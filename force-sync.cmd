@@ -1,5 +1,5 @@
 
-REM tf get * /recursive /force
+tf get * /recursive /force
 git reset --hard origin/master
 git pull
 

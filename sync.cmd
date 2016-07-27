@@ -1,4 +1,4 @@
 
-REM tf get * /recursive
+tf get * /recursive
 git pull
 

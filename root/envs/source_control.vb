@@ -20,7 +20,7 @@ Public NotInheritable Class source_control
     Public Shared ReadOnly current As commit_info
 
     Shared Sub New()
-        If gitver.latest.hash <> unknown_value Then
+        If tf_latest_changeset_id = unknown_value Then
             latest = New commit_info(gitver.latest.short_hash,
                                      gitver.latest.author,
                                      gitver.latest.author_date,
@@ -31,7 +31,7 @@ Public NotInheritable Class source_control
                                      tf_latest_changeset_date,
                                      tf_latest_changeset_comment)
         End If
-        If gitver.current.hash <> unknown_value Then
+        If tf_current_changeset_id = unknown_value Then
             current = New commit_info(gitver.current.short_hash,
                                       gitver.current.author,
                                       gitver.current.author_date,
