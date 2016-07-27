@@ -13,6 +13,7 @@
     <None Include="++--\++--.exe" />
     <None Include="buildInfoGen\buildInfoGen.exe" />
     <None Include="buildcpp.cmd" />
+    <None Include="gitver\gitver.cmd" />
     <None Include="init_vs_env.cmd" />
     <None Include="pack.cmd" />
     <None Include="precompile\precompile.sample1" />

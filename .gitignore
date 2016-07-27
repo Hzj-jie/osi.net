@@ -1,7 +1,8 @@
-**/codegen/*.vb
+**/codegen/**/*.vb
 
 **/bin/
 **/obj/
 
 *.un~
 *.vspscc
+*.suo

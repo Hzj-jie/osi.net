@@ -19,8 +19,8 @@ Namespace counter
                               application_version,
                               ", process id ",
                               current_process.Id(),
-                              ", tf current changeset id ",
-                              tf_current_changeset_id,
+                              ", source control current changeset id ",
+                              source_control.current.id,
                               ", built at ",
                               buildtime,
                               newline.incode()))

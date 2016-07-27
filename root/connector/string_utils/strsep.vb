@@ -8,10 +8,10 @@ Public Module _strsep
                              ByRef s As String,
                              ByVal sep As String,
                              ByVal indexof As Func(Of String, String, Boolean, Int64),
-                             ByVal carecase As Boolean) As Boolean
+                             ByVal case_sensitive As Boolean) As Boolean
         assert(Not indexof Is Nothing)
         Dim i As Int64 = 0
-        i = indexof(input, sep, carecase)
+        i = indexof(input, sep, case_sensitive)
         If i = npos Then
             Return False
         Else
@@ -30,15 +30,15 @@ Public Module _strsep
                                          ByRef f As String,
                                          ByRef s As String,
                                          ByVal sep As String,
-                                         Optional ByVal carecase As Boolean = True) As Boolean
-        Return str_sep(input, f, s, sep, AddressOf strindexof, carecase)
+                                         Optional ByVal case_sensitive As Boolean = True) As Boolean
+        Return str_sep(input, f, s, sep, AddressOf strindexof, case_sensitive)
     End Function
 
     <Extension()> Public Function strrsep(ByVal input As String,
                                           ByRef f As String,
                                           ByRef s As String,
                                           ByVal sep As String,
-                                          Optional ByVal carecase As Boolean = True) As Boolean
-        Return str_sep(input, f, s, sep, AddressOf strlastindexof, carecase)
+                                          Optional ByVal case_sensitive As Boolean = True) As Boolean
+        Return str_sep(input, f, s, sep, AddressOf strlastindexof, case_sensitive)
     End Function
 End Module

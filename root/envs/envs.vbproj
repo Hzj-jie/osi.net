@@ -63,6 +63,8 @@
     <Compile Include="env_value.vb" />
     <Compile Include="build_running.vb" />
     <Compile Include="event_driver.vb" />
+    <Compile Include="gitver.vb" />
+    <Compile Include="gitver.parser.vb" />
     <Compile Include="hardware.vb" />
     <Compile Include="management.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -84,6 +86,7 @@
     <Compile Include="priority.vb" />
     <Compile Include="process.vb" />
     <Compile Include="processor.vb" />
+    <Compile Include="source_control.vb" />
     <Compile Include="spin.vb" />
     <Compile Include="system_perf\atomic_operator.vb" />
     <Compile Include="system_perf\fibonacci.vb" />
@@ -93,6 +96,7 @@
     <Compile Include="system_perf\system_perf.vb" />
     <Compile Include="system_perf\thread_static_operator.vb" />
     <Compile Include="tfver.vb" />
+    <Compile Include="tfver_parser.vb" />
     <Compile Include="thread.vb" />
     <Compile Include="thread_count.vb" />
     <Compile Include="timeslice.vb" />
@@ -152,6 +156,7 @@
   <Target Name="BeforeCompile">
     <Exec Command="copy &quot;$(ProjectDir)\..\codegen\buildInfoGen\buildInfo.vb&quot; &quot;$(ProjectDir)&quot;" />
     <Exec Command="copy &quot;$(ProjectDir)\..\codegen\tfver\tfver.vb&quot; &quot;$(ProjectDir)&quot;" />
+    <Exec Command="copy &quot;$(ProjectDir)\..\codegen\gitver\gitver.vb&quot; &quot;$(ProjectDir)&quot;" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

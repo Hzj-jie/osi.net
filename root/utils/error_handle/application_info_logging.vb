@@ -13,8 +13,8 @@ Friend Class application_info_logging
                     application_version,
                     ", process id ",
                     current_process.Id(),
-                    ", tf current changeset id ",
-                    tf_current_changeset_id,
+                    ", source control current changeset id ",
+                    source_control.current.id,
                     ", built at ",
                     buildtime)
         raise_error("detail build info as",
@@ -28,15 +28,15 @@ Friend Class application_info_logging
                     buildsysver,
                     ", processor ",
                     buildprocessor)
-        raise_error("detail tfs info as",
+        raise_error("detail source control info as",
                     ", changeset id ",
-                    tf_current_changeset_id,
+                    source_control.current.id,
                     ", submitted by ",
-                    tf_current_changeset_user,
+                    source_control.current.user,
                     ", at ",
-                    tf_current_changeset_date,
+                    source_control.current.date,
                     ", comment ",
-                    tf_current_changeset_comment)
+                    source_control.current.comment)
     End Sub
 
     Private Shared Sub init()

@@ -63,7 +63,7 @@ Public Module deploys
         Return Path.Combine(application_name,
                             strcat(application_sign,
                                    character.underline,
-                                   tf_current_changeset_id,
+                                   source_control.current.id,
                                    character.underline,
                                    service_name,
                                    character.underline,
