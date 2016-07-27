@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{AC0AAE9B-F314-4FD3-AE6A-4B430D7AA01B}</ProjectGuid>
+    <SccProjectName>$/geminibranch/osi/root/codegen</SccProjectName>
+    <SccAuxPath>https://tfs.codeplex.com/tfs/tfs02</SccAuxPath>
+    <SccLocalPath>.</SccLocalPath>
+    <SccProvider>{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}</SccProvider>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="++--\++--.cpp" />
+    <None Include="buildInfoGen\buildInfoGen.cpp" />
+    <None Include="++--\++--.exe" />
+    <None Include="buildInfoGen\buildInfoGen.exe" />
+    <None Include="buildcpp.cmd" />
+    <None Include="init_vs_env.cmd" />
+    <None Include="pack.cmd" />
+    <None Include="precompile\precompile.sample1" />
+    <None Include="precompile\precompile.sample2" />
+    <None Include="run.cmd" />
+    <None Include="tfver\tfver.cmd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="adaptive_array\adaptive_array.cs" />
+    <Content Include="adaptive_array\adaptive_array.exe" />
+    <Content Include="array\array.cpp" />
+    <Content Include="array\array.exe" />
+    <Content Include="console_key_info_mapping\console_key_info_mapping.cpp" />
+    <Content Include="console_key_info_mapping\console_key_info_mapping.exe" />
+    <Content Include="console_key_info_mapping\console_key_info_mapping.txt" />
+    <Content Include="delegate\delegate.cpp" />
+    <Content Include="delegate\delegate.exe" />
+    <Content Include="eva\eva.cpp" />
+    <Content Include="eva\eva.exe" />
+    <Content Include="precompile\precompile.cs" />
+    <Content Include="precompile\precompile.exe" />
+    <Content Include="swap\swap.cpp" />
+    <Content Include="swap\swap.exe" />
+    <Content Include="unchecked_int2\unchecked_int2.cs" />
+    <Content Include="unchecked_int2\unchecked_int2.exe" />
+    <Content Include="unchecked_int\unchecked_int.cs" />
+    <Content Include="unchecked_int\unchecked_int.exe" />
+  </ItemGroup>
+  <ItemGroup />
+  <Target Name="Build">
+    <Exec Command="run.cmd" />
+  </Target>
+  <Target Name="Rebuild">
+    <Exec Command="run.cmd" />
+  </Target>
+  <Target Name="Clean" />
+  <Target Name="GetNativeManifest" />
+  <Target Name="GetCopyToOutputDirectoryItems" />
+  <Target Name="GetTargetPath" />
+</Project>

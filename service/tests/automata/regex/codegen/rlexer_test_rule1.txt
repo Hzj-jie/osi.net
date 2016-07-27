@@ -1,0 +1,24 @@
+﻿
+if-clause not-if
+else-clause not-else
+start-paragraph --{
+end-paragraph --}
+
+MODE type_choice multipath
+MODE word_choice multipath
+
+INCLUDE rlexer_test_rule2.txt
+
+CLEAR_WORD
+
+if-clause if
+else-clause else
+start-paragraph {
+end-paragraph }
+name [\d]-[\w,\d,_]+
+equal =
+start-bracket (
+end-bracket )
+number [+,-]?[\d]+
+semi-colon ;
+blank [\b]

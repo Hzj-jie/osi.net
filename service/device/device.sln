@@ -1,0 +1,155 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "configuration", "..\configuration\configuration.vbproj", "{C428976D-292A-49E8-9226-7D355AD3593C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8FE479A4-71CA-445D-B388-5858D2D435B2} = {8FE479A4-71CA-445D-B388-5858D2D435B2}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{80155CF9-F429-4110-9748-EC85E0C8FD0E}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "argument", "..\argument\argument.vbproj", "{A53A7E47-5B3A-40FB-95B8-375691D14AAD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8FE479A4-71CA-445D-B388-5858D2D435B2} = {8FE479A4-71CA-445D-B388-5858D2D435B2}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "convertor", "..\convertor\convertor.vbproj", "{8FE479A4-71CA-445D-B388-5858D2D435B2}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "selector", "..\selector\selector.vbproj", "{1DE5E4A1-4A4D-4868-893C-E98035B421EC}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "device", "device.vbproj", "{92349B84-3C34-42A1-A7CE-62543504B982}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A53A7E47-5B3A-40FB-95B8-375691D14AAD} = {A53A7E47-5B3A-40FB-95B8-375691D14AAD}
+		{C428976D-292A-49E8-9226-7D355AD3593C} = {C428976D-292A-49E8-9226-7D355AD3593C}
+		{1DE5E4A1-4A4D-4868-893C-E98035B421EC} = {1DE5E4A1-4A4D-4868-893C-E98035B421EC}
+		{8FE479A4-71CA-445D-B388-5858D2D435B2} = {8FE479A4-71CA-445D-B388-5858D2D435B2}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "argument", "..\tests\argument\argument.vbproj", "{B6F8C541-722C-4EAE-9FB9-2D28A670940E}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "configuration", "..\tests\configuration\configuration.vbproj", "{C3C617E7-C48A-4685-9722-2B7DFBDB133C}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "convertor", "..\tests\convertor\convertor.vbproj", "{BAFFDCCE-9F20-4970-8447-E5CA968EAE87}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "device", "..\tests\device\device.vbproj", "{7DC8AA60-7E17-4023-A9A8-496CD0D072F1}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "selector", "..\tests\selector\selector.vbproj", "{001A7A8F-B5DF-4302-8C80-9EBB1308744D}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 10
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs02
+		SccProjectUniqueName0 = ..\\configuration\\configuration.vbproj
+		SccProjectName0 = ../configuration
+		SccAuxPath0 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath0 = ..\\configuration
+		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName1 = ..\\argument\\argument.vbproj
+		SccProjectName1 = ../argument
+		SccAuxPath1 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath1 = ..\\argument
+		SccProvider1 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName2 = ..\\convertor\\convertor.vbproj
+		SccProjectName2 = ../convertor
+		SccAuxPath2 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath2 = ..\\convertor
+		SccProvider2 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName3 = ..\\selector\\selector.vbproj
+		SccProjectName3 = ../selector
+		SccAuxPath3 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath3 = ..\\selector
+		SccProvider3 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName4 = device.vbproj
+		SccProjectName4 = .
+		SccAuxPath4 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath4 = .
+		SccProvider4 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName5 = ..\\tests\\argument\\argument.vbproj
+		SccProjectTopLevelParentUniqueName5 = device.sln
+		SccProjectName5 = ../tests/argument
+		SccAuxPath5 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath5 = ..\\tests\\argument
+		SccProvider5 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName6 = ..\\tests\\configuration\\configuration.vbproj
+		SccProjectTopLevelParentUniqueName6 = device.sln
+		SccProjectName6 = ../tests/configuration
+		SccAuxPath6 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath6 = ..\\tests\\configuration
+		SccProvider6 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName7 = ..\\tests\\convertor\\convertor.vbproj
+		SccProjectTopLevelParentUniqueName7 = device.sln
+		SccProjectName7 = ../tests/convertor
+		SccAuxPath7 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath7 = ..\\tests\\convertor
+		SccProvider7 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName8 = ..\\tests\\device\\device.vbproj
+		SccProjectTopLevelParentUniqueName8 = device.sln
+		SccProjectName8 = ../tests/device
+		SccAuxPath8 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath8 = ..\\tests\\device
+		SccProvider8 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName9 = ..\\tests\\selector\\selector.vbproj
+		SccProjectTopLevelParentUniqueName9 = device.sln
+		SccProjectName9 = ../tests/selector
+		SccAuxPath9 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath9 = ..\\tests\\selector
+		SccProvider9 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C428976D-292A-49E8-9226-7D355AD3593C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C428976D-292A-49E8-9226-7D355AD3593C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C428976D-292A-49E8-9226-7D355AD3593C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C428976D-292A-49E8-9226-7D355AD3593C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A53A7E47-5B3A-40FB-95B8-375691D14AAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A53A7E47-5B3A-40FB-95B8-375691D14AAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A53A7E47-5B3A-40FB-95B8-375691D14AAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A53A7E47-5B3A-40FB-95B8-375691D14AAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FE479A4-71CA-445D-B388-5858D2D435B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FE479A4-71CA-445D-B388-5858D2D435B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FE479A4-71CA-445D-B388-5858D2D435B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FE479A4-71CA-445D-B388-5858D2D435B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DE5E4A1-4A4D-4868-893C-E98035B421EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DE5E4A1-4A4D-4868-893C-E98035B421EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DE5E4A1-4A4D-4868-893C-E98035B421EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DE5E4A1-4A4D-4868-893C-E98035B421EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92349B84-3C34-42A1-A7CE-62543504B982}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92349B84-3C34-42A1-A7CE-62543504B982}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92349B84-3C34-42A1-A7CE-62543504B982}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92349B84-3C34-42A1-A7CE-62543504B982}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6F8C541-722C-4EAE-9FB9-2D28A670940E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6F8C541-722C-4EAE-9FB9-2D28A670940E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6F8C541-722C-4EAE-9FB9-2D28A670940E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6F8C541-722C-4EAE-9FB9-2D28A670940E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3C617E7-C48A-4685-9722-2B7DFBDB133C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3C617E7-C48A-4685-9722-2B7DFBDB133C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3C617E7-C48A-4685-9722-2B7DFBDB133C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3C617E7-C48A-4685-9722-2B7DFBDB133C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAFFDCCE-9F20-4970-8447-E5CA968EAE87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAFFDCCE-9F20-4970-8447-E5CA968EAE87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAFFDCCE-9F20-4970-8447-E5CA968EAE87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAFFDCCE-9F20-4970-8447-E5CA968EAE87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DC8AA60-7E17-4023-A9A8-496CD0D072F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DC8AA60-7E17-4023-A9A8-496CD0D072F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DC8AA60-7E17-4023-A9A8-496CD0D072F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DC8AA60-7E17-4023-A9A8-496CD0D072F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{001A7A8F-B5DF-4302-8C80-9EBB1308744D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{001A7A8F-B5DF-4302-8C80-9EBB1308744D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{001A7A8F-B5DF-4302-8C80-9EBB1308744D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{001A7A8F-B5DF-4302-8C80-9EBB1308744D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B6F8C541-722C-4EAE-9FB9-2D28A670940E} = {80155CF9-F429-4110-9748-EC85E0C8FD0E}
+		{C3C617E7-C48A-4685-9722-2B7DFBDB133C} = {80155CF9-F429-4110-9748-EC85E0C8FD0E}
+		{BAFFDCCE-9F20-4970-8447-E5CA968EAE87} = {80155CF9-F429-4110-9748-EC85E0C8FD0E}
+		{7DC8AA60-7E17-4023-A9A8-496CD0D072F1} = {80155CF9-F429-4110-9748-EC85E0C8FD0E}
+		{001A7A8F-B5DF-4302-8C80-9EBB1308744D} = {80155CF9-F429-4110-9748-EC85E0C8FD0E}
+	EndGlobalSection
+EndGlobal

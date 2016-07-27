@@ -1,0 +1,82 @@
+﻿
+Imports System.IO
+Imports osi.root.connector
+Imports osi.root.utt
+Imports osi.root.procedure
+Imports osi.service.storage
+Imports osi.root.utils
+Imports osi.root.constants
+
+Public Class virtdisk_ps_test
+    Inherits multi_procedure_case_wrapper
+
+    Public Sub New()
+        MyBase.New(New repeat_event_comb_case_wrapper(New virtdisk_ps_case(),
+                                                      If(isdebugbuild(), 1, 2) * 65536),
+                   If(isdebugbuild(), 1, 2) * 8)
+    End Sub
+
+    Private Class virtdisk_ps_case
+        Inherits event_comb_case
+
+        Private ReadOnly vd As virtdisk
+
+        Public Sub New()
+            vd = virtdisk.memory_virtdisk()
+        End Sub
+
+        Private Shared Function expected(ByVal p As UInt64) As Byte
+            Return p And max_uint8
+        End Function
+
+        Private Shared Sub rnd_write_data(ByRef start As UInt64, ByRef len As UInt32, ByRef buff() As Byte)
+            start = rnd_int(0, 8192 * 8192 + 1)
+            len = rnd_int(1024, 1024 * 16 + 1)
+            ReDim buff(len - 1)
+            For i As UInt32 = 0 To len - 1
+                buff(i) = expected(start + i)
+            Next
+        End Sub
+
+        Private Sub rnd_read_data(ByRef start As UInt64, ByRef len As UInt32)
+            assert_more(vd.size(), 0)
+            start = rnd_int(0, vd.size())
+            len = rnd_int(1, min(vd.size() - start, 1024 * 16) + 1)
+        End Sub
+
+        Private Sub verify_data(ByVal start As UInt64, ByVal len As UInt32, ByVal buff() As Byte)
+            assert(len > 0)
+            assert_equal(array_size(buff), len)
+            assert_more_or_equal(vd.size(), CLng(start + len))
+            For i As Int32 = 0 To len - 1
+                assert_true((buff(i) = expected(start + i)) OrElse (buff(i) = 0))
+            Next
+        End Sub
+
+        Public Overrides Function create() As event_comb
+            Dim buff() As Byte = Nothing
+            Dim start As UInt64 = 0
+            Dim len As UInt32 = 0
+            Dim ec As event_comb = Nothing
+            Return New event_comb(Function() As Boolean
+                                      rnd_write_data(start, len, buff)
+                                      ec = vd.write(start, len, buff)
+                                      Return waitfor(ec) AndAlso
+                                             goto_next()
+                                  End Function,
+                                  Function() As Boolean
+                                      assert_true(ec.end_result())
+                                      rnd_read_data(start, len)
+                                      ReDim buff(len - 1)
+                                      ec = vd.read(start, len, buff)
+                                      Return waitfor(ec) AndAlso
+                                             goto_next()
+                                  End Function,
+                                  Function() As Boolean
+                                      assert_true(ec.end_result())
+                                      verify_data(start, len, buff)
+                                      Return goto_end()
+                                  End Function)
+        End Function
+    End Class
+End Class

@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DA3051DC-A250-488F-AACA-F46977DD0F17}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>osi.root.formation</RootNamespace>
+    <AssemblyName>osi.root.formation</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Import Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="array.vb" />
+    <Compile Include="binary_tree\bbst.vb" />
+    <Compile Include="binary_tree\bmap.vb" />
+    <Compile Include="binary_tree\bset.vb" />
+    <Compile Include="binary_tree\bst.vb" />
+    <Compile Include="binary_tree\bt.box.vb" />
+    <Compile Include="binary_tree\bt.node.rotate.vb" />
+    <Compile Include="binary_tree\bt.node.shortcut.vb" />
+    <Compile Include="binary_tree\bt.node.status.vb" />
+    <None Include="binary_tree\codegen\bmap2.vbp" />
+    <Compile Include="binary_tree\obst.vb" />
+    <Compile Include="binary_tree\omap.vb" />
+    <Compile Include="binary_tree\oset.vb" />
+    <Compile Include="binary_tree\sbst.vb" />
+    <Compile Include="binary_tree\segment_tree.vb" />
+    <Compile Include="binary_tree\smap.vb" />
+    <Compile Include="binary_tree\sset.vb" />
+    <Compile Include="bit_array.vb" />
+    <Compile Include="circle.vb" />
+    <Compile Include="comparer\comparable_type.vb" />
+    <Compile Include="comparer\reverse.vb" />
+    <Compile Include="const_array.vb" />
+    <Compile Include="ext\conv.vb" />
+    <Compile Include="ext\foreach.vb" />
+    <Compile Include="ext\map.vb" />
+    <Compile Include="ext\set.vb" />
+    <Compile Include="heap.vb" />
+    <Compile Include="lazier.vb" />
+    <Compile Include="lifetime_control\disposer.vb" />
+    <Compile Include="lifetime_control\disposer_T.vb" />
+    <Compile Include="lifetime_control\dispose_ptr.vb" />
+    <Compile Include="lifetime_control\event_disposer.vb" />
+    <Compile Include="lifetime_control\lifetime_binder.vb" />
+    <Compile Include="lifetime_control\ref_ptr.vb" />
+    <Compile Include="lifetime_control\weak_disposer_T.vb" />
+    <Compile Include="lifetime_control\weak_dispose_ptr.vb" />
+    <Compile Include="list.iterator.vb" />
+    <Compile Include="list.vb" />
+    <Compile Include="map.vb" />
+    <Compile Include="mapheap.iterator.vb" />
+    <Compile Include="mapheap.vb" />
+    <Compile Include="map_extension.vb" />
+    <Compile Include="pair.vb" />
+    <Compile Include="piece.vb" />
+    <Compile Include="pointer\array_pointer.vb" />
+    <Compile Include="pointernode.vb" />
+    <Compile Include="pointer\pointer.vb" />
+    <Compile Include="pointer\weak_ref_pointer.vb" />
+    <Compile Include="pointer\weak_pointer.vb" />
+    <Compile Include="pool\fixed_pool.vb" />
+    <Compile Include="pool\pool.vb" />
+    <Compile Include="pool\unmanaged_pool.vb" />
+    <Compile Include="qless2_stream.vb" />
+    <Compile Include="queue.vb" />
+    <Compile Include="comparer\reverse_date.vb" />
+    <Compile Include="set.vb" />
+    <Compile Include="setqueue.vb" />
+    <Compile Include="stack.vb" />
+    <Compile Include="ternary.vb" />
+    <Compile Include="threadsafe\cycle.vb" />
+    <Compile Include="fixed_queue.vb" />
+    <Compile Include="fixed_stack.vb" />
+    <Compile Include="hashmap.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="threadsafe\hashmapless.vb" />
+    <Compile Include="threadsafe\heapless.vb" />
+    <Compile Include="threadsafe\object_unique_pointer_set.vb" />
+    <Compile Include="threadsafe\object_unique_set.vb" />
+    <Compile Include="threadsafe\qless.vb" />
+    <Compile Include="threadsafe\slimqless2.vb" />
+    <Compile Include="binary_tree\bt.iterator.vb" />
+    <Compile Include="binary_tree\bt.node.vb" />
+    <Compile Include="binary_tree\bt.vb" />
+    <Compile Include="threadsafe\slimhealpless.vb" />
+    <Compile Include="threadsafe\unique_map.vb" />
+    <Compile Include="threadsafe\unique_strong_map.vb" />
+    <Compile Include="threadsafe\unique_weak_map.vb" />
+    <Compile Include="threadsafe\collectionless.vb" />
+    <Compile Include="trie.iterator.vb" />
+    <Compile Include="trie.vb" />
+    <Compile Include="vector.adaptive_array.vb" />
+    <Compile Include="vector.vb" />
+    <None Include="codegen\bt.iterator.vbp" />
+    <None Include="codegen\iterator.ext.vbp" />
+    <None Include="codegen\iterator.imports.vbp" />
+    <None Include="codegen\mapheap.iterator.vbp" />
+    <None Include="codegen\list.iterator.vbp" />
+    <None Include="codegen\random_access_iterator.single_step.vbp" />
+    <None Include="codegen\random_access_iterator.vbp" />
+    <None Include="codegen\run.cmd" />
+    <None Include="codegen\trie.iterator.vbp" />
+    <None Include="lifetime_control\codegen\disposer.vbp" />
+    <None Include="lifetime_control\codegen\disposer_core.vbp" />
+    <None Include="lifetime_control\codegen\disposer_dispose.vbp" />
+    <None Include="lifetime_control\codegen\disposer_imports.vbp" />
+    <None Include="lifetime_control\codegen\disposer_T.vbp" />
+    <None Include="lifetime_control\codegen\dispose_ptr.vbp" />
+    <None Include="lifetime_control\codegen\dispose_ptr_do_dispose.vbp" />
+    <None Include="lifetime_control\codegen\run.cmd" />
+    <None Include="lifetime_control\codegen\weak_disposer_T.vbp" />
+    <None Include="lifetime_control\codegen\weak_dispose_ptr.vbp" />
+    <None Include="lifetime_control\codegen\weak_dispose_ptr_do_dispose.vbp" />
+    <None Include="pointer\codegen\array_pointer.override.vbp" />
+    <None Include="pointer\codegen\array_pointer.vbp" />
+    <None Include="pointer\codegen\pointer.override.vbp" />
+    <None Include="pointer\codegen\pointer.vbp" />
+    <None Include="pointer\codegen\run.cmd" />
+    <None Include="pointer\codegen\single_obj_pointer_operator.vbp" />
+    <None Include="pointer\codegen\strong_pointer_override.vbp" />
+    <None Include="pointer\codegen\weak_pointer.override.vbp" />
+    <None Include="pointer\codegen\weak_pointer.vbp" />
+    <None Include="threadsafe\codegen\qless2.vbp" />
+    <None Include="threadsafe\codegen\heapless.vbp" />
+    <None Include="threadsafe\codegen\run.cmd" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="binary_tree\codegen\bmap.vbp" />
+    <None Include="binary_tree\codegen\map.vbp" />
+    <None Include="binary_tree\codegen\omap.vbp" />
+    <None Include="binary_tree\codegen\run.cmd" />
+    <None Include="binary_tree\codegen\smap.vbp" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <Compile Include="threadsafe\qless2.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\connector\connector.vbproj">
+      <Project>{37ec873b-1ea8-449d-ac58-75a2f26fe5ea}</Project>
+      <Name>connector %28root\connector%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\constants\constants.vbproj">
+      <Project>{f251286b-8ee9-4292-b117-1630d5f93b37}</Project>
+      <Name>constants</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\delegates\delegates.vbproj">
+      <Project>{B2A4A210-3AD5-41CA-A650-CE8C86BF1FFC}</Project>
+      <Name>delegates</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\envs\envs.vbproj">
+      <Project>{D310BA86-0FA6-42BB-8EFD-2DEE526E6981}</Project>
+      <Name>envs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\lock\lock.vbproj">
+      <Project>{5bb4adde-7c12-4221-ae69-c669255c931e}</Project>
+      <Name>lock %28root\lock%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\template\template.vbproj">
+      <Project>{8ef461f7-2f05-42a3-b65b-8e644f992582}</Project>
+      <Name>template</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="codegen\static_iterator.vbp" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

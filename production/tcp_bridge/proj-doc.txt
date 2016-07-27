@@ -1,0 +1,132 @@
+﻿
+! overview
+tcp bridge is a service to transport the data between several tcp connection groups, no matter the connections are incoming or outgoing.
+!! tcp connection group
+a tcp connection group is a set of tcp connections generated or accepted, and maintained by the service. several connections are in a same group if they are based on a same configuration section, usually it also means these connections have a same destination ip & port, or from a same listening port.
+!! generated / accepted and maintained
+the tcp bridge service using osi.service.tcp to generate / accept and maintain all the connections. based on the configuration with connection type <incoming or outgoing>, osi.service.tcp will generate the connection or accept the connection. and it will also detect whether the connection has been dropped when it is in free status. and to tcp bridge service, these connections have no difference, which means each connection group <named as powerpoint in the osi.service.tcp> can be directly accessed via it's name, no matter it is incoming connection or outgoing connection. this is also the reason tcp bridge can transport the data between two incoming connections or two outgoing connections.
+
+! any benefit?
+1. not every machine needs to open port directly to the internet, i.e. not every machine needs an individual ip in the internet. it can help to save network fee.
+2. no extra route configuration. since all the outgoing connections are free to go through route. otherwise, all the routes between internet access point and the serving machine need to be configured to open a port. sometimes, this requirement may even not be achievable.
+3. no extra firewall configuration. usually outgoing connections are free to go through firewall, also since there is no open port in machine and route level, it almost means firewall is not necessary.
+4. automatically load balance based on machine load. since high load machine will have a longer processing time for a request, so the connections from the high load machine will be released slower than low load machine. which is more accurate, and no extra code support needed.
+
+! common user scenarios
+1. one gateway + several serving servers mode. the gateway machine has an individual ip in the internet, while other serving machines have only internet access or intranet access to the gateway machine.
+2. the home machine has individual ip in the internet, while the work machine is in the corp net. and the company has no vpn setup.
+3. a service has a listening port, but for security concern or conflict, need to redirect it another port.
+
+the first two scenarios are just as what shows in the image in the homepage, you need to setup two tcp bridge services with different configurations in both machines to make it work. the third is simple as one service.
+
+! single service configuration, redirect port mode
+
+{"[connection1]
+name=connection1
+type=incoming
+port=80
+target=connection2
+send_rate_sec=2048
+receive_rate_sec=2048
+
+[connection2]
+name=connection2
+type=outgoing
+host=dest-machine
+max_connected=256
+port=80"}
+
+it contains two sections,
+1. connection1 is an incoming connection group, which is from 80 port. when data comes from the accepted connections of this port, it will be redirected to the connection2.
+2. connection2 is an outgoing connection group, which has a max connection count limitation as 256. so usually, 256 connections will be generated to the dest-machine:80. in this configuration file, the data to the port 80 of this machine will be redirected to the port 80 of dest-machine.
+pay attention, the target can only be applied to one of the two connection groups. since when selected one connection from the target connection group, these two connections will become a pair. the pair relationship will only be broken when one of them has been dropped or timeout.
+
+! two services configurations
+master
+{"[connection1]
+name=i
+type=incoming
+port=80
+target=o
+send_rate_sec=1
+receive_rate_sec=1
+max_lifetime_ms=2000
+max_connecting=128
+
+[connection2]
+name=o
+type=incoming
+token=http.token
+port=180
+send_rate_sec=0
+receive_rate_sec=0"}
+
+slave
+{"[connection1]
+name=i
+type=outgoing
+host=master-machine
+port=180
+token=http.token
+target=o
+max_connected=256
+
+[connection2]
+name=o
+type=outgoing
+host=localhost
+port=80
+max_connected=256"}
+
+the master machine is the one with individual ip in the internet, the slave machine is the one with only internet or intranet access to the master machine. briefly master machines will accept connections from both end users and slave machines. slave machines will generate connections to both master machines and common tcp based service. when data comes from end users, it will be transported to the slave machine via incoming connections from slave machines, then slave machine will transport the data to its outgoing connections and to the common tcp based service. the tcp based service will be able to handle the request as normal direct connections. and if the service is http based, the keepalive behavior will be inherited from each end, no matter whether the user or server shutdown the connection, the bridge will be released.
+
+! full configuration spec
+the configuration contains several sections as connectionN, N = 1, 2, 3, ...
+each section has following parameters
+!! name
+the name of the connection group, it's required, do not accept empty string
+!! type
+if the value of it is 'outgoing' <no single quotations surrounded>, the connection group is outgoing, otherwise, it's an incoming connection group.
+!! token
+the token for the connection, when a connection has been generated, the outgoing side will send this string as token to the listener side. if the token is not correct, the connection will be dropped, which provides a security connection generation process. the hacker cannot stolen connections and data without the token. BUT, since the data will be transported through route and physical network between both sides, if anyone can get access to the raw data, he would be able to get the token.
+not required, and can be empty string
+!! host
+this only takes effect when the connection is outgoing, the destination ip or dns name, in windows, NetBIOS / WINS name is also acceptable.
+when outgoing, it's required, do not accept empty string.
+!! port
+when the connection group is outgoing, it's the port of destination. when incoming, it's the listening port.
+!! {"connecting_timeout_ms"}
+the milliseconds to generate the connection, when incoming, it's the time to wait for the other side to provide the token <if token has been set>. when outgoing, it's the time to wait for the other side to accept the connection and the token.
+not required, default value is 10 seconds.
+!! {"send_rate_sec"}
+the bytes can be sent in one second. not required, default value is 1.
+!! {"receive_rate_sec"}
+the bytes can be received in one second. not required, default value is 1.
+these two parameters should be considered by the network status, since they are controlling the timeout of a transport behavior.
+!! max_connecting
+the max count of half connections, for outgoing connections, half connection means the status between the first handshake has been sent and the accept token has been received from server. for incoming connections, half connection means the status between the first ack has been sent back to client and the accept token has been sent to client.
+not required, the default value is 2.
+!! max_connected
+the max connections should be generated for this connection group. not required, for outgoing connections, the default value is 256, for incoming connections, the default value is max int32 2147483647 <over 2 billion, almost means no limitation>
+!! no_delay
+whether the no-delay parameter should be set to the socket, no-delay to true will disable Nagle's algorithm.
+not required, the default value is false.
+!! {"max_lifetime_ms"}
+the max idle time in milliseconds before the connection has been dropped. it's the idle time, and only take effect to the listening side / incoming connections.
+not required, default value is 24 hours.
+!! ipv4
+use ipv4 or not, otherwise, use ipv6. not required, default value is true.
+!! target
+the target connection group to transport the data between. should be the name of another connection group.
+!! reset_connection
+whether actively shutdown the connection even no error has been found during the transporting. since the transport is between two connections, one of them shutting down the connection does not mean we need to shutdown the other side. but this is not safe when the connection has been dropped instead of actively shutdown, and the data has not been fully transported to the destination. so if there is safety concern, it should be set to true.
+not required, default value is false.
+!! chunk_count
+whether using buffered transport, and the buffer size. set to 0 means do not use buffered transport, the data will be directly sent to the other side, and no data will be received before the transport has been finished. set to value < 0 means no limitation. buffered transport can help to resolve issues as the non-equivalent network speed between the two connections. which can reduce system buffer usage and resend times in tcp level. using buffered transport will slightly impact the performance, since more memory accesses will happen.
+not required, default value is 0.
+!! stream_based
+whether use NetworkStream of .net, otherwise the service will directly use socket. using socket can help to handle partial receive and timeout more friendly, since even timeout happened, we can confirm how many data we have already read. if using tcp bridge with RDP <remote desktop of windows>, should always set this parameter to false.
+not required, default value is false.
+
+! command line parameter
+the tcp bridge service accepts only one command line parameter, as the configuration file name, overwrites the default configuration file as tcp_bridge.ini

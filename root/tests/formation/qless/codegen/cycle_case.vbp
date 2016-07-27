@@ -1,0 +1,4 @@
+﻿
+##DEFINE NAME cycle_1024_128
+##DEFINE PUSH_RETURN True
+##INCLUDE qless_case.vbp

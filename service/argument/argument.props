@@ -1,0 +1,13 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ArgumentProps>true</ArgumentProps>
+  </PropertyGroup>
+  <Import Project="argument.dep" />
+  <ItemGroup>
+    <Reference Include="osi.service.argument">
+      <HintPath>$(ServicePath)\argument\bin\$(Configuration)\osi.service.argument.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

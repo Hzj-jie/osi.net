@@ -1,0 +1,104 @@
+﻿
+Imports osi.root.constants
+Imports osi.root.connector
+Imports osi.root.utt
+
+Public Class c_escape_test
+    Inherits multithreading_case_wrapper
+
+    Public Sub New()
+        MyBase.New(chained(New c_escape_predefined_case(),
+                           repeat(New c_escape_case(), 16 * 1024)),
+                   2)
+    End Sub
+
+    Private Class c_escape_predefined_case
+        Inherits [case]
+
+        Private Shared ReadOnly failed() As String = {"\",
+                                                      "\c",
+                                                      "\uxxxx",
+                                                      "\u123",
+                                                      "\u123x",
+                                                      "\Uxxxxxxxx",
+                                                      "\U1234567",
+                                                      "\U123",
+                                                      "\U1234567X"}
+
+        Private Shared ReadOnly mapping(,) As String = {
+            {"abc", "abc"},
+            {"\x2C", ","},
+            {"\x5D", "]"},
+            {"\""\'", """'"},
+            {"", ""},
+            {"\ufeff", Convert.ToChar(65279)},
+            {"\uFEFF", Convert.ToChar(65279)},
+            {"\ufffe", Convert.ToChar(65534)},
+            {"\uFFFE", Convert.ToChar(65534)},
+            {"that\'s a sentence. usually we are using \\ as an escape character.",
+             "that's a sentence. usually we are using \ as an escape character."}}
+
+        Public Overrides Function run() As Boolean
+            For i As UInt32 = 0 To array_size(failed) - uint32_1
+                Dim s As String = Nothing
+                assert_false(failed(i).c_unescape(s), failed(i))
+            Next
+
+            For i As Int32 = 0 To array_size(mapping) - 1
+                Dim escaped As String = Nothing
+                Dim unescaped As String = Nothing
+                escaped = mapping(i, 0)
+                assert_true(escaped.c_unescape(unescaped))
+                assert_not_nothing(unescaped)
+                assert_equal(unescaped, mapping(i, 1))
+
+                unescaped = mapping(i, 1)
+                assert_true(unescaped.c_escape(escaped))
+                assert_not_nothing(escaped)
+                If escaped <> mapping(i, 0) Then
+                    assert_equal(escaped, mapping(i, 1))
+                End If
+                If escaped <> mapping(i, 1) Then
+                    assert_equal(escaped, mapping(i, 0))
+                End If
+            Next
+            Return True
+        End Function
+    End Class
+
+    Private Class c_escape_case
+        Inherits [case]
+
+        Private Shared ReadOnly should_not_contains() As Char = {character.alert,
+                                                                 character.feed,
+                                                                 character.return,
+                                                                 character.vtab,
+                                                                 character.tab,
+                                                                 character.newline,
+                                                                 character.backspace,
+                                                                 character.null}
+
+        Public Overrides Function run() As Boolean
+            Dim s As String = Nothing
+            s = rnd_utf8_chars(rnd_int(max_uint8, max_uint16))
+            Dim escaped As String = Nothing
+            assert_true(s.c_escape(escaped))
+            assert_not_nothing(escaped)
+            For i As Int32 = 0 To array_size(should_not_contains) - 1
+                assert_false(escaped.safe_strcontains(should_not_contains(i)))
+            Next
+            Dim unescaped As String = Nothing
+            assert_true(escaped.c_unescape(unescaped))
+            assert_not_nothing(unescaped)
+            If Not assert_equal(unescaped, s) Then
+                For i As Int32 = 0 To min(strlen(unescaped), strlen(s)) - 1
+                    'debug
+                    If Not assert_equal(unescaped(i), s(i), unescaped(i), " <> ", s(i)) Then
+                        Exit For
+                    End If
+                Next
+            End If
+            Return True
+        End Function
+    End Class
+End Class

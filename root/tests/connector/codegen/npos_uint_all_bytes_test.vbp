@@ -1,0 +1,54 @@
+﻿
+Imports osi.root.constants
+Imports osi.root.connector
+Imports osi.root.utt
+
+##DEFINE TYPE npos_uint
+##INCLUDE npos_uint_bytes_test.vbp
+
+##DEFINE TYPE npos_uint32
+##INCLUDE npos_uint_bytes_test.vbp
+
+##DEFINE TYPE npos_uint64
+##INCLUDE npos_uint_bytes_test.vbp
+
+##DEFINE ACCEPT_ZERO False
+##DEFINE TYPE positive_npos_uint
+##INCLUDE npos_uint_bytes_test.vbp
+
+##DEFINE ACCEPT_ZERO False
+##DEFINE TYPE positive_npos_uint32
+##INCLUDE npos_uint_bytes_test.vbp
+
+##DEFINE ACCEPT_ZERO False
+##DEFINE TYPE positive_npos_uint64
+##INCLUDE npos_uint_bytes_test.vbp
+
+##DEFINE ACCEPT_ZERO False
+##DEFINE TYPE positive_size_t
+##INCLUDE npos_uint_bytes_test.vbp
+
+##DEFINE ACCEPT_ZERO False
+##DEFINE TYPE positive_size_t_32
+##INCLUDE npos_uint_bytes_test.vbp
+
+##DEFINE ACCEPT_ZERO False
+##DEFINE TYPE positive_size_t_64
+##INCLUDE npos_uint_bytes_test.vbp
+
+##DEFINE ACCEPT_MAX False
+##DEFINE TYPE retry_times_t
+##INCLUDE npos_uint_bytes_test.vbp
+
+##DEFINE TYPE size_t
+##INCLUDE npos_uint_bytes_test.vbp
+
+##DEFINE TYPE size_t_32
+##INCLUDE npos_uint_bytes_test.vbp
+
+##DEFINE TYPE size_t_64
+##INCLUDE npos_uint_bytes_test.vbp
+
+##DEFINE HAS_NPOS False
+##DEFINE TYPE timeout_ms_t
+##INCLUDE npos_uint_bytes_test.vbp

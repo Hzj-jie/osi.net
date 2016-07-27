@@ -1,0 +1,5 @@
+﻿
+##DEFINE OPERATOR Mod
+##DEFINE CLASS_TYPE int_modulo
+##DEFINE TYPE Int32
+##INCLUDE operator_perf.vbp

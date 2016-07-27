@@ -1,0 +1,3 @@
+﻿
+##DEFINE TYPE positive_size_t
+##INCLUDE positive_npos_uint.vbp

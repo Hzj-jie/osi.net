@@ -1,0 +1,4 @@
+﻿
+##DEFINE TYPE weak_pointer
+##DEFINE CAN_REFER_OBJ_IN_FINALIZE False
+##INCLUDE pointer.vbp

@@ -1,0 +1,6 @@
+﻿
+##DEFINE OPERATOR Mod
+##DEFINE CLASS_TYPE ulong_modulo
+##DEFINE TYPE UInt64
+##DEFINE RND rnd_uint64()
+##INCLUDE operator_perf.vbp

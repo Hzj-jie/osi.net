@@ -1,0 +1,4 @@
+﻿
+##DEFAULT TYPE positive_npos_uint64
+##DEFINE ACCEPT_ZERO False
+##INCLUDE npos_uint64.vbp

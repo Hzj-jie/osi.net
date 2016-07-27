@@ -1,0 +1,6 @@
+﻿
+MODE type_choice first_defined
+MODE word_choice greedy
+
+DEFINE vowel a,e,i,o,u
+DEFINE consonant b,c,d,f,g,h,j,k,l,m,n,p,q,r,s,t,v,w,x,y,z

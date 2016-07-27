@@ -1,0 +1,4 @@
+﻿
+##DEFINE TYPE omap
+##DEFINE BASE_TYPE obst
+##INCLUDE map.vbp

@@ -1,0 +1,20 @@
+﻿
+##DEFAULT NAME int
+##DEFAULT TYPE Int32
+##DEFINE NO_LOCK_CLASS_TYPE atomic_##NAME##
+##DEFINE BASE_TYPE atomic_##NAME##(Of ##DEFAULT_LOCK##)
+##INCLUDE atom_body.vbp
+
+Partial Public Class ##BASE_TYPE##
+    Public Function increment() As ##TYPE##
+        Return Interlocked.Increment(p)
+    End Function
+
+    Public Function decrement() As ##TYPE##
+        Return Interlocked.Decrement(p)
+    End Function
+
+    Public Function add(ByVal i As ##TYPE##) As ##TYPE##
+        Return Interlocked.Add(p, i)
+    End Function
+End Class

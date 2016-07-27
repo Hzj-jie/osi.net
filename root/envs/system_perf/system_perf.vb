@@ -1,0 +1,50 @@
+﻿
+Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.constants.system_perf
+
+Public Module _system_perf
+    Public ReadOnly perf_run_ms As Int64 = 0
+    Public ReadOnly loops_per_ms As Int64 = 0
+
+    Private Function perf_run_single() As Int64
+        Dim startticks As Int64 = 0
+        startticks = nowadays.high_res_ticks()
+        fibonacci.run()
+        atomic_operator.run()
+#If 0 Then
+        thread_static_operator.run()
+#End If
+        memory_access.run()
+        integer_operator.run()
+        float_operator.run()
+        Return nowadays.high_res_ticks() - startticks
+    End Function
+
+    Private Function perf_run() As Int64
+        'warmup
+        perf_run_single()
+        Dim min As Int64 = max_int64
+        For i As Int32 = 1 To 16
+            Dim c As Int64 = 0
+            c = perf_run_single()
+            If c < min Then
+                min = c
+            End If
+        Next
+        Return max(ticks_to_milliseconds(min), 1)
+    End Function
+
+    Sub New()
+        Using New boost()
+            perf_run_ms = perf_run()
+        End Using
+        loops_per_ms = ratio \ perf_run_ms
+        If env_bool(env_keys("report", "system", "perf")) Then
+            raise_error("perf_run_ms = ",
+                          perf_run_ms,
+                          ", loops_per_ms = ",
+                          loops_per_ms)
+        End If
+    End Sub
+End Module

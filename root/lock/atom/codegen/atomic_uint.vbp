@@ -1,0 +1,71 @@
+﻿
+##DEFAULT NAME uint
+##DEFAULT STORE_TYPE Int32
+##DEFAULT OUT_TYPE UInt32
+##DEFAULT STORE_OUT int32_uint32
+##DEFAULT OUT_STORE uint32_int32
+
+Imports System.Threading
+Imports osi.root.constants
+Imports osi.root.connector
+
+Public Class atomic_##NAME##
+    Private i As ##STORE_TYPE##
+
+    Public Sub New()
+    End Sub
+
+    Public Sub New(ByVal i As ##STORE_TYPE##)
+        Me.i = i
+    End Sub
+
+    Public Sub New(ByVal i As ##OUT_TYPE##)
+        Me.i = ##OUT_STORE##(i)
+    End Sub
+
+    Public Function [get]() As ##OUT_TYPE##
+        Return ##STORE_OUT##(i)
+    End Function
+
+    Public Function add(ByVal i As ##OUT_TYPE##) As ##OUT_TYPE##
+        Return ##STORE_OUT##(Interlocked.Add(Me.i, ##OUT_STORE##(i)))
+    End Function
+
+    Public Function add(ByVal i As ##STORE_TYPE##) As ##OUT_TYPE##
+        Return ##STORE_OUT##(Interlocked.Add(Me.i, i))
+    End Function
+
+    Public Function increment() As ##OUT_TYPE##
+        Return ##STORE_OUT##(Interlocked.Increment(i))
+    End Function
+
+    Public Function decrement() As ##OUT_TYPE##
+        Return ##STORE_OUT##(Interlocked.Decrement(i))
+    End Function
+
+    Public Function exchange(ByVal x As ##OUT_TYPE##) As ##OUT_TYPE##
+        Return ##STORE_OUT##(Interlocked.Exchange(i, ##OUT_STORE##(x)))
+    End Function
+
+    Public Function compare_exchange(ByVal value As ##OUT_TYPE##,
+                                     ByVal comparand As ##OUT_TYPE##) As ##OUT_TYPE##
+        Return ##STORE_OUT##(Interlocked.CompareExchange(i, ##OUT_STORE##(value), ##OUT_STORE##(comparand)))
+    End Function
+
+    Public Shared Operator +(ByVal i As atomic_##NAME##) As ##OUT_TYPE##
+        Return i.get()
+    End Operator
+
+    Public Shared Widening Operator CType(ByVal this As ##STORE_TYPE##) As atomic_##NAME##
+        Return New atomic_##NAME##(this)
+    End Operator
+
+    Public Shared Widening Operator CType(ByVal this As ##OUT_TYPE##) As atomic_##NAME##
+        Return New atomic_##NAME##(this)
+    End Operator
+
+    Public Shared Widening Operator CType(ByVal this As atomic_##NAME##) As ##OUT_TYPE##
+        Return +this
+    End Operator
+End Class
+

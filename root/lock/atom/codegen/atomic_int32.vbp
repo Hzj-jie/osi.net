@@ -1,0 +1,3 @@
+﻿
+##DEFINE NAME int32
+##INCLUDE atomic_int.vbp

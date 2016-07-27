@@ -1,0 +1,42 @@
+﻿
+isynckeyvalue same as ikeyvalue, but only sync operations
+
+ikeyvalue
+    key based operations
+        read / append / modify / delete / seek / sizeof
+    key type, byte()
+    data type, byte()
+    other
+        list / retire / empty / full, etc
+    no threadsafe expected
+
+isynckeyvalue_ikeyvalue, input isynckeyvalue, implement ikeyvalue
+
+ikeyvt<_bool THREADSAFE>
+    key based operations
+        read / append / delete / seek / modify / sizeof / unique_write
+    key type, byte()
+    data type, byte()
+    timestamp type, int64
+    other
+        list / retire / empty / full, etc
+    with template parameter THREADSAFE
+
+ikeyvalue_ikeyvt_false, input ikeyvalue, implement ikeyvt<_false>
+ikeyvt_false_ikeyvt_true, input ikeyvt<_false>, implement ikeyvt<_true>
+
+istrkeyvt
+    key based operations
+        same as ikeyvt
+    key type, string
+    data type, byte()
+    timestamp type, int64
+    other
+        same as ikeyvt
+    threadsafe expected
+
+ikeyvt_true_istrkeyvt, input ikeyvt<_true>, implement istrkeyvt
+
+
+cache
+cached_ikeyvalue, input ikeyvalue, implement ikeyvalue

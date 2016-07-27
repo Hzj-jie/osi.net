@@ -1,0 +1,56 @@
+﻿
+##DEFAULT WEAKREFERENCE_TYPE T
+
+##INCLUDE single_obj_pointer_operator.vbp
+
+    Private p As WeakReference
+    
+    Public Sub clear()
+        p = Nothing
+    End Sub
+
+    Public Function empty() As Boolean
+        Dim p As WeakReference = Nothing
+        p = Me.p
+        Return p Is Nothing OrElse
+               Not p.IsAlive() OrElse
+               p.Target() Is Nothing
+    End Function
+
+#If "##WEAKREFERENCE_TYPE##" = "T" Then
+    Public Function [get](ByRef o As ##WEAKREFERENCE_TYPE##) As Boolean
+#Else
+    Private Function [get](ByRef o As ##WEAKREFERENCE_TYPE##) As Boolean
+#End If
+        Dim p As WeakReference = Nothing
+        p = Me.p
+        If p Is Nothing Then
+            Return False
+        Else
+            Try
+                o = DirectCast(p.Target(), ##WEAKREFERENCE_TYPE##)
+            Catch
+                assert(False)
+            End Try
+            Return p.IsAlive()
+        End If
+    End Function
+
+    Public Function alive() As Boolean
+        Dim p As WeakReference = Nothing
+        p = Me.p
+        Return Not p Is Nothing AndAlso p.IsAlive()
+    End Function
+
+    Public Function [get]() As T
+        Dim o As T = Nothing
+        Return If([get](o), o, Nothing)
+    End Function
+
+#If "##WEAKREFERENCE_TYPE##" = "T" Then
+    Public Sub [set](ByVal i As ##WEAKREFERENCE_TYPE##)
+#Else
+    Private Sub [set](ByVal i As ##WEAKREFERENCE_TYPE##)
+#End If
+        p = New WeakReference(i)
+    End Sub

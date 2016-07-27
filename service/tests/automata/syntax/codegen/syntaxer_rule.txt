@@ -1,0 +1,24 @@
+﻿
+IGNORE_TYPES blank
+ROOT_TYPES function
+
+function name name start-bracket [paramlist]? end-bracket multi-sentence-paragraph
+paramlist [param-with-comma]* param
+param-with-comma param comma
+param name name
+paragraph [sentence, multi-sentence-paragraph]
+sentence [sentence-with-semi-colon, sentence-without-semi-colon, semi-colon]
+sentence-with-semi-colon [value-definition, value-clause, return-clause, function-call] semi-colon
+sentence-without-semi-colon [condition]
+multi-sentence-paragraph start-paragraph [sentence]* end-paragraph
+value-definition name name
+value-clause value assignment value
+condition KW-if start-bracket value end-bracket paragraph [else-condition]?
+else-condition KW-else paragraph
+value [comparasion, function-call, name, integer, float, bool, string]
+comparasion value-without-comparasion [less-than, great-than, less-or-equal, great-or-equal, equal] value
+value-without-comparasion [function-call, name, integer, float, bool, string]
+function-call name start-bracket [value-list]? end-bracket
+value-list [value-with-comma]* value
+value-with-comma value comma
+return-clause KW-return [value]?

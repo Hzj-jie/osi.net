@@ -1,0 +1,32 @@
+﻿
+	Public Function min(ByVal f As ##TYPE##, ByVal s As ##TYPE##) As ##TYPE##
+		Return If(f < s, f, s)
+	End Function
+
+	Public Function max(ByVal f As ##TYPE##, ByVal s As ##TYPE##) As ##TYPE##
+		Return If(f < s, s, f)
+	End Function
+
+	Public Function min(ByVal f As ##TYPE##, ByVal s As ##TYPE##, ByVal ParamArray v() As ##TYPE##) As ##TYPE##
+		Dim r As ##TYPE## = min(f, s)
+        If Not isemptyarray(v) Then
+            For i As UInt32 = 0 To array_size(v) - uint32_1
+                If v(i) < r Then
+                    r = v(i)
+                End If
+            Next
+        End If
+		Return r
+	End Function
+
+	Public Function max(ByVal f As ##TYPE##, ByVal s As ##TYPE##, ByVal ParamArray v() As ##TYPE##) As ##TYPE##
+		Dim r As ##TYPE## = max(f, s)
+        If Not isemptyarray(v) Then
+            For i As UInt32 = 0 To array_size(v) - uint32_1
+                If v(i) > r Then
+                    r = v(i)
+                End If
+            Next
+        End If
+		Return r
+	End Function

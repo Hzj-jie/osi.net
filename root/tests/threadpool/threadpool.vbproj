@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>
+    </SchemaVersion>
+    <ProjectGuid>{BBDFA2BE-726F-4FC4-8004-F0900839A69F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>osi.tests.root.threadpool</RootNamespace>
+    <AssemblyName>osi.tests.root.threadpool</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Import Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="threadpool_case.vb" />
+    <Compile Include="threadpool_perf.vb" />
+    <Compile Include="threadpool_test.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\connector\connector.vbproj">
+      <Project>{37EC873B-1EA8-449D-AC58-75A2F26FE5EA}</Project>
+      <Name>connector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\constants\constants.vbproj">
+      <Project>{F251286B-8EE9-4292-B117-1630D5F93B37}</Project>
+      <Name>constants</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\delegates\delegates.vbproj">
+      <Project>{B2A4A210-3AD5-41CA-A650-CE8C86BF1FFC}</Project>
+      <Name>delegates</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\envs\envs.vbproj">
+      <Project>{D310BA86-0FA6-42BB-8EFD-2DEE526E6981}</Project>
+      <Name>envs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\formation\formation.vbproj">
+      <Project>{DA3051DC-A250-488F-AACA-F46977DD0F17}</Project>
+      <Name>formation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lock\lock.vbproj">
+      <Project>{5BB4ADDE-7C12-4221-AE69-C669255C931E}</Project>
+      <Name>lock</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\threadpool\threadpool.vbproj">
+      <Project>{48F338B3-6AB8-4C0C-AD83-20FA9B9B01DE}</Project>
+      <Name>threadpool</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\utils\utils.vbproj">
+      <Project>{066119D7-850D-4191-B7AF-5294A941B8C2}</Project>
+      <Name>utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\utt\utt.vbproj">
+      <Project>{C56C84B9-F739-4BAF-8795-FC7CAA6CC549}</Project>
+      <Name>utt</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(TargetDir)\$(TargetName).*" "$(ProjectDir)\..\..\utt\$(OutDir)" /y</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

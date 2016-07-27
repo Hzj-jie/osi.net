@@ -1,0 +1,38 @@
+﻿
+# comment
+# lines start with # are considered as comment lines, which will be ignored.
+
+# surely, empty lines are also ignored
+
+# include another rule file
+INCLUDE some-other-rules-files
+
+# define characters
+# CHAR [],**?!-\
+# default value is [],**?!-\
+# define characters will implictly call CLEAR_DEFINE, since macros needs a characters instance as parameter
+
+# define mode
+# accepted types are first_defined greedy multipath
+# default value is, type_choice = first_defined, word_choice = greedy
+# MODE type_choice first_defined
+# MODE word_choice greedy
+
+# clear existing macros
+# CLEAR_DEFINE
+# otherwise default macros will be included
+
+# define a macro
+DEFINE lw a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+
+# clear existing words
+# CLEAR_WORD
+
+# define a word
+if-clause if
+else-clause else
+name [\d]-[\w,\d,_]*
+# any undefined macro will be ignored, and consider as normal string
+# say
+what-is-this \IDONTKNOW
+

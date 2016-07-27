@@ -1,0 +1,15 @@
+﻿
+##INCLUDE iterator.imports.vbp
+
+Public Module _mapheap_iterator
+##DEFINE PARENT_CLASS mapheap(Of mapKey, heapKey)
+##DEFINE TEMPLATE_TYPE (Of mapKey As IComparable(Of mapKey), heapKey As IComparable(Of heapKey))
+##INCLUDE iterator.ext.vbp
+End Module
+
+Partial Public Class mapheap(Of mapKey As IComparable(Of mapKey), heapKey As IComparable(Of heapKey))
+    Public Class iterator
+##DEFINE TYPE pair(Of heapKey, mapKey)
+##INCLUDE static_iterator.vbp
+    End Class
+End Class

@@ -1,0 +1,6 @@
+﻿
+##DEFINE OPERATOR Mod
+##DEFINE CLASS_TYPE uint_modulo
+##DEFINE TYPE UInt32
+##DEFINE RND rnd_uint()
+##INCLUDE operator_perf.vbp

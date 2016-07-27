@@ -1,0 +1,90 @@
+﻿
+    Public Shared Shadows Function disposer(ByVal rcec As ##TYPE##,
+                                            ByRef r As disposer(Of ##TYPE##)) As Boolean
+        If rcec Is Nothing Then
+            Return False
+        Else
+            rcec.bind()
+            r = make_disposer(rcec,
+                              disposer:=Sub(ad)
+                                            rcec.release()
+                                        End Sub)
+            Return True
+        End If
+    End Function
+
+    Public Shared Shadows Function disposer(ByVal rcec As ##TYPE##) _
+                                           As disposer(Of ##TYPE##)
+        Dim r As disposer(Of ##TYPE##) = Nothing
+        assert(disposer(rcec, r))
+        Return r
+    End Function
+
+    Public Shared Shadows Function ctor(ByVal work As Func(Of event_comb),
+                                        ByRef r As ##TYPE##) As Boolean
+        Return ctor(Nothing, work, Nothing, r)
+    End Function
+
+    Public Shared Shadows Function ctor(ByVal work As Func(Of event_comb)) As ##TYPE##
+        Dim r As ##TYPE## = Nothing
+        assert(ctor(work, r))
+        Return r
+    End Function
+
+    Public Shared Shadows Function ctor(ByVal init As Func(Of event_comb),
+                                        ByVal work As Func(Of event_comb),
+                                        ByVal final As Func(Of event_comb),
+                                        ByRef r As ##TYPE##) As Boolean
+        If work Is Nothing Then
+            Return False
+        Else
+            r = New ##TYPE##(init, work, final)
+            Return True
+        End If
+    End Function
+
+    Public Shared Shadows Function ctor(ByVal init As Func(Of event_comb),
+                                        ByVal work As Func(Of event_comb),
+                                        ByVal final As Func(Of event_comb)) As ##TYPE##
+        Dim r As ##TYPE## = Nothing
+        assert(ctor(init, work, final, r))
+        Return r
+    End Function
+
+    Public Shared Shadows Function ctor(ByVal work As Func(Of Boolean),
+                                        ByVal interval_ms As Int64,
+                                        ByRef r As ##TYPE##) As Boolean
+        If work Is Nothing Then
+            Return False
+        Else
+            Return ctor(Function() sync_async(Function() If(work(), True, waitfor(interval_ms))),
+                        r)
+        End If
+    End Function
+
+    Public Shared Shadows Function ctor(ByVal work As Func(Of Boolean),
+                                        ByVal interval_ms As Int64) As ##TYPE##
+        Dim r As ##TYPE## = Nothing
+        assert(ctor(work, interval_ms, r))
+        Return r
+    End Function
+
+    Public Shared Shadows Function ctor(ByVal work As Action,
+                                        ByRef r As ##TYPE##) As Boolean
+        If work Is Nothing Then
+            Return False
+        Else
+            Return ctor(Function() As Boolean
+                            work()
+                            Return True
+                        End Function,
+                        npos,
+                        r)
+        End If
+    End Function
+
+    Public Shared Shadows Function ctor(ByVal work As Action) As ##TYPE##
+        Dim r As ##TYPE## = Nothing
+        assert(ctor(work, r))
+        Return r
+    End Function

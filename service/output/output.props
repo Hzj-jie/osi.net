@@ -1,0 +1,13 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <OutputProps>true</OutputProps>
+  </PropertyGroup>
+  <Import Project="output.dep" />
+  <ItemGroup>
+    <Reference Include="osi.service.output">
+      <HintPath>$(ServicePath)\output\bin\$(Configuration)\osi.service.output.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

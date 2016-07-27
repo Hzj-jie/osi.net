@@ -1,0 +1,13 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <HttpProps>true</HttpProps>
+  </PropertyGroup>
+  <Import Project="http.dep" />
+  <ItemGroup>
+    <Reference Include="osi.service.http">
+      <HintPath>$(ServicePath)\http\bin\$(Configuration)\osi.service.http.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

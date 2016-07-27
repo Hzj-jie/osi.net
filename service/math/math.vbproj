@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>
+    </SchemaVersion>
+    <ProjectGuid>{5BF75D65-EF02-42C6-A6D3-7675EB39DF69}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>osi.service.math</RootNamespace>
+    <AssemblyName>osi.service.math</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Import Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="abs.vb" />
+    <Compile Include="big_int\big_int.assert.vb" />
+    <Compile Include="big_int\big_int.bit.vb" />
+    <Compile Include="big_int\big_int.calculation.vb" />
+    <Compile Include="big_int\big_int.cast.vb" />
+    <Compile Include="big_int\big_int.compare.vb" />
+    <Compile Include="big_int\big_int.constants.vb" />
+    <Compile Include="big_int\big_int.implement.vb" />
+    <Compile Include="big_int\big_int.operator.vb" />
+    <Compile Include="big_int\big_int.override.vb" />
+    <Compile Include="big_int\big_int.predefined.vb" />
+    <Compile Include="big_int\big_int.private.vb" />
+    <Compile Include="big_int\big_int.rnd.vb" />
+    <Compile Include="big_int\big_int.shift.vb" />
+    <Compile Include="big_int\big_int.str.vb" />
+    <Compile Include="big_int\big_int.vb" />
+    <Compile Include="big_uint\big_uint.adaptive_array.vb" />
+    <Compile Include="big_uint\big_uint.assert.vb" />
+    <Compile Include="big_uint\big_uint.bit.vb" />
+    <Compile Include="big_uint\big_uint.calculation.vb" />
+    <Compile Include="big_uint\big_uint.cast.vb" />
+    <Compile Include="big_uint\big_uint.compare.vb" />
+    <Compile Include="big_uint\big_uint.constants.vb" />
+    <Compile Include="big_uint\big_uint.implement.vb" />
+    <Compile Include="big_uint\big_uint.operator.vb" />
+    <Compile Include="big_uint\big_uint.override.vb" />
+    <Compile Include="big_uint\big_uint.predefined.vb" />
+    <Compile Include="big_uint\big_uint.private.vb" />
+    <Compile Include="big_uint\big_uint.rnd.vb" />
+    <Compile Include="big_uint\big_uint.shift.vb" />
+    <Compile Include="big_uint\big_uint.str.vb" />
+    <Compile Include="big_uint\big_uint.vb" />
+    <Compile Include="calculator\big_int_binary_calculator.vb" />
+    <Compile Include="calculator\big_uint_binary_calculator.vb" />
+    <Compile Include="calculator\calculator_error.vb" />
+    <Compile Include="calculator\ibinary_calculator.vb" />
+    <Compile Include="calculator\calculator.vb" />
+    <Compile Include="calculator\int_binary_calculator.vb" />
+    <Compile Include="calculator\calculator_predefined.vb" />
+    <Compile Include="calculator\ioutputter.vb" />
+    <Compile Include="calculator\iparser.vb" />
+    <Compile Include="calculator\uint_binary_calculator.vb" />
+    <Compile Include="exceptions.vb" />
+    <Compile Include="expression\basic_expression.vb" />
+    <Compile Include="expression\basic_expression_predefined.vb" />
+    <Compile Include="expression\expression.lex.vb" />
+    <Compile Include="expression\expression.parser.vb" />
+    <Compile Include="expression\expression.syntax.vb" />
+    <Compile Include="expression\expression_predefined.vb" />
+    <Compile Include="expression\expression_result.vb" />
+    <Compile Include="expression\expression.vb" />
+    <Compile Include="math.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="phi.vb" />
+    <Compile Include="prime.vb" />
+    <Compile Include="prime_divisors.vb" />
+    <Compile Include="relative_prime.vb" />
+    <Compile Include="unchecked\cast.vb" />
+    <Compile Include="unchecked\operators.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="calculator\codegen\binary_calculator.vbp" />
+    <None Include="calculator\codegen\int_binary_calculator.vbp" />
+    <None Include="calculator\codegen\run.cmd" />
+    <None Include="calculator\codegen\uint_binary_calculator.vbp" />
+    <None Include="math.dep" />
+    <None Include="math.props" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="expression\expression.syntax.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <Import Project="math.dep" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

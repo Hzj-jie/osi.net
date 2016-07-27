@@ -1,0 +1,48 @@
+﻿
+device_wrapper<T>
+
+configuration
+	[section]
+	wrapper=a,b,c (types)
+	wrapper_a_parameter1=...
+	wrapper_a_parameter2=...
+	wrapper_b_parameter1=...
+	wrapper_b_parameter2=...
+	wrapper_c_parameter1=...
+
+function-type
+	_do_val_val_ref<var, T, T, Boolean> as F
+
+type-based-wrappers
+	unique_strong_map<String, vector<F>>
+
+all-applied-wrappers
+	vector<F>
+
+order, type-based first, all-applied after
+-----------------------------------------------------
+
+device_constructor<T>
+
+configuration
+	[section]
+	type=type-name (type-based)
+	parameter1=...
+	parameter2=...
+	...
+	wrapper_parameters...
+
+function-type
+	allocator<T, var>
+	_do_val_ref<var, T, Boolean>
+
+type-based
+non-type-based <template based>
+
+order
+	resolve, wrap
+-----------------------------------------------------
+
+device_manager<T>
+
+unique_strong_map<String, T>

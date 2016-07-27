@@ -1,0 +1,14 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ChannelProps>true</ChannelProps>
+  </PropertyGroup>
+  <Import Project="channel.dep" />
+  <ItemGroup>
+    <Reference Include="osi.service.channel">
+      <HintPath>$(ServicePath)\channel\bin\$(Configuration)\osi.service.channel.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>
+

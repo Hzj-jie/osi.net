@@ -1,0 +1,40 @@
+﻿
+Whole memory space is separated into two parts,
+1. Instructions, readonly, contains only instructions
+2. Stack, data
+
+Registers
+-- RAEI(x), reset to x after each instruction
+-- RBNI, reset by next <similar or related> instruction
+-- WRITE_ONLY, this register can only be written by instructions. RAEI usually means WRITE_ONLY.
+-- READ_ONLY, this register can only be read by instructions.
+1. Instruction Pointer, IP, uint64, the location of current instruction. It is increased by 1 after each instruction,
+   if no DNAIP set. But some instructions, such as jump, can change its value.
+2. Carry Over, CO, boolean, RBNI, last operation caused a carry over.
+3. Divided By Zero, DBZ, boolean, RBNI, last operation caused a divided by zero error.
+4. Imaginary Number, IN, boolean, RBNI, last operation casued an imaginary number error.
+5. Do not advance instruction pointer, WRITE_ONLY, boolean, RAEI(false), do not increase IP after this instruction.
+
+Data reference
+Data is always in stack, there are two ways to refer a data,
+1. Relative, offset to current stack top, say, rel1 means the one below stack top
+2. Absolute, position in stack, say, abs1 means the one above stack bottom
+Uses 64 bit signed int to represent a data reference, the last bit of a relative reference is 1, the first bit of an
+absolute reference is 0. Then the left 63 bits are the real offset, which could be positive or negative, i.e. right
+shift by 1.
+
+Data block
+Data block is to store constant data in binary, several commands, such as movc, can accept data block.
+The first character of a data block is type character, while in bytes format, the first byte is type byte.
+There are several formats of data block,
+1. Integer, i123, means 123 in integer. 4 bytes.
+2. Long, l123, means 123 in long, i.e. int64. 8 bytes.
+3. Double, d123.2, means 123.2 in double. 8 bytes.
+4. Boolean, b1, means true. 1 byte.
+5. Byte array, aABCDEF0123456789. Two characters represent one byte.
+6, C-escaped string, Eabcde\t\20. One character represents 1-3 bytes. i.e. utf-8. Note, lots of
+   characters are considered as separators in the string format of instructions, they should be escaped.
+7, string, sabc. One character represents 1-3 bytes. i.e. utf-8. No escape support.
+The bytes output is,
+[length(4)][bytes-array]
+The length is a uint32.

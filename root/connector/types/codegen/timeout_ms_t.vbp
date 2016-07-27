@@ -1,0 +1,11 @@
+﻿
+##DEFINE TYPE timeout_ms_t
+##DEFINE HAS_NPOS False
+##INCLUDE npos_uint64.vbp
+
+Partial Public Structure ##TYPE##
+    Public Function [until]() As Int64
+        'value() will call assert(Not npos())
+        Return nowadays.milliseconds() + value()
+    End Function
+End Structure

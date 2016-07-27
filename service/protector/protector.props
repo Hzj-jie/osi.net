@@ -1,0 +1,13 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProtectorProps>true</ProtectorProps>
+  </PropertyGroup>
+  <Import Project="protector.dep" />
+  <ItemGroup>
+    <Reference Include="osi.service.protector">
+      <HintPath>$(ServicePath)\protector\bin\$(Configuration)\osi.service.protector.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

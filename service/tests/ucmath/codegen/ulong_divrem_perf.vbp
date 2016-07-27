@@ -1,0 +1,6 @@
+﻿
+##DEFINE CLASS_TYPE ulong_divrem
+##DEFINE TYPE UInt64
+##DEFINE RND rnd_uint64()
+##DEFINE BINARY_OPERATOR r = r1 \ r2 : Dim f As ##TYPE## : f = r1 Mod r2
+##INCLUDE binary_operator_perf.vbp

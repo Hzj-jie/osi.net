@@ -1,0 +1,13 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <AutomataProps>true</AutomataProps>
+  </PropertyGroup>
+  <Import Project="automata.dep" />
+  <ItemGroup>
+    <Reference Include="osi.service.automata">
+      <HintPath>$(ServicePath)\automata\bin\$(Configuration)\osi.service.automata.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

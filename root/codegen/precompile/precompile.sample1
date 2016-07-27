@@ -1,0 +1,7 @@
+﻿
+##DEFINE SOME_TYPE System.Int
+##INCLUDE precompile.sample2
+##DEFINE SOME_TYPE System.Int64
+##INCLUDE precompile.sample2
+##UNDEF SOME_TYPE
+##INCLUDE precompile.sample2

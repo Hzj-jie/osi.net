@@ -1,0 +1,7 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\root\root.props" Condition="'$(RootProps)'==''" />
+  <Import Project="$(ServicePath)\convertor\convertor.props" Condition="'$(ConvertorProps)'==''" />
+  <Import Project="$(ServicePath)\dataprovider\dataprovider.props" Condition="'$(DataproviderProps)'==''" />
+  <Import Project="$(ServicePath)\cache\cache.props" Condition="'$(CacheProps)'==''" />
+</Project>

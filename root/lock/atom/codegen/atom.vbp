@@ -1,0 +1,5 @@
+﻿
+##DEFINE TYPE T
+##DEFINE NO_LOCK_CLASS_TYPE atom(Of T)
+##DEFINE BASE_TYPE atom(Of T, ##DEFAULT_LOCK##)
+##INCLUDE atom_body.vbp

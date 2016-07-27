@@ -1,0 +1,13 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <UdpProps>true</UdpProps>
+  </PropertyGroup>
+  <Import Project="udp.dep" />
+  <ItemGroup>
+    <Reference Include="osi.service.udp">
+      <HintPath>$(ServicePath)\udp\bin\$(Configuration)\osi.service.udp.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

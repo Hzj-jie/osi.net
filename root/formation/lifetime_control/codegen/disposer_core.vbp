@@ -1,0 +1,37 @@
+﻿
+##DEFAULT IMPLEMENT_DISPOSE True
+
+    Public Event dispose_exception(ByVal ex As Exception)
+    Private exp As singleentry
+
+    Private sub mark_and_dispose()
+        If exp.mark_in_use() Then
+            Try
+                do_dispose()
+            Catch ex As Exception
+                RaiseEvent dispose_exception(ex)
+            End Try
+        End If
+    End Sub
+
+    Public Function disposed() As Boolean
+        Return exp.in_use()
+    End Function
+
+    Public Sub dispose()
+        mark_and_dispose()
+#If ##IMPLEMENT_DISPOSE## Then
+        GC.SuppressFinalize(Me)
+#End If
+    End Sub
+
+    Public Sub queue_dispose()
+        k_queue_in_managed_threadpool(AddressOf mark_and_dispose)
+#If ##IMPLEMENT_DISPOSE## Then
+        GC.SuppressFinalize(Me)
+#End If
+    End Sub
+
+#If ##IMPLEMENT_DISPOSE## Then
+##INCLUDE disposer_dispose.vbp
+#End If

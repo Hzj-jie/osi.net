@@ -1,0 +1,14 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ChannelProps>true</ChannelProps>
+  </PropertyGroup>
+  <Import Project="compiler.dep" />
+  <ItemGroup>
+    <Reference Include="osi.service.compiler">
+      <HintPath>$(ServicePath)\compiler\bin\$(Configuration)\osi.service.compiler.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>
+

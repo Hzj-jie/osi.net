@@ -1,0 +1,13 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SecureProps>true</SecureProps>
+  </PropertyGroup>
+  <Import Project="secure.dep" />
+  <ItemGroup>
+    <Reference Include="osi.service.secure">
+      <HintPath>$(ServicePath)\secure\bin\$(Configuration)\osi.service.secure.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

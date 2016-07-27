@@ -1,0 +1,13 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <CacheProps>true</CacheProps>
+  </PropertyGroup>
+  <Import Project="cache.dep" />
+  <ItemGroup>
+    <Reference Include="osi.service.cache">
+      <HintPath>$(ServicePath)\cache\bin\$(Configuration)\osi.service.cache.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

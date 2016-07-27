@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{37EC873B-1EA8-449D-AC58-75A2F26FE5EA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>osi.root.connector</RootNamespace>
+    <AssemblyName>osi.root.connector</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Import Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="++--.vb" />
+    <Compile Include="1count.vb" />
+    <Compile Include="action_wrapper.vb" />
+    <Compile Include="alloc.vb" />
+    <Compile Include="array.ext.vb" />
+    <Compile Include="array.vb" />
+    <Compile Include="assert.vb" />
+    <Compile Include="binder.vb" />
+    <Compile Include="bit.vb" />
+    <Compile Include="bytes\byte.vb" />
+    <Compile Include="bytes\bytes_array.vb" />
+    <Compile Include="bytes\bytes_dependent_types.vb" />
+    <Compile Include="bytes\bytes_independent_types.vb" />
+    <Compile Include="character.vb" />
+    <Compile Include="choose.vb" />
+    <Compile Include="code_block.vb" />
+    <Compile Include="concurrency_runner.vb" />
+    <Compile Include="custom_attributes.vb" />
+    <Compile Include="default.vb" />
+    <Compile Include="error_handler\colorful_console_error_writer.vb" />
+    <Compile Include="delegate.vb" />
+    <Compile Include="delegate2.vb" />
+    <Compile Include="error_handler\error_event.vb" />
+    <Compile Include="error_handler\error_writer_ignore_types.vb" />
+    <Compile Include="file_system.vb" />
+    <Compile Include="compress.vb" />
+    <Compile Include="static_constructor.vb" />
+    <Compile Include="template\int64.vb" />
+    <Compile Include="template\to_uint32.vb" />
+    <Compile Include="time\high_res_ticks_retriever.vb" />
+    <Compile Include="collections.vb" />
+    <Compile Include="idisposable.vb" />
+    <Compile Include="intptr.vb" />
+    <Compile Include="time\low_res_ticks_retriever.vb" />
+    <Compile Include="math.vb" />
+    <Compile Include="memory_stream.vb" />
+    <Compile Include="net.vb" />
+    <Compile Include="one_off.vb" />
+    <Compile Include="operators.vb" />
+    <Compile Include="process_thread.vb" />
+    <Compile Include="error_handler\raise_error.vb" />
+    <Compile Include="string_utils\c_escape.vb" />
+    <Compile Include="string_utils\lcs.vb" />
+    <Compile Include="string_utils\char_detection.vb" />
+    <Compile Include="string_utils\safe_str.vb" />
+    <Compile Include="string_utils\strcontains.vb" />
+    <Compile Include="string_utils\stringbuilder.vb" />
+    <Compile Include="types\range_int.vb" />
+    <Compile Include="unchecked_int.ext.vb" />
+    <Compile Include="ref.vb" />
+    <None Include="bytes\codegen\bytes_dependent_types.vbp" />
+    <None Include="bytes\codegen\bytes_dependent_types_impl.vbp" />
+    <None Include="bytes\codegen\bytes_independent_types.vbp" />
+    <None Include="bytes\codegen\bytes_independent_types_impl.vbp" />
+    <None Include="bytes\codegen\run.cmd" />
+    <None Include="types\codegen\npos_uint_ctor.vbp" />
+    <None Include="types\codegen\positive_npos_uint.vbp" />
+    <None Include="types\codegen\positive_npos_uint32.vbp" />
+    <None Include="types\codegen\positive_npos_uint64.vbp" />
+    <None Include="types\codegen\positive_size_t.vbp" />
+    <None Include="types\codegen\positive_size_t_32.vbp" />
+    <None Include="types\codegen\positive_size_t_64.vbp" />
+    <None Include="types\codegen\size_t.vbp" />
+    <None Include="types\codegen\size_t_32.vbp" />
+    <None Include="types\codegen\timeout_ms_t.vbp" />
+    <None Include="types\codegen\retry_times_t.vbp" />
+    <Compile Include="string_utils\str_bool.vb" />
+    <Compile Include="types\npos_uint.vb" />
+    <Compile Include="types\npos_uint32.vb" />
+    <Compile Include="types\npos_uint64.vb" />
+    <Compile Include="types\positive_npos_uint.vb" />
+    <Compile Include="types\positive_npos_uint32.vb" />
+    <Compile Include="types\positive_npos_uint64.vb" />
+    <Compile Include="types\positive_size_t.vb" />
+    <Compile Include="types\positive_size_t_32.vb" />
+    <Compile Include="types\positive_size_t_64.vb" />
+    <Compile Include="types\rate_timeout.vb" />
+    <Compile Include="types\retry_times_t.vb" />
+    <Compile Include="types\transceive_timeout.vb" />
+    <Compile Include="types\size_t.vb" />
+    <Compile Include="types\size_t_32.vb" />
+    <Compile Include="types\size_t_64.vb" />
+    <Compile Include="types\timeout_ms_t.vb" />
+    <Compile Include="types\union_int.vb" />
+    <Compile Include="type_info.vb" />
+    <Compile Include="unchecked_int.vb" />
+    <Compile Include="console_key_info.vb" />
+    <Compile Include="console_key_info_mapping.vb" />
+    <Compile Include="control_c.vb" />
+    <Compile Include="encoding.vb" />
+    <Compile Include="enum.vb" />
+    <Compile Include="event.vb" />
+    <Compile Include="mono.vb" />
+    <Compile Include="time\nowadays.vb" />
+    <Compile Include="string_utils\c_str.vb" />
+    <Compile Include="string_utils\levenshtein.vb" />
+    <Compile Include="string_utils\simhash.vb" />
+    <Compile Include="string_utils\strsep.vb" />
+    <Compile Include="thread_static.vb" />
+    <Compile Include="thread_timing\process_boost.vb" />
+    <Compile Include="callstack.vb" />
+    <Compile Include="cast.vb" />
+    <Compile Include="compare.vb" />
+    <Compile Include="console.vb" />
+    <Compile Include="copy.vb" />
+    <Compile Include="debugger.vb" />
+    <Compile Include="debug_mode.vb" />
+    <Compile Include="error_handler\error_message.vb" />
+    <Compile Include="gc.vb" />
+    <Compile Include="inherit.vb" />
+    <Compile Include="istype.vb" />
+    <Compile Include="minmax.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="int_uint.vb" />
+    <Compile Include="rnd.vb" />
+    <Compile Include="shift.vb" />
+    <Compile Include="signing.vb" />
+    <Compile Include="sizeof.vb" />
+    <Compile Include="sleep.vb" />
+    <Compile Include="bytes\str_bytes.vb" />
+    <Compile Include="string_utils\strcat.vb" />
+    <Compile Include="string_utils\strcmp.vb" />
+    <Compile Include="string_utils\kick.vb" />
+    <Compile Include="string_utils\reverse.vb" />
+    <Compile Include="string_utils\strcount.vb" />
+    <Compile Include="string_utils\strindexof.vb" />
+    <Compile Include="string_utils\strlen.vb" />
+    <Compile Include="string_utils\strrplc.vb" />
+    <Compile Include="string_utils\substring.vb" />
+    <Compile Include="string_utils\upper_lower.vb" />
+    <Compile Include="exit.vb" />
+    <Compile Include="swap.vb" />
+    <Compile Include="text_writer.vb" />
+    <Compile Include="threadpool.vb" />
+    <Compile Include="thread_timing\thread_boost.vb" />
+    <Compile Include="thread_timing\thread_timing.vb" />
+    <Compile Include="time\time.vb" />
+    <Compile Include="unhandled_exception.vb" />
+    <Compile Include="unref.vb" />
+    <Compile Include="uri.vb" />
+    <None Include="types\codegen\size_t_64.vbp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="codegen\minmax.1.vbp" />
+    <None Include="codegen\minmax.vbp" />
+    <None Include="codegen\run.cmd" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="types\codegen\npos_uint.vbp" />
+    <None Include="types\codegen\npos_uint32.vbp" />
+    <None Include="types\codegen\npos_uint64.vbp" />
+    <None Include="types\codegen\run.cmd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\constants\constants.vbproj">
+      <Project>{f251286b-8ee9-4292-b117-1630d5f93b37}</Project>
+      <Name>constants</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\delegates\delegates.vbproj">
+      <Project>{b2a4a210-3ad5-41ca-a650-ce8c86bf1ffc}</Project>
+      <Name>delegates</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\template\template.vbproj">
+      <Project>{8ef461f7-2f05-42a3-b65b-8e644f992582}</Project>
+      <Name>template</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

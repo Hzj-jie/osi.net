@@ -1,0 +1,23 @@
+﻿
+##INCLUDE disposer_imports.vbp
+
+Public Class disposer
+    Implements IDisposable
+
+    Private ReadOnly _disposer As Action
+
+    Public Sub New(Optional ByVal disposer As Action = Nothing)
+        _disposer = disposer
+    End Sub
+
+    Protected Overridable Sub disposer()
+        assert(Not _disposer Is Nothing)
+        _disposer()
+    End Sub
+
+    Private Sub do_dispose()
+        disposer()
+    End Sub
+
+##INCLUDE disposer_core.vbp
+End Class

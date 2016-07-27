@@ -1,0 +1,4 @@
+﻿
+##DEFINE CLASS_TYPE uint
+##DEFINE TYPE UInt32
+##INCLUDE binary_calculator.vbp

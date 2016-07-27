@@ -1,0 +1,6 @@
+﻿
+##DEFINE OPERATOR \
+##DEFINE CLASS_TYPE uint_divide
+##DEFINE TYPE UInt32
+##DEFINE RND rnd_uint()
+##INCLUDE operator_perf.vbp

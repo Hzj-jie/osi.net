@@ -1,0 +1,3 @@
+﻿
+##DEFINE BINARY_OPERATOR r = r1 ##OPERATOR## r2
+##INCLUDE binary_operator_perf.vbp

@@ -1,0 +1,13 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <InterpreterProps>true</InterpreterProps>
+  </PropertyGroup>
+  <Import Project="interpreter.dep" />
+  <ItemGroup>
+    <Reference Include="osi.service.interpreter">
+      <HintPath>$(ServicePath)\interpreter\bin\$(Configuration)\osi.service.interpreter.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

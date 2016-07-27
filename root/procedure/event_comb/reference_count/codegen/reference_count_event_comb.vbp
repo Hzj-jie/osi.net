@@ -1,0 +1,33 @@
+﻿
+Imports osi.root.constants
+Imports osi.root.connector
+Imports osi.root.envs
+Imports osi.root.utils
+Imports osi.root.delegates
+Imports osi.root.formation
+Imports osi.root.lock
+Imports lock_t = osi.root.lock.slimlock.monitorlock
+
+#Const START_AFTER_TRIGGER = True
+#If START_AFTER_TRIGGER Then
+Imports impl_type = osi.root.procedure.reference_count_event_comb_1
+#Else
+Imports impl_type = osi.root.procedure.reference_count_event_comb_2
+#End If
+
+Public Class reference_count_event_comb
+    Inherits impl_type
+
+    Protected Sub New(ByVal init As Func(Of event_comb),
+                      ByVal work As Func(Of event_comb),
+                      ByVal final As Func(Of event_comb))
+        MyBase.New(init, work, final)
+    End Sub
+
+    Protected Sub New()
+        MyBase.New()
+    End Sub
+
+##DEFINE TYPE reference_count_event_comb
+##INCLUDE ctors.vbp
+End Class

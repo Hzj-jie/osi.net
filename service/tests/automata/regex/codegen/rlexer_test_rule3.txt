@@ -1,0 +1,28 @@
+﻿
+if-clause not-if
+else-clause not-else
+start-paragraph --{
+end-paragraph --}
+
+MODE type_choice multipath
+MODE word_choice multipath
+
+MODE type_choice first_defined
+MODE word_choice greedy
+
+DEFINE vowel a,e,i,o,u
+DEFINE consonant b,c,d,f,g,h,j,k,l,m,n,p,q,r,s,t,v,w,x,y,z
+
+CLEAR_WORD
+
+if-clause if
+else-clause else
+start-paragraph {
+end-paragraph }
+name [\d]-[\w,\d,_]+
+equal =
+start-bracket (
+end-bracket )
+number [+,-]?[\d]+
+semi-colon ;
+blank [\b]

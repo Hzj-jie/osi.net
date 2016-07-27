@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>
+    </SchemaVersion>
+    <ProjectGuid>{43A71AF7-394D-4E92-880E-A35347205DEB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>osi.service.interpreter</RootNamespace>
+    <AssemblyName>osi.service.interpreter</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="fullstack\executor\exceptions.vb" />
+    <Compile Include="fullstack\executor\expression.vb" />
+    <Compile Include="fullstack\executor\functions\interpret_function.vb" />
+    <Compile Include="fullstack\executor\functions\rnd_functions.vb" />
+    <Compile Include="fullstack\executor\memory\domain.vb" />
+    <Compile Include="fullstack\executor\memory\location.vb" />
+    <Compile Include="fullstack\executor\memory\variables.vb" />
+    <Compile Include="fullstack\executor\sentences\assignment.vb" />
+    <Compile Include="fullstack\executor\sentences\break.vb" />
+    <Compile Include="fullstack\executor\sentences\condition.vb" />
+    <Compile Include="fullstack\executor\sentences\definition.vb" />
+    <Compile Include="fullstack\executor\sentences\for_loop.vb" />
+    <Compile Include="fullstack\executor\sentences\function.vb" />
+    <Compile Include="fullstack\executor\sentences\paragraph.vb" />
+    <Compile Include="fullstack\executor\sentences\return.vb" />
+    <Compile Include="fullstack\executor\sentences\sentence.vb" />
+    <Compile Include="fullstack\executor\sentences\while_loop.vb" />
+    <Compile Include="fullstack\executor\variable.vb" />
+    <Compile Include="fullstack\instruction\block.vb" />
+    <Compile Include="fullstack\instruction\compare.vb" />
+    <Compile Include="fullstack\instruction\instruction.vb" />
+    <Compile Include="fullstack\instruction\operator.vb" />
+    <Compile Include="fullstack\instruction\variable.vb" />
+    <Compile Include="fullstack\parser\functions.vb" />
+    <Compile Include="fullstack\parser\syntax_stack.vb" />
+    <Compile Include="fullstack\parser\types.vb" />
+    <Compile Include="fullstack\syntax\app.vb" />
+    <Compile Include="fullstack\syntax\definition.vb" />
+    <Compile Include="fullstack\syntax\domain.vb" />
+    <Compile Include="fullstack\syntax\expression.vb" />
+    <Compile Include="fullstack\syntax\variable.vb" />
+    <Compile Include="fullstack\type.vb" />
+    <Compile Include="primitive\commands.enum.vb" />
+    <Compile Include="primitive\commands.vb" />
+    <Compile Include="primitive\console_io.vb" />
+    <Compile Include="primitive\data_block.vb" />
+    <Compile Include="primitive\data_ref.vb" />
+    <Compile Include="primitive\extern_functions.vb" />
+    <Compile Include="primitive\instructions.execute.vb" />
+    <Compile Include="primitive\instructions.vb" />
+    <Compile Include="primitive\instruction_wrapper.import.bytes.vb" />
+    <Compile Include="primitive\instruction_wrapper.import.str.vb" />
+    <Compile Include="primitive\instruction_wrapper.vb" />
+    <Compile Include="primitive\interfaces\imitation.vb" />
+    <Compile Include="primitive\interfaces\executor.vb" />
+    <Compile Include="primitive\interfaces\exportable.vb" />
+    <Compile Include="primitive\interfaces\instruction.vb" />
+    <Compile Include="primitive\simulator.vb" />
+    <Compile Include="turing\executor\call.vb" />
+    <Compile Include="turing\executor\clear.vb" />
+    <Compile Include="turing\executor\end.vb" />
+    <Compile Include="turing\executor\interrupter.vb" />
+    <Compile Include="turing\executor\functions\arithmetic.vb" />
+    <Compile Include="turing\executor\functions\compare.vb" />
+    <Compile Include="turing\executor\goto.vb" />
+    <Compile Include="turing\executor\goto_if.vb" />
+    <Compile Include="turing\executor\instruction.vb" />
+    <Compile Include="turing\executor\location.vb" />
+    <Compile Include="turing\executor\pop.vb" />
+    <Compile Include="turing\executor\processor.vb" />
+    <Compile Include="turing\executor\push.vb" />
+    <Compile Include="turing\executor\set.vb" />
+    <Compile Include="turing\executor\variable.vb" />
+    <Compile Include="turing\operator.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="turing\type.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="interpreter.dep" />
+    <None Include="interpreter.props" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="primitive\codegen\run.cmd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="primitive\codegen\commands-parser.cs" />
+    <Content Include="primitive\codegen\commands-parser.exe" />
+    <Content Include="primitive\commands.txt" />
+    <Content Include="primitive\design.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <Import Project="interpreter.dep" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

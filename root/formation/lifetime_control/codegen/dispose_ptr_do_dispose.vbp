@@ -1,0 +1,4 @@
+﻿
+        If Not empty() Then
+            dispose([get]())
+        End If

@@ -1,0 +1,29 @@
+﻿
+default_separators -------------
+	use ignore
+method_type --------------------
+	class_assembly_qualified_name
+key_words ----------------------
+	type_name1	string1	string2	string3	...
+	type_name2	string4	string5	string6	...
+	type_name3	string7	string8	string9	...
+	-type_name4	string10	string11	...
+transitions ---------------------
+	status1	type_name1	status2	action1
+	status2	type_name2	status3	action2
+	status3	type_name3	status4
+
+#COMMENTS
+#   a line starts with # is a comment line, which will be ignored during parsing
+#   and empty lines are also ignored
+#1. a line without a \t or a ' ' <blank> as the first character is considering as the section name
+#2. the separator between two elements is \t
+#3. support \r \n \t \0, etc, c-style escape
+#4. separator / unknown / end are preserved as the separator type, unknown type and end type
+#5. if the first character of type name is '-', minus signal, the type will be ignored in the lexing stage,
+#   such as separators
+#6. a key words type can be defined in several lines, but the last ignore mask will take effect
+#7. start / end statuses are preserved as the start and end status,
+#   for other stauts, a self-incremental integer will be it's status id in the dfa
+#8. do not allow to define a transition from a status to another status with different transition variables <type name>, i.e. it's a dfa
+#9. also do not allow to redefine a duplicate transition, it's the implementation constraint

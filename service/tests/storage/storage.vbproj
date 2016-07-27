@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>
+    </SchemaVersion>
+    <ProjectGuid>{07C9CC3A-9863-4679-B2A4-82763D96E3A2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>osi.tests.service.storage</RootNamespace>
+    <AssemblyName>osi.tests.service.storage</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Import Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="cached_ikeyvalue_test.vb" />
+    <Compile Include="cases\fs_case.vb" />
+    <Compile Include="cases\istrkeyvt_case3.vb" />
+    <Compile Include="cases\istrkeyvt_random_data.vb" />
+    <Compile Include="fces_ondisk_test.vb" />
+    <Compile Include="fces_test.vb" />
+    <Compile Include="file_index_test.vb" />
+    <Compile Include="file_key_test.vb" />
+    <Compile Include="free_cluster_test.vb" />
+    <Compile Include="fs_test.vb" />
+    <Compile Include="hash_distributor_test.vb" />
+    <Compile Include="ikeyvalue2_ikeyvalue_test.vb" />
+    <Compile Include="ikeyvt2_ikeyvt_false_test.vb" />
+    <Compile Include="cases\istrkeyvt_case.vb" />
+    <Compile Include="cases\istrkeyvt_case2.vb" />
+    <Compile Include="cases\istrkeyvt_perf_case.vb" />
+    <Compile Include="istrkeyvt_test.vb" />
+    <Compile Include="isynckeyvalue2_isynckeyvalue_test.vb" />
+    <Compile Include="redundance_distributor_test.vb" />
+    <Compile Include="remote_istrkeyvt_test.vb" />
+    <Compile Include="sider_test.vb" />
+    <Compile Include="temp_drive_istrkeyvt_case.vb" />
+    <Compile Include="virtdisk_perf.vb" />
+    <Compile Include="virtdisk_ps_test.vb" />
+    <Compile Include="virtdisk_test.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <Import Project="..\..\..\root\root.utt.props" Condition="'$(RootUttProps)'==''" />
+  <Import Project="$(ServicePath)\storage\storage.props" Condition="'$(StorageProps)'==''" />
+  <Import Project="$(ServicePath)\http\http.props" Condition="'$(HttpProps)'==''" />
+  <Import Project="$(ServicePath)\tcp\tcp.props" Condition="'$(TcpProps)'==''" />
+  <Import Project="$(ServicePath)\argument\argument.props" Condition="'$(ArgumentProps)'==''" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

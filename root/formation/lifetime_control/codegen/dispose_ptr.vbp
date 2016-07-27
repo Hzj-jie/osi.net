@@ -1,0 +1,52 @@
+﻿
+##DEFAULT CLASS_NAME dispose_ptr
+##DEFAULT BASE_NAME pointer
+##DEFAULT DO_DISPOSE_IMPL dispose_ptr_do_dispose.vbp
+
+##INCLUDE disposer_imports.vbp
+
+Public Class ##CLASS_NAME##(Of T)
+    Inherits ##BASE_NAME##(Of T)
+    
+    Private ReadOnly _disposer As Action(Of T)
+
+    Public Sub New(ByVal p As Func(Of T),
+                   Optional ByVal init As Action = Nothing,
+                   Optional ByVal disposer As Action(Of T) = Nothing)
+        If Not init Is Nothing Then
+            init()
+        End If
+        If Not p Is Nothing Then
+            [set](p())
+        End If
+        If disposer Is Nothing Then
+            assert(Not [default](Of T).disposer() Is Nothing)
+            Me._disposer = [default](Of T).disposer()
+        Else
+            Me._disposer = disposer
+        End If
+    End Sub
+
+    Public Sub New(ByVal p As T,
+                   Optional ByVal init As Action = Nothing,
+                   Optional ByVal disposer As Action(Of T) = Nothing)
+        Me.New(Function() p, init, disposer)
+    End Sub
+
+    Public Sub New(Optional ByVal init As Action = Nothing,
+                   Optional ByVal disposer As Action(Of T) = Nothing)
+        Me.New(DirectCast(Nothing, Func(Of T)), init, disposer)
+    End Sub
+
+    Protected Overridable Sub dispose(ByVal c As T)
+        assert(Not _disposer Is Nothing)
+        _disposer(c)
+    End Sub
+
+    Private Sub do_dispose()
+##INCLUDE ##DO_DISPOSE_IMPL##
+    End Sub
+
+##DEFINE IMPLEMENT_DISPOSE False
+##INCLUDE disposer_core.vbp
+End Class

@@ -1,0 +1,19 @@
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootUttProps>true</RootUttProps>
+  </PropertyGroup>
+  <Import Project="root.props" Condition="'$(RootProps)'==''" />
+  <ItemGroup>
+    <Reference Include="osi.root.utt">
+      <HintPath>$(RootPath)\utt\bin\$(Configuration)\osi.root.utt.exe</HintPath>
+      <Private>$(IsPrivate)</Private>
+    </Reference>
+  </ItemGroup>
+  <PropertyGroup>
+    <!--
+    <PostBuildEvent>copy "$(TargetDir)\$(TargetName).*" "$(RootPath)\utt\$(OutDir)" /y</PostBuildEvent>
+    -->
+    <PostBuildEvent>copy "$(TargetDir)\*.*" "$(RootPath)\utt\$(OutDir)" /y</PostBuildEvent>
+  </PropertyGroup>
+</Project>

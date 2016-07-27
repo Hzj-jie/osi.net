@@ -1,0 +1,48 @@
+﻿
+Imports System.Runtime.CompilerServices
+Imports osi.root.connector
+
+Public Module _to_string_shadower
+    <Extension()> Public Function to_string_shadower(Of T)(ByVal this As T) As to_string_shadower(Of T)
+        Return New to_string_shadower(Of T)(this)
+    End Function
+End Module
+
+Public Class to_string_shadower(Of T)
+    Implements IComparable(Of to_string_shadower(Of T)), IComparable, IComparable(Of T)
+
+    Private Shared ReadOnly type_name As String
+    Private ReadOnly x As T
+
+    Shared Sub New()
+        type_name = strcat("to_string_shadower(Of ", GetType(T).Name(), ")")
+    End Sub
+
+    Public Sub New(ByVal x As T)
+        Me.x = x
+    End Sub
+
+    Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
+        Return CompareTo(cast(Of to_string_shadower(Of T))(obj, False))
+    End Function
+
+    Public Function CompareTo(ByVal other As to_string_shadower(Of T)) As Int32 _
+                             Implements IComparable(Of to_string_shadower(Of T)).CompareTo
+        Dim cmp As Int32 = 0
+        cmp = object_compare(Me, other)
+        If cmp = object_compare_undetermined Then
+            assert(Not other Is Nothing)
+            Return compare(x, other.x)
+        Else
+            Return cmp
+        End If
+    End Function
+
+    Public Function CompareTo(ByVal other As T) As Int32 Implements IComparable(Of T).CompareTo
+        Return compare(x, other)
+    End Function
+
+    Public NotOverridable Overrides Function ToString() As String
+        Return type_name
+    End Function
+End Class

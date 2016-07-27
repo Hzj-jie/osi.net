@@ -1,0 +1,13 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ConvertorProps>true</ConvertorProps>
+  </PropertyGroup>
+  <Import Project="convertor.dep" />
+  <ItemGroup>
+    <Reference Include="osi.service.convertor">
+      <HintPath>$(ServicePath)\convertor\bin\$(Configuration)\osi.service.convertor.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

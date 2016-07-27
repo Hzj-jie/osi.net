@@ -1,0 +1,61 @@
+﻿
+Imports System.DateTime
+Imports osi.root.formation
+Imports osi.root.envs
+Imports osi.root.connector
+Imports osi.root.utils
+Imports osi.root.threadpool
+Imports osi.root.constants.utt
+Imports osi.root.procedure
+
+Public Module _app
+    Public Sub main(ByVal args() As String)
+        debugpause()
+        global_init.execute()
+        Dim start_ms As Int64 = 0
+        start_ms = Now().milliseconds()
+        assert_true(using_default_ithreadpool())
+        If envs.utt_no_assert Then
+            error_writer_ignore_types(Of file_error_writer).ignore(errortype_char)
+        End If
+        commandline.initialize(args)
+
+        Dim run_case_count As Int32 = 0
+        If Not selfhealth.run() Then
+            failed("selfhealth failure")
+        Else
+            raise_error("selfhealth pass")
+            run_case_count = host.run(commandline.args())
+        End If
+
+        'make sure the Finalize called before output overall failure_count
+        host.cases.clear()
+        For i As Int32 = 0 To 7
+            waitfor_gc_collect()
+        Next
+
+        debugpause()
+
+        assert_equal(counter.instance_count_counter(Of event_comb).count(), 0)
+        'counter.backend_writer
+        assert_less_or_equal(queue_runner.size(), 1)
+        assert_true(suppress.init_state())
+        assert_true(using_default_ithreadpool())
+        assert_less_or_equal(private_bytes_usage(), 128 * 1024 * 1024)
+        If failure_count() > 0 Then
+            failed("failure count = ", failure_count())
+        Else
+            raise_error("finish running all the selected cases, all succeeded")
+        End If
+        raise_error("finish running all the selected ",
+                    run_case_count,
+                    " cases, total used time in milliseconds ",
+                    Now().milliseconds() - start_ms,
+                    ", total processor time in milliseconds ",
+                    total_processor_time_ms(),
+                    ", average processor usage percentage ",
+                    processor_usage())
+
+        [exit]()
+    End Sub
+End Module

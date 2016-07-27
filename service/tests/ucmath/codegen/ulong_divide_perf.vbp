@@ -1,0 +1,6 @@
+﻿
+##DEFINE OPERATOR \
+##DEFINE CLASS_TYPE ulong_divide
+##DEFINE TYPE UInt64
+##DEFINE RND rnd_uint64()
+##INCLUDE operator_perf.vbp

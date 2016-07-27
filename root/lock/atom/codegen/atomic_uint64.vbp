@@ -1,0 +1,3 @@
+﻿
+##DEFINE NAME uint64
+##INCLUDE atomic_ulong.vbp

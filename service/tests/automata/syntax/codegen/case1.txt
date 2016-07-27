@@ -1,0 +1,78 @@
+﻿
+string func1(string x,  string  y) {
+    if (strcmp(x, "abc") == 0) {
+		return x;
+	} else {
+		return y;
+	}
+}
+
+int blabla(int start, int end)
+{
+    int x;
+	int y;
+	x = 100;
+	y=1.1;
+}
+
+int max(int a, int b)
+{
+	if (a > b) return a;
+	else return b;
+}
+
+
+int max(int a, int b, int c)
+{
+	if (a > b)
+	{
+		if(a > c)
+		{
+			return a;
+		} else
+		{
+			return c;
+		}
+	}
+	else
+	{
+		if (b>c)
+			return b;
+		else return c;
+	}
+}
+
+
+int max(int a, int b, int c, int d)
+{
+	return max(max(a,b,c),d);
+}
+
+
+int blabla2()
+{
+	return max(1, 2, 3.3, 1991919);
+}
+
+int case_insensitive_compare(string a, string b)
+{
+    return strcasecmp(a, b);
+}
+
+int main()
+{
+	func1(1.1, -1.23, +1.32992);
+	if (1.1 > -1.1)
+	{
+	    printf("%llf", 1.1);
+	} else printf("%llf", -1.1);
+}
+
+double func1(int x, int y, double z)
+{
+	if (x <= 1.11) {
+		if (y < 2.22) {
+			if (z >= 2.23) return z;
+		} else return 2.322;
+	} else { return 1.11;}
+}

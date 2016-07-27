@@ -1,0 +1,62 @@
+﻿
+default_separators ----------
+	use	ignore
+key_words -------------------
+	left_bracket	{	[	(
+	right_bracket	}	]	)
+	plus			+
+	minus			-
+	other_operator	/	==	/_	<<	<	<=	%	>	>=	*	<>	!=	^	>>
+	base_separator	|
+	output			.
+transitions -----------------
+	start			left_bracket	start	pass_left_bracket
+	start			plus			positive
+	start			minus			negative
+	start			unknown			number
+	number			base_separator	base_separator
+	base_separator	unknown			number_with_base
+	positive		unknown			number
+	negative		unknown			neg_number
+	neg_number		base_separator	neg_base_separator
+	neg_base_separator	unknown		neg_number_with_base
+	
+	number					plus			start		number_op
+	neg_number				plus			start		neg_number_op
+	number_with_base		plus			start		number_with_base_op
+	neg_number_with_base	plus			start		neg_number_with_base_op
+	number					minus			start		number_op
+	neg_number				minus			start		neg_number_op
+	number_with_base		minus			start		number_with_base_op
+	neg_number_with_base	minus			start		neg_number_with_base_op
+	number					other_operator	start		number_op
+	neg_number				other_operator	start		neg_number_op
+	number_with_base		other_operator	start		number_with_base_op
+	neg_number_with_base	other_operator	start		neg_number_with_base_op
+
+	number					right_bracket	pnumber		number_pass_right_bracket
+	pnumber					right_bracket	pnumber		pass_right_bracket
+	neg_number				right_bracket	pnumber		neg_number_pass_right_bracket
+	number_with_base		right_bracket	pnumber		number_with_base_pass_right_bracket
+	neg_number_with_base	right_bracket	pnumber		neg_number_with_base_pass_right_bracket
+
+	pnumber					plus			start		op
+	pnumber					minus			start		op
+	pnumber					other_operator	start		op
+
+	number					end				end			number_end
+	neg_number				end				end			neg_number_end
+	number_with_base		end				end			number_with_base_end
+	neg_number_with_base	end				end			neg_number_with_base_end
+	pnumber					end				end			pnumber_end
+
+	number					output			output		parse_number
+	neg_number				output			output		parse_neg_number
+	number_with_base		output			output		parse_number_with_base
+	neg_number_with_base	output			output		parse_neg_number_with_base
+	pnumber					output			output
+
+	output					base_separator	output_base_separator
+	output_base_separator	unknown			output_with_base			output_with_base
+	output_with_base		end				end
+	output					end				end							output

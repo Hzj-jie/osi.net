@@ -1,0 +1,4 @@
+﻿
+##DEFAULT TYPE size_t
+##DEFINE HAS_INF False
+##INCLUDE npos_uint32.vbp

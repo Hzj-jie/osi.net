@@ -1,0 +1,35 @@
+﻿
+MODE type_choice greedy
+
+KW-if if
+KW-else else
+KW-for for
+KW-while while
+KW-do do
+KW-loop loop
+KW-return return
+
+blank [\b]+
+bool [true,false]
+
+less-than <
+great-than >
+less-or-equal <=
+great-or-equal >=
+equal ==
+assignment =
+comma ,
+colon :
+question-mark ?
+start-paragraph {
+end-paragraph }
+start-bracket (
+end-bracket )
+start-square-bracket \[
+end-square-bracket ]
+semi-colon ;
+
+string "["]!*"
+float [+,-]?[\d]+.[\d]+
+integer [+,-]?[\d]+
+name [\d]-[\w,\d,_]+

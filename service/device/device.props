@@ -1,0 +1,13 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <DeviceProps>true</DeviceProps>
+  </PropertyGroup>
+  <Import Project="device.dep" />
+  <ItemGroup>
+    <Reference Include="osi.service.device">
+      <HintPath>$(ServicePath)\device\bin\$(Configuration)\osi.service.device.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

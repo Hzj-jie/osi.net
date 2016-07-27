@@ -1,0 +1,9 @@
+﻿
+##DEFAULT TYPE npos_uint64
+##DEFINE SIGNED_TYPE Int64
+##DEFINE CAST CULng
+##DEFINE ZERO uint64_0
+##DEFINE MAX max_uint64
+##DEFINE TO_BYTES uint64_bytes
+##DEFINE FROM_BYTES bytes_uint64
+##INCLUDE npos_uint.vbp

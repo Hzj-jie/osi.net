@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>
+    </SchemaVersion>
+    <ProjectGuid>{7DC8AA60-7E17-4023-A9A8-496CD0D072F1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>osi.tests.service.device</RootNamespace>
+    <AssemblyName>osi.tests.service.device</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Import Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="async_getter_device_test.vb" />
+    <Compile Include="auto_device_exporter_async_adapter_test.vb" />
+    <Compile Include="auto_device_exporter_iasync_device_test.vb" />
+    <Compile Include="auto_pre_generated_device_pool_test.vb" />
+    <Compile Include="block_flow_adapter_test.vb" />
+    <Compile Include="complete_io_test.vb" />
+    <Compile Include="complete_io_test2.vb" />
+    <Compile Include="datagram_flow_adapter_test.vb" />
+    <Compile Include="delay_generate_device_pool_test.vb" />
+    <Compile Include="auto_device_exporter_idevice_test.vb" />
+    <Compile Include="device_pool_checker_test.vb" />
+    <Compile Include="manual_device_exporter_adapter_test.vb" />
+    <Compile Include="manual_device_exporter_test.vb" />
+    <Compile Include="device_test.vb" />
+    <Compile Include="flow_block_adapter_test.vb" />
+    <Compile Include="flow_block_adapter_test2.vb" />
+    <Compile Include="flow_datagram_adapter_test.vb" />
+    <Compile Include="manual_pre_generated_device_pool_test2.vb" />
+    <Compile Include="manual_pre_generated_device_pool_test3.vb" />
+    <Compile Include="mock\async_getter_mock_dev_device.vb" />
+    <Compile Include="mock\mock_creator.vb" />
+    <Compile Include="mock\mock_device_async_creator.vb" />
+    <Compile Include="mock\mock_device_creator.vb" />
+    <Compile Include="mock\mock_block_dev.vb" />
+    <Compile Include="mock\mock_dev_manual_device_exporter.vb" />
+    <Compile Include="mock\mock_stream.vb" />
+    <Compile Include="device_pool_test.vb" />
+    <Compile Include="registry_test.vb" />
+    <Compile Include="secondary_resolve_test.vb" />
+    <Compile Include="constructor_test.vb" />
+    <Compile Include="constructor_wrapper_test.vb" />
+    <Compile Include="wrapper_test.vb" />
+    <Compile Include="manual_pre_generated_device_pool_test.vb" />
+    <Compile Include="mock\mock_dev.vb" />
+    <Compile Include="mock\mock_dev_int.vb" />
+    <Compile Include="mock\mock_dev_T.vb" />
+    <Compile Include="mock\mock_flow_dev.vb" />
+    <Compile Include="mock_dev_int_test.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="one_off_device_pool_test.vb" />
+    <Compile Include="singleton_device_pool_test.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <Import Project="..\..\..\root\root.utt.props" Condition="'$(RootUttProps)'==''" />
+  <Import Project="$(ServicePath)\device\device.props" Condition="'$(DeviceProps)'==''" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

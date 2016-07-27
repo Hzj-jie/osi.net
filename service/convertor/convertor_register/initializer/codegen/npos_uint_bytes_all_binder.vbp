@@ -1,0 +1,68 @@
+﻿
+Imports osi.root.connector
+Imports osi.root.constants
+
+##DEFINE TYPE npos_uint
+##INCLUDE npos_uint_bytes_binder.vbp
+
+##DEFINE TYPE npos_uint32
+##INCLUDE npos_uint_bytes_binder.vbp
+
+##DEFINE TYPE npos_uint64
+##INCLUDE npos_uint_bytes_binder.vbp
+
+##DEFINE TYPE positive_npos_uint
+##INCLUDE npos_uint_bytes_binder.vbp
+
+##DEFINE TYPE positive_npos_uint32
+##INCLUDE npos_uint_bytes_binder.vbp
+
+##DEFINE TYPE positive_npos_uint64
+##INCLUDE npos_uint_bytes_binder.vbp
+
+##DEFINE TYPE positive_size_t
+##INCLUDE npos_uint_bytes_binder.vbp
+
+##DEFINE TYPE positive_size_t_32
+##INCLUDE npos_uint_bytes_binder.vbp
+
+##DEFINE TYPE positive_size_t_64
+##INCLUDE npos_uint_bytes_binder.vbp
+
+##DEFINE TYPE retry_times_t
+##INCLUDE npos_uint_bytes_binder.vbp
+
+##DEFINE TYPE size_t
+##INCLUDE npos_uint_bytes_binder.vbp
+
+##DEFINE TYPE size_t_32
+##INCLUDE npos_uint_bytes_binder.vbp
+
+##DEFINE TYPE size_t_64
+##INCLUDE npos_uint_bytes_binder.vbp
+
+##DEFINE TYPE timeout_ms_t
+##INCLUDE npos_uint_bytes_binder.vbp
+
+<global_init(global_init_level.services)>
+Friend Class npos_uint_bytes_all_binder_initializer
+    Shared Sub New()
+        npos_uint_bytes_binder.bind_npos_uint()
+        npos_uint_bytes_binder.bind_npos_uint32()
+        npos_uint_bytes_binder.bind_npos_uint64()
+        npos_uint_bytes_binder.bind_positive_npos_uint()
+        npos_uint_bytes_binder.bind_positive_npos_uint32()
+        npos_uint_bytes_binder.bind_positive_npos_uint64()
+        npos_uint_bytes_binder.bind_positive_size_t()
+        npos_uint_bytes_binder.bind_positive_size_t_32()
+        npos_uint_bytes_binder.bind_positive_size_t_64()
+        npos_uint_bytes_binder.bind_retry_times_t()
+        npos_uint_bytes_binder.bind_size_t()
+        npos_uint_bytes_binder.bind_size_t_32()
+        npos_uint_bytes_binder.bind_size_t_64()
+        npos_uint_bytes_binder.bind_timeout_ms_t()
+    End Sub
+
+    Private Shared Sub init()
+    End Sub
+End Class

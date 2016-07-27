@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>
+    </SchemaVersion>
+    <ProjectGuid>{FADBC20C-D0A1-44CB-A1EF-9B318EB15973}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>osi.service.storage</RootNamespace>
+    <AssemblyName>osi.service.storage</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Import Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="adapter\adapter.auto_heartbeat.vb" />
+    <Compile Include="adapter\adapter.cached.vb" />
+    <Compile Include="adapter\adapter.input_validation.vb" />
+    <Compile Include="adapter\adapter.stopable.vb" />
+    <Compile Include="adapter\adapter.vb" />
+    <Compile Include="adapter\adapter.interop.vb" />
+    <Compile Include="capinfo.vb" />
+    <Compile Include="configuration\configuration.vb" />
+    <Compile Include="configuration\preserved_disk_capacity.vb" />
+    <Compile Include="data_dir.vb" />
+    <Compile Include="free_cluster\cluster.constants.vb" />
+    <Compile Include="free_cluster\cluster.data.vb" />
+    <Compile Include="free_cluster\cluster.new.vb" />
+    <Compile Include="free_cluster\cluster.status.vb" />
+    <Compile Include="free_cluster\cluster.structure.vb" />
+    <Compile Include="free_cluster\cluster.vb" />
+    <Compile Include="free_cluster\fces.constants.vb" />
+    <Compile Include="free_cluster\fces.ctor.vb" />
+    <Compile Include="free_cluster\fces.implement.vb" />
+    <Compile Include="free_cluster\fces.vb" />
+    <Compile Include="free_cluster\free_cluster.cluster.vb" />
+    <Compile Include="free_cluster\free_cluster.data.vb" />
+    <Compile Include="free_cluster\free_cluster.vb" />
+    <Compile Include="fs\int\ifs.vb" />
+    <Compile Include="fs\int\inode.vb" />
+    <Compile Include="fs\int\iproperty.vb" />
+    <Compile Include="fs\istrkeyvt\istrkeyvt_fs.vb" />
+    <Compile Include="fs\istrkeyvt\istrkeyvt_node.vb" />
+    <Compile Include="fs\istrkeyvt\istrkeyvt_property.vb" />
+    <Compile Include="fs\path_name.vb" />
+    <Compile Include="fs\remote\remote_fs.vb" />
+    <Compile Include="fs\remote\remote_fs_responder.vb" />
+    <Compile Include="fs\remote\remote_node.vb" />
+    <Compile Include="fs\remote\remote_property.vb" />
+    <Compile Include="key_value\distributor\balance_distributor.vb" />
+    <Compile Include="key_value\distributor\distributor.vb" />
+    <Compile Include="key_value\distributor\iredundance_distributor.vb" />
+    <Compile Include="key_value\distributor\istrkeyvt_container.vb" />
+    <Compile Include="key_value\distributor\hash_distributor.vb" />
+    <Compile Include="key_value\distributor\redundance_distributor.compare.vb" />
+    <Compile Include="key_value\distributor\redundance_distributor.iredundance_distributor.vb" />
+    <Compile Include="key_value\distributor\redundance_distributor.vb" />
+    <Compile Include="key_value\distributor\syncqueue.vb" />
+    <Compile Include="key_value\extension\list.vb" />
+    <Compile Include="key_value\extension\no_timestamp.vb" />
+    <Compile Include="key_value\extension\synchronize.vb" />
+    <Compile Include="key_value\wrapper\broken_istrkeyvt.vb" />
+    <Compile Include="key_value\wrapper\key_locked_istrkeyvt.vb" />
+    <Compile Include="key_value\wrapper\stopable_istrkeyvt.vb" />
+    <Compile Include="key_value\double_keys.vb" />
+    <Compile Include="key_value\impl\file_index.implement.vb" />
+    <Compile Include="key_value\impl\file_index.vb" />
+    <Compile Include="key_value\impl\file_key.vb" />
+    <Compile Include="key_value\impl\localfile.vb" />
+    <Compile Include="key_value\impl\memory.vb" />
+    <Compile Include="key_value\impl\memory2.vb" />
+    <Compile Include="key_value\input_validation\ikeyvalue_input_validation_wrapper.vb" />
+    <Compile Include="key_value\input_validation\ikeyvt_input_validation_wrapper.vb" />
+    <Compile Include="key_value\input_validation\input_validation.vb" />
+    <Compile Include="key_value\input_validation\istrkeyvt_input_validation_wrapper.vb" />
+    <Compile Include="key_value\input_validation\isynckeyvalue_input_validation_wrapper.vb" />
+    <Compile Include="key_value\interop\auto_heartbeat_ikeyvt_false.vb" />
+    <Compile Include="key_value\cache\cached_ikeyvalue.vb" />
+    <Compile Include="key_value\wrapper\disable_istrkeyvt.vb" />
+    <Compile Include="key_value\interop\ikeyvalue2_ikeyvalue.vb" />
+    <Compile Include="key_value\interop\ikeyvalue2_ikeyvt2.vb" />
+    <Compile Include="key_value\interop\ikeyvalue_ikeyvt_false.vb" />
+    <Compile Include="key_value\interop\ikeyvt2_ikeyvt_false.vb" />
+    <Compile Include="key_value\interop\ikeyvt_false_ikeyvt_true.vb" />
+    <Compile Include="key_value\interop\ikeyvt_true_istrkeyvt.vb" />
+    <Compile Include="key_value\interop\isynckeyvalue2_ikeyvalue2.vb" />
+    <Compile Include="key_value\interop\isynckeyvalue2_isynckeyvalue.vb" />
+    <Compile Include="key_value\interop\isynckeyvalue_ikeyvalue.vb" />
+    <Compile Include="key_value\int\ikeyvalue.vb" />
+    <Compile Include="key_value\int\ikeyvt.vb" />
+    <Compile Include="key_value\int\ikeyvalue2.vb" />
+    <Compile Include="key_value\int\ikeyvt2.vb" />
+    <Compile Include="key_value\int\isynckeyvalue2.vb" />
+    <Compile Include="key_value\int\istrkeyvt.vb" />
+    <Compile Include="key_value\int\isynckeyvalue.vb" />
+    <Compile Include="key_value\parallel.vb" />
+    <Compile Include="key_value\timestamp.vb" />
+    <Compile Include="key_value\wrapper\timestamp_override_istrkeyvt.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="remote_constants.vb" />
+    <Compile Include="key_value\remote\istrkeyvt_questioner.shared.vb" />
+    <Compile Include="key_value\remote\istrkeyvt_questioner.vb" />
+    <Compile Include="key_value\remote\istrkeyvt_dispatcher.shared.vb" />
+    <Compile Include="key_value\remote\istrkeyvt_dispatcher.vb" />
+    <Compile Include="virtdisk\virtdisk.capinfo.vb" />
+    <Compile Include="virtdisk\virtdisk.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="free_cluster\cluster.validation.vb" />
+    <Compile Include="key_value\cache\cached_ikeyvalue.caches.vb" />
+    <Compile Include="key_value\impl\file_key.implement.vb" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="storage.props" />
+    <None Include="storage.dep" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fs\design.txt" />
+    <Content Include="key_value\key_value_arch.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <Import Project="storage.dep" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

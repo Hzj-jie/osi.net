@@ -1,0 +1,22 @@
+
+##DEFINE WEAKREFERENCE_TYPE pointer(Of T)
+##INCLUDE weak_pointer.override.vbp
+
+    Public Function [get](ByRef o As T) As Boolean
+        Dim p As pointer(Of T) = Nothing
+        If [get](p) AndAlso Not p Is Nothing AndAlso Not p.empty() Then
+            o = p.get()
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Public Sub [set](ByVal i As T)
+        Dim p As pointer(Of T) = Nothing
+        p = make_pointer(i)
+        AddHandler p.finalized, Sub(ByVal j As T)
+                                    RaiseEvent finalized(j)
+                                End Sub
+        [set](p)
+    End Sub

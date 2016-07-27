@@ -1,0 +1,56 @@
+﻿
+Option Strict On
+
+Imports osi.root.constants
+
+Public Module _bytes_dependent_types
+
+##DEFINE TYPE Boolean
+##DEFINE NAME bool
+##DEFINE DTYPE Byte
+##DEFINE DNAME byte
+##INCLUDE bytes_dependent_types_impl.vbp
+
+##DEFINE TYPE SByte
+##DEFINE NAME sbyte
+##DEFINE DTYPE Byte
+##DEFINE DNAME byte
+##INCLUDE bytes_dependent_types_impl.vbp
+
+##DEFINE TYPE SByte
+##DEFINE NAME int8
+##DEFINE DTYPE Byte
+##DEFINE DNAME byte
+##INCLUDE bytes_dependent_types_impl.vbp
+
+##DEFINE TYPE Byte
+##DEFINE NAME uint8
+##DEFINE DTYPE Byte
+##DEFINE DNAME byte
+##INCLUDE bytes_dependent_types_impl.vbp
+
+##DEFINE TYPE UInt16
+##DEFINE NAME uint16
+##DEFINE DTYPE Int16
+##DEFINE DNAME int16
+##INCLUDE bytes_dependent_types_impl.vbp
+
+##DEFINE TYPE Char
+##DEFINE NAME char
+##DEFINE DTYPE UInt16
+##DEFINE DNAME uint16
+##INCLUDE bytes_dependent_types_impl.vbp
+
+##DEFINE TYPE UInt32
+##DEFINE NAME uint32
+##DEFINE DTYPE Int32
+##DEFINE DNAME int32
+##INCLUDE bytes_dependent_types_impl.vbp
+
+##DEFINE TYPE UInt64
+##DEFINE NAME uint64
+##DEFINE DTYPE Int64
+##DEFINE DNAME int64
+##INCLUDE bytes_dependent_types_impl.vbp
+
+End Module

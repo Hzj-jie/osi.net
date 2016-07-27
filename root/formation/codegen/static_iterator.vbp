@@ -1,0 +1,58 @@
+﻿
+##DEFAULT DEFINE_OPERATOR_PLUS True
+        Implements IComparable(Of iterator), IComparable
+
+        Public Shared ReadOnly [end] As iterator
+
+        Shared Sub New()
+            [end] = New iterator()
+        End Sub
+
+        Private ReadOnly p As ##TYPE##
+
+        Private Sub New()
+        End Sub
+
+        Friend Sub New(ByVal that As ##TYPE##)
+            assert(Not that Is Nothing)
+            p = that
+        End Sub
+
+        Public Function is_end() As Boolean
+            Return p Is Nothing AndAlso
+                   (Not isdebugmode() OrElse
+                    assert(object_compare(Me, [end]) = 0))
+        End Function
+
+        Public Function is_not_end() As Boolean
+            Return Not is_end()
+        End Function
+
+        Public Shared Operator =(ByVal this As iterator, ByVal that As iterator) As Boolean
+            If this.null_or_end() AndAlso that.null_or_end() Then
+                Return True
+            ElseIf this.null_or_end() OrElse that.null_or_end() Then
+                Return False
+            Else
+                assert(Not this Is Nothing AndAlso Not that Is Nothing)
+                Return object_compare(this.p, that.p) = 0
+            End If
+        End Operator
+
+        Public Shared Operator <>(ByVal this As iterator, ByVal that As iterator) As Boolean
+            Return Not (this = that)
+        End Operator
+
+        Public Function CompareTo(ByVal other As iterator) As Int32 Implements IComparable(Of iterator).CompareTo
+            Return If(Me = other, 0, -1)
+        End Function
+
+        Public Function CompareTo(ByVal other As Object) As Int32 Implements IComparable.CompareTo
+            Return CompareTo(cast(Of iterator)(other, False))
+        End Function
+
+    #If ##DEFINE_OPERATOR_PLUS##
+        Public Shared Operator +(ByVal this As iterator) As ##TYPE##
+            Return If(this = [end], Nothing, this.p)
+        End Operator
+    #End If

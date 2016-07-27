@@ -1,0 +1,10 @@
+﻿
+client											host
+		(good) token2+challenge_code <-
+		(bad) N/A
+		(good) -> sign(challenge_code)
+		(bad) -> shutdown connection
+		(good) sign(sign(challenge_code)) <-
+		(bad) forge_signature <-
+		(good) -> token2
+		(bad) -> forge_signature

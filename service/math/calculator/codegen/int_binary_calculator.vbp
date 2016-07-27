@@ -1,0 +1,4 @@
+﻿
+##DEFINE CLASS_TYPE int
+##DEFINE TYPE Int32
+##INCLUDE binary_calculator.vbp

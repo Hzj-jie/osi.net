@@ -1,0 +1,64 @@
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootProps>true</RootProps>
+    <RootPath Condition="!Exists('$(RootPath)\root.props')">$(ProjectDir)\..\root\</RootPath>
+    <RootPath Condition="!Exists('$(RootPath)\root.props')">$(ProjectDir)\..\..\root\</RootPath>
+    <RootPath Condition="!Exists('$(RootPath)\root.props')">$(ProjectDir)\..\..\..\root\</RootPath>
+    <RootPath Condition="!Exists('$(RootPath)\root.props')">$(ProjectDir)\..\..\..\..\root\</RootPath>
+    <RootPath Condition="!Exists('$(RootPath)\root.props')">$(ProjectDir)\..\osi\root\</RootPath>
+    <RootPath Condition="!Exists('$(RootPath)\root.props')">$(ProjectDir)\..\..\osi\root\</RootPath>
+    <RootPath Condition="!Exists('$(RootPath)\root.props')">$(ProjectDir)\..\..\..\osi\root\</RootPath>
+    <RootPath Condition="!Exists('$(RootPath)\root.props')">$(ProjectDir)\..\..\..\..\osi\root\</RootPath>
+    <RootPath Condition="!Exists('$(RootPath)\root.props')">$(ProjectDir)\..\..\..\..\..\osi\root\</RootPath>
+    <ServicePath>$(RootPath)\..\service\</ServicePath>
+    <ProductionPath>$(RootPath)\..\production\</ProductionPath>
+    <IsPrivate Condition="'$(IsPrivate)' == ''">false</IsPrivate>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="osi.root.procedure">
+      <HintPath>$(RootPath)\procedure\bin\$(Configuration)\osi.root.procedure.dll</HintPath>
+      <Private>$(IsPrivate)</Private>
+    </Reference>
+    <Reference Include="osi.root.envs">
+      <HintPath>$(RootPath)\envs\bin\$(Configuration)\osi.root.envs.dll</HintPath>
+      <Private>$(IsPrivate)</Private>
+    </Reference>
+    <Reference Include="osi.root.event">
+      <HintPath>$(RootPath)\event\bin\$(Configuration)\osi.root.event.dll</HintPath>
+      <Private>$(IsPrivate)</Private>
+    </Reference>
+    <Reference Include="osi.root.formation">
+      <HintPath>$(RootPath)\formation\bin\$(Configuration)\osi.root.formation.dll</HintPath>
+      <Private>$(IsPrivate)</Private>
+    </Reference>
+    <Reference Include="osi.root.connector">
+      <HintPath>$(RootPath)\connector\bin\$(Configuration)\osi.root.connector.dll</HintPath>
+      <Private>$(IsPrivate)</Private>
+    </Reference>
+    <Reference Include="osi.root.utils">
+      <HintPath>$(RootPath)\utils\bin\$(Configuration)\osi.root.utils.dll</HintPath>
+      <Private>$(IsPrivate)</Private>
+    </Reference>
+    <Reference Include="osi.root.template">
+      <HintPath>$(RootPath)\template\bin\$(Configuration)\osi.root.template.dll</HintPath>
+      <Private>$(IsPrivate)</Private>
+    </Reference>
+    <Reference Include="osi.root.delegates">
+      <HintPath>$(RootPath)\delegates\bin\$(Configuration)\osi.root.delegates.dll</HintPath>
+      <Private>$(IsPrivate)</Private>
+    </Reference>
+    <Reference Include="osi.root.lock">
+      <HintPath>$(RootPath)\lock\bin\$(Configuration)\osi.root.lock.dll</HintPath>
+      <Private>$(IsPrivate)</Private>
+    </Reference>
+    <Reference Include="osi.root.constants">
+      <HintPath>$(RootPath)\constants\bin\$(Configuration)\osi.root.constants.dll</HintPath>
+      <Private>$(IsPrivate)</Private>
+    </Reference>
+    <Reference Include="osi.root.threadpool">
+      <HintPath>$(RootPath)\threadpool\bin\$(Configuration)\osi.root.threadpool.dll</HintPath>
+      <Private>$(IsPrivate)</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

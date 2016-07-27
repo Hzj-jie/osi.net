@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>
+    </SchemaVersion>
+    <ProjectGuid>{6847F777-1798-438B-A6D0-F3D5C6281CF1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>osi.tests.service.automata</RootNamespace>
+    <AssemblyName>osi.tests.service.automata</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Import Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="lexer_test.vb" />
+    <Compile Include="lp_test.transition.vb" />
+    <Compile Include="lp_test.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="regex\any_character_matching_group_test.vb" />
+    <Compile Include="regex\any_matching_group_test.vb" />
+    <Compile Include="regex\macros_test.vb" />
+    <Compile Include="regex\regex_create_test.vb" />
+    <Compile Include="regex\regex_test.vb" />
+    <Compile Include="regex\matching_group_creator_test.vb" />
+    <Compile Include="regex\multi_matching_group_test.vb" />
+    <Compile Include="regex\optional_matching_group_test.vb" />
+    <Compile Include="regex\reverse_matching_group_test.vb" />
+    <Compile Include="regex\rlexer_first_defined_test.vb" />
+    <Compile Include="regex\rlexer_test.vb" />
+    <Compile Include="regex\rlexer_test_rules.vb" />
+    <Compile Include="regex\rlexer_test_rule_files.vb" />
+    <Compile Include="regex\rule_test.vb" />
+    <Compile Include="regex\string_matching_group_test.vb" />
+    <Compile Include="regex\unmatched_matching_group_test.vb" />
+    <Compile Include="syntax\any_matching_group_test.vb" />
+    <Compile Include="syntax\fake_matching_delegate.vb" />
+    <Compile Include="syntax\fake_typed_word.vb" />
+    <Compile Include="syntax\matching_group_test.vb" />
+    <Compile Include="syntax\matching_test.vb" />
+    <Compile Include="syntax\multi_matching_group_test.vb" />
+    <Compile Include="syntax\optional_matching_group_test.vb" />
+    <Compile Include="syntax\single_matching_test.vb" />
+    <Compile Include="syntax\syntaxer_test.vb" />
+    <Compile Include="syntax\syntaxer_test_cases.vb" />
+    <Compile Include="syntax\syntaxer_test_rules.vb" />
+    <Compile Include="syntax\syntax_create_test.vb" />
+    <Compile Include="syntax\syntax_test.vb" />
+    <Compile Include="syntax\syntax_test2.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="lp_test.syntax.vb" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="regex\codegen\run.cmd" />
+    <None Include="syntax\codegen\run.cmd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="regex\codegen\rlexer_test_rule1.txt" />
+    <Content Include="regex\codegen\rlexer_test_rule2.txt" />
+    <Content Include="regex\codegen\rlexer_test_rule3.txt" />
+    <Content Include="syntax\codegen\case0.txt" />
+    <Content Include="syntax\codegen\case1.txt" />
+    <Content Include="syntax\codegen\rlexer_rule2.txt" />
+    <Content Include="syntax\codegen\rlexer_rule.txt" />
+    <Content Include="syntax\codegen\syntaxer_rule.txt" />
+    <Compile Include="syntax\syntaxer_test_rule_files.vb" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <Import Project="..\..\..\root\root.utt.props" Condition="'$(RootUttProps)'==''" />
+  <Import Project="$(ServicePath)\automata\automata.props" Condition="'$(AutomataProps)'==''" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

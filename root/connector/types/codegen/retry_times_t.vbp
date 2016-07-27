@@ -1,0 +1,17 @@
+﻿
+##DEFINE TYPE retry_times_t
+##DEFINE HAS_NPOS False
+##DEFINE ACCEPT_MAX False
+##DEFINE HAS_VALUE False
+##INCLUDE npos_uint.vbp
+
+Partial Public Structure ##TYPE##
+    Public Function attempts() As U##SIGNED_TYPE##
+        assert(Not npos())
+        Return raw_value() + uint32_1
+    End Function
+
+    Public Shared Operator +(ByVal this As ##TYPE##) As U##SIGNED_TYPE##
+        Return this.attempts()
+    End Operator
+End Structure

@@ -1,0 +1,7 @@
+
+push
+movc rel0 i100
+jump rel2
+movc rel0 i200
+stop
+

@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>
+    </SchemaVersion>
+    <ProjectGuid>{C428976D-292A-49E8-9226-7D355AD3593C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>osi.service.configuration</RootNamespace>
+    <AssemblyName>osi.service.configuration</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Import Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="characters.vb" />
+    <Compile Include="dataprovider\config_dataprovider.vb" />
+    <Compile Include="default_filter_selector.vb" />
+    <Compile Include="default_static_variants.vb" />
+    <Compile Include="extensions\config.vb" />
+    <Compile Include="extensions\load.vb" />
+    <Compile Include="extensions\section.vb" />
+    <Compile Include="extensions\variants.vb" />
+    <Compile Include="filters\cached_filter.vb" />
+    <Compile Include="filters\str\string_prefix_filter.vb" />
+    <Compile Include="rule.vb" />
+    <Compile Include="structure\config.vb" />
+    <Compile Include="structure\configuration.vb" />
+    <Compile Include="constants.vb" />
+    <Compile Include="structure\config_object.vb" />
+    <Compile Include="structure\filtered_raw_value.vb" />
+    <Compile Include="structure\filtered_value.vb" />
+    <Compile Include="filters\cast_compare_validation.vb" />
+    <Compile Include="filters\compare_filter.vb" />
+    <Compile Include="filters\decimal\double_compare_filter.vb" />
+    <Compile Include="filters\decimal\int_compare_filter.vb" />
+    <Compile Include="filters\str\string_compare_filter.vb" />
+    <Compile Include="filters\str\string_interval_filter.vb" />
+    <Compile Include="structure\static_filter.vb" />
+    <Compile Include="filters\decimal\double_filter.vb" />
+    <Compile Include="filters\decimal\double_interval_filter.vb" />
+    <Compile Include="filters\decimal\double_serial_filter.vb" />
+    <Compile Include="filters\decimal\int_interval_filter.vb" />
+    <Compile Include="filters\interval_filter.vb" />
+    <Compile Include="filters\cast_filter.vb" />
+    <Compile Include="filters\filter_selector.vb" />
+    <Compile Include="filters\filter_set.vb" />
+    <Compile Include="filters\ifilter.vb" />
+    <Compile Include="filters\decimal\int_filter.vb" />
+    <Compile Include="filters\decimal\int_serial_filter.vb" />
+    <Compile Include="filters\multi_filter.vb" />
+    <Compile Include="filters\str\string_based_filter.vb" />
+    <Compile Include="filters\str\string_filter.vb" />
+    <Compile Include="filters\str\string_patterns_filter.vb" />
+    <Compile Include="filters\str\string_pattern_filter.vb" />
+    <Compile Include="filters\str\string_serial_filter.vb" />
+    <Compile Include="dataprovider\config_streamreader_dataloader.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="structure\section.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="configuration.dep" />
+    <None Include="configuration.props" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <Import Project="configuration.dep" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

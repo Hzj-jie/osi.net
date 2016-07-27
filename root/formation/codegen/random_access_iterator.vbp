@@ -1,0 +1,20 @@
+﻿
+##INCLUDE static_iterator.vbp
+
+        '1. iterator / reverse_iterator are combined together
+        '2. do not allow to - from end, it's not must-have
+        '3. operator+ / operator- should not impact current instance, considering i = j + 1
+        Public Shared Operator +(ByVal this As iterator, ByVal that As Int32) As iterator
+            If this.null_or_end() OrElse that = 0 Then
+                Return this
+            ElseIf that > 0 Then
+                Return this.move_next(CUInt(that))
+            Else
+                assert(that < 0)
+                Return this.move_prev(CUInt(-that))
+            End If
+        End Operator
+
+        Public Shared Operator -(ByVal this As iterator, ByVal that As Int32) As iterator
+            Return this + (-that)
+        End Operator

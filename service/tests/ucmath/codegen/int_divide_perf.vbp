@@ -1,0 +1,5 @@
+﻿
+##DEFINE OPERATOR \
+##DEFINE CLASS_TYPE int_divide
+##DEFINE TYPE Int32
+##INCLUDE operator_perf.vbp

@@ -1,0 +1,4 @@
+﻿
+##DEFINE TYPE Int64
+##DEFINE NAME long
+##INCLUDE atomic_int.vbp

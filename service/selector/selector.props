@@ -1,0 +1,13 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SelectorProps>true</SelectorProps>
+  </PropertyGroup>
+  <Import Project="selector.dep" />
+  <ItemGroup>
+    <Reference Include="osi.service.selector">
+      <HintPath>$(ServicePath)\selector\bin\$(Configuration)\osi.service.selector.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

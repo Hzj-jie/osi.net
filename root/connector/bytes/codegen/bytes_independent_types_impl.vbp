@@ -1,0 +1,104 @@
+﻿
+##DEFAULT TYPE Byte
+##DEFAULT NAME byte
+
+#Const IS_BYTE = ("##NAME##" = "byte")
+
+    Public Function bytes_##NAME##(
+                        ByVal i() As Byte,
+                        ByVal ii As UInt32,
+                        ByVal il As UInt32,
+                        ByRef o As ##TYPE##) As Boolean
+        If il <> sizeof_##NAME## OrElse array_size(i) < ii + il Then
+            Return False
+        Else
+#If IS_BYTE Then
+            o = i(CInt(ii))
+#Else
+            o = BitConverter.To##TYPE##(i, CInt(ii))
+#End If
+            Return True
+        End If
+    End Function
+
+    Public Function bytes_##NAME##(
+                        ByVal i() As Byte,
+                        ByRef o As ##TYPE##,
+                        Optional ByRef offset As UInt32 = uint32_0) As Boolean
+        If array_size(i) >= offset + sizeof_int8 Then
+#If IS_BYTE Then
+            o = i(CInt(offset))
+#Else
+            o = BitConverter.To##TYPE##(i, CInt(offset))
+#End If
+            offset += sizeof_##NAME##
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Public Function bytes_##NAME##(
+                        ByVal i() As Byte,
+                        Optional ByRef offset As UInt32 = uint32_0) As ##TYPE##
+        Dim o As ##TYPE## = 0
+        assert(bytes_##NAME##(i, o, offset))
+        Return o
+    End Function
+
+    Public Function entire_bytes_##NAME##(
+                        ByVal i() As Byte,
+                        ByRef o As ##TYPE##) As Boolean
+        Dim p As UInt32 = 0
+        Return bytes_##NAME##(i, o, p) AndAlso
+               p = array_size(i)
+    End Function
+
+    Public Function entire_bytes_##NAME##(ByVal i() As Byte) As ##TYPE##
+        Dim o As ##TYPE## = 0
+        assert(entire_bytes_##NAME##(i, o))
+        Return o
+    End Function
+    
+    Public Function ##NAME##_bytes(
+                        ByVal i As ##TYPE##,
+                        ByVal d() As Byte,
+                        Optional ByRef offset As UInt32 = uint32_0) As Boolean
+        If array_size(d) >= offset + sizeof_##NAME## Then
+#If IS_BYTE Then
+            d(CInt(offset)) = i
+#Else
+#If 0 Then
+            'for mono
+            'Marshal.WriteXXX is 100% slower than BitConverter with memcpy
+            Try
+                Marshal.Write##TYPE##(d, CInt(offset), i)
+            Catch
+                Dim t() As Byte = Nothing
+                t = ##NAME##_bytes(i)
+                memcpy(d, offset, t)
+            End Try
+#Else
+            Dim t() As Byte = Nothing
+            t = ##NAME##_bytes(i)
+            memcpy(d, offset, t)
+#End If
+#End If
+            offset += sizeof_##NAME##
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Public Function ##NAME##_bytes(ByVal i As ##TYPE##) As Byte()
+#If IS_BYTE Then
+        assert(sizeof_##NAME## = uint32_1)
+        Dim o() As Byte = Nothing
+        ReDim o(0)
+        o(0) = i
+        Return o
+#Else
+        Return BitConverter.GetBytes(i)
+#End If
+    End Function

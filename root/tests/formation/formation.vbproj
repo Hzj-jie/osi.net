@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{ED8B849E-27C6-474E-A5D5-F3BF955173D3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>osi.tests.root.formation</RootNamespace>
+    <AssemblyName>osi.tests.root.formation</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Import Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="array_test.vb" />
+    <Compile Include="binary_tree\bmap_test.vb" />
+    <Compile Include="binary_tree\bset_test.vb" />
+    <Compile Include="binary_tree\map_compare_test.vb" />
+    <Compile Include="binary_tree\map_perf_test.vb" />
+    <Compile Include="binary_tree\map_test.vb" />
+    <Compile Include="binary_tree\map_test2.vb" />
+    <Compile Include="binary_tree\omap_test.vb" />
+    <Compile Include="binary_tree\ordered_bset_perf.vb" />
+    <Compile Include="binary_tree\ordered_sset_perf.vb" />
+    <Compile Include="binary_tree\oset_test.vb" />
+    <Compile Include="binary_tree\segment_tree_test.vb" />
+    <Compile Include="binary_tree\segment_tree_test2.vb" />
+    <Compile Include="binary_tree\accumulate_segment_tree_test.vb" />
+    <Compile Include="binary_tree\set_test.vb" />
+    <Compile Include="binary_tree\smap_test.vb" />
+    <Compile Include="binary_tree\sset_test.vb" />
+    <None Include="codegen\map_case\bmap_test.vbp" />
+    <None Include="codegen\map_case\map_case.vbp" />
+    <None Include="codegen\map_case\map_test.vbp" />
+    <None Include="codegen\map_case\omap_test.vbp" />
+    <None Include="codegen\map_case\run.cmd" />
+    <None Include="codegen\map_case\smap_test.vbp" />
+    <None Include="codegen\set_case\run.cmd" />
+    <None Include="codegen\set_case\sset_test.vbp" />
+    <Compile Include="bit_array_test.vb" />
+    <Compile Include="collectionless_test.vb" />
+    <Compile Include="comparable_type_test.vb" />
+    <Compile Include="fixed_queue_test.vb" />
+    <Compile Include="fixed_stack_test.vb" />
+    <Compile Include="formation.vb" />
+    <Compile Include="heap\heap_case.vb" />
+    <Compile Include="heap\heap_perf.vb" />
+    <Compile Include="heap\heap_test.vb" />
+    <Compile Include="lifetime_control\event_disposer_test.vb" />
+    <Compile Include="lifetime_control\lifetime_binder_test.vb" />
+    <Compile Include="lifetime_control\ref_ptr_test.vb" />
+    <Compile Include="lifetime_control\weak_event_disposer_test.vb" />
+    <Compile Include="list\list_case.vb" />
+    <Compile Include="list\list_perf.vb" />
+    <Compile Include="list\list_test.vb" />
+    <Compile Include="mapheap\mapheap_case.vb" />
+    <Compile Include="mapheap\mapheap_test.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="pointer_test.vb" />
+    <Compile Include="qless2_stream_test\qless2_stream_case.vb" />
+    <Compile Include="qless2_stream_test\qless2_stream_test.vb" />
+    <None Include="qless\codegen\cycle_case.vbp" />
+    <Compile Include="qless\cycle_case.vb" />
+    <Compile Include="qless\cycle_case2.vb" />
+    <Compile Include="qless\cycle_case3.vb" />
+    <Compile Include="qless\cycle_case4.vb" />
+    <Compile Include="qless\qless2_case.vb" />
+    <Compile Include="qless\qless2_case2.vb" />
+    <Compile Include="qless\qless2_case4.vb" />
+    <Compile Include="qless\heapless_case.vb" />
+    <Compile Include="qless\heapless_case2.vb" />
+    <Compile Include="qless\heapless_case3.vb" />
+    <Compile Include="qless\heapless_case4.vb" />
+    <Compile Include="qless\qless_case.vb" />
+    <Compile Include="qless\qless_case2.vb" />
+    <Compile Include="qless\qless2_case3.vb" />
+    <Compile Include="qless\qless_case3.vb" />
+    <Compile Include="qless\qless_case4.vb" />
+    <Compile Include="qless\qless_lock_selection_case.vb" />
+    <Compile Include="qless\qless_perf.vb" />
+    <Compile Include="qless\qless_test.vb" />
+    <Compile Include="qless\qless_test2.vb" />
+    <Compile Include="qless\qless_test3.vb" />
+    <Compile Include="qless\qless_test4.vb" />
+    <Compile Include="qless\slimqless2_case3.vb" />
+    <Compile Include="qless\slimqless2_case4.vb" />
+    <Compile Include="qless\slimheapless_case3.vb" />
+    <Compile Include="qless\slimheapless_case4.vb" />
+    <Compile Include="qless\slimheapless_debug_tests.vb" />
+    <Compile Include="trie\trie_case.vb" />
+    <Compile Include="trie\trie_perf.vb" />
+    <Compile Include="trie\trie_test.vb" />
+    <Compile Include="unique_strong_map_test.vb" />
+    <Compile Include="vector\vector_perf.vb" />
+    <Compile Include="vector\vector_test.calls.vb" />
+    <Compile Include="vector\vector_test.vb" />
+    <Compile Include="weak_ref_pointer_test.vb" />
+    <Compile Include="weak_pointer_test.vb" />
+    <None Include="qless\codegen\cycle_case2.vbp" />
+    <None Include="qless\codegen\cycle_case3.vbp" />
+    <None Include="qless\codegen\cycle_case4.vbp" />
+    <None Include="qless\codegen\qless2_case.vbp" />
+    <None Include="qless\codegen\qless2_case2.vbp" />
+    <None Include="qless\codegen\qless2_case3.vbp" />
+    <None Include="qless\codegen\qless2_case4.vbp" />
+    <None Include="qless\codegen\heapless_case.vbp" />
+    <None Include="qless\codegen\heapless_case2.vbp" />
+    <None Include="qless\codegen\heapless_case3.vbp" />
+    <None Include="qless\codegen\heapless_case4.vbp" />
+    <None Include="qless\codegen\qless_case.vbp" />
+    <None Include="qless\codegen\qless_case2.vbp" />
+    <None Include="qless\codegen\qless_case3.vbp" />
+    <None Include="qless\codegen\qless_case4.vbp" />
+    <None Include="qless\codegen\qless_lock_selection_case.vbp" />
+    <None Include="qless\codegen\run.cmd" />
+    <None Include="qless\codegen\slimqless2_case3.vbp" />
+    <None Include="qless\codegen\slimqless2_case4.vbp" />
+    <None Include="qless\codegen\slimheapless_case3.vbp" />
+    <None Include="qless\codegen\slimheapless_case4.vbp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="codegen\set_case\bset_test.vbp" />
+    <None Include="codegen\set_case\oset_test.vbp" />
+    <None Include="codegen\set_case\set_case.vbp" />
+    <None Include="codegen\set_case\set_test.vbp" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\connector\connector.vbproj">
+      <Project>{37EC873B-1EA8-449D-AC58-75A2F26FE5EA}</Project>
+      <Name>connector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\constants\constants.vbproj">
+      <Project>{F251286B-8EE9-4292-B117-1630D5F93B37}</Project>
+      <Name>constants</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\delegates\delegates.vbproj">
+      <Project>{B2A4A210-3AD5-41CA-A650-CE8C86BF1FFC}</Project>
+      <Name>delegates</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\envs\envs.vbproj">
+      <Project>{D310BA86-0FA6-42BB-8EFD-2DEE526E6981}</Project>
+      <Name>envs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\formation\formation.vbproj">
+      <Project>{DA3051DC-A250-488F-AACA-F46977DD0F17}</Project>
+      <Name>formation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lock\lock.vbproj">
+      <Project>{5BB4ADDE-7C12-4221-AE69-C669255C931E}</Project>
+      <Name>lock</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\template\template.vbproj">
+      <Project>{8EF461F7-2F05-42A3-B65B-8E644F992582}</Project>
+      <Name>template</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\utils\utils.vbproj">
+      <Project>{066119D7-850D-4191-B7AF-5294A941B8C2}</Project>
+      <Name>utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\utt\utt.vbproj">
+      <Project>{C56C84B9-F739-4BAF-8795-FC7CAA6CC549}</Project>
+      <Name>utt</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(TargetDir)\$(TargetName).*" "$(ProjectDir)\..\..\utt\$(OutDir)" /y</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,69 @@
+﻿
+##DEFAULT TYPE Boolean
+##DEFAULT NAME bool
+##DEFAULT DTYPE Byte
+##DEFAULT DNAME byte
+
+    Public Function bytes_##NAME##(
+                        ByVal i() As Byte,
+                        ByVal ii As UInt32,
+                        ByVal il As UInt32,
+                        ByRef o As ##TYPE##) As Boolean
+        Dim v As ##DTYPE## = ##DNAME##_0
+        If bytes_##DNAME##(i, ii, il, v) Then
+            o = ##DNAME##_##NAME##(v)
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Public Function bytes_##NAME##(
+                        ByVal i() As Byte,
+                        ByRef o As ##TYPE##,
+                        Optional ByRef offset As UInt32 = uint32_0) As Boolean
+        Dim v As ##DTYPE## = ##DNAME##_0
+        If bytes_##DNAME##(i, v, offset) Then
+            o = ##DNAME##_##NAME##(v)
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+#If "##NAME##" = "uint32" Then
+    Public Function bytes_##NAME##_(
+                        ByVal i() As Byte,
+                        Optional ByRef offset As UInt32 = uint32_0) As ##TYPE##
+#Else
+    Public Function bytes_##NAME##(
+                        ByVal i() As Byte,
+                        Optional ByRef offset As UInt32 = uint32_0) As ##TYPE##
+#End If
+        Dim o As ##TYPE## = ##NAME##_0
+        assert(bytes_##NAME##(i, o, offset))
+        Return o
+    End Function
+
+    Public Function entire_bytes_##NAME##(ByVal i() As Byte, ByRef o As ##TYPE##) As Boolean
+        Dim p As UInt32 = 0
+        Return bytes_##NAME##(i, o, p) AndAlso
+               p = array_size(i)
+    End Function
+
+    Public Function entire_bytes_##NAME##(ByVal i() As Byte) As ##TYPE##
+        Dim o As ##TYPE## = ##NAME##_0
+        assert(entire_bytes_##NAME##(i, o))
+        Return o
+    End Function
+    
+    Public Function ##NAME##_bytes(
+                        ByVal i As ##TYPE##,
+                        ByVal d() As Byte,
+                        Optional ByRef offset As UInt32 = uint32_0) As Boolean
+        Return ##DNAME##_bytes(##NAME##_##DNAME##(i), d, offset)
+    End Function
+
+    Public Function ##NAME##_bytes(ByVal i As ##TYPE##) As Byte()
+        Return ##DNAME##_bytes(##NAME##_##DNAME##(i))
+    End Function

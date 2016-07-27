@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D310BA86-0FA6-42BB-8EFD-2DEE526E6981}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>osi.root.envs</RootNamespace>
+    <AssemblyName>osi.root.envs</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,40000</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,40000</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Import Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="app_info.vb" />
+    <Compile Include="assembly.vb" />
+    <Compile Include="buildInfo.vb" />
+    <Compile Include="busy_wait.vb" />
+    <Compile Include="computer_info.vb" />
+    <Compile Include="control_c_trace.vb" />
+    <Compile Include="deploys.vb" />
+    <Compile Include="env_keys.vb" />
+    <Compile Include="env_value.vb" />
+    <Compile Include="build_running.vb" />
+    <Compile Include="event_driver.vb" />
+    <Compile Include="hardware.vb" />
+    <Compile Include="management.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="performance.vb" />
+    <Compile Include="priority.vb" />
+    <Compile Include="process.vb" />
+    <Compile Include="processor.vb" />
+    <Compile Include="spin.vb" />
+    <Compile Include="system_perf\atomic_operator.vb" />
+    <Compile Include="system_perf\fibonacci.vb" />
+    <Compile Include="system_perf\float_operator.vb" />
+    <Compile Include="system_perf\integer_operator.vb" />
+    <Compile Include="system_perf\memory_access.vb" />
+    <Compile Include="system_perf\system_perf.vb" />
+    <Compile Include="system_perf\thread_static_operator.vb" />
+    <Compile Include="tfver.vb" />
+    <Compile Include="thread.vb" />
+    <Compile Include="thread_count.vb" />
+    <Compile Include="timeslice.vb" />
+    <Compile Include="processor_affinity.vb" />
+    <Compile Include="trace\assert_trace.vb" />
+    <Compile Include="trace\callback_trace.vb" />
+    <Compile Include="trace\counter_selfhealth.vb" />
+    <Compile Include="trace\debug_trace.vb" />
+    <Compile Include="trace\event_comb_trace.vb" />
+    <Compile Include="trace\lock_trace.vb" />
+    <Compile Include="trace\network_trace.vb" />
+    <Compile Include="trace\perf_trace.vb" />
+    <Compile Include="trace\tcp_trace.vb" />
+    <Compile Include="trace\threadpool_trace.vb" />
+    <Compile Include="trace\udp_trace.vb" />
+    <Compile Include="trace\utt_assert_trace.vb" />
+    <Compile Include="trace\utt_report.vb" />
+    <Compile Include="utt.vb" />
+    <Compile Include="vm.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\connector\connector.vbproj">
+      <Project>{37ec873b-1ea8-449d-ac58-75a2f26fe5ea}</Project>
+      <Name>connector</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\constants\constants.vbproj">
+      <Project>{f251286b-8ee9-4292-b117-1630d5f93b37}</Project>
+      <Name>constants</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\codegen\codegen.vbproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Management" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <Target Name="BeforeCompile">
+    <Exec Command="copy &quot;$(ProjectDir)\..\codegen\buildInfoGen\buildInfo.vb&quot; &quot;$(ProjectDir)&quot;" />
+    <Exec Command="copy &quot;$(ProjectDir)\..\codegen\tfver\tfver.vb&quot; &quot;$(ProjectDir)&quot;" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

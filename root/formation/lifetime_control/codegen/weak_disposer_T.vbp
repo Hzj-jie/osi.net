@@ -1,0 +1,4 @@
+﻿
+##DEFINE CLASS_NAME weak_disposer
+##DEFINE BASE_NAME weak_dispose_ptr
+##INCLUDE disposer_T.vbp

@@ -1,0 +1,52 @@
+﻿
+Public Module _debug_mode
+    Private PAUSEWHENINDEBUGMODE As Boolean = True
+
+    Public Function strongassert() As Boolean
+        Return Not PAUSEWHENINDEBUGMODE
+    End Function
+
+    Public Sub setstrongassert()
+        PAUSEWHENINDEBUGMODE = False
+    End Sub
+
+    Private INDEBUGMODE As Boolean = False
+    Private NOTINDEBUGMODE As Boolean = False
+
+    Public Sub set_debug_mode()
+        INDEBUGMODE = True
+        NOTINDEBUGMODE = False
+    End Sub
+
+    Public Sub set_not_debug_mode()
+        INDEBUGMODE = False
+        NOTINDEBUGMODE = True
+    End Sub
+
+    Public Sub set_normal_mode()
+        INDEBUGMODE = False
+        NOTINDEBUGMODE = False
+    End Sub
+
+    Public Function isreleasebuild() As Boolean
+        Return Not isdebugbuild()
+    End Function
+
+    Public Function isdebugbuild() As Boolean
+#If DEBUG Then
+        Return True
+#Else
+        Return False
+#End If
+    End Function
+
+    Public Function isdebugmode() As Boolean
+        If INDEBUGMODE Then
+            Return True
+        ElseIf NOTINDEBUGMODE Then
+            Return False
+        Else
+            Return isdebugbuild()
+        End If
+    End Function
+End Module

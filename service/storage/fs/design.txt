@@ -1,0 +1,14 @@
+﻿
+each directory or file is called an inode in the system.
+files and directories are equal, i.e. a directory can have properties, while a file can have sub files.
+so the 'file' in the following paragraph does not mean an inode, instead it means the key-value pair in the istrkeyvt.
+an inode is the set of properties and sub inodes,
+under a certain inode, there are two files $. and $
+$. contains a list of sub inodes
+$ contains a list of properties
+so the name of an inode does not allow to have $, but since / is using as path separator, / is not allowed to be in the inode name.
+also $ and / are not allowed in property name.
+say when trying to open an inode /foo/bar, the system will try to find /foo/bar/$. and /foo/bar/$
+in /foo/bar/$., say, it contains a, b [in chunk format], which means there are two inodes /foo/bar/a and /foo/bar/b
+in /foo/bar/$, say, it contains text, blob [in chunk format], which means there are two properites, named as text and blob, the keys are /foo/bar/text and /foo/bar/blob.
+so the key /foo/bar/a is the key of property a of /foo/bar, while it does not mean an inode named as /foo/bar/a.

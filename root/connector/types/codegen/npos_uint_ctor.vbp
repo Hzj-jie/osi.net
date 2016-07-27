@@ -1,0 +1,68 @@
+﻿
+##DEFAULT HAS_UNSIGNED_TYPE True
+##DEFAULT INPUT_UNSIGNED_TYPE U##INPUT_SIGNED_TYPE##
+
+    Public Sub New(ByVal i As ##INPUT_SIGNED_TYPE##)
+#If Not ##ACCEPT_ZERO## Then
+        If i = 0 Then
+            n = True
+            Return
+        End If
+#End If
+#If "##INPUT_SIGNED_TYPE##" <> "##SIGNED_TYPE##" Then
+        If i > ##MAX## Then
+            n = True
+            Return
+        End If
+#End If
+#If Not ##ACCEPT_MAX## Then
+        If i = ##MAX## Then
+            n = True
+            Return
+        End If
+#End If
+
+        If i < 0 Then
+            n = True
+        Else
+            Me.i = ##CAST##(i)
+        End If
+    End Sub
+
+#If ##HAS_UNSIGNED_TYPE## Then
+    Public Sub New(ByVal i As ##INPUT_UNSIGNED_TYPE##)
+#If Not ##ACCEPT_ZERO## Then
+        If i = 0 Then
+            n = True
+            Return
+        End If
+#End If
+#If "##INPUT_SIGNED_TYPE##" <> "##SIGNED_TYPE##" Then
+        If i > ##MAX## Then
+            n = True
+            Return
+        End If
+#End If
+#If Not ##ACCEPT_MAX## Then
+        If i = ##MAX## Then
+            n = True
+            Return
+        End If
+#End If
+        Me.i = i
+    End Sub
+#End If
+
+    Public Shared Widening Operator CType(ByVal this As ##INPUT_SIGNED_TYPE##) As ##TYPE##
+        Return New ##TYPE##(this)
+    End Operator
+
+#If ##HAS_UNSIGNED_TYPE## Then
+    Public Shared Widening Operator CType(ByVal this As ##INPUT_UNSIGNED_TYPE##) As ##TYPE##
+        Return New ##TYPE##(this)
+    End Operator
+#End If
+
+##UNDEF INPUT_SIGNED_TYPE
+##UNDEF INPUT_UNSIGNED_TYPE
+##UNDEF HAS_UNSIGNED_TYPE

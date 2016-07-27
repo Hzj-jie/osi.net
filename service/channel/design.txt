@@ -1,0 +1,12 @@
+﻿
+input herald
+output block
+
+commands,
+connect
+send
+close
+
+connect(local-id(1)) -> connect(local-id, remote-id(1))
+send(remote-id, data)
+close(remote-id)

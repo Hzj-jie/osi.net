@@ -1,0 +1,110 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "test_http_server", "test_http_server\test_http_server.vbproj", "{674CF483-3BD9-412E-BD9C-4316938EC99B}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "http_proxy", "http_proxy\http_proxy.vbproj", "{1760BA4D-F717-4CB5-ADFB-04C076605467}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "fake_http_request", "fake_http_request\fake_http_request.vbproj", "{04139B44-2FE6-48B8-B89B-585585061F9C}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "tcp_bridge", "tcp_bridge\tcp_bridge.vbproj", "{C848C1AB-7539-48F1-BBC8-C9CD8F464F6D}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "tcp_pair", "tcp_pair\tcp_pair.vbproj", "{43F04EF5-31F9-4854-8318-9D23F2E95562}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "sider", "sider\sider.vbproj", "{AFE9A262-BBA8-47F4-9832-FD38042DF54D}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "utt_diff", "utt_diff\utt_diff.vbproj", "{D1544B50-E0F1-4862-938C-3C38BDCB3F99}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "big_uint_calculator", "big_uint_calculator\big_uint_calculator.vbproj", "{5C464243-D70A-4ACD-99A0-C0C2BB476D3A}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "big_int_calculator", "big_int_calculator\big_int_calculator.vbproj", "{5EB85EA4-4BA0-48D1-A268-B004E1C4C554}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "remote_console", "remote_console\remote_console.vbproj", "{D565B0A8-E74C-4886-8247-361B94A51651}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 11
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = test_http_server\\test_http_server.vbproj
+		SccProjectName1 = test_http_server
+		SccLocalPath1 = test_http_server
+		SccProjectUniqueName2 = http_proxy\\http_proxy.vbproj
+		SccProjectName2 = http_proxy
+		SccLocalPath2 = http_proxy
+		SccProjectUniqueName3 = fake_http_request\\fake_http_request.vbproj
+		SccProjectName3 = fake_http_request
+		SccLocalPath3 = fake_http_request
+		SccProjectUniqueName4 = tcp_bridge\\tcp_bridge.vbproj
+		SccProjectName4 = tcp_bridge
+		SccLocalPath4 = tcp_bridge
+		SccProjectUniqueName5 = tcp_pair\\tcp_pair.vbproj
+		SccProjectName5 = tcp_pair
+		SccLocalPath5 = tcp_pair
+		SccProjectUniqueName6 = sider\\sider.vbproj
+		SccProjectName6 = sider
+		SccLocalPath6 = sider
+		SccProjectUniqueName7 = utt_diff\\utt_diff.vbproj
+		SccProjectName7 = utt_diff
+		SccLocalPath7 = utt_diff
+		SccProjectUniqueName8 = big_uint_calculator\\big_uint_calculator.vbproj
+		SccProjectName8 = big_uint_calculator
+		SccLocalPath8 = big_uint_calculator
+		SccProjectUniqueName9 = big_int_calculator\\big_int_calculator.vbproj
+		SccProjectName9 = big_int_calculator
+		SccLocalPath9 = big_int_calculator
+		SccProjectUniqueName10 = remote_console\\remote_console.vbproj
+		SccProjectName10 = remote_console
+		SccLocalPath10 = remote_console
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{674CF483-3BD9-412E-BD9C-4316938EC99B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{674CF483-3BD9-412E-BD9C-4316938EC99B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{674CF483-3BD9-412E-BD9C-4316938EC99B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{674CF483-3BD9-412E-BD9C-4316938EC99B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1760BA4D-F717-4CB5-ADFB-04C076605467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1760BA4D-F717-4CB5-ADFB-04C076605467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1760BA4D-F717-4CB5-ADFB-04C076605467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1760BA4D-F717-4CB5-ADFB-04C076605467}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04139B44-2FE6-48B8-B89B-585585061F9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04139B44-2FE6-48B8-B89B-585585061F9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04139B44-2FE6-48B8-B89B-585585061F9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04139B44-2FE6-48B8-B89B-585585061F9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C848C1AB-7539-48F1-BBC8-C9CD8F464F6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C848C1AB-7539-48F1-BBC8-C9CD8F464F6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C848C1AB-7539-48F1-BBC8-C9CD8F464F6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C848C1AB-7539-48F1-BBC8-C9CD8F464F6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43F04EF5-31F9-4854-8318-9D23F2E95562}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43F04EF5-31F9-4854-8318-9D23F2E95562}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43F04EF5-31F9-4854-8318-9D23F2E95562}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43F04EF5-31F9-4854-8318-9D23F2E95562}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFE9A262-BBA8-47F4-9832-FD38042DF54D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFE9A262-BBA8-47F4-9832-FD38042DF54D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFE9A262-BBA8-47F4-9832-FD38042DF54D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFE9A262-BBA8-47F4-9832-FD38042DF54D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1544B50-E0F1-4862-938C-3C38BDCB3F99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1544B50-E0F1-4862-938C-3C38BDCB3F99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1544B50-E0F1-4862-938C-3C38BDCB3F99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1544B50-E0F1-4862-938C-3C38BDCB3F99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C464243-D70A-4ACD-99A0-C0C2BB476D3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C464243-D70A-4ACD-99A0-C0C2BB476D3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C464243-D70A-4ACD-99A0-C0C2BB476D3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C464243-D70A-4ACD-99A0-C0C2BB476D3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EB85EA4-4BA0-48D1-A268-B004E1C4C554}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EB85EA4-4BA0-48D1-A268-B004E1C4C554}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EB85EA4-4BA0-48D1-A268-B004E1C4C554}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EB85EA4-4BA0-48D1-A268-B004E1C4C554}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D565B0A8-E74C-4886-8247-361B94A51651}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D565B0A8-E74C-4886-8247-361B94A51651}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D565B0A8-E74C-4886-8247-361B94A51651}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D565B0A8-E74C-4886-8247-361B94A51651}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

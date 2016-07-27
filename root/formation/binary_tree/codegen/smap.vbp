@@ -1,0 +1,4 @@
+﻿
+##DEFINE TYPE smap
+##DEFINE BASE_TYPE sbst
+##INCLUDE map.vbp

@@ -1,0 +1,3 @@
+##DEFINE TYPE weak_ref_pointer
+##DEFINE RAISE_FINALIZED_IN_FINALIZE False
+##INCLUDE pointer.vbp

@@ -1,0 +1,97 @@
+﻿
+Imports System.Threading
+Imports osi.root.connector
+Imports osi.root.lock
+Imports osi.root.utt
+Imports osi.root.utils
+
+Public Class one_off_test
+    Inherits [case]
+
+    Private ReadOnly x As one_off(Of Object)
+    Private ReadOnly are As EventWaitHandle
+    Private ReadOnly suc_times As atomic_int
+    Private ReadOnly read_thread_count As atomic_int
+    Private running As Boolean
+    Private is_get As Boolean
+
+    Public Sub New()
+        x = New one_off(Of Object)()
+        are = New ManualResetEvent(False)
+        suc_times = New atomic_int()
+        read_thread_count = New atomic_int()
+    End Sub
+
+    Private Sub read_thread()
+        read_thread_count.increment()
+        While running
+            assert(are.WaitOne())
+            If is_get Then
+                If x.get(Nothing) Then
+                    suc_times.increment()
+                End If
+            Else
+                If x.set(New Object()) Then
+                    suc_times.increment()
+                End If
+            End If
+        End While
+        read_thread_count.decrement()
+    End Sub
+
+    Private Sub run_case()
+        Const thread_count As Int32 = 8
+        running = True
+        For i As Int32 = 0 To thread_count - 1
+            start_thread(AddressOf read_thread)
+        Next
+        assert_true(timeslice_sleep_wait_until(Function() As Boolean
+                                                   Return (+read_thread_count) > 1
+                                               End Function,
+                                               seconds_to_milliseconds(10)))
+        Const times As Int32 = 1024
+        suc_times.exchange(0)
+        If Not is_get Then
+            assert_true(x.set(New Object()))
+        End If
+        For i As Int32 = 0 To times - 1
+            If is_get Then
+                assert_true(x.set(New Object()))
+            Else
+                assert_true(x.get(Nothing))
+            End If
+            assert(are.Set())
+            lazy_wait_when(Function() As Boolean
+                               If is_get Then
+                                   Return x.has()
+                               Else
+                                   Return Not x.has()
+                               End If
+                           End Function)
+            assert(are.Reset())
+        Next
+        assert_true(timeslice_sleep_wait_until(Function() As Boolean
+                                                   Return ((+suc_times) = times)
+                                               End Function,
+                                               seconds_to_milliseconds(10)))
+        assert_equal(+suc_times, times)
+        If Not is_get Then
+            assert_true(x.get(Nothing))
+        End If
+        running = False
+        assert(are.Set())
+        assert_true(timeslice_sleep_wait_when(Function() As Boolean
+                                                  Return (+read_thread_count) > 0
+                                              End Function,
+                                              seconds_to_milliseconds(10)))
+        assert(are.Reset())
+    End Sub
+
+    Public Overrides Function run() As Boolean
+        is_get = True
+        run_case()
+        is_get = False
+        run_case()
+        Return True
+    End Function
+End Class

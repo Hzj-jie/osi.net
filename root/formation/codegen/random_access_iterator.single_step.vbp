@@ -1,0 +1,24 @@
+﻿
+##INCLUDE random_access_iterator.vbp
+
+        Private Function move_next(ByVal i As UInt32) As iterator
+            assert(i > uint32_0)
+            Dim n As iterator = Nothing
+            n = Me
+            While Not n.is_end() AndAlso i > uint32_0
+                n = n.move_next()
+                i -= uint32_1
+            End While
+            Return n
+        End Function
+
+        Private Function move_prev(ByVal i As UInt32) As iterator
+            assert(i > uint32_0)
+            Dim n As iterator = Nothing
+            n = Me
+            While Not n.is_end() AndAlso i > uint32_0
+                n = n.move_prev()
+                i -= uint32_1
+            End While
+            Return n
+        End Function

@@ -1,0 +1,30 @@
+﻿
+Option Strict On
+
+Imports osi.root.constants
+
+Public Module _bytes_independent_types
+##DEFINE TYPE Byte
+##DEFINE NAME byte
+##INCLUDE bytes_independent_types_impl.vbp
+
+##DEFINE TYPE Int16
+##DEFINE NAME int16
+##INCLUDE bytes_independent_types_impl.vbp
+
+##DEFINE TYPE Int32
+##DEFINE NAME int32
+##INCLUDE bytes_independent_types_impl.vbp
+
+##DEFINE TYPE Int64
+##DEFINE NAME int64
+##INCLUDE bytes_independent_types_impl.vbp
+
+##DEFINE TYPE Single
+##DEFINE NAME single
+##INCLUDE bytes_independent_types_impl.vbp
+
+##DEFINE TYPE Double
+##DEFINE NAME double
+##INCLUDE bytes_independent_types_impl.vbp
+End Module

@@ -1,0 +1,8 @@
+﻿
+##DEFAULT NAME ulong
+##DEFAULT STORE_TYPE Int64
+##DEFAULT OUT_TYPE UInt64
+##DEFAULT STORE_OUT int64_uint64
+##DEFAULT OUT_STORE uint64_int64
+
+##INCLUDE atomic_uint.vbp

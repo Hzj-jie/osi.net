@@ -1,0 +1,13 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <CommanderProps>true</CommanderProps>
+  </PropertyGroup>
+  <Import Project="commander.dep" />
+  <ItemGroup>
+    <Reference Include="osi.service.commander">
+      <HintPath>$(ServicePath)\commander\bin\$(Configuration)\osi.service.commander.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

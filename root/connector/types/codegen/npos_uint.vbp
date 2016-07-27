@@ -1,0 +1,495 @@
+﻿
+##DEFAULT TYPE npos_uint
+##DEFAULT SIGNED_TYPE Int32
+##DEFAULT CAST CUInt
+##DEFAULT ZERO uint32_0
+##DEFAULT MAX max_uint32
+##DEFAULT TO_BYTES uint32_bytes
+##DEFAULT FROM_BYTES bytes_uint32
+##DEFAULT HAS_NPOS True
+##DEFAULT HAS_INF True
+##DEFAULT HAS_VALUE True
+##DEFAULT ACCEPT_ZERO True
+##DEFAULT ACCEPT_MAX True
+
+Imports osi.root.constants
+Imports constants = osi.root.constants
+
+Partial Public Structure ##TYPE##
+    Implements IComparable, IComparable(Of ##TYPE##), ICloneable
+
+    Public Shared ReadOnly inf As ##TYPE##
+    Public Shared ReadOnly zero As ##TYPE##
+    Public Shared ReadOnly sizeof_value As UInt32
+
+    Shared Sub New()
+        assert(constants.npos < 0)
+        sizeof_value = sizeof(Of U##SIGNED_TYPE##)()
+        Dim x As ##TYPE## = Nothing
+        assert(Not x.npos())
+        assert(x.raw_value() = ##ZERO##)
+        inf = New ##TYPE##(constants.npos)
+        assert(inf.npos())
+        zero = New ##TYPE##(##ZERO##)
+        If ##ACCEPT_ZERO## Then
+            assert(Not zero.npos())
+        Else
+            assert(zero.npos())
+        End If
+    End Sub
+
+    Private ReadOnly i As U##SIGNED_TYPE##
+    Private ReadOnly n As Boolean
+
+#If "##SIGNED_TYPE##" <> "SByte" Then
+    ##DEFINE INPUT_SIGNED_TYPE SByte
+    ##DEFINE INPUT_UNSIGNED_TYPE Byte
+    ##INCLUDE npos_uint_ctor.vbp
+#End If
+
+#If "##SIGNED_TYPE##" <> "Int16" AndAlso "##SIGNED_TYPE##" <> "Short" Then
+    ##DEFINE INPUT_SIGNED_TYPE Int16
+    ##INCLUDE npos_uint_ctor.vbp
+#End If
+
+#If "##SIGNED_TYPE##" <> "Int32" AndAlso "##SIGNED_TYPE##" <> "Integer" Then
+    ##DEFINE INPUT_SIGNED_TYPE Int32
+    ##INCLUDE npos_uint_ctor.vbp
+#End If
+
+#If "##SIGNED_TYPE##" <> "Int64" AndAlso "##SIGNED_TYPE##" <> "Long" Then
+    ##DEFINE INPUT_SIGNED_TYPE Int64
+    ##INCLUDE npos_uint_ctor.vbp
+#End If
+
+#If "##SIGNED_TYPE##" <> "Decimal" Then
+    ##DEFINE INPUT_SIGNED_TYPE Decimal
+    ##DEFINE HAS_UNSIGNED_TYPE False
+    ##INCLUDE npos_uint_ctor.vbp
+#End If
+
+##DEFINE INPUT_SIGNED_TYPE ##SIGNED_TYPE##
+##INCLUDE npos_uint_ctor.vbp
+
+    Public Sub New(ByVal that As ##TYPE##)
+        i = that.i
+        n = that.n
+    End Sub
+
+    Public Shared Function to_bytes(ByVal this As ##TYPE##) As Byte()
+        Dim r() As Byte = Nothing
+#If Not ##ACCEPT_ZERO## OrElse Not ##ACCEPT_MAX## Then
+        ReDim r(sizeof_value - uint32_1)
+#Else
+        If this.npos() Then
+            ReDim r(sizeof_uint8 - uint32_1)
+        Else
+            ReDim r(sizeof_uint8 + sizeof_value - uint32_1)
+        End If
+#End If
+        Dim offset As UInt32 = uint32_0
+        assert(to_bytes(this, r, offset))
+        assert(offset = array_size(r))
+        Return r
+    End Function
+
+    Public Function to_bytes() As Byte()
+        Return to_bytes(Me)
+    End Function
+
+    Public Shared Function to_bytes(ByVal this As ##TYPE##, ByRef o() As Byte) As Boolean
+        o = to_bytes(this)
+        Return True
+    End Function
+
+    Public Function to_bytes(ByRef o() As Byte) As Boolean
+        Return to_bytes(Me, o)
+    End Function
+
+    Public Shared Function to_bytes(ByVal this As ##TYPE##,
+                                    ByVal o() As Byte,
+                                    ByRef offset As UInt32) As Boolean
+#If Not ##ACCEPT_ZERO## Then
+        If this.npos() Then
+            Return ##TO_BYTES##(##ZERO##, o, offset)
+        Else
+            Return ##TO_BYTES##(this.raw_value(), o, offset)
+        End If
+#ElseIf Not ##ACCEPT_MAX## Then
+        If this.npos() Then
+            Return ##TO_BYTES##(##MAX##, o, offset)
+        Else
+            Return ##TO_BYTES##(this.raw_value(), o, offset)
+        End If
+#Else
+        If this.npos() Then
+            Return bool_bytes(True, o, offset)
+        Else
+            Return bool_bytes(False, o, offset) AndAlso
+                   ##TO_BYTES##(this.raw_value(), o, offset)
+        End If
+#End If
+    End Function
+
+    Public Function to_bytes(ByVal o() As Byte, ByRef offset As UInt32) As Boolean
+        Return to_bytes(Me, o, offset)
+    End Function
+
+    Public Shared Function from_bytes(ByVal b() As Byte,
+                                      ByVal ii As UInt32,
+                                      ByVal il As UInt32,
+                                      ByRef o As ##TYPE##) As Boolean
+#If Not ##ACCEPT_ZERO## OrElse Not ##ACCEPT_MAX## Then
+        Dim u As U##SIGNED_TYPE## = ##ZERO##
+        If ##FROM_BYTES##(b, ii, il, u) Then
+            o = New ##TYPE##(u)
+            Return True
+        Else
+            Return False
+        End If
+#Else
+        If il < sizeof_uint8 Then
+            Return False
+        Else
+            Dim n As Boolean = False
+            If bytes_bool(b, n, ii) Then
+                If n Then
+                    If il = sizeof_uint8 Then
+                        o = inf
+                        Return True
+                    Else
+                        Return False
+                    End If
+                Else
+                    Dim u As U##SIGNED_TYPE## = ##ZERO##
+                    If ##FROM_BYTES##(b, ii, il - sizeof_uint8, u) Then
+                        o = New ##TYPE##(u)
+                        Return True
+                    Else
+                        Return False
+                    End If
+                End If
+            Else
+                Return False
+            End If
+        End If
+#End If
+    End Function
+
+    Public Shared Function from_bytes(ByVal b() As Byte,
+                                      ByRef o As ##TYPE##,
+                                      Optional ByRef offset As UInt32 = uint32_0) As Boolean
+#If Not ##ACCEPT_ZERO## OrElse Not ##ACCEPT_MAX## Then
+        Dim u As U##SIGNED_TYPE## = ##ZERO##
+        If ##FROM_BYTES##(b, u, offset) Then
+            o = New ##TYPE##(u)
+            Return True
+        Else
+            Return False
+        End If
+#Else
+        Dim n As Boolean = False
+        If bytes_bool(b, n, offset) Then
+            If n Then
+                o = inf
+                Return True
+            Else
+                Dim u As U##SIGNED_TYPE## = ##ZERO##
+                If ##FROM_BYTES##(b, u, offset) Then
+                    o = New ##TYPE##(u)
+                    Return True
+                Else
+                    Return False
+                End If
+            End If
+        Else
+            Return False
+        End If
+#End If
+    End Function
+
+#If ##HAS_VALUE## Then
+    Public Function value() As U##SIGNED_TYPE##
+#If Not DEBUG Then
+        assert(Not npos())
+#End If
+        Return raw_value()
+    End Function
+#End If
+
+    Private Function raw_value() As U##SIGNED_TYPE##
+#If DEBUG Then
+        assert(Not npos())
+#End If
+        Return i
+    End Function
+
+#If ##HAS_NPOS## Then
+    Public Function npos() As Boolean
+#Else
+    Private Function npos() As Boolean
+#End If
+        Return n
+    End Function
+
+#If ##HAS_INF## Then
+    Public Function infinite() As Boolean
+        Return npos()
+    End Function
+#End If
+
+    Public Shared Operator =(ByVal this As ##TYPE##, ByVal that As ##TYPE##) As Boolean
+        If this.npos() = that.npos() Then
+            If this.npos() Then
+                Return True
+            Else
+                Return this.raw_value() = that.raw_value()
+            End If
+        Else
+            Return False
+        End If
+    End Operator
+
+    Public Shared Operator <>(ByVal this As ##TYPE##, ByVal that As ##TYPE##) As Boolean
+        Return Not (this = that)
+    End Operator
+
+    Public Shared Operator =(ByVal this As ##TYPE##, ByVal that As ##SIGNED_TYPE##) As Boolean
+        If that < 0 AndAlso this.npos() Then
+            Return True
+        Else
+            Return this.raw_value() = ##CAST##(that)
+        End If
+    End Operator
+
+    Public Shared Operator <>(ByVal this As ##TYPE##, ByVal that As ##SIGNED_TYPE##) As Boolean
+        Return Not (this = that)
+    End Operator
+
+    Public Shared Operator =(ByVal this As ##SIGNED_TYPE##, ByVal that As ##TYPE##) As Boolean
+        Return that = this
+    End Operator
+
+    Public Shared Operator <>(ByVal this As ##SIGNED_TYPE##, ByVal that As ##TYPE##) As Boolean
+        Return that <> this
+    End Operator
+
+    Public Shared Operator =(ByVal this As ##TYPE##, ByVal that As U##SIGNED_TYPE##) As Boolean
+        If this.npos() Then
+            Return False
+        Else
+            Return this.raw_value() = that
+        End If
+    End Operator
+
+    Public Shared Operator <>(ByVal this As ##TYPE##, ByVal that As U##SIGNED_TYPE##) As Boolean
+        Return Not (this = that)
+    End Operator
+
+    Public Shared Operator =(ByVal this As U##SIGNED_TYPE##, ByVal that As ##TYPE##) As Boolean
+        Return that = this
+    End Operator
+
+    Public Shared Operator <>(ByVal this As U##SIGNED_TYPE##, ByVal that As ##TYPE##) As Boolean
+        Return that <> this
+    End Operator
+
+    Public Shared Operator <(ByVal this As ##TYPE##, ByVal that As ##TYPE##) As Boolean
+        If this.npos() Then
+            Return False
+        ElseIf that.npos() Then
+            Return True
+        Else
+            Return this.raw_value() < that.raw_value()
+        End If
+    End Operator
+
+    Public Shared Operator >(ByVal this As ##TYPE##, ByVal that As ##TYPE##) As Boolean
+        If that.npos() Then
+            Return False
+        ElseIf this.npos() Then
+            Return True
+        Else
+            Return this.raw_value() > that.raw_value()
+        End If
+    End Operator
+
+    Public Shared Operator <(ByVal this As ##TYPE##, ByVal that As ##SIGNED_TYPE##) As Boolean
+        If that <= 0 OrElse
+           this.npos() OrElse
+           this.raw_value() >= max_int32 Then
+            Return False
+        Else
+            Return this.raw_value() < ##CAST##(that)
+        End If
+    End Operator
+
+    Public Shared Operator >(ByVal this As ##TYPE##, ByVal that As ##SIGNED_TYPE##) As Boolean
+        If that < 0 Then
+            Return False
+        ElseIf this.npos() OrElse this.raw_value() > max_int32 Then
+            Return True
+        Else
+            Return this.raw_value() > ##CAST##(that)
+        End If
+    End Operator
+
+    Public Shared Operator <(ByVal this As ##SIGNED_TYPE##, ByVal that As ##TYPE##) As Boolean
+        Return that > this
+    End Operator
+
+    Public Shared Operator >(ByVal this As ##SIGNED_TYPE##, ByVal that As ##TYPE##) As Boolean
+        Return that < this
+    End Operator
+
+    Public Shared Operator <(ByVal this As ##TYPE##, ByVal that As U##SIGNED_TYPE##) As Boolean
+        If this.npos() Then
+            Return False
+        Else
+            Return this.raw_value() < that
+        End If
+    End Operator
+
+    Public Shared Operator >(ByVal this As ##TYPE##, ByVal that As U##SIGNED_TYPE##) As Boolean
+        If this.npos() Then
+            Return True
+        Else
+            Return this.raw_value() > that
+        End If
+    End Operator
+
+    Public Shared Operator <(ByVal this As U##SIGNED_TYPE##, ByVal that As ##TYPE##) As Boolean
+        Return that > this
+    End Operator
+
+    Public Shared Operator >(ByVal this As U##SIGNED_TYPE##, ByVal that As ##TYPE##) As Boolean
+        Return that < this
+    End Operator
+
+    Public Shared Operator <=(ByVal this As ##TYPE##, ByVal that As ##TYPE##) As Boolean
+        If that.npos() Then
+            Return True
+        ElseIf this.npos() Then
+            Return False
+        Else
+            Return this.raw_value() <= that.raw_value()
+        End If
+    End Operator
+
+    Public Shared Operator >=(ByVal this As ##TYPE##, ByVal that As ##TYPE##) As Boolean
+        If this.npos() Then
+            Return True
+        ElseIf that.npos() Then
+            Return False
+        Else
+            Return this.raw_value() >= that.raw_value()
+        End If
+    End Operator
+
+    Public Shared Operator <=(ByVal this As ##TYPE##, ByVal that As ##SIGNED_TYPE##) As Boolean
+        If that < 0 OrElse
+           this.npos() OrElse
+           this.raw_value() > max_int32 Then
+            Return False
+        Else
+            Return this.raw_value() <= ##CAST##(that)
+        End If
+    End Operator
+
+    Public Shared Operator >=(ByVal this As ##TYPE##, ByVal that As ##SIGNED_TYPE##) As Boolean
+        If this.npos() Then
+            Return True
+        ElseIf that < 0 Then
+            Return False
+        ElseIf this.raw_value() >= max_int32 Then
+            Return True
+        Else
+            Return this.raw_value() >= ##CAST##(that)
+        End If
+    End Operator
+
+    Public Shared Operator <=(ByVal this As ##SIGNED_TYPE##, ByVal that As ##TYPE##) As Boolean
+        Return that >= this
+    End Operator
+
+    Public Shared Operator >=(ByVal this As ##SIGNED_TYPE##, ByVal that As ##TYPE##) As Boolean
+        Return that <= this
+    End Operator
+
+    Public Shared Operator <=(ByVal this As ##TYPE##, ByVal that As U##SIGNED_TYPE##) As Boolean
+        If this.npos() Then
+            Return False
+        Else
+            Return this.raw_value() <= that
+        End If
+    End Operator
+
+    Public Shared Operator >=(ByVal this As ##TYPE##, ByVal that As U##SIGNED_TYPE##) As Boolean
+        If this.npos() Then
+            Return True
+        Else
+            Return this.raw_value() >= that
+        End If
+    End Operator
+
+    Public Shared Operator <=(ByVal this As U##SIGNED_TYPE##, ByVal that As ##TYPE##) As Boolean
+        Return that >= this
+    End Operator
+
+    Public Shared Operator >=(ByVal this As U##SIGNED_TYPE##, ByVal that As ##TYPE##) As Boolean
+        Return that <= this
+    End Operator
+
+    Public Shared Widening Operator CType(ByVal this As ##TYPE##) As ##SIGNED_TYPE##
+        If this.npos() Then
+            Return constants.npos
+        Else
+            assert(this.raw_value() <= max_int32)
+            Return CInt(this.raw_value())
+        End If
+    End Operator
+
+    Public Shared Widening Operator CType(ByVal this As ##TYPE##) As U##SIGNED_TYPE##
+        assert(Not this.npos())
+        Return this.raw_value()
+    End Operator
+
+#If ##HAS_VALUE## Then
+    Public Shared Operator +(Byval this As ##TYPE##) As U##SIGNED_TYPE##
+        Return this.raw_value()
+    End Operator    
+#End If
+
+    Public Overrides Function ToString() As String
+        If npos() Then
+            Return Convert.ToString(constants.npos)
+        Else
+            Return Convert.ToString(raw_value())
+        End If
+    End Function
+
+    Public Function CompareTo(ByVal that As ##TYPE##) As Int32 Implements IComparable(Of ##TYPE##).CompareTo
+        If npos() = that.npos() Then
+            Return 0
+        ElseIf npos() Then
+            Return 1
+        ElseIf that.npos() Then
+            Return -1
+        Else
+            Return raw_value().CompareTo(that.raw_value())
+        End If
+    End Function
+
+    Public Function CompareTo(ByVal that As Object) As Int32 Implements IComparable.CompareTo
+        Dim other As ##TYPE## = Nothing
+        If cast(Of ##TYPE##)(that, other) Then
+            Return CompareTo(other)
+        Else
+            Return CompareTo(zero)
+        End If
+    End Function
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return New ##TYPE##(Me)
+    End Function
+End Structure

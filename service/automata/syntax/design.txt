@@ -1,0 +1,46 @@
+﻿
+input	rlexer-output vector<uint32> / vector<rlexer.word.type>
+		type-str-mapping rlexer.export.types-mapping
+		ignore-types <set<uint32>>
+output	syntax tree
+node of syntax tree
+[rlexer.word.type] | [syntax.type, subnode1, subnode2, ...]
+
+syntax
+A [B,C] D [E,F]* [G,H]? [I,J]+
+
+[*] a matching group, say, [a,b,c], use , as separator, the relationship is 'or'
+'a', 'b' and 'c' are rlexer.word.type or syntax.type
+
+a matching group can be suffixed by
+?, optional-matching, no matter whether this matching group existing in the input, the expression goes to next step
++, multi-matching, has one or more matchings
+*, any-matching, has zero or more matchings
+
+say,
+input
+	name blank blank name start-bracket blank name blank name comma blank blank name name end-bracket blank start-paragraph name equal name semi-colon end-paragraph
+	void  func( int i,  int j) {i=j;}
+ignore-types
+	blank
+
+syntax
+	function					name name start-bracket [paramlist, empty-paramlist] end-bracket multi-sentence-paragraph
+	paramlist					[param-with-comma]* param
+	empty-paramlist				
+	param-with-comma			param comma
+	param						name name
+	paragraph					[sentence, multi-sentence-paragraph]
+	multi-sentence-paragraph	start-paragraph [sentence]* end-paragraph
+	sentence					[value-definition, value-clause, condition] semi-colon
+	value-defination			name name
+	value-clause				value assignment value
+	condition					KW-if start-bracket value end-bracket paragraph [else-condition]?
+	else-condition				KW-else paragraph
+	value						[name, comparasion, function-call]
+	comparasion					value-without-comparasion [less-than, great-than, less-or-equal, great-or-equal, equal] value
+	value-without-comparasion	[name, function-call]
+	function-call				name start-bracket [valuelist, empty-valuelist] end-bracket
+	valuelist					[value-with-comma]* value
+	empty-valuelist				
+	value-with-comma			value comma

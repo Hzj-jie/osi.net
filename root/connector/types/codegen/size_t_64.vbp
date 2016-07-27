@@ -1,0 +1,4 @@
+﻿
+##DEFINE TYPE size_t_64
+##DEFINE HAS_INF False
+##INCLUDE npos_uint64.vbp

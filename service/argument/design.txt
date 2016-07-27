@@ -1,0 +1,5 @@
+﻿
+support /abcDEF | -abcDEF as switchers, ask for a will return true
+support ~abc as switcher, ask and only ask for abc will return true
+support --something=somevalue, ask for something will return somevalue
+if no conflict, the parameter can be shorten automatically

@@ -1,0 +1,6 @@
+﻿
+##DEFINE OPERATOR \
+##DEFINE CLASS_TYPE long_divide
+##DEFINE TYPE Int64
+##DEFINE RND rnd_int64()
+##INCLUDE operator_perf.vbp

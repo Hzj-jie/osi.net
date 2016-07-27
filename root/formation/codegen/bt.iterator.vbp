@@ -1,0 +1,80 @@
+﻿
+##INCLUDE iterator.imports.vbp
+
+Public Module _bt_iterator
+##DEFINE PARENT_CLASS bt(Of T)
+##DEFINE TEMPLATE_TYPE (Of T)
+##INCLUDE iterator.ext.vbp
+End Module
+
+Partial Public Class bt(OF T)
+    Public Class iterator
+##DEFINE TYPE node
+##DEFINE DEFINE_OPERATOR_PLUS False
+##INCLUDE random_access_iterator.vbp
+
+        Private Function move_next(ByVal that As UInt32) As iterator
+            assert(that > 0)
+            Dim n As node = Nothing
+            n = p
+            For i As UInt32 = 0 To that - uint32_1
+                assert(Not n Is Nothing)
+                If n.has_right_child() Then
+                    n = n.right_child().min()
+                ElseIf n.is_left_subtree() Then
+                    n = n.parent()
+                Else
+                    While n.is_right_subtree()
+                        n = n.parent()
+                    End While
+                    If n.is_root() Then
+                        Return [end]
+                    Else
+                        assert(n.is_left_subtree())
+                        n = n.parent()
+                    End If
+                End If
+            Next
+            assert(Not n Is Nothing)
+            Return New iterator(n)
+        End Function
+
+        Private Function move_prev(ByVal that As UInt32) As iterator
+            assert(that > 0)
+            Dim n As node = Nothing
+            n = p
+            For i As UInt32 = 0 To that - uint32_1
+                assert(Not n Is Nothing)
+                If n.has_left_child() Then
+                    n = n.left_child().max()
+                ElseIf n.is_right_subtree() Then
+                    n = n.parent()
+                Else
+                    While n.is_left_subtree()
+                        n = n.parent()
+                    End While
+                    If n.is_root() Then
+                        Return [end]
+                    Else
+                        assert(n.is_right_subtree())
+                        n = n.parent()
+                    End If
+                End If
+            Next
+            assert(Not n Is Nothing)
+            Return New iterator(n)
+        End Function
+
+        Public Function value() As T
+            Return +Me
+        End Function
+
+        Public Shared Operator +(ByVal this As iterator) As T
+            Return If(this = [end], Nothing, this.p.value())
+        End Operator
+
+        Friend Function node() As node
+            Return p
+        End Function
+    End Class
+End Class

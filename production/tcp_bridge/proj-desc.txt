@@ -1,0 +1,42 @@
+﻿*Project Description*
+{project:description}
+
+just as the name of it, tcp-bridge is a bridge of tcp connections. technically said, it can receive data from one connection and send them to another connection, without need to care about whether the connections are incoming or outgoing. the typical usage is to bridge data from two intranet machines without opened port to the internet via a machine with opened port to the internet. to be more common, if you have several machines but only one of them, say A, can have directly opened port to the internet, while others have only internet access, you can use the A as the tcp bridge server, while other machines can also connect to the A, and A can bridge all the incoming connections to them. so you can serve the http requests / rdp / ssh, etc, any tcp based services on other machines without internet opened port, and without extra route settings.
+
+key technology, TcpClient in .net, procedural programming [url:http://procedure.codeplex.com], named tcp connection [url:http://geminibranch.codeplex.com]/osi/service/tcp.
+
+TcpClient is the base of this service, yes, it serves only tcp connections.
+procedural programming framework is to make the service fast and easy to maintain, make all the async io friendly, make timeout friendly, make lockfree possible. <the code of this service is only 135 lines in vb.net, include blank lines>
+named tcp connection is to make all the incoming connections meaningful and a little bit safer. <the target of named tcp connection is not for security, but it do can provide a safer connection.> you can provide a token for each connections, if one client cannot provide the correct token to the server, the connection will be dropped, so other users cannot connect to your tcp-bridge without the token to stole your incoming data.
+
+basic topology when you are using tcp bridge should be like the following graph,
+[image:tcp-bridge.png]
+the arrow shows the connection generation direction.
+
+{"
+some basic performance number
+- the bridge machine is thinkpad T60 with T2600 dual core 2.16G and 3G memory <it's much worse than normal machines nowaday>
+- a helper machine is thinkpad T43 with pentium M 1.86G and 2G memory, running an http server <osi/production/test_http_server in geminibranch>, and http request sender <osi/production/fake_http_request>
+- the two machines are connected by a normal home-use wireless route <only use the switch functionanity>, with 100M wired network
+- always uses 64 connections from the fake_http_request to tcpbridge or test_http_server
+- the qps and latency of the test_http_server on the helper machine from the bridge machine directly is about 1750 qps and 36ms. network usage is 4 - 5%. since the bridge machine is more powerful than the helper machine, the processor usage of helper machine is 100%, while the bridge machine is a little bit less than 50%
+1. single bridge, means the bridge machine has only one tcp bridge instance, it directly redirect requests from fake_http_request to the test_http_server. i have added this configuration file <tcp_bridge.ini> in the code. each request needs about 250 bytes without tcp and ip level heads. if using 4 different combinations of stream / socket and buffered / no-buffer, the result is about 730 QPS, and 87ms average latency. if using only socket + no-buffer, the result is about 800qps and 80ms. the network usage is around 3 - 4%. the bridge machine uses about 70 - 80% processor resource, while the helper machine is full, so the real qps should be a little bit higher.
+2. normal bridge scenario, the bridge machine has two tcp bridge instances. one accepts incoming connections from both fake_http_request and the other tcp bridge instances, while the other issues outgoing connections to both first tcp bridge instance and test_http_server. the configurations are almost same as tcp_bridge_http_open.ini and tcp_bridge_http_close.ini. i have just changed the send / receive rate to 2048 and max_connected to 512. using socket + no-buffer, the result is 720qps, 89 ms average latency.
+
+due to the protocol of tcp, the total outgoing connection count is limited to 65534, and the tcp bridge cannot reuse the connection before it has been released. which means a server can only accept 65534 connections through the bridge. though it's much larger than common http server capacity, you still need to aware the limitation.
+known to work with normal http server, rdp <remote desktop of windows>, ssh has not been tested, but it should be able to work.
+the resource needed by the tcp-bridge is pretty small, only 50M memory, and usually < 5% processor usage with one rdp connection.
+some lowend, home-use route cannot keep over 500 tcp connections, it may stop responding if too many connections have been generated.
+if you are using it to bridge the http requests, you may found some requests cannot be fulfilled, or the response contains content from some other http requests. it's due to the design of tcp bridge. the tcp bridge does not care about the upper stream protocol, so when the timeout setting is taking effect, some requests may be dropped entirely or partially if the processor / network resource limitation, since the timeout has happened already. but since the data is already going through the bridge, tcp bridge service would not think the connection is broken. if you did not actively set the reset_connection to true, the connection between tcp bridge and http server will be kept, so the data left will be treated as the response for the next request. usually you can avoid this kind of issue by 1. reduce the send / receive rate, but it will take longer to release a connection if the connection is not keep-alive in http level. 2. always reset_connection, the tcp service used by tcp bridge contains functionanity to automatically generate and maintain tcp connections, but it surely needs time and resource to do it. 3. use buffered transfer <set chunk_count to -1 or a positive number>, the perf of buffered transfer is a little bit lower than no-buffer transfer.
+"}
+
+i have put a snap of all the source code in the source code page, but for the latest change, please refer to [url:http://geminibranch.codeplex.com]/osi/production/tcp_bridge, and the dependences are all under /osi/service/tcp and /osi/root.
+
+{"/*******************************
+non-commercial use only, or please contact me if you need to use the code for commercial purpose
+except for the companies i am now working or was working at.
+*******************************/"}
+
+glad if it can help you, any question, feel free to drop me a msg via mail [url:mailto:hzj_jie@hotmail.com]
+
+thank you.

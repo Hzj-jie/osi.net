@@ -1,0 +1,8 @@
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ServicesAll>true</ServicesAll>
+  </PropertyGroup>
+  <!-- should import root.production.props before this file -->
+  <Import Project="$(ServicePath)\**\*.props" />
+</Project>

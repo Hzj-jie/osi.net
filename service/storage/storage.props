@@ -1,0 +1,13 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <StorageProps>true</StorageProps>
+  </PropertyGroup>
+  <Import Project="storage.dep" />
+  <ItemGroup>
+    <Reference Include="osi.service.storage">
+      <HintPath>$(ServicePath)\storage\bin\$(Configuration)\osi.service.storage.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

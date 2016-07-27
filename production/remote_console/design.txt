@@ -1,0 +1,3 @@
+﻿
+console_keyboard_agent -[iosys]-> bytes_receiver -[tcp]-> bytes_agent -[iosys]-> char_receiver -[char]-> process_io
+console_receiver <-[iosys]- bytes_agent <-[tcp]- bytes_receiver <-[iosys]- text_agent <-[string]- process_io

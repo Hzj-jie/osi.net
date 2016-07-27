@@ -1,0 +1,57 @@
+﻿
+# NOT IMPLEMENTED ^ begin of input
+# NOT IMPLEMENTED $ end of input
+\t \r \n \0 ... c-style escape
+
+[*] a matching group, say, [a,b,c], use , as separator, the relationship is 'or'
+'a', 'b' and 'c' can be strings
+if one more [ in a matching group, treat as a single character,
+say, [[] means match '[', i.e. do not accept matching group to be recursive
+a matching group can contain a match as 'empty string',
+say, [a,,c], means match 'a' or 'c' or 'empty string'
+[*], means all SINGLE characters
+
+a matching group can be suffixed by
+?, optional, no matter whether this matching group existing in the input, the expression goes to next step
+   if not matching, consume no character
++, has one or more matches
+*, has zero or more matches
+!, reverse, i.e. if the matching group does not match, go to next step
+   if it's right after a matching group, the characters consumed will be the length of longest string.
+   if it follows a [*], consume 1 character.
+   otherwise, consume 0 character.
+-, unmatched, i.e. if the matching group does not match, go to next step
+   always does not consume characters.
+say, [a]?bc can match both 'abc' and 'bc'
+[a]+bc can match 'abc', 'aabc' ..., but cannot match 'bc'
+so if want to match 'abc', 'aabc' and 'bc', [a,]+bc is acceptable
+but empty always matches only once, i.e. []+ == []
+[ab,c]! can match 'ad', 'dd', 'ac' ...
+several suffixes can be added after a matching group.
+
+predefined macros
+\w, all English characters, [\w] == [a,A,b,B,c,C,...,z,Z]
+\b, all blank characters, [\b] == [ ,\t,\f,\v,\r,\n]
+\W, all characters other than English character, \W == [\w]! == [a,A,b,B,c,C,...,z,Z]!
+\d, all digits, [\d] == [0,1,2,3,4,5,6,7,8,9]
+\D, all characters other than digits, \D == [\d]! == [0,1,2,3,4,5,6,7,8,9]!
+\,, as ',' or '\x2C'
+\[, as '[' or '\x5B'
+\], as ']' or '\x5D'
+\*, as '*' or '\x2A'
+\\, as '\' or '\x5C'
+
+the processing step,
+1. preprocessing stage
+  1.1 include external files, i.e. handle INCLUDE commands
+  1.2 define macros, i.e. handle DEFINE commands
+  1.3 expand macros, i.e.
+      [\w,0] == [a,A,b,B,c,C,...,z,Z,0]
+      [a,b][\d][c,d] == [a,b][0,1,2,3,4,5,6,7,8,9][c,d], i.e. a0c or b1d ...
+      but [a,b]\d[c,d] == [a,b]0,1,2,3,4,5,6,7,8,9[c,d], i.e. a0,1,2,3,4,5,6,7,8,9c
+
+2. matching groups preparation
+all the strings in a pairs of [] or between two pairs of [] will be translated to matching groups
+
+3. automata generation
+all the matching groups will be chained into an automata

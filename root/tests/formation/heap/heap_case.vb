@@ -1,0 +1,81 @@
+﻿
+Imports osi.root.constants
+Imports osi.root.connector
+Imports osi.root.formation
+Imports osi.root.utt
+
+Friend Class heap_case
+    Inherits random_run_case
+
+    Private Const size As Int64 = 1048576
+    Private ReadOnly h As heap(Of Int64) = Nothing
+    Private ReadOnly s() As Boolean = Nothing
+
+    Private Function validate() As Boolean
+        Return s.Length() > 0
+    End Function
+
+    Private Sub push()
+        Dim i As Int64 = 0
+        i = rnd_int(0, size)
+        If validate() Then
+            If Not s(i) Then
+                s(i) = True
+                Dim j As Int64 = 0
+                j = h.push(i)
+                assert_less(j, h.size())
+                assert_more_or_equal(j, 0)
+            End If
+        Else
+            h.push(i)
+        End If
+    End Sub
+
+    Private Function pop(ByRef i As Int64) As Boolean
+        If h.pop(i) Then
+            assert_less(i, size)
+            assert_more_or_equal(i, 0)
+            If validate() Then
+                assert_true(s(i))
+                s(i) = False
+            End If
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Private Sub pop()
+        Dim i As Int64 = 0
+        Dim j As Int64 = 0
+        If pop(i) AndAlso pop(j) AndAlso validate() Then
+            assert_more(i, j)
+        End If
+    End Sub
+
+    Private Sub [erase]()
+        If h.empty() Then
+            assert_false(h.erase(rnd_int(0, size)))
+        Else
+            assert_true(h.erase(rnd_int(0, h.size())))
+        End If
+    End Sub
+
+    Public Sub New(Optional ByVal validate As Boolean = True)
+        h = New heap(Of Int64)()
+        If validate Then
+            ReDim s(size - 1)
+        Else
+            ReDim s(-1)
+        End If
+        insert_call(0.475, AddressOf push)
+        insert_call(0.175, AddressOf pop)
+        insert_call(0.35, AddressOf [erase])
+    End Sub
+
+    Public Overrides Function finish() As Boolean
+        memclr(s)
+        h.clear()
+        Return MyBase.finish()
+    End Function
+End Class
