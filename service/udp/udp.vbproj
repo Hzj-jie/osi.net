@@ -56,12 +56,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="constants.vb" />
-    <Compile Include="device\client_datagram_adapter.indicator.vb" />
-    <Compile Include="device\client_datagram_adapter.vb" />
+    <Compile Include="device\delegator_datagram_adapter.indicator.vb" />
+    <Compile Include="device\delegator_datagram_adapter.vb" />
     <Compile Include="device\connection.vb" />
     <Compile Include="device\connector.detail.vb" />
     <Compile Include="device\connector.vb" />
-    <Compile Include="device\ref_client.vb" />
+    <Compile Include="device\delegator.vb" />
     <Compile Include="extension.vb" />
     <Compile Include="powerpoint.create.vb" />
     <Compile Include="powerpoint.vb" />

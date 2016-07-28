@@ -7,7 +7,7 @@ Imports osi.service.device
 Imports osi.service.selector
 
 Partial Public NotInheritable Class connector
-    Implements iasync_device_creator(Of ref_client)
+    Implements iasync_device_creator(Of delegator)
 
     Private ReadOnly p As powerpoint
 
@@ -16,9 +16,9 @@ Partial Public NotInheritable Class connector
         Me.p = p
     End Sub
 
-    Public Function create(ByRef o As idevice(Of async_getter(Of ref_client))) As Boolean _
-                          Implements idevice_creator(Of async_getter(Of ref_client)).create
-        o = connection.[New](New async_preparer(Of ref_client)(AddressOf connect))
+    Public Function create(ByRef o As idevice(Of async_getter(Of delegator))) As Boolean _
+                          Implements idevice_creator(Of async_getter(Of delegator)).create
+        o = connection.[New](New async_preparer(Of delegator)(AddressOf connect))
         Return True
     End Function
 End Class

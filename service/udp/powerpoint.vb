@@ -1,6 +1,7 @@
 ﻿
 Imports System.Net.Sockets
 Imports osi.root.connector
+Imports osi.service.device
 
 Partial Public Class powerpoint
     Public ReadOnly host_or_ip As String
@@ -13,6 +14,9 @@ Partial Public Class powerpoint
     Private ReadOnly send_rate_sec As UInt32
     Private ReadOnly receive_rate_sec As UInt32
     Private ReadOnly overhead As UInt32
+    Private ReadOnly _ref_client_creator As idevice_creator(Of delegator)
+    Private ReadOnly _ref_client_auto_exporter As iauto_device_exporter(Of delegator)
+    Private ReadOnly _ref_client_manual_exporter As imanual_device_exporter(Of delegator)
 
     Private Sub New(ByVal host_or_ip As String,
                     ByVal remote_port As UInt16,
@@ -31,9 +35,29 @@ Partial Public Class powerpoint
         Me.address_family = If(ipv4, AddressFamily.InterNetwork, AddressFamily.InterNetworkV6)
 
         Me.overhead = If(ipv4, 28, 48)
+        Me.identity = strcat("udp@port:", local_port, "@remote:", host_or_ip, ":", remote_port)
+
+        If String.IsNullOrEmpty(host_or_ip) Then
+
+        End If
     End Sub
 
     Public Function transceive_timeout() As transceive_timeout
         Return New transceive_timeout(send_rate_sec, receive_rate_sec, overhead)
+    End Function
+
+    Public Function ref_client_creator() As idevice_creator(Of delegator)
+        assert(Not _ref_client_creator Is Nothing)
+        Return _ref_client_creator
+    End Function
+
+    Public Function ref_client_auto_exporter() As iauto_device_exporter(Of delegator)
+        assert(Not _ref_client_auto_exporter Is Nothing)
+        Return _ref_client_auto_exporter
+    End Function
+
+    Public Function ref_client_manual_exporter() As imanual_device_exporter(Of delegator)
+        assert(Not _ref_client_manual_exporter Is Nothing)
+        Return _ref_client_manual_exporter
     End Function
 End Class

@@ -7,36 +7,36 @@ Imports osi.service.selector
 Imports envs = osi.root.envs
 
 Public NotInheritable Class connection
-    Public Shared Function [New](ByVal c As async_getter(Of ref_client)) As idevice(Of async_getter(Of ref_client))
+    Public Shared Function [New](ByVal c As async_getter(Of delegator)) As idevice(Of async_getter(Of delegator))
         Return c.make_device(AddressOf validate, AddressOf close, AddressOf identity)
     End Function
 
-    Public Shared Function [New](ByVal c As ref_client) As idevice(Of ref_client)
+    Public Shared Function [New](ByVal c As delegator) As idevice(Of delegator)
         Return c.make_device(AddressOf validate, AddressOf close, AddressOf identity)
     End Function
 
     Public Shared Function [New](ByVal sources() As IPEndPoint,
                                  ByVal c As UdpClient,
-                                 ByVal p As powerpoint) As idevice(Of ref_client)
-        Return [New](New ref_client(sources, c, p))
+                                 ByVal p As powerpoint) As idevice(Of delegator)
+        Return [New](New delegator(sources, c, p))
     End Function
 
-    Private Shared Sub close(ByVal c As ref_client)
+    Private Shared Sub close(ByVal c As delegator)
         assert(Not c Is Nothing)
         If envs.udp_trace Then
             raise_error("connection ",
                         identity(c),
                         " has been closed by closer delegate")
         End If
-        c.no_refer_client().shutdown()
+        c.shutdown()
     End Sub
 
-    Private Shared Function validate(ByVal c As ref_client) As Boolean
+    Private Shared Function validate(ByVal c As delegator) As Boolean
         assert(Not c Is Nothing)
-        Return c.no_refer_client().alive()
+        Return c.alive()
     End Function
 
-    Private Shared Function identity(ByVal c As ref_client) As String
+    Private Shared Function identity(ByVal c As delegator) As String
         assert(Not c Is Nothing)
         Return c.id
     End Function

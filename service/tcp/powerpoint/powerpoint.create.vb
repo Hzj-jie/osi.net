@@ -39,24 +39,23 @@ Partial Public Class powerpoint
         End Sub
 
         Public Sub New()
-            Dim this As creator = Nothing
-            this = without_token().
-                   without_host_or_ip().
-                   without_port().
-                   without_ipv4().
-                   without_connecting_timeout_ms().
-                   without_send_rate_sec().
-                   without_response_timeout_ms().
-                   without_receive_rate_sec().
-                   without_max_connecting().
-                   without_max_connected().
-                   without_no_delay().
-                   without_max_lifetime_ms().
-                   without_is_outgoing().
-                   without_enable_keepalive().
-                   without_first_keepalive_ms().
-                   without_keepalive_interval_ms().
-                   without_tokener()
+            Me.without_token().
+               without_host_or_ip().
+               without_port().
+               without_ipv4().
+               without_connecting_timeout_ms().
+               without_send_rate_sec().
+               without_response_timeout_ms().
+               without_receive_rate_sec().
+               without_max_connecting().
+               without_max_connected().
+               without_no_delay().
+               without_max_lifetime_ms().
+               without_is_outgoing().
+               without_enable_keepalive().
+               without_first_keepalive_ms().
+               without_keepalive_interval_ms().
+               without_tokener()
         End Sub
 
         Public Shared Function [New]() As creator

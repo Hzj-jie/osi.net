@@ -9,23 +9,23 @@ Imports osi.service.device
 Imports osi.service.udp
 Imports osi.tests.service.device
 
-Public Class client_datagram_adapter_fix_source_test
-    Inherits client_datagram_adapter_test
+Public Class delegator_datagram_adapter_fix_source_test
+    Inherits delegator_datagram_adapter_test
 
     Public Sub New()
         MyBase.New(True, False)
     End Sub
 End Class
 
-Public Class client_datagram_adapter_missing_target_test
-    Inherits client_datagram_adapter_test
+Public Class delegator_datagram_adapter_missing_target_test
+    Inherits delegator_datagram_adapter_test
 
     Public Sub New()
         MyBase.New(False, True)
     End Sub
 End Class
 
-Public Class client_datagram_adapter_test
+Public Class delegator_datagram_adapter_test
     Inherits complete_io_test2(Of datagram_flow_adapter)
 
     Private ReadOnly fixed_source As Boolean
@@ -62,17 +62,17 @@ Public Class client_datagram_adapter_test
         Dim c As UdpClient = Nothing
         c = New UdpClient(r.Port())
         c.set_receive_buffer_size(8192 * 512)
-        Return New datagram_flow_adapter(New client_datagram_adapter(c,
-                                                                     If(fixed_source, {l}, Nothing),
-                                                                     If(missing_target, Nothing, l),
-                                                                     New transceive_timeout(1024, 1024)))
+        Return New datagram_flow_adapter(New delegator_datagram_adapter(c,
+                                                                        If(fixed_source, {l}, Nothing),
+                                                                        If(missing_target, Nothing, l),
+                                                                        New transceive_timeout(1024, 1024)))
     End Function
 
     Protected Overrides Function create_send_flow() As datagram_flow_adapter
         Dim c As UdpClient = Nothing
         c = New UdpClient(l.Port())
         c.set_send_buffer_size(8192 * 512)
-        Return New datagram_flow_adapter(New client_datagram_adapter(c,
+        Return New datagram_flow_adapter(New delegator_datagram_adapter(c,
                                                                      If(fixed_source, {r}, Nothing),
                                                                      r,
                                                                      New transceive_timeout(1024, 1024)))

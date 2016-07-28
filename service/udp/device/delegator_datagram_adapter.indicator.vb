@@ -3,13 +3,13 @@ Imports System.Net.Sockets
 Imports osi.root.connector
 Imports osi.service.device
 
-Partial Public Class client_datagram_adapter
-    Private Class client_indicator
+Partial Public Class delegator_datagram_adapter
+    Private Class delegator_indicator
         Implements sync_indicator
 
-        Private ReadOnly u As UdpClient
+        Private ReadOnly u As delegator
 
-        Public Sub New(ByVal u As UdpClient)
+        Public Sub New(ByVal u As delegator)
             assert(Not u Is Nothing)
             Me.u = u
         End Sub

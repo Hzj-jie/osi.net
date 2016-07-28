@@ -24,13 +24,13 @@ Partial Public NotInheritable Class connector
         Return r
     End Function
 
-    Private Function connect(ByVal r As pointer(Of ref_client)) As event_comb
+    Private Function connect(ByVal r As pointer(Of delegator)) As event_comb
         assert(Not p Is Nothing)
         Dim ec As event_comb = Nothing
         Dim result As pointer(Of IPHostEntry) = Nothing
         Return New event_comb(Function() As Boolean
                                   If String.IsNullOrEmpty(p.host_or_ip) Then
-                                      Return eva(r, New ref_client(Nothing, new_client(Nothing))) AndAlso
+                                      Return eva(r, New delegator(Nothing, new_client(Nothing))) AndAlso
                                              goto_end()
                                   Else
                                       result = New pointer(Of IPHostEntry)()
@@ -57,7 +57,7 @@ Partial Public NotInheritable Class connector
                                          Not isemptyarray((+result).AddressList()) Then
                                           selected_remote_host = (+result).AddressList()(0)
                                       End If
-                                      Return eva(r, New ref_client(eps, new_client(selected_remote_host), p)) AndAlso
+                                      Return eva(r, New delegator(eps, new_client(selected_remote_host), p)) AndAlso
                                              goto_end()
                                   Else
                                       Return False

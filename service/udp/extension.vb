@@ -125,7 +125,7 @@ Public Module _extension
     End Function
 
     <Extension()> Public Function alive(ByVal u As UdpClient) As Boolean
-        Return u.active()
+        Return True
     End Function
 
     <Extension()> Public Sub shutdown(ByVal u As UdpClient)

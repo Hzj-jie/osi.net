@@ -22,7 +22,13 @@ Partial Public Class powerpoint
         End Sub
 
         Public Sub New()
-            Dim this As creator = Nothing
+            Me.without_host_or_ip().
+               without_ipv4().
+               without_local_port().
+               without_receive_rate_sec().
+               without_remote_port().
+               without_response_timeout_ms().
+               without_send_rate_sec()
         End Sub
 
         Public Shared Function [New]() As creator
@@ -52,7 +58,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_remote_port(ByVal port As UInt16) As creator
-            Me.remote_port = remote_port
+            Me.remote_port = port
             Return Me
         End Function
 
@@ -61,7 +67,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function without_remote_port() As creator
-            Return with_remote_port(uint16_0)
+            Return with_remote_port(socket_invalid_port)
         End Function
 
         Public Function with_remote_endpoint(ByVal ep As IPEndPoint) As creator
@@ -88,7 +94,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function without_local_port() As creator
-            Return with_local_port(uint16_0)
+            Return with_local_port(socket_invalid_port)
         End Function
 
         Public Function with_response_timeout_ms(ByVal ms As Int64) As creator
@@ -185,7 +191,8 @@ Partial Public Class powerpoint
                                    local_port,
                                    response_timeout_ms,
                                    send_rate_sec,
-                                   receive_rate_sec, ipv4)
+                                   receive_rate_sec,
+                                   ipv4)
                 Return True
             Else
                 Return False

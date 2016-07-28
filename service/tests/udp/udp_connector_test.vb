@@ -22,18 +22,19 @@ Public Class udp_connector_test
             MyBase.New()
             c = New connector(powerpoint.creator.[New]().
                               with_host_or_ip("www.example.org").
-                              with_remote_port(10000).create())
+                              with_remote_port(10000).
+                              with_ipv4().create())
         End Sub
 
         Public Overrides Function create() As event_comb
-            Dim r As pointer(Of ref_client) = Nothing
+            Dim r As pointer(Of delegator) = Nothing
             Dim ec As event_comb = Nothing
             Return New event_comb(Function() As Boolean
-                                      Dim d As idevice(Of async_getter(Of ref_client)) = Nothing
+                                      Dim d As idevice(Of async_getter(Of delegator)) = Nothing
                                       If assert_true(c.create(d)) AndAlso
                                          assert_not_nothing(d) AndAlso
                                          assert_not_nothing(d.get()) Then
-                                          r = New pointer(Of ref_client)()
+                                          r = New pointer(Of delegator)()
                                           ec = d.get().get(r)
                                           Return waitfor(ec) AndAlso
                                                  goto_next()
@@ -44,8 +45,8 @@ Public Class udp_connector_test
                                   Function() As Boolean
                                       If assert_true(ec.end_result()) AndAlso
                                          assert_false(r.empty()) Then
-                                          assert_not_nothing((+r).client())
-                                          assert_false((+r).sources.null_or_empty())
+                                          assert_true((+r).active())
+                                          assert_true((+r).fixed_sources())
                                           assert_not_nothing((+r).p)
                                       End If
                                       Return goto_end()
