@@ -4,6 +4,7 @@ Imports osi.root.utt
 Imports osi.service.commander
 Imports osi.service.secure
 
+#If 0 Then
 Public NotInheritable Class token2_test
     Inherits chained_case_wrapper
 
@@ -29,3 +30,4 @@ Public NotInheritable Class token2_test
         End Sub
     End Class
 End Class
+#End If
