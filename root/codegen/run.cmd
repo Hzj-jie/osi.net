@@ -13,4 +13,5 @@ call "unchecked_int2\unchecked_int2.exe" > "unchecked_int2\operators.vb"
 call "delegate\delegate.exe" "delegate\delegate.vb"
 call "tfver\tfver.cmd" > "tfver\tfver.vb"
 call "gitver\gitver.cmd" > "gitver\gitver.vb"
+exit /b 0
 
