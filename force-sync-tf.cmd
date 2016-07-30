@@ -1,4 +1,4 @@
 
 tf undo /recursive . /noprompt
-tf get * /recursive
+tf get * /recursive /overwrite /noprompt
 
