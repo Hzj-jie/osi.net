@@ -1,0 +1,3 @@
+
+tf get * /recursive
+

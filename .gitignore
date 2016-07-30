@@ -6,3 +6,7 @@
 *.un~
 *.vspscc
 *.suo
+
+root/envs/buildInfo.vb
+root/envs/tfver.vb
+root/envs/gitver.vb

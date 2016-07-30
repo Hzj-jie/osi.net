@@ -1,4 +1,3 @@
 
-tf get * /recursive
-git pull
+sync-tf.cmd
 
