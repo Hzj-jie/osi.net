@@ -62,6 +62,8 @@
     <Compile Include="device\connector.detail.vb" />
     <Compile Include="device\connector.vb" />
     <Compile Include="device\delegator.vb" />
+    <Compile Include="device\listener.default_accepters.vb" />
+    <Compile Include="device\listener.vb" />
     <Compile Include="extension.vb" />
     <Compile Include="powerpoint.create.vb" />
     <Compile Include="powerpoint.vb" />

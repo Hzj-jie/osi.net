@@ -109,6 +109,8 @@
     <Compile Include="device_pool\get_all.vb" />
     <Compile Include="device\device_adapter.vb" />
     <Compile Include="device_pool\T\device_pool_T.closer.vb" />
+    <Compile Include="dispenser\dispenser.vb" />
+    <Compile Include="dispenser\dispenser.accepter.vb" />
     <Compile Include="io\transmitter.vb" />
     <Compile Include="manager\construction\registry.vb" />
     <Compile Include="manager\construction\wrapper.parameter.vb" />

@@ -23,5 +23,6 @@ Namespace constants
         Public Const block_secondary_type_name As String = "block"
         Public Const datagram_secondary_type_name As String = "datagram"
         Public Const piece_dev_secondary_type_name As String = "piece-dev"
+        Public Const default_sense_timeout_ms As Int64 = 16
     End Module
 End Namespace

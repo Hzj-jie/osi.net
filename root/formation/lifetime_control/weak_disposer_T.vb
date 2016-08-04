@@ -50,7 +50,7 @@ Public Class weak_disposer(Of T)
         MyBase.New(init, disposer)
     End Sub
 
-    Public Shadows Sub dispose()
+    Public Overloads Sub dispose()
         MyBase.dispose()
         GC.SuppressFinalize(Me)
     End Sub

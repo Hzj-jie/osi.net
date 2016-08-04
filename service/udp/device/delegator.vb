@@ -14,6 +14,8 @@ Imports envs = osi.root.envs
 ' Receive data from a certain set of remote hosts.
 <type_attribute()>
 Public Class delegator
+    Inherits disposer(Of UdpClient)
+
     Public ReadOnly p As powerpoint
     Public ReadOnly id As String
 #If SINGLE_OPERATION Then
@@ -33,6 +35,7 @@ Public Class delegator
     End Sub
 
     Public Sub New(ByVal sources() As IPEndPoint, ByVal c As UdpClient, ByVal p As powerpoint)
+        MyBase.New()
         assert(Not c Is Nothing)
 #If SINGLE_OPERATION Then
         send_lock = New ref(Of event_comb_lock)()
@@ -109,54 +112,6 @@ Public Class delegator
 #End If
     End Function
 
-    Private Shared Function match_endpoint(ByVal received_from As IPEndPoint, ByVal expected As IPEndPoint) As Boolean
-        assert(Not received_from Is Nothing)
-        If expected Is Nothing Then
-            Return False
-        End If
-        If received_from.Equals(expected) Then
-            Return True
-        Else
-            Dim rp As UInt16 = uint16_0
-            Dim ep As UInt16 = uint16_0
-            rp = received_from.Port()
-            ep = expected.Port()
-            If rp = ep OrElse ep = uint16_0 Then
-                ' If port has not been set, treat them as equal.
-                Dim ea As IPAddress = Nothing
-                ea = expected.Address()
-                If ea.Equals(IPAddress.Any) OrElse ea.Equals(IPAddress.IPv6Any) Then
-                    Return True
-                End If
-
-                Dim ra As IPAddress = Nothing
-                ra = received_from.Address()
-                If ra.Equals(ea) Then
-                    Return True
-                Else
-                    Dim rb() As Byte = Nothing
-                    Dim eb() As Byte = Nothing
-                    rb = ra.GetAddressBytes()
-                    eb = ea.GetAddressBytes()
-                    If array_size(rb) = array_size(eb) Then
-                        assert(Not isemptyarray(rb))
-                        For i As UInt32 = uint32_0 To array_size(rb) - uint32_1
-                            ' Make it simpler, if one byte is 255, treat it as broadcast mask.
-                            If rb(i) <> eb(i) AndAlso eb(i) <> max_uint8 Then
-                                Return False
-                            End If
-                        Next
-                        Return True
-                    Else
-                        Return False
-                    End If
-                End If
-            Else
-                Return False
-            End If
-        End If
-    End Function
-
     Private Function unlock_receive(ByVal result As pointer(Of Byte()),
                                     ByVal source As pointer(Of IPEndPoint)) As event_comb
         Dim ec As event_comb = Nothing
@@ -173,7 +128,7 @@ Public Class delegator
                                       If fixed_sources() Then
                                           assert(Not +source Is Nothing)
                                           For i As UInt32 = uint32_0 To sources.size() - uint32_1
-                                              If match_endpoint((+source), sources(i)) Then
+                                              If (+source).match_endpoint(sources(i)) Then
                                                   Return goto_end()
                                               End If
                                           Next
@@ -205,5 +160,11 @@ Public Class delegator
 
     Public Sub shutdown()
         c.shutdown()
+    End Sub
+
+    Protected Overrides Sub dispose(ByVal c As UdpClient)
+        If Not c Is Nothing Then
+            c.Close()
+        End If
     End Sub
 End Class

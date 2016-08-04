@@ -14,9 +14,9 @@ Partial Public Class powerpoint
     Private ReadOnly send_rate_sec As UInt32
     Private ReadOnly receive_rate_sec As UInt32
     Private ReadOnly overhead As UInt32
-    Private ReadOnly _ref_client_creator As idevice_creator(Of delegator)
-    Private ReadOnly _ref_client_auto_exporter As iauto_device_exporter(Of delegator)
-    Private ReadOnly _ref_client_manual_exporter As imanual_device_exporter(Of delegator)
+    Private ReadOnly _delegator_creator As idevice_creator(Of delegator)
+    Private ReadOnly _delegator_auto_exporter As iauto_device_exporter(Of delegator)
+    Private ReadOnly _delegator_manual_exporter As imanual_device_exporter(Of delegator)
 
     Private Sub New(ByVal host_or_ip As String,
                     ByVal remote_port As UInt16,
@@ -46,18 +46,18 @@ Partial Public Class powerpoint
         Return New transceive_timeout(send_rate_sec, receive_rate_sec, overhead)
     End Function
 
-    Public Function ref_client_creator() As idevice_creator(Of delegator)
-        assert(Not _ref_client_creator Is Nothing)
-        Return _ref_client_creator
+    Public Function delegator_creator() As idevice_creator(Of delegator)
+        assert(Not _delegator_creator Is Nothing)
+        Return _delegator_creator
     End Function
 
-    Public Function ref_client_auto_exporter() As iauto_device_exporter(Of delegator)
-        assert(Not _ref_client_auto_exporter Is Nothing)
-        Return _ref_client_auto_exporter
+    Public Function delegator_auto_exporter() As iauto_device_exporter(Of delegator)
+        assert(Not _delegator_auto_exporter Is Nothing)
+        Return _delegator_auto_exporter
     End Function
 
-    Public Function ref_client_manual_exporter() As imanual_device_exporter(Of delegator)
-        assert(Not _ref_client_manual_exporter Is Nothing)
-        Return _ref_client_manual_exporter
+    Public Function delegator_manual_exporter() As imanual_device_exporter(Of delegator)
+        assert(Not _delegator_manual_exporter Is Nothing)
+        Return _delegator_manual_exporter
     End Function
 End Class

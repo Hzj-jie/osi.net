@@ -214,17 +214,27 @@ Public Module _alloc
 #End If
     End Function
 
-    Public Function alloc(Of valueT)() As valueT
+    Public Function alloc(Of T)() As T
 #If cached_alloc Then
-        Return alloc_cache(Of valueT).allocate()
+        Return alloc_cache(Of T).allocate()
 #Else
         Try
-            'valueT As New
-            Return Activator.CreateInstance(Of valueT)()
+            'T As New
+            Return Activator.CreateInstance(Of T)()
         Catch
             'there is not a constructor without parameters
-            Return alloc(GetType(valueT))
+            Return alloc(GetType(T))
         End Try
 #End If
+    End Function
+
+    ' Provides a shortcut to write
+    ' Dim x As a_very_long_type(Of some_parameter_1, some_parameter_2) = Nothing
+    ' x = _new(x)
+    ' Or even,
+    ' _new(x)
+    Public Function _new(Of T As New)(ByRef i As T) As T
+        i = New T()
+        Return i
     End Function
 End Module

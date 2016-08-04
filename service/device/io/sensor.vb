@@ -1,5 +1,6 @@
 ﻿
 Imports System.Runtime.CompilerServices
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.constants
 Imports osi.root.procedure
@@ -9,9 +10,46 @@ Public Interface sync_indicator
     Function indicate(ByRef pending As Boolean) As Boolean
 End Interface
 
+Public Class sync_indicator_adapter
+    Implements sync_indicator
+
+    Private ReadOnly f As _do(Of Boolean, Boolean)
+
+    Public Sub New(ByVal f As _do(Of Boolean, Boolean))
+        assert(Not f Is Nothing)
+        Me.f = f
+    End Sub
+
+    Public Sub New(ByVal f As Func(Of Boolean))
+        Me.New(Function(ByRef o As Boolean) As Boolean
+                   o = f()
+                   Return True
+               End Function)
+    End Sub
+
+    Public Function indicate(ByRef pending As Boolean) As Boolean Implements sync_indicator.indicate
+        Return f(pending)
+    End Function
+End Class
+
 Public Interface indicator
     Function indicate(ByVal pending As pointer(Of Boolean)) As event_comb
 End Interface
+
+Public Class indicator_adapter
+    Implements indicator
+
+    Private ReadOnly f As Func(Of pointer(Of Boolean), event_comb)
+
+    Public Sub New(ByVal f As Func(Of pointer(Of Boolean), event_comb))
+        assert(Not f Is Nothing)
+        Me.f = f
+    End Sub
+
+    Public Function indicate(ByVal pending As pointer(Of Boolean)) As event_comb Implements indicator.indicate
+        Return f(pending)
+    End Function
+End Class
 
 Public Interface sensor
     'pending shows whether there are pending data to read
@@ -20,7 +58,35 @@ Public Interface sensor
                    ByVal timeout_ms As Int64) As event_comb
 End Interface
 
+Public Class sensor_adapter
+    Implements sensor
+
+    Private ReadOnly f As Func(Of pointer(Of Boolean), Int64, event_comb)
+
+    Public Sub New(ByVal f As Func(Of pointer(Of Boolean), Int64, event_comb))
+        assert(Not f Is Nothing)
+        Me.f = f
+    End Sub
+
+    Public Function sense(ByVal pending As pointer(Of Boolean),
+                          ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
+        Return f(pending, timeout_ms)
+    End Function
+End Class
+
 Public Module _sensor
+    <Extension()> Public Function as_sensor(ByVal f As Func(Of Boolean)) As sensor
+        Return New indicator_sensor_adapter(New sync_indicator_adapter(f))
+    End Function
+
+    <Extension()> Public Function as_sensor(ByVal f As _do(Of Boolean, Boolean)) As sensor
+        Return New indicator_sensor_adapter(New sync_indicator_adapter(f))
+    End Function
+
+    <Extension()> Public Function as_sensor(ByVal f As Func(Of pointer(Of Boolean), event_comb)) As sensor
+        Return New indicator_sensor_adapter(New indicator_adapter(f))
+    End Function
+
     <Extension()> Public Function sense(ByVal this As sensor,
                                         ByVal timeout_ms As Int64) As event_comb
         assert(Not this Is Nothing)

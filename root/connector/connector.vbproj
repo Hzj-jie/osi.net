@@ -89,7 +89,7 @@
     <Compile Include="math.vb" />
     <Compile Include="memory_stream.vb" />
     <Compile Include="net.vb" />
-    <Compile Include="one_off.vb" />
+    <Compile Include="types\one_off.vb" />
     <Compile Include="operators.vb" />
     <Compile Include="process_thread.vb" />
     <Compile Include="error_handler\raise_error.vb" />
