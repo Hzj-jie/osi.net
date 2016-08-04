@@ -10,3 +10,4 @@
 root/envs/buildInfo.vb
 root/envs/tfver.vb
 root/envs/gitver.vb
+root/tests//connector/string_null_or_whitespace_perf_exe.vb

@@ -1,4 +1,5 @@
 ﻿
+Imports osi.root.template
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.utils
@@ -10,8 +11,8 @@ Public Class pipe(Of T)
     Private ReadOnly max_size As UInt32
     Private ReadOnly retries As Int32
     Private ReadOnly q As qless2(Of T)
-    Private ReadOnly input_pending As pending_io_punishment
-    Private ReadOnly output_pending As pending_io_punishment
+    Private ReadOnly input_pending As pending_io_punishment(Of _true)
+    Private ReadOnly output_pending As pending_io_punishment(Of _true)
 
     Public Sub New(ByVal max_size As UInt32,
                    ByVal retries As Int32,
@@ -23,8 +24,8 @@ Public Class pipe(Of T)
         Me.retries = retries
         q = New qless2(Of T)()
         If enable_io_pending_punishment Then
-            input_pending = New pending_io_punishment()
-            output_pending = New pending_io_punishment()
+            _new(input_pending)
+            _new(output_pending)
         End If
     End Sub
 
@@ -51,6 +52,10 @@ Public Class pipe(Of T)
                assert(Not output_pending Is Nothing)
     End Function
 
+    Public Sub clear()
+        q.clear()
+    End Sub
+
     Public Function size() As UInt32
         Return q.size()
     End Function
@@ -60,7 +65,7 @@ Public Class pipe(Of T)
     End Function
 
     Private Function unlimited(ByVal v As Func(Of Boolean),
-                               ByVal using_pending As pending_io_punishment) As event_comb
+                               ByVal using_pending As pending_io_punishment(Of _true)) As event_comb
         assert(retries < 0)
         assert(Not v Is Nothing)
         Return New event_comb(Function() As Boolean
@@ -84,7 +89,7 @@ Public Class pipe(Of T)
     End Function
 
     Private Function limited(ByVal v As Func(Of Boolean),
-                             ByVal using_pending As pending_io_punishment) As event_comb
+                             ByVal using_pending As pending_io_punishment(Of _true)) As event_comb
         assert(retries >= 0)
         assert(Not v Is Nothing)
         Dim c As Int32 = 0

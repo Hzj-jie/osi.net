@@ -4,12 +4,13 @@ Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utils
 
+' MustInherit to avoid utt-host to load this empty case.
 Public MustInherit Class random_run_case
     Inherits [case]
 
     Private ReadOnly r As random_run(Of Boolean)
 
-    Public Sub New()
+    Protected Sub New()
         r = New random_run(Of Boolean)()
     End Sub
 

@@ -202,4 +202,11 @@ Partial Public Class event_comb
                                    ByVal condition As _do_val_ref(Of event_comb, Boolean, Boolean)) As event_comb
         Return [while](execution, condition_adapter(condition))
     End Function
+
+    Public Shared Function return_true(ByVal ec As event_comb) As event_comb
+        Return New event_comb(Function() As Boolean
+                                  Return waitfor(ec) AndAlso
+                                         goto_end()
+                              End Function)
+    End Function
 End Class
