@@ -142,7 +142,7 @@
     <Compile Include="binary_tree\bt.iterator.vb" />
     <Compile Include="binary_tree\bt.node.vb" />
     <Compile Include="binary_tree\bt.vb" />
-    <Compile Include="threadsafe\slimhealpless.vb" />
+    <Compile Include="threadsafe\slimheapless.vb" />
     <Compile Include="threadsafe\unique_map.vb" />
     <Compile Include="threadsafe\unique_strong_map.vb" />
     <Compile Include="threadsafe\unique_weak_map.vb" />
