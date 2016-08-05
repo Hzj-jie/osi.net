@@ -113,4 +113,8 @@ Public Class slimheapless(Of T)
     Public Sub push(ByVal d As T)
         emplace(copy_no_error(d))
     End Sub
+
+    Public Function empty() As Boolean
+        Return f.next Is Nothing
+    End Function
 End Class

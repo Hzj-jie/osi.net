@@ -10,9 +10,9 @@ Public Class bit_array_thread_safe_test
     Private Const round As Int32 = 1024 * 1024 * 32
 
     Public Sub New()
-        MyBase.New(repeat(New bit_array_thread_safe_case(Environment.ProcessorCount(), round),
+        MyBase.New(repeat(New bit_array_thread_safe_case(max(Environment.ProcessorCount(), 4), round),
                           round),
-                   Environment.ProcessorCount())
+                   max(Environment.ProcessorCount(), 4))
     End Sub
 
     Private Class bit_array_thread_safe_case
