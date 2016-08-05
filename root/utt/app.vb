@@ -30,10 +30,7 @@ Public Module _app
 
         'make sure the Finalize called before output overall failure_count
         host.cases.clear()
-        For i As Int32 = 0 To 7
-            waitfor_gc_collect()
-        Next
-
+        repeat_gc_collect()
         debugpause()
 
         assert_equal(counter.instance_count_counter(Of event_comb).count(), 0)

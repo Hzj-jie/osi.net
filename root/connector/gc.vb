@@ -1,9 +1,14 @@
 ﻿
 Public Module _gc
     Public Sub waitfor_gc_collect()
-        For i As Int32 = 0 To GC.MaxGeneration()
-            GC.Collect()
-            GC.WaitForPendingFinalizers()
+        GC.Collect()
+        GC.WaitForPendingFinalizers()
+    End Sub
+
+    ' Repeats waitfor_gc_collect() for a magic eight times.
+    Public Sub repeat_gc_collect(Optional ByVal round As UInt32 = 8)
+        For i As Int32 = 0 To round - 1
+            waitfor_gc_collect()
         Next
     End Sub
 

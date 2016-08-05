@@ -72,6 +72,10 @@ Friend Module host_run
                             queue_runner.size())
             End If
             If envs.utt_report_memory_status Then
+                ' utt_concurrency == 0 means no two cases will run together, so it's safe to force GC to collect.
+                If utt_concurrency() = 0 Then
+                    repeat_gc_collect()
+                End If
                 raise_error("memory status after caes ",
                             c.full_name(),
                             ": private bytes ",
