@@ -1,0 +1,3 @@
+
+##DEFINE THREAD_SAFE True
+##INCLUDE bit_array.vbp

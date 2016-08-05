@@ -78,6 +78,7 @@
     <None Include="codegen\set_case\run.cmd" />
     <None Include="codegen\set_case\sset_test.vbp" />
     <Compile Include="bit_array_test.vb" />
+    <Compile Include="bit_array_thread_safe_test.vb" />
     <Compile Include="collectionless_test.vb" />
     <Compile Include="comparable_type_test.vb" />
     <Compile Include="fixed_queue_test.vb" />

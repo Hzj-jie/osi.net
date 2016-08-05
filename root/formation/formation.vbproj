@@ -73,6 +73,7 @@
     <Compile Include="binary_tree\smap.vb" />
     <Compile Include="binary_tree\sset.vb" />
     <Compile Include="bit_array.vb" />
+    <Compile Include="bit_array_thread_safe.vb" />
     <Compile Include="circle.vb" />
     <Compile Include="comparer\comparable_type.vb" />
     <Compile Include="comparer\reverse.vb" />
@@ -151,6 +152,8 @@
     <Compile Include="trie.vb" />
     <Compile Include="vector.adaptive_array.vb" />
     <Compile Include="vector.vb" />
+    <None Include="codegen\bit_array.vbp" />
+    <None Include="codegen\bit_array_thread_safe.vbp" />
     <None Include="codegen\bt.iterator.vbp" />
     <None Include="codegen\iterator.ext.vbp" />
     <None Include="codegen\iterator.imports.vbp" />

@@ -3,9 +3,9 @@ Imports osi.root.template
 Imports osi.root.procedure
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.lock
 Imports osi.root.envs
 Imports osi.root.utils
-Imports lock_t = osi.root.lock.slimlock.monitorlock
 
 Public Class pending_io_punishment
     Inherits pending_io_punishment(Of _false)
@@ -22,7 +22,7 @@ End Class
 Public Class pending_io_punishment(Of _THREAD_SAFE As _boolean)
     Private Shared ReadOnly thread_safe As Boolean
     Private ReadOnly idle_timeout_ms As Int64
-    Private lock As lock_t
+    Private lock As slimlock.islimlock
     Private last_active_ms As Int64
     Private pending_counter As UInt32
 
@@ -32,6 +32,11 @@ Public Class pending_io_punishment(Of _THREAD_SAFE As _boolean)
 
     Public Sub New(ByVal idle_timeout_ms As Int64)
         Me.idle_timeout_ms = idle_timeout_ms
+        If thread_safe Then
+            lock = New slimlock.monitorlock()
+        Else
+            lock = New broken_lock()
+        End If
         reset()
     End Sub
 
