@@ -87,6 +87,7 @@ Friend Class qless_case
     Public Overrides Function prepare() As Boolean
         If MyBase.prepare() Then
             ReDim s(max_iteration_count - 1)
+            i = 0
             Return True
         Else
             Return False
@@ -95,8 +96,13 @@ Friend Class qless_case
 
     Public Overrides Function finish() As Boolean
         assert_more_or_equal(q.size(), uint32_0)
-        q.clear()
+        While Not q.empty()
+            read()
+        End While
         assert_equal(q.size(), uint32_0)
+        For j As Int64 = 0 To i - 1
+            assert_true(s(j), j)
+        Next
         Erase s
         Return MyBase.finish()
     End Function
