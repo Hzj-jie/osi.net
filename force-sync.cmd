@@ -1,3 +1,3 @@
 
-force-sync-tf.cmd
+force-sync-git.cmd
 
