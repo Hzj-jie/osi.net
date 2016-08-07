@@ -1,4 +1,6 @@
 ﻿
+Option Strict On
+
 #Const USE_FAST_THREAD_POOL = False
 Imports System.Threading
 Imports osi.root.formation
@@ -49,8 +51,8 @@ Friend Class threadpool_case
                                End Sub)
                 t.Start()
             Next
-            timeslice_sleep_wait_until(Function() size <= 0)
             Using New thread_lazy()
+                timeslice_sleep_wait_until(Function() size <= 0)
                 timeslice_sleep_wait_until(Function() tp.idle())
             End Using
             void_(after)

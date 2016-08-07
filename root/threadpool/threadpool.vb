@@ -2,6 +2,7 @@
 Imports System.DateTime
 Imports System.Threading
 Imports osi.root.constants
+Imports osi.root.template
 Imports osi.root.delegates
 Imports osi.root.envs
 Imports osi.root.connector
@@ -13,6 +14,14 @@ Partial Public MustInherit Class threadpool
     Implements ithreadpool
 
     Public Shared ReadOnly default_thread_count As UInt32
+
+    Public Class _default_thread_count
+        Inherits _int64
+
+        Protected Overrides Function at() As Int64
+            Return default_thread_count
+        End Function
+    End Class
 
     Protected Class work_info
         Public ReadOnly ctor_ticks As Int64 = 0

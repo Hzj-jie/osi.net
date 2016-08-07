@@ -13,7 +13,7 @@ Public NotInheritable Class fast_threadpool
     <ThreadStatic> Private Shared managed_thread As Boolean
     Private ReadOnly ts() As Thread
     Private ReadOnly q As QUEUE_TYPE
-    Private ReadOnly e As count_reset_event
+    Private ReadOnly e As count_reset_event(Of threadpool._default_thread_count)
     Private s As singleentry
 
     Shared Sub New()
@@ -26,7 +26,7 @@ Public NotInheritable Class fast_threadpool
 
     Private Sub New()
         q = New QUEUE_TYPE()
-        e = New count_reset_event()
+        _new(e)
         ReDim ts(threadpool.default_thread_count - uint32_1)
         For i As UInt32 = uint32_0 To threadpool.default_thread_count - uint32_1
             ts(i) = New Thread(AddressOf worker)

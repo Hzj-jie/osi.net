@@ -1,16 +1,28 @@
 ﻿
 Imports System.Threading
+Imports osi.root.template
 Imports osi.root.constants
 Imports osi.root.connector
 Imports lock_t = osi.root.lock.slimlock.monitorlock
 
-' An EventWaitHandle, which releases exact count of threads set function has been called.
 Public NotInheritable Class count_reset_event
+    Inherits count_reset_event(Of _0)
+End Class
+
+' An EventWaitHandle, which releases exact count of threads set function has been called, up to _MAX_COUNT.
+' If _MAX_COUNT = 1, this class has a same behavior as AutoResetEvent, which is unnecessary.
+Public Class count_reset_event(Of _MAX_COUNT As _int64)
     Implements IDisposable
 
+    Private Shared ReadOnly MAX_COUNT As Int64
     Private ReadOnly m As ManualResetEvent
     Private l As lock_t
     Private p As Int32
+
+    Shared Sub New()
+        MAX_COUNT = +alloc(Of _MAX_COUNT)()
+        assert(MAX_COUNT <> 1)
+    End Sub
 
     Public Sub New()
         m = New ManualResetEvent(False)
@@ -19,7 +31,12 @@ Public NotInheritable Class count_reset_event
     Public Sub [set]()
         l.wait()
         p += 1
-        assert(m.Set())
+        If p = 1 Then
+            assert(m.Set())
+        End If
+        If MAX_COUNT > 0 AndAlso p > MAX_COUNT Then
+            p = MAX_COUNT
+        End If
         l.release()
     End Sub
 

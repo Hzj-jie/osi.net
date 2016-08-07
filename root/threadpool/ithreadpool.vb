@@ -8,7 +8,7 @@ Public Interface ithreadpool
     Function stopping() As Boolean
     Sub [stop](Optional ByVal stop_wait_seconds As Int64 = constants.default_stop_threadpool_wait_seconds)
     Function idle() As Boolean
-    ' Executes the next job if there is one.
+    ' Executes the next job in current thread if there is one.
     Function execute_job() As Boolean
     ' Waits for next jobs for at most ms milliseconds. If ms < 0, waits forever.
     Function wait_job(Optional ByVal ms As Int64 = npos) As Boolean
