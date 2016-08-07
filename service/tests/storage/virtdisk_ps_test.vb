@@ -78,5 +78,11 @@ Public Class virtdisk_ps_test
                                       Return goto_end()
                                   End Function)
         End Function
+
+        Public Overrides Function finish() As Boolean
+            async_sync(vd.clear())
+            async_sync(vd.shrink_to_fit())
+            Return MyBase.finish()
+        End Function
     End Class
 End Class

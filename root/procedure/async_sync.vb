@@ -3,6 +3,7 @@ Imports System.Threading
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.delegates
+Imports osi.root.threadpool
 Imports osi.root.utils
 Imports osi.root.lock
 
@@ -29,7 +30,15 @@ Public Module _async_sync
                                         assert(w.Set())
                                         Return goto_end()
                                     End Function))
-        assert(w.WaitOne())
+        If in_iqless_threadpool_thread() Then
+            While Not w.WaitOne(0)
+                If Not thread_pool().execute_job() Then
+                    thread_pool().wait_job(envs.two_timeslice_length_ms)
+                End If
+            End While
+        Else
+            assert(w.WaitOne())
+        End If
         w.Close()
         Return r
     End Function

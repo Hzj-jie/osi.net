@@ -9,24 +9,29 @@ Imports osi.root.utils
 Imports osi.root.constants.filesystem
 Imports osi.root.delegates
 
-Friend Module host
-    Private Class loader
-        Private Shared Function accepted_type(ByVal j As Type) As Boolean
+Partial Friend NotInheritable Class host
+    Public NotInheritable Class case_type_restriction
+        Public Shared Function accept(ByVal j As Type) As Boolean
             assert(Not j Is Nothing)
             Return Not j.IsAbstract() AndAlso
                    Not j.IsGenericType() AndAlso
-                   j.IsPublic() AndAlso
+                   (j.IsPublic() OrElse j.IsNestedPublic()) AndAlso
                    j.inherit(Of [case])() AndAlso
                    j.has_parameterless_public_constructor()
         End Function
 
-        ' This function cannot be placed in host module. It depends on function of host, which will trigger a deadlock.
+        Private Sub New()
+        End Sub
+    End Class
+
+    Private NotInheritable Class loader
+        ' This function cannot be placed in host class. It depends on functions of host, which will trigger a deadlock.
         Public Shared Sub load(ByVal cases As vector(Of case_info))
             ' Cannot use event_comb, allocators of some cases may use async_sync.
             assert(Not cases Is Nothing)
             concurrency_runner.execute(Sub(i As Assembly)
                                            For Each j In i.GetTypes()
-                                               If accepted_type(j) Then
+                                               If case_type_restriction.accept(j) Then
                                                    Dim n As case_info = Nothing
                                                    n = New case_info(j.FullName(), alloc(Of [case])(j))
                                                    SyncLock cases
@@ -43,9 +48,12 @@ Friend Module host
         End Sub
     End Class
 
-    Public ReadOnly cases As vector(Of case_info) = Nothing
+    Public Shared ReadOnly cases As vector(Of case_info) = Nothing
 
-    Sub New()
+    Shared Sub New()
+        assert((envs.utt_concurrency >= 0 AndAlso envs.utt_concurrency <= Environment.ProcessorCount()) OrElse
+               envs.utt_concurrency = npos)
+
         assert(Not strstartwith(extensions.dynamic_link_library, extension_prefix, False))
         cases = New vector(Of case_info)()
         AppDomain.CurrentDomain().load_all(Environment.CurrentDirectory(), "osi.*.dll")
@@ -58,7 +66,7 @@ Friend Module host
         assert(cases.size() > 0)
     End Sub
 
-    Private Function [select](ByVal selector As vector(Of String), ByVal c As case_info) As Boolean
+    Private Shared Function [select](ByVal selector As vector(Of String), ByVal c As case_info) As Boolean
         If selector Is Nothing OrElse selector.empty() Then
             Return True
         Else
@@ -90,7 +98,7 @@ Friend Module host
         End If
     End Function
 
-    Public Function foreach(ByVal d As _do(Of case_info, Boolean, Boolean)) As Boolean
+    Public Shared Function foreach(ByVal d As _do(Of case_info, Boolean, Boolean)) As Boolean
         If d Is Nothing Then
             Return False
         Else
@@ -98,19 +106,19 @@ Friend Module host
         End If
     End Function
 
-    Public Function foreach(ByVal d As _do(Of case_info, Boolean)) As Boolean
+    Public Shared Function foreach(ByVal d As _do(Of case_info, Boolean)) As Boolean
         Return utils.foreach(AddressOf foreach, d)
     End Function
 
-    Public Function foreach(ByVal d As void(Of case_info)) As Boolean
+    Public Shared Function foreach(ByVal d As void(Of case_info)) As Boolean
         Return utils.foreach(AddressOf foreach, d)
     End Function
 
-    Public Sub clear_selection()
+    Public Shared Sub clear_selection()
         foreach(Sub(ByRef x) x.finished = False)
     End Sub
 
-    Public Function run(Optional ByVal selector As vector(Of String) = Nothing) As Int32
+    Public Shared Function run(Optional ByVal selector As vector(Of String) = Nothing) As Int32
         Dim r As Int32 = 0
         clear_selection()
         foreach(Sub(ByRef x)
@@ -121,7 +129,10 @@ Friend Module host
                     End If
                 End Sub)
 
-        host_run.run()
+        host.run()
         Return r
     End Function
-End Module
+
+    Private Sub New()
+    End Sub
+End Class

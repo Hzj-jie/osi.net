@@ -1,7 +1,7 @@
 ﻿
 Imports System.Reflection
 
-Public Class binding_flags
+Public NotInheritable Class binding_flags
     Public Const instance_public As BindingFlags = BindingFlags.Public Or BindingFlags.Instance
     Public Const instance_private As BindingFlags = BindingFlags.NonPublic Or BindingFlags.Instance
     Public Const instance_all As BindingFlags = BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Instance

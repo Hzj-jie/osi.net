@@ -37,14 +37,14 @@ Public Class failure_case
             End Using
 
             ' tirgger 2 failures, one from exec_case, one from assert_true
-            assert_true(execute_case(New exec_failure_case_1.exec_failure_case()))
+            assert_true(host.execute_case(New exec_failure_case_1.exec_failure_case()))
             ' trigger 5 failures,
             ' one from exec_case,
             ' one from assert_true
             ' one from err_rec,
             ' one from out_rec
             ' one from error_received
-            assert_true(execute_case(New exec_failure_case_2.exec_failure_case()))
+            assert_true(host.execute_case(New exec_failure_case_2.exec_failure_case()))
         End If
 
         assert_true(True)

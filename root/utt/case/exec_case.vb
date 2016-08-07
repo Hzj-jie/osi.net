@@ -12,11 +12,14 @@ Public Class exec_case
     Protected Const default_ignore_output As Boolean = True
     Protected Const default_ignore_error As Boolean = False
     Protected Const default_expected_return As Int32 = 0
+    Protected Const default_timeout_ms As Int64 = -1
     Protected ReadOnly ignore_output As Boolean
     Protected ReadOnly ignore_error As Boolean
     Protected ReadOnly exec_file As String
     Protected ReadOnly exec_arg As String
+    Protected ReadOnly process_name As String
     Protected ReadOnly expected_return As Int32
+    Protected ReadOnly timeout_ms As Int64
     Protected Event receive_output(ByVal s As String)
     Protected Event receive_error(ByVal s As String)
 
@@ -24,17 +27,28 @@ Public Class exec_case
                    Optional ByVal arg As String = default_arg,
                    Optional ByVal ignore_output As Boolean = default_ignore_output,
                    Optional ByVal ignore_error As Boolean = default_ignore_error,
-                   Optional ByVal expected_return As Int32 = default_expected_return)
+                   Optional ByVal expected_return As Int32 = default_expected_return,
+                   Optional ByVal timeout_ms As Int64 = default_timeout_ms)
         assert(Not String.IsNullOrEmpty(file))
         Me.exec_file = file
         Me.exec_arg = arg
         Me.ignore_output = ignore_output
         Me.ignore_error = ignore_error
         Me.expected_return = expected_return
+        Me.timeout_ms = timeout_ms
+        Me.process_name = strcat("process ",
+                                 exec_file,
+                                 If(Not String.IsNullOrEmpty(exec_arg),
+                                    strcat(" with argument [", exec_arg, "]"),
+                                    Nothing))
     End Sub
 
     Protected Overridable Function inputs() As IEnumerable(Of String)
         Return Nothing
+    End Function
+
+    Protected Overridable Function init_process(ByVal p As shell_less_process) As Boolean
+        Return True
     End Function
 
     Protected Sub attach_receive_output(ByVal v As receive_outputEventHandler)
@@ -48,9 +62,7 @@ Public Class exec_case
     Private Sub received(ByVal s As String, ByVal output As Boolean)
         If (output AndAlso Not ignore_output) OrElse
            (Not output AndAlso Not ignore_error) Then
-            utt_raise_error("process ",
-                            exec_file,
-                            If(Not String.IsNullOrEmpty(exec_arg), strcat(" with argument ", exec_arg), Nothing),
+            utt_raise_error(process_name,
                             " ",
                             If(output, "outputs", "outputs error"),
                             " { ",
@@ -77,6 +89,9 @@ Public Class exec_case
             Using p As shell_less_process = New shell_less_process(True)
                 p.start_info().FileName() = exec_file
                 p.start_info().Arguments() = exec_arg
+                If Not init_process(p) Then
+                    Return False
+                End If
                 AddHandler p.receive_output, AddressOf output_received
                 AddHandler p.receive_error, AddressOf error_received
                 Dim ex As Exception = Nothing
@@ -87,7 +102,15 @@ Public Class exec_case
                             p.stdin().Write(s)
                         Next
                     End If
-                    p.wait_for_exit()
+                    If Not assert_true(p.wait_for_exit(timeout_ms),
+                                       process_name,
+                                       " cannot finish in ",
+                                       timeout_ms,
+                                       " milliseconds") Then
+                        If Not p.quit(0) Then
+                            utt_raise_error("failed to stop ", process_name)
+                        End If
+                    End If
                     Return p.exit_code() = expected_return
                 Else
                     If Not ex Is Nothing Then

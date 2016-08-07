@@ -11,23 +11,23 @@ Public Module selfhealth
 
     Private Function set_self_health(ByVal b As Boolean) As Boolean
         Dim found As Boolean = False
-        Return foreach(Function(ByRef x) As Boolean
-                           If TypeOf x.case Is failure_case Then
-                               If found Then
-                                   Return False
-                               Else
-                                   x.case.as(Of failure_case).self_health = b
-                                   found = True
-                               End If
-                           End If
-                           Return True
-                       End Function) AndAlso found
+        Return host.foreach(Function(ByRef x) As Boolean
+                                If TypeOf x.case Is failure_case Then
+                                    If found Then
+                                        Return False
+                                    Else
+                                        x.case.as(Of failure_case).self_health = b
+                                        found = True
+                                    End If
+                                End If
+                                Return True
+                            End Function) AndAlso found
     End Function
 
     Public Function run() As Boolean
         Dim selectors As vector(Of String) = Nothing
         selectors = New vector(Of String)()
-        selectors.push_back(GetType(failure_case).Name())
+        selectors.push_back(GetType(failure_case).AssemblyQualifiedName())
 
         Dim r As Int32 = 0
         r = rnd_int(1, 10)

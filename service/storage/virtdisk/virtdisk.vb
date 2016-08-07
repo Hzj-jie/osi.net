@@ -260,6 +260,26 @@ Partial Public Class virtdisk
         Return valid() AndAlso (stream().Length() >= l AndAlso len(l))
     End Function
 
+    ' clear entire virtdisk, i.e. drop(0)
+    Public Function clear() As event_comb
+        Return drop(0)
+    End Function
+
+    Public Function shrink_to_fit() As event_comb
+        Return Me.l.locked(Function() As Boolean
+                               Return unlocked_shrink_to_fit()
+                           End Function)
+    End Function
+
+    Private Function unlocked_shrink_to_fit() As Boolean
+        Dim ms As MemoryStream = Nothing
+        If cast(stream(), ms) Then
+            ms.Capacity() = ms.Length()
+            Return True
+        End If
+        Return False
+    End Function
+
     Public Function write(ByVal start As Int64,
                           ByVal count As Int32,
                           ByVal buff() As Byte,

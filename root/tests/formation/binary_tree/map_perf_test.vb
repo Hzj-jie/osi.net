@@ -90,12 +90,7 @@ Public Class map_perf_test
     Private Class dictionary_case
         Inherits run_case
 
-        Private ReadOnly m As Dictionary(Of String, String)
-
-        Public Sub New()
-            MyBase.New()
-            m = New Dictionary(Of String, String)()
-        End Sub
+        Private m As Dictionary(Of String, String)
 
         Protected Overrides Sub insert()
             m.Add(rnd_str(), rnd_str())
@@ -110,7 +105,8 @@ Public Class map_perf_test
         End Sub
 
         Protected Overrides Sub clear()
-            m.Clear()
+            ' Dictionary.Clear does not really release the memory.
+            m = New Dictionary(Of String, String)()
         End Sub
     End Class
 End Class

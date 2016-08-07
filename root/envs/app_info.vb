@@ -4,15 +4,21 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 Public Module _app_info
-    Public ReadOnly application_directory As String = Nothing
-    Public ReadOnly application_name As String = Nothing
-    Public ReadOnly application_version As String = Nothing
-    Public ReadOnly application_short_version As String = Nothing
-    Public ReadOnly application_sign As String = Nothing
+    Public ReadOnly application_full_path As String
+    Public ReadOnly application_directory As String
+    Public ReadOnly application_file_name As String
+    Public ReadOnly application_name As String
+    Public ReadOnly application_version As String
+    Public ReadOnly application_short_version As String
+    Public ReadOnly application_sign As String
 
     Sub New()
-        application_directory = Path.GetDirectoryName(current_process.MainModule().FileName())
+        application_full_path = current_process.MainModule().FileName()
+        application_directory = Path.GetDirectoryName(application_full_path)
+        application_file_name = Path.GetFileName(application_full_path)
+        assert(Not String.IsNullOrEmpty(application_full_path))
         assert(Not String.IsNullOrEmpty(application_directory))
+        assert(Not String.IsNullOrEmpty(application_file_name))
         application_name = current_assembly.GetName().Name()
         application_version = Convert.ToString(current_assembly.GetName().Version())
         application_short_version = strcat(Convert.ToString(current_assembly.GetName().Version().Major()),

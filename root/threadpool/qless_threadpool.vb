@@ -22,48 +22,58 @@ Imports osi.root.lock
 Imports osi.root.utils
 Imports counter = osi.root.utils.counter
 
-Public Class qless_threadpool
+Public NotInheritable Class qless_threadpool
     Inherits threadpool
 
     Private Const low_pri_rate As Double = 0
     Private Shared ReadOnly wait_time_ms As Int32 = sixteen_timeslice_length_ms
-    <ThreadStatic()> Private Shared is_iqless_threadpool_thread As Boolean
-    Private ReadOnly THREADPOOL_WAIT_TICKS As Int64
-    Private ReadOnly THREADPOOL_IDLE_ROUNDS As Int64
+    <ThreadStatic()> Private Shared managed_thread As Boolean
     Private ReadOnly q As qless(Of work_info) = Nothing
     Private ReadOnly threads As vector(Of Thread) = Nothing
     'AutoResetEvent is pretty slow
     Private ReadOnly are As AutoResetEvent = Nothing
-    Private it As Int32 = 0
-    Private ReadOnly typename As String = Nothing
+    ' Private it As Int32 = 0
 
     Shared Sub New()
-        assert(is_iqless_threadpool_thread = False)
+        assert(managed_thread = False)
     End Sub
 
-    Public Shared Function in_iqless_threadpool_thread() As Boolean
-        Return is_iqless_threadpool_thread
+    Public Shared Function in_managed_thread() As Boolean
+        Return managed_thread
     End Function
     
-    Private Sub wait_job()
-        Interlocked.Increment(it)
-        If busy_wait Then
-            wait_when(Function() Not (are.WaitOne(0) OrElse stopping()))
+    Public Overrides Function wait_job(Optional ByVal ms As Int64 = npos) As Boolean
+        'Interlocked.Increment(it)
+        If ms >= 0 Then
+            If busy_wait Then
+                Dim start_ms As Int64 = 0
+                start_ms = nowadays.milliseconds()
+                wait_when(Function() Not (are.WaitOne(0) OrElse stopping() OrElse nowadays.milliseconds() > start_ms + ms))
+                Return are.WaitOne(0)
+            Else
+                Return are.WaitOne(ms)
+            End If
         Else
-            assert(are.WaitOne() OrElse stopping())
+            If busy_wait Then
+                wait_when(Function() Not (are.WaitOne(0) OrElse stopping()))
+            Else
+                assert(are.WaitOne() OrElse stopping())
+            End If
+            Return True
         End If
         'are.WaitOne(wait_time_ms)
         'sleep(wait_time_ms)
-        Interlocked.Decrement(it)
-    End Sub
+        'Interlocked.Decrement(it)
+    End Function
 
     Private Sub set_job()
         'If working_threads() = 0 Then
         '    are.Set()
         'End If
-        If it > 0 Then
-            are.Set()
-        End If
+        'If it > 0 Then
+        '    are.Set()
+        'End If
+        are.Set()
     End Sub
 
     Protected Overrides Sub queue_job(ByVal wi As work_info)
@@ -76,25 +86,18 @@ Public Class qless_threadpool
         set_job()
     End Sub
 
-    Private Sub worker()
-        While True
-            Dim wi As work_info = Nothing
-            If q.pop(wi) Then
-                work_on(wi)
-            ElseIf threadpool_trace Then
-                Dim startticks As Int64 = 0
-                startticks = Now().Ticks()
-                wait_job()
-                counter.record_time_ticks(THREADPOOL_WAIT_TICKS, startticks)
-                counter.increase(THREADPOOL_IDLE_ROUNDS)
-            Else
-                wait_job()
-            End If
-        End While
-    End Sub
+    Public Overrides Function execute_job() As Boolean
+        Dim wi As work_info = Nothing
+        If q.pop(wi) Then
+            work_on(wi)
+            Return True
+        Else
+            Return False
+        End If
+    End Function
 
     Private Function typedname(ByVal s As String) As String
-        Return strcat(typename, s)
+        Return strcat(TYPE_NAME, s)
     End Function
 
     Private Function upper_typedname(ByVal s As String) As String
@@ -125,7 +128,7 @@ Public Class qless_threadpool
                                                                                  queue_runner.thread_count +
                                                                                  id)
                                                     End If
-                                                    is_iqless_threadpool_thread = True
+                                                    managed_thread = True
                                                     worker()
                                                 End Sub))
                 Dim t As Thread = Nothing
@@ -148,11 +151,6 @@ Public Class qless_threadpool
 
     Private Sub New(Optional ByVal thread_count As UInt32 = 0)
         MyBase.New()
-        typename = Me.GetType().Name()
-        If threadpool_trace Then
-            THREADPOOL_WAIT_TICKS = counter.register_average_and_last_average(upper_typedname("_WAIT_TICKS"))
-            THREADPOOL_IDLE_ROUNDS = counter.register_rate_and_last_rate(upper_typedname("_IDLE_ROUNDS"))
-        End If
         q = New qless(Of work_info)()
         threads = New vector(Of Thread)()
         are = New AutoResetEvent(False)
@@ -169,7 +167,7 @@ Public Class qless_threadpool
     End Sub
 
     ' Consumers should use registry.vb
-    Friend Shared Shadows Sub register()
+    Friend Shadows Shared Sub register()
         threadpool.register(New qless_threadpool())
     End Sub
 End Class

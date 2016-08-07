@@ -48,6 +48,10 @@ Partial Public MustInherit Class threadpool
                 counter.register_average_and_last_average(strcat(TYPE_NAME, "_QUEUE_LENGTH"))
             THREADPOOL_WORKING_THREAD =
                 counter.register_average_and_last_average(strcat(TYPE_NAME, "_WORKING_THREAD"))
+            If threadpool_trace Then
+                THREADPOOL_WAIT_TICKS = counter.register_average_and_last_average(strcat(TYPE_NAME, "_WAIT_TICKS"))
+                THREADPOOL_IDLE_ROUNDS = counter.register_rate_and_last_rate(strcat(TYPE_NAME, "_IDLE_ROUNDS"))
+            End If
         End If
         application_lifetime_binder.instance.insert(New disposer(Of threadpool)(Me,
                                                                                 disposer:=Sub(x) x.stop()))
@@ -60,6 +64,22 @@ Partial Public MustInherit Class threadpool
         start_work_info(wi)
         void_(wi.work)
         finish_work_info()
+    End Sub
+
+    Protected Sub worker()
+        While True
+            If Not execute_job() Then
+                If threadpool_trace Then
+                    Dim startticks As Int64 = 0
+                    startticks = Now().Ticks()
+                    assert(wait_job())
+                    counter.record_time_ticks(THREADPOOL_WAIT_TICKS, startticks)
+                    counter.increase(THREADPOOL_IDLE_ROUNDS)
+                Else
+                    assert(wait_job())
+                End If
+            End If
+        End While
     End Sub
 
     Private Shared Sub stop_thread(ByVal thread As Thread, ByRef stop_wait_seconds As Int64)

@@ -84,19 +84,30 @@ Public NotInheritable Class fast_threadpool
         Return q.empty()
     End Function
 
+    Public Function wait_job(Optional ByVal ms As Int64 = npos) As Boolean
+        Return e.wait(ms)
+    End Function
+
+    Public Function execute_job() As Boolean
+        Dim w As Action = Nothing
+        If q.pop(w) Then
+            assert(Not w Is Nothing)
+            Try
+                w()
+            Catch ex As Exception
+                log_unhandled_exception(ex)
+            End Try
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
     Private Sub worker()
         managed_thread = True
         While s.not_in_use()
-            Dim w As Action = Nothing
-            If q.pop(w) Then
-                assert(Not w Is Nothing)
-                Try
-                    w()
-                Catch ex As Exception
-                    log_unhandled_exception(ex)
-                End Try
-            Else
-                e.wait()
+            If Not execute_job() Then
+                assert(wait_job())
             End If
         End While
         managed_thread = False

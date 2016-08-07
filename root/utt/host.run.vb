@@ -1,5 +1,4 @@
 ﻿
-Imports System.DateTime
 Imports System.Threading
 Imports osi.root.formation
 Imports osi.root.connector
@@ -9,35 +8,29 @@ Imports osi.root.constants
 Imports osi.root.procedure
 Imports counter = osi.root.utils.counter
 
-Friend Module host_run
-    Private ReadOnly expected_end_ms As Int64
-    Private using_threads As Int32 = 0
-    Private running_cases As Int32 = 0
+Partial Friend NotInheritable Class host
+    Private Shared expected_end_ms As Int64
+    Private Shared using_threads As Int32 = 0
+    Private Shared running_cases As Int32 = 0
 
-    Sub New()
-        assert((envs.utt_concurrency >= 0 AndAlso envs.utt_concurrency <= Environment.ProcessorCount()) OrElse
-               envs.utt_concurrency = npos)
-        expected_end_ms = Now().milliseconds() + minute_to_milliseconds(36 * 60)
-    End Sub
-
-    Private Sub assert_running_time()
+    Private Shared Sub assert_running_time()
         assert(commandline.has_specific_selections() OrElse
-               assert_less_or_equal(Now().milliseconds(), expected_end_ms))
+               assert_less_or_equal(nowadays.milliseconds(), expected_end_ms))
     End Sub
 
-    Public Function execute_case(ByVal c As [case]) As Boolean
+    Public Shared Function execute_case(ByVal c As [case]) As Boolean
         assert(Not c Is Nothing)
         Return (assert_true(do_(AddressOf c.prepare, False), "failed to prepare case ", c.full_name) AndAlso
                 assert_true(do_(AddressOf c.run, False), "failed to run case ", c.full_name)) And
                assert_true(do_(AddressOf c.finish, False), "failed to finish case ", c.full_name)
     End Function
 
-    Public Function execute_case(ByVal c As case_info) As Boolean
+    Public Shared Function execute_case(ByVal c As case_info) As Boolean
         assert(Not c Is Nothing)
         Return execute_case(c.case)
     End Function
 
-    Private Sub run(ByVal c As case_info, ByVal started As EventWaitHandle, ByVal finished As EventWaitHandle)
+    Private Shared Sub run(ByVal c As case_info, ByVal started As EventWaitHandle, ByVal finished As EventWaitHandle)
         assert(Not c Is Nothing)
         assert(Not started Is Nothing)
         assert(Not finished Is Nothing)
@@ -54,7 +47,7 @@ Friend Module host_run
         End If
 
         Dim startms As Int64 = 0
-        startms = Now().milliseconds()
+        startms = nowadays.milliseconds()
         Dim proc_ms As Int64 = 0
         proc_ms = envs.total_processor_time_ms()
         Interlocked.Add(using_threads, c.case.preserved_processors())
@@ -88,7 +81,7 @@ Friend Module host_run
                             envs.gc_total_memory())
             End If
             Dim ms As Int64 = 0
-            ms = Now().milliseconds() - startms
+            ms = nowadays.milliseconds() - startms
             Dim pms As Int64 = 0
             pms = envs.total_processor_time_ms() - proc_ms
             Dim msg() As Object = Nothing
@@ -115,13 +108,13 @@ Friend Module host_run
         assert(finished.Set())
     End Sub
 
-    Private Function utt_concurrency() As Int32
+    Private Shared Function utt_concurrency() As Int32
         Return If(envs.utt_concurrency <> npos,
                   envs.utt_concurrency,
                   Environment.ProcessorCount())
     End Function
 
-    Private Function go_through(ByVal finished As EventWaitHandle, ByRef new_case_started As Boolean) As Boolean
+    Private Shared Function go_through(ByVal finished As EventWaitHandle, ByRef new_case_started As Boolean) As Boolean
         assert(Not new_case_started)
         assert_running_time()
         Dim rtn As Boolean = False
@@ -147,7 +140,7 @@ Friend Module host_run
         Return rtn
     End Function
 
-    Private Function go_through_all(ByVal finished As EventWaitHandle) As Boolean
+    Private Shared Function go_through_all(ByVal finished As EventWaitHandle) As Boolean
         Dim r As Int32 = 0
         Dim new_case_started As Boolean = False
         While go_through(finished, new_case_started)
@@ -161,14 +154,15 @@ Friend Module host_run
         Return r > 0
     End Function
 
-    Private Sub wait_finish(ByVal finished As EventWaitHandle)
+    Private Shared Sub wait_finish(ByVal finished As EventWaitHandle)
         assert(Not finished Is Nothing)
         While Not finished.WaitOne(5000)
             assert_running_time()
         End While
     End Sub
 
-    Public Sub run()
+    Public Shared Sub run()
+        expected_end_ms = nowadays.milliseconds() + minute_to_milliseconds(36 * 60)
         Dim finished As AutoResetEvent = Nothing
         finished = New AutoResetEvent(False)
         While go_through_all(finished)
@@ -179,4 +173,4 @@ Friend Module host_run
         End While
         finished.Close()
     End Sub
-End Module
+End Class

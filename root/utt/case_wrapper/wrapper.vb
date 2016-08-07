@@ -111,4 +111,12 @@ Public Module _wrapper
     Public Function sleep_wrappered(ByVal ms As Func(Of Int64), ByVal c As [case]) As [case]
         Return New sleep_case_wrapper(ms, c)
     End Function
+
+    Public Function isolated(ByVal c As commandline_specific_case_wrapper) As [case]
+        Return New isolate_case_wrapper(c)
+    End Function
+
+    Public Function isolated(ByVal c As commandline_specific_event_comb_case_wrapper) As [case]
+        Return New isolate_case_wrapper(c)
+    End Function
 End Module

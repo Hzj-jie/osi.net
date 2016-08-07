@@ -22,6 +22,12 @@ Public Class file_error_writer
     End Class
 
     Shared Sub New()
+        If envs.env_bool(envs.env_keys("no", "file", "log")) Then
+            static_constructor(Of colorful_console_error_writer).execute()
+            error_writer_ignore_types(Of colorful_console_error_writer).value_all()
+            Return
+        End If
+
         If Not envs.env_value(envs.env_keys("log", "file"), log_file) Then
             log_file = Nothing
         End If

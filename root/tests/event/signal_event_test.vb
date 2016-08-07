@@ -101,6 +101,8 @@ Public Class signal_event_test
                 assert(Not e(i) Is Nothing)
                 assert_equal(e(i).called_times(), 1)
             Next
+            e.clear()
+            se.clear()
             Return MyBase.finish()
         End Function
     End Class

@@ -8,10 +8,12 @@ Imports osi.root.envs
 Imports counter = osi.root.utils.counter
 
 Partial Public Class threadpool
+    Protected ReadOnly TYPE_NAME As String = Nothing
     Private ReadOnly THREADPOOL_WORK_INFO_INQUEUE_TICKS As Int64 = 0
+    Private ReadOnly THREADPOOL_WAIT_TICKS As Int64
+    Private ReadOnly THREADPOOL_IDLE_ROUNDS As Int64
     Private ReadOnly THREADPOOL_QUEUE_LENGTH As Int64 = 0
     Private ReadOnly THREADPOOL_WORKING_THREAD As Int64 = 0
-    Private ReadOnly TYPE_NAME As String = Nothing
     Private ql As Int32 = 0
     Private wt As Int32 = 0
     Private stop_signal As singleentry

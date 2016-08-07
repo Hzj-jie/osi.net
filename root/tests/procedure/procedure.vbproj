@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="callback\callback_case.vb" />
+    <Compile Include="event_comb\async_sync_test.vb" />
     <Compile Include="event_comb\event_comb_cancel_test.vb" />
     <Compile Include="event_comb\event_comb_waitfor_concurrency_event_test.vb" />
     <Compile Include="event_comb\event_comb_waitfor_do_boolean_perf.vb" />

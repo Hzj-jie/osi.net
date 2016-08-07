@@ -38,7 +38,7 @@ Public Module _app
         assert_less_or_equal(queue_runner.size(), 1)
         assert_true(suppress.init_state())
         assert_true(using_default_ithreadpool())
-        assert_less_or_equal(private_bytes_usage(), 128 * 1024 * 1024)
+        assert_less_or_equal(gc_total_memory(), 64 * 1024 * 1024)
         If failure_count() > 0 Then
             failed("failure count = ", failure_count())
         Else

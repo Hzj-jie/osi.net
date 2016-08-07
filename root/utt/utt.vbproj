@@ -65,6 +65,7 @@
     <Compile Include="case\delegate_case.vb" />
     <Compile Include="case\exec_case.vb" />
     <Compile Include="case\exec_export_case.vb" />
+    <Compile Include="case_wrapper\isolate_case_wrapper.vb" />
     <Compile Include="case_wrapper\performance_comparison_case_wrapper.vb" />
     <Compile Include="case_wrapper\sleep_case_wrapper.vb" />
     <Compile Include="case_wrapper\chained_case_wrapper.vb" />
@@ -93,7 +94,7 @@
     <Compile Include="fake\fake_rnd.vb" />
     <Compile Include="fake\type_counter.vb" />
     <Compile Include="fake\to_string_shadower.vb" />
-    <Compile Include="host_run.vb" />
+    <Compile Include="host.run.vb" />
     <Compile Include="host.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -120,6 +121,7 @@
     <Compile Include="selfhealth\exec_failure_case_2.vb" />
     <Compile Include="selfhealth\failure_case.vb" />
     <Compile Include="selfhealth\fake_rnd_test.vb" />
+    <Compile Include="selfhealth\isolate_case_wrapper_test.vb" />
     <Compile Include="selfhealth\selfhealth.vb" />
   </ItemGroup>
   <ItemGroup>

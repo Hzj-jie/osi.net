@@ -4,6 +4,18 @@ Imports System.Threading
 Imports osi.root.constants
 
 Public Module _console
+    Public ReadOnly console_output_redirected As Boolean
+
+    Sub New()
+        Try
+            Dim x As Int32 = 0
+            x = Console.CursorLeft()
+            console_output_redirected = False
+        Catch ex As Exception
+            console_output_redirected = True
+        End Try
+    End Sub
+
     Public Sub lock_console_output()
         Monitor.Enter(Console.Out)
     End Sub
@@ -31,6 +43,14 @@ Public Module _console
     End Sub
 
     Private Sub rewrite(ByVal s As String, ByVal err As Boolean)
+        If console_output_redirected Then
+            If err Then
+                write_console_error_line(s)
+            Else
+                write_console_line(s)
+            End If
+            Return
+        End If
         If err Then
             lock_console_error_output()
         Else

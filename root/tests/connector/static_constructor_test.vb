@@ -35,10 +35,17 @@ Public Class static_constructor_test
         assert_equal(v, def)
         static_constructor(Of C).execute()
         assert_equal(v, exp)
+        static_constructor(Of C).execute()
         c = New C()
         assert_equal(v, exp)
+
         assert_not_nothing(static_constructor(Of C).retrieve())
         static_constructor(Of C).as_action()()
+        assert_equal(v, def)
+        assert_not_nothing(static_constructor.retrieve(GetType(C)))
+        static_constructor.as_action(GetType(C))()
+        assert_equal(v, exp)
+        static_constructor.execute(GetType(C))
         assert_equal(v, def)
 
         assert_nothing(static_constructor(Of D).retrieve())
