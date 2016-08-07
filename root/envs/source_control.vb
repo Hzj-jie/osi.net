@@ -21,7 +21,7 @@ Public NotInheritable Class source_control
 
     Shared Sub New()
         If tf_latest_changeset_id = unknown_value Then
-            latest = New commit_info(gitver.latest.short_hash,
+            latest = New commit_info(gitver.latest.trackable_version,
                                      gitver.latest.author,
                                      gitver.latest.author_date,
                                      gitver.latest.subject)
@@ -32,7 +32,7 @@ Public NotInheritable Class source_control
                                      tf_latest_changeset_comment)
         End If
         If tf_current_changeset_id = unknown_value Then
-            current = New commit_info(gitver.current.short_hash,
+            current = New commit_info(gitver.current.trackable_version,
                                       gitver.current.author,
                                       gitver.current.author_date,
                                       gitver.current.subject)

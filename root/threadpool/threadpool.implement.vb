@@ -24,7 +24,10 @@ Partial Public Class threadpool
         If set_stopping() Then
             'if managed_threads is nothing, means do not support stop or do not need to stop
             If Not isemptyarray(managed_threads()) Then
-                Dim s As Action = Sub() stop_threads(managed_threads(), stop_wait_seconds)
+                Dim s As Action = Nothing
+                s = Sub()
+                        stop_threads(managed_threads(), stop_wait_seconds)
+                    End Sub
                 For i As Int64 = 0 To managed_threads().Length() - 1
                     If object_compare(managed_threads()(i), current_thread()) = 0 Then
                         queue_in_managed_threadpool(s)
