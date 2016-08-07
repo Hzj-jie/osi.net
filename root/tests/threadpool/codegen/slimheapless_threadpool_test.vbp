@@ -1,0 +1,3 @@
+﻿
+##DEFINE THREADPOOL_TYPE slimheapless_threadpool
+##INCLUDE threadpool_test.vbp

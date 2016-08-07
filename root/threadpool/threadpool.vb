@@ -1,5 +1,4 @@
 ﻿
-Imports System.DateTime
 Imports System.Threading
 Imports osi.root.constants
 Imports osi.root.template
@@ -80,7 +79,7 @@ Partial Public MustInherit Class threadpool
             If Not execute_job() Then
                 If threadpool_trace Then
                     Dim startticks As Int64 = 0
-                    startticks = Now().Ticks()
+                    startticks = nowadays.high_res_ticks()
                     assert(wait_job())
                     counter.record_time_ticks(THREADPOOL_WAIT_TICKS, startticks)
                     counter.increase(THREADPOOL_IDLE_ROUNDS)
@@ -92,14 +91,14 @@ Partial Public MustInherit Class threadpool
     End Sub
 
     Private Shared Sub stop_thread(ByVal thread As Thread, ByRef stop_wait_seconds As Int64)
-        Dim startticks As Int64 = 0
-        startticks = Now().Ticks()
+        Dim start_ms As Int64 = 0
+        start_ms = nowadays.milliseconds()
         Try
             thread.Abort()
             thread.Join(seconds_to_milliseconds(stop_wait_seconds))
         Catch
         Finally
-            stop_wait_seconds -= ticks_to_seconds(Now().Ticks() - startticks)
+            stop_wait_seconds -= nowadays.milliseconds() - start_ms
         End Try
     End Sub
 

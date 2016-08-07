@@ -1,0 +1,4 @@
+﻿
+##DEFINE THREADPOOL_TYPE managed_threadpool
+##DEFINE NEW_INSTANCE managed_threadpool.[global]
+##INCLUDE threadpool_test.vbp

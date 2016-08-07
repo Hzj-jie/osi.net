@@ -143,7 +143,7 @@ Public NotInheritable Class slimqless2_threadpool
         End Set
     End Property
 
-    Private Sub New(Optional ByVal thread_count As UInt32 = 0)
+    Public Sub New(Optional ByVal thread_count As UInt32 = 0)
         MyBase.New()
         q = New slimqless2(Of work_info)()
         threads = New vector(Of Thread)()

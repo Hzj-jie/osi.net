@@ -6,7 +6,9 @@ Public Interface ithreadpool
     Sub queue_job(ByVal work As Action)
     Property thread_count() As UInt32
     Function stopping() As Boolean
-    Sub [stop](Optional ByVal stop_wait_seconds As Int64 = constants.default_stop_threadpool_wait_seconds)
+    ' Returns false to indicate this stop operation has not taken effect.
+    Function [stop](Optional ByVal stop_wait_seconds As Int64 =
+                                       constants.default_stop_threadpool_wait_seconds) As Boolean
     Function idle() As Boolean
     ' Executes the next job in current thread if there is one.
     Function execute_job() As Boolean

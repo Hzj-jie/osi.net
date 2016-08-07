@@ -149,7 +149,7 @@ Public NotInheritable Class qless_threadpool
         End Set
     End Property
 
-    Private Sub New(Optional ByVal thread_count As UInt32 = 0)
+    Public Sub New(Optional ByVal thread_count As UInt32 = 0)
         MyBase.New()
         q = New qless(Of work_info)()
         threads = New vector(Of Thread)()

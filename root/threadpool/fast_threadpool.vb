@@ -24,7 +24,7 @@ Public NotInheritable Class fast_threadpool
         Return managed_thread
     End Function
 
-    Private Sub New()
+    Public Sub New()
         q = New QUEUE_TYPE()
         _new(e)
         ReDim ts(threadpool.default_thread_count - uint32_1)
@@ -64,9 +64,8 @@ Public NotInheritable Class fast_threadpool
             Dim a As Action = Nothing
             a = Sub()
                     For i As UInt32 = uint32_0 To array_size(ts) - uint32_1
-                        If Not ts(i).Join(until_ms - nowadays.milliseconds()) Then
-                            Return
-                        End If
+                        ts(i).Abort()
+                        ts(i).Join(until_ms - nowadays.milliseconds())
                     Next
                 End Sub
             If in_managed_thread() Then
@@ -112,4 +111,10 @@ Public NotInheritable Class fast_threadpool
         End While
         managed_thread = False
     End Sub
+
+    Public Shared Operator +(ByVal this As fast_threadpool, ByVal that As Action) As fast_threadpool
+        assert(Not this Is Nothing)
+        this.queue_job(that)
+        Return this
+    End Operator
 End Class

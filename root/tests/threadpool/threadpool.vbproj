@@ -55,6 +55,17 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="codegen\qless_threadpool_test.vbp" />
+    <None Include="codegen\run.cmd" />
+    <None Include="codegen\slimqless2_threadpool_test.vbp" />
+    <None Include="codegen\threadpool_test.vbp" />
+    <None Include="codegen\managed_threadpool_test.vbp" />
+    <None Include="codegen\slimheapless_threadpool_test.vbp" />
+    <Compile Include="fast_threadpool_test.vb" />
+    <Compile Include="managed_threadpool_test.vb" />
+    <Compile Include="qless_threadpool_test.vb" />
+    <Compile Include="slimheapless_threadpool_test.vb" />
+    <Compile Include="slimqless2_threadpool_test.vb" />
     <Compile Include="threadpool_case.vb" />
     <Compile Include="threadpool_perf.vb" />
     <Compile Include="threadpool_test.vb" />
@@ -131,6 +142,7 @@
       <Name>utt</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetDir)\$(TargetName).*" "$(ProjectDir)\..\..\utt\$(OutDir)" /y</PostBuildEvent>
