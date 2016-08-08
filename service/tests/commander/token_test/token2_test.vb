@@ -5,7 +5,7 @@ Imports osi.service.commander
 Imports osi.service.secure
 
 Public NotInheritable Class token2_test
-    Inherits commandline_specific_case_wrapper
+    Inherits case_wrapper
 
     Private Shared Function C(ByVal s As signer) As [case]
         Return New token2_case(s)
@@ -15,7 +15,9 @@ Public NotInheritable Class token2_test
         ' ring and xor definitely won't work with token2, they are too simple and easily to conflict.
         MyBase.New(chained(C(sign.hash_algorithm_merge_hasher(Of sign.hash_algorithm_merge_hasher.sha1_new).concat),
                            C(sign.keyed_hasher(Of sign.keyed_hasher.sha512_new).instance),
-                           C(sign.keyed_hasher(Of sign.keyed_hasher.sha384_new).instance)))
+                           C(sign.keyed_hasher(Of sign.keyed_hasher.sha384_new).instance),
+                           C(sign.hash_algorithm_merge_hasher(Of sign.hash_algorithm_merge_hasher.md5_new).concat),
+                           C(sign.md5_merge_hasher.concat)))
     End Sub
 
     Private Class token2_case

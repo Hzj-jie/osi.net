@@ -131,6 +131,7 @@ Partial Public Class token_test
                                   End If
                               End Function,
                               Function() As Boolean
+                                  forward_questioner_responder.reset(id)
                                   Dim ppt As mock_ppt = Nothing
                                   ppt = ppts(rnd_int(0, array_size(ppts)))
                                   Dim exp_accepted As Boolean = False
