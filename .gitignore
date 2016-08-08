@@ -10,4 +10,7 @@
 root/envs/buildInfo.vb
 root/envs/tfver.vb
 root/envs/gitver.vb
+
 root/tests/connector/string_null_or_whitespace_perf_exe.vb
+service/tests/resources/*.do_not_parse_as_vb
+service/tests/interpreter/primitive/cases/simulator_cases.vb

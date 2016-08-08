@@ -85,7 +85,7 @@
     <Compile Include="primitive\extern_functions_implementation_tests.vb" />
     <Compile Include="primitive\extern_functions_test.vb" />
     <Compile Include="primitive\instructions_exportable_test.vb" />
-    <Compile Include="primitive\simualtor_cases.vb" />
+    <Compile Include="primitive\simulator_cases.vb" />
     <Compile Include="primitive\simulator_test.vb" />
     <Compile Include="turing\executor\variable_test.vb" />
   </ItemGroup>
