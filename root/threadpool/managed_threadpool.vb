@@ -47,6 +47,10 @@ Public Class managed_threadpool
         queue_in_managed_threadpool(AddressOf work_on, wi)
     End Sub
 
+    Protected Overrides Function stoppable() As Boolean
+        Return False
+    End Function
+
     Public Shared ReadOnly [global] As managed_threadpool = Nothing
 
     Shared Sub New()

@@ -23,4 +23,8 @@ Partial Public Class threadpool
         sleep(ms)
         Return False
     End Function
+
+    Protected Overridable Function stoppable() As Boolean
+        Return True
+    End Function
 End Class

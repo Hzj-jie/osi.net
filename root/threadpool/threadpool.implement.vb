@@ -21,6 +21,9 @@ Partial Public Class threadpool
     Public Function [stop](Optional ByVal stop_wait_seconds As Int64 =
                                               default_stop_threadpool_wait_seconds) As Boolean _
                           Implements ithreadpool.stop
+        If Not stoppable() Then
+            Return True
+        End If
         If set_stopping() Then
             'if managed_threads is nothing, means do not support stop or do not need to stop
             If Not isemptyarray(managed_threads()) Then
