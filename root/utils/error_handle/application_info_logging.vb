@@ -37,6 +37,28 @@ Friend Class application_info_logging
                     source_control.current.date,
                     ", comment ",
                     source_control.current.comment)
+        raise_error("detail tf info as",
+                    ", changeset id ",
+                    tf_current_changeset_id,
+                    ", submitted by ",
+                    tf_current_changeset_user,
+                    ", at ",
+                    tf_current_changeset_date,
+                    ", comment ",
+                    tf_current_changeset_comment)
+        raise_error("detail git info as",
+                    ", trackable_version ",
+                    gitver.current.trackable_version,
+                    ", hash ",
+                    gitver.current.hash,
+                    ", submitted by ",
+                    gitver.current.author,
+                    ", at ",
+                    gitver.current.author_date,
+                    ", comment ",
+                    gitver.current.subject,
+                    ", detail comment ",
+                    gitver.current.body)
     End Sub
 
     Private Shared Sub init()

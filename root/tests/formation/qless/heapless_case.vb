@@ -96,13 +96,19 @@ Friend Class heapless_case
 
     Public Overrides Function finish() As Boolean
         assert_more_or_equal(q.size(), uint32_0)
-        While Not q.empty()
-            read()
-        End While
+        If validate() Then
+            While Not q.empty()
+                read()
+            End While
+        Else
+            q.clear()
+        End If
         assert_equal(q.size(), uint32_0)
-        For j As Int64 = 0 To i - 1
-            assert_true(s(j), j)
-        Next
+        If validate() Then
+            For j As Int64 = 0 To i - 1
+                assert_true(s(j), j)
+            Next
+        End If
         Erase s
         Return MyBase.finish()
     End Function
