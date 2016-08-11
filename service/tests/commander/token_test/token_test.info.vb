@@ -96,7 +96,7 @@ Partial Public Class token_test
         End Function
 
         Public Overrides Function response_timeout_ms(ByVal p As mock_ppt) As Int64
-            Return seconds_to_milliseconds(1)
+            Return seconds_to_milliseconds(5)
         End Function
 
         Public Overrides Function signer(ByVal p As mock_ppt) As signer
