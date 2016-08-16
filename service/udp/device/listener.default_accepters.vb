@@ -9,8 +9,8 @@ Partial Public Class listener
 
         Private ReadOnly sources As const_array(Of IPEndPoint)
 
-        Public Sub New(ByVal sources As const_array(Of IPEndPoint), Optional ByVal always_accept As Boolean = False)
-            MyBase.New(sources, always_accept)
+        Public Sub New(ByVal sources As const_array(Of IPEndPoint))
+            MyBase.New(sources)
         End Sub
 
         Protected Overrides Function match(ByVal remote As IPEndPoint, ByVal source As IPEndPoint) As Boolean

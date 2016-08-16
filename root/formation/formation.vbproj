@@ -115,6 +115,7 @@
     <Compile Include="setqueue.vb" />
     <Compile Include="stack.vb" />
     <Compile Include="ternary.vb" />
+    <Compile Include="threadsafe\arrayless.vb" />
     <Compile Include="threadsafe\cycle.vb" />
     <Compile Include="fixed_queue.vb" />
     <Compile Include="fixed_stack.vb" />

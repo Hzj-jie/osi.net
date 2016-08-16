@@ -80,9 +80,9 @@ Public Class nowadays_combined_test
         MyBase.New(repeat(chained(multithreading(repeat(nowadays_case.just_run,
                                                         1024),
                                                  Environment.ProcessorCount() << 2),
-                                  repeat(sleep_wrappered(New nowadays_case(),
-                                                         10),
-                                         100)),
+                                  realtime_wrappered(repeat(sleep_wrappered(New nowadays_case(),
+                                                                            10),
+                                                     100))),
                           round))
     End Sub
 

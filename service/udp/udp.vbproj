@@ -63,7 +63,13 @@
     <Compile Include="device\connector.vb" />
     <Compile Include="device\delegator.vb" />
     <Compile Include="device\listener.default_accepters.vb" />
+    <Compile Include="device\listener.receiver.vb" />
     <Compile Include="device\listener.vb" />
+    <Compile Include="device\listeners.vb" />
+    <Compile Include="device\speaker.vb" />
+    <Compile Include="device\speakers.vb" />
+    <Compile Include="device\udp_clients.vb" />
+    <Compile Include="device\_46_collection.vb" />
     <Compile Include="extension.vb" />
     <Compile Include="powerpoint.create.vb" />
     <Compile Include="powerpoint.vb" />

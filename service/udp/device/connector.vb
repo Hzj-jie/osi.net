@@ -7,7 +7,7 @@ Imports osi.service.device
 Imports osi.service.selector
 
 Partial Public NotInheritable Class connector
-    Implements iasync_device_creator(Of delegator)
+    Implements iasync_device_creator(Of delegator), idevice_creator(Of UdpClient)
 
     Private ReadOnly p As powerpoint
 
@@ -20,5 +20,15 @@ Partial Public NotInheritable Class connector
                           Implements idevice_creator(Of async_getter(Of delegator)).create
         o = connection.[New](New async_preparer(Of delegator)(AddressOf connect))
         Return True
+    End Function
+
+    Public Function create(ByRef o As idevice(Of UdpClient)) As Boolean Implements idevice_creator(Of UdpClient).create
+        Dim c As UdpClient = Nothing
+        If connect(c) Then
+            o = connection.[New](c)
+            Return True
+        Else
+            Return False
+        End If
     End Function
 End Class

@@ -12,7 +12,7 @@ Public Class reference_count_event_comb_2
         Return False
     End Function
 
-    Private ReadOnly r As wrapper(Of singleentry)
+    Private ReadOnly r As ref(Of singleentry)
     Private ReadOnly b As atomic_int
     Private ReadOnly i As Func(Of event_comb)
     Private ReadOnly w As Func(Of event_comb)
@@ -25,7 +25,7 @@ Public Class reference_count_event_comb_2
         Me.w = work
         Me.f = final
 
-        Me.r = New wrapper(Of singleentry)()
+        Me.r = New ref(Of singleentry)()
         Me.b = New atomic_int()
         start(make_weak_pointer(Me))
     End Sub

@@ -134,6 +134,11 @@ Public Class reference_count_runner(Of AUTO_MARK_STARTED As _boolean, AUTO_MARK_
         End Try
     End Function
 
+    ' Blocks current thread for a while, until timeout or started.
+    Public Function wait_for_stop(ByVal ms As Int64) As Boolean
+        Return _stopped.WaitOne(ms)
+    End Function
+
     Public Sub wait_for_stop()
         assert(_stopped.WaitOne())
     End Sub

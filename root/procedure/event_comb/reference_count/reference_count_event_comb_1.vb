@@ -70,6 +70,18 @@ Public Class reference_count_event_comb_1
         Return r.binding()
     End Function
 
+    Public Function stopped() As Boolean
+        Return r.stopped()
+    End Function
+
+    Public Function wait_for_stop(ByVal ms As Int64) As Boolean
+        Return r.wait_for_stop(ms)
+    End Function
+
+    Public Sub wait_for_stop()
+        r.wait_for_stop()
+    End Sub
+
     Private Function run() As event_comb
         ec = Nothing
         Return New event_comb(Function() As Boolean

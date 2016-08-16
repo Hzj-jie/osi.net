@@ -52,6 +52,8 @@ Partial Public Class dispenser_test
         Next
 
         assert_true(d.expired())
+        assert_true(d.wait_for_stop(constants.default_sense_timeout_ms))
+        assert_true(d.stopped())
         Return True
     End Function
 End Class

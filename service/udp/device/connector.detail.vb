@@ -9,6 +9,46 @@ Imports osi.root.utils
 Imports osi.service.dns
 
 Partial Public NotInheritable Class connector
+    Public Shared Function [New](ByVal address_family As AddressFamily,
+                                 ByVal local_port As UInt16,
+                                 ByRef c As UdpClient) As Boolean
+        Try
+            If local_port = socket_invalid_port Then
+                c = New UdpClient(address_family)
+            Else
+                c = New UdpClient(local_port, address_family)
+            End If
+            If osi.root.envs.udp_trace Then
+                raise_error("new udp [", address_family, "] connection has been created on local port ",
+                            local_port)
+            End If
+            Return True
+        Catch ex As Exception
+            raise_error(error_type.user,
+                        "failed to create udp client on port ",
+                        local_port,
+                        " with address family ",
+                        address_family,
+                        ", ex ",
+                        ex.Message())
+            Return False
+        End Try
+    End Function
+
+    Public Shared Function [New](ByVal p As powerpoint, ByRef c As UdpClient) As Boolean
+        If p Is Nothing Then
+            Return False
+        Else
+            Return [New](p.address_family, p.local_port, c)
+        End If
+    End Function
+
+    Public Shared Function connect(ByVal p As powerpoint) As UdpClient
+        Dim c As UdpClient = Nothing
+        assert([New](p, c))
+        Return c
+    End Function
+
     ' remote_host is one of the resolved address (usually the first one which matches ipv4 setting), or a null.
     Private Function new_client(ByVal remote_host As IPAddress) As UdpClient
         assert(Not p Is Nothing)
@@ -22,6 +62,10 @@ Partial Public NotInheritable Class connector
             r.Connect(New IPEndPoint(remote_host, p.remote_port))
         End If
         Return r
+    End Function
+
+    Private Function connect(ByRef r As UdpClient) As Boolean
+        Return [New](p, r)
     End Function
 
     Private Function connect(ByVal r As pointer(Of delegator)) As event_comb

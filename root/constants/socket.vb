@@ -11,7 +11,7 @@ Public Module _socket
     Public Const socket_invalid_port As UInt16 = 0  ' A definitely invalid port
 End Module
 
-Public Class IOControlCodeExt
+Public NotInheritable Class IOControlCodeExt
     ' Use Int64 to follow IOControlCode
     Public Const IOC_IN_int As Int64 = &H80000000
     Public Const IOC_VENDOR_int As Int64 = &H18000000
@@ -21,4 +21,8 @@ Public Class IOControlCodeExt
 
     Private Sub New()
     End Sub
+End Class
+
+Public NotInheritable Class SocketOptionExt
+    Public Const ipv6_only As SocketOptionName = 27
 End Class

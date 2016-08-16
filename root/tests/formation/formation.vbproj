@@ -52,6 +52,7 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="arrayless_test.vb" />
     <Compile Include="array_test.vb" />
     <Compile Include="binary_tree\bmap_test.vb" />
     <Compile Include="binary_tree\bset_test.vb" />

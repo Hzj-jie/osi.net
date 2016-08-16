@@ -1,4 +1,5 @@
 ﻿
+Imports osi.root.connector
 Imports osi.root.formation
 
 Partial Public Class dispenser(Of DATA_T, ID_T)
@@ -11,14 +12,14 @@ Partial Public Class dispenser(Of DATA_T, ID_T)
         Implements accepter
 
         Private ReadOnly sources As const_array(Of ID_T)
-        Private ReadOnly always_accept As Boolean
 
-        Public Sub New(ByVal sources As const_array(Of ID_T), Optional ByVal always_accept As Boolean = False)
+        Public Sub New(ByVal sources As const_array(Of ID_T))
             Me.sources = sources
-            Me.always_accept = always_accept
         End Sub
 
-        Protected MustOverride Function match(ByVal remote As ID_T, ByVal source As ID_T) As Boolean
+        Protected Overridable Function match(ByVal remote As ID_T, ByVal source As ID_T) As Boolean
+            Return compare(remote, source) = 0
+        End Function
 
         Public Function accept(ByVal remote As ID_T) As Boolean Implements accepter.accept
             If sources.null_or_empty() Then
@@ -29,7 +30,7 @@ Partial Public Class dispenser(Of DATA_T, ID_T)
                         Return True
                     End If
                 Next
-                Return always_accept
+                Return False
             End If
         End Function
 
