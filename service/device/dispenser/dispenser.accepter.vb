@@ -3,13 +3,24 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Partial Public Class dispenser(Of DATA_T, ID_T)
-    Public Interface accepter
-        Function accept(ByVal remote As ID_T) As Boolean
-        Sub received(ByVal data As DATA_T, ByVal remote As ID_T)
+    Public Interface receiver
+        Event received(ByVal data As DATA_T, ByVal remote As ID_T)
     End Interface
 
-    Public MustInherit Class multiple_accepter
-        Implements accepter
+    Public MustInherit Class accepter
+        Implements receiver
+
+        Public Event received(ByVal data As DATA_T, ByVal remote As ID_T) _
+                             Implements dispenser(Of DATA_T, ID_T).receiver.received
+        Public MustOverride Function accept(ByVal remote As ID_T) As Boolean
+
+        Public Sub raise(ByVal data As DATA_T, ByVal remote As ID_T)
+            RaiseEvent received(data, remote)
+        End Sub
+    End Class
+
+    Public Class multiple_accepter
+        Inherits accepter
 
         Private ReadOnly sources As const_array(Of ID_T)
 
@@ -21,7 +32,7 @@ Partial Public Class dispenser(Of DATA_T, ID_T)
             Return compare(remote, source) = 0
         End Function
 
-        Public Function accept(ByVal remote As ID_T) As Boolean Implements accepter.accept
+        Public NotOverridable Overrides Function accept(ByVal remote As ID_T) As Boolean
             If sources.null_or_empty() Then
                 Return True
             Else
@@ -33,7 +44,5 @@ Partial Public Class dispenser(Of DATA_T, ID_T)
                 Return False
             End If
         End Function
-
-        Public MustOverride Sub received(ByVal data As DATA_T, ByVal remote As ID_T) Implements accepter.received
     End Class
 End Class

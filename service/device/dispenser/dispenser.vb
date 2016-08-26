@@ -67,20 +67,24 @@ Partial Public NotInheritable Class dispenser(Of DATA_T, ID_T)
                               End Function,
                               Function() As Boolean
                                   If ec.end_result() Then
-                                      If Not result.empty() AndAlso Not accepters.empty() Then
-                                          assert(accepters.foreach(Function(ByRef i As accepter,
-                                                                            ByRef [continue] As Boolean) As Boolean
-                                                                       assert(Not i Is Nothing)
-                                                                       If i.accept((+result).second) Then
-                                                                           i.received((+result).first, (+result).second)
-                                                                           [continue] = False
-                                                                       Else
-                                                                           [continue] = True
-                                                                       End If
-                                                                       Return True
-                                                                   End Function))
+                                      If result.empty() Then
+                                          Return goto_end()
+                                      Else
+                                          If Not accepters.empty() Then
+                                              assert(accepters.foreach(Function(ByRef i As accepter,
+                                                                                ByRef [continue] As Boolean) As Boolean
+                                                                           assert(Not i Is Nothing)
+                                                                           If i.accept((+result).second) Then
+                                                                               i.raise((+result).first, (+result).second)
+                                                                               [continue] = False
+                                                                           Else
+                                                                               [continue] = True
+                                                                           End If
+                                                                           Return True
+                                                                       End Function))
+                                          End If
+                                          Return goto_last()
                                       End If
-                                      Return goto_end()
                                   Else
                                       Return False
                                   End If

@@ -6,7 +6,7 @@ Imports osi.service.device
 
 ' Delegates all incoming requests to accepters
 Partial Public Class listener
-    Private ReadOnly d As dispenser(Of IPEndPoint, Byte())
+    Private ReadOnly d As dispenser(Of Byte(), IPEndPoint)
 
     Public Shared Function [New](ByVal p As powerpoint, ByRef o As listener) As Boolean
         Dim r As receiver = Nothing
@@ -26,7 +26,7 @@ Partial Public Class listener
 
     Private Sub New(ByVal r As receiver)
         assert(Not r Is Nothing)
-        Me.d = New dispenser(Of IPEndPoint, Byte())(r)
+        Me.d = New dispenser(Of Byte(), IPEndPoint)(r)
     End Sub
 
     ' Test only
@@ -34,11 +34,11 @@ Partial Public Class listener
         Me.New(New receiver(c))
     End Sub
 
-    Public Function attach(ByVal accepter As dispenser(Of IPEndPoint, Byte()).accepter) As Boolean
+    Public Function attach(ByVal accepter As dispenser(Of Byte(), IPEndPoint).accepter) As Boolean
         Return d.attach(accepter)
     End Function
 
-    Public Function detach(ByVal accepter As dispenser(Of IPEndPoint, Byte()).accepter) As Boolean
+    Public Function detach(ByVal accepter As dispenser(Of Byte(), IPEndPoint).accepter) As Boolean
         Return d.detach(accepter)
     End Function
 End Class

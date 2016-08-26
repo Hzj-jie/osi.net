@@ -89,6 +89,9 @@ Public Module _compare
             ElseIf TypeOf that Is IComparable Then
                 o = that_to_object(this, that)
                 Return True
+            ElseIf comparer(Of T, T2).defined() Then
+                o = comparer(Of T, T2).compare(this, that)
+                Return True
             Else
                 If Not suppress_compare_error() Then
                     raise_error(error_type.exclamation,
@@ -146,6 +149,8 @@ Public Module _compare
                     c = AddressOf this_to_object
                 ElseIf istype(Of T2, IComparable)() Then
                     c = AddressOf that_to_object
+                ElseIf comparer(Of T, T2).defined() Then
+                    c = comparer(Of T, T2).ref()
                 ElseIf contains_object Then
                     'contains object does not mean we need to use_runtime_compare,
                     'T or T2 may implement IComparable or IComparable(Of Object)
@@ -221,11 +226,11 @@ Public Module _compare
                 Dim c1 As Int32 = 0
                 Dim c2 As Int32 = 0
                 assert(cached_compare(this, that, c1, False) = runtime_compare(this, that, c2) AndAlso
-                         c1 = c2,
-                         "need specific treatment to compare type ",
-                         GetType(T).FullName(),
-                         " with ",
-                         GetType(T2).FullName())
+                       c1 = c2,
+                       "need specific treatment to compare type ",
+                       GetType(T).FullName(),
+                       " with ",
+                       GetType(T2).FullName())
             End If
 #End If
             'special treatment for object,

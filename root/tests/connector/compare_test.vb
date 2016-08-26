@@ -29,7 +29,8 @@ Public Class compare_test
 
     Private Shared Function chained_case(ByVal repeat_count As Int32) As [case]
         Return chained(repeat(New compare_case(), repeat_count),
-                       New not_comparable_case())
+                       New not_comparable_case(),
+                       New comparer_defined_case())
     End Function
 
     Protected Sub New(ByVal repeat_count As Int32, ByVal thread_count As Int32)
@@ -337,6 +338,52 @@ Public Class compare_test
 
         Public Overrides Function run() As Boolean
             Return not_comparable_compare()
+        End Function
+    End Class
+
+    Private Class comparer_defined_case
+        Inherits [case]
+
+        Private Class C1
+        End Class
+
+        Private Class C2
+        End Class
+
+        Private ReadOnly result As Int32
+
+        Public Sub New()
+            MyBase.New()
+            result = rnd_int()
+        End Sub
+
+        Public Overrides Function prepare() As Boolean
+            If MyBase.prepare() Then
+                comparer.register(Function(i As C1, j As C2) As Int32
+                                      assert_not_nothing(i)
+                                      assert_not_nothing(j)
+                                      Return result
+                                  End Function)
+                Return True
+            Else
+                Return False
+            End If
+        End Function
+
+        Public Overrides Function run() As Boolean
+            Dim o As Int32 = 0
+            assert_true(compare(Of C1, C2)(Nothing, New C2(), o))
+            assert_equal(o, -1)
+            assert_true(compare(New C1(), New C2(), o))
+            assert_equal(o, result)
+            assert_true(compare(Of C1, C2)(New C1(), Nothing, o))
+            assert_equal(o, 1)
+            Return True
+        End Function
+
+        Public Overrides Function finish() As Boolean
+            comparer.unregister(Of C1, C2)()
+            Return MyBase.finish()
         End Function
     End Class
 End Class

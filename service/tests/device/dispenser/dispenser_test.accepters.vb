@@ -6,7 +6,7 @@ Imports osi.service.device
 
 Partial Public Class dispenser_test
     Private Class accepter
-        Implements dispenser(Of Int32, Int32).accepter
+        Inherits dispenser(Of Int32, Int32).accepter
 
         Public ReadOnly q As qless(Of Int32)
         Private ReadOnly remote As Int32
@@ -14,14 +14,14 @@ Partial Public Class dispenser_test
         Public Sub New(ByVal remote As Int32)
             Me.remote = remote
             Me.q = _new(Me.q)
+            AddHandler MyBase.received, AddressOf received
         End Sub
 
-        Public Function accept(ByVal remote As Int32) As Boolean Implements dispenser(Of Int32, Int32).accepter.accept
+        Public NotOverridable Overrides Function accept(ByVal remote As Int32) As Boolean
             Return Me.remote = remote
         End Function
 
-        Public Sub received(ByVal data As Int32,
-                            ByVal remote As Int32) Implements dispenser(Of Int32, Int32).accepter.received
+        Private Shadows Sub received(ByVal data As Int32, ByVal remote As Int32)
             assert_equal(Me.remote, remote)
             Me.q.emplace(data)
         End Sub

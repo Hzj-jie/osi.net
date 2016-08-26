@@ -31,4 +31,9 @@ Partial Public NotInheritable Class connector
             Return False
         End If
     End Function
+
+    Public Function create(ByRef o As async_getter(Of listener.multiple_accepter)) As Boolean
+        o = New async_preparer(Of listener.multiple_accepter)(AddressOf multiple_accepter)
+        Return True
+    End Function
 End Class

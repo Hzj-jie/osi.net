@@ -1,6 +1,7 @@
 ﻿
 Imports System.Net
 Imports System.Net.Sockets
+Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
@@ -52,5 +53,108 @@ Public Class speaker
                                   Return ec.end_result() AndAlso
                                          goto_end()
                               End Function)
+    End Function
+
+    Public Function send(ByVal remote As IPEndPoint,
+                         ByVal b() As Byte,
+                         ByVal count As UInt32,
+                         Optional ByVal sent As pointer(Of UInt32) = Nothing) As event_comb
+        Return send(remote, b, uint32_0, count, sent)
+    End Function
+
+    Public Function send(ByVal remote As IPEndPoint,
+                         ByVal b() As Byte,
+                         Optional ByVal sent As pointer(Of UInt32) = Nothing) As event_comb
+        Return send(remote, b, array_size(b), sent)
+    End Function
+
+    Public Function send(ByVal remote_host As IPAddress,
+                         ByVal remote_port As UInt16,
+                         ByVal b() As Byte,
+                         ByVal offset As UInt32,
+                         ByVal count As UInt32,
+                         Optional ByVal sent As pointer(Of UInt32) = Nothing) As event_comb
+        Dim ec As event_comb = Nothing
+        Return New event_comb(Function() As Boolean
+                                  If remote_host Is Nothing Then
+                                      Return False
+                                  Else
+                                      ec = send(New IPEndPoint(remote_host, remote_port),
+                                                b,
+                                                offset,
+                                                count,
+                                                sent)
+                                      Return waitfor(ec) AndAlso
+                                             goto_next()
+                                  End If
+                              End Function,
+                              Function() As Boolean
+                                  Return ec.end_result() AndAlso
+                                         goto_end()
+                              End Function)
+    End Function
+
+    Public Function send(ByVal remote_host As IPAddress,
+                         ByVal remote_port As UInt16,
+                         ByVal b() As Byte,
+                         ByVal count As UInt32,
+                         Optional ByVal sent As pointer(Of UInt32) = Nothing) As event_comb
+        Return send(remote_host, remote_port, b, 0, count, sent)
+    End Function
+
+    Public Function send(ByVal remote_host As IPAddress,
+                         ByVal remote_port As UInt16,
+                         ByVal b() As Byte,
+                         Optional ByVal sent As pointer(Of UInt32) = Nothing) As event_comb
+        Return send(remote_host, remote_port, b, array_size(b), sent)
+    End Function
+
+    Public Function send(ByVal remote_host_or_ip As String,
+                         ByVal remote_port As UInt16,
+                         ByVal b() As Byte,
+                         ByVal offset As UInt32,
+                         ByVal count As UInt32,
+                         Optional ByVal sent As pointer(Of UInt32) = Nothing) As event_comb
+        Dim ec As event_comb = Nothing
+        Dim p As pointer(Of IPAddress) = Nothing
+        Return New event_comb(Function() As Boolean
+                                  p = New pointer(Of IPAddress)()
+                                  If c.Client().AddressFamily() = AddressFamily.InterNetwork Then
+                                      ec = dns.resolve_ipv4(remote_host_or_ip, p)
+                                  Else
+                                      assert(c.Client().AddressFamily() = AddressFamily.InterNetworkV6)
+                                      ec = dns.resolve_ipv6(remote_host_or_ip, p)
+                                  End If
+                                  Return waitfor(ec) AndAlso
+                                         goto_next()
+                              End Function,
+                              Function() As Boolean
+                                  If ec.end_result() AndAlso Not p.empty() Then
+                                      ec = send(+p, remote_port, b, offset, count, sent)
+                                      Return waitfor(ec) AndAlso
+                                             goto_next()
+                                  Else
+                                      Return False
+                                  End If
+                              End Function,
+                              Function() As Boolean
+                                  Return ec.end_result() AndAlso
+                                         goto_end()
+                              End Function)
+    End Function
+
+    Public Function send(ByVal remote_host_or_ip As String,
+                         ByVal remote_port As UInt16,
+                         ByVal b() As Byte,
+                         ByVal count As UInt32,
+                         Optional ByVal sent As pointer(Of UInt32) = Nothing) As event_comb
+        Return send(remote_host_or_ip, remote_port, b, 0, count, sent)
+    End Function
+
+    Public Function send(ByVal remote_host_or_ip As String,
+                         ByVal remote_port As UInt16,
+                         ByVal b() As Byte,
+                         Optional ByVal sent As pointer(Of UInt32) = Nothing) As event_comb
+        Return send(remote_host_or_ip, remote_port, b, array_size(b), sent)
     End Function
 End Class

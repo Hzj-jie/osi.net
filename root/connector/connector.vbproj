@@ -68,6 +68,8 @@
     <Compile Include="character.vb" />
     <Compile Include="choose.vb" />
     <Compile Include="code_block.vb" />
+    <Compile Include="comparer.vb" />
+    <Compile Include="comparer_registry.vb" />
     <Compile Include="concurrency_runner.vb" />
     <Compile Include="custom_attributes.vb" />
     <Compile Include="default.vb" />
