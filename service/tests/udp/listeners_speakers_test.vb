@@ -60,6 +60,9 @@ Public Class listeners_speakers_test
                                           assert_array_equal(send_data(j), receive_data(j))
                                       Next
                                       Return assert_true(listener.detach(accepter)) AndAlso
+                                             assert_true(listener.wait_for_stop(
+                                                 osi.service.device.constants.default_sense_timeout_ms)) AndAlso
+                                             assert_true(listener.stopped()) AndAlso
                                              goto_end()
                                   End If
                               End Function,

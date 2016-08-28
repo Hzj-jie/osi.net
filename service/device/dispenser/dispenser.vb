@@ -6,7 +6,7 @@ Imports osi.root.formation
 Imports osi.root.procedure
 
 ' Delegates all incoming requests to accepters
-Partial Public NotInheritable Class dispenser(Of DATA_T, ID_T)
+Partial Public Class dispenser(Of DATA_T, ID_T)
     Inherits reference_count_event_comb_1
 
     Private ReadOnly d As T_receiver(Of pair(Of DATA_T, ID_T))
@@ -47,7 +47,7 @@ Partial Public NotInheritable Class dispenser(Of DATA_T, ID_T)
         End If
     End Function
 
-    Protected Overrides Function work() As event_comb
+    Protected NotOverridable Overrides Function work() As event_comb
         Dim ec As event_comb = Nothing
         Dim result As pointer(Of pair(Of DATA_T, ID_T)) = Nothing
         Return New event_comb(Function() As Boolean
@@ -83,7 +83,7 @@ Partial Public NotInheritable Class dispenser(Of DATA_T, ID_T)
                                                                            Return True
                                                                        End Function))
                                           End If
-                                          Return goto_last()
+                                          Return goto_prev()
                                       End If
                                   Else
                                       Return False
