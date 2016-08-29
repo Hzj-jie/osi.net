@@ -16,17 +16,31 @@ Imports osi.root.lock
 Imports osi.root.threadpool
 Imports osi.root.utt
 
+Public Class slimheapless_threadpool_manual_test
+    Inherits commandline_specific_case_wrapper
+
+    Public Sub New()
+        MyBase.New(rinne(New slimheapless_threadpool_test(1024 * 1024), 1024 * 32))
+    End Sub
+End Class
+
 Public Class slimheapless_threadpool_test
     Inherits [case]
 
-    Private Const round As Int64 = 16 * 1024 * 1024
+    Private ReadOnly round As Int64
     Private ReadOnly inserted As atomic_int64
     Private ReadOnly executed As atomic_int64
     Private t As slimheapless_threadpool
 
+    Public Sub New(ByVal round As Int64)
+        assert(round > 0)
+        Me.round = round
+        Me.inserted = New atomic_int64()
+        Me.executed = New atomic_int64()
+    End Sub
+
     Public Sub New()
-        inserted = New atomic_int64()
-        executed = New atomic_int64()
+        Me.New(16 * 1024 * 1024)
     End Sub
 
     Private Sub queue_job()

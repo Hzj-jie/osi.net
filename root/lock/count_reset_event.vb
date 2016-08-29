@@ -21,6 +21,7 @@ Public Class count_reset_event(Of _MAX_COUNT As _int64)
 
     Shared Sub New()
         MAX_COUNT = +alloc(Of _MAX_COUNT)()
+        assert(MAX_COUNT >= 0)
         assert(MAX_COUNT <> 1)
     End Sub
 
@@ -32,7 +33,8 @@ Public Class count_reset_event(Of _MAX_COUNT As _int64)
         l.wait()
         p += 1
         If p = 1 Then
-            assert(m.Set())
+            ' Any exception will break this event.
+            assert(m.force_set())
         End If
         If MAX_COUNT > 0 AndAlso p > MAX_COUNT Then
             p = MAX_COUNT
@@ -46,7 +48,7 @@ Public Class count_reset_event(Of _MAX_COUNT As _int64)
         l.wait()
         If p = 1 Then
             p = 0
-            assert(m.Reset())
+            assert(m.force_reset())
         ElseIf p > 1 Then
             p -= 1
         Else
@@ -70,7 +72,7 @@ Public Class count_reset_event(Of _MAX_COUNT As _int64)
                 Else
                     Dim wait_ms As Int64 = int64_0
                     wait_ms = until_ms - nowadays.milliseconds()
-                    If wait_ms < 0 OrElse Not m.WaitOne(wait_ms) Then
+                    If wait_ms < 0 OrElse Not m.wait(wait_ms) Then
                         Return False
                     End If
                 End If
@@ -85,7 +87,7 @@ Public Class count_reset_event(Of _MAX_COUNT As _int64)
             If acquire() Then
                 Return
             Else
-                assert(m.WaitOne())
+                assert(m.wait())
             End If
         End While
     End Sub
@@ -93,7 +95,7 @@ Public Class count_reset_event(Of _MAX_COUNT As _int64)
     Public Sub reset()
         l.wait()
         p = 0
-        assert(m.Reset())
+        assert(m.force_reset())
         l.release()
     End Sub
 

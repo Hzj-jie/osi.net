@@ -1,11 +1,12 @@
 ﻿
+#Const USE_COUNT_RESET_EVENT = False
 Imports System.Threading
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.envs
 Imports osi.root.event
 Imports osi.root.lock
-Imports QUEUE_TYPE = osi.root.formation.heapless(Of System.Action)
+Imports QUEUE_TYPE = osi.root.formation.slimheapless(Of System.Action)
 
 Public NotInheritable Class fast_threadpool_instance
     Public Shared ReadOnly g As fast_threadpool
@@ -23,7 +24,11 @@ Public NotInheritable Class fast_threadpool
     <ThreadStatic> Private Shared managed_thread As Boolean
     Private ReadOnly ts() As Thread
     Private ReadOnly q As QUEUE_TYPE
+#If USE_COUNT_RESET_EVENT Then
     Private ReadOnly e As count_reset_event(Of threadpool._default_thread_count)
+#Else
+    Private ReadOnly e As AutoResetEvent
+#End If
     Private s As singleentry
 
     Public Shared Function in_managed_thread() As Boolean
@@ -32,7 +37,11 @@ Public NotInheritable Class fast_threadpool
 
     Public Sub New()
         q = New QUEUE_TYPE()
+#If USE_COUNT_RESET_EVENT Then
         _new(e)
+#Else
+        e = New AutoResetEvent(False)
+#End If
         ReDim ts(threadpool.default_thread_count - uint32_1)
         For i As UInt32 = uint32_0 To threadpool.default_thread_count - uint32_1
             ts(i) = New Thread(AddressOf worker)
@@ -51,7 +60,11 @@ Public NotInheritable Class fast_threadpool
         End If
 
         q.emplace(work)
+#If USE_COUNT_RESET_EVENT Then
         e.set()
+#Else
+        e.force_set()
+#End If
     End Sub
 
     Public Function thread_count() As UInt32
@@ -110,9 +123,10 @@ Public NotInheritable Class fast_threadpool
 
     Private Sub worker()
         managed_thread = True
-        While s.not_in_use()
+        While Not stopping()
             If Not execute_job() Then
-                assert(wait_job())
+                ' wait_job should only fail when thread is aborting.
+                assert(wait_job() OrElse stopping())
             End If
         End While
         managed_thread = False

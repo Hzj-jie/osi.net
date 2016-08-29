@@ -68,14 +68,15 @@ Partial Public MustInherit Class threadpool
     Protected Sub work_on(ByVal wi As work_info)
         assert(Not wi Is Nothing)
         assert(Not wi.work Is Nothing)
-        pop_queue()
+        ' increment wt before decrement ql to make sure idle() can correctly the status.
         start_work_info(wi)
+        pop_queue()
         void_(wi.work)
         finish_work_info()
     End Sub
 
     Protected Sub worker()
-        While True
+        While Not stopping()
             If Not execute_job() Then
                 If threadpool_trace Then
                     Dim startticks As Int64 = 0

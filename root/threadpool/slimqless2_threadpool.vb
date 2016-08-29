@@ -35,23 +35,23 @@ Public NotInheritable Class slimqless2_threadpool
     Public Shared Function in_managed_thread() As Boolean
         Return managed_thread
     End Function
-
+    
     Public Overrides Function wait_job(Optional ByVal ms As Int64 = npos) As Boolean
         'Interlocked.Increment(it)
         If ms >= 0 Then
             If busy_wait Then
                 Dim start_ms As Int64 = 0
                 start_ms = nowadays.milliseconds()
-                wait_when(Function() Not (are.WaitOne(0) OrElse stopping() OrElse nowadays.milliseconds() > start_ms + ms))
-                Return are.WaitOne(0)
+                wait_when(Function() Not (are.wait(0) OrElse stopping() OrElse nowadays.milliseconds() > start_ms + ms))
+                Return are.wait(0)
             Else
-                Return are.WaitOne(ms)
+                Return are.wait(ms)
             End If
         Else
             If busy_wait Then
-                wait_when(Function() Not (are.WaitOne(0) OrElse stopping()))
+                wait_when(Function() Not (are.wait(0) OrElse stopping()))
             Else
-                assert(are.WaitOne() OrElse stopping())
+                assert(are.wait() OrElse stopping())
             End If
             Return True
         End If
@@ -67,7 +67,7 @@ Public NotInheritable Class slimqless2_threadpool
         'If it > 0 Then
         '    are.Set()
         'End If
-        are.Set()
+        are.force_set()
     End Sub
 
     Protected Overrides Sub queue_job(ByVal wi As work_info)
@@ -161,7 +161,7 @@ Public NotInheritable Class slimqless2_threadpool
     End Sub
 
     ' Consumers should use registry.vb
-    Friend Shared Shadows Sub register()
+    Friend Shadows Shared Sub register()
         threadpool.register(New slimqless2_threadpool())
     End Sub
 End Class

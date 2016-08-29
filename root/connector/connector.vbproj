@@ -78,6 +78,7 @@
     <Compile Include="delegate2.vb" />
     <Compile Include="error_handler\error_event.vb" />
     <Compile Include="error_handler\error_writer_ignore_types.vb" />
+    <Compile Include="event_wait_handle.vb" />
     <Compile Include="file_system.vb" />
     <Compile Include="compress.vb" />
     <Compile Include="static_constructor.vb" />
