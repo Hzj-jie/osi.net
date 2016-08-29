@@ -48,8 +48,8 @@ Partial Public MustInherit Class threadpool
     End Sub
 
     Protected Sub New()
+        TYPE_NAME = Me.GetType().Name()
         If threadpool_trace Then
-            TYPE_NAME = Me.GetType().Name()
             THREADPOOL_WORK_INFO_INQUEUE_TICKS =
                 counter.register_average_and_last_average(strcat(TYPE_NAME, "_WORK_INFO_INQUEUE_TICKS"))
             THREADPOOL_QUEUE_LENGTH =

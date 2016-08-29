@@ -67,9 +67,7 @@ Partial Public Class dispenser(Of DATA_T, ID_T)
                               End Function,
                               Function() As Boolean
                                   If ec.end_result() Then
-                                      If result.empty() Then
-                                          Return goto_end()
-                                      Else
+                                      If Not result.empty() Then
                                           If Not accepters.empty() Then
                                               assert(accepters.foreach(Function(ByRef i As accepter,
                                                                                 ByRef [continue] As Boolean) As Boolean
@@ -83,8 +81,8 @@ Partial Public Class dispenser(Of DATA_T, ID_T)
                                                                            Return True
                                                                        End Function))
                                           End If
-                                          Return goto_prev()
                                       End If
+                                      Return goto_end()
                                   Else
                                       Return False
                                   End If
