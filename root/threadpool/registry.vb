@@ -5,7 +5,7 @@
 
 Public Module _auto_updating_resolver
     Public Function thread_pool() As fast_threadpool
-        Return fast_threadpool.instance
+        Return fast_threadpool_instance.g
     End Function
 End Module
 

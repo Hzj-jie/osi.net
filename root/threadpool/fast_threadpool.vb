@@ -7,18 +7,24 @@ Imports osi.root.event
 Imports osi.root.lock
 Imports QUEUE_TYPE = osi.root.formation.heapless(Of System.Action)
 
+Public NotInheritable Class fast_threadpool_instance
+    Public Shared ReadOnly g As fast_threadpool
+
+    Shared Sub New()
+        g = New fast_threadpool()
+    End Sub
+
+    Private Sub New()
+    End Sub
+End Class
+
 ' A not-inheritable, no virtual functions threadpool with compiling time switches only.
 Public NotInheritable Class fast_threadpool
-    Public Shared ReadOnly instance As fast_threadpool
     <ThreadStatic> Private Shared managed_thread As Boolean
     Private ReadOnly ts() As Thread
     Private ReadOnly q As QUEUE_TYPE
     Private ReadOnly e As count_reset_event(Of threadpool._default_thread_count)
     Private s As singleentry
-
-    Shared Sub New()
-        instance = New fast_threadpool()
-    End Sub
 
     Public Shared Function in_managed_thread() As Boolean
         Return managed_thread
@@ -58,7 +64,7 @@ Public NotInheritable Class fast_threadpool
 
     Public Function [stop](Optional ByVal stop_wait_seconds As Int64 = constants.default_stop_threadpool_wait_seconds) _
                           As Boolean
-        If s.mark_in_use() Then
+        If object_compare(Me, fast_threadpool_instance.g) <> 0 AndAlso s.mark_in_use() Then
             Dim until_ms As Int64 = int64_0
             until_ms = nowadays.milliseconds() + seconds_to_milliseconds(stop_wait_seconds)
             Dim a As Action = Nothing

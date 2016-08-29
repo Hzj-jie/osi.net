@@ -16,13 +16,11 @@ Public Class fast_threadpool_test
     Private Const round As Int64 = 16 * 1024 * 1024
     Private ReadOnly inserted As atomic_int64
     Private ReadOnly executed As atomic_int64
-    Private ReadOnly t As fast_threadpool
+    Private t As fast_threadpool
 
     Public Sub New()
         inserted = New atomic_int64()
         executed = New atomic_int64()
-        t = New fast_threadpool()
-        assert(Not t Is Nothing)
     End Sub
 
     Private Sub queue_job()
@@ -37,11 +35,13 @@ Public Class fast_threadpool_test
     End Sub
 
     Public Overrides Function preserved_processors() As Int16
-        Return t.thread_count()
+        Return osi.root.threadpool.threadpool.default_thread_count
     End Function
 
     Public Overrides Function prepare() As Boolean
         If MyBase.prepare() Then
+            t = New fast_threadpool()
+            assert(Not t Is Nothing)
             inserted.set(0)
             executed.set(0)
             Return True
