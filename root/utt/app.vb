@@ -38,6 +38,10 @@ Public Module _app
         assert_less_or_equal(queue_runner.size(), 1)
         assert_true(suppress.init_state())
         assert_true(using_default_ithreadpool())
+        ' A .Net framework uses ~ 15 threads, and since ManagedThreadPool was involved in concurrent_runner, it may have
+        ' some 4 threads. Since unmanaged threads are not controllable, so add an extra 5.
+        assert_less_or_equal(current_process.Threads().Count(),
+                             19 + thread_pool().thread_count() + queue_runner.thread_count + 5)
         assert_less_or_equal(gc_total_memory(), 64 * 1024 * 1024)
         If failure_count() > 0 Then
             failed("failure count = ", failure_count())

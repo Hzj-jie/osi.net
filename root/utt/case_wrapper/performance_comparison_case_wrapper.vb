@@ -47,7 +47,7 @@ Public Class performance_comparison_case_wrapper
         If t Is Nothing OrElse t.GetLength(0) <= i OrElse t.GetLength(1) <= j Then
             Return -1
         ElseIf t(i, j) = 0 AndAlso t.GetLength(0) > j AndAlso t.GetLength(1) > i AndAlso t(j, i) > 0 Then
-            Return 2 / t(j, i)
+            Return 3 / t(j, i)
         Else
             Return t(i, j)
         End If

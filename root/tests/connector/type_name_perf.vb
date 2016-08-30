@@ -10,7 +10,7 @@ Public Class type_name_perf
 
     Protected Overrides Function min_rate_table() As Double(,)
         Return {{0, 8},
-                {0.25, 0}}
+                {0.4, 0}}
     End Function
 
     Private Shared Function r(ByVal c As [case]) As [case]
