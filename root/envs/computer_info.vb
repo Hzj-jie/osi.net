@@ -1,15 +1,9 @@
 ﻿
 Public Module _computer_info
     Public ReadOnly processor_architecture As String
-    Public ReadOnly os_full_name As String
-    Public ReadOnly os_platform As String
-    Public ReadOnly os_version As String
 
     Sub New()
         processor_architecture = Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE")
-        os_full_name = computer.Info().OSFullName()
-        os_platform = computer.Info().OSPlatform()
-        os_version = computer.Info().OSVersion()
     End Sub
 
     'for mono

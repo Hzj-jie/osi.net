@@ -59,6 +59,19 @@ Friend Class application_info_logging
                     gitver.current.subject,
                     ", detail comment ",
                     gitver.current.body)
+        raise_error("host os info as",
+                    ", family ",
+                    os.family,
+                    ", windows major ",
+                    os.windows_major,
+                    ", windows ver ",
+                    os.windows_ver,
+                    ", full name ",
+                    os.full_name,
+                    ", platform ",
+                    os.platform,
+                    ", version ",
+                    os.version)
     End Sub
 
     Private Shared Sub init()

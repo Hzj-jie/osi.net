@@ -3,7 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.utils
 Imports osi.root.utt
-Imports envs = osi.root.envs
+Imports os = osi.root.envs.os
 
 Friend Module inlinable_extension_method
     <Extension()> Public Sub ext_method(ByRef j As Int32, ByVal r1 As Int32, ByVal r2 As Int32)
@@ -12,6 +12,9 @@ Friend Module inlinable_extension_method
     End Sub
 End Module
 
+' On Windows XP / 2003 or maybe earlier, extension method is at least 2x slower than a regular function.
+' On Windows 7 or upper, maybe Vista, extension method is ~30% slower than a regular function in debug build, but on-par
+'   (slightly slower) in release build.
 Public Class inlinable_perf
     Inherits performance_comparison_case_wrapper
 
@@ -31,9 +34,22 @@ Public Class inlinable_perf
     End Sub
 
     Protected Overrides Function max_rate_table() As Double(,)
-        Return {{-1, If(envs.virtual_machine, 0.8, 0.5), If(envs.virtual_machine, 0.8, 0.5)},
-                {If(envs.virtual_machine, 1.5, 4), -1, 1.1},
-                {If(envs.virtual_machine, 1.5, 4), 1.1, -1}}
+        If os.windows_major = os.windows_major_t._5 Then
+            Return {{-1, 0.5, 0.5},
+                    {4, -1, 1.1},
+                    {4, 1.1, -1}}
+        Else
+            ' Targeting _6 or upper
+#If DEBUG Then
+            Return {{-1, 0.9, 0.9},
+                    {1.5, -1, 1.1},
+                    {1.5, 1.1, -1}}
+#Else
+            Return {{-1, 1.1, 1.1},
+                    {1.3, -1, 1.1},
+                    {1.3, 1.1, -1}}
+#End If
+        End If
     End Function
 
     Private Shared Sub internal_instructions()
