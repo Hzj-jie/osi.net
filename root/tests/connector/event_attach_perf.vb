@@ -5,6 +5,7 @@ Imports osi.root.formation
 Imports osi.root.template
 Imports osi.root.utt
 
+' Unfortunately, [Delegate].GetInvocationList in .Net (the internal implementation of event) is an O(N) algorithm.
 Public Class event_attach_perf
     Inherits performance_comparison_case_wrapper
 
@@ -13,12 +14,12 @@ Public Class event_attach_perf
     End Sub
 
     Protected Overrides Function min_rate_table() As Double(,)
-        Return {{-1, 3, -1, -1, -1, -1},
-                {0.8, -1, -1, -1, -1, -1},
-                {-1, -1, -1, 30, -1, -1},
-                {-1, -1, 0.08, -1, -1, -1},
-                {-1, -1, -1, -1, -1, 2000},
-                {-1, -1, -1, -1, 0.0008, -1}}
+        Return {{-1, 0.2, -1, -1, -1, -1},
+                {20, -1, -1, -1, -1, -1},
+                {-1, -1, -1, 1, -1, -1},
+                {-1, -1, 4, -1, -1, -1},
+                {-1, -1, -1, -1, -1, 66.7},
+                {-1, -1, -1, -1, 0.06, -1}}
     End Function
 
     Private Shared Function c(Of _SIZE As _int64)() As [case]()
@@ -49,8 +50,11 @@ Public Class event_attach_perf
         End Function
 
         Public Overrides Function run() As Boolean
-            Dim x As UInt32 = uint32_0
-            x = array_size(a)
+            ' array_size is too fast.
+            For i As Int32 = 0 To 99
+                Dim x As UInt32 = uint32_0
+                x = array_size(a)
+            Next
             Return True
         End Function
 

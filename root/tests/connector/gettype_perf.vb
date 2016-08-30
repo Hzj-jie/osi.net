@@ -28,9 +28,9 @@ Public Class gettype_perf
         Inherits performance_comparison_case_wrapper
 
         Protected Overrides Function min_rate_table() As Double(,)
-            Return {{0, 0.8, 2},
-                    {4, 0, 7},
-                    {0.9, 0.6, 0}}
+            Return {{0, 0.8, 2.5},
+                    {4, 0, 7.2},
+                    {0.9, 0.5, 0}}
         End Function
 
         Public Sub New()
