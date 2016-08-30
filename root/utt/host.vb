@@ -118,7 +118,7 @@ Partial Friend NotInheritable Class host
         foreach(Sub(ByRef x) x.finished = False)
     End Sub
 
-    Public Shared Function run(Optional ByVal selector As vector(Of String) = Nothing) As Int32
+    Public Shared Function run(ByVal selector As vector(Of String)) As Int32
         Dim r As Int32 = 0
         clear_selection()
         foreach(Sub(ByRef x)
