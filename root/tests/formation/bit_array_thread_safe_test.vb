@@ -22,9 +22,10 @@ Public Class bit_array_thread_safe_test
         Private ReadOnly size As UInt32
         Private ReadOnly b As bit_array_thread_safe
         Private i As Int32
+        Private all_true_before As Int32
 
         Public Sub New(ByVal thread_count As Int32, ByVal round As Int32)
-            Me.write_thread_count = (thread_count >> 1)
+            Me.write_thread_count = thread_count - 2
             Me.size = write_thread_count * round
             Me.b = New bit_array_thread_safe()
         End Sub
@@ -33,6 +34,7 @@ Public Class bit_array_thread_safe_test
             If MyBase.prepare() Then
                 b.resize(size)
                 i = 0
+                all_true_before = 0
                 Return True
             Else
                 Return False
@@ -43,7 +45,18 @@ Public Class bit_array_thread_safe_test
             If multithreading_case_wrapper.thread_id() < write_thread_count Then
                 b(Interlocked.Increment(i) - 1) = True
             ElseIf i > write_thread_count Then
-                assert_true(b(rnd_int(0, i - write_thread_count)))
+                Dim current As Int32 = 0
+                current = i
+                Dim fc As Int32 = 0
+                For j As Int32 = all_true_before To current - 1
+                    If Not b(j) Then
+                        fc += 1
+                    End If
+                Next
+                assert_less_or_equal(fc, write_thread_count)
+                If fc = 0 AndAlso current > all_true_before Then
+                    all_true_before = current
+                End If
             End If
             Return True
         End Function
