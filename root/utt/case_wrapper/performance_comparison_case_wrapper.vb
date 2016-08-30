@@ -6,23 +6,23 @@ Imports osi.root.utils
 Public Class performance_comparison_case_wrapper
     Inherits comparison_case_wrapper
 
-    Private Shared Function to_perf_cases(ByVal times As Int64, ByVal cs() As [case]) As [case]()
+    Private Shared Function to_perf_cases(ByVal times As UInt64, ByVal cs() As [case]) As [case]()
         assert(Not isemptyarray(cs))
         Dim r() As [case] = Nothing
         ReDim r(array_size(cs) - 1)
         For i As UInt32 = 0 To array_size(cs) - uint32_1
-            r(i) = New performance_case_wrapper(cs(i), times:=times)
+            r(i) = performance(cs(i), times:=times)
         Next
         Return r
     End Function
 
     Public Sub New(ByVal continue_when_failure As Boolean,
-                   ByVal times As Int64,
+                   ByVal times As UInt64,
                    ByVal ParamArray cs() As [case])
         MyBase.New(continue_when_failure, to_perf_cases(times, cs))
     End Sub
 
-    Public Sub New(ByVal times As Int64,
+    Public Sub New(ByVal times As UInt64,
                    ByVal ParamArray cs() As [case])
         MyBase.New(to_perf_cases(times, cs))
     End Sub

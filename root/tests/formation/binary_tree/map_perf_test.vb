@@ -18,7 +18,7 @@ Public Class map_perf_test
                     {0.04, 0}}
         Else
             Return {{0, 15},
-                    {0.1, 0}}
+                    {0.12, 0}}
         End If
     End Function
 
