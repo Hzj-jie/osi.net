@@ -15,7 +15,7 @@ Public Class to_string_shadower(Of T)
     Private ReadOnly x As T
 
     Shared Sub New()
-        type_name = strcat("to_string_shadower(Of ", GetType(T).Name(), ")")
+        type_name = strcat("to_string_shadower(Of ", type_info(Of T).name, ")")
     End Sub
 
     Public Sub New(ByVal x As T)
