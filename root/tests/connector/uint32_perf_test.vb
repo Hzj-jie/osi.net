@@ -28,13 +28,13 @@ Public Class uint32_perf_test
 
     Protected Overrides Function max_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
         If i < 4 AndAlso j < 4 Then
-            Return 1.1
+            Return 1.2
         ElseIf i >= 4 AndAlso i < 8 AndAlso j >= 4 AndAlso j < 8 Then
-            Return 1.1
+            Return 1.2
         ElseIf i >= 8 AndAlso i < 10 AndAlso j >= 8 AndAlso j < 10 Then
-            Return 1.1
+            Return 1.2
         ElseIf i >= 10 AndAlso i < 14 AndAlso j >= 10 AndAlso j < 14 Then
-            Return 1.1
+            Return 1.2
         End If
         Return -1
     End Function
