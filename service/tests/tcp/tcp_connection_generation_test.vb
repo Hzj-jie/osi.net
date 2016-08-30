@@ -76,7 +76,7 @@ Public Class tcp_connection_generation_test
             If assert_true(timeslice_sleep_wait_when(Function() As Boolean
                                                          Return ap.empty()
                                                      End Function,
-                                                     seconds_to_milliseconds(10))) AndAlso
+                                                     seconds_to_milliseconds(20))) AndAlso
                assert_false(ap.empty()) AndAlso
                assert_false(cp.empty()) Then
                 Dim c As idevice(Of ref_client) = Nothing
@@ -101,11 +101,11 @@ Public Class tcp_connection_generation_test
                                                           Return ap.total_count() > uint32_1
                                                       End Function,
                                                       seconds_to_milliseconds(30)))
-                cp.close()
-                assert_equal(cp.total_count(), uint32_0)
-                ap.close()
-                assert_equal(ap.total_count(), uint32_0)
             End If
+            cp.close()
+            assert_equal(cp.total_count(), uint32_0)
+            ap.close()
+            assert_equal(ap.total_count(), uint32_0)
 
             connection_state.release()
             powerpoint.waitfor_stop()
