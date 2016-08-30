@@ -22,11 +22,12 @@ Public Class concurrency_runner_test
                            If v > max Then
                                max = v
                            End If
-                           fake_processor_work(2)
+                           fake_processor_work(10)
                            assert(r.decrement() >= 0)
                        End Sub
             Next
             concurrency_runner.execute(a)
+            ' One thread may be stuck at the for loop in concurrency_runner.
             assert_more_or_equal(max, Environment.ProcessorCount() - 1)
         End If
         Return True
