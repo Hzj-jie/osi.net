@@ -1,4 +1,5 @@
 ﻿
+' A cached_compare will be initialized once, so unregister a comparer usually won't take effect.
 Public NotInheritable Class comparer
     Public Shared Sub register(Of T, T2)(ByVal c As Func(Of T, T2, Int32))
         assert(Not c Is Nothing)
@@ -8,11 +9,6 @@ Public NotInheritable Class comparer
                                             Return -c(j, i)
                                         End Function)
         End If
-    End Sub
-
-    Public Shared Sub unregister(Of T, T2)()
-        comparer(Of T, T2).unregister()
-        comparer(Of T2, T).unregister()
     End Sub
 
     Private Sub New()
@@ -27,12 +23,6 @@ Public NotInheritable Class comparer(Of T, T2)
         assert(Not c Is Nothing)
         assert(comparer(Of T, T2).c Is Nothing OrElse object_compare(comparer(Of T, T2).c, c) = 0)
         comparer(Of T, T2).c = c
-    End Sub
-
-    ' This should only be used in a test case
-    Public Shared Sub unregister()
-        assert(Not c Is Nothing)
-        c = Nothing
     End Sub
 
     Public Shared Function defined() As Boolean

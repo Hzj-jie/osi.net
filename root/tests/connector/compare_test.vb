@@ -350,25 +350,16 @@ Public Class compare_test
         Private Class C2
         End Class
 
-        Private ReadOnly result As Int32
+        Private Shared ReadOnly result As Int32
 
-        Public Sub New()
-            MyBase.New()
+        Shared Sub New()
             result = rnd_int()
+            comparer.register(Function(i As C1, j As C2) As Int32
+                                  assert_not_nothing(i)
+                                  assert_not_nothing(j)
+                                  Return result
+                              End Function)
         End Sub
-
-        Public Overrides Function prepare() As Boolean
-            If MyBase.prepare() Then
-                comparer.register(Function(i As C1, j As C2) As Int32
-                                      assert_not_nothing(i)
-                                      assert_not_nothing(j)
-                                      Return result
-                                  End Function)
-                Return True
-            Else
-                Return False
-            End If
-        End Function
 
         Public Overrides Function run() As Boolean
             Dim o As Int32 = 0
@@ -379,11 +370,6 @@ Public Class compare_test
             assert_true(compare(Of C1, C2)(New C1(), Nothing, o))
             assert_equal(o, 1)
             Return True
-        End Function
-
-        Public Overrides Function finish() As Boolean
-            comparer.unregister(Of C1, C2)()
-            Return MyBase.finish()
         End Function
     End Class
 End Class
