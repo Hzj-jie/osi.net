@@ -9,7 +9,7 @@ Public Class type_name_perf
     End Sub
 
     Protected Overrides Function min_rate_table() As Double(,)
-        Return {{0, 4},
+        Return {{0, 6},
                 {0.4, 0}}
     End Function
 

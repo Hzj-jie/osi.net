@@ -10,7 +10,7 @@ Public Class valuer_perf_test
     End Sub
 
     Protected Overrides Function min_rate_table() As Double(,)
-        Return {{0, 2000},
+        Return {{0, 4000},
                 {0.001, 0}}
     End Function
 
