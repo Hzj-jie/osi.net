@@ -30,9 +30,9 @@ Public Module _event_wait_handle
         End Try
     End Function
 
-    <Extension()> Public Function wait(ByVal i As EventWaitHandle, ByVal ms As Int64) As Boolean
+    <Extension()> Public Function wait(ByVal i As WaitHandle, ByVal ms As Int64) As Boolean
         assert(Not i Is Nothing)
-        If ms < 0 Then
+        If ms < 0 OrElse ms > max_int32 Then
             Try
                 assert(i.WaitOne())
                 Return True
@@ -44,7 +44,7 @@ Public Module _event_wait_handle
             End Try
         Else
             Try
-                Return i.WaitOne(ms)
+                Return i.WaitOne(CInt(ms))
             Catch ex As ThreadAbortException
                 Return False
             Catch ex As Exception
@@ -54,7 +54,7 @@ Public Module _event_wait_handle
         End If
     End Function
 
-    <Extension()> Public Function wait(ByVal i As EventWaitHandle) As Boolean
+    <Extension()> Public Function wait(ByVal i As WaitHandle) As Boolean
         Return wait(i, npos)
     End Function
 End Module

@@ -1,6 +1,8 @@
 ﻿
 Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.event
+Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.utt
 Imports osi.root.utils
@@ -110,12 +112,55 @@ Public Class event_comb_waitfor_test
                                                                   End Function)))
     End Function
 
+    Private Shared Function waitfor_signal_event() As Boolean
+        Dim se As signal_event = Nothing
+        se = New signal_event()
+        Dim se2 As signal_event = Nothing
+        se2 = New signal_event()
+        Dim se3 As signal_event = Nothing
+        se3 = New signal_event()
+        Dim [step] As Int32 = 0
+        Dim ec As event_comb = Nothing
+        ec = New event_comb(Function() As Boolean
+                                [step] = 0
+                                Return waitfor(se) AndAlso
+                                       goto_next()
+                            End Function,
+                            Function() As Boolean
+                                [step] = 1
+                                Return waitfor(se2, 1) AndAlso
+                                       goto_next()
+                            End Function,
+                            Function() As Boolean
+                                [step] = 2
+                                Return waitfor(se3) AndAlso
+                                       goto_next()
+                            End Function,
+                            Function() As Boolean
+                                [step] = 3
+                                Return False
+                            End Function)
+        [step] = -1
+        assert_begin(ec)
+        assert_true(timeslice_sleep_wait_until(Function() [step] = 0, seconds_to_milliseconds(1)))
+        assert_false(timeslice_sleep_wait_when(Function() [step] = 0, seconds_to_milliseconds(1)))
+        se.mark()
+        assert_true(timeslice_sleep_wait_until(Function() [step] = 2, seconds_to_milliseconds(1)))
+        assert_false(timeslice_sleep_wait_when(Function() [step] = 2, seconds_to_milliseconds(1)))
+        se3.mark()
+        assert_true(timeslice_sleep_wait_until(Function() [step] = 3, seconds_to_milliseconds(1)))
+        assert_false(timeslice_sleep_wait_when(Function() [step] = 3, seconds_to_milliseconds(1)))
+        assert_true(timeslice_sleep_wait_until(Function() ec.end(), seconds_to_milliseconds(1)))
+        Return True
+    End Function
+
     Public Overrides Function run() As Boolean
         Return waitfor_time_ms() AndAlso
                waitfor_try() AndAlso
                waitfor_try_result() AndAlso
                waitfor_void() AndAlso
                waitfor_do() AndAlso
-               waitfor_event_comb()
+               waitfor_event_comb() AndAlso
+               waitfor_signal_event()
     End Function
 End Class

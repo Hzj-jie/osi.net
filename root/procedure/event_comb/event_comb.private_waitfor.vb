@@ -101,7 +101,7 @@ Partial Public Class event_comb
         If [try] Is Nothing Then
             Return False
         Else
-            Return w([try], _wait())
+            Return w([try], _wait(False))
         End If
     End Function
 
@@ -129,32 +129,41 @@ Partial Public Class event_comb
         Return _waitfor([try], Function(x, y) queue_runner.push(queue_runner.check(x, y)))
     End Function
 
-    Private Function _wait() As Action
+    Private Function _wait(ByVal multiple_resume As Boolean) As Action
         assert_in_lock()
         inc_pends()
+        Dim se As ref(Of singleentry) = Nothing
+        If multiple_resume Then
+            se = New ref(Of singleentry)()
+        End If
         Return Sub()
-                   '1, put it back to selected threadpool
-                   '2, not matter how the void called, it would be safe
-                   thread_pool().queue_job(Sub()
-                                               [resume](Me)
-                                           End Sub)
+                   If Not multiple_resume OrElse se.mark_in_use() Then
+                       '1, put it back to selected threadpool
+                       '2, no matter how the _wait() called, it would be safe
+                       thread_pool().queue_job(Sub()
+                                                   [resume](Me)
+                                               End Sub)
+                   End If
                End Sub
     End Function
+
+    Private Shared Sub _waitfor(ByVal d As Action, ByVal cb As action)
+        assert(Not d Is Nothing)
+        assert(Not cb Is Nothing)
+        queue_in_managed_threadpool(Sub()
+                                        Try
+                                            d()
+                                        Finally
+                                            cb()
+                                        End Try
+                                    End Sub)
+    End Sub
 
     Private Function _waitfor(ByVal d As Action) As Boolean
         If d Is Nothing Then
             Return False
         Else
-            Dim cb As Action = Nothing
-            cb = _wait()
-            assert(Not cb Is Nothing)
-            queue_in_managed_threadpool(Sub()
-                                            Try
-                                                d()
-                                            Finally
-                                                cb()
-                                            End Try
-                                        End Sub)
+            _waitfor(d, _wait(False))
             Return True
         End If
     End Function
@@ -165,29 +174,11 @@ Partial Public Class event_comb
         ElseIf timeout_ms < 0 Then
             Return _waitfor(d)
         Else
-            Dim e As stopwatch.[event] = Nothing
-            Dim t As Thread = Nothing
-            e = stopwatch.push(timeout_ms,
-                               Sub()
-                                   timeslice_sleep_wait_when(Function() t Is Nothing)
-                                   assert(t.ManagedThreadId() <> current_thread_id())
-                                   t.Abort()
-                               End Sub)
-            If e Is Nothing Then
-                Return False
-            Else
-                Return _waitfor(Sub()
-                                    Try
-                                        t = current_thread()
-                                        d()
-                                        e.cancel()
-                                    Catch ex As ThreadAbortException
-                                        If application_lifetime.running() Then
-                                            Thread.ResetAbort()
-                                        End If
-                                    End Try
-                                End Sub)
-            End If
+            Dim cb As Action = Nothing
+            cb = _wait(True)
+            assert(Not stopwatch.push(timeout_ms, cb) Is Nothing)
+            _waitfor(d, cb)
+            Return True
         End If
     End Function
 
@@ -228,22 +219,15 @@ Partial Public Class event_comb
         If e Is Nothing Then
             Return False
         Else
-            Dim v As Action = Nothing
-            v = _wait()
-            queue_in_managed_threadpool(Sub()
-                                            If timeout_ms > max_int32 OrElse timeout_ms < 0 Then
-                                                e.WaitOne(Threading.Timeout.Infinite)
-                                            Else
-                                                e.WaitOne(CInt(timeout_ms))
-                                            End If
-                                            v()
-                                        End Sub)
+            Return _waitfor(Sub()
+                                e.wait(timeout_ms)
+                            End Sub)
             Return True
         End If
     End Function
 
     Private Function _waitfor(ByVal e As WaitHandle) As Boolean
-        Return _waitfor(e, max_int64)
+        Return _waitfor(e, npos)
     End Function
 
     Private Function _waitfor(ByVal action As callback_action, ByVal timeout_ms As Int64) As Boolean
@@ -264,7 +248,7 @@ Partial Public Class event_comb
         ElseIf ms = 0 Then
             Return _waitfor_yield()
         Else
-            Return assert(Not stopwatch.push(ms, _wait()) Is Nothing)
+            Return assert(Not stopwatch.push(ms, _wait(False)) Is Nothing)
         End If
     End Function
 
@@ -281,7 +265,7 @@ Partial Public Class event_comb
         If i Is Nothing Then
             Return False
         Else
-            Return _waitfor(Function() i.in_use())
+            Return _waitfor(AddressOf i.in_use)
         End If
     End Function
 
@@ -303,11 +287,11 @@ Partial Public Class event_comb
     End Function
 
     Private Function _waitfor_nap() As Boolean
-        Return assert(queue_runner.once(_wait()))
+        Return assert(queue_runner.once(_wait(False)))
     End Function
 
     Private Function _waitfor_yield() As Boolean
-        _wait()()
+        _wait(False)()
         Return True
     End Function
 
@@ -315,7 +299,19 @@ Partial Public Class event_comb
         If i Is Nothing Then
             Return False
         Else
-            Return assert(i.attach(_wait()))
+            Return assert(i.attach(_wait(False)))
+        End If
+    End Function
+
+    Private Function _waitfor(ByVal i As count_event, ByVal timeout_ms As Int64) As Boolean
+        If i Is Nothing Then
+            Return False
+        Else
+            Dim cb As Action = Nothing
+            cb = _wait(True)
+            assert(i.attach(cb))
+            assert(Not stopwatch.push(timeout_ms, cb) Is Nothing)
+            Return True
         End If
     End Function
 
@@ -323,7 +319,19 @@ Partial Public Class event_comb
         If i Is Nothing Then
             Return False
         Else
-            Return assert(i.attach(_wait()))
+            Return assert(i.attach(_wait(False)))
+        End If
+    End Function
+
+    Private Function _waitfor(ByVal i As weak_count_event, ByVal timeout_ms As Int64) As Boolean
+        If i Is Nothing Then
+            Return False
+        Else
+            Dim cb As Action = Nothing
+            cb = _wait(True)
+            assert(i.attach(cb))
+            assert(Not stopwatch.push(timeout_ms, cb) Is Nothing)
+            Return True
         End If
     End Function
 
@@ -331,7 +339,19 @@ Partial Public Class event_comb
         If i Is Nothing Then
             Return False
         Else
-            Return assert(i.attach(_wait()))
+            Return assert(i.attach(_wait(False)))
+        End If
+    End Function
+
+    Private Function _waitfor(ByVal i As signal_event, ByVal timeout_ms As Int64) As Boolean
+        If i Is Nothing Then
+            Return False
+        Else
+            Dim cb As Action = Nothing
+            cb = _wait(True)
+            assert(i.attach(cb))
+            assert(Not stopwatch.push(timeout_ms, cb) Is Nothing)
+            Return True
         End If
     End Function
 
@@ -339,7 +359,19 @@ Partial Public Class event_comb
         If i Is Nothing Then
             Return False
         Else
-            Return assert(i.attach(_wait()))
+            Return assert(i.attach(_wait(False)))
+        End If
+    End Function
+
+    Private Function _waitfor(ByVal i As weak_signal_event, ByVal timeout_ms As Int64) As Boolean
+        If i Is Nothing Then
+            Return False
+        Else
+            Dim cb As Action = Nothing
+            cb = _wait(True)
+            assert(i.attach(cb))
+            assert(Not stopwatch.push(timeout_ms, cb) Is Nothing)
+            Return True
         End If
     End Function
 
@@ -347,7 +379,19 @@ Partial Public Class event_comb
         If i Is Nothing Then
             Return False
         Else
-            Return assert(i.attach(_wait()))
+            Return assert(i.attach(_wait(False)))
+        End If
+    End Function
+
+    Private Function _waitfor(ByVal i As concurrency_event(Of _false), ByVal timeout_ms As Int64) As Boolean
+        If i Is Nothing Then
+            Return False
+        Else
+            Dim cb As Action = Nothing
+            cb = _wait(True)
+            assert(i.attach(cb))
+            assert(Not stopwatch.push(timeout_ms, cb) Is Nothing)
+            Return True
         End If
     End Function
 End Class
