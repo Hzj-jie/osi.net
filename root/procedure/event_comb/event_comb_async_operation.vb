@@ -30,7 +30,7 @@ Public Class event_comb_async_operation
         MyBase.New(New Func(Of Boolean)() _
                    {Function() As Boolean
                         Dim w As Action = Nothing
-                        w = wait(False)
+                        w = wait()
                         'if the void from wait()'s return has been called before goto_next(),
                         'the goto_next() will not take effect
                         'but the new change in event_comb.private_waitfor makes it safe

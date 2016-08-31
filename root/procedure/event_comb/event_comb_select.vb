@@ -45,7 +45,7 @@ Public Class event_comb_select(Of T)
         Return sync_async(Sub()
                               rcec.bind()
                               Dim v As Action = Nothing
-                              v = event_comb.wait(False)
+                              v = event_comb.wait()
                               Dim v2 As Action = Nothing
                               v2 = Sub()
                                        v()

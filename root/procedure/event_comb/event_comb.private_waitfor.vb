@@ -101,7 +101,7 @@ Partial Public Class event_comb
         If [try] Is Nothing Then
             Return False
         Else
-            Return w([try], _wait(False))
+            Return w([try], _wait())
         End If
     End Function
 
@@ -129,21 +129,31 @@ Partial Public Class event_comb
         Return _waitfor([try], Function(x, y) queue_runner.push(queue_runner.check(x, y)))
     End Function
 
-    Private Function _wait(ByVal multiple_resume As Boolean) As Action
+    Private Function _multiple_resume_wait() As Action
         assert_in_lock()
         inc_pends()
         Dim se As ref(Of singleentry) = Nothing
-        If multiple_resume Then
-            se = New ref(Of singleentry)()
-        End If
+        se = New ref(Of singleentry)()
         Return Sub()
-                   If Not multiple_resume OrElse se.mark_in_use() Then
+                   If se.mark_in_use() Then
                        '1, put it back to selected threadpool
                        '2, no matter how the _wait() called, it would be safe
                        thread_pool().queue_job(Sub()
                                                    [resume](Me)
                                                End Sub)
                    End If
+               End Sub
+    End Function
+
+    Private Function _wait() As Action
+        assert_in_lock()
+        inc_pends()
+        Return Sub()
+                   '1, put it back to selected threadpool
+                   '2, no matter how the _wait() called, it would be safe
+                   thread_pool().queue_job(Sub()
+                                               [resume](Me)
+                                           End Sub)
                End Sub
     End Function
 
@@ -163,7 +173,7 @@ Partial Public Class event_comb
         If d Is Nothing Then
             Return False
         Else
-            _waitfor(d, _wait(False))
+            _waitfor(d, _wait())
             Return True
         End If
     End Function
@@ -175,7 +185,7 @@ Partial Public Class event_comb
             Return _waitfor(d)
         Else
             Dim cb As Action = Nothing
-            cb = _wait(True)
+            cb = _multiple_resume_wait()
             assert(Not stopwatch.push(timeout_ms, cb) Is Nothing)
             _waitfor(d, cb)
             Return True
@@ -248,7 +258,7 @@ Partial Public Class event_comb
         ElseIf ms = 0 Then
             Return _waitfor_yield()
         Else
-            Return assert(Not stopwatch.push(ms, _wait(False)) Is Nothing)
+            Return assert(Not stopwatch.push(ms, _wait()) Is Nothing)
         End If
     End Function
 
@@ -287,11 +297,11 @@ Partial Public Class event_comb
     End Function
 
     Private Function _waitfor_nap() As Boolean
-        Return assert(queue_runner.once(_wait(False)))
+        Return assert(queue_runner.once(_wait()))
     End Function
 
     Private Function _waitfor_yield() As Boolean
-        _wait(False)()
+        _wait()()
         Return True
     End Function
 
@@ -299,7 +309,7 @@ Partial Public Class event_comb
         If i Is Nothing Then
             Return False
         Else
-            Return assert(i.attach(_wait(False)))
+            Return assert(i.attach(_wait()))
         End If
     End Function
 
@@ -308,7 +318,7 @@ Partial Public Class event_comb
             Return False
         Else
             Dim cb As Action = Nothing
-            cb = _wait(True)
+            cb = _multiple_resume_wait()
             assert(i.attach(cb))
             assert(Not stopwatch.push(timeout_ms, cb) Is Nothing)
             Return True
@@ -319,7 +329,7 @@ Partial Public Class event_comb
         If i Is Nothing Then
             Return False
         Else
-            Return assert(i.attach(_wait(False)))
+            Return assert(i.attach(_wait()))
         End If
     End Function
 
@@ -328,7 +338,7 @@ Partial Public Class event_comb
             Return False
         Else
             Dim cb As Action = Nothing
-            cb = _wait(True)
+            cb = _multiple_resume_wait()
             assert(i.attach(cb))
             assert(Not stopwatch.push(timeout_ms, cb) Is Nothing)
             Return True
@@ -339,7 +349,7 @@ Partial Public Class event_comb
         If i Is Nothing Then
             Return False
         Else
-            Return assert(i.attach(_wait(False)))
+            Return assert(i.attach(_wait()))
         End If
     End Function
 
@@ -348,7 +358,7 @@ Partial Public Class event_comb
             Return False
         Else
             Dim cb As Action = Nothing
-            cb = _wait(True)
+            cb = _multiple_resume_wait()
             assert(i.attach(cb))
             assert(Not stopwatch.push(timeout_ms, cb) Is Nothing)
             Return True
@@ -359,7 +369,7 @@ Partial Public Class event_comb
         If i Is Nothing Then
             Return False
         Else
-            Return assert(i.attach(_wait(False)))
+            Return assert(i.attach(_wait()))
         End If
     End Function
 
@@ -368,7 +378,7 @@ Partial Public Class event_comb
             Return False
         Else
             Dim cb As Action = Nothing
-            cb = _wait(True)
+            cb = _multiple_resume_wait()
             assert(i.attach(cb))
             assert(Not stopwatch.push(timeout_ms, cb) Is Nothing)
             Return True
@@ -379,7 +389,7 @@ Partial Public Class event_comb
         If i Is Nothing Then
             Return False
         Else
-            Return assert(i.attach(_wait(False)))
+            Return assert(i.attach(_wait()))
         End If
     End Function
 
@@ -388,7 +398,7 @@ Partial Public Class event_comb
             Return False
         Else
             Dim cb As Action = Nothing
-            cb = _wait(True)
+            cb = _multiple_resume_wait()
             assert(i.attach(cb))
             assert(Not stopwatch.push(timeout_ms, cb) Is Nothing)
             Return True

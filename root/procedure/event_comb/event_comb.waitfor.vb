@@ -152,7 +152,7 @@ Partial Public Class event_comb
     End Function
 
     'do not see if any reason we should export this function, friend for event_comb_lock only
-    Friend Shared Function wait(ByVal multiple_resume As Boolean) As Action
-        Return current()._wait(multiple_resume)
+    Friend Shared Function wait() As Action
+        Return current()._wait()
     End Function
 End Class

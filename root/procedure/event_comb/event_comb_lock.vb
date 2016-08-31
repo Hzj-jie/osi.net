@@ -84,7 +84,7 @@ Public Structure event_comb_lock
 
     Public Sub wait() Implements islimlock.wait
         Dim v As Action = Nothing
-        v = event_comb.wait(False)
+        v = event_comb.wait()
         assert(Not v Is Nothing)
         l.wait()
         If inuse = IN_USE Then
@@ -135,7 +135,7 @@ Public Structure event_comb_lock(Of SIZE As _int64)
 
     Public Sub wait() Implements islimlock.wait
         Dim v As Action = Nothing
-        v = event_comb.wait(False)
+        v = event_comb.wait()
         assert(Not v Is Nothing)
         l.wait()
         If inuse = IN_USE Then
@@ -188,7 +188,7 @@ Public Structure unlimited_event_comb_lock
     Public Sub wait() Implements islimlock.wait
         create_if_nothing(q)
         Dim v As Action = Nothing
-        v = event_comb.wait(False)
+        v = event_comb.wait()
         assert(Not v Is Nothing)
         l.wait()
         If inuse = IN_USE Then
