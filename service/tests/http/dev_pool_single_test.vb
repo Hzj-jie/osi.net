@@ -89,7 +89,7 @@ Public Class dev_pool_single_test
             Dim h As idevice(Of text) = Nothing
             Dim p As pointer(Of String) = Nothing
             Dim ec As event_comb = Nothing
-            begin_lifetime_event_comb(expiration_controller.from_func_bool(Function() Not s.alive()),
+            begin_lifetime_event_comb(expiration_controller.[New](Function() Not s.alive()),
                                       Function() As Boolean
                                           If sp.get(h) AndAlso
                                              assert_not_nothing(h) AndAlso

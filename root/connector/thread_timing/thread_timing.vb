@@ -26,6 +26,10 @@ Public Structure nice
     Public Shared ReadOnly boost As nice
     Public Shared ReadOnly moderate As nice
     Public Shared ReadOnly lazy As nice
+    Public Shared ReadOnly process_realtime As nice
+    Public Shared ReadOnly process_boost As nice
+    Public Shared ReadOnly process_moderate As nice
+    Public Shared ReadOnly process_lazy As nice
     Public Shared ReadOnly thread_boost As nice
     Public Shared ReadOnly thread_moderate As nice
     Public Shared ReadOnly thread_lazy As nice
@@ -38,6 +42,11 @@ Public Structure nice
         boost = New nice(process_priority.high, thread_priority.highest)
         moderate = New nice(process_priority.normal, thread_priority.normal)
         lazy = New nice(process_priority.idle, thread_priority.lowest)
+
+        process_realtime = New nice(process_priority.realtime)
+        process_boost = New nice(process_priority.high)
+        process_moderate = New nice(process_priority.normal)
+        process_lazy = New nice(process_priority.idle)
 
         thread_boost = New nice(thread_priority.highest)
         thread_moderate = New nice(thread_priority.normal)

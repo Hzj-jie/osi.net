@@ -17,28 +17,28 @@ Partial Public MustInherit Class expiration_controller
 
         Public MustOverride Function [stop]() As Boolean
 
-        Public Shared Function [New]() As settable
+        Public Shared Shadows Function [New]() As settable
             Return New se()
         End Function
 
         Public Shared Shadows Widening Operator CType(ByVal this As ref(Of singleentry)) As settable
-            Return from_singleentry(this)
+            Return expiration_controller.[New](this)
         End Operator
     End Class
 
-    Public Shared Function from_lifetime_ms(ByVal ms As Int64, ByRef o As expiration_controller) As Boolean
+    Public Shared Function [New](ByVal ms As Int64, ByRef o As expiration_controller) As Boolean
         o = New ms(ms)
         Return True
     End Function
 
-    Public Shared Function from_lifetime_ms(ByVal ms As Int64) As expiration_controller
+    Public Shared Function [New](ByVal ms As Int64) As expiration_controller
         Dim o As expiration_controller = Nothing
-        assert(from_lifetime_ms(ms, o))
+        assert([New](ms, o))
         Return o
     End Function
 
-    Public Shared Function from_func_bool(ByVal stopping As Func(Of Boolean),
-                                          ByRef o As expiration_controller) As Boolean
+    Public Shared Function [New](ByVal stopping As Func(Of Boolean),
+                                 ByRef o As expiration_controller) As Boolean
         If stopping Is Nothing Then
             Return False
         Else
@@ -47,14 +47,14 @@ Partial Public MustInherit Class expiration_controller
         End If
     End Function
 
-    Public Shared Function from_func_bool(ByVal stopping As Func(Of Boolean)) As expiration_controller
+    Public Shared Function [New](ByVal stopping As Func(Of Boolean)) As expiration_controller
         Dim o As expiration_controller = Nothing
-        assert(from_func_bool(stopping, o))
+        assert([New](stopping, o))
         Return o
     End Function
 
-    Public Shared Function from_singleentry(ByVal stopping As ref(Of singleentry),
-                                            ByRef o As expiration_controller.settable) As Boolean
+    Public Shared Function [New](ByVal stopping As ref(Of singleentry),
+                                 ByRef o As expiration_controller.settable) As Boolean
         If stopping Is Nothing Then
             Return False
         Else
@@ -63,21 +63,21 @@ Partial Public MustInherit Class expiration_controller
         End If
     End Function
 
-    Public Shared Function from_singleentry(ByVal stopping As ref(Of singleentry)) As expiration_controller.settable
+    Public Shared Function [New](ByVal stopping As ref(Of singleentry)) As expiration_controller.settable
         Dim o As expiration_controller.settable = Nothing
-        assert(from_singleentry(stopping, o))
+        assert([New](stopping, o))
         Return o
     End Function
 
     Public Shared Widening Operator CType(ByVal this As Int64) As expiration_controller
-        Return from_lifetime_ms(this)
+        Return [New](this)
     End Operator
 
     Public Shared Widening Operator CType(ByVal this As Func(Of Boolean)) As expiration_controller
-        Return from_func_bool(this)
+        Return [New](this)
     End Operator
 
     Public Shared Widening Operator CType(ByVal this As ref(Of singleentry)) As expiration_controller
-        Return from_singleentry(this)
+        Return [New](this)
     End Operator
 End Class

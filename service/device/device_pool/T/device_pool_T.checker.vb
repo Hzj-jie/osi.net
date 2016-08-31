@@ -1,6 +1,7 @@
 ﻿
 Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.procedure
 
@@ -18,9 +19,12 @@ Partial Public Class device_pool(Of T)
     End Function
 
     Public Function attach_checker(Optional ByVal wait_ms As Int64 = constants.default_checker_interval_ms) As Boolean
-        If enable_checker() Then
-            Return attach_checker(New checker(Me, wait_ms))
+        Dim c As checker = Nothing
+        c = New checker(Me, wait_ms)
+        If attach_checker(c) Then
+            Return True
         Else
+            c.stop()
             Return False
         End If
     End Function
@@ -36,6 +40,8 @@ Partial Public Class device_pool(Of T)
     End Function
 
     Public Class checker
+        Inherits disposer
+
         Private ReadOnly p As device_pool(Of T)
         Private exp As singleentry
 
@@ -43,7 +49,7 @@ Partial Public Class device_pool(Of T)
             assert(Not p Is Nothing)
             assert(interval_ms > 0)
             Me.p = p
-            begin_lifetime_event_comb(expiration_controller.from_func_bool(AddressOf expired),
+            begin_lifetime_event_comb(expiration_controller.[New](AddressOf expired),
                                       Function() As Boolean
                                           Dim i As UInt32 = 0
                                           i = p.free_count()
@@ -64,5 +70,9 @@ Partial Public Class device_pool(Of T)
         Private Function expired() As Boolean
             Return p.expired() OrElse exp.in_use()
         End Function
+
+        Protected Overrides Sub disposer()
+            [stop]()
+        End Sub
     End Class
 End Class

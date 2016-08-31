@@ -43,7 +43,7 @@ Public Class name_responder(Of CONTINUOUS As _boolean)
     Public Overrides Function respond_all() As Boolean
         Dim ec As event_comb = Nothing
         Dim p As idevice_pool(Of herald) = Nothing
-        begin_lifetime_event_comb(expiration_controller.from_func_bool(AddressOf expired),
+        begin_lifetime_event_comb(expiration_controller.[New](AddressOf expired),
                                   Function() As Boolean
                                       Dim t As idevice_pool(Of herald) = Nothing
                                       If device_pool_manager.get(n, t) AndAlso

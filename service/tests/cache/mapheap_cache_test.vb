@@ -52,37 +52,39 @@ Public Class mapheap_cache_test
     End Function
 
     Private Function retired_test() As Boolean
-        Dim sleep_half_retire_ticks As Action = Sub()
-                                                    sleep_ticks(retire_ticks * 4 / 7)
-                                                End Sub
-        assert(c.empty())
-        Dim v As vector(Of pair(Of String, Byte())) = Nothing
-        v = create_data(max_size)
-        For i As Int32 = 0 To v.size() - 1
-            c.set(v(i).first, v(i).second)
-        Next
-        sleep_half_retire_ticks()
-        For i As Int32 = (v.size() >> 1) To v.size() - 1
-            assert_true(c.have(v(i).first))
-            Dim b() As Byte = Nothing
-            assert_true(c.get(v(i).first, b))
-            assert_key_value(v(i).first, b)
-        Next
-        sleep_half_retire_ticks()
-        assert_equal(v.size(), c.size())
-        For i As Int32 = 0 To (v.size() >> 1) - 1
-            assert_true(c.have(v(i).first))
-            assert_false(c.get(v(i).first, Nothing))
-            assert_equal(v.size() - i - 1, c.size())
-        Next
-        sleep_half_retire_ticks()
-        For i As Int32 = (v.size() >> 1) To v.size() - 1
-            assert_true(c.have(v(i).first))
-            assert_false(c.get(v(i).first, Nothing))
-            assert_equal(v.size() - i - 1, c.size())
-        Next
-        assert_true(c.empty())
-        c.clear()
+        Using New realtime()
+            Dim sleep_half_retire_ticks As Action = Sub()
+                                                        sleep_ticks(retire_ticks * 4 / 7)
+                                                    End Sub
+            assert(c.empty())
+            Dim v As vector(Of pair(Of String, Byte())) = Nothing
+            v = create_data(max_size)
+            For i As Int32 = 0 To v.size() - 1
+                c.set(v(i).first, v(i).second)
+            Next
+            sleep_half_retire_ticks()
+            For i As Int32 = (v.size() >> 1) To v.size() - 1
+                assert_true(c.have(v(i).first))
+                Dim b() As Byte = Nothing
+                assert_true(c.get(v(i).first, b))
+                assert_key_value(v(i).first, b)
+            Next
+            sleep_half_retire_ticks()
+            assert_equal(v.size(), c.size())
+            For i As Int32 = 0 To (v.size() >> 1) - 1
+                assert_true(c.have(v(i).first))
+                assert_false(c.get(v(i).first, Nothing))
+                assert_equal(v.size() - i - 1, c.size())
+            Next
+            sleep_half_retire_ticks()
+            For i As Int32 = (v.size() >> 1) To v.size() - 1
+                assert_true(c.have(v(i).first))
+                assert_false(c.get(v(i).first, Nothing))
+                assert_equal(v.size() - i - 1, c.size())
+            Next
+            assert_true(c.empty())
+            c.clear()
+        End Using
         Return True
     End Function
 
