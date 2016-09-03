@@ -13,8 +13,7 @@ Friend Module inlinable_extension_method
 End Module
 
 ' On Windows XP / 2003 or maybe earlier, extension method is at least 2x slower than a regular function.
-' On Windows 7 or upper, maybe Vista, extension method is ~30% slower than a regular function in debug build, but on-par
-'   (slightly slower) in release build.
+' On Windows 7 or upper, maybe Vista, extension method is ~30% slower than a regular function.
 Public Class inlinable_perf
     Inherits performance_comparison_case_wrapper
 
@@ -40,15 +39,9 @@ Public Class inlinable_perf
                     {4, 1.1, -1}}
         Else
             ' Targeting _6 or upper
-#If DEBUG Then
             Return {{-1, 0.9, 0.9},
                     {1.5, -1, 1.1},
                     {1.5, 1.1, -1}}
-#Else
-            Return {{-1, 1.1, 1.1},
-                    {1.3, -1, 1.1},
-                    {1.3, 1.1, -1}}
-#End If
         End If
     End Function
 
