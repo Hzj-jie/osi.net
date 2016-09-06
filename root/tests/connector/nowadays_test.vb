@@ -6,6 +6,7 @@ Imports osi.root.utt
 Friend Class nowadays_case
     Inherits [case]
 
+    Private Const acceptable_difference_ms As UInt32 = 500
     Public Shared ReadOnly just_run As [case]
 
     Shared Sub New()
@@ -24,30 +25,30 @@ Friend Class nowadays_case
                                                nowadays.normal_res_milliseconds() -
                                                nowadays.normal_res_milliseconds() +
                                                nowadays.low_res_milliseconds(),
-                                               -200,
-                                               200,
+                                               -acceptable_difference_ms,
+                                               acceptable_difference_ms,
                                                "nowadays.low_res_milliseconds()")
         assert_more_or_equal_and_less_or_equal(nowadays.normal_res_milliseconds() -
                                                nowadays.high_res_milliseconds() -
                                                nowadays.high_res_milliseconds() +
                                                nowadays.normal_res_milliseconds(),
-                                               -200,
-                                               200,
+                                               -acceptable_difference_ms,
+                                               acceptable_difference_ms,
                                                "nowadays.high_res_milliseconds()")
         'low_res_ticks is faked as milliseconds_to_ticks(low_res_milliseconds)
         assert_more_or_equal_and_less_or_equal(nowadays.low_res_ticks() -
                                                nowadays.normal_res_ticks() -
                                                nowadays.normal_res_ticks() +
                                                nowadays.low_res_ticks(),
-                                               -milliseconds_to_ticks(200),
-                                               milliseconds_to_ticks(200),
+                                               milliseconds_to_ticks(-acceptable_difference_ms),
+                                               milliseconds_to_ticks(acceptable_difference_ms),
                                                "nowadays.low_res_ticks()")
         assert_more_or_equal_and_less_or_equal(nowadays.normal_res_ticks() -
                                                nowadays.high_res_ticks() -
                                                nowadays.high_res_ticks() +
                                                nowadays.normal_res_ticks(),
-                                               -milliseconds_to_ticks(200),
-                                               milliseconds_to_ticks(200),
+                                               milliseconds_to_ticks(-acceptable_difference_ms),
+                                               milliseconds_to_ticks(acceptable_difference_ms),
                                                "nowadays.high_res_ticks()")
         Return True
     End Function
