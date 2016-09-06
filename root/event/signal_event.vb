@@ -29,6 +29,7 @@ Public Class weak_signal_event
 End Class
 
 Public Class signal_event(Of EVENT_TYPE As {action_event(Of _true), New})
+    Implements attachable_event
     Private ReadOnly c As count_event(Of EVENT_TYPE)
 
     Public Sub New(ByVal init_value As Boolean)
@@ -40,15 +41,11 @@ Public Class signal_event(Of EVENT_TYPE As {action_event(Of _true), New})
         Me.New(False)
     End Sub
 
-    Public Function attach(ByVal v As iaction) As Boolean
+    Public Function attach(ByVal v As iaction) As Boolean Implements attachable_event.attach
         Return c.attach(v)
     End Function
 
-    Public Function attach(ByVal v As Action) As Boolean
-        Return c.attach(v)
-    End Function
-
-    Public Function marked() As Boolean
+    Public Function marked() As Boolean Implements attachable_event.marked
         Return c.marked()
     End Function
 

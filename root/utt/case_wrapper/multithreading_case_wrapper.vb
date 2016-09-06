@@ -28,7 +28,7 @@ Public Class multithreading_case_wrapper
     End Sub
 
     Public Overrides Function preserved_processors() As Int16
-        Return threadcount()
+        Return max(threadcount(), MyBase.preserved_processors())
     End Function
 
     Protected Overridable Function threadcount() As Int32

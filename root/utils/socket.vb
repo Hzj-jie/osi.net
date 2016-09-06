@@ -308,4 +308,20 @@ Public Module _socket
             Return True
         End If
     End Function
+
+    <Extension()> Public Function ipv4(ByVal u As Socket) As Boolean
+        If u Is Nothing Then
+            Return False
+        Else
+            Return u.AddressFamily() = AddressFamily.InterNetwork
+        End If
+    End Function
+
+    <Extension()> Public Function ipv6(ByVal u As Socket) As Boolean
+        If u Is Nothing Then
+            Return False
+        Else
+            Return u.AddressFamily() = AddressFamily.InterNetworkV6
+        End If
+    End Function
 End Module

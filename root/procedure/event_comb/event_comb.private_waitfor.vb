@@ -305,102 +305,33 @@ Partial Public Class event_comb
         Return True
     End Function
 
-    Private Function _waitfor(ByVal i As count_event) As Boolean
+    Private Function _waitfor(ByVal i As attachable_event) As Boolean
         If i Is Nothing Then
             Return False
-        Else
-            Return assert(i.attach(_wait()))
-        End If
-    End Function
-
-    Private Function _waitfor(ByVal i As count_event, ByVal timeout_ms As Int64) As Boolean
-        If i Is Nothing Then
-            Return False
-        Else
-            Dim cb As Action = Nothing
-            cb = _multiple_resume_wait()
-            assert(i.attach(cb))
-            assert(Not stopwatch.push(timeout_ms, cb) Is Nothing)
+        ElseIf i.marked() Then
             Return True
-        End If
-    End Function
-
-    Private Function _waitfor(ByVal i As weak_count_event) As Boolean
-        If i Is Nothing Then
-            Return False
         Else
             Return assert(i.attach(_wait()))
         End If
     End Function
 
-    Private Function _waitfor(ByVal i As weak_count_event, ByVal timeout_ms As Int64) As Boolean
+    Private Function _waitfor(ByVal i As attachable_event, ByVal timeout_ms As Int64) As Boolean
         If i Is Nothing Then
             Return False
-        Else
-            Dim cb As Action = Nothing
-            cb = _multiple_resume_wait()
-            assert(i.attach(cb))
-            assert(Not stopwatch.push(timeout_ms, cb) Is Nothing)
+        ElseIf i.marked() Then
             Return True
-        End If
-    End Function
-
-    Private Function _waitfor(ByVal i As signal_event) As Boolean
-        If i Is Nothing Then
-            Return False
         Else
-            Return assert(i.attach(_wait()))
-        End If
-    End Function
-
-    Private Function _waitfor(ByVal i As signal_event, ByVal timeout_ms As Int64) As Boolean
-        If i Is Nothing Then
-            Return False
-        Else
+            Dim e As pointer(Of stopwatch.event) = Nothing
+            e = New pointer(Of stopwatch.event)()
             Dim cb As Action = Nothing
             cb = _multiple_resume_wait()
-            assert(i.attach(cb))
-            assert(Not stopwatch.push(timeout_ms, cb) Is Nothing)
-            Return True
-        End If
-    End Function
-
-    Private Function _waitfor(ByVal i As weak_signal_event) As Boolean
-        If i Is Nothing Then
-            Return False
-        Else
-            Return assert(i.attach(_wait()))
-        End If
-    End Function
-
-    Private Function _waitfor(ByVal i As weak_signal_event, ByVal timeout_ms As Int64) As Boolean
-        If i Is Nothing Then
-            Return False
-        Else
-            Dim cb As Action = Nothing
-            cb = _multiple_resume_wait()
-            assert(i.attach(cb))
-            assert(Not stopwatch.push(timeout_ms, cb) Is Nothing)
-            Return True
-        End If
-    End Function
-
-    Private Function _waitfor(ByVal i As concurrency_event(Of _false)) As Boolean
-        If i Is Nothing Then
-            Return False
-        Else
-            Return assert(i.attach(_wait()))
-        End If
-    End Function
-
-    Private Function _waitfor(ByVal i As concurrency_event(Of _false), ByVal timeout_ms As Int64) As Boolean
-        If i Is Nothing Then
-            Return False
-        Else
-            Dim cb As Action = Nothing
-            cb = _multiple_resume_wait()
-            assert(i.attach(cb))
-            assert(Not stopwatch.push(timeout_ms, cb) Is Nothing)
+            e.set(stopwatch.push(timeout_ms, cb.as_weak_action()))
+            assert(Not e.empty())
+            assert(i.attach(Sub()
+                                cb()
+                                assert(Not e.empty())
+                                e.get().cancel()
+                            End Sub))
             Return True
         End If
     End Function

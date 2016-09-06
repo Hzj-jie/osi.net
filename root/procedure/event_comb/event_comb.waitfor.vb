@@ -111,43 +111,11 @@ Partial Public Class event_comb
         Return current()._waitfor_yield()
     End Function
 
-    Public Shared Function waitfor(ByVal i As count_event) As Boolean
+    Public Shared Function waitfor(ByVal i As attachable_event) As Boolean
         Return current()._waitfor(i)
     End Function
 
-    Public Shared Function waitfor(ByVal i As count_event, ByVal timeout_ms As Int64) As Boolean
-        Return current()._waitfor(i, timeout_ms)
-    End Function
-
-    Public Shared Function waitfor(ByVal i As weak_count_event) As Boolean
-        Return current()._waitfor(i)
-    End Function
-
-    Public Shared Function waitfor(ByVal i As weak_count_event, ByVal timeout_ms As Int64) As Boolean
-        Return current()._waitfor(i, timeout_ms)
-    End Function
-
-    Public Shared Function waitfor(ByVal i As signal_event) As Boolean
-        Return current()._waitfor(i)
-    End Function
-
-    Public Shared Function waitfor(ByVal i As signal_event, ByVal timeout_ms As Int64) As Boolean
-        Return current()._waitfor(i, timeout_ms)
-    End Function
-
-    Public Shared Function waitfor(ByVal i As weak_signal_event) As Boolean
-        Return current()._waitfor(i)
-    End Function
-
-    Public Shared Function waitfor(ByVal i As weak_signal_event, ByVal timeout_ms As Int64) As Boolean
-        Return current()._waitfor(i, timeout_ms)
-    End Function
-
-    Public Shared Function waitfor(ByVal i As concurrency_event(Of _false)) As Boolean
-        Return current()._waitfor(i)
-    End Function
-
-    Public Shared Function waitfor(ByVal i As concurrency_event(Of _false), ByVal timeout_ms As Int64) As Boolean
+    Public Shared Function waitfor(ByVal i As attachable_event, ByVal timeout_ms As Int64) As Boolean
         Return current()._waitfor(i, timeout_ms)
     End Function
 

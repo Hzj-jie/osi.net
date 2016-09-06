@@ -6,6 +6,7 @@ Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.device
 
+' TODO: Use slimqless2_event_sync_T_pump / event_sync_T_pump_T_receiver_adapter
 <type_attribute()>
 Public Class mock_dev_T(Of T)
     Implements dev_T(Of T)

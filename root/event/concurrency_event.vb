@@ -21,9 +21,11 @@ Public Class manual_reset_concurrency_event
     End Sub
 End Class
 
-'raise 'concurrency' events at same time
+'raise 'concurrency' events at same time.
 'do not allow weak_reference_event
 Public Class concurrency_event(Of AutoReset As _boolean)
+    Implements attachable_event
+
     Private Shared ReadOnly ar As Boolean
     Public ReadOnly concurrency As UInt32
     Private ReadOnly e As action_event(Of _true)
@@ -64,18 +66,6 @@ Public Class concurrency_event(Of AutoReset As _boolean)
                End Sub
     End Function
 
-    Private Function to_action(ByVal i As Action) As Action
-        assert(Not i Is Nothing)
-        If ar Then
-            Return Sub()
-                       i()
-                       after_run()
-                   End Sub
-        Else
-            Return i
-        End If
-    End Function
-
     Public Sub release()
         assert(Not ar)
         after_run()
@@ -89,7 +79,7 @@ Public Class concurrency_event(Of AutoReset As _boolean)
         Return e.attached_count()
     End Function
 
-    Public Function attach(ByVal v As iaction) As Boolean
+    Public Function attach(ByVal v As iaction) As Boolean Implements attachable_event.attach
         If v Is Nothing OrElse Not v.valid() Then
             Return False
         Else
@@ -99,13 +89,8 @@ Public Class concurrency_event(Of AutoReset As _boolean)
         End If
     End Function
 
-    Public Function attach(ByVal v As Action) As Boolean
-        If v Is Nothing Then
-            Return False
-        Else
-            assert(e.attach(to_action(v)))
-            try_raise()
-            Return True
-        End If
+    Public Function marked() As Boolean Implements attachable_event.marked
+        ' Each attach call may impact the result. It's not safe to return true for marked.
+        Return False
     End Function
 End Class

@@ -16,6 +16,7 @@ Partial Public Class powerpoint
         Private response_timeout_ms As Int64
         Private receive_rate_sec As UInt32
         Private ipv4 As Boolean
+        Private max_receive_buffer_size As UInt32
 
         Shared Sub New()
             assert(IPEndPoint.MinPort >= 0 AndAlso IPEndPoint.MaxPort <= max_uint16)
@@ -28,7 +29,8 @@ Partial Public Class powerpoint
                without_receive_rate_sec().
                without_remote_port().
                without_response_timeout_ms().
-               without_send_rate_sec()
+               without_send_rate_sec().
+               without_max_receive_buffer_size()
         End Sub
 
         Public Shared Function [New]() As creator
@@ -159,6 +161,20 @@ Partial Public Class powerpoint
             Return Me
         End Function
 
+        Public Function with_max_receive_buffer_size(ByVal max_receive_buffer_size As UInt32) As creator
+            Me.max_receive_buffer_size = max_receive_buffer_size
+            Return Me
+        End Function
+
+        Public Function with_max_receive_buffer_size_str(ByVal max_receive_buffer_size As String) As creator
+            Return with_max_receive_buffer_size(
+                       max_receive_buffer_size.to_uint32(default_value.max_receive_buffer_size))
+        End Function
+
+        Public Function without_max_receive_buffer_size() As creator
+            Return with_max_receive_buffer_size(default_value.max_receive_buffer_size)
+        End Function
+
         Public Function with_var(ByVal v As var) As creator
             Const p_host As String = "host"
             Const p_remote_port As String = "remote-port"
@@ -167,6 +183,7 @@ Partial Public Class powerpoint
             Const p_send_rate_sec As String = "send-rate-sec"
             Const p_receive_rate_sec As String = "receive-rate-sec"
             Const p_ipv4 As String = "ipv4"
+            Const p_max_receive_buffer_size As String = "max-receive-buffer-size"
             assert(Not v Is Nothing)
             v.bind(p_host,
                    p_remote_port,
@@ -174,14 +191,16 @@ Partial Public Class powerpoint
                    p_response_timeout_ms,
                    p_send_rate_sec,
                    p_receive_rate_sec,
-                   p_ipv4)
+                   p_ipv4,
+                   p_max_receive_buffer_size)
             Return with_host_or_ip(v(p_host)).
                    with_remote_port_str(v(p_remote_port)).
                    with_local_port_str(v(p_local_port)).
                    with_response_timeout_ms_str(v(p_response_timeout_ms)).
                    with_send_rate_sec_str(v(p_send_rate_sec)).
                    with_receive_rate_sec_str(v(p_receive_rate_sec)).
-                   with_ipv4_str(v(p_ipv4))
+                   with_ipv4_str(v(p_ipv4)).
+                   with_max_receive_buffer_size_str(v(p_max_receive_buffer_size))
         End Function
 
         Public Function create(ByRef o As powerpoint) As Boolean
@@ -192,7 +211,8 @@ Partial Public Class powerpoint
                                    response_timeout_ms,
                                    send_rate_sec,
                                    receive_rate_sec,
-                                   ipv4)
+                                   ipv4,
+                                   max_receive_buffer_size)
                 Return True
             Else
                 Return False

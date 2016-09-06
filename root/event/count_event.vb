@@ -32,6 +32,7 @@ Public Class weak_count_event
 End Class
 
 Public Class count_event(Of EVENT_TYPE As {action_event(Of _true), New})
+    Implements attachable_event
     Private ReadOnly e As EVENT_TYPE
     Private l As lock_t
     Private s As UInt32
@@ -45,7 +46,7 @@ Public Class count_event(Of EVENT_TYPE As {action_event(Of _true), New})
         Me.New(uint32_0)
     End Sub
 
-    Public Function attach(ByVal v As iaction) As Boolean
+    Public Function attach(ByVal v As iaction) As Boolean Implements attachable_event.attach
         If v Is Nothing OrElse Not v.valid() Then
             Return False
         Else
@@ -65,11 +66,7 @@ Public Class count_event(Of EVENT_TYPE As {action_event(Of _true), New})
         End If
     End Function
 
-    Public Function attach(ByVal v As Action) As Boolean
-        Return attach(New action_adapter(v))
-    End Function
-
-    Public Function marked() As Boolean
+    Public Function marked() As Boolean Implements attachable_event.marked
         Return s = uint32_0
     End Function
 

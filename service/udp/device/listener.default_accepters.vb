@@ -16,6 +16,15 @@ Partial Public Class listener
         Protected Overrides Function match(ByVal remote As IPEndPoint, ByVal source As IPEndPoint) As Boolean
             Return remote.match_endpoint(source)
         End Function
+
+        Public Function first_source(ByRef o As IPEndPoint) As Boolean
+            If sources.null_or_empty() Then
+                Return False
+            Else
+                o = sources(0)
+                Return True
+            End If
+        End Function
     End Class
 
     Public Class one_accepter

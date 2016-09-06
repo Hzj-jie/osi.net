@@ -30,13 +30,14 @@ Public Module _weak_pointer
         Return r
     End Function
 
-    <Extension()> Public Sub renew(Of T)(ByRef i As weak_pointer(Of T))
+    <Extension()> Public Function renew(Of T)(ByRef i As weak_pointer(Of T)) As weak_pointer(Of T)
         If i Is Nothing Then
             i = New weak_pointer(Of T)()
         Else
             i.clear()
         End If
-    End Sub
+        Return i
+    End Function
 End Module
 
 Public Class weak_pointer(Of T)

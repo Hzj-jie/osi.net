@@ -24,13 +24,14 @@ Public Module _pointer
         Return r
     End Function
 
-    <Extension()> Public Sub renew(Of T)(ByRef i As pointer(Of T))
+    <Extension()> Public Function renew(Of T)(ByRef i As pointer(Of T)) As pointer(Of T)
         If i Is Nothing Then
             i = New pointer(Of T)()
         Else
             i.clear()
         End If
-    End Sub
+        Return i
+    End Function
 End Module
 
 Public Class pointer(Of T)

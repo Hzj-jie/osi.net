@@ -65,7 +65,6 @@
     <Compile Include="atom\atomic_ulong.vb" />
     <Compile Include="autolock.vb" />
     <Compile Include="broken_lock.vb" />
-    <Compile Include="count_reset_event.vb" />
     <Compile Include="duallock.vb" />
     <Compile Include="exclusive_container.vb" />
     <Compile Include="expiration_controller\expiration_controller.func_bool.vb" />

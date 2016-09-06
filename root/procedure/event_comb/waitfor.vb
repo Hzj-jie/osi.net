@@ -200,83 +200,19 @@ Public Module _waitfor
         assert(waitfor_yield())
     End Sub
 
-    Public Function waitfor(ByVal i As count_event) As Boolean
+    Public Function waitfor(ByVal i As attachable_event) As Boolean
         Return event_comb.waitfor(i)
     End Function
 
-    Public Sub assert_waitfor(ByVal i As count_event)
+    Public Sub assert_waitfor(ByVal i As attachable_event)
         assert(waitfor(i))
     End Sub
 
-    Public Function waitfor(ByVal i As count_event, ByVal timeout_ms As Int64) As Boolean
+    Public Function waitfor(ByVal i As attachable_event, ByVal timeout_ms As Int64) As Boolean
         Return event_comb.waitfor(i, timeout_ms)
     End Function
 
-    Public Sub assert_waitfor(ByVal i As count_event, ByVal timeout_ms As Int64)
-        assert(waitfor(i, timeout_ms))
-    End Sub
-
-    Public Function waitfor(ByVal i As weak_count_event) As Boolean
-        Return event_comb.waitfor(i)
-    End Function
-
-    Public Sub assert_waitfor(ByVal i As weak_count_event)
-        assert(waitfor(i))
-    End Sub
-
-    Public Function waitfor(ByVal i As weak_count_event, ByVal timeout_ms As Int64) As Boolean
-        Return event_comb.waitfor(i, timeout_ms)
-    End Function
-
-    Public Sub assert_waitfor(ByVal i As weak_count_event, ByVal timeout_ms As Int64)
-        assert(waitfor(i, timeout_ms))
-    End Sub
-
-    Public Function waitfor(ByVal i As signal_event) As Boolean
-        Return event_comb.waitfor(i)
-    End Function
-
-    Public Sub assert_waitfor(ByVal i As signal_event)
-        assert(waitfor(i))
-    End Sub
-
-    Public Function waitfor(ByVal i As signal_event, ByVal timeout_ms As Int64) As Boolean
-        Return event_comb.waitfor(i, timeout_ms)
-    End Function
-
-    Public Sub assert_waitfor(ByVal i As signal_event, ByVal timeout_ms As Int64)
-        assert(waitfor(i, timeout_ms))
-    End Sub
-
-    Public Function waitfor(ByVal i As weak_signal_event) As Boolean
-        Return event_comb.waitfor(i)
-    End Function
-
-    Public Sub assert_waitfor(ByVal i As weak_signal_event)
-        assert(waitfor(i))
-    End Sub
-
-    Public Function waitfor(ByVal i As weak_signal_event, ByVal timeout_ms As Int64) As Boolean
-        Return event_comb.waitfor(i, timeout_ms)
-    End Function
-
-    Public Sub assert_waitfor(ByVal i As weak_signal_event, ByVal timeout_ms As Int64)
-        assert(waitfor(i, timeout_ms))
-    End Sub
-
-    Public Function waitfor(ByVal i As concurrency_event(Of _false)) As Boolean
-        Return event_comb.waitfor(i)
-    End Function
-
-    Public Sub assert_waitfor(ByVal i As concurrency_event(Of _false))
-        assert(waitfor(i))
-    End Sub
-
-    Public Function waitfor(ByVal i As concurrency_event(Of _false), ByVal timeout_ms As Int64) As Boolean
-        Return event_comb.waitfor(i, timeout_ms)
-    End Function
-
-    Public Sub assert_waitfor(ByVal i As concurrency_event(Of _false), ByVal timeout_ms As Int64)
+    Public Sub assert_waitfor(ByVal i As attachable_event, ByVal timeout_ms As Int64)
         assert(waitfor(i, timeout_ms))
     End Sub
 End Module

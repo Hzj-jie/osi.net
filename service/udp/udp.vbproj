@@ -62,6 +62,7 @@
     <Compile Include="device\connector.detail.vb" />
     <Compile Include="device\connector.vb" />
     <Compile Include="device\delegator.vb" />
+    <Compile Include="device\udp_dev.vb" />
     <Compile Include="device\listener.default_accepters.vb" />
     <Compile Include="device\listener.receiver.vb" />
     <Compile Include="device\listener.vb" />

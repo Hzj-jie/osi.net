@@ -81,6 +81,7 @@
     <Compile Include="event_wait_handle.vb" />
     <Compile Include="file_system.vb" />
     <Compile Include="compress.vb" />
+    <Compile Include="iaction.vb" />
     <Compile Include="static_constructor.vb" />
     <Compile Include="template\int64.vb" />
     <Compile Include="template\to_uint32.vb" />
@@ -105,6 +106,7 @@
     <Compile Include="types\range_int.vb" />
     <Compile Include="unchecked_int.ext.vb" />
     <Compile Include="ref.vb" />
+    <Compile Include="weak_action.vb" />
     <None Include="bytes\codegen\bytes_dependent_types.vbp" />
     <None Include="bytes\codegen\bytes_dependent_types_impl.vbp" />
     <None Include="bytes\codegen\bytes_independent_types.vbp" />

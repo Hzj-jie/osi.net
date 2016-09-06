@@ -56,8 +56,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="action_event.vb" />
+    <Compile Include="attachable_event.vb" />
     <Compile Include="concurrency_event.vb" />
     <Compile Include="count_event.vb" />
+    <Compile Include="count_reset_event.vb" />
     <Compile Include="event.vb" />
     <Compile Include="event_queue.vb" />
     <Compile Include="bw_event.vb" />

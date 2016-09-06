@@ -33,7 +33,11 @@ Public Module _app
         repeat_gc_collect()
         debugpause()
 
-        assert_equal(counter.instance_count_counter(Of event_comb).count(), 0)
+        If Not assert_equal(counter.instance_count_counter(Of event_comb).count(), 0) Then
+            If event_comb_alloc_trace Then
+                raise_error(event_comb.dump_alloc_trace())
+            End If
+        End If
         'counter.backend_writer
         assert_less_or_equal(queue_runner.size(), 1)
         assert_true(suppress.init_state())

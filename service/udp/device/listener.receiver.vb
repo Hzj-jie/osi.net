@@ -9,7 +9,7 @@ Imports osi.root.utils
 Imports osi.service.device
 
 Partial Public Class listener
-    Private Class receiver
+    Private Shadows Class receiver
         Implements T_receiver(Of pair(Of Byte(), IPEndPoint))
 
         Private ReadOnly s As sensor

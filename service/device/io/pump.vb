@@ -7,6 +7,17 @@ Imports osi.root.procedure
 Imports osi.root.connector
 Imports osi.root.utils
 
+Public Interface sync_T_pump(Of T)
+    Function receive(ByRef o As T) As Boolean
+    Function pending() As Boolean
+End Interface
+
+Public Interface event_sync_T_pump(Of T)
+    Inherits sync_T_pump(Of T)
+    Event data_arrived()
+End Interface
+
+' All the following pumps should block the procedure until data received.
 Public Interface block_pump
     Function receive(ByVal result As pointer(Of Byte())) As event_comb
 End Interface

@@ -21,16 +21,16 @@ Public MustInherit Class _46_collection(Of T, __NEW As __do(Of powerpoint, T, Bo
         If Not p Is Nothing Then
             Dim a As arrayless(Of T) = Nothing
             a = If(p.ipv4, v4, v6)
-            Return a.[New](p.local_port,
-                           Function() As T
-                               Dim r As T = Nothing
-                               If _new(unref(p), r) Then
-                                   Return r
-                               Else
-                                   Return Nothing
-                               End If
-                           End Function,
-                           o)
+            Return assert(a.[New](p.local_port,
+                                  Function() As T
+                                      Dim r As T = Nothing
+                                      If _new(unref(p), r) Then
+                                          Return r
+                                      Else
+                                          Return Nothing
+                                      End If
+                                  End Function,
+                                  o))
         Else
             Return False
         End If

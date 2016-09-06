@@ -3,6 +3,7 @@ Imports System.Threading
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.lock
+Imports osi.root.event
 Imports osi.root.utt
 
 Public Class count_reset_event_basic_test

@@ -5,6 +5,7 @@ Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
+Imports osi.root.utils
 
 ' Delegates all outgoing requests
 Public Class speaker
@@ -42,7 +43,12 @@ Public Class speaker
                                   Dim p As piece = Nothing
                                   If piece.create(b, offset, count, p) Then
                                       b = p.export(count)
-                                      ec = c.send(b, count, remote, sent)
+                                      ec = c.send(b,
+                                                  min(count, If(c.Client().ipv4(),
+                                                                constants.ipv4_packet_size,
+                                                                constants.ipv6_packet_size)),
+                                                  remote,
+                                                  sent)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
                                   Else
@@ -119,10 +125,10 @@ Public Class speaker
         Dim p As pointer(Of IPAddress) = Nothing
         Return New event_comb(Function() As Boolean
                                   p = New pointer(Of IPAddress)()
-                                  If c.Client().AddressFamily() = AddressFamily.InterNetwork Then
+                                  If c.Client().ipv4() Then
                                       ec = dns.resolve_ipv4(remote_host_or_ip, p)
                                   Else
-                                      assert(c.Client().AddressFamily() = AddressFamily.InterNetworkV6)
+                                      assert(c.Client().ipv6())
                                       ec = dns.resolve_ipv6(remote_host_or_ip, p)
                                   End If
                                   Return waitfor(ec) AndAlso

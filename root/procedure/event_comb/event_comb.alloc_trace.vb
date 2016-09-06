@@ -1,4 +1,5 @@
 ﻿
+Imports System.Text
 Imports osi.root.envs
 Imports osi.root.connector
 Imports osi.root.formation
@@ -36,4 +37,25 @@ Partial Public Class event_comb
             callstack_alloc_change(callstack(), -1)
         End If
     End Sub
+
+    Public Shared Function dump_alloc_trace() As String
+        Dim r As StringBuilder = Nothing
+        r = New StringBuilder()
+        r.Append("[event_comb] instance count ", counter.instance_count_counter(Of event_comb).count())
+        If event_comb_alloc_trace Then
+            callstack_alloc_lock.locked(Sub()
+                                            Dim it As map(Of String, Int64).iterator = Nothing
+                                            it = callstack_alloc.begin()
+                                            While it <> callstack_alloc.end()
+                                                Dim count As Int64 = 0
+                                                assert(counter.counter((+it).second, Nothing, count))
+                                                If count > 0 Then
+                                                    r.Append(", [").Append((+it).first).Append("] - ").Append(count)
+                                                End If
+                                                it += 1
+                                            End While
+                                        End Sub)
+        End If
+        Return Convert.ToString(r)
+    End Function
 End Class

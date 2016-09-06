@@ -65,6 +65,8 @@
     <Compile Include="adapter\block_piece_dev_adapter.vb" />
     <Compile Include="adapter\block_pump_flow_pump_adapter.vb" />
     <Compile Include="adapter\datagram_flow_adapter.vb" />
+    <Compile Include="adapter\dev_piece_block_adapter.vb" />
+    <Compile Include="adapter\dev_piece_datagram_adapter.vb" />
     <Compile Include="adapter\flow_datagram_adapter.vb" />
     <Compile Include="adapter\flow_piece_dev_adapter.vb" />
     <Compile Include="adapter\piece_dev_block_adapter.vb" />
@@ -111,6 +113,7 @@
     <Compile Include="device_pool\T\device_pool_T.closer.vb" />
     <Compile Include="dispenser\dispenser.vb" />
     <Compile Include="dispenser\dispenser.accepter.vb" />
+    <Compile Include="adapter\event_sync_T_pump_T_receiver_adapter.vb" />
     <Compile Include="io\transmitter.vb" />
     <Compile Include="manager\construction\registry.vb" />
     <Compile Include="manager\construction\wrapper.parameter.vb" />
@@ -167,6 +170,8 @@
     </Compile>
     <Compile Include="io\pump.vb" />
     <Compile Include="io\sensor.vb" />
+    <Compile Include="qless2_event_sync_T_pump.vb" />
+    <Compile Include="slimqless2_event_sync_T_pump.vb" />
     <Compile Include="text.vb" />
     <Compile Include="adapter\flow_block_adapter.vb" />
     <Compile Include="adapter\indicator_sensor_adapter.vb" />
@@ -200,7 +205,9 @@
     <Content Include="device.sln" />
     <Content Include="manager\design.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="codegen\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="device.dep" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

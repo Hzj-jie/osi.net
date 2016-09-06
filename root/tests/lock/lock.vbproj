@@ -60,7 +60,6 @@
     <Compile Include="atom\atom_value_test.vb" />
     <Compile Include="auto_duallock_test.vb" />
     <Compile Include="autolock_test.vb" />
-    <Compile Include="count_reset_event_test.vb" />
     <Compile Include="create_if_nothing_test.vb" />
     <Compile Include="duallock_perf_test.vb" />
     <Compile Include="duallock_test.vb" />
