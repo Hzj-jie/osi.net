@@ -8,10 +8,9 @@ Public Class failure_case
     Inherits [case]
 
     Public Const expected_failure_count As Int32 = 28
-    Public self_health As Boolean = False
 
     Public Overrides Function run() As Boolean
-        If self_health Then
+        If self_health_stage() Then
             assert_true(False)
             assert_nothing(empty_string)
             assert_not_nothing(CStr(Nothing))  ' Convert.ToString conflict
@@ -71,6 +70,6 @@ Public Class failure_case
             ma.finish()
         End Using
 
-        Return Not self_health
+        Return Not self_health_stage()
     End Function
 End Class

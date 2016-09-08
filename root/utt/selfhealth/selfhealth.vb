@@ -16,7 +16,6 @@ Public Module selfhealth
                                     If found Then
                                         Return False
                                     Else
-                                        x.case.as(Of failure_case).self_health = b
                                         found = True
                                     End If
                                 End If
