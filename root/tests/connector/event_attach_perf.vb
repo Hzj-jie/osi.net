@@ -1,6 +1,7 @@
 ﻿
 Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.root.utt
@@ -14,12 +15,21 @@ Public Class event_attach_perf
     End Sub
 
     Protected Overrides Function min_rate_table() As Double(,)
-        Return {{-1, 0.2, -1, -1, -1, -1},
-                {20, -1, -1, -1, -1, -1},
-                {-1, -1, -1, 1, -1, -1},
-                {-1, -1, 4, -1, -1, -1},
-                {-1, -1, -1, -1, -1, 66.7},
-                {-1, -1, -1, -1, 0.06, -1}}
+        If os.windows_major = os.windows_major_t._5 Then
+            Return {{-1, 0.6, -1, -1, -1, -1},
+                    {6.67, -1, -1, -1, -1, -1},
+                    {-1, -1, -1, 2.5, -1, -1},
+                    {-1, -1, 1.6, -1, -1, -1},
+                    {-1, -1, -1, -1, -1, 200},
+                    {-1, -1, -1, -1, 0.02, -1}}
+        Else
+            Return {{-1, 0.2, -1, -1, -1, -1},
+                    {20, -1, -1, -1, -1, -1},
+                    {-1, -1, -1, 1, -1, -1},
+                    {-1, -1, 4, -1, -1, -1},
+                    {-1, -1, -1, -1, -1, 100},
+                    {-1, -1, -1, -1, 0.04, -1}}
+        End If
     End Function
 
     Private Shared Function c(Of _SIZE As _int64)() As [case]()
