@@ -7,7 +7,7 @@ Imports osi.root.formation
 Imports osi.root.connector
 
 Public Class shell_less_process
-    Inherits disposer(Of disposer(Of Process))
+    Inherits disposer(Of Process)
 
     Private proc_started As singleentry
     Private proc_exited As singleentry
@@ -17,25 +17,21 @@ Public Class shell_less_process
     Private ReadOnly enable_raise_event As Boolean
 
     Public Sub New(Optional ByVal enable_raise_event As Boolean = False)
-        MyBase.New(make_disposer(New Process(),
-                                 disposer:=Sub(p As Process)
-                                               assert(Not p Is Nothing)
-                                               If enable_raise_event Then
-                                                   p.CancelOutputRead()
-                                                   p.CancelErrorRead()
-                                               End If
-                                               p.quit()
-                                               p.StandardOutput().Close()
-                                               p.StandardOutput().Dispose()
-                                               p.StandardError().Close()
-                                               p.StandardError().Dispose()
-                                               p.StandardInput().Close()
-                                               p.StandardInput().Dispose()
-                                               p.Dispose()
-                                           End Sub),
-                   disposer:=Sub(x As disposer(Of Process))
-                                 assert(Not x Is Nothing)
-                                 x.queue_dispose()
+        MyBase.New(New Process(),
+                   disposer:=Sub(p As Process)
+                                 assert(Not p Is Nothing)
+                                 If enable_raise_event Then
+                                     p.CancelOutputRead()
+                                     p.CancelErrorRead()
+                                 End If
+                                 p.quit()
+                                 p.StandardOutput().Close()
+                                 p.StandardOutput().Dispose()
+                                 p.StandardError().Close()
+                                 p.StandardError().Dispose()
+                                 p.StandardInput().Close()
+                                 p.StandardInput().Dispose()
+                                 p.Dispose()
                              End Sub)
         Me.enable_raise_event = enable_raise_event
         proc().EnableRaisingEvents() = True
@@ -70,7 +66,7 @@ Public Class shell_less_process
     End Sub
 
     Public Function exited() As Boolean
-        Return [get]().disposed()
+        Return disposed()
     End Function
 
     Public Function exit_code() As Int32
@@ -82,7 +78,7 @@ Public Class shell_less_process
     End Function
 
     Private Function proc() As Process
-        Return [get]().[get]()
+        Return [get]()
     End Function
 
     Public Function start_info() As ProcessStartInfo

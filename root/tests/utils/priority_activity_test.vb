@@ -44,7 +44,7 @@ Public Class priority_activity_test
                                assert_true(execute_in_managed_threadpool(
                                                Sub()
                                                    p.stdout().ReadLine()
-                                                   assert_equal((++p).PriorityClass(), ppc)
+                                                   assert_equal((+p).PriorityClass(), ppc)
                                                    p.stdin().WriteLine()
                                                    If Not assert_true(p.wait_for_exit(
                                                               seconds_to_milliseconds(10))) Then
