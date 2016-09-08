@@ -64,7 +64,7 @@ Public NotInheritable Class concurrency_runner
                             queue_in_managed_threadpool(Sub()
                                                             e(a)
                                                             assert(Interlocked.Decrement(r) >= 0)
-                                                            assert(w.Set())
+                                                            assert(w.disposed_or_set())
                                                         End Sub)
                         Else
                             assert(Interlocked.Decrement(r) >= 0)
