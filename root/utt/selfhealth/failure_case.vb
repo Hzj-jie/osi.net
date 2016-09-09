@@ -31,7 +31,7 @@ Public Class failure_case
             assert_now_in_time_range(Now().milliseconds() - 1001, Now().milliseconds() - 1000)
             Using New auto_assert_timelimited_operation(0, 1)
                 Dim ma As manual_assert_timelimited_operation = New manual_assert_timelimited_operation(0, 1)
-                sleep(two_timeslice_length_ms)
+                measure_sleep(two_timeslice_length_ms)
                 ma.finish()
             End Using
 
