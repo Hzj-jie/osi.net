@@ -1,6 +1,7 @@
 ﻿
 Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.envs
 Imports osi.root.utt
 
 Public Class cint_convert_toint_perf_test
@@ -15,9 +16,15 @@ Public Class cint_convert_toint_perf_test
     End Sub
 
     Protected Overrides Function max_rate_table() As Double(,)
-        Return {{0, 0.3, 1.1},
-                {-1, 0, -1},
-                {1.1, 0.3, 0}}
+        If os.windows_major = os.windows_major_t._5 Then
+            Return {{0, 0.6, 1.1},
+                    {-1, 0, -1},
+                    {1.1, 0.6, 0}}
+        Else
+            Return {{0, 0.4, 1.1},
+                    {-1, 0, -1},
+                    {1.1, 0.4, 0}}
+        End If
     End Function
 
     Private Shared Sub cint_run()

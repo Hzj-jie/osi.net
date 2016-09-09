@@ -46,7 +46,7 @@ Public Class performance_comparison_case_wrapper
     Private Shared Function scan_table(ByVal t(,) As Double, ByVal i As UInt32, ByVal j As UInt32) As Double
         If t Is Nothing OrElse t.GetLength(0) <= i OrElse t.GetLength(1) <= j Then
             Return -1
-        ElseIf t(i, j) = 0 AndAlso t.GetLength(0) > j AndAlso t.GetLength(1) > i AndAlso t(j, i) > 0 Then
+        ElseIf t(i, j) = -1 AndAlso t.GetLength(0) > j AndAlso t.GetLength(1) > i AndAlso t(j, i) > 0 Then
             Return 3 / t(j, i)
         Else
             Return t(i, j)
