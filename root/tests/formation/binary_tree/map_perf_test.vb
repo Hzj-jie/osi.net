@@ -12,7 +12,7 @@ Public Class map_perf_test
         MyBase.New(R(New map_case()), R(New dictionary_case()))
     End Sub
 
-    Protected Overrides Function max_rate_table() As Double(,)
+    Protected Overrides Function min_rate_table() As Double(,)
         If isdebugmode() Then
             Return {{0, 40},
                     {0.04, 0}}

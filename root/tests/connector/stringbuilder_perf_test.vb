@@ -24,7 +24,7 @@ Public Class stringbuilder_perf_test(Of PRE_ALLOC As _boolean, RND_EACH_ROUND As
                    rinne(repeat(New stringbuilder_perf_case(l2, l1), l1), r))
     End Sub
 
-    Protected Overrides Function max_rate_table() As Double(,)
+    Protected Overrides Function min_rate_table() As Double(,)
         Return {{0, 1.5},
                 {0.9, 0}}
     End Function

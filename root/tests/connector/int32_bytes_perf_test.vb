@@ -13,7 +13,7 @@ Public Class int32_bytes_perf_test
         MyBase.New(New delegate_case(AddressOf bitconverter_getbytes), New delegate_case(AddressOf marshal_write))
     End Sub
 
-    Protected Overrides Function max_rate_table() As Double(,)
+    Protected Overrides Function min_rate_table() As Double(,)
         Return {{-1, 0.5},
                 {-1, -1}}
     End Function

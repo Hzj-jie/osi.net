@@ -14,7 +14,7 @@ Public Class cstr_convert_tostring_perf_test
                    New delegate_case(AddressOf implicit_convert_run))
     End Sub
 
-    Protected Overrides Function max_rate_table() As Double(,)
+    Protected Overrides Function min_rate_table() As Double(,)
         Return {{0, 1.1, 1.1},
                 {-1, 0, -1},
                 {1.1, 1.1, 0}}

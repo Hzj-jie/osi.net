@@ -1,8 +1,8 @@
 ﻿
 Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.envs
 Imports osi.root.utt
-Imports envs = osi.root.envs
 
 Public Class npos_uint_perf_test
     Inherits performance_comparison_case_wrapper
@@ -22,9 +22,14 @@ Public Class npos_uint_perf_test
                    repeat(New delegate_case(AddressOf int_case), round))
     End Sub
 
-    Protected Overrides Function max_rate_table() As Double(,)
-        Return {{1, If(isdebugbuild() OrElse envs.virtual_machine, 12, 25)},
-                {If(isdebugbuild() OrElse envs.virtual_machine, 0.15, 0.08), 1}}
+    Protected Overrides Function min_rate_table() As Double(,)
+        If os.windows_major = os.windows_major_t._5 Then
+            Return {{0, 25},
+                    {0.08, 0}}
+        Else
+            Return {{0, 12},
+                    {0.15, 0}}
+        End If
     End Function
 
     Private Shared Sub npos_uint_case()
