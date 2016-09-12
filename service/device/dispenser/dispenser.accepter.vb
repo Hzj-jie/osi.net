@@ -44,5 +44,14 @@ Partial Public Class dispenser(Of DATA_T, ID_T)
                 Return False
             End If
         End Function
+
+        Public Function first_source(ByRef o As ID_T) As Boolean
+            If sources.null_or_empty() Then
+                Return False
+            Else
+                o = sources(0)
+                Return True
+            End If
+        End Function
     End Class
 End Class

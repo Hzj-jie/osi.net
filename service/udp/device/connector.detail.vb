@@ -68,7 +68,7 @@ Partial Public NotInheritable Class connector
         Return [New](p, r)
     End Function
 
-    Private Function sources(ByVal result As vector(Of IPEndPoint)) As event_comb
+    Public Function sources(ByVal result As vector(Of IPEndPoint)) As event_comb
         Dim e As pointer(Of IPHostEntry) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -96,7 +96,7 @@ Partial Public NotInheritable Class connector
                               End Function)
     End Function
 
-    Private Function multiple_accepter(ByVal o As pointer(Of listener.multiple_accepter)) As event_comb
+    Public Function multiple_accepter(ByVal o As pointer(Of listener.multiple_accepter)) As event_comb
         Dim e As vector(Of IPEndPoint) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -115,7 +115,26 @@ Partial Public NotInheritable Class connector
                               End Function)
     End Function
 
-    Private Function connect(ByVal r As pointer(Of delegator)) As event_comb
+    Public Function udp_dev(ByVal o As pointer(Of udp_dev)) As event_comb
+        Dim e As vector(Of IPEndPoint) = Nothing
+        Dim ec As event_comb = Nothing
+        Return New event_comb(Function() As Boolean
+                                  e = New vector(Of IPEndPoint)()
+                                  ec = sources(e)
+                                  Return waitfor(ec) AndAlso
+                                         goto_next()
+                              End Function,
+                              Function() As Boolean
+                                  If ec.end_result() Then
+                                      Return eva(o, New udp_dev(p, const_array.[New](+e))) AndAlso
+                                             goto_end()
+                                  Else
+                                      Return False
+                                  End If
+                              End Function)
+    End Function
+
+    Public Function connect(ByVal r As pointer(Of delegator)) As event_comb
         assert(Not p Is Nothing)
         Dim ec As event_comb = Nothing
         Dim result As pointer(Of IPHostEntry) = Nothing

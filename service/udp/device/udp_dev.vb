@@ -18,11 +18,10 @@ Public Class udp_dev
 
     Private ReadOnly p As powerpoint
     Private ReadOnly s As speaker
+    Private ReadOnly pump As slimqless2_event_sync_T_pump(Of Byte())
+    Private ReadOnly receiver As event_sync_T_pump_T_receiver_adapter(Of Byte())
     Private ReadOnly accepter As listener.multiple_accepter
-    Private ReadOnly q As slimqless2(Of Byte())
-    Private ReadOnly received_event As signal_event
     Private ReadOnly buff_size As atomic_int32
-    Private ReadOnly sensor As sensor
 
     Shared Sub New()
         assert(constants.ipv6_packet_size <= constants.ipv4_packet_size)
@@ -31,34 +30,27 @@ Public Class udp_dev
                                           with_transmit_mode(transmitter.mode_t.duplex))
     End Sub
 
-    Public Sub New(ByVal p As powerpoint, ByVal accepter As listener.multiple_accepter)
-        assert(Not accepter Is Nothing)
+    Public Sub New(ByVal p As powerpoint, ByVal sources As const_array(Of IPEndPoint))
         assert(Not p Is Nothing)
-        assert(listeners.[New](p).attach(accepter))
-
         Me.p = p
         Me.s = speakers.[New](p)
-        Me.accepter = accepter
-        Me.q = New slimqless2(Of Byte())()
-        Me.received_event = New signal_event()
+        Me.pump = New slimqless2_event_sync_T_pump(Of Byte())()
+        Me.receiver = event_sync_T_pump_T_receiver_adapter.[New](Me.pump)
+        Me.accepter = New listener.multiple_accepter(sources)
         Me.buff_size = New atomic_int32()
-        Me.sensor = as_sensor(Function() As Boolean
-                                  Return Not q.empty()
-                              End Function)
-
         AddHandler accepter.received, AddressOf push_queue
+        assert(listeners.[New](p).attach(accepter))
     End Sub
 
     Private Sub push_queue(ByVal b() As Byte, ByVal remote As IPEndPoint)
         If Me.buff_size.add(array_size(b)) > p.max_receive_buffer_size Then
             pop_queue(Nothing)
         End If
-        Me.q.emplace(b)
-        Me.received_event.mark()
+        Me.pump.emplace(b)
     End Sub
 
     Private Function pop_queue(ByRef b() As Byte) As Boolean
-        If q.pop(b) Then
+        If Me.pump.receive(b) Then
             assert(Me.buff_size.add(-CInt(array_size(b))) >= 0)
             Return True
         Else
@@ -71,21 +63,7 @@ Public Class udp_dev
     End Sub
 
     Public Function receive(ByVal result As pointer(Of Byte())) As event_comb Implements block_pump.receive
-        Return New event_comb(Function() As Boolean
-                                  Dim b() As Byte = Nothing
-                                  If pop_queue(b) Then
-                                      If q.empty() Then
-                                          received_event.unmark()
-                                          If Not q.empty() Then
-                                              received_event.mark()
-                                          End If
-                                      End If
-                                      Return eva(result, b) AndAlso
-                                             goto_end()
-                                  Else
-                                      Return waitfor(received_event)
-                                  End If
-                              End Function)
+        Return receiver.receive(result)
     End Function
 
     Public Function send(ByVal buff() As Byte,
@@ -111,7 +89,7 @@ Public Class udp_dev
 
     Public Function sense(ByVal pending As pointer(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
-        Return sensor.sense(pending, timeout_ms)
+        Return receiver.sense(pending, timeout_ms)
     End Function
 
     Public Shared Operator +(ByVal this As udp_dev) As idevice(Of datagram)

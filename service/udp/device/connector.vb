@@ -36,4 +36,9 @@ Partial Public NotInheritable Class connector
         o = New async_preparer(Of listener.multiple_accepter)(AddressOf multiple_accepter)
         Return True
     End Function
+
+    Public Function create(ByRef o As async_getter(Of udp_dev)) As Boolean
+        o = New async_preparer(Of udp_dev)(AddressOf udp_dev)
+        Return True
+    End Function
 End Class
