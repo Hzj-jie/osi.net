@@ -37,15 +37,16 @@ Public Module selfhealth
             self_health = True
             host.run(selectors)
             self_health = False
+
+            If (assert_equal(failure_count(), failure_case.expected_failure_count) AndAlso
+                set_self_health(False)) OrElse
+               envs.utt_no_assert Then
+                clear_failure()
+            Else
+                Return False
+            End If
         Next
 
-        If (assert_equal(failure_count(), r * failure_case.expected_failure_count) AndAlso
-            set_self_health(False)) OrElse
-           envs.utt_no_assert Then
-            clear_failure()
-            Return True
-        Else
-            Return False
-        End If
+        Return True
     End Function
 End Module
