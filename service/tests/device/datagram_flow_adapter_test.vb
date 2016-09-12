@@ -4,11 +4,11 @@ Imports osi.service.device
 Public Class datagram_flow_adapter_test
     Inherits complete_io_test2(Of datagram_flow_adapter)
 
-    Private ReadOnly m As mock_block_dev
+    Private ReadOnly m As mock_block
 
     Public Sub New()
         MyBase.New()
-        m = New mock_block_dev()
+        m = New mock_block()
     End Sub
 
     Protected Overrides Function create_receive_flow() As datagram_flow_adapter

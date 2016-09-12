@@ -59,6 +59,10 @@ Public Class qless2_event_sync_T_pump(Of T)
     Public Sub clear()
         q.clear()
     End Sub
+
+    Public Function empty() As Boolean
+        Return q.empty()
+    End Function
 End Class
 
 'finish slimqless2_event_sync_T_pump.vbp --------

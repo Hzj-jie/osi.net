@@ -48,16 +48,16 @@ Public MustInherit Class convector_test
         v2 = rnd_ints(array_size(v1))
         For i As Int32 = 0 To array_size(v1) - 1
             assert(v1(i) <> max_int32)
-            dev1.receive_q.emplace(v1(i))
+            dev1.receive_pump.emplace(v1(i))
             assert(v2(i) <> max_int32)
-            dev2.receive_q.emplace(v2(i))
+            dev2.receive_pump.emplace(v2(i))
         Next
         sleep_seconds(5)
-        dev1.receive_q.emplace(max_int32)
-        dev2.receive_q.emplace(max_int32)
+        dev1.receive_pump.emplace(max_int32)
+        dev2.receive_pump.emplace(max_int32)
         assert_true(timeslice_sleep_wait_until(Function() c.stopped(), minute_to_milliseconds(1)))
-        assert_true(dev1.consistent(v2))
-        assert_true(dev2.consistent(v1))
+        assert_true(dev1.send_pump_equal(v2))
+        assert_true(dev2.send_pump_equal(v1))
         assert_true(timeslice_sleep_wait_until(Function() +ended, minute_to_milliseconds(1)))
         Return True
     End Function

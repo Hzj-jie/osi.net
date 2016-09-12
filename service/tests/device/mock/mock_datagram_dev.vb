@@ -7,79 +7,73 @@ Imports osi.root.utils
 Imports osi.service.device
 
 <type_attribute()>
-Public Class mock_datagram_dev(Of _SEND_RANDOM_FAIL As _boolean, _RECEIVE_RANDOM_FAIL As _boolean)
-    Inherits mock_dev_T(Of piece)
-    Implements datagram
-
-    Private Const packet_size As UInt32 = 1472
-    Private Shared ReadOnly send_random_fail As Boolean
-    Private Shared ReadOnly receive_random_fail As Boolean
+Public Class mock_datagram_dev
+    Inherits mock_datagram_dev(Of _false, _false)
 
     Shared Sub New()
-        send_random_fail = +alloc(Of _SEND_RANDOM_FAIL)()
-        receive_random_fail = +alloc(Of _RECEIVE_RANDOM_FAIL)()
-        type_attribute.of(Of mock_datagram_dev(Of _SEND_RANDOM_FAIL, _RECEIVE_RANDOM_FAIL))().set(
-            datagram_transmitter.[New]() _
-                .with_packet_size(packet_size) _
-                .with_concurrent_operation(True) _
-                .with_transmit_mode(transmitter.mode_t.duplex))
+        type_attribute.of(Of mock_datagram_dev)().forward_from(Of mock_datagram_dev(Of _false, _false))()
+    End Sub
+
+    Private Sub New(ByVal send_pump As slimqless2_event_sync_T_pump(Of piece),
+                    ByVal receive_pump As slimqless2_event_sync_T_pump(Of piece))
+        MyBase.New(send_pump, receive_pump)
     End Sub
 
     Public Sub New()
         MyBase.New()
     End Sub
 
-    Protected Sub New(ByVal send_q As qless2(Of piece),
-                      ByVal receive_q As qless2(Of piece))
-        MyBase.New(send_q, receive_q)
+    Public Shadows Function the_other_end() As mock_datagram_dev
+        Return New mock_datagram_dev(receive_pump, send_pump)
+    End Function
+End Class
+
+<type_attribute()>
+Public Class mock_datagram_dev(Of RANDOM_SEND_FAILURE As _boolean, RANDOM_RECEIVE_FAILURE As _boolean)
+    Inherits mock_dev_T(Of piece, RANDOM_SEND_FAILURE, RANDOM_RECEIVE_FAILURE)
+    Implements datagram
+
+    Private Const packet_size As UInt32 = 1472
+
+    Public NotInheritable Class packet_size_t
+        Inherits _int64
+
+        Protected Overrides Function at() As Int64
+            Return packet_size
+        End Function
+    End Class
+
+    Shared Sub New()
+        type_attribute.of(Of mock_datagram_dev(Of RANDOM_SEND_FAILURE, RANDOM_RECEIVE_FAILURE))().set(
+            datagram_transmitter.[New](
+                transmitter.from_type(Of mock_dev_T(Of piece, RANDOM_SEND_FAILURE, RANDOM_RECEIVE_FAILURE))()) _
+                .with_packet_size(packet_size))
     End Sub
 
-    Protected Shadows Function the_other_end(Of RT As mock_datagram_dev(Of _SEND_RANDOM_FAIL, _RECEIVE_RANDOM_FAIL)) _
-                                            (ByVal c As Func(Of qless2(Of piece), qless2(Of piece), RT)) As RT
-        Return MyBase.the_other_end(c)
-    End Function
+    Private ReadOnly datagram_dev As datagram
 
-    Public Shadows Function the_other_end() As mock_datagram_dev(Of _SEND_RANDOM_FAIL, _RECEIVE_RANDOM_FAIL)
-        Return MyBase.the_other_end(
-                   Function(x, y) New mock_datagram_dev(Of _SEND_RANDOM_FAIL, _RECEIVE_RANDOM_FAIL)(x, y))
-    End Function
+    Protected Sub New(ByVal send_pump As slimqless2_event_sync_T_pump(Of piece),
+                      ByVal receive_pump As slimqless2_event_sync_T_pump(Of piece))
+        MyBase.New(send_pump, receive_pump)
+        datagram_dev = New dev_piece_datagram_adapter(Of packet_size_t)(Me)
+    End Sub
 
-    Private Shared Function random_fail() As Boolean
-        Return rnd_bool_trues(3)
+    Public Sub New()
+        Me.New(new_pump(), new_pump())
+    End Sub
+
+    Public Shadows Function the_other_end() As mock_datagram_dev(Of RANDOM_SEND_FAILURE, RANDOM_RECEIVE_FAILURE)
+        Return New mock_datagram_dev(Of RANDOM_SEND_FAILURE, RANDOM_RECEIVE_FAILURE)(receive_pump, send_pump)
     End Function
 
     Public Overloads Function receive(ByVal result As pointer(Of Byte())) As event_comb Implements block_pump.receive
-        Return sync_async(Function() As Boolean
-                              If receive_random_fail AndAlso random_fail() Then
-                                  Return False
-                              Else
-                                  Dim p As piece = Nothing
-                                  If receive_q.pop(p) Then
-                                      assert(p.size() <= packet_size)
-                                  Else
-                                      p = Nothing
-                                  End If
-                                  Return eva(result, p.export_or_null())
-                              End If
-                          End Function)
+        Return datagram_dev.receive(result)
     End Function
 
     Public Overloads Function send(ByVal buff() As Byte,
                                    ByVal offset As UInt32,
                                    ByVal count As UInt32,
                                    ByVal sent As pointer(Of UInt32)) As event_comb Implements flow_injector.send
-        Return sync_async(Function() As Boolean
-                              If send_random_fail AndAlso random_fail() Then
-                                  Return False
-                              Else
-                                  Dim p As piece = Nothing
-                                  If piece.create(buff, offset, min(count, packet_size), p) Then
-                                      Return assert(sync_send(p)) AndAlso
-                                             eva(sent, p.count)
-                                  Else
-                                      Return False
-                                  End If
-                              End If
-                          End Function)
+        Return datagram_dev.send(buff, offset, count, sent)
     End Function
 End Class

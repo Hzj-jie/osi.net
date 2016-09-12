@@ -15,13 +15,13 @@ Public Class mock_dev_int_test
         v1 = rnd_ints(rnd_int(1024, 4096))
         v2 = rnd_ints(rnd_int(1024, 4096))
         For i As Int32 = 0 To array_size(v1) - 1
-            assert_true(d.sync_send(v1(i)))
+            d.send_pump.emplace(v1(i))
         Next
         For i As Int32 = 0 To array_size(v2) - 1
-            d.receive_q.push(v2(i))
+            d.receive_pump.emplace(v2(i))
         Next
-        assert_true(d.send_q_consistent(v1))
-        assert_true(d.receive_q_consistent(v2))
+        assert_true(d.send_pump_equal(v1))
+        assert_true(d.receive_pump_equal(v2))
         Return True
     End Function
 
@@ -36,13 +36,13 @@ Public Class mock_dev_int_test
             v1 = rnd_ints(rnd_int(1024, 4096))
             v2 = rnd_ints(rnd_int(1024, 4096))
             For i As Int32 = 0 To array_size(v1) - 1
-                assert_true(d1.sync_send(v1(i)))
+                d1.send_pump.emplace(v1(i))
             Next
             For i As Int32 = 0 To array_size(v2) - 1
-                assert_true(d2.sync_send(v2(i)))
+                d2.send_pump.emplace(v2(i))
             Next
-            assert_true(d1.receive_q_consistent(v2))
-            assert_true(d2.receive_q_consistent(v1))
+            assert_true(d1.receive_pump_equal(v2))
+            assert_true(d2.receive_pump_equal(v1))
         End If
         Return True
     End Function

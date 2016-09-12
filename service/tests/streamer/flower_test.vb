@@ -47,11 +47,11 @@ Public MustInherit Class flower_test
         v = rnd_ints(rnd_int(16384, 32768))
         For i As Int32 = 0 To array_size(v) - 1
             assert(v(i) <> max_int32)
-            first.receive_q.emplace(v(i))
+            first.receive_pump.emplace(v(i))
         Next
-        first.receive_q.emplace(max_int32)
+        first.receive_pump.emplace(max_int32)
         assert_true(timeslice_sleep_wait_until(Function() f.stopped(), minute_to_milliseconds(1)))
-        assert_true(last.consistent(v))
+        assert_true(last.send_pump_equal(v))
         assert_true(timeslice_sleep_wait_until(Function() +ended, minute_to_milliseconds(1)))
         Return True
     End Function

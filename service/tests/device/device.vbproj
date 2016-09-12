@@ -79,7 +79,7 @@
     <Compile Include="manual_pre_generated_device_pool_test2.vb" />
     <Compile Include="manual_pre_generated_device_pool_test3.vb" />
     <Compile Include="mock\async_getter_mock_dev_device.vb" />
-    <Compile Include="mock\mock_block_dev.vb" />
+    <Compile Include="mock\mock_block.vb" />
     <Compile Include="mock\mock_creator.vb" />
     <Compile Include="mock\mock_datagram_dev.vb" />
     <Compile Include="mock\mock_device_async_creator.vb" />
