@@ -1,6 +1,7 @@
 ﻿
 Imports System.Text
 Imports osi.root.template
+Imports osi.root.envs
 Imports osi.root.connector
 Imports osi.root.utt
 
@@ -12,6 +13,8 @@ Public Class stringbuilder_auto_extend_perf_test
     Inherits stringbuilder_perf_test(Of _false, _false)
 End Class
 
+' On Windows XP (or maybe earlier), pre-allocating StringBuilder has almost no benefit.
+' On later OS, it has a 30% performance improvement.
 Public Class stringbuilder_perf_test(Of PRE_ALLOC As _boolean, RND_EACH_ROUND As _boolean)
     Inherits performance_comparison_case_wrapper
 
@@ -25,8 +28,13 @@ Public Class stringbuilder_perf_test(Of PRE_ALLOC As _boolean, RND_EACH_ROUND As
     End Sub
 
     Protected Overrides Function min_rate_table() As Double(,)
-        Return {{0, 1.5},
-                {0.9, 0}}
+        If os.windows_major = os.windows_major_t._5 Then
+            Return {{0, 1.2},
+                    {1.2, 0}}
+        Else
+            Return {{0, 1.5},
+                    {1.0, 0}}
+        End If
     End Function
 
     Private Class stringbuilder_perf_case
