@@ -28,7 +28,7 @@ void write_temp_para(FILE*& fo, int pc, bool has_rtn)
     if(has_rtn || pc > 0) fp(")");
 }
 
-void write_head(FILE*& fo, int pc, const char* fn, const char* dn, bool has_rtn, bool para_byref)
+void write_head(FILE*& fo, int pc, const char* fn, const char* dn, bool has_rtn, bool para_byref, bool has_false_value)
 {
     fp("    Public ");
     if(has_rtn) fp("Function");
@@ -50,18 +50,25 @@ void write_head(FILE*& fo, int pc, const char* fn, const char* dn, bool has_rtn,
         fp(" As T");
         fp(para_num(i));
     }
-    if(has_rtn) fp(",\n                     ByVal false_value As RT");
+    if(has_rtn && has_false_value) fp(",\n                     ByVal false_value As RT");
     fp(")");
     if(has_rtn) fp(" As RT");
     fp("\n");
 }
 
-void write_body(FILE*& fo, int pc, bool has_rtn)
+void write_body(FILE*& fo, int pc, bool has_rtn, bool no_throw)
 {
-    fp("            If d Is Nothing Then\n                Return");
-    if(has_rtn) fp(" false_value");
-    fp("\n            End If"
-       "\n            Try"
+    if(no_throw)
+    {
+        fp("            assert(Not d Is Nothing)");
+    }
+    else
+    {
+        fp("            If d Is Nothing Then\n                Return");
+        if(has_rtn) fp(" false_value");
+        fp("\n            End If");
+    }
+    fp("\n            Try"
        "\n                ");
     if(has_rtn) fp("Return ");
     fp("d(");
@@ -72,14 +79,25 @@ void write_body(FILE*& fo, int pc, bool has_rtn)
         fp(para_num(i));
     }
     fp(")");
-    fp("\n            Catch ex As ThreadAbortException"
-       "\n                raise_error(error_type.warning, \"thread abort\")"
-       "\n                Return");
-    if(has_rtn) fp(" false_value");
-    fp("\n            Catch ex As Exception"
-       "\n                log_unhandled_exception(ex)"
-       "\n                Return");
-    if(has_rtn) fp(" false_value");
+    if(no_throw)
+    {
+        fp("\n            Catch ex As Exception"
+           "\n                log_unhandled_exception(ex)"
+           "\n                assert(False)"
+           "\n                Return");
+        if(has_rtn) fp(" Nothing");
+    }
+    else
+    {
+        fp("\n            Catch ex As ThreadAbortException"
+           "\n                raise_error(error_type.warning, \"thread abort\")"
+           "\n                Return");
+        if(has_rtn) fp(" false_value");
+        fp("\n            Catch ex As Exception"
+           "\n                log_unhandled_exception(ex)"
+           "\n                Return");
+        if(has_rtn) fp(" false_value");
+    }
     fp("\n            End Try");
     if(has_rtn)
     fp("\n        End Function\n\n");
@@ -89,9 +107,17 @@ void write_body(FILE*& fo, int pc, bool has_rtn)
 
 void write(FILE*& fo, int pc, const char* fn, const char* dn, bool has_rtn, bool para_byref)
 {
-    write_head(fo, pc, fn, dn, has_rtn, para_byref);
-    write_body(fo, pc, has_rtn);
+    write_head(fo, pc, fn, dn, has_rtn, para_byref, true);
+    write_body(fo, pc, has_rtn, false);
 }
+
+void write2(FILE*& fo, int pc, const char* fn, const char* dn, bool has_rtn, bool para_byref)
+{
+    write_head(fo, pc, fn, dn, has_rtn, para_byref, false);
+    write_body(fo, pc, has_rtn, true);
+}
+
+
 #undef fp
 
 void write(FILE*& fo, int pc)
@@ -100,12 +126,16 @@ void write(FILE*& fo, int pc)
     {
         write(fo, pc, "do_", "_do", true, true);
         write(fo, pc, "void_", "void", false, true);
+        write2(fo, pc, "nothrow", "_do", true, true);
+        write2(fo, pc, "nothrow", "void", false, true);
     }
     // .net 3.5 has only Action / Func with 4 parameters
     if(pc <= 4)
     {
         write(fo, pc, "do_", "Func", true, false);
         write(fo, pc, "void_", "Action", false, false);
+        write2(fo, pc, "nothrow", "Func", true, true);
+        write2(fo, pc, "nothrow", "Action", false, true);
     }
 }
 
