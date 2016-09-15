@@ -11,10 +11,20 @@ Public Class arrayless(Of T)
         Public v As T
     End Structure
 
+    Private ReadOnly c As Func(Of T)
     Private ReadOnly a() As slot
 
-    Public Sub New(ByVal size As UInt32)
+    Public Sub New(ByVal [New] As Func(Of T), ByVal size As UInt32)
+        If [New] Is Nothing Then
+            Me.c = AddressOf alloc(Of T)
+        Else
+            Me.c = [New]
+        End If
         ReDim Me.a(size - uint32_1)
+    End Sub
+
+    Public Sub New(ByVal size As UInt32)
+        Me.New(Nothing, size)
     End Sub
 
     Public Sub clear()
@@ -37,13 +47,55 @@ Public Class arrayless(Of T)
         Return r
     End Function
 
+    ' Create a new instance in an empty slot by using @c, and set the new @id and @o. If there is no empty slot, this
+    ' function returns false.
+    Public Function [next](ByVal c As Func(Of T), ByRef id As UInt32, ByRef o As T) As Boolean
+        assert(Not c Is Nothing)
+        For i As UInt32 = 0 To size() - uint32_1
+            If Not a(i).d Then
+                Dim found As Boolean = False
+                a(i).l.wait()
+                If Not a(i).d Then
+                    a(i).v = nothrow(c)
+                    a(i).d = True
+                    id = i
+                    o = a(i).v
+                    found = True
+                End If
+                a(i).l.release()
+                If found Then
+                    Return True
+                End If
+            End If
+        Next
+        Return False
+    End Function
+
+    Public Function [next](ByVal c As Func(Of T), ByRef id As UInt32) As T
+        Dim o As T = Nothing
+        assert([next](c, id, o))
+        Return o
+    End Function
+
+    Public Function [next](ByRef id As UInt32, ByRef o As T) As Boolean
+        Return [next](c, id, o)
+    End Function
+
+    Public Function [next](ByRef id As UInt32) As T
+        Dim o As T = Nothing
+        assert([next](id, o))
+        Return o
+    End Function
+
+    ' Create or return the data at @id to @o. If the slot is empty, use @c to create a new instance of @T. If @id is not
+    ' in the range [0, #size()), this function returns false.
     Public Function [New](ByVal id As UInt32, ByVal c As Func(Of T), ByRef o As T) As Boolean
         assert(Not c Is Nothing)
         If id < size() Then
             If Not a(id).d Then
                 a(id).l.wait()
                 If Not a(id).d Then
-                    a(id).v = c()
+                    a(id).v = nothrow(c)
                     a(id).d = True
                 End If
                 a(id).l.release()
@@ -63,7 +115,7 @@ Public Class arrayless(Of T)
     End Function
 
     Public Function [New](ByVal id As UInt32, ByRef o As T) As Boolean
-        Return [New](id, AddressOf alloc(Of T), o)
+        Return [New](id, c, o)
     End Function
 
     Public Function [New](ByVal id As UInt32) As T
