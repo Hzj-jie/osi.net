@@ -9,18 +9,24 @@ Imports osi.root.utt
 Public Class arrayless_test
     Inherits case_wrapper
 
+    Private Const round As Int64 = 1024 * 1024
+
     Public Sub New()
-        MyBase.New(multithreading(repeat(New arrayless_case(), 1024 * 1024), 8))
+        MyBase.New(multithreading(repeat(New arrayless_case(round), round), 8))
     End Sub
 
     Private Class arrayless_case
         Inherits [case]
 
+        Private ReadOnly round As Int64
+        Private ReadOnly current_round As thread_static(Of Int64)
         Private ReadOnly size As UInt32
         Private a As arrayless(Of cd_object(Of arrayless_case))
         Private ids() As Int32
 
-        Public Sub New()
+        Public Sub New(ByVal round As Int64)
+            Me.round = round
+            current_round = New thread_static(Of Int64)()
             size = rnd_uint(100000, 200000)
         End Sub
 
@@ -32,6 +38,7 @@ Public Class arrayless_test
                     ids(i) = npos
                 Next
                 cd_object(Of arrayless_case).reset()
+                current_round.clear()
                 Return True
             Else
                 Return False
@@ -51,16 +58,17 @@ Public Class arrayless_test
         End Sub
 
         Public Overrides Function run() As Boolean
+            current_round.set(current_round.get() + 1)
             Dim id As UInt32 = 0
             Dim o As cd_object(Of arrayless_case) = Nothing
-            If repeat_case_wrapper.this.current_round() < 1000 AndAlso rnd_bool_trues(3) Then
+            If current_round.get() < 1000 AndAlso rnd_bool_trues(3) Then
                 If a.next(id, o) Then
                     assert_ids(id, o)
                 Else
                     assert_equal(a.created_count(), size)
                     assert_equal(cd_object(Of arrayless_case).constructed(), size)
                 End If
-            ElseIf repeat_case_wrapper.this.last_round() Then
+            ElseIf current_round.get() = round - 1 Then
                 While a.next(id, o)
                     assert_ids(id, o)
                 End While

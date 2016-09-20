@@ -59,6 +59,10 @@ Public Class thread_static(Of T)
         End Set
     End Property
 
+    Public Sub clear()
+        memclr(slot)
+    End Sub
+
     Public Shared Operator +(ByVal this As thread_static(Of T)) As T
         If this Is Nothing Then
             Return Nothing

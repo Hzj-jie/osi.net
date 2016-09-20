@@ -19,7 +19,7 @@ Public Class case_wrapper
         Return c.preserved_processors()
     End Function
 
-    Protected Function case_prepare_proxy() As Boolean
+    Protected Function my_base_prepare() As Boolean
         Return MyBase.prepare()
     End Function
 
@@ -27,7 +27,7 @@ Public Class case_wrapper
         Return MyBase.prepare() AndAlso c.prepare()
     End Function
 
-    Protected Function case_finish_proxy() As Boolean
+    Protected Function mybase_finish() As Boolean
         Return MyBase.finish()
     End Function
 
