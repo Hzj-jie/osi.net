@@ -94,6 +94,35 @@ Public Class internal_thread_static_valuetype_perf
     End Class
 End Class
 
+Public Class utils_thread_static2_valuetype_perf
+    Inherits thread_static_perf
+
+    Public Sub New()
+        MyBase.New(New [case]())
+    End Sub
+
+    Protected Class [case]
+        Inherits thread_static_perf_case
+
+        Private ReadOnly ts As thread_static2(Of Int32)
+
+        Public Sub New()
+            ts = New thread_static2(Of Int32)()
+        End Sub
+
+        Protected Overrides Function [get]() As Boolean
+            Dim i As Int32 = 0
+            i = ts.get()
+            Return True
+        End Function
+
+        Protected Overrides Function [set]() As Boolean
+            ts.set(rnd_int(min_int32, max_int32))
+            Return True
+        End Function
+    End Class
+End Class
+
 Public Class connector_thread_static_reference_type_perf
     Inherits thread_static_perf
 
@@ -141,6 +170,35 @@ Public Class internal_thread_static_reference_type_perf
 
         Protected Overrides Function [set]() As Boolean
             value = next_sample()
+            Return True
+        End Function
+    End Class
+End Class
+
+Public Class utils_thread_static2_reference_type_perf
+    Inherits thread_static_perf
+
+    Public Sub New()
+        MyBase.New(New [case]())
+    End Sub
+
+    Protected Class [case]
+        Inherits thread_static_perf_reference_type_case
+
+        Private ReadOnly ts As thread_static2(Of test_class)
+
+        Public Sub New()
+            ts = New thread_static2(Of test_class)()
+        End Sub
+
+        Protected Overrides Function [get]() As Boolean
+            Dim i As test_class = Nothing
+            i = ts.get()
+            Return True
+        End Function
+
+        Protected Overrides Function [set]() As Boolean
+            ts.set(next_sample())
             Return True
         End Function
     End Class

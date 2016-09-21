@@ -4,6 +4,7 @@ Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.lock
+Imports osi.root.utils
 Imports osi.root.utt
 
 Public Class arrayless_test
@@ -19,14 +20,14 @@ Public Class arrayless_test
         Inherits [case]
 
         Private ReadOnly round As Int64
-        Private ReadOnly current_round As thread_static(Of Int64)
+        Private ReadOnly current_round As thread_static2(Of Int64)
         Private ReadOnly size As UInt32
         Private a As arrayless(Of cd_object(Of arrayless_case))
         Private ids() As Int32
 
         Public Sub New(ByVal round As Int64)
             Me.round = round
-            current_round = New thread_static(Of Int64)()
+            current_round = New thread_static2(Of Int64)()
             size = rnd_uint(100000, 200000)
         End Sub
 
