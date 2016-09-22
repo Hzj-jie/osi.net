@@ -2,12 +2,13 @@
 Imports System.Net
 Imports osi.root.template
 Imports osi.root.delegates
+Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
 
-Public MustInherit Class _46_collection(Of T, __NEW As __do(Of powerpoint, T, Boolean))
+Public MustInherit Class _46_collection(Of T, __NEW As __do(Of powerpoint, UInt16, T, Boolean))
     Public Const port_count As Int32 = IPEndPoint.MaxPort - IPEndPoint.MinPort + 1
-    Private Shared ReadOnly _new As _do(Of powerpoint, T, Boolean)
+    Private Shared ReadOnly _new As _do(Of powerpoint, UInt16, T, Boolean)
     Private Shared ReadOnly v4 As arrayless(Of T)
     Private Shared ReadOnly v6 As arrayless(Of T)
 
@@ -17,28 +18,59 @@ Public MustInherit Class _46_collection(Of T, __NEW As __do(Of powerpoint, T, Bo
         v6 = New arrayless(Of T)(port_count)
     End Sub
 
-    Public Shared Function [New](ByVal p As powerpoint, ByRef o As T) As Boolean
+    Private Shared Function _new_T(ByVal p As powerpoint, ByVal local_port As UInt16) As Func(Of T)
+        Return Function() As T
+                   Dim r As T = Nothing
+                   If _new(unref(p), unref(local_port), r) Then
+                       Return r
+                   Else
+                       Return Nothing
+                   End If
+               End Function
+    End Function
+
+    Public Shared Function [New](ByVal p As powerpoint, ByVal local_port As UInt16, ByRef o As T) As Boolean
         If Not p Is Nothing Then
-            Dim a As arrayless(Of T) = Nothing
-            a = If(p.ipv4, v4, v6)
-            Return assert(a.[New](p.local_port,
-                                  Function() As T
-                                      Dim r As T = Nothing
-                                      If _new(unref(p), r) Then
-                                          Return r
-                                      Else
-                                          Return Nothing
-                                      End If
-                                  End Function,
-                                  o))
+            If p.local_port <> socket_invalid_port Then
+                local_port = p.local_port
+            End If
+            If local_port = socket_invalid_port Then
+                Return False
+            Else
+                Return assert(If(p.ipv4, v4, v6).[New](p.local_port, _new_T(p, local_port), o))
+            End If
         Else
             Return False
         End If
     End Function
 
+    Public Shared Function [New](ByVal p As powerpoint, ByRef o As T) As Boolean
+        Return [New](p, socket_invalid_port, o)
+    End Function
+
+    Public Shared Function [New](ByVal p As powerpoint, ByVal local_port As UInt16) As T
+        Dim c As T = Nothing
+        assert([New](p, local_port, c))
+        Return c
+    End Function
+
     Public Shared Function [New](ByVal p As powerpoint) As T
         Dim c As T = Nothing
         assert([New](p, c))
+        Return c
+    End Function
+
+    Public Shared Function [next](ByVal p As powerpoint, ByRef port As UInt16, ByRef o As T) As Boolean
+        If Not p Is Nothing Then
+            Return If(p.ipv4, v4, v6).next(_new_T(p, p.local_port), port, o)
+        Else
+            Return False
+        End If
+    End Function
+
+    Public Shared Function [next](ByVal p As powerpoint, ByRef port As UInt16) As T
+        Dim c As T = Nothing
+        assert([next](p, port, c))
         Return c
     End Function
 

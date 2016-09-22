@@ -13,9 +13,12 @@ Partial Public Class powerpoint
     Public ReadOnly address_family As AddressFamily
     Public ReadOnly identity As String
     Public ReadOnly packet_size As UInt32
+    Public ReadOnly accept_new_connection As Boolean
     Private ReadOnly send_rate_sec As UInt32
     Private ReadOnly receive_rate_sec As UInt32
     Private ReadOnly overhead As UInt32
+    ' TODO:
+    Private ReadOnly _udp_dev_manual_device_exporter As imanual_device_exporter(Of udp_dev)
 
     Private Sub New(ByVal host_or_ip As String,
                     ByVal remote_port As UInt16,
@@ -24,7 +27,8 @@ Partial Public Class powerpoint
                     ByVal send_rate_sec As UInt32,
                     ByVal receive_rate_sec As UInt32,
                     ByVal ipv4 As Boolean,
-                    ByVal max_receive_buffer_size As UInt32)
+                    ByVal max_receive_buffer_size As UInt32,
+                    ByVal accept_new_connection As Boolean)
         Me.host_or_ip = host_or_ip
         Me.remote_port = remote_port
         Me.local_port = local_port
@@ -33,6 +37,7 @@ Partial Public Class powerpoint
         Me.receive_rate_sec = receive_rate_sec
         Me.ipv4 = ipv4
         Me.max_receive_buffer_size = max_receive_buffer_size
+        Me.accept_new_connection = accept_new_connection
 
         Me.address_family = If(ipv4, AddressFamily.InterNetwork, AddressFamily.InterNetworkV6)
         Me.overhead = If(ipv4, constants.ipv4_overhead, constants.ipv6_overhead)

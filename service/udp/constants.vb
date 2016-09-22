@@ -17,6 +17,7 @@ Public NotInheritable Class default_value
     Public Const receive_rate_sec As UInt32 = 1
     Public Const ipv4 As Boolean = True
     Public Const max_receive_buffer_size As UInt32 = constants.ipv4_packet_size * 10
+    Public Const accept_new_connection As Boolean = True
 
     Private Sub New()
     End Sub

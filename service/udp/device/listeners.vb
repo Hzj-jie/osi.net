@@ -5,10 +5,10 @@ Public NotInheritable Class listeners
     Inherits _46_collection(Of listener, _New)
 
     Public NotInheritable Class _New
-        Inherits __do(Of powerpoint, listener, Boolean)
+        Inherits __do(Of powerpoint, UInt16, listener, Boolean)
 
-        Public Overrides Function at(ByRef i As powerpoint, ByRef j As listener) As Boolean
-            Return listener.[New](i, j)
+        Public Overrides Function at(ByRef i As powerpoint, ByRef j As UInt16, ByRef k As listener) As Boolean
+            Return listener.[New](i, j, k)
         End Function
     End Class
 

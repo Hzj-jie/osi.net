@@ -7,7 +7,7 @@ Imports osi.service.device
 Imports osi.service.selector
 
 Partial Public NotInheritable Class connector
-    Implements iasync_device_creator(Of delegator), idevice_creator(Of UdpClient)
+    Implements iasync_device_creator(Of delegator), idevice_creator(Of UdpClient), iasync_device_creator(Of udp_dev)
 
     Private ReadOnly p As powerpoint
 
@@ -40,5 +40,18 @@ Partial Public NotInheritable Class connector
     Public Function create(ByRef o As async_getter(Of udp_dev)) As Boolean
         o = New async_preparer(Of udp_dev)(AddressOf udp_dev)
         Return True
+    End Function
+
+    Public Function create(ByRef o As idevice(Of async_getter(Of udp_dev))) As Boolean _
+                          Implements iasync_device_creator(Of udp_dev).create
+        Dim x As async_getter(Of udp_dev) = Nothing
+        If create(x) Then
+            o = x.make_device(validator:=AddressOf osi.service.udp.udp_dev.validator,
+                              closer:=AddressOf osi.service.udp.udp_dev.closer,
+                              identifier:=AddressOf osi.service.udp.udp_dev.identifier)
+            Return True
+        Else
+            Return False
+        End If
     End Function
 End Class

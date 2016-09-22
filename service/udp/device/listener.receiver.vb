@@ -15,6 +15,22 @@ Partial Public Class listener
         Private ReadOnly s As sensor
         Private ReadOnly c As UdpClient
 
+        Public Shared Function [New](ByVal p As powerpoint, ByVal local_port As UInt16, ByRef o As receiver) As Boolean
+            Dim c As UdpClient = Nothing
+            If udp_clients.[New](p, local_port, c) Then
+                o = New receiver(c)
+                Return True
+            Else
+                Return False
+            End If
+        End Function
+
+        Public Shared Function [New](ByVal p As powerpoint, ByVal local_port As UInt16) As receiver
+            Dim o As receiver = Nothing
+            assert([New](p, local_port, o))
+            Return o
+        End Function
+
         Public Shared Function [New](ByVal p As powerpoint, ByRef o As receiver) As Boolean
             Dim c As UdpClient = Nothing
             If udp_clients.[New](p, c) Then

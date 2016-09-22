@@ -11,9 +11,9 @@ Imports osi.root.utils
 Public Class speaker
     Private ReadOnly c As UdpClient
 
-    Public Shared Function [New](ByVal p As powerpoint, ByRef o As speaker) As Boolean
+    Public Shared Function [New](ByVal p As powerpoint, ByVal local_port As UInt16, ByRef o As speaker) As Boolean
         Dim c As UdpClient = Nothing
-        If udp_clients.[New](p, c) Then
+        If udp_clients.[New](p, local_port, c) Then
             o = New speaker(c)
             Return True
         Else
@@ -21,13 +21,20 @@ Public Class speaker
         End If
     End Function
 
-    Public Shared Function [New](ByVal p As powerpoint) As speaker
+    Public Shared Function [New](ByVal p As powerpoint, ByVal local_port As UInt16) As speaker
         Dim o As speaker = Nothing
-        assert([New](p, o))
+        assert([New](p, local_port, o))
         Return o
     End Function
 
-    ' Test only
+    Public Shared Function [New](ByVal p As powerpoint, ByRef o As speaker) As Boolean
+        Return [New](p, socket_invalid_port, o)
+    End Function
+
+    Public Shared Function [New](ByVal p As powerpoint) As speaker
+        Return [New](p, socket_invalid_port)
+    End Function
+
     Public Sub New(ByVal c As UdpClient)
         assert(Not c Is Nothing)
         Me.c = c

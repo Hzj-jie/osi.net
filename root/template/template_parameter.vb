@@ -73,6 +73,28 @@ Public MustInherit Class __do(Of T1, T2, RT)
     End Operator
 End Class
 
+Public MustInherit Class __do(Of T1, T2, T3, RT)
+    Public MustOverride Function at(ByRef i As T1, ByRef j As T2, ByRef k As T3) As RT
+
+    Default Public ReadOnly Property _at(ByVal i As T1, ByVal j As T2, ByVal k As T3) As RT
+        Get
+            Return at(i, j, k)
+        End Get
+    End Property
+
+    Public Shared Operator +(ByVal this As __do(Of T1, T2, T3, RT)) As _do(Of T1, T2, T3, RT)
+        If this Is Nothing Then
+            Return Nothing
+        Else
+            Return AddressOf this.at
+        End If
+    End Operator
+
+    Public Shared Operator -(ByVal this As __do(Of T1, T2, T3, RT)) As _do(Of T1, T2, T3, RT)
+        Return +this
+    End Operator
+End Class
+
 Public MustInherit Class __void
     Public MustOverride Sub at()
 

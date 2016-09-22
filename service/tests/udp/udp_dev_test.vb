@@ -95,7 +95,8 @@ Public Class udp_dev_test
     Public Overrides Function finish() As Boolean
         listeners.[New](p1).wait_for_stop()
         listeners.[New](p2).wait_for_stop()
-        sleep(osi.service.device.constants.default_sense_timeout_ms)   ' Ensure dispenser has fully stopped.
+        ' Ensure dispenser has fully stopped. The dispenser.work() has been canceled, but the T_receiver.sense may not.
+        sleep(osi.service.device.constants.default_sense_timeout_ms)
         Return MyBase.finish()
     End Function
 

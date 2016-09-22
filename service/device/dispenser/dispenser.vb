@@ -9,6 +9,7 @@ Imports osi.root.procedure
 Partial Public Class dispenser(Of DATA_T, ID_T)
     Inherits reference_count_event_comb_1
 
+    Public Event unaccepted(ByVal data As DATA_T, ByVal remote As ID_T)
     Private ReadOnly d As T_receiver(Of pair(Of DATA_T, ID_T))
     Private ReadOnly sense_timeout_ms As Int64
     Private ReadOnly accepters As object_unique_set(Of accepter)
@@ -68,18 +69,24 @@ Partial Public Class dispenser(Of DATA_T, ID_T)
                               Function() As Boolean
                                   If ec.end_result() Then
                                       If Not result.empty() Then
+                                          Dim accepted As Boolean = False
                                           If Not accepters.empty() Then
-                                              assert(accepters.foreach(Function(ByRef i As accepter,
-                                                                                ByRef [continue] As Boolean) As Boolean
-                                                                           assert(Not i Is Nothing)
-                                                                           If i.accept((+result).second) Then
-                                                                               i.raise((+result).first, (+result).second)
-                                                                               [continue] = False
-                                                                           Else
-                                                                               [continue] = True
-                                                                           End If
-                                                                           Return True
-                                                                       End Function))
+                                              assert(accepters.foreach(
+                                                         Function(ByRef i As accepter,
+                                                                  ByRef [continue] As Boolean) As Boolean
+                                                             assert(Not i Is Nothing)
+                                                             If i.accept((+result).second) Then
+                                                                 i.raise((+result).first, (+result).second)
+                                                                 accepted = True
+                                                                 [continue] = False
+                                                             Else
+                                                                 [continue] = True
+                                                             End If
+                                                             Return True
+                                                         End Function))
+                                          End If
+                                          If Not accepted Then
+                                              RaiseEvent unaccepted((+result).first, (+result).second)
                                           End If
                                       End If
                                       Return goto_end()

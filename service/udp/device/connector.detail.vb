@@ -35,12 +35,16 @@ Partial Public NotInheritable Class connector
         End Try
     End Function
 
-    Public Shared Function [New](ByVal p As powerpoint, ByRef c As UdpClient) As Boolean
+    Public Shared Function [New](ByVal p As powerpoint, ByVal local_port As UInt16, ByRef c As UdpClient) As Boolean
         If p Is Nothing Then
             Return False
         Else
-            Return [New](p.address_family, p.local_port, c)
+            Return [New](p.address_family, local_port, c)
         End If
+    End Function
+
+    Public Shared Function [New](ByVal p As powerpoint, ByRef c As UdpClient) As Boolean
+        Return [New](p, p.local_port, c)
     End Function
 
     Public Shared Function connect(ByVal p As powerpoint) As UdpClient
