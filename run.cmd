@@ -17,13 +17,9 @@ for /l %%i in (0,0,1) do (
     call force-sync.cmd
     call build.cmd
     popd
-    mkdir c;\deploys\apps\osi.root.utt 1>nul 2>&1
+    mkdir c:\deploys\apps\osi.root.utt 1>nul 2>&1
     pushd c:\deploys\apps\osi.root.utt
-    if exist batch\sync.cmd (
-         call batch\sync.cmd
-    ) else (
-         call sync.cmd
-    )
+    call c:\deploys\src\osi\root\utt\batch\sync.cmd
     osi.root.utt.exe
     popd
     if not "x%EXIT_NOW%" == "x" goto :end
