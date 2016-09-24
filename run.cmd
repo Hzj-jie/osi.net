@@ -17,6 +17,7 @@ for /l %%i in (0,0,1) do (
     call force-sync.cmd
     call build.cmd
     popd
+    mkdir c;\deploys\apps\osi.root.utt 1>nul 2>&1
     pushd c:\deploys\apps\osi.root.utt
     if exist batch\sync.cmd (
          call batch\sync.cmd
