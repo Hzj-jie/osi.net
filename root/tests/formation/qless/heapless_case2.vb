@@ -37,7 +37,9 @@ Friend Class heapless_case2
 #Else
             q.push(i)
 #End If
-            sleep(rnd_int(-1, 1))
+            If Environment.ProcessorCount() > 1 Then
+                sleep(rnd_int(-1, 1))
+            End If
         Next
         finished.mark_in_use()
     End Sub
@@ -45,8 +47,9 @@ Friend Class heapless_case2
     Private Sub pop_thread(ByVal finished As ref(Of singleentry))
         assert(Not finished Is Nothing)
         While Not finished.in_use()
-            q.pop(Nothing)
-            sleep(rnd_int(-1, 2))
+            If Not q.pop(Nothing) Then
+                sleep(rnd_int(-1, 2))
+            End If
         End While
     End Sub
 
