@@ -73,7 +73,11 @@ Public Class slimqless2_threadpool_test
     Public Overrides Function run() As Boolean
         While inserted.increment() <= round
             queue_job()
+            If (+inserted) - (+executed) > 1024 * 32 Then
+                Exit While
+            End If
         End While
+        timeslice_sleep_wait_until(Function() (+inserted) >= round)
         Return True
     End Function
 

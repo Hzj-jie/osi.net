@@ -1,9 +1,26 @@
 ﻿
 Imports System.Runtime.CompilerServices
 Imports System.Threading
+Imports osi.root.constants
 Imports osi.root.delegates
 
 Public Module _threadpool
+    ' DISABLED <global_init(global_init_level.foundamental)>
+    Private NotInheritable Class min_thread_count
+        Shared Sub New()
+            Dim bt As Int32 = 0
+            ThreadPool.GetMinThreads(Nothing, bt)
+            assert(bt >= 0)
+            assert(ThreadPool.SetMinThreads(2, bt))
+        End Sub
+
+        Private Shared Sub init()
+        End Sub
+
+        Private Sub New()
+        End Sub
+    End Class
+
     Public Sub queue_in_managed_threadpool(ByVal d As WaitCallback)
         assert(Not d Is Nothing)
         queue_in_managed_threadpool(Sub()

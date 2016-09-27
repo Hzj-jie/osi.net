@@ -13,7 +13,7 @@ Public Class managed_threadpool
         MyBase.New()
 #If 0 Then
         If thread_count = 0 Then
-            thread_count = default_thread_count()
+            thread_count = default_thread_count
         End If
         Me.thread_count() = thread_count
 #End If
@@ -22,20 +22,22 @@ Public Class managed_threadpool
     Public Overrides Property thread_count() As UInt32
         Get
             Dim ft As Int32 = 0
-            Dim bt As Int32 = 0
-            tp.GetMaxThreads(ft, bt)
-            If ft <= 0 AndAlso bt <= 0 Then
+            tp.GetMaxThreads(ft, Nothing)
+            If ft <= 0 Then
                 Return 0
-            ElseIf ft <= 0 Then
-                Return bt
-            ElseIf bt <= 0 Then
-                Return ft
             Else
-                Return bt + ft
+                Return ft
             End If
         End Get
         Set(ByVal value As UInt32)
-            tp.SetMaxThreads(value >> 1, value >> 1)
+            ' No effect for .net managed thread pool
+#If 0 Then
+            Dim bt As Int32 = 0
+            tp.GetMaxThreads(Nothing, bt)
+            tp.SetMaxThreads(value, bt)
+            tp.GetMinThreads(Nothing, bt)
+            tp.SetMinThreads(value, bt)
+#End If
         End Set
     End Property
 
