@@ -42,7 +42,7 @@ Friend Class threadpool_case
             void_(before)
             Dim size As Int64 = 0
             size = Me.size
-            For i As Int32 = 0 To min((Environment.ProcessorCount() >> 1) - 1, 0)
+            For i As Int32 = 0 To max((Environment.ProcessorCount() >> 1) - 1, 0)
                 Dim t As Thread = Nothing
                 t = New Thread(Sub()
                                    While Interlocked.Decrement(size) >= 0

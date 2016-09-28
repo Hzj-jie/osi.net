@@ -8,10 +8,18 @@ Imports osi.root.event
 Imports osi.root.lock
 Imports QUEUE_TYPE = osi.root.formation.slimheapless(Of System.Action)
 
+Public NotInheritable Class fast_threadpool_initialized
+    Public Shared initialized As Boolean
+
+    Private Sub New()
+    End Sub
+End Class
+
 Public NotInheritable Class fast_threadpool_instance
     Public Shared ReadOnly g As fast_threadpool
 
     Shared Sub New()
+        fast_threadpool_initialized.initialized = True
         g = New fast_threadpool()
     End Sub
 
@@ -77,7 +85,9 @@ Public NotInheritable Class fast_threadpool
 
     Public Function [stop](Optional ByVal stop_wait_seconds As Int64 = constants.default_stop_threadpool_wait_seconds) _
                           As Boolean
-        If object_compare(Me, fast_threadpool_instance.g) <> 0 AndAlso s.mark_in_use() Then
+        If (Not fast_threadpool_initialized.initialized OrElse
+            object_compare(Me, fast_threadpool_instance.g) <> 0) AndAlso
+           s.mark_in_use() Then
             Dim until_ms As Int64 = int64_0
             until_ms = nowadays.milliseconds() + seconds_to_milliseconds(stop_wait_seconds)
             Dim a As Action = Nothing
