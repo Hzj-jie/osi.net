@@ -69,7 +69,7 @@ Partial Friend NotInheritable Class host
                 If utt_concurrency() = 0 Then
                     repeat_gc_collect()
                 End If
-                raise_error("memory status after caes ",
+                raise_error("memory status after case ",
                             c.full_name(),
                             ": private bytes ",
                             envs.private_bytes_usage(),
