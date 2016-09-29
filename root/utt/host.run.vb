@@ -73,10 +73,16 @@ Partial Friend NotInheritable Class host
                             c.full_name(),
                             ": private bytes ",
                             envs.private_bytes_usage(),
-                            ", virtual bytes ",
-                            envs.virtual_bytes_usage(),
                             ", workset bytes ",
                             envs.workingset_bytes_usage(),
+                            ", virtual bytes ",
+                            envs.virtual_bytes_usage(),
+                            ", peak workset bytes ",
+                            envs.peak_workingset_bytes_usage(),
+                            ", peak virtual bytes",
+                            envs.peak_virtual_memory_bytes_usage(),
+                            ", peak paged bytes ",
+                            envs.peak_paged_memory_bytes_usage(),
                             ", gc total memory ",
                             envs.gc_total_memory())
             End If

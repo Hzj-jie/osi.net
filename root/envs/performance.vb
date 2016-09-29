@@ -15,6 +15,7 @@ Public Module _performance
 
     Private last_usage_ticks As Int64 = 0
     Private last_ticks As Int64 = 0
+
     Public Function recent_processor_usage() As Double
         Dim ticks As Int64 = 0
         Dim usage As Int64 = 0
