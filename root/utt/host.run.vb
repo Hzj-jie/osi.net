@@ -79,7 +79,7 @@ Partial Friend NotInheritable Class host
                             envs.virtual_bytes_usage(),
                             ", peak workset bytes ",
                             envs.peak_workingset_bytes_usage(),
-                            ", peak virtual bytes",
+                            ", peak virtual bytes ",
                             envs.peak_virtual_memory_bytes_usage(),
                             ", peak paged bytes ",
                             envs.peak_paged_memory_bytes_usage(),
