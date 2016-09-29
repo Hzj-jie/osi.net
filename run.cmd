@@ -11,15 +11,17 @@ call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\VsDevCmd
 
 subst T: D:\
 
+REM This script should be started from osi folder, such as c:\deploys\src\osi\
+
+set SRC_ROOT=%CD%
 for /l %%i in (0,0,1) do (
     if exist prepare.cmd call prepare.cmd
-    pushd osi
     call force-sync.cmd
     call build.cmd
-    popd
-    mkdir c:\deploys\apps\osi.root.utt 1>nul 2>&1
-    pushd c:\deploys\apps\osi.root.utt
-    call c:\deploys\src\osi\root\utt\batch\sync.cmd
+    mkdir \deploys\apps\osi.root.utt 1>nul 2>&1
+    pushd \deploys\apps\osi.root.utt
+    if exist prepare.cmd call prepare.cmd
+    call %SRC_ROOT%\root\utt\batch\sync.cmd
     osi.root.utt.exe
     popd
     if not "x%EXIT_NOW%" == "x" goto :end
