@@ -55,6 +55,14 @@ Friend Class nowadays_case
 End Class
 
 Public Class nowadays_test
+    Inherits realtime_wrapper
+
+    Public Sub New()
+        MyBase.New(repeat(New nowadays_case(), 1024 * 1024))
+    End Sub
+End Class
+
+Public Class nowadays_specific_test
     Inherits commandline_specific_case_wrapper
 
     Public Sub New()
