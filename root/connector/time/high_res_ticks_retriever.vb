@@ -26,6 +26,11 @@ Public Class high_res_ticks_retriever
     Private Sub New()
     End Sub
 
+    'force revise the distance during next high_res_ticks() call.
+    Public Shared Sub force_revise()
+        distance = 0
+    End Sub
+
     Public Shared Function high_res_ticks() As Int64
         If Stopwatch.IsHighResolution Then
             Dim c As Int64 = 0

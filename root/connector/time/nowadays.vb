@@ -4,8 +4,10 @@ Imports osi.root.constants
 
 ' The following functions all return Int64 to make sure, we will never fail when
 ' nowadays.milliseconds() - nowadays.milliseconds()
-' The timestamp relies on hardware or external software, we cannot guarantee it won't return a smaller number in another
-' call, http://stackoverflow.com/questions/1008345/system-diagnostics-stopwatch-returns-negative-numbers-in-elapsed-properties
+' The timestamp relies on hardware or external software, we cannot guarantee it won't return a smaller number in a later
+' call.
+' http://stackoverflow.com/questions/1008345/system-diagnostics-stopwatch-returns-negative-numbers-in-elapsed-properties
+' TODO: low_res & high_res or at least their tests are not stable on one core machine.
 <global_init(global_init_level.foundamental)>
 Public Class nowadays
     Private Shared Sub init()
