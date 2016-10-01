@@ -2,8 +2,10 @@
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
+' Seems the issue has been resolved
+#If 0 Then
 Public Module _safe_str
-    'the String.Contains and String.IndexOf may fail for some invalid characters
+    ' Some invalid characters make trouble to .net String.Contains and String.IndexOf functions.
     <Extension()> Public Function safe_strindexof(ByVal s As String, ByVal search As String) As Int32
         If strlen(s) < strlen(search) Then
             Return npos
@@ -33,3 +35,4 @@ Public Module _safe_str
         Return safe_strindexof(s, search) = 0
     End Function
 End Module
+#End If

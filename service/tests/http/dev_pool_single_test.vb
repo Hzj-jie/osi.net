@@ -24,8 +24,6 @@ Public Class dev_pool_single_test
         Private ReadOnly cgp As idevice_pool(Of text)
         Private ReadOnly cpp As idevice_pool(Of text)
         Private ReadOnly p As UInt16
-        Private ReadOnly sent As qless2(Of String)
-        Private ReadOnly received As qless2(Of String)
         Private ReadOnly responder_count As UInt32
 
         Public Sub New(ByVal rc As UInt32)
@@ -36,15 +34,11 @@ Public Class dev_pool_single_test
             sp = server_dev.device_pool(s)
             cgp = client_get_dev.device_pool("localhost", p)
             cpp = client_post_dev.device_pool("localhost", p)
-            sent = New qless2(Of String)()
-            received = New qless2(Of String)()
             responder_count = rc
         End Sub
 
         Public Overrides Function prepare() As Boolean
             If MyBase.prepare() Then
-                sent.clear()
-                received.clear()
                 If s.start() Then
                     For i As UInt32 = 0 To responder_count - uint32_1
                         respond()
@@ -58,20 +52,7 @@ Public Class dev_pool_single_test
             End If
         End Function
 
-        Private Shared Function to_map(ByVal i As qless2(Of String)) As map(Of String, UInt32)
-            assert(Not i Is Nothing)
-            Dim r As map(Of String, UInt32) = Nothing
-            r = New map(Of String, UInt32)()
-            Dim s As String = Nothing
-            While i.pop(s)
-                r(s) += 1
-            End While
-            Return r
-        End Function
-
         Public Overrides Function finish() As Boolean
-            assert_true(timeslice_sleep_wait_when(Function() received.size() < sent.size(),
-                                                  seconds_to_milliseconds(10)))
             s.stop()
             assert_equal(sp.total_count(), uint32_0)
             assert_equal(sp.free_count(), uint32_0)
@@ -79,9 +60,6 @@ Public Class dev_pool_single_test
             assert_equal(cgp.free_count(), uint32_0)
             assert_equal(cpp.total_count(), uint32_0)
             assert_equal(cpp.free_count(), uint32_0)
-            assert_equal(to_map(sent).to_string_shadower(), to_map(received).to_string_shadower())
-            sent.clear()
-            received.clear()
             Return MyBase.finish()
         End Function
 
@@ -116,10 +94,8 @@ Public Class dev_pool_single_test
                                           End If
                                       End Function,
                                       Function()
-                                          If assert_true(ec.end_result()) AndAlso
-                                             assert_true(Not p.empty()) Then
-                                              received.emplace(+p)
-                                          End If
+                                          assert_true(ec.end_result())
+                                          assert_true(Not p.empty())
                                           assert(Not h.get() Is Nothing)
                                           ec = h.get().send(+p)
                                           Return waitfor(ec) AndAlso
@@ -133,6 +109,7 @@ Public Class dev_pool_single_test
         End Sub
 
         Private Function rnd_long_str() As String
+            ' server and client use utf8 to encode and decode the path string
             Return strcat(rnd_utf8_chars(rnd_int(100, 2560)), guid_str())
         End Function
 
@@ -162,7 +139,6 @@ Public Class dev_pool_single_test
                                       If assert_true(cp.get(h)) AndAlso
                                          assert_not_nothing(h) AndAlso
                                          assert_not_nothing(h.get()) Then
-                                          sent.emplace(s)
                                           ec = h.get().send(s)
                                           Return waitfor(ec) AndAlso
                                                  goto_next()

@@ -106,9 +106,8 @@ Public Class lexer_test
                 s = rnd_utf8_chars(rnd_int(1, 16))
                 accepted = True
                 For j As Int32 = 0 To count - 1
-                    'this is not the correct way, but it's simple to make a random test work
-                    If safe_strstartwith(s, ws(j).first) OrElse
-                       safe_strstartwith(ws(j).first, s) OrElse
+                    If strstartwith(s, ws(j).first) OrElse
+                       strstartwith(ws(j).first, s) OrElse
                        (do_not_accept_contains AndAlso
                         have_common_subsequence(s, ws(j).first)) Then
                         accepted = False

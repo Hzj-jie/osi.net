@@ -80,12 +80,12 @@ Public Class c_escape_test
 
         Public Overrides Function run() As Boolean
             Dim s As String = Nothing
-            s = rnd_utf8_chars(rnd_int(max_uint8, max_uint16))
+            s = rndchars(rnd_int(max_uint8, max_uint16))
             Dim escaped As String = Nothing
             assert_true(s.c_escape(escaped))
             assert_not_nothing(escaped)
             For i As Int32 = 0 To array_size(should_not_contains) - 1
-                assert_false(escaped.safe_strcontains(should_not_contains(i)))
+                assert_false(escaped.Contains(should_not_contains(i)))
             Next
             Dim unescaped As String = Nothing
             assert_true(escaped.c_unescape(unescaped))

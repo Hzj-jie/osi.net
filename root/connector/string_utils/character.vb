@@ -1,20 +1,8 @@
 ﻿
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports osi.root.constants
 
 Public Module _character
-    Private ReadOnly utf8() As Boolean
-
-    Sub New()
-        ReDim utf8(Convert.ToInt32(Char.MaxValue) - Convert.ToInt32(Char.MinValue))
-
-        For i As Int32 = Convert.ToInt32(Char.MinValue) To Convert.ToInt32(Char.MaxValue)
-            utf8(i - Convert.ToInt32(Char.MinValue)) =
-                (Encoding.UTF8().GetChars(Encoding.UTF8().GetBytes(Convert.ToChar(i)))(0) = Convert.ToChar(i))
-        Next
-    End Sub
-
     <Extension()> Public Function lowalpha(ByVal c As Char) As Boolean
         Return (c >= character.a AndAlso c <= character.z)
     End Function
@@ -57,8 +45,14 @@ Public Module _character
     End Function
 
     <Extension()> Public Function utf8_supported(ByVal c As Char) As Boolean
-        Return utf8(Convert.ToInt32(c) - Convert.ToInt32(Char.MinValue))
+        Return utf8_char.V(c)
     End Function
+
+#If 0 Then
+    <Extension()> Public Function safe_char_supported(ByVal c As Char) As Boolean
+        Return safe_char.V(c)
+    End Function
+#End If
 
     <Extension()> Public Function space(ByVal c As Char) As Boolean
         Return Char.IsWhiteSpace(c)

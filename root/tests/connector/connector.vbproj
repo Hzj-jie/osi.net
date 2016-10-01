@@ -123,6 +123,7 @@
     <Compile Include="overload_behavior_test.vb" />
     <Compile Include="rate_timeout_test.vb" />
     <Compile Include="rnd\guid_strs_test.vb" />
+    <Compile Include="safe_char_test.vb" />
     <Compile Include="shared_ctor_callstack_behavior_test.vb" />
     <Compile Include="static_constructor_test.vb" />
     <Compile Include="strindexof_test.vb" />

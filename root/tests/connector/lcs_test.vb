@@ -19,7 +19,7 @@ Public Class lcs_test
                 For j As UInt32 = 1 To strlen(this) - i
                     Dim s As String = Nothing
                     s = strmid(this, i, j)
-                    If safe_strcontains(that, s) AndAlso j > strlen(r) Then
+                    If strcontains(that, s) AndAlso j > strlen(r) Then
                         r = s
                     End If
                 Next
@@ -30,8 +30,8 @@ Public Class lcs_test
         Public Overrides Function run() As Boolean
             Dim a As String = Nothing
             Dim b As String = Nothing
-            a = rndenchars(rnd_int(max_uint8, CInt(max_uint8) << 1))
-            b = rndenchars(rnd_int(max_uint8, CInt(max_uint8) << 1))
+            a = rndchars(rnd_int(max_uint8, CInt(max_uint8) << 1))
+            b = rndchars(rnd_int(max_uint8, CInt(max_uint8) << 1))
             Dim s1 As String = Nothing
             s1 = lcs(a, b)
             Dim s2 As String = Nothing
