@@ -14,7 +14,7 @@ Public Class async_getter_herald
 
     Shared Sub New()
         assert(async_device_device_converter.register(Function(i As async_getter(Of herald)) As herald
-                                                          Return create(i)
+                                                          Return [New](i)
                                                       End Function))
     End Sub
 
@@ -22,12 +22,18 @@ Public Class async_getter_herald
         MyBase.New(p)
     End Sub
 
-    Public Shared Shadows Function create(Of T)(ByVal i As async_getter(Of T),
-                                                ByVal c As Func(Of T, herald)) As async_getter_herald
+    Public Shared Shadows Function [New](Of T, HD As herald) _
+                                        (ByVal i As async_getter(Of T),
+                                         ByVal c As Func(Of T, HD)) As async_getter_herald
         Return New async_getter_herald(async_getter_adapter(Of herald).convert(i, c))
     End Function
 
-    Public Shared Shadows Function create(ByVal i As async_getter(Of herald)) As async_getter_herald
+    Public Shared Shadows Function [New](Of T)(ByVal i As async_getter(Of T),
+                                               ByVal c As Func(Of T, herald)) As async_getter_herald
+        Return New async_getter_herald(async_getter_adapter(Of herald).convert(i, c))
+    End Function
+
+    Public Shared Shadows Function [New](ByVal i As async_getter(Of herald)) As async_getter_herald
         Return New async_getter_herald(async_getter_adapter(Of herald).convert(i))
     End Function
 

@@ -75,12 +75,12 @@ Friend Module adapter_registry
         register(Of piece_dev, flow)(constants.piece_dev_flow_adapter_type,
                                      constants.flow_secondary_type_name,
                                      AddressOf piece_dev_flow_adapter.[New])
-        register(Of flow)(AddressOf async_getter_flow.create)
-        register(Of block)(AddressOf async_getter_block.create)
-        register(Of datagram)(AddressOf async_getter_datagram.create)
-        register(Of piece_dev)(AddressOf async_getter_piece_dev.create)
-        register(Of stream_text)(AddressOf async_getter_stream_text.create)
-        register(Of text)(AddressOf async_getter_text.create)
+        register(Of flow)(AddressOf async_getter_flow.[New])
+        register(Of block)(AddressOf async_getter_block.[New])
+        register(Of datagram)(AddressOf async_getter_datagram.[New])
+        register(Of piece_dev)(AddressOf async_getter_piece_dev.[New])
+        register(Of stream_text)(AddressOf async_getter_stream_text.[New])
+        register(Of text)(AddressOf async_getter_text.[New])
     End Sub
 
     Private Sub init()

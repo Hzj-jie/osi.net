@@ -17,6 +17,7 @@ Partial Public Class device_creator_adapter(Of IT, OT)
             assert(Not c Is Nothing)
             Me.i = i
             Me.c = c
+            Me.c2 = c2
         End Sub
 
         Public Function create(ByRef o As idevice(Of OT)) As Boolean Implements idevice_creator(Of OT).create

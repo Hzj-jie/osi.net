@@ -43,22 +43,22 @@ Public NotInheritable Class async_device_device_converter
 
     Shared Sub New()
         assert(register(Function(i As async_getter(Of block)) As block
-                            Return async_getter_block.create(i)
+                            Return async_getter_block.[New](i)
                         End Function))
         assert(register(Function(i As async_getter(Of datagram)) As datagram
-                            Return async_getter_datagram.create(i)
+                            Return async_getter_datagram.[New](i)
                         End Function))
         assert(register(Function(i As async_getter(Of flow)) As flow
-                            Return async_getter_flow.create(i)
+                            Return async_getter_flow.[New](i)
                         End Function))
         assert(register(Function(i As async_getter(Of piece_dev)) As piece_dev
-                            Return async_getter_piece_dev.create(i)
+                            Return async_getter_piece_dev.[New](i)
                         End Function))
         assert(register(Function(i As async_getter(Of stream_text)) As stream_text
-                            Return async_getter_stream_text.create(i)
+                            Return async_getter_stream_text.[New](i)
                         End Function))
         assert(register(Function(i As async_getter(Of text)) As text
-                            Return async_getter_text.create(i)
+                            Return async_getter_text.[New](i)
                         End Function))
     End Sub
 

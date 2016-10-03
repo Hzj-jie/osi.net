@@ -5,6 +5,7 @@ Imports osi.root.procedure
 Imports osi.root.connector
 Imports osi.service.selector
 
+' Consumers should use async_device_creator_device_creator_adatper, instead of using this class directly.
 <type_attribute()>
 Public Class async_getter_datagram
     Inherits async_getter_adapter(Of datagram)
@@ -14,18 +15,18 @@ Public Class async_getter_datagram
         MyBase.New(p)
     End Sub
 
-    Public Shared Shadows Function create(Of T, DT As datagram) _
-                                         (ByVal i As async_getter(Of T),
-                                          ByVal c As Func(Of T, DT)) As async_getter_datagram
+    Public Shared Shadows Function [New](Of T, DT As datagram) _
+                                        (ByVal i As async_getter(Of T),
+                                         ByVal c As Func(Of T, DT)) As async_getter_datagram
         Return New async_getter_datagram(async_getter_adapter(Of datagram).convert(i, c))
     End Function
 
-    Public Shared Shadows Function create(Of T)(ByVal i As async_getter(Of T),
-                                                ByVal c As Func(Of T, datagram)) As async_getter_datagram
+    Public Shared Shadows Function [New](Of T)(ByVal i As async_getter(Of T),
+                                               ByVal c As Func(Of T, datagram)) As async_getter_datagram
         Return New async_getter_datagram(async_getter_adapter(Of datagram).convert(i, c))
     End Function
 
-    Public Shared Shadows Function create(ByVal i As async_getter(Of datagram)) As async_getter_datagram
+    Public Shared Shadows Function [New](ByVal i As async_getter(Of datagram)) As async_getter_datagram
         Return New async_getter_datagram(async_getter_adapter(Of datagram).convert(i))
     End Function
 

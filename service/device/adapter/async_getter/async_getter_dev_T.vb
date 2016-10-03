@@ -4,6 +4,7 @@ Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.service.selector
 
+' Consumers should only use this class to create a new interface, say, async_getter_herald.
 <type_attribute()>
 Public Class async_getter_dev_T(Of T)
     Inherits async_getter_dev_T(Of T, dev_T(Of T))
@@ -12,18 +13,18 @@ Public Class async_getter_dev_T(Of T)
         MyBase.New(p)
     End Sub
 
-    Public Shared Shadows Function create(Of IT, DT As dev_T(Of T)) _
-                                         (ByVal i As async_getter(Of IT),
-                                          ByVal c As Func(Of IT, DT)) As async_getter_dev_T(Of T)
+    Public Shared Shadows Function [New](Of IT, DT As dev_T(Of T)) _
+                                        (ByVal i As async_getter(Of IT),
+                                         ByVal c As Func(Of IT, DT)) As async_getter_dev_T(Of T)
         Return New async_getter_dev_T(Of T, dev_T(Of T))(async_getter_adapter(Of dev_T(Of T)).convert(i, c))
     End Function
 
-    Public Shared Shadows Function create(Of IT)(ByVal i As async_getter(Of IT),
-                                                 ByVal c As Func(Of IT, dev_T(Of T))) As async_getter_dev_T(Of T)
+    Public Shared Shadows Function [New](Of IT)(ByVal i As async_getter(Of IT),
+                                                ByVal c As Func(Of IT, dev_T(Of T))) As async_getter_dev_T(Of T)
         Return New async_getter_dev_T(Of T, dev_T(Of T))(async_getter_adapter(Of dev_T(Of T)).convert(i, c))
     End Function
 
-    Public Shared Shadows Function create(ByVal i As async_getter(Of dev_T(Of T))) As async_getter_dev_T(Of T)
+    Public Shared Shadows Function [New](ByVal i As async_getter(Of dev_T(Of T))) As async_getter_dev_T(Of T)
         Return New async_getter_dev_T(Of T)(async_getter_adapter(Of dev_T(Of T)).convert(i))
     End Function
 End Class
@@ -36,18 +37,18 @@ Public Class async_getter_dev_T(Of T, DT As dev_T(Of T))
         MyBase.New(p)
     End Sub
 
-    Public Shared Shadows Function create(Of IT, DDT As DT) _
+    Public Shared Shadows Function [New](Of IT, DDT As DT) _
                                          (ByVal i As async_getter(Of IT),
                                           ByVal c As Func(Of IT, DDT)) As async_getter_dev_T(Of T, DT)
         Return New async_getter_dev_T(Of T, DT)(async_getter_adapter(Of DT).convert(i, c))
     End Function
 
-    Public Shared Shadows Function create(Of IT)(ByVal i As async_getter(Of IT),
+    Public Shared Shadows Function [New](Of IT)(ByVal i As async_getter(Of IT),
                                                  ByVal c As Func(Of IT, DT)) As async_getter_dev_T(Of T, DT)
         Return New async_getter_dev_T(Of T, DT)(async_getter_adapter(Of DT).convert(i, c))
     End Function
 
-    Public Shared Shadows Function create(ByVal i As async_getter(Of DT)) As async_getter_dev_T(Of T, DT)
+    Public Shared Shadows Function [New](ByVal i As async_getter(Of DT)) As async_getter_dev_T(Of T, DT)
         Return New async_getter_dev_T(Of T, DT)(async_getter_adapter(Of DT).convert(i))
     End Function
 

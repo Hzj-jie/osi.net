@@ -6,6 +6,7 @@ Imports osi.root.connector
 Imports osi.root.utils
 Imports osi.service.selector
 
+' Consumers should only use this class to create a new interface, say, async_getter_herald.
 Public Class async_getter_adapter
     Public Shared Function [New](Of IT, OT)(ByVal i As async_getter(Of IT),
                                             ByVal c As Func(Of IT, OT)) As async_getter_adapter(Of OT)

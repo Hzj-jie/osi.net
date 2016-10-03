@@ -4,6 +4,7 @@ Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.service.selector
 
+' Consumers should use async_device_creator_device_creator_adatper, instead of using this class directly.
 <type_attribute()>
 Public Class async_getter_text
     Inherits async_getter_adapter(Of text)
@@ -13,18 +14,18 @@ Public Class async_getter_text
         MyBase.New(p)
     End Sub
 
-    Public Shared Shadows Function create(Of T, TD As text) _
-                                         (ByVal i As async_getter(Of T),
-                                          ByVal c As Func(Of T, TD)) As async_getter_text
+    Public Shared Shadows Function [New](Of T, TD As text) _
+                                        (ByVal i As async_getter(Of T),
+                                         ByVal c As Func(Of T, TD)) As async_getter_text
         Return New async_getter_text(async_getter_adapter(Of text).convert(i, c))
     End Function
 
-    Public Shared Shadows Function create(Of T)(ByVal i As async_getter(Of T),
-                                                ByVal c As Func(Of T, text)) As async_getter_text
+    Public Shared Shadows Function [New](Of T)(ByVal i As async_getter(Of T),
+                                               ByVal c As Func(Of T, text)) As async_getter_text
         Return New async_getter_text(async_getter_adapter(Of text).convert(i, c))
     End Function
 
-    Public Shared Shadows Function create(ByVal i As async_getter(Of text)) As async_getter_text
+    Public Shared Shadows Function [New](ByVal i As async_getter(Of text)) As async_getter_text
         Return New async_getter_text(async_getter_adapter(Of text).convert(i))
     End Function
 
