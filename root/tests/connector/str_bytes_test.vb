@@ -69,6 +69,7 @@ Public Class str_bytes_test
         End Function
 
         Public Overrides Function run() As Boolean
+            'str_bytes uses utf8 encoder.
             Return run_case(rnd_utf8_chars(rnd_int(16, 1024)))
         End Function
     End Class

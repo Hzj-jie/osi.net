@@ -23,10 +23,12 @@ Public Module _strcmp
                                          Optional ByVal case_sensitive As Boolean = True) As Int64
         If case_sensitive Then
             Return String.Compare(strmid(input1, start1, len1),
-                                  strmid(input2, start2, len2))
+                                  strmid(input2, start2, len2),
+                                  StringComparison.Ordinal)
         Else
             Return String.Compare(strtolower(strmid(input1, start1, len1)),
-                                  strtolower(strmid(input2, start2, len2)))
+                                  strtolower(strmid(input2, start2, len2)),
+                                  StringComparison.Ordinal)
         End If
     End Function
 

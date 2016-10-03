@@ -344,7 +344,7 @@ Public Module _compare
     End Function
 
     Public Function compare(ByVal this As String, ByVal that As String) As Int32
-        Return String.Compare(this, that)
+        Return strcmp(this, that)
     End Function
 
     Public Function equals(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean

@@ -48,7 +48,7 @@ Namespace primitive
                     End If
                 Case 5
                     type = prefix.string
-                    Return New data_block(rnd_utf8_chars(rnd_int(100, 200)))
+                    Return New data_block(rndchars(rnd_int(100, 200)))
                 Case Else
                     assert(False)
                     Return Nothing

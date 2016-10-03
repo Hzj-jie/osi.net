@@ -14,6 +14,9 @@ Friend Module _comparer_registry
                                   Return i.AddressFamily() - j.AddressFamily()
                               End If
                           End Function)
+        comparer.register(Function(i As String, j As String) As Int32
+                              Return strcmp(i, j)
+                          End Function)
     End Sub
 
     Private Sub init()
