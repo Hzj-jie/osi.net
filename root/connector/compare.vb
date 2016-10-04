@@ -77,7 +77,10 @@ Public Module _compare
 
     Private Function runtime_compare(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
         Try
-            If TypeOf this Is IComparable(Of T2) Then
+            If comparer(Of T, T2).defined() Then
+                o = comparer(Of T, T2).compare(this, that)
+                Return True
+            ElseIf TypeOf this Is IComparable(Of T2) Then
                 o = this_to_t2(this, that)
                 Return True
             ElseIf TypeOf that Is IComparable(Of T) Then
@@ -88,9 +91,6 @@ Public Module _compare
                 Return True
             ElseIf TypeOf that Is IComparable Then
                 o = that_to_object(this, that)
-                Return True
-            ElseIf comparer(Of T, T2).defined() Then
-                o = comparer(Of T, T2).compare(this, that)
                 Return True
             Else
                 If Not suppress_compare_error() Then
@@ -141,7 +141,9 @@ Public Module _compare
             Next
             contains_object = type_info(Of T).is_object OrElse type_info(Of T2).is_object
             If Not use_runtime_compare Then
-                If istype(Of T, IComparable(Of T2))() Then
+                If comparer(Of T, T2).defined() Then
+                    c = comparer(Of T, T2).ref()
+                ElseIf istype(Of T, IComparable(Of T2))() Then
                     c = AddressOf this_to_t2
                 ElseIf istype(Of T2, IComparable(Of T))() Then
                     c = AddressOf that_to_t
@@ -149,8 +151,6 @@ Public Module _compare
                     c = AddressOf this_to_object
                 ElseIf istype(Of T2, IComparable)() Then
                     c = AddressOf that_to_object
-                ElseIf comparer(Of T, T2).defined() Then
-                    c = comparer(Of T, T2).ref()
                 ElseIf contains_object Then
                     'contains object does not mean we need to use_runtime_compare,
                     'T or T2 may implement IComparable or IComparable(Of Object)
