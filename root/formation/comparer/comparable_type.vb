@@ -16,7 +16,7 @@ Public NotInheritable Class comparable_type
                   End Function
         Else
             cmp = Function(x As Type, y As Type) As Int32
-                      Return x.AssemblyQualifiedName().CompareTo(y.AssemblyQualifiedName())
+                      Return strcmp(x.AssemblyQualifiedName(), y.AssemblyQualifiedName())
                   End Function
         End If
     End Sub

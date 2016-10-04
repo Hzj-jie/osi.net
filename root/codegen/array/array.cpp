@@ -40,7 +40,7 @@ const char* types[] = {"Decimal",
                         "        ll = array_size(first)\n" \
                         "        rl = array_size(second)\n" \
                         "        If ll <> rl Then\n" \
-                        "            Return ll.CompareTo(rl)\n" \
+                        "            Return compare(ll, rl)\n" \
                         "        Else\n" \
                         "            Return memcmp(first, second, ll)\n" \
                         "        End If\n"

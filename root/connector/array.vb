@@ -69,7 +69,7 @@ Public Module _array
         ll = array_size(first)
         rl = array_size(second)
         If ll <> rl Then
-            Return ll.CompareTo(rl)
+            Return compare(ll, rl)
         Else
             Return memcmp(first, second, ll)
         End If
@@ -176,7 +176,7 @@ Public Module _array
         ll = array_size(first)
         rl = array_size(second)
         If ll <> rl Then
-            Return ll.CompareTo(rl)
+            Return compare(ll, rl)
         Else
             Return memcmp(first, second, ll)
         End If
@@ -283,7 +283,7 @@ Public Module _array
         ll = array_size(first)
         rl = array_size(second)
         If ll <> rl Then
-            Return ll.CompareTo(rl)
+            Return compare(ll, rl)
         Else
             Return memcmp(first, second, ll)
         End If
@@ -390,7 +390,7 @@ Public Module _array
         ll = array_size(first)
         rl = array_size(second)
         If ll <> rl Then
-            Return ll.CompareTo(rl)
+            Return compare(ll, rl)
         Else
             Return memcmp(first, second, ll)
         End If
@@ -497,7 +497,7 @@ Public Module _array
         ll = array_size(first)
         rl = array_size(second)
         If ll <> rl Then
-            Return ll.CompareTo(rl)
+            Return compare(ll, rl)
         Else
             Return memcmp(first, second, ll)
         End If
@@ -604,7 +604,7 @@ Public Module _array
         ll = array_size(first)
         rl = array_size(second)
         If ll <> rl Then
-            Return ll.CompareTo(rl)
+            Return compare(ll, rl)
         Else
             Return memcmp(first, second, ll)
         End If
@@ -711,7 +711,7 @@ Public Module _array
         ll = array_size(first)
         rl = array_size(second)
         If ll <> rl Then
-            Return ll.CompareTo(rl)
+            Return compare(ll, rl)
         Else
             Return memcmp(first, second, ll)
         End If
@@ -818,7 +818,7 @@ Public Module _array
         ll = array_size(first)
         rl = array_size(second)
         If ll <> rl Then
-            Return ll.CompareTo(rl)
+            Return compare(ll, rl)
         Else
             Return memcmp(first, second, ll)
         End If
@@ -925,7 +925,7 @@ Public Module _array
         ll = array_size(first)
         rl = array_size(second)
         If ll <> rl Then
-            Return ll.CompareTo(rl)
+            Return compare(ll, rl)
         Else
             Return memcmp(first, second, ll)
         End If
@@ -1032,7 +1032,7 @@ Public Module _array
         ll = array_size(first)
         rl = array_size(second)
         If ll <> rl Then
-            Return ll.CompareTo(rl)
+            Return compare(ll, rl)
         Else
             Return memcmp(first, second, ll)
         End If
@@ -1139,7 +1139,7 @@ Public Module _array
         ll = array_size(first)
         rl = array_size(second)
         If ll <> rl Then
-            Return ll.CompareTo(rl)
+            Return compare(ll, rl)
         Else
             Return memcmp(first, second, ll)
         End If
@@ -1246,7 +1246,7 @@ Public Module _array
         ll = array_size(first)
         rl = array_size(second)
         If ll <> rl Then
-            Return ll.CompareTo(rl)
+            Return compare(ll, rl)
         Else
             Return memcmp(first, second, ll)
         End If
@@ -1355,7 +1355,7 @@ Public Module _array
         ll = array_size(first)
         rl = array_size(second)
         If ll <> rl Then
-            Return ll.CompareTo(rl)
+            Return compare(ll, rl)
         Else
             Return memcmp(first, second, ll)
         End If

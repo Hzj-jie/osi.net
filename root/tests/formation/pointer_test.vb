@@ -138,8 +138,8 @@ Public Class pointer_test
             Const s2 As String = "abc"
             Dim p As pointer(Of test_class2) = Nothing
             p = New pointer(Of test_class2)(New test_class2(s1))
-            Return compares(p, s1, s1.CompareTo(s1)) AndAlso
-                   compares(p, s2, s1.CompareTo(s2))
+            Return compares(p, s1, strcmp(s1, s1)) AndAlso
+                   compares(p, s2, strcmp(s1, s2))
         End Function
 
         Private Shared Function operators() As Boolean

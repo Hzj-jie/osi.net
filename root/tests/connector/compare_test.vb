@@ -157,7 +157,7 @@ Public Class compare_test
             Dim s2 As String = Nothing
             s1 = rnd_ascii_display_chars(rnd_int(10, 30))
             s2 = rnd_ascii_display_chars(rnd_int(4, 80))
-            Return compare_case(s1, s2, s1.CompareTo(s2)) AndAlso
+            Return compare_case(s1, s2, strcmp(s1, s2)) AndAlso
                    compare_case(s1, s1, 0) AndAlso
                    compare_case(s2, s2, 0) AndAlso
                    not_comparable_case(s1, 0) AndAlso
