@@ -1,4 +1,4 @@
-﻿
+
 MODE type_choice greedy
 
 KW-if if

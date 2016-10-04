@@ -1,4 +1,4 @@
-﻿
+
 void main(string args) { return 0; }
 
 int main(int x, int y) {

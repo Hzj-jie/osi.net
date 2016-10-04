@@ -1,4 +1,4 @@
-﻿
+
 DEFINE name-usable \w,\d,_
 
 KW-if if[\name-usable]-

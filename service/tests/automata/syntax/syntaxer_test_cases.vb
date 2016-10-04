@@ -12,23 +12,12 @@ Friend Module syntaxer_test_cases
     Public ReadOnly syntaxer_test_case1() As Byte
 
     Sub New()
-        syntaxer_test_case0 = Convert.FromBase64String( _
-        "H4sIAAAAAAAEAHu/ez8vV1l+ZopCbmJmnkZxSVFmXrpCYlF6saZCtUJRaklpUZ6C" +
-        "gbVCLS8XL1dmXglEGYhRoaMAoiqB6oAyaQoaFQp2IF5RamkJUE+FNS9Xak5xKsyM" +
-        "SgVrBYQpaYbYzNBQAJlhoAnTg2EGkjvSjDQ0ebmA2jihkkAjDQ0MdBQMDTSB2moB" +
-        "fVooctkAAAA=")
+        syntaxer_test_case0 = Convert.FromBase64String(strcat_hint(CUInt(196), _
+        "H4sIAAAAAAAEAG2OQQrDIBBF1x3wDn+pkIV2K/QugWoQWgujKYbSu2ekDQm0q5nh//cYRc9HuuI+pqxL5ZQnjDwVgxc41JkzrMdbkaKU66fWlzagj0V6kkTohku/OMxVmOYVhVsJm2OBx26J7p9Dozus2Zgfx+GPeNZGkWCnbyhKZ+0AZ41g0lsB2SNaBNgAAAA="))
 
         assert(syntaxer_test_case0.ungzip(syntaxer_test_case0))
-        syntaxer_test_case1 = Convert.FromBase64String( _
-        "H4sIAAAAAAAEAH1TXW6DMAx+Bok7WEiTQMtQkz5VlF6lStIwIVFaAZ2g0062hx1p" +
-        "V5idhC1dp/EjnM/O5w/b+Xz/SOJh7JvuGepLp3nmFxMD8CbMObwmMeDV1EAB+njO" +
-        "MCCVSqc5VBWsbEQU9Wa89B1MJS7ewLSDucFniycxPkncdCOoVuKTkTmMsh8ZkGm6" +
-        "Q57ES0oELB8ZlmCCCvhqReZc8YKXAeFRTpZNOibleCLSLWGHa/BSJG23Aj2gFpq/" +
-        "idxH3/Hhwv5hU1uAAiKHRGEmX407p3ZOV5bIh3hCyNTO8UWBxuhGtQ4r+q9y9/GF" +
-        "XQgpll7JFNM5O+S3RXDtEdn9Js5AMFgXawZ8s+F452EbtBzMvukG0w3N2LyYvT4d" +
-        "z7I3y3ShNm+pn057epov3E4zhmEqv21v0y1q3Lhi/xk88UKgkkderMVmI/LStwid" +
-        "2BP08qVPlOeMicc6Sx/atk5RP3qDef3lffJuK+FwuqjW+INiB9NVdWbgXddgQCbY" +
-        "VsTO/eEgbIYtiEIID1nsCruKwPX3cF6DkVkwgf8mwnO1OChD6UbgC+7ApdDOAwAA")
+        syntaxer_test_case1 = Convert.FromBase64String(strcat_hint(CUInt(564), _
+        "H4sIAAAAAAAEAH1T226DMAx9Bol/sJAmgZaiJjxVLf2VKknDhERpBXSCTvv32UnYwjqNi3COneOD7STxMPZN9wb1vdM884uJAXgT5hw+khjwamqgAH25ZRiQSqXTHKoKtjYiinoz3vsOpj0uPsG0g1nhs8WTGJ8kbroRVCvxycgcRtmPDMg03TlP4iUlApaPDEswQQV8uyVzrnjB9wHhRU6WTTom5Xgi0i3hiGvwUiRttwI9oBaav4ncRz/x4cL+YVNbgAIih0RhJl+NJ6d2TleWyId4QsjU0fFFgcZopVqHFf1Xufv4wi6EFEuvZIrpnJ3zdRFce0T2vIkzEAzKomTAdzuOdx62QcvBnJpuMN3QjM27Oenr5SZ7s0wXavOW+um0p6f5wu00Yxim8nV7m25R48YV+89gwwuBSl55UYrdTuR73yJ0Yk/Qy5c+UZ4bJh7rLH1p2zpF/egN5vWXd+PdVsL5elet8QfFDqar6szAux7BgExwqIid+8NB2AwHEIUQHrLYA44VgeX3cD6CkVkwgf8mwnO1OCjD3o3AFwWlHzzLAwAA"))
 
         assert(syntaxer_test_case1.ungzip(syntaxer_test_case1))
     End Sub

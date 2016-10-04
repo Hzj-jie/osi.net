@@ -1,4 +1,4 @@
-﻿
+
 IGNORE_TYPES blank
 ROOT_TYPES function
 

@@ -13,36 +13,16 @@ Friend Module syntaxer_test_rules
     Public ReadOnly syntaxer_rule() As Byte
 
     Sub New()
-        rlexer_rule = Convert.FromBase64String( _
-        "H4sIAAAAAAAEAG2QTU7DMBBG95Z8h6EroDEHgP5sKBJCYssiidCkmSRWHbu1HXWB" +
-        "OBkLjsQVsBMCBbLIZOZ7T7LHH2/vnN1u7u4fN6CxJdE5LBRBdkyyMnnmjLOHJyEr" +
-        "kFWanQi56AEpRxDLFKyMhfBNoWMjwyF9ncKlgdJMAWXMHmKZgpZ8ZzUMv38CZ4VC" +
-        "vYM0K/J5GIxRkHrbUVJhWCCPhiLnhLGCDh0qWCw5qy2h/4lWIRq65fJL9w1qWIxm" +
-        "P604Q+dkrVvSHoK4NW2LkMRGGQ3XnB06cl4aLVq0O1hz5jxaL/Zosba4b+AlHKTL" +
-        "k+B1dAqL2x15OB+McbwYuQv3s/SdZ+ng/YnDvo5aKYYb3cTtnbdS1zBLZ/nZ5Yyz" +
-        "Shn0kM4Tka/TrMznV33lTGpPNdlTxFl8boi9+P30AX0CWLfP6mUCAAA=")
+        rlexer_rule = Convert.FromBase64String(strcat_hint(CUInt(428), _
+        "H4sIAAAAAAAEAG2QTU7DMBBG95Z8h6EroDEHgP5sKBJCYsvCidCkmaRWHbu1HXWBuDt2QqCULDKZ+d6T7DFnj5un59cNGGxJdB5LTZCfsrzK3jnj7OVNqBpULfMzoRA9IO0JUpmCtXUQvyl02ql4SF+ncGWhslNAW3uAVKago9A5A8Pvn8BZqdHsQeZlMY+DtRpkcB1lNcYFimRo8l5YJ+jYoYbFkrPGEYbfaBWjoVsuv/WwQwOL0eynFWfovWpMSyZAFLe2bRGy1Ghr4J6zY0c+KGtEi24Pa858QBfEAR02Dg87+IgHmeos+Byd0uF2TwGuB2Mcb0bu4/0c/eS5HLyLOO7rqVViuNFD2t4Hp0wDMzkrrm5nnNXaYgA5z0SxlnlVzO/6ypkygRpy54iz9NyQevH36SP6AqRExrxiAgAA"))
 
         assert(rlexer_rule.ungzip(rlexer_rule))
-        rlexer_rule2 = Convert.FromBase64String( _
-        "H4sIAAAAAAAEAF1PS07DMBDdW/Idhq6AxhwA+tnACiGWLJKomiaTxKpjp7ajqkKc" +
-        "jAVH4grYDkEVCz+/n8bj788vzl5eH5/AnwfaVZ2RFUFrieozZ5w9vwnZgGwSI+UI" +
-        "IiTVGAvhJH7qpCJImHRtoDaJKWMGiJCUJT9aDdMV5+8V6gPkxb5cBmGMgtzbkbIG" +
-        "wzNlbChyTvgONaw4C4uhn9TmNzJW0HFEBav1nP9Zm2BNbB0YOidb3ZP2EFRl+h4h" +
-        "i0QZDfecHUdyXhoterQH2HLmPFovBrTYWhw6eA/TdH1hfMydvcXqQB6up8Ysb+bc" +
-        "hSUs/flFPvX+2eG/jnoppo0e4u+dt1K3sMgX5dXtgrNGGfSQLzNRbvOiLpd3CTmT" +
-        "2lNL9jLiTGNPELnIi1NW1Nkuuj8+ZH6M9AEAAA==")
+        rlexer_rule2 = Convert.FromBase64String(strcat_hint(CUInt(412), _
+        "H4sIAAAAAAAEAF1PS07DMBDdW/Idhq6AxhwA+tnACiGWLJKomiSTxKpjp7ajqkLcHdshVcXCz++n8Zizj8/XN/CXkQ51b2RN0Fmi5sIZZ+9fQrYg28RIOYIISbXGQjiJn3upCBIm3RhoTGLKmBEiJGXJT1bDfMX5lUJ9hLyoynUQxijIvZ0oazE8U8aGIueE71HDhrOwGPpZ7f4iYwWdJlSw2S751doFa2bbwNA52emBtIegajMMCFkkymh45uw0kfPSaDGgPcKeM+fRejGixc7i2MN3mKabG+Nn6VQW6yN5uJ8bi3xYcheWsHT1i3zu/bPDfx0NUswbvcTfO2+l7mCVr8q7xxVnrTLoIV9notznRVOunxJyJrWnjuxtxJnGgSBykRfnrGiyQ3R/ASVwGljxAQAA"))
 
         assert(rlexer_rule2.ungzip(rlexer_rule2))
-        syntaxer_rule = Convert.FromBase64String( _
-        "H4sIAAAAAAAEAJ1TS07DMBDdR/IdvEbxGVhVCCFRVCohFEVomrqpVX+K7cDhWHAk" +
-        "roC/qZO2LNgk9hv7zZs3np+vb1Td3z0uV4u39evT4hlvOMgDqlbL5Tohu0F2limJ" +
-        "KlTlNZYgaPwYC9qSjYbuQC1ujqBBcGZse4up3I4BMXDLiKHSUtlR4o/1Go57VI03" +
-        "0mXyyeyedEoIaG9wgNKhIhJxHNYpetIUgUCPm5yyviqhRVUGT8djLkMFcwm5kjWe" +
-        "RNRgZ8G8LtjmHLj5AD5QsqU7Jpn3scYR6TgMxknU1A5ajttsN+mA87ZIMssxVYOb" +
-        "Tslt4HdirlWdGnfBKee671zRorns0uqygFgNBmNYL4WjiwCqRkH44YWw3ezRxFvl" +
-        "aylUUW4c/VjQLaqmiGf0CJ7r9TYID5pg9MTLOoivMXMV91S7KFdga7xRysWM1Uz2" +
-        "rZc9EqRGZbfLSMOpMcTuwWXpNQWb1gFWmtD3AXgOnfbh12aH/qD/j/LJnYuDGhOe" +
-        "T2qWEifyJGucyDPBaSKj6WkiJw/ZtygCidB38RfjPd+VewQAAA==")
+        syntaxer_rule = Convert.FromBase64String(strcat_hint(CUInt(552), _
+        "H4sIAAAAAAAEAJ1Ty2rDMBC8C/wPey7WN+QUSik0JQ2UYkxRHMUR0SOV5Pb3q6ctO0kPvdjSrDQ7O6ut0NPjy2a7/tx9vK7fYM+JPFdou9nsEnIcZGeZkhWqUF6DJILGj7FEW7zXpDtTC82FaCI4M7ZdAZWHMSAGbhk2VFoqO4r9sV6Ty6lC4410Gf8we8KdEoK0DxCgdKiIRBzCOkUnTREI9NDklPVdCW2FMjgdj7kMFcwl5ErWMIuowS6CeV2wLTmg+SZ8oPhAj0wy72MNEek4GYyTqKkdtBy32W7cEc7bIskix1wNNJ2Sh8DvxNyrOjXuhlPOdd+5okVL2aXVZQGxGiDGsF4KRxeBCo2C4Pkds+Pi0cRb5WspVFFuHP1Y0KpCc8QzegSWer0NwoMmGD3zsg7ia2Cu4p5qF+WK2Br2SrmYsZrJvvWyR4LUqOx2GWk4NQbbE3FZek2JTesAK43p10B4Dk378GuzQ3/Q/0f57M7NQY0Jryc1S4kTOckaJ/JKcJrIaHqayNlD9i2KQCL0XfwFjNeLGXgEAAA="))
 
         assert(syntaxer_rule.ungzip(syntaxer_rule))
     End Sub

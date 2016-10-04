@@ -1,4 +1,4 @@
-﻿
+
 string func1(string x,  string  y) {
     if (strcmp(x, "abc") == 0) {
 		return x;
