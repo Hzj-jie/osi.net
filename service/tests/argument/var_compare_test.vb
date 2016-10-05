@@ -24,9 +24,9 @@ Public Class var_compare_test
     End Function
 
     Private Shared Function unequal_cases() As Boolean
-        Return run_case("--a=b", "--A=B", -1) AndAlso
-               run_case("--a=A", "--a=a", 1) AndAlso
-               run_case("AAA", "aaa", 1) AndAlso
+        Return run_case("--a=b", "--A=B", 1) AndAlso
+               run_case("--a=A", "--a=a", -1) AndAlso
+               run_case("AAA", "aaa", -1) AndAlso
                run_case("--a=a", "--a=a -b", -1) AndAlso
                run_case("--a=a ab", "ab --a=ab", -1)
     End Function

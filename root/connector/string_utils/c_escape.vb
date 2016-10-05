@@ -297,7 +297,7 @@ Public Module _c_escape
                                 Const u_size As Int32 = 4
                                 assert(s.hex_bytes_len(i + 1, u_size) <= array_size(b))
                                 If Not s.hex_bytes(i + 1, u_size, b) OrElse
-                                   Not bytes_char(b, c) Then
+                                   Not big_endian_bytes_char(b, c) Then
                                     Return False
                                 End If
                                 i += u_size
@@ -306,8 +306,8 @@ Public Module _c_escape
                                 Const U_size As Int32 = 8
                                 assert(s.hex_bytes_len(i + 1, U_size) <= array_size(b))
                                 If Not s.hex_bytes(i + 1, U_size, b) OrElse
-                                   Not bytes_char(b, c) OrElse
-                                   Not bytes_char(b, c, (array_size(b) >> 1)) Then
+                                   Not big_endian_bytes_char(b, c) OrElse
+                                   Not big_endian_bytes_char(b, c, (array_size(b) >> 1)) Then
                                     Return False
                                 End If
                                 i += U_size

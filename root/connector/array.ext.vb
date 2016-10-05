@@ -143,4 +143,48 @@ Public Module _array_ext
         memcpy(r, uint32_1, j)
         Return array_concat(r)
     End Function
+
+    ' Always treat the input bytes array as big-endian, say, \uFFFE for c-escape.
+    Public Function big_endian_bytes_char(
+                        ByVal i() As Byte,
+                        ByVal ii As UInt32,
+                        ByVal il As UInt32,
+                        ByRef o As Char) As Boolean
+        Dim v As UInt16 = uint16_0
+        If bytes_uint16(i, ii, il, v) Then
+            If BitConverter.IsLittleEndian Then
+                o = uint16_char(endian.reverse(v))
+            Else
+                o = uint16_char(v)
+            End If
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Public Function big_endian_bytes_char(
+                        ByVal i() As Byte,
+                        ByRef o As Char,
+                        Optional ByRef offset As UInt32 = uint32_0) As Boolean
+        Dim v As UInt16 = uint16_0
+        If bytes_uint16(i, v, offset) Then
+            If BitConverter.IsLittleEndian Then
+                o = uint16_char(endian.reverse(v))
+            Else
+                o = uint16_char(v)
+            End If
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Public Function big_endian_bytes_char(
+                        ByVal i() As Byte,
+                        Optional ByRef offset As UInt32 = uint32_0) As Char
+        Dim o As Char = char_0
+        assert(big_endian_bytes_char(i, o, offset))
+        Return o
+    End Function
 End Module
