@@ -24,6 +24,7 @@ Public Interface idevice_creator(Of T)
     Function create(ByRef o As idevice(Of T)) As Boolean
 End Interface
 
+' TODO: Is this interface useful?
 Public Interface iasync_device_creator(Of T)
     Inherits idevice_creator(Of async_getter(Of T))
 End Interface

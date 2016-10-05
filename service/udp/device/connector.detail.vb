@@ -6,6 +6,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
+Imports osi.service.device
 Imports osi.service.dns
 
 Partial Public NotInheritable Class connector
@@ -78,7 +79,12 @@ Partial Public NotInheritable Class connector
         Return New event_comb(Function() As Boolean
                                   result.clear()
                                   If String.IsNullOrEmpty(p.host_or_ip) Then
-                                      Return True
+                                      Dim r As vector(Of IPEndPoint) = Nothing
+                                      r = New vector(Of IPEndPoint)()
+                                      r.emplace_back({New IPEndPoint(IPAddress.Any, p.remote_port),
+                                                      New IPEndPoint(IPAddress.IPv6Any, p.remote_port)})
+                                      Return eva(result, r) AndAlso
+                                             goto_end()
                                   Else
                                       e = New pointer(Of IPHostEntry)()
                                       ec = dns.resolve(p.host_or_ip, e, p.response_timeout_ms)

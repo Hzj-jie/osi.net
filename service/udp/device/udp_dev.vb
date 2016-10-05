@@ -154,7 +154,7 @@ Public Class udp_dev
         Return i.p.identity
     End Function
 
-    Public Shared Operator +(ByVal this As udp_dev) As idevice(Of datagram)
+    Public Shared Operator +(ByVal this As udp_dev) As idevice(Of udp_dev)
         assert(Not this Is Nothing)
         Return this.make_device(validator:=AddressOf validator,
                                 closer:=AddressOf closer,

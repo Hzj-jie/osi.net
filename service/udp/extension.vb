@@ -150,7 +150,7 @@ Public Module _extension
             Dim ep As UInt16 = uint16_0
             rp = received_from.Port()
             ep = expected.Port()
-            If rp = ep OrElse ep = uint16_0 Then
+            If rp = ep OrElse ep = socket_invalid_port Then
                 ' If port has not been set, treat them as equal.
                 Dim ea As IPAddress = Nothing
                 ea = expected.Address()
@@ -170,7 +170,8 @@ Public Module _extension
                     If array_size(rb) = array_size(eb) Then
                         assert(Not isemptyarray(rb))
                         For i As UInt32 = uint32_0 To array_size(rb) - uint32_1
-                            ' Make it simpler, if one byte is 255, treat it as broadcast mask.
+                            ' IPAddress does not contain a sub network mask field, so make it simpler,
+                            ' if one byte is 255, treat it as broadcast mask.
                             If rb(i) <> eb(i) AndAlso eb(i) <> max_uint8 Then
                                 Return False
                             End If

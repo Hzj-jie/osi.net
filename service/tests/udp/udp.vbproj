@@ -74,6 +74,7 @@
     </Compile>
     <Compile Include="udp_connector_test.vb" />
     <Compile Include="udp_dev_test.vb" />
+    <Compile Include="udp_extension_test.vb" />
     <Compile Include="udp_listener_test.vb" />
   </ItemGroup>
   <ItemGroup>

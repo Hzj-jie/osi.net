@@ -7,7 +7,9 @@ Imports osi.service.device
 Imports osi.service.selector
 
 Partial Public NotInheritable Class connector
-    Implements iasync_device_creator(Of delegator), idevice_creator(Of UdpClient), iasync_device_creator(Of udp_dev)
+    Implements iasync_device_creator(Of delegator), 
+               idevice_creator(Of UdpClient), 
+               iasync_device_creator(Of udp_dev)
 
     Private ReadOnly p As powerpoint
 

@@ -1,4 +1,6 @@
 ﻿
+Option Strict On
+
 Imports System.Threading
 Imports osi.root.formation
 Imports osi.root.procedure
@@ -11,6 +13,11 @@ Public Class async_getter_adapter
     Public Shared Function [New](Of IT, OT)(ByVal i As async_getter(Of IT),
                                             ByVal c As Func(Of IT, OT)) As async_getter_adapter(Of OT)
         Return async_getter_adapter(Of OT).[New](i, c)
+    End Function
+
+    Public Shared Function new_async_getter(Of IT, OT)(ByVal i As async_getter(Of IT),
+                                                       ByVal c As Func(Of IT, OT)) As async_getter(Of OT)
+        Return [New](i, c)
     End Function
 
     Private Sub New()

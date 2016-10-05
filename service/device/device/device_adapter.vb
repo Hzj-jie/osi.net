@@ -1,6 +1,7 @@
 ﻿
 Imports osi.root.connector
 Imports osi.service.argument
+Imports osi.service.selector
 
 Public NotInheritable Class device_adapter
     Private Sub New()
@@ -16,6 +17,20 @@ Public NotInheritable Class device_adapter
     Public Shared Function [New](Of IT, OT) _
                                 (ByVal input As idevice(Of IT), ByVal output As OT) As device_adapter(Of IT, OT)
         Return New device_adapter(Of IT, OT)(input, output)
+    End Function
+
+    Public Shared Function [New](Of IT, OT) _
+                                (ByVal input As idevice(Of async_getter(Of IT)), ByVal c As Func(Of IT, OT)) _
+                                As device_adapter(Of async_getter(Of IT), async_getter(Of OT))
+        assert(Not input Is Nothing)
+        assert(Not c Is Nothing)
+        Return [New](input, async_getter_adapter.new_async_getter(input.get(), c))
+    End Function
+
+    Public Shared Function [New](Of IT, OT) _
+                                (ByVal input As idevice(Of async_getter(Of IT)), ByVal output As async_getter(Of OT)) _
+                                As device_adapter(Of async_getter(Of IT), async_getter(Of OT))
+        Return New device_adapter(Of async_getter(Of IT), async_getter(Of OT))(input, output)
     End Function
 
     Public Shared Function wrap(Of T)(ByVal v As var, ByVal i As idevice(Of T), ByRef o As idevice(Of T)) As Boolean
