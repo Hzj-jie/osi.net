@@ -9,6 +9,7 @@ Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.service.device
+Imports osi.service.selector
 
 ' A udp device sends to and receives from a specific remote host (ip + port, v4 or v6),
 ' and sends from and receives to a specific local port.
@@ -73,7 +74,7 @@ Public Class udp_dev
         Return local_port <> socket_invalid_port
     End Function
 
-    Public Sub close()
+    Private Sub close()
         If valid() Then
             assert(listeners.[New](p, local_port).detach(accepter))
         End If
@@ -139,17 +140,17 @@ Public Class udp_dev
                               End Function)
     End Function
 
-    Public Shared Function validator(ByVal i As udp_dev) As Boolean
+    Private Shared Function validator(ByVal i As udp_dev) As Boolean
         assert(Not i Is Nothing)
         Return i.valid()
     End Function
 
-    Public Shared Sub closer(ByVal i As udp_dev)
+    Private Shared Sub closer(ByVal i As udp_dev)
         assert(Not i Is Nothing)
         i.close()
     End Sub
 
-    Public Shared Function identifier(ByVal i As udp_dev) As String
+    Private Shared Function identifier(ByVal i As udp_dev) As String
         assert(Not i Is Nothing)
         Return i.p.identity
     End Function
@@ -160,4 +161,10 @@ Public Class udp_dev
                                 closer:=AddressOf closer,
                                 identifier:=AddressOf identifier)
     End Operator
+
+    Public Shared Function make_device(ByVal this As async_getter(Of udp_dev)) As idevice(Of async_getter(Of udp_dev))
+        Return this.make_device(validator:=AddressOf osi.service.udp.udp_dev.validator,
+                                closer:=AddressOf osi.service.udp.udp_dev.closer,
+                                identifier:=AddressOf osi.service.udp.udp_dev.identifier)
+    End Function
 End Class

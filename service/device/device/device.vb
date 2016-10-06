@@ -78,7 +78,7 @@ Public MustInherit Class device
 
     Protected NotOverridable Overrides Sub Finalize()
         If close_when_finalize() Then
-            close()
+            close_device()
         End If
         MyBase.Finalize()
     End Sub

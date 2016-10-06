@@ -48,9 +48,7 @@ Partial Public NotInheritable Class connector
                           Implements iasync_device_creator(Of udp_dev).create
         Dim x As async_getter(Of udp_dev) = Nothing
         If create(x) Then
-            o = x.make_device(validator:=AddressOf osi.service.udp.udp_dev.validator,
-                              closer:=AddressOf osi.service.udp.udp_dev.closer,
-                              identifier:=AddressOf osi.service.udp.udp_dev.identifier)
+            o = udp.udp_dev.make_device(x)
             Return True
         Else
             Return False

@@ -56,12 +56,14 @@ Public Class object_unique_set(Of T As Class, THREADSAFE As _boolean)
     End Sub
 
     Private Function unlock_erase(ByVal w As T) As Boolean
-        For i As UInt32 = 0 To v.size() - 1
+        Dim i As UInt32 = 0
+        While i < v.size()
             If object_same(v(i), w) Then
                 v.erase(i)
                 Return True
             End If
-        Next
+            i += uint32_1
+        End While
         Return False
     End Function
 
