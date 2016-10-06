@@ -188,7 +188,7 @@ Public Module _fake_rnd
         Dim p As UInt16 = 0
         While True
             p = cast(Of UInt16)(port.increment() - 1)
-            If local_tcp_port_available(p) Then
+            If local_port_available(p) Then
                 Return p
             End If
         End While
