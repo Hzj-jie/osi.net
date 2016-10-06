@@ -53,11 +53,11 @@ Public Class http_client_test
     End Function
 
     Private Shared Function random_key() As String
-        Return rndenchars(rnd_int(1, 10))
+        Return rnd_en_chars(rnd_int(1, 10))
     End Function
 
     Private Shared Function random_value() As String
-        Return rndenchars(rnd_int(0, 10))
+        Return rnd_en_chars(rnd_int(0, 10))
     End Function
 
     Private Shared Function random_headers() As String(,)

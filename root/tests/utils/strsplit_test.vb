@@ -129,7 +129,7 @@ Public Class strsplit_test
                                                       ByVal surround_strs() As pair(Of String, String)) As String
         While True
             Dim s As String = Nothing
-            s = rndenchars(rnd_int(0, 30))
+            s = rnd_en_chars(rnd_int(0, 30))
             If Not contains(s, separators) AndAlso
                Not contains(s, surround_strs) Then
                 Return s

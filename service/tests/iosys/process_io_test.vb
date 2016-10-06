@@ -42,7 +42,7 @@ Public Class process_io_test
             End If
             If assert_true(io.start()) Then
                 For i As Int32 = 0 To output_times - 1
-                    atomic.eva(last_input, rndenchars(rnd_int(10, 100)))
+                    atomic.eva(last_input, rnd_en_chars(rnd_int(10, 100)))
                     assert_true(io.input_received(last_input))
                     assert_true(yield_wait(are, 10000))
                 Next

@@ -35,8 +35,8 @@ Public Module fake_http_request
             Dim r(,) As String = Nothing
             ReDim r(s, 1)
             For i As Int32 = 0 To s - 1
-                r(i, 0) = rndenchars(rnd_int(5, 10))
-                r(i, 1) = rndenchars(rnd_int(10, 20))
+                r(i, 0) = rnd_en_chars(rnd_int(5, 10))
+                r(i, 1) = rnd_en_chars(rnd_int(10, 20))
             Next
             r(s, 0) = "referer"
             r(s, 1) = random_url()

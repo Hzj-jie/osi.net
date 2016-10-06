@@ -37,7 +37,7 @@ Namespace primitive
                     Return New data_block(rnd_bool())
                 Case 3
                     type = prefix.array
-                    Return New data_block(rndbytes())
+                    Return New data_block(rnd_bytes())
                 Case 4
                     type = prefix.double
                     If safe_str_double Then
@@ -48,7 +48,7 @@ Namespace primitive
                     End If
                 Case 5
                     type = prefix.string
-                    Return New data_block(rndchars(rnd_int(100, 200)))
+                    Return New data_block(rnd_chars(rnd_int(100, 200)))
                 Case Else
                     assert(False)
                     Return Nothing

@@ -70,14 +70,14 @@ Namespace turing.executor
 
             Private Shared Function char_case() As Boolean
                 Return run_case(type.char,
-                                rndchar(),
+                                rnd_char(),
                                 AddressOf _variable.[char],
                                 AddressOf _variable.[char])
             End Function
 
             Private Shared Function string_case() As Boolean
                 Return run_case(type.string,
-                                rndenchars(rnd_int(10, 100)),
+                                rnd_en_chars(rnd_int(10, 100)),
                                 AddressOf [string],
                                 AddressOf [string])
             End Function

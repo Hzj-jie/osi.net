@@ -20,7 +20,7 @@ Public Class compress_test
             assert(Not decompress Is Nothing)
             Dim unzipped() As Byte = Nothing
             Dim zipped() As Byte = Nothing
-            unzipped = rndbytes(rnd_int(1024, 65536))
+            unzipped = rnd_bytes(rnd_int(1024, 65536))
             If assert_true(compress(unzipped, zipped)) Then
                 Dim zipunzipped() As Byte = Nothing
                 If assert_true(decompress(zipped, zipunzipped)) Then

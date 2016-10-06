@@ -38,6 +38,6 @@ Partial Public Class big_uint
         If length = 0 Then
             length = rnd_uint(100, 1000)
         End If
-        Return New big_uint(rndbytes(length))
+        Return New big_uint(rnd_bytes(length))
     End Function
 End Class

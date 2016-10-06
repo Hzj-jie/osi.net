@@ -103,7 +103,7 @@ Public Class lexer_test
             Dim s As String = Nothing
             Dim accepted As Boolean = False
             Do
-                ' Why cannot this test pass with rndchars?
+                ' Why cannot this test pass with rnd_chars?
                 s = rnd_utf8_chars(rnd_int(1, 16))
                 accepted = True
                 For j As Int32 = 0 To count - 1

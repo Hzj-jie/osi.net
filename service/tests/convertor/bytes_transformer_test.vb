@@ -29,7 +29,7 @@ Public Class bytes_transformer_test
         Dim i() As Byte = Nothing
         Dim o() As Byte = Nothing
         Dim o2() As Byte = Nothing
-        i = rndbytes()
+        i = rnd_bytes()
         assert(Not isemptyarray(i))
         assert(transform(i, 0, array_size(i), o2))
 

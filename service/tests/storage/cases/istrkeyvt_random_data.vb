@@ -27,7 +27,7 @@ Public Structure istrkeyvt_random_data(Of _KEY_LENGTH_LOW As _int64,
 
     'for quick access
     Public Function rand_key() As String
-        Return rndenchars(rnd_int(key_length_low, key_length_up))
+        Return rnd_en_chars(rnd_int(key_length_low, key_length_up))
     End Function
 
     Public Function rand_bytes() As Byte()

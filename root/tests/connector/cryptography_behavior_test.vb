@@ -37,7 +37,7 @@ Public Class cryptography_behavior_test
                 ReDim i(size - uint32_1)
                 ReDim o(size - uint32_1)
                 For j As UInt32 = uint32_0 To size - uint32_1
-                    i(j) = rndbytes(rnd_uint(1024, 2048))
+                    i(j) = rnd_bytes(rnd_uint(1024, 2048))
                     o(j) = h.ComputeHash(i(j))
                 Next
                 Return True
@@ -136,7 +136,7 @@ Public Class cryptography_behavior_test
 
         Public Overrides Function prepare() As Boolean
             If MyBase.prepare() Then
-                b = rndbytes(rnd_uint(1024, 2048))
+                b = rnd_bytes(rnd_uint(1024, 2048))
                 r = h.ComputeHash(b)
                 Return True
             Else
@@ -191,8 +191,8 @@ Public Class cryptography_behavior_test
 
         Public Overrides Function prepare() As Boolean
             If MyBase.prepare() Then
-                k = rndbytes(rnd_uint(100, 200))
-                b = rndbytes(rnd_uint(1024, 2048))
+                k = rnd_bytes(rnd_uint(100, 200))
+                b = rnd_bytes(rnd_uint(1024, 2048))
                 h.Key() = k
                 r = h.ComputeHash(b)
                 Return True
@@ -202,7 +202,7 @@ Public Class cryptography_behavior_test
         End Function
 
         Public Overrides Function run() As Boolean
-            h.Key() = rndbytes(rnd_uint(100, 200))
+            h.Key() = rnd_bytes(rnd_uint(100, 200))
             h.Key() = k
             assert_array_equal(r, h.ComputeHash(b))
             Return True

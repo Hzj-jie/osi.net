@@ -30,8 +30,8 @@ Public Class lcs_test
         Public Overrides Function run() As Boolean
             Dim a As String = Nothing
             Dim b As String = Nothing
-            a = rndchars(rnd_int(max_uint8, CInt(max_uint8) << 1))
-            b = rndchars(rnd_int(max_uint8, CInt(max_uint8) << 1))
+            a = rnd_chars(rnd_int(max_uint8, CInt(max_uint8) << 1))
+            b = rnd_chars(rnd_int(max_uint8, CInt(max_uint8) << 1))
             Dim s1 As String = Nothing
             s1 = lcs(a, b)
             Dim s2 As String = Nothing

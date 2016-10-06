@@ -44,11 +44,11 @@ Public Class sign_strongness_test
         End Sub
 
         Protected Overridable Function key() As Byte()
-            Return rndbytes(rnd_uint(100, 200))
+            Return rnd_bytes(rnd_uint(100, 200))
         End Function
 
         Protected Overridable Function data() As Byte()
-            Return rndbytes(rnd_uint(1000, 2000))
+            Return rnd_bytes(rnd_uint(1000, 2000))
         End Function
 
         Public NotOverridable Overrides Function prepare() As Boolean

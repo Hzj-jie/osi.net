@@ -23,15 +23,15 @@ Public Class encrypt_test
                assert_true(Not e.bypass() OrElse
                            strsame(parameter, bypass_mode)) Then
                 Dim key() As Byte = Nothing
-                key = rndbytes(rnd_int(1, 256))
+                key = rnd_bytes(rnd_int(1, 256))
                 If array_size(key) = uint32_1 Then
                     While key(0) = 0
-                        key(0) = rndbyte()
+                        key(0) = rnd_byte()
                     End While
                 End If
                 assert(Not isemptyarray(key))
                 Dim ori() As Byte = Nothing
-                ori = rndbytes(rnd_int(4096, 65536))
+                ori = rnd_bytes(rnd_int(4096, 65536))
                 assert(Not isemptyarray(ori))
                 Dim encrypted() As Byte = Nothing
                 Dim decrypted() As Byte = Nothing

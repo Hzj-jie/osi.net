@@ -49,7 +49,7 @@ Public Class stringbuilder_perf_test(Of PRE_ALLOC As _boolean, RND_EACH_ROUND As
             Me.line_len = line_len
             Me.line_count = line_count
             If Not +alloc(Of RND_EACH_ROUND)() Then
-                v = rndchars(line_len)
+                v = rnd_chars(line_len)
             End If
         End Sub
 
@@ -69,7 +69,7 @@ Public Class stringbuilder_perf_test(Of PRE_ALLOC As _boolean, RND_EACH_ROUND As
 
         Public Overrides Function run() As Boolean
             If v Is Nothing Then
-                s.Append(rndchars(line_len))
+                s.Append(rnd_chars(line_len))
             Else
                 s.Append(v)
             End If

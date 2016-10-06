@@ -12,7 +12,7 @@ Public Class forward_bytes_transformer_test
         t = New forward_bytes_transformer()
         Dim i() As Byte = Nothing
         Dim o() As Byte = Nothing
-        i = rndbytes()
+        i = rnd_bytes()
 
         assert_true(t.transform(i, o))
         assert_reference_equal(i, o)

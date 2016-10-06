@@ -13,7 +13,7 @@ Namespace fullstack.executor
             Public ReadOnly i As Int32
 
             Public Sub New()
-                s = rndenchars(rnd_int(10, 100))
+                s = rnd_en_chars(rnd_int(10, 100))
                 i = rnd_int()
             End Sub
 
@@ -60,16 +60,16 @@ Namespace fullstack.executor
             l1(0) = New variable(rnd_bool())
             l1(1) = New variable(rnd_int())
             l1(2) = New variable(rnd_double())
-            l1(3) = New variable(rndchar())
-            l1(4) = New variable(rndenchars(rnd_int(10, 100)))
+            l1(3) = New variable(rnd_char())
+            l1(4) = New variable(rnd_en_chars(rnd_int(10, 100)))
             l1(5) = New variable(rnd_var())
             Dim l2() As variable = Nothing
             ReDim l2(7 - 1)
             l2(0) = New variable(rnd_bool())
             l2(1) = New variable(rnd_int())
             l2(2) = New variable(rnd_double())
-            l2(3) = New variable(rndchar())
-            l2(4) = New variable(rndenchars(rnd_int(10, 100)))
+            l2(3) = New variable(rnd_char())
+            l2(4) = New variable(rnd_en_chars(rnd_int(10, 100)))
             l2(5) = New variable(rnd_var())
             l2(6) = New variable(a_sub_struct(), l1)
             Return New variable(a_struct(), l2)
@@ -93,9 +93,9 @@ Namespace fullstack.executor
             ElseIf rnd_bool() Then
                 Return New variable(rnd_double())
             ElseIf rnd_bool() Then
-                Return New variable(rndchar())
+                Return New variable(rnd_char())
             ElseIf rnd_bool() Then
-                Return New variable(rndenchars(rnd_int(10, 100)))
+                Return New variable(rnd_en_chars(rnd_int(10, 100)))
             ElseIf rnd_bool() Then
                 Return New variable(New Object())
             Else

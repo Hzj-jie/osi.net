@@ -347,31 +347,31 @@ Public Module _rnd
     Private ReadOnly char_max_value As Int32 = Convert.ToInt32(Char.MaxValue)
     Private ReadOnly char_max_value_p_1 As Int32 = char_max_value + 1
 
-    Public Function rndchar(ByVal r As Random) As Char
+    Public Function rnd_char(ByVal r As Random) As Char
         Return Convert.ToChar(ri(r, char_min_value, char_max_value_p_1))
     End Function
 
-    Public Function rndchar() As Char
-        Return rndchar(r())
+    Public Function rnd_char() As Char
+        Return rnd_char(r())
     End Function
 
-    Public Function rndchars(ByVal r As Random, ByVal len As Int32) As String
+    Public Function rnd_chars(ByVal r As Random, ByVal len As Int32) As String
         Dim s As StringBuilder = Nothing
         s = New StringBuilder(If(len < 0, 0, len))
         For i As Int32 = 0 To len - 1
-            s.Append(rndchar(r))
+            s.Append(rnd_char(r))
         Next
         Return Convert.ToString(s)
     End Function
 
-    Public Function rndchars(ByVal len As Int32) As String
-        Return rndchars(r(), len)
+    Public Function rnd_chars(ByVal len As Int32) As String
+        Return rnd_chars(r(), len)
     End Function
 
     Public Function rnd_utf8_char(ByVal r As Random) As Char
         Dim c As Char = Nothing
         Do
-            c = rndchar(r)
+            c = rnd_char(r)
         Loop Until c.utf8_supported() AndAlso c.visible()
         Return c
     End Function
@@ -393,20 +393,20 @@ Public Module _rnd
         Return rnd_utf8_chars(r(), len)
     End Function
 
-    Public Function rndenchars(ByVal r As Random,
-                               ByVal length As Int32,
-                               Optional ByVal careCase As Boolean = True) As String
+    Public Function rnd_en_chars(ByVal r As Random,
+                                 ByVal length As Int32,
+                                 Optional ByVal careCase As Boolean = True) As String
         Dim rtn As StringBuilder = Nothing
         rtn = New StringBuilder(If(length < 0, 0, length))
         For i As Int32 = 0 To length - 1
-            rtn.Append(rndenchar(r, careCase))
+            rtn.Append(rnd_en_char(r, careCase))
         Next
 
         Return Convert.ToString(rtn)
     End Function
 
-    Public Function rndenchars(ByVal length As Int32, Optional ByVal careCase As Boolean = True) As String
-        Return rndenchars(r(), length, careCase)
+    Public Function rnd_en_chars(ByVal length As Int32, Optional ByVal careCase As Boolean = True) As String
+        Return rnd_en_chars(r(), length, careCase)
     End Function
 
     Private ReadOnly a As Int32 = Convert.ToInt32(character.a)
@@ -415,26 +415,26 @@ Public Module _rnd
     Private ReadOnly _A As Int32 = Convert.ToInt32(character._A)
     Private ReadOnly a_A_diff As Int32 = _A - a
 
-    Public Function rndenchar(ByVal r As Random, Optional ByVal careCase As Boolean = True) As Char
+    Public Function rnd_en_char(ByVal r As Random, Optional ByVal careCase As Boolean = True) As Char
         Return Convert.ToChar(ri(r, a, z_p_1) + If(careCase AndAlso ri(r, 0, 2) = 0, a_A_diff, 0))
     End Function
 
-    Public Function rndenchar(Optional ByVal careCase As Boolean = True) As Char
-        Return rndenchar(r(), careCase)
+    Public Function rnd_en_char(Optional ByVal careCase As Boolean = True) As Char
+        Return rnd_en_char(r(), careCase)
     End Function
 
-    Public Function rndbyte() As Byte
+    Public Function rnd_byte() As Byte
         Return rnd(0, max_int8 + 1, True)
     End Function
 
-    Public Function rndbytes(Optional ByVal size As UInt32 = 1024) As Byte()
+    Public Function rnd_bytes(Optional ByVal size As UInt32 = 1024) As Byte()
         Dim rtn() As Byte = Nothing
         ReDim rtn(size - 1)
         assert(next_bytes(rtn))
         Return rtn
     End Function
 
-    Public Function rndalpha() As Byte
+    Public Function rnd_alpha() As Byte
         Return rnd(192, max_uint8 + 1, True)
     End Function
 

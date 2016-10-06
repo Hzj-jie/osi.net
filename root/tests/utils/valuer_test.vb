@@ -41,8 +41,8 @@ Public Class valuer_test
                    run_case(Of test_int)("c", New test_imp(), binding_flags.instance_public) AndAlso
                    run_case(Of test_imp)("d", New test_imp(), binding_flags.instance_public) AndAlso
                    run_case(Of test_inh)("e", New test_inh(), binding_flags.instance_public) AndAlso
-                   run_case(Of String)("f", rndchars(rnd_int(10, 100)), binding_flags.instance_private) AndAlso
-                   run_case(Of String)("g", rndchars(rnd_int(10, 100)), binding_flags.instance_private) AndAlso
+                   run_case(Of String)("f", rnd_chars(rnd_int(10, 100)), binding_flags.instance_private) AndAlso
+                   run_case(Of String)("g", rnd_chars(rnd_int(10, 100)), binding_flags.instance_private) AndAlso
                    run_case(Of Int32)("h", rnd_int(), binding_flags.static_public) AndAlso
                    run_case(Of Int32)("i", rnd_int(), binding_flags.static_private) AndAlso
                    run_case(Of Int32)("j", rnd_int(), binding_flags.static_public) AndAlso

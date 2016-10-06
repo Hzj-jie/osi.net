@@ -21,7 +21,7 @@ Public Class zip_test
                assert_true(Not zipper.bypass() OrElse
                            strsame(parameter, bypass_mode)) Then
                 Dim raw() As Byte = Nothing
-                raw = rndbytes(rnd_int(4096, 65536))
+                raw = rnd_bytes(rnd_int(4096, 65536))
                 assert(Not isemptyarray(raw))
                 Dim zipped() As Byte = Nothing
                 Dim unzipped() As Byte = Nothing

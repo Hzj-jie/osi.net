@@ -24,7 +24,7 @@ Public Class token_info_sign_test
         Public Sub New(ByVal s As signer)
             assert(Not s Is Nothing)
             Me.s = s
-            Me.k = rndbytes(rnd_uint(10, 100))
+            Me.k = rnd_bytes(rnd_uint(10, 100))
         End Sub
 
         Public Overrides Function identity(ByVal c As mock_conn) As String
@@ -58,7 +58,7 @@ Public Class token_info_sign_test
     Private Shared Function sign_case1(ByVal f As info) As Boolean
         assert(Not f Is Nothing)
         Dim code() As Byte = Nothing
-        code = rndbytes(rnd_uint(100, 200))
+        code = rnd_bytes(rnd_uint(100, 200))
         Dim o() As Byte = Nothing
         If assert_true(f.sign(Nothing, code, o)) Then
             assert_true(f.sign_match(Nothing, code, o))
@@ -73,10 +73,10 @@ Public Class token_info_sign_test
         Dim prefix() As Byte = Nothing
         Dim prefix_len As UInt32 = uint32_0
         prefix_len = rnd_uint(10, 20)
-        prefix = rndbytes(prefix_len)
+        prefix = rnd_bytes(prefix_len)
         assert(array_size(prefix) = prefix_len)
         Dim code() As Byte = Nothing
-        code = rndbytes(rnd_uint(100, 200))
+        code = rnd_bytes(rnd_uint(100, 200))
         Dim o() As Byte = Nothing
         If assert_true(f.sign(Nothing, (New piece(array_concat(prefix, code))).consume(prefix_len), o)) Then
             assert_true(f.sign_match(Nothing, code, o))

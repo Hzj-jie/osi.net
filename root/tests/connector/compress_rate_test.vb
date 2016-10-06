@@ -65,7 +65,7 @@ Public MustInherit Class compress_rate_test
             Dim raw() As Byte = Nothing
             Dim gzipped() As Byte = Nothing
             Dim deflated() As Byte = Nothing
-            raw = rndbytes(rnd_int(lower, upper + 1))
+            raw = rnd_bytes(rnd_int(lower, upper + 1))
             If assert_true(raw.gzip(gzipped)) AndAlso
                assert_true(raw.deflate(deflated)) Then
                 If array_size(gzipped) < array_size(deflated) Then

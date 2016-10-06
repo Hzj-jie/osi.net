@@ -39,8 +39,8 @@ Public Class sign_test
             Dim b() As Byte = Nothing
             Dim o() As Byte = Nothing
             Dim o2() As Byte = Nothing
-            k = rndbytes(rnd_uint(100, 200))
-            b = rndbytes(rnd_uint(2048, 4096))
+            k = rnd_bytes(rnd_uint(100, 200))
+            b = rnd_bytes(rnd_uint(2048, 4096))
             assert_true(s.sign(k, b, o))
             assert_true(s.sign(k, b, o2))
             assert_array_equal(o, o2)
@@ -54,7 +54,7 @@ Public Class sign_test
 
             For i As Int32 = 0 To 3
                 Dim b2() As Byte = Nothing
-                b2 = rndbytes(rnd_uint(2048, 4096))
+                b2 = rnd_bytes(rnd_uint(2048, 4096))
                 assert_true(s.sign(k, b, o))
                 assert_true(s.sign(k, b2, o2))
                 If memcmp(o, o2) <> 0 Then

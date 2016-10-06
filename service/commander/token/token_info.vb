@@ -69,7 +69,7 @@ Public MustInherit Class token_info(Of COLLECTION, CONNECTION)
     End Function
 
     Public Function challenge_code(ByVal p As COLLECTION) As Byte()
-        Return rndbytes(challenge_code_length(p))
+        Return rnd_bytes(challenge_code_length(p))
     End Function
 
     Public Overridable Function signer(ByVal p As COLLECTION) As signer

@@ -21,7 +21,7 @@ Public Class udp_dev_test
         Dim r As pointer(Of Byte()) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  v = rndbytes(rnd_uint(100, 500))
+                                  v = rnd_bytes(rnd_uint(100, 500))
                                   ec = sender.send(v)
                                   Return waitfor(ec) AndAlso
                                          goto_next()

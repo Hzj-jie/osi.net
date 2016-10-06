@@ -14,7 +14,7 @@ Public Module _fake_rnd
 
     Sub New()
         assert(is_cloneable(Of Byte())())
-        str_prefix = rndenchars(rnd_int(2, 4 + 1))
+        str_prefix = rnd_en_chars(rnd_int(2, 4 + 1))
         str_prefix_len = strlen(str_prefix)
         int_bit = 0
         For i As Int32 = rnd_int(2, 4 + 1) - 1 To 0 Step -1
@@ -48,7 +48,7 @@ Public Module _fake_rnd
         ElseIf l = str_prefix_len Then
             Return str_prefix
         Else
-            Return strcat(str_prefix, rndenchars(l - str_prefix_len))
+            Return strcat(str_prefix, rnd_en_chars(l - str_prefix_len))
         End If
     End Function
 

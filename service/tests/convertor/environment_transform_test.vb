@@ -37,7 +37,7 @@ Public Class environment_transform_test
             Else
                 Dim r As String = Nothing
                 'hope there is no default environment ends with HHHH
-                r = rndenchars(rnd_int(1, 20)) + "HHHH"
+                r = rnd_en_chars(rnd_int(1, 20)) + "HHHH"
                 p += r
                 e += r
             End If

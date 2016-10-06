@@ -41,15 +41,15 @@ Public Class array_test
         assert_reference_equal(array_concat(b), b)
 
         ReDim b(0)
-        b(0) = rndbyte()
+        b(0) = rnd_byte()
         Dim b2() As Byte = Nothing
         Dim r() As Byte = Nothing
         r = array_concat(b, b2)
         assert_equal(array_size(r), uint32_1)
         assert_equal(r(0), b(0))
 
-        b = rndbytes(5)
-        b2 = rndbytes(5)
+        b = rnd_bytes(5)
+        b2 = rnd_bytes(5)
         r = array_concat(b, b2)
         assert_equal(array_size(r), CUInt(10))
         For i As UInt32 = 0 To array_size(r) - uint32_1
@@ -61,9 +61,9 @@ Public Class array_test
         Next
 
         Dim b3() As Byte = Nothing
-        b = rndbytes(5)
+        b = rnd_bytes(5)
         b2 = Nothing
-        b3 = rndbytes(5)
+        b3 = rnd_bytes(5)
         r = array_concat(b, b2, b3)
         assert_equal(array_size(r), CUInt(10))
         For i As UInt32 = 0 To array_size(r) - uint32_1
@@ -88,7 +88,7 @@ Public Class array_test
         Dim b() As Byte = Nothing
         assert_nothing(b.concat())
 
-        b = rndbytes(5)
+        b = rnd_bytes(5)
         assert_reference_equal(b.concat(), b)
 
         Dim b2() As Byte = Nothing
@@ -100,7 +100,7 @@ Public Class array_test
         assert_array_equal(r, array_concat(b2, b))
 
         Dim b3() As Byte = Nothing
-        b3 = rndbytes(5)
+        b3 = rnd_bytes(5)
 
         r = b.concat(b2, b3)
         assert_array_equal(r, array_concat(b, b2, b3))

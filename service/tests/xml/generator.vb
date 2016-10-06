@@ -20,7 +20,7 @@ Friend Module _generator
         End Sub
 
         Public Shared Function tag() As String
-            Return strcat(rndenchar(),
+            Return strcat(rnd_en_char(),
                           rnd_ascii_display_chars(rnd_int(4, 10), tag_excepts))
         End Function
 
@@ -29,7 +29,7 @@ Friend Module _generator
         End Function
 
         Public Shared Function value() As String
-            Return strcat(rndenchar(),
+            Return strcat(rnd_en_char(),
                           rnd_ascii_display_chars(rnd_int(4, 10), value_excepts))
         End Function
 

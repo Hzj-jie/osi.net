@@ -88,7 +88,7 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
     End Sub
 
     Private Shared Function rand_key() As String
-        Return rndenchars(rnd_uint(key_length_low, key_length_up))
+        Return rnd_en_chars(rnd_uint(key_length_low, key_length_up))
     End Function
 
     Private Shared Function rand_bytes(ByVal key As String) As Byte()

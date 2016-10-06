@@ -68,7 +68,7 @@ Public Class listeners_speakers_test
                               End Function,
                               Function() As Boolean
                                   ' <= 500 bytes should be safe for one datagram.
-                                  send_data.emplace_back(rndbytes(rnd_uint(100, 500)))
+                                  send_data.emplace_back(rnd_bytes(rnd_uint(100, 500)))
                                   sent.renew()
                                   ec = speaker.send(IPAddress.Loopback, listener_port, send_data.back(), sent)
                                   Return waitfor(ec) AndAlso

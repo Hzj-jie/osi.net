@@ -115,7 +115,7 @@ Public Class dev_pool_single_test
 
 #If 0 Then
         Private Function rnd_short_str() As String
-            Return strcat(rndenchars(rnd_int(5, 10)), guid_str())
+            Return strcat(rnd_en_chars(rnd_int(5, 10)), guid_str())
         End Function
 #End If
 

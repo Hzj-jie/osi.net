@@ -80,7 +80,7 @@ Public Class c_escape_test
 
         Public Overrides Function run() As Boolean
             Dim s As String = Nothing
-            s = rndchars(rnd_int(max_uint8, max_uint16))
+            s = rnd_chars(rnd_int(max_uint8, max_uint16))
             Dim escaped As String = Nothing
             assert_true(s.c_escape(escaped))
             assert_not_nothing(escaped)

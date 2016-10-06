@@ -61,7 +61,7 @@ Public Class bytes_transformer_collection_test
                              New bytes_transformer_wrapper(AddressOf trans3)))
         Dim i() As Byte = Nothing
         Dim o() As Byte = Nothing
-        i = rndbytes()
+        i = rnd_bytes()
         assert(Not isemptyarray(i))
 
         assert_true(bt.transform_forward(i, o))

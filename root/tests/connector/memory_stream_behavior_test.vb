@@ -10,7 +10,7 @@ Public Class memory_stream_behavior_test
         Dim ms As MemoryStream = Nothing
         ms = New MemoryStream()
         Dim buff() As Byte = Nothing
-        buff = rndbytes()
+        buff = rnd_bytes()
         ms.Write(buff, 0, array_size(buff))
         assert_equal(ms.Position(), array_size(buff))
         Dim buff2() As Byte = Nothing
