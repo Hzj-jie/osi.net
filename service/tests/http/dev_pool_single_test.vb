@@ -157,7 +157,8 @@ Public Class dev_pool_single_test
                                   Function() As Boolean
                                       assert_true(ec.end_result())
                                       assert_true(Not p.empty())
-                                      assert_equal(+p, s)
+                                      ' Why cannot this pass with String.CompareOrdinal?
+                                      assert_true(String.Compare(+p, s) = 0)
                                       assert_true(cp.release(h))
                                       Return goto_end()
                                   End Function)
