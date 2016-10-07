@@ -24,7 +24,7 @@ Public NotInheritable Class device_adapter
                                 As device_adapter(Of async_getter(Of IT), async_getter(Of OT))
         assert(Not input Is Nothing)
         assert(Not c Is Nothing)
-        Return [New](input, async_getter_adapter.new_async_getter(input.get(), c))
+        Return [New](Of IT, OT)(input, async_getter_adapter.new_async_getter(input.get(), c))
     End Function
 
     Public Shared Function [New](Of IT, OT) _
