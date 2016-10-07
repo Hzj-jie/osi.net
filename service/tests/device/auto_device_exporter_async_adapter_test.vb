@@ -10,8 +10,7 @@ Public Class auto_device_exporter_async_adapter_test
 
     Private Shared Function basic_case() As Boolean
         Dim e As auto_device_exporter(Of mock_dev(Of auto_device_exporter_async_adapter_test)) = Nothing
-        e = auto_device_exporter.[New](async_device_creator_device_creator_adapter.[New](
-                                       New mock_device_async_creator(Of auto_device_exporter_async_adapter_test)()))
+        e = auto_device_exporter.[New](New mock_device_async_creator(Of auto_device_exporter_async_adapter_test)())
         Dim count As Int32 = 0
         AddHandler e.new_device_exported, Sub(d As idevice(Of mock_dev(Of auto_device_exporter_async_adapter_test)),
                                               ByRef export_result As Boolean)

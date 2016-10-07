@@ -71,6 +71,7 @@
     <Compile Include="command.uri.vb" />
     <Compile Include="command.vb" />
     <Compile Include="constants.vb" />
+    <Compile Include="device_construction.vb" />
     <Compile Include="dev\adapter\dev_T_herald_adapter.vb" />
     <Compile Include="dev\adapter\flow_herald_adapter.vb" />
     <Compile Include="dev\adapter\herald_dev_T_adapter.vb" />

@@ -21,7 +21,6 @@ Partial Public Class powerpoint
     Private ReadOnly send_rate_sec As UInt32
     Private ReadOnly receive_rate_sec As UInt32
     Private ReadOnly overhead As UInt32
-    ' TODO
     ' Fixed local & target
     Private ReadOnly _udp_dev_device As idevice(Of async_getter(Of udp_dev))
     Private ReadOnly _async_getter_datagram_device As idevice(Of async_getter(Of datagram))

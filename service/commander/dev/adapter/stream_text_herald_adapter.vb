@@ -11,4 +11,8 @@ Public Class stream_text_herald_adapter
     Public Sub New(ByVal t As stream_text, Optional ByVal enc As Encoding = Nothing)
         MyBase.New(t, enc, text_herald_adapter_convertor.command_string, text_herald_adapter_convertor.string_command)
     End Sub
+
+    Public Shared Function [New](ByVal t As stream_text) As stream_text_herald_adapter
+        Return New stream_text_herald_adapter(t)
+    End Function
 End Class

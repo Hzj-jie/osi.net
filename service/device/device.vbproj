@@ -87,8 +87,6 @@
     <Compile Include="adapter\async_getter\async_getter_text.vb" />
     <Compile Include="device\async_getter_delegate_device.vb" />
     <Compile Include="device\async_getter_device.vb" />
-    <Compile Include="device\creator\async_device_creator_device_creator_adatper.vb" />
-    <Compile Include="device\creator\auto_device_exporter.async_device_creator_device_creator_adapter.vb" />
     <Compile Include="device\creator\auto_device_exporter.vb" />
     <Compile Include="device\creator\auto_device_exporter.iasync_device_creator.vb" />
     <Compile Include="device\creator\auto_device_exporter.idevice_creator.vb" />

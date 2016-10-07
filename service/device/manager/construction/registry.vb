@@ -7,14 +7,10 @@ Imports osi.service.convertor
 Imports osi.service.selector
 
 <global_init(global_init_level.services)>
-Friend Module adapter_registry
-    Private Sub register(Of T)(ByVal adapter_new As Func(Of async_getter(Of T), T))
-        binder(Of Func(Of async_getter(Of T), T)).set_global(adapter_new)
-    End Sub
-
-    Private Sub register(Of T1, T2)(ByVal type_name As String,
-                                    ByVal secondary_type_name As String,
-                                    ByVal adapter_new As Func(Of T1, T2))
+Public NotInheritable Class adapter_registry
+    Public Shared Sub register(Of T1, T2)(ByVal type_name As String,
+                                          ByVal secondary_type_name As String,
+                                          ByVal adapter_new As Func(Of T1, T2))
         assert(Not adapter_new Is Nothing)
 #If REGISTER_RAW_DEVICE Then
         assert(constructor.register(type_name,
@@ -50,44 +46,41 @@ Friend Module adapter_registry
                                     End Function))
     End Sub
 
-    Sub New()
+    Shared Sub New()
         register(Of flow, block)(constants.flow_block_adapter_type,
-                                 constants.block_secondary_type_name,
+                                 constants.flow_secondary_type_name,
                                  AddressOf flow_block_adapter.[New])
         register(Of block, flow)(constants.block_flow_adapter_type,
-                                 constants.flow_secondary_type_name,
+                                 constants.block_secondary_type_name,
                                  AddressOf block_flow_adapter.[New])
-        register(Of flow, datagram)(constants.flow_block_adapter_type,
-                                    constants.datagram_secondary_type_name,
+        register(Of flow, datagram)(constants.flow_datagram_adapter_type,
+                                    constants.flow_secondary_type_name,
                                     AddressOf flow_datagram_adapter.[New])
         register(Of datagram, flow)(constants.datagram_flow_adapter_type,
-                                    constants.flow_secondary_type_name,
+                                    constants.datagram_secondary_type_name,
                                     AddressOf datagram_flow_adapter.[New])
         register(Of block, piece_dev)(constants.block_piece_dev_adapter_type,
-                                      constants.piece_dev_secondary_type_name,
+                                      constants.block_secondary_type_name,
                                       AddressOf block_piece_dev_adapter.[New])
         register(Of piece_dev, block)(constants.piece_dev_block_adapter_type,
-                                      constants.block_secondary_type_name,
+                                      constants.piece_dev_secondary_type_name,
                                       AddressOf piece_dev_block_adapter.[New])
         register(Of flow, piece_dev)(constants.flow_piece_dev_adapter_type,
-                                     constants.piece_dev_secondary_type_name,
+                                     constants.flow_secondary_type_name,
                                      AddressOf flow_piece_dev_adapter.[New])
         register(Of piece_dev, flow)(constants.piece_dev_flow_adapter_type,
-                                     constants.flow_secondary_type_name,
+                                     constants.piece_dev_secondary_type_name,
                                      AddressOf piece_dev_flow_adapter.[New])
-        register(Of flow)(AddressOf async_getter_flow.[New])
-        register(Of block)(AddressOf async_getter_block.[New])
-        register(Of datagram)(AddressOf async_getter_datagram.[New])
-        register(Of piece_dev)(AddressOf async_getter_piece_dev.[New])
-        register(Of stream_text)(AddressOf async_getter_stream_text.[New])
-        register(Of text)(AddressOf async_getter_text.[New])
     End Sub
 
-    Private Sub init()
+    Private Shared Sub init()
     End Sub
-End Module
 
-Friend Class registry(Of T)
+    Private Sub New()
+    End Sub
+End Class
+
+Public NotInheritable Class registry(Of T)
     Private Shared Function identity(ByVal v As var) As String
         assert(Not v Is Nothing)
         Const s As String = "identity"
@@ -130,13 +123,12 @@ Friend Class registry(Of T)
                            Return True
                        End Function))
 
-            If binder(Of Func(Of async_getter(Of T), T)).has_global_value() Then
+            If async_device_device_converter(Of T).registered() Then
                 assert(constructor.register(
                            Function(v As var, ByRef o As idevice_creator(Of T)) As Boolean
                                Dim c As iasync_device_creator(Of T) = Nothing
                                If constructor.resolve(v, c) Then
-                                   o = device_creator_adapter.[New](c,
-                                                                    binder(Of Func(Of async_getter(Of T), T)).global())
+                                   o = device_creator_adapter.[New](c, async_device_device_converter(Of T).[default]())
                                    Return True
                                Else
                                    Return False
@@ -285,5 +277,8 @@ Friend Class registry(Of T)
                            End If
                        End Function))
         End If
+    End Sub
+
+    Private Sub New()
     End Sub
 End Class

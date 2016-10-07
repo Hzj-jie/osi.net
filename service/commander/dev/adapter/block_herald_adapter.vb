@@ -41,4 +41,8 @@ Public Class block_herald_adapter
                    block_herald_adapter_convertor.command_bytes,
                    block_herald_adapter_convertor.bytes_command)
     End Sub
+
+    Public Shared Function [New](ByVal b As block) As block_herald_adapter
+        Return New block_herald_adapter(b)
+    End Function
 End Class

@@ -30,4 +30,8 @@ Public Class text_herald_adapter
                    text_herald_adapter_convertor.command_string,
                    text_herald_adapter_convertor.string_command)
     End Sub
+
+    Public Shared Function [New](ByVal t As text) As herald
+        Return New text_herald_adapter(t)
+    End Function
 End Class

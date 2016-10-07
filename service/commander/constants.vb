@@ -12,9 +12,12 @@ Namespace constants
         Public Const respond_one_of_wait_device_ms As Int64 = 128
         Public Const accepting_over_max_connecting_wait_ms As Int64 = 100
         Public Const max_concurrent_connecting As UInt32 = max_uint32
-        Public Const block_herald_secondary_type_name As String = "block"
-        Public Const text_herald_secondary_type_name As String = "text"
-        Public Const stream_text_herald_secondary_type_name As String = "stream-text"
+        Public Const block_herald_adapter_type = "block-herald-adapter"
+        Public Const text_herald_adapter_type = "text-herald-adapter"
+        Public Const stream_text_herald_adapter_type = "stream-text-herald-adapter"
+        Public Const block_secondary_type_name As String = "block"
+        Public Const text_secondary_type_name As String = "text"
+        Public Const stream_text_secondary_type_name As String = "stream-text"
         Public Const herald_secondary_type_name As String = "herald"
         Public Const token_default_response_timeout_ms As Int64 = 30 * second_milli
         Public ReadOnly token1_prefix() As Byte = str_bytes("token1")
