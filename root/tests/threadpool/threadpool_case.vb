@@ -42,11 +42,18 @@ Friend Class threadpool_case
             void_(before)
             Dim size As Int64 = 0
             size = Me.size
+            Dim executed As Int64 = 0
             For i As Int32 = 0 To max((Environment.ProcessorCount() >> 1) - 1, 0)
                 Dim t As Thread = Nothing
                 t = New Thread(Sub()
                                    While Interlocked.Decrement(size) >= 0
-                                       tp.queue_job(w)
+                                       tp.queue_job(Sub()
+                                                        w()
+                                                        Interlocked.Increment(executed)
+                                                    End Sub)
+                                       While (Me.size - size) - executed > 10000
+                                           force_yield()
+                                       End While
                                    End While
                                End Sub)
                 t.Start()
