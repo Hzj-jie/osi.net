@@ -184,6 +184,8 @@
     <None Include="pointer\codegen\strong_pointer_override.vbp" />
     <None Include="pointer\codegen\weak_pointer.override.vbp" />
     <None Include="pointer\codegen\weak_pointer.vbp" />
+    <None Include="pointer\codegen\weak_ref_pointer.override.vbp" />
+    <None Include="pointer\codegen\weak_ref_pointer.vbp" />
     <None Include="threadsafe\codegen\qless2.vbp" />
     <None Include="threadsafe\codegen\heapless.vbp" />
     <None Include="threadsafe\codegen\run.cmd" />

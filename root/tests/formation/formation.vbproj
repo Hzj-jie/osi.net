@@ -163,6 +163,8 @@
     <None Include="qless\codegen\cycle_case2.vbp" />
     <None Include="qless\codegen\cycle_case3.vbp" />
     <None Include="qless\codegen\cycle_case4.vbp" />
+    <None Include="qless\codegen\cycle_case5.vbp" />
+    <None Include="qless\codegen\heapless_case5.vbp" />
     <None Include="qless\codegen\qless2_case.vbp" />
     <None Include="qless\codegen\qless2_case2.vbp" />
     <None Include="qless\codegen\qless2_case3.vbp" />
@@ -171,16 +173,20 @@
     <None Include="qless\codegen\heapless_case2.vbp" />
     <None Include="qless\codegen\heapless_case3.vbp" />
     <None Include="qless\codegen\heapless_case4.vbp" />
+    <None Include="qless\codegen\qless2_case5.vbp" />
     <None Include="qless\codegen\qless_case.vbp" />
     <None Include="qless\codegen\qless_case2.vbp" />
     <None Include="qless\codegen\qless_case3.vbp" />
     <None Include="qless\codegen\qless_case4.vbp" />
+    <None Include="qless\codegen\qless_case5.vbp" />
     <None Include="qless\codegen\qless_lock_selection_case.vbp" />
     <None Include="qless\codegen\run.cmd" />
+    <None Include="qless\codegen\slimheapless_case5.vbp" />
     <None Include="qless\codegen\slimqless2_case3.vbp" />
     <None Include="qless\codegen\slimqless2_case4.vbp" />
     <None Include="qless\codegen\slimheapless_case3.vbp" />
     <None Include="qless\codegen\slimheapless_case4.vbp" />
+    <None Include="qless\codegen\slimqless2_case5.vbp" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

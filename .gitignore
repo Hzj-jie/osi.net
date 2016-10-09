@@ -6,6 +6,7 @@
 *.un~
 *.vspscc
 *.suo
+*.netmodule
 
 root/envs/buildInfo.vb
 root/envs/tfver.vb

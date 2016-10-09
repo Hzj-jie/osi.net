@@ -187,6 +187,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="codegen\qless2_event_sync_T_pump.vbp" />
+    <None Include="codegen\run.cmd" />
+    <None Include="codegen\slimqless2_event_sync_T_pump.vbp" />
     <None Include="device.dep" />
     <None Include="device.props" />
     <None Include="My Project\Application.myapp">
@@ -203,9 +206,7 @@
     <Content Include="device.sln" />
     <Content Include="manager\design.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="codegen\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="device.dep" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
