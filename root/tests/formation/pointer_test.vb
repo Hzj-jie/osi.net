@@ -30,7 +30,7 @@ Public Class pointer_test
         Inherits [case]
 
         Public Const large_memory_object_count_lowerbound As Int64 = 10000
-        Public Const large_memory_object_size_lowerbound As Int64 = 20000
+        Public Const large_memory_object_size_lowerbound As Int64 = 200
 
         Private Class test_class
             Private Shared finalized As Int64 = 0
