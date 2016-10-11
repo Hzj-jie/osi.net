@@ -59,8 +59,7 @@ Partial Public Class accepter
                                             End If
                                         End Function,
                                   Function() As Boolean
-                                      If ec.end_result() Then
-                                          assert(Not +tp Is Nothing)
+                                      If ec.end_result() AndAlso Not tp.empty() Then
                                           If (+tp).ref_client_manual_device_exporter().inject(connection.[New](+tp, c)) Then
                                               Return goto_end()
                                           Else

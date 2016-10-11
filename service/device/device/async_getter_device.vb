@@ -54,7 +54,7 @@ Public MustInherit Class async_getter_device(Of T)
         assert(Not c Is Nothing)
         Dim r As T = Nothing
         If c.get(r) Then
-            MyBase.check(r)
+            check(r)
         End If
     End Sub
 

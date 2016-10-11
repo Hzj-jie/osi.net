@@ -74,6 +74,10 @@ Public Class device_adapter(Of IT, OT)
         Return input.is_valid()
     End Function
 
+    Protected NotOverridable Overrides Sub check(ByVal c As OT)
+        input.check()
+    End Sub
+
     Protected NotOverridable Overrides Function close_when_finalize() As Boolean
         Return False
     End Function
