@@ -39,6 +39,7 @@ Namespace constants
             Public Const receive_rate_sec As UInt32 = 1
             Public Const no_delay As Boolean = False
             Public Const ipv4 As Boolean = True
+            Public Const delay_connect As Boolean = False
             Public ReadOnly connector_concurrently_connecting As Int32
 
             Sub New()

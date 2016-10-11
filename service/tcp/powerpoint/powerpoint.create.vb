@@ -33,6 +33,7 @@ Partial Public Class powerpoint
         Private first_keepalive_ms As UInt32
         Private keepalive_interval_ms As UInt32
         Private tokener As String
+        Private delay_connect As Boolean
 
         Shared Sub New()
             assert(IPEndPoint.MinPort >= 0 AndAlso IPEndPoint.MaxPort <= max_uint16)
@@ -55,7 +56,8 @@ Partial Public Class powerpoint
                without_enable_keepalive().
                without_first_keepalive_ms().
                without_keepalive_interval_ms().
-               without_tokener()
+               without_tokener().
+               without_delay_connect()
         End Sub
 
         Public Shared Function [New]() As creator
@@ -345,6 +347,19 @@ Partial Public Class powerpoint
             Return with_tokener(Nothing)
         End Function
 
+        Public Function with_delay_connect(ByVal delay_connect As Boolean) As creator
+            Me.delay_connect = delay_connect
+            Return Me
+        End Function
+
+        Public Function with_delay_connect_str(ByVal delay_connect As String) As creator
+            Return with_delay_connect(delay_connect.to_bool(default_value.delay_connect))
+        End Function
+
+        Public Function without_delay_connect() As creator
+            Return with_delay_connect(default_value.delay_connect)
+        End Function
+
         Public Function with_var(ByVal v As var) As creator
             Const p_is_outgoing As String = "is-outgoing"
             Const p_host As String = "host"
@@ -363,6 +378,7 @@ Partial Public Class powerpoint
             Const p_first_keepalive_ms As String = "first-keepalive-ms"
             Const p_keepalive_interval_ms As String = "keepalive-interval-ms"
             Const p_tokener As String = "tokener"
+            Const p_delay_connect As String = "delay-connect"
             assert(Not v Is Nothing)
             v.bind(p_is_outgoing,
                    p_host,
@@ -380,7 +396,8 @@ Partial Public Class powerpoint
                    p_enable_keepalive,
                    p_first_keepalive_ms,
                    p_keepalive_interval_ms,
-                   p_tokener)
+                   p_tokener,
+                   p_delay_connect)
             Return with_token(v(p_token)).
                    with_host_or_ip(v(p_host)).
                    with_port_str(v(p_port)).
@@ -397,7 +414,8 @@ Partial Public Class powerpoint
                    with_enable_keepalive_str(v(p_enable_keepalive)).
                    with_first_keepalive_ms_str(v(p_first_keepalive_ms)).
                    with_keepalive_interval_ms_str(v(p_keepalive_interval_ms)).
-                   with_tokener(v(p_tokener))
+                   with_tokener(v(p_tokener)).
+                   with_delay_connect_str(v(p_delay_connect))
         End Function
 
         Public Function create(ByRef o As powerpoint) As Boolean
@@ -424,7 +442,8 @@ Partial Public Class powerpoint
                                    enable_keepalive,
                                    first_keepalive_ms,
                                    keepalive_interval_ms,
-                                   tokener)
+                                   tokener,
+                                   delay_connect)
                 Return True
             Else
                 Return False

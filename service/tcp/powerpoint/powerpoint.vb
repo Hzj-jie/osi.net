@@ -25,6 +25,7 @@ Partial Public Class powerpoint
     Public ReadOnly address_family As AddressFamily
     Public ReadOnly identity As String
     Public ReadOnly tokener As String
+    Public ReadOnly delay_connect As Boolean
     Private ReadOnly overhead As UInt32
     Private ReadOnly _ref_client_creator As iasync_device_creator(Of ref_client)
     Private ReadOnly _ref_client_auto_device_exporter As iauto_device_exporter(Of ref_client)
@@ -49,7 +50,8 @@ Partial Public Class powerpoint
                     ByVal enable_keepalive As Boolean,
                     ByVal first_keepalive_ms As UInt32,
                     ByVal keepalive_interval_ms As UInt32,
-                    ByVal tokener As String)
+                    ByVal tokener As String,
+                    ByVal delay_connect As Boolean)
         assert(max_connecting > 0)
         assert(max_connecting <= max_connected OrElse max_connected = 0)
         assert(is_outgoing Xor String.IsNullOrEmpty(host_or_ip))
@@ -73,6 +75,7 @@ Partial Public Class powerpoint
         Me.first_keepalive_ms = first_keepalive_ms
         Me.keepalive_interval_ms = keepalive_interval_ms
         Me.tokener = tokener
+        Me.delay_connect = delay_connect
 
         Me.overhead = If(ipv4, 40, 60)
         Me.identity = strcat("tcp@",
@@ -222,6 +225,12 @@ Partial Public Class powerpoint
         End If
     End Function
 
+    Private Function _herald_creator() As idevice_creator(Of herald)
+        Dim o As idevice_creator(Of herald) = Nothing
+        herald_creator(o)
+        Return o
+    End Function
+
     Public Function herald_creator() As idevice_creator(Of herald)
         Dim o As idevice_creator(Of herald) = Nothing
         assert(herald_creator(o))
@@ -274,11 +283,16 @@ Partial Public Class powerpoint
         Return o
     End Function
 
-    Public Function device_pool_new(Of T)(ByVal a As iauto_device_exporter(Of T),
-                                          ByVal m As imanual_device_exporter(Of T)) As idevice_pool(Of T)
+    Private Function device_pool_new(Of T)(ByVal c As idevice_creator(Of T),
+                                           ByVal a As iauto_device_exporter(Of T),
+                                           ByVal m As imanual_device_exporter(Of T)) As idevice_pool(Of T)
         Dim r As device_pool(Of T) = Nothing
         If is_outgoing Then
-            r = auto_pre_generated_device_pool.[New](a, max_connected, identity)
+            If delay_connect AndAlso Not c Is Nothing Then
+                r = delay_generate_device_pool.[New](c, max_connected, identity)
+            Else
+                r = auto_pre_generated_device_pool.[New](a, max_connected, identity)
+            End If
         Else
             r = manual_pre_generated_device_pool.[New](m, max_connected, identity)
         End If
@@ -287,15 +301,15 @@ Partial Public Class powerpoint
     End Function
 
     Public Function ref_client_device_pool() As idevice_pool(Of ref_client)
-        Return device_pool_new(_ref_client_auto_device_exporter, _ref_client_manual_device_exporter)
+        Return device_pool_new(Nothing, _ref_client_auto_device_exporter, _ref_client_manual_device_exporter)
     End Function
 
     Public Function flow_device_pool() As idevice_pool(Of flow)
-        Return device_pool_new(_flow_auto_device_exporter, _flow_manual_device_exporter)
+        Return device_pool_new(_flow_creator, _flow_auto_device_exporter, _flow_manual_device_exporter)
     End Function
 
     Public Function herald_device_pool() As idevice_pool(Of herald)
-        Return device_pool_new(_herald_auto_device_exporter(), _herald_manual_device_exporter())
+        Return device_pool_new(_herald_creator(), _herald_auto_device_exporter(), _herald_manual_device_exporter())
     End Function
 
     'test purpose only, make sure all the related event_combs and stopwatch events are stopped

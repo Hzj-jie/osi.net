@@ -1,6 +1,15 @@
 ﻿
 Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.template
+
+Public Class processor_count
+    Inherits _int64
+
+    Protected Overrides Function at() As Int64
+        Return Environment.ProcessorCount()
+    End Function
+End Class
 
 Public Module _processor
     Public ReadOnly single_cpu As Boolean
