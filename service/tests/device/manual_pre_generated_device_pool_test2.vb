@@ -1,5 +1,6 @@
 ﻿
 Imports osi.root.constants
+Imports osi.root.connector
 Imports osi.root.utt
 Imports osi.service.device
 
@@ -35,7 +36,12 @@ Public Class manual_pre_generated_device_pool_test2
             assert_more_or_equal(p.total_count(), uint32_1)
             assert_true(p.get(r))
             assert_not_nothing(r)
-            assert_true(p.release(r))
+            If rnd_bool_trues(3) Then
+                assert_true(p.release(r))
+            Else
+                r.close()
+                assert_false(p.release(r))
+            End If
             Return True
         End Function
 
