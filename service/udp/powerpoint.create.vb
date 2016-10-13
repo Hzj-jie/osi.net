@@ -18,6 +18,7 @@ Partial Public Class powerpoint
         Private ipv4 As Boolean
         Private max_receive_buffer_size As UInt32
         Private accept_new_connection As Boolean
+        Private max_connected As uint32
 
         Shared Sub New()
             assert(IPEndPoint.MinPort >= 0 AndAlso IPEndPoint.MaxPort <= max_uint16)
@@ -32,7 +33,8 @@ Partial Public Class powerpoint
                without_response_timeout_ms().
                without_send_rate_sec().
                without_max_receive_buffer_size().
-               without_accept_new_connection()
+               without_accept_new_connection().
+               without_max_connected()
         End Sub
 
         Public Shared Function [New]() As creator
@@ -199,6 +201,19 @@ Partial Public Class powerpoint
             Return with_accept_new_connection(default_value.accept_new_connection)
         End Function
 
+        Public Function with_max_connected(ByVal max_connected As UInt32) As creator
+            Me.max_connected = max_connected
+            Return Me
+        End Function
+
+        Public Function with_max_connected_str(ByVal max_connected As String) As creator
+            Return with_max_connected(max_connected.to_uint32(default_value.max_connected))
+        End Function
+
+        Public Function without_max_connected() As creator
+            Return with_max_connected(default_value.max_connected)
+        End Function
+
         Public Function with_var(ByVal v As var) As creator
             Const p_host As String = "host"
             Const p_remote_port As String = "remote-port"
@@ -209,6 +224,7 @@ Partial Public Class powerpoint
             Const p_ipv4 As String = "ipv4"
             Const p_max_receive_buffer_size As String = "max-receive-buffer-size"
             Const p_accept_new_connection As String = "accept-new-connection"
+            Const p_max_connected As String = "max-connected"
             assert(Not v Is Nothing)
             v.bind(p_host,
                    p_remote_port,
@@ -218,7 +234,8 @@ Partial Public Class powerpoint
                    p_receive_rate_sec,
                    p_ipv4,
                    p_max_receive_buffer_size,
-                   p_accept_new_connection)
+                   p_accept_new_connection,
+                   p_max_connected)
             Return with_host_or_ip(v(p_host)).
                    with_remote_port_str(v(p_remote_port)).
                    with_local_port_str(v(p_local_port)).
@@ -227,7 +244,8 @@ Partial Public Class powerpoint
                    with_receive_rate_sec_str(v(p_receive_rate_sec)).
                    with_ipv4_str(v(p_ipv4)).
                    with_max_receive_buffer_size_str(v(p_max_receive_buffer_size)).
-                   with_accept_new_connection_str(v(p_accept_new_connection))
+                   with_accept_new_connection_str(v(p_accept_new_connection)).
+                   with_max_connected_str(v(p_max_connected))
         End Function
 
         Public Function create(ByRef o As powerpoint) As Boolean
@@ -240,7 +258,8 @@ Partial Public Class powerpoint
                                    receive_rate_sec,
                                    ipv4,
                                    max_receive_buffer_size,
-                                   accept_new_connection)
+                                   accept_new_connection,
+                                   max_connected)
                 Return True
             Else
                 Return False

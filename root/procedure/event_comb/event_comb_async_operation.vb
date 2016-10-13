@@ -20,7 +20,10 @@ Public Class event_comb_async_operation
     End Sub
 
     Private Shared Shadows Function current() As event_comb_async_operation
-        Return cast(Of event_comb_async_operation)(event_comb.current())
+        Dim o As event_comb_async_operation = Nothing
+        o = DirectCast(event_comb.current(), event_comb_async_operation)
+        assert(Not o Is Nothing)
+        Return o
     End Function
 
     <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>

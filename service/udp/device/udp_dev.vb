@@ -33,7 +33,7 @@ Public Class udp_dev
                                           with_transmit_mode(transmitter.mode_t.duplex))
     End Sub
 
-    Public Sub New(ByVal p As powerpoint, ByVal sources As const_array(Of IPEndPoint))
+    Public Sub New(ByVal p As powerpoint, ByVal sources As const_array(Of IPEndPoint), ByVal buff() As Byte)
         assert(Not p Is Nothing)
         Me.p = p
         If p.local_port = socket_invalid_port Then
@@ -50,8 +50,15 @@ Public Class udp_dev
             Me.accepter = New listener.multiple_accepter(sources)
             Me.buff_size = New atomic_int32()
             AddHandler accepter.received, AddressOf push_queue
+            If Not buff Is Nothing Then
+                push_queue(buff, Nothing)
+            End If
             assert(listeners.[New](p, local_port).attach(accepter))
         End If
+    End Sub
+
+    Public Sub New(ByVal p As powerpoint, ByVal sources As const_array(Of IPEndPoint))
+        Me.New(p, sources, Nothing)
     End Sub
 
     Private Sub push_queue(ByVal b() As Byte, ByVal remote As IPEndPoint)

@@ -12,25 +12,26 @@ Imports osi.root.utils
 Imports osi.root.lock
 Imports osi.root.lock.slimlock
 Imports osi.service.commander
-Imports osi.service.tcp
-Imports osi.service.http
 Imports osi.service.convertor
 Imports osi.service.device
-Imports cmd = osi.service.commander
 Imports tcp = osi.service.tcp
 Imports http = osi.service.http
+Imports udp = osi.service.udp
 
 'different combinations will generate a different set of parameters
 Public Class commander_case(Of _ENABLE_TCP As _boolean,
                                _ENABLE_HTTP_GET As _boolean,
                                _ENABLE_HTTP_POST As _boolean,
+                               _ENABLE_UDP As _boolean,
                                _CONNECTION_COUNT As _int64)
     Inherits case_wrapper
 
+    Private Const test_size As Int64 = 128
     Private Shared ReadOnly enable_tcp As Boolean
     Private Shared ReadOnly enable_http_get As Boolean
     Private Shared ReadOnly enable_http_post As Boolean
     Private Shared ReadOnly enable_http As Boolean
+    Private Shared ReadOnly enable_udp As Boolean
     Private Shared ReadOnly token As String
     Private Shared ReadOnly connection_count As Int32
     Private Shared ReadOnly ask_command As Int32
@@ -39,6 +40,7 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
     Private Shared ReadOnly answer_para As Int32
     Private Shared ReadOnly tcp_port As UInt16
     Private Shared ReadOnly http_port As UInt16
+    Private Shared ReadOnly udp_port As UInt16
     Private ReadOnly dispatcher As dispatcher
 
     Shared Sub New()
@@ -46,13 +48,17 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
         enable_http_get = +(alloc(Of _ENABLE_HTTP_GET)())
         enable_http_post = +(alloc(Of _ENABLE_HTTP_POST)())
         enable_http = enable_http_get OrElse enable_http_post
-        assert(enable_tcp OrElse enable_http)
+        enable_udp = +(alloc(Of _ENABLE_UDP)())
+        assert(enable_tcp OrElse enable_http OrElse enable_udp)
         If enable_tcp Then
             token = guid_str()
             tcp_port = rnd_port()
         End If
         If enable_http Then
             http_port = rnd_port()
+        End If
+        If enable_udp Then
+            udp_port = rnd_port()
         End If
         connection_count = +(alloc(Of _CONNECTION_COUNT)())
         If connection_count = npos Then
@@ -67,7 +73,7 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
     Public Sub New()
         MyBase.New(If(connection_count > 1,
                       multi_procedure(repeat(New commander_case(), If(isdebugbuild(), 1, 2) * 4096), connection_count),
-                      repeat(New commander_case(), If(isdebugbuild(), 1, 2) * 4096)))
+                      repeat(New commander_case(), If(isdebugbuild(), 1, 2) * test_size)))
         dispatcher = New dispatcher()
     End Sub
 
@@ -95,36 +101,50 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
     Public Overrides Function run() As Boolean
         assert_true(dispatcher.register(ask_command, AddressOf handle))
         Dim pp As idevice_pool(Of herald) = Nothing
-        Dim s As server = Nothing
+        Dim udp_receive As idevice_pool(Of herald) = Nothing
+        Dim s As http.server = Nothing
         If enable_tcp Then
-            pp = powerpoint.creator.[New]().
-                 with_token(token).
-                 with_port(tcp_port).
-                 create().herald_device_pool()
-            assert_true(-(New cmd.responder(pp, npos, dispatcher)))
-            commander_case.opp.set(powerpoint.creator.[New]().
-                                   with_token(token).
-                                   with_endpoint(New IPEndPoint(IPAddress.Loopback, tcp_port)).
-                                   with_max_connected(CUInt(connection_count)).
-                                   create().herald_device_pool())
+            pp = tcp.powerpoint.creator.[New]().
+                     with_token(token).
+                     with_port(tcp_port).
+                     create().herald_device_pool()
+            assert_true(-(New responder(pp, npos, dispatcher)))
+            commander_case.opp.set(tcp.powerpoint.creator.[New]().
+                                       with_token(token).
+                                       with_endpoint(New IPEndPoint(IPAddress.Loopback, tcp_port)).
+                                       with_max_connected(CUInt(connection_count)).
+                                       create().herald_device_pool())
             assert_true(timeslice_sleep_wait_when(Function() pp.total_count() < connection_count,
                                                   seconds_to_milliseconds(30)))
         End If
         If enable_http Then
-            s = New server(response_timeout_ms:=seconds_to_milliseconds(15))
+            s = New http.server(response_timeout_ms:=seconds_to_milliseconds(15))
             assert_true(s.add_port(http_port))
             assert_true(s.start())
             assert_true(http.responder.respond(s, dispatcher))
+        End If
+        If enable_udp Then
+            udp_receive = udp.powerpoint.creator.[New]().
+                              with_local_port(udp_port).
+                              create().herald_device_pool()
+            assert_true(-(New responder(udp_receive, npos, dispatcher)))
+            commander_case.udp_sender.set(udp.powerpoint.creator.[New]().
+                                              with_remote_endpoint(New IPEndPoint(IPAddress.Loopback, udp_port)).
+                                              create().herald_device_pool())
         End If
         Dim r As Boolean = False
         r = MyBase.run()
         If enable_tcp Then
             commander_case.opp.get().close()
             pp.close()
-            powerpoint.waitfor_stop()
+            tcp.powerpoint.waitfor_stop()
         End If
         If enable_http Then
             s.stop(30)
+        End If
+        If enable_udp Then
+            commander_case.udp_sender.get().close()
+            udp_receive.close()
         End If
         assert_true(dispatcher.erase(ask_command))
         Return True
@@ -134,17 +154,21 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
         Inherits count_event_comb_case
 
         Public Shared ReadOnly opp As pointer(Of idevice_pool(Of herald))
+        Public Shared ReadOnly udp_sender As pointer(Of idevice_pool(Of herald))
 
         Shared Sub New()
             opp = New pointer(Of idevice_pool(Of herald))()
+            udp_sender = New pointer(Of idevice_pool(Of herald))()
         End Sub
 
         Private ReadOnly tcp_suc As atomic_int
         Private ReadOnly http_get_suc As atomic_int
         Private ReadOnly http_post_suc As atomic_int
+        Private ReadOnly udp_suc As atomic_int
         Private tcp_q As questioner
         Private http_get_q As questioner
         Private http_post_q As questioner
+        Private udp_q As questioner
 
         Public Sub New()
             MyBase.New(False)
@@ -157,22 +181,33 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
             If enable_http_post Then
                 http_post_suc = New atomic_int()
             End If
+            If enable_udp Then
+                udp_suc = New atomic_int()
+            End If
         End Sub
 
         Public Overrides Function prepare() As Boolean
-            If enable_tcp Then
-                tcp_suc.set(0)
+            If MyBase.prepare() Then
+                If enable_tcp Then
+                    tcp_suc.set(0)
+                End If
+                If enable_http_get Then
+                    http_get_suc.set(0)
+                End If
+                If enable_http_post Then
+                    http_post_suc.set(0)
+                End If
+                If enable_udp Then
+                    udp_suc.set(0)
+                End If
+                tcp_q = Nothing
+                http_get_q = Nothing
+                http_post_q = Nothing
+                udp_q = Nothing
+                Return True
+            Else
+                Return False
             End If
-            If enable_http_get Then
-                http_get_suc.set(0)
-            End If
-            If enable_http_post Then
-                http_post_suc.set(0)
-            End If
-            tcp_q = Nothing
-            http_get_q = Nothing
-            http_post_q = Nothing
-            Return MyBase.prepare()
         End Function
 
         Protected Overrides Function create_case() As event_comb
@@ -181,21 +216,25 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
                 tcp_q = New questioner(+opp)
             End If
             If enable_http_get AndAlso http_get_q Is Nothing Then
-                http_get_q = New questioner(client_get_dev.herald_device_pool(Convert.ToString(IPAddress.Loopback),
-                                                                              http_port,
-                                                                              max_connection:=connection_count))
+                http_get_q = New questioner(http.client_get_dev.herald_device_pool(Convert.ToString(IPAddress.Loopback),
+                                                                                   http_port,
+                                                                                   max_connection:=connection_count))
             End If
             If enable_http_post AndAlso http_post_q Is Nothing Then
-                http_post_q = New questioner(client_post_dev.herald_device_pool(Convert.ToString(IPAddress.Loopback),
-                                                                                http_port,
-                                                                                max_connection:=connection_count))
+                http_post_q = New questioner(http.client_post_dev.herald_device_pool(
+                                                 Convert.ToString(IPAddress.Loopback),
+                                                 http_port,
+                                                 max_connection:=connection_count))
+            End If
+            If enable_udp AndAlso udp_q Is Nothing Then
+                udp_q = New questioner(+udp_sender)
             End If
             Dim para As Int32 = 0
             Dim r As pointer(Of command) = Nothing
             Dim ec As event_comb = Nothing
             Dim choice As Int32 = 0
             Return New event_comb(Function() As Boolean
-                                      Const max_choice As Int32 = 3
+                                      Const max_choice As Int32 = 4
                                       Dim c As command = Nothing
                                       c = New command()
                                       para = rnd_int(min_int32, max_int32)
@@ -211,6 +250,9 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
                                               choice = 2
                                           End If
                                           If Not enable_http_post AndAlso choice = 2 Then
+                                              choice = 3
+                                          End If
+                                          If Not enable_udp AndAlso choice = 3 Then
                                               choice = 0
                                           End If
                                       Next
@@ -224,6 +266,9 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
                                           Case 2
                                               assert(enable_http_post)
                                               ec = http_post_q(c, r)
+                                          Case 3
+                                              assert(enable_udp)
+                                              ec = udp_q(c, r)
                                           Case Else
                                               assert(False)
                                       End Select
@@ -246,6 +291,9 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
                                               Case 2
                                                   assert(enable_http_post)
                                                   http_post_suc.increment()
+                                              Case 3
+                                                  assert(enable_udp)
+                                                  udp_suc.increment()
                                               Case Else
                                                   assert(False)
                                           End Select
@@ -262,7 +310,8 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
             Dim div As Int32 = 0
             div = If(enable_tcp, 1, 0) +
                   If(enable_http_get, 1, 0) +
-                  If(enable_http_post, 1, 0)
+                  If(enable_http_post, 1, 0) +
+                  If(enable_udp, 1, 0)
             assert(div > 0)
             If enable_tcp Then
                 assert_more_or_equal_and_less_or_equal(+tcp_suc, run_times() / div * 0.9, run_times() / div * 1.1)
@@ -272,6 +321,9 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
             End If
             If enable_http_post Then
                 assert_more_or_equal_and_less_or_equal(+http_post_suc, run_times() / div * 0.9, run_times() / div * 1.1)
+            End If
+            If enable_udp Then
+                assert_more_or_equal_and_less_or_equal(+udp_suc, run_times() / div * 0.9, run_times() / div * 1.1)
             End If
             Return MyBase.finish()
         End Function

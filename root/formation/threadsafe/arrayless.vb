@@ -11,20 +11,34 @@ Public Class arrayless(Of T)
         Public v As T
     End Structure
 
-    Private ReadOnly c As Func(Of T)
+    Private ReadOnly c As Func(Of UInt32, T)
     Private ReadOnly a() As slot
 
-    Public Sub New(ByVal [New] As Func(Of T), ByVal size As UInt32)
+    Private Shared Function remove_parameter(ByVal i As Func(Of T)) As Func(Of UInt32, T)
+        If i Is Nothing Then
+            Return Nothing
+        Else
+            Return Function(ByVal id As UInt32) As T
+                       Return i()
+                   End Function
+        End If
+    End Function
+
+    Public Sub New(ByVal [New] As Func(Of UInt32, T), ByVal size As UInt32)
         If [New] Is Nothing Then
-            Me.c = AddressOf alloc(Of T)
+            Me.c = remove_parameter(AddressOf alloc(Of T))
         Else
             Me.c = [New]
         End If
         ReDim Me.a(size - uint32_1)
     End Sub
 
+    Public Sub New(ByVal [New] As Func(Of T), ByVal size As UInt32)
+        Me.New(remove_parameter([New]), size)
+    End Sub
+
     Public Sub New(ByVal size As UInt32)
-        Me.New(Nothing, size)
+        Me.New([default](Of Func(Of UInt32, T)).null, size)
     End Sub
 
     Public Sub clear()
@@ -49,14 +63,14 @@ Public Class arrayless(Of T)
 
     ' Create a new instance in an empty slot by using @c, and set the new @id and @o. If there is no empty slot, this
     ' function returns false.
-    Public Function [next](ByVal c As Func(Of T), ByRef id As UInt32, ByRef o As T) As Boolean
+    Public Function [next](ByVal c As Func(Of UInt32, T), ByRef id As UInt32, ByRef o As T) As Boolean
         assert(Not c Is Nothing)
         For i As UInt32 = 0 To size() - uint32_1
             If Not a(i).d Then
                 Dim found As Boolean = False
                 a(i).l.wait()
                 If Not a(i).d Then
-                    a(i).v = nothrow(c)
+                    a(i).v = nothrow(c, i)
                     a(i).d = True
                     id = i
                     o = a(i).v
@@ -71,14 +85,51 @@ Public Class arrayless(Of T)
         Return False
     End Function
 
-    Public Function [next](ByVal c As Func(Of T), ByRef id As UInt32) As T
+    ' Create a new instance in one of several slots by using @c, until @c returns a non-null object, and set the new @id
+    ' and @o. If there is no empty slot, this function returns false.
+    Public Function next_non_null(ByVal c As Func(Of UInt32, T), ByRef id As UInt32, ByRef o As T) As Boolean
+        While [next](c, id, o)
+            If Not o Is Nothing Then
+                Return True
+            End If
+        End While
+        Return False
+    End Function
+
+    Public Function [next](ByVal c As Func(Of T), ByRef id As UInt32, ByRef o As T) As Boolean
+        Return [next](remove_parameter(c), id, o)
+    End Function
+
+    Public Function next_non_null(ByVal c As Func(Of T), ByRef id As UInt32, ByRef o As T) As Boolean
+        Return next_non_null(remove_parameter(c), id, o)
+    End Function
+
+    Public Function [next](ByVal c As Func(Of UInt32, T), ByRef id As UInt32) As T
         Dim o As T = Nothing
         assert([next](c, id, o))
         Return o
     End Function
 
+    Public Function next_non_null(ByVal c As Func(Of UInt32, T), ByRef id As UInt32) As T
+        Dim o As T = Nothing
+        assert(next_non_null(c, id, o))
+        Return o
+    End Function
+
+    Public Function [next](ByVal c As Func(Of T), ByRef id As UInt32) As T
+        Return [next](remove_parameter(c), id)
+    End Function
+
+    Public Function next_non_null(ByVal c As Func(Of T), ByRef id As UInt32) As T
+        Return next_non_null(remove_parameter(c), id)
+    End Function
+
     Public Function [next](ByRef id As UInt32, ByRef o As T) As Boolean
         Return [next](c, id, o)
+    End Function
+
+    Public Function next_non_null(ByRef id As UInt32, ByRef o As T) As Boolean
+        Return next_non_null(c, id, o)
     End Function
 
     Public Function [next](ByRef id As UInt32) As T
@@ -87,15 +138,21 @@ Public Class arrayless(Of T)
         Return o
     End Function
 
+    Public Function next_non_null(ByRef id As UInt32) As T
+        Dim o As T = Nothing
+        assert(next_non_null(id, o))
+        Return o
+    End Function
+
     ' Create or return the data at @id to @o. If the slot is empty, use @c to create a new instance of @T. If @id is not
     ' in the range [0, #size()), this function returns false.
-    Public Function [New](ByVal id As UInt32, ByVal c As Func(Of T), ByRef o As T) As Boolean
+    Public Function [New](ByVal id As UInt32, ByVal c As Func(Of UInt32, T), ByRef o As T) As Boolean
         assert(Not c Is Nothing)
         If id < size() Then
             If Not a(id).d Then
                 a(id).l.wait()
                 If Not a(id).d Then
-                    a(id).v = nothrow(c)
+                    a(id).v = nothrow(c, id)
                     a(id).d = True
                 End If
                 a(id).l.release()
@@ -108,10 +165,18 @@ Public Class arrayless(Of T)
         End If
     End Function
 
-    Public Function [New](ByVal id As UInt32, ByVal c As Func(Of T)) As T
+    Public Function [New](ByVal id As UInt32, ByVal c As Func(Of T), ByRef o As T) As Boolean
+        Return [New](id, remove_parameter(c), o)
+    End Function
+
+    Public Function [New](ByVal id As UInt32, ByVal c As Func(Of UInt32, T)) As T
         Dim o As T = Nothing
         assert([New](id, c, o))
         Return o
+    End Function
+
+    Public Function [New](ByVal id As UInt32, ByVal c As Func(Of T)) As T
+        Return [New](id, remove_parameter(c))
     End Function
 
     Public Function [New](ByVal id As UInt32, ByRef o As T) As Boolean

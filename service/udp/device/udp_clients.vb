@@ -1,5 +1,6 @@
 ﻿
 Imports System.Net.Sockets
+Imports osi.root.constants
 Imports osi.root.template
 
 ' A collection of all udp-clients, each one can be retrieved by its local port.
@@ -10,7 +11,11 @@ Public NotInheritable Class udp_clients
         Inherits __do(Of powerpoint, UInt16, UdpClient, Boolean)
 
         Public Overrides Function at(ByRef i As powerpoint, ByRef j As UInt16, ByRef k As UdpClient) As Boolean
-            Return connector.[New](i, j, k)
+            If j = socket_invalid_port Then
+                Return False
+            Else
+                Return connector.[New](i, j, k)
+            End If
         End Function
     End Class
 

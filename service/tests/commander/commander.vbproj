@@ -106,6 +106,7 @@
   <Import Project="$(ServicePath)\commander\commander.props" Condition="'$(CommanderProps)'==''" />
   <Import Project="$(ServicePath)\convertor\convertor.props" Condition="'$(ConvertorProps)'==''" />
   <Import Project="$(ServicePath)\tcp\tcp.props" Condition="'$(TcpProps)'==''" />
+  <Import Project="$(ServicePath)\udp\udp.props" Condition="'$(UdpProps)'==''" />
   <Import Project="$(ServicePath)\http\http.props" Condition="'$(HttpProps)'==''" />
   <ItemGroup>
     <Reference Include="osi.tests.service.device">

@@ -43,9 +43,10 @@ Partial Public Class listener
         If p.accept_new_connection Then
             AddHandler MyBase.unaccepted, Sub(buff() As Byte, remote As IPEndPoint)
                                               p.udp_dev_manual_device_exporter().inject(
-                                                  +(New udp_dev(p, const_array.[New]({remote}))))
+                                                  +(New udp_dev(p, const_array.[New]({remote}), buff)))
                                           End Sub
         End If
+        assert(bind())
     End Sub
 
     Public Sub New(ByVal p As powerpoint, ByVal c As UdpClient)
