@@ -1,5 +1,6 @@
 ﻿
 Imports osi.root.connector
+Imports osi.root.envs
 Imports osi.root.utt
 
 Public Class default_test
@@ -24,6 +25,10 @@ Public Class default_test
 
         Protected Overrides Function min_rate_table() As Double(,)
             If isdebugbuild() Then
+                If os.windows_major <= os.windows_major_t._5 Then
+                    Return {{0, 2.5},
+                            {0.6, 0}}
+                End If
                 Return {{0, 1.8},
                         {0.9, 0}}
             Else

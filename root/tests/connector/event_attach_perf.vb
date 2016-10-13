@@ -15,7 +15,7 @@ Public Class event_attach_perf
     End Sub
 
     Protected Overrides Function min_rate_table() As Double(,)
-        If os.windows_major = os.windows_major_t._5 Then
+        If os.windows_major <= os.windows_major_t._5 Then
             Return {{-1, 0.6, -1, -1, -1, -1},
                     {6.67, -1, -1, -1, -1, -1},
                     {-1, -1, -1, 2.5, -1, -1},

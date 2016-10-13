@@ -16,7 +16,7 @@ Public Class cint_convert_toint_perf_test
     End Sub
 
     Protected Overrides Function min_rate_table() As Double(,)
-        If os.windows_major = os.windows_major_t._5 Then
+        If os.windows_major <= os.windows_major_t._5 Then
             Return {{0, 0.6, 1.1},
                     {-1, 0, -1},
                     {1.1, 0.6, 0}}

@@ -23,7 +23,7 @@ Public Class npos_uint_perf_test
     End Sub
 
     Protected Overrides Function min_rate_table() As Double(,)
-        If os.windows_major = os.windows_major_t._5 Then
+        If os.windows_major <= os.windows_major_t._5 Then
             Return {{0, 25},
                     {0.08, 0}}
         Else
