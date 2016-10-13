@@ -23,8 +23,13 @@ Public Class default_test
         End Sub
 
         Protected Overrides Function min_rate_table() As Double(,)
-            Return {{0, 1.8},
-                    {0.9, 0}}
+            If isdebugbuild() Then
+                Return {{0, 1.8},
+                        {0.9, 0}}
+            Else
+                Return {{0, 6},
+                        {0.4, 0}}
+            End If
         End Function
 
         Private Class default_null_case
