@@ -14,8 +14,4 @@ Public Module _default
     Public Const default_string As String = Nothing
     Public ReadOnly default_strings() As String = Nothing
     Public ReadOnly default_bytes() As Byte = Nothing
-
-    Public Function D(Of T)() As T
-        Return Nothing
-    End Function
 End Module
