@@ -13,7 +13,7 @@ Public Structure lock(Of T As {Structure, islimlock})
 
     Shared Sub New()
         assert(INVALID_THREAD_ID = DirectCast(Nothing, Int32))
-        Dim l As T
+        Dim l As T = Nothing
         assert(l.can_thread_owned())
         assert(Not TypeOf l Is ilock)
     End Sub
