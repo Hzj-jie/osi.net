@@ -6,6 +6,7 @@
 
 
 Public Module _disposer
+#If 0 Then
     Public Function make_disposer(Of T) _
 					    (ByVal p As Func(Of T),
                          Optional ByVal init As Action = Nothing,
@@ -21,12 +22,21 @@ Public Module _disposer
                         As disposer(Of T)
         Return New disposer(Of T)(p, init, disposer)
     End Function
+#End If
+
+    Public Function make_disposer(Of T) _
+						(ByVal p As T,
+                         Optional ByVal disposer As Action(Of T) = Nothing) _
+                        As disposer(Of T)
+        Return New disposer(Of T)(p, disposer)
+    End Function
 End Module
 
 Public Class disposer(Of T)
     Inherits dispose_ptr(Of T)
     Implements IDisposable
 
+#If 0 Then
     Public Sub New(ByVal p As Func(Of T),
                    Optional ByVal init As Action = Nothing,
                    Optional ByVal disposer As Action(Of T) = Nothing)
@@ -42,6 +52,16 @@ Public Class disposer(Of T)
     Public Sub New(Optional ByVal init As Action = Nothing,
                    Optional ByVal disposer As Action(Of T) = Nothing)
         MyBase.New(init, disposer)
+    End Sub
+#End If
+
+    Public Sub New(ByVal p As T,
+                   Optional ByVal disposer As Action(Of T) = Nothing)
+        MyBase.New(p, disposer)
+    End Sub
+
+    Public Sub New(Optional ByVal disposer As Action(Of T) = Nothing)
+        MyBase.New(disposer)
     End Sub
 
     Public Overloads Sub dispose()

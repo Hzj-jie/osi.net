@@ -12,6 +12,7 @@
 
 
 Public Module _weak_disposer
+#If 0 Then
     Public Function make_weak_disposer(Of T) _
 					    (ByVal p As Func(Of T),
                          Optional ByVal init As Action = Nothing,
@@ -27,12 +28,21 @@ Public Module _weak_disposer
                         As weak_disposer(Of T)
         Return New weak_disposer(Of T)(p, init, disposer)
     End Function
+#End If
+
+    Public Function make_weak_disposer(Of T) _
+						(ByVal p As T,
+                         Optional ByVal disposer As Action(Of T) = Nothing) _
+                        As weak_disposer(Of T)
+        Return New weak_disposer(Of T)(p, disposer)
+    End Function
 End Module
 
 Public Class weak_disposer(Of T)
     Inherits weak_dispose_ptr(Of T)
     Implements IDisposable
 
+#If 0 Then
     Public Sub New(ByVal p As Func(Of T),
                    Optional ByVal init As Action = Nothing,
                    Optional ByVal disposer As Action(Of T) = Nothing)
@@ -48,6 +58,16 @@ Public Class weak_disposer(Of T)
     Public Sub New(Optional ByVal init As Action = Nothing,
                    Optional ByVal disposer As Action(Of T) = Nothing)
         MyBase.New(init, disposer)
+    End Sub
+#End If
+
+    Public Sub New(ByVal p As T,
+                   Optional ByVal disposer As Action(Of T) = Nothing)
+        MyBase.New(p, disposer)
+    End Sub
+
+    Public Sub New(Optional ByVal disposer As Action(Of T) = Nothing)
+        MyBase.New(disposer)
     End Sub
 
     Public Overloads Sub dispose()

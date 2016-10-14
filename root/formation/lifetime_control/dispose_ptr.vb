@@ -20,6 +20,7 @@ Public Class dispose_ptr(Of T)
     
     Private ReadOnly _disposer As Action(Of T)
 
+#If 0 Then
     Public Sub New(ByVal p As Func(Of T),
                    Optional ByVal init As Action = Nothing,
                    Optional ByVal disposer As Action(Of T) = Nothing)
@@ -46,6 +47,22 @@ Public Class dispose_ptr(Of T)
     Public Sub New(Optional ByVal init As Action = Nothing,
                    Optional ByVal disposer As Action(Of T) = Nothing)
         Me.New(DirectCast(Nothing, Func(Of T)), init, disposer)
+    End Sub
+#End If
+    
+    Public Sub New(ByVal p As T,
+                   Optional ByVal disposer As Action(Of T) = Nothing)
+        [set](p)
+        If disposer Is Nothing Then
+            assert(Not [default](Of T).disposer() Is Nothing)
+            Me._disposer = [default](Of T).disposer()
+        Else
+            Me._disposer = disposer
+        End If
+    End Sub
+
+    Public Sub New(Optional ByVal disposer As Action(Of T) = Nothing)
+        Me.New(Nothing, disposer)
     End Sub
 
     Protected Overridable Sub dispose(ByVal c As T)

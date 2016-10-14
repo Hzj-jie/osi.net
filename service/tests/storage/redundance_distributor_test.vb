@@ -42,8 +42,8 @@ Public Class redundance_distributor_test
     Protected Overrides Function clean_up(ByVal i As istrkeyvt) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  assert_true(manager.erase(istrkeyvt1_name, D(Of istrkeyvt)()))
-                                  assert_true(manager.erase(istrkeyvt2_name, D(Of istrkeyvt)()))
+                                  assert_true(manager.erase(istrkeyvt1_name, [default](Of istrkeyvt).null))
+                                  assert_true(manager.erase(istrkeyvt2_name, [default](Of istrkeyvt).null))
                                   ec = MyBase.clean_up(i)
                                   Return waitfor(ec) AndAlso
                                          goto_next()

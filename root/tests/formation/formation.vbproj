@@ -90,6 +90,7 @@
     <Compile Include="heap\heap_test.vb" />
     <Compile Include="lifetime_control\event_disposer_test.vb" />
     <Compile Include="lifetime_control\lifetime_binder_test.vb" />
+    <Compile Include="lifetime_control\ref_instance_test.vb" />
     <Compile Include="lifetime_control\ref_ptr_test.vb" />
     <Compile Include="lifetime_control\weak_event_disposer_test.vb" />
     <Compile Include="list\list_case.vb" />

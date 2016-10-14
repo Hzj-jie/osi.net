@@ -5,14 +5,15 @@ Imports osi.root.connector
 
 Public Module _disposer
     Public Function regional_action(ByVal start As Action,
-                                    ByVal [end] As Action) As disposer(Of Int32)
+                                    ByVal [end] As Action) As disposer
         assert(Not start Is Nothing)
         assert(Not [end] Is Nothing)
-        Return make_disposer(0, start, Sub(x) [end]())
+        start()
+        Return New disposer([end])
     End Function
 
-    Public Function regional_atomic_bool(ByVal i As atomic_bool) As disposer(Of Int32)
+    Public Function regional_atomic_bool(ByVal i As atomic_bool) As disposer
         assert(Not i Is Nothing)
-        Return make_disposer(0, Sub() i.inc(), Sub(x) i.dec())
+        Return regional_action(AddressOf i.inc, AddressOf i.dec)
     End Function
 End Module

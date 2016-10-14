@@ -77,7 +77,7 @@ Public Class remote_istrkeyvt_test
         Return New event_comb(Function() As Boolean
                                   assert_true(dispatcher.ignore())
                                   s.stop(30)
-                                  assert_true(manager.erase(istrkeyvt_name, D(Of istrkeyvt)()))
+                                  assert_true(manager.erase(istrkeyvt_name, [default](Of istrkeyvt).null))
                                   ec = MyBase.clean_up()
                                   Return waitfor(ec) AndAlso
                                          goto_next()

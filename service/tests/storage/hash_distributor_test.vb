@@ -55,7 +55,7 @@ Public Class hash_distributor_test
     Protected Overrides Function clean_up() As event_comb
         Return sync_async(Sub()
                               For i As Int32 = 0 To strkeyvt_count - 1
-                                  assert_true(manager.erase(istrkeyvt_name(i), D(Of istrkeyvt)()))
+                                  assert_true(manager.erase(istrkeyvt_name(i), [default](Of istrkeyvt).null))
                               Next
                           End Sub)
     End Function

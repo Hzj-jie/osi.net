@@ -49,6 +49,12 @@ Public Class [default](Of T)
                             cast(Of Socket)(x).Close()
                         End If
                     End Sub
+            ElseIf GetType(T).inherit(GetType(TextWriter)) Then
+                D = Sub(x As T)
+                        If Not x Is Nothing Then
+                            assert(close_writer(direct_cast(Of TextWriter)(x)))
+                        End If
+                    End Sub
             ElseIf GetType(T).implement(GetType(IDisposable)) Then
                 D = Sub(x As T)
                         If Not x Is Nothing Then

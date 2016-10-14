@@ -3,6 +3,7 @@
 ##DEFAULT BASE_NAME dispose_ptr
 
 Public Module _##CLASS_NAME##
+#If 0 Then
     Public Function make_##CLASS_NAME##(Of T) _
 					    (ByVal p As Func(Of T),
                          Optional ByVal init As Action = Nothing,
@@ -18,12 +19,21 @@ Public Module _##CLASS_NAME##
                         As ##CLASS_NAME##(Of T)
         Return New ##CLASS_NAME##(Of T)(p, init, disposer)
     End Function
+#End If
+
+    Public Function make_##CLASS_NAME##(Of T) _
+						(ByVal p As T,
+                         Optional ByVal disposer As Action(Of T) = Nothing) _
+                        As ##CLASS_NAME##(Of T)
+        Return New ##CLASS_NAME##(Of T)(p, disposer)
+    End Function
 End Module
 
 Public Class ##CLASS_NAME##(Of T)
     Inherits ##BASE_NAME##(Of T)
     Implements IDisposable
 
+#If 0 Then
     Public Sub New(ByVal p As Func(Of T),
                    Optional ByVal init As Action = Nothing,
                    Optional ByVal disposer As Action(Of T) = Nothing)
@@ -39,6 +49,16 @@ Public Class ##CLASS_NAME##(Of T)
     Public Sub New(Optional ByVal init As Action = Nothing,
                    Optional ByVal disposer As Action(Of T) = Nothing)
         MyBase.New(init, disposer)
+    End Sub
+#End If
+
+    Public Sub New(ByVal p As T,
+                   Optional ByVal disposer As Action(Of T) = Nothing)
+        MyBase.New(p, disposer)
+    End Sub
+
+    Public Sub New(Optional ByVal disposer As Action(Of T) = Nothing)
+        MyBase.New(disposer)
     End Sub
 
     Public Overloads Sub dispose()

@@ -67,7 +67,7 @@ Public Class remote_iosys_test
     Public Overrides Function finish() As Boolean
         s.stop(30)
         Return assert_true(device_pool_manager.erase(
-                   ra_name, D(Of singleton_device_pool(Of command_ragent(Of iosys_test_case)))())) And
+                   ra_name, [default](Of singleton_device_pool(Of command_ragent(Of iosys_test_case))).null)) And
                ra.ignore() And
                MyBase.finish()
     End Function
