@@ -34,26 +34,7 @@ Public Module _cast
         End If
     End Sub
 
-    Public Function cast(Of T)(ByVal i As Object, Optional ByVal require_assert As Boolean = True) As T
-        Dim o As T = Nothing
-        cast_assert(Of T)(i, cast(Of T)(i, o), require_assert)
-        Return o
-    End Function
-
-    'use in this way
-    'dim i as thisClass = new thisClass()
-    'cast(of otherClass, otherClass)(i)
-    'so if there is a ctype from thisClass to otherClass, it will be OK to translate
-    'use directly ctype may fail
-    'use cast(of object)(i, requireAssert) can make it safer? cannot sure about it.
-    Public Function cast(Of T, IT)(ByVal i As IT, Optional ByVal require_assert As Boolean = True) As T
-        'Return cast(Of t)(cast(Of Object)(i, requireAssert), requireAssert)
-        Dim o As T = Nothing
-        cast_assert(Of T)(i, cast(Of T, IT)(i, o), require_assert)
-        Return o
-    End Function
-
-    Private Function direct_cast(Of T)(ByVal i As Object, ByRef o As T) As Boolean
+    Private Function _direct_cast(Of T)(ByVal i As Object, ByRef o As T) As Boolean
         Try
             o = DirectCast(i, T)
             Return True
@@ -245,7 +226,7 @@ Public Module _cast
 
     Public Function cast(Of T, IT)(ByVal i As IT, ByRef o As T) As Boolean
         Return c_nothing(i, o) OrElse
-               direct_cast(i, o) OrElse
+               _direct_cast(i, o) OrElse
                (on_mono() AndAlso change_type(i, o)) OrElse
                c_type(i, o) OrElse
                runtime_casting_proxy(i, o)
@@ -258,5 +239,38 @@ Public Module _cast
 
     Public Function cast(Of T)(ByVal i As Object, ByRef o As T) As Boolean
         Return cast(Of T, Object)(i, o)
+    End Function
+
+    Public Function direct_cast(Of T, IT)(ByVal i As IT, ByRef o As T) As Boolean
+        Return c_nothing(i, o) OrElse
+               _direct_cast(i, o)
+    End Function
+
+    Public Function direct_cast(Of T)(ByVal i As Object, ByRef o As T) As Boolean
+        Return direct_cast(Of T, Object)(i, o)
+    End Function
+
+    Public Function cast(Of T, IT)(ByVal i As IT, Optional ByVal require_assert As Boolean = True) As T
+        Dim o As T = Nothing
+        cast_assert(Of T)(i, cast(Of T, IT)(i, o), require_assert)
+        Return o
+    End Function
+
+    Public Function cast(Of T)(ByVal i As Object, Optional ByVal require_assert As Boolean = True) As T
+        Dim o As T = Nothing
+        cast_assert(Of T)(i, cast(Of T)(i, o), require_assert)
+        Return o
+    End Function
+
+    Public Function direct_cast(Of T, IT)(ByVal i As IT, Optional ByVal require_assert As Boolean = True) As T
+        Dim o As T = Nothing
+        cast_assert(Of T)(i, direct_cast(Of T, IT)(i, o), require_assert)
+        Return o
+    End Function
+
+    Public Function direct_cast(Of T)(ByVal i As Object, Optional ByVal require_assert As Boolean = True) As T
+        Dim o As T = Nothing
+        cast_assert(Of T)(i, direct_cast(Of T)(i, o), require_assert)
+        Return o
     End Function
 End Module
