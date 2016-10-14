@@ -72,9 +72,12 @@ Public Class arrayless(Of T)
                 If Not a(i).d Then
                     a(i).v = nothrow(c, i)
                     a(i).d = True
-                    id = i
-                    o = a(i).v
-                    found = True
+                    ' We expect the [New] function returns a valid instance, otherwise it means the allocation failed.
+                    If type_info(Of T).is_valuetype OrElse Not a(i).v Is Nothing Then
+                        id = i
+                        o = a(i).v
+                        found = True
+                    End If
                 End If
                 a(i).l.release()
                 If found Then
@@ -85,23 +88,8 @@ Public Class arrayless(Of T)
         Return False
     End Function
 
-    ' Create a new instance in one of several slots by using @c, until @c returns a non-null object, and set the new @id
-    ' and @o. If there is no empty slot, this function returns false.
-    Public Function next_non_null(ByVal c As Func(Of UInt32, T), ByRef id As UInt32, ByRef o As T) As Boolean
-        While [next](c, id, o)
-            If Not o Is Nothing Then
-                Return True
-            End If
-        End While
-        Return False
-    End Function
-
     Public Function [next](ByVal c As Func(Of T), ByRef id As UInt32, ByRef o As T) As Boolean
         Return [next](remove_parameter(c), id, o)
-    End Function
-
-    Public Function next_non_null(ByVal c As Func(Of T), ByRef id As UInt32, ByRef o As T) As Boolean
-        Return next_non_null(remove_parameter(c), id, o)
     End Function
 
     Public Function [next](ByVal c As Func(Of UInt32, T), ByRef id As UInt32) As T
@@ -110,37 +98,17 @@ Public Class arrayless(Of T)
         Return o
     End Function
 
-    Public Function next_non_null(ByVal c As Func(Of UInt32, T), ByRef id As UInt32) As T
-        Dim o As T = Nothing
-        assert(next_non_null(c, id, o))
-        Return o
-    End Function
-
     Public Function [next](ByVal c As Func(Of T), ByRef id As UInt32) As T
         Return [next](remove_parameter(c), id)
-    End Function
-
-    Public Function next_non_null(ByVal c As Func(Of T), ByRef id As UInt32) As T
-        Return next_non_null(remove_parameter(c), id)
     End Function
 
     Public Function [next](ByRef id As UInt32, ByRef o As T) As Boolean
         Return [next](c, id, o)
     End Function
 
-    Public Function next_non_null(ByRef id As UInt32, ByRef o As T) As Boolean
-        Return next_non_null(c, id, o)
-    End Function
-
     Public Function [next](ByRef id As UInt32) As T
         Dim o As T = Nothing
         assert([next](id, o))
-        Return o
-    End Function
-
-    Public Function next_non_null(ByRef id As UInt32) As T
-        Dim o As T = Nothing
-        assert(next_non_null(id, o))
         Return o
     End Function
 

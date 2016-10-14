@@ -35,8 +35,10 @@ Public Module _cast
     End Sub
 
     Private Function _direct_cast(Of T)(ByVal i As Object, ByRef o As T) As Boolean
+        assert(Not i Is Nothing)
         Try
             o = DirectCast(i, T)
+            assert(Not o Is Nothing)
             Return True
         Catch
             Return False

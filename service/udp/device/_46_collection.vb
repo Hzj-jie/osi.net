@@ -62,7 +62,7 @@ Public MustInherit Class _46_collection(Of T, __NEW As __do(Of powerpoint, UInt1
 
     Public Shared Function [next](ByVal p As powerpoint, ByRef port As UInt16, ByRef o As T) As Boolean
         If Not p Is Nothing Then
-            Return If(p.ipv4, v4, v6).next_non_null(_new_T(p), port, o)
+            Return If(p.ipv4, v4, v6).next(_new_T(p), port, o)
         Else
             Return False
         End If
