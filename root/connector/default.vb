@@ -1,5 +1,6 @@
 ﻿
 Imports System.IO
+Imports System.Net.Sockets
 Imports System.Threading
 
 Public Class [default](Of T)
@@ -28,6 +29,24 @@ Public Class [default](Of T)
                 D = Sub(x As T)
                         If Not x Is Nothing Then
                             cast(Of WaitHandle)(x).Close()
+                        End If
+                    End Sub
+            ElseIf GetType(T).inherit(GetType(TcpClient)) Then
+                D = Sub(x As T)
+                        If Not x Is Nothing Then
+                            cast(Of TcpClient)(x).Close()
+                        End If
+                    End Sub
+            ElseIf GetType(T).inherit(GetType(UdpClient)) Then
+                D = Sub(x As T)
+                        If Not x Is Nothing Then
+                            cast(Of UdpClient)(x).Close()
+                        End If
+                    End Sub
+            ElseIf GetType(T).inherit(GetType(Socket)) Then
+                D = Sub(x As T)
+                        If Not x Is Nothing Then
+                            cast(Of Socket)(x).Close()
                         End If
                     End Sub
             ElseIf GetType(T).implement(GetType(IDisposable)) Then

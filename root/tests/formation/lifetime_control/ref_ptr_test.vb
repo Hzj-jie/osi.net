@@ -24,17 +24,23 @@ Public Class ref_ptr_test
         Inherits [case]
 
         Private i As ref_ptr(Of atomic_int)
+        Private a As atomic_int
 
         Public Overrides Function prepare() As Boolean
-            i = New ref_ptr(Of atomic_int)(New atomic_int(),
-                                           disposer:=Sub(x As atomic_int)
-                                                         If assert_not_nothing(x) AndAlso
-                                                            assert_equal(object_compare(x, i.get()), 0) Then
-                                                             x.increment()
-                                                         End If
-                                                     End Sub,
-                                           ref:=uint32_1)
-            Return MyBase.prepare()
+            If MyBase.prepare() Then
+                a = New atomic_int()
+                i = New ref_ptr(Of atomic_int)(a,
+                                               disposer:=Sub(x As atomic_int)
+                                                             If assert_not_nothing(x) AndAlso
+                                                                assert_equal(object_compare(x, i.get()), 0) Then
+                                                                 x.increment()
+                                                             End If
+                                                         End Sub,
+                                               ref:=uint32_1)
+                Return True
+            Else
+                Return False
+            End If
         End Function
 
         Public Overrides Function run() As Boolean
@@ -53,7 +59,7 @@ Public Class ref_ptr_test
             assert_equal(i.ref(), uint32_2)
             assert_equal(i.unref(), uint32_1)
             assert_equal(i.unref(), uint32_0)
-            assert_equal(i.get().get(), 1)
+            assert_equal(+a, 1)
             Return MyBase.finish()
         End Function
     End Class
