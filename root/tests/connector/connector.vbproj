@@ -83,6 +83,7 @@
     <Compile Include="default_test.vb" />
     <Compile Include="delegate_perf_test.vb" />
     <Compile Include="delegate_pinning_test.vb" />
+    <Compile Include="disposable_test.vb" />
     <Compile Include="divide_perf_test.vb" />
     <Compile Include="encoding_test.vb" />
     <Compile Include="enum_test.vb" />
