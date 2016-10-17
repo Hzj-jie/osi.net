@@ -6,14 +6,25 @@ Public Module text_writer
         If i Is Nothing Then
             Return False
         Else
+            Dim r As Boolean = False
+            r = True
             Try
                 i.Flush()
-                i.Close()
-                i.Dispose()
-                Return True
             Catch
-                Return False
+                r = False
             End Try
+            Try
+                i.Close()
+            Catch
+                r = False
+            End Try
+            Try
+                i.Dispose()
+            Catch
+                r = False
+            End Try
+
+            Return r
         End If
     End Function
 End Module

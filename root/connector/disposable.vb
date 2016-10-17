@@ -58,9 +58,7 @@ Public NotInheritable Class disposable(Of T)
                         End Sub
         ElseIf GetType(T).is(GetType(TextWriter)) Then
             [default] = Sub(x As T)
-                            If Not x Is Nothing Then
-                                assert(close_writer(direct_cast(Of TextWriter)(x)))
-                            End If
+                            close_writer(direct_cast(Of TextWriter)(x))
                         End Sub
         ElseIf GetType(T).is(GetType(IDisposable)) Then
             [default] = Sub(x As T)
