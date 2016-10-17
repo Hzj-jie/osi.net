@@ -65,6 +65,7 @@
     <Compile Include="bytes\bytes_array.vb" />
     <Compile Include="bytes\bytes_dependent_types.vb" />
     <Compile Include="bytes\bytes_independent_types.vb" />
+    <Compile Include="disposable.vb" />
     <Compile Include="endian.vb" />
     <Compile Include="string_utils\utf8_char.vb" />
     <Compile Include="string_utils\character.vb" />
@@ -74,7 +75,6 @@
     <Compile Include="comparer_registry.vb" />
     <Compile Include="concurrency_runner.vb" />
     <Compile Include="custom_attributes.vb" />
-    <Compile Include="default.vb" />
     <Compile Include="error_handler\colorful_console_error_writer.vb" />
     <Compile Include="delegate.vb" />
     <Compile Include="delegate2.vb" />

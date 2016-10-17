@@ -35,7 +35,11 @@ Public Class delegator
     End Sub
 
     Public Sub New(ByVal sources() As IPEndPoint, ByVal c As UdpClient, ByVal p As powerpoint)
-        MyBase.New()
+        MyBase.New(Sub(ByVal x As UdpClient)
+                       If Not x Is Nothing Then
+                           x.Close()
+                       End If
+                   End Sub)
         assert(Not c Is Nothing)
 #If SINGLE_OPERATION Then
         send_lock = New ref(Of event_comb_lock)()
@@ -160,11 +164,5 @@ Public Class delegator
 
     Public Sub shutdown()
         c.shutdown()
-    End Sub
-
-    Protected Overrides Sub dispose(ByVal c As UdpClient)
-        If Not c Is Nothing Then
-            c.Close()
-        End If
     End Sub
 End Class

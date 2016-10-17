@@ -60,19 +60,18 @@ Public Class weak_dispose_ptr(Of T)
                    Optional ByVal disposer As Action(Of T) = Nothing)
         [set](p)
         If disposer Is Nothing Then
-            assert(Not [default](Of T).disposer() Is Nothing)
-            Me._disposer = [default](Of T).disposer()
+            Me._disposer = disposable(Of T).D()
         Else
             Me._disposer = disposer
         End If
+        assert(Not Me._disposer Is Nothing)
     End Sub
 
     Public Sub New(Optional ByVal disposer As Action(Of T) = Nothing)
         Me.New(Nothing, disposer)
     End Sub
 
-    Protected Overridable Sub dispose(ByVal c As T)
-        assert(Not _disposer Is Nothing)
+    Protected Sub dispose(ByVal c As T)
         _disposer(c)
     End Sub
 

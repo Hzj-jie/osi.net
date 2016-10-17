@@ -9,7 +9,7 @@ Public Class lifetime_binder(Of T As Class)
 
     Shared Sub New()
         instance = New lifetime_binder(Of T)()
-        disposer = [default](Of T).disposer()
+        disposer = disposable(Of T).D()
     End Sub
 
     Protected Sub New()

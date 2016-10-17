@@ -15,3 +15,11 @@ Public Module _default
     Public ReadOnly default_strings() As String = Nothing
     Public ReadOnly default_bytes() As Byte = Nothing
 End Module
+
+Public NotInheritable Class [default](Of T)
+    Public Shared ReadOnly null As T
+
+    Shared Sub New()
+        null = Nothing
+    End Sub
+End Class
