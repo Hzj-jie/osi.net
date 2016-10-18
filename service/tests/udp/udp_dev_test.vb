@@ -85,11 +85,13 @@ Public Class udp_dev_test
             p1 = powerpoint.creator.[New]().
                      with_host_or_ip(Convert.ToString(IPAddress.Loopback)).
                      with_local_port(rnd_port()).
-                     with_remote_port(rnd_port()).create()
+                     with_remote_port(rnd_port()).
+                     with_accept_new_connection(False).create()
             p2 = powerpoint.creator.[New]().
                      with_host_or_ip(Convert.ToString(IPAddress.Loopback)).
                      with_local_port(p1.remote_port).
-                     with_remote_port(p1.local_port).create()
+                     with_remote_port(p1.local_port).
+                     with_accept_new_connection(False).create()
             Return True
         Else
             Return False
@@ -97,6 +99,8 @@ Public Class udp_dev_test
     End Function
 
     Public Overrides Function finish() As Boolean
+        p1.udp_dev_device().close()
+        p2.udp_dev_device().close()
         assert_true(listeners.[New](p1).wait_for_stop(seconds_to_milliseconds(1)))
         assert_true(listeners.[New](p2).wait_for_stop(seconds_to_milliseconds(1)))
         ' Ensure dispenser has fully stopped. The dispenser.work() has been canceled, but the T_receiver.sense may not.

@@ -45,8 +45,8 @@ Partial Public Class listener
                                               p.udp_dev_manual_device_exporter().inject(
                                                   +(New udp_dev(p, const_array.[New]({remote}), buff)))
                                           End Sub
+            assert(bind())
         End If
-        assert(bind())
     End Sub
 
     Public Sub New(ByVal p As powerpoint, ByVal c As UdpClient)
