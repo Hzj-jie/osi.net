@@ -20,6 +20,15 @@ Public Class listeners_speakers_test
         speaker_port = rnd_port()
     End Sub
 
+    Private Function retrieve_listener(ByRef r As listener) As Boolean
+        Return listeners.[New](powerpoint.creator.
+                                   [New]().
+                                   with_ipv4().
+                                   with_local_port(listener_port).
+                                   with_accept_new_connection(False).
+                                   create(), r)
+    End Function
+
     Private Function send_and_receive(ByVal listener As listener, ByVal speaker As speaker) As event_comb
         assert(Not listener Is Nothing)
         assert(Not speaker Is Nothing)
@@ -29,6 +38,7 @@ Public Class listeners_speakers_test
         Dim sent As pointer(Of UInt32) = Nothing
         Dim send_data As vector(Of Byte()) = Nothing
         Dim receive_data As vector(Of Byte()) = Nothing
+        Dim waited As Boolean = False
         Return New event_comb(Function() As Boolean
                                   If i < 1000 Then
                                       If i = 0 Then
@@ -51,18 +61,18 @@ Public Class listeners_speakers_test
                                       i += 1
                                       Return waitfor_nap() AndAlso
                                              goto_next()
+                                  ElseIf receive_data.size() < send_data.size() AndAlso Not waited Then
+                                      waited = True
+                                      Return waitfor(Function() As Boolean
+                                                         Return receive_data.size() = send_data.size()
+                                                     End Function,
+                                                     seconds_to_milliseconds(1))
                                   Else
-                                      assert_true(timeslice_sleep_wait_until(
-                                                       Function() receive_data.size() = send_data.size(),
-                                                       seconds_to_milliseconds(1)))
                                       assert_equal(receive_data.size(), send_data.size())
                                       For j As Int32 = 0 To receive_data.size() - 1
                                           assert_array_equal(send_data(j), receive_data(j))
                                       Next
                                       Return assert_true(listener.detach(accepter)) AndAlso
-                                             assert_true(listener.wait_for_stop(
-                                                 osi.service.device.constants.default_sense_timeout_ms)) AndAlso
-                                             assert_true(listener.stopped()) AndAlso
                                              goto_end()
                                   End If
                               End Function,
@@ -89,15 +99,12 @@ Public Class listeners_speakers_test
         Dim speaker As speaker = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  If assert_true(listeners.[New](powerpoint.creator.
-                                                                     [New]().
-                                                                     with_ipv4().
-                                                                     with_local_port(listener_port).
-                                                                     create(), listener)) AndAlso
+                                  If assert_true(retrieve_listener(listener)) AndAlso
                                      assert_true(speakers.[New](powerpoint.creator.
                                                                     [New]().
                                                                     with_ipv4().
                                                                     with_local_port(speaker_port).
+                                                                    with_accept_new_connection(False).
                                                                     create(), speaker)) Then
                                       ec = send_and_receive(listener, speaker)
                                       Return waitfor(ec) AndAlso
@@ -110,5 +117,17 @@ Public Class listeners_speakers_test
                                   Return ec.end_result() AndAlso
                                          goto_end()
                               End Function)
+    End Function
+
+    Public Overrides Function finish() As Boolean
+        Dim listener As listener = Nothing
+        If assert_true(retrieve_listener(listener)) Then
+            assert_true(listener.wait_for_stop(osi.service.device.constants.default_sense_timeout_ms))
+            assert_true(listener.stopped())
+            ' Ensure dispenser has fully stopped. The dispenser.work() has been canceled,
+            ' but the T_receiver.sense may not.
+            sleep(osi.service.device.constants.default_sense_timeout_ms)
+        End If
+        Return MyBase.finish()
     End Function
 End Class

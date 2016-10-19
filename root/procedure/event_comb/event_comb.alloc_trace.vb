@@ -41,7 +41,8 @@ Partial Public Class event_comb
     Public Shared Function dump_alloc_trace() As String
         Dim r As StringBuilder = Nothing
         r = New StringBuilder()
-        r.Append("[event_comb] instance count ", counter.instance_count_counter(Of event_comb).count())
+        r.Append("[event_comb] instance count ")
+        r.Append(counter.instance_count_counter(Of event_comb).count())
         If event_comb_alloc_trace Then
             callstack_alloc_lock.locked(Sub()
                                             Dim it As map(Of String, Int64).iterator = Nothing
