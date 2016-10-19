@@ -41,6 +41,7 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
     Private Shared ReadOnly tcp_port As UInt16
     Private Shared ReadOnly http_port As UInt16
     Private Shared ReadOnly udp_port As UInt16
+    Private Shared ReadOnly enabled_choices As UInt32
     Private ReadOnly dispatcher As dispatcher
 
     Shared Sub New()
@@ -50,6 +51,11 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
         enable_http = enable_http_get OrElse enable_http_post
         enable_udp = +(alloc(Of _ENABLE_UDP)())
         assert(enable_tcp OrElse enable_http OrElse enable_udp)
+        enabled_choices = If(enable_tcp, 1, 0) +
+                          If(enable_http_get, 1, 0) +
+                          If(enable_http_post, 1, 0) +
+                          If(enable_udp, 1, 0)
+        assert(enabled_choices > 0)
         If enable_tcp Then
             token = guid_str()
             tcp_port = rnd_port()
@@ -72,7 +78,7 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
 
     Public Sub New()
         MyBase.New(If(connection_count > 1,
-                      multi_procedure(repeat(New commander_case(), If(isdebugbuild(), 1, 2) * 4096), connection_count),
+                      multi_procedure(repeat(New commander_case(), If(isdebugbuild(), 1, 2) * test_size), connection_count),
                       repeat(New commander_case(), If(isdebugbuild(), 1, 2) * test_size)))
         dispatcher = New dispatcher()
     End Sub
@@ -234,15 +240,14 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
             Dim ec As event_comb = Nothing
             Dim choice As Int32 = 0
             Return New event_comb(Function() As Boolean
-                                      Const max_choice As Int32 = 4
                                       Dim c As command = Nothing
                                       c = New command()
                                       para = rnd_int(min_int32, max_int32)
                                       c.attach(ask_command) _
                                        .attach(ask_para, para)
                                       r = New pointer(Of command)()
-                                      choice = rnd_int(0, max_choice)
-                                      For i As Int32 = 0 To max_choice - 2
+                                      choice = rnd_int(0, enabled_choices)
+                                      For i As Int32 = 0 To enabled_choices - 2
                                           If Not enable_tcp AndAlso choice = 0 Then
                                               choice = 1
                                           End If
@@ -308,10 +313,7 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
         Public Overrides Function finish() As Boolean
             assert_more_or_equal_and_less_or_equal(trigger_times(), 0.9999 * run_times(), run_times())
             Dim div As Int32 = 0
-            div = If(enable_tcp, 1, 0) +
-                  If(enable_http_get, 1, 0) +
-                  If(enable_http_post, 1, 0) +
-                  If(enable_udp, 1, 0)
+            div = enabled_choices
             assert(div > 0)
             If enable_tcp Then
                 assert_more_or_equal_and_less_or_equal(+tcp_suc, run_times() / div * 0.9, run_times() / div * 1.1)
