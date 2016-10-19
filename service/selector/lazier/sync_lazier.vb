@@ -68,7 +68,7 @@ Public Class sync_thread_unsafe_lazier(Of T)
 
     Public Function [get]() As T
         If state.unknown_() Then
-            assert(v Is Nothing OrElse is_valuetype(Of T)())
+            assert(v Is Nothing OrElse type_info(Of T).is_valuetype)
             Try
                 v = prepare()
             Catch ex As Exception
@@ -107,7 +107,7 @@ Public Class sync_thread_safe_lazier(Of T)
     Public Function [get]() As T
         If state.unknown_() Then
             If begin_get.mark_in_use() Then
-                assert(v Is Nothing OrElse is_valuetype(Of T)())
+                assert(v Is Nothing OrElse type_info(Of T).is_valuetype)
                 Try
                     v = prepare()
                 Catch ex As Exception

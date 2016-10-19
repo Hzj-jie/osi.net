@@ -8,6 +8,10 @@ Public Class inherit_test
     Private Interface inf
     End Interface
 
+    Private Interface inf2
+        Inherits inf
+    End Interface
+
     Private Class base
         Implements inf
     End Class
@@ -28,6 +32,12 @@ Public Class inherit_test
     End Class
 
     Public Overrides Function run() As Boolean
+        assert_false(GetType(inf).implement(GetType(inf)))
+        assert_false(GetType(inf).inherit(GetType(inf)))
+
+        assert_false(GetType(inf2).implement(GetType(inf)))
+        assert_true(GetType(inf2).inherit(GetType(inf)))
+
         assert_true(GetType(base).implement(Of inf)())
         assert_false(GetType(base2).implement(Of inf)())
 

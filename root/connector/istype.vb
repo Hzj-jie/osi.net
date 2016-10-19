@@ -1,6 +1,7 @@
 ﻿
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports osi.root.constants
 
 Public Module _istype
     <Extension()> Public Function get_type_or_null(ByVal this As Object) As Type
@@ -36,39 +37,54 @@ Public Module _istype
         Return [is](this, GetType(T))
     End Function
 
-    Private Structure istype_cache(Of T, T2)
-        Public Shared ReadOnly v As Boolean
-
-        Shared Sub New()
-            v = GetType(T).is(GetType(T2))
-        End Sub
-    End Structure
-
-    Public Function istype(Of T, T2)() As Boolean
-        Return istype_cache(Of T, T2).v
+    <Extension()> Public Function allocatable(ByVal t As Type) As Boolean
+        Return Not t Is Nothing AndAlso
+               Not t.IsArray() AndAlso
+               Not t.IsValueType() AndAlso
+               Not t.IsAbstract() AndAlso
+               Not t.IsEnum() AndAlso
+               Not t.IsGenericTypeDefinition() AndAlso
+               Not t.IsInterface() AndAlso
+               Not t.[is](GetType([Delegate]))
     End Function
 
-    Public Function is_cloneable(Of T)() As Boolean
-        Return istype(Of T, ICloneable)()
+    <Extension()> Public Function constructors(ByVal t As Type) As ConstructorInfo()
+        Try
+            Return t.GetConstructors(Reflection.BindingFlags.Instance Or
+                                     Reflection.BindingFlags.Public Or
+                                     Reflection.BindingFlags.NonPublic)
+        Catch ex As Exception
+            If isdebugmode() AndAlso Not suppress_alloc_error() Then
+                raise_error(error_type.warning,
+                            "failed to get constructors of type ", t.AssemblyQualifiedName(),
+                            ", ex ", ex.Message)
+            End If
+            Return Nothing
+        End Try
     End Function
 
-    Public Function is_valuetype(Of T)() As Boolean
-        Return istype(Of T, ValueType)()
+    <Extension()> Public Function has_parameterless_constructor(ByVal t As Type,
+                                                                ByVal accept_private_constructor As Boolean) As Boolean
+        If t Is Nothing Then
+            Return False
+        Else
+            Dim cs() As ConstructorInfo = Nothing
+            cs = t.constructors()
+            For i As Int32 = 0 To array_size(cs) - 1
+                If isemptyarray(cs(i).GetParameters()) AndAlso
+                   (accept_private_constructor OrElse cs(i).IsPublic()) Then
+                    Return True
+                End If
+            Next
+            Return False
+        End If
     End Function
 
-    Public Function is_delegate(Of T)() As Boolean
-        Return istype(Of T, [Delegate])()
+    <Extension()> Public Function has_parameterless_constructor(ByVal t As Type) As Boolean
+        Return t.has_parameterless_constructor(True)
     End Function
 
-    Private Structure type_equals_cache(Of T, T2)
-        Public Shared ReadOnly v As Boolean
-
-        Shared Sub New()
-            v = GetType(T).Equals(GetType(T2))
-        End Sub
-    End Structure
-
-    Public Function type_equals(Of T, T2)() As Boolean
-        Return type_equals_cache(Of T, T2).v
+    <Extension()> Public Function has_parameterless_public_constructor(ByVal t As Type) As Boolean
+        Return t.has_parameterless_constructor(False)
     End Function
 End Module

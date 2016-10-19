@@ -2,23 +2,37 @@
 Imports System.Runtime.CompilerServices
 
 Public Module _inherit
+    <Extension()> Public Function interface_inherit(ByVal t As Type, ByVal base As Type) As Boolean
+        If Not t.IsInterface() OrElse Not base.IsInterface() Then
+            Return False
+        ElseIf t Is base Then
+            Return False
+        Else
+            Return base.IsAssignableFrom(t)
+        End If
+    End Function
+
     <Extension()> Public Function inherit(ByVal t As Type, ByVal base As Type) As Boolean
         If t Is Nothing AndAlso base Is Nothing Then
             Return True
         ElseIf t Is Nothing OrElse base Is Nothing Then
             Return False
         ElseIf t Is base Then
-            Return True
+            Return False
+        ElseIf t.IsInterface() AndAlso base.IsInterface() Then
+            Return interface_inherit(t, base)
+        ElseIf t.IsInterface() OrElse base.IsInterface() Then
+            Return False
+        ElseIf t.IsGenericType() AndAlso base.IsGenericTypeDefinition() Then
+            'object is not a generic type
+            While t.IsGenericType() 'AndAlso Not t Is GetType(Object)
+                If t.GetGenericTypeDefinition() Is base Then
+                    Return True
+                End If
+                t = t.BaseType()
+            End While
+            Return False
         Else
-            If t.IsGenericType() AndAlso base.IsGenericTypeDefinition() Then
-                'object is not a generic type
-                While t.IsGenericType() 'AndAlso Not t Is GetType(Object)
-                    If t.GetGenericTypeDefinition() Is base Then
-                        Return True
-                    End If
-                    t = t.BaseType()
-                End While
-            End If
             Return t.IsSubclassOf(base)
         End If
     End Function
@@ -31,6 +45,8 @@ Public Module _inherit
         If t Is Nothing AndAlso base Is Nothing Then
             Return True
         ElseIf t Is Nothing OrElse base Is Nothing Then
+            Return False
+        ElseIf Not base.IsInterface() Then
             Return False
         ElseIf base.IsGenericTypeDefinition() Then
             Dim ints() As Type = Nothing

@@ -118,6 +118,7 @@
     <Compile Include="lcs_test.vb" />
     <Compile Include="levenshtein_test.vb" />
     <Compile Include="memory_stream_behavior_test.vb" />
+    <Compile Include="nothing_test.vb" />
     <Compile Include="npos_uint_all_bytes_test.vb" />
     <Compile Include="npos_uint_perf_test.vb" />
     <Compile Include="npos_uint_test.vb" />
@@ -135,6 +136,7 @@
     <Compile Include="strrplc_test.vb" />
     <Compile Include="str_bool_test.vb" />
     <Compile Include="type_behavior_test.vb" />
+    <Compile Include="type_info_perf.vb" />
     <Compile Include="type_initializer_behavior_test.vb" />
     <Compile Include="non_integer_overflow_test.vb" />
     <Compile Include="nowadays_gap_consistency_test.vb" />

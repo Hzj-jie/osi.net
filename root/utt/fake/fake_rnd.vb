@@ -13,7 +13,7 @@ Public Module _fake_rnd
     Private ReadOnly port As atomic_int
 
     Sub New()
-        assert(is_cloneable(Of Byte())())
+        assert(type_info(Of Byte()).is_cloneable())
         str_prefix = rnd_en_chars(rnd_int(2, 4 + 1))
         str_prefix_len = strlen(str_prefix)
         int_bit = 0

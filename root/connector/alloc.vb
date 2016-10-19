@@ -12,60 +12,9 @@ Public Module _alloc
         suppress_alloc_error_binder = New binder(Of Func(Of Boolean), suppress_alloc_error_binder_protector)()
     End Sub
 
-    Private Function suppress_alloc_error() As Boolean
+    Public Function suppress_alloc_error() As Boolean
         Return suppress_alloc_error_binder.has_value() AndAlso
                (+suppress_alloc_error_binder)()
-    End Function
-
-    <Extension()> Public Function allocatable(ByVal t As Type) As Boolean
-        Return Not t Is Nothing AndAlso
-               Not t.IsArray() AndAlso
-               Not t.IsValueType() AndAlso
-               Not t.IsAbstract() AndAlso
-               Not t.IsEnum() AndAlso
-               Not t.IsGenericTypeDefinition() AndAlso
-               Not t.IsInterface() AndAlso
-               Not t.[is](GetType([Delegate]))
-    End Function
-
-    <Extension()> Public Function constructors(ByVal t As Type) As ConstructorInfo()
-        Try
-            Return t.GetConstructors(Reflection.BindingFlags.Instance Or
-                                     Reflection.BindingFlags.Public Or
-                                     Reflection.BindingFlags.NonPublic)
-        Catch ex As Exception
-            If isdebugmode() AndAlso Not suppress_alloc_error() Then
-                raise_error(error_type.warning,
-                            "failed to get constructors of type ", t.AssemblyQualifiedName(),
-                            ", ex ", ex.Message)
-            End If
-            Return Nothing
-        End Try
-    End Function
-
-    <Extension()> Public Function has_parameterless_constructor(ByVal t As Type,
-                                                                ByVal accept_private_constructor As Boolean) As Boolean
-        If t Is Nothing Then
-            Return False
-        Else
-            Dim cs() As ConstructorInfo = Nothing
-            cs = t.constructors()
-            For i As Int32 = 0 To array_size(cs) - 1
-                If isemptyarray(cs(i).GetParameters()) AndAlso
-                   (accept_private_constructor OrElse cs(i).IsPublic()) Then
-                    Return True
-                End If
-            Next
-            Return False
-        End If
-    End Function
-
-    <Extension()> Public Function has_parameterless_constructor(ByVal t As Type) As Boolean
-        Return t.has_parameterless_constructor(True)
-    End Function
-
-    <Extension()> Public Function has_parameterless_public_constructor(ByVal t As Type) As Boolean
-        Return t.has_parameterless_constructor(False)
     End Function
 
     <Extension()> Public Function alloc_with_parameters_constructor(ByVal t As Type) As Object
@@ -151,7 +100,7 @@ Public Module _alloc
             End If
         Else
             Return Nothing
-            End If
+        End If
     End Function
 
     Public Function alloc(Of T)(ByVal i As Type) As T

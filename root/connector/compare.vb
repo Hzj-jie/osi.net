@@ -40,7 +40,7 @@ Public Module _compare
     End Function
 
     Public Function object_comparable(Of T, T2)() As Boolean
-        Return object_comparable(is_valuetype(Of T), is_valuetype(Of T2))
+        Return object_comparable(type_info(Of T).is_valuetype, type_info(Of T2).is_valuetype)
     End Function
 
     Public Function object_comparable(ByVal this As Object, ByVal that As Object) As Boolean
@@ -143,13 +143,13 @@ Public Module _compare
             If Not use_runtime_compare Then
                 If comparer(Of T, T2).defined() Then
                     c = comparer(Of T, T2).ref()
-                ElseIf istype(Of T, IComparable(Of T2))() Then
+                ElseIf type_info(Of T, type_info_operators.is, IComparable(Of T2)).v Then
                     c = AddressOf this_to_t2
-                ElseIf istype(Of T2, IComparable(Of T))() Then
+                ElseIf type_info(Of T2, type_info_operators.is, IComparable(Of T)).v Then
                     c = AddressOf that_to_t
-                ElseIf istype(Of T, IComparable)() Then
+                ElseIf type_info(Of T, type_info_operators.is, IComparable).v Then
                     c = AddressOf this_to_object
-                ElseIf istype(Of T2, IComparable)() Then
+                ElseIf type_info(Of T2, type_info_operators.is, IComparable).v Then
                     c = AddressOf that_to_object
                 ElseIf contains_object Then
                     'contains object does not mean we need to use_runtime_compare,

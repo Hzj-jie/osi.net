@@ -2,6 +2,7 @@
 Imports osi.root.connector
 Imports osi.root.utt
 Imports osi.root.lock
+Imports osi.root.utils
 
 Public Class alloc_test
     Inherits [case]
@@ -275,6 +276,15 @@ Public Class alloc_test
         Return True
     End Function
 
+    Public Overrides Function prepare() As Boolean
+        If MyBase.prepare() Then
+            suppress.alloc_error.inc()
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
     Public Overrides Function run() As Boolean
         Return case1() AndAlso
                case2() AndAlso
@@ -286,5 +296,10 @@ Public Class alloc_test
                case8() AndAlso
                case9() AndAlso
                case10()
+    End Function
+
+    Public Overrides Function finish() As Boolean
+        suppress.alloc_error.dec()
+        Return MyBase.finish()
     End Function
 End Class

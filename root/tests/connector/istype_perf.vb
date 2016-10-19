@@ -174,26 +174,26 @@ Public MustInherit Class type_check_perf
 
     Protected Shared Function is_type_of(Of T)() As Boolean
         Dim b As Boolean = False
-        b = _istype.istype(Of T, SByte)()
-        b = _istype.istype(Of T, Byte)()
-        b = _istype.istype(Of T, Int16)()
-        b = _istype.istype(Of T, UInt16)()
-        b = _istype.istype(Of T, Int32)()
-        b = _istype.istype(Of T, UInt32)()
-        b = _istype.istype(Of T, Int64)()
-        b = _istype.istype(Of T, UInt64)()
-        b = _istype.istype(Of T, String)()
-        b = _istype.istype(Of T, int)()
-        b = _istype.istype(Of T, base_c)()
-        b = _istype.istype(Of T, inh_c)()
-        b = _istype.istype(Of T, base2_c)()
-        b = _istype.istype(Of T, inh2_c)()
-        b = _istype.istype(Of T, base3_c)()
-        b = _istype.istype(Of T, cloneable)()
-        b = _istype.istype(Of T, struct)()
-        b = _istype.istype(Of T, IDisposable)()
-        b = _istype.istype(Of T, ICloneable)()
-        b = _istype.istype(Of T, ValueType)()
+        b = type_info(Of T, type_info_operators.is, SByte).v
+        b = type_info(Of T, type_info_operators.is, Byte).v
+        b = type_info(Of T, type_info_operators.is, Int16).v
+        b = type_info(Of T, type_info_operators.is, UInt16).v
+        b = type_info(Of T, type_info_operators.is, Int32).v
+        b = type_info(Of T, type_info_operators.is, UInt32).v
+        b = type_info(Of T, type_info_operators.is, Int64).v
+        b = type_info(Of T, type_info_operators.is, UInt64).v
+        b = type_info(Of T, type_info_operators.is, String).v
+        b = type_info(Of T, type_info_operators.is, int).v
+        b = type_info(Of T, type_info_operators.is, base_c).v
+        b = type_info(Of T, type_info_operators.is, inh_c).v
+        b = type_info(Of T, type_info_operators.is, base2_c).v
+        b = type_info(Of T, type_info_operators.is, inh2_c).v
+        b = type_info(Of T, type_info_operators.is, base3_c).v
+        b = type_info(Of T, type_info_operators.is, cloneable).v
+        b = type_info(Of T, type_info_operators.is, struct).v
+        b = type_info(Of T, type_info_operators.is, IDisposable).v
+        b = type_info(Of T, type_info_operators.is, ICloneable).v
+        b = type_info(Of T, type_info_operators.is, ValueType).v
         Return True
     End Function
 

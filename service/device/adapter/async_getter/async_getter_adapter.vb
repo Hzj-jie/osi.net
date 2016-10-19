@@ -45,7 +45,7 @@ Public Class async_getter_adapter(Of T)
 
     Private Shared Function find_type_attribute(Of IT, OT As T)(ByVal i As async_getter(Of IT),
                                                                 ByVal c As Func(Of IT, OT)) As type_attribute
-        If Not type_equals(Of OT, T)() AndAlso type_attribute.has(Of OT)() Then
+        If Not type_info(Of OT, type_info_operators.equal, T).v AndAlso type_attribute.has(Of OT)() Then
             Return type_attribute.of(Of OT)()
         ElseIf type_attribute.has(Of IT)() Then
             Return type_attribute.of(Of IT)()
@@ -89,7 +89,7 @@ Public Class async_getter_adapter(Of T)
     End Function
 
     Private Shared Function find_type_attribute(Of OT As T)(ByVal i As async_getter(Of OT)) As type_attribute
-        If Not type_equals(Of T, OT)() AndAlso type_attribute.has(Of OT)() Then
+        If Not type_info(Of T, type_info_operators.equal, OT).v AndAlso type_attribute.has(Of OT)() Then
             Return type_attribute.of(Of OT)()
         ElseIf type_attribute.has(i) Then
             Return type_attribute.of(i)
