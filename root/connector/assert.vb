@@ -27,7 +27,7 @@ Public Module _assert
     End Function
 
     Private Function debug_assert_failed(ByVal msgs() As Object) As Boolean
-        Return Not isdebugmode() AndAlso assert_failed("debug assert", msgs)
+        Return Not isdebugmode() OrElse assert_failed("debug assert", msgs)
     End Function
 
     Public Function debug_assert(ByVal v As Boolean) As Boolean
