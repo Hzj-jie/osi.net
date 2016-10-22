@@ -11,7 +11,7 @@ Imports osi.service.selector
 Public Class selector_test
     Inherits multithreading_case_wrapper
 
-    Private Shadows Const thread_count As Int32 = 1024
+    Private Shadows Const thread_count As Int32 = 64
 
     Public Sub New()
         MyBase.New(repeat(New singleton_case(),
