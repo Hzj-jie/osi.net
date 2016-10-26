@@ -1,0 +1,13 @@
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TransmitterProps>true</TransmitterProps>
+  </PropertyGroup>
+  <Import Project="transmitter.dep" />
+  <ItemGroup>
+    <Reference Include="osi.service.transmitter">
+      <HintPath>$(ServicePath)\transmitter\bin\$(Configuration)\osi.service.transmitter.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>

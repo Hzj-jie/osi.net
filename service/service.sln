@@ -111,6 +111,9 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "storage", "tests\storage\st
 	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "selector", "selector\selector.vbproj", "{1DE5E4A1-4A4D-4868-893C-E98035B421EC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3891B0B7-27B1-47AE-B6B1-1E40FD82B9C9} = {3891B0B7-27B1-47AE-B6B1-1E40FD82B9C9}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "selector", "tests\selector\selector.vbproj", "{001A7A8F-B5DF-4302-8C80-9EBB1308744D}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -311,9 +314,19 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "dns", "tests\dns\dns.vbproj
 		{F39134C1-058F-4CFB-835D-2D827B95B393} = {F39134C1-058F-4CFB-835D-2D827B95B393}
 	EndProjectSection
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "transmitter", "transmitter\transmitter.vbproj", "{3891B0B7-27B1-47AE-B6B1-1E40FD82B9C9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8FE479A4-71CA-445D-B388-5858D2D435B2} = {8FE479A4-71CA-445D-B388-5858D2D435B2}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "transmitter", "tests\transmitter\transmitter.vbproj", "{08986685-C36E-4CF8-AB33-B31824ADC213}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3891B0B7-27B1-47AE-B6B1-1E40FD82B9C9} = {3891B0B7-27B1-47AE-B6B1-1E40FD82B9C9}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 56
+		SccNumberOfProjects = 58
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs02
 		SccLocalPath0 = .
@@ -510,6 +523,13 @@ Global
 		SccProjectTopLevelParentUniqueName55 = service.sln
 		SccProjectName55 = tests/dns
 		SccLocalPath55 = tests\\dns
+		SccProjectUniqueName56 = tests\\transmitter\\transmitter.vbproj
+		SccProjectTopLevelParentUniqueName56 = service.sln
+		SccProjectName56 = tests/transmitter
+		SccLocalPath56 = tests\\transmitter
+		SccProjectUniqueName57 = transmitter\\transmitter.vbproj
+		SccProjectName57 = transmitter
+		SccLocalPath57 = transmitter
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -736,6 +756,12 @@ Global
 		{0AD7E6B4-F1CA-4BA8-8833-599691267260}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0AD7E6B4-F1CA-4BA8-8833-599691267260}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0AD7E6B4-F1CA-4BA8-8833-599691267260}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3891B0B7-27B1-47AE-B6B1-1E40FD82B9C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3891B0B7-27B1-47AE-B6B1-1E40FD82B9C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08986685-C36E-4CF8-AB33-B31824ADC213}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08986685-C36E-4CF8-AB33-B31824ADC213}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08986685-C36E-4CF8-AB33-B31824ADC213}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08986685-C36E-4CF8-AB33-B31824ADC213}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -769,5 +795,6 @@ Global
 		{6D6CA6FA-3184-47D3-8574-2AEAC49E3F24} = {80155CF9-F429-4110-9748-EC85E0C8FD0E}
 		{E211A4BF-B083-418D-AEB6-DFA833688210} = {80155CF9-F429-4110-9748-EC85E0C8FD0E}
 		{0AD7E6B4-F1CA-4BA8-8833-599691267260} = {80155CF9-F429-4110-9748-EC85E0C8FD0E}
+		{08986685-C36E-4CF8-AB33-B31824ADC213} = {80155CF9-F429-4110-9748-EC85E0C8FD0E}
 	EndGlobalSection
 EndGlobal

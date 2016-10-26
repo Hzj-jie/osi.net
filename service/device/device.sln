@@ -16,6 +16,9 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "convertor", "..\convertor\convertor.vbproj", "{8FE479A4-71CA-445D-B388-5858D2D435B2}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "selector", "..\selector\selector.vbproj", "{1DE5E4A1-4A4D-4868-893C-E98035B421EC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3891B0B7-27B1-47AE-B6B1-1E40FD82B9C9} = {3891B0B7-27B1-47AE-B6B1-1E40FD82B9C9}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "device", "device.vbproj", "{92349B84-3C34-42A1-A7CE-62543504B982}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -23,6 +26,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "device", "device.vbproj", "
 		{C428976D-292A-49E8-9226-7D355AD3593C} = {C428976D-292A-49E8-9226-7D355AD3593C}
 		{1DE5E4A1-4A4D-4868-893C-E98035B421EC} = {1DE5E4A1-4A4D-4868-893C-E98035B421EC}
 		{8FE479A4-71CA-445D-B388-5858D2D435B2} = {8FE479A4-71CA-445D-B388-5858D2D435B2}
+		{3891B0B7-27B1-47AE-B6B1-1E40FD82B9C9} = {3891B0B7-27B1-47AE-B6B1-1E40FD82B9C9}
 	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "argument", "..\tests\argument\argument.vbproj", "{B6F8C541-722C-4EAE-9FB9-2D28A670940E}"
@@ -34,6 +38,16 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "device", "..\tests\device\device.vbproj", "{7DC8AA60-7E17-4023-A9A8-496CD0D072F1}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "selector", "..\tests\selector\selector.vbproj", "{001A7A8F-B5DF-4302-8C80-9EBB1308744D}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "transmitter", "..\transmitter\transmitter.vbproj", "{3891B0B7-27B1-47AE-B6B1-1E40FD82B9C9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8FE479A4-71CA-445D-B388-5858D2D435B2} = {8FE479A4-71CA-445D-B388-5858D2D435B2}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "transmitter", "..\tests\transmitter\transmitter.vbproj", "{08986685-C36E-4CF8-AB33-B31824ADC213}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3891B0B7-27B1-47AE-B6B1-1E40FD82B9C9} = {3891B0B7-27B1-47AE-B6B1-1E40FD82B9C9}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -141,6 +155,14 @@ Global
 		{001A7A8F-B5DF-4302-8C80-9EBB1308744D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{001A7A8F-B5DF-4302-8C80-9EBB1308744D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{001A7A8F-B5DF-4302-8C80-9EBB1308744D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3891B0B7-27B1-47AE-B6B1-1E40FD82B9C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3891B0B7-27B1-47AE-B6B1-1E40FD82B9C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3891B0B7-27B1-47AE-B6B1-1E40FD82B9C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3891B0B7-27B1-47AE-B6B1-1E40FD82B9C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08986685-C36E-4CF8-AB33-B31824ADC213}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08986685-C36E-4CF8-AB33-B31824ADC213}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08986685-C36E-4CF8-AB33-B31824ADC213}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08986685-C36E-4CF8-AB33-B31824ADC213}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -151,5 +173,6 @@ Global
 		{BAFFDCCE-9F20-4970-8447-E5CA968EAE87} = {80155CF9-F429-4110-9748-EC85E0C8FD0E}
 		{7DC8AA60-7E17-4023-A9A8-496CD0D072F1} = {80155CF9-F429-4110-9748-EC85E0C8FD0E}
 		{001A7A8F-B5DF-4302-8C80-9EBB1308744D} = {80155CF9-F429-4110-9748-EC85E0C8FD0E}
+		{08986685-C36E-4CF8-AB33-B31824ADC213} = {80155CF9-F429-4110-9748-EC85E0C8FD0E}
 	EndGlobalSection
 EndGlobal
