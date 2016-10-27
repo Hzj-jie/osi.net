@@ -62,6 +62,7 @@
     <Compile Include="domain_unhandled_exception_test.vb" />
     <Compile Include="global_init_order_test.vb" />
     <Compile Include="global_init_test.vb" />
+    <Compile Include="invoker_perf.vb" />
     <Compile Include="invoker_test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
