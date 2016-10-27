@@ -1,5 +1,5 @@
 ﻿
-Imports osi.service.device
+Imports osi.service.transmitter
 Imports osi.service.streamer
 
 Public Class buffered_flower_test

@@ -1,0 +1,56 @@
+
+##DEFAULT TYPE slimqless2
+Imports osi.root.connector
+Imports osi.root.formation
+
+Public NotInheritable Class ##TYPE##_event_sync_T_pump
+    Public Shared Function [New](Of T)(ByVal q As ##TYPE##(Of T)) As ##TYPE##_event_sync_T_pump(Of T)
+        Return New ##TYPE##_event_sync_T_pump(Of T)(q)
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
+
+Public Class ##TYPE##_event_sync_T_pump(Of T)
+    Implements event_sync_T_pump(Of T)
+
+    Private ReadOnly q As ##TYPE##(Of T)
+    Public Event data_arrived() Implements event_sync_T_pump(Of T).data_arrived
+
+    Public Sub New(ByVal q As ##TYPE##(Of T))
+        assert(Not q Is Nothing)
+        Me.q = q
+    End Sub
+
+    Public Sub New()
+        Me.New(New ##TYPE##(Of T)())
+    End Sub
+
+    Public Function pending() As Boolean Implements sync_T_pump(Of T).pending
+        Return Not q.empty()
+    End Function
+
+    Public Function receive(ByRef o As T) As Boolean Implements sync_T_pump(Of T).receive
+        Return q.pop(o)
+    End Function
+
+    Public Sub emplace(ByVal v As T)
+        q.emplace(v)
+        RaiseEvent data_arrived()
+    End Sub
+
+    Public Sub push(ByVal v As T)
+        q.push(v)
+        RaiseEvent data_arrived()
+    End Sub
+
+    Public Sub clear()
+        q.clear()
+    End Sub
+
+    Public Function empty() As Boolean
+        Return q.empty()
+    End Function
+End Class
+

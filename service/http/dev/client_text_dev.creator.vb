@@ -4,6 +4,7 @@ Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.service.device
 Imports osi.service.commander
+Imports osi.service.transmitter
 
 Public MustInherit Class client_text_dev(Of C As client_text_dev.creator)
     Inherits client_text_dev

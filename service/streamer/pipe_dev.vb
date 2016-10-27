@@ -3,7 +3,7 @@ Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.connector
 Imports osi.root.utils
-Imports osi.service.device
+Imports osi.service.transmitter
 
 Public Class pipe_dev(Of T)
     Implements dev_T(Of T)

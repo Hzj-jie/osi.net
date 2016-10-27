@@ -4,6 +4,7 @@ Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.service.convertor
+Imports osi.service.transmitter
 
 Public Class bytes_transformer_block_wrapper
     Implements block

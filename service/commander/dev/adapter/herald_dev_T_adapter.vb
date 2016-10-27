@@ -3,7 +3,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
-Imports osi.service.device
+Imports osi.service.transmitter
 
 <type_attribute()>
 Public Class herald_dev_T_adapter(Of T)

@@ -3,5 +3,6 @@
   <Import Project="..\..\root\root.props" Condition="'$(RootProps)'==''" />
   <Import Project="$(ServicePath)\argument\argument.props" Condition="'$(ArgumentProps)'==''" />
   <Import Project="$(ServicePath)\convertor\convertor.props" Condition="'$(ConvertorProps)'==''" />
+  <Import Project="$(ServicePath)\transmitter\transmitter.props" Condition="'$(TransmitterProps)'==''" />
   <Import Project="$(ServicePath)\device\device.props" Condition="'$(DeviceProps)'==''" />
 </Project>

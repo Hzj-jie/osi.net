@@ -3,6 +3,7 @@
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
+Imports osi.service.transmitter
 
 Public Class token_herald_wrapper
     Implements herald
@@ -15,15 +16,15 @@ Public Class token_herald_wrapper
     End Sub
 
     Public Function sense(ByVal pending As pointer(Of Boolean),
-                          ByVal timeout_ms As Int64) As event_comb Implements device.sensor.sense
+                          ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
 
     End Function
 
-    Public Function send(ByVal i As command) As event_comb Implements device.T_injector(Of command).send
+    Public Function send(ByVal i As command) As event_comb Implements T_injector(Of command).send
 
     End Function
 
-    Public Function receive(ByVal o As pointer(Of command)) As event_comb Implements device.T_pump(Of command).receive
+    Public Function receive(ByVal o As pointer(Of command)) As event_comb Implements T_pump(Of command).receive
 
     End Function
 End Class

@@ -26,8 +26,8 @@ Public Class delegator
     Private ReadOnly c As UdpClient
 
     Shared Sub New()
-        type_attribute.of(Of delegator).set(transmitter.[New]().
-            with_transmit_mode(transmitter.mode_t.duplex))
+        type_attribute.of(Of delegator).set(osi.service.transmitter.transmitter.[New]().
+            with_transmit_mode(osi.service.transmitter.transmitter.mode_t.duplex))
     End Sub
 
     Public Sub New(ByVal sources() As IPEndPoint, ByVal c As UdpClient)

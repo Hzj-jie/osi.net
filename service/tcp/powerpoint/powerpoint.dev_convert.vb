@@ -3,8 +3,7 @@ Option Strict On
 
 Imports System.Net.Sockets
 Imports osi.root.connector
-Imports osi.root.utils
-Imports osi.service.device
+Imports osi.service.transmitter
 Imports osi.service.commander
 
 Partial Public Class powerpoint

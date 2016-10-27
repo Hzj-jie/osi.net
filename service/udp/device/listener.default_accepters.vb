@@ -1,7 +1,7 @@
 ﻿
 Imports System.Net
 Imports osi.root.formation
-Imports osi.service.device
+Imports osi.service.selector
 
 Partial Public Class listener
     Public Shadows Class multiple_accepter

@@ -1,11 +1,6 @@
 ﻿
 Imports System.Net.Sockets
 Imports osi.root.connector
-Imports osi.root.formation
-Imports osi.root.procedure
-Imports osi.root.utils
-Imports osi.service.device
-Imports osi.service.selector
 
 Public Class client_checker
     Private Shared ReadOnly ms As Int64

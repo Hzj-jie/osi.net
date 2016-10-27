@@ -6,7 +6,7 @@ Imports osi.root.connector
 Imports osi.root.procedure
 Imports osi.root.formation
 Imports osi.root.utils
-Imports osi.service.device
+Imports osi.service.transmitter
 
 <type_attribute()>
 Partial Public Class delegator_datagram_adapter
@@ -18,7 +18,7 @@ Partial Public Class delegator_datagram_adapter
     Shared Sub New()
         type_attribute.of(Of delegator_datagram_adapter)().set(datagram_transmitter.[New]().
             with_packet_size(max_packet_size).
-            with_transmit_mode(transmitter.mode_t.duplex))
+            with_transmit_mode(osi.service.transmitter.transmitter.mode_t.duplex))
     End Sub
 
     Private ReadOnly c As delegator

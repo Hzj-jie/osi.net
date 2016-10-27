@@ -5,6 +5,7 @@ Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.service.argument
 Imports osi.service.device
+Imports osi.service.transmitter
 
 Public Enum zip_mode
     bypass

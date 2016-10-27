@@ -7,11 +7,10 @@ Imports osi.root.utils
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.service.convertor
-Imports osi.service.device
-Imports default_value = osi.service.http.constants.default_value
+Imports osi.service.transmitter
 
 Public Class client_dev
-    Protected Shared ReadOnly attribute As transmitter
+    Protected Shared ReadOnly attribute As osi.service.transmitter.transmitter
     Protected ReadOnly send_link_status As link_status
     Protected ReadOnly receive_link_status As link_status
     Protected ReadOnly host As String
@@ -19,8 +18,8 @@ Public Class client_dev
     Private ReadOnly id As String
 
     Shared Sub New()
-        attribute = transmitter.[New]().
-                        with_transmit_mode(device.transmitter.mode_t.send_receive).
+        attribute = osi.service.transmitter.transmitter.[New]().
+                        with_transmit_mode(osi.service.transmitter.transmitter.mode_t.send_receive).
                         with_concurrent_operation(False)
     End Sub
 

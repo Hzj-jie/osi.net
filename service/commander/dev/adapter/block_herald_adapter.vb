@@ -3,7 +3,7 @@ Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.delegates
 Imports osi.root.utils
-Imports osi.service.device
+Imports osi.service.transmitter
 
 Public Class block_herald_adapter_convertor
     Public Shared ReadOnly bytes_command As binder(Of _do_val_ref(Of Byte(), command, Boolean), 

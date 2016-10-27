@@ -1,15 +1,14 @@
 ﻿
-Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.argument
 Imports osi.service.convertor
 Imports osi.service.device
 Imports osi.service.secure
 Imports osi.service.zip
+Imports osi.service.transmitter
 
 Public Class bytes_transformer_block_wrapper_test
     Inherits case_wrapper

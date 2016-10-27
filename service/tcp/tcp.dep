@@ -5,5 +5,7 @@
   <Import Project="$(ServicePath)\convertor\convertor.props" Condition="'$(ConvertorProps)'==''" />
   <Import Project="$(ServicePath)\commander\commander.props" Condition="'$(CommanderProps)'==''" />
   <Import Project="$(ServicePath)\device\device.props" Condition="'$(DeviceProps)'==''" />
+  <Import Project="$(ServicePath)\transmitter\transmitter.props" Condition="'$(TransmitterProps)'==''" />
   <Import Project="$(ServicePath)\argument\argument.props" Condition="'$(ArgumentProps)'==''" />
+  <Import Project="$(ServicePath)\selector\selector.props" Condition="'$(SelectorProps)'==''" />
 </Project>

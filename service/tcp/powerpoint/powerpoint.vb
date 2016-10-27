@@ -4,6 +4,7 @@ Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.service.device
 Imports osi.service.commander
+Imports osi.service.transmitter
 
 Partial Public Class powerpoint
     Public ReadOnly token As String

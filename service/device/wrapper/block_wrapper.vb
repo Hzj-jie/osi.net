@@ -5,6 +5,7 @@ Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.service.argument
+Imports osi.service.transmitter
 
 Public Class block_wrapper
     Implements block

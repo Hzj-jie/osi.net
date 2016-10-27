@@ -14,6 +14,10 @@
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,6 +55,21 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="block_flow_adapter_test.vb" />
+    <Compile Include="complete_io_test.vb" />
+    <Compile Include="complete_io_test2.vb" />
+    <Compile Include="datagram_flow_adapter_test.vb" />
+    <Compile Include="event_sync_T_pump_T_receiver_adapter_test.vb" />
+    <Compile Include="flow_block_adapter_test.vb" />
+    <Compile Include="flow_block_adapter_test2.vb" />
+    <Compile Include="flow_datagram_adapter_test.vb" />
+    <Compile Include="mock\mock_block.vb" />
+    <Compile Include="mock\mock_datagram_dev.vb" />
+    <Compile Include="mock\mock_dev_int.vb" />
+    <Compile Include="mock\mock_dev_T.vb" />
+    <Compile Include="mock\mock_flow_dev.vb" />
+    <Compile Include="mock\mock_stream.vb" />
+    <Compile Include="mock_dev_int_test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

@@ -1,6 +1,6 @@
 ﻿
 Imports osi.root.utils
-Imports osi.service.device
+Imports osi.service.transmitter
 Imports Encoding = System.Text.Encoding
 
 <type_attribute()>

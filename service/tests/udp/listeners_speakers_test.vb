@@ -2,7 +2,6 @@
 Imports System.Net
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.utt
 Imports osi.service.udp
@@ -122,11 +121,11 @@ Public Class listeners_speakers_test
     Public Overrides Function finish() As Boolean
         Dim listener As listener = Nothing
         If assert_true(retrieve_listener(listener)) Then
-            assert_true(listener.wait_for_stop(osi.service.device.constants.default_sense_timeout_ms))
+            assert_true(listener.wait_for_stop(osi.service.selector.constants.default_sense_timeout_ms))
             assert_true(listener.stopped())
             ' Ensure dispenser has fully stopped. The dispenser.work() has been canceled,
             ' but the T_receiver.sense may not.
-            sleep(osi.service.device.constants.default_sense_timeout_ms)
+            sleep(osi.service.selector.constants.default_sense_timeout_ms)
         End If
         Return MyBase.finish()
     End Function

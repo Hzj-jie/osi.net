@@ -58,6 +58,11 @@
     <Compile Include="allocator.vb" />
     <Compile Include="async_parameter_allocator.vb" />
     <Compile Include="async_parameter_resolve.vb" />
+    <Compile Include="constants.vb" />
+    <Compile Include="dispenser\dispenser.accepter.vb" />
+    <Compile Include="dispenser\dispenser.vb" />
+    <Compile Include="dispenser\shared_device.device_collection.vb" />
+    <Compile Include="dispenser\shared_device.vb" />
     <Compile Include="lazier\async_getter.vb" />
     <Compile Include="lazier\async_lazier.vb" />
     <Compile Include="lazier\async_preparer.vb" />

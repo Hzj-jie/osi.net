@@ -4,5 +4,6 @@
   <Import Project="$(ServicePath)\streamer\streamer.props" Condition="'$(StreamerProps)'==''" />
   <Import Project="$(ServicePath)\commander\commander.props" Condition="'$(CommanderProps)'==''" />
   <Import Project="$(ServicePath)\convertor\convertor.props" Condition="'$(ConvertorProps)'==''" />
+  <Import Project="$(ServicePath)\transmitter\transmitter.props" Condition="'$(TransmitterProps)'==''" />
   <Import Project="$(ServicePath)\resource\resource.props" Condition="'$(ResourceProps)'==''" />
 </Project>

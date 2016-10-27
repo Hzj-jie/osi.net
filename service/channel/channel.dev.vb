@@ -3,7 +3,7 @@ Imports osi.root.formation
 Imports osi.root.event
 Imports osi.root.connector
 Imports osi.root.procedure
-Imports osi.service.device
+Imports osi.service.transmitter
 
 Partial Public Class channel
     Private Class channel_block

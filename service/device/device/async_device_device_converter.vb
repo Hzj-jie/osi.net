@@ -3,6 +3,7 @@ Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.delegates
 Imports osi.service.selector
+Imports osi.service.transmitter
 
 <global_init(global_init_level.services)>
 Public NotInheritable Class async_device_device_converter

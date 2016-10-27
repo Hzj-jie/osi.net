@@ -3,8 +3,8 @@ Imports osi.root.formation
 Imports osi.root.template
 Imports osi.root.utils
 Imports osi.service.commander
-Imports osi.service.device
-Imports osi.tests.service.device
+Imports osi.service.transmitter
+Imports osi.tests.service.transmitter
 
 <type_Attribute()>
 Public Class mock_herald

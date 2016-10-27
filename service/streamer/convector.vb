@@ -5,7 +5,7 @@ Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.utils
-Imports osi.service.device
+Imports osi.service.transmitter
 
 Public Class convector(Of T)
     Private ReadOnly a_b As flower(Of T)

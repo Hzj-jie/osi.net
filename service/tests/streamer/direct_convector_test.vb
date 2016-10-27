@@ -1,7 +1,7 @@
 ﻿
 Imports osi.root.constants
 Imports osi.service.streamer
-Imports osi.tests.service.device
+Imports osi.tests.service.transmitter
 
 Public Class direct_convector_test
     Inherits convector_test

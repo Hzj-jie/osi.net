@@ -4,7 +4,7 @@ Imports osi.root.procedure
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.service.streamer
-Imports osi.service.device
+Imports osi.service.transmitter
 Imports utils = osi.root.utils
 
 Public Class agents(Of T)

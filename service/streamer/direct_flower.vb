@@ -5,7 +5,7 @@ Imports osi.root.lock
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
-Imports osi.service.device
+Imports osi.service.transmitter
 
 Public Class direct_flower(Of T)
     Inherits flower(Of T)

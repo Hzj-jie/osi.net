@@ -1,5 +1,5 @@
 ﻿
-Imports osi.service.device
+Imports osi.service.transmitter
 
 Public Class flow_herald_adapter
     Public Shared Function [New](ByVal i As flow) As herald

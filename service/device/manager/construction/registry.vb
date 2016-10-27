@@ -5,6 +5,7 @@ Imports osi.root.connector
 Imports osi.service.argument
 Imports osi.service.convertor
 Imports osi.service.selector
+Imports osi.service.transmitter
 
 <global_init(global_init_level.services)>
 Public NotInheritable Class adapter_registry

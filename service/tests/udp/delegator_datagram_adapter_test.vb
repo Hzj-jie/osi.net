@@ -1,13 +1,12 @@
 ﻿
 Imports System.Net
 Imports System.Net.Sockets
-Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.utils
 Imports osi.root.utt
-Imports osi.service.device
+Imports osi.service.transmitter
 Imports osi.service.udp
-Imports osi.tests.service.device
+Imports osi.tests.service.transmitter
 
 Public Class delegator_datagram_adapter_fix_source_test
     Inherits delegator_datagram_adapter_test

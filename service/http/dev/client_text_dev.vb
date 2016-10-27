@@ -7,9 +7,8 @@ Imports osi.root.utils
 Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports osi.service.convertor
-Imports osi.service.commander
 Imports osi.service.device
+Imports osi.service.transmitter
 Imports default_value = osi.service.http.constants.default_value
 
 Public MustInherit Class client_text_dev

@@ -3,14 +3,14 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports osi.service.device
+Imports osi.service.transmitter
 
 Public Interface herald
     Inherits dev_T(Of command)
 End Interface
 
 Public Module _herald
-    <Extension()> Public Function transmit_mode(ByVal this As herald) As transmitter.mode_t
+    <Extension()> Public Function transmit_mode(ByVal this As herald) As osi.service.transmitter.transmitter.mode_t
         Return _transmitter.transmit_mode(this)
     End Function
 

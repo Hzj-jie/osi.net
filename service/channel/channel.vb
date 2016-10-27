@@ -5,10 +5,9 @@ Imports osi.root.event
 Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.procedure
-Imports osi.root.utils
 Imports osi.service.commander
 Imports osi.service.convertor
-Imports osi.service.device
+Imports osi.service.transmitter
 
 Partial Public Class channel
     'Inherits pre_generated_device_pool(Of block)

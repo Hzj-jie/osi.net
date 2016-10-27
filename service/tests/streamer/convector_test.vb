@@ -7,7 +7,7 @@ Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utt
 Imports osi.service.streamer
-Imports osi.tests.service.device
+Imports osi.tests.service.transmitter
 
 Public MustInherit Class convector_test
     Inherits [case]

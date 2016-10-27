@@ -4,8 +4,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
-Imports osi.service.device
-Imports osi.service.selector
+Imports osi.service.transmitter
 
 Partial Public Class client_flow_adapter
     Private Class client_socket_flow_adapter

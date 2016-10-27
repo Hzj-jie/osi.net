@@ -1,15 +1,12 @@
 ﻿
 Imports System.Net
-Imports System.Net.Sockets
 Imports osi.root.connector
 Imports osi.root.lock
-Imports osi.root.template
 Imports osi.root.constants
-Imports osi.root.procedure
 Imports osi.root.utt
 Imports osi.service.device
+Imports osi.service.transmitter
 Imports osi.service.tcp
-Imports osi.root.utils
 Imports osi.root.formation
 Imports constants = osi.service.tcp.constants
 

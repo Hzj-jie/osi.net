@@ -4,7 +4,7 @@ Imports System.Net.Sockets
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.service.device
+Imports osi.service.selector
 
 ' Delegates all incoming requests to accepters
 Partial Public Class listener

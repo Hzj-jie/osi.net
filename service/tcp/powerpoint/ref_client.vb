@@ -2,7 +2,6 @@
 Imports System.Net.Sockets
 Imports osi.root.connector
 Imports osi.root.utils
-Imports osi.service.device
 Imports envs = osi.root.envs
 
 <type_attribute()>
@@ -12,8 +11,8 @@ Public Class ref_client
     Private lrm As Int64
 
     Shared Sub New()
-        type_attribute.of(Of ref_client).set(transmitter.[New]().
-            with_transmit_mode(transmitter.mode_t.duplex))
+        type_attribute.of(Of ref_client).set(osi.service.transmitter.transmitter.[New]().
+            with_transmit_mode(osi.service.transmitter.transmitter.mode_t.duplex))
     End Sub
 
     Public Sub New(ByVal c As TcpClient)

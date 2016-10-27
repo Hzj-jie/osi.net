@@ -5,6 +5,7 @@ Imports osi.root.procedure
 Imports osi.root.connector
 Imports osi.root.utils
 Imports osi.service.selector
+Imports osi.service.transmitter
 
 ' Non-generic interface for device_manager
 Public Interface idevice_pool

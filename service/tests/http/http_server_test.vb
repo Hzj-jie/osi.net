@@ -9,7 +9,7 @@ Imports osi.root.utt
 Imports osi.service.http
 Imports osi.root.utils
 Imports osi.root.lock
-Imports osi.service.device
+Imports osi.service.transmitter
 
 Public Class http_server_test
     Inherits processor_measured_case_wrapper

@@ -5,6 +5,7 @@ Imports osi.root.lock
 Imports osi.root.template
 Imports osi.root.connector
 Imports osi.service.device
+Imports osi.service.transmitter
 
 Public NotInheritable Class herald_questioner
     Inherits herald_questioner(Of _true)
@@ -22,9 +23,10 @@ Public Class herald_questioner(Of _ENABLE_AUTO_PING As _boolean)
     Inherits iexecutable_questioner(Of _ENABLE_AUTO_PING)
 
     Private Shared Sub assert_transmit_mode(ByVal h As herald)
-        Dim t As transmitter.mode_t = Nothing
+        Dim t As osi.service.transmitter.transmitter.mode_t = Nothing
         t = h.transmit_mode()
-        assert(t = transmitter.mode_t.duplex OrElse t = transmitter.mode_t.send_receive)
+        assert(t = osi.service.transmitter.transmitter.mode_t.duplex OrElse
+               t = osi.service.transmitter.transmitter.mode_t.send_receive)
     End Sub
 
     Private ReadOnly h As herald

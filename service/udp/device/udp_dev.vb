@@ -10,6 +10,7 @@ Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.service.device
 Imports osi.service.selector
+Imports osi.service.transmitter
 
 ' A udp device sends to and receives from a specific remote host (ip + port, v4 or v6),
 ' and sends from and receives to a specific local port.
@@ -30,7 +31,7 @@ Public Class udp_dev
         assert(constants.ipv6_packet_size <= constants.ipv4_packet_size)
         type_attribute.of(Of udp_dev).set(datagram_transmitter.[New]().
                                           with_packet_size(constants.ipv6_packet_size).
-                                          with_transmit_mode(transmitter.mode_t.duplex))
+                                          with_transmit_mode(osi.service.transmitter.transmitter.mode_t.duplex))
     End Sub
 
     Public Sub New(ByVal p As powerpoint, ByVal sources As const_array(Of IPEndPoint), ByVal buff() As Byte)

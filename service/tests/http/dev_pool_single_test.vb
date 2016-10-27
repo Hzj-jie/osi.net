@@ -8,6 +8,7 @@ Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.device
 Imports osi.service.http
+Imports osi.service.transmitter
 
 Public Class dev_pool_single_test
     Inherits commandline_specific_event_comb_case_wrapper

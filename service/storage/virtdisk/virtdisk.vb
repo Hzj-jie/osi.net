@@ -6,7 +6,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.root.lock
-Imports osi.service.device
+Imports osi.service.transmitter
 
 Partial Public Class virtdisk
     Implements IDisposable

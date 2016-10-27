@@ -7,8 +7,8 @@ Imports osi.root.procedure
 Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.service.streamer
-Imports osi.service.device
-Imports osi.tests.service.device
+Imports osi.service.transmitter
+Imports osi.tests.service.transmitter
 
 Public MustInherit Class flower_test
     Inherits [case]

@@ -5,6 +5,7 @@ Imports System.Net.Sockets
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.service.device
+Imports osi.service.transmitter
 Imports osi.service.selector
 Imports osi.service.commander
 

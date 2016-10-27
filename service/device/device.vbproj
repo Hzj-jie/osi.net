@@ -52,39 +52,18 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
-    <Import Include="System.Collections" />
-    <Import Include="System.Collections.Generic" />
-    <Import Include="System.Diagnostics" />
-    <Import Include="System.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="adapter\block_dev_T_adapter.vb" />
-    <Compile Include="adapter\block_flow_adapter.vb" />
-    <Compile Include="adapter\block_piece_dev_adapter.vb" />
-    <Compile Include="adapter\block_pump_flow_pump_adapter.vb" />
-    <Compile Include="adapter\datagram_flow_adapter.vb" />
-    <Compile Include="adapter\dev_piece_block_adapter.vb" />
-    <Compile Include="adapter\dev_piece_datagram_adapter.vb" />
-    <Compile Include="adapter\flow_datagram_adapter.vb" />
-    <Compile Include="adapter\flow_piece_dev_adapter.vb" />
-    <Compile Include="adapter\piece_dev_block_adapter.vb" />
-    <Compile Include="adapter\piece_dev_flow_adapter.vb" />
+    <Compile Include="adapter\async_getter_block.vb" />
+    <Compile Include="adapter\async_getter_datagram.vb" />
+    <Compile Include="adapter\async_getter_adapter.vb" />
+    <Compile Include="adapter\async_getter_dev_T.vb" />
+    <Compile Include="adapter\async_getter_flow.vb" />
+    <Compile Include="adapter\async_getter_piece_dev.vb" />
+    <Compile Include="adapter\async_getter_stream_text.vb" />
+    <Compile Include="adapter\async_getter_text.vb" />
     <Compile Include="adapter\pool_one_adapter.vb" />
-    <Compile Include="adapter\stream_text_dev_T_adapter.vb" />
-    <Compile Include="adapter\sync_indicator_indicator_adapter.vb" />
-    <Compile Include="adapter\text_dev_T_adapter.vb" />
-    <Compile Include="adapter\T_adapter.vb" />
-    <Compile Include="datagram.vb" />
-    <Compile Include="adapter\async_getter\async_getter_block.vb" />
-    <Compile Include="adapter\async_getter\async_getter_datagram.vb" />
-    <Compile Include="adapter\async_getter\async_getter_adapter.vb" />
-    <Compile Include="adapter\async_getter\async_getter_dev_T.vb" />
-    <Compile Include="adapter\async_getter\async_getter_flow.vb" />
-    <Compile Include="adapter\async_getter\async_getter_piece_dev.vb" />
-    <Compile Include="adapter\async_getter\async_getter_stream_text.vb" />
-    <Compile Include="adapter\async_getter\async_getter_text.vb" />
     <Compile Include="device\async_getter_delegate_device.vb" />
     <Compile Include="device\async_getter_device.vb" />
     <Compile Include="device\creator\auto_device_exporter.vb" />
@@ -109,10 +88,6 @@
     <Compile Include="device_pool\get_all.vb" />
     <Compile Include="device\device_adapter.vb" />
     <Compile Include="device_pool\T\device_pool_T.closer.vb" />
-    <Compile Include="dispenser\dispenser.vb" />
-    <Compile Include="dispenser\dispenser.accepter.vb" />
-    <Compile Include="adapter\event_sync_T_pump_T_receiver_adapter.vb" />
-    <Compile Include="io\transmitter.vb" />
     <Compile Include="manager\construction\registry.vb" />
     <Compile Include="manager\construction\wrapper.parameter.vb" />
     <Compile Include="manager\container.vb" />
@@ -120,7 +95,6 @@
     <Compile Include="manager\construction\constructor.infer.vb" />
     <Compile Include="manager\construction\constructor.shortcut.vb" />
     <Compile Include="manager\construction\constructor.vb" />
-    <Compile Include="block.vb" />
     <Compile Include="constants.vb" />
     <Compile Include="device_pool\device_pool.implements.vb" />
     <Compile Include="device_pool\impl\auto_pre_generated_device_pool.vb" />
@@ -145,12 +119,6 @@
     <Compile Include="manager\construction\wrapper.infer.vb" />
     <Compile Include="manager\construction\wrapper.vb" />
     <Compile Include="manager\construction\secondary_resolve.vb" />
-    <Compile Include="piece_dev.vb" />
-    <Compile Include="flow.vb" />
-    <Compile Include="io\injector.vb" />
-    <Compile Include="io\complete_io.vb" />
-    <Compile Include="io\io.vb" />
-    <Compile Include="io\pending_io_punishment.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -166,15 +134,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="io\pump.vb" />
-    <Compile Include="io\sensor.vb" />
-    <Compile Include="qless2_event_sync_T_pump.vb" />
-    <Compile Include="slimqless2_event_sync_T_pump.vb" />
-    <Compile Include="text.vb" />
-    <Compile Include="adapter\flow_block_adapter.vb" />
-    <Compile Include="adapter\indicator_sensor_adapter.vb" />
-    <Compile Include="adapter\stream_flow_adapter.vb" />
-    <Compile Include="dev_T.vb" />
     <Compile Include="wrapper\block_wrapper.vb" />
     <Compile Include="wrapper\bytes_transformer_block_wrapper.vb" />
   </ItemGroup>
@@ -187,9 +146,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="codegen\qless2_event_sync_T_pump.vbp" />
-    <None Include="codegen\run.cmd" />
-    <None Include="codegen\slimqless2_event_sync_T_pump.vbp" />
     <None Include="device.dep" />
     <None Include="device.props" />
     <None Include="My Project\Application.myapp">
@@ -206,7 +162,6 @@
     <Content Include="device.sln" />
     <Content Include="manager\design.txt" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="device.dep" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

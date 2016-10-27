@@ -4,4 +4,6 @@
   <Import Project="$(ServicePath)\device\device.props" Condition="'$(DeviceProps)'==''" />
   <Import Project="$(ServicePath)\dns\dns.props" Condition="'$(DnsProps)'==''" />
   <Import Project="$(ServicePath)\commander\commander.props" Condition="'$(CommanderProps)'==''" />
+  <Import Project="$(ServicePath)\transmitter\transmitter.props" Condition="'$(TransmitterProps)'==''" />
+  <Import Project="$(ServicePath)\selector\selector.props" Condition="'$(SelectorProps)'==''" />
 </Project>

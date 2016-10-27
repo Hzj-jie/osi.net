@@ -1,7 +1,7 @@
 ﻿
 Imports System.Net.Sockets
 Imports osi.root.connector
-Imports osi.service.device
+Imports osi.service.transmitter
 
 Partial Public Class delegator_datagram_adapter
     Private Class delegator_indicator

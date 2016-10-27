@@ -4,8 +4,7 @@ Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.connector
 Imports osi.root.utils
-Imports osi.service.device
-Imports osi.service.selector
+Imports osi.service.transmitter
 
 Public Class client_sensor
     Private Class client_indicator

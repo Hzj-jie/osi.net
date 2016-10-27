@@ -5,7 +5,7 @@ Imports osi.root.connector
 Imports osi.root.utils
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports osi.service.device
+Imports osi.service.transmitter
 
 Public Class pipe(Of T)
     Private ReadOnly max_size As UInt32

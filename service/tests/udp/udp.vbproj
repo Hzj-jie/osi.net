@@ -101,8 +101,8 @@
   <Import Project="$(ServicePath)\device\device.props" Condition="'$(DeviceProps)'==''" />
   <Import Project="$(ServicePath)\udp\udp.props" Condition="'$(UdpProps)'==''" />
   <ItemGroup>
-    <Reference Include="osi.tests.service.device">
-      <HintPath>$(ServicePath)\tests\device\bin\$(Configuration)\osi.tests.service.device.dll</HintPath>
+    <Reference Include="osi.tests.service.transmitter">
+      <HintPath>$(ServicePath)\tests\transmitter\bin\$(Configuration)\osi.tests.service.transmitter.dll</HintPath>
       <Private>true</Private>
     </Reference>
   </ItemGroup>

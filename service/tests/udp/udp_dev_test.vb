@@ -4,7 +4,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utt
-Imports osi.service.device
+Imports osi.service.transmitter
 Imports osi.service.udp
 
 Public Class udp_dev_test
@@ -104,7 +104,7 @@ Public Class udp_dev_test
         assert_true(listeners.[New](p1).wait_for_stop(seconds_to_milliseconds(1)))
         assert_true(listeners.[New](p2).wait_for_stop(seconds_to_milliseconds(1)))
         ' Ensure dispenser has fully stopped. The dispenser.work() has been canceled, but the T_receiver.sense may not.
-        sleep(osi.service.device.constants.default_sense_timeout_ms)
+        sleep(osi.service.selector.constants.default_sense_timeout_ms)
         Return MyBase.finish()
     End Function
 

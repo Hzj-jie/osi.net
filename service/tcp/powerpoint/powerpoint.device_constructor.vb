@@ -3,6 +3,7 @@ Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.service.argument
 Imports osi.service.device
+Imports osi.service.transmitter
 
 <global_init(global_init_level.server_services)>
 Partial Public Class powerpoint

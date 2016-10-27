@@ -59,6 +59,9 @@
     <Compile Include="async_preparer_test.vb" />
     <Compile Include="async_preparer_valuetype_test.vb" />
     <Compile Include="async_thread_safe_lazier_test.vb" />
+    <Compile Include="dispenser\dispenser_test.accepters.vb" />
+    <Compile Include="dispenser\dispenser_test.receiver.vb" />
+    <Compile Include="dispenser\dispenser_test.vb" />
     <Compile Include="selector_test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -100,6 +103,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\..\..\root\root.utt.props" Condition="'$(RootUttProps)'==''" />
   <Import Project="$(ServicePath)\selector\selector.props" Condition="'$(SelectorProps)'==''" />
+  <Import Project="$(ServicePath)\transmitter\transmitter.props" Condition="'$(TransmitterProps)'==''" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

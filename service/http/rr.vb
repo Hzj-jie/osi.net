@@ -6,7 +6,7 @@ Imports osi.root.connector
 Imports osi.root.procedure
 Imports osi.root.formation
 Imports osi.root.utils
-Imports osi.service.device
+Imports osi.service.transmitter
 Imports Text = System.Text
 
 Public Module _rr

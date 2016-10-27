@@ -14,6 +14,10 @@
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,6 +55,37 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="adapter\block_dev_T_adapter.vb" />
+    <Compile Include="adapter\block_flow_adapter.vb" />
+    <Compile Include="adapter\block_piece_dev_adapter.vb" />
+    <Compile Include="adapter\block_pump_flow_pump_adapter.vb" />
+    <Compile Include="adapter\datagram_flow_adapter.vb" />
+    <Compile Include="adapter\dev_piece_block_adapter.vb" />
+    <Compile Include="adapter\dev_piece_datagram_adapter.vb" />
+    <Compile Include="adapter\event_sync_T_pump_T_receiver_adapter.vb" />
+    <Compile Include="adapter\flow_block_adapter.vb" />
+    <Compile Include="adapter\flow_datagram_adapter.vb" />
+    <Compile Include="adapter\flow_piece_dev_adapter.vb" />
+    <Compile Include="adapter\indicator_sensor_adapter.vb" />
+    <Compile Include="adapter\piece_dev_block_adapter.vb" />
+    <Compile Include="adapter\piece_dev_flow_adapter.vb" />
+    <Compile Include="adapter\stream_flow_adapter.vb" />
+    <Compile Include="adapter\stream_text_dev_T_adapter.vb" />
+    <Compile Include="adapter\sync_indicator_indicator_adapter.vb" />
+    <Compile Include="adapter\text_dev_T_adapter.vb" />
+    <Compile Include="adapter\T_adapter.vb" />
+    <Compile Include="block.vb" />
+    <Compile Include="constants.vb" />
+    <Compile Include="datagram.vb" />
+    <Compile Include="dev_T.vb" />
+    <Compile Include="flow.vb" />
+    <Compile Include="io\complete_io.vb" />
+    <Compile Include="io\injector.vb" />
+    <Compile Include="io\io.vb" />
+    <Compile Include="io\pending_io_punishment.vb" />
+    <Compile Include="io\pump.vb" />
+    <Compile Include="io\sensor.vb" />
+    <Compile Include="io\transmitter.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -66,6 +101,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="piece_dev.vb" />
+    <Compile Include="qless2_event_sync_T_pump.vb" />
+    <Compile Include="slimqless2_event_sync_T_pump.vb" />
+    <Compile Include="text.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -76,6 +115,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="codegen\qless2_event_sync_T_pump.vbp" />
+    <None Include="codegen\run.cmd" />
+    <None Include="codegen\slimqless2_event_sync_T_pump.vbp" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
