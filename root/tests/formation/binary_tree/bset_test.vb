@@ -16,7 +16,6 @@ Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utt
-Imports osi.root.utils
 Imports osi.root.delegates
 
 Friend Class bset_case

@@ -14,10 +14,8 @@
 Imports System.Threading
 Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.root.connector
 Imports osi.root.utt
-Imports osi.root.lock
 
 #If True Then
 Imports osi.root.lock.slimlock

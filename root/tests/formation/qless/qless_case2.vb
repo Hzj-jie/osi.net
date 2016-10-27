@@ -9,7 +9,6 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.utt
-Imports osi.root.utils
 
 Friend Class qless_case2
     Inherits [case]

@@ -1,6 +1,7 @@
 ﻿
 Imports osi.root.connector
 Imports osi.root.utt
+Imports osi.root.envs
 
 Public Class constructor_detect_test
     Inherits [case]

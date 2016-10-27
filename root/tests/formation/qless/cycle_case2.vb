@@ -15,7 +15,6 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.utt
-Imports osi.root.utils
 
 Friend Class cycle_1024_128_case2
     Inherits [case]
