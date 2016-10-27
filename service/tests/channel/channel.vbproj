@@ -93,6 +93,12 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\..\..\root\root.utt.props" Condition="'$(RootUttProps)'==''" />
   <Import Project="$(ServicePath)\channel\channel.props" Condition="'$(ChannelProps)'==''" />
+  <ItemGroup>
+    <Reference Include="osi.tests.service.transmitter">
+      <HintPath>$(ServicePath)\tests\transmitter\bin\$(Configuration)\osi.tests.service.transmitter.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
