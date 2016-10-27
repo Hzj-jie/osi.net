@@ -10,6 +10,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.connector
 Imports osi.root.utt
+Imports osi.root.lock
 
 #If False Then
 Imports osi.root.lock.slimlock
