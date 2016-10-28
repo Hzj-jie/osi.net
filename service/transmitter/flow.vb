@@ -18,7 +18,7 @@ Public Interface flow
 End Interface
 
 Public Module _flow
-    <Extension()> Public Function transmit_mode(ByVal this As flow) As transmitter.mode_t
+    <Extension()> Public Function transmit_mode(ByVal this As flow) As trait.mode_t
         Return _transmitter.transmit_mode(this)
     End Function
 

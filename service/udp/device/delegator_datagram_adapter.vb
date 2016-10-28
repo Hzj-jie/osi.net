@@ -16,9 +16,9 @@ Partial Public Class delegator_datagram_adapter
     Public Const max_packet_size As UInt32 = 65535 - 8 - 40
 
     Shared Sub New()
-        type_attribute.of(Of delegator_datagram_adapter)().set(datagram_transmitter.[New]().
+        type_attribute.of(Of delegator_datagram_adapter)().set(datagram_trait.[New]().
             with_packet_size(max_packet_size).
-            with_transmit_mode(osi.service.transmitter.transmitter.mode_t.duplex))
+            with_transmit_mode(trait.mode_t.duplex))
     End Sub
 
     Private ReadOnly c As delegator

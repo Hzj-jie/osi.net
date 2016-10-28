@@ -37,8 +37,8 @@ Public Class mock_dev_T(Of T, _RANDOM_SEND_FAILURE As _boolean, _RANDOM_RECEIVE_
 
     Shared Sub New()
         type_attribute.of(Of mock_dev_T(Of T, _RANDOM_SEND_FAILURE, _RANDOM_RECEIVE_FAILURE))().set(
-                osi.service.transmitter.transmitter.[New]() _
-                    .with_transmit_mode(osi.service.transmitter.transmitter.mode_t.duplex))
+                trait.[New]() _
+                    .with_transmit_mode(trait.mode_t.duplex))
         random_send_failure = +alloc(Of _RANDOM_SEND_FAILURE)()
         random_receive_failure = +alloc(Of _RANDOM_RECEIVE_FAILURE)()
     End Sub

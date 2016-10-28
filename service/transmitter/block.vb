@@ -18,7 +18,7 @@ Public Interface block
 End Interface
 
 Public Module _block
-    <Extension()> Public Function transmit_mode(ByVal this As block) As transmitter.mode_t
+    <Extension()> Public Function transmit_mode(ByVal this As block) As trait.mode_t
         Return _transmitter.transmit_mode(this)
     End Function
 

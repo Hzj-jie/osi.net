@@ -24,8 +24,8 @@ Public Class server_dev
                               root.constants.content_type_charset_prefix,
                               constants.dev_enc.WebName())
         assert(strlen(strcat(constants.uri.path_separator, constants.uri.query_mark)) = uint32_2)
-        type_attribute.of(Of server_dev).set(osi.service.transmitter.transmitter.[New]().
-            with_transmit_mode(osi.service.transmitter.transmitter.mode_t.receive_send).
+        type_attribute.of(Of server_dev).set(trait.[New]().
+            with_transmit_mode(trait.mode_t.receive_send).
             with_one_off(True))
     End Sub
 

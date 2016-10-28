@@ -11,8 +11,8 @@ Public Class mock_flow_dev
     Implements flow
 
     Shared Sub New()
-        type_attribute.of(Of mock_flow_dev)().set(osi.service.transmitter.transmitter.[New]().
-            with_transmit_mode(osi.service.transmitter.transmitter.mode_t.duplex))
+        type_attribute.of(Of mock_flow_dev)().set(trait.[New]().
+            with_transmit_mode(trait.mode_t.duplex))
     End Sub
 
     Private ReadOnly receive_buff() As Byte

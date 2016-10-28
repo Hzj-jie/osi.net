@@ -10,7 +10,7 @@ Public Interface herald
 End Interface
 
 Public Module _herald
-    <Extension()> Public Function transmit_mode(ByVal this As herald) As osi.service.transmitter.transmitter.mode_t
+    <Extension()> Public Function transmit_mode(ByVal this As herald) As trait.mode_t
         Return _transmitter.transmit_mode(this)
     End Function
 

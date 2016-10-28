@@ -39,7 +39,7 @@ Public Class flow_datagram_adapter(Of _PACKET_SIZE As _int64)
     Private Shared Function forward_type_attribute(ByVal f As flow) As type_attribute
         Dim r As type_attribute = Nothing
         r = (New type_attribute()).with_store()
-        r.set(datagram_transmitter.[New](type_attribute.of(f).get(Of transmitter)()).
+        r.set(datagram_trait.[New](type_attribute.of(f).get(Of trait)()).
                   with_packet_size(packet_size))
         Return r
     End Function

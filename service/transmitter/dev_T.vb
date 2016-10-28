@@ -18,7 +18,7 @@ Public Interface dev_T(Of T)
 End Interface
 
 Public Module _dev_T
-    <Extension()> Public Function transmit_mode(Of T)(ByVal this As dev_T(Of T)) As transmitter.mode_t
+    <Extension()> Public Function transmit_mode(Of T)(ByVal this As dev_T(Of T)) As trait.mode_t
         Return _transmitter.transmit_mode(this)
     End Function
 

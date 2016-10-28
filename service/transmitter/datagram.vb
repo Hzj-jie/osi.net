@@ -14,7 +14,7 @@ Public Interface datagram
 End Interface
 
 Public Module _datagram
-    <Extension()> Public Function transmit_mode(ByVal this As datagram) As transmitter.mode_t
+    <Extension()> Public Function transmit_mode(ByVal this As datagram) As trait.mode_t
         Return _transmitter.transmit_mode(this)
     End Function
 

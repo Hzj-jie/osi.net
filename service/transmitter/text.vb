@@ -26,7 +26,7 @@ Public Interface stream_text
 End Interface
 
 Public Module _text
-    <Extension()> Public Function transmit_mode(ByVal this As text) As transmitter.mode_t
+    <Extension()> Public Function transmit_mode(ByVal this As text) As trait.mode_t
         Return _transmitter.transmit_mode(this)
     End Function
 

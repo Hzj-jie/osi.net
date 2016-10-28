@@ -10,7 +10,7 @@ Imports osi.service.convertor
 Imports osi.service.transmitter
 
 Public Class client_dev
-    Protected Shared ReadOnly attribute As osi.service.transmitter.transmitter
+    Protected Shared ReadOnly attribute As trait
     Protected ReadOnly send_link_status As link_status
     Protected ReadOnly receive_link_status As link_status
     Protected ReadOnly host As String
@@ -18,8 +18,8 @@ Public Class client_dev
     Private ReadOnly id As String
 
     Shared Sub New()
-        attribute = osi.service.transmitter.transmitter.[New]().
-                        with_transmit_mode(osi.service.transmitter.transmitter.mode_t.send_receive).
+        attribute = trait.[New]().
+                        with_transmit_mode(trait.mode_t.send_receive).
                         with_concurrent_operation(False)
     End Sub
 

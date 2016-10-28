@@ -85,7 +85,7 @@
     <Compile Include="io\pending_io_punishment.vb" />
     <Compile Include="io\pump.vb" />
     <Compile Include="io\sensor.vb" />
-    <Compile Include="io\transmitter.vb" />
+    <Compile Include="io\trait.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

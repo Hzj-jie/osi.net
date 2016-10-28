@@ -29,7 +29,7 @@ Public Class dev_piece_datagram_adapter(Of _PACKET_SIZE As _int64)
     Private Shared Function attach_type_attribute(ByVal d As dev_T(Of piece)) As type_attribute
         Dim r As type_attribute = Nothing
         r = New type_attribute()
-        r.set(datagram_transmitter.[New](type_attribute.of(d).get()).with_packet_size(packet_size))
+        r.set(datagram_trait.[New](type_attribute.of(d).get()).with_packet_size(packet_size))
         Return r
     End Function
 

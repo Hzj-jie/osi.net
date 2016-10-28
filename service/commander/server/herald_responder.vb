@@ -10,10 +10,10 @@ Public Class herald_responder(Of CONTINUOUS As _boolean)
     Inherits iexecutable_responder(Of CONTINUOUS)
 
     Private Shared Sub assert_transmit_mode(ByVal h As herald)
-        Dim t As osi.service.transmitter.transmitter.mode_t = Nothing
+        Dim t As trait.mode_t = Nothing
         t = h.transmit_mode()
-        assert(t = osi.service.transmitter.transmitter.mode_t.duplex OrElse
-               t = osi.service.transmitter.transmitter.mode_t.receive_send)
+        assert(t = trait.mode_t.duplex OrElse
+               t = trait.mode_t.receive_send)
     End Sub
 
     Private ReadOnly instance As herald

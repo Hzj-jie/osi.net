@@ -8,7 +8,7 @@ Public Interface piece_dev
 End Interface
 
 Public Module _piece_dev
-    <Extension()> Public Function transmit_mode(ByVal this As piece_dev) As transmitter.mode_t
+    <Extension()> Public Function transmit_mode(ByVal this As piece_dev) As trait.mode_t
         Return _transmitter.transmit_mode(this)
     End Function
 

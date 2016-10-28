@@ -45,8 +45,8 @@ Public Class mock_datagram_dev(Of RANDOM_SEND_FAILURE As _boolean, RANDOM_RECEIV
 
     Shared Sub New()
         type_attribute.of(Of mock_datagram_dev(Of RANDOM_SEND_FAILURE, RANDOM_RECEIVE_FAILURE))().set(
-            datagram_transmitter.[New](
-                osi.service.transmitter.transmitter _
+            datagram_trait.[New](
+                trait _
                     .from_type(Of mock_dev_T(Of piece, RANDOM_SEND_FAILURE, RANDOM_RECEIVE_FAILURE))()) _
                     .with_packet_size(packet_size))
     End Sub

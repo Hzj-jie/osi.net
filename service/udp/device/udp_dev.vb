@@ -29,9 +29,9 @@ Public Class udp_dev
 
     Shared Sub New()
         assert(constants.ipv6_packet_size <= constants.ipv4_packet_size)
-        type_attribute.of(Of udp_dev).set(datagram_transmitter.[New]().
+        type_attribute.of(Of udp_dev).set(datagram_trait.[New]().
                                           with_packet_size(constants.ipv6_packet_size).
-                                          with_transmit_mode(osi.service.transmitter.transmitter.mode_t.duplex))
+                                          with_transmit_mode(trait.mode_t.duplex))
     End Sub
 
     Public Sub New(ByVal p As powerpoint, ByVal sources As const_array(Of IPEndPoint), ByVal buff() As Byte)

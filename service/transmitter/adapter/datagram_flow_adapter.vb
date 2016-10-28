@@ -10,12 +10,12 @@ Public Class datagram_flow_adapter
     Implements flow
 
     Private ReadOnly pump As block_pump_flow_pump_adapter
-    Private ReadOnly dt As datagram_transmitter
+    Private ReadOnly dt As datagram_trait
 
     Public Sub New(ByVal d As datagram)
         MyBase.New(d)
         Me.pump = New block_pump_flow_pump_adapter(underlying_device)
-        Me.dt = attribute().get(Of datagram_transmitter)()
+        Me.dt = attribute().get(Of datagram_trait)()
     End Sub
 
     Public Shared Function [New](ByVal d As datagram) As flow

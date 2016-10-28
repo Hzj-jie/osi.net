@@ -156,8 +156,8 @@ Public Class stream_flow_adapter
     Implements flow, IDisposable
 
     Shared Sub New()
-        type_attribute.of(Of stream_flow_adapter)().set(transmitter.[New](). _
-            with_transmit_mode(transmitter.mode_t.duplex))
+        type_attribute.of(Of stream_flow_adapter)().set(trait.[New]().
+            with_transmit_mode(trait.mode_t.duplex))
     End Sub
 
     'usually should not be called, upstream device should have its own indicator / sensor implementations
