@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
-Imports osi.service.device
+Imports osi.service.transmitter
 Imports envs = osi.root.envs
 
 ' Maintain a very basic send / receive lock to ensure only one single direction operation is ongoing.

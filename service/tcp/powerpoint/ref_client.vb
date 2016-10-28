@@ -2,6 +2,7 @@
 Imports System.Net.Sockets
 Imports osi.root.connector
 Imports osi.root.utils
+Imports osi.service.transmitter
 Imports envs = osi.root.envs
 
 <type_attribute()>
