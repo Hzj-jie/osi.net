@@ -5,8 +5,6 @@ Imports osi.root.event
 Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.utt
-Imports osi.root.utils
-Imports osi.root.delegates
 Imports osi.root.formation
 
 Public Class event_comb_waitfor_test
