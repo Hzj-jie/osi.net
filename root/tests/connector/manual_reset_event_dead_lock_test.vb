@@ -36,10 +36,6 @@ Public Class manual_reset_event_dead_lock_test
                 passed2 = New atomic_int()
             End Sub
 
-            Public Overrides Function preserved_processors() As Int16
-                Return 1
-            End Function
-
             Protected Overrides Sub Finalize()
                 stage1.Close()
                 stage2.Close()
@@ -51,15 +47,15 @@ Public Class manual_reset_event_dead_lock_test
                     For i As Int32 = min_int32 To max_int32 - 1
                         passed1.set(0)
                         assert(stage1.force_set())
-                        assert_true(timeslice_sleep_wait_until(Function() +passed1 = thread_count - 1,
-                                                               seconds_to_milliseconds(10)))
+                        assert_true(lazy_sleep_wait_until(Function() +passed1 = thread_count - 1,
+                                                          seconds_to_milliseconds(10)))
                         assert(stage1.force_reset())
                         assert_equal(+passed1, thread_count - 1)
                         passed2.set(0)
                         assert(stage2.force_set())
                         assert_equal(+passed1, thread_count - 1)
-                        assert_true(timeslice_sleep_wait_until(Function() +passed2 = thread_count - 1,
-                                                               seconds_to_milliseconds(10)))
+                        assert_true(lazy_sleep_wait_until(Function() +passed2 = thread_count - 1,
+                                                          seconds_to_milliseconds(10)))
                         assert(stage2.force_reset())
                         assert_equal(+passed1, thread_count - 1)
                         assert_equal(+passed2, thread_count - 1)
