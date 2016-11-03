@@ -84,25 +84,31 @@ Public Class reference_count_runner_test
             Protected Overrides Sub start_process()
                 assert_more(binding_count(), 0)
                 assert_false(started())
-                assert_true(stopped())
+                assert_false(stopped())
                 assert_true(starting())
                 assert_false(stopping())
                 assert_equal(v, 0)
                 v += 1
                 Me.mark_started()
                 assert_true(started())
+                assert_false(stopped())
+                assert_false(starting())
+                assert_false(stopping())
             End Sub
 
             Protected Overrides Sub stop_process()
                 assert_equal(binding_count(), 0)
                 assert_false(stopped())
-                assert_true(started())
+                assert_false(started())
                 assert_false(starting())
                 assert_true(stopping())
                 assert_equal(v, 1)
                 v -= 1
                 Me.mark_stopped()
+                assert_false(started())
                 assert_true(stopped())
+                assert_false(starting())
+                assert_false(stopping())
             End Sub
         End Class
 

@@ -61,15 +61,20 @@ Public Class reference_count_runner(Of AUTO_MARK_STARTED As _boolean, AUTO_MARK_
         _stopped = New ManualResetEvent(True)
     End Sub
 
+    ' Users expect to call this function in start_process or somewhere else.
+    ' This function is always expected to be called in start_process, or after start_process, so the _stopped has
+    ' already been WaitOne() and Reset().
     Public Sub mark_started()
-        assert(_stopped.WaitOne())
+        'assert(_stopped.WaitOne())
         assert(_started.Set())
         RaiseEvent after_start()
     End Sub
 
-    ' Users expect to call this function in stop_process or somewhere else
+    ' Users expect to call this function in stop_process or somewhere else.
+    ' This function is always expected to be called in stop_process, or after stop_process, so the _started has
+    ' already been WaitOne() and Reset().
     Public Sub mark_stopped()
-        assert(_started.WaitOne())
+        'assert(_started.WaitOne())
         assert(_stopped.Set())
         RaiseEvent after_stop()
     End Sub
@@ -118,11 +123,11 @@ Public Class reference_count_runner(Of AUTO_MARK_STARTED As _boolean, AUTO_MARK_
                 If Not _auto_mark_stopped Then
                     assert(_stopped.WaitOne()) ' Wait for last run to finish
                 End If
+                assert(_stopped.Reset())
                 start_process()
                 If Not _auto_mark_started Then
                     wait_for_start()
                 End If
-                assert(_stopped.Reset())
                 Return True
             Else
                 assert(b > 0)
@@ -152,11 +157,11 @@ Public Class reference_count_runner(Of AUTO_MARK_STARTED As _boolean, AUTO_MARK_
                 If Not _auto_mark_started Then
                     assert(_started.WaitOne()) ' Wait for last run to start
                 End If
+                assert(_started.Reset())
                 stop_process()
                 If Not _auto_mark_stopped Then
                     wait_for_stop()
                 End If
-                assert(_started.Reset())
                 Return True
             Else
                 assert(b > 0)

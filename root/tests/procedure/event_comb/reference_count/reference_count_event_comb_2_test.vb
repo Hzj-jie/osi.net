@@ -20,7 +20,7 @@ Imports osi.root.utt
 Public Class reference_count_event_comb_2_test
     Inherits [case]
 
-    Private Class reference_count_event_comb_2_case
+    Private Class case1
         Inherits [case]
 
         Public ReadOnly rcec As reference_count_event_comb_2
@@ -49,8 +49,8 @@ Public Class reference_count_event_comb_2_test
         End Function
     End Class
 
-    Private Class reference_count_event_comb_2_case2
-        Inherits reference_count_event_comb_2_case
+    Private Class case2
+        Inherits case1
 
         Public ReadOnly init_runs As ref(Of unchecked_int)
         Public ReadOnly final_runs As ref(Of unchecked_int)
@@ -82,7 +82,24 @@ Public Class reference_count_event_comb_2_test
         End Function
     End Class
 
-    Private Overloads Function run(ByVal rc As reference_count_event_comb_2_case, ByVal c As [case]) As Boolean
+    Private Class case3
+        Inherits [case]
+
+        Public Overrides Function run() As Boolean
+            Dim r As reference_count_event_comb_1 = Nothing
+            r = reference_count_event_comb_1.ctor(Function() As event_comb
+                                                      Return Nothing
+                                                  End Function)
+            For i As Int32 = 0 To 1000
+                assert(r.bind())
+                sleep(10)
+                assert(r.release())
+            Next
+            Return True
+        End Function
+    End Class
+
+    Private Overloads Function run(ByVal rc As case1, ByVal c As [case]) As Boolean
         assert(Not rc Is Nothing)
         assert(Not c Is Nothing)
         If c.run() Then
@@ -98,8 +115,8 @@ Public Class reference_count_event_comb_2_test
     End Function
 
     Private Function run_case() As Boolean
-        Dim rc As reference_count_event_comb_2_case = Nothing
-        rc = New reference_count_event_comb_2_case()
+        Dim rc As case1 = Nothing
+        rc = New case1()
         Dim c As [case] = Nothing
         c = multithreading(repeat(rc, 1024), Environment.ProcessorCount() << 2)
         If Not run(rc, c) Then
@@ -122,8 +139,8 @@ Public Class reference_count_event_comb_2_test
 
     Private Function run_case2() As Boolean
         Const repeat_count As Int32 = 8192
-        Dim rc As reference_count_event_comb_2_case2 = Nothing
-        rc = New reference_count_event_comb_2_case2()
+        Dim rc As case2 = Nothing
+        rc = New case2()
         Dim c As [case] = Nothing
         c = repeat(rc, repeat_count)
         If Not run(rc, c) Then
@@ -146,9 +163,16 @@ Public Class reference_count_event_comb_2_test
         Return True
     End Function
 
+    Private Function run_case3() As Boolean
+        Dim c As [case] = Nothing
+        c = New case3()
+        Return c.run()
+    End Function
+
     Public Overrides Function run() As Boolean
         Return run_case() AndAlso
-               run_case2()
+               run_case2() AndAlso
+               run_case3()
     End Function
 End Class
 'finish reference_count_event_comb_test.vbp --------

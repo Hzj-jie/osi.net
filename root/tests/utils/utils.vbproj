@@ -81,6 +81,7 @@
     </Compile>
     <Compile Include="pather_test.vb" />
     <Compile Include="pattern_match_test.vb" />
+    <Compile Include="reference_count_runner_test2.vb" />
     <Compile Include="reference_count_runner_test.vb" />
     <Compile Include="type_attribute_forward_test.vb" />
     <Compile Include="type_attribute_perf_test.vb" />
