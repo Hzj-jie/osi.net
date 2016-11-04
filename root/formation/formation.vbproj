@@ -150,6 +150,7 @@
     <Compile Include="threadsafe\unique_strong_map.vb" />
     <Compile Include="threadsafe\unique_weak_map.vb" />
     <Compile Include="threadsafe\collectionless.vb" />
+    <Compile Include="threadsafe\waitable_slimheapless.vb" />
     <Compile Include="threadsafe\waitable_slimqless2.vb" />
     <Compile Include="trie.iterator.vb" />
     <Compile Include="trie.vb" />
@@ -191,6 +192,8 @@
     <None Include="threadsafe\codegen\qless2.vbp" />
     <None Include="threadsafe\codegen\heapless.vbp" />
     <None Include="threadsafe\codegen\run.cmd" />
+    <None Include="threadsafe\codegen\waitable_slimheapless.vbp" />
+    <None Include="threadsafe\codegen\waitable_slimqless2.vbp" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

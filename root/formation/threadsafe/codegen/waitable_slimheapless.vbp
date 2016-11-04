@@ -1,0 +1,4 @@
+
+##DEFINE TYPE slimheapless
+##INCLUDE waitable_slimqless2.vbp
+

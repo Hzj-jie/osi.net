@@ -152,6 +152,7 @@
     <Compile Include="qless\slimheapless_debug_tests.vb" />
     <Compile Include="qless\slimqless2_case5.vb" />
     <Compile Include="threadsafe\object_unique_set_test.vb" />
+    <Compile Include="threadsafe\waitable_slimheapless_test.vb" />
     <Compile Include="threadsafe\waitable_slimqless2_test.vb" />
     <Compile Include="trie\trie_case.vb" />
     <Compile Include="trie\trie_perf.vb" />
@@ -251,7 +252,9 @@
       <Name>utt</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="threadsafe\codegen\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetDir)\$(TargetName).*" "$(ProjectDir)\..\..\utt\$(OutDir)" /y</PostBuildEvent>
