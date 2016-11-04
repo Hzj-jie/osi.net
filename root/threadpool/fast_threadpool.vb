@@ -147,4 +147,11 @@ Public NotInheritable Class fast_threadpool
         this.queue_job(that)
         Return this
     End Operator
+
+#If Not USE_COUNT_RESET_EVENT Then
+    Protected Overrides Sub Finalize()
+        e.Close()
+        MyBase.Finalize()
+    End Sub
+#End If
 End Class

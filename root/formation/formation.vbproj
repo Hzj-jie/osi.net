@@ -150,6 +150,7 @@
     <Compile Include="threadsafe\unique_strong_map.vb" />
     <Compile Include="threadsafe\unique_weak_map.vb" />
     <Compile Include="threadsafe\collectionless.vb" />
+    <Compile Include="threadsafe\waitable_slimqless2.vb" />
     <Compile Include="trie.iterator.vb" />
     <Compile Include="trie.vb" />
     <Compile Include="vector.adaptive_array.vb" />
