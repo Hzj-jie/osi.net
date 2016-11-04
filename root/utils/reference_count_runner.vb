@@ -61,21 +61,15 @@ Public Class reference_count_runner(Of AUTO_MARK_STARTED As _boolean, AUTO_MARK_
         _stopped = New ManualResetEvent(True)
     End Sub
 
-    ' Users expect to call this function in start_process or somewhere else.
-    ' This function is always expected to be called in start_process, or after start_process, so the _stopped has
-    ' already been WaitOne() and Reset().
+    ' Users expect to call this function in start_process or somewhere else if AUTO_MARK_STARTED is false.
     Public Sub mark_started()
-        'assert(_stopped.WaitOne())
-        assert(_started.Set())
+        assert(_started.force_set())
         RaiseEvent after_start()
     End Sub
 
-    ' Users expect to call this function in stop_process or somewhere else.
-    ' This function is always expected to be called in stop_process, or after stop_process, so the _started has
-    ' already been WaitOne() and Reset().
+    ' Users expect to call this function in stop_process or somewhere else if AUTO_MARK_STOPPED is false.
     Public Sub mark_stopped()
-        'assert(_started.WaitOne())
-        assert(_stopped.Set())
+        assert(_stopped.force_set())
         RaiseEvent after_stop()
     End Sub
 
@@ -93,25 +87,39 @@ Public Class reference_count_runner(Of AUTO_MARK_STARTED As _boolean, AUTO_MARK_
         Return binding_count() = 0
     End Function
 
+    ' bind() has been called, wait for mark_started().
     Public Function starting() As Boolean
-        Return binding() AndAlso Not started()
+        Return binding() AndAlso Not _started.wait(0)
     End Function
 
+    ' mark_started() has been called, but release() has not been called.
     Public Function started() As Boolean
-        Return _started.WaitOne(0)
+        Return binding() AndAlso _started.wait(0)
     End Function
 
+    ' release() has been called, wait for mark_stopped().
     Public Function stopping() As Boolean
-        Return not_binding() AndAlso Not stopped()
+        Return not_binding() AndAlso Not _stopped.wait(0)
     End Function
 
+    ' mark_stopped() has been called, but bind() has not been called.
     Public Function stopped() As Boolean
-        Return _stopped.WaitOne(0)
+        Return not_binding() AndAlso _stopped.wait(0)
+    End Function
+
+    ' mark_started() has been called, but mark_stopped() has not been called.
+    Public Function running() As Boolean
+        Return _started.wait(0) AndAlso Not _stopped.wait(0)
+    End Function
+
+    ' mark_stopped() has been called, but mark_started() has not been called.
+    Public Function not_running() As Boolean
+        Return Not _started.wait(0) AndAlso _stopped.wait(0)
     End Function
 
     ' Blocks current thread until started
     Public Sub wait_for_start()
-        assert(_started.WaitOne())
+        assert(_started.wait())
     End Sub
 
     ' Returns true if this function call took effect.
@@ -119,11 +127,11 @@ Public Class reference_count_runner(Of AUTO_MARK_STARTED As _boolean, AUTO_MARK_
         l.wait()
         Try
             If b = 0 Then
-                b = 1
                 If Not _auto_mark_stopped Then
-                    assert(_stopped.WaitOne()) ' Wait for last run to finish
+                    wait_for_stop() ' Wait for last run to finish
                 End If
-                assert(_stopped.Reset())
+                b = 1
+                assert(_stopped.force_reset())
                 start_process()
                 If Not _auto_mark_started Then
                     wait_for_start()
@@ -141,11 +149,11 @@ Public Class reference_count_runner(Of AUTO_MARK_STARTED As _boolean, AUTO_MARK_
 
     ' Blocks current thread for a while, until timeout or started.
     Public Function wait_for_stop(ByVal ms As Int64) As Boolean
-        Return _stopped.WaitOne(ms)
+        Return _stopped.wait(ms)
     End Function
 
     Public Sub wait_for_stop()
-        assert(_stopped.WaitOne())
+        assert(_stopped.wait())
     End Sub
 
     ' Returns true if this function call took effect.
@@ -153,11 +161,11 @@ Public Class reference_count_runner(Of AUTO_MARK_STARTED As _boolean, AUTO_MARK_
         l.wait()
         Try
             If b = 1 Then
-                b = 0
                 If Not _auto_mark_started Then
-                    assert(_started.WaitOne()) ' Wait for last run to start
+                    wait_for_start() ' Wait for last run to start
                 End If
-                assert(_started.Reset())
+                b = 0
+                assert(_started.force_reset())
                 stop_process()
                 If Not _auto_mark_stopped Then
                     wait_for_stop()
