@@ -190,6 +190,9 @@
     <None Include="qless\codegen\slimheapless_case3.vbp" />
     <None Include="qless\codegen\slimheapless_case4.vbp" />
     <None Include="qless\codegen\slimqless2_case5.vbp" />
+    <None Include="threadsafe\codegen\run.cmd" />
+    <None Include="threadsafe\codegen\waitable_slimheapless_test.vbp" />
+    <None Include="threadsafe\codegen\waitable_slimqless2_test.vbp" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -252,9 +255,7 @@
       <Name>utt</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="threadsafe\codegen\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetDir)\$(TargetName).*" "$(ProjectDir)\..\..\utt\$(OutDir)" /y</PostBuildEvent>
