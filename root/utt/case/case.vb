@@ -1,4 +1,6 @@
 ﻿
+Imports osi.root.envs
+
 Public MustInherit Class [case]
     Public ReadOnly full_name As String
     Public ReadOnly assembly_qualified_name As String
@@ -26,5 +28,10 @@ Public MustInherit Class [case]
 
     Protected Function commandline_specific() As Boolean
         Return commandline.specific(Me)
+    End Function
+
+    Public Shared Function exceed_memory_limit(ByVal expected_memory_usage As Int64) As Boolean
+        Return max_physical_memory_usage < expected_memory_usage OrElse
+               max_virtual_memory_usage < expected_memory_usage
     End Function
 End Class

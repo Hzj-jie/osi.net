@@ -1,6 +1,5 @@
 ﻿
 Imports osi.root.connector
-Imports osi.root.envs
 
 ' A temporary solution to disable cases on lowend machines.
 Public Class memory_usage_limited_case_wrapper
@@ -14,8 +13,7 @@ Public Class memory_usage_limited_case_wrapper
     End Sub
 
     Private Function not_exceed_memory_limit() As Boolean
-        Return max_physical_memory_usage >= expected_memory_usage AndAlso
-               max_virtual_memory_usage >= expected_memory_usage
+        Return Not exceed_memory_limit(expected_memory_usage)
     End Function
 
     Public NotOverridable Overrides Function prepare() As Boolean
@@ -30,7 +28,7 @@ Public Class memory_usage_limited_case_wrapper
         If not_exceed_memory_limit() Then
             Return MyBase.run()
         Else
-            raise_error("expected memory usage of case ", name, " is larger than physical limitation, ignore")
+            raise_error("expected memory usage of case ", name, " is larger than memory limitation, ignore")
             Return True
         End If
     End Function
