@@ -57,6 +57,8 @@
   <ItemGroup>
     <None Include="codegen\qless_threadpool_test.vbp" />
     <None Include="codegen\run.cmd" />
+    <None Include="codegen\slimheapless_runner_test.vbp" />
+    <None Include="codegen\slimqless2_runner_test.vbp" />
     <None Include="codegen\slimqless2_threadpool_test.vbp" />
     <None Include="codegen\threadpool_test.vbp" />
     <None Include="codegen\managed_threadpool_test.vbp" />
@@ -64,6 +66,7 @@
     <Compile Include="fast_threadpool_test.vb" />
     <Compile Include="managed_threadpool_test.vb" />
     <Compile Include="qless_threadpool_test.vb" />
+    <Compile Include="slimheapless_runner_test.vb" />
     <Compile Include="slimheapless_threadpool_test.vb" />
     <Compile Include="slimqless2_runner_test.vb" />
     <Compile Include="slimqless2_threadpool_test.vb" />
