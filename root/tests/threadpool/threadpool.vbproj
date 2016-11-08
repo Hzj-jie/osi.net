@@ -65,6 +65,7 @@
     <Compile Include="managed_threadpool_test.vb" />
     <Compile Include="qless_threadpool_test.vb" />
     <Compile Include="slimheapless_threadpool_test.vb" />
+    <Compile Include="slimqless2_runner_test.vb" />
     <Compile Include="slimqless2_threadpool_test.vb" />
     <Compile Include="threadpool_case.vb" />
     <Compile Include="threadpool_perf.vb" />

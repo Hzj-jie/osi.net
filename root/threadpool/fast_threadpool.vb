@@ -88,13 +88,20 @@ Public NotInheritable Class fast_threadpool
         If (Not fast_threadpool_initialized.initialized OrElse
             object_compare(Me, fast_threadpool_instance.g) <> 0) AndAlso
            s.mark_in_use() Then
+            If stop_wait_seconds < 0 Then
+                stop_wait_seconds = constants.default_stop_threadpool_wait_seconds
+            End If
             Dim until_ms As Int64 = int64_0
             until_ms = nowadays.milliseconds() + seconds_to_milliseconds(stop_wait_seconds)
             Dim a As Action = Nothing
             a = Sub()
                     For i As UInt32 = uint32_0 To array_size(ts) - uint32_1
                         ts(i).Abort()
-                        ts(i).Join(until_ms - nowadays.milliseconds())
+                        Dim wait_ms As Int64 = 0
+                        wait_ms = until_ms - nowadays.milliseconds()
+                        If wait_ms > 0 Then
+                            ts(i).Join(wait_ms)
+                        End If
                     Next
                 End Sub
             If in_managed_thread() Then
@@ -148,10 +155,11 @@ Public NotInheritable Class fast_threadpool
         Return this
     End Operator
 
-#If Not USE_COUNT_RESET_EVENT Then
     Protected Overrides Sub Finalize()
+        [stop](0)
+#If Not USE_COUNT_RESET_EVENT Then
         e.Close()
+#End If
         MyBase.Finalize()
     End Sub
-#End If
 End Class

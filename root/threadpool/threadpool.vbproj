@@ -77,6 +77,7 @@
     <Compile Include="qless_threadpool.vb" />
     <Compile Include="registry.vb" />
     <Compile Include="slimheapless_threadpool.vb" />
+    <Compile Include="slimqless2_runner.vb" />
     <Compile Include="slimqless2_threadpool.vb" />
     <Compile Include="threadpool.implement.vb" />
     <Compile Include="threadpool.override.vb" />

@@ -96,7 +96,9 @@ Partial Public MustInherit Class threadpool
         start_ms = nowadays.milliseconds()
         Try
             thread.Abort()
-            thread.Join(seconds_to_milliseconds(stop_wait_seconds))
+            If stop_wait_seconds > 0 Then
+                thread.Join(seconds_to_milliseconds(stop_wait_seconds))
+            End If
         Catch
         Finally
             stop_wait_seconds -= nowadays.milliseconds() - start_ms
@@ -105,7 +107,7 @@ Partial Public MustInherit Class threadpool
 
     Private Sub stop_threads(ByVal threads() As Thread,
                              ByVal stop_wait_seconds As Int64)
-        If stop_wait_seconds <= 0 Then
+        If stop_wait_seconds < 0 Then
             stop_wait_seconds = constants.default_stop_threadpool_wait_seconds
         End If
         raise_error("threadpool starts to stop, running before step.")
@@ -129,7 +131,7 @@ Partial Public MustInherit Class threadpool
     End Sub
 
     Protected Overrides Sub Finalize()
-        [stop]()
+        [stop](0)
         MyBase.Finalize()
     End Sub
 
