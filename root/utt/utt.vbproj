@@ -66,6 +66,7 @@
     <Compile Include="case\exec_case.vb" />
     <Compile Include="case\exec_export_case.vb" />
     <Compile Include="case_wrapper\isolate_case_wrapper.vb" />
+    <Compile Include="case_wrapper\memory_usage_limited_case_wrapper.vb" />
     <Compile Include="case_wrapper\performance_comparison_case_wrapper.vb" />
     <Compile Include="case_wrapper\sleep_case_wrapper.vb" />
     <Compile Include="case_wrapper\chained_case_wrapper.vb" />
@@ -122,6 +123,7 @@
     <Compile Include="selfhealth\failure_case.vb" />
     <Compile Include="selfhealth\fake_rnd_test.vb" />
     <Compile Include="selfhealth\isolate_case_wrapper_test.vb" />
+    <Compile Include="selfhealth\memory_usage_limited_test.vb" />
     <Compile Include="selfhealth\selfhealth.vb" />
   </ItemGroup>
   <ItemGroup>

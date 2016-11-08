@@ -119,4 +119,8 @@ Public Module _wrapper
     Public Function isolated(ByVal c As commandline_specific_event_comb_case_wrapper) As [case]
         Return New isolate_case_wrapper(c)
     End Function
+
+    Public Function memory_usage_limited(ByVal c As [case], ByVal expected_memory_usage As Int64) As [case]
+        Return New memory_usage_limited_case_wrapper(c, expected_memory_usage)
+    End Function
 End Module

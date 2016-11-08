@@ -67,6 +67,7 @@
     <Compile Include="gitver.parser.vb" />
     <Compile Include="hardware.vb" />
     <Compile Include="management.vb" />
+    <Compile Include="memory_usage.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
