@@ -17,6 +17,7 @@ Imports osi.root.formation
 Imports osi.root.lock
 
 Public Class slimheapless_runner
+    <ThreadStatic()> Private Shared current As slimheapless_runner
     Private ReadOnly q As waitable_slimheapless(Of Action)
     Private ReadOnly t As Thread
     Private s As singleentry
@@ -29,16 +30,25 @@ Public Class slimheapless_runner
         assert(Not q Is Nothing)
         Me.q = q
         Me.t = New Thread(Sub()
-                              While Not stopping()
-                                  If Not execute() Then
-                                      assert(wait(max_int64) OrElse stopping())
-                                  End If
-                              End While
+                              current = Me
+                              Try
+                                  While Not stopping()
+                                      If Not execute() Then
+                                          wait()
+                                      End If
+                                  End While
+                              Finally
+                                  current = Nothing
+                              End Try
                           End Sub)
         Me.t.Name() = "slimheapless_runner_thread"
         t.Start()
         assert(Not stopping())
     End Sub
+
+    Public Function running_in_current_thread() As Boolean
+        Return object_compare(current, Me) = 0
+    End Function
 
     Public Function stopping() As Boolean
         Return s.in_use() AndAlso Not stopped()

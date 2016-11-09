@@ -20,17 +20,19 @@ Public Class slimheapless_runner_test
     Inherits [case]
 
     Private Shared Function single_thread_case() As Boolean
-        Const size As Int32 = 32 * 1024 * 1024
+        Const size As Int32 = 1024 * 1024
         Dim b As bit_array_thread_safe = Nothing
         b = New bit_array_thread_safe(size)
         Dim c As atomic_int32 = Nothing
         c = New atomic_int32()
         Dim r As slimheapless_runner = Nothing
         r = New slimheapless_runner()
+        assert_false(r.running_in_current_thread())
         For i As Int32 = 0 To size - 1
             Dim j As Int32 = 0
             j = i
             r.emplace(Sub()
+                          assert_true(r.running_in_current_thread())
                           assert_false(b(j))
                           b(j) = True
                           If c.increment() = size Then
@@ -38,7 +40,7 @@ Public Class slimheapless_runner_test
                           End If
                       End Sub)
         Next
-        assert_true(r.join(seconds_to_milliseconds(size / 32 / 1024 / 1024 * 120)))
+        assert_true(r.join(seconds_to_milliseconds(size / 32 / 1024 / 1024 * 240)))
         assert_equal(+c, size)
         assert_false(r.stopping())
         assert_true(r.stopped())
@@ -50,26 +52,34 @@ Public Class slimheapless_runner_test
     End Function
 
     Private Shared Function execute_case() As Boolean
-        Const size As Int32 = 32 * 1024 * 1024
+        Const size As Int32 = 128 * 1024
         Dim b As bit_array_thread_safe = Nothing
         b = New bit_array_thread_safe(size)
         Dim c As atomic_int32 = Nothing
         c = New atomic_int32()
+        Dim executed As atomic_int32 = Nothing
+        executed = New atomic_int32()
         Dim r As slimheapless_runner = Nothing
         r = New slimheapless_runner()
+        assert_false(r.running_in_current_thread())
         For i As Int32 = 0 To size - 1
             Dim j As Int32 = 0
             j = i
             r.emplace(Sub()
+                          If Not r.running_in_current_thread() Then
+                              executed.increment()
+                          End If
                           assert_false(b(j))
                           b(j) = True
                           c.increment()
+                          fake_processor_ticks_work(1)
                       End Sub)
         Next
         While r.execute()
         End While
         assert_equal(+c, size)
         assert_false(r.stopping())
+        assert_more(+executed, 0)
         r.stop()
         r.join()
         assert_false(r.stopping())
