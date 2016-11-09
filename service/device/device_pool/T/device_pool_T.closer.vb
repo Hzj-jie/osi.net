@@ -42,7 +42,9 @@ Partial Public Class device_pool(Of T)
                 End If
                 i += 1
             End While
-            c.clear()
+            ' Cannot clear. If d.closing is raised concurrently with p.closing, assertion will fail in
+            ' collectionless.erase(uint32).
+            ' c.clear()
         End Sub
     End Class
 End Class
