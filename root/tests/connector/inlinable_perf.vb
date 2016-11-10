@@ -34,14 +34,14 @@ Public Class inlinable_perf
 
     Protected Overrides Function min_rate_table() As Double(,)
         If os.windows_major <= os.windows_major_t._5 Then
-            Return {{-1, 0.5, 0.5},
-                    {4, -1, 1.1},
-                    {4, 1.1, -1}}
+            Return {{-1, 1.2, 1.2},
+                    {2.5, -1, 1.1},
+                    {2.5, 1.1, -1}}
         Else
             ' Targeting _6 or upper
-            Return {{-1, 0.9, 0.9},
-                    {1.5, -1, 1.1},
-                    {1.5, 1.1, -1}}
+            Return {{-1, 1.2, 1.2},
+                    {2, -1, 1.1},
+                    {2, 1.1, -1}}
         End If
     End Function
 

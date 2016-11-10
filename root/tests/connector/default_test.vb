@@ -37,7 +37,7 @@ Public Class default_test
                         {0.9, 0, 0.8},
                         {1.5, 2.3, 0}}
             Else
-                Return {{0, 6, 2.5},
+                Return {{0, 6, 4},
                         {0.4, 0, 0.8},
                         {0.6, 2, 0}}
             End If
