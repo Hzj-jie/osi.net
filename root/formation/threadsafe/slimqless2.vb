@@ -95,7 +95,7 @@ Public Class slimqless2(Of T)
         wait_mark_writting()
         Dim n As node = Nothing
         n = e
-        n.next = ne
+        atomic.eva(n.next, ne)
         atomic.eva(e, ne)
         n.v = v
         n.vs.mark_value_written()
