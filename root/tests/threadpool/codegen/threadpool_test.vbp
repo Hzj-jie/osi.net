@@ -1,4 +1,5 @@
 ﻿
+##DEFAULT JOINABLE False
 ##DEFAULT THREADPOOL_TYPE fast_threadpool
 ##DEFAULT NEW_INSTANCE New ##THREADPOOL_TYPE##()
 
@@ -80,6 +81,9 @@ Public Class ##THREADPOOL_TYPE##_test
                                                    seconds_to_milliseconds(1)))
         End Using
         assert_true(t.[stop]())
+#If ##JOINABLE## Then
+        t.join()
+#End If
         Return MyBase.finish()
     End Function
 End Class

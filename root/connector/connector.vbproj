@@ -65,8 +65,10 @@
     <Compile Include="bytes\bytes_array.vb" />
     <Compile Include="bytes\bytes_dependent_types.vb" />
     <Compile Include="bytes\bytes_independent_types.vb" />
+    <Compile Include="default_new.vb" />
     <Compile Include="disposable.vb" />
     <Compile Include="endian.vb" />
+    <Compile Include="global_instance.vb" />
     <Compile Include="string_utils\utf8_char.vb" />
     <Compile Include="string_utils\character.vb" />
     <Compile Include="choose.vb" />

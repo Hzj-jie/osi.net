@@ -89,6 +89,9 @@ Public Class slimqless2_threadpool_test
                                                    seconds_to_milliseconds(1)))
         End Using
         assert_true(t.[stop]())
+#If False Then
+        t.join()
+#End If
         Return MyBase.finish()
     End Function
 End Class

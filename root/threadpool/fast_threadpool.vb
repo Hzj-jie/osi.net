@@ -8,25 +8,6 @@ Imports osi.root.event
 Imports osi.root.lock
 Imports QUEUE_TYPE = osi.root.formation.slimheapless(Of System.Action)
 
-Public NotInheritable Class fast_threadpool_initialized
-    Public Shared initialized As Boolean
-
-    Private Sub New()
-    End Sub
-End Class
-
-Public NotInheritable Class fast_threadpool_instance
-    Public Shared ReadOnly g As fast_threadpool
-
-    Shared Sub New()
-        fast_threadpool_initialized.initialized = True
-        g = New fast_threadpool()
-    End Sub
-
-    Private Sub New()
-    End Sub
-End Class
-
 ' A not-inheritable, no virtual functions threadpool with compiling time switches only.
 Public NotInheritable Class fast_threadpool
     <ThreadStatic> Private Shared managed_thread As Boolean
@@ -85,8 +66,7 @@ Public NotInheritable Class fast_threadpool
 
     Public Function [stop](Optional ByVal stop_wait_seconds As Int64 = constants.default_stop_threadpool_wait_seconds) _
                           As Boolean
-        If (Not fast_threadpool_initialized.initialized OrElse
-            object_compare(Me, fast_threadpool_instance.g) <> 0) AndAlso
+        If object_compare(Me, newable_global_instance(Of fast_threadpool).ref()) <> 0 AndAlso
            s.mark_in_use() Then
             If stop_wait_seconds < 0 Then
                 stop_wait_seconds = constants.default_stop_threadpool_wait_seconds

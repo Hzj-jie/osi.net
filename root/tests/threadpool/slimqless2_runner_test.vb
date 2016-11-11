@@ -22,23 +22,26 @@ Public Class slimqless2_runner_test
         Dim r As slimqless2_runner = Nothing
         r = New slimqless2_runner()
         assert_false(r.running_in_current_thread())
+        assert_false(slimqless2_runner.current_thread_is_managed())
         For i As Int32 = 0 To size - 1
             Dim j As Int32 = 0
             j = i
-            r.emplace(Sub()
-                          assert_true(r.running_in_current_thread())
-                          assert_false(b(j))
-                          b(j) = True
-                          If c.increment() = size Then
-                              r.stop()
-                          End If
-                      End Sub)
+            r.push(Sub()
+                       assert_true(r.running_in_current_thread())
+                       assert_true(slimqless2_runner.current_thread_is_managed())
+                       assert_false(b(j))
+                       b(j) = True
+                       If c.increment() = size Then
+                           r.stop()
+                       End If
+                   End Sub)
         Next
         assert_true(r.join(seconds_to_milliseconds(size / 32 / 1024 / 1024 * 240)))
         assert_equal(+c, size)
         assert_false(r.stopping())
         assert_true(r.stopped())
-        r.stop()
+        assert_true(r.stop())
+        assert_false(r.stop())
         r.join()
         assert_false(r.stopping())
         assert_true(r.stopped())
@@ -56,25 +59,30 @@ Public Class slimqless2_runner_test
         Dim r As slimqless2_runner = Nothing
         r = New slimqless2_runner()
         assert_false(r.running_in_current_thread())
+        assert_false(slimqless2_runner.current_thread_is_managed())
         For i As Int32 = 0 To size - 1
             Dim j As Int32 = 0
             j = i
-            r.emplace(Sub()
-                          If Not r.running_in_current_thread() Then
-                              executed.increment()
-                          End If
-                          assert_false(b(j))
-                          b(j) = True
-                          c.increment()
-                          fake_processor_ticks_work(1)
-                      End Sub)
+            r.push(Sub()
+                       If Not r.running_in_current_thread() Then
+                           assert_false(slimqless2_runner.current_thread_is_managed())
+                           executed.increment()
+                       Else
+                           assert_true(slimqless2_runner.current_thread_is_managed())
+                       End If
+                       assert_false(b(j))
+                       b(j) = True
+                       c.increment()
+                       fake_processor_ticks_work(1)
+                   End Sub)
         Next
         While r.execute()
         End While
         assert_equal(+c, size)
         assert_false(r.stopping())
         assert_more(+executed, 0)
-        r.stop()
+        assert_true(r.stop())
+        assert_false(r.stop())
         r.join()
         assert_false(r.stopping())
         assert_true(r.stopped())

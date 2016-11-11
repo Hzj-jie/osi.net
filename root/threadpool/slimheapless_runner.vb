@@ -16,7 +16,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.lock
 
-Public Class slimheapless_runner
+Public NotInheritable Class slimheapless_runner
     <ThreadStatic()> Private Shared current As slimheapless_runner
     Private ReadOnly q As waitable_slimheapless(Of Action)
     Private ReadOnly t As Thread
@@ -46,6 +46,10 @@ Public Class slimheapless_runner
         assert(Not stopping())
     End Sub
 
+    Public Shared Function current_thread_is_managed() As Boolean
+        Return Not current Is Nothing
+    End Function
+
     Public Function running_in_current_thread() As Boolean
         Return object_compare(current, Me) = 0
     End Function
@@ -60,14 +64,18 @@ Public Class slimheapless_runner
                assert(s.in_use())
     End Function
 
-    Public Sub [stop]()
+    Public Function [stop]() As Boolean
         If s.mark_in_use() Then
             t.Abort()
             GC.SuppressFinalize(Me)
+            Return True
+        Else
+            Return False
         End If
-    End Sub
+    End Function
 
     Public Function join(ByVal timeout_ms As Int64) As Boolean
+        assert(Not running_in_current_thread())
         If timeout_ms > max_int32 Then
             Return t.Join(max_int32)
         ElseIf timeout_ms < 0 Then
@@ -105,10 +113,6 @@ Public Class slimheapless_runner
     End Function
 
     Public Function push(ByVal job As Action) As Boolean
-        Return emplace(copy(job))
-    End Function
-
-    Public Function emplace(ByVal job As Action) As Boolean
         If job Is Nothing Then
             Return False
         Else

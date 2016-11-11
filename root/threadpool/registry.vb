@@ -5,7 +5,7 @@
 
 Public Module _auto_updating_resolver
     Public Function thread_pool() As fast_threadpool
-        Return fast_threadpool_instance.g
+        Return newable_global_instance(Of fast_threadpool).ref_new()
     End Function
 End Module
 

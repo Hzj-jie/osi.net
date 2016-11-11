@@ -69,6 +69,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="new.vb" />
     <Compile Include="string.vb" />
     <Compile Include="strings.vb" />
     <Compile Include="template_parameter.vb" />

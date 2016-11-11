@@ -78,8 +78,10 @@
     <Compile Include="registry.vb" />
     <Compile Include="slimheapless_runner.vb" />
     <Compile Include="slimheapless_threadpool.vb" />
+    <Compile Include="slimheapless_threadpool2.vb" />
     <Compile Include="slimqless2_runner.vb" />
     <Compile Include="slimqless2_threadpool.vb" />
+    <Compile Include="slimqless2_threadpool2.vb" />
     <Compile Include="threadpool.implement.vb" />
     <Compile Include="threadpool.override.vb" />
     <Compile Include="threadpool.status.vb" />
@@ -99,7 +101,9 @@
     <None Include="codegen\run.cmd" />
     <None Include="codegen\slimheapless_runner.vbp" />
     <None Include="codegen\slimheapless_threadpool.vbp" />
+    <None Include="codegen\slimheapless_threadpool2.vbp" />
     <None Include="codegen\slimqless2_runner.vbp" />
+    <None Include="codegen\slimqless2_threadpool2.vbp" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
