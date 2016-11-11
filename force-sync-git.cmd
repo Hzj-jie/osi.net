@@ -1,4 +1,4 @@
 
-git reset --hard origin/master
-git pull
+git.exe reset --hard origin/master
+git.exe pull
 
