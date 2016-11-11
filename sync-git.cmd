@@ -1,3 +1,3 @@
 
-git.exe pull
+call git pull
 

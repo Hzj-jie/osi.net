@@ -1,4 +1,4 @@
 
-git.exe pull
-git.exe checkout %1
+call git pull
+call git checkout %1
 
