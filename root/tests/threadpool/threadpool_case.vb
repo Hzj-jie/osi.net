@@ -2,12 +2,12 @@
 Option Strict On
 
 #Const USE_FAST_THREAD_POOL = False
+#Const USE_THREAD_POOL2 = True
 Imports System.Threading
 Imports osi.root.formation
 Imports osi.root.connector
 Imports osi.root.utils
 Imports osi.root.lock
-Imports osi.root.delegates
 Imports osi.root.threadpool
 
 Friend Class threadpool_case
@@ -33,6 +33,8 @@ Friend Class threadpool_case
         p = New pointer(Of Int64)()
 #If USE_FAST_THREAD_POOL Then
         Dim tp As fast_threadpool = Nothing
+#ElseIf USE_THREAD_POOL2 Then
+        Dim tp As slimqless2_threadpool2 = Nothing
 #Else
         Dim tp As ithreadpool = Nothing
 #End If

@@ -1,7 +1,9 @@
 ﻿
 #Const USE_FAST_THREAD_POOL = False
+#Const USE_THREAD_POOL2 = True
 
 #If USE_FAST_THREAD_POOL Then
+Imports osi.root.connector
 
 Public Module _auto_updating_resolver
     Public Function thread_pool() As fast_threadpool
@@ -27,10 +29,35 @@ Public Module _registry
     End Function
 End Module
 
+#ElseIf USE_THREAD_POOL2 Then
+Imports osi.root.connector
+
+Public Module _auto_updating_resolver
+    Public Function thread_pool() As slimqless2_threadpool2
+        Return newable_global_instance(Of slimqless2_threadpool2).ref_new()
+    End Function
+End Module
+
+Public Module _registry
+    Public Sub register_managed_threadpool()
+    End Sub
+
+    Public Sub register_qless_threadpool()
+    End Sub
+
+    Public Sub register_slimqless2_threadpool()
+    End Sub
+
+    Public Sub register_slimheapless_threadpool()
+    End Sub
+
+    Public Function using_default_ithreadpool() As Boolean
+        Return True
+    End Function
+End Module
 #Else
 
 Imports osi.root.constants
-Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utils
 
