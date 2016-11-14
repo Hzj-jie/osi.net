@@ -40,7 +40,6 @@ Public Class slimqless2_runner_test
         assert_equal(+c, size)
         assert_false(r.stopping())
         assert_true(r.stopped())
-        assert_true(r.stop())
         assert_false(r.stop())
         r.join()
         assert_false(r.stopping())
@@ -78,7 +77,7 @@ Public Class slimqless2_runner_test
         Next
         While r.execute()
         End While
-        assert_equal(+c, size)
+        assert_true(timeslice_sleep_wait_until(Function() +c = size, seconds_to_milliseconds(1)))
         assert_false(r.stopping())
         assert_more(+executed, 0)
         assert_true(r.stop())
