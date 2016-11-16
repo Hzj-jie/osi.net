@@ -13,6 +13,8 @@ Friend Class application_info_logging
                     application_version,
                     ", process id ",
                     current_process.Id(),
+                    ", under clr ",
+                    clr_version,
                     ", source control current changeset id ",
                     source_control.current.id,
                     ", built at ",
