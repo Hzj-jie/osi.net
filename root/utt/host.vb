@@ -30,16 +30,22 @@ Partial Friend NotInheritable Class host
             ' Cannot use event_comb, allocators of some cases may use async_sync.
             assert(Not cases Is Nothing)
             concurrency_runner.execute(Sub(i As Assembly)
-                                           For Each j In i.GetTypes()
-                                               If case_type_restriction.accept(j) Then
-                                                   Dim n As case_info = Nothing
-                                                   n = New case_info(j.FullName(), alloc(Of [case])(j))
-                                                   SyncLock cases
-                                                       cases.emplace_back(n)
-                                                   End SyncLock
-                                                   raise_error("loaded case ", j.FullName())
-                                               End If
-                                           Next
+                                           Try
+                                               For Each j In i.GetTypes()
+                                                   If case_type_restriction.accept(j) Then
+                                                       Dim n As case_info = Nothing
+                                                       n = New case_info(j.FullName(), alloc(Of [case])(j))
+                                                       SyncLock cases
+                                                           cases.emplace_back(n)
+                                                       End SyncLock
+                                                       raise_error("loaded case ", j.FullName())
+                                                   End If
+                                               Next
+                                           Catch ex As Exception
+                                               raise_error(error_type.warning,
+                                                           "failed to load type from assembly ",
+                                                           i.FullName())
+                                           End Try
                                        End Sub,
                                        AppDomain.CurrentDomain().GetAssemblies())
         End Sub
