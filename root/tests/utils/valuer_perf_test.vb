@@ -2,16 +2,17 @@
 Imports osi.root.utils
 Imports osi.root.utt
 
+' valuer is expected to be 2000x slower than direct access.
 Public Class valuer_perf_test
     Inherits performance_comparison_case_wrapper
 
     Public Sub New()
-        MyBase.New(R(New valuer_perf_case()), R(New direct_access_perf_case()))
+        MyBase.New(R(New valuer_perf_case()), R(repeat(New direct_access_perf_case(), 100)))
     End Sub
 
     Protected Overrides Function min_rate_table() As Double(,)
-        Return {{0, 4000},
-                {0.001, 0}}
+        Return {{0, 40},
+                {0.1, 0}}
     End Function
 
     Private Shared Function R(ByVal i As [case]) As [case]

@@ -50,7 +50,7 @@ Public MustInherit Class socket_receive_behavior_test(Of IMPL)
             last_received = (+received)
             assert_true(ready.WaitOne())
             If receive_before_send Then
-                assert_false(try_wait_when(Function() last_received = (+received), 1024))
+                assert_false(try_wait_when(Function() last_received = (+received), 4096))
                 assert_equal(last_received + 1, +received)
             Else
                 assert_true(try_wait_when(Function() last_received = (+received), 32))
@@ -59,7 +59,7 @@ Public MustInherit Class socket_receive_behavior_test(Of IMPL)
             Dim b() As Byte = Nothing
             b = next_bytes(rnd_int(1, max_size + 1))
             c.GetStream().Write(b, 0, array_size(b))
-            assert_false(try_wait_when(Function() last_received = (+received), 1024))
+            assert_false(try_wait_when(Function() last_received = (+received), 4096))
             assert_equal(last_received + 1, +received)
         Next
         c.Close()

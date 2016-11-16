@@ -27,7 +27,7 @@ Public Class npos_uint_perf_test
             Return {{0, 25},
                     {0.08, 0}}
         Else
-            Return {{0, 12},
+            Return {{0, 18},
                     {0.15, 0}}
         End If
     End Function

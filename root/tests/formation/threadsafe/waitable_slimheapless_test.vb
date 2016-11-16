@@ -72,12 +72,7 @@ Public Class waitable_slimheapless_test
         End Function
 
         Public Overrides Function finish() As Boolean
-            Dim c As Int32 = 0
-            While q.pop(Nothing)
-                c += 1
-            End While
-            ' Expect at least there is once, two concurrent emplace operations release two threads.
-            assert_less(c, test_size >> 1)
+            q.clear()
             Return MyBase.finish()
         End Function
     End Class
