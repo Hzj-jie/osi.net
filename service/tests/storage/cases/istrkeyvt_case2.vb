@@ -18,7 +18,7 @@ Public Class short_key_istrkeyvt_case2
 End Class
 
 Public Class fast_istrkeyvt_case2
-    Inherits istrkeyvt_case2(Of _4, _8, _128, _1024, _10000)
+    Inherits istrkeyvt_case2(Of _4, _8, _128, _1024, _4096)
 End Class
 
 Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,

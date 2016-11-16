@@ -9,6 +9,10 @@ Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.storage
 
+Public Class fast_istrkeyvt_case3
+    Inherits istrkeyvt_case3(Of _2, _2, _8, _1024, _16383)
+End Class
+
 Public Class default_istrkeyvt_case3
     Inherits istrkeyvt_case3(Of _2, _2, _8, _1024, _max_int16)
 End Class
