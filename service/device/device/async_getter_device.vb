@@ -72,7 +72,7 @@ Public MustInherit Class async_getter_device(Of T)
         assert(Not c Is Nothing)
         If c.initialized() Then
             Dim r As T = Nothing
-            'assert(Not in_iqless_threadpool_thread())
+            'assert(Not in_restricted_threadpool_thread())
             If c.get(r) Then
                 close(r)
             End If

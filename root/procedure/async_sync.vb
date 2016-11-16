@@ -30,7 +30,7 @@ Public Module _async_sync
                                         assert(w.Set())
                                         Return goto_end()
                                     End Function))
-        If in_iqless_threadpool_thread() Then
+        If in_restricted_threadpool_thread() Then
             While Not w.WaitOne(0)
                 If Not thread_pool().execute_job() Then
                     thread_pool().wait_job(envs.two_timeslice_length_ms)

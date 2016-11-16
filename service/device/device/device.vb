@@ -31,7 +31,7 @@ Public MustInherit Class device
             'the only problem is, if the managed threadpool does not have enough threads to handle the request,
             'the closing may be delayed, and cause the resource exhausted trouble
             'FIXME: find a better solution
-            If in_iqless_threadpool_thread() Then
+            If in_restricted_threadpool_thread() Then
                 queue_in_managed_threadpool(AddressOf close_device)
             Else
                 close_device()

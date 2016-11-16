@@ -17,10 +17,12 @@ Public Interface ithreadpool
 End Interface
 
 Public Module _ithreadpool
-    Public Function in_iqless_threadpool_thread() As Boolean
+    Public Function in_restricted_threadpool_thread() As Boolean
         Return slimqless2_threadpool.in_managed_thread() OrElse
                qless_threadpool.in_managed_thread() OrElse
                slimheapless_threadpool.in_managed_thread() OrElse
-               fast_threadpool.in_managed_thread()
+               fast_threadpool.in_managed_thread() OrElse
+               slimqless2_threadpool2.in_managed_thread() OrElse
+               slimheapless_threadpool2.in_managed_thread()
     End Function
 End Module
