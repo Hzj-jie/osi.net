@@ -64,7 +64,7 @@
     <Compile Include="error_type.vb" />
     <Compile Include="filesystem.vb" />
     <Compile Include="http.vb" />
-    <Compile Include="int.vb" />
+    <Compile Include="number.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

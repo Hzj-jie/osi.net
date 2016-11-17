@@ -18,12 +18,20 @@
         End If
     End Function
 
-    Public Function bytes_##NAME##(
+    Public Function ##NAME##_bytes(ByVal i As ##TYPE##) As Byte()
+        Return ##DNAME##_bytes(##NAME##_##DNAME##(i))
+    End Function
+
+##DEFINE PREFIX 
+##INCLUDE bytes_dependent_impl.vbp
+
+    Public Function big_endian_bytes_##NAME##(
                         ByVal i() As Byte,
-                        ByRef o As ##TYPE##,
-                        Optional ByRef offset As UInt32 = uint32_0) As Boolean
+                        ByVal ii As UInt32,
+                        ByVal il As UInt32,
+                        ByRef o As ##TYPE##) As Boolean
         Dim v As ##DTYPE## = ##DNAME##_0
-        If bytes_##DNAME##(i, v, offset) Then
+        If big_endian_bytes_##DNAME##(i, ii, il, v) Then
             o = ##DNAME##_##NAME##(v)
             Return True
         Else
@@ -31,39 +39,30 @@
         End If
     End Function
 
-#If "##NAME##" = "uint32" Then
-    Public Function bytes_##NAME##_(
+    Public Function ##NAME##_big_endian_bytes(ByVal i As ##TYPE##) As Byte()
+        Return ##DNAME##_big_endian_bytes(##NAME##_##DNAME##(i))
+    End Function
+
+##DEFINE PREFIX big_endian_
+##INCLUDE bytes_dependent_impl.vbp
+
+    Public Function little_endian_bytes_##NAME##(
                         ByVal i() As Byte,
-                        Optional ByRef offset As UInt32 = uint32_0) As ##TYPE##
-#Else
-    Public Function bytes_##NAME##(
-                        ByVal i() As Byte,
-                        Optional ByRef offset As UInt32 = uint32_0) As ##TYPE##
-#End If
-        Dim o As ##TYPE## = ##NAME##_0
-        assert(bytes_##NAME##(i, o, offset))
-        Return o
+                        ByVal ii As UInt32,
+                        ByVal il As UInt32,
+                        ByRef o As ##TYPE##) As Boolean
+        Dim v As ##DTYPE## = ##DNAME##_0
+        If little_endian_bytes_##DNAME##(i, ii, il, v) Then
+            o = ##DNAME##_##NAME##(v)
+            Return True
+        Else
+            Return False
+        End If
     End Function
 
-    Public Function entire_bytes_##NAME##(ByVal i() As Byte, ByRef o As ##TYPE##) As Boolean
-        Dim p As UInt32 = 0
-        Return bytes_##NAME##(i, o, p) AndAlso
-               p = array_size(i)
+    Public Function ##NAME##_little_endian_bytes(ByVal i As ##TYPE##) As Byte()
+        Return ##DNAME##_little_endian_bytes(##NAME##_##DNAME##(i))
     End Function
 
-    Public Function entire_bytes_##NAME##(ByVal i() As Byte) As ##TYPE##
-        Dim o As ##TYPE## = ##NAME##_0
-        assert(entire_bytes_##NAME##(i, o))
-        Return o
-    End Function
-    
-    Public Function ##NAME##_bytes(
-                        ByVal i As ##TYPE##,
-                        ByVal d() As Byte,
-                        Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        Return ##DNAME##_bytes(##NAME##_##DNAME##(i), d, offset)
-    End Function
-
-    Public Function ##NAME##_bytes(ByVal i As ##TYPE##) As Byte()
-        Return ##DNAME##_bytes(##NAME##_##DNAME##(i))
-    End Function
+##DEFINE PREFIX little_endian_
+##INCLUDE bytes_dependent_impl.vbp

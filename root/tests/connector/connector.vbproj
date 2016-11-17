@@ -58,6 +58,8 @@
     <Compile Include="array_test.vb" />
     <Compile Include="assert_test.vb" />
     <Compile Include="bit_test.vb" />
+    <Compile Include="bytes_perf.vb" />
+    <Compile Include="bytes_test.vb" />
     <Compile Include="byte_test.vb" />
     <Compile Include="callstack_test.vb" />
     <Compile Include="cast\cast_perf.vb" />
@@ -87,6 +89,7 @@
     <Compile Include="disposable_test.vb" />
     <Compile Include="divide_perf_test.vb" />
     <Compile Include="encoding_test.vb" />
+    <Compile Include="endian_test.vb" />
     <Compile Include="enum_test.vb" />
     <Compile Include="event_attach_perf.vb" />
     <Compile Include="event_handler_test.vb" />

@@ -9,13 +9,34 @@ Public Module _array_ext
             Return i
         Else
             Dim r() As T = Nothing
-            ReDim r(array_size(i) - 1)
-            For j As UInt32 = 0 To array_size(i) - 1
-                copy(r(j), i(array_size(i) - j - 1))
+            ReDim r(array_size(i) - uint32_1)
+            For j As UInt32 = 0 To array_size(i) - uint32_1
+                copy(r(j), i(array_size(i) - j - uint32_1))
             Next
             Return r
         End If
     End Function
+
+    <Extension()> Public Function emplace_reverse(Of T)(ByVal i() As T) As T()
+        If isemptyarray(i) Then
+            Return i
+        Else
+            Dim r() As T = Nothing
+            ReDim r(array_size(i) - uint32_1)
+            For j As UInt32 = 0 To array_size(i) - uint32_1
+                r(j) = i(array_size(i) - j - uint32_1)
+            Next
+            Return r
+        End If
+    End Function
+
+    <Extension()> Public Sub in_place_reverse(Of T)(ByVal i() As T)
+        If array_size(i) > 1 Then
+            For j As UInt32 = 0 To array_size(i) \ 2 - uint32_1
+                swap(i(j), i(array_size(i) - j - uint32_1))
+            Next
+        End If
+    End Sub
 
     <Extension()> Public Sub gc_keepalive(Of T)(ByVal v() As T)
         For i As UInt32 = 0 To array_size(v) - 1
@@ -142,49 +163,5 @@ Public Module _array_ext
         r(0) = i
         memcpy(r, uint32_1, j)
         Return array_concat(r)
-    End Function
-
-    ' Always treat the input bytes array as big-endian, say, \uFFFE for c-escape.
-    Public Function big_endian_bytes_char(
-                        ByVal i() As Byte,
-                        ByVal ii As UInt32,
-                        ByVal il As UInt32,
-                        ByRef o As Char) As Boolean
-        Dim v As UInt16 = uint16_0
-        If bytes_uint16(i, ii, il, v) Then
-            If BitConverter.IsLittleEndian Then
-                o = uint16_char(endian.reverse(v))
-            Else
-                o = uint16_char(v)
-            End If
-            Return True
-        Else
-            Return False
-        End If
-    End Function
-
-    Public Function big_endian_bytes_char(
-                        ByVal i() As Byte,
-                        ByRef o As Char,
-                        Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        Dim v As UInt16 = uint16_0
-        If bytes_uint16(i, v, offset) Then
-            If BitConverter.IsLittleEndian Then
-                o = uint16_char(endian.reverse(v))
-            Else
-                o = uint16_char(v)
-            End If
-            Return True
-        Else
-            Return False
-        End If
-    End Function
-
-    Public Function big_endian_bytes_char(
-                        ByVal i() As Byte,
-                        Optional ByRef offset As UInt32 = uint32_0) As Char
-        Dim o As Char = char_0
-        assert(big_endian_bytes_char(i, o, offset))
-        Return o
     End Function
 End Module

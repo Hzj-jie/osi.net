@@ -2,6 +2,8 @@
 ##DEFAULT TYPE Byte
 ##DEFAULT NAME byte
 
+' A manual loop is ~10% faster than reverse functions.
+#Const USE_REVERSE = False
 #Const IS_BYTE = ("##NAME##" = "byte")
 
     Public Function bytes_##NAME##(
@@ -21,76 +23,6 @@
         End If
     End Function
 
-    Public Function bytes_##NAME##(
-                        ByVal i() As Byte,
-                        ByRef o As ##TYPE##,
-                        Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(i) >= offset + sizeof_int8 Then
-#If IS_BYTE Then
-            o = i(CInt(offset))
-#Else
-            o = BitConverter.To##TYPE##(i, CInt(offset))
-#End If
-            offset += sizeof_##NAME##
-            Return True
-        Else
-            Return False
-        End If
-    End Function
-
-    Public Function bytes_##NAME##(
-                        ByVal i() As Byte,
-                        Optional ByRef offset As UInt32 = uint32_0) As ##TYPE##
-        Dim o As ##TYPE## = 0
-        assert(bytes_##NAME##(i, o, offset))
-        Return o
-    End Function
-
-    Public Function entire_bytes_##NAME##(
-                        ByVal i() As Byte,
-                        ByRef o As ##TYPE##) As Boolean
-        Dim p As UInt32 = 0
-        Return bytes_##NAME##(i, o, p) AndAlso
-               p = array_size(i)
-    End Function
-
-    Public Function entire_bytes_##NAME##(ByVal i() As Byte) As ##TYPE##
-        Dim o As ##TYPE## = 0
-        assert(entire_bytes_##NAME##(i, o))
-        Return o
-    End Function
-    
-    Public Function ##NAME##_bytes(
-                        ByVal i As ##TYPE##,
-                        ByVal d() As Byte,
-                        Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(d) >= offset + sizeof_##NAME## Then
-#If IS_BYTE Then
-            d(CInt(offset)) = i
-#Else
-#If 0 Then
-            'for mono
-            'Marshal.WriteXXX is 100% slower than BitConverter with memcpy
-            Try
-                Marshal.Write##TYPE##(d, CInt(offset), i)
-            Catch
-                Dim t() As Byte = Nothing
-                t = ##NAME##_bytes(i)
-                memcpy(d, offset, t)
-            End Try
-#Else
-            Dim t() As Byte = Nothing
-            t = ##NAME##_bytes(i)
-            memcpy(d, offset, t)
-#End If
-#End If
-            offset += sizeof_##NAME##
-            Return True
-        Else
-            Return False
-        End If
-    End Function
-
     Public Function ##NAME##_bytes(ByVal i As ##TYPE##) As Byte()
 #If IS_BYTE Then
         assert(sizeof_##NAME## = uint32_1)
@@ -102,3 +34,131 @@
         Return BitConverter.GetBytes(i)
 #End If
     End Function
+
+##DEFINE PREFIX 
+##INCLUDE bytes_dependent_impl.vbp
+
+#If ("##NAME##" <> "single" AndAlso "##NAME##" <> "double") Then
+    Public Function big_endian_bytes_##NAME##(
+                        ByVal i() As Byte,
+                        ByVal ii As UInt32,
+                        ByVal il As UInt32,
+                        ByRef o As ##TYPE##) As Boolean
+        If il <> sizeof_##NAME## OrElse array_size(i) < ii + il Then
+            Return False
+        Else
+#If IS_BYTE Then
+            o = i(CInt(ii))
+#Else
+            If BitConverter.IsLittleEndian Then
+#If USE_REVERSE Then
+                assert(bytes_##NAME##(i, ii, il, o))
+                o = endian.reverse(o)
+#Else
+                o = 0
+                For j As Int32 = 0 To CInt(sizeof_##NAME##) - 1
+                    o <<= bit_count_in_byte
+                    o += i(j)
+                Next
+#End If
+            Else
+                assert(bytes_##NAME##(i, ii, il, o))
+            End If
+#End If
+            Return True
+        End If
+    End Function
+
+    Public Function ##NAME##_big_endian_bytes(ByVal i As ##TYPE##) As Byte()
+#If IS_BYTE Then
+        assert(sizeof_##NAME## = uint32_1)
+        Dim o() As Byte = Nothing
+        ReDim o(0)
+        o(0) = i
+        Return o
+#Else
+        If BitConverter.IsLittleEndian Then
+#If USE_REVERSE Then
+            Dim o() As Byte = Nothing
+            o = ##NAME##_bytes(i)
+            o.in_place_reverse()
+            Return o
+#Else
+            Dim o() As Byte = Nothing
+            ReDim o(CInt(sizeof_##NAME##) - 1)
+            For j As Int32 = CInt(sizeof_##NAME##) - 1 To 0 Step -1
+                o(j) = CByte(i And max_uint8)
+                i >>= bit_count_in_byte
+            Next
+            Return o
+#End If
+        Else
+            Return ##NAME##_bytes(i)
+        End If
+#End If
+    End Function
+
+##DEFINE PREFIX big_endian_
+##INCLUDE bytes_dependent_impl.vbp
+
+    Public Function little_endian_bytes_##NAME##(
+                        ByVal i() As Byte,
+                        ByVal ii As UInt32,
+                        ByVal il As UInt32,
+                        ByRef o As ##TYPE##) As Boolean
+        If il <> sizeof_##NAME## OrElse array_size(i) < ii + il Then
+            Return False
+        Else
+#If IS_BYTE Then
+            o = i(CInt(ii))
+#Else
+            If Not BitConverter.IsLittleEndian Then
+#If USE_REVERSE Then
+                assert(bytes_##NAME##(i, ii, il, o))
+                o = endian.reverse(o)
+#Else
+                o = 0
+                For j As Int32 = CInt(sizeof_##NAME##) - 1 To 0 Step -1
+                    o <<= bit_count_in_byte
+                    o += i(j)
+                Next
+#End If
+            Else
+                assert(bytes_##NAME##(i, ii, il, o))
+            End If
+#End If
+            Return True
+        End If
+    End Function
+
+    Public Function ##NAME##_little_endian_bytes(ByVal i As ##TYPE##) As Byte()
+#If IS_BYTE Then
+        assert(sizeof_##NAME## = uint32_1)
+        Dim o() As Byte = Nothing
+        ReDim o(0)
+        o(0) = i
+        Return o
+#Else
+        If Not BitConverter.IsLittleEndian Then
+#If USE_REVERSE Then
+            Dim o() As Byte = Nothing
+            o = ##NAME##_bytes(i)
+            o.in_place_reverse()
+            Return o
+#Else
+            Dim o() As Byte = Nothing
+            ReDim o(CInt(sizeof_##NAME##))
+            For j As Int32 = 0 To CInt(sizeof_##NAME##) - 1
+                o(j) = CByte(i And max_uint8)
+                i >>= bit_count_in_byte
+            Next
+            Return o
+#End If
+        Else
+            Return ##NAME##_bytes(i)
+        End If
+#End If
+    End Function
+##DEFINE PREFIX little_endian_
+##INCLUDE bytes_dependent_impl.vbp
+#End If

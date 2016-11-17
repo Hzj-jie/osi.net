@@ -1,5 +1,5 @@
 ﻿
-Public Module _int
+Public Module _number
     Public Const max_int8 As SByte = SByte.MaxValue
     Public Const min_int8 As SByte = SByte.MinValue
     Public Const max_uint8 As Byte = Byte.MaxValue
@@ -46,4 +46,8 @@ Public Module _int
     Public Const int64_1 As Int64 = 1
     Public Const uint64_0 As UInt64 = 0
     Public Const uint64_1 As UInt64 = 1
+    Public Const single_0 As Single = 0
+    Public Const single_1 As Single = 1
+    Public Const double_0 As Double = 0
+    Public Const double_1 As Double = 1
 End Module

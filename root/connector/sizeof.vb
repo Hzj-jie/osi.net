@@ -10,6 +10,7 @@ Public Module _sizeof
     Public ReadOnly sizeof_uint8 As UInt32 = sizeof(Of Byte)()
     Public ReadOnly sizeof_int16 As UInt32 = sizeof(Of Int16)()
     Public ReadOnly sizeof_uint16 As UInt32 = sizeof(Of UInt16)()
+    Public ReadOnly sizeof_char As UInt32 = sizeof(Of Char)()
     Public ReadOnly sizeof_int32 As UInt32 = sizeof(Of Int32)()
     Public ReadOnly sizeof_uint32 As UInt32 = sizeof(Of UInt32)()
     Public ReadOnly sizeof_int64 As UInt32 = sizeof(Of Int64)()

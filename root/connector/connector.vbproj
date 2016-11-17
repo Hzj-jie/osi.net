@@ -110,6 +110,7 @@
     <Compile Include="unchecked_int.ext.vb" />
     <Compile Include="ref.vb" />
     <Compile Include="weak_action.vb" />
+    <None Include="bytes\codegen\bytes_dependent_impl.vbp" />
     <None Include="bytes\codegen\bytes_dependent_types.vbp" />
     <None Include="bytes\codegen\bytes_dependent_types_impl.vbp" />
     <None Include="bytes\codegen\bytes_independent_types.vbp" />

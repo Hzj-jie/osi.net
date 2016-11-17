@@ -1,0 +1,77 @@
+##DEFAULT TYPE Byte
+##DEFAULT NAME byte
+##DEFAULT PREFIX 
+
+    Public Function ##PREFIX##bytes_##NAME##(
+                        ByVal i() As Byte,
+                        ByRef o As ##TYPE##,
+                        Optional ByRef offset As UInt32 = uint32_0) As Boolean
+        If ##PREFIX##bytes_##NAME##(i, offset, sizeof_##NAME##, o) Then
+            offset += sizeof_##NAME##
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+#If "##NAME##" = "uint32" Then
+    Public Function ##PREFIX##bytes_##NAME##_(
+                        ByVal i() As Byte,
+                        Optional ByRef offset As UInt32 = uint32_0) As ##TYPE##
+#Else
+    Public Function ##PREFIX##bytes_##NAME##(
+                        ByVal i() As Byte,
+                        Optional ByRef offset As UInt32 = uint32_0) As ##TYPE##
+#End If
+        Dim o As ##TYPE## = ##NAME##_0
+        assert(##PREFIX##bytes_##NAME##(i, o, offset))
+        Return o
+    End Function
+
+    Public Function entire_##PREFIX##bytes_##NAME##(
+                        ByVal i() As Byte,
+                        ByRef o As ##TYPE##) As Boolean
+        Dim p As UInt32 = 0
+        Return ##PREFIX##bytes_##NAME##(i, o, p) AndAlso
+               p = array_size(i)
+    End Function
+
+    Public Function entire_##PREFIX##bytes_##NAME##(ByVal i() As Byte) As ##TYPE##
+        Dim o As ##TYPE## = ##NAME##_0
+        assert(entire_##PREFIX##bytes_##NAME##(i, o))
+        Return o
+    End Function
+    
+    Public Function ##NAME##_##PREFIX##bytes(
+                        ByVal i As ##TYPE##,
+                        ByVal d() As Byte,
+                        Optional ByRef offset As UInt32 = uint32_0) As Boolean
+        If array_size(d) >= offset + sizeof_##NAME## Then
+#If IS_BYTE Then
+            d(CInt(offset)) = i
+#Else
+            Dim t() As Byte = Nothing
+            t = ##NAME##_##PREFIX##bytes(i)
+            memcpy(d, offset, t)
+#End If
+            offset += sizeof_##NAME##
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+#If "##NAME##" <> "int8" AndAlso "##NAME##" <> "uint8" Then
+    ' There are no int8 and uint8 types.
+    <Extension()> Public Function ##PREFIX##bytes(ByVal i As ##TYPE##) As Byte()
+        Return ##NAME##_##PREFIX##bytes(i)
+    End Function
+#End If
+
+    <Extension()> Public Function as_##PREFIX####NAME##(ByVal i() As Byte) As ##TYPE##
+#If "##NAME##" = "uint32" Then
+        Return ##PREFIX##bytes_##NAME##_(i)
+#Else
+        Return ##PREFIX##bytes_##NAME##(i)
+#End If
+    End Function

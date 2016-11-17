@@ -62,9 +62,9 @@ Partial Friend NotInheritable Class host
 
         assert(Not strstartwith(extensions.dynamic_link_library, extension_prefix, False))
         cases = New vector(Of case_info)()
-        AppDomain.CurrentDomain().load_all(Environment.CurrentDirectory(), "osi.*.dll")
+        AppDomain.CurrentDomain().load_all(Environment.CurrentDirectory(), utt_file_pattern)
         If Not Environment.CurrentDirectory().path_same(application_directory) Then
-            AppDomain.CurrentDomain().load_all(application_directory, "osi.*.dll")
+            AppDomain.CurrentDomain().load_all(application_directory, utt_file_pattern)
         End If
         ' for newly loaded types
         global_init.execute()

@@ -22,6 +22,21 @@ Public Class byte_test
         For i As UInt32 = 0 To array_size(hex_str_cases) - uint32_1
             assert_equal(hex_str_cases(i).first.hex_str(), hex_str_cases(i).second)
         Next
+        assert_equal(hex_str(uint16_0), "0000")
+        assert_equal(hex_str(uint32_0), "00000000")
+        assert_equal(hex_str(uint64_0), "0000000000000000")
+        assert_equal(hex_str(max_uint16), "FFFF")
+        assert_equal(hex_str(max_uint32), "FFFFFFFF")
+        assert_equal(hex_str(max_uint64), "FFFFFFFFFFFFFFFF")
+        assert_equal(hex_str((CUInt(&H12) << 24) + (CUInt(&H34) << 16) + (CUInt(&H56) << 8) + CUInt(&H78)), "12345678")
+        assert_equal(hex_str((CUInt(&HAB) << 24) + (CUInt(&HCD) << 16) + (CUInt(&HEF) << 8) + CUInt(&H12)), "ABCDEF12")
+        assert_equal(hex_str((CULng(&HAB) << 24) + (CULng(&HCD) << 16) + (CULng(&HEF) << 8) + CULng(&H12)),
+                     "00000000ABCDEF12")
+        assert_equal(hex_str((CULng(&H87) << 24) + (CULng(&H65) << 16) + (CULng(&H43) << 8) + CULng(&HDE)),
+                     "00000000876543DE")
+        assert_equal(hex_str((CULng(&H12) << 56) + (CULng(&H34) << 48) + (CULng(&H56) << 40) + (CULng(&H78) << 32) +
+                             (CULng(&H9A) << 24) + (CULng(&HBC) << 16) + (CULng(&HDE) << 8) + CULng(&HF0)),
+                     "123456789ABCDEF0")
         Return True
     End Function
 

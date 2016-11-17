@@ -75,6 +75,22 @@ Public Module _byte
         Return hex_str(i, 0, array_size(i))
     End Function
 
+    <Extension()> Public Function hex_str(ByVal i As UInt64) As String
+        Return hex_str(uint64_big_endian_bytes(i))
+    End Function
+
+    <Extension()> Public Function hex_str(ByVal i As UInt32) As String
+        Return hex_str(uint32_big_endian_bytes(i))
+    End Function
+
+    <Extension()> Public Function hex_str(ByVal i As UInt16) As String
+        Return hex_str(uint16_big_endian_bytes(i))
+    End Function
+
+    <Extension()> Public Function hex_str(ByVal i As Char) As String
+        Return hex_str(Convert.ToUInt16(i))
+    End Function
+
     <Extension()> Public Function hex_bytes(ByVal s As String,
                                             ByVal str_start As Int32,
                                             ByVal str_len As Int32,
@@ -156,6 +172,13 @@ Public Module _byte
     <Extension()> Public Function hex_bytes(ByVal s As String,
                                             ByVal buff() As Byte) As Boolean
         Return hex_bytes(s, 0, strlen(s), buff, 0, array_size(buff))
+    End Function
+
+    <Extension()> Public Function hex_bytes(ByVal s As String) As Byte()
+        Dim r() As Byte = Nothing
+        ReDim r(hex_bytes_len(s) - 1)
+        assert(hex_bytes(s, r))
+        Return r
     End Function
 
     <Extension()> Public Function hex_bytes_len(ByVal s As String,

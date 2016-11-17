@@ -1,6 +1,7 @@
 ﻿
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
 Public Module _bytes_dependent_types
