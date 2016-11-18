@@ -60,8 +60,14 @@ Public Module _bytes_independent_types
                         ByVal i() As Byte,
                         ByRef o As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If bytes_byte(i, offset, sizeof_byte, o) Then
-            offset += sizeof_byte
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_byte
+#End If
+        If bytes_byte(i, offset, size, o) Then
+            offset += size
             Return True
         Else
             Return False
@@ -100,7 +106,13 @@ Public Module _bytes_independent_types
                         ByVal i As Byte,
                         ByVal d() As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(d) >= offset + sizeof_byte Then
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_byte
+#End If
+        If array_size(d) >= offset + size Then
 #If IS_BYTE Then
             d(CInt(offset)) = i
 #Else
@@ -108,7 +120,7 @@ Public Module _bytes_independent_types
             t = byte_bytes(i)
             memcpy(d, offset, t)
 #End If
-            offset += sizeof_byte
+            offset += size
             Return True
         Else
             Return False
@@ -201,8 +213,14 @@ Public Module _bytes_independent_types
                         ByVal i() As Byte,
                         ByRef o As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If big_endian_bytes_byte(i, offset, sizeof_byte, o) Then
-            offset += sizeof_byte
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_byte
+#End If
+        If big_endian_bytes_byte(i, offset, size, o) Then
+            offset += size
             Return True
         Else
             Return False
@@ -241,7 +259,13 @@ Public Module _bytes_independent_types
                         ByVal i As Byte,
                         ByVal d() As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(d) >= offset + sizeof_byte Then
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_byte
+#End If
+        If array_size(d) >= offset + size Then
 #If IS_BYTE Then
             d(CInt(offset)) = i
 #Else
@@ -249,7 +273,7 @@ Public Module _bytes_independent_types
             t = byte_big_endian_bytes(i)
             memcpy(d, offset, t)
 #End If
-            offset += sizeof_byte
+            offset += size
             Return True
         Else
             Return False
@@ -340,8 +364,14 @@ Public Module _bytes_independent_types
                         ByVal i() As Byte,
                         ByRef o As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If little_endian_bytes_byte(i, offset, sizeof_byte, o) Then
-            offset += sizeof_byte
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_byte
+#End If
+        If little_endian_bytes_byte(i, offset, size, o) Then
+            offset += size
             Return True
         Else
             Return False
@@ -380,7 +410,13 @@ Public Module _bytes_independent_types
                         ByVal i As Byte,
                         ByVal d() As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(d) >= offset + sizeof_byte Then
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_byte
+#End If
+        If array_size(d) >= offset + size Then
 #If IS_BYTE Then
             d(CInt(offset)) = i
 #Else
@@ -388,7 +424,7 @@ Public Module _bytes_independent_types
             t = byte_little_endian_bytes(i)
             memcpy(d, offset, t)
 #End If
-            offset += sizeof_byte
+            offset += size
             Return True
         Else
             Return False
@@ -463,8 +499,14 @@ Public Module _bytes_independent_types
                         ByVal i() As Byte,
                         ByRef o As Int16,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If bytes_int16(i, offset, sizeof_int16, o) Then
-            offset += sizeof_int16
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_int16
+#End If
+        If bytes_int16(i, offset, size, o) Then
+            offset += size
             Return True
         Else
             Return False
@@ -503,7 +545,13 @@ Public Module _bytes_independent_types
                         ByVal i As Int16,
                         ByVal d() As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(d) >= offset + sizeof_int16 Then
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_int16
+#End If
+        If array_size(d) >= offset + size Then
 #If IS_BYTE Then
             d(CInt(offset)) = i
 #Else
@@ -511,7 +559,7 @@ Public Module _bytes_independent_types
             t = int16_bytes(i)
             memcpy(d, offset, t)
 #End If
-            offset += sizeof_int16
+            offset += size
             Return True
         Else
             Return False
@@ -604,8 +652,14 @@ Public Module _bytes_independent_types
                         ByVal i() As Byte,
                         ByRef o As Int16,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If big_endian_bytes_int16(i, offset, sizeof_int16, o) Then
-            offset += sizeof_int16
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_int16
+#End If
+        If big_endian_bytes_int16(i, offset, size, o) Then
+            offset += size
             Return True
         Else
             Return False
@@ -644,7 +698,13 @@ Public Module _bytes_independent_types
                         ByVal i As Int16,
                         ByVal d() As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(d) >= offset + sizeof_int16 Then
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_int16
+#End If
+        If array_size(d) >= offset + size Then
 #If IS_BYTE Then
             d(CInt(offset)) = i
 #Else
@@ -652,7 +712,7 @@ Public Module _bytes_independent_types
             t = int16_big_endian_bytes(i)
             memcpy(d, offset, t)
 #End If
-            offset += sizeof_int16
+            offset += size
             Return True
         Else
             Return False
@@ -743,8 +803,14 @@ Public Module _bytes_independent_types
                         ByVal i() As Byte,
                         ByRef o As Int16,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If little_endian_bytes_int16(i, offset, sizeof_int16, o) Then
-            offset += sizeof_int16
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_int16
+#End If
+        If little_endian_bytes_int16(i, offset, size, o) Then
+            offset += size
             Return True
         Else
             Return False
@@ -783,7 +849,13 @@ Public Module _bytes_independent_types
                         ByVal i As Int16,
                         ByVal d() As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(d) >= offset + sizeof_int16 Then
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_int16
+#End If
+        If array_size(d) >= offset + size Then
 #If IS_BYTE Then
             d(CInt(offset)) = i
 #Else
@@ -791,7 +863,7 @@ Public Module _bytes_independent_types
             t = int16_little_endian_bytes(i)
             memcpy(d, offset, t)
 #End If
-            offset += sizeof_int16
+            offset += size
             Return True
         Else
             Return False
@@ -866,8 +938,14 @@ Public Module _bytes_independent_types
                         ByVal i() As Byte,
                         ByRef o As Int32,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If bytes_int32(i, offset, sizeof_int32, o) Then
-            offset += sizeof_int32
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_int32
+#End If
+        If bytes_int32(i, offset, size, o) Then
+            offset += size
             Return True
         Else
             Return False
@@ -906,7 +984,13 @@ Public Module _bytes_independent_types
                         ByVal i As Int32,
                         ByVal d() As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(d) >= offset + sizeof_int32 Then
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_int32
+#End If
+        If array_size(d) >= offset + size Then
 #If IS_BYTE Then
             d(CInt(offset)) = i
 #Else
@@ -914,7 +998,7 @@ Public Module _bytes_independent_types
             t = int32_bytes(i)
             memcpy(d, offset, t)
 #End If
-            offset += sizeof_int32
+            offset += size
             Return True
         Else
             Return False
@@ -1007,8 +1091,14 @@ Public Module _bytes_independent_types
                         ByVal i() As Byte,
                         ByRef o As Int32,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If big_endian_bytes_int32(i, offset, sizeof_int32, o) Then
-            offset += sizeof_int32
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_int32
+#End If
+        If big_endian_bytes_int32(i, offset, size, o) Then
+            offset += size
             Return True
         Else
             Return False
@@ -1047,7 +1137,13 @@ Public Module _bytes_independent_types
                         ByVal i As Int32,
                         ByVal d() As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(d) >= offset + sizeof_int32 Then
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_int32
+#End If
+        If array_size(d) >= offset + size Then
 #If IS_BYTE Then
             d(CInt(offset)) = i
 #Else
@@ -1055,7 +1151,7 @@ Public Module _bytes_independent_types
             t = int32_big_endian_bytes(i)
             memcpy(d, offset, t)
 #End If
-            offset += sizeof_int32
+            offset += size
             Return True
         Else
             Return False
@@ -1146,8 +1242,14 @@ Public Module _bytes_independent_types
                         ByVal i() As Byte,
                         ByRef o As Int32,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If little_endian_bytes_int32(i, offset, sizeof_int32, o) Then
-            offset += sizeof_int32
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_int32
+#End If
+        If little_endian_bytes_int32(i, offset, size, o) Then
+            offset += size
             Return True
         Else
             Return False
@@ -1186,7 +1288,13 @@ Public Module _bytes_independent_types
                         ByVal i As Int32,
                         ByVal d() As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(d) >= offset + sizeof_int32 Then
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_int32
+#End If
+        If array_size(d) >= offset + size Then
 #If IS_BYTE Then
             d(CInt(offset)) = i
 #Else
@@ -1194,7 +1302,7 @@ Public Module _bytes_independent_types
             t = int32_little_endian_bytes(i)
             memcpy(d, offset, t)
 #End If
-            offset += sizeof_int32
+            offset += size
             Return True
         Else
             Return False
@@ -1269,8 +1377,14 @@ Public Module _bytes_independent_types
                         ByVal i() As Byte,
                         ByRef o As Int64,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If bytes_int64(i, offset, sizeof_int64, o) Then
-            offset += sizeof_int64
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_int64
+#End If
+        If bytes_int64(i, offset, size, o) Then
+            offset += size
             Return True
         Else
             Return False
@@ -1309,7 +1423,13 @@ Public Module _bytes_independent_types
                         ByVal i As Int64,
                         ByVal d() As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(d) >= offset + sizeof_int64 Then
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_int64
+#End If
+        If array_size(d) >= offset + size Then
 #If IS_BYTE Then
             d(CInt(offset)) = i
 #Else
@@ -1317,7 +1437,7 @@ Public Module _bytes_independent_types
             t = int64_bytes(i)
             memcpy(d, offset, t)
 #End If
-            offset += sizeof_int64
+            offset += size
             Return True
         Else
             Return False
@@ -1410,8 +1530,14 @@ Public Module _bytes_independent_types
                         ByVal i() As Byte,
                         ByRef o As Int64,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If big_endian_bytes_int64(i, offset, sizeof_int64, o) Then
-            offset += sizeof_int64
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_int64
+#End If
+        If big_endian_bytes_int64(i, offset, size, o) Then
+            offset += size
             Return True
         Else
             Return False
@@ -1450,7 +1576,13 @@ Public Module _bytes_independent_types
                         ByVal i As Int64,
                         ByVal d() As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(d) >= offset + sizeof_int64 Then
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_int64
+#End If
+        If array_size(d) >= offset + size Then
 #If IS_BYTE Then
             d(CInt(offset)) = i
 #Else
@@ -1458,7 +1590,7 @@ Public Module _bytes_independent_types
             t = int64_big_endian_bytes(i)
             memcpy(d, offset, t)
 #End If
-            offset += sizeof_int64
+            offset += size
             Return True
         Else
             Return False
@@ -1549,8 +1681,14 @@ Public Module _bytes_independent_types
                         ByVal i() As Byte,
                         ByRef o As Int64,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If little_endian_bytes_int64(i, offset, sizeof_int64, o) Then
-            offset += sizeof_int64
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_int64
+#End If
+        If little_endian_bytes_int64(i, offset, size, o) Then
+            offset += size
             Return True
         Else
             Return False
@@ -1589,7 +1727,13 @@ Public Module _bytes_independent_types
                         ByVal i As Int64,
                         ByVal d() As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(d) >= offset + sizeof_int64 Then
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_int64
+#End If
+        If array_size(d) >= offset + size Then
 #If IS_BYTE Then
             d(CInt(offset)) = i
 #Else
@@ -1597,7 +1741,7 @@ Public Module _bytes_independent_types
             t = int64_little_endian_bytes(i)
             memcpy(d, offset, t)
 #End If
-            offset += sizeof_int64
+            offset += size
             Return True
         Else
             Return False
@@ -1672,8 +1816,14 @@ Public Module _bytes_independent_types
                         ByVal i() As Byte,
                         ByRef o As Single,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If bytes_single(i, offset, sizeof_single, o) Then
-            offset += sizeof_single
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_single
+#End If
+        If bytes_single(i, offset, size, o) Then
+            offset += size
             Return True
         Else
             Return False
@@ -1712,7 +1862,13 @@ Public Module _bytes_independent_types
                         ByVal i As Single,
                         ByVal d() As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(d) >= offset + sizeof_single Then
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_single
+#End If
+        If array_size(d) >= offset + size Then
 #If IS_BYTE Then
             d(CInt(offset)) = i
 #Else
@@ -1720,7 +1876,7 @@ Public Module _bytes_independent_types
             t = single_bytes(i)
             memcpy(d, offset, t)
 #End If
-            offset += sizeof_single
+            offset += size
             Return True
         Else
             Return False
@@ -1813,8 +1969,14 @@ Public Module _bytes_independent_types
                         ByVal i() As Byte,
                         ByRef o As Single,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If big_endian_bytes_single(i, offset, sizeof_single, o) Then
-            offset += sizeof_single
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_single
+#End If
+        If big_endian_bytes_single(i, offset, size, o) Then
+            offset += size
             Return True
         Else
             Return False
@@ -1853,7 +2015,13 @@ Public Module _bytes_independent_types
                         ByVal i As Single,
                         ByVal d() As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(d) >= offset + sizeof_single Then
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_single
+#End If
+        If array_size(d) >= offset + size Then
 #If IS_BYTE Then
             d(CInt(offset)) = i
 #Else
@@ -1861,7 +2029,7 @@ Public Module _bytes_independent_types
             t = single_big_endian_bytes(i)
             memcpy(d, offset, t)
 #End If
-            offset += sizeof_single
+            offset += size
             Return True
         Else
             Return False
@@ -1952,8 +2120,14 @@ Public Module _bytes_independent_types
                         ByVal i() As Byte,
                         ByRef o As Single,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If little_endian_bytes_single(i, offset, sizeof_single, o) Then
-            offset += sizeof_single
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_single
+#End If
+        If little_endian_bytes_single(i, offset, size, o) Then
+            offset += size
             Return True
         Else
             Return False
@@ -1992,7 +2166,13 @@ Public Module _bytes_independent_types
                         ByVal i As Single,
                         ByVal d() As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(d) >= offset + sizeof_single Then
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_single
+#End If
+        If array_size(d) >= offset + size Then
 #If IS_BYTE Then
             d(CInt(offset)) = i
 #Else
@@ -2000,7 +2180,7 @@ Public Module _bytes_independent_types
             t = single_little_endian_bytes(i)
             memcpy(d, offset, t)
 #End If
-            offset += sizeof_single
+            offset += size
             Return True
         Else
             Return False
@@ -2075,8 +2255,14 @@ Public Module _bytes_independent_types
                         ByVal i() As Byte,
                         ByRef o As Double,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If bytes_double(i, offset, sizeof_double, o) Then
-            offset += sizeof_double
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_double
+#End If
+        If bytes_double(i, offset, size, o) Then
+            offset += size
             Return True
         Else
             Return False
@@ -2115,7 +2301,13 @@ Public Module _bytes_independent_types
                         ByVal i As Double,
                         ByVal d() As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(d) >= offset + sizeof_double Then
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_double
+#End If
+        If array_size(d) >= offset + size Then
 #If IS_BYTE Then
             d(CInt(offset)) = i
 #Else
@@ -2123,7 +2315,7 @@ Public Module _bytes_independent_types
             t = double_bytes(i)
             memcpy(d, offset, t)
 #End If
-            offset += sizeof_double
+            offset += size
             Return True
         Else
             Return False
@@ -2216,8 +2408,14 @@ Public Module _bytes_independent_types
                         ByVal i() As Byte,
                         ByRef o As Double,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If big_endian_bytes_double(i, offset, sizeof_double, o) Then
-            offset += sizeof_double
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_double
+#End If
+        If big_endian_bytes_double(i, offset, size, o) Then
+            offset += size
             Return True
         Else
             Return False
@@ -2256,7 +2454,13 @@ Public Module _bytes_independent_types
                         ByVal i As Double,
                         ByVal d() As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(d) >= offset + sizeof_double Then
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_double
+#End If
+        If array_size(d) >= offset + size Then
 #If IS_BYTE Then
             d(CInt(offset)) = i
 #Else
@@ -2264,7 +2468,7 @@ Public Module _bytes_independent_types
             t = double_big_endian_bytes(i)
             memcpy(d, offset, t)
 #End If
-            offset += sizeof_double
+            offset += size
             Return True
         Else
             Return False
@@ -2355,8 +2559,14 @@ Public Module _bytes_independent_types
                         ByVal i() As Byte,
                         ByRef o As Double,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If little_endian_bytes_double(i, offset, sizeof_double, o) Then
-            offset += sizeof_double
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_double
+#End If
+        If little_endian_bytes_double(i, offset, size, o) Then
+            offset += size
             Return True
         Else
             Return False
@@ -2395,7 +2605,13 @@ Public Module _bytes_independent_types
                         ByVal i As Double,
                         ByVal d() As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(d) >= offset + sizeof_double Then
+        Dim size As UInt32 = 0
+#If "" <> "" Then
+        size = sizeof_
+#Else
+        size = sizeof_double
+#End If
+        If array_size(d) >= offset + size Then
 #If IS_BYTE Then
             d(CInt(offset)) = i
 #Else
@@ -2403,7 +2619,7 @@ Public Module _bytes_independent_types
             t = double_little_endian_bytes(i)
             memcpy(d, offset, t)
 #End If
-            offset += sizeof_double
+            offset += size
             Return True
         Else
             Return False

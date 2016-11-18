@@ -1,13 +1,20 @@
 ##DEFAULT TYPE Byte
 ##DEFAULT NAME byte
 ##DEFAULT PREFIX 
+##DEFAULT DNAME 
 
     Public Function ##PREFIX##bytes_##NAME##(
                         ByVal i() As Byte,
                         ByRef o As ##TYPE##,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If ##PREFIX##bytes_##NAME##(i, offset, sizeof_##NAME##, o) Then
-            offset += sizeof_##NAME##
+        Dim size As UInt32 = 0
+#If "##DNAME##" <> "" Then
+        size = sizeof_##DNAME##
+#Else
+        size = sizeof_##NAME##
+#End If
+        If ##PREFIX##bytes_##NAME##(i, offset, size, o) Then
+            offset += size
             Return True
         Else
             Return False
@@ -46,7 +53,13 @@
                         ByVal i As ##TYPE##,
                         ByVal d() As Byte,
                         Optional ByRef offset As UInt32 = uint32_0) As Boolean
-        If array_size(d) >= offset + sizeof_##NAME## Then
+        Dim size As UInt32 = 0
+#If "##DNAME##" <> "" Then
+        size = sizeof_##DNAME##
+#Else
+        size = sizeof_##NAME##
+#End If
+        If array_size(d) >= offset + size Then
 #If IS_BYTE Then
             d(CInt(offset)) = i
 #Else
@@ -54,7 +67,7 @@
             t = ##NAME##_##PREFIX##bytes(i)
             memcpy(d, offset, t)
 #End If
-            offset += sizeof_##NAME##
+            offset += size
             Return True
         Else
             Return False
