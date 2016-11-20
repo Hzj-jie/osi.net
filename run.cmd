@@ -20,7 +20,6 @@ for /l %%i in (0,0,1) do (
     call build.cmd
     mkdir \deploys\apps\osi.root.utt 1>nul 2>&1
     pushd \deploys\apps\osi.root.utt
-    if exist prepare.cmd call prepare.cmd
     call %SRC_ROOT%\root\utt\batch\sync.cmd
     osi.root.utt.exe
     popd
