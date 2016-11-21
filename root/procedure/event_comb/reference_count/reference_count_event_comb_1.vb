@@ -15,6 +15,8 @@ Public Class reference_count_event_comb_1
         Return True
     End Function
 
+    Public Event before_init()
+    Public Event after_final()
     Private ReadOnly r As reference_count_runner
     Private ec As event_comb
 
@@ -111,6 +113,7 @@ Public Class reference_count_event_comb_1
     Private Sub start()
         Dim ec As event_comb = Nothing
         assert_begin(New event_comb(Function() As Boolean
+                                        RaiseEvent before_init()
                                         ec = init()
                                         Return waitfor_or_null(ec) AndAlso
                                                goto_next()
@@ -132,6 +135,7 @@ Public Class reference_count_event_comb_1
                                     End Function,
                                     Function() As Boolean
                                         r.mark_stopped()
+                                        RaiseEvent after_final()
                                         If ec.end_result_or_null() Then
                                             Return goto_end()
                                         Else

@@ -3,6 +3,22 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.lock
 
+Public NotInheritable Class ref_ptr
+    Public Shared Function [New](Of T)(ByVal p As T,
+                                       Optional ByVal disposer As Action(Of T) = Nothing,
+                                       Optional ByVal ref As UInt32 = uint32_1) As ref_ptr(Of T)
+        Return New ref_ptr(Of T)(p, disposer, ref)
+    End Function
+
+    Public Shared Function [New](Of T)(Optional ByVal disposer As Action(Of T) = Nothing,
+                                       Optional ByVal ref As UInt32 = uint32_1) As ref_ptr(Of T)
+        Return New ref_ptr(Of T)(disposer, ref)
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
+
 Public Class ref_ptr(Of T)
     Inherits dispose_ptr(Of T)
 

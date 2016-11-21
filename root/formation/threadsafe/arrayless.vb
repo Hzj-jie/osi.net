@@ -1,8 +1,20 @@
 ﻿
 Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.lock
 Imports lock_t = osi.root.lock.slimlock.monitorlock
+
+Public NotInheritable Class arrayless
+    Public Shared Function [New](Of T)(ByVal n As Func(Of UInt32, T), ByVal size As UInt32) As arrayless(Of T)
+        Return New arrayless(Of T)(n, size)
+    End Function
+
+    Public Shared Function [New](Of T)(ByVal n As Func(Of T), ByVal size As UInt32) As arrayless(Of T)
+        Return New arrayless(Of T)(n, size)
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
 
 Public Class arrayless(Of T)
     Private Structure slot
@@ -64,12 +76,12 @@ Public Class arrayless(Of T)
     ' Create a new instance in an empty slot by using @c, and set the new @id and @o. If there is no empty slot, this
     ' function returns false.
     Public Function [next](ByVal c As Func(Of UInt32, T), ByRef id As UInt32, ByRef o As T) As Boolean
-        assert(Not c Is Nothing)
         For i As UInt32 = 0 To size() - uint32_1
             If Not a(i).d Then
                 Dim found As Boolean = False
                 a(i).l.wait()
                 If Not a(i).d Then
+                    assert(Not c Is Nothing)
                     a(i).v = nothrow(c, i)
                     a(i).d = True
                     ' We expect the [New] function returns a valid instance, otherwise it means the allocation failed.
@@ -115,11 +127,11 @@ Public Class arrayless(Of T)
     ' Create or return the data at @id to @o. If the slot is empty, use @c to create a new instance of @T. If @id is not
     ' in the range [0, #size()), this function returns false.
     Public Function [New](ByVal id As UInt32, ByVal c As Func(Of UInt32, T), ByRef o As T) As Boolean
-        assert(Not c Is Nothing)
         If id < size() Then
             If Not a(id).d Then
                 a(id).l.wait()
                 If Not a(id).d Then
+                    assert(Not c Is Nothing)
                     a(id).v = nothrow(c, id)
                     a(id).d = True
                 End If

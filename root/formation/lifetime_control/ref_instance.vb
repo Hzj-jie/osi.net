@@ -4,7 +4,25 @@ Imports osi.root.constants
 Imports osi.root.lock
 Imports lock_t = osi.root.lock.slimlock.monitorlock
 
+Public NotInheritable Class ref_instance
+    Public Shared Function [New](Of T)(ByVal n As Func(Of T),
+                                       Optional ByVal ref As UInt32 = uint32_1,
+                                       Optional ByVal disposer As Action(Of T) = Nothing) As ref_instance(Of T)
+        Return New ref_instance(Of T)(n, ref, disposer)
+    End Function
+
+    Public Shared Function [New](Of T)(Optional ByVal ref As UInt32 = uint32_1,
+                                       Optional ByVal disposer As Action(Of T) = Nothing) As ref_instance(Of T)
+        Return New ref_instance(Of T)(ref, disposer)
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
+
 Public Class ref_instance(Of T)
+    Public Event created()
+    Public Event disposed()
     Private ReadOnly [New] As Func(Of T)
     Private ReadOnly p As dispose_ptr(Of T)
     Private ReadOnly create_stack_trace As String
@@ -43,6 +61,7 @@ Public Class ref_instance(Of T)
         v = r
         If v = 1 Then
             p.set([New]())
+            RaiseEvent created()
         End If
         l.release()
         Return v
@@ -57,6 +76,7 @@ Public Class ref_instance(Of T)
         If v = 0 Then
             p.dispose()
             p.clear()
+            RaiseEvent disposed()
         End If
         l.release()
         Return v

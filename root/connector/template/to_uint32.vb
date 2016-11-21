@@ -23,7 +23,7 @@ Public Class _byte_to_uint32
     End Function
 
     Public Overrides Function reverse(ByVal r As UInt32) As Byte
-        assert(r >= min_int8 AndAlso r <= max_int8)
+        assert(r >= min_uint8 AndAlso r <= max_uint8)
         Return r
     End Function
 End Class
@@ -42,6 +42,27 @@ Public Class _char_to_uint32
             assert(False)
             Return character.null
         End Try
+    End Function
+End Class
+
+Public Class _int16_to_uint32
+    Inherits default_to_uint32(Of Int16)
+
+    Public Overrides Function at(ByRef k As Int16) As UInt32
+        Return CUInt(max_int16) + k
+    End Function
+End Class
+
+Public Class _uint16_to_uint32
+    Inherits default_to_uint32(Of UInt16)
+
+    Public Overrides Function at(ByRef k As UInt16) As UInt32
+        Return k
+    End Function
+
+    Public Overrides Function reverse(ByVal i As UInt32) As UInt16
+        assert(i >= min_uint16 AndAlso i <= max_uint16)
+        Return i
     End Function
 End Class
 

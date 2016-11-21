@@ -61,8 +61,10 @@
     <Compile Include="constants.vb" />
     <Compile Include="dispenser\dispenser.accepter.vb" />
     <Compile Include="dispenser\dispenser.vb" />
-    <Compile Include="dispenser\shared_device.device_collection.vb" />
-    <Compile Include="dispenser\shared_device.vb" />
+    <Compile Include="dispenser\shared_component.collection.vb" />
+    <Compile Include="dispenser\shared_component.default_collection.vb" />
+    <Compile Include="dispenser\shared_component.exporter.vb" />
+    <Compile Include="dispenser\shared_component.vb" />
     <Compile Include="lazier\async_getter.vb" />
     <Compile Include="lazier\async_lazier.vb" />
     <Compile Include="lazier\async_preparer.vb" />
