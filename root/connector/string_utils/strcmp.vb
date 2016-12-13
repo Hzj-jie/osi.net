@@ -20,7 +20,7 @@ Public Module _strcmp
                                          ByVal input2 As String,
                                          ByVal start2 As UInt32,
                                          ByVal len2 As UInt32,
-                                         Optional ByVal case_sensitive As Boolean = True) As Int64
+                                         Optional ByVal case_sensitive As Boolean = True) As Int32
         If case_sensitive Then
             Return String.CompareOrdinal(strmid(input1, start1, len1),
                                          strmid(input2, start2, len2))
@@ -35,20 +35,20 @@ Public Module _strcmp
                                          ByVal input2 As String,
                                          ByVal start2 As UInt32,
                                          ByVal len As UInt32,
-                                         Optional ByVal case_sensitive As Boolean = True) As Int64
+                                         Optional ByVal case_sensitive As Boolean = True) As Int32
         Return strcmp(input1, start1, len, input2, start2, len, case_sensitive)
     End Function
 
     <Extension()> Public Function strcmp(ByVal s1 As String,
                                          ByVal s2 As String,
                                          ByVal len As UInt32,
-                                         Optional ByVal case_sensitive As Boolean = True) As Int64
+                                         Optional ByVal case_sensitive As Boolean = True) As Int32
         Return strcmp(s1, uint32_0, len, s2, uint32_0, len, case_sensitive)
     End Function
 
     <Extension()> Public Function strcmp(ByVal s1 As String,
                                          ByVal s2 As String,
-                                         Optional ByVal case_sensitive As Boolean = True) As Int64
+                                         Optional ByVal case_sensitive As Boolean = True) As Int32
         Return strcmp(s1, uint32_0, strlen(s1), s2, uint32_0, strlen(s2), case_sensitive)
     End Function
 
@@ -58,7 +58,7 @@ Public Module _strcmp
                                          ByVal s2 As StringBuilder,
                                          ByVal start2 As UInt32,
                                          ByVal len2 As UInt32,
-                                         Optional ByVal case_sensitive As Boolean = True) As Int64
+                                         Optional ByVal case_sensitive As Boolean = True) As Int32
         Return strcmp(strmid(s1, start1, len1), strmid(s2, start2, len2), case_sensitive)
     End Function
 
@@ -68,7 +68,7 @@ Public Module _strcmp
                                          ByVal s2 As String,
                                          ByVal start2 As UInt32,
                                          ByVal len2 As UInt32,
-                                         Optional ByVal case_sensitive As Boolean = True) As Int64
+                                         Optional ByVal case_sensitive As Boolean = True) As Int32
         Return strcmp(strmid(s1, start1, len1), uint32_0, s2, start2, len2, case_sensitive)
     End Function
 
@@ -78,7 +78,7 @@ Public Module _strcmp
                                          ByVal s2 As StringBuilder,
                                          ByVal start2 As UInt32,
                                          ByVal len2 As UInt32,
-                                         Optional ByVal case_sensitive As Boolean = True) As Int64
+                                         Optional ByVal case_sensitive As Boolean = True) As Int32
         Return -strcmp(s2, start2, len2, s1, start1, len1, case_sensitive)
     End Function
 

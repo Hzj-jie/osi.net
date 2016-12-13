@@ -78,6 +78,7 @@
     <Compile Include="comparer\comparable_type.vb" />
     <Compile Include="comparer\reverse.vb" />
     <Compile Include="const_array.vb" />
+    <Compile Include="const_pair.vb" />
     <Compile Include="ext\conv.vb" />
     <Compile Include="ext\foreach.vb" />
     <Compile Include="ext\map.vb" />
@@ -159,10 +160,12 @@
     <None Include="codegen\bit_array.vbp" />
     <None Include="codegen\bit_array_thread_safe.vbp" />
     <None Include="codegen\bt.iterator.vbp" />
+    <None Include="codegen\const_pair.vbp" />
     <None Include="codegen\iterator.ext.vbp" />
     <None Include="codegen\iterator.imports.vbp" />
     <None Include="codegen\mapheap.iterator.vbp" />
     <None Include="codegen\list.iterator.vbp" />
+    <None Include="codegen\pair.vbp" />
     <None Include="codegen\random_access_iterator.single_step.vbp" />
     <None Include="codegen\random_access_iterator.vbp" />
     <None Include="codegen\run.cmd" />

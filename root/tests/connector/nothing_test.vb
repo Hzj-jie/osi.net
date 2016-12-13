@@ -19,7 +19,23 @@ Public Class nothing_test
         Return i Is Nothing
     End Function
 
+    Private Shared Sub is_nothing_test(Of T)()
+        Dim x As T = Nothing
+        assert_true(is_nothing(x))
+        assert_true(x Is Nothing)
+    End Sub
+
+    Private Shared Sub is_not_nothing_test(Of T)()
+        Dim x As T = Nothing
+        assert_false(is_nothing(x))
+        assert_false(x Is Nothing)
+    End Sub
+
     Private Shared Function value_type_is_not_nothing() As Boolean
+        is_not_nothing_test(Of Int16)()
+        is_not_nothing_test(Of Int32)()
+        is_not_nothing_test(Of Double)()
+        is_not_nothing_test(Of UInt32)()
         Using code_block
             Dim i As Int32 = 0
             assert_true(type_info(Of Int32).is_valuetype)
@@ -45,6 +61,7 @@ Public Class nothing_test
 
     ' A structure should always be value_type.
     Private Shared Function structure_is_not_nothing() As Boolean
+        is_not_nothing_test(Of test_structure)()
         Using code_block
             Dim i As test_structure = Nothing
             assert_true(type_info(Of test_structure).is_valuetype)
@@ -59,6 +76,7 @@ Public Class nothing_test
     End Function
 
     Private Shared Function reference_type_is_nullable() As Boolean
+        is_nothing_test(Of String)()
         Using code_block
             Dim x As String = Nothing
             assert_false(type_info(Of String).is_valuetype)
@@ -72,6 +90,7 @@ Public Class nothing_test
     End Function
 
     Private Shared Function interface_is_nullable() As Boolean
+        is_nothing_test(Of test_interface)()
         Using code_block
             Dim i As test_structure2 = Nothing
             assert_true(type_info(Of test_structure2).is_valuetype)
@@ -93,6 +112,7 @@ Public Class nothing_test
     End Function
 
     Private Shared Function array_is_nullable() As Boolean
+        is_nothing_test(Of Int32())()
         Using code_block
             Dim a() As Int32 = Nothing
             assert_false(type_info(Of Int32()).is_valuetype)
@@ -104,6 +124,7 @@ Public Class nothing_test
             a = Nothing
             assert_true(is_nothing(a))
         End Using
+        is_nothing_test(Of test_interface())()
         Using code_block
             Dim a() As test_interface = Nothing
             assert_false(type_info(Of test_interface()).is_valuetype)
@@ -115,6 +136,7 @@ Public Class nothing_test
             a = Nothing
             assert_true(is_nothing(a))
         End Using
+        is_nothing_test(Of String())()
         Using code_block
             Dim a() As String = Nothing
             assert_false(type_info(Of String()).is_valuetype)

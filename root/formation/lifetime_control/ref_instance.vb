@@ -1,6 +1,8 @@
 ﻿
-Imports osi.root.connector
+Option Strict On
+
 Imports osi.root.constants
+Imports osi.root.connector
 Imports osi.root.lock
 Imports lock_t = osi.root.lock.slimlock.monitorlock
 
@@ -26,7 +28,7 @@ Public Class ref_instance(Of T)
     Private ReadOnly [New] As Func(Of T)
     Private ReadOnly p As dispose_ptr(Of T)
     Private ReadOnly create_stack_trace As String
-    Private r As UInt32
+    Private r As Int32
     Private l As lock_t
 
     Private Shared Function build_create_stack_trace() As String
@@ -43,7 +45,8 @@ Public Class ref_instance(Of T)
         End If
         Me.p = New dispose_ptr(Of T)(disposer:=disposer)
         Me.create_stack_trace = build_create_stack_trace()
-        Me.r = ref
+        assert(ref <= max_int32)
+        Me.r = CInt(ref)
         If Me.r > 0 Then
             Me.p.set(Me.[New]())
         End If
@@ -57,9 +60,10 @@ Public Class ref_instance(Of T)
     Public Function ref() As UInt32
         Dim v As UInt32 = 0
         l.wait()
-        r += uint32_1
-        v = r
-        If v = 1 Then
+        r += 1
+        assert(r > 0)
+        v = CUInt(r)
+        If r = 1 Then
             p.set([New]())
             RaiseEvent created()
         End If
@@ -71,8 +75,8 @@ Public Class ref_instance(Of T)
         Dim v As UInt32 = 0
         l.wait()
         assert(r > 0)
-        r -= uint32_1
-        v = r
+        r -= 1
+        v = CUInt(r)
         If v = 0 Then
             p.dispose()
             p.clear()
@@ -84,6 +88,10 @@ Public Class ref_instance(Of T)
 
     Public Function [get]() As T
         Return p.get()
+    End Function
+
+    Public Function referred() As Boolean
+        Return atomic.read(r) > 0
     End Function
 
     Public Shared Operator +(ByVal this As ref_instance(Of T)) As T

@@ -69,6 +69,7 @@
     <Compile Include="cast\value_types_cast.vb" />
     <Compile Include="choose_test.vb" />
     <Compile Include="cint_convert_toint_perf_test.vb" />
+    <Compile Include="compare_predefined_test.vb" />
     <Compile Include="compare_test.vb" />
     <Compile Include="compress_rate_test.vb" />
     <Compile Include="concurrency_runner_test.vb" />

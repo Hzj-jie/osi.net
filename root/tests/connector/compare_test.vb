@@ -172,8 +172,10 @@ Public Class compare_test
             Return compare_case(i1, i2, i1.CompareTo(i2)) AndAlso
                    compare_case(i1, i1, 0) AndAlso
                    compare_case(i2, i2, 0) AndAlso
-                   not_comparable_case(i1, Convert.ToInt64(i1)) AndAlso
-                   not_comparable_case(Convert.ToInt64(i1), i1)
+                   compare_case(i1, Convert.ToInt64(i1), 0) AndAlso
+                   compare_case(Convert.ToInt64(i1), i1, 0) AndAlso
+                   compare_case(i1, Convert.ToInt64(i2), i1.CompareTo(i2)) AndAlso
+                   compare_case(Convert.ToInt64(i1), i2, i1.CompareTo(i2))
         End Function
 
         Private Shared Function nullable_compare() As Boolean

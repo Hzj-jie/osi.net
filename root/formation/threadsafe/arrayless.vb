@@ -85,7 +85,8 @@ Public Class arrayless(Of T)
                     a(i).v = nothrow(c, i)
                     a(i).d = True
                     ' We expect the [New] function returns a valid instance, otherwise it means the allocation failed.
-                    If type_info(Of T).is_valuetype OrElse Not a(i).v Is Nothing Then
+                    ' Note, if T is a value type, 'Not a(i).v Is Nothing' always returns true. Refer to nothing_test.
+                    If Not a(i).v Is Nothing Then
                         id = i
                         o = a(i).v
                         found = True
