@@ -13,15 +13,15 @@
 Imports osi.root.connector
 
 Public Class smap(Of KEY_T, VALUE_T)
-    Inherits sbst(Of pair(Of KEY_T, VALUE_T))
+    Inherits sbst(Of first_const_pair(Of KEY_T, VALUE_T))
     Implements ICloneable
 
     Public Sub New()
         MyBase.New(AddressOf first_compare)
     End Sub
 
-    Private Shared Function first_compare(ByVal this As pair(Of KEY_T, VALUE_T),
-                                          ByVal that As pair(Of KEY_T, VALUE_T)) As Int32
+    Private Shared Function first_compare(ByVal this As first_const_pair(Of KEY_T, VALUE_T),
+                                          ByVal that As first_const_pair(Of KEY_T, VALUE_T)) As Int32
         Dim c As Int32 = 0
         c = object_compare(this, that)
         If c = object_compare_undetermined Then
@@ -64,7 +64,7 @@ Public Class smap(Of KEY_T, VALUE_T)
             Return it
         Else
             Dim r As pair(Of iterator, Boolean) = Nothing
-            r = MyBase.emplace(emplace_make_pair(key, value))
+            r = MyBase.emplace(emplace_make_first_const_pair(key, value))
             assert(Not r Is Nothing)
             assert(r.second)
             Return r.first
@@ -85,7 +85,7 @@ Public Class smap(Of KEY_T, VALUE_T)
     End Function
 
     Public Shadows Function find(ByVal key As KEY_T) As iterator
-        Return MyBase.find(emplace_make_pair(Of KEY_T, VALUE_T)(key))
+        Return MyBase.find(emplace_make_first_const_pair(Of KEY_T, VALUE_T)(key))
     End Function
 
     Default Public Property at(ByVal key As KEY_T) As VALUE_T

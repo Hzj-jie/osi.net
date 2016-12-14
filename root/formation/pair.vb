@@ -7,6 +7,7 @@
 Option Strict On
 
 #Const IS_CONST = ("" = "const_")
+#Const IS_FIRST_CONST = ("" = "first_const_")
 
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
@@ -18,6 +19,9 @@ Public NotInheritable Class pair(Of FT, ST)
 #If IS_CONST Then
     Public ReadOnly first As FT
     Public ReadOnly second As ST
+#ElseIf IS_FIRST_CONST Then
+    Public ReadOnly first As FT
+    Public second As ST
 #Else
     Public first As FT
     Public second As ST
@@ -65,7 +69,7 @@ Public NotInheritable Class pair(Of FT, ST)
         Return emplace_make_pair(Nothing, Nothing)
     End Function
 
-#If Not IS_CONST Then
+#If Not IS_CONST AndAlso Not IS_FIRST_CONST Then
     Public Shared Function move(ByVal that As pair(Of FT, ST)) As pair(Of FT, ST)
         If that Is Nothing Then
             Return Nothing
@@ -142,21 +146,31 @@ Public NotInheritable Class pair(Of FT, ST)
         Return compare(Me, obj) = 0
     End Function
 
-#If IS_CONST Then
-    Public Function to_pair() As pair(Of FT, ST)
-        Return make_pair(first, second)
-    End Function
-
-    Public Function emplace_to_pair() As pair(Of FT, ST)
-        Return emplace_make_pair(first, second)
-    End Function
-#Else
+#If Not IS_CONST Then
     Public Function to_const_pair() As const_pair(Of FT, ST)
         Return make_const_pair(first, second)
     End Function
 
     Public Function emplace_to_const_pair() As const_pair(Of FT, ST)
         Return emplace_make_const_pair(first, second)
+    End Function
+#End If
+#If Not IS_FIRST_CONST Then
+    Public Function to_first_const_pair() As first_const_pair(Of FT, ST)
+        Return make_first_const_pair(first, second)
+    End Function
+
+    Public Function emplace_to_first_const_pair() As first_const_pair(Of FT, ST)
+        Return emplace_make_first_const_pair(first, second)
+    End Function
+#End If
+#If IS_CONST OrElse IS_FIRST_CONST Then
+    Public Function to_pair() As pair(Of FT, ST)
+        Return make_pair(first, second)
+    End Function
+
+    Public Function emplace_to_pair() As pair(Of FT, ST)
+        Return emplace_make_pair(first, second)
     End Function
 #End If
 End Class

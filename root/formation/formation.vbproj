@@ -83,6 +83,7 @@
     <Compile Include="ext\foreach.vb" />
     <Compile Include="ext\map.vb" />
     <Compile Include="ext\set.vb" />
+    <Compile Include="first_const_pair.vb" />
     <Compile Include="heap.vb" />
     <Compile Include="lazier.vb" />
     <Compile Include="lifetime_control\disposer.vb" />
@@ -155,12 +156,14 @@
     <Compile Include="threadsafe\waitable_slimqless2.vb" />
     <Compile Include="trie.iterator.vb" />
     <Compile Include="trie.vb" />
+    <Compile Include="tuple.vb" />
     <Compile Include="vector.adaptive_array.vb" />
     <Compile Include="vector.vb" />
+    <None Include="binary_tree\codegen\bt.iterator.vbp" />
     <None Include="codegen\bit_array.vbp" />
     <None Include="codegen\bit_array_thread_safe.vbp" />
-    <None Include="codegen\bt.iterator.vbp" />
     <None Include="codegen\const_pair.vbp" />
+    <None Include="codegen\first_const_pair.vbp" />
     <None Include="codegen\iterator.ext.vbp" />
     <None Include="codegen\iterator.imports.vbp" />
     <None Include="codegen\mapheap.iterator.vbp" />

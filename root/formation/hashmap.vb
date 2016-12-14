@@ -123,7 +123,7 @@ Public Class hashmap(Of keyT As IComparable(Of keyT),
             End If
         End Operator
 
-        Public Shared Operator +(ByVal this As iterator) As pair(Of keyT, valueT)
+        Public Shared Operator +(ByVal this As iterator) As first_const_pair(Of keyT, valueT)
             If this Is Nothing Then
                 Return Nothing
             Else

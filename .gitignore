@@ -3,6 +3,7 @@
 **/bin/
 **/obj/
 
+*.swp
 *.un~
 *.vspscc
 *.suo
