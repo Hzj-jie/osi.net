@@ -78,6 +78,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="shared_component\shared_component_test.collection.vb" />
+    <Compile Include="shared_component\shared_component_test.component.vb" />
+    <Compile Include="shared_component\shared_component_test.dispenser.receiver.vb" />
+    <Compile Include="shared_component\shared_component_test.outgoing.vb" />
+    <Compile Include="shared_component\shared_component_test.parameter.vb" />
+    <Compile Include="shared_component\shared_component_test.vb" />
     <Compile Include="sync_lazier_valuetype_test.vb" />
     <Compile Include="sync_thread_safe_lazier_test.vb" />
   </ItemGroup>
@@ -100,6 +106,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\..\..\root\root.utt.props" Condition="'$(RootUttProps)'==''" />
   <Import Project="$(ServicePath)\selector\selector.props" Condition="'$(SelectorProps)'==''" />

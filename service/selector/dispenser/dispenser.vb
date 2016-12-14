@@ -6,6 +6,18 @@ Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.service.transmitter
 
+Public NotInheritable Class dispenser
+    Public Shared Function [New](Of DATA_T, ID_T) _
+                                (ByVal d As T_receiver(Of pair(Of DATA_T, ID_T)),
+                                 Optional ByVal sense_timeout_ms As Int64 = constants.default_sense_timeout_ms) _
+                                As dispenser(Of DATA_T, ID_T)
+        Return New dispenser(Of DATA_T, ID_T)(d, sense_timeout_ms)
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
+
 ' Delegates all incoming requests to accepters
 Partial Public Class dispenser(Of DATA_T, ID_T)
     Inherits reference_count_event_comb_1
