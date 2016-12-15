@@ -13,7 +13,7 @@ Partial Public Class rlexer
         Private ReadOnly l() As UInt32
 
         Shared Sub New()
-            assert(type_info(Of String()).is_cloneable())
+            assert(type_info(Of String()).is_cloneable)
         End Sub
 
         Public Sub New(ByVal ParamArray s() As String)

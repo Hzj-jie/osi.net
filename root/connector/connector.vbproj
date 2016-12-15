@@ -69,6 +69,7 @@
     <Compile Include="disposable.vb" />
     <Compile Include="endian.vb" />
     <Compile Include="global_instance.vb" />
+    <Compile Include="ICloneable.vb" />
     <Compile Include="string_utils\utf8_char.vb" />
     <Compile Include="string_utils\character.vb" />
     <Compile Include="choose.vb" />
