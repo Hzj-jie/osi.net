@@ -1,4 +1,6 @@
 ﻿
+Imports System.Runtime.CompilerServices
+Imports osi.root.connector
 Imports osi.root.formation
 
 Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
@@ -17,3 +19,17 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
                        ByRef dispenser As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T))) As Boolean
     End Interface
 End Class
+
+Public Module _shared_component_collection
+    <Extension()> Public Function [New](Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T) _
+                                       (ByVal this As shared_component(Of PORT_T,
+                                                                          ADDRESS_T,
+                                                                          COMPONENT_T,
+                                                                          DATA_T,
+                                                                          PARAMETER_T).collection,
+                                        ByVal p As PARAMETER_T,
+                                        ByRef dispenser As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T))) _
+                                       As Boolean
+        assert(Not this Is Nothing)
+    End Function
+End Module

@@ -19,7 +19,8 @@ Partial Public Class shared_component_test
 
         Public Overrides Function run() As Boolean
             Dim s As shared_component(Of UInt16, UInt16, component, Int32, parameter) = Nothing
-            s = shared_component.[New](New parameter(), c, emplace_make_const_pair(Of UInt16, UInt16)(100, 100), 200)
+            s = shared_component.[New](Of UInt16, UInt16, component, Int32, parameter) _
+                                      (New parameter(), c, emplace_make_const_pair(Of UInt16, UInt16)(100, 100), 200)
             Dim ec As event_comb = Nothing
             Dim p As pointer(Of Int32) = Nothing
             p = New pointer(Of Int32)()
