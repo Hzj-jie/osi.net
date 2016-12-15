@@ -51,7 +51,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "transmitter", "..\tests\tra
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 10
+		SccNumberOfProjects = 12
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs02
 		SccProjectUniqueName0 = ..\\configuration\\configuration.vbproj
@@ -109,6 +109,17 @@ Global
 		SccAuxPath9 = https://tfs.codeplex.com/tfs/tfs02
 		SccLocalPath9 = ..\\tests\\selector
 		SccProvider9 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName10 = ..\\transmitter\\transmitter.vbproj
+		SccProjectName10 = ../transmitter
+		SccAuxPath10 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath10 = ..\\transmitter
+		SccProvider10 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName11 = ..\\tests\\transmitter\\transmitter.vbproj
+		SccProjectTopLevelParentUniqueName11 = device.sln
+		SccProjectName11 = ../tests/transmitter
+		SccAuxPath11 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath11 = ..\\tests\\transmitter
+		SccProvider11 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
