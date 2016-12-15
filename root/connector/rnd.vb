@@ -151,8 +151,20 @@ Public Module _rnd
         Return rnd_int(min_int32, max_int32)
     End Function
 
+    Public Function rnd_int16(ByVal r As Random) As Int16
+        Return rnd_int(r, min_int16, max_int16)
+    End Function
+
     Public Function rnd_int16() As Int16
         Return rnd_int(min_int16, max_int16)
+    End Function
+
+    Public Function rnd_uint16(ByVal r As Random) As UInt16
+        Return rnd_int(r, min_uint16, max_uint16)
+    End Function
+
+    Public Function rnd_uint16() As UInt16
+        Return rnd_int(min_uint16, max_uint16)
     End Function
 
     Public Function rnd_int8() As SByte

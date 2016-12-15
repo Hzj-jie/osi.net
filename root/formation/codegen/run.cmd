@@ -9,5 +9,8 @@ precompile bit_array_thread_safe.vbp > bit_array_thread_safe.vb
 precompile pair.vbp > pair.vb
 precompile const_pair.vbp > const_pair.vb
 precompile first_const_pair.vbp > first_const_pair.vb
+
+for /l %%x in (3,1,8) do precompile tuple%%x.vbp > tuple%%x.vb
+precompile make_tuple.vbp > make_tuple.vb
 endlocal
 

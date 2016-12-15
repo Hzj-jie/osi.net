@@ -158,6 +158,7 @@
     <Compile Include="trie\trie_case.vb" />
     <Compile Include="trie\trie_perf.vb" />
     <Compile Include="trie\trie_test.vb" />
+    <Compile Include="tuple_test.vb" />
     <Compile Include="unique_strong_map_test.vb" />
     <Compile Include="vector\vector_perf.vb" />
     <Compile Include="vector\vector_test.calls.vb" />

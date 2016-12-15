@@ -34,7 +34,8 @@ Public Module _##TYPE##
 End Module
 
 Public Class ##TYPE##(Of T)
-    Implements IComparable, IComparable(Of ##TYPE##(Of T)), IComparable(Of ##INNER_TYPE##)
+    Implements IComparable, IComparable(Of ##TYPE##(Of T)), IComparable(Of ##INNER_TYPE##),
+               ICloneable, ICloneable(Of ##TYPE##(Of T))
 
     Shared Sub New()
         Dim tp As Type = Nothing
@@ -54,6 +55,17 @@ Public Class ##TYPE##(Of T)
 #Else
     Public Event finalized()
 #End If
+
+    Public Shared Function move(ByVal that As ##TYPE##(Of T)) As ##TYPE##(Of T)
+        If that Is Nothing Then
+            Return Nothing
+        Else
+            Dim r As ##TYPE##(Of T) = Nothing
+            r = New ##TYPE##(Of T)(that)
+            that.clear()
+            Return r
+        End If
+    End Function
 
     Public Sub New()
         clear()
@@ -109,6 +121,14 @@ finish:
         Return p2
     End Operator
 #End If
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
+    End Function
+
+    Public Function CloneT() As ##TYPE##(Of T) Implements ICloneable(Of ##TYPE##(Of T)).Clone
+        Return New ##TYPE##(Of T)(Me)
+    End Function
 
     Public Shared Operator +(ByVal p As ##TYPE##(Of T)) As ##INNER_TYPE##
         Return If(p Is Nothing, Nothing, p.get())

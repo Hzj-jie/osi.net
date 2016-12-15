@@ -97,6 +97,7 @@
     <Compile Include="lifetime_control\weak_dispose_ptr.vb" />
     <Compile Include="list.iterator.vb" />
     <Compile Include="list.vb" />
+    <Compile Include="make_tuple.vb" />
     <Compile Include="map.vb" />
     <Compile Include="mapheap.iterator.vb" />
     <Compile Include="mapheap.vb" />
@@ -156,7 +157,12 @@
     <Compile Include="threadsafe\waitable_slimqless2.vb" />
     <Compile Include="trie.iterator.vb" />
     <Compile Include="trie.vb" />
-    <Compile Include="tuple.vb" />
+    <Compile Include="tuple3.vb" />
+    <Compile Include="tuple4.vb" />
+    <Compile Include="tuple5.vb" />
+    <Compile Include="tuple6.vb" />
+    <Compile Include="tuple7.vb" />
+    <Compile Include="tuple8.vb" />
     <Compile Include="vector.adaptive_array.vb" />
     <Compile Include="vector.vb" />
     <None Include="binary_tree\codegen\bt.iterator.vbp" />
@@ -166,6 +172,7 @@
     <None Include="codegen\first_const_pair.vbp" />
     <None Include="codegen\iterator.ext.vbp" />
     <None Include="codegen\iterator.imports.vbp" />
+    <None Include="codegen\make_tuple.vbp" />
     <None Include="codegen\mapheap.iterator.vbp" />
     <None Include="codegen\list.iterator.vbp" />
     <None Include="codegen\pair.vbp" />
@@ -173,6 +180,15 @@
     <None Include="codegen\random_access_iterator.vbp" />
     <None Include="codegen\run.cmd" />
     <None Include="codegen\trie.iterator.vbp" />
+    <None Include="codegen\tuple.vbp" />
+    <None Include="codegen\tuple3.vbp" />
+    <None Include="codegen\tuple4.vbp" />
+    <None Include="codegen\tuple5.vbp" />
+    <None Include="codegen\tuple6.vbp" />
+    <None Include="codegen\tuple7.vbp" />
+    <None Include="codegen\tuple8.vbp" />
+    <None Include="codegen\tuple_compare.vbp" />
+    <None Include="codegen\tuple_make.vbp" />
     <None Include="lifetime_control\codegen\disposer.vbp" />
     <None Include="lifetime_control\codegen\disposer_core.vbp" />
     <None Include="lifetime_control\codegen\disposer_dispose.vbp" />

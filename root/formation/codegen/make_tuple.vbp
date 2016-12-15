@@ -1,0 +1,14 @@
+
+Imports osi.root.connector
+
+Public Module _make_tuple
+
+##DEFINE EMPLACE 
+##DEFINE COPY copy_no_error
+##INCLUDE tuple_make.vbp
+
+##DEFINE EMPLACE emplace_
+##DEFINE COPY 
+##INCLUDE tuple_make.vbp
+
+End Module

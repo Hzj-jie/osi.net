@@ -35,7 +35,8 @@ Public Module _pointer
 End Module
 
 Public Class pointer(Of T)
-    Implements IComparable, IComparable(Of pointer(Of T)), IComparable(Of T)
+    Implements IComparable, IComparable(Of pointer(Of T)), IComparable(Of T),
+               ICloneable, ICloneable(Of pointer(Of T))
 
     Shared Sub New()
         Dim tp As Type = Nothing
@@ -55,6 +56,17 @@ Public Class pointer(Of T)
 #Else
     Public Event finalized()
 #End If
+
+    Public Shared Function move(ByVal that As pointer(Of T)) As pointer(Of T)
+        If that Is Nothing Then
+            Return Nothing
+        Else
+            Dim r As pointer(Of T) = Nothing
+            r = New pointer(Of T)(that)
+            that.clear()
+            Return r
+        End If
+    End Function
 
     Public Sub New()
         clear()
@@ -155,6 +167,14 @@ finish:
         Return p2
     End Operator
 #End If
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
+    End Function
+
+    Public Function CloneT() As pointer(Of T) Implements ICloneable(Of pointer(Of T)).Clone
+        Return New pointer(Of T)(Me)
+    End Function
 
     Public Shared Operator +(ByVal p As pointer(Of T)) As T
         Return If(p Is Nothing, Nothing, p.get())

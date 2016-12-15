@@ -1,0 +1,272 @@
+
+##DEFAULT TEMPLATE_LIST T1, T2, T3, T4, T5, T6, T7, T8
+##DEFAULT SIZE 8
+Imports System.Text
+Imports osi.root.connector
+
+' To reduce complexity, tuple is always const, use pointer if the fields are required to be muttable.
+Public NotInheritable Class tuple(Of ##TEMPLATE_LIST##)
+    Implements ICloneable, ICloneable(Of tuple(Of ##TEMPLATE_LIST##)),
+               IComparable, IComparable(Of tuple(Of ##TEMPLATE_LIST##))
+
+    Private __1 As T1
+
+    Public Function _1() As T1
+        Return __1
+    End Function
+
+    Private __2 As T2
+
+    Public Function _2() As T2
+        Return __2
+    End Function
+
+    Private __3 As T3
+
+    Public Function _3() As T3
+        Return __3
+    End Function
+
+#If ##SIZE## > 3 Then
+    Private __4 As T4
+
+    Public Function _4() As T4
+        Return __4
+    End Function
+#End If
+
+#If ##SIZE## > 4 Then
+    Private __5 As T5
+
+    Public Function _5() As T5
+        Return __5
+    End Function
+#End If
+
+#If ##SIZE## > 5 Then
+    Private __6 As T6
+
+    Public Function _6() As T6
+        Return __6
+    End Function
+#End If
+
+#If ##SIZE## > 6 Then
+    Private __7 As T7
+
+    Public Function _7() As T7
+        Return __7
+    End Function
+#End If
+
+#If ##SIZE## > 7 Then
+    Private __8 As T8
+
+    Public Function _8() As T8
+        Return __8
+    End Function
+#End If
+
+#If ##SIZE## = 3 Then
+    Public Sub New(ByVal _1 As T1,
+                   ByVal _2 As T2,
+                   ByVal _3 As T3)
+#ElseIf ##SIZE## = 4 Then
+    Public Sub New(ByVal _1 As T1,
+                   ByVal _2 As T2,
+                   ByVal _3 As T3,
+                   ByVal _4 As T4)
+#ElseIf ##SIZE## = 5 Then
+    Public Sub New(ByVal _1 As T1,
+                   ByVal _2 As T2,
+                   ByVal _3 As T3,
+                   ByVal _4 As T4,
+                   ByVal _5 As T5)
+#ElseIf ##SIZE## = 6 Then
+    Public Sub New(ByVal _1 As T1,
+                   ByVal _2 As T2,
+                   ByVal _3 As T3,
+                   ByVal _4 As T4,
+                   ByVal _5 As T5,
+                   ByVal _6 As T6)
+#ElseIf ##SIZE## = 7 Then
+    Public Sub New(ByVal _1 As T1,
+                   ByVal _2 As T2,
+                   ByVal _3 As T3,
+                   ByVal _4 As T4,
+                   ByVal _5 As T5,
+                   ByVal _6 As T6,
+                   ByVal _7 As T7)
+#ElseIf ##SIZE## = 8 Then
+    Public Sub New(ByVal _1 As T1,
+                   ByVal _2 As T2,
+                   ByVal _3 As T3,
+                   ByVal _4 As T4,
+                   ByVal _5 As T5,
+                   ByVal _6 As T6,
+                   ByVal _7 As T7,
+                   ByVal _8 As T8)
+#Else
+    Unexpected SIZE (##SIZE##)
+#End If
+        Me.__1 = _1
+        Me.__2 = _2
+        Me.__3 = _3
+#If ##SIZE## > 3 Then
+        Me.__4 = _4
+#End If
+#If ##SIZE## > 4 Then
+        Me.__5 = _5
+#End If
+#If ##SIZE## > 5 Then
+        Me.__6 = _6
+#End If
+#If ##SIZE## > 6 Then
+        Me.__7 = _7
+#End If
+#If ##SIZE## > 7 Then
+        Me.__8 = _8
+#End If
+    End Sub
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
+    End Function
+
+    Public Function CloneT() As tuple(Of ##TEMPLATE_LIST##) _
+                                Implements ICloneable(Of tuple(Of ##TEMPLATE_LIST##)).Clone
+#If ##SIZE## = 3 Then
+        Return make_tuple(__1, __2, __3)
+#ElseIf ##SIZE## = 4 Then
+        Return make_tuple(__1, __2, __3, __4)
+#ElseIf ##SIZE## = 5 Then
+        Return make_tuple(__1, __2, __3, __4, __5)
+#ElseIf ##SIZE## = 6 Then
+        Return make_tuple(__1, __2, __3, __4, __5, __6)
+#ElseIf ##SIZE## = 7 Then
+        Return make_tuple(__1, __2, __3, __4, __5, __6, __7)
+#ElseIf ##SIZE## = 8 Then
+        Return make_tuple(__1, __2, __3, __4, __5, __6, __7, __8)
+#Else
+    Unexpected SIZE (##SIZE##)
+#End If
+    End Function
+
+    Public Function CompareTo(ByVal other As tuple(Of ##TEMPLATE_LIST##)) As Int32 _
+                             Implements IComparable(Of tuple(Of ##TEMPLATE_LIST##)).CompareTo
+        If other Is Nothing Then
+            Return 1
+        End If
+        Dim r As Int32 = 0
+##DEFINE VALUE __1
+##INCLUDE tuple_compare.vbp
+##DEFINE VALUE __2
+##INCLUDE tuple_compare.vbp
+##DEFINE VALUE __3
+##INCLUDE tuple_compare.vbp
+#If ##SIZE## > 3 Then
+##DEFINE VALUE __4
+##INCLUDE tuple_compare.vbp
+#End If
+#If ##SIZE## > 4 Then
+##DEFINE VALUE __5
+##INCLUDE tuple_compare.vbp
+#End If
+#If ##SIZE## > 5 Then
+##DEFINE VALUE __6
+##INCLUDE tuple_compare.vbp
+#End If
+#If ##SIZE## > 6 Then
+##DEFINE VALUE __7
+##INCLUDE tuple_compare.vbp
+#End If
+#If ##SIZE## > 7 Then
+##DEFINE VALUE __8
+##INCLUDE tuple_compare.vbp
+#End If
+        Return 0
+    End Function
+
+    Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
+        Return CompareTo(cast(Of tuple(Of ##TEMPLATE_LIST##))(obj, False))
+    End Function
+
+    Public Shared Operator =(ByVal this As tuple(Of ##TEMPLATE_LIST##),
+                             ByVal that As tuple(Of ##TEMPLATE_LIST##)) As Boolean
+        Return compare(this, that) = 0
+    End Operator
+
+    Public Shared Operator =(ByVal this As tuple(Of ##TEMPLATE_LIST##),
+                             ByVal that As Object) As Boolean
+        Return compare(this, that) = 0
+    End Operator
+
+    Public Shared Operator <>(ByVal this As tuple(Of ##TEMPLATE_LIST##),
+                              ByVal that As tuple(Of ##TEMPLATE_LIST##)) As Boolean
+        Return compare(this, that) <> 0
+    End Operator
+
+    Public Shared Operator <>(ByVal this As tuple(Of ##TEMPLATE_LIST##),
+                              ByVal that As Object) As Boolean
+        Return compare(this, that) <> 0
+    End Operator
+
+    Public Overrides Function ToString() As String
+        Dim r As StringBuilder = Nothing
+        r = New StringBuilder()
+        r.Append(Convert.ToString(__1))
+        r.Append(", ")
+        r.Append(Convert.ToString(__2))
+        r.Append(", ")
+        r.Append(Convert.ToString(__3))
+#If ##SIZE## > 3 Then
+        r.Append(", ")
+        r.Append(Convert.ToString(__4))
+#End If
+#If ##SIZE## > 4 Then
+        r.Append(", ")
+        r.Append(Convert.ToString(__5))
+#End If
+#If ##SIZE## > 5 Then
+        r.Append(", ")
+        r.Append(Convert.ToString(__6))
+#End If
+#If ##SIZE## > 6 Then
+        r.Append(", ")
+        r.Append(Convert.ToString(__7))
+#End If
+#If ##SIZE## > 7 Then
+        r.Append(", ")
+        r.Append(Convert.ToString(__8))
+#End If
+        Return Convert.ToString(r)
+    End Function
+
+    Public Overrides Function GetHashCode() As Int32
+        Dim r As Int32 = 0
+        r = r Xor If(__1 Is Nothing, 0, __1.GetHashCode())
+        r = r Xor If(__2 Is Nothing, 0, __2.GetHashCode())
+        r = r Xor If(__3 Is Nothing, 0, __3.GetHashCode())
+#If ##SIZE## > 3 Then
+        r = r Xor If(__4 Is Nothing, 0, __4.GetHashCode())
+#End If
+#If ##SIZE## > 4 Then
+        r = r Xor If(__5 Is Nothing, 0, __5.GetHashCode())
+#End If
+#If ##SIZE## > 5 Then
+        r = r Xor If(__6 Is Nothing, 0, __6.GetHashCode())
+#End If
+#If ##SIZE## > 6 Then
+        r = r Xor If(__7 Is Nothing, 0, __7.GetHashCode())
+#End If
+#If ##SIZE## > 7 Then
+        r = r Xor If(__8 Is Nothing, 0, __8.GetHashCode())
+#End If
+        Return r
+    End Function
+
+    Public Overrides Function Equals(ByVal obj As Object) As Boolean
+        Return compare(Me, obj) = 0
+    End Function
+End Class
+

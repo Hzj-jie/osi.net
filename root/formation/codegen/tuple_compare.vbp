@@ -1,0 +1,6 @@
+
+##DEFAULT VALUE __1
+    r = compare(##VALUE##, other.##VALUE##)
+    If r <> 0 Then
+        Return r
+    End If

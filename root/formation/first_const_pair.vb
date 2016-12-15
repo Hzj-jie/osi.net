@@ -20,7 +20,8 @@ Imports osi.root.constants
 Imports osi.root.connector
 
 Public NotInheritable Class first_const_pair(Of FT, ST)
-    Implements IComparable(Of first_const_pair(Of FT, ST)), IComparable, ICloneable
+    Implements IComparable(Of first_const_pair(Of FT, ST)), IComparable,
+               ICloneable(Of first_const_pair(Of FT, ST)), ICloneable
 
 #If IS_CONST Then
     Public ReadOnly first As FT
@@ -128,7 +129,7 @@ Public NotInheritable Class first_const_pair(Of FT, ST)
         Return compare(this, that) <> 0
     End Operator
 
-    Public Function Clone() As Object Implements System.ICloneable.Clone
+    Public Function CloneT() As first_const_pair(Of FT, ST) Implements ICloneable(Of first_const_pair(Of FT, ST)).Clone
         If Me Is Nothing Then
             Return Nothing
         Else
@@ -138,6 +139,10 @@ Public NotInheritable Class first_const_pair(Of FT, ST)
             copy(rtn.second, second)
             Return rtn
         End If
+    End Function
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
     End Function
 
     Public Overrides Function ToString() As String

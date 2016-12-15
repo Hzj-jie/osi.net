@@ -41,7 +41,8 @@ Public Module _weak_pointer
 End Module
 
 Public Class weak_pointer(Of T)
-    Implements IComparable, IComparable(Of weak_pointer(Of T)), IComparable(Of T)
+    Implements IComparable, IComparable(Of weak_pointer(Of T)), IComparable(Of T),
+               ICloneable, ICloneable(Of weak_pointer(Of T))
 
     Shared Sub New()
         Dim tp As Type = Nothing
@@ -61,6 +62,17 @@ Public Class weak_pointer(Of T)
 #Else
     Public Event finalized()
 #End If
+
+    Public Shared Function move(ByVal that As weak_pointer(Of T)) As weak_pointer(Of T)
+        If that Is Nothing Then
+            Return Nothing
+        Else
+            Dim r As weak_pointer(Of T) = Nothing
+            r = New weak_pointer(Of T)(that)
+            that.clear()
+            Return r
+        End If
+    End Function
 
     Public Sub New()
         clear()
@@ -190,6 +202,14 @@ finish:
         Return p2
     End Operator
 #End If
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
+    End Function
+
+    Public Function CloneT() As weak_pointer(Of T) Implements ICloneable(Of weak_pointer(Of T)).Clone
+        Return New weak_pointer(Of T)(Me)
+    End Function
 
     Public Shared Operator +(ByVal p As weak_pointer(Of T)) As T
         Return If(p Is Nothing, Nothing, p.get())
