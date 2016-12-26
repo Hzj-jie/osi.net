@@ -58,11 +58,11 @@ Public Class reference_count_event_comb_2
         Return r.in_use()
     End Function
 
-    Public Function binding_count() As Int32
+    Public Function binding_count() As UInt32
         Dim c As Int32 = 0
         c = (+b)
         assert(c >= 0)
-        Return c
+        Return CUInt(c)
     End Function
 
     Public Function binding() As Boolean

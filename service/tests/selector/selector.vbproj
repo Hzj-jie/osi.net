@@ -81,6 +81,7 @@
     <Compile Include="shared_component\shared_component_test.collection.vb" />
     <Compile Include="shared_component\shared_component_test.component.vb" />
     <Compile Include="shared_component\shared_component_test.dispenser.receiver.vb" />
+    <Compile Include="shared_component\shared_component_test.incoming.vb" />
     <Compile Include="shared_component\shared_component_test.outgoing.vb" />
     <Compile Include="shared_component\shared_component_test.parameter.vb" />
     <Compile Include="shared_component\shared_component_test.vb" />

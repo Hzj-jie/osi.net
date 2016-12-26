@@ -64,7 +64,7 @@ Public Class reference_count_event_comb_1
         Return r.started()
     End Function
 
-    Public Function binding_count() As Int32
+    Public Function binding_count() As UInt32
         Return r.binding_count()
     End Function
 

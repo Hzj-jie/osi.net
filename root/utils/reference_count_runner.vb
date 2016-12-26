@@ -73,10 +73,11 @@ Public Class reference_count_runner(Of AUTO_MARK_STARTED As _boolean, AUTO_MARK_
         RaiseEvent after_stop()
     End Sub
 
-    Public Function binding_count() As Int32
+    Public Function binding_count() As UInt32
         Dim r As Int32 = 0
         r = atomic.read(b)
-        Return r
+        assert(r >= 0)
+        Return CUInt(r)
     End Function
 
     Public Function binding() As Boolean

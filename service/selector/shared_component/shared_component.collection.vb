@@ -28,8 +28,12 @@ Public Module _shared_component_collection
                                                                           DATA_T,
                                                                           PARAMETER_T).collection,
                                         ByVal p As PARAMETER_T,
+                                        ByRef component As ref_instance(Of COMPONENT_T),
                                         ByRef dispenser As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T))) _
                                        As Boolean
         assert(Not this Is Nothing)
+        Dim local_port As PORT_T = Nothing
+        Return this.[New](p, local_port, component) AndAlso
+               this.[New](p, local_port, component, dispenser)
     End Function
 End Module

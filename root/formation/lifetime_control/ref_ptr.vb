@@ -1,4 +1,6 @@
 ﻿
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.lock
@@ -33,7 +35,8 @@ Public Class ref_ptr(Of T)
                    Optional ByVal disposer As Action(Of T) = Nothing,
                    Optional ByVal ref As UInt32 = uint32_1)
         MyBase.New(p, disposer)
-        i = New atomic_int(ref)
+        assert(ref <= max_int32)
+        i = New atomic_int(CInt(ref))
         create_stack_trace = build_create_stack_trace()
     End Sub
 
@@ -43,7 +46,10 @@ Public Class ref_ptr(Of T)
     End Sub
 
     Public Function ref() As UInt32
-        Return i.increment()
+        Dim r As Int32 = 0
+        r = i.increment()
+        assert(r > 0)
+        Return CUInt(r)
     End Function
 
     Public Function unref() As UInt32
@@ -53,11 +59,22 @@ Public Class ref_ptr(Of T)
         If r = 0 Then
             dispose()
         End If
-        Return r
+        Return CUInt(r)
+    End Function
+
+    Public Function referred() As Boolean
+        Return ref_count() > 0
+    End Function
+
+    Public Function ref_count() As UInt32
+        Dim r As Int32 = 0
+        r = i.get()
+        assert(r >= 0)
+        Return CUInt(r)
     End Function
 
     Protected Overrides Sub Finalize()
-        assert(+i = 0, "ref_ptr @ ", create_stack_trace, " has not been fully dereferred.")
+        assert(i.get() = 0, "ref_ptr @ ", create_stack_trace, " has not been fully dereferred.")
         MyBase.Finalize()
     End Sub
 End Class

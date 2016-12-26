@@ -1,4 +1,5 @@
 ﻿
+Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.utils
 Imports osi.root.utt
@@ -82,7 +83,7 @@ Public Class reference_count_runner_test
             Private v As Int32
 
             Protected Overrides Sub start_process()
-                assert_more(binding_count(), 0)
+                assert_more(binding_count(), uint32_0)
                 assert_false(started())
                 assert_false(stopped())
                 assert_true(starting())
@@ -97,7 +98,7 @@ Public Class reference_count_runner_test
             End Sub
 
             Protected Overrides Sub stop_process()
-                assert_equal(binding_count(), 0)
+                assert_equal(binding_count(), uint32_0)
                 assert_false(stopped())
                 assert_false(started())
                 assert_false(starting())

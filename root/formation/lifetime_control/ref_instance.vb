@@ -91,7 +91,14 @@ Public Class ref_instance(Of T)
     End Function
 
     Public Function referred() As Boolean
-        Return atomic.read(r) > 0
+        Return ref_count() > 0
+    End Function
+
+    Public Function ref_count() As UInt32
+        Dim x As Int32 = 0
+        x = atomic.read(r)
+        assert(x >= 0)
+        Return CUInt(x)
     End Function
 
     Public Shared Operator +(ByVal this As ref_instance(Of T)) As T
