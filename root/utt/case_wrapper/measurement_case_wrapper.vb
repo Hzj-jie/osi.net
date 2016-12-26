@@ -102,7 +102,8 @@ Public MustInherit Class measurement_case_wrapper
     End Function
 
     Public NotOverridable Overrides Function run() As Boolean
-        Dim finished As Boolean = False
+        Dim finished As atomic_bool = Nothing
+        finished = New atomic_bool()
         _fs = sample()
         stopwatch.repeat(interval_ms,
                          Function() As Boolean
@@ -118,12 +119,13 @@ Public MustInherit Class measurement_case_wrapper
                              _count += 1
                              _average /= _count
                              sampling.release()
-                             Return Not finished
+                             Return Not +finished
                          End Function)
 
         Dim rtn As Boolean = False
         rtn = MyBase.run()
-        finished = True
+        finished.set(True)
+        sleep(interval_ms)
         lazy_wait_when(Function() sampling.in_use())
         raise_error("finished measurement case ",
                     name,

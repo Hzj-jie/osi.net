@@ -1,8 +1,6 @@
 ﻿
 #Const cached_compare = True
-Imports System.Runtime.CompilerServices
 Imports System.Threading
-Imports osi.root.delegates
 Imports osi.root.constants
 
 Public Module _compare

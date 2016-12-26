@@ -56,6 +56,10 @@ Public Class atomic_bool
     End Function
 
     Public Shared Widening Operator CType(ByVal this As atomic_bool) As Boolean
+        Return +this
+    End Operator
+
+    Public Shared Operator +(ByVal this As atomic_bool) As Boolean
         If this Is Nothing Then
             Return False
         Else

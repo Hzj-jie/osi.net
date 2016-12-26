@@ -190,7 +190,8 @@ Public Class pointer_test
             p = New pointer(Of test_class2)(New test_class2("abc"))
             Dim q As pointer(Of test_class2) = Nothing
             copy(q, p)
-            assert_equal(object_compare(p, q), 0)
+            assert_equal(object_compare(p.get(), q.get()), 0)
+            assert_equal(object_compare(p, q), object_compare_undetermined)
             Return True
         End Function
 
