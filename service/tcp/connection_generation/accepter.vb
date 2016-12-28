@@ -1,14 +1,7 @@
 ﻿
-Imports System.Reflection
-Imports System.Net.Sockets
 Imports System.Net
 Imports osi.root.formation
-Imports osi.root.lock
 Imports osi.root.connector
-Imports osi.root.procedure
-Imports osi.root.envs
-Imports osi.root.utils
-Imports osi.root.constants
 
 'public for test, do not try to use it directly
 Partial Public Class accepter

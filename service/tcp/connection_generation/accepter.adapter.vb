@@ -4,7 +4,6 @@ Imports System.Net.Sockets
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports osi.service.device
 Imports osi.service.commander
 
 Partial Public Class accepter

@@ -1,8 +1,5 @@
 ﻿
-Imports osi.root.formation
-Imports osi.root.procedure
 Imports osi.root.connector
-Imports osi.service.selector
 
 Partial Public Class device_pool(Of T)
     Protected Overridable Function get_device(ByRef r As idevice(Of T)) As Boolean

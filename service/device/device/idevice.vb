@@ -40,14 +40,14 @@ Public Interface idevice_exporter(Of T)
     Function stopped() As Boolean
 End Interface
 
-' Automatically receives and injects idevice(Of T) for manual_pre_generated_device_pool
+' Manually (device_pool consumers) receives and injects idevice(Of T) for manual_pre_generated_device_pool
 Public Interface imanual_device_exporter(Of T)
     Inherits idevice_exporter(Of T)
     Function inject(ByVal d As idevice(Of T)) As Boolean
-    Function inject(ByVal d As idevice(Of async_getter(Of T))) As event_comb     ' Do not use
+    Function inject(ByVal d As idevice(Of async_getter(Of T))) As event_comb
 End Interface
 
-' Manually creates and exports idevice(Of T) for auto_pre_generated_device_pool according to require function
+' Automatically creates and exports idevice(Of T) for auto_pre_generated_device_pool according to require function
 Public Interface iauto_device_exporter(Of T)
     Inherits idevice_exporter(Of T)
     Sub require(Optional ByVal c As UInt32 = uint32_1)

@@ -1,11 +1,8 @@
 ﻿
 Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.procedure
 Imports osi.root.connector
 Imports osi.root.lock
-Imports osi.root.threadpool
-Imports counter = osi.root.utils.counter
 
 Partial Public Class device_pool(Of T)
     Protected Overloads Sub close_existing_devices(ByVal q As qless2(Of idevice(Of T)))

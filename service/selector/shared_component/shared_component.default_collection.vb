@@ -41,7 +41,26 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
         Protected MustOverride Function is_valid_port(ByVal id As PORT_T) As Boolean
         Protected MustOverride Function port(ByVal p As PARAMETER_T) As PORT_T
         Protected MustOverride Function accept_new_component(ByVal p As PARAMETER_T) As Boolean
-        Protected MustOverride Function new_shared_component(
+        Protected MustOverride Sub dispose_component(ByVal c As COMPONENT_T)
+
+        Protected Overridable Function new_accepter(ByVal p As PARAMETER_T,
+                                                    ByVal remote As const_pair(Of ADDRESS_T, PORT_T)) _
+                                                   As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)).accepter
+            Return New default_accepter(remote)
+        End Function
+
+        Protected Overridable Function new_shared_component(
+                 ByVal p As PARAMETER_T,
+                 ByVal id As PORT_T,
+                 ByVal component As ref_instance(Of COMPONENT_T),
+                 ByVal dispenser As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)),
+                 ByVal accepter As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)).accepter,
+                 ByVal buff As DATA_T) As SHARED_COMPONENT_IMPL_T
+            assert(False)
+            Return Nothing
+        End Function
+
+        Protected Overridable Function new_shared_component(
                  ByVal p As PARAMETER_T,
                  ByVal id As PORT_T,
                  ByVal component As ref_instance(Of COMPONENT_T),
@@ -49,7 +68,10 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
                  ByVal buff As DATA_T,
                  ByVal remote As const_pair(Of ADDRESS_T, PORT_T)) _
              As SHARED_COMPONENT_IMPL_T
-        Protected MustOverride Sub dispose_component(ByVal c As COMPONENT_T)
+            Dim accepter As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)).accepter = Nothing
+            accepter = new_accepter(p, remote)
+            Return new_shared_component(p, id, component, dispenser, accepter, buff)
+        End Function
 
         Protected Overridable Function sense_timeout_ms(ByVal p As PARAMETER_T, ByVal id As PORT_T) As Int64
             Return constants.default_sense_timeout_ms

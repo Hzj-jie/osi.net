@@ -52,6 +52,8 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
                 End If
                 dispenser.attach(accepter)
                 valid = True
+            Else
+                valid = False
             End If
         Else
             valid = False
