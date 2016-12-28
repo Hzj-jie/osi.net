@@ -2,6 +2,7 @@
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.utt
 Imports osi.service.selector
@@ -20,6 +21,10 @@ Partial Public Class shared_component_test
             p = New parameter(1000)
         End Sub
 
+        Public Overrides Function preserved_processors() As Int16
+            Return 1
+        End Function
+
         Public Overrides Function prepare() As Boolean
             If MyBase.prepare() Then
                 assert_true(c.[New](p, component, dispenser))
@@ -30,6 +35,8 @@ Partial Public Class shared_component_test
         End Function
 
         Public Overrides Function run() As Boolean
+            Const ip_size As UInt16 = 10
+            Const port_size As UInt16 = 10
             Dim s As vector(Of shared_component(Of UInt16, UInt16, component, Int32, parameter)) = Nothing
             s = _new(s)
             AddHandler c.new_shared_component_exported,
@@ -39,36 +46,45 @@ Partial Public Class shared_component_test
             Dim p As pointer(Of Int32) = Nothing
             p = New pointer(Of Int32)()
             If assert_true(component.referred()) Then
-                For i As UInt16 = 0 To 10
-                    For j As UInt16 = 1 To 10
+                For i As UInt16 = 0 To ip_size - uint16_1
+                    For j As UInt16 = 1 To port_size
                         assert(shared_component_test.component.is_valid_port(j))
+                        Dim exp_size As UInt32
+                        exp_size = i * 10 + j
+                        assert_less(s.size(), exp_size)
                         component.get().push(200, i, j)
-                        If assert_equal(s.size(), CUInt(i) * 9 + j) Then
-                            assert_true(async_sync(s(i * 9 + j).receiver.receive(p)))
-                            assert_equal(+p, 200)
+                        If assert_true(timeslice_sleep_wait_until(Function() As Boolean
+                                                                      assert_less_or_equal(s.size(), exp_size)
+                                                                      Return s.size() = exp_size
+                                                                  End Function,
+                                                                  second_milli)) Then
+                            assert_true(async_sync(s.back().receiver.receive(p), second_milli), "@", i, "-", j)
+                            assert_equal(+p, 200, "@", i, "-", j)
 
                             For k As Int32 = 0 To 1000
                                 component.get().push(k, i, j)
-                                assert_true(async_sync(s(i * 9 + j).receiver.receive(p)))
+                                assert_true(async_sync(s.back().receiver.receive(p), second_milli))
                                 assert_equal(+p, k)
                             Next
-                        End If
 
-                        If i > 0 Then
-                            For k As UInt16 = 0 To i - uint32_1
-                                For l As UInt16 = 1 To 10
-                                    component.get().push(k * l, k, l)
-                                    assert_true(async_sync(s(k * 9 + l).receiver.receive(p)))
-                                    assert_equal(+p, k * l)
+                            If i > 0 Then
+                                For k As UInt16 = 0 To i - uint32_1
+                                    For l As UInt16 = 1 To port_size
+                                        component.get().push(k * l, k, l)
+                                        assert_true(async_sync(s(k * port_size + l - uint16_1).receiver.receive(p),
+                                                               second_milli))
+                                        assert_equal(+p, k * l)
+                                    Next
                                 Next
-                            Next
-                        End If
-                        If j > 1 Then
-                            For k As UInt16 = 1 To j - uint32_1
-                                component.get().push(k * i, i, k)
-                                assert_true(async_sync(s(i * 9 + k).receiver.receive(p)))
-                                assert_equal(+p, k * i)
-                            Next
+                            End If
+                            If j > 1 Then
+                                For k As UInt16 = 1 To j - uint32_1
+                                    component.get().push(k * i, i, k)
+                                    assert_true(async_sync(s(i * port_size + k - uint16_1).receiver.receive(p),
+                                                           second_milli))
+                                    assert_equal(+p, k * i)
+                                Next
+                            End If
                         End If
                     Next
                 Next
@@ -87,10 +103,16 @@ Partial Public Class shared_component_test
             assert_true(dispenser.release())
             assert_equal(dispenser.binding_count(), uint32_0)
             assert_true(dispenser.expired())
-            dispenser.wait_for_stop()
+            assert_true(dispenser.wait_for_stop(constants.default_sense_timeout_ms))
             assert_true(dispenser.stopped())
             assert_equal(component.ref_count(), uint32_0)
             assert_false(component.referred())
+            ' TODO: Why cannot shared_component_test.dispenser.receiver.sense be finished here.
+            ' [event_comb] instance count 3,
+            ' [event_sync_T_pump_T_receiver_adapter.vb(64):osi.service.transmitter.event_sync_T_pump_T_receiver_adapter`1.sense] - 1,
+            ' [shared_component_test.dispenser.receiver.vb(44):osi.tests.service.selector.shared_component_test+receiver.sense] - 1,
+            ' [sensor.vb(95):osi.service.transmitter.dll.osi.service.transmitter._sensor.sense] - 1
+            sleep(constants.default_sense_timeout_ms)
             Return MyBase.finish()
         End Function
     End Class

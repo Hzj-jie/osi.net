@@ -87,7 +87,11 @@ Public Class ref_instance(Of T)
     End Function
 
     Public Function [get]() As T
-        Return p.get()
+        Dim r As T = Nothing
+        l.wait()
+        r = p.get()
+        l.release()
+        Return r
     End Function
 
     Public Function referred() As Boolean

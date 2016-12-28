@@ -67,7 +67,9 @@ Public Class event_sync_T_pump_T_receiver_adapter(Of T)
                                              goto_end()
                                   Else
                                       unmark_arrived_event()
-                                      Return waitfor(arrived_event, end_time - nowadays.milliseconds()) AndAlso
+                                      Return If(end_time = max_int64,
+                                                waitfor(arrived_event),
+                                                waitfor(arrived_event, end_time - nowadays.milliseconds())) AndAlso
                                              goto_next()
                                   End If
                               End Function,

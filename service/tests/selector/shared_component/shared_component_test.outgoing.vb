@@ -17,6 +17,10 @@ Partial Public Class shared_component_test
             c = New collection()
         End Sub
 
+        Public Overrides Function preserved_processors() As Int16
+            Return 1
+        End Function
+
         Public Overrides Function run() As Boolean
             Dim s As shared_component(Of UInt16, UInt16, component, Int32, parameter) = Nothing
             s = shared_component.[New](Of UInt16, UInt16, component, Int32, parameter) _
