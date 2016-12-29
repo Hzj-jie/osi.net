@@ -1,10 +1,100 @@
 ﻿
+Imports System.Collections.Generic
 Imports System.IO
 Imports System.Threading
 Imports System.Net.Sockets
 Imports osi.root.constants
 
 Public NotInheritable Class disposable
+    Private Class type_disposer
+        Public ReadOnly t As Type
+        Public ReadOnly d As Action(Of Object)
+
+        Public Sub New(ByVal t As Type, ByVal d As Action(Of Object))
+            assert(Not t Is Nothing)
+            assert(Not d Is Nothing)
+            Me.t = t
+            Me.d = d
+        End Sub
+
+        Public Shared Function [New](Of T)(ByVal d As Action(Of T)) As type_disposer
+            assert(Not d Is Nothing)
+            Return New type_disposer(GetType(T),
+                                     Sub(ByVal i As Object)
+                                         d(direct_cast(Of T)(i))
+                                     End Sub)
+        End Function
+    End Class
+
+    Private Shared ReadOnly td As List(Of type_disposer)
+
+    ' The order is important.
+    Shared Sub New()
+        td = New List(Of type_disposer)()
+        td.Add(type_disposer.[New](Sub(ByVal s As Stream)
+                                       If Not s Is Nothing Then
+                                           s.Flush()
+                                           s.Close()
+                                           s.Dispose()
+                                       End If
+                                   End Sub))
+        td.Add(type_disposer.[New](Sub(ByVal s As WaitHandle)
+                                       If Not s Is Nothing Then
+                                           s.Close()
+                                       End If
+                                   End Sub))
+        td.Add(type_disposer.[New](Sub(ByVal s As TcpClient)
+                                       If Not s Is Nothing Then
+                                           s.Close()
+                                       End If
+                                   End Sub))
+        td.Add(type_disposer.[New](Sub(ByVal s As UdpClient)
+                                       If Not s Is Nothing Then
+                                           s.Close()
+                                       End If
+                                   End Sub))
+        td.Add(type_disposer.[New](Sub(ByVal s As Socket)
+                                       If Not s Is Nothing Then
+                                           s.Close()
+                                       End If
+                                   End Sub))
+        td.Add(type_disposer.[New](Sub(ByVal s As TextWriter)
+                                       close_writer(s)
+                                   End Sub))
+        td.Add(type_disposer.[New](Sub(ByVal s As IDisposable)
+                                       s.not_null_and_dispose()
+                                   End Sub))
+    End Sub
+
+    ' By registering with a Type, some disposer(Of T) may be initialized with the d, so unregister usually won't take
+    ' effect.
+    Public Shared Sub register(ByVal t As Type, ByVal d As Action(Of Object))
+        td.Add(New type_disposer(t, d))
+    End Sub
+
+    Public Shared Function find(Of T)(ByRef o As Action(Of T)) As Boolean
+        Dim type As Type = Nothing
+        type = GetType(T)
+        For Each p In td
+            If type.is(p.t) Then
+                o = Sub(ByVal x As T)
+                        p.d(x)
+                    End Sub
+                Return True
+            End If
+        Next
+        Return False
+    End Function
+
+    Public Shared Function find(Of T)() As Action(Of T)
+        Dim o As Action(Of T) = Nothing
+        If find(o) Then
+            Return o
+        Else
+            Return Nothing
+        End If
+    End Function
+
     Public Shared Sub register(Of T)(ByVal d As Action(Of T))
         disposable(Of T).register(d)
     End Sub
@@ -21,54 +111,7 @@ Public NotInheritable Class disposable(Of T)
     Private Shared ReadOnly [default] As Action(Of T)
 
     Shared Sub New()
-        If GetType(T).is(GetType(Stream)) Then
-            [default] = Sub(x As T)
-                            If Not x Is Nothing Then
-                                Dim s As Stream = Nothing
-                                s = direct_cast(Of Stream)(x)
-                                assert(Not s Is Nothing)
-                                s.Flush()
-                                s.Close()
-                                s.Dispose()
-                            End If
-                        End Sub
-        ElseIf GetType(T).is(GetType(WaitHandle)) Then
-            [default] = Sub(x As T)
-                            If Not x Is Nothing Then
-                                direct_cast(Of WaitHandle)(x).Close()
-                            End If
-                        End Sub
-        ElseIf GetType(T).is(GetType(TcpClient)) Then
-            [default] = Sub(x As T)
-                            If Not x Is Nothing Then
-                                direct_cast(Of TcpClient)(x).Close()
-                            End If
-                        End Sub
-        ElseIf GetType(T).is(GetType(UdpClient)) Then
-            [default] = Sub(x As T)
-                            If Not x Is Nothing Then
-                                direct_cast(Of UdpClient)(x).Close()
-                            End If
-                        End Sub
-        ElseIf GetType(T).is(GetType(Socket)) Then
-            [default] = Sub(x As T)
-                            If Not x Is Nothing Then
-                                direct_cast(Of Socket)(x).Close()
-                            End If
-                        End Sub
-        ElseIf GetType(T).is(GetType(TextWriter)) Then
-            [default] = Sub(x As T)
-                            close_writer(direct_cast(Of TextWriter)(x))
-                        End Sub
-        ElseIf GetType(T).is(GetType(IDisposable)) Then
-            [default] = Sub(x As T)
-                            If Not x Is Nothing Then
-                                direct_cast(Of IDisposable)(x).Dispose()
-                            End If
-                        End Sub
-        Else
-            [default] = Nothing
-        End If
+        [default] = disposable.find(Of T)()
     End Sub
 
     Public Shared Sub register(ByVal d As Action(Of T))

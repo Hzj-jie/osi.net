@@ -2,7 +2,6 @@
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.service.selector
 
@@ -57,6 +56,7 @@ Public Interface iauto_device_exporter(Of T)
     Sub wait_for_stop()
 End Interface
 
+<global_init(global_init_level.services)>
 Public Module _idevice
     <Extension()> Public Function create(Of T)(ByVal this As idevice_creator(Of T)) As idevice(Of T)
         assert(Not this Is Nothing)
@@ -64,4 +64,18 @@ Public Module _idevice
         assert(this.create(o))
         Return o
     End Function
+
+    Sub New()
+        disposable.register(GetType(idevice),
+                            Sub(ByVal x As Object)
+                                Dim d As idevice = Nothing
+                                d = direct_cast(Of idevice)(x)
+                                If Not d Is Nothing Then
+                                    d.close()
+                                End If
+                            End Sub)
+    End Sub
+
+    Private Sub init()
+    End Sub
 End Module
