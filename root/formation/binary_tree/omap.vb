@@ -14,7 +14,7 @@ Imports osi.root.connector
 
 Public Class omap(Of KEY_T, VALUE_T)
     Inherits obst(Of first_const_pair(Of KEY_T, VALUE_T))
-    Implements ICloneable
+    Implements ICloneable, ICloneable(Of omap(Of KEY_T, VALUE_T))
 
     Public Sub New()
         MyBase.New(AddressOf first_compare)
@@ -49,6 +49,10 @@ Public Class omap(Of KEY_T, VALUE_T)
         r = New omap(Of KEY_T, VALUE_T)()
         clone_to(Me, r)
         Return r
+    End Function
+
+    Public Function CloneT() As omap(Of KEY_T, VALUE_T) Implements ICloneable(Of omap(Of KEY_T, VALUE_T)).Clone
+        Return clone()
     End Function
 
     Public Function ICloneable_Clone() As Object Implements ICloneable.Clone

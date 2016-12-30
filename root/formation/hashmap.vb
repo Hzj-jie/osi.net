@@ -2,54 +2,73 @@
 Imports osi.root.template
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 
-Public Class hashmap(Of keyT As IComparable(Of keyT), valueT, HASH_SIZE As _int64)
-    Inherits hashmap(Of keyT, valueT, HASH_SIZE, default_to_uint32(Of keyT))
+Public Class hashmap(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
+    Inherits hashmap(Of KEY_T, VALUE_T, _1023)
+    Implements ICloneable(Of hashmap(Of KEY_T, VALUE_T))
+
+    Public Shadows Function CloneT() As hashmap(Of KEY_T, VALUE_T) _
+                                     Implements ICloneable(Of hashmap(Of KEY_T, VALUE_T)).Clone
+        Return direct_cast(Of hashmap(Of KEY_T, VALUE_T))(MyBase.CloneT())
+    End Function
 End Class
 
-Public Class hashmap(Of keyT As IComparable(Of keyT),
-                        valueT,
+Public Class hashmap(Of KEY_T As IComparable(Of KEY_T), VALUE_T, HASH_SIZE As _int64)
+    Inherits hashmap(Of KEY_T, VALUE_T, HASH_SIZE, default_to_uint32(Of KEY_T))
+    Implements ICloneable(Of hashmap(Of KEY_T, VALUE_T, HASH_SIZE))
+
+    Public Shadows Function CloneT() As hashmap(Of KEY_T, VALUE_T, HASH_SIZE) _
+                                     Implements ICloneable(Of hashmap(Of KEY_T, VALUE_T, HASH_SIZE)).Clone
+        Return direct_cast(Of hashmap(Of KEY_T, VALUE_T, HASH_SIZE))(MyBase.CloneT())
+    End Function
+End Class
+
+Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
+                        VALUE_T,
                         _HASH_SIZE As _int64,
-                        _KEY_TO_INDEX As _to_uint32(Of keyT))
-    Implements ICloneable
+                        _KEY_TO_INDEX As _to_uint32(Of KEY_T))
+    Implements ICloneable, ICloneable(Of hashmap(Of KEY_T, VALUE_T, _HASH_SIZE, _KEY_TO_INDEX))
 
     Private Shared ReadOnly _end As iterator = Nothing
     Private Shared ReadOnly hash_size As UInt32 = 0
     Private Shared ReadOnly key_to_index As _KEY_TO_INDEX = Nothing
-    Private _data() As map(Of keyT, valueT)
+    Private _data() As map(Of KEY_T, VALUE_T)
 
     Public Class iterator
-        Private ReadOnly _container As hashmap(Of keyT, valueT, _HASH_SIZE, _KEY_TO_INDEX) = Nothing
-        Private ReadOnly it As map(Of keyT, valueT).iterator
+        Implements IComparable(Of iterator), IComparable
+
+        Private ReadOnly _container As hashmap(Of KEY_T, VALUE_T, _HASH_SIZE, _KEY_TO_INDEX) = Nothing
+        Private ReadOnly it As map(Of KEY_T, VALUE_T).iterator
         Private ReadOnly _index As UInt32
 
         Friend Function index() As UInt32
             Return _index
         End Function
 
-        Friend Function container() As hashmap(Of keyT, valueT, _HASH_SIZE, _KEY_TO_INDEX)
+        Friend Function container() As hashmap(Of KEY_T, VALUE_T, _HASH_SIZE, _KEY_TO_INDEX)
             Return _container
         End Function
 
-        Friend Function iterator() As map(Of keyT, valueT).iterator
+        Friend Function iterator() As map(Of KEY_T, VALUE_T).iterator
             Return it
         End Function
 
-        Public Function key() As keyT
-            Dim rtn As keyT = Nothing
+        Public Function key() As KEY_T
+            Dim rtn As KEY_T = Nothing
             copy(rtn, (+it).first)
             Return rtn
         End Function
 
-        Public Function value() As valueT
-            Dim rtn As valueT = Nothing
+        Public Function value() As VALUE_T
+            Dim rtn As VALUE_T = Nothing
             copy(rtn, (+it).second)
             Return rtn
         End Function
 
-        Private Shared Function move_next(ByVal container As hashmap(Of keyT, valueT, _HASH_SIZE, _KEY_TO_INDEX),
+        Private Shared Function move_next(ByVal container As hashmap(Of KEY_T, VALUE_T, _HASH_SIZE, _KEY_TO_INDEX),
                                           ByVal index As Int64,
-                                          ByVal it As map(Of keyT, valueT).iterator) As iterator
+                                          ByVal it As map(Of KEY_T, VALUE_T).iterator) As iterator
             assert(Not container Is Nothing)
             assert(Not it Is Nothing)
             it += 1
@@ -64,9 +83,9 @@ Public Class hashmap(Of keyT As IComparable(Of keyT),
             Return New iterator(container, index, it)
         End Function
 
-        Private Shared Function move_prev(ByVal container As hashmap(Of keyT, valueT, _HASH_SIZE, _KEY_TO_INDEX),
+        Private Shared Function move_prev(ByVal container As hashmap(Of KEY_T, VALUE_T, _HASH_SIZE, _KEY_TO_INDEX),
                                           ByVal index As Int64,
-                                          ByVal it As map(Of keyT, valueT).iterator) As iterator
+                                          ByVal it As map(Of KEY_T, VALUE_T).iterator) As iterator
             assert(Not container Is Nothing)
             assert(Not it Is Nothing)
             it -= 1
@@ -123,7 +142,7 @@ Public Class hashmap(Of keyT As IComparable(Of keyT),
             End If
         End Operator
 
-        Public Shared Operator +(ByVal this As iterator) As first_const_pair(Of keyT, valueT)
+        Public Shared Operator +(ByVal this As iterator) As first_const_pair(Of KEY_T, VALUE_T)
             If this Is Nothing Then
                 Return Nothing
             Else
@@ -160,13 +179,21 @@ Public Class hashmap(Of keyT As IComparable(Of keyT),
             Return Not is_end()
         End Function
 
-        Friend Sub New(ByVal container As hashmap(Of keyT, valueT, _HASH_SIZE, _KEY_TO_INDEX),
+        Friend Sub New(ByVal container As hashmap(Of KEY_T, VALUE_T, _HASH_SIZE, _KEY_TO_INDEX),
                        ByVal index As Int64,
-                       ByVal that As map(Of keyT, valueT).iterator)
+                       ByVal that As map(Of KEY_T, VALUE_T).iterator)
             _container = container
             _index = index
             it = that
         End Sub
+
+        Public Function CompareTo(ByVal other As iterator) As Int32 Implements IComparable(Of iterator).CompareTo
+            Return If(Me = other, 0, -1)
+        End Function
+
+        Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
+            Return CompareTo(cast(Of iterator)(obj, False))
+        End Function
     End Class
 
     Private Shared Function valid_index(ByVal index As UInt32) As Boolean
@@ -177,9 +204,9 @@ Public Class hashmap(Of keyT As IComparable(Of keyT),
         Return Not valid_index(index)
     End Function
 
-    Private Function data(ByVal index As Int64, Optional ByVal autoInsert As Boolean = True) As map(Of keyT, valueT)
+    Private Function data(ByVal index As Int64, Optional ByVal autoInsert As Boolean = True) As map(Of KEY_T, VALUE_T)
         If _data(index) Is Nothing AndAlso autoInsert Then
-            _data(index) = New map(Of keyT, valueT)()
+            _data(index) = New map(Of KEY_T, VALUE_T)()
         End If
         Return _data(index)
     End Function
@@ -191,7 +218,7 @@ Public Class hashmap(Of keyT As IComparable(Of keyT),
 
     Private Function size(ByVal i As Int64) As UInt32
         assert(valid_index(i))
-        Dim r As map(Of keyT, valueT) = Nothing
+        Dim r As map(Of KEY_T, VALUE_T) = Nothing
         r = data(i, False)
         Return If(r Is Nothing, 0, r.size())
     End Function
@@ -253,13 +280,13 @@ Public Class hashmap(Of keyT As IComparable(Of keyT),
     End Sub
 
     Shared Sub New()
-        _end = New iterator(Nothing, max_uint32, map(Of keyT, valueT).iterator.end)
+        _end = New iterator(Nothing, max_uint32, map(Of KEY_T, VALUE_T).iterator.end)
         key_to_index = alloc(Of _KEY_TO_INDEX)()
         hash_size = (alloc(Of _HASH_SIZE)()).as_uint32()
         assert(hash_size > 0)
     End Sub
 
-    Private Shared Function keyToIndex(ByVal k As keyT) As UInt32
+    Private Shared Function key_index(ByVal k As KEY_T) As UInt32
         Return key_to_index(k) Mod hash_size
     End Function
 
@@ -267,28 +294,28 @@ Public Class hashmap(Of keyT As IComparable(Of keyT),
         clear()
     End Sub
 
-    Default Public Property _D(ByVal k As keyT) As valueT
+    Default Public Property _D(ByVal k As KEY_T) As VALUE_T
         Get
-            Return data(keyToIndex(k))(k)
+            Return data(key_index(k))(k)
         End Get
-        Set(ByVal value As valueT)
-            data(keyToIndex(k)).insert(k, value)
+        Set(ByVal value As VALUE_T)
+            data(key_index(k)).insert(k, value)
         End Set
     End Property
 
-    Public Function insert(ByVal k As keyT, ByVal v As valueT) As iterator
+    Public Function insert(ByVal k As KEY_T, ByVal v As VALUE_T) As iterator
         Dim index As Int32 = npos
-        index = keyToIndex(k)
+        index = key_index(k)
         Return New iterator(Me, index, data(index).insert(k, v))
     End Function
 
-    Public Function insert(ByVal other As hashmap(Of keyT, valueT, _HASH_SIZE, _KEY_TO_INDEX)) As Boolean
+    Public Function insert(ByVal other As hashmap(Of KEY_T, VALUE_T, _HASH_SIZE, _KEY_TO_INDEX)) As Boolean
         If other Is Nothing Then
             Return False
         Else
             For i As UInt32 = 0 To hash_size - uint32_1
                 If Not other.data(i, False) Is Nothing Then
-                    Dim it As map(Of keyT, valueT).iterator = Nothing
+                    Dim it As map(Of KEY_T, VALUE_T).iterator = Nothing
                     data(i).insert(other.data(i))
                 End If
             Next
@@ -296,9 +323,9 @@ Public Class hashmap(Of keyT As IComparable(Of keyT),
         End If
     End Function
 
-    Public Function find(ByVal k As keyT) As iterator
+    Public Function find(ByVal k As KEY_T) As iterator
         Dim index As Int32 = npos
-        index = keyToIndex(k)
+        index = key_index(k)
         If data(index, False) Is Nothing Then
             Return [end]()
         Else
@@ -332,12 +359,17 @@ Public Class hashmap(Of keyT As IComparable(Of keyT),
         End If
     End Function
 
-    Public Function [erase](ByVal k As keyT) As Boolean
+    Public Function [erase](ByVal k As KEY_T) As Boolean
         Return [erase](find(k))
     End Function
 
     Public Function Clone() As Object Implements ICloneable.Clone
-        Dim rtn As hashmap(Of keyT, valueT, _HASH_SIZE, _KEY_TO_INDEX) = Nothing
+        Return CloneT()
+    End Function
+
+    Public Function CloneT() As hashmap(Of KEY_T, VALUE_T, _HASH_SIZE, _KEY_TO_INDEX) _
+                             Implements ICloneable(Of hashmap(Of KEY_T, VALUE_T, _HASH_SIZE, _KEY_TO_INDEX)).Clone
+        Dim rtn As hashmap(Of KEY_T, VALUE_T, _HASH_SIZE, _KEY_TO_INDEX) = Nothing
         rtn = alloc(Me)
         For i As UInt32 = 0 To hash_size - uint32_1
             If Not _data(i) Is Nothing Then

@@ -58,7 +58,7 @@
     <Compile Include="binary_tree\bmap_test.vb" />
     <Compile Include="binary_tree\bset_test.vb" />
     <Compile Include="binary_tree\map_compare_test.vb" />
-    <Compile Include="binary_tree\map_perf_test.vb" />
+    <Compile Include="map_hashmap_perf_test.vb" />
     <Compile Include="binary_tree\map_test.vb" />
     <Compile Include="binary_tree\map_test2.vb" />
     <Compile Include="binary_tree\omap_test.vb" />
@@ -86,6 +86,7 @@
     <Compile Include="fixed_queue_test.vb" />
     <Compile Include="fixed_stack_test.vb" />
     <Compile Include="formation.vb" />
+    <Compile Include="hashmap_test.vb" />
     <Compile Include="heap\heap_case.vb" />
     <Compile Include="heap\heap_perf.vb" />
     <Compile Include="heap\heap_test.vb" />

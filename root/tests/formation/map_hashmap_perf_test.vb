@@ -4,21 +4,23 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utt
 
-' Compare perf of map and Dictionary
-Public Class map_perf_test
+' Compare perf of map, hashmap and Dictionary
+Public Class map_hashmap_perf_test
     Inherits performance_comparison_case_wrapper
 
     Public Sub New()
-        MyBase.New(R(New map_case()), R(New dictionary_case()))
+        MyBase.New(R(New map_case()), R(New hashmap_case()), R(New dictionary_case()))
     End Sub
 
     Protected Overrides Function min_rate_table() As Double(,)
         If isdebugmode() Then
-            Return {{0, 40},
-                    {0.04, 0}}
+            Return {{0, -1, 40},
+                    {-1, 0, -1},
+                    {0.08, -1, 0}}
         Else
-            Return {{0, 15},
-                    {0.2, 0}}
+            Return {{0, -1, 15},
+                    {-1, 0, -1},
+                    {0.2, -1, 0}}
         End If
     End Function
 
@@ -68,6 +70,33 @@ Public Class map_perf_test
         Public Sub New()
             MyBase.New()
             m = New map(Of String, String)()
+        End Sub
+
+        Protected Overrides Sub insert()
+            m.insert(rnd_str(), rnd_str())
+        End Sub
+
+        Protected Overrides Sub find()
+            m.find(rnd_str())
+        End Sub
+
+        Protected Overrides Sub [erase]()
+            m.erase(rnd_str())
+        End Sub
+
+        Protected Overrides Sub clear()
+            m.clear()
+        End Sub
+    End Class
+
+    Private Class hashmap_case
+        Inherits run_case
+
+        Private ReadOnly m As hashmap(Of String, String)
+
+        Public Sub New()
+            MyBase.New()
+            m = New hashmap(Of String, String)()
         End Sub
 
         Protected Overrides Sub insert()
