@@ -62,6 +62,7 @@
     <Compile Include="delay_generate_device_pool_test.vb" />
     <Compile Include="auto_device_exporter_idevice_test.vb" />
     <Compile Include="device_pool_checker_test.vb" />
+    <Compile Include="idevice_disposable_test.vb" />
     <Compile Include="manual_device_exporter_adapter_test.vb" />
     <Compile Include="manual_device_exporter_test.vb" />
     <Compile Include="device_test.vb" />

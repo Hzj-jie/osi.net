@@ -66,14 +66,11 @@ Public Module _idevice
     End Function
 
     Sub New()
-        disposable.register(GetType(idevice),
-                            Sub(ByVal x As Object)
-                                Dim d As idevice = Nothing
-                                d = direct_cast(Of idevice)(x)
-                                If Not d Is Nothing Then
-                                    d.close()
-                                End If
-                            End Sub)
+        disposable.register_base_type(Sub(x As idevice)
+                                          If Not x Is Nothing Then
+                                              x.close()
+                                          End If
+                                      End Sub)
     End Sub
 
     Private Sub init()
