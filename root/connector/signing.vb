@@ -35,73 +35,73 @@ Public Module _signing
         Return rtn
     End Function
 
-    Private ReadOnly signing8MaxMoveBits As Int32 = sizeof(Of UInt32)() * 8
-    Private ReadOnly signing8MaxMoveBits_1 As Int32 = signing8MaxMoveBits - 1
-    Private ReadOnly signing8MaxMoveBits_m_2 As Int32 = signing8MaxMoveBits * 2
-    Private ReadOnly signing8MaxMoveBits_m_2_1 As Int32 = signing8MaxMoveBits_m_2 - 1
-    Private ReadOnly signing8MaxMoveBits_m_3 As Int32 = signing8MaxMoveBits * 3
-    Private ReadOnly signing8MaxMoveBits_m_3_1 As Int32 = signing8MaxMoveBits_m_3 - 1
-    Private ReadOnly signing8MaxMoveBits_m_4 As Int32 = signing8MaxMoveBits * 4
-    Private ReadOnly signing8MaxMoveBits_m_4_1 As Int32 = signing8MaxMoveBits_m_4 - 1
-    Public ReadOnly maxSigningIndex As Int32 = signing8MaxMoveBits << 2
+    Private ReadOnly signing8_max_move_bits As Int32 = sizeof(Of UInt32)() * 8
+    Private ReadOnly signing8_max_move_bits_1 As Int32 = signing8_max_move_bits - 1
+    Private ReadOnly signing8_max_move_bits_m_2 As Int32 = signing8_max_move_bits * 2
+    Private ReadOnly signing8_max_move_bits_m_2_1 As Int32 = signing8_max_move_bits_m_2 - 1
+    Private ReadOnly signing8_max_move_bits_m_3 As Int32 = signing8_max_move_bits * 3
+    Private ReadOnly signing8_max_move_bits_m_3_1 As Int32 = signing8_max_move_bits_m_3 - 1
+    Private ReadOnly signing8_max_move_bits_m_4 As Int32 = signing8_max_move_bits * 4
+    Private ReadOnly signing8_max_move_bits_m_4_1 As Int32 = signing8_max_move_bits_m_4 - 1
+    Public ReadOnly maxSigningIndex As Int32 = signing8_max_move_bits << 2
 
-    Private Function signing_from_hashcode(ByVal v As Int32, ByVal signingIndex As Int32) As UInt32
-        Select Case signingIndex
-            Case 0 To signing8MaxMoveBits - 1
-                Return signing8(v, signingIndex)
-            Case signing8MaxMoveBits To signing8MaxMoveBits_m_2_1
-                Return signing9(v, signingIndex - signing8MaxMoveBits)
-            Case signing8MaxMoveBits_m_2 To signing8MaxMoveBits_m_3_1
-                Return signing10(v, signingIndex - signing8MaxMoveBits_m_2)
-            Case signing8MaxMoveBits_m_3 To signing8MaxMoveBits_m_4_1
-                Return signing11(v, signingIndex - signing8MaxMoveBits_m_3)
+    Private Function signing_from_hashcode(ByVal v As Int32, ByVal signing_index As Int32) As UInt32
+        Select Case signing_index
+            Case 0 To signing8_max_move_bits - 1
+                Return signing8(v, signing_index)
+            Case signing8_max_move_bits To signing8_max_move_bits_m_2_1
+                Return signing9(v, signing_index - signing8_max_move_bits)
+            Case signing8_max_move_bits_m_2 To signing8_max_move_bits_m_3_1
+                Return signing10(v, signing_index - signing8_max_move_bits_m_2)
+            Case signing8_max_move_bits_m_3 To signing8_max_move_bits_m_4_1
+                Return signing11(v, signing_index - signing8_max_move_bits_m_3)
             Case Else
-                Return signing11(v, signingIndex Mod signing8MaxMoveBits)
+                Return signing11(v, signing_index Mod signing8_max_move_bits)
         End Select
     End Function
 
-    Public Function signing(ByVal v As Object, Optional ByVal signingIndex As Int32 = 16) As UInt32
+    Public Function signing(ByVal v As Object, Optional ByVal signing_index As Int32 = 16) As UInt32
         Dim bi As Int32 = 0
         If Not v Is Nothing Then
             bi = v.GetHashCode()
         End If
-        Return signing_from_hashcode(bi, signingIndex)
+        Return signing_from_hashcode(bi, signing_index)
     End Function
 
-    Public Function signing(Of t As Structure)(ByVal v As t, Optional ByVal signingIndex As Int32 = 16) As UInt32
-        Return signing_from_hashcode(v.GetHashCode(), signingIndex)
+    Public Function signing(Of t As Structure)(ByVal v As t, Optional ByVal signing_index As Int32 = 16) As UInt32
+        Return signing_from_hashcode(v.GetHashCode(), signing_index)
     End Function
 
-    Public Function signing(ByVal v As Byte, Optional ByVal signingIndex As Int32 = 16) As UInt32
-        Return signing_from_hashcode(v.GetHashCode(), signingIndex)
+    Public Function signing(ByVal v As Byte, Optional ByVal signing_index As Int32 = 16) As UInt32
+        Return signing_from_hashcode(v.GetHashCode(), signing_index)
     End Function
 
-    Public Function signing(ByVal v As SByte, Optional ByVal signingIndex As Int32 = 16) As UInt32
-        Return signing_from_hashcode(v.GetHashCode(), signingIndex)
+    Public Function signing(ByVal v As SByte, Optional ByVal signing_index As Int32 = 16) As UInt32
+        Return signing_from_hashcode(v.GetHashCode(), signing_index)
     End Function
 
-    Public Function signing(ByVal v As Int16, Optional ByVal signingIndex As Int32 = 16) As UInt32
-        Return signing_from_hashcode(v.GetHashCode(), signingIndex)
+    Public Function signing(ByVal v As Int16, Optional ByVal signing_index As Int32 = 16) As UInt32
+        Return signing_from_hashcode(v.GetHashCode(), signing_index)
     End Function
 
-    Public Function signing(ByVal v As UInt16, Optional ByVal signingIndex As Int32 = 16) As UInt32
-        Return signing_from_hashcode(v.GetHashCode(), signingIndex)
+    Public Function signing(ByVal v As UInt16, Optional ByVal signing_index As Int32 = 16) As UInt32
+        Return signing_from_hashcode(v.GetHashCode(), signing_index)
     End Function
 
-    Public Function signing(ByVal v As Int32, Optional ByVal signingIndex As Int32 = 16) As UInt32
-        Return signing_from_hashcode(v.GetHashCode(), signingIndex)
+    Public Function signing(ByVal v As Int32, Optional ByVal signing_index As Int32 = 16) As UInt32
+        Return signing_from_hashcode(v.GetHashCode(), signing_index)
     End Function
 
-    Public Function signing(ByVal v As UInt32, Optional ByVal signingIndex As Int32 = 16) As UInt32
-        Return signing_from_hashcode(v.GetHashCode(), signingIndex)
+    Public Function signing(ByVal v As UInt32, Optional ByVal signing_index As Int32 = 16) As UInt32
+        Return signing_from_hashcode(v.GetHashCode(), signing_index)
     End Function
 
-    Public Function signing(ByVal v As Int64, Optional ByVal signingIndex As Int32 = 16) As UInt32
-        Return signing_from_hashcode(v.GetHashCode(), signingIndex)
+    Public Function signing(ByVal v As Int64, Optional ByVal signing_index As Int32 = 16) As UInt32
+        Return signing_from_hashcode(v.GetHashCode(), signing_index)
     End Function
 
-    Public Function signing(ByVal v As UInt64, Optional ByVal signingIndex As Int32 = 16) As UInt32
-        Return signing_from_hashcode(v.GetHashCode(), signingIndex)
+    Public Function signing(ByVal v As UInt64, Optional ByVal signing_index As Int32 = 16) As UInt32
+        Return signing_from_hashcode(v.GetHashCode(), signing_index)
     End Function
 
     Private Function signing2(ByVal v As Int32) As UInt32
@@ -132,28 +132,28 @@ Public Module _signing
         Return Convert.ToString(v.GetHashCode()).GetHashCode
     End Function
 
-    Private Function signing8(ByVal v As Int32, Optional ByVal movebits As Int32 = 16) As UInt32
+    Private Function signing8(ByVal v As Int32, Optional ByVal move_bits As Int32 = 16) As UInt32
         Dim v2 As UInt32 = 0
-        v2 = CLng(v.GetHashCode()) - min_int32
-        While movebits < 0
-            movebits += signing8MaxMoveBits
+        v2 = CLng(v) - min_int32
+        While move_bits < 0
+            move_bits += signing8_max_move_bits
         End While
-        While movebits >= signing8MaxMoveBits
-            movebits -= signing8MaxMoveBits
+        While move_bits >= signing8_max_move_bits
+            move_bits -= signing8_max_move_bits
         End While
-        right_shift(v2, movebits)
+        right_shift(v2, move_bits)
         Return v2
     End Function
 
-    Private Function signing9(ByVal v As Int32, Optional ByVal movebits As Int32 = 16) As UInt32
-        Return Not signing8(v, movebits)
+    Private Function signing9(ByVal v As Int32, Optional ByVal move_bits As Int32 = 16) As UInt32
+        Return Not signing8(v, move_bits)
     End Function
 
-    Private Function signing10(ByVal v As Int32, Optional ByVal movebits As Int32 = 16) As UInt32
-        Return signing8(v, signing8MaxMoveBits - movebits)
+    Private Function signing10(ByVal v As Int32, Optional ByVal move_bits As Int32 = 16) As UInt32
+        Return signing8(v, signing8_max_move_bits - move_bits)
     End Function
 
-    Private Function signing11(ByVal v As Int32, Optional ByVal movebits As Int32 = 16) As UInt32
-        Return signing9(v, signing8MaxMoveBits - movebits)
+    Private Function signing11(ByVal v As Int32, Optional ByVal move_bits As Int32 = 16) As UInt32
+        Return signing9(v, signing8_max_move_bits - move_bits)
     End Function
 End Module

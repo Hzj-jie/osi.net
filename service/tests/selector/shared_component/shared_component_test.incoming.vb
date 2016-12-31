@@ -27,7 +27,7 @@ Partial Public Class shared_component_test
 
         Public Overrides Function prepare() As Boolean
             If MyBase.prepare() Then
-                assert_true(c.[New](p, component, dispenser))
+                assert_true([New](Of UInt16, UInt16, component, Int32, parameter)(c, p, component, dispenser))
                 Return True
             Else
                 Return False
