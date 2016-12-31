@@ -116,11 +116,44 @@ Public Module _compare
 
 #If cached_compare Then
     Private Structure compare_cache(Of T, T2)
+        ' A simple ternary. connector cannot refer formation.
+        Private Class ternary
+            Public Const _unknown As Int32 = 0
+            Public Const _true As Int32 = 1
+            Public Const _false As Int32 = 2
+
+            Private v As Int32
+
+            Public Sub New()
+                v = _unknown
+            End Sub
+
+            Public Sub [set](ByVal v As Boolean)
+                If v Then
+                    Me.v = _true
+                Else
+                    Me.v = _false
+                End If
+            End Sub
+
+            Public Function unknown() As Boolean
+                Return v = _unknown
+            End Function
+
+            Public Function true_() As Boolean
+                Return v = _true
+            End Function
+
+            Public Function false_() As Boolean
+                Return v = _false
+            End Function
+        End Class
+
         Private Shared ReadOnly use_object_compare As Boolean
         Private Shared ReadOnly use_runtime_compare As Boolean
         Private Shared ReadOnly contains_object As Boolean
         Private Shared ReadOnly c As Func(Of T, T2, Int32)
-        Private Shared ca As Boolean?
+        Private Shared ReadOnly ca As ternary
 
         Shared Sub New()
             use_object_compare = connector.object_comparable(Of T, T2)()
@@ -163,6 +196,7 @@ Public Module _compare
                     c = Nothing
                 End If
             End If
+            ca = New ternary()
         End Sub
 
         Private Shared Function object_comparable(ByVal this As T, ByVal that As T2) As Boolean
@@ -171,8 +205,7 @@ Public Module _compare
         End Function
 
         Private Shared Function comparable_cache_usable() As Boolean
-            Return Not contains_object AndAlso
-                   ca.HasValue()
+            Return Not contains_object AndAlso Not ca.unknown()
         End Function
 
         Private Shared Function cached_compare(ByVal this As T,
@@ -185,19 +218,18 @@ Public Module _compare
             assert(Not this Is Nothing AndAlso Not that Is Nothing)
             If c Is Nothing Then
                 Return False
-            ElseIf Not comparable_cache_usable() OrElse
-                   ca.Value() Then
+            ElseIf Not comparable_cache_usable() OrElse ca.true_() Then
                 If comparable_cache_usable() AndAlso
                    check_only Then
-                    Return assert(ca.Value())
+                    Return assert(ca.true_())
                 Else
                     Try
                         o = c(this, that)
-                        ca = True
+                        ca.set(True)
                         Return True
                     Catch ex As Exception
                         compare_error(Of T, T2)(ex)
-                        ca = False
+                        ca.set(False)
                         Return False
                     End Try
                 End If

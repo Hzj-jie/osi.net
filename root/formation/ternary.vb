@@ -2,7 +2,7 @@
 Imports osi.root.connector
 
 Public Structure ternary
-    Implements IComparable(Of ternary), ICloneable
+    Implements IComparable(Of ternary), IComparable, ICloneable(Of ternary), ICloneable
 
     Private Const _unknown As Byte = 0
     Private Const _true As Byte = 1
@@ -76,10 +76,18 @@ Public Structure ternary
     End Function
 
     Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
+    End Function
+
+    Public Function CloneT() As ternary Implements ICloneable(Of ternary).Clone
         Return New ternary(Me)
     End Function
 
     Public Function CompareTo(ByVal other As ternary) As Int32 Implements IComparable(Of ternary).CompareTo
         Return compare(d, other.d)
+    End Function
+
+    Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
+        Return CompareTo(cast(Of ternary)(obj, False))
     End Function
 End Structure

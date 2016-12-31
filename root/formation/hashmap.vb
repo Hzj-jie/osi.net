@@ -5,7 +5,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 
 Public Class hashmap(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
-    Inherits hashmap(Of KEY_T, VALUE_T, _1023)
+    Inherits hashmap(Of KEY_T, VALUE_T, _3371)
     Implements ICloneable(Of hashmap(Of KEY_T, VALUE_T))
 
     Public Shadows Function CloneT() As hashmap(Of KEY_T, VALUE_T) _

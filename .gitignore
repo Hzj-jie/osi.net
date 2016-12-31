@@ -7,6 +7,8 @@
 *.un~
 *.suo
 *.netmodule
+*.psess
+*.vspx
 
 root/envs/buildInfo.vb
 root/envs/tfver.vb

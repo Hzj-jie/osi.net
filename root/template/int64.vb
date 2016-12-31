@@ -257,6 +257,14 @@ Public Class _2048
     End Function
 End Class
 
+Public Class _3371
+    Inherits _int64
+
+    Protected Overrides Function at() As Int64
+        Return 3371
+    End Function
+End Class
+
 Public Class _3600
     Inherits _int64
 
