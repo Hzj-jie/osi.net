@@ -2,7 +2,7 @@
 Imports System.Runtime.CompilerServices
 
 Public Module _transformation
-    Public Function reverse(ByVal d As Func(Of Boolean)) As Func(Of Boolean)
+    <Extension()> Public Function reverse(ByVal d As Func(Of Boolean)) As Func(Of Boolean)
         If d Is Nothing Then
             Return Function() True
         Else
@@ -10,7 +10,7 @@ Public Module _transformation
         End If
     End Function
 
-    Public Function reverse(Of T)(ByVal d As _do(Of T, Boolean)) As _do(Of T, Boolean)
+    <Extension()> Public Function reverse(Of T)(ByVal d As _do(Of T, Boolean)) As _do(Of T, Boolean)
         If d Is Nothing Then
             Return Function(ByRef x) True
         Else
@@ -29,11 +29,11 @@ Public Module _transformation
         End If
     End Function
 
-    Public Function true_(ByVal d As Action) As Func(Of Boolean)
+    <Extension()> Public Function true_(ByVal d As Action) As Func(Of Boolean)
         Return v_d_b(d, True)
     End Function
 
-    Public Function false_(ByVal d As Action) As Func(Of Boolean)
+    <Extension()> Public Function false_(ByVal d As Action) As Func(Of Boolean)
         Return v_d_b(d, False)
     End Function
 
@@ -51,5 +51,15 @@ Public Module _transformation
 
     <Extension()> Public Function not_null_and_false(ByVal d As Func(Of Boolean)) As Boolean
         Return Not d Is Nothing AndAlso (Not d())
+    End Function
+
+    <Extension()> Public Function type_erase(Of T)(ByVal v As Action(Of Object)) As Action(Of T)
+        If v Is Nothing Then
+            Return Nothing
+        Else
+            Return Sub(ByVal x As T)
+                       v(x)
+                   End Sub
+        End If
     End Function
 End Module

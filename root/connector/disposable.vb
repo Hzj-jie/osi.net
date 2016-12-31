@@ -4,6 +4,7 @@ Imports System.IO
 Imports System.Threading
 Imports System.Net.Sockets
 Imports osi.root.constants
+Imports osi.root.delegates
 
 Public NotInheritable Class disposable
     Private Class type_disposer
@@ -19,10 +20,7 @@ Public NotInheritable Class disposable
 
         Public Shared Function [New](Of T)(ByVal d As Action(Of T)) As type_disposer
             assert(Not d Is Nothing)
-            Return New type_disposer(GetType(T),
-                                     Sub(ByVal i As Object)
-                                         d(direct_cast(Of T)(i))
-                                     End Sub)
+            Return New type_disposer(GetType(T), d.type_restore())
         End Function
     End Class
 
@@ -81,9 +79,7 @@ Public NotInheritable Class disposable
         type = GetType(T)
         For Each p In td
             If type.is(p.t) Then
-                o = Sub(ByVal x As T)
-                        p.d(x)
-                    End Sub
+                o = p.d.type_erase(Of T)()
                 Return True
             End If
         Next
