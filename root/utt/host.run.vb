@@ -30,11 +30,9 @@ Partial Friend NotInheritable Class host
         Return execute_case(c.case)
     End Function
 
-    Private Shared Sub run(ByVal c As case_info, ByVal started As EventWaitHandle, ByVal finished As EventWaitHandle)
+    Private Shared Sub run(ByVal c As case_info, ByVal finished As EventWaitHandle)
         assert(Not c Is Nothing)
-        assert(Not started Is Nothing)
         assert(Not finished Is Nothing)
-        Interlocked.Increment(running_cases)
 
         If Not self_health_stage() Then
             Dim msg() As Object = Nothing
@@ -50,8 +48,6 @@ Partial Friend NotInheritable Class host
         startms = nowadays.milliseconds()
         Dim proc_ms As Int64 = 0
         proc_ms = envs.total_processor_time_ms()
-        Interlocked.Add(using_threads, c.case.preserved_processors())
-        assert(started.Set())
         execute_case(c)
         Interlocked.Add(using_threads, -c.case.preserved_processors())
 
@@ -126,19 +122,17 @@ Partial Friend NotInheritable Class host
         Dim rtn As Boolean = False
         For i As Int32 = 0 To cases.size() - 1
             If Not cases(i).finished Then
+                Dim c As case_info = Nothing
+                c = cases(i)
                 rtn = True
-                If (cases(i).case.preserved_processors() >= 0 AndAlso
-                    cases(i).case.preserved_processors() + using_threads <= utt_concurrency()) OrElse
+                If (c.case.preserved_processors() >= 0 AndAlso
+                    c.case.preserved_processors() + using_threads <= utt_concurrency()) OrElse
                    using_threads = 0 Then
                     new_case_started = True
-                    cases(i).finished = True
-                    Dim j As Int32 = 0
-                    j = i
-                    Dim started As AutoResetEvent = Nothing
-                    started = New AutoResetEvent(False)
-                    queue_in_managed_threadpool(Sub() run(cases(j), started, finished))
-                    assert(started.WaitOne())
-                    started.Close()
+                    Interlocked.Increment(running_cases)
+                    Interlocked.Add(using_threads, c.case.preserved_processors())
+                    start_thread(Nothing, Sub() run(c, finished))
+                    c.finished = True
                 End If
             End If
         Next

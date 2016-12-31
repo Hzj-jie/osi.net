@@ -29,7 +29,7 @@ Public Class map_hashmap_perf_test
     End Function
 
     Private Shared Function rnd_str() As String
-        Return guid_str()
+        Return rnd_chars(rnd_int(20, 50))
     End Function
 
     Private MustInherit Class run_case

@@ -67,7 +67,7 @@ Public Class exec_case
                             If(output, "outputs", "outputs error"),
                             " { ",
                             s,
-                            "}")
+                            " }")
         End If
         If output Then
             RaiseEvent receive_output(s)

@@ -122,6 +122,7 @@
     <Compile Include="lambda_test.vb" />
     <Compile Include="lcs_test.vb" />
     <Compile Include="levenshtein_test.vb" />
+    <Compile Include="managed_threadpool_behavior_test.vb" />
     <Compile Include="manual_reset_event_dead_lock_test.vb" />
     <Compile Include="memory_stream_behavior_test.vb" />
     <Compile Include="nothing_test.vb" />
@@ -224,6 +225,10 @@
     <ProjectReference Include="..\..\envs\envs.vbproj">
       <Project>{D310BA86-0FA6-42BB-8EFD-2DEE526E6981}</Project>
       <Name>envs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\event\event.vbproj">
+      <Project>{93adc952-439d-4968-9640-51bc34b066dd}</Project>
+      <Name>event</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\formation\formation.vbproj">
       <Project>{da3051dc-a250-488f-aaca-f46977dd0f17}</Project>
