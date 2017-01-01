@@ -58,7 +58,9 @@
     <Compile Include="character.vb" />
     <Compile Include="console_key_info_mapping.vb" />
     <Compile Include="counter.vb" />
+    <Compile Include="culture_info.vb" />
     <Compile Include="default.vb" />
+    <Compile Include="git.vb" />
     <Compile Include="global_init_attribute.vb" />
     <Compile Include="queue_runner.vb" />
     <Compile Include="error_type.vb" />

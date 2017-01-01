@@ -1,5 +1,6 @@
 ﻿
 Imports System.Globalization
+Imports osi.root.constants
 Imports osi.root.connector
 
 Partial Public NotInheritable Class gitver
@@ -18,11 +19,7 @@ Partial Public NotInheritable Class gitver
 
         Private Shared Function parse_date_to_ver(ByVal d As String) As String
             Dim t As Date = Nothing
-            assert(Date.TryParseExact(d,
-                                      "ddd MMM d HH:mm:ss yyyy zzz",
-                                      CultureInfo.CurrentCulture(),
-                                      Globalization.DateTimeStyles.AdjustToUniversal,
-                                      t))
+            assert(Date.TryParseExact(d, git_time_format, culture_info.en_US, DateTimeStyles.AdjustToUniversal, t))
             Return strcat("UTC-",
                           t.Year(),
                           "-",
