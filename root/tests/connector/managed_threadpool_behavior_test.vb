@@ -1,7 +1,7 @@
 ﻿
 Imports System.Threading
 Imports osi.root.connector
-Imports osi.root.lock
+Imports osi.root.event
 Imports osi.root.utt
 
 Public Class managed_threadpool_behavior_test
@@ -9,22 +9,16 @@ Public Class managed_threadpool_behavior_test
 
     Private Shared Function queue_in_background_io_thread_case() As Boolean
         Const size As Int32 = 1024
-        Dim running As atomic_int = Nothing
-        running = New atomic_int()
-        running.set(size)
-        Dim finished As AutoResetEvent = Nothing
-        finished = New AutoResetEvent(False)
+        Dim finished As count_down_event = Nothing
+        finished = New count_down_event(size)
         For i As Int32 = 0 To size - 1
             queue_in_managed_threadpool(Sub()
                                             assert_true(Thread.CurrentThread().IsThreadPoolThread())
                                             assert_true(Thread.CurrentThread().IsBackground())
-                                            If running.decrement() = 0 Then
-                                                assert(finished.force_set())
-                                            End If
+                                            finished.set()
                                         End Sub)
         Next
-        assert(finished.wait())
-        finished.Close()
+        finished.wait()
         Return True
     End Function
 

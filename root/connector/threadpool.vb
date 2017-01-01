@@ -5,7 +5,7 @@ Imports osi.root.constants
 Imports osi.root.delegates
 
 Public Module _threadpool
-    <global_init(global_init_level.foundamental)>
+    ' DISABLED <global_init(global_init_level.foundamental)>
     Private NotInheritable Class min_thread_count
         Shared Sub New()
             assert(ThreadPool.SetMinThreads(4, 4))

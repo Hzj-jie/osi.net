@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="concurrency_event_test.vb" />
+    <Compile Include="count_down_event_test.vb" />
     <Compile Include="count_reset_event_test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

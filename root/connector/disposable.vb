@@ -39,6 +39,7 @@ Public NotInheritable Class disposable
         register_base_type(Sub(ByVal s As WaitHandle)
                                If Not s Is Nothing Then
                                    s.Close()
+                                   s.Dispose()
                                End If
                            End Sub)
         register_base_type(Sub(ByVal s As TcpClient)
@@ -54,6 +55,7 @@ Public NotInheritable Class disposable
         register_base_type(Sub(ByVal s As Socket)
                                If Not s Is Nothing Then
                                    s.Close()
+                                   s.Dispose()
                                End If
                            End Sub)
         register_base_type(Sub(ByVal s As TextWriter)
