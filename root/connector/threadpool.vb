@@ -5,13 +5,10 @@ Imports osi.root.constants
 Imports osi.root.delegates
 
 Public Module _threadpool
-    ' DISABLED <global_init(global_init_level.foundamental)>
+    <global_init(global_init_level.foundamental)>
     Private NotInheritable Class min_thread_count
         Shared Sub New()
-            Dim bt As Int32 = 0
-            ThreadPool.GetMinThreads(Nothing, bt)
-            assert(bt >= 0)
-            assert(ThreadPool.SetMinThreads(2, bt))
+            assert(ThreadPool.SetMinThreads(3, 3))
         End Sub
 
         Private Shared Sub init()
