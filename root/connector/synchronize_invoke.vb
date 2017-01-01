@@ -10,25 +10,27 @@ Public MustInherit Class synchronize_invoke
 
         Private ReadOnly method As [Delegate]
         Private ReadOnly args() As Object
-        Private ReadOnly state As Object
+        Private ReadOnly sync As Boolean
         Private ReadOnly mre As ManualResetEvent
         Private r As Object
 
-        Public Sub New(ByVal method As [Delegate], ByVal args() As Object)
-            Me.New(method, args, Nothing)
-        End Sub
-
-        Public Sub New(ByVal method As [Delegate], ByVal args() As Object, ByVal state As Object)
+        Public Sub New(ByVal method As [Delegate], ByVal args() As Object, ByVal sync As Boolean)
             assert(Not method Is Nothing)
             Me.method = method
             Me.args = args
-            Me.state = state
-            mre = New ManualResetEvent(False)
+            Me.sync = sync
+            If Not Me.sync Then
+                mre = New ManualResetEvent(False)
+            Else
+                execute()
+            End If
         End Sub
 
         Public Sub execute()
             r = do_(AddressOf method.DynamicInvoke, args, Nothing)
-            assert(mre.force_set())
+            If Not sync Then
+                assert(mre.force_set())
+            End If
         End Sub
 
         Public Function result() As Object
@@ -37,7 +39,7 @@ Public MustInherit Class synchronize_invoke
 
         Public ReadOnly Property AsyncState() As Object Implements IAsyncResult.AsyncState
             Get
-                Return state
+                Return Nothing
             End Get
         End Property
 
@@ -49,18 +51,20 @@ Public MustInherit Class synchronize_invoke
 
         Public ReadOnly Property CompletedSynchronously() As Boolean Implements IAsyncResult.CompletedSynchronously
             Get
-                Return False
+                Return sync
             End Get
         End Property
 
         Public ReadOnly Property IsCompleted() As Boolean Implements IAsyncResult.IsCompleted
             Get
-                Return mre.wait(0)
+                Return sync OrElse mre.wait(0)
             End Get
         End Property
 
         Protected Overrides Sub Finalize()
-            mre.Close()
+            If Not sync Then
+                mre.Close()
+            End If
             MyBase.Finalize()
         End Sub
     End Class
@@ -76,10 +80,14 @@ Public MustInherit Class synchronize_invoke
         If method Is Nothing Then
             Return Nothing
         Else
-            Dim r As async_result = Nothing
-            r = New async_result(method, args)
-            push(AddressOf r.execute)
-            Return r
+            If synchronously() Then
+                Return New async_result(method, args, True)
+            Else
+                Dim r As async_result = Nothing
+                r = New async_result(method, args, False)
+                push(AddressOf r.execute)
+                Return r
+            End If
         End If
     End Function
 
@@ -101,4 +109,8 @@ Public MustInherit Class synchronize_invoke
     End Function
 
     Protected MustOverride Sub push(ByVal v As Action)
+
+    Protected Overridable Function synchronously() As Boolean
+        Return False
+    End Function
 End Class

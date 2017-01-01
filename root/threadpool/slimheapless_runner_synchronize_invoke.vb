@@ -25,6 +25,10 @@ Public NotInheritable Class slimheapless_runner_synchronize_invoke
     Protected Overrides Sub push(ByVal v As Action)
         assert(r.push(v))
     End Sub
+
+    Protected Overrides Function synchronously() As Boolean
+        Return slimheapless_runner.current_thread_is_managed()
+    End Function
 End Class
 'finish slimqless2_runner_synchronize_invoke.vbp --------
 'finish slimheapless_runner_synchronize_invoke.vbp --------

@@ -1,6 +1,5 @@
 ﻿
 Imports System.Threading
-Imports osi.root.delegates
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.envs
@@ -14,6 +13,7 @@ Partial Public NotInheritable Class queue_runner
     Private Shared ReadOnly USED As Int64
     Private Shared ReadOnly q As qless2(Of Func(Of Boolean))
     Private Shared ReadOnly are As AutoResetEvent
+    <ThreadStatic()> Private Shared current_thread As Boolean
 
     Shared Sub New()
         thread_count = determine_thread_count()
@@ -66,7 +66,8 @@ Partial Public NotInheritable Class queue_runner
                                             If processor_affinity <> npos Then
                                                 loop_set_thread_affinity(CUInt(processor_affinity) + id)
                                             End If
-                                            current_thread().Name() = "QUEUE_RUNNER_WORKTHREAD"
+                                            envs._thread.current_thread().Name() = "QUEUE_RUNNER_WORKTHREAD"
+                                            current_thread = True
                                             While application_lifetime.running()
                                                 Dim size As UInt32 = 0
                                                 size = q.size()
@@ -90,6 +91,10 @@ Partial Public NotInheritable Class queue_runner
                                         End Sub)
         Next
     End Sub
+
+    Public Shared Function running_in_current_thread() As Boolean
+        Return current_thread
+    End Function
 
     Public Shared Function push(ByVal d As Func(Of Boolean)) As Boolean
         If d Is Nothing Then

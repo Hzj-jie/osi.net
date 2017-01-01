@@ -15,4 +15,8 @@ Public NotInheritable Class ##TYPE##_synchronize_invoke
     Protected Overrides Sub push(ByVal v As Action)
         assert(r.push(v))
     End Sub
+
+    Protected Overrides Function synchronously() As Boolean
+        Return ##TYPE##.current_thread_is_managed()
+    End Function
 End Class

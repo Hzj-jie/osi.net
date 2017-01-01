@@ -1,4 +1,5 @@
 ﻿
+Imports System.Threading
 Imports osi.root.connector
 
 Public NotInheritable Class threadpool_synchronize_invoke
@@ -17,4 +18,9 @@ Public NotInheritable Class threadpool_synchronize_invoke
     Protected Overrides Sub push(ByVal v As Action)
         assert(thread_pool().queue_job(v))
     End Sub
+
+    Protected Overrides Function synchronously() As Boolean
+        Return in_restricted_threadpool_thread() OrElse
+               Thread.CurrentThread().IsThreadPoolThread()
+    End Function
 End Class

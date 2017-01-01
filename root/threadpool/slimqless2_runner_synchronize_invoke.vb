@@ -19,5 +19,9 @@ Public NotInheritable Class slimqless2_runner_synchronize_invoke
     Protected Overrides Sub push(ByVal v As Action)
         assert(r.push(v))
     End Sub
+
+    Protected Overrides Function synchronously() As Boolean
+        Return slimqless2_runner.current_thread_is_managed()
+    End Function
 End Class
 'finish slimqless2_runner_synchronize_invoke.vbp --------
