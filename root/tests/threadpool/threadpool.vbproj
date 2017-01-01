@@ -71,6 +71,7 @@
     <Compile Include="slimheapless_runner_test.vb" />
     <Compile Include="slimheapless_threadpool2_test.vb" />
     <Compile Include="slimheapless_threadpool_test.vb" />
+    <Compile Include="slimqless2_runner_synchronize_invoke_test.vb" />
     <Compile Include="slimqless2_runner_test.vb" />
     <Compile Include="slimqless2_threadpool2_test.vb" />
     <Compile Include="slimqless2_threadpool_test.vb" />

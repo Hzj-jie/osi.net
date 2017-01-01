@@ -1,0 +1,18 @@
+﻿
+##DEFAULT TYPE slimqless2_runner
+Imports osi.root.connector
+
+Public NotInheritable Class ##TYPE##_synchronize_invoke
+    Inherits synchronize_invoke
+
+    Private ReadOnly r As ##TYPE##
+
+    Public Sub New(ByVal r As ##TYPE##)
+        assert(Not r Is Nothing)
+        Me.r = r
+    End Sub
+
+    Protected Overrides Sub push(ByVal v As Action)
+        assert(r.push(v))
+    End Sub
+End Class

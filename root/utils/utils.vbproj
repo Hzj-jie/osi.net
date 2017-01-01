@@ -90,6 +90,7 @@
     <Compile Include="lifetime_binder\application_lifetime.vb" />
     <Compile Include="lifetime_binder\disposer.vb" />
     <Compile Include="mono\chmod.vb" />
+    <Compile Include="queue_runner\queue_runner_synchronize_invoke.vb" />
     <Compile Include="reference_count_runner.vb" />
     <Compile Include="pather.vb" />
     <Compile Include="process.vb" />

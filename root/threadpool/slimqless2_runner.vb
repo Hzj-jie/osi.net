@@ -94,6 +94,14 @@ Public NotInheritable Class slimqless2_runner
         End If
     End Function
 
+    Public Function run_until_idle() As UInt32
+        Dim r As UInt32 = uint32_0
+        While execute()
+            r += uint32_1
+        End While
+        Return r
+    End Function
+
     Public Function wait(ByVal ms As Int64) As Boolean
         Return q.wait(ms)
     End Function
