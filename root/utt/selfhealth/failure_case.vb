@@ -7,7 +7,11 @@ Imports osi.root.connector
 Public Class failure_case
     Inherits [case]
 
+#If TODO Then
     Public Const expected_failure_count As Int32 = 28
+#Else
+    Public Const expected_failure_count As Int32 = 23
+#End If
 
     Private Shared Sub report_self_health_failure(ByVal exp As Int64, ByVal cmd As String)
         If failure_count() <> exp Then
@@ -70,6 +74,7 @@ Public Class failure_case
             report_self_health_failure(22,
                                        "assert_true(host.execute_case(New exec_failure_case_1.exec_failure_case()))")
 
+#If TODO Then
             ' trigger 5 failures,
             ' one from exec_case,
             ' one from assert_true
@@ -79,6 +84,7 @@ Public Class failure_case
             assert_true(host.execute_case(New exec_failure_case_2.exec_failure_case()))
             report_self_health_failure(27,
                                        "assert_true(host.execute_case(New exec_failure_case_2.exec_failure_case()))")
+#End If
         End If
 
         assert_true(True)
