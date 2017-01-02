@@ -1,23 +1,13 @@
 ﻿
-Imports System.IO
-Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.utils
 Imports osi.root.utt
-Imports osi.service.resource
 Imports osi.service.iosys
 
 Public Class process_io_manual_test
     Inherits commandline_specific_case_wrapper
 
-    Private Shared ReadOnly process_io_exe_full_path As String
-
     Shared Sub New()
-        process_io_exe_full_path = Path.Combine(temp_folder,
-                                                strcat(guid_str(),
-                                                       filesystem.extension_prefix,
-                                                       filesystem.extensions.executable_file))
-        assert(process_io_exe.sync_export_exec(process_io_exe_full_path))
+        process_io_test.dump()
     End Sub
 
     Public Sub New()
@@ -32,7 +22,7 @@ Public Class process_io_manual_test
                 AddHandler io.output, Sub(input As String)
                                           Console.WriteLine(input)
                                       End Sub
-                io.start_info().FileName() = process_io_exe_full_path
+                io.start_info().FileName() = process_io_test.process_io_exe_full_path
                 If rnd_bool() Then
                     io.start_info().Arguments() += guid_str()
                 End If

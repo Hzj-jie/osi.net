@@ -13,15 +13,27 @@ Imports osi.service.iosys
 Public Class process_io_test
     Inherits [case]
 
+    Public Shared ReadOnly process_io_exe_full_path As String
+    Public Shared ReadOnly process_io_pdb_full_path As String
     Private Const output_times As Int32 = 1024 * 8
-    Private Shared ReadOnly process_io_exe_full_path As String
 
     Shared Sub New()
+        Dim filename As String = Nothing
+        filename = guid_str()
         process_io_exe_full_path = Path.Combine(temp_folder,
-                                                strcat(guid_str(),
+                                                strcat(filename,
                                                        filesystem.extension_prefix,
                                                        filesystem.extensions.executable_file))
+        process_io_pdb_full_path = Path.Combine(temp_folder,
+                                                strcat(filename,
+                                                       filesystem.extension_prefix,
+                                                       filesystem.extensions.program_database))
         assert(process_io_exe.sync_export_exec(process_io_exe_full_path))
+        assert(process_io_pdb.sync_export(process_io_pdb_full_path))
+    End Sub
+
+    ' Let process_io_test to dump binary files.
+    Public Shared Sub dump()
     End Sub
 
     Private ReadOnly are As AutoResetEvent

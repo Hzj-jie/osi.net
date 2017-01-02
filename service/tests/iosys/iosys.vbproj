@@ -101,6 +101,7 @@
   <ItemGroup>
     <Content Include="process_io_exe\process_io_exe.cs" />
     <Content Include="process_io_exe\process_io_exe.exe" />
+    <Content Include="process_io_exe\process_io_exe.pdb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\..\..\root\root.utt.props" Condition="'$(RootUttProps)'==''" />
