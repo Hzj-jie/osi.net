@@ -7,10 +7,7 @@ Imports osi.root.connector
 Public Class failure_case
     Inherits [case]
 
-#If TODO Then
     Public Const expected_failure_count As Int32 = 28
-#End If
-    Public Const expected_failure_count As Int32 = 23
 
     Private Shared Sub report_self_health_failure(ByVal exp As Int64, ByVal cmd As String)
         If failure_count() <> exp Then
@@ -73,13 +70,6 @@ Public Class failure_case
             report_self_health_failure(22,
                                        "assert_true(host.execute_case(New exec_failure_case_1.exec_failure_case()))")
 
-            ' TODO: Is there a reliable way to ensure the events can be raised on other thread?
-            ' Process.SynchronizingObject Property seems like a reasonable solution, the events can be pushed into
-            ' queue_runner or thread_pool().
-#If TODO Then
-            ' exec_failure_case_2 may randomly fail on single core machine. Since the error / output events may be
-            ' raised on main (current) thread or test case thread, and cause the assert failure in error_received()
-            ' won't be able to trigger before this function has been finished.
             ' trigger 5 failures,
             ' one from exec_case,
             ' one from assert_true
@@ -89,7 +79,6 @@ Public Class failure_case
             assert_true(host.execute_case(New exec_failure_case_2.exec_failure_case()))
             report_self_health_failure(27,
                                        "assert_true(host.execute_case(New exec_failure_case_2.exec_failure_case()))")
-#End If
         End If
 
         assert_true(True)

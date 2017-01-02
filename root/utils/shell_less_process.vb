@@ -54,12 +54,26 @@ Public NotInheritable Class shell_less_process
         End If
     End Sub
 
+    Private Sub received_delegate(ByVal e As DataReceivedEventArgs, ByVal output As Boolean)
+        If proc().SynchronizingObject() Is Nothing Then
+            received(e, output)
+        Else
+            ' This is definitely not the correct behavior, but Process.Exited() may be raised on a random ThreadPool
+            ' thread.
+            ' TODO: Why Process.Exited() won't respect SynchronizingObject().
+            proc().SynchronizingObject().Invoke(Sub()
+                                                    received(e, output)
+                                                End Sub,
+                                                Nothing)
+        End If
+    End Sub
+
     Private Sub output_received(ByVal sender As Object, ByVal e As DataReceivedEventArgs)
-        received(e, True)
+        received_delegate(e, True)
     End Sub
 
     Private Sub error_received(ByVal sender As Object, ByVal e As DataReceivedEventArgs)
-        received(e, False)
+        received_delegate(e, False)
     End Sub
 
     Private Sub process_exited()
