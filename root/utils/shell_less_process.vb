@@ -1,4 +1,5 @@
 ﻿
+Imports System.ComponentModel
 Imports System.Diagnostics
 Imports System.IO
 Imports osi.root.constants
@@ -6,9 +7,10 @@ Imports osi.root.lock
 Imports osi.root.formation
 Imports osi.root.connector
 
-Public Class shell_less_process
-    Inherits disposer(Of Process)
+Public NotInheritable Class shell_less_process
+    Inherits disposer
 
+    Private ReadOnly p As disposer(Of Process)
     Private proc_started As singleentry
     Private proc_exited As singleentry
     Public Event receive_output(ByVal s As String)
@@ -16,25 +18,27 @@ Public Class shell_less_process
     Public Event process_exit()
     Private ReadOnly enable_raise_event As Boolean
 
-    Public Sub New(Optional ByVal enable_raise_event As Boolean = False)
-        MyBase.New(New Process(),
-                   disposer:=Sub(p As Process)
-                                 assert(Not p Is Nothing)
-                                 If enable_raise_event Then
-                                     p.CancelOutputRead()
-                                     p.CancelErrorRead()
-                                 End If
-                                 p.quit()
-                                 p.StandardOutput().Close()
-                                 p.StandardOutput().Dispose()
-                                 p.StandardError().Close()
-                                 p.StandardError().Dispose()
-                                 p.StandardInput().Close()
-                                 p.StandardInput().Dispose()
-                                 p.Dispose()
-                             End Sub)
+    Public Sub New(Optional ByVal enable_raise_event As Boolean = False,
+                   Optional ByVal synchronize_invoke As binder(Of ISynchronizeInvoke) = Nothing)
+        p = make_disposer(New Process(),
+                          disposer:=Sub(p As Process)
+                                        assert(Not p Is Nothing)
+                                        If enable_raise_event Then
+                                            p.CancelOutputRead()
+                                            p.CancelErrorRead()
+                                        End If
+                                        p.quit()
+                                        p.StandardOutput().Close()
+                                        p.StandardOutput().Dispose()
+                                        p.StandardError().Close()
+                                        p.StandardError().Dispose()
+                                        p.StandardInput().Close()
+                                        p.StandardInput().Dispose()
+                                        p.Dispose()
+                                    End Sub)
         Me.enable_raise_event = enable_raise_event
         proc().EnableRaisingEvents() = True
+        proc().SynchronizingObject() = +synchronize_invoke
         AddHandler proc().OutputDataReceived, AddressOf output_received
         AddHandler proc().ErrorDataReceived, AddressOf error_received
         AddHandler proc().Exited, AddressOf process_exited
@@ -58,15 +62,29 @@ Public Class shell_less_process
         received(e, False)
     End Sub
 
-    Private Sub process_exited(ByVal sender As Object, ByVal e As EventArgs)
+    Private Sub process_exited()
         If proc_exited.mark_in_use() Then
             proc_started.release()
             RaiseEvent process_exit()
         End If
     End Sub
 
+    Private Sub process_exited(ByVal sender As Object, ByVal e As EventArgs)
+        If proc().SynchronizingObject() Is Nothing Then
+            process_exited()
+        Else
+            ' This is definitely not the correct behavior, but Process.Exited() may be raised on a random ThreadPool
+            ' thread.
+            ' TODO: Why Process.Exited() won't respect SynchronizingObject().
+            proc().SynchronizingObject().Invoke(Sub()
+                                                    process_exited()
+                                                End Sub,
+                                                Nothing)
+        End If
+    End Sub
+
     Public Function exited() As Boolean
-        Return disposed()
+        Return proc_exited.in_use()
     End Function
 
     Public Function exit_code() As Int32
@@ -78,7 +96,7 @@ Public Class shell_less_process
     End Function
 
     Private Function proc() As Process
-        Return [get]()
+        Return p.[get]()
     End Function
 
     Public Function start_info() As ProcessStartInfo
@@ -158,4 +176,16 @@ Public Class shell_less_process
     Public Function stderr_str() As String
         Return stderr().ReadToEnd()
     End Function
+
+    Protected Overrides Sub disposer()
+        p.dispose()
+    End Sub
+
+    Public Shared Operator +(ByVal this As shell_less_process) As Process
+        If this Is Nothing Then
+            Return Nothing
+        Else
+            Return this.p.get()
+        End If
+    End Operator
 End Class

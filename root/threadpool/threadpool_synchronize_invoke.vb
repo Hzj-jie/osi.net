@@ -1,7 +1,10 @@
 ﻿
+Imports System.ComponentModel
 Imports System.Threading
+Imports osi.root.constants
 Imports osi.root.connector
 
+<global_init(global_init_level.threading_and_procedure)>
 Public NotInheritable Class threadpool_synchronize_invoke
     Inherits synchronize_invoke
 
@@ -9,6 +12,10 @@ Public NotInheritable Class threadpool_synchronize_invoke
 
     Shared Sub New()
         instance = New threadpool_synchronize_invoke()
+        If binder(Of ISynchronizeInvoke).has_global_value() Then
+            binder(Of ISynchronizeInvoke).set_global(Nothing)
+        End If
+        binder(Of ISynchronizeInvoke).set_global(instance)
     End Sub
 
     Private Sub New()
@@ -23,4 +30,7 @@ Public NotInheritable Class threadpool_synchronize_invoke
         Return in_restricted_threadpool_thread() OrElse
                Thread.CurrentThread().IsThreadPoolThread()
     End Function
+
+    Private Shared Sub init()
+    End Sub
 End Class

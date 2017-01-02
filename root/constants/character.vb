@@ -9,6 +9,7 @@ Public NotInheritable Class character
     Public Shared ReadOnly unicode_upper_bound As Int32 = Convert.ToInt32(Char.MaxValue)
 
     Public Const null As Char = Chr(0)
+    Public Const eot As Char = Chr(4)
     Public Const alert As Char = Chr(7)
     Public Const bell As Char = alert
     Public Const backspace As Char = Chr(8)
@@ -19,6 +20,7 @@ Public NotInheritable Class character
     Public Const [return] As Char = Chr(13)
     Public Const _return As Char = [return]
     Public Const enter As Char = [return]
+    Public Const [sub] As Char = Chr(26)
     Public Const esc As Char = Chr(27)
     Public Const semicolon As Char = ";"c
     Public Const left_mid_bracket As Char = "["c

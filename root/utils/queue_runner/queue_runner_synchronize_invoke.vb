@@ -1,6 +1,9 @@
 ﻿
+Imports System.ComponentModel
+Imports osi.root.constants
 Imports osi.root.connector
 
+<global_init(global_init_level.foundamental)>
 Public NotInheritable Class queue_runner_synchronize_invoke
     Inherits synchronize_invoke
 
@@ -8,6 +11,7 @@ Public NotInheritable Class queue_runner_synchronize_invoke
 
     Shared Sub New()
         instance = New queue_runner_synchronize_invoke()
+        binder(Of ISynchronizeInvoke).set_global(instance)
     End Sub
 
     Private Sub New()
@@ -21,4 +25,7 @@ Public NotInheritable Class queue_runner_synchronize_invoke
     Protected Overrides Function synchronously() As Boolean
         Return queue_runner.running_in_current_thread()
     End Function
+
+    Private Shared Sub init()
+    End Sub
 End Class

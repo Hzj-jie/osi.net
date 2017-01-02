@@ -11,7 +11,7 @@ Public Module _binder
 End Module
 
 Public Class binder
-    Private Shared ReadOnly suppress_rebind_global_value_error_binder As  _
+    Private Shared ReadOnly suppress_rebind_global_value_error_binder As _
                                 binder(Of Func(Of Boolean), suppress_rebind_global_value_error_binder_protector)
 
     Shared Sub New()
@@ -23,10 +23,30 @@ Public Class binder
         Return suppress_rebind_global_value_error_binder.has_value() AndAlso
                (+suppress_rebind_global_value_error_binder)()
     End Function
+
+    Public Shared Function [New](Of T As Class, PROTECTOR)(ByVal i As T) As binder(Of T, PROTECTOR)
+        Dim r As binder(Of T, PROTECTOR) = Nothing
+        r = New binder(Of T, PROTECTOR)(i)
+        Return r
+    End Function
+
+    Public Shared Function [New](Of T As Class)(ByVal i As T) As binder(Of T)
+        Dim r As binder(Of T) = Nothing
+        r = New binder(Of T)(i)
+        Return r
+    End Function
 End Class
 
 Public Class binder(Of T As Class)
     Inherits binder(Of T, Object)
+
+    Public Sub New()
+        MyBase.New()
+    End Sub
+
+    Public Sub New(ByVal i As T)
+        MyBase.New(i)
+    End Sub
 End Class
 
 Public Class binder(Of T As Class, PROTECTOR)
@@ -41,6 +61,13 @@ Public Class binder(Of T As Class, PROTECTOR)
 
     Shared Sub New()
         is_protected = Not type_info(Of PROTECTOR).is_object
+    End Sub
+
+    Public Sub New()
+    End Sub
+
+    Public Sub New(ByVal i As T)
+        set_local(i)
     End Sub
 
     Public Sub set_local(ByVal i As T)

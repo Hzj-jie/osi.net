@@ -83,6 +83,10 @@ Public Module _thread
         End Function
     End Class
 
+    Public Function running_in_thread(ByVal t As Thread) As Boolean
+        Return object_compare(current_thread(), t) = 0
+    End Function
+
     Public Function current_thread() As Thread
         Return _thread.current_thread()
     End Function

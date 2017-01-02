@@ -83,6 +83,8 @@
     <Compile Include="pattern_match_test.vb" />
     <Compile Include="reference_count_runner_test2.vb" />
     <Compile Include="reference_count_runner_test.vb" />
+    <Compile Include="shell_less_process_test.vb" />
+    <Compile Include="shell_less_process_test_exe.vb" />
     <Compile Include="type_attribute_forward_test.vb" />
     <Compile Include="type_attribute_perf_test.vb" />
     <Compile Include="type_attribute_signal_test.vb" />
@@ -149,6 +151,10 @@
     <ProjectReference Include="..\..\template\template.vbproj">
       <Project>{8EF461F7-2F05-42A3-B65B-8E644F992582}</Project>
       <Name>template</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\threadpool\threadpool.vbproj">
+      <Project>{48f338b3-6ab8-4c0c-ad83-20fa9b9b01de}</Project>
+      <Name>threadpool</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\utils\utils.vbproj">
       <Project>{066119D7-850D-4191-B7AF-5294A941B8C2}</Project>
