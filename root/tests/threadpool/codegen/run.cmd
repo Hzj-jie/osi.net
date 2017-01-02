@@ -10,4 +10,6 @@ precompile slimheapless_threadpool2_test.vbp > slimheapless_threadpool2_test.vb
 precompile managed_threadpool_test.vbp > managed_threadpool_test.vb
 precompile slimqless2_runner_test.vbp > slimqless2_runner_test.vb
 precompile slimheapless_runner_test.vbp > slimheapless_runner_test.vb
+precompile slimqless2_runner_synchronize_invoke_test.vbp > slimqless2_runner_synchronize_invoke_test.vb
+precompile slimheapless_runner_synchronize_invoke_test.vbp > slimheapless_runner_synchronize_invoke_test.vb
 endlocal

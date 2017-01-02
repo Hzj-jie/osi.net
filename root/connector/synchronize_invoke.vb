@@ -45,7 +45,11 @@ Public MustInherit Class synchronize_invoke
 
         Public ReadOnly Property AsyncWaitHandle() As WaitHandle Implements IAsyncResult.AsyncWaitHandle
             Get
-                Return mre
+                If sync Then
+                    Return null_wait_handle.instance
+                Else
+                    Return mre
+                End If
             End Get
         End Property
 
