@@ -80,6 +80,7 @@
     <Compile Include="counter\icounter_writer.vb" />
     <Compile Include="counter\file_counter_writer.vb" />
     <Compile Include="counter\self_maintained_counter\instance_count_counter.vb" />
+    <Compile Include="disable_windows_error_popup.vb" />
     <Compile Include="error_handle\application_info_logging.vb" />
     <Compile Include="invoker\valuer.recursive.vb" />
     <Compile Include="invoker\valuer.vb" />
