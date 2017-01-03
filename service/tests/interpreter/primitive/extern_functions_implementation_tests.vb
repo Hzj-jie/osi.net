@@ -10,26 +10,30 @@ Namespace primitive
         Inherits [case]
 
         Public Overrides Function run() As Boolean
+            Dim io As console_io = Nothing
+            io = New console_io()
+            Dim f As extern_functions = Nothing
+            f = New extern_functions(io)
             Dim s As String = Nothing
             Using out As TextWriter = New StringWriter()
-                console_io.redirect_output(out)
+                io.redirect_output(out)
                 s = strcat(guid_str(), newline.incode())
-                assert_array_equal(extern_functions.stdout(str_bytes(s)), Nothing)
+                assert_array_equal(f.stdout(str_bytes(s)), Nothing)
                 assert_equal(Convert.ToString(out), s)
-                console_io.redirect_output()
+                io.redirect_output()
             End Using
             Using out As TextWriter = New StringWriter()
-                console_io.redirect_error(out)
+                io.redirect_error(out)
                 s = strcat(guid_str(), newline.incode())
-                assert_array_equal(extern_functions.stderr(str_bytes(s)), Nothing)
+                assert_array_equal(f.stderr(str_bytes(s)), Nothing)
                 assert_equal(Convert.ToString(out), s)
-                console_io.redirect_error()
+                io.redirect_error()
             End Using
             s = guid_str()
             Using [in] As TextReader = New StringReader(strcat(s, newline.incode()))
-                console_io.redirect_input([in])
-                assert_equal(s, bytes_str(extern_functions.stdin(Nothing)))
-                console_io.redirect_input()
+                io.redirect_input([in])
+                assert_equal(s, bytes_str(f.stdin(Nothing)))
+                io.redirect_input()
             End Using
             Return True
         End Function

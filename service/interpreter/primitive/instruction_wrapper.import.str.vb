@@ -4,10 +4,9 @@
 
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.root.utils
 
 Namespace primitive
-    Partial Public Class instruction_wrapper
+    Partial Public NotInheritable Class instruction_wrapper
         Public Function import(ByVal s As vector(Of String), ByRef p As UInt32) As Boolean _
                               Implements exportable.import
             Me.i = Nothing
@@ -19,6 +18,10 @@ Namespace primitive
                         Me.i = New instructions.push()
                     Case command_str(command.pop)
                         Me.i = New instructions.pop()
+                    Case command_str(command.pushm)
+                        Me.i = New instructions.pushm()
+                    Case command_str(command.popm)
+                        Me.i = New instructions.popm()
                     Case command_str(command.jump)
                         Me.i = New instructions.jump()
                     Case command_str(command.add)

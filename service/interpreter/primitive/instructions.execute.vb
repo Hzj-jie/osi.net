@@ -2,13 +2,12 @@
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.service.convertor
 Imports osi.service.math
 
 Namespace primitive
     Namespace instructions
-        Partial Public Class [push]
+        Partial Public NotInheritable Class [push]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -17,7 +16,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [pop]
+        Partial Public NotInheritable Class [pop]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -26,7 +25,29 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [jump]
+        Partial Public NotInheritable Class [pushm]
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                assert(Not imi Is Nothing)
+                Dim l As UInt32 = 0
+                l = imi.access_stack_as_uint32(d0)
+                imi.push_stack(l)
+            End Sub
+        End Class
+
+        Partial Public NotInheritable Class [popm]
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                assert(Not imi Is Nothing)
+                Dim l As UInt32 = 0
+                l = imi.access_stack_as_uint32(d0)
+                imi.pop_stack(l)
+            End Sub
+        End Class
+
+        Partial Public NotInheritable Class [jump]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -40,7 +61,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [add]
+        Partial Public NotInheritable Class [add]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -60,7 +81,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [sub]
+        Partial Public NotInheritable Class [sub]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -82,7 +103,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [movc]
+        Partial Public NotInheritable Class [movc]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -94,7 +115,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [mov]
+        Partial Public NotInheritable Class [mov]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -109,7 +130,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [mul]
+        Partial Public NotInheritable Class [mul]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -129,7 +150,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [div]
+        Partial Public NotInheritable Class [div]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -156,7 +177,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [ext]
+        Partial Public NotInheritable Class [ext]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -183,7 +204,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [pow]
+        Partial Public NotInheritable Class [pow]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -203,16 +224,14 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [jumpif]
+        Partial Public NotInheritable Class [jumpif]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
                 assert(Not imi Is Nothing)
-                Dim b1 As pointer(Of Byte()) = Nothing
-                b1 = imi.access_stack(d1)
-                assert(Not b1 Is Nothing)
                 Dim b As Boolean = False
-                If bytes_bool(+b1, b) AndAlso b Then
+                b = imi.access_stack_as_bool(d1)
+                If b Then
                     If d0.relative() Then
                         imi.advance_instruction_pointer(d0.offset())
                         imi.do_not_advance_instruction_pointer()
@@ -223,7 +242,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [cpip]
+        Partial Public NotInheritable Class [cpip]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -235,7 +254,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [cpco]
+        Partial Public NotInheritable Class [cpco]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -247,7 +266,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [cpdbz]
+        Partial Public NotInheritable Class [cpdbz]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -259,7 +278,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [cpin]
+        Partial Public NotInheritable Class [cpin]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -271,7 +290,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [stop]
+        Partial Public NotInheritable Class [stop]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -280,7 +299,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [equal]
+        Partial Public NotInheritable Class [equal]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -300,7 +319,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [less]
+        Partial Public NotInheritable Class [less]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -320,7 +339,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [app]
+        Partial Public NotInheritable Class [app]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -335,7 +354,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [sapp]
+        Partial Public NotInheritable Class [sapp]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -350,7 +369,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [cut]
+        Partial Public NotInheritable Class [cut]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -374,7 +393,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [cutl]
+        Partial Public NotInheritable Class [cutl]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -399,16 +418,16 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [extern]
+        Partial Public NotInheritable Class [extern]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
                 assert(Not imi Is Nothing)
-                p2(imi).set(extern_functions.involve(imi.access_stack_as_uint32(d0), +p1(imi)))
+                p2(imi).set(imi.extern_functions().invoke(imi.access_stack_as_uint32(d0), +p1(imi)))
             End Sub
         End Class
 
-        Partial Public Class [clr]
+        Partial Public NotInheritable Class [clr]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -416,7 +435,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [scut]
+        Partial Public NotInheritable Class [scut]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -432,7 +451,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [sizeof]
+        Partial Public NotInheritable Class [sizeof]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -440,7 +459,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public Class [empty]
+        Partial Public NotInheritable Class [empty]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute

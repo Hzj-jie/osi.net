@@ -72,10 +72,9 @@ public class commands_parser
         enum_writer.WriteLine("Namespace primitive\r\n" +
                               "    Public Enum command As UInt32");
 
-        instruction_wrapper_import_bytes_writer.WriteLine("Imports osi.root.connector\r\n" +
-                                                          "Imports osi.root.utils\r\n\r\n" +
+        instruction_wrapper_import_bytes_writer.WriteLine("Imports osi.root.connector\r\n\r\n" +
                                                           "Namespace primitive\r\n" +
-                                                          "    Partial Public Class instruction_wrapper\r\n" +
+                                                          "    Partial Public NotInheritable Class instruction_wrapper\r\n" +
                                                           "        Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean _\r\n" +
                                                           "                              Implements exportable.import\r\n" +
                                                           "            Me.i = Nothing\r\n" +
@@ -83,10 +82,9 @@ public class commands_parser
                                                           "            If bytes_uint32(i, x, unref(p)) Then\r\n" +
                                                           "                Select Case x");
         instruction_wrapper_import_str_writer.WriteLine("Imports osi.root.connector\r\n" +
-                                                        "Imports osi.root.formation\r\n" +
-                                                        "Imports osi.root.utils\r\n\r\n" +
+                                                        "Imports osi.root.formation\r\n\r\n" +
                                                         "Namespace primitive\r\n" +
-                                                        "    Partial Public Class instruction_wrapper\r\n" +
+                                                        "    Partial Public NotInheritable Class instruction_wrapper\r\n" +
                                                         "        Public Function import(ByVal s As vector(Of String), ByRef p As UInt32) As Boolean _\r\n" +
                                                         "                              Implements exportable.import\r\n" +
                                                         "            Me.i = Nothing\r\n" +
@@ -97,8 +95,7 @@ public class commands_parser
         instructions_writer.WriteLine("Imports System.Text\r\n" +
                                       "Imports osi.root.constants\r\n" +
                                       "Imports osi.root.connector\r\n" +
-                                      "Imports osi.root.formation\r\n" +
-                                      "Imports osi.root.utils\r\n\r\n" +
+                                      "Imports osi.root.formation\r\n\r\n" +
                                       "Namespace primitive\r\n" +
                                       "    Namespace instructions");
         exportable_test_writer.WriteLine("Imports osi.service.interpreter.primitive\r\n" +
@@ -166,7 +163,7 @@ public class commands_parser
     private static void write_instructions(command cmd)
     {
 
-        instructions_writer.WriteLine("        Partial Public Class [" + cmd.str + "]\r\n" +
+        instructions_writer.WriteLine("        Partial Public NotInheritable Class [" + cmd.str + "]\r\n" +
                                       "            Implements instruction, IComparable, IComparable(Of [" + cmd.str + "])\r\n");
         for (int i = 0; i < cmd.args.Count; i++)
         {
@@ -219,7 +216,7 @@ public class commands_parser
                                       "            End Function\r\n\r\n" +
                                       "            Public Function export(ByRef s As String) As Boolean Implements exportable.export\r\n" +
                                       "                Dim b As StringBuilder = Nothing\r\n" +
-                                      "                b = new StringBuilder()\r\n" +
+                                      "                b = New StringBuilder()\r\n" +
                                       "                b.Append(command_str(command." + cmd.str + "))");
         for (int i = 0; i < cmd.args.Count; i++)
         {
@@ -273,7 +270,7 @@ public class commands_parser
                                       "                    Return c\r\n" +
                                       "                End If\r\n" +
                                       "            End Function\r\n\r\n" +
-                                      "            Public NotOverridable Overrides Function ToString() As String\r\n" +
+                                      "            Public Overrides Function ToString() As String\r\n" +
                                       "                Dim s As String = Nothing\r\n" +
                                       "                assert(export(s))\r\n" +
                                       "                Return s\r\n" +

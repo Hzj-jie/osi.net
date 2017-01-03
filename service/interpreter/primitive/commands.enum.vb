@@ -8,25 +8,29 @@ Namespace primitive
         [push]
         ' pop a data slot from stack 
         [pop]
+        ' push (*A uint) data slots in to stack 
+        [pushm]
+        ' pop (*A uint) data slots from stack 
+        [popm]
         ' jump to instruction @A 
         [jump]
-        ' (*A) = (*B) + (*C) 
+        ' (*A big_uint) = (*B big_uint) + (*C big_uint) 
         [add]
-        ' (*A) = (*B) - (*C) 
+        ' (*A big_uint) = (*B big_uint) - (*C big_uint) 
         [sub]
         ' (*A) = B 
         [movc]
         ' (*A) = (*B) 
         [mov]
-        ' (*A) = (*B) * (*C) 
+        ' (*A big_uint) = (*B big_uint) * (*C big_uint) 
         [mul]
-        ' (*A) = (*C) / (*D) (*B) = (*C) % (*D) 
+        ' (*A big_uint) = (*C big_uint) / (*D big_uint) (*B big_uint) = (*C big_uint) % (*D big_uint) 
         [div]
-        ' (*A) = extract((*C), (*D)) (*B) = remainder(extract((*C), (*D))) 
+        ' (*A big_uint) = extract((*C big_uint), (*D big_uint)) (*B big_uint) = remainder(extract((*C big_uint), (*D big_uint))) 
         [ext]
-        ' (*A) = pow((*B), (*C)) 
+        ' (*A big_uint) = pow((*B big_uint), (*C big_uint)) 
         [pow]
-        ' jump to instruction @A, if (*B) is true 
+        ' jump to instruction @A, if (*B bool) is true 
         [jumpif]
         ' (*A) = IP 
         [cpip]
@@ -38,23 +42,23 @@ Namespace primitive
         [cpin]
         ' finish execution, and leave the executor in a stop but not error status. 
         [stop]
-        ' (*A) = ((*B) == (*C)) 
+        ' (*A) = ((*B big_uint) == (*C big_uint)) 
         [equal]
-        ' (*A) = ((*B) < (*C)) 
+        ' (*A) = ((*B big_uint) < (*C big_uint)) 
         [less]
         ' (*A) += (*B) 
         [app]
         ' (*A) += sizeof(*B) + (*B) 
         [sapp]
-        ' (*A) = sub-array(src=(*B), from=(*C)) 
+        ' (*A) = sub-array(src=(*B uint), from=(*C uint)) 
         [cut]
-        ' (*A) = sub-array(src=(*B), from=(*C), len=(*D)) 
+        ' (*A) = sub-array(src=(*B), from=(*C uint), len=(*D uint)) 
         [cutl]
-        ' execute an external function (*A), with parameter (*B), return value will be set to (*C) 
+        ' execute an external function (*A uint), with parameter (*B), return value will be set to (*C) 
         [extern]
         ' set (*A) to empty array 
         [clr]
-        ' (*A) = the (*C) chunk of (*B) 
+        ' (*A) = the (*C uint) chunk of (*B) 
         [scut]
         ' (*A) = array-size(*B) 
         [sizeof]

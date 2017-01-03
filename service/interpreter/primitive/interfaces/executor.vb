@@ -30,8 +30,8 @@ Namespace primitive
         End Enum
 
         Function access_stack(ByVal p As data_ref) As pointer(Of Byte())
-        Sub push_stack()
-        Sub pop_stack()
+        Sub push_stack(ByVal count As UInt32)
+        Sub pop_stack(ByVal count As UInt32)
         Function instruction_pointer() As UInt64
         Function carry_over() As Boolean
         Function divided_by_zero() As Boolean
@@ -44,6 +44,16 @@ Namespace primitive
     End Interface
 
     Public Module _executor
+        <Extension()> Public Sub push_stack(ByVal e As executor)
+            assert(Not e Is Nothing)
+            e.push_stack(uint32_1)
+        End Sub
+
+        <Extension()> Public Sub pop_stack(ByVal e As executor)
+            assert(Not e Is Nothing)
+            e.pop_stack(uint32_1)
+        End Sub
+
         ' exportable.load_bitcode is not reasonable
         <Extension()> Public Function load_bitcode(ByVal e As executor, ByVal f As String) As Boolean
             Dim a() As Byte = Nothing

@@ -13,6 +13,7 @@ Namespace primitive
         Private ReadOnly _errors As vector(Of executor.error_type)
         Private ReadOnly _instructions As vector(Of instruction)
         Private ReadOnly _stack As vector(Of pointer(Of Byte()))
+        Private ReadOnly _extern_functions As extern_functions
         Private _carry_over As Boolean
         Private _diviced_by_zero As Boolean
         Private _imaginary_number As Boolean
@@ -21,10 +22,16 @@ Namespace primitive
         Private _do_not_advance_instruction_pointer As Boolean
         Private _stop As Boolean
 
-        Public Sub New()
+        Public Sub New(ByVal extern_functions As extern_functions)
+            assert(Not extern_functions Is Nothing)
             _errors = New vector(Of executor.error_type)()
             _instructions = New vector(Of instruction)()
             _stack = New vector(Of pointer(Of Byte()))()
+            _extern_functions = extern_functions
+        End Sub
+
+        Public Sub New()
+            Me.New(New extern_functions())
         End Sub
 
         Public Function carry_over() As Boolean Implements executor.carry_over
@@ -61,6 +68,10 @@ Namespace primitive
 
         Public Function instruction_pointer() As UInt64 Implements executor.instruction_pointer
             Return _instruction_pointer
+        End Function
+
+        Public Function extern_functions() As extern_functions Implements imitation.extern_functions
+            Return _extern_functions
         End Function
 
         Public Sub instruction_pointer(ByVal v As Int64) Implements imitation.instruction_pointer
@@ -101,12 +112,22 @@ Namespace primitive
             End If
         End Function
 
-        Public Sub push_stack() Implements executor.push_stack
-            _stack.push_back(New pointer(Of Byte())())
+        Public Sub push_stack(ByVal count As UInt32) Implements executor.push_stack
+            If count > uint32_0 Then
+                For i As UInt32 = uint32_0 To count - uint32_1
+                    _stack.emplace_back(New pointer(Of Byte())())
+                Next
+            End If
         End Sub
 
-        Public Sub pop_stack() Implements executor.pop_stack
-            _stack.pop_back()
+        Public Sub pop_stack(ByVal count As UInt32) Implements executor.pop_stack
+            If _stack.size() < count Then
+                executor_stop_error.throw(executor.error_type.stack_access_out_of_boundary)
+            ElseIf count > uint32_0 Then
+                For i As UInt32 = uint32_0 To count - uint32_1
+                    _stack.pop_back()
+                Next
+            End If
         End Sub
 
         Public Sub do_not_advance_instruction_pointer() Implements imitation.do_not_advance_instruction_pointer
@@ -114,16 +135,23 @@ Namespace primitive
             _do_not_advance_instruction_pointer = True
         End Sub
 
+        Private Sub halt(ByVal ex As executor_stop_error)
+            assert(Not ex Is Nothing)
+            _errors.emplace_back(ex.error_types)
+            _halt = True
+        End Sub
+
         Public Sub execute() Implements executor.execute
+            If _instructions.empty() Then
+                halt(New executor_stop_error(executor.error_type.instruction_pointer_overflow))
+            End If
             _stop = False
             While True
                 assert(_instruction_pointer >= 0 AndAlso _instruction_pointer < _instructions.size())
                 Try
                     _instructions(_instruction_pointer).execute(Me)
                 Catch ex As executor_stop_error
-                    assert(Not ex Is Nothing)
-                    _errors.emplace_back(ex.error_types)
-                    _halt = True
+                    halt(ex)
                 End Try
                 If _stop OrElse _halt Then
                     Exit While

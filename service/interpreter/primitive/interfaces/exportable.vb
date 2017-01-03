@@ -21,6 +21,8 @@ Namespace primitive
     End Interface
 
     Public Module _exportable
+        Private Const comment_start As String = "##"
+        Private Const comment_end As String = character.newline
         Private ReadOnly separators() As String
         Private ReadOnly surround_strs() As String
 
@@ -50,6 +52,7 @@ Namespace primitive
         End Function
 
         <Extension()> Public Function import(ByVal e As exportable, ByVal s As String) As Boolean
+            s.kick_between(comment_start, comment_end)
             Dim v As vector(Of String) = Nothing
             Return strsplit(s, separators, surround_strs, v) AndAlso
                    assert(Not v.null_or_empty()) AndAlso

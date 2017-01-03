@@ -3,12 +3,12 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.service.math
 
 Namespace primitive
     Public Interface imitation
         Inherits executor
+        Function extern_functions() As extern_functions
         Overloads Sub instruction_pointer(ByVal v As Int64)  ' data_ref.offset() returns int64
         Overloads Sub carry_over(ByVal v As Boolean)
         Overloads Sub divided_by_zero(ByVal v As Boolean)
@@ -29,6 +29,19 @@ Namespace primitive
             Dim b As big_uint = Nothing
             b = New big_uint(+d)
             Return b.as_uint32(overflow)
+        End Function
+
+        <Extension()> Public Function access_stack_as_bool(ByVal this As imitation, ByVal p As data_ref) As Boolean
+            assert(Not this Is Nothing)
+            Dim d As pointer(Of Byte()) = Nothing
+            d = this.access_stack(p)
+            assert(Not d Is Nothing)
+            Dim o As Boolean = False
+            ' If the data slot is empty, treat it as false.
+            If Not bytes_bool(+d, o) Then
+                o = False
+            End If
+            Return o
         End Function
 
         <Extension()> Public Function access_stack_as_uint32(ByVal this As imitation, ByVal p As data_ref) As UInt32

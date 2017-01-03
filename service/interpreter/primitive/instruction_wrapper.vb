@@ -1,10 +1,8 @@
 ﻿
 Imports osi.root.connector
-Imports osi.root.formation
-Imports osi.root.utils
 
 Namespace primitive
-    Partial Public Class instruction_wrapper
+    Partial Public NotInheritable Class instruction_wrapper
         Implements instruction
 
         Private i As instruction
@@ -28,5 +26,9 @@ Namespace primitive
             assert(Not i Is Nothing)
             i.execute(imi)
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return Convert.ToString(i)
+        End Function
     End Class
 End Namespace

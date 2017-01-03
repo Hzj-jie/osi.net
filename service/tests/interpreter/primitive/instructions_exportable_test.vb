@@ -23,6 +23,24 @@ Namespace primitive
             End Function
         End Class
 
+        Public Class pushm_exportable_test
+            Inherits exportable_test(Of [pushm])
+
+            Protected Overrides Function create() As [pushm]
+                Return New [pushm]( _
+                        data_ref.random())
+            End Function
+        End Class
+
+        Public Class popm_exportable_test
+            Inherits exportable_test(Of [popm])
+
+            Protected Overrides Function create() As [popm]
+                Return New [popm]( _
+                        data_ref.random())
+            End Function
+        End Class
+
         Public Class jump_exportable_test
             Inherits exportable_test(Of [jump])
 

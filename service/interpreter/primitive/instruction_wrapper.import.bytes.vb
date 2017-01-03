@@ -3,10 +3,9 @@
 ' So change commands-parser or commands.txt instead of this file.
 
 Imports osi.root.connector
-Imports osi.root.utils
 
 Namespace primitive
-    Partial Public Class instruction_wrapper
+    Partial Public NotInheritable Class instruction_wrapper
         Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean _
                               Implements exportable.import
             Me.i = Nothing
@@ -17,6 +16,10 @@ Namespace primitive
                         Me.i = New instructions.push()
                     Case command.pop
                         Me.i = New instructions.pop()
+                    Case command.pushm
+                        Me.i = New instructions.pushm()
+                    Case command.popm
+                        Me.i = New instructions.popm()
                     Case command.jump
                         Me.i = New instructions.jump()
                     Case command.add

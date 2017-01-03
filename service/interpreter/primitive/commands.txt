@@ -1,29 +1,31 @@
 ﻿
 push	#push a data slot in to stack
 pop	#pop a data slot from stack
+pushm	data_ref	#push (*A uint) data slots in to stack
+popm	data_ref	#pop (*A uint) data slots from stack
 jump	data_ref	#jump to instruction @A
-add	data_ref	data_ref	data_ref	#(*A) = (*B) + (*C)
-sub	data_ref	data_ref	data_ref	#(*A) = (*B) - (*C)
+add	data_ref	data_ref	data_ref	#(*A big_uint) = (*B big_uint) + (*C big_uint)
+sub	data_ref	data_ref	data_ref	#(*A big_uint) = (*B big_uint) - (*C big_uint)
 movc	data_ref	data_block	#(*A) = B
 mov	data_ref	data_ref	#(*A) = (*B)
-mul	data_ref	data_ref	data_ref	#(*A) = (*B) * (*C)
-div	data_ref	data_ref	data_ref	data_ref	#(*A) = (*C) / (*D) (*B) = (*C) % (*D)
-ext	data_ref	data_ref	data_ref	data_ref	#(*A) = extract((*C), (*D)) (*B) = remainder(extract((*C), (*D)))
-pow	data_ref	data_ref	data_ref	#(*A) = pow((*B), (*C))
-jumpif	data_ref	data_ref	#jump to instruction @A, if (*B) is true
+mul	data_ref	data_ref	data_ref	#(*A big_uint) = (*B big_uint) * (*C big_uint)
+div	data_ref	data_ref	data_ref	data_ref	#(*A big_uint) = (*C big_uint) / (*D big_uint) (*B big_uint) = (*C big_uint) % (*D big_uint)
+ext	data_ref	data_ref	data_ref	data_ref	#(*A big_uint) = extract((*C big_uint), (*D big_uint)) (*B big_uint) = remainder(extract((*C big_uint), (*D big_uint)))
+pow	data_ref	data_ref	data_ref	#(*A big_uint) = pow((*B big_uint), (*C big_uint))
+jumpif	data_ref	data_ref	#jump to instruction @A, if (*B bool) is true
 cpip	data_ref	#(*A) = IP
 cpco	data_ref	#(*A) = CO
 cpdbz	data_ref	#(*A) = DBZ
 cpin	data_ref	#(*A) = IN
 stop	#finish execution, and leave the executor in a stop but not error status.
-equal	data_ref	data_ref	data_ref	#(*A) = ((*B) == (*C))
-less	data_ref	data_ref	data_ref	#(*A) = ((*B) < (*C))
+equal	data_ref	data_ref	data_ref	#(*A) = ((*B big_uint) == (*C big_uint))
+less	data_ref	data_ref	data_ref	#(*A) = ((*B big_uint) < (*C big_uint))
 app	data_ref	data_ref	#(*A) += (*B)
 sapp	data_ref	data_ref	#(*A) += sizeof(*B) + (*B)
-cut	data_ref	data_ref	data_ref	#(*A) = sub-array(src=(*B), from=(*C))
-cutl	data_ref	data_ref	data_ref	data_ref	#(*A) = sub-array(src=(*B), from=(*C), len=(*D))
-extern	data_ref	data_ref	data_ref	#execute an external function (*A), with parameter (*B), return value will be set to (*C)
+cut	data_ref	data_ref	data_ref	#(*A) = sub-array(src=(*B uint), from=(*C uint))
+cutl	data_ref	data_ref	data_ref	data_ref	#(*A) = sub-array(src=(*B), from=(*C uint), len=(*D uint))
+extern	data_ref	data_ref	data_ref	#execute an external function (*A uint), with parameter (*B), return value will be set to (*C)
 clr	data_ref	#set (*A) to empty array
-scut	data_ref	data_ref	data_ref	#(*A) = the (*C) chunk of (*B)
+scut	data_ref	data_ref	data_ref	#(*A) = the (*C uint) chunk of (*B)
 sizeof	data_ref	data_ref	#(*A) = array-size(*B)
 empty	data_ref	data_ref	#(*A) = ((*B) == null)

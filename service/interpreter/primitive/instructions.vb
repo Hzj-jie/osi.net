@@ -6,11 +6,10 @@ Imports System.Text
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.root.utils
 
 Namespace primitive
     Namespace instructions
-        Partial Public Class [push]
+        Partial Public NotInheritable Class [push]
             Implements instruction, IComparable, IComparable(Of [push])
 
             Public Function bytes_size() As UInt32 Implements exportable.bytes_size
@@ -24,7 +23,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.push))
                 s = Convert.ToString(b)
                 Return True
@@ -57,14 +56,14 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
             End Function
         End Class
 
-        Partial Public Class [pop]
+        Partial Public NotInheritable Class [pop]
             Implements instruction, IComparable, IComparable(Of [pop])
 
             Public Function bytes_size() As UInt32 Implements exportable.bytes_size
@@ -78,7 +77,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.pop))
                 s = Convert.ToString(b)
                 Return True
@@ -111,14 +110,200 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
             End Function
         End Class
 
-        Partial Public Class [jump]
+        Partial Public NotInheritable Class [pushm]
+            Implements instruction, IComparable, IComparable(Of [pushm])
+
+            Private ReadOnly d0 As data_ref
+
+            Public Sub New()
+                d0 = New data_ref()
+            End Sub
+
+            Public Sub New( _
+                       ByVal d0 As data_ref)
+                Me.d0 = d0
+            End Sub
+
+            Public Function bytes_size() As UInt32 Implements exportable.bytes_size
+                Return sizeof_uint32 +
+                       d0.bytes_size()
+            End Function
+
+            Public Function export(ByRef b() As Byte) As Boolean Implements exportable.export
+                Dim b0() As Byte = Nothing
+                If Not d0.export(b0) Then
+                    Return False
+                End If
+                b = array_concat(uint32_bytes(command.pushm),
+                                 b0)
+                Return True
+            End Function
+
+            Public Function export(ByRef s As String) As Boolean Implements exportable.export
+                Dim b As StringBuilder = Nothing
+                b = New StringBuilder()
+                b.Append(command_str(command.pushm))
+                If d0.export(s) Then
+                    b.Append(character.blank)
+                    b.Append(s)
+                Else
+                    Return False
+                End If
+
+                s = Convert.ToString(b)
+                Return True
+            End Function
+
+            Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import
+                Dim o As UInt32 = 0
+                Return assert(bytes_uint32(i, o, p) AndAlso o = command.pushm) AndAlso
+                       d0.import(i, p)
+            End Function
+
+            Public Function import(s As vector(Of String), ByRef p As UInt32) As Boolean Implements exportable.import
+                assert(Not s.null_or_empty() AndAlso s.size() > p)
+                assert(s(p) = command_str(command.pushm))
+                p += 1
+                Return True AndAlso
+                       d0.import(s, p)
+            End Function
+
+            Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
+                Return CompareTo(cast(Of [pushm])(obj, False))
+            End Function
+
+            Public Function CompareTo(ByVal other As [pushm]) As Int32 Implements IComparable(Of [pushm]).CompareTo
+                Dim c As Int32 = 0
+                c = object_compare(Me, other)
+                If c = object_compare_undetermined Then
+                    assert(Not other Is Nothing)
+                    c = Me.d0.CompareTo(other.d0)
+                    If c <> 0 Then
+                        Return c
+                    End If
+
+                    Return 0
+                Else
+                    Return c
+                End If
+            End Function
+
+            Public Overrides Function ToString() As String
+                Dim s As String = Nothing
+                assert(export(s))
+                Return s
+            End Function
+
+            Private Function p0(ByVal imi As imitation) As pointer(Of Byte())
+                assert(Not imi Is Nothing)
+                Dim p As pointer(Of Byte()) = Nothing
+                p = imi.access_stack(d0)
+                assert(Not p Is Nothing)
+                Return p
+            End Function
+        End Class
+
+        Partial Public NotInheritable Class [popm]
+            Implements instruction, IComparable, IComparable(Of [popm])
+
+            Private ReadOnly d0 As data_ref
+
+            Public Sub New()
+                d0 = New data_ref()
+            End Sub
+
+            Public Sub New( _
+                       ByVal d0 As data_ref)
+                Me.d0 = d0
+            End Sub
+
+            Public Function bytes_size() As UInt32 Implements exportable.bytes_size
+                Return sizeof_uint32 +
+                       d0.bytes_size()
+            End Function
+
+            Public Function export(ByRef b() As Byte) As Boolean Implements exportable.export
+                Dim b0() As Byte = Nothing
+                If Not d0.export(b0) Then
+                    Return False
+                End If
+                b = array_concat(uint32_bytes(command.popm),
+                                 b0)
+                Return True
+            End Function
+
+            Public Function export(ByRef s As String) As Boolean Implements exportable.export
+                Dim b As StringBuilder = Nothing
+                b = New StringBuilder()
+                b.Append(command_str(command.popm))
+                If d0.export(s) Then
+                    b.Append(character.blank)
+                    b.Append(s)
+                Else
+                    Return False
+                End If
+
+                s = Convert.ToString(b)
+                Return True
+            End Function
+
+            Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import
+                Dim o As UInt32 = 0
+                Return assert(bytes_uint32(i, o, p) AndAlso o = command.popm) AndAlso
+                       d0.import(i, p)
+            End Function
+
+            Public Function import(s As vector(Of String), ByRef p As UInt32) As Boolean Implements exportable.import
+                assert(Not s.null_or_empty() AndAlso s.size() > p)
+                assert(s(p) = command_str(command.popm))
+                p += 1
+                Return True AndAlso
+                       d0.import(s, p)
+            End Function
+
+            Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
+                Return CompareTo(cast(Of [popm])(obj, False))
+            End Function
+
+            Public Function CompareTo(ByVal other As [popm]) As Int32 Implements IComparable(Of [popm]).CompareTo
+                Dim c As Int32 = 0
+                c = object_compare(Me, other)
+                If c = object_compare_undetermined Then
+                    assert(Not other Is Nothing)
+                    c = Me.d0.CompareTo(other.d0)
+                    If c <> 0 Then
+                        Return c
+                    End If
+
+                    Return 0
+                Else
+                    Return c
+                End If
+            End Function
+
+            Public Overrides Function ToString() As String
+                Dim s As String = Nothing
+                assert(export(s))
+                Return s
+            End Function
+
+            Private Function p0(ByVal imi As imitation) As pointer(Of Byte())
+                assert(Not imi Is Nothing)
+                Dim p As pointer(Of Byte()) = Nothing
+                p = imi.access_stack(d0)
+                assert(Not p Is Nothing)
+                Return p
+            End Function
+        End Class
+
+        Partial Public NotInheritable Class [jump]
             Implements instruction, IComparable, IComparable(Of [jump])
 
             Private ReadOnly d0 As data_ref
@@ -149,7 +334,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.jump))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -196,7 +381,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -211,7 +396,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [add]
+        Partial Public NotInheritable Class [add]
             Implements instruction, IComparable, IComparable(Of [add])
 
             Private ReadOnly d0 As data_ref
@@ -262,7 +447,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.add))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -337,7 +522,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -368,7 +553,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [sub]
+        Partial Public NotInheritable Class [sub]
             Implements instruction, IComparable, IComparable(Of [sub])
 
             Private ReadOnly d0 As data_ref
@@ -419,7 +604,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.sub))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -494,7 +679,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -525,7 +710,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [movc]
+        Partial Public NotInheritable Class [movc]
             Implements instruction, IComparable, IComparable(Of [movc])
 
             Private ReadOnly d0 As data_ref
@@ -566,7 +751,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.movc))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -627,7 +812,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -642,7 +827,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [mov]
+        Partial Public NotInheritable Class [mov]
             Implements instruction, IComparable, IComparable(Of [mov])
 
             Private ReadOnly d0 As data_ref
@@ -683,7 +868,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.mov))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -744,7 +929,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -767,7 +952,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [mul]
+        Partial Public NotInheritable Class [mul]
             Implements instruction, IComparable, IComparable(Of [mul])
 
             Private ReadOnly d0 As data_ref
@@ -818,7 +1003,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.mul))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -893,7 +1078,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -924,7 +1109,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [div]
+        Partial Public NotInheritable Class [div]
             Implements instruction, IComparable, IComparable(Of [div])
 
             Private ReadOnly d0 As data_ref
@@ -985,7 +1170,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.div))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -1074,7 +1259,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -1113,7 +1298,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [ext]
+        Partial Public NotInheritable Class [ext]
             Implements instruction, IComparable, IComparable(Of [ext])
 
             Private ReadOnly d0 As data_ref
@@ -1174,7 +1359,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.ext))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -1263,7 +1448,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -1302,7 +1487,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [pow]
+        Partial Public NotInheritable Class [pow]
             Implements instruction, IComparable, IComparable(Of [pow])
 
             Private ReadOnly d0 As data_ref
@@ -1353,7 +1538,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.pow))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -1428,7 +1613,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -1459,7 +1644,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [jumpif]
+        Partial Public NotInheritable Class [jumpif]
             Implements instruction, IComparable, IComparable(Of [jumpif])
 
             Private ReadOnly d0 As data_ref
@@ -1500,7 +1685,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.jumpif))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -1561,7 +1746,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -1584,7 +1769,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [cpip]
+        Partial Public NotInheritable Class [cpip]
             Implements instruction, IComparable, IComparable(Of [cpip])
 
             Private ReadOnly d0 As data_ref
@@ -1615,7 +1800,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.cpip))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -1662,7 +1847,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -1677,7 +1862,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [cpco]
+        Partial Public NotInheritable Class [cpco]
             Implements instruction, IComparable, IComparable(Of [cpco])
 
             Private ReadOnly d0 As data_ref
@@ -1708,7 +1893,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.cpco))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -1755,7 +1940,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -1770,7 +1955,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [cpdbz]
+        Partial Public NotInheritable Class [cpdbz]
             Implements instruction, IComparable, IComparable(Of [cpdbz])
 
             Private ReadOnly d0 As data_ref
@@ -1801,7 +1986,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.cpdbz))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -1848,7 +2033,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -1863,7 +2048,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [cpin]
+        Partial Public NotInheritable Class [cpin]
             Implements instruction, IComparable, IComparable(Of [cpin])
 
             Private ReadOnly d0 As data_ref
@@ -1894,7 +2079,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.cpin))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -1941,7 +2126,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -1956,7 +2141,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [stop]
+        Partial Public NotInheritable Class [stop]
             Implements instruction, IComparable, IComparable(Of [stop])
 
             Public Function bytes_size() As UInt32 Implements exportable.bytes_size
@@ -1970,7 +2155,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.stop))
                 s = Convert.ToString(b)
                 Return True
@@ -2003,14 +2188,14 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
             End Function
         End Class
 
-        Partial Public Class [equal]
+        Partial Public NotInheritable Class [equal]
             Implements instruction, IComparable, IComparable(Of [equal])
 
             Private ReadOnly d0 As data_ref
@@ -2061,7 +2246,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.equal))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -2136,7 +2321,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -2167,7 +2352,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [less]
+        Partial Public NotInheritable Class [less]
             Implements instruction, IComparable, IComparable(Of [less])
 
             Private ReadOnly d0 As data_ref
@@ -2218,7 +2403,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.less))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -2293,7 +2478,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -2324,7 +2509,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [app]
+        Partial Public NotInheritable Class [app]
             Implements instruction, IComparable, IComparable(Of [app])
 
             Private ReadOnly d0 As data_ref
@@ -2365,7 +2550,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.app))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -2426,7 +2611,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -2449,7 +2634,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [sapp]
+        Partial Public NotInheritable Class [sapp]
             Implements instruction, IComparable, IComparable(Of [sapp])
 
             Private ReadOnly d0 As data_ref
@@ -2490,7 +2675,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.sapp))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -2551,7 +2736,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -2574,7 +2759,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [cut]
+        Partial Public NotInheritable Class [cut]
             Implements instruction, IComparable, IComparable(Of [cut])
 
             Private ReadOnly d0 As data_ref
@@ -2625,7 +2810,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.cut))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -2700,7 +2885,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -2731,7 +2916,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [cutl]
+        Partial Public NotInheritable Class [cutl]
             Implements instruction, IComparable, IComparable(Of [cutl])
 
             Private ReadOnly d0 As data_ref
@@ -2792,7 +2977,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.cutl))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -2881,7 +3066,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -2920,7 +3105,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [extern]
+        Partial Public NotInheritable Class [extern]
             Implements instruction, IComparable, IComparable(Of [extern])
 
             Private ReadOnly d0 As data_ref
@@ -2971,7 +3156,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.extern))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -3046,7 +3231,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -3077,7 +3262,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [clr]
+        Partial Public NotInheritable Class [clr]
             Implements instruction, IComparable, IComparable(Of [clr])
 
             Private ReadOnly d0 As data_ref
@@ -3108,7 +3293,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.clr))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -3155,7 +3340,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -3170,7 +3355,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [scut]
+        Partial Public NotInheritable Class [scut]
             Implements instruction, IComparable, IComparable(Of [scut])
 
             Private ReadOnly d0 As data_ref
@@ -3221,7 +3406,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.scut))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -3296,7 +3481,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -3327,7 +3512,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [sizeof]
+        Partial Public NotInheritable Class [sizeof]
             Implements instruction, IComparable, IComparable(Of [sizeof])
 
             Private ReadOnly d0 As data_ref
@@ -3368,7 +3553,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.sizeof))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -3429,7 +3614,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
@@ -3452,7 +3637,7 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public Class [empty]
+        Partial Public NotInheritable Class [empty]
             Implements instruction, IComparable, IComparable(Of [empty])
 
             Private ReadOnly d0 As data_ref
@@ -3493,7 +3678,7 @@ Namespace primitive
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
-                b = new StringBuilder()
+                b = New StringBuilder()
                 b.Append(command_str(command.empty))
                 If d0.export(s) Then
                     b.Append(character.blank)
@@ -3554,7 +3739,7 @@ Namespace primitive
                 End If
             End Function
 
-            Public NotOverridable Overrides Function ToString() As String
+            Public Overrides Function ToString() As String
                 Dim s As String = Nothing
                 assert(export(s))
                 Return s
