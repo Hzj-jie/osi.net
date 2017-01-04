@@ -30,7 +30,7 @@ Namespace primitive
                 io.redirect_error()
             End Using
             s = guid_str()
-            Using [in] As TextReader = New StringReader(strcat(s, newline.incode()))
+            Using [in] As TextReader = New StringReader(s)
                 io.redirect_input([in])
                 assert_equal(s, bytes_str(f.stdin(Nothing)))
                 io.redirect_input()
