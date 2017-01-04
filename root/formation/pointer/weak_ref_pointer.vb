@@ -315,6 +315,10 @@ finish:
         Return that < this
     End Operator
 
+    Public Shared Widening Operator CType(ByVal this As weak_ref_pointer(Of T)) As Boolean
+        Return Not this Is Nothing AndAlso Not this.empty()
+    End Operator
+
     Public NotOverridable Overrides Function Equals(ByVal that As Object) As Boolean
         Return Me = that
     End Function

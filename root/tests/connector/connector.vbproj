@@ -78,6 +78,8 @@
     <Compile Include="copy_test.vb" />
     <Compile Include="cryptography_behavior_test.vb" />
     <Compile Include="cstr_convert_tostring_perf_test.vb" />
+    <Compile Include="ctype_bool_perf_test.vb" />
+    <Compile Include="ctype_bool_test.vb" />
     <Compile Include="custom_attributes_behavior_test.vb" />
     <Compile Include="custom_attributes_behavior_test2.vb" />
     <Compile Include="custom_attributes_behavior_test3.vb" />

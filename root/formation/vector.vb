@@ -185,7 +185,7 @@ Public Module vector_extension
 End Module
 
 Public NotInheritable Class vector(Of T)
-    Implements ICloneable, IComparable(Of vector(Of T)), IComparable
+    Implements ICloneable(Of vector(Of T)), ICloneable, IComparable(Of vector(Of T)), IComparable
 
     Private ReadOnly v As adaptive_array_t
 
@@ -393,6 +393,10 @@ Public NotInheritable Class vector(Of T)
 
     '.net implementations
     Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
+    End Function
+
+    Public Function CloneT() As vector(Of T) Implements ICloneable(Of vector(Of T)).Clone
         Return New vector(Of T)(v.clone())
     End Function
 
