@@ -1,5 +1,4 @@
 ﻿
-Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 Imports osi.root.formation
@@ -53,30 +52,5 @@ Namespace primitive
             assert(Not e Is Nothing)
             e.pop_stack(uint32_1)
         End Sub
-
-        ' exportable.load_bitcode is not reasonable
-        <Extension()> Public Function load_bitcode(ByVal e As executor, ByVal f As String) As Boolean
-            Dim a() As Byte = Nothing
-            Try
-                a = File.ReadAllBytes(f)
-            Catch ex As Exception
-                raise_error(error_type.warning, "failed to read from file ", f)
-                Return False
-            End Try
-            Return assert(Not e Is Nothing) AndAlso
-                   e.import(a)
-        End Function
-
-        <Extension()> Public Function load_asccode(ByVal e As executor, ByVal f As String) As Boolean
-            Dim s As String = Nothing
-            Try
-                s = File.ReadAllText(f)
-            Catch ex As Exception
-                raise_error(error_type.warning, "failed to read from file ", f)
-                Return False
-            End Try
-            Return assert(Not e Is Nothing) AndAlso
-                   e.import(s)
-        End Function
     End Module
 End Namespace

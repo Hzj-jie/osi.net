@@ -1,0 +1,3 @@
+﻿
+osi.service.compiler.logic provides a set of basic statements a high-level language may support, and convert these
+statements into interpreter.primitive asccode format.

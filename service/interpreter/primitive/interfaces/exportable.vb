@@ -1,6 +1,6 @@
 ﻿
+Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
@@ -9,7 +9,8 @@ Imports osi.root.utils
 Namespace primitive
     ' Each exportable instance should export several bytes or several characters only, so copying an instance should not
     ' have too much performance impact.
-    ' .Net does not accept an instance, which is larger than 4G, so using uint32 as byte array or string index is enough.
+    ' An exportable instance always clears its internal state when executes import functions.
+    ' .Net does not accept an instance larger than 4G, so using uint32 as byte array or string index is enough.
     Public Interface exportable
         Function export(ByRef b() As Byte) As Boolean
         Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean
@@ -57,6 +58,91 @@ Namespace primitive
             Return strsplit(s, separators, surround_strs, v) AndAlso
                    assert(Not v.null_or_empty()) AndAlso
                    e.import(v)
+        End Function
+
+        <Extension()> Public Function load_bitcode(ByVal e As exportable, ByVal f As String) As Boolean
+            Dim a() As Byte = Nothing
+            Try
+                a = File.ReadAllBytes(f)
+            Catch ex As Exception
+                raise_error(error_type.warning, "failed to read from file ", f, ", ex ", ex)
+                Return False
+            End Try
+            Return assert(Not e Is Nothing) AndAlso
+                   e.import(a)
+        End Function
+
+        <Extension()> Public Function write_bitcode(ByVal e As exportable, ByVal f As String) As Boolean
+            assert(Not e Is Nothing)
+            Dim a() As Byte = Nothing
+            If e.export(a) Then
+                Try
+                    File.WriteAllBytes(f, a)
+                Catch ex As Exception
+                    raise_error(error_type.warning, "failed to write to file ", f, ", ex ", ex)
+                    Return False
+                End Try
+                Return True
+            Else
+                Return False
+            End If
+        End Function
+
+        <Extension()> Public Function load_asccode(ByVal e As exportable, ByVal f As String) As Boolean
+            Dim s As String = Nothing
+            Try
+                s = File.ReadAllText(f)
+            Catch ex As Exception
+                raise_error(error_type.warning, "failed to read from file ", f)
+                Return False
+            End Try
+            Return assert(Not e Is Nothing) AndAlso
+                   e.import(s)
+        End Function
+
+        <Extension()> Public Function write_asccode(ByVal e As exportable, ByVal f As String) As Boolean
+            assert(Not e Is Nothing)
+            Dim s As String = Nothing
+            If e.export(s) Then
+                Try
+                    File.WriteAllText(f, s)
+                Catch ex As Exception
+                    raise_error(error_type.warning, "failed to write to file ", f, ", ex ", ex)
+                    Return False
+                End Try
+                Return True
+            Else
+                Return False
+            End If
+        End Function
+
+        ' assemble() and following functions convert various formats of asccode into bitcode.
+        <Extension()> Public Function assemble(ByVal e As exportable, ByVal s As String, ByRef o() As Byte) As Boolean
+            assert(Not e Is Nothing)
+            Return e.import(s) AndAlso
+                   e.export(o)
+        End Function
+
+        <Extension()> Public Function assemble(ByVal e As exportable, ByVal s As String, ByVal o As String) As Boolean
+            assert(Not e Is Nothing)
+            Return e.import(s) AndAlso
+                   e.write_bitcode(o)
+        End Function
+
+        <Extension()> Public Function load_and_assemble(ByVal e As exportable,
+                                                        ByVal f As String,
+                                                        ByRef o() As Byte) As Boolean
+            assert(Not e Is Nothing)
+            Return e.load_asccode(f) AndAlso
+                   e.export(o)
+        End Function
+
+        <Extension()> Public Function load_and_assemble(ByVal e As exportable,
+                                                        ByVal f As String,
+                                                        ByVal o As String) As Boolean
+            assert(Not e Is Nothing)
+            Return e.load_asccode(f) AndAlso
+                   e.write_bitcode(o)
         End Function
     End Module
 End Namespace

@@ -2,7 +2,7 @@
 Imports osi.root.connector
 
 Public NotInheritable Class stack(Of T)
-    Implements ICloneable
+    Implements ICloneable, ICloneable(Of stack(Of T)), IComparable, IComparable(Of stack(Of T))
 
     Private ReadOnly d As vector(Of T) = Nothing
 
@@ -47,6 +47,25 @@ Public NotInheritable Class stack(Of T)
     End Sub
 
     Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
+    End Function
+
+    Public Function CloneT() As stack(Of T) Implements ICloneable(Of stack(Of T)).Clone
         Return New stack(Of T)(d)
+    End Function
+
+    Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
+        Return CompareTo(cast(Of stack(Of T))(obj, False))
+    End Function
+
+    Public Function CompareTo(ByVal other As stack(Of T)) As Int32 Implements IComparable(Of stack(Of T)).CompareTo
+        Dim cmp As Int32 = 0
+        cmp = object_compare(Me, other)
+        If cmp <> 0 Then
+            Return cmp
+        Else
+            assert(Not other Is Nothing)
+            Return d.CompareTo(other.d)
+        End If
     End Function
 End Class
