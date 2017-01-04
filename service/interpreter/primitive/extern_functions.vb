@@ -39,7 +39,7 @@ Namespace primitive
         End Function
 
         Public Function stdin(ByVal i() As Byte) As Byte()
-            Return str_bytes(io.input().ReadLine())
+            Return str_bytes(io.input().ReadToEnd())
         End Function
 
         Public Function invoke(ByVal i As UInt32, ByVal j() As Byte) As Byte()

@@ -114,6 +114,7 @@
     <Content Include="primitive\cases\sim1.txt" />
     <Content Include="primitive\cases\sim2.txt" />
     <Content Include="primitive\cases\sim3.txt" />
+    <Content Include="primitive\cases\sim4.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\..\..\root\root.utt.props" Condition="'$(RootUttProps)'==''" />

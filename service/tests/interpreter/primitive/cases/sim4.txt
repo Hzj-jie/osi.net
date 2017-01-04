@@ -11,8 +11,10 @@ pushm rel0
 ## rel6 equal return
 ## rel7 cutl return
 
-movc rel0 Ehello\x20world\n
+movc rel3 i2
+extern rel3 rel0 rel0
 sizeof rel1 rel0
+
 movc rel2 i0
 movc rel3 i0
 
