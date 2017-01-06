@@ -56,6 +56,8 @@ Namespace primitive
                         Me.i = New instructions.equal()
                     Case command_str(command.less)
                         Me.i = New instructions.less()
+                    Case command_str(command.leeq)
+                        Me.i = New instructions.leeq()
                     Case command_str(command.app)
                         Me.i = New instructions.app()
                     Case command_str(command.sapp)
@@ -74,6 +76,12 @@ Namespace primitive
                         Me.i = New instructions.sizeof()
                     Case command_str(command.empty)
                         Me.i = New instructions.empty()
+                    Case command_str(command.and)
+                        Me.i = New instructions.and()
+                    Case command_str(command.or)
+                        Me.i = New instructions.or()
+                    Case command_str(command.not)
+                        Me.i = New instructions.not()
                     Case Else
                         Return False
                 End Select

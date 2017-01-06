@@ -1,68 +1,90 @@
 ﻿
+Option Strict On
+
+Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public Class scope
         ' The offset of current scope, i.e. the sum of all its ancient scopes.
-        Private ReadOnly p As scope
-        Private ReadOnly m As map(Of String, UInt32)
-        Private c As scope
-        Private s As UInt32
+        Private ReadOnly parent As scope
+        Private ReadOnly offsets As map(Of String, UInt64)
+        Private ReadOnly types As map(Of String, String)
+        Private child As scope
 
         Public Sub New()
             Me.New(Nothing)
         End Sub
 
         Public Sub New(ByVal parent As scope)
-            Me.p = parent
-            Me.m = New map(Of String, UInt32)()
-            Me.c = Nothing
-            Me.s = 0
+            Me.parent = parent
+            Me.offsets = New map(Of String, UInt64)()
+            Me.types = New map(Of String, String)()
+            Me.child = Nothing
         End Sub
 
         Public Function start_scope() As scope
-            assert(c Is Nothing)
-            c = New scope(Me)
-            Return c
+            assert(child Is Nothing)
+            child = New scope(Me)
+            Return child
         End Function
 
         Public Function end_scope() As scope
-            If Not p Is Nothing Then
-                p.c = Nothing
+            If Not parent Is Nothing Then
+                parent.child = Nothing
             End If
-            Return p
+            Return parent
         End Function
 
-        Public Function define(ByVal name As String) As Boolean
-            If m.find(name) = m.end() Then
-                s += 1
-                m(name) = s
+        Public Function define(ByVal name As String, ByVal type As String) As Boolean
+            If offsets.find(name) = offsets.end() Then
+                offsets(name) = size() + uint64_1
+                types(name) = type
                 Return True
             Else
                 Return False
             End If
+        End Function
+
+        Private Function size() As UInt32
+            assert(offsets.size() = types.size())
+            Return offsets.size()
         End Function
 
         ' Find @name in @m, and return the offset to the "end" / "top" of current scope.
-        Private Function find(ByVal name As String, ByRef offset As UInt32) As Boolean
-            Dim it As map(Of String, UInt32).iterator = Nothing
-            it = m.find(name)
-            If it <> m.end() Then
-                offset = s - (+it).second
+        Private Function find(ByVal name As String, ByRef offset As UInt64) As Boolean
+            Dim o As UInt64 = 0
+            If offsets.find(name, o) Then
+                offset = size() - o
                 Return True
             Else
                 Return False
             End If
         End Function
 
-        Public Shared Function export(ByVal offset As UInt32) As String
-            Return strcat("rel", offset)
+        Public Function type(ByVal name As String, ByRef o As String) As Boolean
+            Dim s As scope = Nothing
+            s = Me
+            While Not s Is Nothing
+                If s.types.find(name, o) Then
+                    Return True
+                End If
+                s = s.parent
+            End While
+            Return False
         End Function
 
-        Public Function export(ByVal name As String, ByRef o As UInt32) As Boolean
-            Dim offset As UInt32 = 0
-            Dim size As UInt32 = 0
+        Public Function type(ByVal name As String) As String
+            Dim o As String = Nothing
+            assert(type(name, o))
+            Return o
+        End Function
+
+        Public Function export(ByVal name As String, ByRef o As UInt64) As Boolean
+            Dim offset As UInt64 = 0
+            Dim size As UInt64 = 0
             Dim s As scope = Nothing
             s = Me
             While Not s Is Nothing
@@ -70,20 +92,37 @@ Namespace logic
                     o = offset + size
                     Return True
                 End If
-                size += s.s
-                s = s.p
+                size += s.size()
+                s = s.parent
             End While
             Return False
         End Function
 
-        Public Function export(ByVal name As String, ByRef o As String) As Boolean
-            Dim offset As UInt32 = 0
-            If export(name, offset) Then
-                o = export(offset)
+        Public Function export(ByVal name As String, ByRef o As UInt32) As Boolean
+            Dim r As UInt64 = 0
+            If export(name, r) AndAlso r <= max_uint32 Then
+                o = CUInt(r)
                 Return True
             Else
                 Return False
             End If
+        End Function
+
+        Public Function export(ByVal name As String, ByRef o As data_ref) As Boolean
+            Dim offset As UInt64 = 0
+            If export(name, offset) AndAlso data_ref.valid_offset(CLng(offset)) Then
+                o = data_ref.rel(CLng(offset))
+                Return True
+            Else
+                Return False
+            End If
+        End Function
+
+        Public Function export(ByVal name As String, ByRef o As String) As Boolean
+            Dim ref As data_ref = Nothing
+            Return export(name, ref) AndAlso
+                   assert(Not ref Is Nothing) AndAlso
+                   ref.export(o)
         End Function
     End Class
 End Namespace

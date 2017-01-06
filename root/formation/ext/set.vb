@@ -35,4 +35,8 @@ Public Module _set
     <Extension()> Public Function null_or_empty(Of T)(ByVal this As [set](Of T)) As Boolean
         Return this Is Nothing OrElse this.empty()
     End Function
+
+    <Extension()> Public Function has(Of T)(ByVal this As [set](Of T), ByVal v As T) As Boolean
+        Return Not this Is Nothing AndAlso this.find(v) <> this.end()
+    End Function
 End Module

@@ -46,6 +46,8 @@ Namespace primitive
         [equal]
         ' (*A) = ((*B big_uint) < (*C big_uint)) 
         [less]
+        ' (*A) = ((*B big_uint) <= (*C big_uint)) 
+        [leeq]
         ' (*A) += (*B) 
         [app]
         ' (*A) += sizeof(*B) + (*B) 
@@ -64,6 +66,12 @@ Namespace primitive
         [sizeof]
         ' (*A) = ((*B) == null) 
         [empty]
+        ' (*A big_uint) = (*B big_uint) AND (*C big_uint) 
+        [and]
+        ' (*A big_uint) = (*B big_uint) OR (*C big_uint) 
+        [or]
+        ' (*A big_uint) = NOT (*B big_uint) 
+        [not]
 
         COUNT
     End Enum

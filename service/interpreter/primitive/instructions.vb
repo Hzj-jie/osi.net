@@ -2509,6 +2509,163 @@ Namespace primitive
             End Function
         End Class
 
+        Partial Public NotInheritable Class [leeq]
+            Implements instruction, IComparable, IComparable(Of [leeq])
+
+            Private ReadOnly d0 As data_ref
+            Private ReadOnly d1 As data_ref
+            Private ReadOnly d2 As data_ref
+
+            Public Sub New()
+                d0 = New data_ref()
+                d1 = New data_ref()
+                d2 = New data_ref()
+            End Sub
+
+            Public Sub New( _
+                       ByVal d0 As data_ref,
+                       ByVal d1 As data_ref,
+                       ByVal d2 As data_ref)
+                Me.d0 = d0
+                Me.d1 = d1
+                Me.d2 = d2
+            End Sub
+
+            Public Function bytes_size() As UInt32 Implements exportable.bytes_size
+                Return sizeof_uint32 +
+                       d0.bytes_size() +
+                       d1.bytes_size() +
+                       d2.bytes_size()
+            End Function
+
+            Public Function export(ByRef b() As Byte) As Boolean Implements exportable.export
+                Dim b0() As Byte = Nothing
+                If Not d0.export(b0) Then
+                    Return False
+                End If
+                Dim b1() As Byte = Nothing
+                If Not d1.export(b1) Then
+                    Return False
+                End If
+                Dim b2() As Byte = Nothing
+                If Not d2.export(b2) Then
+                    Return False
+                End If
+                b = array_concat(uint32_bytes(command.leeq),
+                                 b0,
+                                 b1,
+                                 b2)
+                Return True
+            End Function
+
+            Public Function export(ByRef s As String) As Boolean Implements exportable.export
+                Dim b As StringBuilder = Nothing
+                b = New StringBuilder()
+                b.Append(command_str(command.leeq))
+                If d0.export(s) Then
+                    b.Append(character.blank)
+                    b.Append(s)
+                Else
+                    Return False
+                End If
+
+                If d1.export(s) Then
+                    b.Append(character.blank)
+                    b.Append(s)
+                Else
+                    Return False
+                End If
+
+                If d2.export(s) Then
+                    b.Append(character.blank)
+                    b.Append(s)
+                Else
+                    Return False
+                End If
+
+                s = Convert.ToString(b)
+                Return True
+            End Function
+
+            Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import
+                Dim o As UInt32 = 0
+                Return assert(bytes_uint32(i, o, p) AndAlso o = command.leeq) AndAlso
+                       d0.import(i, p) AndAlso
+                       d1.import(i, p) AndAlso
+                       d2.import(i, p)
+            End Function
+
+            Public Function import(s As vector(Of String), ByRef p As UInt32) As Boolean Implements exportable.import
+                assert(Not s.null_or_empty() AndAlso s.size() > p)
+                assert(s(p) = command_str(command.leeq))
+                p += 1
+                Return True AndAlso
+                       d0.import(s, p) AndAlso
+                       d1.import(s, p) AndAlso
+                       d2.import(s, p)
+            End Function
+
+            Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
+                Return CompareTo(cast(Of [leeq])(obj, False))
+            End Function
+
+            Public Function CompareTo(ByVal other As [leeq]) As Int32 Implements IComparable(Of [leeq]).CompareTo
+                Dim c As Int32 = 0
+                c = object_compare(Me, other)
+                If c = object_compare_undetermined Then
+                    assert(Not other Is Nothing)
+                    c = Me.d0.CompareTo(other.d0)
+                    If c <> 0 Then
+                        Return c
+                    End If
+
+                    c = Me.d1.CompareTo(other.d1)
+                    If c <> 0 Then
+                        Return c
+                    End If
+
+                    c = Me.d2.CompareTo(other.d2)
+                    If c <> 0 Then
+                        Return c
+                    End If
+
+                    Return 0
+                Else
+                    Return c
+                End If
+            End Function
+
+            Public Overrides Function ToString() As String
+                Dim s As String = Nothing
+                assert(export(s))
+                Return s
+            End Function
+
+            Private Function p0(ByVal imi As imitation) As pointer(Of Byte())
+                assert(Not imi Is Nothing)
+                Dim p As pointer(Of Byte()) = Nothing
+                p = imi.access_stack(d0)
+                assert(Not p Is Nothing)
+                Return p
+            End Function
+
+            Private Function p1(ByVal imi As imitation) As pointer(Of Byte())
+                assert(Not imi Is Nothing)
+                Dim p As pointer(Of Byte()) = Nothing
+                p = imi.access_stack(d1)
+                assert(Not p Is Nothing)
+                Return p
+            End Function
+
+            Private Function p2(ByVal imi As imitation) As pointer(Of Byte())
+                assert(Not imi Is Nothing)
+                Dim p As pointer(Of Byte()) = Nothing
+                p = imi.access_stack(d2)
+                assert(Not p Is Nothing)
+                Return p
+            End Function
+        End Class
+
         Partial Public NotInheritable Class [app]
             Implements instruction, IComparable, IComparable(Of [app])
 
@@ -3719,6 +3876,445 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [empty]) As Int32 Implements IComparable(Of [empty]).CompareTo
+                Dim c As Int32 = 0
+                c = object_compare(Me, other)
+                If c = object_compare_undetermined Then
+                    assert(Not other Is Nothing)
+                    c = Me.d0.CompareTo(other.d0)
+                    If c <> 0 Then
+                        Return c
+                    End If
+
+                    c = Me.d1.CompareTo(other.d1)
+                    If c <> 0 Then
+                        Return c
+                    End If
+
+                    Return 0
+                Else
+                    Return c
+                End If
+            End Function
+
+            Public Overrides Function ToString() As String
+                Dim s As String = Nothing
+                assert(export(s))
+                Return s
+            End Function
+
+            Private Function p0(ByVal imi As imitation) As pointer(Of Byte())
+                assert(Not imi Is Nothing)
+                Dim p As pointer(Of Byte()) = Nothing
+                p = imi.access_stack(d0)
+                assert(Not p Is Nothing)
+                Return p
+            End Function
+
+            Private Function p1(ByVal imi As imitation) As pointer(Of Byte())
+                assert(Not imi Is Nothing)
+                Dim p As pointer(Of Byte()) = Nothing
+                p = imi.access_stack(d1)
+                assert(Not p Is Nothing)
+                Return p
+            End Function
+        End Class
+
+        Partial Public NotInheritable Class [and]
+            Implements instruction, IComparable, IComparable(Of [and])
+
+            Private ReadOnly d0 As data_ref
+            Private ReadOnly d1 As data_ref
+            Private ReadOnly d2 As data_ref
+
+            Public Sub New()
+                d0 = New data_ref()
+                d1 = New data_ref()
+                d2 = New data_ref()
+            End Sub
+
+            Public Sub New( _
+                       ByVal d0 As data_ref,
+                       ByVal d1 As data_ref,
+                       ByVal d2 As data_ref)
+                Me.d0 = d0
+                Me.d1 = d1
+                Me.d2 = d2
+            End Sub
+
+            Public Function bytes_size() As UInt32 Implements exportable.bytes_size
+                Return sizeof_uint32 +
+                       d0.bytes_size() +
+                       d1.bytes_size() +
+                       d2.bytes_size()
+            End Function
+
+            Public Function export(ByRef b() As Byte) As Boolean Implements exportable.export
+                Dim b0() As Byte = Nothing
+                If Not d0.export(b0) Then
+                    Return False
+                End If
+                Dim b1() As Byte = Nothing
+                If Not d1.export(b1) Then
+                    Return False
+                End If
+                Dim b2() As Byte = Nothing
+                If Not d2.export(b2) Then
+                    Return False
+                End If
+                b = array_concat(uint32_bytes(command.and),
+                                 b0,
+                                 b1,
+                                 b2)
+                Return True
+            End Function
+
+            Public Function export(ByRef s As String) As Boolean Implements exportable.export
+                Dim b As StringBuilder = Nothing
+                b = New StringBuilder()
+                b.Append(command_str(command.and))
+                If d0.export(s) Then
+                    b.Append(character.blank)
+                    b.Append(s)
+                Else
+                    Return False
+                End If
+
+                If d1.export(s) Then
+                    b.Append(character.blank)
+                    b.Append(s)
+                Else
+                    Return False
+                End If
+
+                If d2.export(s) Then
+                    b.Append(character.blank)
+                    b.Append(s)
+                Else
+                    Return False
+                End If
+
+                s = Convert.ToString(b)
+                Return True
+            End Function
+
+            Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import
+                Dim o As UInt32 = 0
+                Return assert(bytes_uint32(i, o, p) AndAlso o = command.and) AndAlso
+                       d0.import(i, p) AndAlso
+                       d1.import(i, p) AndAlso
+                       d2.import(i, p)
+            End Function
+
+            Public Function import(s As vector(Of String), ByRef p As UInt32) As Boolean Implements exportable.import
+                assert(Not s.null_or_empty() AndAlso s.size() > p)
+                assert(s(p) = command_str(command.and))
+                p += 1
+                Return True AndAlso
+                       d0.import(s, p) AndAlso
+                       d1.import(s, p) AndAlso
+                       d2.import(s, p)
+            End Function
+
+            Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
+                Return CompareTo(cast(Of [and])(obj, False))
+            End Function
+
+            Public Function CompareTo(ByVal other As [and]) As Int32 Implements IComparable(Of [and]).CompareTo
+                Dim c As Int32 = 0
+                c = object_compare(Me, other)
+                If c = object_compare_undetermined Then
+                    assert(Not other Is Nothing)
+                    c = Me.d0.CompareTo(other.d0)
+                    If c <> 0 Then
+                        Return c
+                    End If
+
+                    c = Me.d1.CompareTo(other.d1)
+                    If c <> 0 Then
+                        Return c
+                    End If
+
+                    c = Me.d2.CompareTo(other.d2)
+                    If c <> 0 Then
+                        Return c
+                    End If
+
+                    Return 0
+                Else
+                    Return c
+                End If
+            End Function
+
+            Public Overrides Function ToString() As String
+                Dim s As String = Nothing
+                assert(export(s))
+                Return s
+            End Function
+
+            Private Function p0(ByVal imi As imitation) As pointer(Of Byte())
+                assert(Not imi Is Nothing)
+                Dim p As pointer(Of Byte()) = Nothing
+                p = imi.access_stack(d0)
+                assert(Not p Is Nothing)
+                Return p
+            End Function
+
+            Private Function p1(ByVal imi As imitation) As pointer(Of Byte())
+                assert(Not imi Is Nothing)
+                Dim p As pointer(Of Byte()) = Nothing
+                p = imi.access_stack(d1)
+                assert(Not p Is Nothing)
+                Return p
+            End Function
+
+            Private Function p2(ByVal imi As imitation) As pointer(Of Byte())
+                assert(Not imi Is Nothing)
+                Dim p As pointer(Of Byte()) = Nothing
+                p = imi.access_stack(d2)
+                assert(Not p Is Nothing)
+                Return p
+            End Function
+        End Class
+
+        Partial Public NotInheritable Class [or]
+            Implements instruction, IComparable, IComparable(Of [or])
+
+            Private ReadOnly d0 As data_ref
+            Private ReadOnly d1 As data_ref
+            Private ReadOnly d2 As data_ref
+
+            Public Sub New()
+                d0 = New data_ref()
+                d1 = New data_ref()
+                d2 = New data_ref()
+            End Sub
+
+            Public Sub New( _
+                       ByVal d0 As data_ref,
+                       ByVal d1 As data_ref,
+                       ByVal d2 As data_ref)
+                Me.d0 = d0
+                Me.d1 = d1
+                Me.d2 = d2
+            End Sub
+
+            Public Function bytes_size() As UInt32 Implements exportable.bytes_size
+                Return sizeof_uint32 +
+                       d0.bytes_size() +
+                       d1.bytes_size() +
+                       d2.bytes_size()
+            End Function
+
+            Public Function export(ByRef b() As Byte) As Boolean Implements exportable.export
+                Dim b0() As Byte = Nothing
+                If Not d0.export(b0) Then
+                    Return False
+                End If
+                Dim b1() As Byte = Nothing
+                If Not d1.export(b1) Then
+                    Return False
+                End If
+                Dim b2() As Byte = Nothing
+                If Not d2.export(b2) Then
+                    Return False
+                End If
+                b = array_concat(uint32_bytes(command.or),
+                                 b0,
+                                 b1,
+                                 b2)
+                Return True
+            End Function
+
+            Public Function export(ByRef s As String) As Boolean Implements exportable.export
+                Dim b As StringBuilder = Nothing
+                b = New StringBuilder()
+                b.Append(command_str(command.or))
+                If d0.export(s) Then
+                    b.Append(character.blank)
+                    b.Append(s)
+                Else
+                    Return False
+                End If
+
+                If d1.export(s) Then
+                    b.Append(character.blank)
+                    b.Append(s)
+                Else
+                    Return False
+                End If
+
+                If d2.export(s) Then
+                    b.Append(character.blank)
+                    b.Append(s)
+                Else
+                    Return False
+                End If
+
+                s = Convert.ToString(b)
+                Return True
+            End Function
+
+            Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import
+                Dim o As UInt32 = 0
+                Return assert(bytes_uint32(i, o, p) AndAlso o = command.or) AndAlso
+                       d0.import(i, p) AndAlso
+                       d1.import(i, p) AndAlso
+                       d2.import(i, p)
+            End Function
+
+            Public Function import(s As vector(Of String), ByRef p As UInt32) As Boolean Implements exportable.import
+                assert(Not s.null_or_empty() AndAlso s.size() > p)
+                assert(s(p) = command_str(command.or))
+                p += 1
+                Return True AndAlso
+                       d0.import(s, p) AndAlso
+                       d1.import(s, p) AndAlso
+                       d2.import(s, p)
+            End Function
+
+            Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
+                Return CompareTo(cast(Of [or])(obj, False))
+            End Function
+
+            Public Function CompareTo(ByVal other As [or]) As Int32 Implements IComparable(Of [or]).CompareTo
+                Dim c As Int32 = 0
+                c = object_compare(Me, other)
+                If c = object_compare_undetermined Then
+                    assert(Not other Is Nothing)
+                    c = Me.d0.CompareTo(other.d0)
+                    If c <> 0 Then
+                        Return c
+                    End If
+
+                    c = Me.d1.CompareTo(other.d1)
+                    If c <> 0 Then
+                        Return c
+                    End If
+
+                    c = Me.d2.CompareTo(other.d2)
+                    If c <> 0 Then
+                        Return c
+                    End If
+
+                    Return 0
+                Else
+                    Return c
+                End If
+            End Function
+
+            Public Overrides Function ToString() As String
+                Dim s As String = Nothing
+                assert(export(s))
+                Return s
+            End Function
+
+            Private Function p0(ByVal imi As imitation) As pointer(Of Byte())
+                assert(Not imi Is Nothing)
+                Dim p As pointer(Of Byte()) = Nothing
+                p = imi.access_stack(d0)
+                assert(Not p Is Nothing)
+                Return p
+            End Function
+
+            Private Function p1(ByVal imi As imitation) As pointer(Of Byte())
+                assert(Not imi Is Nothing)
+                Dim p As pointer(Of Byte()) = Nothing
+                p = imi.access_stack(d1)
+                assert(Not p Is Nothing)
+                Return p
+            End Function
+
+            Private Function p2(ByVal imi As imitation) As pointer(Of Byte())
+                assert(Not imi Is Nothing)
+                Dim p As pointer(Of Byte()) = Nothing
+                p = imi.access_stack(d2)
+                assert(Not p Is Nothing)
+                Return p
+            End Function
+        End Class
+
+        Partial Public NotInheritable Class [not]
+            Implements instruction, IComparable, IComparable(Of [not])
+
+            Private ReadOnly d0 As data_ref
+            Private ReadOnly d1 As data_ref
+
+            Public Sub New()
+                d0 = New data_ref()
+                d1 = New data_ref()
+            End Sub
+
+            Public Sub New( _
+                       ByVal d0 As data_ref,
+                       ByVal d1 As data_ref)
+                Me.d0 = d0
+                Me.d1 = d1
+            End Sub
+
+            Public Function bytes_size() As UInt32 Implements exportable.bytes_size
+                Return sizeof_uint32 +
+                       d0.bytes_size() +
+                       d1.bytes_size()
+            End Function
+
+            Public Function export(ByRef b() As Byte) As Boolean Implements exportable.export
+                Dim b0() As Byte = Nothing
+                If Not d0.export(b0) Then
+                    Return False
+                End If
+                Dim b1() As Byte = Nothing
+                If Not d1.export(b1) Then
+                    Return False
+                End If
+                b = array_concat(uint32_bytes(command.not),
+                                 b0,
+                                 b1)
+                Return True
+            End Function
+
+            Public Function export(ByRef s As String) As Boolean Implements exportable.export
+                Dim b As StringBuilder = Nothing
+                b = New StringBuilder()
+                b.Append(command_str(command.not))
+                If d0.export(s) Then
+                    b.Append(character.blank)
+                    b.Append(s)
+                Else
+                    Return False
+                End If
+
+                If d1.export(s) Then
+                    b.Append(character.blank)
+                    b.Append(s)
+                Else
+                    Return False
+                End If
+
+                s = Convert.ToString(b)
+                Return True
+            End Function
+
+            Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import
+                Dim o As UInt32 = 0
+                Return assert(bytes_uint32(i, o, p) AndAlso o = command.not) AndAlso
+                       d0.import(i, p) AndAlso
+                       d1.import(i, p)
+            End Function
+
+            Public Function import(s As vector(Of String), ByRef p As UInt32) As Boolean Implements exportable.import
+                assert(Not s.null_or_empty() AndAlso s.size() > p)
+                assert(s(p) = command_str(command.not))
+                p += 1
+                Return True AndAlso
+                       d0.import(s, p) AndAlso
+                       d1.import(s, p)
+            End Function
+
+            Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
+                Return CompareTo(cast(Of [not])(obj, False))
+            End Function
+
+            Public Function CompareTo(ByVal other As [not]) As Int32 Implements IComparable(Of [not]).CompareTo
                 Dim c As Int32 = 0
                 c = object_compare(Me, other)
                 If c = object_compare_undetermined Then

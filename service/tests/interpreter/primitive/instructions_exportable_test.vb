@@ -214,6 +214,17 @@ Namespace primitive
             End Function
         End Class
 
+        Public Class leeq_exportable_test
+            Inherits exportable_test(Of [leeq])
+
+            Protected Overrides Function create() As [leeq]
+                Return New [leeq]( _
+                        data_ref.random(),
+                        data_ref.random(),
+                        data_ref.random())
+            End Function
+        End Class
+
         Public Class app_exportable_test
             Inherits exportable_test(Of [app])
 
@@ -303,6 +314,38 @@ Namespace primitive
 
             Protected Overrides Function create() As [empty]
                 Return New [empty]( _
+                        data_ref.random(),
+                        data_ref.random())
+            End Function
+        End Class
+
+        Public Class and_exportable_test
+            Inherits exportable_test(Of [and])
+
+            Protected Overrides Function create() As [and]
+                Return New [and]( _
+                        data_ref.random(),
+                        data_ref.random(),
+                        data_ref.random())
+            End Function
+        End Class
+
+        Public Class or_exportable_test
+            Inherits exportable_test(Of [or])
+
+            Protected Overrides Function create() As [or]
+                Return New [or]( _
+                        data_ref.random(),
+                        data_ref.random(),
+                        data_ref.random())
+            End Function
+        End Class
+
+        Public Class not_exportable_test
+            Inherits exportable_test(Of [not])
+
+            Protected Overrides Function create() As [not]
+                Return New [not]( _
                         data_ref.random(),
                         data_ref.random())
             End Function

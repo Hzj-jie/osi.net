@@ -42,9 +42,9 @@ Public Module _udpclient
 
     <Extension()> Public Function send(ByVal this As UdpClient,
                                        ByVal d() As Byte,
-                                       ByVal len As Int32,
+                                       ByVal len As UInt32,
                                        Optional ByVal r As pointer(Of UInt32) = Nothing) As event_comb
-        Return send(this, Function(ac) this.BeginSend(d, len, ac, Nothing), r)
+        Return send(this, Function(ac) this.BeginSend(d, CInt(len), ac, Nothing), r)
     End Function
 
     <Extension()> Public Function send(ByVal this As UdpClient,
@@ -57,15 +57,15 @@ Public Module _udpclient
                                        ByVal d() As Byte,
                                        ByVal len As UInt32,
                                        ByVal host As String,
-                                       ByVal port As Int32,
+                                       ByVal port As UInt16,
                                        Optional ByVal r As pointer(Of UInt32) = Nothing) As event_comb
-        Return send(this, Function(ac) this.BeginSend(d, len, host, port, ac, Nothing), r)
+        Return send(this, Function(ac) this.BeginSend(d, len, host, CInt(port), ac, Nothing), r)
     End Function
 
     <Extension()> Public Function send(ByVal this As UdpClient,
                                        ByVal d() As Byte,
                                        ByVal host As String,
-                                       ByVal port As Int32,
+                                       ByVal port As UInt16,
                                        Optional ByVal r As pointer(Of UInt32) = Nothing) As event_comb
         Return send(this, d, array_size(d), host, port, r)
     End Function

@@ -28,13 +28,17 @@ Namespace primitive
             [set](i)
         End Sub
 
+        Public Shared Function valid_offset(ByVal i As Int64) As Boolean
+            Return i <= max_value AndAlso i >= min_value
+        End Function
+
         Public Shared Function rel(ByVal i As Int64) As data_ref
-            assert(i <= max_value AndAlso i >= min_value)
+            assert(valid_offset(i))
             Return New data_ref() With {.r = True, .o = i}
         End Function
 
         Public Shared Function abs(ByVal i As Int64) As data_ref
-            assert(i <= max_value AndAlso i >= min_value)
+            assert(valid_offset(i))
             Return New data_ref() With {.r = False, .o = i}
         End Function
 

@@ -143,6 +143,7 @@ Namespace primitive
         Public Sub execute() Implements executor.execute
             If _instructions.empty() Then
                 halt(New executor_stop_error(executor.error_type.instruction_pointer_overflow))
+                Return
             End If
             _stop = False
             While True

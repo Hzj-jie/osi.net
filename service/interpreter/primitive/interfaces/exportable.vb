@@ -60,6 +60,13 @@ Namespace primitive
                    e.import(v)
         End Function
 
+        <Extension()> Public Function export(ByVal e As exportable) As String
+            assert(Not e Is Nothing)
+            Dim r As String = Nothing
+            assert(e.export(r))
+            Return r
+        End Function
+
         <Extension()> Public Function load_bitcode(ByVal e As exportable, ByVal f As String) As Boolean
             Dim a() As Byte = Nothing
             Try

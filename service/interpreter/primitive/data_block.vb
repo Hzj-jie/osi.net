@@ -1,13 +1,11 @@
 ﻿
 Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.delegates
 Imports osi.root.formation
-Imports osi.root.utils
 
 Namespace primitive
     Public Class data_block
-        Implements exportable, IComparable(Of data_block), IComparable
+        Implements exportable, IComparable(Of data_block), IComparable, ICloneable(Of data_block), ICloneable
 
         Public Class prefix
             Public Const [int] As Char = "i"c
@@ -63,8 +61,16 @@ Namespace primitive
             buff = int32_bytes(i)
         End Sub
 
+        Public Sub New(ByVal i As UInt32)
+            buff = uint32_bytes(i)
+        End Sub
+
         Public Sub New(ByVal l As Int64)
             buff = int64_bytes(l)
+        End Sub
+
+        Public Sub New(ByVal l As UInt64)
+            buff = uint64_bytes(l)
         End Sub
 
         Public Sub New(ByVal d As Double)
@@ -307,6 +313,14 @@ Namespace primitive
             Dim o As String = Nothing
             assert(str(prefix.array, o))
             Return o
+        End Function
+
+        Public Function CloneT() As data_block Implements ICloneable(Of data_block).Clone
+            Return New data_block(copy(buff))
+        End Function
+
+        Public Function Clone() As Object Implements ICloneable.Clone
+            Return CloneT()
         End Function
     End Class
 End Namespace

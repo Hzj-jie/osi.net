@@ -20,6 +20,7 @@ cpin	data_ref	#(*A) = IN
 stop	#finish execution, and leave the executor in a stop but not error status.
 equal	data_ref	data_ref	data_ref	#(*A) = ((*B big_uint) == (*C big_uint))
 less	data_ref	data_ref	data_ref	#(*A) = ((*B big_uint) < (*C big_uint))
+leeq	data_ref	data_ref	data_ref	#(*A) = ((*B big_uint) <= (*C big_uint))
 app	data_ref	data_ref	#(*A) += (*B)
 sapp	data_ref	data_ref	#(*A) += sizeof(*B) + (*B)
 cut	data_ref	data_ref	data_ref	#(*A) = sub-array(src=(*B uint), from=(*C uint))
@@ -29,3 +30,6 @@ clr	data_ref	#set (*A) to empty array
 scut	data_ref	data_ref	data_ref	#(*A) = the (*C uint) chunk of (*B)
 sizeof	data_ref	data_ref	#(*A) = array-size(*B)
 empty	data_ref	data_ref	#(*A) = ((*B) == null)
+and	data_ref	data_ref	data_ref	#(*A big_uint) = (*B big_uint) AND (*C big_uint)
+or	data_ref	data_ref	data_ref	#(*A big_uint) = (*B big_uint) OR (*C big_uint)
+not	data_ref	data_ref	#(*A big_uint) = NOT (*B big_uint)

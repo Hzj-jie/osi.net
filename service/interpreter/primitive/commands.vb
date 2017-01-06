@@ -8,6 +8,8 @@ Namespace primitive
         Sub New()
             ReDim str(command.COUNT - 1)
             For i As command = uint32_0 To command.COUNT - uint32_1
+                ' Note, there is no Convert.ToString([Enum]) overload, so Convert.ToString(i) falls back to
+                ' Convert.ToString(UInt32)
                 str(i) = i.ToString()
             Next
         End Sub

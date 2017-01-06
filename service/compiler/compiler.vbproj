@@ -55,7 +55,18 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="logic\compare.vb" />
+    <Compile Include="logic\condition.vb" />
+    <Compile Include="logic\define.vb" />
+    <Compile Include="logic\errors.vb" />
+    <Compile Include="logic\exportable.vb" />
+    <Compile Include="logic\compares.vb" />
+    <Compile Include="logic\extern_function.vb" />
+    <Compile Include="logic\move_const.vb" />
+    <Compile Include="logic\paragraph.vb" />
     <Compile Include="logic\scope.vb" />
+    <Compile Include="logic\move.vb" />
+    <Compile Include="logic\types.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

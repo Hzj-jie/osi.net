@@ -12,7 +12,9 @@ Namespace logic
             Return rnd_chars(rnd_int(1, 10))
         End Function
 
-        Private Shared Sub execute(ByVal s As scope, ByVal stack As vector(Of String), ByVal depth As Int32)
+        Private Shared Sub execute(ByVal s As scope,
+                                   ByVal stack As vector(Of pair(Of String, String)),
+                                   ByVal depth As Int32)
             assert(Not s Is Nothing)
             assert(Not stack Is Nothing)
             Dim c As Int32 = 0
@@ -20,18 +22,25 @@ Namespace logic
             For i As Int32 = 0 To c - 1
                 Dim name As String = Nothing
                 name = rnd_name()
-                If s.define(name) Then
-                    stack.emplace_back(name)
+                Dim type As String = Nothing
+                type = rnd_name()
+                If s.define(name, type) Then
+                    stack.emplace_back(emplace_make_pair(name, type))
                 End If
             Next
 
             For i As Int32 = 0 To stack.size() - 1
                 Dim offset As UInt32 = 0
-                If assert_true(s.export(stack(i), offset)) AndAlso assert_less(offset, stack.size()) Then
+                Dim type As String = Nothing
+                If assert_true(s.export(stack(i).first, offset)) AndAlso
+                   assert_less(offset, stack.size()) AndAlso
+                   assert_true(s.type(stack(i).first, type)) Then
                     If stack.size() - i - 1 > offset Then
-                        assert_equal(stack(stack.size() - offset - 1), stack(i))
+                        assert_equal(stack(stack.size() - offset - 1).first, stack(i).first)
+                        assert_equal(type, stack(stack.size() - offset - 1).second)
                     Else
                         assert_equal(offset, stack.size() - i - 1)
+                        assert_equal(type, stack(i).second)
                     End If
                 End If
             Next
@@ -40,8 +49,12 @@ Namespace logic
                 Dim name As String = Nothing
                 name = rnd_name()
                 Dim offset As UInt32 = 0
-                If s.export(name, offset) AndAlso assert_less(offset, stack.size()) Then
-                    assert_equal(stack(stack.size() - offset - 1), name)
+                Dim type As String = Nothing
+                If s.export(name, offset) AndAlso
+                   assert_less(offset, stack.size()) AndAlso
+                   assert_true(s.type(name, type)) Then
+                    assert_equal(stack(stack.size() - offset - 1).first, name)
+                    assert_equal(stack(stack.size() - offset - 1).second, type)
                 End If
             Next
 
@@ -55,8 +68,8 @@ Namespace logic
         End Sub
 
         Public Overrides Function run() As Boolean
-            Dim stack As vector(Of String) = Nothing
-            stack = New vector(Of String)()
+            Dim stack As vector(Of pair(Of String, String)) = Nothing
+            stack = New vector(Of pair(Of String, String))()
             Dim scope As scope = Nothing
             scope = New scope()
             execute(scope, stack, 0)
