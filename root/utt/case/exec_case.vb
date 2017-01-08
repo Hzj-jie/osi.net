@@ -111,7 +111,8 @@ Public Class exec_case
                             utt_raise_error("failed to stop ", process_name)
                         End If
                     End If
-                    Return p.exit_code() = expected_return
+                    assert_equal(p.exit_code(), expected_return)
+                    Return True
                 Else
                     If Not ex Is Nothing Then
                         assert_true(False, ex.Message())
