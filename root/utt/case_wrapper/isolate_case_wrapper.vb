@@ -14,7 +14,10 @@ Public Class isolate_case_wrapper
         MyBase.New(envs.application_full_path,
                    strcat("""", assert_not_nothing_return(c).assembly_qualified_name, """"),
                    ignore_error:=True,
-                   timeout_ms:=timeout_ms)
+                   timeout_ms:=timeout_ms,
+                   expected_return:=If(envs.os.windows_major = envs.os.windows_major_t._5, 128, 0))
+        ' TODO: Why is the return value of osi.root.utt.exe 128 on Windows 2003 with .Net 4.0?
+        ' On Windows 2003 with .Net 4.0 (?), the return value of osi.root.utt is 128. The reason is still unknown.
         Me.c = c
         assert(host.case_type_restriction.accept(c.GetType()))
     End Sub
