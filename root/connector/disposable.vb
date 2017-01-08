@@ -116,6 +116,7 @@ Public NotInheritable Class disposable(Of T)
 
     Shared Sub New()
         If type_info(Of T).is_object Then
+            raise_error(error_type.performance, "disposable(Of Object) is definitely a performance destroyer.")
             [default] = Sub(ByVal i As T)
                             If Not i Is Nothing Then
                                 Dim a As Action(Of T) = Nothing

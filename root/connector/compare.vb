@@ -171,6 +171,10 @@ Public Module _compare
                 End If
             Next
             contains_object = type_info(Of T).is_object OrElse type_info(Of T2).is_object
+            If contains_object Then
+                raise_error(error_type.performance,
+                            "compare_cache(Of *, Object) or compare_cache(Of Object, *) are defintely performance destroyers.")
+            End If
             If Not use_runtime_compare Then
                 If comparer(Of T, T2).defined() Then
                     c = comparer(Of T, T2).ref()
