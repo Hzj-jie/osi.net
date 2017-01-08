@@ -76,9 +76,7 @@ Public NotInheritable Class disposable
         td.Add(type_disposer.[New](d))
     End Sub
 
-    Public Shared Function find(Of T)(ByRef o As Action(Of T)) As Boolean
-        Dim type As Type = Nothing
-        type = GetType(T)
+    Public Shared Function find(Of T)(ByVal type As Type, ByRef o As Action(Of T)) As Boolean
         For Each p In td
             If type.is(p.t) Then
                 o = p.d.type_erase(Of T)()
@@ -86,6 +84,10 @@ Public NotInheritable Class disposable
             End If
         Next
         Return False
+    End Function
+
+    Public Shared Function find(Of T)(ByRef o As Action(Of T)) As Boolean
+        Return find(GetType(T), o)
     End Function
 
     Public Shared Function find(Of T)() As Action(Of T)
@@ -113,7 +115,19 @@ Public NotInheritable Class disposable(Of T)
     Private Shared ReadOnly [default] As Action(Of T)
 
     Shared Sub New()
-        [default] = disposable.find(Of T)()
+        If type_info(Of T).is_object Then
+            [default] = Sub(ByVal i As T)
+                            If Not i Is Nothing Then
+                                Dim a As Action(Of T) = Nothing
+                                If disposable.find(i.GetType(), a) Then
+                                    assert(Not a Is Nothing)
+                                    a(i)
+                                End If
+                            End If
+                        End Sub
+        Else
+            [default] = disposable.find(Of T)()
+        End If
     End Sub
 
     Public Shared Sub register(ByVal d As Action(Of T))
@@ -137,8 +151,9 @@ Public NotInheritable Class disposable(Of T)
     Public Shared Sub dispose(ByVal v As T)
         Dim a As Action(Of T) = Nothing
         a = D()
-        assert(Not a Is Nothing)
-        a(v)
+        If Not a Is Nothing Then
+            a(v)
+        End If
     End Sub
 
     Private Sub New()

@@ -4,12 +4,10 @@ Imports osi.root.delegates
 
 Public Class lifetime_binder(Of T As Class)
     Public Shared ReadOnly instance As lifetime_binder(Of T) = Nothing
-    Private Shared ReadOnly disposer As Action(Of T)
     Private ReadOnly s As object_unique_pointer_set(Of T) = Nothing
 
     Shared Sub New()
         instance = New lifetime_binder(Of T)()
-        disposer = disposable(Of T).D()
     End Sub
 
     Protected Sub New()
@@ -35,13 +33,11 @@ Public Class lifetime_binder(Of T As Class)
     End Function
 
     Public Sub clear()
-        If Not disposer Is Nothing Then
-            assert(s.foreach(Function(ByRef i As pointer(Of T), ByRef c As Boolean) As Boolean
-                                 disposer(+i)
-                                 c = True
-                                 Return True
-                             End Function))
-        End If
+        assert(s.foreach(Function(ByRef i As pointer(Of T), ByRef c As Boolean) As Boolean
+                             disposable.dispose(+i)
+                             c = True
+                             Return True
+                         End Function))
         s.clear()
     End Sub
 

@@ -13,8 +13,11 @@
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.root.utils
 
 Public NotInheritable Class slimheapless_threadpool2
+    Implements IDisposable
+
     Private ReadOnly q As waitable_slimheapless(Of Action)
     Private ReadOnly rs() As slimheapless_runner
 
@@ -61,8 +64,8 @@ Public NotInheritable Class slimheapless_threadpool2
             Dim r As Boolean = False
             r = True
             For i As UInt32 = 0 To array_size(rs) - uint32_1
-                If rs(i).stop() Then
-                    r = True
+                If Not rs(i).stop() Then
+                    r = False
                 End If
             Next
             Return r
@@ -120,6 +123,10 @@ Public NotInheritable Class slimheapless_threadpool2
         For i As UInt32 = 0 To array_size(rs) - uint32_1
             rs(i).join()
         Next
+    End Sub
+
+    Public Sub Dispose() Implements IDisposable.Dispose
+        [stop]()
     End Sub
 
     Public Shared Operator +(ByVal this As slimheapless_threadpool2, ByVal that As Action) As slimheapless_threadpool2

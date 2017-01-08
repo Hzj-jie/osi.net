@@ -4,7 +4,7 @@ Imports System.Threading
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.envs
-Imports osi.root.event
+Imports osi.root.utils
 Imports osi.root.lock
 Imports QUEUE_TYPE = osi.root.formation.slimheapless(Of System.Action)
 

@@ -68,7 +68,6 @@
     <Compile Include="default_new.vb" />
     <Compile Include="disposable.vb" />
     <Compile Include="endian.vb" />
-    <Compile Include="global_instance.vb" />
     <Compile Include="ICloneable.vb" />
     <Compile Include="null_wait_handle.vb" />
     <Compile Include="string_utils\utf8_char.vb" />

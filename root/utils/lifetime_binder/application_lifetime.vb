@@ -1,9 +1,7 @@
 ﻿
 Imports osi.root.formation
-Imports osi.root.envs
 Imports osi.root.connector
 Imports osi.root.lock
-Imports osi.root.delegates
 
 Public Class application_lifetime_binder(Of T As Class)
     Inherits lifetime_binder(Of T)
@@ -21,7 +19,7 @@ Public Class application_lifetime_binder(Of T As Class)
 End Class
 
 Public Class application_lifetime_binder
-    Inherits application_lifetime_binder(Of Object)
+    Inherits application_lifetime_binder(Of IDisposable)
 End Class
 
 Public Class application_lifetime

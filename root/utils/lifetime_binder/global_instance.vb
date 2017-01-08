@@ -1,4 +1,5 @@
 ﻿
+Imports osi.root.connector
 Imports osi.root.template
 
 Public NotInheritable Class global_instance(Of T, _new As _new(Of T))
@@ -18,6 +19,9 @@ Public NotInheritable Class global_instance(Of T, _new As _new(Of T))
 
         Shared Sub New()
             v = +alloc(Of _new)()
+            application_lifetime.stopping_handle(Sub()
+                                                     disposable.dispose(v)
+                                                 End Sub)
             initialized.v = True
         End Sub
 
