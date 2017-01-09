@@ -33,7 +33,7 @@ Public Class object_unique_set(Of T As Class, THREADSAFE As _boolean)
                 Return False
             End If
         Next
-        v.push_back(o)
+        v.emplace_back(o)
         Return True
     End Function
 
