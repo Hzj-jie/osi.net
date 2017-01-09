@@ -11,7 +11,7 @@ Namespace primitive
     End Interface
 
     Public NotInheritable Class instruction_builder
-        Public Shared Function str(ByVal command As command, ParamArray ByVal args() As String) As String
+        Public Shared Function str(ByVal command As command, ParamArray ByVal args() As Object) As String
             Dim s As StringBuilder = Nothing
             s = New StringBuilder()
             s.Append(command_str(command))

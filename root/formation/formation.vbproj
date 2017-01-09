@@ -164,6 +164,8 @@
     <Compile Include="tuple7.vb" />
     <Compile Include="tuple8.vb" />
     <Compile Include="unique_ptr.vb" />
+    <Compile Include="unordered_map.vb" />
+    <Compile Include="unordered_set.vb" />
     <Compile Include="vector.adaptive_array.vb" />
     <Compile Include="vector.vb" />
     <None Include="binary_tree\codegen\bt.iterator.vbp" />

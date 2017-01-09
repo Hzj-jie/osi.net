@@ -1,5 +1,24 @@
 ﻿
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+
+Public Module _unique_ptr
+    <Extension()> Public Function get_or_null(Of T As Class)(ByVal p As unique_ptr(Of T)) As T
+        If p Is Nothing Then
+            Return Nothing
+        Else
+            Return p.get()
+        End If
+    End Function
+
+    <Extension()> Public Function release_or_null(Of T As Class)(ByVal p As unique_ptr(Of T)) As T
+        If p Is Nothing Then
+            Return Nothing
+        Else
+            Return p.release()
+        End If
+    End Function
+End Module
 
 Public NotInheritable Class unique_ptr
     Public Shared Function [New](Of T As Class)(ByVal p As T) As unique_ptr(Of T)

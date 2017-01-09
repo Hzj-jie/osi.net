@@ -25,27 +25,14 @@ Namespace logic
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not scope Is Nothing)
             assert(Not o Is Nothing)
-            Dim target_ref As String = Nothing
-            Dim target_type As String = Nothing
-            If Not scope.export(target, target_ref) OrElse
-               Not assert(scope.type(target, target_type)) Then
-                errors.variable_undefined(target)
-                Return False
-            End If
-
-            Dim source_ref As String = Nothing
-            Dim source_type As String = Nothing
-            If Not scope.export(source, source_ref) OrElse
-               Not assert(scope.type(source, source_type)) Then
-                errors.variable_undefined(source)
-                Return False
-            End If
-
-            If types.is_assignable(source_type, target_type) Then
-                o.emplace_back(instruction_builder.str(command.mov, target_ref, source_ref))
+            Dim t As variable = Nothing
+            Dim s As variable = Nothing
+            If variable.[New](scope, types, target, t) AndAlso
+               variable.[New](scope, types, source, s) AndAlso
+               t.is_assignable_from(s) Then
+                o.emplace_back(instruction_builder.str(command.mov, t.ref, s.ref))
                 Return True
             Else
-                errors.unassignable(target, target_type, source, source_type)
                 Return False
             End If
         End Function

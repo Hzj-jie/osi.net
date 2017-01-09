@@ -12,38 +12,63 @@ Namespace logic
             raise_error(error_type.user, "Extern function ", name, " is undefined.")
         End Sub
 
-        Public Shared Sub unassignable_bool(ByVal variable As String, ByVal type As String)
-            raise_error(error_type.user, variable, " [", type, "] is not assignable from bool.")
+        Public Shared Sub unassignable_from_bool(ByVal v As variable)
+            assert(Not v Is Nothing)
+            raise_error(error_type.user, "Variable ", v.name, " [", v.type, "] is not assignable from bool.")
         End Sub
 
-        Public Shared Sub redefine(ByVal variable As String, ByVal type As String, ByVal last_type As String)
-            raise_error(error_type.user, "Variable ", variable, " [", type, "] redefined, last type ", last_type)
+        Public Shared Sub unassignable_from_uint32(ByVal v As variable)
+            assert(Not v Is Nothing)
+            raise_error(error_type.user, "Variable ", v.name, " [", v.type, "] is not assignable from uint32.")
         End Sub
 
-        Public Shared Sub unassignable(ByVal target As String,
-                                       ByVal target_type As String,
-                                       ByVal source As String,
-                                       ByVal source_type As String)
+        Public Shared Sub unassignable_to_uint32(ByVal v As variable)
+            assert(Not v Is Nothing)
+            raise_error(error_type.user, "Variable ", v.name, " [", v.type, "] is not assignable to uint32.")
+        End Sub
+
+        Public Shared Sub redefine(ByVal name As String, ByVal type As String, ByVal last_type As String)
+            raise_error(error_type.user, "Variable ", name, " [", type, "] redefined, last type ", last_type)
+        End Sub
+
+        Public Shared Sub unassignable(ByVal target As variable, ByVal source As variable)
+            assert(Not target Is Nothing)
+            assert(Not source Is Nothing)
             raise_error(error_type.user,
                         "Source ",
-                        source,
+                        source.name,
                         " [",
-                        source_type,
+                        source.type,
                         "] and target ",
-                        target,
+                        target.name,
                         " [",
-                        target_type,
+                        target.type,
                         "] have different size, unassignable.")
         End Sub
 
-        Public Shared Sub unassignable_array(ByVal target As String, ByVal target_type As String, ByVal size As UInt32)
+        Public Shared Sub unassignable_array(ByVal target As variable, ByVal size As UInt32)
+            assert(Not target Is Nothing)
             raise_error(error_type.user,
                         "Target ",
-                        target,
+                        target.name,
                         " [",
-                        target_type,
+                        target.type,
                         "] is not assignable from byte array with size ",
                         size)
+        End Sub
+
+        Public Shared Sub unassignable_variable_size(ByVal target As variable)
+            assert(Not target Is Nothing)
+            raise_error(error_type.user,
+                        "Target ",
+                        target.name,
+                        " [",
+                        target.type,
+                        "] is not a variable size type.")
+        End Sub
+
+        Public Shared Sub type_undefined(ByVal type As String, ByVal target As String)
+            raise_error(error_type.user, "Type ", type, " referred by target ", target, " is undefined.")
         End Sub
 
         Private Sub New()

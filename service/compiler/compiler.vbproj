@@ -55,18 +55,32 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="logic\binary_math_operator.vb" />
+    <Compile Include="logic\binary_operator.vb" />
     <Compile Include="logic\compare.vb" />
     <Compile Include="logic\condition.vb" />
+    <Compile Include="logic\data_ref_operator.vb" />
     <Compile Include="logic\define.vb" />
+    <Compile Include="logic\do_until.vb" />
+    <Compile Include="logic\do_while.vb" />
     <Compile Include="logic\errors.vb" />
     <Compile Include="logic\exportable.vb" />
     <Compile Include="logic\compares.vb" />
     <Compile Include="logic\extern_function.vb" />
     <Compile Include="logic\move_const.vb" />
+    <Compile Include="logic\binary_math_operators.vb" />
+    <Compile Include="logic\pair_result_binary_operator.vb" />
+    <Compile Include="logic\pair_result_binary_operators.vb" />
     <Compile Include="logic\paragraph.vb" />
     <Compile Include="logic\scope.vb" />
     <Compile Include="logic\move.vb" />
+    <Compile Include="logic\array_operators.vb" />
+    <Compile Include="logic\ternary_operator.vb" />
     <Compile Include="logic\types.vb" />
+    <Compile Include="logic\unary_operator.vb" />
+    <Compile Include="logic\unary_operators.vb" />
+    <Compile Include="logic\variable.vb" />
+    <Compile Include="logic\while_then.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

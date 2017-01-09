@@ -24,6 +24,15 @@ Namespace logic
             End If
         End Sub
 
+        Public Function push(ByVal e As exportable) As Boolean
+            If e Is Nothing Then
+                Return False
+            Else
+                s.emplace_back(e)
+                Return True
+            End If
+        End Function
+
         Public Function export(ByVal scope As scope,
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not scope Is Nothing)

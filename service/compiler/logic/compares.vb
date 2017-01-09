@@ -10,27 +10,21 @@ Namespace logic
             MyBase.New(types, left, right, result)
         End Sub
 
-        Protected Overrides Sub export(ByVal left_ref As String,
-                                       ByVal right_ref As String,
-                                       ByVal result_ref As String,
-                                       ByVal o As vector(Of String))
-            o.emplace_back(instruction_builder.str(command.less, result_ref, left_ref, right_ref))
-        End Sub
+        Protected Overrides Function instruction() As command
+            Return command.less
+        End Function
     End Class
 
     Public Class more
         Inherits compare
 
         Public Sub New(ByVal types As types, ByVal left As String, ByVal right As String, ByVal result As String)
-            MyBase.New(types, left, right, result)
+            MyBase.New(types, right, left, result)
         End Sub
 
-        Protected Overrides Sub export(ByVal left_ref As String,
-                                       ByVal right_ref As String,
-                                       ByVal result_ref As String,
-                                       ByVal o As vector(Of String))
-            o.emplace_back(instruction_builder.str(command.less, result_ref, right_ref, left_ref))
-        End Sub
+        Protected Overrides Function instruction() As command
+            Return command.less
+        End Function
     End Class
 
     Public Class less_or_equal
@@ -40,27 +34,21 @@ Namespace logic
             MyBase.New(types, left, right, result)
         End Sub
 
-        Protected Overrides Sub export(ByVal left_ref As String,
-                                       ByVal right_ref As String,
-                                       ByVal result_ref As String,
-                                       ByVal o As vector(Of String))
-            o.emplace_back(instruction_builder.str(command.leeq, result_ref, left_ref, right_ref))
-        End Sub
+        Protected Overrides Function instruction() As command
+            Return command.leeq
+        End Function
     End Class
 
     Public Class more_or_equal
         Inherits compare
 
         Public Sub New(ByVal types As types, ByVal left As String, ByVal right As String, ByVal result As String)
-            MyBase.New(types, left, right, result)
+            MyBase.New(types, right, left, result)
         End Sub
 
-        Protected Overrides Sub export(ByVal left_ref As String,
-                                       ByVal right_ref As String,
-                                       ByVal result_ref As String,
-                                       ByVal o As vector(Of String))
-            o.emplace_back(instruction_builder.str(command.leeq, result_ref, right_ref, left_ref))
-        End Sub
+        Protected Overrides Function instruction() As command
+            Return command.leeq
+        End Function
     End Class
 
     Public Class equal
@@ -70,11 +58,8 @@ Namespace logic
             MyBase.New(types, left, right, result)
         End Sub
 
-        Protected Overrides Sub export(ByVal left_ref As String,
-                                       ByVal right_ref As String,
-                                       ByVal result_ref As String,
-                                       ByVal o As vector(Of String))
-            o.emplace_back(instruction_builder.str(command.equal, result_ref, right_ref, left_ref))
-        End Sub
+        Protected Overrides Function instruction() As command
+            Return command.equal
+        End Function
     End Class
 End Namespace

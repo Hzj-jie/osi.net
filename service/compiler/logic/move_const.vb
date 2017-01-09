@@ -25,19 +25,12 @@ Namespace logic
         Public Function export(ByVal scope As scope,
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not scope Is Nothing)
-            Dim target_ref As String = Nothing
-            Dim target_type As String = Nothing
-            If Not scope.export(target, target_ref) OrElse
-               Not assert(scope.type(target, target_type)) Then
-                errors.variable_undefined(target)
-                Return False
-            End If
-
-            If types.is_assignable(target_type, data.bytes_size()) Then
-                o.emplace_back(instruction_builder.str(command.movc, target_ref, data.export()))
+            Dim t As variable = Nothing
+            If variable.[New](scope, types, target, t) AndAlso
+               t.is_assignable_from(data.bytes_size()) Then
+                o.emplace_back(instruction_builder.str(command.movc, t.ref, data.export()))
                 Return True
             Else
-                errors.unassignable_array(target, target_type, data.bytes_size())
                 Return False
             End If
         End Function

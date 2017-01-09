@@ -46,16 +46,15 @@ Namespace logic
                 Return False
             End If
 
-            Dim parameter_ref As String = Nothing
-            If Not scope.export(parameter, parameter_ref) Then
-                errors.variable_undefined(parameter)
+            Dim p As variable = Nothing
+            If Not variable.[New](scope, parameter, p) Then
                 Return False
             End If
 
-            Dim result_ref As String = Nothing
-            assert(scope.export(result, result_ref))  ' Otherwise movc.export() should not succeed.
+            Dim r As variable = Nothing
+            assert(variable.[New](scope, result, r))  ' Otherwise movc.export() should not succeed.
 
-            o.emplace_back(instruction_builder.str(command.extern, parameter_ref, result_ref))
+            o.emplace_back(instruction_builder.str(command.extern, p.ref, r.ref))
             Return True
         End Function
     End Class

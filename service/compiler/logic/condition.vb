@@ -1,6 +1,7 @@
 ﻿
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public Class condition
@@ -11,18 +12,42 @@ Namespace logic
         Private ReadOnly false_path As paragraph
 
         Public Sub New(ByVal v As String,
-                       ByVal true_path As paragraph,
-                       Optional ByVal false_path As paragraph = Nothing)
+                       ByVal true_path As unique_ptr(Of paragraph),
+                       Optional ByVal false_path As unique_ptr(Of paragraph) = Nothing)
             assert(Not String.IsNullOrEmpty(v))
-            assert(Not true_path Is Nothing)
+            assert(true_path)
             Me.v = v
-            Me.true_path = true_path
-            Me.false_path = false_path
+            Me.true_path = true_path.release()
+            Me.false_path = false_path.release_or_null()
         End Sub
 
         Public Function export(ByVal scope As scope,
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
+            assert(Not scope Is Nothing)
+            assert(Not o Is Nothing)
+            Dim var As variable = Nothing
+            If Not variable.[New](scope, v, var) Then
+                Return False
+            End If
 
+            Dim true_o As vector(Of String) = Nothing
+            true_o = New vector(Of String)()
+            If Not true_path.export(scope, true_o) Then
+                Return False
+            End If
+
+            Dim false_o As vector(Of String) = Nothing
+            false_o = New vector(Of String)()
+            If Not false_path Is Nothing AndAlso Not false_path.export(scope, false_o) Then
+                Return False
+            End If
+            false_o.emplace_back(instruction_builder.str(command.jump, data_ref.rel(true_o.size())))
+
+            o.emplace_back(instruction_builder.str(command.jumpif, var.ref))
+            assert(o.emplace_back(false_o))
+            assert(o.emplace_back(true_o))
+
+            Return True
         End Function
     End Class
 End Namespace

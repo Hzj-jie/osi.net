@@ -385,10 +385,26 @@ Public NotInheritable Class vector(Of T)
         Return push_back(vs, start, n, False)
     End Function
 
+    Public Function emplace_back(ByVal v As vector(Of T)) As Boolean
+        If v Is Nothing Then
+            Return False
+        Else
+            Return assert(emplace_back(v.data(), uint32_0, v.size()))
+        End If
+    End Function
+
     Public Function push_back(ByVal vs() As T,
                               Optional ByVal start As UInt32 = 0,
                               Optional ByVal n As UInt32 = max_uint32) As Boolean
         Return push_back(vs, start, n, True)
+    End Function
+
+    Public Function push_back(ByVal v As vector(Of T)) As Boolean
+        If v Is Nothing Then
+            Return False
+        Else
+            Return assert(push_back(v.data(), uint32_0, v.size()))
+        End If
     End Function
 
     '.net implementations

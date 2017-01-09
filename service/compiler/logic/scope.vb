@@ -8,7 +8,6 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public Class scope
-        ' The offset of current scope, i.e. the sum of all its ancient scopes.
         Private ReadOnly parent As scope
         Private ReadOnly offsets As map(Of String, UInt64)
         Private ReadOnly types As map(Of String, String)

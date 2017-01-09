@@ -52,7 +52,7 @@ Namespace primitive
         [app]
         ' (*A) += sizeof(*B) + (*B) 
         [sapp]
-        ' (*A) = sub-array(src=(*B uint), from=(*C uint)) 
+        ' (*A) = sub-array(src=(*B), from=(*C uint)) 
         [cut]
         ' (*A) = sub-array(src=(*B), from=(*C uint), len=(*D uint)) 
         [cutl]

@@ -24,32 +24,6 @@ Namespace logic
             define(type, variable_size)
         End Sub
 
-        Public Function is_size(ByVal type As String, ByVal size As UInt32, ByRef o As Boolean) As Boolean
-            Dim exp_size As UInt32 = 0
-            If retrieve(type, exp_size) Then
-                o = (size = exp_size)
-                Return True
-            Else
-                Return False
-            End If
-        End Function
-
-        Public Function is_size(ByVal type As String, ByVal size As UInt32) As Boolean
-            Dim o As Boolean = False
-            assert(is_size(type, size, o))
-            Return o
-        End Function
-
-        Public Function is_variable_size(ByVal type As String, ByRef o As Boolean) As Boolean
-            Return is_size(type, variable_size, o)
-        End Function
-
-        Public Function is_variable_size(ByVal type As String) As Boolean
-            Dim o As Boolean = False
-            assert(is_variable_size(type, o))
-            Return o
-        End Function
-
         Public Shared Function is_variable_size(ByVal size As UInt32) As Boolean
             Return size = variable_size
         End Function
@@ -60,20 +34,6 @@ Namespace logic
 
         Public Function retrieve(ByVal type As String, ByRef size As UInt32) As Boolean
             Return sizes.find(type, size)
-        End Function
-
-        Public Function is_assignable(ByVal [from] As String, ByVal [to] As String) As Boolean
-            Dim from_size As UInt32 = 0
-            Dim to_size As UInt32 = 0
-            Return retrieve([from], from_size) AndAlso
-                   retrieve([to], to_size) AndAlso
-                   is_size_or_variable(to_size, from_size)
-        End Function
-
-        Public Function is_assignable(ByVal [to] As String, ByVal size As UInt32) As Boolean
-            Dim to_size As UInt32 = 0
-            Return retrieve([to], to_size) AndAlso
-                   is_size_or_variable(to_size, size)
         End Function
     End Class
 End Namespace
