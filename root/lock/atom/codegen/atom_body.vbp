@@ -32,11 +32,17 @@ Partial Public Class ##BASE_TYPE##
     End Sub
 
 	Public Function exchange(ByVal value As ##TYPE##) As ##TYPE##
-	    Return Interlocked.Exchange(p, value)
+        Dim r As ##TYPE## = Nothing
+        r = Interlocked.Exchange(p, value)
+        Thread.MemoryBarrier()
+        Return r
 	End Function
 
     Public Function compare_exchange(ByVal value As ##TYPE##, ByVal comparand As ##TYPE##) As ##TYPE##
-        Return Interlocked.CompareExchange(p, value, comparand)
+        Dim r As ##TYPE## = Nothing
+        r = Interlocked.CompareExchange(p, value, comparand)
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Shared Operator +(ByVal this As ##BASE_TYPE##) As ##TYPE##

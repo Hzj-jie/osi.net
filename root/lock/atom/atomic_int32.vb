@@ -47,11 +47,17 @@ Partial Public Class atomic_int32(Of LOCK_T As {islimlock, Structure})
     End Sub
 
 	Public Function exchange(ByVal value As Int32) As Int32
-	    Return Interlocked.Exchange(p, value)
+        Dim r As Int32 = Nothing
+        r = Interlocked.Exchange(p, value)
+        Thread.MemoryBarrier()
+        Return r
 	End Function
 
     Public Function compare_exchange(ByVal value As Int32, ByVal comparand As Int32) As Int32
-        Return Interlocked.CompareExchange(p, value, comparand)
+        Dim r As Int32 = Nothing
+        r = Interlocked.CompareExchange(p, value, comparand)
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Shared Operator +(ByVal this As atomic_int32(Of LOCK_T)) As Int32
@@ -76,15 +82,24 @@ End Class
 
 Partial Public Class atomic_int32(Of LOCK_T As {islimlock, Structure})
     Public Function increment() As Int32
-        Return Interlocked.Increment(p)
+        Dim r As Int32 = 0
+        r = Interlocked.Increment(p)
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Function decrement() As Int32
-        Return Interlocked.Decrement(p)
+        Dim r As Int32 = 0
+        r = Interlocked.Decrement(p)
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Function add(ByVal i As Int32) As Int32
-        Return Interlocked.Add(p, i)
+        Dim r As Int32 = 0
+        r = Interlocked.Add(p, i)
+        Thread.MemoryBarrier()
+        Return r
     End Function
 End Class
 'finish atomic_int.vbp --------

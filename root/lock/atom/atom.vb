@@ -41,11 +41,17 @@ Partial Public Class atom(Of T, LOCK_T As {islimlock, Structure})
     End Sub
 
 	Public Function exchange(ByVal value As T) As T
-	    Return Interlocked.Exchange(p, value)
+        Dim r As T = Nothing
+        r = Interlocked.Exchange(p, value)
+        Thread.MemoryBarrier()
+        Return r
 	End Function
 
     Public Function compare_exchange(ByVal value As T, ByVal comparand As T) As T
-        Return Interlocked.CompareExchange(p, value, comparand)
+        Dim r As T = Nothing
+        r = Interlocked.CompareExchange(p, value, comparand)
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Shared Operator +(ByVal this As atom(Of T, LOCK_T)) As T

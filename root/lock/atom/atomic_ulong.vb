@@ -35,28 +35,46 @@ Public Class atomic_ulong
     End Function
 
     Public Function add(ByVal i As UInt64) As UInt64
-        Return int64_uint64(Interlocked.Add(Me.i, uint64_int64(i)))
+        Dim r As UInt64 = 0
+        r = int64_uint64(Interlocked.Add(Me.i, uint64_int64(i)))
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Function add(ByVal i As Int64) As UInt64
-        Return int64_uint64(Interlocked.Add(Me.i, i))
+        Dim r As UInt64 = 0
+        r = int64_uint64(Interlocked.Add(Me.i, i))
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Function increment() As UInt64
-        Return int64_uint64(Interlocked.Increment(i))
+        Dim r As UInt64 = 0
+        r = int64_uint64(Interlocked.Increment(i))
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Function decrement() As UInt64
-        Return int64_uint64(Interlocked.Decrement(i))
+        Dim r As UInt64 = 0
+        r = int64_uint64(Interlocked.Decrement(i))
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Function exchange(ByVal x As UInt64) As UInt64
-        Return int64_uint64(Interlocked.Exchange(i, uint64_int64(x)))
+        Dim r As UInt64 = 0
+        r = int64_uint64(Interlocked.Exchange(i, uint64_int64(x)))
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Function compare_exchange(ByVal value As UInt64,
                                      ByVal comparand As UInt64) As UInt64
-        Return int64_uint64(Interlocked.CompareExchange(i, uint64_int64(value), uint64_int64(comparand)))
+        Dim r As UInt64 = 0
+        r = int64_uint64(Interlocked.CompareExchange(i, uint64_int64(value), uint64_int64(comparand)))
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Shared Operator +(ByVal i As atomic_ulong) As UInt64

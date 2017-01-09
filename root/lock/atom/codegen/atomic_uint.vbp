@@ -28,28 +28,46 @@ Public Class atomic_##NAME##
     End Function
 
     Public Function add(ByVal i As ##OUT_TYPE##) As ##OUT_TYPE##
-        Return ##STORE_OUT##(Interlocked.Add(Me.i, ##OUT_STORE##(i)))
+        Dim r As ##OUT_TYPE## = 0
+        r = ##STORE_OUT##(Interlocked.Add(Me.i, ##OUT_STORE##(i)))
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Function add(ByVal i As ##STORE_TYPE##) As ##OUT_TYPE##
-        Return ##STORE_OUT##(Interlocked.Add(Me.i, i))
+        Dim r As ##OUT_TYPE## = 0
+        r = ##STORE_OUT##(Interlocked.Add(Me.i, i))
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Function increment() As ##OUT_TYPE##
-        Return ##STORE_OUT##(Interlocked.Increment(i))
+        Dim r As ##OUT_TYPE## = 0
+        r = ##STORE_OUT##(Interlocked.Increment(i))
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Function decrement() As ##OUT_TYPE##
-        Return ##STORE_OUT##(Interlocked.Decrement(i))
+        Dim r As ##OUT_TYPE## = 0
+        r = ##STORE_OUT##(Interlocked.Decrement(i))
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Function exchange(ByVal x As ##OUT_TYPE##) As ##OUT_TYPE##
-        Return ##STORE_OUT##(Interlocked.Exchange(i, ##OUT_STORE##(x)))
+        Dim r As ##OUT_TYPE## = 0
+        r = ##STORE_OUT##(Interlocked.Exchange(i, ##OUT_STORE##(x)))
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Function compare_exchange(ByVal value As ##OUT_TYPE##,
                                      ByVal comparand As ##OUT_TYPE##) As ##OUT_TYPE##
-        Return ##STORE_OUT##(Interlocked.CompareExchange(i, ##OUT_STORE##(value), ##OUT_STORE##(comparand)))
+        Dim r As ##OUT_TYPE## = 0
+        r = ##STORE_OUT##(Interlocked.CompareExchange(i, ##OUT_STORE##(value), ##OUT_STORE##(comparand)))
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Shared Operator +(ByVal i As atomic_##NAME##) As ##OUT_TYPE##

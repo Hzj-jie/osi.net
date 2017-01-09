@@ -14,4 +14,6 @@ precompile atomic_int32.vbp > atomic_int32.vb
 precompile atomic_long.vbp > atomic_long.vb
 precompile atomic_int64.vbp > atomic_int64.vb
 
+move /Y *.vb ..\
+
 endlocal

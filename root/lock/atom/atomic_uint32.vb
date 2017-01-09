@@ -34,28 +34,46 @@ Public Class atomic_uint32
     End Function
 
     Public Function add(ByVal i As UInt32) As UInt32
-        Return int32_uint32(Interlocked.Add(Me.i, uint32_int32(i)))
+        Dim r As UInt32 = 0
+        r = int32_uint32(Interlocked.Add(Me.i, uint32_int32(i)))
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Function add(ByVal i As Int32) As UInt32
-        Return int32_uint32(Interlocked.Add(Me.i, i))
+        Dim r As UInt32 = 0
+        r = int32_uint32(Interlocked.Add(Me.i, i))
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Function increment() As UInt32
-        Return int32_uint32(Interlocked.Increment(i))
+        Dim r As UInt32 = 0
+        r = int32_uint32(Interlocked.Increment(i))
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Function decrement() As UInt32
-        Return int32_uint32(Interlocked.Decrement(i))
+        Dim r As UInt32 = 0
+        r = int32_uint32(Interlocked.Decrement(i))
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Function exchange(ByVal x As UInt32) As UInt32
-        Return int32_uint32(Interlocked.Exchange(i, uint32_int32(x)))
+        Dim r As UInt32 = 0
+        r = int32_uint32(Interlocked.Exchange(i, uint32_int32(x)))
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Function compare_exchange(ByVal value As UInt32,
                                      ByVal comparand As UInt32) As UInt32
-        Return int32_uint32(Interlocked.CompareExchange(i, uint32_int32(value), uint32_int32(comparand)))
+        Dim r As UInt32 = 0
+        r = int32_uint32(Interlocked.CompareExchange(i, uint32_int32(value), uint32_int32(comparand)))
+        Thread.MemoryBarrier()
+        Return r
     End Function
 
     Public Shared Operator +(ByVal i As atomic_uint32) As UInt32
