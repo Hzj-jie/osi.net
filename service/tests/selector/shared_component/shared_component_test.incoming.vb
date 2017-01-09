@@ -57,13 +57,14 @@ Partial Public Class shared_component_test
                                                                       assert_less_or_equal(s.size(), exp_size)
                                                                       Return s.size() = exp_size
                                                                   End Function,
-                                                                  second_milli)) Then
-                            assert_true(async_sync(s.back().receiver.receive(p), second_milli), "@", i, "-", j)
+                                                                  seconds_to_milliseconds(10))) Then
+                            assert_true(async_sync(s.back().receiver.receive(p), seconds_to_milliseconds(10)),
+                                        "@", i, "-", j)
                             assert_equal(+p, 200, "@", i, "-", j)
 
                             For k As Int32 = 0 To 1000
                                 component.get().push(k, i, j)
-                                assert_true(async_sync(s.back().receiver.receive(p), second_milli))
+                                assert_true(async_sync(s.back().receiver.receive(p), seconds_to_milliseconds(10)))
                                 assert_equal(+p, k)
                             Next
 
@@ -72,7 +73,7 @@ Partial Public Class shared_component_test
                                     For l As UInt16 = 1 To port_size
                                         component.get().push(k * l, k, l)
                                         assert_true(async_sync(s(k * port_size + l - uint16_1).receiver.receive(p),
-                                                               second_milli))
+                                                               seconds_to_milliseconds(10)))
                                         assert_equal(+p, k * l)
                                     Next
                                 Next
@@ -81,7 +82,7 @@ Partial Public Class shared_component_test
                                 For k As UInt16 = 1 To j - uint32_1
                                     component.get().push(k * i, i, k)
                                     assert_true(async_sync(s(i * port_size + k - uint16_1).receiver.receive(p),
-                                                           second_milli))
+                                                           seconds_to_milliseconds(10)))
                                     assert_equal(+p, k * i)
                                 Next
                             End If
