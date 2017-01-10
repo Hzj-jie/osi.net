@@ -166,7 +166,7 @@ Public Module _distributor
                                   If (+rs(i)) Is Nothing Then
                                       Return False
                                   Else
-                                      r.push_back(+rs(i))
+                                      r.emplace_back(+rs(i))
                                   End If
                               Next
                               Return True

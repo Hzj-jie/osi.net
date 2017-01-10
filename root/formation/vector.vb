@@ -117,10 +117,18 @@ Public Module vector_extension
     End Function
 
     <Extension()> Public Function push_back(Of T)(ByVal d As vector(Of T), ByVal s As vector(Of T)) As Boolean
-        If d Is Nothing OrElse s Is Nothing Then
+        If d Is Nothing OrElse s.null_or_empty() Then
             Return False
         Else
-            Return d.push_back(s.data(), 0, s.size())
+            Return assert(d.push_back(s.data(), 0, s.size()))
+        End If
+    End Function
+
+    <Extension()> Public Function emplace_back(Of T)(ByVal d As vector(Of T), ByVal s As vector(Of T)) As Boolean
+        If d Is Nothing OrElse s.null_or_empty() Then
+            Return False
+        Else
+            Return assert(d.emplace_back(s.data(), 0, s.size()))
         End If
     End Function
 
