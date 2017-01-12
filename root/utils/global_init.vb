@@ -1,15 +1,16 @@
 ﻿
 Imports System.Reflection
-Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.lock
 Imports global_init_attribute = osi.root.constants.global_initAttribute
+Imports lock_t = osi.root.lock.slimlock.monitorlock
 
 Public Class global_init
     Private Shared ReadOnly times As atomic_int
     Private Shared ReadOnly inited As [set](Of comparable_type)
+    Private Shared initiating As lock_t
 
     Shared Sub New()
         times = New atomic_int()
@@ -119,8 +120,10 @@ Public Class global_init
                               ex.Message())
             End Try
         Next
+        initiating.wait()
         For k As Int32 = 0 To level
             concurrency_runner.execute(AddressOf execute_init, +its(k))
         Next
+        initiating.release()
     End Sub
 End Class

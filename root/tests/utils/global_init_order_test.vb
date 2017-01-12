@@ -81,6 +81,7 @@ Public Class global_init_order_test
     End Class
 
     Public Overrides Function run() As Boolean
+        type_lock(Of global_init).wait()
         global_init.execute()
         assert_more(case1.initialized_times(), uint32_1)
         assert_more(case2.initialized_times(), uint32_1)
@@ -89,6 +90,7 @@ Public Class global_init_order_test
         assert_equal(case1.initialized_times(), case2.initialized_times())
         assert_equal(case1.initialized_times(), case3.initialized_times())
         assert_equal(case1.initialized_times(), case4.initialized_times())
+        type_lock(Of global_init).release()
         Return True
     End Function
 End Class

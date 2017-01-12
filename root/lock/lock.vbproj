@@ -103,6 +103,7 @@
     <Compile Include="slimlocks\spinlock2.vb" />
     <Compile Include="spinwait.vb" />
     <Compile Include="ref.vb" />
+    <Compile Include="type_lock.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

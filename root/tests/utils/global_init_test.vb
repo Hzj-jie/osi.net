@@ -199,6 +199,7 @@ Public Class global_init_test
     End Class
 
     Public Overrides Function run() As Boolean
+        type_lock(Of global_init).wait()
         global_init.execute()
         global_init.execute()
         global_init.execute(global_init_level.max - 1)
@@ -213,6 +214,7 @@ Public Class global_init_test
         assert_equal(global_init_case_7_holder.invoke_times(), 0)
         assert_equal(global_init_case_8_holder.invoke_times(), 1)
         assert_equal(global_init_case_9.invoke_times(), global_init.init_times() - 2)
+        type_lock(Of global_init).release()
         Return True
     End Function
 End Class
