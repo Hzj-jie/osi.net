@@ -15,25 +15,27 @@ const char* types[] = {"Decimal",
                        "Double",
                        "String"};
 #define ARRAY_SIZE_0 "        Return If(i Is Nothing, uint32_0, CUInt(i.Length()))\n"
+#define ARRAY_SIZE_2 "        Return If(i Is Nothing, 0, i.Length())\n"
 #define ARRAY_LONG_SIZE_0 "        Return If(i Is Nothing, uint32_0, CULng(i.LongLength()))\n"
 #define IS_EMPTY_ARRAY_0 "        Return i Is Nothing OrElse i.Length() = 0\n"
 #define ARRAY_SIZE_1 "        Return If(i Is Nothing, uint32_0, CUInt(i.GetLength(0)))\n"
+#define ARRAY_SIZE_3 "        Return If(i Is Nothing, 0, i.GetLength(0))\n"
 #define ARRAY_LONG_SIZE_1 "        Return If(i Is Nothing, uint32_0, CULng(i.GetLongLength(0)))\n"
 #define IS_EMPTY_ARRAY_1 "        Return i Is Nothing OrElse i.GetLength(0) = 0\n"
 #define COMPARE_ARRAY_0 "        assert(array_size(first) >= first_start + len)\n" \
                         "        assert(array_size(second) >= second_start + len)\n" \
-                        "        If len = uint32_0 Then\n" \
-                        "            Return 0\n" \
-                        "        Else\n" \
-                        "            For i As UInt32 = 0 To len - uint32_1\n" \
-                        "                Dim cmp As Int32 = 0\n" \
-                        "                cmp = compare(first(i + first_start), second(i + second_start))\n" \
-                        "                If cmp <> 0 Then\n" \
-                        "                    Return cmp\n" \
-                        "                End If\n" \
-                        "            Next\n" \
-                        "            Return 0\n" \
-                        "        End If\n"
+                        "        Dim fs As Int32 = 0\n" \
+                        "        fs = CInt(first_start)\n" \
+                        "        Dim ss As Int32 = 0\n" \
+                        "        ss = CInt(second_start)\n" \
+                        "        For i As Int32 = 0 To CInt(len) - 1\n" \
+                        "            Dim cmp As Int32 = 0\n" \
+                        "            cmp = compare(first(i + fs), second(i + ss))\n" \
+                        "            If cmp <> 0 Then\n" \
+                        "                Return cmp\n" \
+                        "            End If\n" \
+                        "        Next\n" \
+                        "        Return 0\n"
 #define COMPARE_ARRAY_1 "        Return memcmp(first, uint32_0, second, uint32_0, len)\n"
 #define COMPARE_ARRAY_2 "        Dim ll As UInt32 = 0\n" \
                         "        Dim rl As UInt32 = 0\n" \
@@ -48,32 +50,28 @@ const char* types[] = {"Decimal",
                      "            Return Nothing\n" \
                      "        Else\n" \
                      "            Dim r() As String = Nothing\n" \
-                     "            ReDim r(array_size(i) - uint32_1)\n" \
-                     "            For j As UInt32 = 0 To array_size(i) - uint32_1\n" \
+                     "            ReDim r(array_size_i(i) - 1)\n" \
+                     "            For j As Int32 = 0 To array_size_i(i) - 1\n" \
                      "                r(j) = Convert.ToString(i(j))\n" \
                      "            Next\n" \
                      "            Return r\n" \
                      "        End If\n"
-#define TO_STRINGS_2 "        If isemptyarray(j) Then\n" \
-                     "            Return New String() {Convert.ToString(i)}\n" \
-                     "        Else\n" \
-                     "            Dim r() As String = Nothing\n" \
-                     "            ReDim r(array_size(j))\n" \
-                     "            r(0) = Convert.ToString(i)\n" \
-                     "            For k As UInt32 = 0 To array_size(j) - uint32_1\n" \
-                     "                r(k + uint32_1) = Convert.ToString(j(k))\n" \
-                     "            Next\n" \
-                     "            Return r\n" \
-                     "        End If\n"
+#define TO_STRINGS_2 "        Dim r() As String = Nothing\n" \
+                     "        ReDim r(array_size_i(j))\n" \
+                     "        r(0) = Convert.ToString(i)\n" \
+                     "        For k As Int32 = 0 To array_size_i(j) - 1\n" \
+                     "            r(k + 1) = Convert.ToString(j(k))\n" \
+                     "        Next\n" \
+                     "        Return r\n"
 #define START_WITH   "        If array_size(first) < array_size(second) Then\n" \
                      "            Return False\n" \
                      "        Else\n" \
-                     "            Return memcmp(first, second, array_size(second))\n" \
+                     "            Return memcmp(first, second, array_size(second)) = 0\n" \
                      "        End If\n"
 #define END_WITH     "        If array_size(first) < array_size(second) Then\n" \
                      "            Return False\n" \
                      "        Else\n" \
-                     "            Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second))\n" \
+                     "            Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0\n" \
                      "        End If\n"
 
 int main(int argc, char* argv[])
@@ -84,6 +82,7 @@ int main(int argc, char* argv[])
         FILE* fo = fopen(argv[1], "w");
         fputs("\n'this file is generated by osi/root/codegen/array/array.exe"
               "\n'so edit the osi/root/codegen/array/array.cpp instead of this file\n"
+              "\nOption Strict On\n"
               "\nImports System.Runtime.CompilerServices\n"
               "\nImports osi.root.constants\n"
               "\n\nPublic Module _array\n\n"
@@ -93,6 +92,12 @@ int main(int argc, char* argv[])
             fprintf(fo,
                     "    Public Function array_size(ByVal i() As %s) As UInt32\n"
                     ARRAY_SIZE_0
+                    "    End Function\n\n",
+                    types[i]);
+
+            fprintf(fo,
+                    "    Public Function array_size_i(ByVal i() As %s) As Int32\n"
+                    ARRAY_SIZE_2
                     "    End Function\n\n",
                     types[i]);
 
@@ -111,6 +116,12 @@ int main(int argc, char* argv[])
             fprintf(fo,
                     "    Public Function array_size(ByVal i(,) As %s) As UInt32\n"
                     ARRAY_SIZE_1
+                    "    End Function\n\n",
+                    types[i]);
+
+            fprintf(fo,
+                    "    Public Function array_size_i(ByVal i(,) As %s) As Int32\n"
+                    ARRAY_SIZE_3
                     "    End Function\n\n",
                     types[i]);
 
@@ -181,6 +192,11 @@ int main(int argc, char* argv[])
               "    End Function\n\n",
               fo);
 
+        fputs("    Public Function array_size_i(Of T)(ByVal i() As T) As Int32\n"
+              ARRAY_SIZE_2
+              "    End Function\n\n",
+              fo);
+
         fputs("    Public Function array_long_size(Of T)(ByVal i() As T) As UInt64\n"
               ARRAY_LONG_SIZE_0
               "    End Function\n\n",
@@ -193,6 +209,11 @@ int main(int argc, char* argv[])
 
         fputs("    Public Function array_size(Of T)(ByVal i(,) As T) As UInt32\n"
               ARRAY_SIZE_1
+              "    End Function\n\n",
+              fo);
+
+        fputs("    Public Function array_size_i(Of T)(ByVal i(,) As T) As Int32\n"
+              ARRAY_SIZE_3
               "    End Function\n\n",
               fo);
 
