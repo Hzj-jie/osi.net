@@ -42,8 +42,8 @@ Namespace primitive
                         Me.i = New instructions.pow()
                     Case command_str(command.jumpif)
                         Me.i = New instructions.jumpif()
-                    Case command_str(command.cpip)
-                        Me.i = New instructions.cpip()
+                    Case command_str(command.cpnip)
+                        Me.i = New instructions.cpnip()
                     Case command_str(command.cpco)
                         Me.i = New instructions.cpco()
                     Case command_str(command.cpdbz)
@@ -82,6 +82,8 @@ Namespace primitive
                         Me.i = New instructions.or()
                     Case command_str(command.not)
                         Me.i = New instructions.not()
+                    Case command_str(command.esc)
+                        Me.i = New instructions.esc()
                     Case Else
                         Return False
                 End Select

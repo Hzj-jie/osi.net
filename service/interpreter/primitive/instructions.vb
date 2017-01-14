@@ -1769,8 +1769,8 @@ Namespace primitive
             End Function
         End Class
 
-        Partial Public NotInheritable Class [cpip]
-            Implements instruction, IComparable, IComparable(Of [cpip])
+        Partial Public NotInheritable Class [cpnip]
+            Implements instruction, IComparable, IComparable(Of [cpnip])
 
             Private ReadOnly d0 As data_ref
 
@@ -1793,7 +1793,7 @@ Namespace primitive
                 If Not d0.export(b0) Then
                     Return False
                 End If
-                b = array_concat(uint32_bytes(command.cpip),
+                b = array_concat(uint32_bytes(command.cpnip),
                                  b0)
                 Return True
             End Function
@@ -1801,7 +1801,7 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As StringBuilder = Nothing
                 b = New StringBuilder()
-                b.Append(command_str(command.cpip))
+                b.Append(command_str(command.cpnip))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
@@ -1815,23 +1815,23 @@ Namespace primitive
 
             Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import
                 Dim o As UInt32 = 0
-                Return assert(bytes_uint32(i, o, p) AndAlso o = command.cpip) AndAlso
+                Return assert(bytes_uint32(i, o, p) AndAlso o = command.cpnip) AndAlso
                        d0.import(i, p)
             End Function
 
             Public Function import(s As vector(Of String), ByRef p As UInt32) As Boolean Implements exportable.import
                 assert(Not s.null_or_empty() AndAlso s.size() > p)
-                assert(s(p) = command_str(command.cpip))
+                assert(s(p) = command_str(command.cpnip))
                 p += 1
                 Return True AndAlso
                        d0.import(s, p)
             End Function
 
             Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
-                Return CompareTo(cast(Of [cpip])(obj, False))
+                Return CompareTo(cast(Of [cpnip])(obj, False))
             End Function
 
-            Public Function CompareTo(ByVal other As [cpip]) As Int32 Implements IComparable(Of [cpip]).CompareTo
+            Public Function CompareTo(ByVal other As [cpnip]) As Int32 Implements IComparable(Of [cpnip]).CompareTo
                 Dim c As Int32 = 0
                 c = object_compare(Me, other)
                 If c = object_compare_undetermined Then
@@ -4355,6 +4355,60 @@ Namespace primitive
                 p = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
+            End Function
+        End Class
+
+        Partial Public NotInheritable Class [esc]
+            Implements instruction, IComparable, IComparable(Of [esc])
+
+            Public Function bytes_size() As UInt32 Implements exportable.bytes_size
+                Return sizeof_uint32
+            End Function
+
+            Public Function export(ByRef b() As Byte) As Boolean Implements exportable.export
+                b = array_concat(uint32_bytes(command.esc))
+                Return True
+            End Function
+
+            Public Function export(ByRef s As String) As Boolean Implements exportable.export
+                Dim b As StringBuilder = Nothing
+                b = New StringBuilder()
+                b.Append(command_str(command.esc))
+                s = Convert.ToString(b)
+                Return True
+            End Function
+
+            Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import
+                Dim o As UInt32 = 0
+                Return assert(bytes_uint32(i, o, p) AndAlso o = command.esc)
+            End Function
+
+            Public Function import(s As vector(Of String), ByRef p As UInt32) As Boolean Implements exportable.import
+                assert(Not s.null_or_empty() AndAlso s.size() > p)
+                assert(s(p) = command_str(command.esc))
+                p += 1
+                Return True
+            End Function
+
+            Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
+                Return CompareTo(cast(Of [esc])(obj, False))
+            End Function
+
+            Public Function CompareTo(ByVal other As [esc]) As Int32 Implements IComparable(Of [esc]).CompareTo
+                Dim c As Int32 = 0
+                c = object_compare(Me, other)
+                If c = object_compare_undetermined Then
+                    assert(Not other Is Nothing)
+                    Return 0
+                Else
+                    Return c
+                End If
+            End Function
+
+            Public Overrides Function ToString() As String
+                Dim s As String = Nothing
+                assert(export(s))
+                Return s
             End Function
         End Class
 

@@ -32,8 +32,8 @@ Namespace primitive
         [pow]
         ' jump to instruction @A, if (*B bool) is true 
         [jumpif]
-        ' (*A) = IP 
-        [cpip]
+        ' (*A) = IP_AFTER_NEXT_INSTRUCTION, i.e. IP + 2, a typical usage is [ cpnip, jump ? ] 
+        [cpnip]
         ' (*A) = CO 
         [cpco]
         ' (*A) = DBZ 
@@ -72,6 +72,8 @@ Namespace primitive
         [or]
         ' (*A big_uint) = NOT (*B big_uint) 
         [not]
+        ' jump to instruction @(* stack.top() uint64) 
+        [esc]
 
         COUNT
     End Enum

@@ -40,8 +40,8 @@ Namespace primitive
                         Me.i = New instructions.pow()
                     Case command.jumpif
                         Me.i = New instructions.jumpif()
-                    Case command.cpip
-                        Me.i = New instructions.cpip()
+                    Case command.cpnip
+                        Me.i = New instructions.cpnip()
                     Case command.cpco
                         Me.i = New instructions.cpco()
                     Case command.cpdbz
@@ -80,6 +80,8 @@ Namespace primitive
                         Me.i = New instructions.or()
                     Case command.not
                         Me.i = New instructions.not()
+                    Case command.esc
+                        Me.i = New instructions.esc()
                     Case Else
                         Return False
                 End Select

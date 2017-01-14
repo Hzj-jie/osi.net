@@ -220,7 +220,7 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
         assert(valid_index(i))
         Dim r As map(Of KEY_T, VALUE_T) = Nothing
         r = data(i, False)
-        Return If(r Is Nothing, 0, r.size())
+        Return If(r Is Nothing, uint32_0, r.size())
     End Function
 
     Private Function prev_index(ByVal this As UInt32) As UInt32

@@ -22,11 +22,10 @@ Namespace logic
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not scope Is Nothing)
             assert(Not o Is Nothing)
-            If scope.define(name, type) Then
+            If scope_define.define(scope, name, type) Then
                 o.emplace_back(command_str(command.push))
                 Return True
             Else
-                errors.redefine(name, type, scope.type(name))
                 Return False
             End If
         End Function

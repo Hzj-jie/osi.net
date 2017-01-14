@@ -46,6 +46,7 @@ Public Module _number
     Public Const int64_1 As Int64 = 1
     Public Const uint64_0 As UInt64 = 0
     Public Const uint64_1 As UInt64 = 1
+    Public Const uint64_2 As UInt64 = 2
     Public Const single_0 As Single = 0
     Public Const single_1 As Single = 1
     Public Const double_0 As Double = 0

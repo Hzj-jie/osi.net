@@ -1,4 +1,6 @@
 ﻿
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
@@ -187,12 +189,12 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public NotInheritable Class [cpip]
+        Partial Public NotInheritable Class [cpnip]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
                 assert(Not imi Is Nothing)
-                p0(imi).set(uint64_bytes(imi.instruction_pointer()))
+                p0(imi).set(uint64_bytes(imi.instruction_pointer() + uint64_2))
             End Sub
         End Class
 
@@ -308,7 +310,7 @@ Namespace primitive
                     p0.clear()
                 Else
                     Dim r() As Byte = Nothing
-                    ReDim r(array_size(+p1) - l - uint32_1)
+                    ReDim r(CInt(array_size(+p1) - l - uint32_1))
                     memcpy(r, uint32_0, +p1, l, array_size(+p1) - l)
                     p0.set(r)
                 End If
@@ -331,7 +333,7 @@ Namespace primitive
                     p0.clear()
                 Else
                     Dim r() As Byte = Nothing
-                    ReDim r(min(array_size(+p1) - sl(0), sl(1)) - uint32_1)
+                    ReDim r(CInt(min(array_size(+p1) - sl(0), sl(1)) - uint32_1))
                     memcpy(r, uint32_0, +p1, sl(0), array_size(r))
                     p0.set(r)
                 End If
@@ -418,6 +420,16 @@ Namespace primitive
                 Dim d1 As big_uint = Nothing
                 d1 = New big_uint(+p1(imi))
                 p0(imi).set(d1.not().as_bytes())
+            End Sub
+        End Class
+
+        Partial Public NotInheritable Class [esc]
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                Dim i As UInt64 = 0
+                i = imi.access_stack_top_as_uint64()
+                imi.instruction_pointer(i)
             End Sub
         End Class
     End Namespace

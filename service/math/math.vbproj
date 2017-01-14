@@ -127,7 +127,6 @@
     <Compile Include="prime.vb" />
     <Compile Include="prime_divisors.vb" />
     <Compile Include="relative_prime.vb" />
-    <Compile Include="unchecked\cast.vb" />
     <Compile Include="unchecked\operators.vb" />
   </ItemGroup>
   <ItemGroup>

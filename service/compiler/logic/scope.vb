@@ -30,14 +30,18 @@ Namespace logic
             Return child
         End Function
 
+#If 0 Then
         Public Function end_scope() As scope
             If Not parent Is Nothing Then
                 parent.child = Nothing
             End If
             Return parent
         End Function
+#End If
 
         Public Function define(ByVal name As String, ByVal type As String) As Boolean
+            assert(Not String.IsNullOrEmpty(name))
+            assert(Not String.IsNullOrEmpty(type))
             If offsets.find(name) = offsets.end() Then
                 offsets(name) = size() + uint64_1
                 types(name) = type
@@ -47,7 +51,7 @@ Namespace logic
             End If
         End Function
 
-        Private Function size() As UInt32
+        Public Function size() As UInt32
             assert(offsets.size() = types.size())
             Return offsets.size()
         End Function

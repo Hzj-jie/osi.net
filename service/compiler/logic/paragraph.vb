@@ -1,6 +1,10 @@
 ﻿
+Option Strict On
+
+Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public Class paragraph
@@ -37,11 +41,13 @@ Namespace logic
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not scope Is Nothing)
             assert(Not o Is Nothing)
-            For i As Int32 = 0 To s.size() - 1
-                If Not s(i).export(scope, o) Then
-                    Return False
-                End If
-            Next
+            Using sw As scope_wrapper = scope_wrapper.[New](scope, o)
+                For i As UInt32 = 0 To s.size() - uint32_1
+                    If Not s(i).export(sw.scope(), o) Then
+                        Return False
+                    End If
+                Next
+            End Using
             Return True
         End Function
     End Class

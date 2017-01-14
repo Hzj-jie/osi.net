@@ -1,8 +1,6 @@
 ﻿
 Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.template
-Imports osi.root.utils
 
 'TODO: consider to add a temporary value for uint32 / uint64 to big_uint convert to save object create time
 Partial Public NotInheritable Class big_uint

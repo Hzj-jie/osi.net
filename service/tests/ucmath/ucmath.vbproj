@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="int_divide_perf.vb" />
     <Compile Include="int_modulo_perf.vb" />
+    <Compile Include="int_uint_perf.vb" />
     <Compile Include="long_divide_perf.vb" />
     <Compile Include="long_modulo_perf.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

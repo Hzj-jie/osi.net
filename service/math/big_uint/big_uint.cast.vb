@@ -1,7 +1,6 @@
 ﻿
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.utils
 
 Partial Public Class big_uint
     Public Shared Widening Operator CType(ByVal this As UInt32) As big_uint

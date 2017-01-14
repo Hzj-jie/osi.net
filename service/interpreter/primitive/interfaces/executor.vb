@@ -1,8 +1,11 @@
 ﻿
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.connector
+Imports osi.service.math
 
 Namespace primitive
     Public Class executor_stop_error
@@ -52,5 +55,52 @@ Namespace primitive
             assert(Not e Is Nothing)
             e.pop_stack(uint32_1)
         End Sub
+
+        <Extension()> Public Function convert_stack_to_uint32(ByVal this As executor,
+                                                              ByVal p As data_ref,
+                                                              ByRef overflow As Boolean) As UInt32
+            assert(Not this Is Nothing)
+            Dim d As pointer(Of Byte()) = Nothing
+            d = this.access_stack(p)
+            assert(Not d Is Nothing)
+            Dim b As big_uint = Nothing
+            b = New big_uint(+d)
+            Return b.as_uint32(overflow)
+        End Function
+
+        <Extension()> Public Function convert_stack_to_uint64(ByVal this As executor,
+                                                              ByVal p As data_ref,
+                                                              ByRef overflow As Boolean) As UInt64
+            assert(Not this Is Nothing)
+            Dim d As pointer(Of Byte()) = Nothing
+            d = this.access_stack(p)
+            assert(Not d Is Nothing)
+            Dim b As big_uint = Nothing
+            b = New big_uint(+d)
+            Return b.as_uint64(overflow)
+        End Function
+
+        <Extension()> Public Function access_stack_as_bool(ByVal this As executor, ByVal p As data_ref) As Boolean
+            assert(Not this Is Nothing)
+            Dim d As pointer(Of Byte()) = Nothing
+            d = this.access_stack(p)
+            assert(Not d Is Nothing)
+            Dim o As Boolean = False
+            ' If the data slot is empty, treat it as false.
+            If Not bytes_bool(+d, o) Then
+                o = False
+            End If
+            Return o
+        End Function
+
+        <Extension()> Public Function stack_top(ByVal this As executor) As pointer(Of Byte())
+            assert(Not this Is Nothing)
+            Return this.access_stack(data_ref.rel(0))
+        End Function
+
+        <Extension()> Public Function convert_stack_top_to_uint64(ByVal this As executor,
+                                                                  ByRef overflow As Boolean) As UInt64
+            Return this.convert_stack_to_uint64(data_ref.rel(0), overflow)
+        End Function
     End Module
 End Namespace

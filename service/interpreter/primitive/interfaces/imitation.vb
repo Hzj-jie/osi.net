@@ -1,9 +1,9 @@
 ﻿
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.formation
-Imports osi.service.math
 
 Namespace primitive
     Public Interface imitation
@@ -19,30 +19,14 @@ Namespace primitive
     End Interface
 
     Public Module _imitation
-        <Extension()> Public Function convert_stack_to_uint32(ByVal this As imitation,
-                                                              ByVal p As data_ref,
-                                                              ByRef overflow As Boolean) As UInt32
+        <Extension()> Public Sub instruction_pointer(ByVal this As imitation, ByVal v As UInt64)
             assert(Not this Is Nothing)
-            Dim d As pointer(Of Byte()) = Nothing
-            d = this.access_stack(p)
-            assert(Not d Is Nothing)
-            Dim b As big_uint = Nothing
-            b = New big_uint(+d)
-            Return b.as_uint32(overflow)
-        End Function
-
-        <Extension()> Public Function access_stack_as_bool(ByVal this As imitation, ByVal p As data_ref) As Boolean
-            assert(Not this Is Nothing)
-            Dim d As pointer(Of Byte()) = Nothing
-            d = this.access_stack(p)
-            assert(Not d Is Nothing)
-            Dim o As Boolean = False
-            ' If the data slot is empty, treat it as false.
-            If Not bytes_bool(+d, o) Then
-                o = False
+            If v > max_int64 Then
+                executor_stop_error.throw(executor.error_type.instruction_pointer_overflow)
+            Else
+                this.instruction_pointer(CLng(v))
             End If
-            Return o
-        End Function
+        End Sub
 
         <Extension()> Public Function access_stack_as_uint32(ByVal this As imitation, ByVal p As data_ref) As UInt32
             assert(Not this Is Nothing)
@@ -53,21 +37,34 @@ Namespace primitive
             Return r
         End Function
 
+        <Extension()> Public Function access_stack_as_uint64(ByVal this As imitation, ByVal p As data_ref) As UInt64
+            assert(Not this Is Nothing)
+            Dim o As Boolean = False
+            Dim r As UInt64 = 0
+            r = this.convert_stack_to_uint64(p, o)
+            this.carry_over(o)
+            Return r
+        End Function
+
+        <Extension()> Public Function access_stack_top_as_uint64(ByVal this As imitation) As UInt64
+            Return this.access_stack_as_uint64(data_ref.rel(0))
+        End Function
+
         <Extension()> Public Function access_stack_as_uint32(ByVal this As imitation,
                                                              ByVal p1 As data_ref,
                                                              ByVal p2 As data_ref,
                                                              ByVal ParamArray ps() As data_ref) As UInt32()
             assert(Not this Is Nothing)
             Dim r() As UInt32 = Nothing
-            ReDim r(array_size(ps) + uint32_1)
-            For i As UInt32 = 0 To array_size(ps) + uint32_1
+            ReDim r(CInt(array_size(ps)) + 1)
+            For i As Int32 = 0 To CInt(array_size(ps)) + 1
                 Dim o As Boolean = False
                 If i = 0 Then
                     r(i) = this.convert_stack_to_uint32(p1, o)
                 ElseIf i = 1 Then
                     r(i) = this.convert_stack_to_uint32(p2, o)
                 Else
-                    r(i) = this.convert_stack_to_uint32(ps(i - uint32_2), o)
+                    r(i) = this.convert_stack_to_uint32(ps(i - 2), o)
                 End If
                 If o Then
                     this.carry_over(o)

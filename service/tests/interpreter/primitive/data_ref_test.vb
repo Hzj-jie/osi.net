@@ -1,4 +1,6 @@
 ﻿
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.utt

@@ -1,6 +1,6 @@
 ﻿
 Whole memory space is separated into two parts,
-1. Instructions, readonly, contains only instructions
+1. Instructions, readonly, contains only instructions.
 2. Stack, data, managed as data slot, each slot has zero or more bytes, which can be initialized by certain commands.
 
 Data slot,
@@ -8,6 +8,7 @@ Each data slot stores zero or more bytes, so for certain commands, the bytes wil
 string, bytes_str.
 bool, bytes_bool, if empty, treat as false.
 uint, big_uint.as_uint32, set Carry Over.
+uint64, big_uint.as_uint64, set Carry Over.
 
 Registers
 -- RAEI(x), reset to x after each instruction

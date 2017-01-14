@@ -148,11 +148,11 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class cpip_exportable_test
-            Inherits exportable_test(Of [cpip])
+        Public Class cpnip_exportable_test
+            Inherits exportable_test(Of [cpnip])
 
-            Protected Overrides Function create() As [cpip]
-                Return New [cpip]( _
+            Protected Overrides Function create() As [cpnip]
+                Return New [cpnip]( _
                         data_ref.random())
             End Function
         End Class
@@ -348,6 +348,14 @@ Namespace primitive
                 Return New [not]( _
                         data_ref.random(),
                         data_ref.random())
+            End Function
+        End Class
+
+        Public Class esc_exportable_test
+            Inherits exportable_test(Of [esc])
+
+            Protected Overrides Function create() As [esc]
+                Return New [esc]()
             End Function
         End Class
 
