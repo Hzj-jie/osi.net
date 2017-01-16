@@ -75,6 +75,7 @@
     <Compile Include="big_uint\big_uint_left_shift_multiply_case.vb" />
     <Compile Include="big_uint\big_uint_power_divide_case.vb" />
     <Compile Include="big_uint\big_uint_power_extract_case.vb" />
+    <Compile Include="big_uint\big_uint_predefined_case.vb" />
     <Compile Include="big_uint\big_uint_right_shift_divide_case.vb" />
     <Compile Include="big_uint\big_uint_shift_case.vb" />
     <Compile Include="big_uint\big_uint_str_case.vb" />

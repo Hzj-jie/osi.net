@@ -345,6 +345,46 @@ Public Class _131071
     End Function
 End Class
 
+Public Class _500000
+    Inherits _int64
+
+    Protected Overrides Function at() As Int64
+        Return 500000
+    End Function
+End Class
+
+Public Class _1000000
+    Inherits _int64
+
+    Protected Overrides Function at() As Int64
+        Return 1000000
+    End Function
+End Class
+
+Public Class _5000000
+    Inherits _int64
+
+    Protected Overrides Function at() As Int64
+        Return 5000000
+    End Function
+End Class
+
+Public Class _10000000
+    Inherits _int64
+
+    Protected Overrides Function at() As Int64
+        Return 10000000
+    End Function
+End Class
+
+Public Class _50000000
+    Inherits _int64
+
+    Protected Overrides Function at() As Int64
+        Return 50000000
+    End Function
+End Class
+
 Public Class _134217728
     Inherits _int64
 

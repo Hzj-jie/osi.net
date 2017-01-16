@@ -14,7 +14,8 @@ Public Class big_uint_test
                    big_uint_power_divide_case.create_case(),
                    big_uint_power_extract_case.create_case(),
                    big_uint_str_case.create_case(),
-                   big_uint_bytes_case.create_case())
+                   big_uint_bytes_case.create_case(),
+                   New big_uint_predefined_case())
     End Sub
 End Class
 
@@ -159,5 +160,13 @@ Public Class big_uint_bytes_specific_test
 
     Public Sub New()
         MyBase.New(big_uint_bytes_case.create_case(100))
+    End Sub
+End Class
+
+Public Class big_uint_predefined_test
+    Inherits commandline_specific_case_wrapper
+
+    Public Sub New()
+        MyBase.New(New big_uint_predefined_case())
     End Sub
 End Class

@@ -39,7 +39,7 @@ Partial Public Class big_uint
             Return v(0)
         Else
             overflow = (v.size() > 2)
-            Return v(0) + CULng(v(1)) * max_uint32
+            Return v(0) + v(1) * (CULng(max_uint32) + uint32_1)
         End If
     End Function
 
