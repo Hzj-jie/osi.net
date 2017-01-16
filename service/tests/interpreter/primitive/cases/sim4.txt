@@ -1,7 +1,12 @@
 
 push
-movc rel0 i7
-pushm rel0
+push
+push
+push
+push
+push
+push
+push
 ## rel0 text
 ## rel1 len
 ## rel2 index

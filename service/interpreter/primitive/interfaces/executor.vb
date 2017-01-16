@@ -2,7 +2,7 @@
 Option Strict On
 
 Imports System.Runtime.CompilerServices
-Imports osi.root.constants
+Imports System.Text
 Imports osi.root.formation
 Imports osi.root.connector
 Imports osi.service.math
@@ -20,6 +20,19 @@ Namespace primitive
         Public Shared Sub [throw](ByVal ParamArray error_types() As executor.error_type)
             Throw New executor_stop_error(error_types)
         End Sub
+
+        Public Overrides Function ToString() As String
+            Dim r As StringBuilder = Nothing
+            r = New StringBuilder()
+            r.Append("executor_stop_error: ")
+            For i As Int32 = 0 To array_size_i(error_types) - 1
+                If i > 0 Then
+                    r.Append(", ")
+                End If
+                r.Append(error_types(i))
+            Next
+            Return Convert.ToString(r)
+        End Function
     End Class
 
     Public Interface executor
@@ -32,8 +45,6 @@ Namespace primitive
         End Enum
 
         Function access_stack(ByVal p As data_ref) As pointer(Of Byte())
-        Sub push_stack(ByVal count As UInt32)
-        Sub pop_stack(ByVal count As UInt32)
         Function instruction_pointer() As UInt64
         Function carry_over() As Boolean
         Function divided_by_zero() As Boolean
@@ -46,16 +57,6 @@ Namespace primitive
     End Interface
 
     Public Module _executor
-        <Extension()> Public Sub push_stack(ByVal e As executor)
-            assert(Not e Is Nothing)
-            e.push_stack(uint32_1)
-        End Sub
-
-        <Extension()> Public Sub pop_stack(ByVal e As executor)
-            assert(Not e Is Nothing)
-            e.pop_stack(uint32_1)
-        End Sub
-
         <Extension()> Public Function convert_stack_to_uint32(ByVal this As executor,
                                                               ByVal p As data_ref,
                                                               ByRef overflow As Boolean) As UInt32

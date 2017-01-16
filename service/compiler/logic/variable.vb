@@ -25,7 +25,6 @@ Namespace logic
                                      ByVal name As String,
                                      ByRef o As variable) As Boolean
             assert(Not scope Is Nothing)
-            assert(Not types Is Nothing)
             assert(Not String.IsNullOrEmpty(name))
             Dim type As String = Nothing
             Dim ref As String = Nothing
@@ -111,6 +110,10 @@ Namespace logic
                 errors.unassignable_variable_size(Me)
                 Return False
             End If
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return ref
         End Function
     End Class
 End Namespace

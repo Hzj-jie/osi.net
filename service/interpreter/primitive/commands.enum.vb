@@ -8,10 +8,6 @@ Namespace primitive
         [push]
         ' pop a data slot from stack 
         [pop]
-        ' push (*A uint) data slots in to stack 
-        [pushm]
-        ' pop (*A uint) data slots from stack 
-        [popm]
         ' jump to instruction @A 
         [jump]
         ' (*A big_uint) = (*B big_uint) + (*C big_uint) 
@@ -46,8 +42,6 @@ Namespace primitive
         [equal]
         ' (*A) = ((*B big_uint) < (*C big_uint)) 
         [less]
-        ' (*A) = ((*B big_uint) <= (*C big_uint)) 
-        [leeq]
         ' (*A) += (*B) 
         [app]
         ' (*A) += sizeof(*B) + (*B) 

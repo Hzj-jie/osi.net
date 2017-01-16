@@ -41,12 +41,6 @@ Namespace logic
                 Return False
             End If
             Using sw As scope_wrapper = New scope_wrapper(scope, o)
-                If Not return_value_of.define(scope, name) Then
-                    Return False
-                End If
-                If Not scope_define.define(sw.scope(), strcat("@return_ip_of_", name), types.variable_type) Then
-                    Return False
-                End If
                 For i As Int32 = 0 To array_size_i(parameters) - 1
                     If Not sw.scope().define(parameters(i).first, parameters(i).second) Then
                         errors.redefine(parameters(i).first, parameters(i).second, sw.scope().type(parameters(i).first))

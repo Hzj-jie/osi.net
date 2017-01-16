@@ -55,7 +55,9 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="logic\executor_case.vb" />
     <Compile Include="logic\scope_test.vb" />
+    <Compile Include="logic\while_then_test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

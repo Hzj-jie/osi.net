@@ -27,28 +27,6 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public NotInheritable Class [pushm]
-            Implements instruction
-
-            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(Not imi Is Nothing)
-                Dim l As UInt32 = 0
-                l = imi.access_stack_as_uint32(d0)
-                imi.push_stack(l)
-            End Sub
-        End Class
-
-        Partial Public NotInheritable Class [popm]
-            Implements instruction
-
-            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(Not imi Is Nothing)
-                Dim l As UInt32 = 0
-                l = imi.access_stack_as_uint32(d0)
-                imi.pop_stack(l)
-            End Sub
-        End Class
-
         Partial Public NotInheritable Class [jump]
             Implements instruction
 
@@ -257,19 +235,6 @@ Namespace primitive
                 b1 = New big_uint(+p1(imi))
                 b2 = New big_uint(+p2(imi))
                 p0(imi).set(bool_bytes(b1.less(b2)))
-            End Sub
-        End Class
-
-        Partial Public NotInheritable Class [leeq]
-            Implements instruction
-
-            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(Not imi Is Nothing)
-                Dim b1 As big_uint = Nothing
-                Dim b2 As big_uint = Nothing
-                b1 = New big_uint(+p1(imi))
-                b2 = New big_uint(+p2(imi))
-                p0(imi).set(bool_bytes(b1.less_or_equal(b2)))
             End Sub
         End Class
 

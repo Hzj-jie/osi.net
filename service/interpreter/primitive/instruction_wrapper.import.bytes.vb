@@ -16,10 +16,6 @@ Namespace primitive
                         Me.i = New instructions.push()
                     Case command.pop
                         Me.i = New instructions.pop()
-                    Case command.pushm
-                        Me.i = New instructions.pushm()
-                    Case command.popm
-                        Me.i = New instructions.popm()
                     Case command.jump
                         Me.i = New instructions.jump()
                     Case command.add
@@ -54,8 +50,6 @@ Namespace primitive
                         Me.i = New instructions.equal()
                     Case command.less
                         Me.i = New instructions.less()
-                    Case command.leeq
-                        Me.i = New instructions.leeq()
                     Case command.app
                         Me.i = New instructions.app()
                     Case command.sapp

@@ -7,9 +7,14 @@ Namespace logic
     ' Defines primitive types, i.e. basic data types a language can handle, such as byte, int, byte array, etc. So the
     ' types instance won't be impacted by the source code or in another word, user input, of a language.
     Public Class types
+        Public Shared ReadOnly empty As types
         Public Const variable_type As String = "*"
         Private Const variable_size As UInt32 = max_uint32
         Private ReadOnly sizes As map(Of String, UInt32)
+
+        Shared Sub New()
+            empty = New types()
+        End Sub
 
         Public Sub New()
             sizes = New map(Of String, UInt32)()
@@ -17,6 +22,7 @@ Namespace logic
         End Sub
 
         Public Sub define(ByVal type As String, ByVal size As UInt32)
+            assert(object_compare(Me, empty) <> 0)
             assert(Not String.IsNullOrEmpty(type))
             assert(sizes.find(type) = sizes.end())
             sizes(type) = size

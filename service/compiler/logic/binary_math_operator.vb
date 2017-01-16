@@ -1,4 +1,6 @@
 ﻿
+Option Strict On
+
 Imports osi.root.connector
 
 Namespace logic
@@ -15,7 +17,7 @@ Namespace logic
 
         Protected Overrides Function result_restrict(ByVal result As variable) As Boolean
             assert(Not result Is Nothing)
-            If types.is_variable_size(result.type) Then
+            If types.is_variable_size(result.size) Then
                 Return True
             Else
                 errors.unassignable_variable_size(result)

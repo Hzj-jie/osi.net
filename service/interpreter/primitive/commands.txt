@@ -1,8 +1,6 @@
 ﻿
 push	#push a data slot in to stack
 pop	#pop a data slot from stack
-pushm	data_ref	#push (*A uint) data slots in to stack
-popm	data_ref	#pop (*A uint) data slots from stack
 jump	data_ref	#jump to instruction @A
 add	data_ref	data_ref	data_ref	#(*A big_uint) = (*B big_uint) + (*C big_uint)
 sub	data_ref	data_ref	data_ref	#(*A big_uint) = (*B big_uint) - (*C big_uint)
@@ -20,7 +18,6 @@ cpin	data_ref	#(*A) = IN
 stop	#finish execution, and leave the executor in a stop but not error status.
 equal	data_ref	data_ref	data_ref	#(*A) = ((*B big_uint) == (*C big_uint))
 less	data_ref	data_ref	data_ref	#(*A) = ((*B big_uint) < (*C big_uint))
-leeq	data_ref	data_ref	data_ref	#(*A) = ((*B big_uint) <= (*C big_uint))
 app	data_ref	data_ref	#(*A) += (*B)
 sapp	data_ref	data_ref	#(*A) += sizeof(*B) + (*B)
 cut	data_ref	data_ref	data_ref	#(*A) = sub-array(src=(*B), from=(*C uint))

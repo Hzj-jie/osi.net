@@ -102,6 +102,7 @@
     <Compile Include="mapheap.iterator.vb" />
     <Compile Include="mapheap.vb" />
     <Compile Include="map_extension.vb" />
+    <Compile Include="not_null.vb" />
     <Compile Include="pair.vb" />
     <Compile Include="piece.vb" />
     <Compile Include="pointer\array_pointer.vb" />

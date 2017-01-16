@@ -111,21 +111,15 @@ Namespace primitive
             End If
         End Function
 
-        Public Sub push_stack(ByVal count As UInt32) Implements executor.push_stack
-            If count > uint32_0 Then
-                For i As UInt32 = uint32_0 To count - uint32_1
-                    _stack.emplace_back(New pointer(Of Byte())())
-                Next
-            End If
+        Public Sub push_stack() Implements imitation.push_stack
+            _stack.emplace_back(New pointer(Of Byte()))
         End Sub
 
-        Public Sub pop_stack(ByVal count As UInt32) Implements executor.pop_stack
-            If _stack.size() < count Then
+        Public Sub pop_stack() Implements imitation.pop_stack
+            If _stack.empty() Then
                 executor_stop_error.throw(executor.error_type.stack_access_out_of_boundary)
-            ElseIf count > uint32_0 Then
-                For i As UInt32 = uint32_0 To count - uint32_1
-                    _stack.pop_back()
-                Next
+            Else
+                _stack.pop_back()
             End If
         End Sub
 

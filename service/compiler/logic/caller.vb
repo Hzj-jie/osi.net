@@ -31,7 +31,12 @@ Namespace logic
             assert(Not o Is Nothing)
             ' rel(array_size(parameters)) is the return address of "esc".
             ' rel(array_size(parameters) + 1) is for return value.
-            o.emplace_back(instruction_builder.str(command.pushm, 2 + array_size(parameters)))
+            For i As Int32 = 0 To 2 + array_size_i(parameters) - 1
+                o.emplace_back(instruction_builder.str(command.push))
+            Next
+            If Not return_value_of.define(scope, name) Then
+                Return False
+            End If
             For i As Int32 = 0 To CInt(array_size(parameters)) - 1
                 Dim var As variable = Nothing
                 If Not variable.[New](scope, parameters(i), var) Then
@@ -48,6 +53,7 @@ Namespace logic
                 Return False
             End If
             o.emplace_back(instruction_builder.str(command.jump, data_ref.abs(pos)))
+            o.emplace_back(instruction_builder.str(command.pop))
 
             Return True
         End Function

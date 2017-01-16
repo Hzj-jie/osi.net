@@ -1,4 +1,5 @@
 ﻿
+Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
@@ -26,7 +27,11 @@ Namespace logic
         End Function
 
         Public Sub Dispose() Implements IDisposable.Dispose
-            o.emplace_back(instruction_builder.str(command.popm, new_scope.size()))
+            Dim i As UInt32 = 0
+            While i < new_scope.size()
+                o.emplace_back(instruction_builder.str(command.pop))
+                i += uint32_1
+            End While
         End Sub
     End Class
 End Namespace

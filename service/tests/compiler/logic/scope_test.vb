@@ -62,7 +62,9 @@ Namespace logic
                 Dim new_scope As scope = Nothing
                 new_scope = s.start_scope()
                 execute(new_scope, stack, depth + 1)
+#If 0 Then
                 assert_reference_equal(new_scope.end_scope(), s)
+#End If
             End If
             stack.resize(stack.size() - c)
         End Sub

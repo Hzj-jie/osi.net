@@ -23,9 +23,14 @@ Namespace logic
 
         Public Sub New(ByVal statements As unique_ptr(Of vector(Of exportable)))
             Me.New()
-            If Not statements Is Nothing AndAlso Not statements.empty() Then
+            If statements Then
                 Me.s = statements.release()
             End If
+        End Sub
+
+        Public Sub New(ByVal ParamArray statements() As exportable)
+            Me.New()
+            Me.s.emplace_back(statements)
         End Sub
 
         Public Function push(ByVal e As exportable) As Boolean
@@ -43,6 +48,7 @@ Namespace logic
             assert(Not o Is Nothing)
             Using sw As scope_wrapper = scope_wrapper.[New](scope, o)
                 For i As UInt32 = 0 To s.size() - uint32_1
+                    assert(Not s(i) Is Nothing)
                     If Not s(i).export(sw.scope(), o) Then
                         Return False
                     End If

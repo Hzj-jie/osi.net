@@ -51,6 +51,10 @@ Namespace logic
             End If
         End Function
 
+        Public Function empty() As Boolean
+            Return size() = uint32_0
+        End Function
+
         Public Function size() As UInt32
             assert(offsets.size() = types.size())
             Return offsets.size()

@@ -18,19 +18,46 @@ Namespace primitive
             Return emplace_make_pair(b, str)
         End Function
 
-        Public Overrides Function run() As Boolean
+        Private Shared Function execute(ByVal s As String, Optional ByRef sim As simulator = Nothing) As Boolean
+            If sim Is Nothing Then
+                sim = New simulator()
+            End If
+            assert_true(sim.import(s))
+            sim.execute()
+            assert_false(sim.halt())
+            assert_true(sim.errors().empty())
+            Return True
+        End Function
+
+        Private Shared Function case1() As Boolean
             For i As UInt32 = 0 To array_size(cases) - uint32_1
                 Dim sim As simulator = Nothing
-                sim = New simulator()
-                assert_true(sim.import(cases(i).second))
-                sim.execute()
-                assert_false(sim.halt())
-                assert_true(sim.errors().empty())
+                If Not execute(cases(i).second, sim) Then
+                    Return False
+                End If
                 Dim p As pointer(Of Byte()) = Nothing
                 p = sim.access_stack(data_ref.abs(0))
                 assert_array_equal(+p, cases(i).first)
             Next
             Return True
+        End Function
+
+        Private Shared Function case2() As Boolean
+            Dim sim As simulator = Nothing
+            If Not execute(sim5.as_text(), sim) Then
+                Return False
+            End If
+            assert_equal(sim.access_stack_as_bool(data_ref.abs(0)), False)
+            assert_equal(sim.access_stack_as_uint32(data_ref.abs(1)), CUInt(1326))
+            assert_equal(sim.access_stack_as_uint32(data_ref.abs(2)), CUInt(51))
+            assert_equal(sim.access_stack_as_uint32(data_ref.abs(3)), CUInt(1))
+            assert_equal(sim.access_stack_as_uint32(data_ref.abs(4)), CUInt(50))
+            Return True
+        End Function
+
+        Public Overrides Function run() As Boolean
+            Return case1() AndAlso
+                   case2()
         End Function
     End Class
 End Namespace

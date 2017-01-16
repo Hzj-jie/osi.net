@@ -9,6 +9,8 @@ Namespace primitive
     Public Interface imitation
         Inherits executor
         Function extern_functions() As extern_functions
+        Sub push_stack()
+        Sub pop_stack()
         Overloads Sub instruction_pointer(ByVal v As Int64)  ' data_ref.offset() returns int64
         Overloads Sub carry_over(ByVal v As Boolean)
         Overloads Sub divided_by_zero(ByVal v As Boolean)
