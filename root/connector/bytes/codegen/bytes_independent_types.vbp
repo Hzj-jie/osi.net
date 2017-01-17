@@ -5,6 +5,7 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
 Public Module _bytes_independent_types
+
 ##DEFINE TYPE Byte
 ##DEFINE NAME byte
 ##INCLUDE bytes_independent_types_impl.vbp
@@ -13,12 +14,24 @@ Public Module _bytes_independent_types
 ##DEFINE NAME int16
 ##INCLUDE bytes_independent_types_impl.vbp
 
+##DEFINE TYPE UInt16
+##DEFINE NAME uint16
+##INCLUDE bytes_independent_types_impl.vbp
+
 ##DEFINE TYPE Int32
 ##DEFINE NAME int32
 ##INCLUDE bytes_independent_types_impl.vbp
 
+##DEFINE TYPE UInt32
+##DEFINE NAME uint32
+##INCLUDE bytes_independent_types_impl.vbp
+
 ##DEFINE TYPE Int64
 ##DEFINE NAME int64
+##INCLUDE bytes_independent_types_impl.vbp
+
+##DEFINE TYPE UInt64
+##DEFINE NAME uint64
 ##INCLUDE bytes_independent_types_impl.vbp
 
 ##DEFINE TYPE Single

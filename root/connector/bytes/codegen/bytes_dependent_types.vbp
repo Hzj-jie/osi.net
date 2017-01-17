@@ -30,17 +30,23 @@ Public Module _bytes_dependent_types
 ##DEFINE DNAME byte
 ##INCLUDE bytes_dependent_types_impl.vbp
 
+#If 0 Then
+
 ##DEFINE TYPE UInt16
 ##DEFINE NAME uint16
 ##DEFINE DTYPE Int16
 ##DEFINE DNAME int16
 ##INCLUDE bytes_dependent_types_impl.vbp
 
+#End If
+
 ##DEFINE TYPE Char
 ##DEFINE NAME char
 ##DEFINE DTYPE UInt16
 ##DEFINE DNAME uint16
 ##INCLUDE bytes_dependent_types_impl.vbp
+
+#If 0 Then
 
 ##DEFINE TYPE UInt32
 ##DEFINE NAME uint32
@@ -53,5 +59,7 @@ Public Module _bytes_dependent_types
 ##DEFINE DTYPE Int64
 ##DEFINE DNAME int64
 ##INCLUDE bytes_dependent_types_impl.vbp
+
+#End If
 
 End Module

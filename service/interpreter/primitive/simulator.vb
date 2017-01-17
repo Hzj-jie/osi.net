@@ -1,4 +1,6 @@
 ﻿
+Option Strict On
+
 Imports System.IO
 Imports System.Text
 Imports osi.root.constants
@@ -77,16 +79,18 @@ Namespace primitive
             If v < 0 OrElse v >= _instructions.size() Then
                 executor_stop_error.throw(executor.error_type.instruction_pointer_overflow)
             Else
-                _instruction_pointer = v
+                _instruction_pointer = CULng(v)
             End If
         End Sub
 
         Public Sub advance_instruction_pointer(ByVal v As Int64) Implements imitation.advance_instruction_pointer
-            If (v < 0 AndAlso -v > _instruction_pointer) OrElse
-               (v > 0 AndAlso _instruction_pointer + v >= _instructions.size()) Then
+            If v < 0 AndAlso -v > _instruction_pointer Then
                 executor_stop_error.throw(executor.error_type.instruction_pointer_overflow)
             Else
-                _instruction_pointer += v
+                _instruction_pointer = CULng(CLng(_instruction_pointer) + v)
+                If _instruction_pointer >= _instructions.size() Then
+                    executor_stop_error.throw(executor.error_type.instruction_pointer_overflow)
+                End If
             End If
         End Sub
 
@@ -143,7 +147,7 @@ Namespace primitive
             While True
                 assert(_instruction_pointer >= 0 AndAlso _instruction_pointer < _instructions.size())
                 Try
-                    _instructions(_instruction_pointer).execute(Me)
+                    _instructions(CUInt(_instruction_pointer)).execute(Me)
                 Catch ex As executor_stop_error
                     halt(ex)
                 End Try
@@ -175,7 +179,7 @@ Namespace primitive
                 For i As UInt32 = 0 To _instructions.size() - uint32_1
                     If _instructions(i).export(b) Then
                         assert(Not isemptyarray(b))
-                        ms.Write(b, 0, array_size(b))
+                        ms.Write(b, 0, array_size_i(b))
                     Else
                         Return False
                     End If
