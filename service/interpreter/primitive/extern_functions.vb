@@ -5,9 +5,14 @@ Imports osi.root.formation
 
 Namespace primitive
     Public Class extern_functions
+        Public Shared ReadOnly [default] As extern_functions
         Private ReadOnly io As console_io
         Private ReadOnly v As vector(Of Func(Of Byte(), Byte()))
         Private ReadOnly m As map(Of String, UInt32)
+
+        Shared Sub New()
+            [default] = New extern_functions()
+        End Sub
 
         Public Sub New(ByVal io As console_io)
             assert(Not io Is Nothing)

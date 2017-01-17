@@ -34,7 +34,7 @@ Namespace logic
             End If
 
             o.emplace_back(instruction_builder.str(command.jumpif, data_ref.rel(2), var.ref))
-            o.emplace_back(instruction_builder.str(command.jump, data_ref.rel(start - o.size() - 1)))
+            o.emplace_back(instruction_builder.str(command.jump, data_ref.rel(CLng(start) - o.size() - 1)))
 
             Return True
         End Function

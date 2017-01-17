@@ -22,9 +22,19 @@ Namespace logic
         Protected Overridable Sub check_result(ByVal e As not_null(Of simulator))
         End Sub
 
+        Protected Overridable Function extern_functions() As extern_functions
+            Return Nothing
+        End Function
+
         Public Overrides Function run() As Boolean
             Dim e As simulator = Nothing
-            e = New simulator()
+            Dim ext As extern_functions = Nothing
+            ext = extern_functions()
+            If ext Is Nothing Then
+                e = New simulator()
+            Else
+                e = New simulator(ext)
+            End If
             If assert_true(e.import(es)) Then
                 e.execute()
                 Try

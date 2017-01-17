@@ -54,7 +54,7 @@ Namespace logic
             Dim r As variable = Nothing
             assert(variable.[New](scope, result, r))  ' Otherwise movc.export() should not succeed.
 
-            o.emplace_back(instruction_builder.str(command.extern, p.ref, r.ref))
+            o.emplace_back(instruction_builder.str(command.extern, r.ref, p.ref, r.ref))
             Return True
         End Function
     End Class

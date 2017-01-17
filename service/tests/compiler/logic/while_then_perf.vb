@@ -97,4 +97,35 @@ Namespace logic
             End Class
         End Class
     End Class
+
+    Public Class while_then_perf
+        Inherits performance_case_wrapper
+
+        Public Sub New()
+            MyBase.New(New while_then_case())
+        End Sub
+
+        Private Class while_then_case
+            Inherits executor_case
+
+            Private Const upper_bound As Int32 = 100000000
+            Public Sub New()
+                MyBase.New({
+                New define("state", types.variable_type),
+                New define("result", types.variable_type),
+                New define("i", types.variable_type),
+                New define("1", types.variable_type),
+                New define("UPPER_BOUND", types.variable_type),
+                New move_const(types.empty, "state", unique_ptr.[New](New data_block(True))),
+                New move_const(types.empty, "1", unique_ptr.[New](New data_block(1))),
+                New move_const(types.empty, "UPPER_BOUND", unique_ptr.[New](New data_block(upper_bound))),
+                New while_then("state", unique_ptr.[New](New paragraph(
+                    New add(types.empty, "i", "i", "1"),
+                    New add(types.empty, "result", "result", "i"),
+                    New less_or_equal(types.empty, "state", "i", "UPPER_BOUND")
+                )))
+            })
+            End Sub
+        End Class
+    End Class
 End Namespace
