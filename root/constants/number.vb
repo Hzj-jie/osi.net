@@ -42,6 +42,7 @@ Public Module _number
     Public Const uint32_0 As UInt32 = 0
     Public Const uint32_1 As UInt32 = 1
     Public Const uint32_2 As UInt32 = 2
+    Public Const uint32_3 As UInt32 = 3
     Public Const int64_0 As Int64 = 0
     Public Const int64_1 As Int64 = 1
     Public Const uint64_0 As UInt64 = 0

@@ -96,6 +96,7 @@ Partial Public NotInheritable Class big_uint
         If isemptyarray(a) Then
             Return False
         Else
+            v.reserve((array_size(a) + uint32_3) \ byte_count_in_uint32)
             Dim start As UInt32 = 0
             Dim [end] As UInt32 = 0
             Dim [step] As Int32 = 0
@@ -110,7 +111,7 @@ Partial Public NotInheritable Class big_uint
             End If
             Dim x As UInt32 = 0
             Dim j As UInt32 = 0
-            For i As Int64 = start To [end] Step [step]
+            For i As Int32 = start To [end] Step [step]
                 x += (CUInt(a(i)) << (j * bit_count_in_byte))
                 j += 1
                 If j = byte_count_in_uint32 Then
