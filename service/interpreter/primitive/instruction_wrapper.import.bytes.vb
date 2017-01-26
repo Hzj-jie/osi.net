@@ -18,14 +18,16 @@ Namespace primitive
                         Me.i = New instructions.pop()
                     Case command.jump
                         Me.i = New instructions.jump()
+                    Case command.cpc
+                        Me.i = New instructions.cpc()
+                    Case command.mov
+                        Me.i = New instructions.mov()
+                    Case command.cp
+                        Me.i = New instructions.cp()
                     Case command.add
                         Me.i = New instructions.add()
                     Case command.sub
                         Me.i = New instructions.sub()
-                    Case command.movc
-                        Me.i = New instructions.movc()
-                    Case command.mov
-                        Me.i = New instructions.mov()
                     Case command.mul
                         Me.i = New instructions.mul()
                     Case command.div
@@ -36,8 +38,6 @@ Namespace primitive
                         Me.i = New instructions.pow()
                     Case command.jumpif
                         Me.i = New instructions.jumpif()
-                    Case command.cpnip
-                        Me.i = New instructions.cpnip()
                     Case command.cpco
                         Me.i = New instructions.cpco()
                     Case command.cpdbz
@@ -74,8 +74,10 @@ Namespace primitive
                         Me.i = New instructions.or()
                     Case command.not
                         Me.i = New instructions.not()
-                    Case command.esc
-                        Me.i = New instructions.esc()
+                    Case command.stst
+                        Me.i = New instructions.stst()
+                    Case command.rest
+                        Me.i = New instructions.rest()
                     Case Else
                         Return False
                 End Select

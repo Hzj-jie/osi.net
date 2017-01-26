@@ -31,7 +31,7 @@ Namespace logic
                 Return False
             End If
 
-            o.emplace_back(instruction_builder.str(command.jumpif, data_ref.rel(2), var.ref))
+            o.emplace_back(instruction_builder.str(command.jumpif, data_ref.rel(2), var))
             o.emplace_back(instruction_builder.str(command.jump, data_ref.rel(po.size() + 2)))
             assert(o.emplace_back(po))
             o.emplace_back(instruction_builder.str(command.jump, data_ref.rel(-po.size() - 3)))

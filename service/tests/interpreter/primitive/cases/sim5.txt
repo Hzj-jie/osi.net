@@ -3,9 +3,9 @@ push
 push
 push
 push
-movc rel4 aFF
-movc rel1 a01000000
-movc rel0 a32000000
+cpc rel4 aFF
+cpc rel1 a01000000
+cpc rel0 a32000000
 jumpif rel2 rel4
 jump rel7
 add rel2 rel2 rel1

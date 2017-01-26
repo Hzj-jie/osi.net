@@ -55,6 +55,7 @@
     <Compile Include="addhandler_behavior_test.vb" />
     <Compile Include="alloc_perf.vb" />
     <Compile Include="alloc_test.vb" />
+    <Compile Include="array_behavior_test.vb" />
     <Compile Include="array_test.vb" />
     <Compile Include="assert_test.vb" />
     <Compile Include="bit_test.vb" />

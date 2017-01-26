@@ -1,6 +1,7 @@
 ﻿
 Option Strict On
 
+Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
@@ -33,14 +34,9 @@ Namespace logic
                 If Not return_value_of.retrieve(scope, name, r) Then
                     Return False
                 End If
-                o.emplace_back(instruction_builder.str(command.mov, r.ref, var.ref))
+                o.emplace_back(instruction_builder.str(command.mov, r, var))
             End If
-            Dim pos As UInt32 = 0
-            If Not anchors.retrieve_end(name, pos) Then
-                errors.anchor_undefined(name)
-                Return False
-            End If
-            o.emplace_back(instruction_builder.str(command.jump, data_ref.abs(pos)))
+            o.emplace_back(instruction_builder.str(command.rest))
             Return True
         End Function
     End Class

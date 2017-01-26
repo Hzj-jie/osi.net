@@ -32,6 +32,36 @@ Namespace primitive
             End Function
         End Class
 
+        Public Class cpc_exportable_test
+            Inherits exportable_test(Of [cpc])
+
+            Protected Overrides Function create() As [cpc]
+                Return New [cpc]( _
+                        data_ref.random(),
+                        data_block.random())
+            End Function
+        End Class
+
+        Public Class mov_exportable_test
+            Inherits exportable_test(Of [mov])
+
+            Protected Overrides Function create() As [mov]
+                Return New [mov]( _
+                        data_ref.random(),
+                        data_ref.random())
+            End Function
+        End Class
+
+        Public Class cp_exportable_test
+            Inherits exportable_test(Of [cp])
+
+            Protected Overrides Function create() As [cp]
+                Return New [cp]( _
+                        data_ref.random(),
+                        data_ref.random())
+            End Function
+        End Class
+
         Public Class add_exportable_test
             Inherits exportable_test(Of [add])
 
@@ -49,26 +79,6 @@ Namespace primitive
             Protected Overrides Function create() As [sub]
                 Return New [sub]( _
                         data_ref.random(),
-                        data_ref.random(),
-                        data_ref.random())
-            End Function
-        End Class
-
-        Public Class movc_exportable_test
-            Inherits exportable_test(Of [movc])
-
-            Protected Overrides Function create() As [movc]
-                Return New [movc]( _
-                        data_ref.random(),
-                        data_block.random())
-            End Function
-        End Class
-
-        Public Class mov_exportable_test
-            Inherits exportable_test(Of [mov])
-
-            Protected Overrides Function create() As [mov]
-                Return New [mov]( _
                         data_ref.random(),
                         data_ref.random())
             End Function
@@ -126,15 +136,6 @@ Namespace primitive
             Protected Overrides Function create() As [jumpif]
                 Return New [jumpif]( _
                         data_ref.random(),
-                        data_ref.random())
-            End Function
-        End Class
-
-        Public Class cpnip_exportable_test
-            Inherits exportable_test(Of [cpnip])
-
-            Protected Overrides Function create() As [cpnip]
-                Return New [cpnip]( _
                         data_ref.random())
             End Function
         End Class
@@ -322,11 +323,19 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class esc_exportable_test
-            Inherits exportable_test(Of [esc])
+        Public Class stst_exportable_test
+            Inherits exportable_test(Of [stst])
 
-            Protected Overrides Function create() As [esc]
-                Return New [esc]()
+            Protected Overrides Function create() As [stst]
+                Return New [stst]()
+            End Function
+        End Class
+
+        Public Class rest_exportable_test
+            Inherits exportable_test(Of [rest])
+
+            Protected Overrides Function create() As [rest]
+                Return New [rest]()
             End Function
         End Class
 

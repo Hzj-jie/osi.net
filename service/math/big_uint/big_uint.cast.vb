@@ -78,22 +78,27 @@ Partial Public Class big_uint
 
     Public Function as_bytes() As Byte()
         Dim r() As Byte = Nothing
-        ReDim r(v.size() * byte_count_in_uint32 - uint32_1)
-        Dim start As Int64 = 0
-        Dim [end] As Int64 = 0
-        Dim [step] As Int32 = 0
-        If BitConverter.IsLittleEndian Then
-            start = 0
-            [end] = v.size() - uint32_1
-            [step] = 1
+        If v.empty() Then
+            ReDim r(-1)
         Else
-            start = v.size() - uint32_1
-            [end] = 0
-            [step] = -1
+            ReDim r(v.size() * byte_count_in_uint32 - uint32_1)
+            Dim start As Int64 = 0
+            Dim [end] As Int64 = 0
+            Dim [step] As Int32 = 0
+            If BitConverter.IsLittleEndian Then
+                start = 0
+                [end] = v.size() - uint32_1
+                [step] = 1
+            Else
+                start = v.size() - uint32_1
+                [end] = 0
+                [step] = -1
+            End If
+            For i As Int64 = start To [end] Step [step]
+                assert(uint32_bytes(v(i), r, i * byte_count_in_uint32))
+            Next
         End If
-        For i As Int64 = start To [end] Step [step]
-            assert(uint32_bytes(v(i), r, i * byte_count_in_uint32))
-        Next
+
         Return r
     End Function
 End Class

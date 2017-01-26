@@ -10,14 +10,16 @@ Namespace primitive
         [pop]
         ' jump to instruction @A 
         [jump]
+        ' (*A) = B 
+        [cpc]
+        ' (*A) = (*B), clr B 
+        [mov]
+        ' (*A) = (*B) 
+        [cp]
         ' (*A big_uint) = (*B big_uint) + (*C big_uint) 
         [add]
         ' (*A big_uint) = (*B big_uint) - (*C big_uint) 
         [sub]
-        ' (*A) = B 
-        [movc]
-        ' (*A) = (*B) 
-        [mov]
         ' (*A big_uint) = (*B big_uint) * (*C big_uint) 
         [mul]
         ' (*A big_uint) = (*C big_uint) / (*D big_uint) (*B big_uint) = (*C big_uint) % (*D big_uint) 
@@ -28,8 +30,6 @@ Namespace primitive
         [pow]
         ' jump to instruction @A, if (*B bool) is true 
         [jumpif]
-        ' (*A) = IP_AFTER_NEXT_INSTRUCTION, i.e. IP + 2, a typical usage is [ cpnip, jump ? ] 
-        [cpnip]
         ' (*A) = CO 
         [cpco]
         ' (*A) = DBZ 
@@ -66,8 +66,10 @@ Namespace primitive
         [or]
         ' (*A big_uint) = NOT (*B big_uint) 
         [not]
-        ' jump to instruction @(* stack.top() uint64) 
-        [esc]
+        ' push current state into states, such as IP_AFTER_THIS_INSTRUCTION, i.e. IP + 1, Stack Size, a typical usage is [ stst, jump ? ] 
+        [stst]
+        ' pop extra (StackSize - states.top.StackSize) slots from stack, and jump to instruction @(* states.top.IP uint64) 
+        [rest]
 
         COUNT
     End Enum

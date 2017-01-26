@@ -2,8 +2,8 @@
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    ' Move a variable from @source to @target.
-    Public Class move
+    ' Copy a variable from @source to @target.
+    Public Class copy
         Inherits copy_move
 
         Public Sub New(ByVal types As types, ByVal target As String, ByVal source As String)
@@ -11,7 +11,7 @@ Namespace logic
         End Sub
 
         Protected Overrides Function instruction() As command
-            Return command.mov
+            Return command.cp
         End Function
     End Class
 End Namespace

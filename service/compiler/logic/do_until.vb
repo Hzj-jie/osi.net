@@ -33,7 +33,7 @@ Namespace logic
                 Return False
             End If
 
-            o.emplace_back(instruction_builder.str(command.jumpif, data_ref.rel(2), var.ref))
+            o.emplace_back(instruction_builder.str(command.jumpif, data_ref.rel(2), var))
             o.emplace_back(instruction_builder.str(command.jump, data_ref.rel(CLng(start) - o.size() - 1)))
 
             Return True

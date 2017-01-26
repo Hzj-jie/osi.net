@@ -11,6 +11,8 @@ Namespace primitive
         Function extern_functions() As extern_functions
         Sub push_stack()
         Sub pop_stack()
+        Sub store_state()
+        Sub restore_state()
         Overloads Sub instruction_pointer(ByVal v As Int64)  ' data_ref.offset() returns int64
         Overloads Sub carry_over(ByVal v As Boolean)
         Overloads Sub divided_by_zero(ByVal v As Boolean)

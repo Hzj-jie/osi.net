@@ -2,16 +2,16 @@
 push	#push a data slot in to stack
 pop	#pop a data slot from stack
 jump	data_ref	#jump to instruction @A
+cpc	data_ref	data_block	#(*A) = B
+mov	data_ref	data_ref	#(*A) = (*B), clr B
+cp	data_ref	data_ref	#(*A) = (*B)
 add	data_ref	data_ref	data_ref	#(*A big_uint) = (*B big_uint) + (*C big_uint)
 sub	data_ref	data_ref	data_ref	#(*A big_uint) = (*B big_uint) - (*C big_uint)
-movc	data_ref	data_block	#(*A) = B
-mov	data_ref	data_ref	#(*A) = (*B)
 mul	data_ref	data_ref	data_ref	#(*A big_uint) = (*B big_uint) * (*C big_uint)
 div	data_ref	data_ref	data_ref	data_ref	#(*A big_uint) = (*C big_uint) / (*D big_uint) (*B big_uint) = (*C big_uint) % (*D big_uint)
 ext	data_ref	data_ref	data_ref	data_ref	#(*A big_uint) = extract((*C big_uint), (*D big_uint)) (*B big_uint) = remainder(extract((*C big_uint), (*D big_uint)))
 pow	data_ref	data_ref	data_ref	#(*A big_uint) = pow((*B big_uint), (*C big_uint))
 jumpif	data_ref	data_ref	#jump to instruction @A, if (*B bool) is true
-cpnip	data_ref	#(*A) = IP_AFTER_NEXT_INSTRUCTION, i.e. IP + 2, a typical usage is [ cpnip, jump ? ]
 cpco	data_ref	#(*A) = CO
 cpdbz	data_ref	#(*A) = DBZ
 cpin	data_ref	#(*A) = IN
@@ -30,4 +30,5 @@ empty	data_ref	data_ref	#(*A) = ((*B) == null)
 and	data_ref	data_ref	data_ref	#(*A big_uint) = (*B big_uint) AND (*C big_uint)
 or	data_ref	data_ref	data_ref	#(*A big_uint) = (*B big_uint) OR (*C big_uint)
 not	data_ref	data_ref	#(*A big_uint) = NOT (*B big_uint)
-esc	#jump to instruction @(* stack.top() uint64)
+stst	#push current state into states, such as IP_AFTER_THIS_INSTRUCTION, i.e. IP + 1, Stack Size, a typical usage is [ stst, jump ? ]
+rest	#pop extra (StackSize - states.top.StackSize) slots from stack, and jump to instruction @(* states.top.IP uint64)

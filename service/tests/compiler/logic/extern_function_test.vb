@@ -18,9 +18,9 @@ Namespace logic
         Private ReadOnly _extern_functions As extern_functions
 
         Public Sub New()
-            MyBase.New({
+            MyBase.New(
                 New define("1", types.variable_type),
-                New move_const(types.empty, "1", unique_ptr.[New](New data_block(1))),
+                New copy_const(types.empty, "1", unique_ptr.[New](New data_block(1))),
                 New define("i", types.variable_type),
                 New define("input", types.variable_type),
                 New extern_function(types.empty, primitive.extern_functions.default, "stdin", "i", "input"),
@@ -29,7 +29,7 @@ Namespace logic
                 New define("len", types.variable_type),
                 New sizeof(types.empty, "len", "input"),
                 New define("i-less-then-len", types.variable_type),
-                New do_while("i-less-then-len", unique_ptr.[New](New paragraph({
+                New do_while("i-less-then-len", unique_ptr.[New](New paragraph(
                     New define("char", types.variable_type),
                     New define("result", types.variable_type),
                     New cut_slice(types.empty, "char", "input", "i", "1"),
@@ -37,8 +37,8 @@ Namespace logic
                     New extern_function(types.empty, primitive.extern_functions.default, "stderr", "char", "result"),
                     New add(types.empty, "i", "i", "1"),
                     New less(types.empty, "i-less-then-len", "i", "len")
-                })))
-            })
+                )))
+            )
             text = rnd_en_chars(rnd_int(1000, 2000))
             input = make_disposer(New StringReader(text))
             out = make_disposer(New StringWriter())

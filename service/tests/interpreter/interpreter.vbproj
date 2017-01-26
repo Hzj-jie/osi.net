@@ -81,6 +81,7 @@
     </Compile>
     <Compile Include="primitive\data_block_test.vb" />
     <Compile Include="primitive\data_ref_test.vb" />
+    <Compile Include="primitive\states_test.vb" />
     <Compile Include="primitive\exportable_test.vb" />
     <Compile Include="primitive\extern_functions_implementation_tests.vb" />
     <Compile Include="primitive\extern_functions_test.vb" />
@@ -115,6 +116,9 @@
     <Content Include="primitive\cases\sim2.txt" />
     <Content Include="primitive\cases\sim3.txt" />
     <Content Include="primitive\cases\sim4.txt" />
+    <Content Include="primitive\cases\sim5.txt" />
+    <Content Include="primitive\cases\sim6.txt" />
+    <Content Include="primitive\cases\sim7.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\..\..\root\root.utt.props" Condition="'$(RootUttProps)'==''" />

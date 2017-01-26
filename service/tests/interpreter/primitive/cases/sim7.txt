@@ -1,0 +1,7 @@
+
+push
+stst
+jump rel2
+stop
+cpc rel0 Ehello\x20world\n
+rest

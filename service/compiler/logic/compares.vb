@@ -74,9 +74,9 @@ Namespace logic
             If Not variable.[New](scope, types, right, right_var) Then
                 Return False
             End If
-            o.emplace_back(instruction_builder.str(command.less, result_var.ref, left_var.ref, right_var.ref))
-            o.emplace_back(instruction_builder.str(command.jumpif, data_ref.rel(2), result_var.ref))
-            o.emplace_back(instruction_builder.str(command.equal, result_var.ref, left_var.ref, right_var.ref))
+            o.emplace_back(instruction_builder.str(command.less, result_var, left_var, right_var))
+            o.emplace_back(instruction_builder.str(command.jumpif, data_ref.rel(2), result_var))
+            o.emplace_back(instruction_builder.str(command.equal, result_var, left_var, right_var))
             Return True
         End Function
     End Class

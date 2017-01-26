@@ -9,21 +9,21 @@ Namespace logic
         Inherits executor_case
 
         Public Sub New()
-            MyBase.New({
+            MyBase.New(
                 New define("state", types.variable_type),
                 New define("result", types.variable_type),
                 New define("i", types.variable_type),
                 New define("1", types.variable_type),
                 New define("50", types.variable_type),
-                New move_const(types.empty, "state", unique_ptr.[New](New data_block(True))),
-                New move_const(types.empty, "1", unique_ptr.[New](New data_block(1))),
-                New move_const(types.empty, "50", unique_ptr.[New](New data_block(50))),
+                New copy_const(types.empty, "state", unique_ptr.[New](New data_block(True))),
+                New copy_const(types.empty, "1", unique_ptr.[New](New data_block(1))),
+                New copy_const(types.empty, "50", unique_ptr.[New](New data_block(50))),
                 New while_then("state", unique_ptr.[New](New paragraph(
                     New add(types.empty, "i", "i", "1"),
                     New add(types.empty, "result", "result", "i"),
                     New less_or_equal(types.empty, "state", "i", "50")
                 )))
-            })
+            )
         End Sub
 
         Protected Overrides Sub check_result(ByVal e As not_null(Of simulator))

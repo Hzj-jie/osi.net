@@ -62,6 +62,8 @@
     <Compile Include="logic\caller.vb" />
     <Compile Include="logic\compare.vb" />
     <Compile Include="logic\condition.vb" />
+    <Compile Include="logic\copy.vb" />
+    <Compile Include="logic\copy_move.vb" />
     <Compile Include="logic\data_ref_operator.vb" />
     <Compile Include="logic\define.vb" />
     <Compile Include="logic\do_until.vb" />
@@ -70,7 +72,7 @@
     <Compile Include="logic\exportable.vb" />
     <Compile Include="logic\compares.vb" />
     <Compile Include="logic\extern_function.vb" />
-    <Compile Include="logic\move_const.vb" />
+    <Compile Include="logic\copy_const.vb" />
     <Compile Include="logic\binary_math_operators.vb" />
     <Compile Include="logic\pair_result_binary_operator.vb" />
     <Compile Include="logic\pair_result_binary_operators.vb" />

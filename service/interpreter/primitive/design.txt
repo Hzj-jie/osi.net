@@ -1,7 +1,8 @@
 ﻿
-Whole memory space is separated into two parts,
+Entire memory space is separated into three parts,
 1. Instructions, readonly, contains only instructions.
 2. Stack, data, managed as data slot, each slot has zero or more bytes, which can be initialized by certain commands.
+3. States Stack, stores states, such as Instruction Pointer and Stack Size to maintain call stack.
 
 Data slot,
 Each data slot stores zero or more bytes, so for certain commands, the bytes will be converted to other data types.
@@ -31,7 +32,7 @@ absolute reference is 0. Then the left 63 bits are the real offset, which could 
 shift by 1.
 
 Data block
-Data block is to store constant data in binary, several commands, such as movc, can accept data block.
+Data block is to store constant data in binary, several commands, such as cpc, can accept data block.
 The first character of a data block is type character, while in bytes format, the first byte is type byte.
 There are several formats of data block,
 1. Integer, i123, means 123 in integer. 4 bytes.

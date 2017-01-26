@@ -1,8 +1,8 @@
 
 push
 push
-movc rel0 i100
+cpc rel0 i100
 push
-movc rel0 i50
+cpc rel0 i50
 less abs0 rel0 rel1
 stop

@@ -55,6 +55,7 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="logic\caller_test.vb" />
     <Compile Include="logic\executor_case.vb" />
     <Compile Include="logic\scope_test.vb" />
     <Compile Include="logic\extern_function_test.vb" />

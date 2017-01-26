@@ -2,8 +2,8 @@
 Imports osi.root.connector
 
 Namespace logic
-    Public NotInheritable Class scope_define
-        Public Shared Function define(ByVal scope As scope, ByVal name As String, ByVal type As String) As Boolean
+    Public Module _scope_define
+        Public Function scope_define(ByVal scope As scope, ByVal name As String, ByVal type As String) As Boolean
             assert(Not scope Is Nothing)
             If scope.define(name, type) Then
                 Return True
@@ -12,8 +12,5 @@ Namespace logic
                 Return False
             End If
         End Function
-
-        Private Sub New()
-        End Sub
-    End Class
+    End Module
 End Namespace

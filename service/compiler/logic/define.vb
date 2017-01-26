@@ -18,11 +18,20 @@ Namespace logic
             Me.type = type
         End Sub
 
+        Public Shared Function export(ByVal name As String,
+                                      ByVal type As String,
+                                      ByVal scope As scope,
+                                      ByVal o As vector(Of String)) As Boolean
+            Dim d As define = Nothing
+            d = New define(name, type)
+            Return d.export(scope, o)
+        End Function
+
         Public Function export(ByVal scope As scope,
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not scope Is Nothing)
             assert(Not o Is Nothing)
-            If scope_define.define(scope, name, type) Then
+            If scope_define(scope, name, type) Then
                 o.emplace_back(command_str(command.push))
                 Return True
             Else

@@ -14,6 +14,7 @@ Namespace primitive
         Private ReadOnly _errors As vector(Of executor.error_type)
         Private ReadOnly _instructions As vector(Of instruction)
         Private ReadOnly _stack As vector(Of pointer(Of Byte()))
+        Private ReadOnly _states As vector(Of executor.state)
         Private ReadOnly _extern_functions As extern_functions
         Private _carry_over As Boolean
         Private _diviced_by_zero As Boolean
@@ -28,6 +29,7 @@ Namespace primitive
             _errors = New vector(Of executor.error_type)()
             _instructions = New vector(Of instruction)()
             _stack = New vector(Of pointer(Of Byte()))()
+            _states = New vector(Of executor.state)()
             _extern_functions = extern_functions
         End Sub
 
@@ -67,8 +69,26 @@ Namespace primitive
             Return _halt
         End Function
 
+        Public Function stack_size() As UInt64 Implements executor.stack_size
+            Return _stack.size()
+        End Function
+
         Public Function instruction_pointer() As UInt64 Implements executor.instruction_pointer
             Return _instruction_pointer
+        End Function
+
+        Public Function access_states(ByVal p As UInt64) As executor.state Implements executor.access_states
+            If p >= _states.size() Then
+                executor_stop_error.throw(executor.error_type.stack_access_out_of_boundary)
+                assert(False)
+                Return executor.state.empty
+            Else
+                Return _states(CUInt(p))
+            End If
+        End Function
+
+        Public Function states_size() As UInt64 Implements executor.states_size
+            Return CULng(_states.size())
         End Function
 
         Public Function extern_functions() As extern_functions Implements imitation.extern_functions
@@ -124,6 +144,23 @@ Namespace primitive
                 executor_stop_error.throw(executor.error_type.stack_access_out_of_boundary)
             Else
                 _stack.pop_back()
+            End If
+        End Sub
+
+        Public Sub store_state() Implements imitation.store_state
+            _states.emplace_back(current_state())
+        End Sub
+
+        Public Sub restore_state() Implements imitation.restore_state
+            If _states.empty() Then
+                executor_stop_error.throw(executor.error_type.stack_access_out_of_boundary)
+            Else
+                Dim r As executor.state = Nothing
+                r = _states.back()
+                _states.pop_back()
+                assert(r.stack_size <= _stack.size())
+                _stack.resize(CUInt(r.stack_size))
+                instruction_pointer(r.instruction_pointer)
             End If
         End Sub
 

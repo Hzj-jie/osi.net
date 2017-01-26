@@ -37,6 +37,8 @@ Namespace logic
             End If
             If assert_true(e.import(es)) Then
                 e.execute()
+                assert_false(e.halt())
+                assert_true(e.errors().empty())
                 Try
                     check_result(not_null.[New](e))
                 Catch ex As executor_stop_error

@@ -69,7 +69,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public NotInheritable Class [movc]
+        Partial Public NotInheritable Class [cpc]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -84,6 +84,16 @@ Namespace primitive
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
                 assert(Not imi Is Nothing)
                 p0(imi).set(+p1(imi))
+                p1(imi).clear()
+            End Sub
+        End Class
+
+        Partial Public NotInheritable Class [cp]
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                assert(Not imi Is Nothing)
+                p0(imi).set(copy(+p1(imi)))
             End Sub
         End Class
 
@@ -164,15 +174,6 @@ Namespace primitive
                         imi.instruction_pointer(d0.offset())
                     End If
                 End If
-            End Sub
-        End Class
-
-        Partial Public NotInheritable Class [cpnip]
-            Implements instruction
-
-            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(Not imi Is Nothing)
-                p0(imi).set(uint64_bytes(imi.instruction_pointer() + uint64_2))
             End Sub
         End Class
 
@@ -388,13 +389,21 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public NotInheritable Class [esc]
+        Partial Public NotInheritable Class [stst]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                Dim i As UInt64 = 0
-                i = imi.access_stack_top_as_uint64()
-                imi.instruction_pointer(i)
+                assert(Not imi Is Nothing)
+                imi.store_state()
+            End Sub
+        End Class
+
+        Partial Public NotInheritable Class [rest]
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                assert(Not imi Is Nothing)
+                imi.restore_state()
             End Sub
         End Class
     End Namespace

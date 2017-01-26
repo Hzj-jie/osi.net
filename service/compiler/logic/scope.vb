@@ -30,14 +30,12 @@ Namespace logic
             Return child
         End Function
 
-#If 0 Then
         Public Function end_scope() As scope
             If Not parent Is Nothing Then
                 parent.child = Nothing
             End If
             Return parent
         End Function
-#End If
 
         Public Function define(ByVal name As String, ByVal type As String) As Boolean
             assert(Not String.IsNullOrEmpty(name))

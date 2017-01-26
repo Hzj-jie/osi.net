@@ -3,6 +3,7 @@ Option Strict On
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.connector
 Imports osi.service.math
@@ -44,11 +45,25 @@ Namespace primitive
             undefined_extern_function
         End Enum
 
+        Structure state
+            Public Shared ReadOnly empty As state
+            Public ReadOnly instruction_pointer As UInt64
+            Public ReadOnly stack_size As UInt64
+
+            Public Sub New(ByVal instruction_pointer As UInt64, ByVal stack_size As UInt64)
+                Me.instruction_pointer = instruction_pointer
+                Me.stack_size = stack_size
+            End Sub
+        End Structure
+
         Function access_stack(ByVal p As data_ref) As pointer(Of Byte())
+        Function stack_size() As UInt64
         Function instruction_pointer() As UInt64
         Function carry_over() As Boolean
         Function divided_by_zero() As Boolean
         Function imaginary_number() As Boolean
+        Function access_states(ByVal p As UInt64) As state
+        Function states_size() As UInt64
 
         Function halt() As Boolean
         Function errors() As vector(Of error_type)
@@ -102,6 +117,11 @@ Namespace primitive
         <Extension()> Public Function convert_stack_top_to_uint64(ByVal this As executor,
                                                                   ByRef overflow As Boolean) As UInt64
             Return this.convert_stack_to_uint64(data_ref.rel(0), overflow)
+        End Function
+
+        <Extension()> Public Function current_state(ByVal this As executor) As executor.state
+            assert(Not this Is Nothing)
+            Return New executor.state(this.instruction_pointer() + uint64_1, this.stack_size())
         End Function
     End Module
 End Namespace

@@ -43,7 +43,7 @@ Namespace logic
             End If
             false_o.emplace_back(instruction_builder.str(command.jump, data_ref.rel(true_o.size())))
 
-            o.emplace_back(instruction_builder.str(command.jumpif, var.ref))
+            o.emplace_back(instruction_builder.str(command.jumpif, var))
             assert(o.emplace_back(false_o))
             assert(o.emplace_back(true_o))
 

@@ -16,16 +16,16 @@ push
 ## rel6 equal return
 ## rel7 cutl return
 
-movc rel0 Ehello\x20world\n
+cpc rel0 Ehello\x20world\n
 sizeof rel1 rel0
-movc rel2 i0
-movc rel3 i0
+cpc rel2 i0
+cpc rel3 i0
 
 ## This is a simple way.
 extern rel3 rel0 rel4
 
 ## This is a complex way.
-movc rel5 i1
+cpc rel5 i1
 equal rel6 rel1 rel2
 jumpif rel5 rel6
 cutl rel7 rel0 rel2 rel5
@@ -33,14 +33,14 @@ extern rel3 rel7 rel4
 add rel2 rel2 rel5
 jump rel-5
 
-movc rel2 i0
-movc rel3 i1
+cpc rel2 i0
+cpc rel3 i1
 
 ## This is a simple way.
 extern rel3 rel0 rel4
 
 ## This is a complex way.
-movc rel5 i1
+cpc rel5 i1
 equal rel6 rel1 rel2
 jumpif rel5 rel6
 cutl rel7 rel0 rel2 rel5

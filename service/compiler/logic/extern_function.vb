@@ -40,9 +40,9 @@ Namespace logic
                 Return False
             End If
 
-            Dim movc As move_const = Nothing
-            movc = New move_const(types, result, unique_ptr.[New](New data_block(function_id)))
-            If Not movc.export(scope, o) Then
+            Dim cpc As copy_const = Nothing
+            cpc = New copy_const(types, result, unique_ptr.[New](New data_block(function_id)))
+            If Not cpc.export(scope, o) Then
                 Return False
             End If
 
@@ -52,9 +52,9 @@ Namespace logic
             End If
 
             Dim r As variable = Nothing
-            assert(variable.[New](scope, result, r))  ' Otherwise movc.export() should not succeed.
+            assert(variable.[New](scope, result, r))  ' Otherwise cpc.export() should not succeed.
 
-            o.emplace_back(instruction_builder.str(command.extern, r.ref, p.ref, r.ref))
+            o.emplace_back(instruction_builder.str(command.extern, r, p, r))
             Return True
         End Function
     End Class

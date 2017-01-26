@@ -15,7 +15,7 @@ Namespace primitive
             Dim io As console_io = Nothing
             io = New console_io()
             s = New simulator(New extern_functions(io))
-            s.import(sim3.as_text())
+            assert_true(s.import(sim3.as_text()))
             Using out As TextWriter = New StringWriter(),
                   err As TextWriter = New StringWriter()
                 io.redirect_output(out)
@@ -36,7 +36,7 @@ Namespace primitive
             Dim io As console_io = Nothing
             io = New console_io()
             s = New simulator(New extern_functions(io))
-            s.import(sim4.as_text())
+            assert_true(s.import(sim4.as_text()))
             Dim input As String = Nothing
             input = rnd_en_chars(rnd_int(100, 1000))
             Using out As TextWriter = New StringWriter(),
