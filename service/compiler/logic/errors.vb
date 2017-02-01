@@ -1,4 +1,6 @@
 ﻿
+Option Explicit On
+Option Infer Off
 Option Strict On
 
 Imports osi.root.constants
@@ -79,6 +81,22 @@ Namespace logic
 
         Public Shared Sub anchor_redefined(ByVal name As String, ByVal last_pos As UInt32)
             raise_error(error_type.user, "Anchor ", name, " redefined, last position is ", last_pos)
+        End Sub
+
+        Public Shared Sub unexpected_token(ByVal s As String)
+            raise_error(error_type.user, "Unexpected token ", s)
+        End Sub
+
+        Public Shared Sub typed_parameters_is_not_closed()
+            raise_error(error_type.user, "Right parenthesis is not found, typed_parameters is not closed.")
+        End Sub
+
+        Public Shared Sub parameters_is_not_closed()
+            raise_error(error_type.user, "Right parenthesis is not found, parameters is not closed.")
+        End Sub
+
+        Public Shared Sub paragraph_is_not_closed()
+            raise_error(error_type.user, "Right bracket is not found, paragraph is not closed.")
         End Sub
 
         Private Sub New()

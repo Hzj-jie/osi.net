@@ -1,0 +1,40 @@
+
+#typed_parameters = ( string string * )
+#parameters = ( string * )
+#paragraph = { statement * }
+type	string	uint
+append_slice	string	string
+cut	string	string	string
+cut_slice	string	string	string	string
+clear	string
+add	string	string	string
+substract	string	string	string
+power	string	string	string
+and	string	string	string
+or	string	string	string
+callee	string	typed_parameters	paragraph
+caller	string	string	parameters
+caller	string	parameters
+less	string	string	string
+more	string	string	string
+equal	string	string	string
+less_or_equal	string	string	string
+more_or_equal	string	string	string
+if	string	paragraph	else	paragraph
+if	string	paragraph
+copy	string	string
+copy_const	string	data_block
+define	string	string
+do_until	string	paragraph
+do_while	string	paragraph
+extern_function	string	string	string
+move	string	string
+divide	string	string	string	string
+extract	string	string	string	string
+return	string	string
+return	string
+append	string	string
+not	string	string
+sizeof	string	string
+empty	string	string
+while_then	string	paragraph

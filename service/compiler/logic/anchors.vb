@@ -15,6 +15,7 @@ Namespace logic
         End Sub
 
         Public Function define(ByVal name As String, ByVal o As vector(Of String)) As Boolean
+            assert(Not String.IsNullOrEmpty(name))
             assert(Not o Is Nothing)
             If begins.find(name) = begins.end() Then
                 begins(name) = o.size()

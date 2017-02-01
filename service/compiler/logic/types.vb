@@ -21,15 +21,27 @@ Namespace logic
             define_variable_size(variable_type)
         End Sub
 
-        Public Sub define(ByVal type As String, ByVal size As UInt32)
+        Public Function define(ByVal type As String, ByVal size As UInt32) As Boolean
             assert(object_compare(Me, empty) <> 0)
             assert(Not String.IsNullOrEmpty(type))
-            assert(sizes.find(type) = sizes.end())
-            sizes(type) = size
+            If sizes.find(type) <> sizes.end() Then
+                Return False
+            Else
+                sizes(type) = size
+                Return True
+            End If
+        End Function
+
+        Public Sub assert_define(ByVal type As String, ByVal size As UInt32)
+            assert(define(type, size))
         End Sub
 
-        Public Sub define_variable_size(ByVal type As String)
-            define(type, variable_size)
+        Public Function define_variable_size(ByVal type As String) As Boolean
+            Return define(type, variable_size)
+        End Function
+
+        Public Sub assert_define_variable_size(ByVal type As String)
+            assert(define_variable_size(type))
         End Sub
 
         Public Shared Function is_variable_size(ByVal size As UInt32) As Boolean

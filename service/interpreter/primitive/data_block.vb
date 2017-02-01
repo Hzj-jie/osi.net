@@ -212,9 +212,13 @@ Namespace primitive
             Return buff
         End Function
 
-        Public Function bytes_size() As UInt32 Implements exportable.bytes_size
+        Public Function value_bytes_size() As UInt32
             assert(Not buff Is Nothing)
-            Return array_size(buff) + sizeof_uint32
+            Return array_size(buff)
+        End Function
+
+        Public Function bytes_size() As UInt32 Implements exportable.bytes_size
+            Return value_bytes_size() + sizeof_uint32
         End Function
 
         Public Function export(ByRef b() As Byte) As Boolean Implements exportable.export

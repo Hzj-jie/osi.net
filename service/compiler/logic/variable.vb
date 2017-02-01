@@ -94,7 +94,7 @@ Namespace logic
 
         Public Function is_assignable_from_bool() As Boolean
             assert(size <> unknown_size)
-            If types.is_size_or_variable(size, sizeof_bool) Then
+            If types.is_size_or_variable(size, sizeof_bool_implementation) Then
                 Return True
             Else
                 errors.unassignable_from_bool(Me)

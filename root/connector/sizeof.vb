@@ -4,6 +4,7 @@ Imports osi.root.constants
 
 Public Module _sizeof
     Public ReadOnly sizeof_bool As UInt32 = sizeof(Of Boolean)()
+    Public ReadOnly sizeof_bool_implementation As UInt32 = 1
     Public ReadOnly sizeof_sbyte As UInt32 = sizeof(Of SByte)()
     Public ReadOnly sizeof_byte As UInt32 = sizeof(Of Byte)()
     Public ReadOnly sizeof_int8 As UInt32 = sizeof(Of SByte)()

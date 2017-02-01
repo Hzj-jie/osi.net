@@ -27,7 +27,7 @@ Namespace logic
             assert(Not scope Is Nothing)
             Dim t As variable = Nothing
             If variable.[New](scope, types, target, t) AndAlso
-               t.is_assignable_from(data.bytes_size()) Then
+               t.is_assignable_from(data.value_bytes_size()) Then
                 o.emplace_back(instruction_builder.str(command.cpc, t, data))
                 Return True
             Else

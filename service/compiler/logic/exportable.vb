@@ -1,13 +1,12 @@
 ﻿
 Imports System.Runtime.CompilerServices
-Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public Module _exportable
-        <Extension()> Public Function import(ByVal e As executor,
+        <Extension()> Public Function import(ByVal e As interpreter.primitive.exportable,
                                              ByVal scope As scope,
                                              ByVal es() As exportable) As Boolean
             assert(Not e Is Nothing)
@@ -34,7 +33,8 @@ Namespace logic
             End If
         End Function
 
-        <Extension()> Public Function import(ByVal e As executor, ByVal es() As exportable) As Boolean
+        <Extension()> Public Function import(ByVal e As interpreter.primitive.exportable,
+                                             ByVal es() As exportable) As Boolean
             Return import(e, New scope(), es)
         End Function
     End Module

@@ -30,9 +30,21 @@ Namespace logic
 
         Public Sub New(ByVal anchors As anchors,
                        ByVal name As String,
+                       ByVal parameters As unique_ptr(Of String()))
+            Me.New(anchors, name, Nothing, parameters)
+        End Sub
+
+        Public Sub New(ByVal anchors As anchors,
+                       ByVal name As String,
                        ByVal result As String,
                        ParamArray ByVal parameters() As String)
             Me.New(anchors, name, result, unique_ptr.[New](parameters))
+        End Sub
+
+        Public Sub New(ByVal anchors As anchors,
+                       ByVal name As String,
+                       ParamArray ByVal parameters() As String)
+            Me.New(anchors, name, Nothing, unique_ptr.[New](parameters))
         End Sub
 
         Public Function export(ByVal scope As scope,

@@ -74,6 +74,10 @@
     <Compile Include="logic\extern_function.vb" />
     <Compile Include="logic\copy_const.vb" />
     <Compile Include="logic\binary_math_operators.vb" />
+    <Compile Include="logic\importer.parser.vb" />
+    <Compile Include="logic\importer.definition.vb" />
+    <Compile Include="logic\importer.new.vb" />
+    <Compile Include="logic\importer.vb" />
     <Compile Include="logic\pair_result_binary_operator.vb" />
     <Compile Include="logic\pair_result_binary_operators.vb" />
     <Compile Include="logic\paragraph.vb" />
@@ -85,6 +89,7 @@
     <Compile Include="logic\scope_define.vb" />
     <Compile Include="logic\scope_wrapper.vb" />
     <Compile Include="logic\ternary_operator.vb" />
+    <Compile Include="logic\type.vb" />
     <Compile Include="logic\types.vb" />
     <Compile Include="logic\unary_operator.vb" />
     <Compile Include="logic\unary_operators.vb" />
@@ -118,6 +123,7 @@
   <ItemGroup>
     <None Include="compiler.dep" />
     <None Include="compiler.props" />
+    <None Include="logic\codegen\run.cmd" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -132,8 +138,12 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="logic\codegen\definition_parser.cs" />
+    <Content Include="logic\codegen\definition_parser.exe" />
+    <Content Include="logic\definition.txt" />
     <Content Include="logic\design.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="compiler.dep" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
