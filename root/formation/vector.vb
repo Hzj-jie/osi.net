@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Text
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
@@ -15,6 +19,14 @@ Public Module vector_extension
 
     <Extension()> Public Function null_or_empty(Of T)(ByVal i As vector(Of T)) As Boolean
         Return i Is Nothing OrElse i.empty()
+    End Function
+
+    <Extension()> Public Function size_or_0(Of T)(ByVal i As vector(Of T)) As UInt32
+        If i Is Nothing Then
+            Return uint32_0
+        Else
+            Return i.size()
+        End If
     End Function
 
     <Extension()> Public Function except(Of T As IComparable(Of T)) _
@@ -47,13 +59,14 @@ Public Module vector_extension
         If v.null_or_empty() Then
             Return Nothing
         Else
-            Return v(i Mod v.size())
+            Return v(CUInt(Math.Abs(i Mod v.size())))
         End If
     End Function
 
     <Extension()> Public Function take(Of T)(ByVal v As vector(Of T), ByVal i As Int32, ByRef o As T) As Boolean
         If available_index(v, i) Then
-            o = v(i)
+            assert(i >= 0)
+            o = v(CUInt(i))
             Return True
         Else
             Return False
@@ -71,7 +84,9 @@ Public Module vector_extension
 
     <Extension()> Public Function take(Of T)(ByVal v As vector(Of T), ByVal i As Int64, ByRef o As T) As Boolean
         If available_index(v, i) Then
-            o = v(i)
+            assert(i >= 0)
+            assert(i <= max_uint32)
+            o = v(CUInt(i))
             Return True
         Else
             Return False
@@ -80,7 +95,8 @@ Public Module vector_extension
 
     <Extension()> Public Function take(Of T)(ByVal v As vector(Of T), ByVal i As UInt64, ByRef o As T) As Boolean
         If available_index(v, i) Then
-            o = v(i)
+            assert(i <= max_uint32)
+            o = v(CUInt(i))
             Return True
         Else
             Return False
@@ -138,10 +154,10 @@ Public Module vector_extension
                 ReDim d(-1)
             Else
                 If array_size(d) <> v.size() Then
-                    ReDim d(v.size() - uint32_1)
+                    ReDim d(CInt(v.size() - uint32_1))
                 End If
                 For i As UInt32 = 0 To v.size() - uint32_1
-                    copy(d(i), v(i))
+                    copy(d(CInt(i)), v(i))
                 Next
             End If
         End If
@@ -153,7 +169,7 @@ Public Module vector_extension
         Else
             For i As UInt32 = 0 To v.size() - uint32_1
                 If compare(k, v(i)) = 0 Then
-                    Return i
+                    Return CInt(i)
                 End If
             Next
             Return npos
@@ -231,11 +247,13 @@ Public NotInheritable Class vector(Of T)
     End Sub
 
     Public Sub assign(ByVal ParamArray vs() As T)
-        v.resize(array_size(vs) - 1)
+        v.resize(array_size(vs))
         assert(v.capacity() >= array_size(vs))
-        For i As Int32 = 0 To array_size(vs) - 1
-            copy(v(i), vs(i))
-        Next
+        Dim i As UInt32 = 0
+        While i < array_size(vs)
+            copy(v(i), vs(CInt(i)))
+            i += uint32_1
+        End While
     End Sub
 
     Default Public Property at(ByVal p As UInt32) As T
@@ -274,7 +292,7 @@ Public NotInheritable Class vector(Of T)
             v.push_back(d)
         Else
             v.push_back(d)
-            memmove(v.data(), pos + 1, v.data(), pos, v.size() - pos - 1)
+            memmove(v.data(), pos + uint32_1, v.data(), pos, v.size() - pos - uint32_1)
             v(pos) = d
         End If
     End Sub
@@ -303,7 +321,7 @@ Public NotInheritable Class vector(Of T)
     End Sub
 
     Public Sub [erase](ByVal start As UInt32)
-        [erase](start, start + 1)
+        [erase](start, start + uint32_1)
     End Sub
 
     Public Function front() As T
@@ -340,7 +358,7 @@ Public NotInheritable Class vector(Of T)
         Dim os As UInt32 = 0
         os = v.size()
         v.resize(n)
-        For i As UInt32 = os To n - 1
+        For i As UInt32 = os To n - uint32_1
             copy(v(i), d)
         Next
     End Sub
@@ -375,15 +393,19 @@ Public NotInheritable Class vector(Of T)
         End If
 
         v.reserve(n + size())
-        For i As UInt32 = start To start + n - uint32_1
-            Dim m As T = Nothing
-            If need_copy Then
-                copy(m, vs(i))
-            Else
-                m = vs(i)
-            End If
-            v.push_back(m)
-        Next
+        If need_copy Then
+            For i As UInt32 = start To start + n - uint32_1
+                Dim m As T = Nothing
+                copy(m, vs(CInt(i)))
+                v.push_back(m)
+            Next
+        Else
+            For i As UInt32 = start To start + n - uint32_1
+                Dim m As T = Nothing
+                m = vs(CInt(i))
+                v.push_back(m)
+            Next
+        End If
         Return True
     End Function
 

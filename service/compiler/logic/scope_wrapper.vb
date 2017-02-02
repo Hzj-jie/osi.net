@@ -32,6 +32,7 @@ Namespace logic
                 o.emplace_back(instruction_builder.str(command.pop))
                 i += uint32_1
             End While
+            new_scope.end_scope()
         End Sub
     End Class
 End Namespace

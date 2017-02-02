@@ -33,7 +33,8 @@ Namespace logic
             p += uint32_1
             o = new_type(
                 p1,
-                p2)
+                p2
+            )
             Return True
         End Function
 
@@ -55,7 +56,8 @@ Namespace logic
             p += uint32_1
             o = new_append_slice(
                 p1,
-                p2)
+                p2
+            )
             Return True
         End Function
 
@@ -81,7 +83,8 @@ Namespace logic
             o = new_cut(
                 p1,
                 p2,
-                p3)
+                p3
+            )
             Return True
         End Function
 
@@ -111,7 +114,8 @@ Namespace logic
                 p1,
                 p2,
                 p3,
-                p4)
+                p4
+            )
             Return True
         End Function
 
@@ -129,7 +133,8 @@ Namespace logic
             p1 = v(p)
             p += uint32_1
             o = new_clear(
-                p1)
+                p1
+            )
             Return True
         End Function
 
@@ -155,7 +160,8 @@ Namespace logic
             o = new_add(
                 p1,
                 p2,
-                p3)
+                p3
+            )
             Return True
         End Function
 
@@ -181,7 +187,8 @@ Namespace logic
             o = new_substract(
                 p1,
                 p2,
-                p3)
+                p3
+            )
             Return True
         End Function
 
@@ -207,7 +214,8 @@ Namespace logic
             o = new_power(
                 p1,
                 p2,
-                p3)
+                p3
+            )
             Return True
         End Function
 
@@ -233,7 +241,8 @@ Namespace logic
             o = new_and(
                 p1,
                 p2,
-                p3)
+                p3
+            )
             Return True
         End Function
 
@@ -259,7 +268,8 @@ Namespace logic
             o = new_or(
                 p1,
                 p2,
-                p3)
+                p3
+            )
             Return True
         End Function
 
@@ -292,7 +302,8 @@ Namespace logic
             o = new_callee(
                 p1,
                 p2,
-                p3)
+                p3
+            )
             Return True
         End Function
 
@@ -322,7 +333,8 @@ Namespace logic
             o = new_caller(
                 p1,
                 p2,
-                p3)
+                p3
+            )
             Return True
         End Function
 
@@ -348,7 +360,8 @@ Namespace logic
             p += uint32_1
             o = new_caller(
                 p1,
-                p2)
+                p2
+            )
             Return True
         End Function
 
@@ -374,7 +387,8 @@ Namespace logic
             o = new_less(
                 p1,
                 p2,
-                p3)
+                p3
+            )
             Return True
         End Function
 
@@ -400,7 +414,8 @@ Namespace logic
             o = new_more(
                 p1,
                 p2,
-                p3)
+                p3
+            )
             Return True
         End Function
 
@@ -426,7 +441,8 @@ Namespace logic
             o = new_equal(
                 p1,
                 p2,
-                p3)
+                p3
+            )
             Return True
         End Function
 
@@ -452,7 +468,8 @@ Namespace logic
             o = new_less_or_equal(
                 p1,
                 p2,
-                p3)
+                p3
+            )
             Return True
         End Function
 
@@ -478,7 +495,8 @@ Namespace logic
             o = new_more_or_equal(
                 p1,
                 p2,
-                p3)
+                p3
+            )
             Return True
         End Function
 
@@ -516,7 +534,8 @@ Namespace logic
                 p1,
                 p2,
                 p3,
-                p4)
+                p4
+            )
             Return True
         End Function
 
@@ -541,7 +560,8 @@ Namespace logic
             p += uint32_1
             o = new_if(
                 p1,
-                p2)
+                p2
+            )
             Return True
         End Function
 
@@ -563,7 +583,8 @@ Namespace logic
             p += uint32_1
             o = new_copy(
                 p1,
-                p2)
+                p2
+            )
             Return True
         End Function
 
@@ -591,7 +612,8 @@ Namespace logic
             p += uint32_1
             o = new_copy_const(
                 p1,
-                p2)
+                p2
+            )
             Return True
         End Function
 
@@ -613,7 +635,8 @@ Namespace logic
             p += uint32_1
             o = new_define(
                 p1,
-                p2)
+                p2
+            )
             Return True
         End Function
 
@@ -638,7 +661,8 @@ Namespace logic
             p += uint32_1
             o = new_do_until(
                 p1,
-                p2)
+                p2
+            )
             Return True
         End Function
 
@@ -663,7 +687,8 @@ Namespace logic
             p += uint32_1
             o = new_do_while(
                 p1,
-                p2)
+                p2
+            )
             Return True
         End Function
 
@@ -689,7 +714,8 @@ Namespace logic
             o = new_extern_function(
                 p1,
                 p2,
-                p3)
+                p3
+            )
             Return True
         End Function
 
@@ -711,7 +737,8 @@ Namespace logic
             p += uint32_1
             o = new_move(
                 p1,
-                p2)
+                p2
+            )
             Return True
         End Function
 
@@ -741,7 +768,8 @@ Namespace logic
                 p1,
                 p2,
                 p3,
-                p4)
+                p4
+            )
             Return True
         End Function
 
@@ -771,11 +799,37 @@ Namespace logic
                 p1,
                 p2,
                 p3,
-                p4)
+                p4
+            )
             Return True
         End Function
 
         Private Function parse_return_29(
+                ByVal v As vector(Of String),
+                ByRef p As UInt32,
+                ByRef o As exportable) As Boolean
+            assert(Not v Is Nothing)
+            assert(v.size() > p)
+            If Not strsame(v(p), "return") Then
+                Return False
+            End If
+            p += uint32_1
+            Dim p1 As String = Nothing
+            p1 = v(p)
+            p += uint32_1
+            Dim p2 As place_holder = Nothing
+            If Not strsame(v(p), "*") Then
+                Return False
+            End If
+            p += uint32_1
+            o = new_return(
+                p1,
+                p2
+            )
+            Return True
+        End Function
+
+        Private Function parse_return_30(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -793,25 +847,8 @@ Namespace logic
             p += uint32_1
             o = new_return(
                 p1,
-                p2)
-            Return True
-        End Function
-
-        Private Function parse_return_30(
-                ByVal v As vector(Of String),
-                ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
-            assert(Not v Is Nothing)
-            assert(v.size() > p)
-            If Not strsame(v(p), "return") Then
-                Return False
-            End If
-            p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
-            p += uint32_1
-            o = new_return(
-                p1)
+                p2
+            )
             Return True
         End Function
 
@@ -833,7 +870,8 @@ Namespace logic
             p += uint32_1
             o = new_append(
                 p1,
-                p2)
+                p2
+            )
             Return True
         End Function
 
@@ -855,7 +893,8 @@ Namespace logic
             p += uint32_1
             o = new_not(
                 p1,
-                p2)
+                p2
+            )
             Return True
         End Function
 
@@ -877,7 +916,8 @@ Namespace logic
             p += uint32_1
             o = new_sizeof(
                 p1,
-                p2)
+                p2
+            )
             Return True
         End Function
 
@@ -899,7 +939,8 @@ Namespace logic
             p += uint32_1
             o = new_empty(
                 p1,
-                p2)
+                p2
+            )
             Return True
         End Function
 
@@ -924,7 +965,23 @@ Namespace logic
             p += uint32_1
             o = new_while_then(
                 p1,
-                p2)
+                p2
+            )
+            Return True
+        End Function
+
+        Private Function parse_stop_36(
+                ByVal v As vector(Of String),
+                ByRef p As UInt32,
+                ByRef o As exportable) As Boolean
+            assert(Not v Is Nothing)
+            assert(v.size() > p)
+            If Not strsame(v(p), "stop") Then
+                Return False
+            End If
+            p += uint32_1
+            o = new_stop(
+            )
             Return True
         End Function
 
@@ -1218,6 +1275,14 @@ Namespace logic
                 Dim pos As UInt32 = 0
                 pos = p
                 If parse_while_then_35(v, pos, o) Then
+                    p = pos
+                    Return True
+                End If
+            End Using
+            Using code_block
+                Dim pos As UInt32 = 0
+                pos = p
+                If parse_stop_36(v, pos, o) Then
                     p = pos
                     Return True
                 End If

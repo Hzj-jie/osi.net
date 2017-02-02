@@ -23,13 +23,16 @@ Namespace logic
                                       New [return](anchors, "add", "result")
                                   )),
                                   emplace_make_pair("parameter1", types.variable_type),
-                                  emplace_make_pair("parameter2", types.variable_type)),
+                                  emplace_make_pair("parameter2", types.variable_type),
+                                  emplace_make_pair("parameter3", types.variable_type)),
                        New define("parameter1", types.variable_type),
                        New define("parameter2", types.variable_type),
+                       New define("parameter3", types.variable_type),
                        New define("result", types.variable_type),
                        New copy_const(types.empty, "parameter1", unique_ptr.[New](New data_block(100))),
                        New copy_const(types.empty, "parameter2", unique_ptr.[New](New data_block(200))),
-                       New caller(anchors, "add", "result", "parameter1", "parameter2"))
+                       New copy_const(types.empty, "parameter3", unique_ptr.[New](New data_block(10000))),
+                       New caller(anchors, "add", "result", "parameter1", "parameter2", "parameter3"))
         End Sub
 
         Public Overrides Function prepare() As Boolean
@@ -42,10 +45,11 @@ Namespace logic
         End Function
 
         Protected Overrides Sub check_result(ByVal e As not_null(Of simulator))
-            If assert_equal(e.get().stack_size(), CULng(3)) Then
+            If assert_equal(e.get().stack_size(), CULng(4)) Then
                 assert_equal(e.get().access_stack_as_uint32(data_ref.abs(0)), CUInt(100))
                 assert_equal(e.get().access_stack_as_uint32(data_ref.abs(1)), CUInt(200))
-                assert_equal(e.get().access_stack_as_uint32(data_ref.abs(2)), CUInt(300))
+                assert_equal(e.get().access_stack_as_uint32(data_ref.abs(2)), CUInt(10000))
+                assert_equal(e.get().access_stack_as_uint32(data_ref.abs(3)), CUInt(300))
             End If
         End Sub
     End Class

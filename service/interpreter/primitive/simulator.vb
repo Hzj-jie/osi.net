@@ -1,10 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
 Option Strict On
 
 Imports System.IO
 Imports System.Text
 Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.delegates
 Imports osi.root.formation
 
 Namespace primitive
@@ -247,40 +250,54 @@ Namespace primitive
             End If
         End Function
 
-        Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import
-            If p >= array_size(i) Then
+        Private Function import(Of T)(ByVal i As T,
+                                      ByRef p As UInt32,
+                                      ByVal imp As _do_val_val_ref(Of instruction_wrapper, T, UInt32, Boolean),
+                                      ByVal size_of As Func(Of T, UInt32)) As Boolean
+            assert(Not imp Is Nothing)
+            assert(Not size_of Is Nothing)
+            If p >= size_of(i) Then
                 Return False
             Else
                 _instructions.clear()
-                While p < array_size(i)
+                While p < size_of(i)
                     Dim ins As instruction_wrapper = Nothing
                     ins = New instruction_wrapper()
-                    If ins.import(i, p) Then
+                    If imp(ins, i, p) Then
                         _instructions.emplace_back(ins)
                     Else
                         Return False
                     End If
                 End While
+                _instructions.emplace_back(New instructions.stop())
                 Return True
             End If
         End Function
 
+        Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import
+            Return import(i,
+                          p,
+                          Function(ByVal ins As instruction_wrapper, ByVal x() As Byte, ByRef pos As UInt32) As Boolean
+                              assert(Not ins Is Nothing)
+                              Return ins.import(x, pos)
+                          End Function,
+                          Function(ByVal x() As Byte) As UInt32
+                              Return array_size(i)
+                          End Function)
+        End Function
+
         Public Function import(ByVal s As vector(Of String), ByRef p As UInt32) As Boolean Implements exportable.import
-            If s.null_or_empty() OrElse p >= s.size() Then
-                Return False
-            Else
-                _instructions.clear()
-                While p < s.size()
-                    Dim ins As instruction_wrapper = Nothing
-                    ins = New instruction_wrapper()
-                    If ins.import(s, p) Then
-                        _instructions.emplace_back(ins)
-                    Else
-                        Return False
-                    End If
-                End While
-                Return True
-            End If
+            Return import(s,
+                          p,
+                          Function(ByVal ins As instruction_wrapper,
+                                   ByVal x As vector(Of String),
+                                   ByRef pos As UInt32) As Boolean
+                              assert(Not ins Is Nothing)
+                              Return ins.import(x, pos)
+                          End Function,
+                          Function(ByVal x As vector(Of String)) As UInt32
+                              Return x.size_or_0()
+                          End Function)
         End Function
     End Class
 End Namespace

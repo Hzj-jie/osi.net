@@ -34,12 +34,19 @@ Namespace logic
 
         Shared Sub New()
             importable_cases = {
-                make_case("define v *")
+                make_case("define v *"),
+                make_case("type int 4",
+                          "define v int",
+                          "define s int",
+                          "sizeof s v")
             }
 
             not_importable_cases = {
                 make_case("define v *",
-                          "define v *")
+                          "define v *"),
+                make_case("unknown"),
+                make_case("define v unknown_type",
+                          "add v v v")
             }
 
             cases = {

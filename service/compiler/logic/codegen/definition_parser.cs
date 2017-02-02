@@ -109,12 +109,13 @@ public static class Program {
       wl("            o = new_" + ss[0] + "(");
       for (int i = 1; i < ss.Length; i++) {
         w("                p" + i.ToString());
-        if (i == ss.Length - 1) {
-          wl(")");
-        } else {
+        if (i < ss.Length - 1) {
           wl(",");
+        } else {
+          wl();
         }
       }
+      wl("            )");
       wl("            Return True");
       wl("        End Function");
       wl();

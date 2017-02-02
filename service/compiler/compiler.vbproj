@@ -88,6 +88,7 @@
     <Compile Include="logic\array_operators.vb" />
     <Compile Include="logic\scope_define.vb" />
     <Compile Include="logic\scope_wrapper.vb" />
+    <Compile Include="logic\stop.vb" />
     <Compile Include="logic\ternary_operator.vb" />
     <Compile Include="logic\type.vb" />
     <Compile Include="logic\types.vb" />

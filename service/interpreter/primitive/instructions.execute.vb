@@ -64,7 +64,7 @@ Namespace primitive
                 b1 = New big_uint(+p1(imi))
                 b2 = New big_uint(+p2(imi))
                 Dim c As Boolean = False
-                p2(imi).set(b1.sub(b2, c).as_bytes())
+                p0(imi).set(b1.sub(b2, c).as_bytes())
                 imi.carry_over(c)
             End Sub
         End Class

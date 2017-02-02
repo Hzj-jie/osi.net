@@ -24,7 +24,6 @@ Namespace logic
                     End If
 
                 Next
-                o.emplace_back(instruction_builder.str(command.stop))
                 If Not e.import(Convert.ToString(o)) Then
                     Return False
                 End If

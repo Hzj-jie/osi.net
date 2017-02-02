@@ -1,0 +1,58 @@
+
+## define a type string of variable size
+type string 0
+## define a big_uint of variable size
+type biguint 0
+## define a type uint of 4 bytes
+type uint 4
+## define a type bool of 1 byte
+type bool 1
+
+callee copy-one-byte2 ( source string target string pos uint len uint ) {
+    define char string
+    cut_slice char source pos len
+    append target char
+    return copy-one-byte2 target
+}
+
+define source string
+define target1 string
+define target2 string
+
+callee copy-one-byte1 ( source string pos uint len uint ) {
+    define char string
+    cut_slice char source pos len
+    append target1 char
+    return copy-one-byte1 *
+}
+
+## copy a const string to source
+copy_const source Ehello\x20world\n
+
+define 0 biguint
+copy_const 0 i0
+define 1 biguint
+copy_const 1 i1
+
+define length uint
+sizeof length source
+
+define i biguint
+copy i length
+define not-finished bool
+more not-finished i 0
+while_then not-finished {
+    substract i i 1
+    caller copy-one-byte1 ( source i 1 )
+    more not-finished i 0
+}
+
+copy i length
+more not-finished i 0
+while_then not-finished {
+    substract i i 1
+    define result string
+    caller copy-one-byte2 result ( source target2 i 1 )
+    move target2 result
+    more not-finished i 0
+}

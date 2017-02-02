@@ -58,6 +58,9 @@
     <Compile Include="logic\caller_test.vb" />
     <Compile Include="logic\executor_case.vb" />
     <Compile Include="logic\importer_test.vb" />
+    <Compile Include="logic\import_executor_case.vb" />
+    <Compile Include="logic\import_executor_cases.vb" />
+    <Compile Include="logic\import_executor_tests.vb" />
     <Compile Include="logic\scope_test.vb" />
     <Compile Include="logic\extern_function_test.vb" />
     <Compile Include="logic\while_then_perf.vb" />
@@ -87,6 +90,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="logic\codegen\run.cmd" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -99,6 +103,10 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="logic\codegen\case1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\..\..\root\root.utt.props" Condition="'$(RootUttProps)'==''" />

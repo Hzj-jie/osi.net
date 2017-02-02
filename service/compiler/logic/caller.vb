@@ -70,7 +70,9 @@ Namespace logic
                         Return False
                     End If
 
-                    o.emplace_back(instruction_builder.str(command.cp, data_ref.rel(i), var))
+                    o.emplace_back(instruction_builder.str(command.cp,
+                                                           data_ref.rel(array_size_i(parameters) - i - 1),
+                                                           var))
                 Next
                 o.emplace_back(instruction_builder.str(command.stst))
 

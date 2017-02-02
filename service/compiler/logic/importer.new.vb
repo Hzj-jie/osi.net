@@ -147,8 +147,8 @@ Namespace logic
             Return New [return](anchors, p1, p2)
         End Function
 
-        Private Function new_return(ByVal p As String) As [return]
-            Return New [return](anchors, p)
+        Private Function new_return(ByVal p1 As String, ByVal p2 As place_holder) As [return]
+            Return New [return](anchors, p1)
         End Function
 
         Private Function new_append(ByVal p1 As String, ByVal p2 As String) As append
@@ -169,6 +169,10 @@ Namespace logic
 
         Private Function new_while_then(ByVal p1 As String, ByVal p2 As paragraph) As while_then
             Return New while_then(p1, unique_ptr.[New](p2))
+        End Function
+
+        Private Function new_stop() As [stop]
+            Return New [stop]()
         End Function
     End Class
 End Namespace

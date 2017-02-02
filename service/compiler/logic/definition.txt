@@ -31,10 +31,11 @@ extern_function	string	string	string
 move	string	string
 divide	string	string	string	string
 extract	string	string	string	string
+return	string	*
 return	string	string
-return	string
 append	string	string
 not	string	string
 sizeof	string	string
 empty	string	string
 while_then	string	paragraph
+stop

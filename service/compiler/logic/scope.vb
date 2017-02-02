@@ -87,40 +87,29 @@ Namespace logic
             Return o
         End Function
 
-        Public Function export(ByVal name As String, ByRef o As UInt64) As Boolean
+        Public Function export(ByVal name As String, ByRef o As data_ref) As Boolean
             Dim offset As UInt64 = 0
             Dim size As UInt64 = 0
             Dim s As scope = Nothing
             s = Me
             While Not s Is Nothing
                 If s.find(name, offset) Then
-                    o = offset + size
-                    Return True
+                    If data_ref.valid_offset(CLng(offset)) Then
+                        If s.parent Is Nothing Then
+                            ' To allow a callee to access global variables.
+                            o = data_ref.abs(CLng(s.size() - offset - 1))
+                        Else
+                            o = data_ref.rel(CLng(offset + size))
+                        End If
+                        Return True
+                    Else
+                        Return False
+                    End If
                 End If
                 size += s.size()
                 s = s.parent
             End While
             Return False
-        End Function
-
-        Public Function export(ByVal name As String, ByRef o As UInt32) As Boolean
-            Dim r As UInt64 = 0
-            If export(name, r) AndAlso r <= max_uint32 Then
-                o = CUInt(r)
-                Return True
-            Else
-                Return False
-            End If
-        End Function
-
-        Public Function export(ByVal name As String, ByRef o As data_ref) As Boolean
-            Dim offset As UInt64 = 0
-            If export(name, offset) AndAlso data_ref.valid_offset(CLng(offset)) Then
-                o = data_ref.rel(CLng(offset))
-                Return True
-            Else
-                Return False
-            End If
         End Function
 
         Public Function export(ByVal name As String, ByRef o As String) As Boolean
