@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
@@ -8,7 +12,8 @@ Namespace primitive
         Implements exportable, IComparable(Of data_ref), IComparable
 
         Public Const max_value As Int64 = (max_int64 >> 1)
-        Public Const min_value As Int64 = (min_int64 >> 1)
+        Public Const rel_min_value As Int64 = (min_int64 >> 1)
+        Public Const abs_min_value As Int64 = 0
         Private Const rel_str As String = "rel"
         Private Const abs_str As String = "abs"
         Private Shared ReadOnly ref_types() As String = {rel_str, abs_str}
@@ -16,8 +21,12 @@ Namespace primitive
         Private o As Int64
 
         Public Shared Function random(Optional ByRef r As Int64 = 0) As data_ref
-            r = rnd_int64()
-            Return New data_ref(r)
+            Dim o As data_ref = Nothing
+            Do
+                r = rnd_int64()
+            Loop Until [New](r, o)
+            assert(Not o Is Nothing)
+            Return o
         End Function
 
         Public Sub New()
@@ -25,27 +34,100 @@ Namespace primitive
         End Sub
 
         Public Sub New(ByVal i As Int64)
-            [set](i)
+            assert([set](i))
         End Sub
 
-        Public Shared Function valid_offset(ByVal i As Int64) As Boolean
-            Return i <= max_value AndAlso i >= min_value
+        Public Shared Function [New](ByVal i As Int64, ByRef o As data_ref) As Boolean
+            Dim x As data_ref = Nothing
+            x = New data_ref()
+            If x.[set](i) Then
+                o = x
+                Return True
+            Else
+                Return False
+            End If
+        End Function
+
+        Public Shared Function rel(ByVal i As Int64, ByRef o As data_ref) As Boolean
+            If i <= max_value AndAlso i >= rel_min_value Then
+                o = New data_ref() With {.r = True, .o = i}
+                Return True
+            Else
+                Return False
+            End If
         End Function
 
         Public Shared Function rel(ByVal i As Int64) As data_ref
-            assert(valid_offset(i))
-            Return New data_ref() With {.r = True, .o = i}
+            Dim o As data_ref = Nothing
+            assert(rel(i, o))
+            Return o
+        End Function
+
+        Public Shared Function abs(ByVal i As Int64, ByRef o As data_ref) As Boolean
+            If i <= max_value AndAlso i >= abs_min_value Then
+                o = New data_ref() With {.r = False, .o = i}
+                Return True
+            Else
+                Return False
+            End If
         End Function
 
         Public Shared Function abs(ByVal i As Int64) As data_ref
-            assert(valid_offset(i))
-            Return New data_ref() With {.r = False, .o = i}
+            Dim o As data_ref = Nothing
+            assert(abs(i, o))
+            Return o
         End Function
 
-        Public Sub [set](ByVal i As Int64)
+        Public Function to_rel(ByVal size As UInt64, ByRef o As data_ref) As Boolean
+            If relative() Then
+                o = Me
+                Return True
+            Else
+                Return rel(CLng(size) - offset() - 1, o)
+            End If
+        End Function
+
+        Public Function to_rel(ByVal size As UInt64) As data_ref
+            Dim o As data_ref = Nothing
+            assert(to_rel(size, o))
+            Return o
+        End Function
+
+        Public Function to_abs(ByVal size As UInt64, ByRef o As data_ref) As Boolean
+            If absolute() Then
+                o = Me
+                Return True
+            Else
+                Return abs(CLng(size) - offset() - 1, o)
+            End If
+        End Function
+
+        Public Function to_abs(ByVal size As UInt64) As data_ref
+            Dim o As data_ref = Nothing
+            assert(to_abs(size, o))
+            Return o
+        End Function
+
+        Public Function [set](ByVal i As Int64) As Boolean
+            Dim r As Boolean = False
+            Dim o As Int64 = 0
             r = ((i And int64_1) <> 0)
             o = (i >> 1)
-        End Sub
+            If r Then
+                If o >= rel_min_value AndAlso o <= max_value Then
+                    Me.r = r
+                    Me.o = o
+                    Return True
+                End If
+            Else
+                If o >= abs_min_value AndAlso o <= max_value Then
+                    Me.r = r
+                    Me.o = o
+                    Return True
+                End If
+            End If
+            Return False
+        End Function
 
         Public Function relative() As Boolean
             Return r
@@ -83,12 +165,8 @@ Namespace primitive
 
         Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import
             Dim o As Int64 = 0
-            If bytes_int64(i, o, p) Then
-                [set](o)
-                Return True
-            Else
-                Return False
-            End If
+            Return bytes_int64(i, o, p) AndAlso
+                   [set](o)
         End Function
 
         Private Shared Function separate(ByVal s As String, ByRef t As String, ByRef o As Int64) As Boolean
@@ -96,7 +174,7 @@ Namespace primitive
                 Return False
             Else
                 t = Nothing
-                For i As UInt32 = uint32_0 To array_size(ref_types) - uint32_1
+                For i As Int32 = 0 To array_size_i(ref_types) - 1
                     If strstartwith(s, ref_types(i)) Then
                         t = ref_types(i)
                         assert(Not t Is Nothing)
@@ -126,7 +204,7 @@ Namespace primitive
                         Return False
                     End If
                     o = offset
-                    p += 1
+                    p += uint32_1
                     Return True
                 Else
                     Return False

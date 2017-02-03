@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
@@ -23,10 +27,10 @@ Namespace logic
         Public Function export(ByVal scope As scope,
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
             Dim vars() As variable = Nothing
-            ReDim vars(array_size(vs) - 1)
-            For i As UInt32 = 0 To array_size(vs) - 1
+            ReDim vars(array_size_i(vs) - 1)
+            For i As Int32 = 0 To array_size_i(vs) - 1
                 If Not variable.[New](scope, types, vs(i), vars(i)) OrElse
-                   Not variable_restrict(i, vars(i)) Then
+                   Not variable_restrict(CUInt(i), vars(i)) Then
                     Return False
                 End If
             Next

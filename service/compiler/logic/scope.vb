@@ -1,4 +1,6 @@
 ﻿
+Option Explicit On
+Option Infer Off
 Option Strict On
 
 Imports osi.root.constants
@@ -49,6 +51,10 @@ Namespace logic
             End If
         End Function
 
+        Public Function is_root() As Boolean
+            Return parent Is Nothing
+        End Function
+
         Public Function empty() As Boolean
             Return size() = uint32_0
         End Function
@@ -94,16 +100,11 @@ Namespace logic
             s = Me
             While Not s Is Nothing
                 If s.find(name, offset) Then
-                    If data_ref.valid_offset(CLng(offset)) Then
-                        If s.parent Is Nothing Then
-                            ' To allow a callee to access global variables.
-                            o = data_ref.abs(CLng(s.size() - offset - 1))
-                        Else
-                            o = data_ref.rel(CLng(offset + size))
-                        End If
-                        Return True
+                    If s.is_root() Then
+                        ' To allow a callee to access global variables.
+                        Return data_ref.abs(CLng(s.size() - offset - 1), o)
                     Else
-                        Return False
+                        Return data_ref.rel(CLng(offset + size), o)
                     End If
                 End If
                 size += s.size()

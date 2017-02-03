@@ -1,7 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utt
+Imports osi.service.interpreter.primitive
 Imports osi.service.compiler.logic
 
 Namespace logic
@@ -29,18 +35,21 @@ Namespace logic
                 End If
             Next
 
-            For i As Int32 = 0 To stack.size() - 1
-                Dim offset As UInt32 = 0
+            For i As Int32 = 0 To CInt(stack.size()) - 1
+                Dim offset As data_ref = Nothing
                 Dim type As String = Nothing
-                If assert_true(s.export(stack(i).first, offset)) AndAlso
-                   assert_less(offset, stack.size()) AndAlso
-                   assert_true(s.type(stack(i).first, type)) Then
-                    If stack.size() - i - 1 > offset Then
-                        assert_equal(stack(stack.size() - offset - 1).first, stack(i).first)
-                        assert_equal(type, stack(stack.size() - offset - 1).second)
+                If assert_true(s.export(stack(CUInt(i)).first, offset)) AndAlso
+                   assert_true(offset.to_rel(stack.size(), offset)) AndAlso
+                   assert_more_or_equal(offset.offset(), uint32_0) AndAlso
+                   assert_less(offset.offset(), stack.size()) AndAlso
+                   assert_true(s.type(stack(CUInt(i)).first, type)) Then
+                    If stack.size() - i - 1 > offset.offset() Then
+                        assert_equal(stack(stack.size() - CUInt(offset.offset()) - uint32_1).first,
+                                     stack(CUInt(i)).first)
+                        assert_equal(type, stack(stack.size() - CUInt(offset.offset()) - uint32_1).second)
                     Else
-                        assert_equal(offset, stack.size() - i - 1)
-                        assert_equal(type, stack(i).second)
+                        assert_equal(offset.offset(), stack.size() - i - uint32_1)
+                        assert_equal(type, stack(CUInt(i)).second)
                     End If
                 End If
             Next
@@ -48,13 +57,14 @@ Namespace logic
             For i As Int32 = 0 To 1000
                 Dim name As String = Nothing
                 name = rnd_name()
-                Dim offset As UInt32 = 0
+                Dim offset As data_ref = Nothing
                 Dim type As String = Nothing
                 If s.export(name, offset) AndAlso
-                   assert_less(offset, stack.size()) AndAlso
+                   offset.to_rel(stack.size(), offset) AndAlso
+                   assert_less(offset.offset(), stack.size()) AndAlso
                    assert_true(s.type(name, type)) Then
-                    assert_equal(stack(stack.size() - offset - 1).first, name)
-                    assert_equal(stack(stack.size() - offset - 1).second, type)
+                    assert_equal(stack(stack.size() - CUInt(offset.offset()) - uint32_1).first, name)
+                    assert_equal(stack(stack.size() - CUInt(offset.offset()) - uint32_1).second, type)
                 End If
             Next
 
@@ -66,7 +76,7 @@ Namespace logic
                 assert_reference_equal(new_scope.end_scope(), s)
 #End If
             End If
-            stack.resize(stack.size() - c)
+            stack.resize(stack.size() - CUInt(c))
         End Sub
 
         Public Overrides Function run() As Boolean

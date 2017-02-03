@@ -39,8 +39,8 @@ Namespace primitive
             assert_equal(r.offset(), data_ref.max_value)
             assert_true(r.absolute())
 
-            assert_true(r.import(strcat("abs", data_ref.min_value)))
-            assert_equal(r.offset(), data_ref.min_value)
+            assert_true(r.import(strcat("abs", data_ref.abs_min_value)))
+            assert_equal(r.offset(), data_ref.abs_min_value)
             assert_true(r.absolute())
 
             assert_true(r.import("rel0"))
@@ -51,8 +51,8 @@ Namespace primitive
             assert_equal(r.offset(), data_ref.max_value)
             assert_true(r.relative())
 
-            assert_true(r.import(strcat("rel", data_ref.min_value)))
-            assert_equal(r.offset(), data_ref.min_value)
+            assert_true(r.import(strcat("rel", data_ref.rel_min_value)))
+            assert_equal(r.offset(), data_ref.rel_min_value)
             assert_true(r.relative())
             Return True
         End Function
