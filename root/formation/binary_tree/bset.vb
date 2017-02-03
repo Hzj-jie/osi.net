@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Public Class bset(Of T)
     Inherits bbst(Of T)
     Implements ICloneable

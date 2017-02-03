@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 Imports osi.root.connector
@@ -186,7 +190,7 @@ Public NotInheritable Class piece
             Return r
         Else
             Dim r() As Byte = Nothing
-            ReDim r(count - uint32_1)
+            ReDim r(CInt(count - uint32_1))
             memcpy(r, uint32_0, buff, offset, count)
             Return r
         End If
@@ -205,7 +209,7 @@ Public NotInheritable Class piece
             Return r
         Else
             Dim r() As Byte = Nothing
-            ReDim r(Me.count - uint32_1)
+            ReDim r(CInt(Me.count - uint32_1))
             memcpy(r, uint32_0, buff, offset, Me.count)
             count = Me.count
             Return r

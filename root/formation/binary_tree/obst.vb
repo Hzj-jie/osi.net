@@ -1,4 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.constants
 Imports osi.root.connector
 
 Public Class obst(Of T)
@@ -108,7 +113,7 @@ Public Class obst(Of T)
                     If n.has_right_child() Then
                         n = n.right_child()
                     Else
-                        s += 1
+                        s += uint32_1
                         Dim r As node = Nothing
                         r = create_node(v)
                         n.replace_right(r)
@@ -118,7 +123,7 @@ Public Class obst(Of T)
                     If n.has_left_child() Then
                         n = n.left_child()
                     Else
-                        s += 1
+                        s += uint32_1
                         Dim r As node = Nothing
                         r = create_node(v)
                         n.replace_left(r)
@@ -158,7 +163,7 @@ Public Class obst(Of T)
                 root.clear_parent()
             End If
         End If
-        s -= 1
+        s -= uint32_1
         Return r
     End Function
 

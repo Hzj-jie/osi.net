@@ -4,6 +4,10 @@
 'so change bit_array.vbp instead of this file
 
 
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 #If False Then
 Imports System.Threading
 #End If
@@ -15,7 +19,7 @@ Public Class bit_array_thread_safe
 #Else
 Public Class bit_array
 #End If
-    Private Shared ReadOnly bit_count_in_uint32 As Byte = bit_count_in_byte * sizeof_uint32
+    Private Shared ReadOnly bit_count_in_uint32 As Byte = CByte(bit_count_in_byte * sizeof_uint32)
 #If False Then
     Private b() As Int32
 #Else
@@ -35,9 +39,9 @@ Public Class bit_array
 
     Public Sub resize(ByVal size As UInt32)
         If size Mod bit_count_in_uint32 = 0 Then
-            ReDim b(size \ bit_count_in_uint32 - 1)
+            ReDim b(CInt(size \ bit_count_in_uint32) - 1)
         Else
-            ReDim b(size \ bit_count_in_uint32)
+            ReDim b(CInt(size \ bit_count_in_uint32))
         End If
     End Sub
 
@@ -50,7 +54,7 @@ Public Class bit_array
     End Sub
 
     Private Sub devide(ByVal i As UInt32, ByRef p As Byte, ByRef index As Int32)
-        p = i Mod bit_count_in_uint32
+        p = CByte(i Mod bit_count_in_uint32)
         index = CInt(i \ bit_count_in_uint32)
         assert(index < size())
     End Sub

@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.template
 Imports osi.root.connector
 Imports osi.root.constants
@@ -30,9 +34,9 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
                         _KEY_TO_INDEX As _to_uint32(Of KEY_T))
     Implements ICloneable, ICloneable(Of hashmap(Of KEY_T, VALUE_T, _HASH_SIZE, _KEY_TO_INDEX))
 
-    Private Shared ReadOnly _end As iterator = Nothing
-    Private Shared ReadOnly hash_size As UInt32 = 0
-    Private Shared ReadOnly key_to_index As _KEY_TO_INDEX = Nothing
+    Private Shared ReadOnly _end As iterator
+    Private Shared ReadOnly hash_size As UInt32
+    Private Shared ReadOnly key_to_index As _KEY_TO_INDEX
     Private _data() As map(Of KEY_T, VALUE_T)
 
     Public Class iterator
@@ -67,7 +71,7 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
         End Function
 
         Private Shared Function move_next(ByVal container As hashmap(Of KEY_T, VALUE_T, _HASH_SIZE, _KEY_TO_INDEX),
-                                          ByVal index As Int64,
+                                          ByVal index As UInt32,
                                           ByVal it As map(Of KEY_T, VALUE_T).iterator) As iterator
             assert(Not container Is Nothing)
             assert(Not it Is Nothing)
@@ -84,7 +88,7 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
         End Function
 
         Private Shared Function move_prev(ByVal container As hashmap(Of KEY_T, VALUE_T, _HASH_SIZE, _KEY_TO_INDEX),
-                                          ByVal index As Int64,
+                                          ByVal index As UInt32,
                                           ByVal it As map(Of KEY_T, VALUE_T).iterator) As iterator
             assert(Not container Is Nothing)
             assert(Not it Is Nothing)
@@ -124,10 +128,10 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
             If this Is Nothing OrElse this = this.container().end() OrElse that = 0 Then
                 Return this
             ElseIf that > 0 Then
-                Return this.move_next(that)
+                Return this.move_next(CUInt(that))
             Else
                 assert(that < 0)
-                Return this.move_prev(-that)
+                Return this.move_prev(CUInt(-that))
             End If
         End Operator
 
@@ -135,10 +139,10 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
             If this Is Nothing OrElse this = this.container().end() OrElse that = 0 Then
                 Return this
             ElseIf that > 0 Then
-                Return this.move_prev(that)
+                Return this.move_prev(CUInt(that))
             Else
                 assert(that < 0)
-                Return this.move_next(-that)
+                Return this.move_next(CUInt(-that))
             End If
         End Operator
 
@@ -180,7 +184,7 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
         End Function
 
         Friend Sub New(ByVal container As hashmap(Of KEY_T, VALUE_T, _HASH_SIZE, _KEY_TO_INDEX),
-                       ByVal index As Int64,
+                       ByVal index As UInt32,
                        ByVal that As map(Of KEY_T, VALUE_T).iterator)
             _container = container
             _index = index
@@ -204,19 +208,19 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
         Return Not valid_index(index)
     End Function
 
-    Private Function data(ByVal index As Int64, Optional ByVal autoInsert As Boolean = True) As map(Of KEY_T, VALUE_T)
-        If _data(index) Is Nothing AndAlso autoInsert Then
-            _data(index) = New map(Of KEY_T, VALUE_T)()
+    Private Function data(ByVal index As UInt32, Optional ByVal autoInsert As Boolean = True) As map(Of KEY_T, VALUE_T)
+        If _data(CInt(index)) Is Nothing AndAlso autoInsert Then
+            _data(CInt(index)) = New map(Of KEY_T, VALUE_T)()
         End If
-        Return _data(index)
+        Return _data(CInt(index))
     End Function
 
-    Private Function empty(ByVal i As Int64) As Boolean
+    Private Function empty(ByVal i As UInt32) As Boolean
         assert(valid_index(i))
         Return data(i, False) Is Nothing OrElse data(i).empty()
     End Function
 
-    Private Function size(ByVal i As Int64) As UInt32
+    Private Function size(ByVal i As UInt32) As UInt32
         assert(valid_index(i))
         Dim r As map(Of KEY_T, VALUE_T) = Nothing
         r = data(i, False)
@@ -228,7 +232,7 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
             If this = 0 Then
                 this = max_uint32
             Else
-                this -= 1
+                this -= uint32_1
             End If
             If invalid_index(this) Then
                 Exit Do
@@ -238,9 +242,22 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
         Return this
     End Function
 
-    Private Function next_index(ByVal this As Int32) As Int32
+    Private Function next_index(ByVal this As Int32) As UInt32
+        assert(this >= -1)
+        If this = -1 Then
+            assert(valid_index(uint32_0))
+            If Not empty(uint32_0) Then
+                Return uint32_0
+            Else
+                this = 0
+            End If
+        End If
+        Return next_index(CUInt(this))
+    End Function
+
+    Private Function next_index(ByVal this As UInt32) As UInt32
         Do
-            this += 1
+            this += uint32_1
             If invalid_index(this) Then
                 Exit Do
             End If
@@ -251,7 +268,7 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
 
     Public Function rbegin() As iterator
         Dim rtn As iterator = Nothing
-        Dim index As Int32 = prev_index(hash_size)
+        Dim index As UInt32 = prev_index(hash_size)
         If valid_index(index) Then
             Return New iterator(Me, index, data(index).rbegin())
         End If
@@ -260,7 +277,7 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
 
     Public Function begin() As iterator
         Dim rtn As iterator = Nothing
-        Dim index As Int32 = next_index(-1)
+        Dim index As UInt32 = next_index(-1)
         If valid_index(index) Then
             Return New iterator(Me, index, data(index).begin())
         End If
@@ -276,7 +293,7 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
     End Function
 
     Public Sub clear()
-        ReDim _data(hash_size - uint32_1)
+        ReDim _data(CInt(hash_size - uint32_1))
     End Sub
 
     Shared Sub New()
@@ -304,7 +321,7 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
     End Property
 
     Public Function insert(ByVal k As KEY_T, ByVal v As VALUE_T) As iterator
-        Dim index As Int32 = npos
+        Dim index As UInt32 = 0
         index = key_index(k)
         Return New iterator(Me, index, data(index).insert(k, v))
     End Function
@@ -324,7 +341,7 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
     End Function
 
     Public Function find(ByVal k As KEY_T) As iterator
-        Dim index As Int32 = npos
+        Dim index As UInt32 = 0
         index = key_index(k)
         If data(index, False) Is Nothing Then
             Return [end]()
@@ -371,7 +388,7 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
                              Implements ICloneable(Of hashmap(Of KEY_T, VALUE_T, _HASH_SIZE, _KEY_TO_INDEX)).Clone
         Dim rtn As hashmap(Of KEY_T, VALUE_T, _HASH_SIZE, _KEY_TO_INDEX) = Nothing
         rtn = alloc(Me)
-        For i As UInt32 = 0 To hash_size - uint32_1
+        For i As Int32 = 0 To CInt(hash_size) - 1
             If Not _data(i) Is Nothing Then
                 copy(rtn._data(i), _data(i))
             End If

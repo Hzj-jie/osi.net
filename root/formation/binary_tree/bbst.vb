@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 #Const use_rebalance = False
 Imports osi.root.connector
 

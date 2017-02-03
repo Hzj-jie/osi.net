@@ -12,5 +12,8 @@ precompile first_const_pair.vbp > first_const_pair.vb
 
 for /l %%x in (3,1,8) do precompile tuple%%x.vbp > tuple%%x.vb
 precompile make_tuple.vbp > make_tuple.vb
+
+move /Y *.vb ..\
+
 endlocal
 

@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.template
 Imports osi.root.connector
 
@@ -13,7 +17,7 @@ Public Structure fixed_queue(Of T, _MAX_SIZE As _int64)
     Private last As Int32
 
     Shared Sub New()
-        MAX_SIZE_D_1 = +(alloc(Of _MAX_SIZE)())
+        MAX_SIZE_D_1 = CInt(+(alloc(Of _MAX_SIZE)()))
         MAX_SIZE = MAX_SIZE_D_1 + 1
         assert(DirectCast(Nothing, T()) Is Nothing)
         assert(DirectCast(Nothing, Int32) = 0)

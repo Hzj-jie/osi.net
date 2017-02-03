@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 Imports osi.root.template
@@ -33,7 +37,7 @@ Public Class const_array(Of T, __SIZE As _int64)
 
     Protected Sub New(ByVal size As Int64)
         assert(size > 0)
-        ReDim v(size - 1)
+        ReDim v(CInt(size) - 1)
     End Sub
 
     Public Sub New(ByVal v() As T)
@@ -44,7 +48,7 @@ Public Class const_array(Of T, __SIZE As _int64)
     Default Public ReadOnly Property [get](ByVal i As UInt32) As T
         Get
             assert(i < size())
-            Return v(i)
+            Return v(CInt(i))
         End Get
     End Property
 
@@ -52,7 +56,7 @@ Public Class const_array(Of T, __SIZE As _int64)
         If _size < 0 Then
             Return array_size(v)
         Else
-            Return _size
+            Return CUInt(_size)
         End If
     End Function
 
@@ -62,7 +66,7 @@ Public Class const_array(Of T, __SIZE As _int64)
 
     Public Function as_array() As T()
         Dim r() As T = Nothing
-        ReDim r(size() - uint32_1)
+        ReDim r(CInt(size() - uint32_1))
         memcpy(r, v)
         Return r
     End Function

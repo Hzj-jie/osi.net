@@ -1,4 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.constants
 Imports osi.root.connector
 
 ' make sure T is comparable
@@ -19,19 +24,19 @@ Public Class heap(Of T As IComparable(Of T))
         Return (index - 1) >> 1
     End Function
 
-    Private Shared Function leftChild(ByVal index As Int64) As Int64
+    Private Shared Function left_child(ByVal index As Int64) As Int64
         Return (index << 1) + 1
     End Function
 
-    Private Shared Function rightChild(ByVal index As Int64) As Int64
-        Return leftChild(index) + 1
+    Private Shared Function right_child(ByVal index As Int64) As Int64
+        Return left_child(index) + 1
     End Function
 
     Protected Overridable Function swap(ByVal first As Int64, ByVal second As Int64) As Boolean
         If first = second Then
             Return available_index(first)
         ElseIf available_index(first) AndAlso available_index(second) Then
-            _swap.swap(data()(first), data()(second))
+            _swap.swap(data()(CUInt(first)), data()(CUInt(second)))
             Return True
         Else
             Return False
@@ -51,7 +56,7 @@ Public Class heap(Of T As IComparable(Of T))
                     debug_assert(index >= parent _
                                 , "got an invalid parent " + Convert.ToString(parent) _
                                 + " index " + Convert.ToString(index))
-                    If index > parent AndAlso compare(data()(index), data()(parent)) > 0 Then
+                    If index > parent AndAlso compare(data()(CUInt(index)), data()(CUInt(parent))) > 0 Then
                         debug_assert(swap(index, parent) _
                                     , Convert.ToString(index) + " or " _
                                     + Convert.ToString(parent) + " is not in heap.")
@@ -76,15 +81,15 @@ Public Class heap(Of T As IComparable(Of T))
             Dim right As Int64 = head
             While (True)
                 min = index
-                left = leftChild(index)
-                right = rightChild(index)
+                left = left_child(index)
+                right = right_child(index)
                 If available_index(left) Then
-                    If compare(data()(left), data()(min)) > 0 Then
+                    If compare(data()(CUInt(left)), data()(CUInt(min))) > 0 Then
                         min = left
                     End If
                 End If
                 If available_index(right) Then
-                    If compare(data()(right), data()(min)) > 0 Then
+                    If compare(data()(CUInt(right)), data()(CUInt(min))) > 0 Then
                         min = right
                     End If
                 End If
@@ -149,7 +154,7 @@ Public Class heap(Of T As IComparable(Of T))
     End Sub
 
     Public Function insert(ByVal value As T) As Int64
-        data().resize(data().size() + 1)
+        data().resize(data().size() + uint32_1)
         Return update(data().size() - 1, value)
     End Function
 
@@ -172,7 +177,7 @@ Public Class heap(Of T As IComparable(Of T))
     Public Overridable Function update(ByVal index As Int64, ByVal value As T) As Int64
         Dim rtn As Int64
         If available_index(index) Then
-            copy(data()(index), value)
+            copy(data()(CUInt(index)), value)
             rtn = up(index)
             If rtn = index Then
                 rtn = down(index)
@@ -220,7 +225,7 @@ Public Class heap(Of T As IComparable(Of T))
         If cmp = object_compare_undetermined Then
             assert(Not other Is Nothing)
             If size() <> other.size() Then
-                Return size() - other.size()
+                Return CInt(size()) - CInt(other.size())
             Else
                 Return compare(data(), other.data())
             End If

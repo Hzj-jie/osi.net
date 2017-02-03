@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.template
 Imports osi.root.connector
 
@@ -32,7 +36,7 @@ Public Class array(Of T, SIZE As _int64)
         End Get
         Set(ByVal v As T)
             assert(i < size())
-            Me.v(i) = v
+            Me.v(CInt(i)) = v
         End Set
     End Property
 
@@ -65,7 +69,7 @@ Public Class array(Of T)
         End Get
         Set(ByVal v As T)
             assert(i < size())
-            Me.v(i) = v
+            Me.v(CInt(i)) = v
         End Set
     End Property
 

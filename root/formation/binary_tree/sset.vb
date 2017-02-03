@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Public Class sset(Of T)
     Inherits sbst(Of T)
     Implements ICloneable

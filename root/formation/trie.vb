@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.template
 Imports osi.root.connector
 Imports osi.root.constants
@@ -6,7 +10,7 @@ Imports osi.root.constants
 Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index As _to_uint32(Of keyT))
     Implements ICloneable
 
-    Private Shared ReadOnly child_count As Int64 = Nothing
+    Private Shared ReadOnly child_count As UInt32 = Nothing
     Private Shared ReadOnly key_to_index As _key_to_index = Nothing
     Private ReadOnly root As node = Nothing
 
@@ -26,7 +30,7 @@ Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index
 
         Private Sub initial(ByVal index_count As UInt32)
             has_value = False
-            ReDim child(index_count - 1)
+            ReDim child(CInt(index_count - uint32_1))
             value = alloc(Of valueT)()
             father = Nothing
         End Sub
@@ -43,11 +47,11 @@ Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index
         End Sub
 
         Public Function first() As keyT()
-            Dim rtn(length() - 1) As keyT
+            Dim rtn(CInt(length() - uint32_1)) As keyT
             Dim w As node = Nothing
             w = Me
             For i As Int64 = length() - 1 To 0 Step -1
-                rtn(i) = key_to_index.reverse(w.father_index())
+                rtn(CInt(i)) = key_to_index.reverse(CUInt(w.father_index()))
                 w = w.father
             Next
             assert(w.is_root())
@@ -59,7 +63,7 @@ Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index
         End Function
 
         Public Function father_index() As Int64
-            Dim rtn As Int64
+            Dim rtn As UInt32
             If find_father_index(Me, rtn) Then
                 Return rtn
             Else
@@ -78,7 +82,7 @@ Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index
         Public Function Clone() As Object Implements System.ICloneable.Clone
             Dim rtn As node = Nothing
             rtn = alloc(Me)
-            rtn.initial(child.Length())
+            rtn.initial(CUInt(child.Length()))
             copy(rtn.value, value)
             copy(rtn.has_value, has_value)
             copy(rtn._length, length)
@@ -115,8 +119,8 @@ Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index
             Return False
         Else
             Dim i As UInt32
-            For i = 0 To it.father.child.Length() - 1
-                If Object.ReferenceEquals(it.father.child(i), it) Then
+            For i = 0 To CUInt(it.father.child.Length()) - uint32_1
+                If Object.ReferenceEquals(it.father.child(CInt(i)), it) Then
                     index = i
                     Exit For
                 End If
@@ -132,8 +136,8 @@ Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index
         If it Is Nothing Then
             Return False
         Else
-            While Not it.child(child_count - 1) Is Nothing
-                it = it.child(child_count - 1)
+            While Not it.child(CInt(child_count - uint32_1)) Is Nothing
+                it = it.child(CInt(child_count - uint32_1))
             End While
 
             Return True
@@ -154,8 +158,10 @@ Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index
 
     Shared Sub New()
         _end = iterator.end
-        child_count = +(alloc(Of _child_count)())
-        assert(child_count > 0)
+        Dim __child_count As Int64 = 0
+        __child_count = +(alloc(Of _child_count)())
+        assert(__child_count > 0 AndAlso __child_count <= max_uint32)
+        child_count = CUInt(__child_count)
         key_to_index = alloc(Of _key_to_index)()
         assert(Not key_to_index Is Nothing)
     End Sub
@@ -222,16 +228,16 @@ Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index
                                             End Sub
         w = root
         update_working_node()
-        For i = start To array_size(k) - 1
+        For i = CInt(start) To array_size_i(k) - 1
             If w Is Nothing Then
                 Exit For
             Else
-                index = key_to_index(k(i))
+                index = CInt(key_to_index(k(i)))
                 assert(index >= 0 AndAlso index < child_count)
                 If w.child(index) Is Nothing Then
                     If auto_insert Then
                         w.child(index) = New node(child_count)
-                        w.child(index)._length = i + 1
+                        w.child(index)._length = CUInt(i + 1)
                         w.child(index).father = w
                     ElseIf find_front Then
                         Exit For
@@ -295,7 +301,7 @@ Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index
         If Not source Is Nothing Then
             copy(dest, source)
             Dim i As Int32
-            For i = 0 To child_count - 1
+            For i = 0 To CInt(child_count) - 1
                 If Not source.child(i) Is Nothing Then
                     copy_node(dest.child(i), source.child(i))
                     dest.child(i).father = dest

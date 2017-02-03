@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 'copy from bset.vb
 
 Public Class [set](Of T)

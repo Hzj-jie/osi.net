@@ -10,7 +10,10 @@
 'so change iterator.imports.vbp instead of this file
 
 
+Option Explicit On
+Option Infer Off
 Option Strict On
+
 
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants

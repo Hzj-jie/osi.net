@@ -4,6 +4,10 @@
 'so change make_tuple.vbp instead of this file
 
 
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 
 Public Module _make_tuple

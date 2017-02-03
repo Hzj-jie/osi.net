@@ -4,6 +4,8 @@
 'so change pair.vbp instead of this file
 
 
+Option Explicit On
+Option Infer Off
 Option Strict On
 
 #Const IS_CONST = ("" = "const_")

@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Public Class oset(Of T)
     Inherits obst(Of T)
     Implements ICloneable

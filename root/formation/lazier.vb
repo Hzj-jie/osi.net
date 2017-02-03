@@ -1,7 +1,7 @@
 ﻿
-Imports osi.root.constants
-Imports osi.root.delegates
-Imports osi.root.connector
+Option Explicit On
+Option Infer Off
+Option Strict On
 
 Public NotInheritable Class lazier
     Public Shared Function [New](Of T)(ByVal d As Func(Of T)) As lazier(Of T)

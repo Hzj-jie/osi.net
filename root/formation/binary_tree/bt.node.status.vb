@@ -1,4 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.constants
 Imports osi.root.connector
 
 Partial Public Class bt(Of T)
@@ -127,27 +132,27 @@ Partial Public Class bt(Of T)
         End Function
 
         Public Function left_child_count() As UInt32
-            Return If(has_left_child(), left_child().subtree_node_count(), 0)
+            Return If(has_left_child(), left_child().subtree_node_count(), uint32_0)
         End Function
 
         Public Function right_child_count() As UInt32
-            Return If(has_right_child(), right_child().subtree_node_count(), 0)
+            Return If(has_right_child(), right_child().subtree_node_count(), uint32_0)
         End Function
 
         Public Function subtree_node_count() As UInt32
-            Return left_child_count() + right_child_count() + 1
+            Return left_child_count() + right_child_count() + uint32_1
         End Function
 
         Public Function left_subtree_height() As UInt32
-            Return If(has_left_child(), left_child().subtree_height(), 0)
+            Return If(has_left_child(), left_child().subtree_height(), uint32_0)
         End Function
 
         Public Function right_subtree_height() As UInt32
-            Return If(has_right_child(), right_child().subtree_height(), 0)
+            Return If(has_right_child(), right_child().subtree_height(), uint32_0)
         End Function
 
         Public Function subtree_height() As UInt32
-            Return _minmax.max(left_subtree_height(), right_subtree_height()) + 1
+            Return _minmax.max(left_subtree_height(), right_subtree_height()) + uint32_1
         End Function
 
         Private Function boxed_left_subtree_height() As UInt32
@@ -159,7 +164,7 @@ Partial Public Class bt(Of T)
         End Function
 
         Private Function boxed_subtree_height() As UInt32
-            Return _minmax.max(boxed_left_subtree_height(), boxed_right_subtree_height()) + 1
+            Return _minmax.max(boxed_left_subtree_height(), boxed_right_subtree_height()) + uint32_1
         End Function
 
         Public Function balance_factor() As Int32

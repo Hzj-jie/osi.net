@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Text
 Imports osi.root.constants
 Imports osi.root.connector
@@ -35,7 +39,7 @@ Partial Public Class bt(Of T)
     Private Shared Sub assert_structure(ByVal r As node, ByVal v As vector(Of node))
         assert(Not r Is Nothing)
         assert(Not v Is Nothing)
-        For i As UInt32 = 0 To v.size() - 1
+        For i As UInt32 = 0 To v.size() - uint32_1
             assert(object_compare(v(i), r) <> 0)
         Next
         v.emplace_back(r)
@@ -71,7 +75,7 @@ Partial Public Class bt(Of T)
     End Function
 
     Public Function size() As UInt32
-        Return If(empty(), 0, root.subtree_node_count())
+        Return If(empty(), uint32_0, root.subtree_node_count())
     End Function
 
     Public Function count() As UInt32

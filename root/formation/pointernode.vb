@@ -1,4 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.constants
 Imports osi.root.connector
 
 Public Class pointernode(Of T)
@@ -22,7 +27,7 @@ Public Class pointernode(Of T)
     End Sub
 
     Private Sub initial_pointers(ByVal pointer_count As Int64)
-        ReDim _p(pointer_count - 1)
+        ReDim _p(CInt(pointer_count - uint32_1))
     End Sub
 
     Public Function pointer_count() As Int64
@@ -53,14 +58,14 @@ Public Class pointernode(Of T)
     Public Property pointer(ByVal index As Int64) As pointernode(Of T)
         Get
             If available_index(index) Then
-                Return _p(index)
+                Return _p(CInt(index))
             Else
                 Return Nothing
             End If
         End Get
         Set(ByVal value As pointernode(Of T))
             If available_index(index) Then
-                _p(index) = value
+                _p(CInt(index)) = value
             End If
         End Set
     End Property

@@ -10,6 +10,10 @@
 'so change map.vbp instead of this file
 
 
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 
 Public Class map(Of KEY_T, VALUE_T)

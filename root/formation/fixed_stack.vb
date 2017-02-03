@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports osi.root.template
 Imports osi.root.connector
@@ -62,7 +66,7 @@ Public Structure fixed_stack(Of T, _MAX_SIZE As _int64)
 
     Private Sub create()
         If q Is Nothing Then
-            ReDim q(MAX_SIZE - 1)
+            ReDim q(CInt(MAX_SIZE) - 1)
             assert(Not q Is Nothing)
         End If
     End Sub
@@ -72,7 +76,7 @@ Public Structure fixed_stack(Of T, _MAX_SIZE As _int64)
         assert(Not empty())
 #End If
         Dim r As T = Nothing
-        r = q(index - 1)
+        r = q(CInt(index) - 1)
         Return r
     End Function
 
@@ -81,7 +85,7 @@ Public Structure fixed_stack(Of T, _MAX_SIZE As _int64)
         assert(Not empty())
 #End If
         index -= 1
-        q(index) = Nothing
+        q(CInt(index)) = Nothing
     End Sub
 
     Public Sub push(ByVal i As T)
@@ -93,7 +97,7 @@ Public Structure fixed_stack(Of T, _MAX_SIZE As _int64)
 #If DEBUG Then
         assert(Not full())
 #End If
-        q(index) = i
+        q(CInt(index)) = i
         index += 1
     End Sub
 

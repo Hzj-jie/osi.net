@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
 Imports osi.root.constants
 Imports osi.root.connector
@@ -39,7 +43,7 @@ Public Class qless2_stream(Of T, MAX_COUNT As _int64)
     Public Function size() As UInt64
         Dim r As Int64 = 0
         r = len
-        Return If(r < 0, uint64_0, r)
+        Return If(r < 0, uint64_0, CULng(r))
     End Function
 
     Public Function empty() As Boolean
@@ -63,7 +67,7 @@ Public Class qless2_stream(Of T, MAX_COUNT As _int64)
             assert(last_index < array_size(last))
             Dim l As Int64 = 0
             l = min(array_size(last) - last_index, count - offset)
-            memcpy(r, offset, last, last_index, l)
+            memcpy(r, CUInt(offset), last, CUInt(last_index), CUInt(l))
             last_index += l
             If array_size(last) = last_index Then
                 last = Nothing
@@ -82,7 +86,7 @@ Public Class qless2_stream(Of T, MAX_COUNT As _int64)
             Return Nothing
         Else
             Dim r() As T = Nothing
-            ReDim r(len - 1)
+            ReDim r(CInt(len) - 1)
             Dim i As Int64 = 0
             While i < len
                 i += pop(r, i)
@@ -105,7 +109,7 @@ Public Class qless2_stream(Of T, MAX_COUNT As _int64)
     Public Sub clear()
         Dim r() As T = Nothing
         ReDim r(1024 - 1)
-        While pop(r)
+        While pop(r) > 0
         End While
     End Sub
 End Class

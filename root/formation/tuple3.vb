@@ -10,6 +10,10 @@
 'so change tuple.vbp instead of this file
 
 
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Text
 Imports osi.root.connector
 

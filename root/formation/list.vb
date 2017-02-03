@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
@@ -17,11 +21,11 @@ Partial Public NotInheritable Class list(Of T)
         End Class
 
         Public Function last() As node
-            Return pointer(pointer_index.last)
+            Return direct_cast(Of node)(pointer(pointer_index.last))
         End Function
 
         Public Function [next]() As node
-            Return pointer(pointer_index.next)
+            Return direct_cast(Of node)(pointer(pointer_index.next))
         End Function
 
         Public Sub appendlast(ByVal that As node)
