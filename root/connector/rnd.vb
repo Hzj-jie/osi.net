@@ -242,6 +242,19 @@ Public Module _rnd
         Return rnd_uint(min_uint32, max_uint32)
     End Function
 
+    Public Function rnd_uints(ByVal size As UInt32) As UInt32()
+        Dim r() As UInt32 = Nothing
+        If size = uint32_0 Then
+            ReDim r(-1)
+        Else
+            ReDim r(CInt(size - uint32_1))
+            For i As Int32 = 0 To CInt(size - uint32_1)
+                r(i) = rnd_uint()
+            Next
+        End If
+        Return r
+    End Function
+
     Public Function rnd_uint64(ByVal min As UInt64, ByVal max As UInt64) As UInt64
         Return Math.Truncate(next_double() * (CDbl(max) - min)) + min
     End Function

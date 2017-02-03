@@ -33,11 +33,6 @@ Private Class adaptive_array_uint32
         reserve(n)
     End Sub
 
-    Private Sub New(ByVal d() As UInt32, ByVal s As UInt32)
-        Me.d = d
-        Me.s = s
-    End Sub
-
     Public Shared Function move(ByVal that As adaptive_array_uint32) As adaptive_array_uint32
         If that Is Nothing Then
             Return Nothing
@@ -67,6 +62,20 @@ Private Class adaptive_array_uint32
             Return True
         End If
     End Function
+
+    Public Function replace_by(ByVal d() As UInt32, ByVal s As UInt32) As Boolean
+        If array_size(d) >= s Then
+            Me.d = d
+            Me.s = s
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Public Sub replace_by(ByVal d() As UInt32)
+        assert(replace_by(d, array_size(d)))
+    End Sub
 
     Public Function clone() As adaptive_array_uint32
         Dim r As adaptive_array_uint32

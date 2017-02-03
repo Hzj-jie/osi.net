@@ -164,4 +164,50 @@ Public Module _array_ext
         memcpy(r, uint32_1, j)
         Return array_concat(r)
     End Function
+
+    Public Function uint32_array_byte_array(ByVal i() As UInt32) As Byte()
+        Dim o() As Byte = Nothing
+        If isemptyarray(i) Then
+            ReDim o(-1)
+        Else
+            ReDim o(array_size(i) * sizeof_uint32 - uint32_1)
+            For j As Int32 = 0 To array_size_i(i) - 1
+                assert(uint32_bytes(i(j), o, j * sizeof_uint32))
+            Next
+        End If
+        Return o
+    End Function
+
+    Public Function byte_array_uint32_array(ByVal i() As Byte, ByRef o() As UInt32) As Boolean
+        If isemptyarray(i) Then
+            ReDim o(-1)
+            Return True
+        ElseIf array_size(i) Mod sizeof_uint32 = 0 Then
+            ReDim o(array_size(i) \ sizeof_uint32 - uint32_1)
+            For j As Int32 = 0 To array_size_i(i) - 1 Step sizeof_uint32
+                assert(bytes_uint32(i, j, sizeof_uint32, o(j \ sizeof_uint32)))
+            Next
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Public Function byte_array_uint32_array(ByVal i() As Byte) As UInt32()
+        Dim r() As UInt32 = Nothing
+        assert(byte_array_uint32_array(i, r))
+        Return r
+    End Function
+
+    <Extension()> Public Function byte_array(ByVal i() As UInt32) As Byte()
+        Return uint32_array_byte_array(i)
+    End Function
+
+    <Extension()> Public Function uint32_array(ByVal i() As Byte, ByRef o() As UInt32) As Boolean
+        Return byte_array_uint32_array(i, o)
+    End Function
+
+    <Extension()> Public Function uint32_array(ByVal i() As Byte) As UInt32()
+        Return byte_array_uint32_array(i)
+    End Function
 End Module

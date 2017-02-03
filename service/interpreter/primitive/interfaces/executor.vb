@@ -43,6 +43,8 @@ Namespace primitive
             instruction_pointer_overflow
             stack_access_out_of_boundary
             undefined_extern_function
+            unsupported_feature
+            invalid_buffer_size
         End Enum
 
         Structure state

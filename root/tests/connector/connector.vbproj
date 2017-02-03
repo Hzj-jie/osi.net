@@ -61,6 +61,7 @@
     <Compile Include="bit_test.vb" />
     <Compile Include="bytes_perf.vb" />
     <Compile Include="bytes_test.vb" />
+    <Compile Include="byte_array_uint32_array_conversion_test.vb" />
     <Compile Include="byte_test.vb" />
     <Compile Include="callstack_test.vb" />
     <Compile Include="cast\cast_perf.vb" />
