@@ -42,26 +42,26 @@ Public Module _timeslice
     End Function
 
     Private Function decide_timeslice_length_ticks() As Int64
-        Dim timesliceLengthTicks As Int64 = 0
+        Dim timeslice_length_ticks As Int64 = 0
         Const count As Int32 = 8
-        Dim thisround As Int64 = 0
-        thisround = default_timeslice_length_ticks
+        Dim this_round As Int64 = 0
+        this_round = default_timeslice_length_ticks
         For i As Int32 = 0 To count - 1
             sleep(0)
             Dim startticks As Int64 = 0
             startticks = nowadays.high_res_ticks()
-            sleep_ticks(decide_timeslice_length_ticks_sleep_ticks(thisround))
-            thisround = (nowadays.high_res_ticks() - startticks + thisround) >> 1
-            timesliceLengthTicks += thisround
+            sleep_ticks(decide_timeslice_length_ticks_sleep_ticks(this_round))
+            this_round = (nowadays.high_res_ticks() - startticks + this_round) >> 1
+            timeslice_length_ticks += this_round
         Next
-        timesliceLengthTicks \= count
-        If timesliceLengthTicks <= milliseconds_to_ticks(1) Then
-            timesliceLengthTicks = default_timeslice_length_ticks
+        timeslice_length_ticks \= count
+        If timeslice_length_ticks <= milliseconds_to_ticks(1) Then
+            timeslice_length_ticks = default_timeslice_length_ticks
             raise_error("cannot determined length of timeslice, use default value as ",
                           ticks_to_milliseconds(default_timeslice_length_ticks), "ms.")
         End If
 
-        Return timesliceLengthTicks
+        Return timeslice_length_ticks
     End Function
 
     Sub New()
@@ -85,6 +85,8 @@ Public Module _timeslice
         eight_timeslice_length_ms = to_ms(eight_timeslice_length_ticks)
         sixteen_timeslice_length_ms = to_ms(sixteen_timeslice_length_ticks)
 
+        ' This function is usually executed before global_init(), so using raise_error() does not output the result to
+        ' file.
         If env_bool(env_keys("report", "timeslice", "length")) Then
             raise_error("timeslice length in ticks = ", timeslice_length_ticks)
         End If

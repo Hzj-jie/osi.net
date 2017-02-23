@@ -43,31 +43,46 @@ Public Class error_event
                         ByVal err_type_char As Char,
                         ByVal msg() As Object,
                         ByVal additional_jump As Int32)
+        Dim r1a As Boolean = False
         Dim r2a As Boolean = False
         Dim r3a As Boolean = False
         Dim r4a As Boolean = False
+        Dim r5a As Boolean = False
         Dim r6a As Boolean = False
+        r1a = event_attached(R1Event)
         r2a = event_attached(R2Event)
         r3a = event_attached(R3Event)
         r4a = event_attached(R4Event)
+        r5a = event_attached(R5Event)
         r6a = event_attached(R6Event)
+        Dim unattached As Boolean = False
+        unattached = Not (r1a OrElse r2a OrElse r3a OrElse r4a OrElse r5a OrElse r6a)
 
         err_type_char = Char.ToLower(err_type_char)
 
-        SyncLock r1lock
-            RaiseEvent R1(err_type, err_type_char, msg, additional_jump + 1)
-        End SyncLock
         Dim merged_msg As String = Nothing
-        If r2a OrElse r3a OrElse r4a OrElse r6a Then
+        If unattached OrElse r2a OrElse r3a OrElse r4a OrElse r6a Then
             merged_msg = error_message.P(msg)
         End If
         Dim full_msg As String = Nothing
-        If r3a OrElse r4a OrElse r6a Then
+        If unattached OrElse r3a OrElse r4a OrElse r6a Then
             If merged_msg Is Nothing Then
                 assert_break()
             End If
             full_msg = error_message.P(err_type, err_type_char, merged_msg, additional_jump + 1)
         End If
+
+        If unattached Then
+            If full_msg Is Nothing Then
+                assert_break()
+            End If
+            ' Before global_init(), no event is attached, we at least should print the message to console.
+            write_console_line(full_msg)
+        End If
+
+        SyncLock r1lock
+            RaiseEvent R1(err_type, err_type_char, msg, additional_jump + 1)
+        End SyncLock
         If r2a Then
             If merged_msg Is Nothing Then
                 assert_break()
