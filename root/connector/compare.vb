@@ -73,7 +73,10 @@ Public Module _compare
         Return -cast(Of IComparable)(that).CompareTo(this)
     End Function
 
-    Private Function runtime_compare(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
+    Private Function runtime_compare(Of T, T2)(ByVal this As T,
+                                               ByVal that As T2,
+                                               ByRef o As Int32,
+                                               ByVal check_only As Boolean) As Boolean
         Try
             If comparer(Of T, T2).defined() Then
                 o = comparer(Of T, T2).compare(this, that)
@@ -91,16 +94,18 @@ Public Module _compare
                 o = that_to_object(this, that)
                 Return True
             Else
-                If Not suppress_compare_error() Then
+                If Not check_only AndAlso Not suppress_compare_error() Then
                     raise_error(error_type.exclamation,
-                                  "caught instances do not have IComparable implement or is nothing, ",
-                                  "unable to compare ",
-                                  this.GetType().FullName(), " with ", that.GetType().FullName())
+                                "caught instances do not have IComparable implement or is nothing, ",
+                                "unable to compare ",
+                                this.GetType().FullName(), " with ", that.GetType().FullName())
                 End If
                 Return False
             End If
         Catch ex As Exception
-            compare_error(Of T, T2)(ex)
+            If Not check_only Then
+                compare_error(Of T, T2)(ex)
+            End If
             Return False
         End Try
     End Function
@@ -108,9 +113,9 @@ Public Module _compare
     Private Sub compare_error(Of T, T2)(ByVal ex As Exception)
         If Not TypeOf ex Is ThreadAbortException AndAlso Not suppress_compare_error() Then
             raise_error(error_type.exclamation,
-                          "caught exception when comparing ",
-                          GetType(T).FullName(), " with ", GetType(T2).FullName(),
-                          ", ex ", ex.Message, ", callstack ", ex.StackTrace())
+                        "caught exception when comparing ",
+                        GetType(T).FullName(), " with ", GetType(T2).FullName(),
+                        ", ex ", ex.Message, ", callstack ", ex.StackTrace())
         End If
     End Sub
 
@@ -173,7 +178,8 @@ Public Module _compare
             contains_object = type_info(Of T).is_object OrElse type_info(Of T2).is_object
             If contains_object Then
                 raise_error(error_type.performance,
-                            "compare_cache(Of *, Object) or compare_cache(Of Object, *) are defintely performance destroyers.")
+                            "compare_cache(Of *, Object) or compare_cache(Of Object, *) are defintely performance ",
+                            "destroyers.")
             End If
             If Not use_runtime_compare Then
                 If comparer(Of T, T2).defined() Then
@@ -193,9 +199,10 @@ Public Module _compare
                 Else
                     If Not suppress_compare_error() Then
                         raise_error(error_type.exclamation,
-                                      "caught types do not have IComparable implement, ",
-                                      "unable to compare ",
-                                      GetType(T).FullName(), " with ", GetType(T2).FullName())
+                                    "caught types do not have IComparable implement, unable to compare ",
+                                    GetType(T).FullName(),
+                                    " with ",
+                                    GetType(T2).FullName())
                     End If
                     c = Nothing
                 End If
@@ -259,7 +266,7 @@ Public Module _compare
             If Not use_runtime_compare Then
                 Dim c1 As Int32 = 0
                 Dim c2 As Int32 = 0
-                assert(cached_compare(this, that, c1, False) = runtime_compare(this, that, c2) AndAlso
+                assert(cached_compare(this, that, c1, False) = runtime_compare(this, that, c2, False) AndAlso
                        c1 = c2,
                        "need specific treatment to compare type ",
                        GetType(T).FullName(),
@@ -270,7 +277,7 @@ Public Module _compare
             'special treatment for object,
             'since say int, it is comparable with int as object, but not comparable with long as object
             If use_runtime_compare Then
-                Return runtime_compare(this, that, o)
+                Return runtime_compare(this, that, o, check_only)
             Else
                 Return cached_compare(this, that, o, check_only)
             End If
