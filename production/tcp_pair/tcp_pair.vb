@@ -12,7 +12,10 @@ Imports osi.root.threadpool
 Imports osi.service
 Imports osi.service.tcp
 Imports osi.service.convertor
+Imports osi.service.device
+Imports osi.service.commander
 Imports td = osi.service.tcp.constants.default_value
+Imports responder = osi.service.commander.responder
 Imports execution_wrapper = osi.service.commander.executor_wrapper
 
 Public Module tcp_pair
@@ -95,8 +98,8 @@ Public Module tcp_pair
             question = argument.switch(_question)
             reset_connection = argument.switch(_reset_connection)
             enable_keepalive = argument.switch(_enable_keepalive)
-            first_keepalive_ms = argument.value(_first_keepalive_ms).to_uint32(td.first_keepalive_ms)
-            keepalive_interval_ms = argument.value(_keepalive_interval_ms).to_uint32(td.keepalive_interval_ms)
+            first_keepalive_ms = argument.value(_first_keepalive_ms).to_uint32(socket_first_keepalive_ms)
+            keepalive_interval_ms = argument.value(_keepalive_interval_ms).to_uint32(socket_keepalive_interval_ms)
             Console.Write(strcat(_i, " = ", i, character.newline,
                                  _host, " = ", host, character.newline,
                                  _port, " = ", port, character.newline,
@@ -127,40 +130,35 @@ Public Module tcp_pair
         argument.parse(args)
         ServicePointManager.DefaultConnectionLimit() = max_int32
         ServicePointManager.MaxServicePoints() = max_int32
-        Dim p As powerpoint = Nothing
+        Dim b As powerpoint.creator = Nothing
+        b = New powerpoint.creator()
+        b.with_token(arguments.token).
+          with_port(arguments.port).
+          with_send_rate_sec(arguments.send_rate_sec).
+          with_response_timeout_ms(arguments.response_timeout_ms).
+          with_receive_rate_sec(arguments.receive_rate_sec).
+          with_max_connecting(arguments.half_connection_count).
+          with_max_connected(arguments.connection_count).
+          with_no_delay(arguments.no_delay).
+          with_max_lifetime_ms(arguments.max_lifetime_ms).
+          with_enable_keepalive(arguments.enable_keepalive).
+          with_first_keepalive_ms(arguments.first_keepalive_ms).
+          with_keepalive_interval_ms(arguments.keepalive_interval_ms)
         If arguments.i Then
-            p = powerpoint.create(arguments.token,
-                                  arguments.port,
-                                  arguments.send_rate_sec,
-                                  arguments.response_timeout_ms,
-                                  arguments.receive_rate_sec,
-                                  arguments.half_connection_count,
-                                  arguments.connection_count,
-                                  arguments.no_delay,
-                                  arguments.max_lifetime_ms,
-                                  arguments.enable_keepalive,
-                                  arguments.first_keepalive_ms,
-                                  arguments.keepalive_interval_ms)
+            b.with_outgoing().
+              with_host_or_ip(arguments.host).
+              with_connecting_timeout_ms(arguments.connecting_timeout_ms)
+            If arguments.ipv4 Then
+                b.with_ipv4()
+            End If
         Else
-            p = powerpoint.create(arguments.token,
-                                  arguments.host,
-                                  arguments.port,
-                                  arguments.connecting_timeout_ms,
-                                  arguments.send_rate_sec,
-                                  arguments.response_timeout_ms,
-                                  arguments.receive_rate_sec,
-                                  arguments.half_connection_count,
-                                  arguments.connection_count,
-                                  arguments.no_delay,
-                                  arguments.max_lifetime_ms,
-                                  arguments.ipv4,
-                                  arguments.enable_keepalive,
-                                  arguments.first_keepalive_ms,
-                                  arguments.keepalive_interval_ms)
+            b.with_incoming()
         End If
+        Dim p As idevice_pool(Of herald) = Nothing
+        p = b.create().herald_device_pool()
         Dim c As Int64 = 0
         If arguments.question Then
-            For i As Int32 = 0 To p.max_connected() - 1
+            For i As Int32 = 0 To p.max_count() - 1
                 Dim r As pointer(Of Byte()) = Nothing
                 r = New pointer(Of Byte())
                 Dim ec As event_comb = Nothing

@@ -30,6 +30,10 @@ Public Class responder
         MyBase.New(instance, pending_request_timeout_ms, e)
     End Sub
 
+    Public Sub New(ByVal instance As herald, ByVal e As executor)
+        Me.New(instance, npos, e)
+    End Sub
+
     Public Sub New(ByVal instance As idevice(Of herald),
                    ByVal pending_request_timeout_ms As Int64,
                    ByVal e As executor,
@@ -41,6 +45,10 @@ Public Class responder
                    ByVal pending_request_timeout_ms As Int64,
                    ByVal e As executor)
         MyBase.New(instance, pending_request_timeout_ms, e)
+    End Sub
+
+    Public Sub New(ByVal instance As idevice(Of herald), ByVal e As executor)
+        Me.New(instance, npos, e)
     End Sub
 
     Public Sub New(ByVal p As idevice_pool(Of herald),
@@ -56,6 +64,10 @@ Public Class responder
         MyBase.New(p, pending_request_timeout_ms, e)
     End Sub
 
+    Public Sub New(ByVal p As idevice_pool(Of herald), ByVal e As executor)
+        Me.New(p, npos, e)
+    End Sub
+
     Public Sub New(ByVal name As String,
                    ByVal pending_request_timeout_ms As Int64,
                    ByVal e As executor,
@@ -67,6 +79,10 @@ Public Class responder
                    ByVal pending_request_timeout_ms As Int64,
                    ByVal e As executor)
         MyBase.New(name, pending_request_timeout_ms, e)
+    End Sub
+
+    Public Sub New(ByVal name As String, ByVal e As executor)
+        Me.New(name, npos, e)
     End Sub
 
     Private Shared Function create(ByVal v As var,
