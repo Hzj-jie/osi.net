@@ -15,6 +15,12 @@ Partial Public Class powerpoint
                assert(c.create(o))
     End Function
 
+    Public Shared Function create(ByVal v As var) As powerpoint
+        Dim o As powerpoint = Nothing
+        assert(create(v, o))
+        Return o
+    End Function
+
     Public Class creator
         Private token As String
         Private host_or_ip As String
@@ -398,8 +404,9 @@ Partial Public Class powerpoint
                    p_keepalive_interval_ms,
                    p_tokener,
                    p_delay_connect)
-            Return with_token(v(p_token)).
-                   with_host_or_ip(v(p_host)).
+            Return with_host_or_ip(v(p_host)).
+                   with_is_outgoing_str(v(p_is_outgoing)).  ' Several other fields depend on is_outgoing, set it first.
+                   with_token(v(p_token)).
                    with_port_str(v(p_port)).
                    with_ipv4_str(v(p_ipv4)).
                    with_connecting_timeout_ms_str(v(p_connecting_timeout_ms)).
@@ -410,7 +417,6 @@ Partial Public Class powerpoint
                    with_max_connected_str(v(p_max_connected)).
                    with_no_delay_str(v(p_no_delay)).
                    with_max_lifetime_ms_str(v(p_max_lifetime_ms)).
-                   with_is_outgoing_str(v(p_is_outgoing)).
                    with_enable_keepalive_str(v(p_enable_keepalive)).
                    with_first_keepalive_ms_str(v(p_first_keepalive_ms)).
                    with_keepalive_interval_ms_str(v(p_keepalive_interval_ms)).
