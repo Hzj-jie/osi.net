@@ -1,4 +1,13 @@
 ﻿
+' Sample:
+' Server, osi.production.tcp_pair.exe -i --port=10000 --token=token
+' Client, osi.production.tcp_pair.exe --port=10000 --token=token ~question
+' Or
+' Server, osi.production.tcp_pair.exe -i --port=10000 --token=token ~question
+' Client, osi.production.tcp_pair.exe --port=10000 --token=token
+
+' The expected QPS is ~3800 on a four-core machine.
+
 Imports System.DateTime
 Imports System.Net
 Imports System.Threading
@@ -34,7 +43,7 @@ Public Module tcp_pair
         Private Const _max_lifetime_ms As String = "max-lifetime-ms"
         Private Const _ipv4 As String = "ipv4"
         Private Const _question As String = "question"
-        Private Const _reset_connection As String = "reset-connection"
+        ' Private Const _reset_connection As String = "reset-connection"
         Private Const _enable_keepalive As String = "enable-keepalive"
         Private Const _first_keepalive_ms As String = "first-keepalive-ms"
         Private Const _keepalive_interval_ms As String = "keepalive-interval-ms"
@@ -53,7 +62,7 @@ Public Module tcp_pair
         Public Shared ReadOnly max_lifetime_ms As Int64
         Public Shared ReadOnly ipv4 As Boolean
         Public Shared ReadOnly question As Boolean
-        Public Shared ReadOnly reset_connection As Boolean
+        ' Public Shared ReadOnly reset_connection As Boolean
         Public Shared ReadOnly enable_keepalive As Boolean
         Public Shared ReadOnly first_keepalive_ms As UInt32
         Public Shared ReadOnly keepalive_interval_ms As UInt32
@@ -72,8 +81,7 @@ Public Module tcp_pair
                           _half_connection_count,
                           _max_lifetime_ms,
                           _ipv4,
-                          _question,
-                          _reset_connection,
+                          _question, ' _reset_connection,
                           _enable_keepalive,
                           _first_keepalive_ms,
                           _keepalive_interval_ms)
@@ -88,15 +96,15 @@ Public Module tcp_pair
             connecting_timeout_ms = argument.value(_connecting_timeout_ms).to_int64(td.outgoing.connecting_timeout_ms)
             no_delay = argument.switch(_no_delay)
             connection_count = argument.value(_connection_count).to_int32(td.outgoing.max_connected)
-            half_connection_count = argument.value(_half_connection_count).to_int32(If(i,
-                                                                                       td.incoming.max_connecting,
-                                                                                       td.outgoing.max_connecting))
+            half_connection_count = argument.value(_half_connection_count).to_uint32(If(i,
+                                                                                        td.incoming.max_connecting,
+                                                                                        td.outgoing.max_connecting))
             max_lifetime_ms = argument.value(_max_lifetime_ms).to_int64(If(i,
                                                                            td.incoming.max_lifetime_ms,
                                                                            td.outgoing.max_lifetime_ms))
             ipv4 = argument.switch(_ipv4)
             question = argument.switch(_question)
-            reset_connection = argument.switch(_reset_connection)
+            ' reset_connection = argument.switch(_reset_connection)
             enable_keepalive = argument.switch(_enable_keepalive)
             first_keepalive_ms = argument.value(_first_keepalive_ms).to_uint32(socket_first_keepalive_ms)
             keepalive_interval_ms = argument.value(_keepalive_interval_ms).to_uint32(socket_keepalive_interval_ms)
@@ -112,8 +120,7 @@ Public Module tcp_pair
                                  _half_connection_count, " = ", half_connection_count, character.newline,
                                  _max_lifetime_ms, " = ", max_lifetime_ms, character.newline,
                                  _ipv4, " = ", ipv4, character.newline,
-                                 _question, " = ", question, character.newline,
-                                 _reset_connection, " = ", reset_connection, character.newline,
+                                 _question, " = ", question, character.newline, ' _reset_connection, " = ", reset_connection, character.newline,
                                  _enable_keepalive, " = ", enable_keepalive, character.newline,
                                  _first_keepalive_ms, " = ", first_keepalive_ms, character.newline,
                                  _keepalive_interval_ms, " = ", keepalive_interval_ms, character.newline))
@@ -126,6 +133,7 @@ Public Module tcp_pair
     End Sub
 
     Public Sub main(ByVal args() As String)
+        global_init.execute(load_assemblies:=True)
         debugpause()
         argument.parse(args)
         ServicePointManager.DefaultConnectionLimit() = max_int32
@@ -145,14 +153,14 @@ Public Module tcp_pair
           with_first_keepalive_ms(arguments.first_keepalive_ms).
           with_keepalive_interval_ms(arguments.keepalive_interval_ms)
         If arguments.i Then
+            b.with_incoming()
+        Else
             b.with_outgoing().
               with_host_or_ip(arguments.host).
               with_connecting_timeout_ms(arguments.connecting_timeout_ms)
             If arguments.ipv4 Then
                 b.with_ipv4()
             End If
-        Else
-            b.with_incoming()
         End If
         Dim p As idevice_pool(Of herald) = Nothing
         p = b.create().herald_device_pool()
