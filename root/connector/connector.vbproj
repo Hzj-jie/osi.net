@@ -109,6 +109,7 @@
     <Compile Include="string_utils\strcontains.vb" />
     <Compile Include="string_utils\stringbuilder.vb" />
     <Compile Include="types\range_int.vb" />
+    <Compile Include="types\getter.vb" />
     <Compile Include="unchecked_int.ext.vb" />
     <Compile Include="ref.vb" />
     <Compile Include="weak_action.vb" />

@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
@@ -6,14 +10,14 @@ Imports osi.root.procedure
 Imports osi.root.utils
 
 Public Module _complete_io
-    Private Function copy_once(ByVal r As Func(Of Byte(), 
-                                                  UInt32, 
-                                                  UInt32, 
-                                                  pointer(Of UInt32), 
+    Private Function copy_once(ByVal r As Func(Of Byte(),
+                                                  UInt32,
+                                                  UInt32,
+                                                  pointer(Of UInt32),
                                                   event_comb),
-                               ByVal w As Func(Of Byte(), 
-                                                  UInt32, 
-                                                  UInt32, 
+                               ByVal w As Func(Of Byte(),
+                                                  UInt32,
+                                                  UInt32,
                                                   event_comb),
                                ByVal buff() As Byte,
                                ByVal max_copy As UInt32,
@@ -48,27 +52,27 @@ Public Module _complete_io
                               End Function)
     End Function
 
-    Private Function prepare_buff(ByRef buff_size As UInt32, Optional ByVal count As UInt32 = max_uint32) As Byte()
+    Private Function prepare_buff(ByRef buff_size As UInt32, Optional ByVal count As UInt64 = max_uint64) As Byte()
         assert(count > 0)
         If buff_size = 0 Then
             buff_size = constants.default_io_buff_size
         End If
         If buff_size > count Then
-            buff_size = count
+            buff_size = CUInt(count)
         End If
         Dim r() As Byte = Nothing
-        ReDim r(buff_size - 1)
+        ReDim r(CInt(buff_size - uint32_1))
         Return r
     End Function
 
-    Public Function until_pending(ByVal r As Func(Of Byte(), 
-                                                     UInt32, 
-                                                     UInt32, 
-                                                     pointer(Of UInt32), 
+    Public Function until_pending(ByVal r As Func(Of Byte(),
+                                                     UInt32,
+                                                     UInt32,
+                                                     pointer(Of UInt32),
                                                      event_comb),
-                                  ByVal w As Func(Of Byte(), 
-                                                     UInt32, 
-                                                     UInt32, 
+                                  ByVal w As Func(Of Byte(),
+                                                     UInt32,
+                                                     UInt32,
                                                      event_comb),
                                   Optional ByVal buff_size As UInt32 = 0,
                                   Optional ByVal result As pointer(Of UInt64) = Nothing) As event_comb
@@ -105,6 +109,22 @@ Public Module _complete_io
 
     Private Function count_condition(ByVal last_ec As event_comb,
                                      ByRef break_error As Boolean,
+                                     ByRef count As UInt32,
+                                     ByVal p As pointer(Of UInt32),
+                                     ByVal pending_counter As pending_io_punishment) As Boolean
+        Dim x As UInt64 = 0
+        x = count
+        If count_condition(last_ec, break_error, x, p, pending_counter) Then
+            assert(x <= max_uint32)
+            count = CUInt(x)
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Private Function count_condition(ByVal last_ec As event_comb,
+                                     ByRef break_error As Boolean,
                                      ByRef count As UInt64,
                                      ByVal p As pointer(Of UInt32),
                                      ByVal pending_counter As pending_io_punishment) As Boolean
@@ -128,14 +148,14 @@ Public Module _complete_io
         Return count > 0
     End Function
 
-    Public Function complete_io(ByVal r As Func(Of Byte(), 
-                                                   UInt32, 
-                                                   UInt32, 
-                                                   pointer(Of UInt32), 
+    Public Function complete_io(ByVal r As Func(Of Byte(),
+                                                   UInt32,
+                                                   UInt32,
+                                                   pointer(Of UInt32),
                                                    event_comb),
-                                ByVal w As Func(Of Byte(), 
-                                                   UInt32, 
-                                                   UInt32, 
+                                ByVal w As Func(Of Byte(),
+                                                   UInt32,
+                                                   UInt32,
                                                    event_comb),
                                 ByVal count As UInt64,
                                 Optional ByVal buff_size As UInt32 = 0) As event_comb
@@ -160,7 +180,7 @@ Public Module _complete_io
                                                                           pending_counter)
                                                End Function,
                                                Function() As event_comb
-                                                   Return copy_once(r, w, buff, min(buff_size, count), p)
+                                                   Return copy_once(r, w, buff, CUInt(min(buff_size, count)), p)
                                                End Function)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -172,9 +192,9 @@ Public Module _complete_io
                               End Function)
     End Function
 
-    Public Function complete_io(ByVal r As Func(Of pointer(Of Byte()), 
+    Public Function complete_io(ByVal r As Func(Of pointer(Of Byte()),
                                                    event_comb),
-                                ByVal w As Func(Of Byte(), 
+                                ByVal w As Func(Of Byte(),
                                                    event_comb)) _
                                As event_comb
         assert(Not r Is Nothing)
@@ -202,13 +222,24 @@ Public Module _complete_io
                               End Function)
     End Function
 
+    Public Function complete_io_4(ByVal buff() As Byte,
+                                  ByVal offset As UInt32,
+                                  ByVal count As UInt32,
+                                  ByVal partial_io As Func(Of Byte(),
+                                                              UInt32,
+                                                              UInt32,
+                                                              pointer(Of UInt32),
+                                                              event_comb)) As event_comb
+        Return complete_io(buff, offset, count, partial_io)
+    End Function
+
     Public Function complete_io(ByVal buff() As Byte,
                                 ByVal offset As UInt32,
                                 ByVal count As UInt32,
-                                ByVal partial_io As Func(Of Byte(), 
-                                                            UInt32, 
-                                                            UInt32, 
-                                                            pointer(Of UInt32), 
+                                ByVal partial_io As Func(Of Byte(),
+                                                            UInt32,
+                                                            UInt32,
+                                                            pointer(Of UInt32),
                                                             event_comb)) _
                                As event_comb
         assert(Not partial_io Is Nothing)
@@ -255,5 +286,54 @@ Public Module _complete_io
                                   Return ec.end_result() AndAlso
                                          goto_end()
                               End Function)
+    End Function
+
+    Public Function complete_io_3(ByVal buff() As Byte,
+                                  ByVal offset As UInt32,
+                                  ByVal count As UInt32,
+                                  ByVal partial_io As Func(Of Byte(),
+                                                              UInt32,
+                                                              pointer(Of UInt32),
+                                                              event_comb)) _
+                                 As event_comb
+        Return complete_io(buff, offset, count, partial_io)
+    End Function
+
+    Public Function complete_io(ByVal buff() As Byte,
+                                ByVal offset As UInt32,
+                                ByVal count As UInt32,
+                                ByVal partial_io As Func(Of Byte(),
+                                                            UInt32,
+                                                            pointer(Of UInt32),
+                                                            event_comb)) _
+                               As event_comb
+        assert(Not partial_io Is Nothing)
+        Return complete_io(buff,
+                           offset,
+                           count,
+                           Function(ByVal b() As Byte,
+                                    ByVal o As UInt32,
+                                    ByVal c As UInt32,
+                                    ByVal r As pointer(Of UInt32)) As event_comb
+                               Dim ec As event_comb = Nothing
+                               Return New event_comb(Function() As Boolean
+                                                         Dim p As piece = Nothing
+                                                         If piece.create(b, o, c, p) Then
+                                                             Dim nc As UInt32 = 0
+                                                             Dim nb() As Byte = Nothing
+                                                             nb = p.export(nc)
+                                                             assert(nc = c)
+                                                             ec = partial_io(nb, nc, r)
+                                                             Return waitfor(ec) AndAlso
+                                                                    goto_next()
+                                                         Else
+                                                             Return False
+                                                         End If
+                                                     End Function,
+                                                     Function() As Boolean
+                                                         Return ec.end_result() AndAlso
+                                                                goto_end()
+                                                     End Function)
+                           End Function)
     End Function
 End Module

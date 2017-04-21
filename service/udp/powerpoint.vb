@@ -67,19 +67,19 @@ Partial Public Class powerpoint
             Me.max_receive_buffer_size = (packet_size << 1)
         End If
 
-        If local_defined() AndAlso remote_defined() Then
+        If p2p() Then
             assert((New connector(Me)).create(_udp_dev_device))
             _async_getter_datagram_device = device_adapter.[New](_udp_dev_device, AddressOf udp_dev_to_datagram)
             assert(async_device_device_converter.adapt(_async_getter_datagram_device, _datagram_device))
             _herald_device = device_adapter.[New](_datagram_device, AddressOf datagram_to_herald)
-        ElseIf local_defined() Then
+        ElseIf incoming() Then
             _udp_dev_manual_device_exporter = New manual_device_exporter(Of udp_dev)(identity)
             _datagram_manual_device_exporter =
                 manual_device_exporter_adapter.[New](_udp_dev_manual_device_exporter, AddressOf udp_dev_to_datagram)
             _herald_manual_device_exporter = manual_device_exporter_adapter.[New](_udp_dev_manual_device_exporter,
                                                                                   AddressOf udp_dev_to_herald)
             listeners.listen(Me)
-        ElseIf remote_defined() Then
+        ElseIf outgoing() Then
             _udp_dev_creator = New connector(Me)
             _datagram_creator = device_creator_adapter.[New](_udp_dev_creator, AddressOf udp_dev_to_datagram)
             _herald_creator = device_creator_adapter.[New](_udp_dev_creator, AddressOf udp_dev_to_herald)
@@ -94,6 +94,18 @@ Partial Public Class powerpoint
 
     Public Function remote_defined() As Boolean
         Return Not String.IsNullOrEmpty(host_or_ip) AndAlso remote_port <> socket_invalid_port
+    End Function
+
+    Public Function p2p() As Boolean
+        Return local_defined() AndAlso remote_defined()
+    End Function
+
+    Public Function incoming() As Boolean
+        Return local_defined() AndAlso Not remote_defined()
+    End Function
+
+    Public Function outgoing() As Boolean
+        Return remote_defined() AndAlso Not local_defined()
     End Function
 
     Public Shared Function udp_dev_to_datagram(ByVal i As udp_dev) As datagram

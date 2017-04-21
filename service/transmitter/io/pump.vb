@@ -43,7 +43,7 @@ Public Module _pump
                                           ByVal offset As UInt32,
                                           ByVal count As UInt32) As event_comb
         assert(Not f Is Nothing)
-        Return complete_io(buff, offset, count, AddressOf f.receive)
+        Return complete_io_4(buff, offset, count, AddressOf f.receive)
     End Function
 
     <Extension()> Public Function receive(ByVal f As flow_pump,

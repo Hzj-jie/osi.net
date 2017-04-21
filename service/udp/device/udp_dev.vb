@@ -1,9 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net
-Imports System.Net.Sockets
 Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.event
 Imports osi.root.lock
 Imports osi.root.formation
 Imports osi.root.procedure
@@ -63,7 +65,7 @@ Public Class udp_dev
     End Sub
 
     Private Sub push_queue(ByVal b() As Byte, ByVal remote As IPEndPoint)
-        If Me.buff_size.add(array_size(b)) > p.max_receive_buffer_size Then
+        If Me.buff_size.add(array_size_i(b)) > p.max_receive_buffer_size Then
             pop_queue(Nothing)
         End If
         Me.pump.emplace(b)

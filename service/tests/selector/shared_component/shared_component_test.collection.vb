@@ -20,8 +20,8 @@ Partial Public Class shared_component_test
                                                       ByVal id As UInt16,
                                                       ByRef o As component) As Boolean
             assert_not_nothing(p)
-            If is_valid_port(p.port) Then
-                assert_equal(p.port, id)
+            If is_valid_port(p.local_port) Then
+                assert_equal(p.local_port, id)
             End If
             o = New component(id)
             Return True
@@ -34,8 +34,8 @@ Partial Public Class shared_component_test
                                                                                       const_pair(Of UInt16, UInt16)))) _
                                                     As Boolean
             assert_not_nothing(p)
-            If is_valid_port(p.port) Then
-                assert_equal(p.port, id)
+            If is_valid_port(p.local_port) Then
+                assert_equal(p.local_port, id)
             End If
             o = New receiver(dev)
             Return True
@@ -45,9 +45,9 @@ Partial Public Class shared_component_test
             Return component.is_valid_port(id)
         End Function
 
-        Protected Overrides Function port(ByVal p As parameter) As UInt16
+        Protected Overrides Function local_port(ByVal p As parameter) As UInt16
             assert(Not p Is Nothing)
-            Return p.port
+            Return p.local_port
         End Function
 
         Protected Overrides Sub dispose_component(ByVal p As component)

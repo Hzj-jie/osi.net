@@ -19,5 +19,16 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
                 As shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
             Return shared_component.[New](p, local_port, component, dispenser, accepter, buff)
         End Function
+
+        Protected NotOverridable Overrides Function new_shared_component(
+                 ByVal p As PARAMETER_T,
+                 ByVal id As PORT_T,
+                 ByVal component As ref_instance(Of COMPONENT_T),
+                 ByVal dispenser As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)),
+                 ByVal buff As DATA_T,
+                 ByVal remote As const_pair(Of ADDRESS_T, PORT_T)) _
+             As shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
+            Return MyBase.new_shared_component(p, id, component, dispenser, buff, remote)
+        End Function
     End Class
 End Class

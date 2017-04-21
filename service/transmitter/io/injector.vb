@@ -56,7 +56,7 @@ Public Module _injector
                                        ByVal offset As UInt32,
                                        ByVal count As UInt32) As event_comb
         assert(Not f Is Nothing)
-        Return complete_io(buff, offset, count, AddressOf f.send)
+        Return complete_io_4(buff, offset, count, AddressOf f.send)
     End Function
 
     <Extension()> Public Function send(ByVal f As flow_injector,

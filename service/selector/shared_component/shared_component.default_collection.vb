@@ -39,7 +39,7 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
                                                          ByVal id As PORT_T,
                                                          ByRef o As COMPONENT_T) As Boolean
         Protected MustOverride Function is_valid_port(ByVal id As PORT_T) As Boolean
-        Protected MustOverride Function port(ByVal p As PARAMETER_T) As PORT_T
+        Protected MustOverride Function local_port(ByVal p As PARAMETER_T) As PORT_T
         Protected MustOverride Function accept_new_component(ByVal p As PARAMETER_T) As Boolean
         Protected MustOverride Sub dispose_component(ByVal c As COMPONENT_T)
 
@@ -78,12 +78,32 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
         End Function
 
         Protected Overridable Function create_receiver(
+               ByVal dev As ref_instance(Of COMPONENT_T)) _
+               As T_receiver(Of pair(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)))
+            assert(False)
+            Return Nothing
+        End Function
+
+        Protected Overridable Function create_receiver(
+                ByVal dev As ref_instance(Of COMPONENT_T),
+                ByRef o As T_receiver(Of pair(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)))) As Boolean
+            o = create_receiver(dev)
+            Return Not o Is Nothing
+        End Function
+
+        Protected Overridable Function create_receiver(
+                ByVal p As PARAMETER_T,
+                ByVal dev As ref_instance(Of COMPONENT_T),
+                ByRef o As T_receiver(Of pair(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)))) As Boolean
+            Return create_receiver(dev, o)
+        End Function
+
+        Protected Overridable Function create_receiver(
                 ByVal p As PARAMETER_T,
                 ByVal id As PORT_T,
                 ByVal dev As ref_instance(Of COMPONENT_T),
                 ByRef o As T_receiver(Of pair(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)))) As Boolean
-            assert(False)
-            Return False
+            Return create_receiver(p, dev, o)
         End Function
 
         Protected Overridable Function create_dispenser(ByVal p As PARAMETER_T,
@@ -117,16 +137,16 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
         Public Function [New](ByVal p As PARAMETER_T,
                               ByRef local_port As PORT_T,
                               ByRef o As ref_instance(Of COMPONENT_T)) As Boolean Implements collection.New
-            If is_valid_port(port(p)) Then
+            If is_valid_port(Me.local_port(p)) Then
                 If Not devs.[New](port_To_uint32(local_port),
-                                  Function() new_component(p, port(p)),
+                                  Function() new_component(p, Me.local_port(p)),
                                   o) Then
                     Return False
                 End If
-                local_port = port(p)
+                local_port = Me.local_port(p)
             Else
-                Dim id As UInt32 = 0
-                If Not devs.next(Function(ByVal current_id As UInt32) As ref_instance(Of COMPONENT_T)
+                Dim id As UInteger = 0
+                If Not devs.next(Function(ByVal current_id As UInteger) As ref_instance(Of COMPONENT_T)
                                      Dim port As PORT_T = Nothing
                                      port = port_To_uint32.reverse(current_id)
                                      If is_valid_port(port) Then
@@ -162,8 +182,8 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
                                                                           i.unref()
                                                                       End Sub
                                             ' Usually it's not reasonable to accept new connections from a random port.
-                                            If accept_new_component(p) AndAlso is_valid_port(port(p)) Then
-                                                assert(compare(port(p), local_port) = 0)
+                                            If accept_new_component(p) AndAlso is_valid_port(Me.local_port(p)) Then
+                                                assert(compare(Me.local_port(p), local_port) = 0)
                                                 AddHandler x.unaccepted,
                                                            Sub(ByVal buff As DATA_T,
                                                                ByVal remote As const_pair(Of ADDRESS_T, PORT_T))

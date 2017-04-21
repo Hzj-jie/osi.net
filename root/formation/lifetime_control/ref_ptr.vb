@@ -77,4 +77,49 @@ Public Class ref_ptr(Of T)
         assert(i.get() = 0, "ref_ptr @ ", create_stack_trace, " has not been fully dereferred.")
         MyBase.Finalize()
     End Sub
+
+    Public Function assert_getter() As getter(Of T)
+        Return New _assert_getter(Me)
+    End Function
+
+    Public Function getter() As getter(Of T)
+        Return New _getter(Me)
+    End Function
+
+    Private NotInheritable Class _assert_getter
+        Implements getter(Of T)
+
+        Private ReadOnly r As ref_ptr(Of T)
+
+        Public Sub New(ByVal r As ref_ptr(Of T))
+            assert(Not r Is Nothing)
+            Me.r = r
+        End Sub
+
+        Public Function [get](ByRef k As T) As Boolean Implements getter(Of T).get
+            assert(r.referred())
+            k = r.get()
+            Return True
+        End Function
+    End Class
+
+    Private NotInheritable Class _getter
+        Implements getter(Of T)
+
+        Private ReadOnly r As ref_ptr(Of T)
+
+        Public Sub New(ByVal r As ref_ptr(Of T))
+            assert(Not r Is Nothing)
+            Me.r = r
+        End Sub
+
+        Public Function [get](ByRef k As T) As Boolean Implements getter(Of T).get
+            If r.referred() Then
+                k = r.get()
+                Return True
+            Else
+                Return False
+            End If
+        End Function
+    End Class
 End Class
