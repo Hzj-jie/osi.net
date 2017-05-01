@@ -10,17 +10,17 @@ Public Class pattern_match_test
 
     Private Shared Sub match_case(ByVal pattern As String, ByVal str As String)
         match_one_cases.emplace_back(emplace_make_pair(emplace_make_pair(pattern, str),
-                                                       stringfilter.fit_true))
+                                                       pattern_match.fit_true))
     End Sub
 
     Private Shared Sub unmatch_case(ByVal pattern As String, ByVal str As String)
         match_one_cases.emplace_back(emplace_make_pair(emplace_make_pair(pattern, str),
-                                                       stringfilter.fit_false))
+                                                       pattern_match.fit_false))
     End Sub
 
     Private Shared Sub undetermined_case(ByVal pattern As String, ByVal str As String)
         match_one_cases.emplace_back(emplace_make_pair(emplace_make_pair(pattern, str),
-                                                       stringfilter.fit_undertermind))
+                                                       pattern_match.fit_undertermind))
     End Sub
 
     Shared Sub New()
@@ -53,7 +53,7 @@ Public Class pattern_match_test
     Private Shared Function match_one_case()
         For i As UInt32 = 0 To CUInt(match_one_cases.size() - 1)
             Dim result As Byte = 0
-            result = match_one_cases(i).first.second.match_one(match_one_cases(i).first.first)
+            result = match_one_cases(i).first.second.match_pattern(match_one_cases(i).first.first)
             assert_equal(result,
                          match_one_cases(i).second,
                          "pattern == ",

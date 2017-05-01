@@ -61,8 +61,8 @@ Public Module _levenshtein
 
     <Extension()> Public Function levenshtein(ByVal s1() As Char,
                                               ByVal s2() As Char,
-                                              Optional ByVal care_case As Boolean = True) As Int32
-        If care_case Then
+                                              Optional ByVal case_sensitive As Boolean = True) As Int32
+        If case_sensitive Then
             Return levenshtein(s1, s2, Function(x, y) x = y)
         Else
             Return levenshtein(s1, s2, Function(x, y) Char.ToLower(x) = Char.ToLower(y))
@@ -71,7 +71,7 @@ Public Module _levenshtein
 
     <Extension()> Public Function levenshtein(ByVal s1 As String,
                                               ByVal s2 As String,
-                                              Optional ByVal care_case As Boolean = True) As Int32
-        Return levenshtein(c_str(s1), c_str(s2), care_case)
+                                              Optional ByVal case_sensitive As Boolean = True) As Int32
+        Return levenshtein(c_str(s1), c_str(s2), case_sensitive)
     End Function
 End Module

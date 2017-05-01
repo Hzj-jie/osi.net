@@ -1,4 +1,6 @@
 ﻿
+Imports System.Runtime.CompilerServices
+
 Public Interface getter(Of T)
     Function [get](ByRef k As T) As Boolean
 End Interface
@@ -31,3 +33,12 @@ Public Class predefined_getter(Of T)
         Return r
     End Function
 End Class
+
+Public Module _getter
+    <Extension()> Public Function [get](Of T)(ByVal this As getter(Of T)) As T
+        assert(Not this Is Nothing)
+        Dim r As T = Nothing
+        assert(this.[get](r))
+        Return r
+    End Function
+End Module

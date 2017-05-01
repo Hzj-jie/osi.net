@@ -5,7 +5,6 @@ Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.convertor
-Imports osi.root.utils
 
 Partial Public Class var
     Public Shared ReadOnly [default] As var
@@ -84,7 +83,7 @@ Partial Public Class var
         If String.IsNullOrEmpty(n) Then
             Return False
         Else
-            If Not c.care_case Then
+            If Not c.case_sensitive Then
                 strtolower(n)
             End If
             Return find(raw, n, o) OrElse

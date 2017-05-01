@@ -27,18 +27,18 @@ Public NotInheritable Class filter_selector
         assert_register_filter(string_prefix, Function(s) New string_prefix_filter(s))
         assert_register_filter(string_prefixes, Function(s) New string_prefixes_filter(s))
 
-        assert_register_filter(string_care_case, Function(s) New string_care_case_filter(s))
-        assert_register_filter(string_pattern_care_case, Function(s) New string_care_case_pattern_filter(s))
-        assert_register_filter(string_serial_care_case, Function(s) New string_care_case_serial_filter(s))
-        assert_register_filter(string_patterns_care_case, Function(s) New string_care_case_patterns_filter(s))
-        assert_register_filter(string_compare_care_case, Function(s) New string_care_case_compare_filter(s))
-        assert_register_filter(string_interval_care_case, Function(s) New string_care_case_interval_filter(s))
-        assert_register_filter(string_pattern_care_case_cache,
-            Function(s) New cached_filter(New string_care_case_pattern_filter(s)))
-        assert_register_filter(string_patterns_care_case_cache,
-            Function(s) New cached_filter(New string_care_case_patterns_filter(s)))
-        assert_register_filter(string_prefix_care_case, Function(s) New string_care_case_prefix_filter(s))
-        assert_register_filter(string_prefixes_care_case, Function(s) New string_care_case_prefixes_filter(s))
+        assert_register_filter(string_case_sensitive, Function(s) New string_case_sensitive_filter(s))
+        assert_register_filter(string_pattern_case_sensitive, Function(s) New string_case_sensitive_pattern_filter(s))
+        assert_register_filter(string_serial_case_sensitive, Function(s) New string_case_sensitive_serial_filter(s))
+        assert_register_filter(string_patterns_case_sensitive, Function(s) New string_case_sensitive_patterns_filter(s))
+        assert_register_filter(string_compare_case_sensitive, Function(s) New string_case_sensitive_compare_filter(s))
+        assert_register_filter(string_interval_case_sensitive, Function(s) New string_case_sensitive_interval_filter(s))
+        assert_register_filter(string_pattern_case_sensitive_cache,
+            Function(s) New cached_filter(New string_case_sensitive_pattern_filter(s)))
+        assert_register_filter(string_patterns_case_sensitive_cache,
+            Function(s) New cached_filter(New string_case_sensitive_patterns_filter(s)))
+        assert_register_filter(string_prefix_case_sensitive, Function(s) New string_case_sensitive_prefix_filter(s))
+        assert_register_filter(string_prefixes_case_sensitive, Function(s) New string_case_sensitive_prefixes_filter(s))
 
         assert_register_filter(int, Function(s) New int_filter(s))
         assert_register_filter(int_interval, Function(s) New int_interval_filter(s))

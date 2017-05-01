@@ -10,8 +10,8 @@ Partial Public Class var
             Dim it As map(Of String, vector(Of String)).iterator = Nothing
             it = raw.begin()
             While it <> raw.end()
-                If strsame(i, (+it).first, strlen((+it).first), c.care_case) Then
-                    If c.care_case Then
+                If strsame(i, (+it).first, strlen((+it).first), c.case_sensitive) Then
+                    If c.case_sensitive Then
                         binded(i).push_back((+it).second)
                     Else
                         binded(strtolower(i)).push_back((+it).second)

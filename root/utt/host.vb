@@ -80,23 +80,23 @@ Partial Friend NotInheritable Class host
             Dim has_fit_true As Boolean = False
             Dim r As Byte = 0
             r = match_all(c.name(), selector)
-            If r = stringfilter.fit_true Then
+            If r = pattern_match.fit_true Then
                 has_fit_true = True
-            ElseIf r = stringfilter.fit_false Then
+            ElseIf r = pattern_match.fit_false Then
                 Return False
             End If
 
             r = match_all(c.full_name(), selector)
-            If r = stringfilter.fit_true Then
+            If r = pattern_match.fit_true Then
                 has_fit_true = True
-            ElseIf r = stringfilter.fit_false Then
+            ElseIf r = pattern_match.fit_false Then
                 Return False
             End If
 
             r = match_all(c.assembly_qualified_name(), selector)
-            If r = stringfilter.fit_true Then
+            If r = pattern_match.fit_true Then
                 has_fit_true = True
-            ElseIf r = stringfilter.fit_false Then
+            ElseIf r = pattern_match.fit_false Then
                 Return False
             End If
 

@@ -121,15 +121,15 @@ Public Class double_comparer
     End Function
 End Class
 
-Public Class string_comparer(Of CARE_CASE As _boolean)
+Public Class string_comparer(Of case_sensitive As _boolean)
     Inherits comparer(Of String)
 
-    Public Shared Shadows ReadOnly instance As string_comparer(Of CARE_CASE)
+    Public Shared Shadows ReadOnly instance As string_comparer(Of case_sensitive)
     Private Shared ReadOnly cc As Boolean
 
     Shared Sub New()
-        cc = +(alloc(Of CARE_CASE)())
-        instance = New string_comparer(Of CARE_CASE)()
+        cc = +(alloc(Of case_sensitive)())
+        instance = New string_comparer(Of case_sensitive)()
     End Sub
 
     Protected Sub New()
@@ -152,7 +152,7 @@ Public Class string_comparer
     Inherits string_comparer(Of _false)
 End Class
 
-Public Class string_care_case_comparer
+Public Class string_case_sensitive_comparer
     Inherits string_comparer(Of _true)
 End Class
 

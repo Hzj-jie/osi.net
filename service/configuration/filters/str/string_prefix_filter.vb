@@ -2,8 +2,8 @@
 Imports osi.root.connector
 Imports osi.root.template
 
-Friend Class string_prefix_filter(Of CARE_CASE As _boolean)
-    Inherits string_based_filter(Of CARE_CASE)
+Friend Class string_prefix_filter(Of case_sensitive As _boolean)
+    Inherits string_based_filter(Of case_sensitive)
 
     Protected Sub New(ByVal base As String)
         MyBase.New(base)
@@ -11,8 +11,8 @@ Friend Class string_prefix_filter(Of CARE_CASE As _boolean)
 
     Protected NotOverridable Overrides Function match(ByVal input As String,
                                                       ByVal base As String,
-                                                      ByVal care_case As Boolean) As Boolean
-        Return strstartwith(input, base, care_case)
+                                                      ByVal case_sensitive As Boolean) As Boolean
+        Return strstartwith(input, base, case_sensitive)
     End Function
 End Class
 
@@ -24,7 +24,7 @@ Friend Class string_prefix_filter
     End Sub
 End Class
 
-Friend Class string_care_case_prefix_filter
+Friend Class string_case_sensitive_prefix_filter
     Inherits string_prefix_filter(Of _true)
 
     Public Sub New(ByVal s As String)
@@ -40,10 +40,10 @@ Friend Class string_prefixes_filter
     End Sub
 End Class
 
-Friend Class string_care_case_prefixes_filter
+Friend Class string_case_sensitive_prefixes_filter
     Inherits multi_filter
 
     Public Sub New(ByVal s As String)
-        MyBase.New(Function(i) New string_care_case_prefix_filter(i), s)
+        MyBase.New(Function(i) New string_case_sensitive_prefix_filter(i), s)
     End Sub
 End Class

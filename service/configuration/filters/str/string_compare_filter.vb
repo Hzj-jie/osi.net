@@ -2,11 +2,11 @@
 Imports osi.root.template
 Imports osi.root.utils
 
-Friend Class string_compare_filter(Of CARE_CASE As _boolean)
+Friend Class string_compare_filter(Of case_sensitive As _boolean)
     Inherits compare_filter(Of String)
 
     Public Sub New(ByVal s As String)
-        MyBase.New(string_string_caster.instance, string_comparer(Of CARE_CASE).instance, s)
+        MyBase.New(string_string_caster.instance, string_comparer(Of case_sensitive).instance, s)
     End Sub
 End Class
 
@@ -18,7 +18,7 @@ Friend Class string_compare_filter
     End Sub
 End Class
 
-Friend Class string_care_case_compare_filter
+Friend Class string_case_sensitive_compare_filter
     Inherits string_compare_filter(Of _true)
 
     Public Sub New(ByVal s As String)

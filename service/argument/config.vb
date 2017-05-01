@@ -15,7 +15,7 @@ Public Class config
     Public full_swither_prefix As String = character.tilde
     Public arg_prefix As String = character.minus_sign + character.minus_sign
     Public arg_key_value_separator As String = character.equal_sign
-    Public care_case As Boolean = True
+    Public case_sensitive As Boolean = True
 
     Public Function create_arg(Of T1, T2)(ByVal key As T1, ByVal value As T2) As String
         Return strcat(arg_prefix, key, arg_key_value_separator, value)
@@ -34,16 +34,16 @@ Public Class config
     End Function
 
     Private Function is_not_any_prefix(ByVal c As Char) As Boolean
-        Return strindexof(switcher_prefix, c, care_case) = npos AndAlso
-               strindexof(arg_prefix, c, care_case) = npos AndAlso
-               strindexof(full_swither_prefix, c, care_case) = npos
+        Return strindexof(switcher_prefix, c, case_sensitive) = npos AndAlso
+               strindexof(arg_prefix, c, case_sensitive) = npos AndAlso
+               strindexof(full_swither_prefix, c, case_sensitive) = npos
     End Function
 
     Private Function is_switcher_prefix(ByVal i As String) As Boolean
         Return Not String.IsNullOrEmpty(i) AndAlso
                Not String.IsNullOrEmpty(switcher_prefix) AndAlso
                strlen(i) > 1 AndAlso
-               strindexof(switcher_prefix, i(0), care_case) <> npos AndAlso
+               strindexof(switcher_prefix, i(0), case_sensitive) <> npos AndAlso
                is_not_any_prefix(i(1))
     End Function
 
@@ -51,7 +51,7 @@ Public Class config
         Return Not String.IsNullOrEmpty(i) AndAlso
                Not String.IsNullOrEmpty(full_swither_prefix) AndAlso
                strlen(i) > 1 AndAlso
-               strindexof(full_swither_prefix, i(0), care_case) <> npos AndAlso
+               strindexof(full_swither_prefix, i(0), case_sensitive) <> npos AndAlso
                is_not_any_prefix(i(1))
     End Function
 
@@ -66,7 +66,7 @@ Public Class config
     Friend Function is_switcher(ByVal i As String, ByRef o As String) As Boolean
         If is_switcher_prefix(i) Then
             o = strmid(i, 1)
-            If Not care_case Then
+            If Not case_sensitive Then
                 strtolower(o)
             End If
             Return True
@@ -78,7 +78,7 @@ Public Class config
     Friend Function is_full_switcher(ByVal i As String, ByRef o As String) As Boolean
         If is_full_switcher_prefix(i) Then
             o = strmid(i, 1)
-            If Not care_case Then
+            If Not case_sensitive Then
                 strtolower(o)
             End If
             Return True
@@ -89,8 +89,8 @@ Public Class config
 
     Friend Function is_arg(ByVal i As String, ByRef k As String, ByRef v As String) As Boolean
         If is_arg_prefix(i) Then
-            If strsep(strmid(i, strlen(arg_prefix)), k, v, arg_key_value_separator, care_case) Then
-                If Not care_case Then
+            If strsep(strmid(i, strlen(arg_prefix)), k, v, arg_key_value_separator, case_sensitive) Then
+                If Not case_sensitive Then
                     strtolower(k)
                 End If
                 Return True
