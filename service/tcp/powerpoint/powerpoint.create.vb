@@ -404,8 +404,9 @@ Partial Public Class powerpoint
                    p_keepalive_interval_ms,
                    p_tokener,
                    p_delay_connect)
+            ' Several other fields depend on is_outgoing, set is_outgoing_str() first.
             Return with_host_or_ip(v(p_host)).
-                   with_is_outgoing_str(v(p_is_outgoing)).  ' Several other fields depend on is_outgoing, set it first.
+                   with_is_outgoing_str(v(p_is_outgoing)).
                    with_token(v(p_token)).
                    with_port_str(v(p_port)).
                    with_ipv4_str(v(p_ipv4)).
