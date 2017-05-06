@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
@@ -18,23 +22,14 @@ Partial Public Class shared_component_test
 
         Public Sub New()
             c = New collection()
-            p = New parameter(1000)
+            p = New parameter(1000, True)
         End Sub
 
         Public Overrides Function preserved_processors() As Int16
             Return 1
         End Function
 
-        Public Overrides Function prepare() As Boolean
-            If MyBase.prepare() Then
-                assert_true([New](Of UInt16, UInt16, component, Int32, parameter)(c, p, component, dispenser))
-                Return True
-            Else
-                Return False
-            End If
-        End Function
-
-        Public Overrides Function run() As Boolean
+        Private Function run_case() As Boolean
             Const ip_size As UInt16 = 10
             Const port_size As UInt16 = 10
             Dim s As vector(Of shared_component(Of UInt16, UInt16, component, Int32, parameter)) = Nothing
@@ -50,7 +45,7 @@ Partial Public Class shared_component_test
                     For j As UInt16 = 1 To port_size
                         assert(shared_component_test.component.is_valid_port(j))
                         Dim exp_size As UInt32
-                        exp_size = i * 10 + j
+                        exp_size = i * CUInt(10) + j
                         assert_less(s.size(), exp_size)
                         component.get().push(200, i, j)
                         If assert_true(timeslice_sleep_wait_until(Function() As Boolean
@@ -58,6 +53,7 @@ Partial Public Class shared_component_test
                                                                       Return s.size() = exp_size
                                                                   End Function,
                                                                   seconds_to_milliseconds(10))) Then
+                            assert_true(s.back().is_valid())
                             assert_true(async_sync(s.back().receiver.receive(p), seconds_to_milliseconds(10)),
                                         "@", i, "-", j)
                             assert_equal(+p, 200, "@", i, "-", j)
@@ -69,7 +65,7 @@ Partial Public Class shared_component_test
                             Next
 
                             If i > 0 Then
-                                For k As UInt16 = 0 To i - uint32_1
+                                For k As UInt16 = 0 To i - uint16_1
                                     For l As UInt16 = 1 To port_size
                                         component.get().push(k * l, k, l)
                                         assert_true(async_sync(s(k * port_size + l - uint16_1).receiver.receive(p),
@@ -79,7 +75,7 @@ Partial Public Class shared_component_test
                                 Next
                             End If
                             If j > 1 Then
-                                For k As UInt16 = 1 To j - uint32_1
+                                For k As UInt16 = 1 To j - uint16_1
                                     component.get().push(k * i, i, k)
                                     assert_true(async_sync(s(i * port_size + k - uint16_1).receiver.receive(p),
                                                            seconds_to_milliseconds(10)))
@@ -100,7 +96,12 @@ Partial Public Class shared_component_test
             Return True
         End Function
 
-        Public Overrides Function finish() As Boolean
+        Public Overrides Function run() As Boolean
+            assert_true(c.[New](p, component, dispenser))
+
+            Dim r As Boolean = False
+            r = run_case()
+
             assert_true(dispenser.release())
             assert_equal(dispenser.binding_count(), uint32_0)
             assert_true(dispenser.expired())
@@ -114,7 +115,8 @@ Partial Public Class shared_component_test
             ' [shared_component_test.dispenser.receiver.vb(44):osi.tests.service.selector.shared_component_test+receiver.sense] - 1,
             ' [sensor.vb(95):osi.service.transmitter.dll.osi.service.transmitter._sensor.sense] - 1
             sleep(constants.default_sense_timeout_ms)
-            Return MyBase.finish()
+
+            Return r
         End Function
     End Class
 End Class

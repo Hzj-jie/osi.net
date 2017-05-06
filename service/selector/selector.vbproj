@@ -61,11 +61,14 @@
     <Compile Include="constants.vb" />
     <Compile Include="dispenser\dispenser.accepter.vb" />
     <Compile Include="dispenser\dispenser.vb" />
+    <Compile Include="shared_component\shared_component.creator.vb" />
+    <Compile Include="shared_component\shared_component.default_functor.vb" />
+    <Compile Include="shared_component\shared_component.functor.vb" />
     <Compile Include="shared_component\shared_component.default_accepter.vb" />
     <Compile Include="shared_component\shared_component.collection.vb" />
     <Compile Include="shared_component\shared_component.default_collection.vb" />
     <Compile Include="shared_component\shared_component.exporter.vb" />
-    <Compile Include="shared_component\shared_component.pass_through_collection.vb" />
+    <Compile Include="shared_component\shared_component.shared_receiver.vb" />
     <Compile Include="shared_component\shared_component.vb" />
     <Compile Include="lazier\async_getter.vb" />
     <Compile Include="lazier\async_lazier.vb" />
@@ -113,7 +116,7 @@
     </None>
     <None Include="selector.dep" />
     <None Include="selector.props" />
-    <Compile Include="shared_component\shared_component.default_collection2.vb" />
+    <Compile Include="shared_component\shared_component.exclusive_sender.vb" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

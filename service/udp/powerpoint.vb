@@ -1,9 +1,11 @@
 ﻿
 Option Strict On
 
+Imports System.Net
 Imports System.Net.Sockets
 Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.formation
 Imports osi.service.device
 Imports osi.service.transmitter
 Imports osi.service.selector
@@ -297,5 +299,19 @@ Partial Public Class powerpoint
 
     Public Function transceive_timeout() As transceive_timeout
         Return New transceive_timeout(send_rate_sec, receive_rate_sec, overhead)
+    End Function
+
+    Public Function remote_endpoint(ByRef o As const_pair(Of IPAddress, UInt16)) As Boolean
+        If remote_defined() Then
+            Dim address As IPAddress = Nothing
+            If IPAddress.TryParse(host_or_ip, address) Then
+                o = emplace_make_const_pair(address, remote_port)
+                Return True
+            Else
+                Return False
+            End If
+        Else
+            Return False
+        End If
     End Function
 End Class

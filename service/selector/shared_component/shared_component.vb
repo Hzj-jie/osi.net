@@ -1,4 +1,6 @@
 ﻿
+Option Explicit On
+Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
@@ -20,8 +22,12 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
     Public ReadOnly p As PARAMETER_T
     ' The PORT_T to represent local resource id allocated in constructor.
     Public ReadOnly local_port As PORT_T
+    ' The pair of ADDRESS_T and PORT_T to represent the remote endpoint.
+    Public ReadOnly remote As const_pair(Of ADDRESS_T, PORT_T)
     ' The converted receiver of @pump.
     Public ReadOnly receiver As event_sync_T_pump_T_receiver_adapter(Of DATA_T)
+    ' The sender to @remote.
+    Public ReadOnly sender As exclusive_sender
     ' The underlying component.
     Private ReadOnly component_ref As ref_instance(Of COMPONENT_T)
     ' The data received from dispenser.
@@ -33,80 +39,39 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
     ' Whether current shared_device is valid.
     Private ReadOnly valid As Boolean
 
-    Private Sub New(ByVal p As PARAMETER_T,
-                    ByVal c As collection,
+    Private Sub New(ByVal valid As Boolean,
+                    ByVal p As PARAMETER_T,
+                    ByVal component_ref As ref_instance(Of COMPONENT_T),
+                    ByVal local_port As PORT_T,
+                    ByVal remote As const_pair(Of ADDRESS_T, PORT_T),
+                    ByVal sender As exclusive_sender,
                     ByVal accepter As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)).accepter,
+                    ByVal dispenser As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)),
                     ByVal data As DATA_T,
                     ByVal has_data As Boolean)
-        assert(Not c Is Nothing)
-        assert(Not accepter Is Nothing)
-        If c.[New](p, local_port, component_ref) Then
-            component_ref.ref()
-            If c.[New](p, local_port, component_ref, dispenser) Then
-                pump = New slimqless2_event_sync_T_pump(Of DATA_T)()
-                receiver = event_sync_T_pump_T_receiver_adapter.[New](pump)
-                Me.accepter = accepter
-                AddHandler Me.accepter.received, AddressOf push_queue
-                If has_data Then
-                    push_queue(data, Nothing)
-                End If
-                dispenser.attach(accepter)
-                valid = True
-            Else
-                valid = False
+        Me.valid = valid
+        If is_valid() Then
+            assert(Not component_ref Is Nothing)
+            assert(Not sender Is Nothing)
+            assert(Not accepter Is Nothing)
+            assert(Not dispenser Is Nothing)
+            Me.p = p
+            Me.local_port = local_port
+            Me.remote = remote
+            Me.component_ref = component_ref
+            Me.sender = sender
+            Me.accepter = accepter
+            Me.dispenser = dispenser
+
+            Me.component_ref.ref()
+            Me.pump = New slimqless2_event_sync_T_pump(Of DATA_T)()
+            Me.receiver = event_sync_T_pump_T_receiver_adapter.[New](Me.pump)
+            AddHandler Me.accepter.received, AddressOf push_queue
+            If has_data Then
+                push_queue(data, Nothing)
             End If
-        Else
-            valid = False
+            Me.dispenser.attach(Me.accepter)
         End If
-    End Sub
-
-    ' Incoming
-    Public Sub New(ByVal p As PARAMETER_T,
-                   ByVal local_port As PORT_T,
-                   ByVal component As ref_instance(Of COMPONENT_T),
-                   ByVal dispenser As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)),
-                   ByVal accepter As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)).accepter)
-        Me.New(p, New pass_through_collection(local_port, component, dispenser), accepter)
-    End Sub
-
-    ' Outgoing
-    Public Sub New(ByVal p As PARAMETER_T,
-                   ByVal c As collection,
-                   ByVal accepter As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)).accepter)
-        Me.New(p, c, accepter, Nothing, False)
-    End Sub
-
-    ' Incoming
-    Public Sub New(ByVal p As PARAMETER_T,
-                   ByVal local_port As PORT_T,
-                   ByVal component As ref_instance(Of COMPONENT_T),
-                   ByVal dispenser As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)),
-                   ByVal accepter As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)).accepter,
-                   ByVal data As DATA_T)
-        Me.New(p, New pass_through_collection(local_port, component, dispenser), accepter, data)
-    End Sub
-
-    ' Outgoing
-    Public Sub New(ByVal p As PARAMETER_T,
-                   ByVal c As collection,
-                   ByVal accepter As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)).accepter,
-                   ByVal data As DATA_T)
-        Me.New(p, c, accepter, data, True)
-    End Sub
-
-    ' Outgoing
-    Public Sub New(ByVal p As PARAMETER_T,
-                   ByVal c As collection,
-                   ByVal remote As const_pair(Of ADDRESS_T, PORT_T))
-        Me.New(p, c, New default_accepter(remote))
-    End Sub
-
-    ' Outgoing
-    Public Sub New(ByVal p As PARAMETER_T,
-                   ByVal c As collection,
-                   ByVal remote As const_pair(Of ADDRESS_T, PORT_T),
-                   ByVal data As DATA_T)
-        Me.New(p, c, New default_accepter(remote), data)
     End Sub
 
     Public Function component() As COMPONENT_T
@@ -126,10 +91,9 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
     End Function
 
     Protected Overrides Sub disposer()
-        If Not component_ref Is Nothing Then
-            component_ref.unref()
-        End If
         If is_valid() Then
+            assert(Not component_ref Is Nothing)
+            component_ref.unref()
             assert(Not dispenser Is Nothing)
             assert(dispenser.detach(accepter))
         End If
@@ -137,89 +101,5 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
 
     Private Sub push_queue(ByVal b As DATA_T, ByVal remote As const_pair(Of ADDRESS_T, PORT_T))
         pump.emplace(b)
-    End Sub
-End Class
-
-Public NotInheritable Class shared_component
-    ' Outgoing
-    Public Shared Function [New](Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T) _
-                                (ByVal p As PARAMETER_T,
-                                 ByVal c As shared_component(Of PORT_T,
-                                                                ADDRESS_T,
-                                                                COMPONENT_T,
-                                                                DATA_T,
-                                                                PARAMETER_T).collection,
-                                 ByVal accepter As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)).accepter,
-                                 ByVal data As DATA_T) _
-                                As shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
-        Return New shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)(p, c, accepter, data)
-    End Function
-
-    ' Incoming
-    Public Shared Function [New](Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T) _
-                                (ByVal p As PARAMETER_T,
-                                 ByVal local_port As PORT_T,
-                                 ByVal component As ref_instance(Of COMPONENT_T),
-                                 ByVal dispenser As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)),
-                                 ByVal accepter As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)).accepter,
-                                 ByVal data As DATA_T) _
-                                As shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
-        Return New shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T) _
-                                   (p, local_port, component, dispenser, accepter, data)
-    End Function
-
-    ' Outgoing
-    Public Shared Function [New](Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T) _
-                                (ByVal p As PARAMETER_T,
-                                 ByVal c As shared_component(Of PORT_T,
-                                                                ADDRESS_T,
-                                                                COMPONENT_T,
-                                                                DATA_T,
-                                                                PARAMETER_T).collection,
-                                 ByVal remote As const_pair(Of ADDRESS_T, PORT_T),
-                                 ByVal data As DATA_T) _
-                                As shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
-        Return New shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)(p, c, remote, data)
-    End Function
-
-    ' Outgoing
-    Public Shared Function [New](Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T) _
-                                (ByVal p As PARAMETER_T,
-                                 ByVal c As shared_component(Of PORT_T,
-                                                                ADDRESS_T,
-                                                                COMPONENT_T,
-                                                                DATA_T,
-                                                                PARAMETER_T).collection,
-                                 ByVal accepter As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)).accepter) _
-                                As shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
-        Return New shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)(p, c, accepter)
-    End Function
-
-    ' Incoming
-    Public Shared Function [New](Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T) _
-                                (ByVal p As PARAMETER_T,
-                                 ByVal local_port As PORT_T,
-                                 ByVal component As ref_instance(Of COMPONENT_T),
-                                 ByVal dispenser As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)),
-                                 ByVal accepter As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)).accepter) _
-                                As shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
-        Return New shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T) _
-                                   (p, local_port, component, dispenser, accepter)
-    End Function
-
-    ' Outgoing
-    Public Shared Function [New](Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T) _
-                                (ByVal p As PARAMETER_T,
-                                 ByVal c As shared_component(Of PORT_T,
-                                                                ADDRESS_T,
-                                                                COMPONENT_T,
-                                                                DATA_T,
-                                                                PARAMETER_T).collection,
-                                 ByVal remote As const_pair(Of ADDRESS_T, PORT_T)) _
-                                As shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
-        Return New shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)(p, c, remote)
-    End Function
-
-    Private Sub New()
     End Sub
 End Class

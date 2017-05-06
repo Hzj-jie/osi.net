@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.formation
@@ -6,8 +10,8 @@ Imports osi.root.formation
 Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
     ' Implementation of this interface should be singleton to represent all devices in the system.
     Public Interface collection
-        ' Create a new or retrieve existing device with the PARAMETER_T.local_port if it's valid.
-        ' Or find next free local_port, and create a new device if PARAMTER_T.local_port is invalid.
+        ' Create a new or retrieve existing device with the @local_port if it's valid.
+        ' Or find next free local_port, and create a new device if @local_port is invalid.
         ' This function always set @local_port to the "real" id.
         Function [New](ByVal p As PARAMETER_T,
                        ByRef local_port As PORT_T,
