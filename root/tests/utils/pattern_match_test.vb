@@ -53,7 +53,7 @@ Public Class pattern_match_test
     Private Shared Function match_one_case()
         For i As UInt32 = 0 To CUInt(match_one_cases.size() - 1)
             Dim result As Byte = 0
-            result = match_one_cases(i).first.second.match_pattern(match_one_cases(i).first.first)
+            result = match_one_cases(i).first.second.match_one(match_one_cases(i).first.first)
             assert_equal(result,
                          match_one_cases(i).second,
                          "pattern == ",
