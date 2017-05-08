@@ -1,13 +1,16 @@
 ﻿
-Imports System.IO
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Reflection
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.constants.filesystem
+Imports osi.root.delegates
 Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.root.utils
-Imports osi.root.constants.filesystem
-Imports osi.root.delegates
 
 Partial Friend NotInheritable Class host
     Public NotInheritable Class case_type_restriction
@@ -31,7 +34,7 @@ Partial Friend NotInheritable Class host
             assert(Not cases Is Nothing)
             concurrency_runner.execute(Sub(i As Assembly)
                                            Try
-                                               For Each j In i.GetTypes()
+                                               For Each j As Type In i.GetTypes()
                                                    If case_type_restriction.accept(j) Then
                                                        Dim n As case_info = Nothing
                                                        n = New case_info(j.FullName(), alloc(Of [case])(j))
@@ -79,21 +82,21 @@ Partial Friend NotInheritable Class host
             assert(Not c Is Nothing)
             Dim has_fit_true As Boolean = False
             Dim r As Byte = 0
-            r = match_all(c.name(), selector)
+            r = fit_patterns(c.name(), selector)
             If r = pattern_match.fit_true Then
                 has_fit_true = True
             ElseIf r = pattern_match.fit_false Then
                 Return False
             End If
 
-            r = match_all(c.full_name(), selector)
+            r = fit_patterns(c.full_name(), selector)
             If r = pattern_match.fit_true Then
                 has_fit_true = True
             ElseIf r = pattern_match.fit_false Then
                 Return False
             End If
 
-            r = match_all(c.assembly_qualified_name(), selector)
+            r = fit_patterns(c.assembly_qualified_name(), selector)
             If r = pattern_match.fit_true Then
                 has_fit_true = True
             ElseIf r = pattern_match.fit_false Then

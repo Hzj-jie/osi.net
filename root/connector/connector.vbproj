@@ -99,6 +99,7 @@
     <Compile Include="math.vb" />
     <Compile Include="memory_stream.vb" />
     <Compile Include="net.vb" />
+    <Compile Include="types\constant.vb" />
     <Compile Include="types\one_off.vb" />
     <Compile Include="operators.vb" />
     <Compile Include="process_thread.vb" />

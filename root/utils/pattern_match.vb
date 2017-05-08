@@ -1,80 +1,59 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
-Imports osi.root.formation
-Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.connector
+Imports osi.root.formation
 
 ' TODO: Update the name of functions in this file.
 Public Module _pattern_matching
-    <Extension()> Public Function match_pattern(ByVal str As String,
-                                                ByVal patterns As vector(Of String),
-                                                Optional ByVal case_sensitive As Boolean = False) As Boolean
-        Return fitfilterSet(patterns, str, case_sensitive)
+    <Extension()> Public Function match_patterns(ByVal str As String,
+                                                 ByVal patterns As vector(Of String),
+                                                 Optional ByVal case_sensitive As Boolean = False) As Boolean
+        Return pattern_match.match_filters(patterns, str, case_sensitive)
     End Function
 
     <Extension()> Public Function match_pattern(ByVal str As String,
                                                 ByVal pattern As String,
                                                 Optional ByVal case_sensitive As Boolean = False) As Boolean
-        Return fitfilter(pattern, str, case_sensitive)
+        Return pattern_match.match_filter(pattern, str, case_sensitive)
     End Function
 
-    <Extension()> Public Function match_one(ByVal str As String,
-                                            ByVal pattern As String,
-                                            Optional ByVal case_sensitive As Boolean = False) As Byte
-        Return pattern_match.fitfilter(pattern, str, case_sensitive)
+    <Extension()> Public Function fit_pattern(ByVal str As String,
+                                              ByVal pattern As String,
+                                              Optional ByVal case_sensitive As Boolean = False) As Byte
+        Return pattern_match.fit_filter(pattern, str, case_sensitive)
     End Function
 
-    <Extension()> Public Function match_all(ByVal str As String,
-                                            ByVal patterns As vector(Of String),
-                                            Optional ByVal case_sensitive As Boolean = False) As Byte
-        Return pattern_match.fit_filter_list(patterns, str, case_sensitive)
-    End Function
-
-    Public Function fitfilterSet(ByVal filterSet As vector(Of String),
-                                 ByVal str As String,
-                                 Optional ByVal case_sensitive As Boolean = False) As Boolean
-        Return pattern_match.fitfilterList(filterSet, str, case_sensitive)
-    End Function
-
-    Public Function fitfilter(ByVal filter As String,
-                              ByVal str As String,
-                              Optional ByVal case_sensitive As Boolean = False) As Boolean
-        Dim rtn As Int32
-        Dim extCode As Boolean = False
-        rtn = pattern_match.fitfilter(filter, str, case_sensitive)
-        If rtn = pattern_match.fit_undertermind Then
-            If strlen(filter) > 0 AndAlso filter(0) = pattern_match.cut_sign Then
-                extCode = True
-            Else
-                extCode = False
-            End If
-        Else
-            extCode = (rtn = pattern_match.fit_true)
-        End If
-
-        Return extCode
+    <Extension()> Public Function fit_patterns(ByVal str As String,
+                                               ByVal patterns As vector(Of String),
+                                               Optional ByVal case_sensitive As Boolean = False) As Byte
+        Return pattern_match.fit_filters(patterns, str, case_sensitive)
     End Function
 End Module
 
 Public NotInheritable Class pattern_match
     Public Const fit_true As Byte = 1
     Public Const fit_false As Byte = 2
-    Public Const fit_undertermind As Byte = 0
+    Public Const fit_undertermined As Byte = 0
     Public Const cut_sign As Char = character.minus_sign
     Public Const add_sign As Char = character.plus_sign
     Public Const multi_char_sign As Char = filesystem.multi_pattern_matching_character
     Public Const single_char_sign As Char = filesystem.single_pattern_matching_character
 
-    Friend Shared Function fit_filter_list(ByVal filters As vector(Of String),
-                                           ByVal str As String,
-                                           Optional ByVal case_sensitive As Boolean = False) As Byte
-        If filters Is Nothing Then
-            Return fit_undertermind
+    Friend Shared Function fit_filters(ByVal filters As vector(Of String),
+                                       ByVal str As String,
+                                       Optional ByVal case_sensitive As Boolean = False) As Byte
+        If filters.null_or_empty() Then
+            Return fit_undertermined
         End If
-        Dim fitted As Byte = fit_undertermind
-        For i As Int32 = 0 To filters.size() - 1
+        Dim fitted As Byte = fit_undertermined
+        For i As UInt32 = 0 To filters.size() - uint32_1
             Dim r As Byte = 0
-            r = fitfilter(filters(i), str, case_sensitive)
+            r = fit_filter(filters(i), str, case_sensitive)
             If r = fit_true Then
                 fitted = fit_true
             ElseIf r = fit_false Then
@@ -84,16 +63,16 @@ Public NotInheritable Class pattern_match
         Return fitted
     End Function
 
-    Friend Shared Function fitfilterList(ByVal filterSet As vector(Of String),
+    Friend Shared Function match_filters(ByVal filters As vector(Of String),
                                          ByVal name As String,
                                          Optional ByVal case_sensitive As Boolean = False) As Boolean
-        If filterSet Is Nothing OrElse filterSet.empty() Then
+        If filters.null_or_empty() Then
             Return False
         Else
             Dim fitted As Boolean = False
-            For i As Int32 = 0 To filterSet.size() - 1
+            For i As UInt32 = 0 To filters.size() - uint32_1
                 Dim result As Byte
-                result = fitfilter(filterSet(i), name, case_sensitive)
+                result = fit_filter(filters(i), name, case_sensitive)
                 If result = fit_false Then
                     fitted = False
                 ElseIf result = fit_true Then
@@ -105,28 +84,30 @@ Public NotInheritable Class pattern_match
         End If
     End Function
 
-    Private Shared Function fitfilterLite(ByVal definition As String,
-                                          ByVal definition_start As Int32,
-                                          ByVal name As String,
-                                          ByVal name_start As Int32,
-                                          Optional ByVal case_sensitive As Boolean = False) As Boolean
-        Dim i As Int32 = definition_start
-        Dim j As Int32 = name_start
-        Dim definition_len As Int32 = strlen(definition)
-        Dim name_len As Int32 = strlen(name)
+    Private Shared Function match_filter_without_prefix(ByVal definition As String,
+                                                        ByVal definition_start As Int32,
+                                                        ByVal name As String,
+                                                        ByVal name_start As Int32,
+                                                        Optional ByVal case_sensitive As Boolean = False) As Boolean
+        Dim i As Int32 = 0
+        i = definition_start
+        Dim j As Int32 = 0
+        j = name_start
+        Dim definition_len As constant(Of UInt32) = strlen(definition)
+        Dim name_len As constant(Of UInt32) = strlen(name)
 
-        While (i < definition_len AndAlso j < name_len)
+        While (i < +definition_len AndAlso j < +name_len)
             If definition(i) = multi_char_sign Then
                 i += 1
-                While (i < definition_len AndAlso definition(i) = multi_char_sign)
+                While (i < +definition_len AndAlso definition(i) = multi_char_sign)
                     i += 1
                 End While
-                While (j <= name_len)
-                    If fitfilterLite(definition,
-                                         i,
-                                         name,
-                                         j,
-                                         case_sensitive) Then
+                While (j <= +name_len)
+                    If match_filter_without_prefix(definition,
+                                                   i,
+                                                   name,
+                                                   j,
+                                                   case_sensitive) Then
                         Return True
                     Else
                         j += 1
@@ -146,42 +127,70 @@ Public NotInheritable Class pattern_match
             End If
         End While
 
-        While i < definition_len AndAlso definition(i) = multi_char_sign
+        While i < +definition_len AndAlso definition(i) = multi_char_sign
             i += 1
         End While
-        Return i = definition_len AndAlso j = name_len
+        Return i = +definition_len AndAlso j = +name_len
     End Function
 
-    Private Shared Function fitfilterLite(ByVal definition As String,
-                                          ByVal name As String,
-                                          Optional ByVal case_sensitive As Boolean = False) As Boolean
-        Return fitfilterLite(definition,
-                             0,
-                             name,
-                             0,
-                             case_sensitive)
+    Private Shared Function match_filter_without_prefix(ByVal definition As String,
+                                                        ByVal name As String,
+                                                        Optional ByVal case_sensitive As Boolean = False) As Boolean
+        Return match_filter_without_prefix(definition,
+                                           0,
+                                           name,
+                                           0,
+                                           case_sensitive)
     End Function
 
-    Friend Shared Function fitfilter(ByVal definition As String,
-                                     ByVal name As String,
-                                     Optional ByVal case_sensitive As Boolean = False) As Byte
+    Private Shared Function execute_filter(Of T)(ByVal definition As String,
+                                                 ByVal name As String,
+                                                 ByVal match_cut As T,
+                                                 ByVal match_add As T,
+                                                 ByVal unmatch_cut As T,
+                                                 ByVal unmatch_add As T,
+                                                 Optional ByVal case_sensitive As Boolean = False) As T
         If strlen(definition) > 0 AndAlso definition(0) = cut_sign Then
-            If (fitfilterLite(strmid(definition, 1), name, case_sensitive)) Then
-                Return fit_false
+            If (match_filter_without_prefix(strmid(definition, 1), name, case_sensitive)) Then
+                Return match_cut
             Else
-                Return fit_undertermind
+                Return unmatch_cut
             End If
         Else
             Dim offside As Byte = 0
             If strlen(definition) > 0 AndAlso definition(0) = add_sign Then
                 offside = 1
             End If
-            If (fitfilterLite(strmid(definition, offside), name, case_sensitive)) Then
-                Return fit_true
+            If (match_filter_without_prefix(strmid(definition, offside), name, case_sensitive)) Then
+                Return match_add
             Else
-                Return fit_undertermind
+                Return unmatch_add
             End If
         End If
+    End Function
+
+    Friend Shared Function fit_filter(ByVal definition As String,
+                                      ByVal name As String,
+                                      Optional ByVal case_sensitive As Boolean = False) As Byte
+        Return execute_filter(definition,
+                              name,
+                              fit_false,
+                              fit_true,
+                              fit_undertermined,
+                              fit_undertermined,
+                              case_sensitive)
+    End Function
+
+    Friend Shared Function match_filter(ByVal definition As String,
+                                        ByVal name As String,
+                                        Optional ByVal case_sensitive As Boolean = False) As Boolean
+        Return execute_filter(definition,
+                              name,
+                              False,
+                              True,
+                              True,
+                              False,
+                              case_sensitive)
     End Function
 
     Private Sub New()
