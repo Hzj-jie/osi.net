@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.ComponentModel
 Imports System.Diagnostics
 Imports System.IO
@@ -163,6 +167,10 @@ Public NotInheritable Class shell_less_process
 
     Public Function wait_for_exit(ByVal wait_ms As Int32) As Boolean
         Return proc().WaitForExit(If(wait_ms < 0, max_int32, wait_ms))
+    End Function
+
+    Public Function wait_for_exit(ByVal wait_ms As Int64) As Boolean
+        Return wait_for_exit(If(wait_ms >= max_int32, max_int32, CInt(wait_ms)))
     End Function
 
     Public Sub wait_for_exit()

@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Diagnostics
 Imports System.IO
 Imports osi.root.constants
@@ -43,7 +47,13 @@ Public Class priority_activity_test
                            If assert_true(p.start()) Then
                                assert_true(execute_in_managed_threadpool(
                                                Sub()
-                                                   p.stdout().ReadLine()
+                                                   While True
+                                                       Dim l As String = Nothing
+                                                       l = p.stdout().ReadLine()
+                                                       If strsame(l, "Finished global_init.execute(0)") Then
+                                                           Exit While
+                                                       End If
+                                                   End While
                                                    assert_equal((+p).PriorityClass(), ppc)
                                                    p.stdin().WriteLine()
                                                    If Not assert_true(p.wait_for_exit(

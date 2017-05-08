@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 
 Public Class error_event
@@ -78,6 +82,7 @@ Public Class error_event
             End If
             ' Before global_init(), no event is attached, we at least should print the message to console.
             write_console_line(full_msg)
+            Return
         End If
 
         SyncLock r1lock
