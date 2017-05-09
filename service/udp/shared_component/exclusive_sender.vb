@@ -7,11 +7,7 @@ Imports System.Net
 Imports System.Net.Sockets
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports base_shared_component = osi.service.selector.shared_component(Of System.UInt16,
-                                                                         System.Net.IPAddress,
-                                                                         System.Net.Sockets.UdpClient,
-                                                                         Byte(),
-                                                                         osi.service.udp.powerpoint)
+Imports base_shared_component = osi.service.selector.shared_component(Of System.UInt16, System.Net.IPAddress, System.Net.Sockets.UdpClient, Byte(), osi.service.udp.powerpoint)
 
 Public NotInheritable Class exclusive_sender
     Inherits base_shared_component.exclusive_sender
