@@ -152,25 +152,28 @@ Public NotInheritable Class shell_less_process
 
     Public Function start(Optional ByRef ex As Exception = Nothing) As Boolean
         If proc_started.mark_in_use() Then
-            If proc_exited.in_use() Then
-                proc_exited.release()
-            End If
-            start_info().UseShellExecute() = False
-            start_info().RedirectStandardOutput() = True
-            start_info().RedirectStandardError() = True
-            start_info().RedirectStandardInput() = True
-            Try
-                If Not proc().Start() Then
-                    Return False
+            ce.increment()
+            Using defer(Sub() ce.decrement())
+                If proc_exited.in_use() Then
+                    proc_exited.release()
                 End If
-            Catch e As Exception
-                ex = e
-                Return False
-            End Try
-            If enable_raise_event Then
-                proc().BeginOutputReadLine()
-                proc().BeginErrorReadLine()
-            End If
+                start_info().UseShellExecute() = False
+                start_info().RedirectStandardOutput() = True
+                start_info().RedirectStandardError() = True
+                start_info().RedirectStandardInput() = True
+                Try
+                    If Not proc().Start() Then
+                        Return False
+                    End If
+                Catch e As Exception
+                    ex = e
+                    Return False
+                End Try
+                If enable_raise_event Then
+                    proc().BeginOutputReadLine()
+                    proc().BeginErrorReadLine()
+                End If
+            End Using
             Return True
         Else
             Return False
