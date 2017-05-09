@@ -9,8 +9,11 @@ Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.udp
-Imports base_shared_component = osi.service.selector.shared_component(Of
-        System.UInt16, System.Net.IPAddress, System.Net.Sockets.UdpClient, Byte(), osi.service.udp.powerpoint)
+Imports base_shared_component = osi.service.selector.shared_component(Of System.UInt16,
+                                                                         System.Net.IPAddress,
+                                                                         System.Net.Sockets.UdpClient,
+                                                                         Byte(),
+                                                                         osi.service.udp.powerpoint)
 
 Public NotInheritable Class functor
     Inherits base_shared_component.default_functor
@@ -43,5 +46,6 @@ Public NotInheritable Class functor
                                                ByVal dev As ref_instance(Of UdpClient),
                                                ByVal remote As const_pair(Of IPAddress, UInt16)) _
                                               As base_shared_component.exclusive_sender
+        Return New exclusive_sender(dev, remote)
     End Function
 End Class

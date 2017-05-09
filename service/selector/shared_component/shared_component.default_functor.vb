@@ -69,19 +69,24 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
         End Function
 
         Protected Overridable Function create_sender(
-                ByVal id As PORT_T,
                 ByVal dev As ref_instance(Of COMPONENT_T),
                 ByVal remote As const_pair(Of ADDRESS_T, PORT_T)) As exclusive_sender
             assert(False)
             Return Nothing
         End Function
 
+        Protected Overridable Function create_sender(ByVal dev As ref_instance(Of COMPONENT_T),
+                                                     ByVal remote As const_pair(Of ADDRESS_T, PORT_T),
+                                                     ByRef o As exclusive_sender) As Boolean
+            o = create_sender(dev, remote)
+            Return True
+        End Function
+
         Protected Overridable Function create_sender(ByVal id As PORT_T,
                                                      ByVal dev As ref_instance(Of COMPONENT_T),
                                                      ByVal remote As const_pair(Of ADDRESS_T, PORT_T),
                                                      ByRef o As exclusive_sender) As Boolean
-            o = create_sender(id, dev, remote)
-            Return Not o Is Nothing
+            Return create_sender(dev, remote, o)
         End Function
 
         Public Overridable Function create_sender(ByVal p As PARAMETER_T,
