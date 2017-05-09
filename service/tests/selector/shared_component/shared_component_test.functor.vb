@@ -44,7 +44,6 @@ Partial Public Class shared_component_test
         End Function
 
         Protected Overrides Function create_sender(
-                ByVal id As UInt16,
                 ByVal dev As ref_instance(Of component),
                 ByVal remote As const_pair(Of UInt16, UInt16)) _
                 As shared_component(Of UInt16, UInt16, component, Int32, parameter).exclusive_sender
