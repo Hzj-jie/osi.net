@@ -113,6 +113,7 @@
     <Compile Include="trace\perf_trace.vb" />
     <Compile Include="trace\tcp_trace.vb" />
     <Compile Include="trace\threadpool_trace.vb" />
+    <Compile Include="trace\trace_trace.vb" />
     <Compile Include="trace\udp_trace.vb" />
     <Compile Include="trace\utt_assert_trace.vb" />
     <Compile Include="trace\utt_report.vb" />

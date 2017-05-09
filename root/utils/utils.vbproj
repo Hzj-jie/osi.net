@@ -81,6 +81,7 @@
     <Compile Include="counter\file_counter_writer.vb" />
     <Compile Include="counter\self_maintained_counter\instance_count_counter.vb" />
     <Compile Include="error_handle\application_info_logging.vb" />
+    <Compile Include="error_handle\trace.vb" />
     <Compile Include="invoker\valuer.recursive.vb" />
     <Compile Include="invoker\valuer.vb" />
     <Compile Include="ipendpoint.vb" />
@@ -190,6 +191,10 @@
     <ProjectReference Include="..\envs\envs.vbproj">
       <Project>{d310ba86-0fa6-42bb-8efd-2dee526e6981}</Project>
       <Name>envs %28root\envs%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\event\event.vbproj">
+      <Project>{93adc952-439d-4968-9640-51bc34b066dd}</Project>
+      <Name>event</Name>
     </ProjectReference>
     <ProjectReference Include="..\formation\formation.vbproj">
       <Project>{da3051dc-a250-488f-aaca-f46977dd0f17}</Project>

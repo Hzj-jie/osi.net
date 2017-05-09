@@ -1,4 +1,6 @@
 ﻿
+#Const USE_EXIT_SIGNAL = False
+
 Option Explicit On
 Option Infer Off
 Option Strict On
@@ -6,10 +8,14 @@ Option Strict On
 Imports System.ComponentModel
 Imports System.Diagnostics
 Imports System.IO
-Imports osi.root.constants
-Imports osi.root.lock
-Imports osi.root.formation
+#If USE_EXIT_SIGNAL Then
+Imports System.Threading
+#End If
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.event
+Imports osi.root.formation
+Imports osi.root.lock
 
 Public NotInheritable Class shell_less_process
     Inherits disposer
@@ -21,26 +27,35 @@ Public NotInheritable Class shell_less_process
     Public Event receive_error(ByVal s As String)
     Public Event process_exit()
     Private ReadOnly enable_raise_event As Boolean
+    ' This does not resolve the issue of unreliable output event, but only to reduce the possibility.
+    Private ReadOnly ce As count_event
+#If USE_EXIT_SIGNAL Then
+    Private ReadOnly exit_signal As ManualResetEvent
+#End If
 
     Public Sub New(Optional ByVal enable_raise_event As Boolean = False,
                    Optional ByVal synchronize_invoke As binder(Of ISynchronizeInvoke) = Nothing)
         p = make_disposer(New Process(),
                           disposer:=Sub(p As Process)
+                                        trace("disposer")
                                         assert(Not p Is Nothing)
-                                        If enable_raise_event Then
-                                            p.CancelOutputRead()
-                                            p.CancelErrorRead()
-                                        End If
                                         p.quit()
-                                        p.StandardOutput().Close()
-                                        p.StandardOutput().Dispose()
-                                        p.StandardError().Close()
-                                        p.StandardError().Dispose()
+                                        If Not enable_raise_event Then
+                                            p.StandardOutput().Close()
+                                            p.StandardOutput().Dispose()
+                                            p.StandardError().Close()
+                                            p.StandardError().Dispose()
+                                        End If
                                         p.StandardInput().Close()
                                         p.StandardInput().Dispose()
                                         p.Dispose()
+                                        trace("finish disposer")
                                     End Sub)
         Me.enable_raise_event = enable_raise_event
+#If USE_EXIT_SIGNAL Then
+        Me.exit_signal = New ManualResetEvent(False)
+#End If
+        Me.ce = New count_event()
         proc().EnableRaisingEvents() = True
         proc().SynchronizingObject() = +synchronize_invoke
         AddHandler proc().OutputDataReceived, AddressOf output_received
@@ -59,6 +74,8 @@ Public NotInheritable Class shell_less_process
     End Sub
 
     Private Sub received_delegate(ByVal e As DataReceivedEventArgs, ByVal output As Boolean)
+        ce.increment()
+        trace("received_delegate")
         If proc().SynchronizingObject() Is Nothing Then
             received(e, output)
         Else
@@ -70,6 +87,8 @@ Public NotInheritable Class shell_less_process
                                                 End Sub,
                                                 Nothing)
         End If
+        trace("finish received_delegate")
+        ce.decrement()
     End Sub
 
     Private Sub output_received(ByVal sender As Object, ByVal e As DataReceivedEventArgs)
@@ -82,12 +101,21 @@ Public NotInheritable Class shell_less_process
 
     Private Sub process_exited()
         If proc_exited.mark_in_use() Then
+            assert(ce.wait())
             proc_started.release()
             RaiseEvent process_exit()
+            If enable_raise_event Then
+                proc().CancelOutputRead()
+                proc().CancelErrorRead()
+            End If
+#If USE_EXIT_SIGNAL Then
+            exit_signal.force_set()
+#End If
         End If
     End Sub
 
     Private Sub process_exited(ByVal sender As Object, ByVal e As EventArgs)
+        trace("start process_exited")
         If proc().SynchronizingObject() Is Nothing Then
             process_exited()
         Else
@@ -99,6 +127,7 @@ Public NotInheritable Class shell_less_process
                                                 End Sub,
                                                 Nothing)
         End If
+        trace("finish process_exited")
     End Sub
 
     Public Function exited() As Boolean
@@ -166,7 +195,11 @@ Public NotInheritable Class shell_less_process
     End Function
 
     Public Function wait_for_exit(ByVal wait_ms As Int32) As Boolean
+#If USE_EXIT_SIGNAL Then
+        Return exit_signal.wait(wait_ms)
+#Else
         Return proc().WaitForExit(If(wait_ms < 0, max_int32, wait_ms))
+#End If
     End Function
 
     Public Function wait_for_exit(ByVal wait_ms As Int64) As Boolean
@@ -201,6 +234,10 @@ Public NotInheritable Class shell_less_process
 
     Protected Overrides Sub disposer()
         p.dispose()
+#If USE_EXIT_SIGNAL Then
+        exit_signal.Close()
+        exit_signal.Dispose()
+#End If
     End Sub
 
     Public Shared Operator +(ByVal this As shell_less_process) As Process

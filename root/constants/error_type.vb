@@ -9,6 +9,7 @@ Public Enum error_type
     warning                 'for application error, can be handled, will not cause more serious issue
     user                    'for user input issue, such as in c/s model or b/s model, c/b sends wrong data type
     performance             'for performance information output
+    trace                   'for debugging trace
     other                   'for other output
     last                    'last of errorType
 End Enum

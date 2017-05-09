@@ -4,7 +4,7 @@ Imports osi.root.constants
 
 Public Class error_message
     Public Const error_type_count As Int64 = error_type.last - error_type.first + 1
-    Public Const error_type_char As String = "_aceiswupo_"
+    Public Const error_type_char As String = "_aceiswupto_"
     Public Shared ReadOnly error_type_defination() As String = {"_",
                                                                 "application",
                                                                 "critical",
@@ -14,6 +14,7 @@ Public Class error_message
                                                                 "warning",
                                                                 "user",
                                                                 "performance",
+                                                                "trace",
                                                                 "other",
                                                                 "_"}
     Public Const seperator As String = character.comma + character.blank

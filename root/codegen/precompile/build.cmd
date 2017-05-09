@@ -1,0 +1,2 @@
+
+csc /o+ precompile.cs

@@ -1,6 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Collections.Generic
-Imports System.Diagnostics
 Imports System.IO
 Imports osi.root.connector
 Imports osi.root.utils
@@ -98,7 +101,7 @@ Public Class exec_case
                 If p.start(ex) Then
                     assert(ex Is Nothing)
                     If Not inputs() Is Nothing Then
-                        For Each s In inputs()
+                        For Each s As String In inputs()
                             p.stdin().Write(s)
                         Next
                     End If

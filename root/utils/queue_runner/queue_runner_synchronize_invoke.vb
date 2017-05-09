@@ -1,5 +1,7 @@
 ﻿
+#If DEPRECATED Then
 Imports System.ComponentModel
+#End If
 Imports osi.root.constants
 Imports osi.root.connector
 
@@ -11,7 +13,9 @@ Public NotInheritable Class queue_runner_synchronize_invoke
 
     Shared Sub New()
         instance = New queue_runner_synchronize_invoke()
+#If DEPRECATED Then
         binder(Of ISynchronizeInvoke).set_global(instance)
+#End If
     End Sub
 
     Private Sub New()

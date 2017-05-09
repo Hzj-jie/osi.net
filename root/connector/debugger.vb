@@ -1,6 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Diagnostics
-Imports osi.root.constants
 
 Public Module _debugger
     Public Function attach_debugger() As Boolean
