@@ -10,7 +10,7 @@ Public Class failure_case
 #If TODO Then
     Public Const expected_failure_count As Int32 = 28
 #Else
-    Public Const expected_failure_count As Int32 = 23
+    Public Const expected_failure_count As Int32 = 25
 #End If
 
     Private Shared Sub report_self_health_failure(ByVal exp As Int64, ByVal cmd As String)
@@ -85,6 +85,8 @@ Public Class failure_case
             report_self_health_failure(27,
                                        "assert_true(host.execute_case(New exec_failure_case_2.exec_failure_case()))")
 #End If
+            assert_happening_in(Function() False, CLng(1))
+            assert_not_happening_in(Function() True, CLng(1))
         End If
 
         assert_true(True)
@@ -110,6 +112,8 @@ Public Class failure_case
                       New manual_assert_timelimited_operation(0, two_timeslice_length_ms)
             ma.finish()
         End Using
+        assert_happening_in(Function() True, CLng(1))
+        assert_not_happening_in(Function() False, CLng(1))
 
         Return Not self_health_stage()
     End Function

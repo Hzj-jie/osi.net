@@ -29,6 +29,7 @@ Public Module _number
     Public Const int8_1 As SByte = 1
     Public Const uint8_0 As Byte = 0
     Public Const uint8_1 As Byte = 1
+    Public Const uint8_2 As Byte = 2
     Public Const byte_0 As Byte = 0
     Public Const byte_1 As Byte = 1
     Public Const sbyte_0 As SByte = 0

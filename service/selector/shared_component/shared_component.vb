@@ -92,10 +92,10 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
 
     Protected Overrides Sub disposer()
         If is_valid() Then
-            assert(Not component_ref Is Nothing)
+            assert(Not component_ref Is Nothing, "component_ref")
             component_ref.unref()
-            assert(Not dispenser Is Nothing)
-            assert(dispenser.detach(accepter))
+            assert(Not dispenser Is Nothing, "dispenser")
+            assert(dispenser.detach(accepter), "detach")
         End If
     End Sub
 

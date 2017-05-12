@@ -10,14 +10,14 @@ Imports osi.service.selector
 
 Partial Public Class shared_component_test
     Private NotInheritable Class shared_receiver
-        Inherits shared_component(Of UInt16, UInt16, component, Int32, parameter).shared_receiver
+        Inherits shared_component(Of Byte, Byte, component, Int32, parameter).shared_receiver
 
         Public Sub New(ByVal c As ref_instance(Of component))
             MyBase.New(c)
         End Sub
 
         Public Overrides Function receive(
-                ByVal o As pointer(Of pair(Of Int32, const_pair(Of UInt16, UInt16)))) As event_comb
+                ByVal o As pointer(Of pair(Of Int32, const_pair(Of Byte, Byte)))) As event_comb
             Dim ec As event_comb = Nothing
             Return New event_comb(Function() As Boolean
                                       If assert_true(referred()) Then

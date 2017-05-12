@@ -18,6 +18,7 @@ Partial Public Class shared_component_test
         Private ReadOnly c As collection
 
         Public Sub New()
+            MyBase.New()
             c = New collection()
         End Sub
 
@@ -28,11 +29,11 @@ Partial Public Class shared_component_test
         Public Overrides Function run() As Boolean
             Dim param As parameter = Nothing
             param = New parameter(False)
-            Dim s As shared_component(Of UInt16, UInt16, component, Int32, parameter) = Nothing
-            s = shared_component(Of UInt16, UInt16, component, Int32, parameter).creator.[New]().
+            Dim s As shared_component(Of Byte, Byte, component, Int32, parameter) = Nothing
+            s = shared_component(Of Byte, Byte, component, Int32, parameter).creator.[New]().
                         with_parameter(param).
                         with_local_port(param.local_port).
-                        with_remote(emplace_make_const_pair(Of UInt16, UInt16)(100, 100)).
+                        with_remote(emplace_make_const_pair(Of Byte, Byte)(100, 100)).
                         with_data(200).
                         with_collection(c).
                         with_functor(Of functor)().
@@ -42,18 +43,18 @@ Partial Public Class shared_component_test
             assert_true(async_sync(s.receiver.receive(p)))
             assert_equal(+p, 200)  ' The initial data
             For i As Int32 = 0 To 1000
-                s.component().push(i, 100, 100)
+                s.component().receive(i, 100, 100)
                 assert_true(async_sync(s.receiver.receive(p)))
                 assert_equal(+p, i)
             Next
-            s.component().push(100, 101, 100)
+            s.component().receive(100, 101, 100)
             assert_false(async_sync(s.receiver.sense(1000)))
-            s.component().push(100, 100, 101)
+            s.component().receive(100, 100, 101)
             assert_false(async_sync(s.receiver.sense(1000)))
             s.dispose()
             assert_false(valuer.get(Of ref_instance(Of component)) _
                                    (s, binding_flags.instance_private, "component_ref").referred())
-            assert_false(valuer.get(Of dispenser(Of Int32, const_pair(Of UInt16, UInt16))) _
+            assert_false(valuer.get(Of dispenser(Of Int32, const_pair(Of Byte, Byte))) _
                                    (s, binding_flags.instance_private, "dispenser").binding())
             Return True
         End Function

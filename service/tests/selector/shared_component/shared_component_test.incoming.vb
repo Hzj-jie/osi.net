@@ -18,11 +18,11 @@ Partial Public Class shared_component_test
         Private ReadOnly c As collection
         Private ReadOnly p As parameter
         Private component As ref_instance(Of component)
-        Private dispenser As dispenser(Of Int32, const_pair(Of UInt16, UInt16))
+        Private dispenser As dispenser(Of Int32, const_pair(Of Byte, Byte))
 
         Public Sub New()
             c = New collection()
-            p = New parameter(1000, True)
+            p = New parameter(10, True)
         End Sub
 
         Public Overrides Function preserved_processors() As Int16
@@ -30,24 +30,24 @@ Partial Public Class shared_component_test
         End Function
 
         Private Function run_case() As Boolean
-            Const ip_size As UInt16 = 10
-            Const port_size As UInt16 = 10
-            Dim s As vector(Of shared_component(Of UInt16, UInt16, component, Int32, parameter)) = Nothing
+            Const ip_size As Byte = 10
+            Const port_size As Byte = 10
+            Dim s As vector(Of shared_component(Of Byte, Byte, component, Int32, parameter)) = Nothing
             s = _new(s)
             AddHandler c.new_shared_component_exported,
-                       Sub(ByVal new_component As shared_component(Of UInt16, UInt16, component, Int32, parameter))
+                       Sub(ByVal new_component As shared_component(Of Byte, Byte, component, Int32, parameter))
                            s.emplace_back(new_component)
                        End Sub
             Dim p As pointer(Of Int32) = Nothing
             p = New pointer(Of Int32)()
             If assert_true(component.referred()) Then
-                For i As UInt16 = 0 To ip_size - uint16_1
-                    For j As UInt16 = 1 To port_size
+                For i As Byte = 0 To ip_size - uint8_1
+                    For j As Byte = 1 To port_size
                         assert(shared_component_test.component.is_valid_port(j))
                         Dim exp_size As UInt32
                         exp_size = i * CUInt(10) + j
                         assert_less(s.size(), exp_size)
-                        component.get().push(200, i, j)
+                        component.get().receive(200, i, j)
                         If assert_true(timeslice_sleep_wait_until(Function() As Boolean
                                                                       assert_less_or_equal(s.size(), exp_size)
                                                                       Return s.size() = exp_size
@@ -59,15 +59,15 @@ Partial Public Class shared_component_test
                             assert_equal(+p, 200, "@", i, "-", j)
 
                             For k As Int32 = 0 To 1000
-                                component.get().push(k, i, j)
+                                component.get().receive(k, i, j)
                                 assert_true(async_sync(s.back().receiver.receive(p), seconds_to_milliseconds(10)))
                                 assert_equal(+p, k)
                             Next
 
                             If i > 0 Then
-                                For k As UInt16 = 0 To i - uint16_1
-                                    For l As UInt16 = 1 To port_size
-                                        component.get().push(k * l, k, l)
+                                For k As Byte = 0 To i - uint8_1
+                                    For l As Byte = 1 To port_size
+                                        component.get().receive(k * l, k, l)
                                         assert_true(async_sync(s(k * port_size + l - uint16_1).receiver.receive(p),
                                                                seconds_to_milliseconds(10)))
                                         assert_equal(+p, k * l)
@@ -75,8 +75,8 @@ Partial Public Class shared_component_test
                                 Next
                             End If
                             If j > 1 Then
-                                For k As UInt16 = 1 To j - uint16_1
-                                    component.get().push(k * i, i, k)
+                                For k As Byte = 1 To j - uint8_1
+                                    component.get().receive(k * i, i, k)
                                     assert_true(async_sync(s(i * port_size + k - uint16_1).receiver.receive(p),
                                                            seconds_to_milliseconds(10)))
                                     assert_equal(+p, k * i)

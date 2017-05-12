@@ -100,8 +100,14 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
                 If Me.accepter Is Nothing Then
                     Me.accepter = f.new_accepter(Me.p, Me.remote)
                 End If
-                If Not f.create_sender(Me.p, Me.local_port, Me.component_ref, Me.remote, Me.sender) Then
-                    raise_error(error_type.warning, "Failed to create sender from ", Me.local_port, " to ", Me.remote)
+                If Me.sender Is Nothing Then
+                    If Not f.create_sender(Me.p, Me.local_port, Me.component_ref, Me.remote, Me.sender) Then
+                        raise_error(error_type.warning,
+                                    "Failed to create sender from ",
+                                    Me.local_port,
+                                    " to ",
+                                    Me.remote)
+                    End If
                 End If
             End If
             Return Me

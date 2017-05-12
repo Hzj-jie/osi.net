@@ -1,13 +1,13 @@
 ﻿
+Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports osi.root.formation
 Imports osi.root.connector
-Imports osi.root.utils
 Imports osi.root.constants
 Imports osi.root.lock
-Imports osi.root.constants.utt
 
 Public Module _assert
+    Private Const default_assert_async_wait_time_ms As Int64 = 10 * second_milli
     Private failure As Int64 = 0
 
     Public Function assert_true(ByVal v As Boolean, ByVal ParamArray msg() As Object) As Boolean
@@ -41,10 +41,23 @@ Public Module _assert
         Return assert_true(object_compare(i, j) = 0, msg)
     End Function
 
+    <Extension()> Public Function assert_reference_equal_to(Of T As Class)(ByVal i As T,
+                                                                           ByVal j As T,
+                                                                           ByVal ParamArray msg() As Object) As Boolean
+        Return assert_reference_equal(Of T)(i, j, msg)
+    End Function
+
     Public Function assert_not_reference_equal(Of T As Class)(ByVal i As T,
                                                               ByVal j As T,
                                                               ByVal ParamArray msg() As Object) As Boolean
         Return assert_true(object_compare(i, j) <> 0, msg)
+    End Function
+
+    <Extension()> Public Function assert_not_reference_equal_to(Of T As Class) _
+                                                               (ByVal i As T,
+                                                                ByVal j As T,
+                                                                ByVal ParamArray msg() As Object) As Boolean
+        Return assert_not_reference_equal(Of T)(i, j, msg)
     End Function
 
     Private Function assert_left_right_msg(Of T)(ByVal cmp As String,
@@ -58,6 +71,12 @@ Public Module _assert
                                            ByVal j As T,
                                            ByVal ParamArray msg() As Object) As Boolean
         Return assert_true(compare(i, j) <> 0, assert_left_right_msg("not equal to", i, j, msg))
+    End Function
+
+    <Extension()> Public Function assert_not_equal_to(Of T)(ByVal i As T,
+                                                            ByVal j As T,
+                                                            ByVal ParamArray msg() As Object) As Boolean
+        Return assert_not_equal(Of T)(i, j, msg)
     End Function
 
     Public Function assert_array_equal(Of T)(ByVal i() As T,
@@ -75,6 +94,12 @@ Public Module _assert
         End If
     End Function
 
+    <Extension()> Public Function assert_array_equal_to(Of T)(ByVal i() As T,
+                                                              ByVal j() As T,
+                                                              ByVal ParamArray msg() As Object) As Boolean
+        Return assert_array_equal(Of T)(i, j, msg)
+    End Function
+
     Public Function assert_array_not_equal(Of T)(ByVal i() As T,
                                                  ByVal j() As T,
                                                  ByVal ParamArray msg() As Object) As Boolean
@@ -90,10 +115,22 @@ Public Module _assert
         End If
     End Function
 
+    <Extension()> Public Function assert_array_not_equal_to(Of T)(ByVal i() As T,
+                                                                  ByVal j() As T,
+                                                                  ByVal ParamArray msg() As Object) As Boolean
+        Return assert_array_equal(Of T)(i, j, msg)
+    End Function
+
     Public Function assert_vector_equal(Of T)(ByVal i As vector(Of T),
                                               ByVal j As vector(Of T),
                                               ByVal ParamArray msg() As Object) As Boolean
         Return assert_array_equal(+i, +j, msg)
+    End Function
+
+    <Extension()> Public Function assert_vector_equal_to(Of T)(ByVal i As vector(Of T),
+                                                               ByVal j As vector(Of T),
+                                                               ByVal ParamArray msg() As Object) As Boolean
+        Return assert_vector_equal(Of T)(i, j, msg)
     End Function
 
     Public Function assert_equal(Of T)(ByVal i As T,
@@ -102,10 +139,22 @@ Public Module _assert
         Return assert_true(compare(i, j) = 0, assert_left_right_msg("equal to", i, j, msg))
     End Function
 
+    <Extension()> Public Function assert_equal_to(Of T)(ByVal i As T,
+                                                        ByVal j As T,
+                                                        ByVal ParamArray msg() As Object) As Boolean
+        Return assert_equal(Of T)(i, j, msg)
+    End Function
+
     Public Function assert_less(Of T)(ByVal i As T,
                                       ByVal j As T,
                                       ByVal ParamArray msg() As Object) As Boolean
         Return assert_true(compare(i, j) < 0, assert_left_right_msg("less than", i, j, msg))
+    End Function
+
+    <Extension()> Public Function assert_less_than(Of T)(ByVal i As T,
+                                                         ByVal j As T,
+                                                         ByVal ParamArray msg() As Object) As Boolean
+        Return assert_less(Of T)(i, j, msg)
     End Function
 
     Public Function assert_less_or_equal(Of T)(ByVal i As T,
@@ -114,16 +163,34 @@ Public Module _assert
         Return assert_true(compare(i, j) <= 0, assert_left_right_msg("less than or equal to", i, j, msg))
     End Function
 
+    <Extension()> Public Function assert_less_than_or_equal_to(Of T)(ByVal i As T,
+                                                                     ByVal j As T,
+                                                                     ByVal ParamArray msg() As Object) As Boolean
+        Return assert_less_or_equal(Of T)(i, j, msg)
+    End Function
+
     Public Function assert_more(Of T)(ByVal i As T,
                                       ByVal j As T,
                                       ByVal ParamArray msg() As Object) As Boolean
         Return assert_true(compare(i, j) > 0, assert_left_right_msg("more than", i, j, msg))
     End Function
 
+    <Extension()> Public Function assert_more_than(Of T)(ByVal i As T,
+                                                         ByVal j As T,
+                                                         ByVal ParamArray msg() As Object) As Boolean
+        Return assert_more(Of T)(i, j, msg)
+    End Function
+
     Public Function assert_more_or_equal(Of T)(ByVal i As T,
                                                ByVal j As T,
                                                ByVal ParamArray msg() As Object) As Boolean
         Return assert_true(compare(i, j) >= 0, assert_left_right_msg("more than or equal to", i, j, msg))
+    End Function
+
+    <Extension()> Public Function assert_more_than_or_equal_to(Of T)(ByVal i As T,
+                                                                     ByVal j As T,
+                                                                     ByVal ParamArray msg() As Object) As Boolean
+        Return assert_more_or_equal(i, j, msg)
     End Function
 
     Public Function assert_more_and_less(Of T)(ByVal i As T,
@@ -134,12 +201,34 @@ Public Module _assert
                assert_less(i, max, msg)
     End Function
 
+    <Extension()> Public Function assert_more_than_and_less_than(Of T)(ByVal i As T,
+                                                                       ByVal min As T,
+                                                                       ByVal max As T,
+                                                                       ByVal ParamArray msg() As Object) As Boolean
+        Return assert_more_and_less(i, min, max, msg)
+    End Function
+
+    <Extension()> Public Function assert_in_range(Of T)(ByVal i As T,
+                                                        ByVal min As T,
+                                                        ByVal max As T,
+                                                        ByVal ParamArray msg() As Object) As Boolean
+        Return assert_more_and_less(Of T)(i, min, max, msg)
+    End Function
+
     Public Function assert_more_or_equal_and_less(Of T)(ByVal i As T,
                                                         ByVal min As T,
                                                         ByVal max As T,
                                                         ByVal ParamArray msg() As Object) As Boolean
         Return assert_more_or_equal(i, min, msg) AndAlso
                assert_less(i, max, msg)
+    End Function
+
+    <Extension()> Public Function assert_more_than_or_equal_to_and_less_than(Of T) _
+                                                                            (ByVal i As T,
+                                                                             ByVal min As T,
+                                                                             ByVal max As T,
+                                                                             ByVal ParamArray msg() As Object) As Boolean
+        Return assert_more_or_equal_and_less(Of T)(i, min, max, msg)
     End Function
 
     Public Function assert_more_and_less_or_equal(Of T)(ByVal i As T,
@@ -150,6 +239,14 @@ Public Module _assert
                assert_less_or_equal(i, max, msg)
     End Function
 
+    <Extension()> Public Function assert_more_than_and_less_than_or_equal_to(Of T) _
+                                                                            (ByVal i As T,
+                                                                             ByVal min As T,
+                                                                             ByVal max As T,
+                                                                             ByVal ParamArray msg() As Object) As Boolean
+        Return assert_more_and_less_or_equal(Of T)(i, min, max, msg)
+    End Function
+
     Public Function assert_more_or_equal_and_less_or_equal(Of T)(ByVal i As T,
                                                                  ByVal min As T,
                                                                  ByVal max As T,
@@ -158,13 +255,21 @@ Public Module _assert
                assert_less_or_equal(i, max, msg)
     End Function
 
-    Public Function assert_int(ByVal i As Double,
-                               ByVal ParamArray msg() As Object) As Boolean
+    <Extension()> Public Function assert_more_than_or_equal_to_and_less_than_or_equal_to _
+                          (Of T) _
+                          (ByVal i As T,
+                           ByVal min As T,
+                           ByVal max As T,
+                           ByVal ParamArray msg() As Object) As Boolean
+        Return assert_more_or_equal(i, min, msg) AndAlso
+               assert_less_or_equal(i, max, msg)
+    End Function
+
+    <Extension()> Public Function assert_int(ByVal i As Double, ByVal ParamArray msg() As Object) As Boolean
         Return assert_true(i.is_int(), msg)
     End Function
 
-    Public Function assert_not_int(ByVal i As Double,
-                                   ByVal ParamArray msg() As Object) As Boolean
+    <Extension()> Public Function assert_not_int(ByVal i As Double, ByVal ParamArray msg() As Object) As Boolean
         Return assert_true(i.is_not_int(), msg)
     End Function
 
@@ -183,8 +288,41 @@ Public Module _assert
                assert_equal(compare(r, l) = 0, exp = 0, msg)
     End Function
 
+    <Extension()> Public Function assert_compare_to(Of T)(ByVal l As T,
+                                                          ByVal r As T,
+                                                          ByVal exp As Int32,
+                                                          ByVal ParamArray msg() As Object) As Boolean
+        Return assert_compare(Of T)(l, r, exp, msg)
+    End Function
+
     Public Function assert_compare(Of T)(ByVal l As T, ByVal r As T) As Boolean
         Return assert_compare(l, r, compare(l, r))
+    End Function
+
+    <Extension()> Public Function assert_compare_to(Of T)(ByVal l As T, ByVal r As T) As Boolean
+        Return assert_compare(Of T)(l, r)
+    End Function
+
+    <Extension()> Public Function assert_happening_in(ByVal f As Func(Of Boolean),
+                                                      ByVal ms As Int64,
+                                                      ByVal ParamArray msg() As Object) As Boolean
+        Return assert_true(lazy_sleep_wait_until(f, ms), msg)
+    End Function
+
+    <Extension()> Public Function assert_happening(ByVal f As Func(Of Boolean),
+                                                   ByVal ParamArray msg() As Object) As Boolean
+        Return assert_happening_in(f, default_assert_async_wait_time_ms, msg)
+    End Function
+
+    <Extension()> Public Function assert_not_happening_in(ByVal f As Func(Of Boolean),
+                                                          ByVal ms As Int64,
+                                                          ByVal ParamArray msg() As Object) As Boolean
+        Return assert_false(lazy_sleep_wait_when(f, ms), msg)
+    End Function
+
+    <Extension()> Public Function assert_not_happening(ByVal f As Func(Of Boolean),
+                                                       ByVal ParamArray msg() As Object) As Boolean
+        Return assert_not_happening_in(f, default_assert_async_wait_time_ms, msg)
     End Function
 
     Public Function failure_count() As Int64
