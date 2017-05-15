@@ -1,10 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 #Const use_thread_static = False
 Imports osi.root.connector
-Imports osi.root.template
-Imports osi.root.formation
+Imports osi.root.constants
 
-Public Class call_stack(Of T)
+Public Class instance_stack(Of T)
     'the implementation of threadstatic valuetype object is not consistent between mono and .net
     'while .net has boxing by default
 #If use_thread_static Then
@@ -71,6 +74,6 @@ Public Class call_stack(Of T)
 #Else
         s = c
 #End If
-        Return If(s Is Nothing, 0, s.size())
+        Return If(s Is Nothing, uint32_0, s.size())
     End Function
 End Class

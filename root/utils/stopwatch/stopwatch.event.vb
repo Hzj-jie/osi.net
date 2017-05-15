@@ -1,6 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.lock
+Imports osi.root.formation
 
 Partial Public Class stopwatch
     Public Class [event]
@@ -18,10 +22,10 @@ Partial Public Class stopwatch
 
         Public Shared Property current() As [event]
             Get
-                Return call_stack(Of [event]).current()
+                Return instance_stack(Of [event]).current()
             End Get
             Private Set(ByVal value As [event])
-                call_stack(Of [event]).current() = value
+                instance_stack(Of [event]).current() = value
             End Set
         End Property
 

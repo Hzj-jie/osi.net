@@ -74,6 +74,7 @@
     <Compile Include="binary_tree\sset.vb" />
     <Compile Include="bit_array.vb" />
     <Compile Include="bit_array_thread_safe.vb" />
+    <Compile Include="instance_stack.vb" />
     <Compile Include="circle.vb" />
     <Compile Include="comparer\comparable_type.vb" />
     <Compile Include="comparer\reverse.vb" />

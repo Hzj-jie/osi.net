@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.formation
 Imports osi.root.threadpool
-Imports osi.root.utils
 
 Friend Class event_driver
     Private Shared Function event_comb_valid(ByVal ec As event_comb) As Boolean
@@ -11,7 +15,7 @@ Friend Class event_driver
     Public Shared Function begin(ByVal ec As event_comb) As Boolean
         If event_comb_valid(ec) Then
             If envs.event_driver_begin_in_current_thread AndAlso
-               call_stack(Of event_comb).size() < 128 Then
+               instance_stack(Of event_comb).size() < 128 Then
                 ec.do()
             Else
                 thread_pool().queue_job(AddressOf ec.do)

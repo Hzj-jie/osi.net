@@ -58,7 +58,6 @@
     <Compile Include="affinity.vb" />
     <Compile Include="assembly.vb" />
     <Compile Include="autolock\autolock_dll_exporter.vb" />
-    <Compile Include="call_stack.vb" />
     <Compile Include="caster.vb" />
     <Compile Include="choose_group.vb" />
     <Compile Include="comparer.vb" />

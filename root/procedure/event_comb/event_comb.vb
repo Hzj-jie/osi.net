@@ -1,14 +1,15 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.DateTime
-Imports osi.root.threadpool
 Imports osi.root.connector
-Imports osi.root.formation
-Imports osi.root.delegates
-Imports osi.root.lock
 Imports osi.root.constants
-Imports osi.root.utils
 Imports osi.root.envs
-Imports counter = osi.root.utils.counter
+Imports osi.root.formation
+Imports osi.root.lock
+Imports osi.root.utils
 #If DEBUG Then
 Imports lock_t = osi.root.lock.monitorlock
 #Else
@@ -21,7 +22,7 @@ Partial Public Class event_comb
     Public Const first_step As Int32 = 0
     Private ReadOnly ds() As Func(Of Boolean)
     Private ReadOnly _callstack As String
-    Private ReadOnly ds_len As Int32    'for perf concern
+    Private ReadOnly ds_len As UInt32    'for perf concern
     Protected Event suspending()
     Private _end_result As ternary
     Private timeouted_event As stopwatch.[event]
@@ -34,10 +35,10 @@ Partial Public Class event_comb
 
     Public Shared Property current() As event_comb
         Get
-            Return call_stack(Of event_comb).current()
+            Return instance_stack(Of event_comb).current()
         End Get
         Protected Set(ByVal value As event_comb)
-            call_stack(Of event_comb).current() = value
+            instance_stack(Of event_comb).current() = value
         End Set
     End Property
 
@@ -141,13 +142,13 @@ Partial Public Class event_comb
 
     Protected Sub inc_pends()
         assert_in_lock()
-        pends += 1
+        pends += uint32_1
     End Sub
 
     Protected Sub dec_pends()
         assert_in_lock()
         assert(pends > 0)
-        pends -= 1
+        pends -= uint32_1
     End Sub
 
     Protected Sub mark_as_failed()
@@ -189,7 +190,7 @@ Partial Public Class event_comb
         End If
 
         If not_started() Then
-            If ds_len = 0 Then
+            If ds_len = uint32_0 Then
                 assert_goto_end()
             Else
                 assert_goto_begin()

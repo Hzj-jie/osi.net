@@ -1,8 +1,9 @@
 ﻿
-Imports System.Threading
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.delegates
-Imports osi.root.utils
 Imports osi.root.formation
 Imports osi.root.constants
 Imports osi.root.envs
@@ -151,17 +152,17 @@ Partial Public Class callback_action
 
     Public Shared Property current As callback_action
         Get
-            Return call_stack(Of callback_action).current()
+            Return instance_stack(Of callback_action).current()
         End Get
         Protected Set(ByVal value As callback_action)
             'removed, since callbackManager2 will run several chained callbackActions in one thread
             'assert(value Is Nothing OrElse _current Is Nothing OrElse object_compare(value, _current) = 0)
-            call_stack(Of callback_action).current() = value
+            instance_stack(Of callback_action).current() = value
         End Set
     End Property
 
     Friend Shared Function in_callback_action_thread() As Boolean
-        Return Not call_stack(Of callback_action).empty()
+        Return Not instance_stack(Of callback_action).empty()
     End Function
 
     Public Sub cancel(Optional ByVal beginResult As Boolean = True, Optional ByVal endResult As Boolean = True)
