@@ -106,6 +106,7 @@
     <Compile Include="map_extension.vb" />
     <Compile Include="not_null.vb" />
     <Compile Include="one_off.vb" />
+    <Compile Include="optional.vb" />
     <Compile Include="pair.vb" />
     <Compile Include="piece.vb" />
     <Compile Include="pointer\array_pointer.vb" />
