@@ -80,7 +80,7 @@ Public Class gc_behavior_test
             x = New tc(a)
             x = Nothing
         Next
-        waitfor_gc_collect()
+        repeat_gc_collect()
         assert_equal(+a, CInt(r))
         Return True
     End Function

@@ -31,14 +31,14 @@ Public Class delegate_pinning_test
         Dim d As Action = Nothing
         d = AddressOf c.run
 
-        waitfor_gc_collect()
+        repeat_gc_collect()
 
         assert_true(p.alive())
         d()
         assert_equal(c.count(), 1)
         GC.KeepAlive(c)
         c = Nothing
-        waitfor_gc_collect()
+        repeat_gc_collect()
 
         assert_true(p.alive())
         d()
@@ -47,10 +47,10 @@ Public Class delegate_pinning_test
         assert_equal(c2.count(), 2)
         c2 = Nothing
         GC.KeepAlive(d)
-        waitfor_gc_collect()
+        repeat_gc_collect()
 
         d = Nothing
-        waitfor_gc_collect()
+        repeat_gc_collect()
 
         assert_false(p.alive())
         Return True

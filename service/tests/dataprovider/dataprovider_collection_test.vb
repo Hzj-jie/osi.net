@@ -106,7 +106,7 @@ Public Class dataprovider_collection_test
         GC.KeepAlive(i)
         i = Nothing
         sleep(lifetime_ms << 1)
-        waitfor_gc_collect()
+        repeat_gc_collect()
         assert_equal(dataprovider_count(), uint32_0)
         assert_equal(fake_datawatcher.constructed(), uint32_1)
         assert_equal(fake_datafetcher.constructed(), uint32_1)
@@ -124,7 +124,7 @@ Public Class dataprovider_collection_test
         GC.KeepAlive(i)
         i = Nothing
         sleep(0)
-        waitfor_gc_collect()
+        repeat_gc_collect()
         assert_equal(dataprovider_count(), uint32_1)
         assert_equal(fake_datawatcher.constructed(), uint32_2)
         assert_equal(fake_datafetcher.constructed(), uint32_2)
@@ -132,7 +132,7 @@ Public Class dataprovider_collection_test
         assert_equal(fake_datafetcher.destructed(), uint32_1)
 
         sleep(lifetime_ms << 1)
-        waitfor_gc_collect()
+        repeat_gc_collect()
         assert_equal(dataprovider_count(), uint32_0)
         assert_equal(fake_datawatcher.constructed(), uint32_2)
         assert_equal(fake_datafetcher.constructed(), uint32_2)

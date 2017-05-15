@@ -37,7 +37,7 @@ Public Class weak_pointer_test
         GC.KeepAlive(c)
 
         c = Nothing
-        waitfor_gc_collect()
+        repeat_gc_collect()
         assert_false(p.alive())
         assert_false(p.get(c2))
 
@@ -58,7 +58,7 @@ Public Class weak_pointer_test
             cs(i) = New test_class(s)
             ps(i) = make_weak_pointer(cs(i))
         Next
-        waitfor_gc_collect()
+        repeat_gc_collect()
 
         For i As Int32 = 0 To size - 1
             Dim t As test_class = Nothing
@@ -73,7 +73,7 @@ Public Class weak_pointer_test
                 cs(i) = Nothing
             End If
         Next
-        waitfor_gc_collect()
+        repeat_gc_collect()
 
         For i As Int32 = 0 To size - 1
             assert_equal(Not cs(i) Is Nothing, ps(i).alive())
@@ -89,7 +89,7 @@ Public Class weak_pointer_test
         For i As Int32 = 0 To size - 1
             cs(i) = Nothing
         Next
-        waitfor_gc_collect()
+        repeat_gc_collect()
 
         For i As Int32 = 0 To size - 1
             assert_false(ps(i).alive())

@@ -48,7 +48,7 @@ Public Class lifetime_binder_test
         create(wr1, tc1, refer_only)
         create_bind(wr2, bind)
 
-        waitfor_gc_collect()
+        repeat_gc_collect()
         assert_equal(test_class.finalized_count(), 0)
         assert_true(wr1.IsAlive())
         assert_true(wr2.IsAlive())
@@ -59,14 +59,14 @@ Public Class lifetime_binder_test
 
         GC.KeepAlive(tc1)
         tc1 = Nothing
-        waitfor_gc_collect()
+        repeat_gc_collect()
         assert_equal(test_class.finalized_count(), 1)
         assert_false(wr1.IsAlive())
         assert_true(wr2.IsAlive())
         assert_equal(cast(Of test_class)(wr2.Target()).s, bind)
 
         lifetime_binder(Of test_class).instance.erase(wr2.Target())
-        waitfor_gc_collect()
+        repeat_gc_collect()
         assert_equal(test_class.finalized_count(), 2)
         assert_false(wr2.IsAlive())
 

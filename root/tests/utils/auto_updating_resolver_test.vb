@@ -29,7 +29,7 @@ Public Class auto_updating_resolver_test
                 'register before auto_updating_resolver.ctor
                 For i As Int32 = 0 To 1024 - 1
                     wef = Nothing
-                    waitfor_gc_collect()
+                    repeat_gc_collect()
                     Dim instance As test_class = Nothing
                     instance = New test_class()
                     resolver.register(Of test_class)(instance)
@@ -51,7 +51,7 @@ Public Class auto_updating_resolver_test
                 Using New assert_more(Of Int32)(Function() resolver.registered_event_count())
                     Using New assert_more(Of Int32)(Function() resolver.erased_event_count())
                         wef = Nothing
-                        waitfor_gc_collect()
+                        repeat_gc_collect()
                     End Using
                 End Using
             End Using

@@ -21,7 +21,7 @@ Public Class event_pin_object_behavior_test
             Dim a As c = Nothing
             a = New c()
             AddHandler a.e, AddressOf handler
-            waitfor_gc_collect()
+            repeat_gc_collect()
         Next
         assert_more(c.destructed(), uint32_0)
         For i As Int32 = 0 To 1000
@@ -29,7 +29,7 @@ Public Class event_pin_object_behavior_test
             a = New c()
             AddHandler a.e, Sub()
                             End Sub
-            waitfor_gc_collect()
+            repeat_gc_collect()
         Next
         assert_more(c.destructed(), uint32_0)
         Return True

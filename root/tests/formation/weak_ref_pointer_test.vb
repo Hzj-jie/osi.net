@@ -21,7 +21,7 @@ Public Class weak_ref_pointer_test
         p = make_weak_ref_pointer(New cd_object(Of weak_ref_pointer_test)())
         For i As Int32 = 0 To 1000
             p.set(New cd_object(Of weak_ref_pointer_test)())
-            waitfor_gc_collect()
+            repeat_gc_collect()
         Next
         assert_more(cd_object(Of weak_ref_pointer_test).destructed(), uint32_0)
         Return True
@@ -41,7 +41,7 @@ Public Class weak_ref_pointer_test
                                             assert_equal(ci, j)
                                             c += 1
                                         End Sub
-            waitfor_gc_collect()
+            repeat_gc_collect()
         Next
         assert_more(c, 0)
         Return True

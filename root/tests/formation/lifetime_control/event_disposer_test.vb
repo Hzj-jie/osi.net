@@ -33,13 +33,13 @@ Public Class event_disposer_test
             End If
             p = create(disposing)
         Next
-        waitfor_gc_collect()
+        repeat_gc_collect()
         assert_equal(cd_object(Of test_class).constructed(), size)
         assert_equal(cd_object(Of test_class).destructed(), size - uint32_1)
         assert_equal(CUInt(+disposing), size - uint32_1)
         p.Dispose()
         p = Nothing
-        waitfor_gc_collect()
+        repeat_gc_collect()
         assert_equal(cd_object(Of test_class).constructed(), size)
         assert_equal(cd_object(Of test_class).destructed(), size)
         assert_equal(CUInt(+disposing), size)
@@ -56,7 +56,7 @@ Public Class event_disposer_test
         For i As UInt32 = 0 To size - uint32_1
             p(i) = create(disposing)
         Next
-        waitfor_gc_collect()
+        repeat_gc_collect()
         assert_equal(+disposing, 0)
         assert_equal(cd_object(Of test_class).constructed(), size)
         assert_equal(cd_object(Of test_class).destructed(), uint32_0)
@@ -65,7 +65,7 @@ Public Class event_disposer_test
             p(i).Dispose()
             p(i) = Nothing
         Next
-        waitfor_gc_collect()
+        repeat_gc_collect()
         assert_equal(CUInt(+disposing), size)
         assert_equal(cd_object(Of test_class).constructed(), size)
         assert_equal(cd_object(Of test_class).destructed(), size)
