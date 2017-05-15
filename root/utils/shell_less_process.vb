@@ -105,8 +105,10 @@ Public NotInheritable Class shell_less_process
             proc_started.release()
             RaiseEvent process_exit()
             If enable_raise_event Then
-                proc().CancelOutputRead()
-                proc().CancelErrorRead()
+                void_(Sub()
+                          proc().CancelOutputRead()
+                          proc().CancelErrorRead()
+                      End Sub)
             End If
 #If USE_EXIT_SIGNAL Then
             exit_signal.force_set()
