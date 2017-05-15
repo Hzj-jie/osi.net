@@ -15,5 +15,7 @@ precompile positive_npos_uint64.vbp > positive_npos_uint64.vb
 precompile positive_size_t.vbp > positive_size_t.vb
 precompile positive_size_t_32.vbp > positive_size_t_32.vb
 precompile positive_size_t_64.vbp > positive_size_t_64.vb
+
+move /y *.vb ..\
 endlocal
 

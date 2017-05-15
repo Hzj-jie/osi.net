@@ -99,8 +99,6 @@
     <Compile Include="math.vb" />
     <Compile Include="memory_stream.vb" />
     <Compile Include="net.vb" />
-    <Compile Include="types\constant.vb" />
-    <Compile Include="types\one_off.vb" />
     <Compile Include="operators.vb" />
     <Compile Include="process_thread.vb" />
     <Compile Include="error_handler\raise_error.vb" />
@@ -109,8 +107,7 @@
     <Compile Include="string_utils\char_detection.vb" />
     <Compile Include="string_utils\strcontains.vb" />
     <Compile Include="string_utils\stringbuilder.vb" />
-    <Compile Include="types\range_int.vb" />
-    <Compile Include="types\getter.vb" />
+    <Compile Include="ints\range_int.vb" />
     <Compile Include="unchecked_int.ext.vb" />
     <Compile Include="ref.vb" />
     <Compile Include="weak_action.vb" />
@@ -121,35 +118,34 @@
     <None Include="bytes\codegen\bytes_independent_types.vbp" />
     <None Include="bytes\codegen\bytes_independent_types_impl.vbp" />
     <None Include="bytes\codegen\run.cmd" />
-    <None Include="types\codegen\npos_uint_ctor.vbp" />
-    <None Include="types\codegen\positive_npos_uint.vbp" />
-    <None Include="types\codegen\positive_npos_uint32.vbp" />
-    <None Include="types\codegen\positive_npos_uint64.vbp" />
-    <None Include="types\codegen\positive_size_t.vbp" />
-    <None Include="types\codegen\positive_size_t_32.vbp" />
-    <None Include="types\codegen\positive_size_t_64.vbp" />
-    <None Include="types\codegen\size_t.vbp" />
-    <None Include="types\codegen\size_t_32.vbp" />
-    <None Include="types\codegen\timeout_ms_t.vbp" />
-    <None Include="types\codegen\retry_times_t.vbp" />
+    <None Include="ints\codegen\npos_uint_ctor.vbp" />
+    <None Include="ints\codegen\positive_npos_uint.vbp" />
+    <None Include="ints\codegen\positive_npos_uint32.vbp" />
+    <None Include="ints\codegen\positive_npos_uint64.vbp" />
+    <None Include="ints\codegen\positive_size_t.vbp" />
+    <None Include="ints\codegen\positive_size_t_32.vbp" />
+    <None Include="ints\codegen\positive_size_t_64.vbp" />
+    <None Include="ints\codegen\size_t.vbp" />
+    <None Include="ints\codegen\size_t_32.vbp" />
+    <None Include="ints\codegen\timeout_ms_t.vbp" />
+    <None Include="ints\codegen\retry_times_t.vbp" />
     <Compile Include="string_utils\str_bool.vb" />
-    <Compile Include="types\npos_uint.vb" />
-    <Compile Include="types\npos_uint32.vb" />
-    <Compile Include="types\npos_uint64.vb" />
-    <Compile Include="types\positive_npos_uint.vb" />
-    <Compile Include="types\positive_npos_uint32.vb" />
-    <Compile Include="types\positive_npos_uint64.vb" />
-    <Compile Include="types\positive_size_t.vb" />
-    <Compile Include="types\positive_size_t_32.vb" />
-    <Compile Include="types\positive_size_t_64.vb" />
-    <Compile Include="types\rate_timeout.vb" />
-    <Compile Include="types\retry_times_t.vb" />
-    <Compile Include="types\transceive_timeout.vb" />
-    <Compile Include="types\size_t.vb" />
-    <Compile Include="types\size_t_32.vb" />
-    <Compile Include="types\size_t_64.vb" />
-    <Compile Include="types\timeout_ms_t.vb" />
-    <Compile Include="types\union_int.vb" />
+    <Compile Include="ints\npos_uint.vb" />
+    <Compile Include="ints\npos_uint32.vb" />
+    <Compile Include="ints\npos_uint64.vb" />
+    <Compile Include="ints\positive_npos_uint.vb" />
+    <Compile Include="ints\positive_npos_uint32.vb" />
+    <Compile Include="ints\positive_npos_uint64.vb" />
+    <Compile Include="ints\positive_size_t.vb" />
+    <Compile Include="ints\positive_size_t_32.vb" />
+    <Compile Include="ints\positive_size_t_64.vb" />
+    <Compile Include="ints\rate_timeout.vb" />
+    <Compile Include="ints\retry_times_t.vb" />
+    <Compile Include="ints\size_t.vb" />
+    <Compile Include="ints\size_t_32.vb" />
+    <Compile Include="ints\size_t_64.vb" />
+    <Compile Include="ints\timeout_ms_t.vb" />
+    <Compile Include="ints\union_int.vb" />
     <Compile Include="type_info.vb" />
     <Compile Include="unchecked_int.vb" />
     <Compile Include="console_key_info.vb" />
@@ -220,7 +216,7 @@
     <Compile Include="unhandled_exception.vb" />
     <Compile Include="unref.vb" />
     <Compile Include="uri.vb" />
-    <None Include="types\codegen\size_t_64.vbp" />
+    <None Include="ints\codegen\size_t_64.vbp" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -243,10 +239,10 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="types\codegen\npos_uint.vbp" />
-    <None Include="types\codegen\npos_uint32.vbp" />
-    <None Include="types\codegen\npos_uint64.vbp" />
-    <None Include="types\codegen\run.cmd" />
+    <None Include="ints\codegen\npos_uint.vbp" />
+    <None Include="ints\codegen\npos_uint32.vbp" />
+    <None Include="ints\codegen\npos_uint64.vbp" />
+    <None Include="ints\codegen\run.cmd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\constants\constants.vbproj">

@@ -1,7 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net.Sockets
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.utils
 Imports osi.service.device
 Imports osi.service.commander
 Imports osi.service.transmitter
@@ -37,7 +42,7 @@ Partial Public Class powerpoint
 
     Private Sub New(ByVal token As String,
                     ByVal host_or_ip As String,
-                    ByVal port As UInt32,
+                    ByVal port As UInt16,
                     ByVal ipv4 As Boolean,
                     ByVal connecting_timeout_ms As Int64,
                     ByVal send_rate_sec As UInt32,
@@ -78,7 +83,7 @@ Partial Public Class powerpoint
         Me.tokener = tokener
         Me.delay_connect = delay_connect
 
-        Me.overhead = If(ipv4, 40, 60)
+        Me.overhead = CUInt(If(ipv4, 40, 60))
         Me.identity = strcat("tcp@",
                              If(is_outgoing, strcat("outgoing@", host_or_ip, ":", port),
                                 strcat("incoming@", port)))
@@ -119,11 +124,11 @@ Partial Public Class powerpoint
     End Function
 
     Public Function send_timeout_ms(ByVal count As Int64) As Int64
-        Return rate_to_ms(send_rate_sec, count + overhead)
+        Return rate_to_ms(send_rate_sec, CULng(If(count < 0, 0, count) + overhead))
     End Function
 
     Public Function receive_timeout_ms(ByVal count As Int64) As Int64
-        Return rate_to_ms(receive_rate_sec, count + overhead)
+        Return rate_to_ms(receive_rate_sec, CULng(If(count < 0, 0, count) + overhead))
     End Function
 
     Public Function transceive_timeout() As transceive_timeout
@@ -324,7 +329,7 @@ Partial Public Class powerpoint
         m = max(constants.interval_ms.connection_check_interval,
                 constants.interval_ms.connector_check)
         m = max(m, constants.interval_ms.connector_fail)
-        For i As Int32 = 0 To array_size(this) - 1
+        For i As Int32 = 0 To array_size_i(this) - 1
             If Not this(i) Is Nothing AndAlso
                this(i).is_outgoing Then
                 m = max(m, this(i).connecting_timeout_ms)

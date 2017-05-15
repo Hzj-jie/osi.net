@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.DateTime
 Imports System.Threading
 Imports osi.root.constants
@@ -7,20 +11,20 @@ Imports osi.root.delegates
 Public Module _sleep
     Public Sub measure_sleep(ByVal ms As Int32)
         If ms > 0 Then
-            Dim left As Int64 = 0
-            left = Math.Ceiling(ms * measure_sleep_percentage)
+            Dim left As Int32 = 0
+            left = CInt(Math.Ceiling(ms * measure_sleep_percentage))
             Dim till As Int64 = 0
             till = Now().milliseconds() + left
             While left > 0
                 Thread.Sleep(left)
-                left = till - Now().milliseconds()
+                left = CInt(till - Now().milliseconds())
             End While
         ElseIf ms = 0 Then
             Thread.Sleep(0)
         End If
     End Sub
 
-    Public Sub sleep(Optional ByVal ms As Int32 = second_milli)
+    Public Sub sleep(ByVal ms As Int32)
         If ms = 0 Then
             Thread.Sleep(ms)
         ElseIf ms > 0 Then
@@ -32,6 +36,26 @@ Public Module _sleep
                 Thread.Sleep(ms)
             End If
         End If
+    End Sub
+
+    Public Sub sleep(ByVal ms As Int64)
+        If ms > max_int32 Then
+            sleep(max_int32)
+        Else
+            sleep(CInt(ms))
+        End If
+    End Sub
+
+    Public Sub sleep(ByVal ms As Double)
+        If ms > max_int32 Then
+            sleep(max_int32)
+        Else
+            sleep(CInt(ms))
+        End If
+    End Sub
+
+    Public Sub sleep()
+        sleep(second_milli)
     End Sub
 
     Public Sub suspend()

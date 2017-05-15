@@ -24,7 +24,7 @@ Partial Public Structure ##TYPE##
 
     Shared Sub New()
         assert(constants.npos < 0)
-        sizeof_value = sizeof(Of U##SIGNED_TYPE##)()
+        sizeof_value = CUInt(sizeof(Of U##SIGNED_TYPE##)())
         Dim x As ##TYPE## = Nothing
         assert(Not x.npos())
         assert(x.raw_value() = ##ZERO##)
@@ -79,12 +79,12 @@ Partial Public Structure ##TYPE##
     Public Shared Function to_bytes(ByVal this As ##TYPE##) As Byte()
         Dim r() As Byte = Nothing
 #If Not ##ACCEPT_ZERO## OrElse Not ##ACCEPT_MAX## Then
-        ReDim r(sizeof_value - uint32_1)
+        ReDim r(CInt(sizeof_value - uint32_1))
 #Else
         If this.npos() Then
-            ReDim r(sizeof_uint8 - uint32_1)
+            ReDim r(CInt(sizeof_uint8 - uint32_1))
         Else
-            ReDim r(sizeof_uint8 + sizeof_value - uint32_1)
+            ReDim r(CInt(sizeof_uint8 + sizeof_value - uint32_1))
         End If
 #End If
         Dim offset As UInt32 = uint32_0

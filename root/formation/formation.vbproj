@@ -77,6 +77,7 @@
     <Compile Include="circle.vb" />
     <Compile Include="comparer\comparable_type.vb" />
     <Compile Include="comparer\reverse.vb" />
+    <Compile Include="constant.vb" />
     <Compile Include="const_array.vb" />
     <Compile Include="const_pair.vb" />
     <Compile Include="ext\conv.vb" />
@@ -84,6 +85,7 @@
     <Compile Include="ext\map.vb" />
     <Compile Include="ext\set.vb" />
     <Compile Include="first_const_pair.vb" />
+    <Compile Include="getter.vb" />
     <Compile Include="heap.vb" />
     <Compile Include="lazier.vb" />
     <Compile Include="lifetime_control\disposer.vb" />
@@ -103,6 +105,7 @@
     <Compile Include="mapheap.vb" />
     <Compile Include="map_extension.vb" />
     <Compile Include="not_null.vb" />
+    <Compile Include="one_off.vb" />
     <Compile Include="pair.vb" />
     <Compile Include="piece.vb" />
     <Compile Include="pointer\array_pointer.vb" />

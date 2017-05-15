@@ -1,5 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
+Imports osi.root.connector
 Imports osi.root.constants
 
 Public Module _transceive_timeout
@@ -23,7 +28,7 @@ Public Module _transceive_timeout
 End Module
 
 Public Class transceive_timeout
-    Implements ICloneable
+    Implements ICloneable, ICloneable(Of transceive_timeout)
 
     Private ReadOnly st As rate_timeout
     Private ReadOnly rt As rate_timeout
@@ -70,6 +75,10 @@ Public Class transceive_timeout
     End Function
 
     Public Function IClonable_Clone() As Object Implements ICloneable.Clone
+        Return clone()
+    End Function
+
+    Public Function ICloneableT_Clone() As transceive_timeout Implements ICloneable(Of transceive_timeout).Clone
         Return clone()
     End Function
 End Class

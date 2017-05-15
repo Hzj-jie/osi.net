@@ -1,11 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
 Option Strict On
 
 Imports System.Net
 Imports System.Net.Sockets
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.root.utils
 Imports osi.service.device
 Imports osi.service.transmitter
 Imports osi.service.selector

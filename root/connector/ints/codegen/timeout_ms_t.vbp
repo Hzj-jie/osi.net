@@ -6,6 +6,12 @@
 Partial Public Structure ##TYPE##
     Public Function [until]() As Int64
         'value() will call assert(Not npos())
-        Return nowadays.milliseconds() + value()
+        Dim n As Int64 = 0
+        n = nowadays.milliseconds()
+        If value() > max_int64 - n Then
+            Return max_int64
+        Else
+            Return CLng(n + value())
+        End If
     End Function
 End Structure

@@ -97,7 +97,7 @@ Partial Public Class shared_component_test
         End Function
 
         Public Overrides Function run() As Boolean
-            assert_true(_shared_component_collection.[New](Of UInt16, UInt16, component, Int32, parameter) _
+            assert_true(_shared_component_collection.[New](Of Byte, Byte, component, Int32, parameter) _
                                                           (c, p, component, dispenser))
 
             Dim r As Boolean = False

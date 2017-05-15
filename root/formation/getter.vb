@@ -1,5 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
+Imports osi.root.connector
 
 Public Interface getter(Of T)
     Function [get](ByRef k As T) As Boolean

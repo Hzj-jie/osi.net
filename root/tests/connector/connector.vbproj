@@ -155,7 +155,6 @@
     <Compile Include="nowadays_perf.vb" />
     <Compile Include="nowadays_test.vb" />
     <Compile Include="nullable_test.vb" />
-    <Compile Include="one_off_test.vb" />
     <Compile Include="rnd\guid_str_test.vb" />
     <Compile Include="rnd\randomness_test.vb" />
     <Compile Include="rnd\rnd_perf.vb" />

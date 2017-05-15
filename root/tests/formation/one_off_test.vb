@@ -1,9 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
 Imports osi.root.connector
+Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.utt
-Imports osi.root.utils
 
 Public Class one_off_test
     Inherits [case]
