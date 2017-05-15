@@ -317,7 +317,7 @@ Public Module _assert
     <Extension()> Public Function assert_not_happening_in(ByVal f As Func(Of Boolean),
                                                           ByVal ms As Int64,
                                                           ByVal ParamArray msg() As Object) As Boolean
-        Return assert_false(lazy_sleep_wait_when(f, ms), msg)
+        Return assert_false(lazy_sleep_wait_until(f, ms), msg)
     End Function
 
     <Extension()> Public Function assert_not_happening(ByVal f As Func(Of Boolean),
