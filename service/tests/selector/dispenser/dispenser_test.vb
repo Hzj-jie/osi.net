@@ -1,14 +1,19 @@
 ﻿
+Option Explicit On
+Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.lock
 Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.service.selector
 
 Partial Public Class dispenser_test
     Inherits [case]
+
+    Public Overrides Function preserved_processors() As Int16
+        Return 2
+    End Function
 
     Public Overrides Function run() As Boolean
         Const accepter_count As Int32 = 10
@@ -33,10 +38,7 @@ Partial Public Class dispenser_test
         For i As Int32 = 0 To accepter_count - 1
             Dim j As Int32 = 0
             j = i
-            assert_true(timeslice_sleep_wait_until(Function() As Boolean
-                                                       Return accepters(j).q.size() = data_size
-                                                   End Function,
-                                                   seconds_to_milliseconds(10)))
+            assert_happening(Function() accepters(j).q.size() = data_size)
         Next
 
         For i As Int32 = 0 To accepter_count - 1
