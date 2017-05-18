@@ -59,7 +59,7 @@
     <Compile Include="async_preparer_test.vb" />
     <Compile Include="async_preparer_valuetype_test.vb" />
     <Compile Include="async_thread_safe_lazier_test.vb" />
-    <Compile Include="dispenser\dispenser_test.accepters.vb" />
+    <Compile Include="dispenser\dispenser_test.accepter.vb" />
     <Compile Include="dispenser\dispenser_test.receiver.vb" />
     <Compile Include="dispenser\dispenser_test.vb" />
     <Compile Include="selector_test.vb" />

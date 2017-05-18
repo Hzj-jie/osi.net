@@ -58,4 +58,10 @@ Partial Public Class dispenser_test
         assert_true(d.stopped())
         Return True
     End Function
+
+    Public Overrides Function finish() As Boolean
+        ' Ensure event_combs are correctly finished.
+        sleep(constants.default_sense_timeout_ms)
+        Return MyBase.finish()
+    End Function
 End Class
