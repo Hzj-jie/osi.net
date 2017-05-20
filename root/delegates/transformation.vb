@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 
 Public Module _transformation
@@ -53,12 +57,22 @@ Public Module _transformation
         Return Not d Is Nothing AndAlso (Not d())
     End Function
 
-    <Extension()> Public Function type_erase(Of T)(ByVal v As Action(Of Object)) As Action(Of T)
+    <Extension()> Public Function type_erasure(Of T)(ByVal v As Action(Of Object)) As Action(Of T)
         If v Is Nothing Then
             Return Nothing
         Else
             Return Sub(ByVal x As T)
                        v(x)
+                   End Sub
+        End If
+    End Function
+
+    <Extension()> Public Function parameter_erasure(Of T)(ByVal i As Action) As Action(Of T)
+        If i Is Nothing Then
+            Return Nothing
+        Else
+            Return Sub(ByVal v As T)
+                       i()
                    End Sub
         End If
     End Function

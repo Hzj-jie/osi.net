@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Collections.Generic
 Imports System.IO
 Imports System.Threading
@@ -77,9 +81,9 @@ Public NotInheritable Class disposable
     End Sub
 
     Public Shared Function find(Of T)(ByVal type As Type, ByRef o As Action(Of T)) As Boolean
-        For Each p In td
+        For Each p As type_disposer In td
             If type.is(p.t) Then
-                o = p.d.type_erase(Of T)()
+                o = p.d.type_erasure(Of T)()
                 Return True
             End If
         Next

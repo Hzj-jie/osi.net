@@ -110,6 +110,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="event_comb\waitfor.vb" />
+    <Compile Include="promise\promise.auto.vb" />
+    <Compile Include="promise\promise.new.vb" />
+    <Compile Include="promise\promise.share.vb" />
+    <Compile Include="promise\promise.status.vb" />
+    <Compile Include="promise\promise.thenable.vb" />
+    <Compile Include="promise\promise.vb" />
     <Compile Include="sync_async.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +142,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <Compile Include="promise\promise.then.vb" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\connector\connector.vbproj">
@@ -179,9 +186,7 @@
       <Name>utils</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="promise\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

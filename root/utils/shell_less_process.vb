@@ -155,7 +155,7 @@ Public NotInheritable Class shell_less_process
     Public Function start(Optional ByRef ex As Exception = Nothing) As Boolean
         If proc_started.mark_in_use() Then
             ce.increment()
-            Using defer(Sub() ce.decrement())
+            Using defer(AddressOf ce.decrement)
                 If proc_exited.in_use() Then
                     proc_exited.release()
                 End If

@@ -85,4 +85,10 @@ Public Module _event_wait_handle
     <Extension()> Public Function wait(ByVal i As WaitHandle) As Boolean
         Return wait(i, npos)
     End Function
+
+    <Extension()> Public Sub wait_close(ByVal i As WaitHandle)
+        assert(Not i Is Nothing)
+        assert(wait(i))
+        i.Close()
+    End Sub
 End Module
