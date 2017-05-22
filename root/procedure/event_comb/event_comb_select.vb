@@ -1,9 +1,11 @@
 ﻿
-Imports osi.root.constants
-Imports osi.root.delegates
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.utils
 
 Public Class event_comb_select(Of T)
     Private Const default_wait_ms As Int64 = 1

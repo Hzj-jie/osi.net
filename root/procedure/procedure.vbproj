@@ -70,6 +70,7 @@
     <Compile Include="event_comb\event_comb.predefined.vb" />
     <Compile Include="event_comb\event_comb.private_waitfor.vb" />
     <Compile Include="event_comb\event_comb.alloc_trace.vb" />
+    <Compile Include="event_comb\event_comb.promise.vb" />
     <Compile Include="event_comb\event_comb_success_behavior.vb" />
     <Compile Include="event_comb\event_comb.vb" />
     <Compile Include="event_comb\event_comb.chain.vb" />
@@ -111,6 +112,7 @@
     </Compile>
     <Compile Include="event_comb\waitfor.vb" />
     <Compile Include="promise\promise.auto.vb" />
+    <Compile Include="promise\promise.event_comb.vb" />
     <Compile Include="promise\promise.new.vb" />
     <Compile Include="promise\promise.share.vb" />
     <Compile Include="promise\promise.status.vb" />

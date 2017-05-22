@@ -19,7 +19,7 @@ Public Class promise_test
         Dim mre As ManualResetEvent = Nothing
         mre = New ManualResetEvent(False)
         Dim start_ms As Int64 = 0
-        start_ms = nowadays.high_res_milliseconds()
+        start_ms = nowadays.milliseconds()
         Dim p As promise = Nothing
         p = New promise(Sub(ByVal resolve As Action(Of Object))
                             assert(Not stopwatch.push(20,
@@ -33,7 +33,7 @@ Public Class promise_test
                    assert(mre.force_set())
                End Sub)
         mre.wait_close()
-        assert_more_or_equal(nowadays.high_res_milliseconds() - start_ms, 20)
+        assert_more_or_equal(nowadays.milliseconds() - start_ms, 20)
         Return True
     End Function
 
@@ -43,7 +43,7 @@ Public Class promise_test
         Dim ce As count_event = Nothing
         ce = New count_event(2)
         Dim start_ms As Int64 = 0
-        start_ms = nowadays.high_res_milliseconds()
+        start_ms = nowadays.milliseconds()
         Dim p As promise = Nothing
         p = New promise(Sub(ByVal resolve As Action(Of Object))
                             assert(Not stopwatch.push(10,
@@ -68,7 +68,7 @@ Public Class promise_test
                    assert_equal(ce.decrement(), uint32_0)
                End Sub)
         assert(ce.wait())
-        assert_more_or_equal(nowadays.high_res_milliseconds() - start_ms, 20)
+        assert_more_or_equal(nowadays.milliseconds() - start_ms, 20)
         Return True
     End Function
 
@@ -77,7 +77,7 @@ Public Class promise_test
         Dim mre As ManualResetEvent = Nothing
         mre = New ManualResetEvent(False)
         Dim start_ms As Int64 = 0
-        start_ms = nowadays.high_res_milliseconds()
+        start_ms = nowadays.milliseconds()
         Dim p As promise = Nothing
         p = New promise(Sub(ByVal resolve As Action(Of Object), ByVal reject As Action(Of Object))
                             assert(Not stopwatch.push(20,
@@ -94,7 +94,7 @@ Public Class promise_test
                    assert(mre.force_set())
                End Sub)
         assert(mre.wait())
-        assert_more_or_equal(nowadays.high_res_milliseconds() - start_ms, 20)
+        assert_more_or_equal(nowadays.milliseconds() - start_ms, 20)
         Return True
     End Function
 
@@ -103,7 +103,7 @@ Public Class promise_test
         Dim ce As count_event = Nothing
         ce = New count_event(2)
         Dim start_ms As Int64 = 0
-        start_ms = nowadays.high_res_milliseconds()
+        start_ms = nowadays.milliseconds()
         Dim p As promise = Nothing
         p = New promise(Sub(ByVal resolve As Action(Of Object), ByVal reject As Action(Of Object))
                             assert(Not stopwatch.push(20,
@@ -128,7 +128,7 @@ Public Class promise_test
                    assert_equal(ce.decrement(), uint32_0)
                End Sub)
         assert(ce.wait())
-        assert_more_or_equal(nowadays.high_res_milliseconds() - start_ms, 20)
+        assert_more_or_equal(nowadays.milliseconds() - start_ms, 20)
         Return True
     End Function
 
@@ -137,7 +137,7 @@ Public Class promise_test
         Dim mre As ManualResetEvent = Nothing
         mre = New ManualResetEvent(False)
         Dim start_ms As Int64 = 0
-        start_ms = nowadays.high_res_milliseconds()
+        start_ms = nowadays.milliseconds()
         Dim p As promise = Nothing
         p = New promise(Function() As Object
                             Return promise.resolve(New promise(Sub(ByVal resolve As Action(Of Object))
@@ -152,7 +152,7 @@ Public Class promise_test
                    assert(mre.force_set())
                End Sub)
         assert(mre.wait())
-        assert_more_or_equal(nowadays.high_res_milliseconds() - start_ms, 10)
+        assert_more_or_equal(nowadays.milliseconds() - start_ms, 10)
         Return True
     End Function
 
@@ -177,7 +177,7 @@ Public Class promise_test
         Dim mre As ManualResetEvent = Nothing
         mre = New ManualResetEvent(False)
         Dim start_ms As Int64 = 0
-        start_ms = nowadays.high_res_milliseconds()
+        start_ms = nowadays.milliseconds()
         Dim p As promise = Nothing
         p = New promise(Function() As Object
                             Return New promise(Sub(ByVal resolve As Action(Of Object))
@@ -192,7 +192,7 @@ Public Class promise_test
                    assert(mre.force_set())
                End Sub)
         assert(mre.wait())
-        assert_more_or_equal(nowadays.high_res_milliseconds() - start_ms, 10)
+        assert_more_or_equal(nowadays.milliseconds() - start_ms, 10)
         Return True
     End Function
 

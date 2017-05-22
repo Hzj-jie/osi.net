@@ -1,14 +1,13 @@
 ﻿
-Imports System.Timers
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
-Imports osi.root.event
 Imports osi.root.connector
-Imports osi.root.utils
-Imports osi.root.lock
-Imports osi.root.template
-Imports osi.root.delegates
-Imports osi.root.lock.slimlock
+Imports osi.root.event
 Imports osi.root.formation
+Imports osi.root.lock
 
 Partial Public Class event_comb
     Public Shared Function waitfor(ByVal ec As event_comb, ByVal timeout_ms As Int64) As Boolean

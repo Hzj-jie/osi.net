@@ -1,10 +1,11 @@
 ﻿
-Imports osi.root.constants
-Imports osi.root.delegates
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utils
-Imports osi.root.formation
 Imports osi.root.lock
+Imports osi.root.utils
 
 Public Module _lifetime_event_comb
     Public Function lifetime_event_comb(ByVal stop_result As Boolean,
@@ -12,8 +13,8 @@ Public Module _lifetime_event_comb
                                         ByVal ParamArray d() As Func(Of Boolean)) As event_comb
         assert(Not control Is Nothing)
         Dim d2() As Func(Of Boolean) = Nothing
-        ReDim d2(array_size(d) - 1)
-        For i As Int32 = 0 To array_size(d) - 1
+        ReDim d2(array_size_i(d) - 1)
+        For i As Int32 = 0 To array_size_i(d) - 1
             Dim j As Int32 = 0
             j = i
             d2(i) = Function() As Boolean

@@ -25,6 +25,6 @@ Partial Public NotInheritable Class promise
     End Function
 
     Public Function [then](ByVal on_resolve As Action) As promise
-        Return [then](on_resolve.parameter_erasure(Of Object)())
+        Return [then](on_resolve.parameter_erasure(Of Object)(), Nothing)
     End Function
 End Class

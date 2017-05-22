@@ -1,7 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
-Imports osi.root.delegates
-Imports osi.root.utils
 Imports osi.root.connector
 
 Public Module _event_comb_extensions
@@ -10,7 +12,7 @@ Public Module _event_comb_extensions
     End Function
 
     <Extension()> Public Function cancel(ByVal ecs() As event_comb) As Boolean
-        For i As Int32 = 0 To array_size(ecs) - 1
+        For i As Int32 = 0 To array_size_i(ecs) - 1
             If ecs(i) Is Nothing Then
                 Return False
             End If
@@ -20,7 +22,7 @@ Public Module _event_comb_extensions
     End Function
 
     <Extension()> Public Function [end](ByVal ecs() As event_comb) As Boolean
-        For i As Int32 = 0 To array_size(ecs) - 1
+        For i As Int32 = 0 To array_size_i(ecs) - 1
             If ecs(i) Is Nothing OrElse Not ecs(i).end() Then
                 Return False
             End If
@@ -29,7 +31,7 @@ Public Module _event_comb_extensions
     End Function
 
     <Extension()> Public Function end_result(ByVal ecs() As event_comb) As Boolean
-        For i As Int32 = 0 To array_size(ecs) - 1
+        For i As Int32 = 0 To array_size_i(ecs) - 1
             If ecs(i) Is Nothing OrElse Not ecs(i).end_result() Then
                 Return False
             End If
@@ -39,7 +41,7 @@ Public Module _event_comb_extensions
 
     <Extension()> Public Function any_end_result(ByVal ecs() As event_comb) As Boolean
         Dim r As Boolean = False
-        For i As Int32 = 0 To array_size(ecs) - 1
+        For i As Int32 = 0 To array_size_i(ecs) - 1
             If ecs(i) Is Nothing Then
                 Return False
             ElseIf ecs(i).end_result() Then
@@ -54,7 +56,7 @@ Public Module _event_comb_extensions
     End Function
 
     <Extension()> Public Function end_result_or_null(ByVal ecs() As event_comb) As Boolean
-        For i As Int32 = 0 To array_size(ecs) - 1
+        For i As Int32 = 0 To array_size_i(ecs) - 1
             If Not ecs(i) Is Nothing AndAlso Not ecs(i).end_result() Then
                 Return False
             End If
@@ -63,7 +65,7 @@ Public Module _event_comb_extensions
     End Function
 
     <Extension()> Public Function any_end_result_or_null(ByVal ecs() As event_comb) As Boolean
-        For i As Int32 = 0 To array_size(ecs) - 1
+        For i As Int32 = 0 To array_size_i(ecs) - 1
             If Not ecs(i) Is Nothing AndAlso ecs(i).end_result() Then
                 Return True
             End If

@@ -1,16 +1,16 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
-Imports osi.root.constants
-Imports osi.root.delegates
 Imports osi.root.connector
-Imports osi.root.utils
+Imports osi.root.constants
 Imports osi.root.event
-Imports osi.root.lock
-Imports osi.root.lock.slimlock
-Imports osi.root.template
 Imports osi.root.formation
-Imports osi.root.envs
+Imports osi.root.lock
 Imports osi.root.threadpool
+Imports osi.root.utils
 
 Partial Public Class event_comb
     Private Function _waitfor(ByVal ec As event_comb, ByVal begin As Func(Of Boolean)) As Boolean
@@ -56,7 +56,7 @@ Partial Public Class event_comb
         If isemptyarray(ecs) Then
             Return False
         Else
-            For i As Int32 = 0 To array_size(ecs) - 1
+            For i As Int32 = 0 To array_size_i(ecs) - 1
                 If Not _waitfor(ecs(i)) Then
                     Return False
                 End If
@@ -71,7 +71,7 @@ Partial Public Class event_comb
         If isemptyarray(ecs) Then
             Return True
         Else
-            For i As Int32 = 0 To array_size(ecs) - 1
+            For i As Int32 = 0 To array_size_i(ecs) - 1
                 If Not _waitfor_or_null(ecs(i)) Then
                     Return False
                 End If

@@ -1,5 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 
 Partial Public Class event_comb
     Private Function _goto(ByVal [step] As Int32) As Boolean
@@ -55,7 +60,7 @@ Partial Public Class event_comb
     End Function
 
     Private Function _goto_last() As Boolean
-        Return _goto(ds_len - 1)
+        Return _goto(CInt(ds_len - uint32_1))
     End Function
 
     Public Shared Function [goto](ByVal [step] As Int32) As Boolean

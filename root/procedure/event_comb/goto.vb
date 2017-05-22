@@ -1,6 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Public Module _goto
-    Public Function [goto](ByVal [step] As Int64) As Boolean
+    Public Function [goto](ByVal [step] As Int32) As Boolean
         Return event_comb.goto([step])
     End Function
 

@@ -33,7 +33,7 @@ Partial Public NotInheritable Class promise
 
         Public Sub resolve(ByVal result As Object)
             Dim p As promise = Nothing
-            If Not p Is Nothing AndAlso direct_cast(result, p) Then
+            If Not result Is Nothing AndAlso direct_cast(result, p) Then
                 p.then(AddressOf resolve, AddressOf reject)
             Else
                 SyncLock Me
@@ -57,10 +57,11 @@ Partial Public NotInheritable Class promise
 
         <MethodImpl(MethodImplOptions.Synchronized)>
         Public Sub [then](ByVal on_resolve As Action(Of Object), ByVal on_reject As Action(Of Object))
-            If Me.next Is Nothing Then
-                Me.next = emplace_make_const_pair(on_resolve, on_reject)
-                execute_next()
-            End If
+            assert(Not on_resolve Is Nothing)
+            assert(Not on_reject Is Nothing)
+            assert(Me.next Is Nothing)
+            Me.next = emplace_make_const_pair(on_resolve, on_reject)
+            execute_next()
         End Sub
 
         Private Sub execute_next()

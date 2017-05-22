@@ -1,13 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
-Imports osi.root.event
 Imports osi.root.connector
-Imports osi.root.utils
-Imports osi.root.delegates
-Imports osi.root.lock
-Imports osi.root.lock.slimlock
-Imports osi.root.template
+Imports osi.root.event
 Imports osi.root.formation
+Imports osi.root.lock
 
 Public Module _waitfor
     Public Function waitfor(ByVal ec As event_comb, ByVal timeout_ms As Int64) As Boolean

@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.procedure
@@ -13,7 +17,7 @@ Public Class promise_share_test
         Dim mre As ManualResetEvent = Nothing
         mre = New ManualResetEvent(False)
         Dim start_ms As Int64 = 0
-        start_ms = nowadays.high_res_milliseconds()
+        start_ms = nowadays.milliseconds()
         Dim finished() As Boolean = Nothing
         ReDim finished(size - 1)
         memclr(finished)
@@ -41,7 +45,7 @@ Public Class promise_share_test
                    assert(mre.force_set())
                End Sub)
         assert(mre.wait())
-        assert_more_or_equal(nowadays.high_res_milliseconds() - start_ms, 10)
+        assert_more_or_equal(nowadays.milliseconds() - start_ms, 10)
         Return True
     End Function
 

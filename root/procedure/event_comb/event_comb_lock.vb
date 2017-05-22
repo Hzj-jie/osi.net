@@ -1,11 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
-Imports osi.root.lock.atomic
 Imports osi.root.connector
-Imports osi.root.template
 Imports osi.root.formation
+Imports osi.root.lock.atomic
 Imports osi.root.lock.slimlock
-Imports osi.root.delegates
+Imports osi.root.template
 Imports lock_t = osi.root.lock.slimlock.monitorlock
 
 Public Module _event_comb_lock

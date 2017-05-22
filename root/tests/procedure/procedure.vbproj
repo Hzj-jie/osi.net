@@ -91,6 +91,8 @@
     </Compile>
     <Compile Include="promise\promise_share_test.vb" />
     <Compile Include="promise\promise_test.vb" />
+    <Compile Include="promise_event_comb_reject_test.vb" />
+    <Compile Include="promise_event_comb_test.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

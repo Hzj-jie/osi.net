@@ -1,7 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.delegates
-Imports osi.root.utils
 Imports osi.root.formation
 
 Partial Public Class event_comb
@@ -123,7 +126,7 @@ Partial Public Class event_comb
 
     Public Shared Function chain(ByVal ParamArray cs() As void(Of event_comb, Boolean, Boolean, Boolean)) As event_comb
         assert(Not cs Is Nothing AndAlso cs.Length() > 0)
-        Dim i As Int64 = 0
+        Dim i As Int32 = 0
         Dim ec As event_comb = Nothing
         Dim accept_null_ec As Boolean = False
         Dim predict As Boolean = False
@@ -177,12 +180,12 @@ Partial Public Class event_comb
     End Function
 
     Public Shared Function chain(ByVal before As Func(Of Boolean),
-                                 ByVal cs As _do(Of Int64, event_comb, Boolean, Boolean),
+                                 ByVal cs As _do(Of Int32, event_comb, Boolean, Boolean),
                                  ByVal after As Func(Of Boolean)) As event_comb
         assert(Not before Is Nothing)
         assert(Not cs Is Nothing)
         assert(Not after Is Nothing)
-        Dim i As Int64 = 0
+        Dim i As Int32 = 0
         Dim ec As event_comb = Nothing
         Dim accept_null_ec As Boolean = False
         Return New event_comb(Function() As Boolean
@@ -211,15 +214,15 @@ Partial Public Class event_comb
             Return True
         End Function
 
-    Public Shared Function chain(ByVal cs As _do(Of Int64, event_comb, Boolean, Boolean)) As event_comb
+    Public Shared Function chain(ByVal cs As _do(Of Int32, event_comb, Boolean, Boolean)) As event_comb
         Return chain(t, cs, t)
     End Function
 
     Private Shared Function chain_response(Of T)(ByVal cs() As T,
-                                                 ByVal i As Int64,
+                                                 ByVal i As Int32,
                                                  ByRef ec As event_comb,
                                                  ByRef accept_null_ec As Boolean,
-                                                 ByVal d As void(Of Int64, event_comb, Boolean)) As Boolean
+                                                 ByVal d As void(Of Int32, event_comb, Boolean)) As Boolean
         assert(Not cs Is Nothing AndAlso cs.Length() > 0)
         assert(Not d Is Nothing)
         If i = cs.Length() Then
@@ -232,16 +235,16 @@ Partial Public Class event_comb
 
     Private Shared Function chain(Of T)(ByVal cs() As T,
                                         ByVal before As Func(Of Boolean),
-                                        ByVal c As _do(Of Int64, event_comb),
+                                        ByVal c As _do(Of Int32, event_comb),
                                         ByVal after As Func(Of Boolean),
-                                        ByVal accept_null_ec As _do(Of Int64, Boolean)) As event_comb
+                                        ByVal accept_null_ec As _do(Of Int32, Boolean)) As event_comb
         assert(Not cs Is Nothing AndAlso cs.Length() > 0)
         assert(Not c Is Nothing)
         assert(Not accept_null_ec Is Nothing)
         Return chain(before,
-                     Function(ByRef i As Int64, ByRef ec As event_comb, ByRef ane As Boolean) As Boolean
+                     Function(ByRef i As Int32, ByRef ec As event_comb, ByRef ane As Boolean) As Boolean
                          Return chain_response(cs, i, ec, ane,
-                                               Sub(ByRef j As Int64, ByRef e As event_comb, ByRef a As Boolean)
+                                               Sub(ByRef j As Int32, ByRef e As event_comb, ByRef a As Boolean)
                                                    e = c(j)
                                                    a = accept_null_ec(j)
                                                End Sub)
@@ -250,8 +253,8 @@ Partial Public Class event_comb
     End Function
 
     Private Shared Function chain(Of T)(ByVal cs() As T,
-                                        ByVal c As _do(Of Int64, event_comb),
-                                        ByVal accept_null_ec As _do(Of Int64, Boolean)) As event_comb
+                                        ByVal c As _do(Of Int32, event_comb),
+                                        ByVal accept_null_ec As _do(Of Int32, Boolean)) As event_comb
         Return chain(cs, event_comb.t, c, event_comb.t, accept_null_ec)
     End Function
 
@@ -260,9 +263,9 @@ Partial Public Class event_comb
                                  ByVal after As Func(Of Boolean)) As event_comb
         assert(Not cs Is Nothing AndAlso cs.Length() > 0)
         Return chain(before,
-                     Function(ByRef i As Int64, ByRef ec As event_comb, ByRef accept_null_ec As Boolean) As Boolean
+                     Function(ByRef i As Int32, ByRef ec As event_comb, ByRef accept_null_ec As Boolean) As Boolean
                          Return chain_response(cs, i, ec, accept_null_ec,
-                                               Sub(ByRef j As Int64, ByRef e As event_comb, ByRef ane As Boolean)
+                                               Sub(ByRef j As Int32, ByRef e As event_comb, ByRef ane As Boolean)
                                                    ane = cs(j)(e)
                                                End Sub)
                      End Function,
@@ -281,19 +284,19 @@ Partial Public Class event_comb
 
     Public Shared Function chain(ByVal ParamArray cs() As pair(Of Func(Of event_comb), Boolean)) As event_comb
         Return chain(cs,
-                     Function(ByRef i As Int64) As event_comb
+                     Function(ByRef i As Int32) As event_comb
                          Return cs(i).first()
                      End Function,
-                     Function(ByRef i As Int64) As Boolean
+                     Function(ByRef i As Int32) As Boolean
                          Return cs(i).second
                      End Function)
     End Function
 
     Public Shared Function chain(ByVal ParamArray cs() As void(Of event_comb, Boolean)) As event_comb
         assert(Not cs Is Nothing AndAlso cs.Length() > 0)
-        Return chain(Function(ByRef i As Int64, ByRef ec As event_comb, ByRef accept_null_ec As Boolean) As Boolean
+        Return chain(Function(ByRef i As Int32, ByRef ec As event_comb, ByRef accept_null_ec As Boolean) As Boolean
                          Return chain_response(cs, i, ec, accept_null_ec,
-                                               Sub(ByRef j As Int64, ByRef e As event_comb, ByRef a As Boolean)
+                                               Sub(ByRef j As Int32, ByRef e As event_comb, ByRef a As Boolean)
                                                    cs(j)(e, a)
                                                End Sub)
                      End Function)
@@ -302,10 +305,10 @@ Partial Public Class event_comb
     Public Shared Function chain(ByVal accept_null_ec As Boolean,
                                  ByVal ParamArray cs() As Func(Of event_comb)) As event_comb
         Return chain(cs,
-                     Function(ByRef i As Int64) As event_comb
+                     Function(ByRef i As Int32) As event_comb
                          Return cs(i)()
                      End Function,
-                     Function(ByRef i As Int64) As Boolean
+                     Function(ByRef i As Int32) As Boolean
                          Return accept_null_ec
                      End Function)
     End Function
@@ -316,11 +319,11 @@ Partial Public Class event_comb
                                  ByVal ParamArray cs() As Func(Of event_comb)) As event_comb
         Return chain(cs,
                      before,
-                     Function(ByRef i As Int64) As event_comb
+                     Function(ByRef i As Int32) As event_comb
                          Return cs(i)()
                      End Function,
                      after,
-                     Function(ByRef i As Int64) As Boolean
+                     Function(ByRef i As Int32) As Boolean
                          Return accept_null_ec
                      End Function)
     End Function
@@ -332,10 +335,10 @@ Partial Public Class event_comb
     Public Shared Function chain(ByVal accept_null_ec As Boolean,
                                  ByVal ParamArray cs() As event_comb) As event_comb
         Return chain(cs,
-                     Function(ByRef i As Int64) As event_comb
+                     Function(ByRef i As Int32) As event_comb
                          Return cs(i)
                      End Function,
-                     Function(ByRef i As Int64) As Boolean
+                     Function(ByRef i As Int32) As Boolean
                          Return accept_null_ec
                      End Function)
     End Function
