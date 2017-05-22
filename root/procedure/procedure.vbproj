@@ -111,6 +111,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="event_comb\waitfor.vb" />
+    <Compile Include="promise\promise.async_operation.vb" />
     <Compile Include="promise\promise.auto.vb" />
     <Compile Include="promise\promise.event_comb.vb" />
     <Compile Include="promise\promise.new.vb" />

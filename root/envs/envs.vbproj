@@ -62,6 +62,7 @@
     <Compile Include="env_keys.vb" />
     <Compile Include="env_value.vb" />
     <Compile Include="build_running.vb" />
+    <Compile Include="event_comb_async_operation.vb" />
     <Compile Include="event_driver.vb" />
     <Compile Include="gitver.vb" />
     <Compile Include="gitver.parser.vb" />

@@ -96,11 +96,14 @@ Public Class event_comb_async_operation
                [end])
     End Sub
 
-    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)> _
+    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
     Public Shared Function ctor(Of T)(ByVal begin As Func(Of AsyncCallback, IAsyncResult),
                                       ByVal [end] As Func(Of IAsyncResult, T),
-                                      Optional ByVal result As pointer(Of T) = Nothing) As event_comb_async_operation
-        Return New event_comb_async_operation(begin,
+                                      Optional ByVal result As pointer(Of T) = Nothing) As event_comb
+        If use_promise_for_event_comb_async_operation Then
+            Return event_comb.from(promise.[New](begin, [end]), result)
+        Else
+            Return New event_comb_async_operation(begin,
                                               Sub(e As Boolean, ar As IAsyncResult)
                                                   Dim r As T = Nothing
                                                   assert(Not [end] Is Nothing)
@@ -110,5 +113,6 @@ Public Class event_comb_async_operation
                                                   End If
                                               End Sub,
                                               [end])
+        End If
     End Function
 End Class
