@@ -112,6 +112,7 @@
     <Compile Include="trace\lock_trace.vb" />
     <Compile Include="trace\network_trace.vb" />
     <Compile Include="trace\perf_trace.vb" />
+    <Compile Include="trace\promise_trace.vb" />
     <Compile Include="trace\tcp_trace.vb" />
     <Compile Include="trace\threadpool_trace.vb" />
     <Compile Include="trace\trace_trace.vb" />

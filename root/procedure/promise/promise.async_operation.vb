@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.envs
 
 Partial Public NotInheritable Class promise
     Public Shared Function [New](Of T)(ByVal begin As Func(Of AsyncCallback, IAsyncResult),
@@ -15,7 +16,9 @@ Partial Public NotInheritable Class promise
                                          Try
                                              resolve([end](ar))
                                          Catch ex As Exception
-                                             log_unhandled_exception(ex)
+                                             If promise_trace Then
+                                                 log_unhandled_exception(ex)
+                                             End If
                                              reject(Nothing)
                                          End Try
                                      End Sub)
@@ -32,7 +35,9 @@ Partial Public NotInheritable Class promise
                                              [end](ar)
                                              resolve(Nothing)
                                          Catch ex As Exception
-                                             log_unhandled_exception(ex)
+                                             If promise_trace Then
+                                                 log_unhandled_exception(ex)
+                                             End If
                                              reject(Nothing)
                                          End Try
                                      End Sub)
