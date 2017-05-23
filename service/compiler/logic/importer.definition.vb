@@ -12,7 +12,7 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public Partial NotInheritable Class Importer
+    Public Partial NotInheritable Class importer
         Private Function parse_type_0(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,

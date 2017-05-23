@@ -32,7 +32,7 @@ public static class Program {
     wl("Imports osi.service.interpreter.primitive");
     wl();
     wl("Namespace logic");
-    wl("    Public Partial NotInheritable Class Importer");
+    wl("    Public Partial NotInheritable Class importer");
     List<string> keys = new List<string>();
     string s;
     while ((s = Console.ReadLine()) != null) {
