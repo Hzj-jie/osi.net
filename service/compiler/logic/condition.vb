@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
@@ -45,9 +46,9 @@ Namespace logic
             If Not false_path Is Nothing AndAlso Not false_path.export(scope, false_o) Then
                 Return False
             End If
-            false_o.emplace_back(instruction_builder.str(command.jump, data_ref.rel(true_o.size())))
+            false_o.emplace_back(instruction_builder.str(command.jump, data_ref.rel(true_o.size() + uint32_1)))
 
-            o.emplace_back(instruction_builder.str(command.jumpif, var))
+            o.emplace_back(instruction_builder.str(command.jumpif, data_ref.rel(false_o.size() + uint32_1), var))
             assert(o.emplace_back(false_o))
             assert(o.emplace_back(true_o))
 

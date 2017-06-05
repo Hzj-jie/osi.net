@@ -22,6 +22,8 @@ Namespace logic
             If Not strsame(v(p), "type") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -35,6 +37,9 @@ Namespace logic
                 p1,
                 p2
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
@@ -47,6 +52,8 @@ Namespace logic
             If Not strsame(v(p), "append_slice") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -58,6 +65,9 @@ Namespace logic
                 p1,
                 p2
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
@@ -70,6 +80,8 @@ Namespace logic
             If Not strsame(v(p), "cut") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -85,6 +97,9 @@ Namespace logic
                 p2,
                 p3
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
@@ -97,6 +112,8 @@ Namespace logic
             If Not strsame(v(p), "cut_slice") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -116,6 +133,9 @@ Namespace logic
                 p3,
                 p4
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
@@ -128,6 +148,8 @@ Namespace logic
             If Not strsame(v(p), "clear") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -135,6 +157,9 @@ Namespace logic
             o = new_clear(
                 p1
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
@@ -147,6 +172,8 @@ Namespace logic
             If Not strsame(v(p), "add") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -162,18 +189,23 @@ Namespace logic
                 p2,
                 p3
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_substract_6(
+        Private Function parse_subtract_6(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "substract") Then
+            If Not strsame(v(p), "subtract") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -184,15 +216,50 @@ Namespace logic
             Dim p3 As String = Nothing
             p3 = v(p)
             p += uint32_1
-            o = new_substract(
+            o = new_subtract(
                 p1,
                 p2,
                 p3
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_power_7(
+        Private Function parse_multiply_7(
+                ByVal v As vector(Of String),
+                ByRef p As UInt32,
+                ByRef o As exportable) As Boolean
+            assert(Not v Is Nothing)
+            assert(v.size() > p)
+            If Not strsame(v(p), "multiply") Then
+                Return False
+            End If
+            Dim start As UInt32
+            start = p
+            p += uint32_1
+            Dim p1 As String = Nothing
+            p1 = v(p)
+            p += uint32_1
+            Dim p2 As String = Nothing
+            p2 = v(p)
+            p += uint32_1
+            Dim p3 As String = Nothing
+            p3 = v(p)
+            p += uint32_1
+            o = new_multiply(
+                p1,
+                p2,
+                p3
+            )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
+            Return True
+        End Function
+
+        Private Function parse_power_8(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -201,6 +268,8 @@ Namespace logic
             If Not strsame(v(p), "power") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -216,10 +285,13 @@ Namespace logic
                 p2,
                 p3
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_and_8(
+        Private Function parse_and_9(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -228,6 +300,8 @@ Namespace logic
             If Not strsame(v(p), "and") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -243,10 +317,13 @@ Namespace logic
                 p2,
                 p3
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_or_9(
+        Private Function parse_or_10(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -255,6 +332,8 @@ Namespace logic
             If Not strsame(v(p), "or") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -270,10 +349,13 @@ Namespace logic
                 p2,
                 p3
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_callee_10(
+        Private Function parse_callee_11(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -282,6 +364,8 @@ Namespace logic
             If Not strsame(v(p), "callee") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -304,10 +388,13 @@ Namespace logic
                 p2,
                 p3
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_caller_11(
+        Private Function parse_caller_12(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -316,6 +403,8 @@ Namespace logic
             If Not strsame(v(p), "caller") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -335,10 +424,13 @@ Namespace logic
                 p2,
                 p3
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_caller_12(
+        Private Function parse_caller_13(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -347,6 +439,8 @@ Namespace logic
             If Not strsame(v(p), "caller") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -362,10 +456,13 @@ Namespace logic
                 p1,
                 p2
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_less_13(
+        Private Function parse_less_14(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -374,6 +471,8 @@ Namespace logic
             If Not strsame(v(p), "less") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -389,10 +488,13 @@ Namespace logic
                 p2,
                 p3
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_more_14(
+        Private Function parse_more_15(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -401,6 +503,8 @@ Namespace logic
             If Not strsame(v(p), "more") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -416,10 +520,13 @@ Namespace logic
                 p2,
                 p3
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_equal_15(
+        Private Function parse_equal_16(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -428,6 +535,8 @@ Namespace logic
             If Not strsame(v(p), "equal") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -443,10 +552,13 @@ Namespace logic
                 p2,
                 p3
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_less_or_equal_16(
+        Private Function parse_less_or_equal_17(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -455,6 +567,8 @@ Namespace logic
             If Not strsame(v(p), "less_or_equal") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -470,10 +584,13 @@ Namespace logic
                 p2,
                 p3
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_more_or_equal_17(
+        Private Function parse_more_or_equal_18(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -482,6 +599,8 @@ Namespace logic
             If Not strsame(v(p), "more_or_equal") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -497,10 +616,13 @@ Namespace logic
                 p2,
                 p3
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_if_18(
+        Private Function parse_if_19(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -509,6 +631,8 @@ Namespace logic
             If Not strsame(v(p), "if") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -536,10 +660,13 @@ Namespace logic
                 p3,
                 p4
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_if_19(
+        Private Function parse_if_20(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -548,6 +675,8 @@ Namespace logic
             If Not strsame(v(p), "if") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -562,10 +691,13 @@ Namespace logic
                 p1,
                 p2
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_copy_20(
+        Private Function parse_copy_21(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -574,6 +706,8 @@ Namespace logic
             If Not strsame(v(p), "copy") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -585,10 +719,13 @@ Namespace logic
                 p1,
                 p2
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_copy_const_21(
+        Private Function parse_copy_const_22(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -597,6 +734,8 @@ Namespace logic
             If Not strsame(v(p), "copy_const") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -614,10 +753,13 @@ Namespace logic
                 p1,
                 p2
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_define_22(
+        Private Function parse_define_23(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -626,6 +768,8 @@ Namespace logic
             If Not strsame(v(p), "define") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -637,10 +781,13 @@ Namespace logic
                 p1,
                 p2
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_do_until_23(
+        Private Function parse_do_until_24(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -649,6 +796,8 @@ Namespace logic
             If Not strsame(v(p), "do_until") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -663,10 +812,13 @@ Namespace logic
                 p1,
                 p2
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_do_while_24(
+        Private Function parse_do_while_25(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -675,6 +827,8 @@ Namespace logic
             If Not strsame(v(p), "do_while") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -689,10 +843,13 @@ Namespace logic
                 p1,
                 p2
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_extern_function_25(
+        Private Function parse_extern_function_26(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -701,6 +858,8 @@ Namespace logic
             If Not strsame(v(p), "extern_function") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -716,10 +875,13 @@ Namespace logic
                 p2,
                 p3
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_move_26(
+        Private Function parse_move_27(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -728,6 +890,8 @@ Namespace logic
             If Not strsame(v(p), "move") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -739,10 +903,13 @@ Namespace logic
                 p1,
                 p2
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_divide_27(
+        Private Function parse_divide_28(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -751,6 +918,8 @@ Namespace logic
             If Not strsame(v(p), "divide") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -770,10 +939,13 @@ Namespace logic
                 p3,
                 p4
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_extract_28(
+        Private Function parse_extract_29(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -782,6 +954,8 @@ Namespace logic
             If Not strsame(v(p), "extract") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -801,10 +975,13 @@ Namespace logic
                 p3,
                 p4
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_return_29(
+        Private Function parse_return_30(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -813,6 +990,8 @@ Namespace logic
             If Not strsame(v(p), "return") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -826,10 +1005,13 @@ Namespace logic
                 p1,
                 p2
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_return_30(
+        Private Function parse_return_31(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -838,6 +1020,8 @@ Namespace logic
             If Not strsame(v(p), "return") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -849,10 +1033,13 @@ Namespace logic
                 p1,
                 p2
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_append_31(
+        Private Function parse_append_32(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -861,6 +1048,8 @@ Namespace logic
             If Not strsame(v(p), "append") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -872,10 +1061,13 @@ Namespace logic
                 p1,
                 p2
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_not_32(
+        Private Function parse_not_33(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -884,6 +1076,8 @@ Namespace logic
             If Not strsame(v(p), "not") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -895,10 +1089,13 @@ Namespace logic
                 p1,
                 p2
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_sizeof_33(
+        Private Function parse_sizeof_34(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -907,6 +1104,8 @@ Namespace logic
             If Not strsame(v(p), "sizeof") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -918,10 +1117,13 @@ Namespace logic
                 p1,
                 p2
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_empty_34(
+        Private Function parse_empty_35(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -930,6 +1132,8 @@ Namespace logic
             If Not strsame(v(p), "empty") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -941,10 +1145,13 @@ Namespace logic
                 p1,
                 p2
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_while_then_35(
+        Private Function parse_while_then_36(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -953,6 +1160,8 @@ Namespace logic
             If Not strsame(v(p), "while_then") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             Dim p1 As String = Nothing
             p1 = v(p)
@@ -967,10 +1176,13 @@ Namespace logic
                 p1,
                 p2
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
-        Private Function parse_stop_36(
+        Private Function parse_stop_37(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -979,9 +1191,14 @@ Namespace logic
             If Not strsame(v(p), "stop") Then
                 Return False
             End If
+            Dim start As UInt32
+            start = p
             p += uint32_1
             o = new_stop(
             )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
             Return True
         End Function
 
@@ -1042,7 +1259,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_substract_6(v, pos, o) Then
+                If parse_subtract_6(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1050,7 +1267,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_power_7(v, pos, o) Then
+                If parse_multiply_7(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1058,7 +1275,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_and_8(v, pos, o) Then
+                If parse_power_8(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1066,7 +1283,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_or_9(v, pos, o) Then
+                If parse_and_9(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1074,7 +1291,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_callee_10(v, pos, o) Then
+                If parse_or_10(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1082,7 +1299,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_caller_11(v, pos, o) Then
+                If parse_callee_11(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1098,7 +1315,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_less_13(v, pos, o) Then
+                If parse_caller_13(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1106,7 +1323,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_more_14(v, pos, o) Then
+                If parse_less_14(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1114,7 +1331,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_equal_15(v, pos, o) Then
+                If parse_more_15(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1122,7 +1339,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_less_or_equal_16(v, pos, o) Then
+                If parse_equal_16(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1130,7 +1347,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_more_or_equal_17(v, pos, o) Then
+                If parse_less_or_equal_17(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1138,7 +1355,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_if_18(v, pos, o) Then
+                If parse_more_or_equal_18(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1154,7 +1371,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_copy_20(v, pos, o) Then
+                If parse_if_20(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1162,7 +1379,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_copy_const_21(v, pos, o) Then
+                If parse_copy_21(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1170,7 +1387,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_define_22(v, pos, o) Then
+                If parse_copy_const_22(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1178,7 +1395,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_do_until_23(v, pos, o) Then
+                If parse_define_23(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1186,7 +1403,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_do_while_24(v, pos, o) Then
+                If parse_do_until_24(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1194,7 +1411,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_extern_function_25(v, pos, o) Then
+                If parse_do_while_25(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1202,7 +1419,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_move_26(v, pos, o) Then
+                If parse_extern_function_26(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1210,7 +1427,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_divide_27(v, pos, o) Then
+                If parse_move_27(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1218,7 +1435,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_extract_28(v, pos, o) Then
+                If parse_divide_28(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1226,7 +1443,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_return_29(v, pos, o) Then
+                If parse_extract_29(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1242,7 +1459,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_append_31(v, pos, o) Then
+                If parse_return_31(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1250,7 +1467,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_not_32(v, pos, o) Then
+                If parse_append_32(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1258,7 +1475,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_sizeof_33(v, pos, o) Then
+                If parse_not_33(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1266,7 +1483,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_empty_34(v, pos, o) Then
+                If parse_sizeof_34(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1274,7 +1491,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_while_then_35(v, pos, o) Then
+                If parse_empty_35(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1282,7 +1499,15 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_stop_36(v, pos, o) Then
+                If parse_while_then_36(v, pos, o) Then
+                    p = pos
+                    Return True
+                End If
+            End Using
+            Using code_block
+                Dim pos As UInt32 = 0
+                pos = p
+                If parse_stop_37(v, pos, o) Then
                     p = pos
                     Return True
                 End If

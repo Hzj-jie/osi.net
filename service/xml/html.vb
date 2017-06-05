@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 
 Public Module _html
@@ -7,11 +11,11 @@ Public Module _html
     'these two functions have potential risk to wrongly remove content, but it's in an acceptable range
     'since there is no official tag as <style*> or <script*>
     Public Function kick_style(ByRef content As String) As String
-        Return kick_between(content, "<style", "</style>", False)
+        Return kick_between(content, "<style", "</style>", case_sensitive:=False)
     End Function
 
     Public Function kick_script(ByRef content As String) As String
-        Return kick_between(content, "<script", "</script>", False)
+        Return kick_between(content, "<script", "</script>", case_sensitive:=False)
     End Function
 
     Public Function kick_style_script(ByRef content As String) As String

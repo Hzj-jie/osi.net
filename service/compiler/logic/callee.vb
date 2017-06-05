@@ -39,13 +39,13 @@ Namespace logic
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not scope Is Nothing)
             assert(Not o Is Nothing)
+            Dim pos As UInt32 = 0
+            pos = o.size()
+            o.emplace_back(String.Empty)
             If Not anchors.define(name, o) Then
                 errors.anchor_redefined(name, anchors(name))
                 Return False
             End If
-            Dim pos As UInt32 = 0
-            pos = o.size()
-            o.emplace_back(String.Empty)
             scope = scope.start_scope()
             ' caller should setup the stack.
             If Not return_value_of.define(scope, name) Then

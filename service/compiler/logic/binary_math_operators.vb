@@ -30,6 +30,18 @@ Namespace logic
         End Function
     End Class
 
+    Public Class multiply
+        Inherits binary_math_operator
+
+        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(types, result, left, right)
+        End Sub
+
+        Protected Overrides Function instruction() As command
+            Return command.mul
+        End Function
+    End Class
+
     Public Class power
         Inherits binary_math_operator
 

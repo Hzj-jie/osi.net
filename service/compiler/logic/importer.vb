@@ -74,7 +74,7 @@ Namespace logic
         End Function
 
         Public Function import(ByVal s As String, ByVal o As vector(Of exportable)) As Boolean
-            s.kick_between(comment_start, comment_end)
+            s.kick_between(comment_start, comment_end, recursive:=False)
             Dim v As vector(Of String) = Nothing
             Return strsplit(s, separators, surround_strs, v) AndAlso
                    assert(Not v.null_or_empty()) AndAlso

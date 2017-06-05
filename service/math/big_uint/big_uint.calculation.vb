@@ -1,7 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.utils
 
 Partial Public Class big_uint
     Public Function add(ByVal that As big_uint) As big_uint
@@ -204,6 +207,21 @@ Partial Public Class big_uint
         Dim r As Boolean = False
         extract(that, remainder, r)
         assert(Not r)
+        Return Me
+    End Function
+
+    Public Function factorial() As big_uint
+        If is_zero_or_one() Then
+            set_one()
+        Else
+            Dim i As big_uint = Nothing
+            i = move(Me)
+            set_one()
+            While Not i.is_one()
+                Me.multiply(i)
+                i.assert_sub(uint32_1)
+            End While
+        End If
         Return Me
     End Function
 End Class

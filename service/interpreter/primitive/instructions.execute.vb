@@ -36,10 +36,10 @@ Namespace primitive
                 assert(Not imi Is Nothing)
                 If d0.relative() Then
                     imi.advance_instruction_pointer(d0.offset())
-                    imi.do_not_advance_instruction_pointer()
                 Else
                     imi.instruction_pointer(d0.offset())
                 End If
+                imi.do_not_advance_instruction_pointer()
             End Sub
         End Class
 
@@ -247,10 +247,10 @@ Namespace primitive
                 If b Then
                     If d0.relative() Then
                         imi.advance_instruction_pointer(d0.offset())
-                        imi.do_not_advance_instruction_pointer()
                     Else
                         imi.instruction_pointer(d0.offset())
                     End If
+                    imi.do_not_advance_instruction_pointer()
                 End If
             End Sub
         End Class

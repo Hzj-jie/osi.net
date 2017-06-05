@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="logic\caller_test.vb" />
+    <Compile Include="logic\condition_test.vb" />
     <Compile Include="logic\executor_case.vb" />
     <Compile Include="logic\importer_test.vb" />
     <Compile Include="logic\import_executor_case.vb" />
@@ -107,6 +108,8 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="logic\codegen\case1.txt" />
+    <Content Include="logic\codegen\case2.txt" />
+    <Content Include="logic\codegen\case3.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\..\..\root\root.utt.props" Condition="'$(RootUttProps)'==''" />

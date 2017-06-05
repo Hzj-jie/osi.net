@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
@@ -30,7 +34,7 @@ Namespace primitive
         Sub New()
             Dim v As vector(Of String) = Nothing
             v = New vector(Of String)()
-            For i As UInt32 = 0 To strlen(space_chars) - uint32_1
+            For i As Int32 = 0 To CInt(strlen(space_chars)) - 1
                 v.emplace_back(space_chars(i))
             Next
             separators = (+v)
@@ -53,7 +57,7 @@ Namespace primitive
         End Function
 
         <Extension()> Public Function import(ByVal e As exportable, ByVal s As String) As Boolean
-            s.kick_between(comment_start, comment_end)
+            s.kick_between(comment_start, comment_end, recursive:=False)
             Dim v As vector(Of String) = Nothing
             Return strsplit(s, separators, surround_strs, v) AndAlso
                    assert(Not v.null_or_empty()) AndAlso

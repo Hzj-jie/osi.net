@@ -30,10 +30,13 @@ clear	string
 #  add target source1 source2
 add	string	string	string
 
-# execute substract command against two variables and store the result in the first variable:
-#  substract target source1 source2
-substract	string	string	string
+# execute subtract command against two variables and store the result in the first variable:
+#  subtract target source1 source2
+subtract	string	string	string
 
+# execute multiply command against two variables and store the result in the first variable:
+#  multiply target source1 source2
+multiply	string	string	string
 # execute power command against two variables and store the result in the first variable:
 #  power target source1 source2
 power	string	string	string

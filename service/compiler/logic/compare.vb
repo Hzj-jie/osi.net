@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.formation
 
 Namespace logic
     Public MustInherit Class compare

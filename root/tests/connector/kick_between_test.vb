@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.utt
 
@@ -17,8 +21,10 @@ Public Class kick_between_test
         assert_equal(kick_between("ABC<STyLE>ab sd <STYljsdo iasoj aosdfj {} []adf </stYle>BCD<sTyLe>def</StYlE>def",
                                   "<style>",
                                   "</style>",
-                                  False),
+                                  case_sensitive:=False),
                      "ABCBCDdef")
+
+        assert_equal(kick_between("abc{{{{{d}efg", "{", "}", recursive:=False), "abcefg")
         Return True
     End Function
 End Class

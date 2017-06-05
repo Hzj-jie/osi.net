@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Text
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
@@ -7,7 +11,8 @@ Public Module _kick
     <Extension()> Public Function kick_between(ByRef content As String,
                                                ByVal left As String,
                                                ByVal right As String,
-                                               Optional ByVal case_sensitive As Boolean = True) As String
+                                               Optional ByVal case_sensitive As Boolean = True,
+                                               Optional ByVal recursive As Boolean = True) As String
         If String.IsNullOrEmpty(content) Then
             Return content
         Else
@@ -18,7 +23,7 @@ Public Module _kick
                 left = content(0)
             End If
             If String.IsNullOrEmpty(right) Then
-                right = content(l - 1)
+                right = content(CInt(l - uint32_1))
             End If
 
             Dim bracket As Int32 = 0
@@ -30,13 +35,20 @@ Public Module _kick
             rtn = New StringBuilder(CInt(strlen(content)))
             For i As UInt32 = 0 To l - uint32_1
                 If strsame(content, i, left, uint32_0, leftlen, case_sensitive) Then
-                    bracket += 1
-                    i += leftlen - 1
+                    If recursive Then
+                        bracket += 1
+                    Else
+                        assert(bracket <= 1)
+                        If bracket = 0 Then
+                            bracket = 1
+                        End If
+                    End If
+                    i += leftlen - uint32_1
                 ElseIf strsame(content, i, right, uint32_0, rightlen, case_sensitive) AndAlso bracket > 0 Then
                     bracket -= 1
-                    i += rightlen - 1
+                    i += rightlen - uint32_1
                 ElseIf bracket = 0 Then
-                    rtn.Append(content(i))
+                    rtn.Append(content(CInt(i)))
                 End If
             Next
 

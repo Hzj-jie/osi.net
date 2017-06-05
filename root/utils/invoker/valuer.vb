@@ -1,5 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
 Option Strict On
+
 Imports System.Reflection
 Imports osi.root.constants
 Imports osi.root.connector
@@ -29,6 +32,17 @@ Partial Public NotInheritable Class valuer
         Return try_get(obj, binding_flags.public, name, o)
     End Function
 
+    Public Shared Function try_get(Of T, VT)(ByVal name As String,
+                                             ByVal bindingflags As BindingFlags,
+                                             ByRef o As VT) As Boolean
+        Return try_get(Of T, VT)(Nothing, bindingflags, name, o)
+    End Function
+
+    Public Shared Function try_get(Of T, VT)(ByVal name As String,
+                                             ByRef o As VT) As Boolean
+        Return try_get(Of T, VT)(Nothing, name, o)
+    End Function
+
     Public Shared Function [get](Of T, VT)(ByVal obj As T,
                                            ByVal bindingflags As BindingFlags,
                                            ByVal name As String) As VT
@@ -39,6 +53,19 @@ Partial Public NotInheritable Class valuer
 
     Public Shared Function [get](Of T, VT)(ByVal obj As T, ByVal name As String) As VT
         Return [get](Of T, VT)(obj, binding_flags.public, name)
+    End Function
+
+    Public Shared Function [get](Of T, VT)(ByVal name As String,
+                                           ByVal bindingflags As BindingFlags) As VT
+        Dim o As VT = Nothing
+        assert(try_get(Of T, VT)(name, bindingflags, o))
+        Return o
+    End Function
+
+    Public Shared Function [get](Of T, VT)(ByVal name As String) As VT
+        Dim o As VT = Nothing
+        assert(try_get(Of T, VT)(name, o))
+        Return o
     End Function
 
     Public Shared Function [get](Of VT)(ByVal obj As Object,

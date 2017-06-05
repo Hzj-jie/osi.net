@@ -51,6 +51,8 @@ public static class Program {
       wl("            If Not strsame(v(p), \"" + ss[0] + "\") Then");
       wl("                Return False");
       wl("            End If");
+      wl("            Dim start As UInt32");
+      wl("            start = p");
       wl("            p += uint32_1");
       for (int i = 1; i < ss.Length; i++) {
         switch(ss[i]) {
@@ -116,6 +118,9 @@ public static class Program {
         }
       }
       wl("            )");
+      wl("            If isdebugmode() Then");
+      wl("                o = New exportable_source_wrapper(v, start, p, o)");
+      wl("            End If");
       wl("            Return True");
       wl("        End Function");
       wl();

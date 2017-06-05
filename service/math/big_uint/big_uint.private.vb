@@ -151,8 +151,12 @@ Partial Public Class big_uint
         Else
             divide_zero_error = False
             remainder = 0
-            If that > 1 Then
-                assert(v.size() > 0)
+            If Not is_zero() AndAlso that > 1 Then
+                If is_one() Then
+                    remainder = 1
+                    set_zero()
+                Else
+                    assert(v.size() > 0)
 #If 0 Then
                 'why this is slower?
                 Dim r As UInt64 = 0
@@ -184,35 +188,36 @@ Partial Public Class big_uint
                 remainder = r
                 assert(remove_extra_blank() <= 1)
 #Else
-                Dim i As UInt32 = 0
-                i = v.size() - uint32_1
-                While True
-                    If remainder > 0 OrElse v(i) > 0 Then
-                        Dim t As UInt64 = 0
-                        t = remainder
-                        t <<= bit_count_in_uint32
-                        t = t Or v(i)
+                    Dim i As UInt32 = 0
+                    i = v.size() - uint32_1
+                    While True
+                        If remainder > 0 OrElse v(i) > 0 Then
+                            Dim t As UInt64 = 0
+                            t = remainder
+                            t <<= bit_count_in_uint32
+                            t = t Or v(i)
 
 #If 1 Then
-                        remainder = t Mod that
-                        t \= that
+                            remainder = t Mod that
+                            t \= that
 #Else
                         Dim x As UInt64 = 0
                         x = (t \ that)
                         remainder = (t Mod that)
                         t = x
 #End If
-                        assert(t <= max_uint32)
-                        v(i) = t
-                    End If
-                    If i = 0 Then
-                        Exit While
-                    Else
-                        i -= uint32_1
-                    End If
-                End While
-                assert(remove_extra_blank() <= 1)
+                            assert(t <= max_uint32)
+                            v(i) = t
+                        End If
+                        If i = 0 Then
+                            Exit While
+                        Else
+                            i -= uint32_1
+                        End If
+                    End While
+                    assert(remove_extra_blank() <= 1)
 #End If
+                End If
             End If
             assert(remainder < that)
         End If
@@ -274,7 +279,7 @@ Partial Public Class big_uint
                             ElseIf that_bit_count = remainder_bit_count Then
                                 that.right_shift(uint64_1)
                             Else
-                                'should not happen, since remainder has just been substracted by that
+                                'should not happen, since remainder has just been subtracted by that
                                 assert(False)
                             End If
                             If i = 0 Then

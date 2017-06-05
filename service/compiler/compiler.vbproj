@@ -71,6 +71,7 @@
     <Compile Include="logic\errors.vb" />
     <Compile Include="logic\exportable.vb" />
     <Compile Include="logic\compares.vb" />
+    <Compile Include="logic\exportable_source_wrapper.vb" />
     <Compile Include="logic\extern_function.vb" />
     <Compile Include="logic\copy_const.vb" />
     <Compile Include="logic\binary_math_operators.vb" />

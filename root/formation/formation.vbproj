@@ -173,6 +173,7 @@
     <Compile Include="unordered_map.vb" />
     <Compile Include="unordered_set.vb" />
     <Compile Include="vector.adaptive_array.vb" />
+    <Compile Include="vector.extension.vb" />
     <Compile Include="vector.vb" />
     <None Include="binary_tree\codegen\bt.iterator.vbp" />
     <None Include="codegen\bit_array.vbp" />

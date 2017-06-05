@@ -72,6 +72,7 @@
     <Compile Include="big_uint\big_uint_add_sub_multiply_case.vb" />
     <Compile Include="big_uint\big_uint_bytes_case.vb" />
     <Compile Include="big_uint\big_uint_divide_multiply_case.vb" />
+    <Compile Include="big_uint\big_uint_fractorial_divide_case.vb" />
     <Compile Include="big_uint\big_uint_left_shift_multiply_case.vb" />
     <Compile Include="big_uint\big_uint_power_divide_case.vb" />
     <Compile Include="big_uint\big_uint_power_extract_case.vb" />

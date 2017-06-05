@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
@@ -26,13 +27,8 @@ Namespace logic
                     If Not es(i).export(scope, o) Then
                         Return False
                     End If
-
                 Next
-                If Not e.import(Convert.ToString(o)) Then
-                    Return False
-                End If
-
-                Return True
+                Return debug_assert(e.import(o.ToString(character.newline)))
             End If
         End Function
 

@@ -38,8 +38,12 @@ Namespace logic
             Return New add(types, p1, p2, p3)
         End Function
 
-        Private Function new_substract(ByVal p1 As String, ByVal p2 As String, ByVal p3 As String) As subtract
+        Private Function new_subtract(ByVal p1 As String, ByVal p2 As String, ByVal p3 As String) As subtract
             Return New subtract(types, p1, p2, p3)
+        End Function
+
+        Private Function new_multiply(ByVal p1 As String, ByVal p2 As String, ByVal p3 As String) As multiply
+            Return New multiply(types, p1, p2, p3)
         End Function
 
         Private Function new_power(ByVal p1 As String, ByVal p2 As String, ByVal p3 As String) As power

@@ -42,7 +42,7 @@ copy i length
 define not-finished bool
 more not-finished i 0
 while_then not-finished {
-    substract i i 1
+    subtract i i 1
     caller copy-one-byte1 ( source i 1 )
     more not-finished i 0
 }
@@ -50,7 +50,7 @@ while_then not-finished {
 copy i length
 more not-finished i 0
 while_then not-finished {
-    substract i i 1
+    subtract i i 1
     define result string
     caller copy-one-byte2 result ( source target2 i 1 )
     move target2 result

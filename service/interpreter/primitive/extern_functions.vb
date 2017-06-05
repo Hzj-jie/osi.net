@@ -21,6 +21,7 @@ Namespace primitive
             v.emplace_back(AddressOf stdout)
             v.emplace_back(AddressOf stderr)
             v.emplace_back(AddressOf stdin)
+            v.emplace_back(AddressOf current_ms)
 
             m = New map(Of String, UInt32)()
             For i As UInt32 = 0 To v.size() - uint32_1
@@ -45,6 +46,10 @@ Namespace primitive
 
         Public Function stdin(ByVal i() As Byte) As Byte()
             Return str_bytes(io.input().ReadToEnd())
+        End Function
+
+        Public Function current_ms(ByVal i() As Byte) As Byte()
+            Return int64_bytes(nowadays.milliseconds())
         End Function
 
         Public Function invoke(ByVal i As UInt32, ByVal j() As Byte) As Byte()
