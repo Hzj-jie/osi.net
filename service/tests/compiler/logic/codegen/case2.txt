@@ -77,7 +77,7 @@ define continue bool
 less_or_equal continue i 100
 while_then continue {
   define rnd bigint
-  extern_function current_ms 1 rnd
+  interrupt current_ms 1 rnd
   define result bigint
   divide result rnd rnd 3
 

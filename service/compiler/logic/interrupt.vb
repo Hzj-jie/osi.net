@@ -8,17 +8,17 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public Class extern_function
+    Public Class interrupt
         Implements exportable
 
         Private ReadOnly types As types
-        Private ReadOnly functions As extern_functions
+        Private ReadOnly functions As interrupts
         Private ReadOnly function_name As String
         Private ReadOnly parameter As String
         Private ReadOnly result As String
 
         Public Sub New(ByVal types As types,
-                       ByVal functions As extern_functions,
+                       ByVal functions As interrupts,
                        ByVal function_name As String,
                        ByVal parameter As String,
                        ByVal result As String)
@@ -39,8 +39,8 @@ Namespace logic
             assert(Not scope Is Nothing)
             assert(Not o Is Nothing)
             Dim function_id As UInt32 = 0
-            If Not functions.find_extern_function(function_name, function_id) Then
-                errors.extern_function_undefined(function_name)
+            If Not functions.find_interrupt(function_name, function_id) Then
+                errors.interrupt_undefined(function_name)
                 Return False
             End If
 
@@ -58,7 +58,7 @@ Namespace logic
             Dim r As variable = Nothing
             assert(variable.[New](scope, result, r))  ' Otherwise cpc.export() should not succeed.
 
-            o.emplace_back(instruction_builder.str(command.extern, r, p, r))
+            o.emplace_back(instruction_builder.str(command.int, r, p, r))
             Return True
         End Function
     End Class

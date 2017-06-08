@@ -18,7 +18,7 @@ Namespace primitive
         Private ReadOnly _instructions As vector(Of instruction)
         Private ReadOnly _stack As vector(Of pointer(Of Byte()))
         Private ReadOnly _states As vector(Of executor.state)
-        Private ReadOnly _extern_functions As extern_functions
+        Private ReadOnly _interrupts As interrupts
         Private _carry_over As Boolean
         Private _diviced_by_zero As Boolean
         Private _imaginary_number As Boolean
@@ -27,17 +27,17 @@ Namespace primitive
         Private _do_not_advance_instruction_pointer As Boolean
         Private _stop As Boolean
 
-        Public Sub New(ByVal extern_functions As extern_functions)
-            assert(Not extern_functions Is Nothing)
+        Public Sub New(ByVal interrupts As interrupts)
+            assert(Not interrupts Is Nothing)
             _errors = New vector(Of executor.error_type)()
             _instructions = New vector(Of instruction)()
             _stack = New vector(Of pointer(Of Byte()))()
             _states = New vector(Of executor.state)()
-            _extern_functions = extern_functions
+            _interrupts = interrupts
         End Sub
 
         Public Sub New()
-            Me.New(New extern_functions())
+            Me.New(New interrupts())
         End Sub
 
         Public Function carry_over() As Boolean Implements executor.carry_over
@@ -94,8 +94,8 @@ Namespace primitive
             Return CULng(_states.size())
         End Function
 
-        Public Function extern_functions() As extern_functions Implements imitation.extern_functions
-            Return _extern_functions
+        Public Function interrupts() As interrupts Implements imitation.interrupts
+            Return _interrupts
         End Function
 
         Public Sub instruction_pointer(ByVal v As Int64) Implements imitation.instruction_pointer

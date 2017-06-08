@@ -14,7 +14,7 @@ Namespace logic
         Inherits executor_case
 
         Private Shared Function build_case(ByVal str As String,
-                                           Optional ByVal functions As extern_functions = Nothing) As exportable()
+                                           Optional ByVal functions As interrupts = Nothing) As exportable()
             Dim es As vector(Of exportable) = Nothing
             es = New vector(Of exportable)()
             If functions Is Nothing Then
@@ -28,7 +28,7 @@ Namespace logic
             Return +es
         End Function
 
-        Protected Sub New(ByVal str As String, ByVal functions As extern_functions)
+        Protected Sub New(ByVal str As String, ByVal functions As interrupts)
             MyBase.New(build_case(str, functions))
         End Sub
 

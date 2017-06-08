@@ -110,9 +110,9 @@ do_until	string	paragraph
 # equals to do { } while (a_bool_value); in C.
 do_while	string	paragraph
 
-# execute an external function with parameter and store the result in the third variable:
-#  extern_function function-name parameter result
-extern_function	string	string	string
+# execute an interrupt function with parameter and store the result in the third variable:
+#  interrupt function-name parameter result
+interrupt	string	string	string
 
 # execute move command:
 #  move target source

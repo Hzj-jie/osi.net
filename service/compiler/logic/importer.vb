@@ -18,7 +18,7 @@ Namespace logic
 
         Private ReadOnly anchors As anchors
         Private ReadOnly types As types
-        Private ReadOnly functions As extern_functions
+        Private ReadOnly functions As interrupts
 
         Shared Sub New()
             Dim v As vector(Of String) = Nothing
@@ -30,7 +30,7 @@ Namespace logic
             surround_strs = Nothing
         End Sub
 
-        Public Sub New(ByVal anchors As anchors, ByVal types As types, ByVal functions As extern_functions)
+        Public Sub New(ByVal anchors As anchors, ByVal types As types, ByVal functions As interrupts)
             assert(Not anchors Is Nothing)
             assert(Not types Is Nothing)
             assert(Not functions Is Nothing)
@@ -41,20 +41,20 @@ Namespace logic
 
         Public Shared Function [New](ByVal anchors As anchors,
                                      ByVal types As types,
-                                     ByVal functions As extern_functions) As importer
+                                     ByVal functions As interrupts) As importer
             Return New importer(anchors, types, functions)
         End Function
 
-        Public Sub New(ByVal functions As extern_functions)
+        Public Sub New(ByVal functions As interrupts)
             Me.New(New anchors(), New types(), functions)
         End Sub
 
-        Public Shared Function [New](ByVal functions As extern_functions) As importer
+        Public Shared Function [New](ByVal functions As interrupts) As importer
             Return New importer(functions)
         End Function
 
         Public Sub New()
-            Me.New(New extern_functions())
+            Me.New(New interrupts())
         End Sub
 
         Public Shared Function [New]() As importer

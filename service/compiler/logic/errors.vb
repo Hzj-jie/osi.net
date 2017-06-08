@@ -12,8 +12,8 @@ Namespace logic
             raise_error(error_type.user, "Variable ", variable, " is undefined.")
         End Sub
 
-        Public Shared Sub extern_function_undefined(ByVal name As String)
-            raise_error(error_type.user, "Extern function ", name, " is undefined.")
+        Public Shared Sub interrupt_undefined(ByVal name As String)
+            raise_error(error_type.user, "Interrupt function ", name, " is undefined.")
         End Sub
 
         Public Shared Sub unassignable_from_bool(ByVal v As variable)

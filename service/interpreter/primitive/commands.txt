@@ -22,7 +22,7 @@ app	data_ref	data_ref	#(*A) += (*B)
 sapp	data_ref	data_ref	#(*A) += sizeof(*B) + (*B)
 cut	data_ref	data_ref	data_ref	#(*A) = sub-array(src=(*B), from=(*C uint))
 cutl	data_ref	data_ref	data_ref	data_ref	#(*A) = sub-array(src=(*B), from=(*C uint), len=(*D uint))
-extern	data_ref	data_ref	data_ref	#execute an external function (*A uint), with parameter (*B), return value will be set to (*C)
+int	data_ref	data_ref	data_ref	#execute an interrupt function (*A uint), with parameter (*B), return value will be set to (*C)
 clr	data_ref	#set (*A) to empty array
 scut	data_ref	data_ref	data_ref	#(*A) = the (*C uint) chunk of (*B)
 sizeof	data_ref	data_ref	#(*A) = array-size(*B)

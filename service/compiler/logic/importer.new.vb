@@ -123,10 +123,10 @@ Namespace logic
             Return New do_while(p1, unique_ptr.[New](p2))
         End Function
 
-        Private Function new_extern_function(ByVal p1 As String,
+        Private Function new_interrupt(ByVal p1 As String,
                                              ByVal p2 As String,
-                                             ByVal p3 As String) As extern_function
-            Return New extern_function(types, functions, p1, p2, p3)
+                                             ByVal p3 As String) As interrupt
+            Return New interrupt(types, functions, p1, p2, p3)
         End Function
 
         Private Function new_move(ByVal p1 As String, ByVal p2 As String) As move

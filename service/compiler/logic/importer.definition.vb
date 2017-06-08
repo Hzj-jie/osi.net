@@ -849,13 +849,13 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_extern_function_26(
+        Private Function parse_interrupt_26(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "extern_function") Then
+            If Not strsame(v(p), "interrupt") Then
                 Return False
             End If
             Dim start As UInt32
@@ -870,7 +870,7 @@ Namespace logic
             Dim p3 As String = Nothing
             p3 = v(p)
             p += uint32_1
-            o = new_extern_function(
+            o = new_interrupt(
                 p1,
                 p2,
                 p3
@@ -1419,7 +1419,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_extern_function_26(v, pos, o) Then
+                If parse_interrupt_26(v, pos, o) Then
                     p = pos
                     Return True
                 End If

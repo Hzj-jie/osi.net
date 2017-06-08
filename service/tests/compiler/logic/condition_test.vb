@@ -18,7 +18,7 @@ Namespace logic
         Private Shared ReadOnly value1 As String
         Private Shared ReadOnly value2 As String
         Private ReadOnly io As console_io
-        Private ReadOnly ext As extern_functions
+        Private ReadOnly ext As interrupts
         Private ReadOnly out As disposer(Of StringWriter)
 
         Shared Sub New()
@@ -43,7 +43,7 @@ Namespace logic
             out = make_disposer(New StringWriter())
             io = New console_io()
             io.redirect_output(+out)
-            ext = New extern_functions(io)
+            ext = New interrupts(io)
         End Sub
 
         Private Shared Function random_value() As String
@@ -53,15 +53,15 @@ Namespace logic
         Private Shared Function create_condition() As condition
             Return New condition("a-bool",
                 unique_ptr.[New](New paragraph(
-                    New extern_function(types.empty, New extern_functions(), "stdout", "value1", "value")
+                    New interrupt(types.empty, New interrupts(), "stdout", "value1", "value")
                 )),
                 unique_ptr.[New](New paragraph(
-                    New extern_function(types.empty, New extern_functions(), "stdout", "value2", "value")
+                    New interrupt(types.empty, New interrupts(), "stdout", "value2", "value")
                 ))
             )
         End Function
 
-        Protected Overrides Function extern_functions() As extern_functions
+        Protected Overrides Function interrupts() As interrupts
             Return ext
         End Function
 

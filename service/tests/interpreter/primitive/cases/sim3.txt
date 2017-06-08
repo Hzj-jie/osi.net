@@ -10,8 +10,8 @@ push
 ## rel0 text
 ## rel1 len
 ## rel2 index
-## rel3 extern function id
-## rel4 extern return
+## rel3 int function id
+## rel4 int return
 ## rel5 1 for cutl length
 ## rel6 equal return
 ## rel7 cutl return
@@ -22,14 +22,14 @@ cpc rel2 i0
 cpc rel3 i0
 
 ## This is a simple way.
-extern rel3 rel0 rel4
+int rel3 rel0 rel4
 
 ## This is a complex way.
 cpc rel5 i1
 equal rel6 rel1 rel2
 jumpif rel5 rel6
 cutl rel7 rel0 rel2 rel5
-extern rel3 rel7 rel4
+int rel3 rel7 rel4
 add rel2 rel2 rel5
 jump rel-5
 
@@ -37,14 +37,14 @@ cpc rel2 i0
 cpc rel3 i1
 
 ## This is a simple way.
-extern rel3 rel0 rel4
+int rel3 rel0 rel4
 
 ## This is a complex way.
 cpc rel5 i1
 equal rel6 rel1 rel2
 jumpif rel5 rel6
 cutl rel7 rel0 rel2 rel5
-extern rel3 rel7 rel4
+int rel3 rel7 rel4
 add rel2 rel2 rel5
 jump rel-5
 stop

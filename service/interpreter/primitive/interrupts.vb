@@ -1,17 +1,21 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
 
 Namespace primitive
-    Public Class extern_functions
-        Public Shared ReadOnly [default] As extern_functions
+    Public Class interrupts
+        Public Shared ReadOnly [default] As interrupts
         Private ReadOnly io As console_io
         Private ReadOnly v As vector(Of Func(Of Byte(), Byte()))
         Private ReadOnly m As map(Of String, UInt32)
 
         Shared Sub New()
-            [default] = New extern_functions()
+            [default] = New interrupts()
         End Sub
 
         Public Sub New(ByVal io As console_io)
@@ -54,7 +58,7 @@ Namespace primitive
 
         Public Function invoke(ByVal i As UInt32, ByVal j() As Byte) As Byte()
             If i >= v.size() Then
-                executor_stop_error.throw(executor.error_type.undefined_extern_function)
+                executor_stop_error.throw(executor.error_type.undefined_interrupt)
                 Return Nothing
             Else
                 assert(Not v(i) Is Nothing)
@@ -62,7 +66,7 @@ Namespace primitive
             End If
         End Function
 
-        Public Function find_extern_function(ByVal name As String, ByRef o As UInt32) As Boolean
+        Public Function find_interrupt(ByVal name As String, ByRef o As UInt32) As Boolean
             Dim it As map(Of String, UInt32).iterator = Nothing
             it = m.find(name)
             If it = m.end() Then

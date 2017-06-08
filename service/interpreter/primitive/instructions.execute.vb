@@ -1,6 +1,8 @@
 ﻿
 #Const USE_WORK_ON = False
 
+Option Explicit On
+Option Infer Off
 Option Strict On
 
 Imports osi.root.constants
@@ -408,12 +410,12 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public NotInheritable Class [extern]
+        Partial Public NotInheritable Class [int]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
                 assert(Not imi Is Nothing)
-                p2(imi).set(imi.extern_functions().invoke(imi.access_stack_as_uint32(d0), +p1(imi)))
+                p2(imi).set(imi.interrupts().invoke(imi.access_stack_as_uint32(d0), +p1(imi)))
             End Sub
         End Class
 

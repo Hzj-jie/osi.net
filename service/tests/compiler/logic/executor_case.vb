@@ -24,14 +24,14 @@ Namespace logic
         Protected Overridable Sub check_result(ByVal e As not_null(Of simulator))
         End Sub
 
-        Protected Overridable Function extern_functions() As extern_functions
+        Protected Overridable Function interrupts() As interrupts
             Return Nothing
         End Function
 
         Public Overrides Function run() As Boolean
             Dim e As simulator = Nothing
-            Dim ext As extern_functions = Nothing
-            ext = extern_functions()
+            Dim ext As interrupts = Nothing
+            ext = interrupts()
             If ext Is Nothing Then
                 e = New simulator()
             Else

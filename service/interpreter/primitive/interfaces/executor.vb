@@ -1,4 +1,6 @@
 ﻿
+Option Explicit On
+Option Infer Off
 Option Strict On
 
 Imports System.Runtime.CompilerServices
@@ -42,7 +44,7 @@ Namespace primitive
         Enum error_type
             instruction_pointer_overflow
             stack_access_out_of_boundary
-            undefined_extern_function
+            undefined_interrupt
             unsupported_feature
             invalid_buffer_size
         End Enum

@@ -83,8 +83,8 @@
     <Compile Include="primitive\data_ref_test.vb" />
     <Compile Include="primitive\states_test.vb" />
     <Compile Include="primitive\exportable_test.vb" />
-    <Compile Include="primitive\extern_functions_implementation_tests.vb" />
-    <Compile Include="primitive\extern_functions_test.vb" />
+    <Compile Include="primitive\interrupts_implementation_tests.vb" />
+    <Compile Include="primitive\interrupts_test.vb" />
     <Compile Include="primitive\instructions_exportable_test.vb" />
     <Compile Include="primitive\simulator_cases.vb" />
     <Compile Include="primitive\simulator_stdio_test.vb" />

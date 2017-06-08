@@ -1,4 +1,6 @@
 ﻿
+Option Explicit On
+Option Infer Off
 Option Strict On
 
 Imports System.Runtime.CompilerServices
@@ -8,7 +10,7 @@ Imports osi.root.connector
 Namespace primitive
     Public Interface imitation
         Inherits executor
-        Function extern_functions() As extern_functions
+        Function interrupts() As interrupts
         Sub push_stack()
         Sub pop_stack()
         Sub store_state()

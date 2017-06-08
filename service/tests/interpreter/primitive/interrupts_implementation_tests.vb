@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
 Imports osi.root.constants
 Imports osi.root.connector
@@ -12,8 +16,8 @@ Namespace primitive
         Public Overrides Function run() As Boolean
             Dim io As console_io = Nothing
             io = New console_io()
-            Dim f As extern_functions = Nothing
-            f = New extern_functions(io)
+            Dim f As interrupts = Nothing
+            f = New interrupts(io)
             Dim s As String = Nothing
             Using out As TextWriter = New StringWriter()
                 io.redirect_output(out)

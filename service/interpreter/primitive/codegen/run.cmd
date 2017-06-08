@@ -1,4 +1,5 @@
 
+csc commands-parser.cs
 commands-parser.exe ..\commands.txt
 move /y commands.enum.vb ..\
 move /y instructions.vb ..\

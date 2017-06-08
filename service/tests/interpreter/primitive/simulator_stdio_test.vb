@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
 Imports osi.root.constants
 Imports osi.root.connector
@@ -14,7 +18,7 @@ Namespace primitive
             Dim s As simulator = Nothing
             Dim io As console_io = Nothing
             io = New console_io()
-            s = New simulator(New extern_functions(io))
+            s = New simulator(New interrupts(io))
             assert_true(s.import(sim3.as_text()))
             Using out As TextWriter = New StringWriter(),
                   err As TextWriter = New StringWriter()
@@ -35,7 +39,7 @@ Namespace primitive
             Dim s As simulator = Nothing
             Dim io As console_io = Nothing
             io = New console_io()
-            s = New simulator(New extern_functions(io))
+            s = New simulator(New interrupts(io))
             assert_true(s.import(sim4.as_text()))
             Dim input As String = Nothing
             input = rnd_en_chars(rnd_int(100, 1000))
