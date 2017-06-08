@@ -1,8 +1,4 @@
 
-Option Explicit On
-Option Infer Off
-Option Strict On
-
 ##DEFAULT TEMPLATE_LIST T1, T2, T3, T4, T5, T6, T7, T8
 ##DEFAULT SIZE 8
 Imports System.Text

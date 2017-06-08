@@ -74,6 +74,8 @@
     <Compile Include="binary_tree\sset.vb" />
     <Compile Include="bit_array.vb" />
     <Compile Include="bit_array_thread_safe.vb" />
+    <Compile Include="hashtable\hashtable.ref.vb" />
+    <Compile Include="hashtable\hashtable.vb" />
     <Compile Include="instance_stack.vb" />
     <Compile Include="circle.vb" />
     <Compile Include="comparer\comparable_type.vb" />
@@ -281,7 +283,9 @@
   <ItemGroup>
     <None Include="codegen\static_iterator.vbp" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="hashtable\codegen\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

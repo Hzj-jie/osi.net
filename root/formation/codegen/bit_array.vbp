@@ -1,9 +1,5 @@
 ##DEFAULT THREAD_SAFE False
 
-Option Explicit On
-Option Infer Off
-Option Strict On
-
 #If ##THREAD_SAFE## Then
 Imports System.Threading
 #End If

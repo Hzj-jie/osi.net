@@ -1,8 +1,4 @@
 ﻿
-Option Explicit On
-Option Infer Off
-Option Strict On
-
 ##DEFAULT CONST 
 #Const IS_CONST = ("##CONST##" = "const_")
 #Const IS_FIRST_CONST = ("##CONST##" = "first_const_")
