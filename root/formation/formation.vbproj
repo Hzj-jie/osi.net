@@ -74,6 +74,11 @@
     <Compile Include="binary_tree\sset.vb" />
     <Compile Include="bit_array.vb" />
     <Compile Include="bit_array_thread_safe.vb" />
+    <Compile Include="hashtable\hashtable.implements.vb" />
+    <Compile Include="hashtable\hashtable.iterator.vb" />
+    <Compile Include="hashtable\hashtable.operators.vb" />
+    <Compile Include="hashtable\hashtable.predefined.vb" />
+    <Compile Include="hashtable\hashtable.private.vb" />
     <Compile Include="hashtable\hashtable.ref.vb" />
     <Compile Include="hashtable\hashtable.vb" />
     <Compile Include="instance_stack.vb" />
@@ -201,6 +206,8 @@
     <None Include="codegen\tuple8.vbp" />
     <None Include="codegen\tuple_compare.vbp" />
     <None Include="codegen\tuple_make.vbp" />
+    <None Include="hashtable\codegen\hashtable.iterator.vbp" />
+    <None Include="hashtable\codegen\run.cmd" />
     <None Include="lifetime_control\codegen\disposer.vbp" />
     <None Include="lifetime_control\codegen\disposer_core.vbp" />
     <None Include="lifetime_control\codegen\disposer_dispose.vbp" />
@@ -283,9 +290,7 @@
   <ItemGroup>
     <None Include="codegen\static_iterator.vbp" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="hashtable\codegen\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

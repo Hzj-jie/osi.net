@@ -65,11 +65,13 @@
     <Compile Include="bytes\bytes_array.vb" />
     <Compile Include="bytes\bytes_dependent_types.vb" />
     <Compile Include="bytes\bytes_independent_types.vb" />
+    <Compile Include="copy_constructor.vb" />
     <Compile Include="default_new.vb" />
     <Compile Include="disposable.vb" />
     <Compile Include="endian.vb" />
     <Compile Include="ICloneable.vb" />
     <Compile Include="null_wait_handle.vb" />
+    <Compile Include="rnd_register.vb" />
     <Compile Include="string_utils\utf8_char.vb" />
     <Compile Include="string_utils\character.vb" />
     <Compile Include="choose.vb" />
@@ -89,6 +91,7 @@
     <Compile Include="iaction.vb" />
     <Compile Include="static_constructor.vb" />
     <Compile Include="synchronize_invoke.vb" />
+    <Compile Include="template\comparer.vb" />
     <Compile Include="template\int64.vb" />
     <Compile Include="template\to_uint32.vb" />
     <Compile Include="time\high_res_ticks_retriever.vb" />

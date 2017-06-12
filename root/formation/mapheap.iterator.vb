@@ -53,7 +53,11 @@ Partial Public Class mapheap(Of mapKey As IComparable(Of mapKey), heapKey As ICo
         Private Sub New()
         End Sub
 
+#If True Then
         Friend Sub New(ByVal that As pair(Of heapKey, mapKey))
+#Else
+        Private Sub New(ByVal that As pair(Of heapKey, mapKey))
+#End If
             assert(Not that Is Nothing)
             p = that
         End Sub
@@ -91,7 +95,7 @@ Partial Public Class mapheap(Of mapKey As IComparable(Of mapKey), heapKey As ICo
             Return CompareTo(cast(Of iterator)(other, False))
         End Function
 
-    #If True
+    #If True Then
         Public Shared Operator +(ByVal this As iterator) As pair(Of heapKey, mapKey)
             Return If(this = [end], Nothing, this.p)
         End Operator

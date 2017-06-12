@@ -1,5 +1,6 @@
 ﻿
 ##DEFAULT DEFINE_OPERATOR_PLUS True
+##DEFAULT FRIEND_CONSTRUCTOR True
         Implements IComparable(Of iterator), IComparable
 
         Public Shared ReadOnly [end] As iterator
@@ -13,7 +14,11 @@
         Private Sub New()
         End Sub
 
+#If ##FRIEND_CONSTRUCTOR## Then
         Friend Sub New(ByVal that As ##TYPE##)
+#Else
+        Private Sub New(ByVal that As ##TYPE##)
+#End If
             assert(Not that Is Nothing)
             p = that
         End Sub
@@ -51,7 +56,7 @@
             Return CompareTo(cast(Of iterator)(other, False))
         End Function
 
-    #If ##DEFINE_OPERATOR_PLUS##
+    #If ##DEFINE_OPERATOR_PLUS## Then
         Public Shared Operator +(ByVal this As iterator) As ##TYPE##
             Return If(this = [end], Nothing, this.p)
         End Operator

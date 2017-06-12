@@ -551,4 +551,8 @@ Public Module _rnd
     Public Function rnd_ints(ByVal count As Int32) As Int32()
         Return rnd_ints(r(), count)
     End Function
+
+    Public Function rnd(Of T)() As T
+        Return rnd_register(Of T).rnd()
+    End Function
 End Module

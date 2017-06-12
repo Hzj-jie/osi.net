@@ -74,6 +74,7 @@
     <Compile Include="strings.vb" />
     <Compile Include="template_parameter.vb" />
     <Compile Include="to_uint32.vb" />
+    <Compile Include="_comparer.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

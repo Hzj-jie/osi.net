@@ -1,0 +1,58 @@
+
+##INCLUDE ..\..\codegen\iterator.imports.vbp
+Imports osi.root.template
+
+Public Module _hashtable_iterator
+##DEFINE PARENT_CLASS hashtable(Of T, _UNIQUE, _SIZE, _HASHER, _COMPARER)
+##DEFINE TEMPLATE_TYPE (Of T, _UNIQUE As _boolean, _SIZE As _int64, _HASHER As _to_uint32(Of T), _COMPARER As _comparer(Of T))
+##INCLUDE ..\..\codegen\iterator.ext.vbp
+End Module
+
+Partial Public Class hashtable(Of T,
+                                  _UNIQUE As _boolean,
+                                  _SIZE As _int64,
+                                  _HASHER As _to_uint32(Of T),
+                                  _COMPARER As _comparer(Of T))
+    Public Class iterator
+##DEFINE TYPE ref
+##DEFINE DEFINE_OPERATOR_PLUS False
+##DEFINE FRIEND_CONSTRUCTOR False
+##INCLUDE ..\..\codegen\random_access_iterator.single_step.vbp
+
+        Friend Sub New(ByVal owner As hashtable(Of T, _UNIQUE, _SIZE, _HASHER, _COMPARER),
+                       ByVal row As UInt32,
+                       ByVal column As UInt32)
+            Me.New(assert_not_nothing_return(owner).ref_at(row, column))
+        End Sub
+
+        Private Function move_next() As iterator
+            Dim i As UInt32 = 0
+            i = p.cell_id() + uint32_1
+            While i < p.cell_count()
+                If Not p.cell(i) Is Nothing Then
+                    Return New iterator(p.ref_at(i))
+                End If
+                i += uint32_1
+            End While
+            Return [end]
+        End Function
+
+        Private Function move_prev() As iterator
+            If p.cell_id() > uint32_0 Then
+                Dim i As UInt32 = 0
+                i = p.cell_id() - uint32_1
+                While i >= uint32_0
+                    If Not p.cell(i) Is Nothing Then
+                        Return New iterator(p.ref_at(i))
+                    End If
+                    i -= uint32_1
+                End While
+            End If
+            Return [end]
+        End Function
+
+        Public Shared Operator +(ByVal this As iterator) As T
+            Return If(this = [end], Nothing, +(this.p))
+        End Operator
+    End Class
+End Class

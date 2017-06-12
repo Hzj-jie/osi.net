@@ -59,7 +59,11 @@ Partial Public Class bt(OF T)
         Private Sub New()
         End Sub
 
+#If True Then
         Friend Sub New(ByVal that As node)
+#Else
+        Private Sub New(ByVal that As node)
+#End If
             assert(Not that Is Nothing)
             p = that
         End Sub
@@ -97,7 +101,7 @@ Partial Public Class bt(OF T)
             Return CompareTo(cast(Of iterator)(other, False))
         End Function
 
-    #If False
+    #If False Then
         Public Shared Operator +(ByVal this As iterator) As node
             Return If(this = [end], Nothing, this.p)
         End Operator

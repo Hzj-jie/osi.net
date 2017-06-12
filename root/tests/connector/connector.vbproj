@@ -77,6 +77,8 @@
     <Compile Include="concurrency_runner_test.vb" />
     <Compile Include="console_key_test.vb" />
     <Compile Include="constructor_detect_test.vb" />
+    <Compile Include="copy_constructor_perf.vb" />
+    <Compile Include="copy_constructor_test.vb" />
     <Compile Include="copy_test.vb" />
     <Compile Include="cryptography_behavior_test.vb" />
     <Compile Include="cstr_convert_tostring_perf_test.vb" />
@@ -138,6 +140,7 @@
     <Compile Include="overload_behavior_test.vb" />
     <Compile Include="rate_timeout_test.vb" />
     <Compile Include="rnd\guid_strs_test.vb" />
+    <Compile Include="rnd_register_test.vb" />
     <Compile Include="shared_ctor_callstack_behavior_test.vb" />
     <Compile Include="static_constructor_test.vb" />
     <Compile Include="strindexof_test.vb" />
