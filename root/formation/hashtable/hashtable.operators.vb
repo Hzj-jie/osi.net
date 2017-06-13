@@ -9,7 +9,7 @@ Imports osi.root.template
 
 Partial Public Class hashtable(Of T,
                                   _UNIQUE As _boolean,
-                                  _SIZE As _int64,
+                                  _COLUMN_SIZE As _int64,
                                   _HASHER As _to_uint32(Of T),
                                   _COMPARER As _comparer(Of T))
     Public Function find(ByVal value As T) As iterator

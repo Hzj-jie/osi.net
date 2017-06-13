@@ -8,7 +8,7 @@ Imports osi.root.template
 
 Partial Public Class hashtable(Of T,
                                   _UNIQUE As _boolean,
-                                  _SIZE As _int64,
+                                  _COLUMN_SIZE As _int64,
                                   _HASHER As _to_uint32(Of T),
                                   _COMPARER As _comparer(Of T))
     Private Function hash(ByVal v As T) As UInt32
@@ -16,7 +16,7 @@ Partial Public Class hashtable(Of T,
     End Function
 
     Private Sub new_row()
-        v.emplace_back(New array(Of constant(Of T), _SIZE)())
+        v.emplace_back(New array(Of constant(Of T), _COLUMN_SIZE)())
     End Sub
 
     Private Function column_count() As UInt32

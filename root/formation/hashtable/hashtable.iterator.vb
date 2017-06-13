@@ -27,7 +27,7 @@ Public Module _hashtable_iterator
 'so change ..\..\codegen\iterator.ext.vbp instead of this file
 
 
-    <Extension()> Public Function null_or_end(Of T, _UNIQUE As _boolean, _SIZE As _int64, _HASHER As _to_uint32(Of T), _COMPARER As _comparer(Of T))(ByVal this As hashtable(Of T, _UNIQUE, _SIZE, _HASHER, _COMPARER).iterator) As Boolean
+    <Extension()> Public Function null_or_end(Of T, _UNIQUE As _boolean, _COLUMN_SIZE As _int64, _HASHER As _to_uint32(Of T), _COMPARER As _comparer(Of T))(ByVal this As hashtable(Of T, _UNIQUE, _COLUMN_SIZE, _HASHER, _COMPARER).iterator) As Boolean
         Return this Is Nothing OrElse this.is_end()
     End Function
 'finish ..\..\codegen\iterator.ext.vbp --------
@@ -35,7 +35,7 @@ End Module
 
 Partial Public Class hashtable(Of T,
                                   _UNIQUE As _boolean,
-                                  _SIZE As _int64,
+                                  _COLUMN_SIZE As _int64,
                                   _HASHER As _to_uint32(Of T),
                                   _COMPARER As _comparer(Of T))
     Public Class iterator
@@ -161,7 +161,7 @@ Partial Public Class hashtable(Of T,
         End Function
 'finish ..\..\codegen\random_access_iterator.single_step.vbp --------
 
-        Friend Sub New(ByVal owner As hashtable(Of T, _UNIQUE, _SIZE, _HASHER, _COMPARER),
+        Friend Sub New(ByVal owner As hashtable(Of T, _UNIQUE, _COLUMN_SIZE, _HASHER, _COMPARER),
                        ByVal row As UInt32,
                        ByVal column As UInt32)
             Me.New(assert_not_nothing_return(owner).ref_at(row, column))

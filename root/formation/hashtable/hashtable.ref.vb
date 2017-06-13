@@ -8,15 +8,15 @@ Imports osi.root.template
 
 Partial Public Class hashtable(Of T,
                                   _UNIQUE As _boolean,
-                                  _SIZE As _int64,
+                                  _COLUMN_SIZE As _int64,
                                   _HASHER As _to_uint32(Of T),
                                   _COMPARER As _comparer(Of T))
     Private Class ref
-        Public ReadOnly owner As hashtable(Of T, _UNIQUE, _SIZE, _HASHER, _COMPARER)
+        Public ReadOnly owner As hashtable(Of T, _UNIQUE, _COLUMN_SIZE, _HASHER, _COMPARER)
         Public ReadOnly row As UInt32
         Public ReadOnly column As UInt32
 
-        Public Sub New(ByVal owner As hashtable(Of T, _UNIQUE, _SIZE, _HASHER, _COMPARER),
+        Public Sub New(ByVal owner As hashtable(Of T, _UNIQUE, _COLUMN_SIZE, _HASHER, _COMPARER),
                        ByVal row As UInt32,
                        ByVal column As UInt32)
             assert(Not owner Is Nothing)

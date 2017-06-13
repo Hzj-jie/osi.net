@@ -9,7 +9,7 @@ Imports osi.root.template
 
 Partial Public Class hashtable(Of T,
                                   _UNIQUE As _boolean,
-                                  _SIZE As _int64,
+                                  _COLUMN_SIZE As _int64,
                                   _HASHER As _to_uint32(Of T),
                                   _COMPARER As _comparer(Of T))
     Private Shared ReadOnly unique As Boolean
@@ -22,11 +22,11 @@ Partial Public Class hashtable(Of T,
         compare = alloc(Of _COMPARER)()
     End Sub
 
-    Private ReadOnly v As vector(Of array(Of constant(Of T), _SIZE))
+    Private ReadOnly v As vector(Of array(Of constant(Of T), _COLUMN_SIZE))
     Private s As UInt32
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As vector(Of array(Of constant(Of T), _SIZE)), ByVal s As UInt32)
+    Protected Sub New(ByVal v As vector(Of array(Of constant(Of T), _COLUMN_SIZE)), ByVal s As UInt32)
         assert(Not v Is Nothing)
         Me.v = v
         Me.s = s
