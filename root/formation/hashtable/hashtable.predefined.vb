@@ -58,6 +58,10 @@ Public Class hashtable(Of T)
         MyBase.New()
     End Sub
 
+    Protected Shadows Function clone(Of R As hashtable(Of T))() As R
+        Return MyBase.clone(Of R)()
+    End Function
+
     Public Shadows Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
@@ -90,6 +94,10 @@ Public Class multi_hashtable(Of T)
     Public Sub New()
         MyBase.New()
     End Sub
+
+    Protected Shadows Function clone(Of R As multi_hashtable(Of T))() As R
+        Return MyBase.clone(Of R)()
+    End Function
 
     Public Shadows Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()

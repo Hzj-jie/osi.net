@@ -420,18 +420,18 @@ Public Module _rnd
 
     Public Function rnd_en_chars(ByVal r As Random,
                                  ByVal length As Int32,
-                                 Optional ByVal careCase As Boolean = True) As String
+                                 Optional ByVal case_sensitive As Boolean = True) As String
         Dim rtn As StringBuilder = Nothing
         rtn = New StringBuilder(If(length < 0, 0, length))
         For i As Int32 = 0 To length - 1
-            rtn.Append(rnd_en_char(r, careCase))
+            rtn.Append(rnd_en_char(r, case_sensitive))
         Next
 
         Return Convert.ToString(rtn)
     End Function
 
-    Public Function rnd_en_chars(ByVal length As Int32, Optional ByVal careCase As Boolean = True) As String
-        Return rnd_en_chars(r(), length, careCase)
+    Public Function rnd_en_chars(ByVal length As Int32, Optional ByVal case_sensitive As Boolean = True) As String
+        Return rnd_en_chars(r(), length, case_sensitive)
     End Function
 
     Private ReadOnly a As Int32 = Convert.ToInt32(character.a)
@@ -440,12 +440,12 @@ Public Module _rnd
     Private ReadOnly _A As Int32 = Convert.ToInt32(character._A)
     Private ReadOnly a_A_diff As Int32 = _A - a
 
-    Public Function rnd_en_char(ByVal r As Random, Optional ByVal careCase As Boolean = True) As Char
-        Return Convert.ToChar(ri(r, a, z_p_1) + If(careCase AndAlso ri(r, 0, 2) = 0, a_A_diff, 0))
+    Public Function rnd_en_char(ByVal r As Random, Optional ByVal case_sensitive As Boolean = True) As Char
+        Return Convert.ToChar(ri(r, a, z_p_1) + If(case_sensitive AndAlso ri(r, 0, 2) = 0, a_A_diff, 0))
     End Function
 
-    Public Function rnd_en_char(Optional ByVal careCase As Boolean = True) As Char
-        Return rnd_en_char(r(), careCase)
+    Public Function rnd_en_char(Optional ByVal case_sensitive As Boolean = True) As Char
+        Return rnd_en_char(r(), case_sensitive)
     End Function
 
     Public Function rnd_byte() As Byte
