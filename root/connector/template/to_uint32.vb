@@ -6,14 +6,33 @@ Option Strict On
 Imports osi.root.constants
 Imports osi.root.template
 
-Public Class default_to_uint32(Of keyT)
-    Inherits _to_uint32(Of keyT)
+Public Class fast_to_uint32(Of T)
+    Inherits _to_uint32(Of T)
 
-    Public Overrides Function at(ByRef k As keyT) As UInt32
+    Public Overrides Function at(ByRef k As T) As UInt32
+        If type_info(Of T).is_valuetype Then
+            Return int32_uint32(k.GetHashCode())
+        ElseIf Not k Is Nothing Then
+            Return int32_uint32(k.GetHashCode())
+        Else
+            Return 0
+        End If
+    End Function
+
+    Public Overrides Function reverse(ByVal i As UInt32) As T
+        assert(False)
+        Return Nothing
+    End Function
+End Class
+
+Public Class default_to_uint32(Of T)
+    Inherits _to_uint32(Of T)
+
+    Public Overrides Function at(ByRef k As T) As UInt32
         Return signing(k)
     End Function
 
-    Public Overrides Function reverse(ByVal i As UInt32) As keyT
+    Public Overrides Function reverse(ByVal i As UInt32) As T
         assert(False)
         Return Nothing
     End Function

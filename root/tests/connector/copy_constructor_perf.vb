@@ -31,7 +31,7 @@ Public Class copy_constructor_perf
             Me.New(a, b, c)
         End Sub
 
-        <copy_constructor>
+        <copy_constructor()>
         Protected Sub New(ByVal a As String, ByVal b As UInt32, ByVal c As Object)
             Me.a = a
             Me.b = b

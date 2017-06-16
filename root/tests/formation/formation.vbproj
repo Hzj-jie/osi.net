@@ -165,6 +165,7 @@
     <Compile Include="tuple_test.vb" />
     <Compile Include="unique_strong_map_test.vb" />
     <Compile Include="unordered_set_perf.vb" />
+    <Compile Include="unordered_set_perf_tests.vb" />
     <Compile Include="unordered_set_test.vb" />
     <Compile Include="vector\vector_perf.vb" />
     <Compile Include="vector\vector_test.calls.vb" />

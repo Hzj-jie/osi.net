@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.utt
 Imports osi.root.constants
@@ -50,7 +54,7 @@ Public Class prime_test
         If x <= 1 Then
             Return False
         Else
-            For i As Int32 = 2 To System.Math.Sqrt(x)
+            For i As Int32 = 2 To CInt(System.Math.Sqrt(x))
                 If x Mod i = 0 Then
                     Return False
                 End If
@@ -60,10 +64,10 @@ Public Class prime_test
     End Function
 
     Private Shared Function test_known_primes(ByVal known_primes() As Int32) As Boolean
-        For i As Int32 = 0 To array_size(known_primes) - 1
+        For i As Int32 = 0 To array_size_i(known_primes) - 1
             assert_true(is_prime(known_primes(i)))
         Next
-        For i As Int32 = 0 To array_size(known_primes) - 2
+        For i As Int32 = 0 To array_size_i(known_primes) - 2
             For j As Int32 = known_primes(i) + 1 To known_primes(i + 1) - 1
                 assert_false(is_prime(j))
             Next
@@ -82,9 +86,7 @@ Public Class prime_test
     End Function
 
     Public Overrides Function run() As Boolean
-        Using New auto_assert_timelimited_operation(1000)
-            assert_equal(prime_count, 9592)
-        End Using
+        assert_equal(prime_count, 9592)
         Return test_known_primes(known_primes1) AndAlso
                test_known_primes(known_primes2) AndAlso
                test_rnd_prime()

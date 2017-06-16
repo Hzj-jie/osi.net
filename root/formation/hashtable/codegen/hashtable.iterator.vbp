@@ -3,14 +3,13 @@
 Imports osi.root.template
 
 Public Module _hashtable_iterator
-##DEFINE PARENT_CLASS hashtable(Of T, _UNIQUE, _COLUMN_SIZE, _HASHER, _COMPARER)
-##DEFINE TEMPLATE_TYPE (Of T, _UNIQUE As _boolean, _COLUMN_SIZE As _int64, _HASHER As _to_uint32(Of T), _COMPARER As _comparer(Of T))
+##DEFINE PARENT_CLASS hashtable(Of T, _UNIQUE, _HASHER, _COMPARER)
+##DEFINE TEMPLATE_TYPE (Of T, _UNIQUE As _boolean, _HASHER As _to_uint32(Of T), _COMPARER As _comparer(Of T))
 ##INCLUDE ..\..\codegen\iterator.ext.vbp
 End Module
 
 Partial Public Class hashtable(Of T,
                                   _UNIQUE As _boolean,
-                                  _COLUMN_SIZE As _int64,
                                   _HASHER As _to_uint32(Of T),
                                   _COMPARER As _comparer(Of T))
     Public Class iterator
@@ -19,7 +18,7 @@ Partial Public Class hashtable(Of T,
 ##DEFINE FRIEND_CONSTRUCTOR False
 ##INCLUDE ..\..\codegen\random_access_iterator.single_step.vbp
 
-        Friend Sub New(ByVal owner As hashtable(Of T, _UNIQUE, _COLUMN_SIZE, _HASHER, _COMPARER),
+        Friend Sub New(ByVal owner As hashtable(Of T, _UNIQUE, _HASHER, _COMPARER),
                        ByVal row As UInt32,
                        ByVal column As UInt32)
             Me.New(assert_not_nothing_return(owner).ref_at(row, column))

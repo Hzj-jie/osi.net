@@ -9,7 +9,6 @@ Imports osi.root.template
 
 Partial Public Class hashtable(Of T,
                                   _UNIQUE As _boolean,
-                                  _COLUMN_SIZE As _int64,
                                   _HASHER As _to_uint32(Of T),
                                   _COMPARER As _comparer(Of T))
     Public Function find(ByVal value As T) As iterator
@@ -39,6 +38,11 @@ Partial Public Class hashtable(Of T,
                 Return True
             End If
         Next
+
+        If size() = column_count() AndAlso rehash() Then
+            Return emplace(value)
+        End If
+
         new_row()
         set_cell(last_row(), index, value)
         Return True

@@ -7,12 +7,12 @@ Imports osi.root.connector
 Imports osi.root.template
 
 Public Class hashtable(Of T, _UNIQUE As _boolean)
-    Inherits hashtable(Of T, _UNIQUE, _3371, default_to_uint32(Of T), default_comparer(Of T))
+    Inherits hashtable(Of T, _UNIQUE, fast_to_uint32(Of T), default_comparer(Of T))
     Implements ICloneable, ICloneable(Of hashtable(Of T, _UNIQUE))
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As vector(Of array(Of constant(Of T), _3371)), ByVal s As UInt32)
-        MyBase.New(v, s)
+    Protected Sub New(ByVal v As vector(Of array(Of constant(Of T))), ByVal s As UInt32, ByVal c As UInt32)
+        MyBase.New(v, s, c)
     End Sub
 
     Public Sub New()
@@ -34,13 +34,13 @@ Public Class hashtable(Of T, _UNIQUE As _boolean)
 
     Public Shared Shadows Function move(ByVal v As hashtable(Of T, _UNIQUE)) _
                                        As hashtable(Of T, _UNIQUE)
-        Return hashtable(Of T, _UNIQUE, _3371, default_to_uint32(Of T), default_comparer(Of T)) _
+        Return hashtable(Of T, _UNIQUE, fast_to_uint32(Of T), default_comparer(Of T)) _
                    .move(Of hashtable(Of T, _UNIQUE))(v)
     End Function
 
     Public Shared Shadows Function swap(ByVal this As hashtable(Of T, _UNIQUE),
                                         ByVal that As hashtable(Of T, _UNIQUE)) As Boolean
-        Return hashtable(Of T, _UNIQUE, _3371, default_to_uint32(Of T), default_comparer(Of T)) _
+        Return hashtable(Of T, _UNIQUE, fast_to_uint32(Of T), default_comparer(Of T)) _
                    .swap(this, that)
     End Function
 End Class
@@ -50,8 +50,8 @@ Public Class hashtable(Of T)
     Implements ICloneable, ICloneable(Of hashtable(Of T))
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As vector(Of array(Of constant(Of T), _3371)), ByVal s As UInt32)
-        MyBase.New(v, s)
+    Protected Sub New(ByVal v As vector(Of array(Of constant(Of T))), ByVal s As UInt32, ByVal c As UInt32)
+        MyBase.New(v, s, c)
     End Sub
 
     Public Sub New()
@@ -71,13 +71,13 @@ Public Class hashtable(Of T)
     End Function
 
     Public Shared Shadows Function move(ByVal v As hashtable(Of T)) As hashtable(Of T)
-        Return hashtable(Of T, _true, _3371, default_to_uint32(Of T), default_comparer(Of T)) _
+        Return hashtable(Of T, _true, fast_to_uint32(Of T), default_comparer(Of T)) _
                    .move(Of hashtable(Of T))(v)
     End Function
 
     Public Shared Shadows Function swap(ByVal this As hashtable(Of T),
                                         ByVal that As hashtable(Of T)) As Boolean
-        Return hashtable(Of T, _true, _3371, default_to_uint32(Of T), default_comparer(Of T)) _
+        Return hashtable(Of T, _true, fast_to_uint32(Of T), default_comparer(Of T)) _
                    .swap(this, that)
     End Function
 End Class
@@ -87,8 +87,8 @@ Public Class multi_hashtable(Of T)
     Implements ICloneable, ICloneable(Of multi_hashtable(Of T))
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As vector(Of array(Of constant(Of T), _3371)), ByVal s As UInt32)
-        MyBase.New(v, s)
+    Protected Sub New(ByVal v As vector(Of array(Of constant(Of T))), ByVal s As UInt32, ByVal c As UInt32)
+        MyBase.New(v, s, c)
     End Sub
 
     Public Sub New()
@@ -108,13 +108,13 @@ Public Class multi_hashtable(Of T)
     End Function
 
     Public Shared Shadows Function move(ByVal v As multi_hashtable(Of T)) As multi_hashtable(Of T)
-        Return hashtable(Of T, _false, _3371, default_to_uint32(Of T), default_comparer(Of T)) _
+        Return hashtable(Of T, _false, fast_to_uint32(Of T), default_comparer(Of T)) _
                    .move(Of multi_hashtable(Of T))(v)
     End Function
 
     Public Shared Shadows Function swap(ByVal this As multi_hashtable(Of T),
                                         ByVal that As multi_hashtable(Of T)) As Boolean
-        Return hashtable(Of T, _false, _3371, default_to_uint32(Of T), default_comparer(Of T)) _
+        Return hashtable(Of T, _false, fast_to_uint32(Of T), default_comparer(Of T)) _
                    .swap(this, that)
     End Function
 End Class

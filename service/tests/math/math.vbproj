@@ -83,6 +83,7 @@
     <Compile Include="big_uint\big_uint_test.vb" />
     <Compile Include="calculator_test.vb" />
     <Compile Include="expression_test.vb" />
+    <Compile Include="hashtable_predefined_sizes_test.vb" />
     <Compile Include="math_expression.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
