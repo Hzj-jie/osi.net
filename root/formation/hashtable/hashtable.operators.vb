@@ -39,7 +39,7 @@ Partial Public Class hashtable(Of T,
             End If
         Next
 
-        If size() = column_count() AndAlso rehash() Then
+        If should_rehash() AndAlso rehash() Then
             Return emplace(value)
         End If
 

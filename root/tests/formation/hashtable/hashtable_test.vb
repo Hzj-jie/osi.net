@@ -14,15 +14,16 @@ Public Class hashtable_case(Of T)
     Private ReadOnly h As hashtable(Of T)
     Private ReadOnly s As [set](Of T)
 
+    ' ~229 items
     Public Sub New()
         h = New hashtable(Of T)()
         s = New [set](Of T)()
-        insert_call(0.215, AddressOf insert)
-        insert_call(0.215, AddressOf emplace)
-        insert_call(0.25, AddressOf find)
-        insert_call(0.26, AddressOf [erase])
+        insert_call(0.2395, AddressOf insert)
+        insert_call(0.2395, AddressOf emplace)
+        insert_call(0.26, AddressOf find)
+        insert_call(0.25, AddressOf [erase])
         insert_call(0.01, AddressOf clone)
-        insert_call(0.05, AddressOf clear)
+        insert_call(0.001, AddressOf clear)
     End Sub
 
     Private Function random_select_key_from_h() As T
@@ -123,7 +124,7 @@ Public Class hashtable_test(Of T)
     Inherits repeat_case_wrapper
 
     Public Sub New()
-        MyBase.New(New hashtable_case(Of T)(), 1024 * 1024)
+        MyBase.New(New hashtable_case(Of T)(), 1024 * 64)
     End Sub
 End Class
 

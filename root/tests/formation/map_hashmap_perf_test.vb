@@ -14,13 +14,13 @@ Public Class map_hashmap_perf_test
 
     Protected Overrides Function min_rate_table() As Double(,)
         If isdebugmode() Then
-            Return {{0, -1, 40},
-                    {-1, 0, -1},
-                    {0.08, -1, 0}}
-        Else
-            Return {{0, -1, 15},
-                    {-1, 0, -1},
+            Return {{0, 4, 10},
+                    {0.5, 0, -1},
                     {0.2, -1, 0}}
+        Else
+            Return {{0, 3, 4},
+                    {0.7, 0, -1},
+                    {0.5, -1, 0}}
         End If
     End Function
 
@@ -37,6 +37,7 @@ Public Class map_hashmap_perf_test
 
         Public Sub New()
             MyBase.New()
+            ' ~30000 items
             insert_call(0.5, AddressOf insert)
             insert_call(0.3, AddressOf find)
             insert_call(0.2, AddressOf [erase])
@@ -81,7 +82,7 @@ Public Class map_hashmap_perf_test
         End Sub
 
         Protected Overrides Sub insert()
-            m.insert(rnd_str(), rnd_str())
+            m.emplace(rnd_str(), rnd_str())
         End Sub
 
         Protected Overrides Sub find()
@@ -116,7 +117,7 @@ Public Class map_hashmap_perf_test
         End Sub
 
         Protected Overrides Sub insert()
-            m.insert(rnd_str(), rnd_str())
+            m.emplace(rnd_str(), rnd_str())
         End Sub
 
         Protected Overrides Sub find()

@@ -97,4 +97,8 @@ Partial Public Class hashtable(Of T,
         move_to(r, Me)
         Return True
     End Function
+
+    Private Function should_rehash() As Boolean
+        Return size() >= column_count()
+    End Function
 End Class

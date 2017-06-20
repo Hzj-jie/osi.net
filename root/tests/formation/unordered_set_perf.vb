@@ -55,12 +55,22 @@ Public Class unordered_set_perf(Of T, _RND As __do(Of T))
         rnd = -alloc(Of _RND)()
     End Sub
 
-    Public Sub New(ByVal ParamArray percentages() As Double)
+    Public Sub New(ByVal percentages() As Double)
         MyBase.New(R(New unordered_set_case(percentages)), R(New set_case(percentages)))
     End Sub
 
+    Protected Shared Function low_item_count_percentages() As Double()
+        ' ~239 items
+        Return {0.2445, 0.2445, 0.25, 0.26, 0.001}
+    End Function
+
+    Protected Shared Function high_item_count_percentages() As Double()
+        ' ~25000 items
+        Return {0.25, 0.25, 0.25, 0.24999, 0.00001}
+    End Function
+
     Private Shared Function R(ByVal c As [case]) As [case]
-        Return repeat(c, 1024 * 1024 * 16)
+        Return repeat(c, 1024 * 256)
     End Function
 
     Private MustInherit Class perf_case

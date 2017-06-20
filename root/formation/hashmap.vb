@@ -321,9 +321,13 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
     End Property
 
     Public Function insert(ByVal k As KEY_T, ByVal v As VALUE_T) As iterator
+        Return emplace(k, copy_no_error(v))
+    End Function
+
+    Public Function emplace(ByVal k As KEY_T, ByVal v As VALUE_T) As iterator
         Dim index As UInt32 = 0
         index = key_index(k)
-        Return New iterator(Me, index, data(index).insert(k, v))
+        Return New iterator(Me, index, data(index).emplace(k, v))
     End Function
 
     Public Function insert(ByVal other As hashmap(Of KEY_T, VALUE_T, _HASH_SIZE, _KEY_TO_INDEX)) As Boolean

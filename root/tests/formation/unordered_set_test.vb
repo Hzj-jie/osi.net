@@ -14,15 +14,15 @@ Public Class unordered_set_case(Of T)
     Private ReadOnly h As unordered_set(Of T)
     Private ReadOnly s As [set](Of T)
 
-    Public Sub New()
+    Public Sub New(ByVal percentags() As Double)
         h = New unordered_set(Of T)()
         s = New [set](Of T)()
-        insert_call(0.215, AddressOf insert)
-        insert_call(0.215, AddressOf emplace)
-        insert_call(0.25, AddressOf find)
-        insert_call(0.26, AddressOf [erase])
-        insert_call(0.01, AddressOf clone)
-        insert_call(0.05, AddressOf clear)
+        insert_call(percentags(0), AddressOf insert)
+        insert_call(percentags(1), AddressOf emplace)
+        insert_call(percentags(2), AddressOf find)
+        insert_call(percentags(3), AddressOf [erase])
+        insert_call(percentags(4), AddressOf clone)
+        insert_call(percentags(5), AddressOf clear)
     End Sub
 
     Private Function random_select_key_from_h() As T
@@ -122,15 +122,49 @@ End Class
 Public Class unordered_set_test(Of T)
     Inherits repeat_case_wrapper
 
-    Public Sub New()
-        MyBase.New(New unordered_set_case(Of T)(), 1024 * 1024)
+    Public Sub New(ByVal percentages() As Double)
+        MyBase.New(New unordered_set_case(Of T)(percentages), 1024 * 16)
     End Sub
+
+    Protected Shared Function low_item_count_percentages() As Double()
+        ' ~229 items
+        Return {0.2395, 0.2395, 0.26, 0.25, 0.01, 0.001}
+    End Function
+
+    Protected Shared Function high_item_count_percentages() As Double()
+        ' ~25000 items
+        Return {0.25, 0.25, 0.23999, 0.25, 0.01, 0.00001}
+    End Function
 End Class
 
 Public Class unordered_set_uint_test
     Inherits unordered_set_test(Of UInt32)
+
+    Public Sub New()
+        MyBase.New(low_item_count_percentages())
+    End Sub
 End Class
 
 Public Class unordered_set_string_test
     Inherits unordered_set_test(Of String)
+
+    Public Sub New()
+        MyBase.New(low_item_count_percentages())
+    End Sub
+End Class
+
+Public Class unordered_set_more_items_uint_test
+    Inherits unordered_set_test(Of UInt32)
+
+    Public Sub New()
+        MyBase.New(high_item_count_percentages())
+    End Sub
+End Class
+
+Public Class unordered_set_more_items_string_test
+    Inherits unordered_set_test(Of String)
+
+    Public Sub New()
+        MyBase.New(high_item_count_percentages())
+    End Sub
 End Class
