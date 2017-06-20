@@ -15,7 +15,8 @@ Public NotInheritable Class windows_error_mode
         Try
             old_mode = SetErrorMode(mode)
             Return True
-        Catch ex As DllNotFoundException
+        Catch ex As Exception
+            raise_error(error_type.warning, "Failed to execute SetErrorMode, ex ", ex)
             Return False
         End Try
     End Function
@@ -24,7 +25,8 @@ Public NotInheritable Class windows_error_mode
         Try
             mode = GetErrorMode()
             Return True
-        Catch ex As DllNotFoundException
+        Catch ex As Exception
+            raise_error(error_type.warning, "Failed to execute GetErrorMode, ex ", ex)
             Return False
         End Try
     End Function

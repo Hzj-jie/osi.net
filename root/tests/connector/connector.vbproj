@@ -193,6 +193,7 @@
     <Compile Include="uri_path_test.vb" />
     <Compile Include="wait_handle_behavior_test.vb" />
     <Compile Include="weakreference_behavior_test.vb" />
+    <Compile Include="windows_hook\lowlevel_keyboard_hook_test.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

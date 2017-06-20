@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.DateTime
 Imports osi.root.constants
 
@@ -50,5 +54,12 @@ Public Class low_res_ticks_retriever
         last_ms = c
         assert(offset > 0)
         Return offset + c
+    End Function
+
+    Public Shared Function to_date(ByVal environment_milliseconds As UInt32) As Date
+        Dim n As Int64 = 0
+        n = environment_milliseconds_uint32()
+        n -= environment_milliseconds
+        Return New Date(milliseconds_to_ticks(Now().milliseconds() - n))
     End Function
 End Class

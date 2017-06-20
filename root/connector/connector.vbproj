@@ -115,6 +115,12 @@
     <Compile Include="ref.vb" />
     <Compile Include="weak_action.vb" />
     <Compile Include="windows_error_mode.vb" />
+    <Compile Include="windows_hook\auto_release_windows_hook.vb" />
+    <Compile Include="windows_hook\lowlevel_keyboard_hook.vb" />
+    <Compile Include="windows_hook\windows_virtual_key.vb" />
+    <Compile Include="windows_hook\windows_hook.vb" />
+    <Compile Include="windows_hook\windows_message.vb" />
+    <Compile Include="windows_native_error.vb" />
     <None Include="bytes\codegen\bytes_dependent_impl.vbp" />
     <None Include="bytes\codegen\bytes_dependent_types.vbp" />
     <None Include="bytes\codegen\bytes_dependent_types_impl.vbp" />
