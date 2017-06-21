@@ -164,6 +164,7 @@
     <Compile Include="trie\trie_test.vb" />
     <Compile Include="tuple_test.vb" />
     <Compile Include="unique_strong_map_test.vb" />
+    <Compile Include="unordered_map_test.vb" />
     <Compile Include="unordered_set_perf.vb" />
     <Compile Include="unordered_set_perf_tests.vb" />
     <Compile Include="unordered_set_test.vb" />

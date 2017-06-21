@@ -91,7 +91,7 @@ Partial Public Class hashtable(Of T,
         Dim it As iterator = Nothing
         it = begin()
         While it <> [end]()
-            assert(r.emplace(+it))
+            assert(r.emplace(+it).second)
             it += 1
         End While
         move_to(r, Me)

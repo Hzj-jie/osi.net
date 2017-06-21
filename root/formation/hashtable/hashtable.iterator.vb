@@ -192,8 +192,16 @@ Partial Public Class hashtable(Of T,
             Return [end]
         End Function
 
+        Friend Function ref() As ref
+            Return p
+        End Function
+
+        Public Function value() As T
+            Return +p
+        End Function
+
         Public Shared Operator +(ByVal this As iterator) As T
-            Return If(this = [end], Nothing, +(this.p))
+            Return If(this = [end], Nothing, this.value())
         End Operator
     End Class
 End Class

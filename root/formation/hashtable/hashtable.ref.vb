@@ -10,7 +10,7 @@ Partial Public Class hashtable(Of T,
                                   _UNIQUE As _boolean,
                                   _HASHER As _to_uint32(Of T),
                                   _COMPARER As _comparer(Of T))
-    Private Class ref
+    Protected Friend Class ref
         Public ReadOnly owner As hashtable(Of T, _UNIQUE, _HASHER, _COMPARER)
         Public ReadOnly row As UInt32
         Public ReadOnly column As UInt32

@@ -22,20 +22,20 @@ Partial Public Class hashtable(Of T,
         Return iterator.[end]
     End Function
 
-    Public Function emplace(ByVal value As T) As Boolean
+    Public Function emplace(ByVal value As T) As pair(Of iterator, Boolean)
         Dim index As UInt32 = 0
         index = hash(value)
         If unique Then
             For i As UInt32 = 0 To last_row()
                 If Not cell(i, index) Is Nothing AndAlso compare(+cell(i, index), value) = 0 Then
-                    Return False
+                    Return emplace_make_pair(iterator_at(i, index), False)
                 End If
             Next
         End If
         For i As UInt32 = 0 To last_row()
             If cell(i, index) Is Nothing Then
                 set_cell(i, index, value)
-                Return True
+                Return emplace_make_pair(iterator_at(i, index), True)
             End If
         Next
 
@@ -45,10 +45,10 @@ Partial Public Class hashtable(Of T,
 
         new_row()
         set_cell(last_row(), index, value)
-        Return True
+        Return emplace_make_pair(iterator_at(last_row(), index), True)
     End Function
 
-    Public Function insert(ByVal value As T) As Boolean
+    Public Function insert(ByVal value As T) As pair(Of iterator, Boolean)
         Return emplace(copy_no_error(value))
     End Function
 
@@ -66,6 +66,15 @@ Partial Public Class hashtable(Of T,
             End If
         Next
         Return r
+    End Function
+
+    Public Function [erase](ByVal it As iterator) As Boolean
+        If it = [end]() OrElse object_compare(it.ref().owner, Me) <> 0 Then
+            Return False
+        Else
+            clear_cell(it.ref().row, it.ref().column)
+            Return True
+        End If
     End Function
 
     Public Sub clear()

@@ -42,7 +42,7 @@ Public Class unordered_set_case(Of T)
     Private Sub insert_or_emplace(ByVal insert As Boolean)
         Dim n As T = Nothing
         n = rnd(Of T)()
-        If If(insert, h.insert(n), h.emplace(n)) Then
+        If If(insert, h.insert(n).second, h.emplace(n).second) Then
             assert_equal(s.find(n), s.end())
             s.insert(n)
         Else
