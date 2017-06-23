@@ -1,10 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
-Imports osi.root.formation
 Imports osi.root.connector
-Imports osi.root.utils
-Imports osi.root.lock
 Imports osi.root.constants
+Imports osi.root.envs
+Imports osi.root.formation
+Imports osi.root.utils
 Imports osi.root.procedure
 Imports counter = osi.root.utils.counter
 
@@ -120,7 +124,7 @@ Partial Friend NotInheritable Class host
         assert(Not new_case_started)
         assert_running_time()
         Dim rtn As Boolean = False
-        For i As Int32 = 0 To cases.size() - 1
+        For i As UInt32 = uint32_0 To cases.size() - uint32_1
             If Not cases(i).finished Then
                 Dim c As case_info = Nothing
                 c = cases(i)
@@ -162,7 +166,8 @@ Partial Friend NotInheritable Class host
     End Sub
 
     Public Shared Sub run()
-        expected_end_ms = nowadays.milliseconds() + minute_to_milliseconds(36 * 60)
+        expected_end_ms = nowadays.milliseconds()
+        expected_end_ms += CLng(minute_to_milliseconds(36 * 60) / 45 / utt_concurrency() * perf_run_ms * 2)
         Dim finished As AutoResetEvent = Nothing
         finished = New AutoResetEvent(False)
         While go_through_all(finished)
