@@ -78,6 +78,12 @@ Partial Public Class list(Of T)
             Return Not is_end()
         End Function
 
+#If True Then
+        Private Shared Function is_equal(ByVal this As node, ByVal that As node) As Boolean
+            Return object_compare(this, that) = 0
+        End Function
+#End If
+
         Public Shared Operator =(ByVal this As iterator, ByVal that As iterator) As Boolean
             If this.null_or_end() AndAlso that.null_or_end() Then
                 Return True
@@ -85,7 +91,7 @@ Partial Public Class list(Of T)
                 Return False
             Else
                 assert(Not this Is Nothing AndAlso Not that Is Nothing)
-                Return object_compare(this.p, that.p) = 0
+                Return is_equal(this.p, that.p)
             End If
         End Operator
 

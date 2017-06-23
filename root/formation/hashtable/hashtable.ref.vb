@@ -46,6 +46,16 @@ Partial Public Class hashtable(Of T,
             Return owner.cell(row, column) Is Nothing
         End Function
 
+        Public Function is_equal_to(ByVal that As ref) As Boolean
+            If that Is Nothing Then
+                Return False
+            Else
+                Return object_compare(owner, that.owner) = 0 AndAlso
+                       row = that.row AndAlso
+                       column = that.column
+            End If
+        End Function
+
         Public Shared Operator +(ByVal this As ref) As T
             If this Is Nothing OrElse this.empty() Then
                 Return Nothing

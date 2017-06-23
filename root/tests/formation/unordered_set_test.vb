@@ -65,15 +65,11 @@ Public Class unordered_set_case(Of T)
             Dim k As T = Nothing
             k = random_select_key_from_h()
             assert_true(s.erase(k))
-            assert_equal(h.erase(k), uint32_1)
+            assert_true(h.erase(k))
         Else
             Dim k As T = Nothing
             k = rnd(Of T)()
-            If s.erase(k) Then
-                assert_equal(h.erase(k), uint32_1)
-            Else
-                assert_equal(h.erase(k), uint32_0)
-            End If
+            assert_equal(s.erase(k), h.erase(k))
         End If
     End Sub
 

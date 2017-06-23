@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utt
@@ -22,28 +26,33 @@ Public Class map_test2
     Public Overrides Function run() As Boolean
         Dim m As map(Of String, String) = Nothing
         m = New map(Of String, String)()
-        Dim it As map(Of String, String).iterator = Nothing
-        For i As Int32 = 0 To array_size(first_round) - 1
-            it = m.emplace(first_round(i).first, first_round(i).second)
-            assert_not_nothing(it)
-            assert_false(it.is_end())
+        For i As Int32 = 0 To array_size_i(first_round) - 1
+            Dim p As pair(Of map(Of String, String).iterator, Boolean) = Nothing
+            p = m.emplace(first_round(i).first, first_round(i).second)
+            assert_true(p.second)
+            assert_not_nothing(p.first)
+            assert_not_equal(p.first, m.end())
         Next
-        For i As Int32 = 0 To array_size(second_round) - 1
+        For i As Int32 = 0 To array_size_i(second_round) - 1
             assert_true(m.erase(second_round(i).first))
         Next
-        For i As Int32 = 0 To array_size(second_round) - 1
-            it = m.emplace(second_round(i).first, second_round(i).second)
-            assert_not_nothing(it)
-            assert_false(it.is_end())
+        For i As Int32 = 0 To array_size_i(second_round) - 1
+            Dim p As pair(Of map(Of String, String).iterator, Boolean) = Nothing
+            p = m.emplace(second_round(i).first, second_round(i).second)
+            assert_true(p.second)
+            assert_not_nothing(p.first)
+            assert_not_equal(p.first, m.end())
         Next
-        For i As Int32 = 0 To array_size(first_round) - 1
+        For i As Int32 = 0 To array_size_i(first_round) - 1
+            Dim it As map(Of String, String).iterator
             it = m.find(first_round(i).first)
             If assert_not_nothing(it) AndAlso
                assert_false(it.is_end()) Then
                 assert_equal((+it).second, first_round(i).second)
             End If
         Next
-        For i As Int32 = 0 To array_size(second_round) - 1
+        For i As Int32 = 0 To array_size_i(second_round) - 1
+            Dim it As map(Of String, String).iterator
             it = m.find(second_round(i).first)
             If assert_not_nothing(it) AndAlso
                assert_false(it.is_end()) Then
@@ -53,26 +62,32 @@ Public Class map_test2
 
         Dim m2 As map(Of String, String) = Nothing
         copy(m2, m)
-        For i As Int32 = 0 To array_size(first_round) - 1
+        For i As Int32 = 0 To array_size_i(first_round) - 1
             assert_true(m2.erase(first_round(i).first))
-            it = m2.emplace(first_round(i).first, first_round(i).second)
-            assert_not_nothing(it)
-            assert_false(it.is_end())
+            Dim p As pair(Of map(Of String, String).iterator, Boolean) = Nothing
+            p = m2.emplace(first_round(i).first, first_round(i).second)
+            assert_true(p.second)
+            assert_not_nothing(p.first)
+            assert_not_equal(p.first, m.end())
         Next
-        For i As Int32 = 0 To array_size(second_round) - 1
+        For i As Int32 = 0 To array_size_i(second_round) - 1
             assert_true(m2.erase(second_round(i).first))
-            it = m2.emplace(second_round(i).first, second_round(i).second)
-            assert_not_nothing(it)
-            assert_false(it.is_end())
+            Dim p As pair(Of map(Of String, String).iterator, Boolean) = Nothing
+            p = m2.emplace(second_round(i).first, second_round(i).second)
+            assert_true(p.second)
+            assert_not_nothing(p.first)
+            assert_not_equal(p.first, m.end())
         Next
-        For i As Int32 = 0 To array_size(first_round) - 1
+        For i As Int32 = 0 To array_size_i(first_round) - 1
+            Dim it As map(Of String, String).iterator
             it = m2.find(first_round(i).first)
             If assert_not_nothing(it) AndAlso
                assert_false(it.is_end()) Then
                 assert_equal((+it).second, first_round(i).second)
             End If
         Next
-        For i As Int32 = 0 To array_size(second_round) - 1
+        For i As Int32 = 0 To array_size_i(second_round) - 1
+            Dim it As map(Of String, String).iterator
             it = m2.find(second_round(i).first)
             If assert_not_nothing(it) AndAlso
                assert_false(it.is_end()) Then

@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.template
 
 Public Class unordered_set(Of T,
@@ -40,14 +41,26 @@ Public Class unordered_set(Of T,
                    .move(Of unordered_set(Of T, _HASHER, _COMPARER))(v)
     End Function
 
+    Protected Shared Shadows Function move(Of R As unordered_set(Of T, _HASHER, _COMPARER))(ByVal v As R) As R
+        Return hashtable(Of T, _true, _HASHER, _COMPARER).move(Of R)(v)
+    End Function
+
     Public Shared Shadows Function swap(ByVal this As unordered_set(Of T, _HASHER, _COMPARER),
                                         ByVal that As unordered_set(Of T, _HASHER, _COMPARER)) As Boolean
         Return hashtable(Of T, _true, _HASHER, _COMPARER).swap(this, that)
     End Function
+
+    Public Shadows Function [erase](ByVal it As iterator) As Boolean
+        Return MyBase.erase(it)
+    End Function
+
+    Public Shadows Function [erase](ByVal value As T) As Boolean
+        Return MyBase.erase(value) = uint32_1
+    End Function
 End Class
 
 Public Class unordered_set(Of T)
-    Inherits hashtable(Of T)
+    Inherits unordered_set(Of T, fast_to_uint32(Of T), default_comparer(Of T))
     Implements ICloneable, ICloneable(Of unordered_set(Of T))
 
     <copy_constructor()>
@@ -74,12 +87,12 @@ Public Class unordered_set(Of T)
 
     Public Shared Shadows Function move(ByVal v As unordered_set(Of T)) _
                                        As unordered_set(Of T)
-        Return hashtable(Of T, _true, fast_to_uint32(Of T), default_comparer(Of T)) _
+        Return unordered_set(Of T, fast_to_uint32(Of T), default_comparer(Of T)) _
                   .move(Of unordered_set(Of T))(v)
     End Function
 
     Public Shared Shadows Function swap(ByVal this As unordered_set(Of T),
                                         ByVal that As unordered_set(Of T)) As Boolean
-        Return hashtable(Of T, _true).swap(this, that)
+        Return unordered_set(Of T, fast_to_uint32(Of T), default_comparer(Of T)).swap(this, that)
     End Function
 End Class

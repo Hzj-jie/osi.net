@@ -54,8 +54,8 @@ Friend Class ##TYPE##_case
             If rnd_int(0, 2) = 0 Then
                 confirm_not_empty()
                 assert_equal(keys.size(), s.size())
-                Dim i As Int32 = 0
-                i = rnd_int(0, keys.size())
+                Dim i As UInt32 = 0
+                i = rnd_uint(uint32_0, keys.size())
                 assert_true(s.erase(keys(i)), "s.erase(", keys(i), ") returns false.")
                 assert_equal(s.find(keys(i)), s.end(), "s.find(", keys(i), ") <> s.end()")
                 keys.erase(i)
@@ -72,8 +72,8 @@ Friend Class ##TYPE##_case
         If validate() Then
             If rnd_int(0, 2) = 0 Then
                 confirm_not_empty()
-                Dim i As Int64
-                i = rnd_int(0, keys.size())
+                Dim i As UInt32
+                i = rnd_uint(uint32_0, keys.size())
                 assert_not_equal(s.find(keys(i)), s.end(), "s.find(", keys(i), ") = s.end()")
             Else
                 assert_equal(s.find(rnd_key()), s.end())
@@ -166,7 +166,7 @@ Public Class ##TYPE##_perf
     End Sub
 
     Protected Overrides Function max_loops() As UInt64
-        Return If(isreleasebuild(), ##DEBUG_MAX_LOOPS##, ##RELEASE_MAX_LOOPS##)
+        Return CULng(If(isreleasebuild(), ##DEBUG_MAX_LOOPS##, ##RELEASE_MAX_LOOPS##))
     End Function
 End Class
 

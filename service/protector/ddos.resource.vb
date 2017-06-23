@@ -54,7 +54,7 @@ Public Class ddos
                                       Dim it As map(Of String, UInt64).iterator = Nothing
                                       it = m.find(s)
                                       If it = m.end() Then
-                                          it = m.insert(s, 1)
+                                          it = m.insert(s, 1).first
                                       Else
                                           With +it
                                               .second += 1
@@ -108,7 +108,7 @@ Public Class ddos
                                       Dim it As map(Of String, UInt64).iterator = Nothing
                                       it = m.find(s)
                                       If it = m.end() Then
-                                          it = m.insert(s, 1)
+                                          it = m.insert(s, 1).first
                                       Else
                                           With +it
                                               .second += 1

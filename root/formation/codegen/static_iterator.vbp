@@ -1,6 +1,7 @@
 ﻿
 ##DEFAULT DEFINE_OPERATOR_PLUS True
 ##DEFAULT FRIEND_CONSTRUCTOR True
+##DEFAULT DEFAULT_COMPARER True
         Implements IComparable(Of iterator), IComparable
 
         Public Shared ReadOnly [end] As iterator
@@ -33,6 +34,12 @@
             Return Not is_end()
         End Function
 
+#If ##DEFAULT_COMPARER## Then
+        Private Shared Function is_equal(ByVal this As ##TYPE##, ByVal that As ##TYPE##) As Boolean
+            Return object_compare(this, that) = 0
+        End Function
+#End If
+
         Public Shared Operator =(ByVal this As iterator, ByVal that As iterator) As Boolean
             If this.null_or_end() AndAlso that.null_or_end() Then
                 Return True
@@ -40,7 +47,7 @@
                 Return False
             Else
                 assert(Not this Is Nothing AndAlso Not that Is Nothing)
-                Return object_compare(this.p, that.p) = 0
+                Return is_equal(this.p, that.p)
             End If
         End Operator
 

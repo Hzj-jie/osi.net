@@ -16,6 +16,7 @@ Partial Public Class hashtable(Of T,
 ##DEFINE TYPE ref
 ##DEFINE DEFINE_OPERATOR_PLUS False
 ##DEFINE FRIEND_CONSTRUCTOR False
+##DEFINE DEFAULT_COMPARER False
 ##INCLUDE ..\..\codegen\random_access_iterator.single_step.vbp
 
         Friend Sub New(ByVal owner As hashtable(Of T, _UNIQUE, _HASHER, _COMPARER),
@@ -48,6 +49,11 @@ Partial Public Class hashtable(Of T,
                 End While
             End If
             Return [end]
+        End Function
+
+        Private Shared Function is_equal(ByVal this As ##TYPE##, ByVal that As ##TYPE##) As Boolean
+            assert(Not this Is Nothing AndAlso Not that Is Nothing)
+            Return this.is_equal_to(that)
         End Function
 
         Friend Function ref() As ref

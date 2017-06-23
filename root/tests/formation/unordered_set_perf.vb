@@ -9,7 +9,7 @@ Imports osi.root.formation
 Imports osi.root.template
 Imports osi.root.utt
 
-Public NotInheritable Class unordered_set_perf
+Public NotInheritable Class unordered_set_perf_templates
     Public Class small_range_uint
         Inherits __do(Of UInt32)
 

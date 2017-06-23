@@ -88,6 +88,12 @@ Partial Public Class hashtable(Of T,
             Return Not is_end()
         End Function
 
+#If False Then
+        Private Shared Function is_equal(ByVal this As ref, ByVal that As ref) As Boolean
+            Return object_compare(this, that) = 0
+        End Function
+#End If
+
         Public Shared Operator =(ByVal this As iterator, ByVal that As iterator) As Boolean
             If this.null_or_end() AndAlso that.null_or_end() Then
                 Return True
@@ -95,7 +101,7 @@ Partial Public Class hashtable(Of T,
                 Return False
             Else
                 assert(Not this Is Nothing AndAlso Not that Is Nothing)
-                Return object_compare(this.p, that.p) = 0
+                Return is_equal(this.p, that.p)
             End If
         End Operator
 
@@ -190,6 +196,11 @@ Partial Public Class hashtable(Of T,
                 End While
             End If
             Return [end]
+        End Function
+
+        Private Shared Function is_equal(ByVal this As ref, ByVal that As ref) As Boolean
+            assert(Not this Is Nothing AndAlso Not that Is Nothing)
+            Return this.is_equal_to(that)
         End Function
 
         Friend Function ref() As ref

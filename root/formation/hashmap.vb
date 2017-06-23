@@ -59,15 +59,11 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
         End Function
 
         Public Function key() As KEY_T
-            Dim rtn As KEY_T = Nothing
-            copy(rtn, (+it).first)
-            Return rtn
+            Return (+it).first
         End Function
 
         Public Function value() As VALUE_T
-            Dim rtn As VALUE_T = Nothing
-            copy(rtn, (+it).second)
-            Return rtn
+            Return (+it).second
         End Function
 
         Private Shared Function move_next(ByVal container As hashmap(Of KEY_T, VALUE_T, _HASH_SIZE, _KEY_TO_INDEX),
@@ -316,18 +312,24 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
             Return data(key_index(k))(k)
         End Get
         Set(ByVal value As VALUE_T)
-            data(key_index(k)).insert(k, value)
+            Dim r As pair(Of iterator, Boolean) = Nothing
+            r = insert(k, value)
+            If Not r.second Then
+                copy(r.first.iterator().value().second, value)
+            End If
         End Set
     End Property
 
-    Public Function insert(ByVal k As KEY_T, ByVal v As VALUE_T) As iterator
+    Public Function insert(ByVal k As KEY_T, ByVal v As VALUE_T) As pair(Of iterator, Boolean)
         Return emplace(k, copy_no_error(v))
     End Function
 
-    Public Function emplace(ByVal k As KEY_T, ByVal v As VALUE_T) As iterator
+    Public Function emplace(ByVal k As KEY_T, ByVal v As VALUE_T) As pair(Of iterator, Boolean)
         Dim index As UInt32 = 0
         index = key_index(k)
-        Return New iterator(Me, index, data(index).emplace(k, v))
+        Dim p As pair(Of map(Of KEY_T, VALUE_T).iterator, Boolean) = Nothing
+        p = data(index).emplace(k, v)
+        Return emplace_make_pair(New iterator(Me, index, p.first), p.second)
     End Function
 
     Public Function insert(ByVal other As hashmap(Of KEY_T, VALUE_T, _HASH_SIZE, _KEY_TO_INDEX)) As Boolean
@@ -372,10 +374,9 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
     End Function
 
     Public Function [erase](ByVal it As iterator) As Boolean
-        If it Is Nothing OrElse it = [end]() Then
+        If it Is Nothing OrElse it = [end]() OrElse object_compare(it.container(), Me) <> 0 Then
             Return False
         Else
-            assert(object_compare(it.container(), Me) = 0)
             Return data(it.index()).erase(it.iterator())
         End If
     End Function

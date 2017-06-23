@@ -1,9 +1,12 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utt
-Imports osi.root.utils
 
 Friend Class trie_case
     Inherits random_run_case
@@ -80,9 +83,9 @@ Friend Class trie_case
         Dim i As Int32 = 0
         s = random_key()
         i = random_value()
-        assert_true(t.insert(s, i) <> t.end())
+        assert_true(t.emplace(s, i) <> t.end())
         If validate() Then
-            assert(m.insert(s, i) <> m.end())
+            m(s) = i
             assert_true(t.find(s) <> t.end())
         End If
     End Sub

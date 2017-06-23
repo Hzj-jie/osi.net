@@ -1,4 +1,5 @@
 ﻿
+' TODO: emplace() and insert() should return pair(Of iterator, Boolean)
 Option Explicit On
 Option Infer Off
 Option Strict On
@@ -7,18 +8,18 @@ Imports osi.root.template
 Imports osi.root.connector
 Imports osi.root.constants
 
-Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index As _to_uint32(Of keyT))
+Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_INDEX As _to_uint32(Of KEY_T))
     Implements ICloneable
 
     Private Shared ReadOnly child_count As UInt32 = Nothing
-    Private Shared ReadOnly key_to_index As _key_to_index = Nothing
+    Private Shared ReadOnly key_to_index As _KEY_TO_INDEX = Nothing
     Private ReadOnly root As node = Nothing
 
     Public Class node
         Implements ICloneable
 
         Public has_value As Boolean
-        Public value As valueT
+        Public value As VALUE_T
 
         Protected Friend _length As UInt32
         Protected Friend father As node
@@ -31,7 +32,7 @@ Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index
         Private Sub initial(ByVal index_count As UInt32)
             has_value = False
             ReDim child(CInt(index_count - uint32_1))
-            value = alloc(Of valueT)()
+            value = alloc(Of VALUE_T)()
             father = Nothing
         End Sub
 
@@ -46,8 +47,8 @@ Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index
             memclr(child)
         End Sub
 
-        Public Function first() As keyT()
-            Dim rtn(CInt(length() - uint32_1)) As keyT
+        Public Function first() As KEY_T()
+            Dim rtn(CInt(length() - uint32_1)) As KEY_T
             Dim w As node = Nothing
             w = Me
             For i As Int64 = length() - 1 To 0 Step -1
@@ -71,7 +72,7 @@ Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index
             End If
         End Function
 
-        Public Shared Operator +(ByVal this As node) As valueT
+        Public Shared Operator +(ByVal this As node) As VALUE_T
             If this.has_value Then
                 Return this.value
             Else
@@ -158,11 +159,11 @@ Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index
 
     Shared Sub New()
         _end = iterator.end
-        Dim __child_count As Int64 = 0
-        __child_count = +(alloc(Of _child_count)())
-        assert(__child_count > 0 AndAlso __child_count <= max_uint32)
-        child_count = CUInt(__child_count)
-        key_to_index = alloc(Of _key_to_index)()
+        Dim __CHILD_COUNT As Int64 = 0
+        __CHILD_COUNT = +(alloc(Of _CHILD_COUNT)())
+        assert(__CHILD_COUNT > 0 AndAlso __CHILD_COUNT <= max_uint32)
+        child_count = CUInt(__CHILD_COUNT)
+        key_to_index = alloc(Of _KEY_TO_INDEX)()
         assert(Not key_to_index Is Nothing)
     End Sub
 
@@ -170,11 +171,11 @@ Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index
         root = New node(child_count)
     End Sub
 
-    Default Public Property data(ByVal k() As keyT) As valueT
+    Default Public Property data(ByVal k() As KEY_T) As VALUE_T
         Get
             Return (++find(k, True, False))
         End Get
-        Set(ByVal value As valueT)
+        Set(ByVal value As VALUE_T)
             Dim w As iterator = Nothing
             w = find(k, True, False)
             w.get().has_value = True
@@ -182,33 +183,33 @@ Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index
         End Set
     End Property
 
-    Public Function findfront(ByVal k() As keyT,
+    Public Function findfront(ByVal k() As KEY_T,
                               ByVal start As UInt32,
                               ByVal find_front_action As Action(Of node)) As iterator
         Return find(k, False, True, start, find_front_action)
     End Function
 
-    Public Function findfront(ByVal k() As keyT, ByVal start As UInt32) As iterator
+    Public Function findfront(ByVal k() As KEY_T, ByVal start As UInt32) As iterator
         Return findfront(k, start, Nothing)
     End Function
 
-    Public Function findfront(ByVal k() As keyT, ByVal find_front_action As Action(Of node)) As iterator
+    Public Function findfront(ByVal k() As KEY_T, ByVal find_front_action As Action(Of node)) As iterator
         Return findfront(k, 0, find_front_action)
     End Function
 
-    Public Function findfront(ByVal k() As keyT) As iterator
+    Public Function findfront(ByVal k() As KEY_T) As iterator
         Return findfront(k, 0, Nothing)
     End Function
 
-    Public Function find(ByVal k() As keyT, ByVal start As UInt32) As iterator
+    Public Function find(ByVal k() As KEY_T, ByVal start As UInt32) As iterator
         Return find(k, False, False, start)
     End Function
 
-    Public Function find(ByVal k() As keyT) As iterator
+    Public Function find(ByVal k() As KEY_T) As iterator
         Return find(k, 0)
     End Function
 
-    Private Function find(ByVal k() As keyT,
+    Private Function find(ByVal k() As KEY_T,
                           ByVal auto_insert As Boolean,
                           ByVal find_front As Boolean,
                           Optional ByVal start As UInt32 = 0,
@@ -264,24 +265,28 @@ Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index
         End If
     End Function
 
-    Public Function insert(ByVal k() As keyT) As iterator
+    Public Function insert(ByVal k() As KEY_T) As iterator
         Dim w As iterator
         w = find(k, True, False)
         w.get().has_value = False
         Return w
     End Function
 
-    Public Function insert(ByVal k() As keyT, ByVal v As valueT) As iterator
+    Public Function insert(ByVal k() As KEY_T, ByVal v As VALUE_T) As iterator
+        Return emplace(k, copy_no_error(v))
+    End Function
+
+    Public Function emplace(ByVal k() As KEY_T, ByVal v As VALUE_T) As iterator
         Dim w As iterator = Nothing
         w = insert(k)
         With (+w)
             .has_value = True
-            copy(.value, v)
+            .value = v
         End With
         Return w
     End Function
 
-    Public Function [erase](ByVal k() As keyT) As Boolean
+    Public Function [erase](ByVal k() As KEY_T) As Boolean
         Dim w As iterator
         w = find(k, False, False)
         If w = [end]() OrElse Not w.get().has_value Then
@@ -293,7 +298,7 @@ Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index
         End If
     End Function
 
-    Public Function remove(ByVal k() As keyT) As Boolean
+    Public Function remove(ByVal k() As KEY_T) As Boolean
         Return [erase](k)
     End Function
 
@@ -311,7 +316,7 @@ Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index
     End Sub
 
     Public Function Clone() As Object Implements ICloneable.Clone
-        Dim rtn As trie(Of keyT, valueT, _child_count, _key_to_index) = Nothing
+        Dim rtn As trie(Of KEY_T, VALUE_T, _CHILD_COUNT, _KEY_TO_INDEX) = Nothing
         alloc(Me)
         copy_node(rtn.root, root)
         Return rtn
@@ -322,8 +327,8 @@ Partial Public Class trie(Of keyT, valueT, _child_count As _int64, _key_to_index
     End Sub
 End Class
 
-Public Class chartrie(Of valueT)
-    Inherits trie(Of Char, valueT, _max_uint16, _char_to_uint32)
+Public Class chartrie(Of VALUE_T)
+    Inherits trie(Of Char, VALUE_T, _max_uint16, _char_to_uint32)
 
     Public Overloads Function find(ByVal s As String) As iterator
         Return MyBase.find(c_str(s))
@@ -353,7 +358,11 @@ Public Class chartrie(Of valueT)
         Return MyBase.findfront(c_str(s), start, find_front_action)
     End Function
 
-    Public Overloads Function insert(ByVal s As String, ByVal v As valueT) As iterator
+    Public Overloads Function emplace(ByVal s As String, ByVal v As VALUE_T) As iterator
+        Return MyBase.emplace(c_str(s), v)
+    End Function
+
+    Public Overloads Function insert(ByVal s As String, ByVal v As VALUE_T) As iterator
         Return MyBase.insert(c_str(s), v)
     End Function
 
@@ -369,11 +378,11 @@ Public Class chartrie(Of valueT)
         Return MyBase.remove(c_str(s))
     End Function
 
-    Default Public Overloads Property data(ByVal s As String) As valueT
+    Default Public Overloads Property data(ByVal s As String) As VALUE_T
         Get
             Return MyBase.data(c_str(s))
         End Get
-        Set(ByVal value As valueT)
+        Set(ByVal value As VALUE_T)
             MyBase.data(c_str(s)) = value
         End Set
     End Property
@@ -387,12 +396,12 @@ Public Class chartrie(Of valueT)
     End Function
 End Class
 
-Public Class bytetrie(Of valueT)
-    Inherits trie(Of Byte, valueT, _max_uint8, _byte_to_uint32)
+Public Class bytetrie(Of VALUE_T)
+    Inherits trie(Of Byte, VALUE_T, _max_uint8, _byte_to_uint32)
 End Class
 
-Public Class stringtrie(Of valueT)
-    Inherits bytetrie(Of valueT)
+Public Class stringtrie(Of VALUE_T)
+    Inherits bytetrie(Of VALUE_T)
 
     Private Shared Function string_start(ByVal s As String, ByVal start As UInt32) As UInt32
         Return str_byte_count(s, 0, start)
@@ -426,7 +435,11 @@ Public Class stringtrie(Of valueT)
         Return MyBase.findfront(str_bytes(s), string_start(s, start), find_front_action)
     End Function
 
-    Public Shadows Function insert(ByVal s As String, ByVal v As valueT) As iterator
+    Public Shadows Function emplace(ByVal s As String, ByVal v As VALUE_T) As iterator
+        Return MyBase.emplace(str_bytes(s), v)
+    End Function
+
+    Public Shadows Function insert(ByVal s As String, ByVal v As VALUE_T) As iterator
         Return MyBase.insert(str_bytes(s), v)
     End Function
 
@@ -442,11 +455,11 @@ Public Class stringtrie(Of valueT)
         Return MyBase.remove(str_bytes(s))
     End Function
 
-    Default Public Shadows Property data(ByVal s As String) As valueT
+    Default Public Shadows Property data(ByVal s As String) As VALUE_T
         Get
             Return MyBase.data(str_bytes(s))
         End Get
-        Set(ByVal value As valueT)
+        Set(ByVal value As VALUE_T)
             MyBase.data(str_bytes(s)) = value
         End Set
     End Property

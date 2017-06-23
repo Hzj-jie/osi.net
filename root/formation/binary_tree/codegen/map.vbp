@@ -49,23 +49,12 @@ Public Class ##TYPE##(Of KEY_T, VALUE_T)
     End Function
 
     Public Overloads Function emplace(ByVal key As KEY_T,
-                                      ByVal value As VALUE_T) As iterator
-        Dim it As iterator = Nothing
-        it = find(key)
-        If it.is_not_end() Then
-            it.value().second = value
-            Return it
-        Else
-            Dim r As pair(Of iterator, Boolean) = Nothing
-            r = MyBase.emplace(emplace_make_first_const_pair(key, value))
-            assert(Not r Is Nothing)
-            assert(r.second)
-            Return r.first
-        End If
+                                      ByVal value As VALUE_T) As pair(Of iterator, Boolean)
+        Return MyBase.emplace(emplace_make_first_const_pair(key, value))
     End Function
 
     Public Overloads Function insert(ByVal key As KEY_T,
-                                     ByVal value As VALUE_T) As iterator
+                                     ByVal value As VALUE_T) As pair(Of iterator, Boolean)
         Return emplace(copy_no_error(key), copy_no_error(value))
     End Function
 
@@ -86,12 +75,16 @@ Public Class ##TYPE##(Of KEY_T, VALUE_T)
             Dim r As iterator = Nothing
             r = find(key)
             If r = [end]() Then
-                r = emplace(copy_no_error(key), alloc(Of VALUE_T)())
+                r = emplace(copy_no_error(key), alloc(Of VALUE_T)()).first
             End If
             Return (+r).second
         End Get
         Set(ByVal value As VALUE_T)
-            insert(key, value)
+            Dim r As pair(Of iterator, Boolean) = Nothing
+            r = insert(key, value)
+            If Not r.second Then
+                copy(r.first.value().second, value)
+            End If
         End Set
     End Property
 End Class
