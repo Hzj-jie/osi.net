@@ -1,5 +1,4 @@
 ﻿
-' TODO: emplace() and insert() should return pair(Of iterator, Boolean)
 Option Explicit On
 Option Infer Off
 Option Strict On
@@ -265,25 +264,26 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
         End If
     End Function
 
-    Public Function insert(ByVal k() As KEY_T) As iterator
-        Dim w As iterator
+    Public Function insert(ByVal k() As KEY_T) As pair(Of iterator, Boolean)
+        Dim w As iterator = Nothing
         w = find(k, True, False)
-        w.get().has_value = False
-        Return w
+        Return emplace_make_pair(w, Not w.get().has_value)
     End Function
 
-    Public Function insert(ByVal k() As KEY_T, ByVal v As VALUE_T) As iterator
+    Public Function insert(ByVal k() As KEY_T, ByVal v As VALUE_T) As pair(Of iterator, Boolean)
         Return emplace(k, copy_no_error(v))
     End Function
 
-    Public Function emplace(ByVal k() As KEY_T, ByVal v As VALUE_T) As iterator
-        Dim w As iterator = Nothing
-        w = insert(k)
-        With (+w)
-            .has_value = True
-            .value = v
-        End With
-        Return w
+    Public Function emplace(ByVal k() As KEY_T, ByVal v As VALUE_T) As pair(Of iterator, Boolean)
+        Dim r As pair(Of iterator, Boolean) = Nothing
+        r = insert(k)
+        If r.second Then
+            With +(r.first)
+                .has_value = True
+                .value = v
+            End With
+        End If
+        Return r
     End Function
 
     Public Function [erase](ByVal k() As KEY_T) As Boolean
@@ -358,15 +358,15 @@ Public Class chartrie(Of VALUE_T)
         Return MyBase.findfront(c_str(s), start, find_front_action)
     End Function
 
-    Public Overloads Function emplace(ByVal s As String, ByVal v As VALUE_T) As iterator
+    Public Overloads Function emplace(ByVal s As String, ByVal v As VALUE_T) As pair(Of iterator, Boolean)
         Return MyBase.emplace(c_str(s), v)
     End Function
 
-    Public Overloads Function insert(ByVal s As String, ByVal v As VALUE_T) As iterator
+    Public Overloads Function insert(ByVal s As String, ByVal v As VALUE_T) As pair(Of iterator, Boolean)
         Return MyBase.insert(c_str(s), v)
     End Function
 
-    Public Overloads Function insert(ByVal s As String) As iterator
+    Public Overloads Function insert(ByVal s As String) As pair(Of iterator, Boolean)
         Return MyBase.insert(c_str(s))
     End Function
 
@@ -435,15 +435,15 @@ Public Class stringtrie(Of VALUE_T)
         Return MyBase.findfront(str_bytes(s), string_start(s, start), find_front_action)
     End Function
 
-    Public Shadows Function emplace(ByVal s As String, ByVal v As VALUE_T) As iterator
+    Public Shadows Function emplace(ByVal s As String, ByVal v As VALUE_T) As pair(Of iterator, Boolean)
         Return MyBase.emplace(str_bytes(s), v)
     End Function
 
-    Public Shadows Function insert(ByVal s As String, ByVal v As VALUE_T) As iterator
+    Public Shadows Function insert(ByVal s As String, ByVal v As VALUE_T) As pair(Of iterator, Boolean)
         Return MyBase.insert(str_bytes(s), v)
     End Function
 
-    Public Shadows Function insert(ByVal s As String) As iterator
+    Public Shadows Function insert(ByVal s As String) As pair(Of iterator, Boolean)
         Return MyBase.insert(str_bytes(s))
     End Function
 

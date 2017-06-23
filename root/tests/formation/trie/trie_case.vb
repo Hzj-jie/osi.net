@@ -83,10 +83,17 @@ Friend Class trie_case
         Dim i As Int32 = 0
         s = random_key()
         i = random_value()
-        assert_true(t.emplace(s, i) <> t.end())
+        Dim r As pair(Of stringtrie(Of Int32).iterator, Boolean) = Nothing
+        r = t.emplace(s, i)
+        assert_not_nothing(r)
+        assert_not_nothing(r.first)
+        assert_not_equal(r.first, t.end())
         If validate() Then
-            m(s) = i
-            assert_true(t.find(s) <> t.end())
+            If r.second Then
+                assert_equal(m.find(s), m.end())
+                m(s) = i
+            End If
+            assert_not_equal(t.find(s), t.end())
         End If
     End Sub
 
