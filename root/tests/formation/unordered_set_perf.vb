@@ -84,6 +84,11 @@ Public Class unordered_set_perf(Of T, _RND As __do(Of T))
             insert_call(percentages(4), AddressOf clear)
         End Sub
 
+        Public Overrides Function finish() As Boolean
+            clear()
+            Return MyBase.finish()
+        End Function
+
         Protected MustOverride Sub insert(ByVal v As T)
         Protected MustOverride Sub emplace(ByVal v As T)
         Protected MustOverride Sub [erase](ByVal v As T)
