@@ -17,24 +17,25 @@ Public Class pointernode(Of T)
         memclr(_p)
     End Sub
 
-    Public Sub New(ByVal pointer_count As Int64)
+    Public Sub New(ByVal pointer_count As UInt32)
         initial_pointers(pointer_count)
     End Sub
 
-    Public Sub New(ByVal pointer_count As Int64, ByVal newdata As T)
+    Public Sub New(ByVal pointer_count As UInt32, ByVal newdata As T)
         initial_pointers(pointer_count)
         data() = newdata
     End Sub
 
-    Private Sub initial_pointers(ByVal pointer_count As Int64)
+    Private Sub initial_pointers(ByVal pointer_count As UInt32)
+        assert(pointer_count > uint32_0)
         ReDim _p(CInt(pointer_count - uint32_1))
     End Sub
 
-    Public Function pointer_count() As Int64
+    Public Function pointer_count() As UInt32
         If _p Is Nothing Then
             Return 0
         Else
-            Return _p.Length()
+            Return CUInt(_p.Length())
         End If
     End Function
 
@@ -51,11 +52,11 @@ Public Class pointernode(Of T)
         _data = value
     End Sub
 
-    Public Function available_index(ByVal index As Int64) As Boolean
-        Return index < pointer_count() AndAlso index >= 0
+    Private Function available_index(ByVal index As UInt32) As Boolean
+        Return index < pointer_count() AndAlso index >= uint32_0
     End Function
 
-    Public Property pointer(ByVal index As Int64) As pointernode(Of T)
+    Public Property pointer(ByVal index As UInt32) As pointernode(Of T)
         Get
             If available_index(index) Then
                 Return _p(CInt(index))
@@ -76,8 +77,7 @@ Public Class pointernode(Of T)
         rtn.data = _data
 
         rtn.initial_pointers(pointer_count())
-        Dim i As Int64
-        For i = 0 To pointer_count() - 1
+        For i As UInt32 = uint32_0 To pointer_count() - uint32_1
             rtn.pointer(i) = pointer(i)
         Next
 

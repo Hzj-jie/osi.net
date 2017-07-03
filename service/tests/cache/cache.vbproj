@@ -56,10 +56,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="cache_case.vb" />
+    <Compile Include="cache_case2.vb" />
     <Compile Include="cache_test.vb" />
+    <Compile Include="cache_test2.vb" />
     <Compile Include="hashmap_cache_test.vb" />
     <Compile Include="mapheap_cache_no_auto_cleanup_test.vb" />
     <Compile Include="mapheap_cache_test.vb" />
+    <Compile Include="mapheap_cache_test2.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

@@ -185,8 +185,8 @@ Friend Class list_case
             l.erase(v(i))
             assert(v.erase(v(i)))
         Else
-            Dim i As Int64 = Nothing
-            i = rnd_int(0, l.size())
+            Dim i As UInt32 = Nothing
+            i = rnd_uint(0, l.size())
             Dim s As String = Nothing
             s = l(i)
             l.erase(i)

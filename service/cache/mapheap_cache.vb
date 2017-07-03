@@ -1,8 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.formation
 Imports osi.root.delegates
-Imports osi.root.utils
+Imports osi.root.formation
 Imports osi.service.cache.constants.mapheap_cache
 
 Friend Class mapheap_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
@@ -101,7 +104,7 @@ Friend Class mapheap_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     End Function
 
     Public Sub [set](ByVal key As KEY_T, ByVal value As VALUE_T) Implements islimcache2(Of KEY_T, VALUE_T).set
-        m.insert(key, value)
+        m(key) = value
         update_refer_ticks(key)
         If size() > max_size Then
             Dim oldname As KEY_T = Nothing

@@ -6,18 +6,18 @@ Option Strict On
 Imports osi.root.constants
 Imports osi.root.connector
 
-Partial Public Class mapheap(Of mapKey As IComparable(Of mapKey), heapKey As IComparable(Of heapKey))
+Partial Public Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As IComparable(Of HEAP_KEY))
     Implements ICloneable
 
     Private Class heap2
-        Inherits heap(Of pair(Of heapKey, mapKey))
+        Inherits heap(Of pair(Of HEAP_KEY, MAP_KEY))
 
-        Public _map As map(Of mapKey, Int64) = Nothing
+        Public _map As map(Of MAP_KEY, Int64) = Nothing
 
         Public Overrides Function [erase](ByVal index As Int64) As Boolean
             debug_assert(Not _map Is Nothing, "_map is nothing.")
             debug_assert(Not at(index) Is Nothing, "index " + Convert.ToString(index) + " is not in heap.")
-            Dim k As mapKey = Nothing
+            Dim k As MAP_KEY = Nothing
             k = at(index).second
             debug_assert(MyBase.erase(index), "mybase.erase(" + Convert.ToString(index) + ") returns false.")
             If index = size() Then
@@ -30,7 +30,7 @@ Partial Public Class mapheap(Of mapKey As IComparable(Of mapKey), heapKey As ICo
             Return True
         End Function
 
-        Public Overrides Function update(ByVal index As Int64, ByVal value As pair(Of heapKey, mapKey)) As Int64
+        Public Overrides Function update(ByVal index As Int64, ByVal value As pair(Of HEAP_KEY, MAP_KEY)) As Int64
             debug_assert(index <> npos, "should not call update with index = npos.")
             debug_assert(Not value Is Nothing, "value is nothing.")
             If Not at(index) Is Nothing Then
@@ -62,10 +62,10 @@ Partial Public Class mapheap(Of mapKey As IComparable(Of mapKey), heapKey As ICo
         End Function
     End Class
 
-    Public Shared ReadOnly boa As binder(Of Func(Of heapKey, heapKey, heapKey), binary_operator_add_protector)
+    Public Shared ReadOnly boa As binder(Of Func(Of HEAP_KEY, HEAP_KEY, HEAP_KEY), binary_operator_add_protector)
     Private Shared ReadOnly _end As iterator = Nothing
     Private _heap As heap2 = Nothing
-    Private _map As map(Of mapKey, Int64) = Nothing
+    Private _map As map(Of MAP_KEY, Int64) = Nothing
 
     Public Function begin() As iterator
         Return find(_map.begin())
@@ -84,29 +84,29 @@ Partial Public Class mapheap(Of mapKey As IComparable(Of mapKey), heapKey As ICo
     End Function
 
     Shared Sub New()
-        boa = New binder(Of Func(Of heapKey, heapKey, heapKey), binary_operator_add_protector)()
+        boa = New binder(Of Func(Of HEAP_KEY, HEAP_KEY, HEAP_KEY), binary_operator_add_protector)()
         _end = iterator.end
 
         If isdebugmode() AndAlso
            Not boa.has_value() AndAlso
-           Not accumulatable(Of heapKey).v Then
-            assert(Not accumulatable(Of heapKey).ex Is Nothing)
+           Not accumulatable(Of HEAP_KEY).v Then
+            assert(Not accumulatable(Of HEAP_KEY).ex Is Nothing)
             raise_error(error_type.warning,
-                          "cannot add a heapKey to another, heapKey = ",
-                          GetType(heapKey).FullName(),
+                          "cannot add a HEAP_KEY to another, HEAP_KEY = ",
+                          GetType(HEAP_KEY).FullName(),
                           ", may cause data lost in accumulate function, ex ",
-                          accumulatable(Of heapKey).ex.Message())
+                          accumulatable(Of HEAP_KEY).ex.Message())
         End If
     End Sub
 
     Public Sub New()
-        _map = New map(Of mapKey, Int64)
+        _map = New map(Of MAP_KEY, Int64)
         _heap = New heap2()
         _heap._map = _map
     End Sub
 
-    Public Function [erase](ByVal key As mapKey) As Boolean
-        Dim heapPos As map(Of mapKey, Int64).iterator = Nothing
+    Public Function [erase](ByVal key As MAP_KEY) As Boolean
+        Dim heapPos As map(Of MAP_KEY, Int64).iterator = Nothing
         heapPos = _map.find(key)
         If heapPos <> _map.end() Then
             _heap.erase((+(heapPos)).second)
@@ -116,40 +116,45 @@ Partial Public Class mapheap(Of mapKey As IComparable(Of mapKey), heapKey As ICo
         End If
     End Function
 
-    Protected Function update(ByVal key As mapKey, ByVal value As heapKey _
-                            , Optional ByVal accumulate As Boolean = True) As Boolean
-        Dim heapPos As map(Of mapKey, Int64).iterator = Nothing
-        heapPos = _map.find(key)
-        If heapPos = _map.end() Then
-            Return _heap.insert(make_pair(value, key)) <> npos
+    Protected Function update(ByVal key As MAP_KEY,
+                              ByVal value As HEAP_KEY,
+                              Optional ByVal accumulate As Boolean = True) As Boolean
+        Dim heap_pos As map(Of MAP_KEY, Int64).iterator = Nothing
+        heap_pos = _map.find(key)
+        If heap_pos = _map.end() Then
+            Return _heap.insert(emplace_make_pair(value, key)) <> npos
         Else
-            Dim heapNode As pair(Of heapKey, mapKey) = Nothing
-            heapNode = _heap((+heapPos).second)
-            debug_assert(Not heapNode Is Nothing, "heapNode is nothing, _map is not concur with _heap.")
+            Dim heap_node As pair(Of HEAP_KEY, MAP_KEY) = Nothing
+            heap_node = _heap((+heap_pos).second)
+            debug_assert(Not heap_node Is Nothing, "heapNode is nothing, _map is not concur with _heap.")
             If accumulate Then
-                assert(boa.has_value() OrElse accumulatable(Of heapKey).v)
+                assert(boa.has_value() OrElse accumulatable(Of HEAP_KEY).v)
                 If boa.has_value() Then
-                    heapNode.first = (+boa)(heapNode.first, value)
+                    heap_node.first = (+boa)(heap_node.first, value)
                 Else
-                    heapNode.first = inc(heapNode.first, value)
+                    heap_node.first = inc(heap_node.first, value)
                 End If
             Else
-                copy(heapNode.first, value)
+                heap_node.first = value
             End If
-            Return _heap.update((+heapPos).second, heapNode) <> npos
+            Return _heap.update((+heap_pos).second, heap_node) <> npos
         End If
     End Function
 
-    Public Function insert(ByVal key As mapKey, ByVal value As heapKey) As Boolean
+    Public Function emplace(ByVal key As MAP_KEY, ByVal value As HEAP_KEY) As Boolean
         Return update(key, value, False)
     End Function
 
-    Public Function accumulate(ByVal key As mapKey, ByVal value As heapKey) As Boolean
+    Public Function insert(ByVal key As MAP_KEY, ByVal value As HEAP_KEY) As Boolean
+        Return update(copy_no_error(key), copy_no_error(value), False)
+    End Function
+
+    Public Function accumulate(ByVal key As MAP_KEY, ByVal value As HEAP_KEY) As Boolean
         Return update(key, value, True)
     End Function
 
-    Public Sub pop_front(ByRef key As mapKey, ByRef value As heapKey)
-        Dim heapNode As pair(Of heapKey, mapKey) = Nothing
+    Public Sub pop_front(ByRef key As MAP_KEY, ByRef value As HEAP_KEY)
+        Dim heapNode As pair(Of HEAP_KEY, MAP_KEY) = Nothing
         _heap.pop_front(heapNode)
         If Not heapNode Is Nothing Then
             key = heapNode.second
@@ -160,18 +165,18 @@ Partial Public Class mapheap(Of mapKey As IComparable(Of mapKey), heapKey As ICo
         End If
     End Sub
 
-    Private Function find(ByVal it As map(Of mapKey, Int64).iterator) As iterator
+    Private Function find(ByVal it As map(Of MAP_KEY, Int64).iterator) As iterator
         If it Is Nothing OrElse it = _map.end() Then
             Return [end]()
         Else
-            Dim heapnode As pair(Of heapKey, mapKey) = Nothing
+            Dim heapnode As pair(Of HEAP_KEY, MAP_KEY) = Nothing
             debug_assert(_heap.take((+it).second, heapnode) _
                         , "cannot get _heap(" + Convert.ToString((+it).second) + ")")
             Return New iterator(heapnode)
         End If
     End Function
 
-    Public Function find(ByVal key As mapKey) As iterator
+    Public Function find(ByVal key As MAP_KEY) As iterator
         Return find(_map.find(key))
     End Function
 
@@ -195,7 +200,7 @@ Partial Public Class mapheap(Of mapKey As IComparable(Of mapKey), heapKey As ICo
     End Function
 
     Public Function Clone() As Object Implements ICloneable.Clone
-        Dim rtn As mapheap(Of mapKey, heapKey) = Nothing
+        Dim rtn As mapheap(Of MAP_KEY, HEAP_KEY) = Nothing
         rtn = alloc(Me)
 
         copy(rtn._heap, _heap)

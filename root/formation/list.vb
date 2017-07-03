@@ -13,12 +13,12 @@ Partial Public NotInheritable Class list(Of T)
     Friend Class node
         Inherits pointernode(Of T)
 
-        Private Const _pointer_count As Int64 = 2
+        Private Const _pointer_count As UInt32 = 2
 
-        Private Class pointer_index
-            Public Const last As Int64 = 0
-            Public Const [next] As Int64 = 1
-        End Class
+        Private Enum pointer_index As UInt32
+            last = 0
+            [next] = 1
+        End Enum
 
         Public Function last() As node
             Return direct_cast(Of node)(pointer(pointer_index.last))
@@ -56,7 +56,7 @@ Partial Public NotInheritable Class list(Of T)
     Private Shared ReadOnly _end As iterator = Nothing
     Private _front As node
     Private _back As node
-    Private _size As Int64
+    Private _size As UInt32
 
     Public Function begin() As iterator
         If empty() Then
@@ -102,23 +102,23 @@ Partial Public NotInheritable Class list(Of T)
         End Set
     End Property
 
-    Private Function find(ByVal index As Int64) As node
+    Private Function find(ByVal index As UInt32) As node
         Dim rtn As node = Nothing
-        If Not availableIndex(index) Then
+        If Not available_index(index) Then
             rtn = Nothing
         Else
-            If index <= _size \ 2 Then
+            If index <= (_size >> 1) Then
                 rtn = _front
-                While index > 0
+                While index > uint32_0
                     rtn = rtn.next
-                    index -= 1
+                    index -= uint32_1
                 End While
             Else
                 rtn = _back
-                index = _size - index - 1
-                While index > 0
+                index = _size - index - uint32_1
+                While index > uint32_0
                     rtn = rtn.last
-                    index -= 1
+                    index -= uint32_1
                 End While
             End If
         End If
@@ -126,7 +126,7 @@ Partial Public NotInheritable Class list(Of T)
         Return rtn
     End Function
 
-    Public Function [goto](ByVal index As Int64) As iterator
+    Public Function [goto](ByVal index As UInt32) As iterator
         Return New iterator(find(index))
     End Function
 
@@ -158,15 +158,15 @@ Partial Public NotInheritable Class list(Of T)
         Return rend()
     End Function
 
-    Public Function availableIndex(ByVal index As Int64) As Boolean
-        Return index >= 0 And index < size()
+    Private Function available_index(ByVal index As UInt32) As Boolean
+        Return index >= uint32_0 And index < size()
     End Function
 
-    Public Function size() As Int64
+    Public Function size() As UInt32
         Return _size
     End Function
 
-    Default Public Property at(ByVal index As Int64) As T
+    Default Public Property at(ByVal index As UInt32) As T
         Get
             Dim rtn As node = Nothing
             rtn = find(index)
@@ -185,30 +185,30 @@ Partial Public NotInheritable Class list(Of T)
         Return size() = 0
     End Function
 
-    Public Function push_back(ByVal newData As T) As Boolean
+    Public Function push_back(ByVal new_data As T) As Boolean
         Dim add As node = Nothing
-        add = New node(newData)
+        add = New node(new_data)
         If Not _back Is Nothing Then
             _back.appendnext(add)
         Else
             _front = add
         End If
         _back = add
-        _size += 1
+        _size += uint32_1
 
         Return True
     End Function
 
-    Public Function push_front(ByVal newData As T) As Boolean
+    Public Function push_front(ByVal new_data As T) As Boolean
         Dim add As node = Nothing
-        add = New node(newData)
+        add = New node(new_data)
         If Not _front Is Nothing Then
             _front.appendlast(add)
         Else
             _back = add
         End If
         _front = add
-        _size += 1
+        _size += uint32_1
 
         Return True
     End Function
@@ -247,7 +247,7 @@ Partial Public NotInheritable Class list(Of T)
             If Object.ReferenceEquals(it, _back) Then
                 _back = work
             End If
-            _size += 1
+            _size += uint32_1
             it = it.next()
             debug_assert(Not it Is Nothing, "it.next() is nothing after insert.")
 
@@ -255,8 +255,8 @@ Partial Public NotInheritable Class list(Of T)
         End If
     End Function
 
-    Public Function insert(ByVal index As Int64, ByVal newData As T) As iterator
-        Return insert(find(index), newData)
+    Public Function insert(ByVal index As UInt32, ByVal new_data As T) As iterator
+        Return insert(find(index), new_data)
     End Function
 
     Public Function insert(ByVal newData As T) As iterator
@@ -280,7 +280,7 @@ Partial Public NotInheritable Class list(Of T)
             If Object.ReferenceEquals(it, _back) Then
                 _back = it.last
             End If
-            _size -= 1
+            _size -= uint32_1
             del.appendlast(Nothing)
             del.appendnext(Nothing)
             If it.next Is Nothing Then
@@ -295,7 +295,7 @@ Partial Public NotInheritable Class list(Of T)
         Return [erase](it.node())
     End Function
 
-    Public Function [erase](ByVal index As Int64) As iterator
+    Public Function [erase](ByVal index As UInt32) As iterator
         Return [erase](find(index))
     End Function
 

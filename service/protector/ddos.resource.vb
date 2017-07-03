@@ -1,6 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.lock
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.procedure
 Imports osi.root.formation
 Imports osi.root.utils
@@ -22,7 +27,7 @@ Public Class ddos
             m = New map(Of String, UInt64)()
             q = New queue(Of String)()
             m(fake_insert_string) = len
-            For i As UInt32 = 0 To len - 1
+            For i As UInt32 = 0 To len - uint32_1
                 q.push(fake_insert_string)
             Next
             begin_lifetime_event_comb(exp,
@@ -57,7 +62,7 @@ Public Class ddos
                                           it = m.insert(s, 1).first
                                       Else
                                           With +it
-                                              .second += 1
+                                              .second += uint64_1
                                           End With
                                       End If
                                       eva(r, (+it).second)
@@ -67,7 +72,7 @@ Public Class ddos
                                       it = m.find(s)
                                       assert(it <> m.end())
                                       With +it
-                                          .second -= 1
+                                          .second -= uint64_1
                                           If .second = 0 Then
                                               assert(m.erase(it))
                                           End If
@@ -111,7 +116,7 @@ Public Class ddos
                                           it = m.insert(s, 1).first
                                       Else
                                           With +it
-                                              .second += 1
+                                              .second += uint64_1
                                           End With
                                       End If
                                       eva(r, (+it).second / t)
@@ -136,7 +141,7 @@ Public Class ddos
                                           Return False
                                       Else
                                           With +it
-                                              .second -= 1
+                                              .second -= uint64_1
                                               If .second = 0 Then
                                                   assert(m.erase(it))
                                               End If

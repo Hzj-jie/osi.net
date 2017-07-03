@@ -1,11 +1,14 @@
 ﻿
-Imports osi.service.cache
-Imports osi.root.utt
-Imports osi.root.connector
-Imports osi.root.utils
-Imports osi.root.delegates
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Friend Class cache_case
+Imports osi.root.connector
+Imports osi.root.delegates
+Imports osi.root.utt
+Imports osi.service.cache
+
+Public Class cache_case
     Inherits random_run_case
 
     Private Shared ReadOnly enc As Text.Encoding
@@ -26,11 +29,11 @@ Friend Class cache_case
         insert_call(0.3, AddressOf [set])
         insert_call(0.3, AddressOf [get])
         insert_call(0.1, AddressOf size)
-        insert_call(0.03, AddressOf clear)
+        insert_call(0.0001, AddressOf clear)
         insert_call(0.1, AddressOf [erase])
-        insert_call(0.04, AddressOf foreach)
+        insert_call(0.05, AddressOf foreach)
         insert_call(0.1, AddressOf have)
-        insert_call(0.03, AddressOf empty)
+        insert_call(0.0499, AddressOf empty)
     End Sub
 
     Private Sub [set]()

@@ -63,6 +63,8 @@
     <Compile Include="hash_cache.vb" />
     <Compile Include="hash_cache2.vb" />
     <Compile Include="icache.vb" />
+    <Compile Include="icache2_icache_adapter.vb" />
+    <Compile Include="icache_icache2_adapter.vb" />
     <Compile Include="mapheap_cache.vb" />
     <Compile Include="map_cache.vb" />
     <Compile Include="map_map_cache.vb" />

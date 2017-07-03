@@ -26,10 +26,10 @@ Public Module _queue
     End Function
 End Module
 
-Public Class queue(Of valueT)
+Public Class queue(Of T)
     Implements ICloneable
 
-    Private ReadOnly data As list(Of valueT)
+    Private ReadOnly data As list(Of T)
 
     Public Sub clear()
         data.clear()
@@ -39,19 +39,19 @@ Public Class queue(Of valueT)
         Return data.empty()
     End Function
 
-    Public Function size() As Int64
+    Public Function size() As UInt32
         Return data.size()
     End Function
 
-    Public Function front() As valueT
+    Public Function front() As T
         Return data.front()
     End Function
 
-    Public Function back() As valueT
+    Public Function back() As T
         Return data.back()
     End Function
 
-    Public Function push(ByVal dataNew As valueT) As Boolean
+    Public Function push(ByVal dataNew As T) As Boolean
         Return data.push_back(dataNew)
     End Function
 
@@ -59,32 +59,32 @@ Public Class queue(Of valueT)
         Return data.pop_front()
     End Function
 
-    Public Overridable Function Clone() As Object Implements System.ICloneable.Clone
-        Return New queue(Of valueT)(data)
+    Public Overridable Function Clone() As Object Implements ICloneable.Clone
+        Return New queue(Of T)(data)
     End Function
 
     'in fact, there should be no such function, but it's here, so leave them
-    Public Function [erase](ByVal start As Int64, ByVal [end] As Int64) As Boolean
-        While start < [end] AndAlso Not data.erase(start) Is Nothing
-            start += 1
+    Public Function [erase](ByVal start As UInt32, ByVal [end] As UInt32) As Boolean
+        While start < [end] AndAlso data.erase(start) <> data.end()
+            start += uint32_1
         End While
 
         Return start = [end]
     End Function
 
-    Public Function [erase](ByVal start As Int64) As Boolean
-        Return [erase](start, start + 1)
+    Public Function [erase](ByVal start As UInt32) As Boolean
+        Return [erase](start, start + uint32_1)
     End Function
 
-    Public Sub New(ByVal that As queue(Of valueT))
+    Public Sub New(ByVal that As queue(Of T))
         copy(data, that.data)
     End Sub
 
-    Public Sub New(ByVal that As list(Of valueT))
+    Public Sub New(ByVal that As list(Of T))
         copy(data, that)
     End Sub
 
     Public Sub New()
-        data = New list(Of valueT)()
+        data = New list(Of T)()
     End Sub
 End Class

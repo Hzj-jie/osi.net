@@ -1,11 +1,13 @@
 ﻿
-Imports osi.root.delegates
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utt
-Imports osi.root.formation
-Imports osi.root.utils
+Imports osi.root.constants
 Imports osi.root.envs
+Imports osi.root.formation
+Imports osi.root.utt
 Imports osi.service.cache
 
 Public Class mapheap_cache_test
@@ -17,7 +19,7 @@ Public Class mapheap_cache_test
     Private ReadOnly c As icache(Of String, Byte())
 
     Shared Sub New()
-        retire_ticks = seconds_to_ticks(5)
+        retire_ticks = CULng(seconds_to_ticks(5))
         enc = Text.Encoding.Unicode()
     End Sub
 
@@ -54,16 +56,16 @@ Public Class mapheap_cache_test
     Private Function retired_test() As Boolean
         Using New realtime()
             Dim sleep_half_retire_ticks As Action = Sub()
-                                                        sleep_ticks(retire_ticks * 4 / 7)
+                                                        sleep_ticks(CLng(retire_ticks * 4 / 7))
                                                     End Sub
             assert(c.empty())
             Dim v As vector(Of pair(Of String, Byte())) = Nothing
             v = create_data(max_size)
-            For i As Int32 = 0 To v.size() - 1
+            For i As UInt32 = 0 To v.size() - uint32_1
                 c.set(v(i).first, v(i).second)
             Next
             sleep_half_retire_ticks()
-            For i As Int32 = (v.size() >> 1) To v.size() - 1
+            For i As UInt32 = (v.size() >> 1) To v.size() - uint32_1
                 assert_true(c.have(v(i).first))
                 Dim b() As Byte = Nothing
                 assert_true(c.get(v(i).first, b))
@@ -71,13 +73,13 @@ Public Class mapheap_cache_test
             Next
             sleep_half_retire_ticks()
             assert_equal(v.size(), c.size())
-            For i As Int32 = 0 To (v.size() >> 1) - 1
+            For i As UInt32 = 0 To (v.size() >> 1) - uint32_1
                 assert_true(c.have(v(i).first))
                 assert_false(c.get(v(i).first, Nothing))
                 assert_equal(v.size() - i - 1, c.size())
             Next
             sleep_half_retire_ticks()
-            For i As Int32 = (v.size() >> 1) To v.size() - 1
+            For i As UInt32 = (v.size() >> 1) To v.size() - uint32_1
                 assert_true(c.have(v(i).first))
                 assert_false(c.get(v(i).first, Nothing))
                 assert_equal(v.size() - i - 1, c.size())
@@ -93,9 +95,9 @@ Public Class mapheap_cache_test
         Dim v As vector(Of pair(Of String, Byte())) = Nothing
         v = create_data(max_size << 1)
         For i As Int32 = 0 To 1
-            For j As Int32 = 0 To max_size - 1
-                Dim k As Int32 = 0
-                k = i * max_size + j
+            For j As UInt32 = 0 To max_size - uint32_1
+                Dim k As UInt32 = 0
+                k = CUInt(i * max_size) + j
                 c.set(v(k).first, v(k).second)
                 assert_true(c.size() <= max_size)
                 assert_true(c.have(v(k).first))
@@ -106,7 +108,7 @@ Public Class mapheap_cache_test
             sleep(two_timeslice_length_ms)
         Next
 
-        For i As Int32 = max_size To v.size() - 1
+        For i As UInt32 = max_size To v.size() - uint32_1
             assert_true(c.have(v(i).first), v(i).first)
             Dim b() As Byte = Nothing
             assert_true(c.get(v(i).first, b), v(i).first)
@@ -118,7 +120,7 @@ Public Class mapheap_cache_test
     End Function
 
     Public Overrides Function preserved_processors() As Int16
-        Return Environment.ProcessorCount()
+        Return CShort(Environment.ProcessorCount())
     End Function
 
     Public Overrides Function run() As Boolean
