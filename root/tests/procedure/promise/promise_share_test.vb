@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.Threading
 Imports osi.root.connector
+Imports osi.root.event
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.root.utt
@@ -52,15 +53,19 @@ Public Class promise_share_test
     Private Shared Function race_case() As Boolean
         Const value1 As Int32 = 10
         Const value2 As Int32 = 20
+        Dim ce As count_event = Nothing
+        ce = New count_event(2)
         Dim finished As Boolean = False
         Dim p As promise = Nothing
         p = promise.race(New promise(Sub(ByVal resolve As Action(Of Object))
-                                         assert(Not stopwatch.push(10,
-                                                              Sub()
-                                                                  resolve(value1)
-                                                              End Sub) Is Nothing)
+                                         assert(Not stopwatch.push(100,
+                                                                   Sub()
+                                                                       resolve(value1)
+                                                                       ce.decrement()
+                                                                   End Sub) Is Nothing)
                                      End Sub),
                          New promise(Function() As Object
+                                         ce.decrement()
                                          Return value2
                                      End Function))
         p.then(Sub(ByVal v As Object)
@@ -69,6 +74,7 @@ Public Class promise_share_test
                    finished = True
                End Sub)
         assert_true(finished)
+        assert(ce.wait())
         Return True
     End Function
 
