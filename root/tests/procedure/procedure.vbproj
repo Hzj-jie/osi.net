@@ -89,6 +89,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="promise\promise_resolve_then_reject_test.vb" />
     <Compile Include="promise\promise_share_test.vb" />
     <Compile Include="promise\promise_test.vb" />
     <Compile Include="promise_event_comb_reject_test.vb" />

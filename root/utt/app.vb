@@ -38,6 +38,7 @@ Public Module _app
                 raise_error(event_comb.dump_alloc_trace())
             End If
         End If
+        assert_equal(counter.instance_count_counter(Of promise).count(), 0)
         'counter.backend_writer
         assert_less_or_equal(queue_runner.size(), 1)
         assert_true(suppress.init_state())

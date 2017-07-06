@@ -8,11 +8,15 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Partial Public NotInheritable Class promise
-    Private Class thenable
+    Partial Private Class thenable
         Private status As status
         Private [next] As const_pair(Of Action(Of Object), Action(Of Object))
         Private result As Object
         Private reason As Object
+
+        Public Sub New()
+            trace_start()
+        End Sub
 
         Public Function pending() As Boolean
             Return status = status.pending
@@ -41,6 +45,7 @@ Partial Public NotInheritable Class promise
                         status = status.fulfilled
                         Me.result = result
                         execute_next()
+                        trace_stop()
                     End If
                 End SyncLock
             End If
@@ -52,6 +57,7 @@ Partial Public NotInheritable Class promise
                 Me.reason = reason
                 status = status.rejected
                 execute_next()
+                trace_stop()
             End If
         End Sub
 
