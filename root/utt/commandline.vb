@@ -15,7 +15,7 @@ Friend Class commandline
     Public Shared Sub initialize(ByVal args() As String)
         For i As Int32 = 0 To array_size(args) - 1
             v.emplace_back(args(i))
-            assert(s.insert(args(i)) <> s.end())
+            assert(s.insert(args(i)).first <> s.end())
         Next
     End Sub
 
