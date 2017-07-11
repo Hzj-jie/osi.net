@@ -1,12 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net.Sockets
 Imports System.Net
 Imports osi.root.connector
-Imports osi.root.lock
 Imports osi.root.constants
 Imports osi.root.procedure
 Imports osi.root.formation
-Imports osi.root.utils
 
 Partial Public Class accepter
     Private Class listener
@@ -29,7 +31,7 @@ Partial Public Class accepter
 
         Public Function port() As UInt16
             Try
-                Return If(valid, l.LocalEndpoint().as(Of IPEndPoint).Port(), max_uint16)
+                Return If(valid, CUShort(l.LocalEndpoint().direct_cast_to(Of IPEndPoint).Port()), max_uint16)
             Catch ex As Exception
                 raise_error(error_type.warning,
                             "failed to get port of listener, ex ", ex.Message())

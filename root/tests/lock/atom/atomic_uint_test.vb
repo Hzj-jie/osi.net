@@ -1,9 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.lock
-Imports osi.root.utils
-Imports osi.root.utt
 Imports osi.root.constants
+Imports osi.root.lock
+Imports osi.root.utt
 
 Public MustInherit Class atomic_uint_test
     Inherits atom_test
@@ -34,9 +37,9 @@ Public MustInherit Class atomic_uint_test
     Protected Overrides Sub validate(ByVal ac As atom_case)
         assert(Not ac Is Nothing)
         assert(TypeOf ac Is atomic_uint_case)
-        assert_true(ac.as(Of atomic_uint_case)().result() >= 0)
-        assert_equal(CLng(ac.as(Of atomic_uint_case)().result()),
-                     round * thread_count + ac.as(Of atomic_uint_case)().initial_value())
+        assert_true(ac.direct_cast_to(Of atomic_uint_case)().result() >= 0)
+        assert_equal(CLng(ac.direct_cast_to(Of atomic_uint_case)().result()),
+                     round * thread_count + ac.direct_cast_to(Of atomic_uint_case)().initial_value())
     End Sub
 End Class
 

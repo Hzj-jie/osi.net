@@ -1,25 +1,44 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 #Const cached_cast = True
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports System.Threading
 Imports osi.root.delegates
 
 Public Module _cast
-    <Extension()> Public Function [as](Of T, IT)(ByVal i As IT, ByRef o As T) As Boolean
+    <Extension()> Public Function cast_to(Of T, IT)(ByVal i As IT, ByRef o As T) As Boolean
         Return cast(Of T, IT)(i, o)
     End Function
 
-    <Extension()> Public Function [as](Of T, IT)(ByVal i As IT) As T
+    <Extension()> Public Function cast_to(Of T, IT)(ByVal i As IT) As T
         Return cast(Of T, IT)(i)
     End Function
 
-    <Extension()> Public Function [as](Of T)(ByVal this As Object, ByRef o As T) As Boolean
+    <Extension()> Public Function cast_to(Of T)(ByVal this As Object, ByRef o As T) As Boolean
         Return cast(Of T)(this, o)
     End Function
 
-    <Extension()> Public Function [as](Of T)(ByVal this As Object) As T
+    <Extension()> Public Function cast_to(Of T)(ByVal this As Object) As T
         Return cast(Of T)(this)
+    End Function
+
+    <Extension()> Public Function direct_cast_to(Of T, IT)(ByVal i As IT, ByRef o As T) As Boolean
+        Return direct_cast(Of T, IT)(i, o)
+    End Function
+
+    <Extension()> Public Function direct_cast_to(Of T, IT)(ByVal i As IT) As T
+        Return direct_cast(Of T, IT)(i)
+    End Function
+
+    <Extension()> Public Function direct_cast_to(Of T)(ByVal i As Object, ByRef o As T) As Boolean
+        Return direct_cast(Of T)(i, o)
+    End Function
+
+    <Extension()> Public Function direct_cast_to(Of T)(ByVal i As Object) As T
+        Return direct_cast(Of T)(i)
     End Function
 
     Private Sub cast_assert(Of T)(ByVal i As Object, ByVal rst As Boolean, ByVal require_assert As Boolean)
@@ -87,7 +106,7 @@ Public Module _cast
             Else
                 Dim ott As Type = Nothing
                 ott = GetType(T)
-                For j As Int32 = 0 To array_size(ms) - 1
+                For j As Int32 = 0 To array_size_i(ms) - 1
                     If Not ms(j) Is Nothing AndAlso
                        ms(j).Name() = n AndAlso
                        array_size(ms(j).GetParameters()) = 1 AndAlso

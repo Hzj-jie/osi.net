@@ -1,8 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
-Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.utils
+Imports osi.root.constants
 Imports def_bool = System.Boolean
 Imports def_int = System.Int32
 Imports def_float = System.Double
@@ -89,7 +92,7 @@ Namespace fullstack.executor
         End Sub
 
         Public Function cvalue_count() As Int32
-            Return array_size(cvalues)
+            Return array_size_i(cvalues)
         End Function
 
         Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
@@ -114,7 +117,7 @@ Namespace fullstack.executor
                         Return 0
                     End If
                 ElseIf is_struct() OrElse other.is_struct() Then
-                    Return False
+                    Return -1
                 Else
                     Return compare(value, other.value)
                 End If
@@ -215,7 +218,7 @@ Namespace fullstack.executor
         <Extension()> Public Function bool(ByVal i As variable, ByRef o As def_bool) As Boolean
             assert(Not i Is Nothing)
             Return i.is_bool() AndAlso
-                   assert([as](Of Boolean)(i.value, o))
+                   assert(cast_to(Of Boolean)(i.value, o))
             'cast(Of def_bool)(i.value, o) will trigger require_assert overload
         End Function
 
@@ -292,7 +295,7 @@ Namespace fullstack.executor
             ElseIf i.string(vs) Then
                 Return Not String.IsNullOrEmpty(vs)
             ElseIf i.is_struct() Then
-                For j As Int32 = 0 To array_size(i.cvalues) - 1
+                For j As Int32 = 0 To array_size_i(i.cvalues) - 1
                     If Not i.cvalues(j) Is Nothing Then
                         Return True
                     End If

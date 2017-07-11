@@ -1,7 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.root.utt
 
 Public Class map_compare_test
@@ -20,15 +23,15 @@ Public Class map_compare_test
             Dim r As map(Of String, String) = Nothing
             r = New map(Of String, String)()
             Dim b() As Boolean = Nothing
-            ReDim b(v.size() - 1)
-            For i As Int32 = 0 To v.size() - 1
+            ReDim b(CInt(v.size()) - 1)
+            For i As Int32 = 0 To CInt(v.size()) - 1
                 Dim j As Int32 = 0
-                j = rnd_int(0, v.size())
+                j = rnd_int(0, CInt(v.size()))
                 While b(j)
-                    j = rnd_int(0, v.size())
+                    j = rnd_int(0, CInt(v.size()))
                 End While
                 b(j) = True
-                r(v(j).first) = v(j).second
+                r(v(CUInt(j)).first) = v(CUInt(j)).second
             Next
             Return r
         End Function
@@ -53,8 +56,8 @@ Public Class map_compare_test
                                          ByVal r As vector(Of pair(Of String, String)),
                                          ByVal exp As Int32) As Boolean
             assert_compare(create_map(l), create_map(r), exp)
-            assert_compare(create_map(l).as(Of bt(Of first_const_pair(Of String, String)))(),
-                           create_map(r).as(Of bt(Of first_const_pair(Of String, String)))())
+            assert_compare(create_map(l).direct_cast_to(Of bt(Of first_const_pair(Of String, String)))(),
+                           create_map(r).direct_cast_to(Of bt(Of first_const_pair(Of String, String)))())
             Return True
         End Function
 

@@ -1,8 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.utils
 Imports osi.root.utt
-Imports osi.root.formation
-Imports osi.root.connector
 
 Public Class cast_perf
     Inherits case_wrapper
@@ -20,6 +23,6 @@ Public Class cast_perf
 
     'to avoid the impact from suppress.compare_error
     Public Overrides Function preserved_processors() As Int16
-        Return Environment.ProcessorCount()
+        Return CShort(Environment.ProcessorCount())
     End Function
 End Class

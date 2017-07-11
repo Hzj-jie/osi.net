@@ -1,9 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
-Imports osi.root.envs
 Imports osi.root.connector
-Imports osi.root.utils
 Imports osi.root.constants
+Imports osi.root.envs
 
 Partial Public Class virtdisk
     Private Class capinfo
@@ -20,7 +23,7 @@ Partial Public Class virtdisk
                             "do not get a valid stream instance for virtdisk, the capacity will always return 0")
             ElseIf TypeOf i Is FileStream Then
                 is_fs = True
-                di = New storage.capinfo(i.as(Of FileStream)().Name())
+                di = New storage.capinfo(i.direct_cast_to(Of FileStream)().Name())
             ElseIf TypeOf i Is MemoryStream Then
                 is_ms = True
             Else
@@ -36,7 +39,7 @@ Partial Public Class virtdisk
                 assert(Not i.di Is Nothing)
                 Return i.di.capacity()
             ElseIf i.is_ms Then
-                Return available_virtual_memory()
+                Return CLng(available_virtual_memory())
             Else
                 Return 0
             End If

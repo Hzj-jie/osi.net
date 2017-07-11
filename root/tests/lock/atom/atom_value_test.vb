@@ -1,8 +1,11 @@
 ﻿
-Imports osi.root.utt
-Imports osi.root.lock
-Imports osi.root.utils
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.lock
+Imports osi.root.utt
 
 Public Class atom_value_test
     Inherits atom_test
@@ -36,6 +39,6 @@ Public Class atom_value_test
     Protected Overrides Sub validate(ByVal ac As atom_case)
         assert(Not ac Is Nothing)
         assert(TypeOf ac Is atom_value_case)
-        assert_equal(ac.as(Of atom_value_case)().result(), atom_value_case.increment * round * thread_count)
+        assert_equal(ac.direct_cast_to(Of atom_value_case)().result(), atom_value_case.increment * round * thread_count)
     End Sub
 End Class

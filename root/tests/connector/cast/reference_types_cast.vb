@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.utt
 
@@ -21,7 +25,7 @@ Public Module _reference_types_cast
     Private Function cast_as_T(Of T As {return_s, Class},
                                   T2 As {return_s, Class})(ByVal i As T) As Boolean
         Dim j As T2 = Nothing
-        assert_true(i.as(j))
+        assert_true(i.cast_to(j))
         Return cast_case_verify(i, j)
     End Function
 
@@ -33,7 +37,7 @@ Public Module _reference_types_cast
 
     Private Function cast_as_object(Of T As {return_s, Class}, T2 As {return_s, Class})(ByVal i As T) As Boolean
         Dim j As T2 = Nothing
-        assert_true(i.as(Of T2)(j))
+        assert_true(i.cast_to(Of T2)(j))
         Return cast_case_verify(i, j)
     End Function
 
