@@ -66,6 +66,7 @@
     <Compile Include="callstack_test.vb" />
     <Compile Include="cast\cast_perf.vb" />
     <Compile Include="cast\cast_test.vb" />
+    <Compile Include="cast\direct_cast_perf.vb" />
     <Compile Include="cast\reference_types_cast.vb" />
     <Compile Include="cast\reference_types_definitions.vb" />
     <Compile Include="cast\value_types_cast.vb" />
