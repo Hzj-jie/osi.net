@@ -1,4 +1,6 @@
 
+call init_vs_env.cmd
+
 for /l %%x in (0,0,1) do (
     call force-sync.cmd
     call build.cmd
