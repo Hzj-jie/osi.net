@@ -29,6 +29,26 @@ Public Module _ipendpoint
         End If
     End Function
 
+    <Extension()> Public Function to_string_pair(ByVal this As IPEndPoint) As pair(Of String, UInt16)
+        Dim r As pair(Of IPAddress, UInt16) = Nothing
+        r = to_pair(this)
+        If r Is Nothing Then
+            Return Nothing
+        Else
+            Return emplace_make_pair(Convert.ToString(r.first), r.second)
+        End If
+    End Function
+
+    <Extension()> Public Function to_string_const_pair(ByVal this As IPEndPoint) As const_pair(Of String, UInt16)
+        Dim r As pair(Of String, UInt16) = Nothing
+        r = to_string_pair(this)
+        If r Is Nothing Then
+            Return Nothing
+        Else
+            Return r.emplace_to_const_pair()
+        End If
+    End Function
+
     <Extension()> Public Function to_ipendpoint(ByVal this As pair(Of IPAddress, UInt16)) As IPEndPoint
         If this Is Nothing OrElse this.first Is Nothing Then
             Return Nothing

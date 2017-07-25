@@ -1,16 +1,17 @@
 ﻿
-Imports System.IO
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.formation
-Imports osi.root.utt
-Imports osi.root.template
-Imports osi.root.procedure
-Imports osi.root.utils
 Imports osi.root.lock
-Imports osi.root.lock.slimlock
+Imports osi.root.procedure
+Imports osi.root.template
+Imports osi.root.utt
 Imports osi.service.commander
 Imports osi.service.convertor
 Imports osi.service.device
@@ -41,7 +42,7 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
     Private Shared ReadOnly tcp_port As UInt16
     Private Shared ReadOnly http_port As UInt16
     Private Shared ReadOnly udp_port As UInt16
-    Private Shared ReadOnly enabled_choices As UInt32
+    Private Shared ReadOnly enabled_choices As Int32
     Private ReadOnly dispatcher As dispatcher
 
     Shared Sub New()
@@ -66,7 +67,7 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
         If enable_udp Then
             udp_port = rnd_port()
         End If
-        connection_count = +(alloc(Of _CONNECTION_COUNT)())
+        connection_count = alloc(Of _CONNECTION_COUNT)().as_int32()
         If connection_count = npos Then
             connection_count = If(isdebugbuild(), 1, 2) * min((Environment.ProcessorCount() << 4), 64)
         End If
@@ -101,7 +102,7 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
     End Function
 
     Public Overrides Function preserved_processors() As Int16
-        Return Environment.ProcessorCount()
+        Return CShort(Environment.ProcessorCount())
     End Function
 
     Public Overrides Function run() As Boolean
@@ -222,15 +223,16 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
                 tcp_q = New questioner(+opp)
             End If
             If enable_http_get AndAlso http_get_q Is Nothing Then
-                http_get_q = New questioner(http.client_get_dev.herald_device_pool(Convert.ToString(IPAddress.Loopback),
-                                                                                   http_port,
-                                                                                   max_connection:=connection_count))
+                http_get_q = New questioner(http.client_get_dev.herald_device_pool(
+                                                Convert.ToString(IPAddress.Loopback),
+                                                http_port,
+                                                max_connection:=CUInt(connection_count)))
             End If
             If enable_http_post AndAlso http_post_q Is Nothing Then
                 http_post_q = New questioner(http.client_post_dev.herald_device_pool(
                                                  Convert.ToString(IPAddress.Loopback),
                                                  http_port,
-                                                 max_connection:=connection_count))
+                                                 max_connection:=CUInt(connection_count)))
             End If
             If enable_udp AndAlso udp_q Is Nothing Then
                 udp_q = New questioner(+udp_sender)

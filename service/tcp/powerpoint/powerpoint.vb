@@ -6,6 +6,7 @@ Option Strict On
 Imports System.Net.Sockets
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.service.device
 Imports osi.service.commander
@@ -39,6 +40,7 @@ Partial Public Class powerpoint
     Private ReadOnly _flow_creator As idevice_creator(Of flow)
     Private ReadOnly _flow_auto_device_exporter As iauto_device_exporter(Of flow)
     Private ReadOnly _flow_manual_device_exporter As imanual_device_exporter(Of flow)
+    Private ReadOnly closer As disposer
 
     Private Sub New(ByVal token As String,
                     ByVal host_or_ip As String,
@@ -93,12 +95,22 @@ Partial Public Class powerpoint
             _ref_client_auto_device_exporter = auto_device_exporter_new(_ref_client_creator)
             _flow_creator = device_creator_adapter.[New](_ref_client_creator, AddressOf ref_client_to_flow)
             _flow_auto_device_exporter = auto_device_exporter_new(_flow_creator)
+            closer = New disposer(Sub()
+                                      ref_client_auto_device_exporter().stop()
+                                      flow_auto_device_exporter().stop()
+                                  End Sub)
         Else
             _ref_client_manual_device_exporter = New manual_device_exporter(Of ref_client)(identity)
             _flow_manual_device_exporter = manual_device_exporter_adapter.[New](_ref_client_manual_device_exporter,
                                                                                 AddressOf ref_client_to_flow)
             accepter.listen(Me)
+            closer = New disposer(Sub()
+                                      ref_client_manual_device_exporter().stop()
+                                      flow_manual_device_exporter().stop()
+                                  End Sub)
         End If
+
+        assert(Not closer Is Nothing)
     End Sub
 
     Public Shared Function auto_device_exporter_new(Of T)(ByVal i As iasync_device_creator(Of T)) _
@@ -317,6 +329,10 @@ Partial Public Class powerpoint
     Public Function herald_device_pool() As idevice_pool(Of herald)
         Return device_pool_new(_herald_creator(), _herald_auto_device_exporter(), _herald_manual_device_exporter())
     End Function
+
+    Public Sub close()
+        closer.dispose()
+    End Sub
 
     'test purpose only, make sure all the related event_combs and stopwatch events are stopped
     Public Shared Sub waitfor_stop(ByVal ParamArray this() As powerpoint)

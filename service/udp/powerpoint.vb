@@ -42,6 +42,7 @@ Partial Public Class powerpoint
     Private ReadOnly _udp_dev_manual_device_exporter As imanual_device_exporter(Of udp_dev)
     Private ReadOnly _datagram_manual_device_exporter As imanual_device_exporter(Of datagram)
     Private ReadOnly _herald_manual_device_exporter As imanual_device_exporter(Of herald)
+    Private ReadOnly closer As IDisposable
 
     Private Sub New(ByVal host_or_ip As String,
                     ByVal remote_port As UInt16,
@@ -77,6 +78,10 @@ Partial Public Class powerpoint
             _async_getter_datagram_device = device_adapter.[New](_udp_dev_device, AddressOf udp_dev_to_datagram)
             assert(async_device_device_converter.adapt(_async_getter_datagram_device, _datagram_device))
             _herald_device = device_adapter.[New](_datagram_device, AddressOf datagram_to_herald)
+            closer = New disposer(Sub()
+                                      async_getter_datagram_device().close()
+                                      herald_device().close()
+                                  End Sub)
         ElseIf incoming() Then
             _udp_dev_manual_device_exporter = New manual_device_exporter(Of udp_dev)(identity)
             _datagram_manual_device_exporter =
@@ -84,13 +89,22 @@ Partial Public Class powerpoint
             _herald_manual_device_exporter = manual_device_exporter_adapter.[New](_udp_dev_manual_device_exporter,
                                                                                   AddressOf udp_dev_to_herald)
             listeners.listen(Me)
+            closer = New disposer(Sub()
+                                      udp_dev_manual_device_exporter().stop()
+                                      datagram_manual_device_exporter().stop()
+                                      herald_manual_device_exporter().stop()
+                                  End Sub)
         ElseIf outgoing() Then
             _udp_dev_creator = New connector(Me)
             _datagram_creator = device_creator_adapter.[New](_udp_dev_creator, AddressOf udp_dev_to_datagram)
             _herald_creator = device_creator_adapter.[New](_udp_dev_creator, AddressOf udp_dev_to_herald)
+            ' Do nothing
+            closer = New empty_idisposable()
         Else
             assert(False)
         End If
+
+        assert(Not closer Is Nothing)
     End Sub
 
     Public Function local_defined() As Boolean
@@ -317,4 +331,14 @@ Partial Public Class powerpoint
             Return False
         End If
     End Function
+
+    Public Function remote_endpoint() As const_pair(Of IPAddress, UInt16)
+        Dim r As const_pair(Of IPAddress, UInt16) = Nothing
+        assert(remote_endpoint(r))
+        Return r
+    End Function
+
+    Public Sub close()
+        closer.dispose()
+    End Sub
 End Class

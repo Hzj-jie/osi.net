@@ -8,8 +8,8 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.root.procedure
+Imports osi.root.utils
 Imports counter = osi.root.utils.counter
 
 Partial Friend NotInheritable Class host
@@ -167,7 +167,7 @@ Partial Friend NotInheritable Class host
 
     Public Shared Sub run()
         expected_end_ms = nowadays.milliseconds()
-        expected_end_ms += CLng(minute_to_milliseconds(36 * 60) / 20 / utt_concurrency() * perf_run_ms * 4)
+        expected_end_ms += CLng(minute_to_milliseconds(36 * 60) / 20 / max(utt_concurrency(), 1) * perf_run_ms * 4)
         Dim finished As AutoResetEvent = Nothing
         finished = New AutoResetEvent(False)
         While go_through_all(finished)

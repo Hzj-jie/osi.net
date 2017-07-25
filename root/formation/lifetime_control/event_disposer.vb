@@ -1,6 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 'do not suggest to use these two classes, use auto_disposer instead
-Imports osi.root.formation
 
 Public Class event_disposer(Of T)
     Inherits pointer(Of T)
