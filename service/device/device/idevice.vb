@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 Imports osi.root.connector
@@ -28,8 +32,7 @@ Public Interface iasync_device_creator(Of T)
     Inherits idevice_creator(Of async_getter(Of T))
 End Interface
 
-Public Interface idevice_exporter(Of T)
-    Event new_device_exported(ByVal d As idevice(Of T), ByRef export_result As Boolean)
+Public Interface idevice_exporter
     Function exported() As UInt32
     Event after_start()
     Function start() As Boolean
@@ -37,6 +40,12 @@ Public Interface idevice_exporter(Of T)
     Event after_stop()
     Function [stop]() As Boolean
     Function stopped() As Boolean
+End Interface
+
+Public Interface idevice_exporter(Of T)
+    Inherits idevice_exporter
+
+    Event new_device_exported(ByVal d As idevice(Of T), ByRef export_result As Boolean)
 End Interface
 
 ' Manually (device_pool consumers) receives and injects idevice(Of T) for manual_pre_generated_device_pool
@@ -65,14 +74,35 @@ Public Module _idevice
         Return o
     End Function
 
+    <Extension()> Public Sub dispose(ByVal this As idevice)
+        If Not this Is Nothing Then
+            this.close()
+        End If
+    End Sub
+
     Sub New()
         disposable.register_base_type(Sub(x As idevice)
-                                          If Not x Is Nothing Then
-                                              x.close()
-                                          End If
+                                          x.dispose()
                                       End Sub)
     End Sub
 
     Private Sub init()
+    End Sub
+End Module
+
+<global_init(global_init_level.services)>
+Public Module _idevice_exporter
+    <Extension()> Public Sub dispose(ByVal this As idevice_exporter)
+        If Not this Is Nothing Then
+            While this.started()
+                this.stop()
+            End While
+        End If
+    End Sub
+
+    Sub New()
+        disposable.register_base_type(Of idevice_exporter)(Sub(ByVal this As idevice_exporter)
+                                                               this.dispose()
+                                                           End Sub)
     End Sub
 End Module

@@ -1,9 +1,12 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.lock
-Imports osi.root.event
+Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.utils
 
@@ -46,7 +49,8 @@ Partial Public MustInherit Class auto_device_exporter(Of T)
         Me.count = New atomic_int()
     End Sub
 
-    Private Sub start_to_export()
+    Private Sub start_to_export(ByVal rcr As reference_count_runner)
+        assert(object_compare(rcr, Me.rcr) = 0)
         Dim ec As event_comb = Nothing
         assert_begin(New event_comb(Function() As Boolean
                                         If stopping() Then
@@ -54,7 +58,7 @@ Partial Public MustInherit Class auto_device_exporter(Of T)
                                             Return goto_end()
                                         Else
                                             Dim this_round As Int32 = 0
-                                            this_round = (+count) - exported()
+                                            this_round = (+count) - CInt(exported())
                                             assert(this_round >= 0)
                                             If this_round = 0 Then
                                                 Return waitfor(check_interval_ms)
@@ -82,13 +86,13 @@ Partial Public MustInherit Class auto_device_exporter(Of T)
     Protected MustOverride Function create_device(ByVal p As pointer(Of idevice(Of T))) As event_comb
 
     Private Function create_devices(ByVal expected As Int32) As event_comb
-        assert(expected > uint32_0)
+        assert(expected > 0)
         Dim ecs() As event_comb = Nothing
         Dim p() As pointer(Of idevice(Of T)) = Nothing
         Return New event_comb(Function() As Boolean
-                                  ReDim ecs(expected - uint32_1)
-                                  ReDim p(expected - uint32_1)
-                                  For i As UInt32 = 0 To expected - uint32_1
+                                  ReDim ecs(expected - 1)
+                                  ReDim p(expected - 1)
+                                  For i As Int32 = 0 To expected - 1
                                       p(i) = New pointer(Of idevice(Of T))()
                                       ecs(i) = create_device(p(i))
                                   Next
@@ -97,7 +101,7 @@ Partial Public MustInherit Class auto_device_exporter(Of T)
                               End Function,
                               Function() As Boolean
                                   Dim failed As Boolean = False
-                                  For i As UInt32 = 0 To expected - uint32_1
+                                  For i As Int32 = 0 To expected - 1
                                       If Not ecs(i).end_result() OrElse
                                          p(i).empty() OrElse
                                          Not device_exported(+p(i)) Then

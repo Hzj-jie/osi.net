@@ -90,9 +90,9 @@ Partial Public Class powerpoint
                                                                                   AddressOf udp_dev_to_herald)
             listeners.listen(Me)
             closer = New disposer(Sub()
-                                      udp_dev_manual_device_exporter().stop()
-                                      datagram_manual_device_exporter().stop()
-                                      herald_manual_device_exporter().stop()
+                                      udp_dev_manual_device_exporter().dispose()
+                                      datagram_manual_device_exporter().dispose()
+                                      herald_manual_device_exporter().dispose()
                                   End Sub)
         ElseIf outgoing() Then
             _udp_dev_creator = New connector(Me)

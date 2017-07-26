@@ -96,8 +96,8 @@ Partial Public Class powerpoint
             _flow_creator = device_creator_adapter.[New](_ref_client_creator, AddressOf ref_client_to_flow)
             _flow_auto_device_exporter = auto_device_exporter_new(_flow_creator)
             closer = New disposer(Sub()
-                                      ref_client_auto_device_exporter().stop()
-                                      flow_auto_device_exporter().stop()
+                                      ref_client_auto_device_exporter().dispose()
+                                      flow_auto_device_exporter().dispose()
                                   End Sub)
         Else
             _ref_client_manual_device_exporter = New manual_device_exporter(Of ref_client)(identity)
@@ -105,8 +105,8 @@ Partial Public Class powerpoint
                                                                                 AddressOf ref_client_to_flow)
             accepter.listen(Me)
             closer = New disposer(Sub()
-                                      ref_client_manual_device_exporter().stop()
-                                      flow_manual_device_exporter().stop()
+                                      ref_client_manual_device_exporter().dispose()
+                                      flow_manual_device_exporter().dispose()
                                   End Sub)
         End If
 

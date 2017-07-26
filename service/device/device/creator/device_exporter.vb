@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.lock
 Imports osi.root.utils
@@ -47,7 +51,7 @@ Public Class device_exporter(Of T)
     End Function
 
     Public Function exported() As UInt32 Implements idevice_exporter(Of T).exported
-        Return +exped
+        Return CUInt(+exped)
     End Function
 
     Public Overridable Function start() As Boolean Implements idevice_exporter(Of T).start
