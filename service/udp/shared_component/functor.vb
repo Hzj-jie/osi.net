@@ -3,14 +3,13 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports System.Net
 Imports System.Net.Sockets
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.udp
 Imports base_shared_component = osi.service.selector.shared_component(Of System.UInt16,
-                                                                         System.Net.IPAddress,
+                                                                         String,
                                                                          System.Net.Sockets.UdpClient,
                                                                          Byte(),
                                                                          osi.service.udp.powerpoint)
@@ -43,7 +42,7 @@ Public NotInheritable Class functor
     End Function
 
     Protected Overrides Function create_sender(ByVal dev As ref_instance(Of UdpClient),
-                                               ByVal remote As const_pair(Of IPAddress, UInt16)) _
+                                               ByVal remote As const_pair(Of String, UInt16)) _
                                               As base_shared_component.exclusive_sender
         Return New exclusive_sender(dev, remote)
     End Function

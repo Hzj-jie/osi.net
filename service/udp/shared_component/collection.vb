@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.template
 Imports base_shared_component = osi.service.selector.shared_component(Of System.UInt16,
-                                                                         System.Net.IPAddress,
+                                                                         String,
                                                                          System.Net.Sockets.UdpClient,
                                                                          Byte(),
                                                                          osi.service.udp.powerpoint)

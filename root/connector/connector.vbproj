@@ -70,6 +70,8 @@
     <Compile Include="disposable.vb" />
     <Compile Include="endian.vb" />
     <Compile Include="ICloneable.vb" />
+    <Compile Include="send_input.vb" />
+    <Compile Include="virtual_key.vb" />
     <Compile Include="null_wait_handle.vb" />
     <Compile Include="rnd_register.vb" />
     <Compile Include="string_utils\utf8_char.vb" />
@@ -117,9 +119,9 @@
     <Compile Include="windows_error_mode.vb" />
     <Compile Include="windows_hook\auto_release_windows_hook.vb" />
     <Compile Include="windows_hook\lowlevel_keyboard_hook.vb" />
-    <Compile Include="windows_hook\windows_virtual_key.vb" />
+    <Compile Include="windows_virtual_key.vb" />
     <Compile Include="windows_hook\windows_hook.vb" />
-    <Compile Include="windows_hook\windows_message.vb" />
+    <Compile Include="windows_message.vb" />
     <Compile Include="windows_native_error.vb" />
     <None Include="bytes\codegen\bytes_dependent_impl.vbp" />
     <None Include="bytes\codegen\bytes_dependent_types.vbp" />

@@ -114,10 +114,10 @@ Public Class global_init
                     End If
                 Next
             Catch ex As Exception
-                raise_error("failed to load types from assembly ",
-                              i.FullName(),
-                              ", ex ",
-                              ex.Message())
+                raise_error("Failed to load types from assembly ",
+                            i,
+                            ", ex ",
+                            ex)
             End Try
         Next
         initiating.wait()

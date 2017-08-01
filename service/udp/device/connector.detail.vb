@@ -1,13 +1,15 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net
 Imports System.Net.Sockets
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
-Imports osi.service.device
-Imports osi.service.dns
 
 Partial Public NotInheritable Class connector
     Public Shared Function [New](ByVal address_family As AddressFamily,
@@ -96,7 +98,7 @@ Partial Public NotInheritable Class connector
                                   If ec.end_result() AndAlso
                                      Not e.empty() AndAlso
                                      Not isemptyarray((+e).AddressList()) Then
-                                      For i As Int32 = 0 To array_size((+e).AddressList()) - 1
+                                      For i As Int32 = 0 To array_size_i((+e).AddressList()) - 1
                                           result.emplace_back(New IPEndPoint((+e).AddressList()(i), p.remote_port))
                                       Next
                                       Return goto_end()
@@ -162,9 +164,9 @@ Partial Public NotInheritable Class connector
                               Function() As Boolean
                                   If ec.end_result() AndAlso Not result.empty() Then
                                       Dim eps() As IPEndPoint = Nothing
-                                      ReDim eps(array_size((+result).AddressList()) - 1)
+                                      ReDim eps(array_size_i((+result).AddressList()) - 1)
                                       Dim selected_remote_host As IPAddress = Nothing
-                                      For i As Int32 = 0 To array_size((+result).AddressList()) - 1
+                                      For i As Int32 = 0 To array_size_i((+result).AddressList()) - 1
                                           If Not (+result).AddressList()(i) Is Nothing Then
                                               eps(i) = New IPEndPoint((+result).AddressList()(i), p.remote_port)
                                               If selected_remote_host Is Nothing AndAlso

@@ -3,7 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports System.Net
 Imports System.Net.Sockets
 Imports osi.root.connector
 Imports osi.root.constants
@@ -88,7 +87,7 @@ Partial Public Class powerpoint
                 manual_device_exporter_adapter.[New](_udp_dev_manual_device_exporter, AddressOf udp_dev_to_datagram)
             _herald_manual_device_exporter = manual_device_exporter_adapter.[New](_udp_dev_manual_device_exporter,
                                                                                   AddressOf udp_dev_to_herald)
-            listeners.listen(Me)
+            ' listeners.listen(Me)
             closer = New disposer(Sub()
                                       udp_dev_manual_device_exporter().dispose()
                                       datagram_manual_device_exporter().dispose()
@@ -318,22 +317,17 @@ Partial Public Class powerpoint
         Return New transceive_timeout(send_rate_sec, receive_rate_sec, overhead)
     End Function
 
-    Public Function remote_endpoint(ByRef o As const_pair(Of IPAddress, UInt16)) As Boolean
+    Public Function remote_endpoint(ByRef o As const_pair(Of String, UInt16)) As Boolean
         If remote_defined() Then
-            Dim address As IPAddress = Nothing
-            If IPAddress.TryParse(host_or_ip, address) Then
-                o = emplace_make_const_pair(address, remote_port)
-                Return True
-            Else
-                Return False
-            End If
+            o = emplace_make_const_pair(host_or_ip, remote_port)
+            Return True
         Else
             Return False
         End If
     End Function
 
-    Public Function remote_endpoint() As const_pair(Of IPAddress, UInt16)
-        Dim r As const_pair(Of IPAddress, UInt16) = Nothing
+    Public Function remote_endpoint() As const_pair(Of String, UInt16)
+        Dim r As const_pair(Of String, UInt16) = Nothing
         assert(remote_endpoint(r))
         Return r
     End Function

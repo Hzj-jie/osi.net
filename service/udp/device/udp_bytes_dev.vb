@@ -13,7 +13,7 @@ Imports osi.root.utils
 Imports osi.service.transmitter
 
 Public Class udp_bytes_dev
-    Implements dev_T(Of pair(Of Byte(), const_pair(Of IPAddress, UInt16)))
+    Implements dev_T(Of pair(Of Byte(), const_pair(Of String, UInt16)))
 
     Private Class indicator
         Implements sync_indicator
@@ -52,8 +52,8 @@ Public Class udp_bytes_dev
         Me.s = New indicator_sensor_adapter(New sync_indicator_indicator_adapter(New indicator(d)))
     End Sub
 
-    Public Function receive(ByVal o As pointer(Of pair(Of Byte(), const_pair(Of IPAddress, UInt16)))) As event_comb _
-                           Implements T_pump(Of pair(Of Byte(), const_pair(Of IPAddress, UInt16))).receive
+    Public Function receive(ByVal o As pointer(Of pair(Of Byte(), const_pair(Of String, UInt16)))) As event_comb _
+                           Implements T_pump(Of pair(Of Byte(), const_pair(Of String, UInt16))).receive
         Dim ec As event_comb = Nothing
         Dim buff As pointer(Of Byte()) = Nothing
         Dim remote As pointer(Of IPEndPoint) = Nothing
@@ -65,7 +65,7 @@ Public Class udp_bytes_dev
                                       remote = New pointer(Of IPEndPoint)()
                                       ec = udp_client.receive(buff, remote)
                                       Return waitfor(ec) AndAlso
-                                         goto_next()
+                                             goto_next()
                                   Else
                                       Return False
                                   End If
@@ -74,13 +74,13 @@ Public Class udp_bytes_dev
                                   Return ec.end_result() AndAlso
                                          assert(Not buff.empty()) AndAlso
                                          assert(Not remote.empty()) AndAlso
-                                         eva(o, emplace_make_pair(+buff, (+remote).to_const_pair())) AndAlso
+                                         eva(o, emplace_make_pair(+buff, (+remote).to_string_const_pair())) AndAlso
                                          goto_end()
                               End Function)
     End Function
 
-    Public Function send(ByVal i As pair(Of Byte(), const_pair(Of IPAddress, UInt16))) As event_comb _
-                        Implements T_injector(Of pair(Of Byte(), const_pair(Of IPAddress, UInt16))).send
+    Public Function send(ByVal i As pair(Of Byte(), const_pair(Of String, UInt16))) As event_comb _
+                        Implements T_injector(Of pair(Of Byte(), const_pair(Of String, UInt16))).send
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If i Is Nothing OrElse i.second Is Nothing OrElse i.second.first Is Nothing Then
@@ -94,7 +94,15 @@ Public Class udp_bytes_dev
                                           ec = complete_io_3(i.first,
                                                              uint32_0,
                                                              array_size(i.first),
-                                                             AddressOf udp_client.send)
+                                                             Function(ByVal buff() As Byte,
+                                                                      ByVal count As UInt32,
+                                                                      ByVal result As pointer(Of UInt32)) As event_comb
+                                                                 Return udp_client.send(buff,
+                                                                                        count,
+                                                                                        i.second.first,
+                                                                                        i.second.second,
+                                                                                        result)
+                                                             End Function)
                                           Return waitfor(ec) AndAlso
                                                  goto_next()
                                       Else

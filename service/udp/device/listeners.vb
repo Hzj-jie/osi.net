@@ -19,7 +19,8 @@ Public NotInheritable Class listeners
         assert(Not p Is Nothing)
         assert(p.local_defined() AndAlso Not p.remote_defined())
         Dim l As listener = Nothing
-        If [New](p, l) Then
+        If [New](p, p.local_port, l) Then
+            l.bind()
             AddHandler p.udp_dev_manual_device_exporter().after_stop,
                        Sub()
                            assert(l.release())

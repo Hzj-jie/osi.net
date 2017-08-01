@@ -142,6 +142,7 @@
     <Compile Include="rate_timeout_test.vb" />
     <Compile Include="rnd\guid_strs_test.vb" />
     <Compile Include="rnd_register_test.vb" />
+    <Compile Include="send_input_test.vb" />
     <Compile Include="shared_ctor_callstack_behavior_test.vb" />
     <Compile Include="static_constructor_test.vb" />
     <Compile Include="strindexof_test.vb" />
@@ -192,6 +193,7 @@
     <Compile Include="uint32_perf_test.vb" />
     <Compile Include="unchecked_int_test.vb" />
     <Compile Include="uri_path_test.vb" />
+    <Compile Include="virtual_key_test.vb" />
     <Compile Include="wait_handle_behavior_test.vb" />
     <Compile Include="weakreference_behavior_test.vb" />
     <Compile Include="windows_hook\lowlevel_keyboard_hook_test.vb" />

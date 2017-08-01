@@ -46,8 +46,10 @@ Partial Friend NotInheritable Class host
                                                Next
                                            Catch ex As Exception
                                                raise_error(error_type.warning,
-                                                           "failed to load type from assembly ",
-                                                           i.FullName())
+                                                           "Failed to load type from assembly ",
+                                                           i,
+                                                           ", ex",
+                                                           ex)
                                            End Try
                                        End Sub,
                                        AppDomain.CurrentDomain().GetAssemblies())

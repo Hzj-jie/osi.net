@@ -30,7 +30,7 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
         End Function
 
         Protected Function component_getter() As getter(Of COMPONENT_T)
-            Return c.assert_getter()
+            Return not_null_getter.[New](c.assert_getter())
         End Function
 
         Public MustOverride Function receive(
