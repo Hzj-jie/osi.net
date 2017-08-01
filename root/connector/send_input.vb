@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.Runtime.InteropServices
 Imports osi.root.constants
+Imports osi.root.delegates
 
 Public NotInheritable Class send_input
     <StructLayout(LayoutKind.Sequential)>
@@ -42,14 +43,29 @@ Public NotInheritable Class send_input
             unicode = &H4
         End Enum
 
-        Public Shared Function from_scan_code(ByVal code As UInt16) As keyboard_input
-            Dim r As keyboard_input = Nothing
-            r = New keyboard_input()
-            r.scan_code = code
-            r.flags = flag.scan_code
-            If (code >> bit_count_in_byte) <> 0 Then
-                r.flags = r.flags Or flag.extended_key
-            End If
+        Public Shared Function from_virtual_code(ByVal code As UInt16) As keyboard_input()
+            Dim r() As keyboard_input = Nothing
+            ReDim r(1)
+            For i As Int32 = 0 To 1
+                r(i) = New keyboard_input()
+                r(i).virtual_key = code
+            Next
+            r(1).flags = flag.key_up
+            Return r
+        End Function
+
+        Public Shared Function from_scan_code(ByVal code As UInt16) As keyboard_input()
+            Dim r() As keyboard_input = Nothing
+            ReDim r(1)
+            For i As Int32 = 0 To 1
+                r(i) = New keyboard_input()
+                r(i).scan_code = code
+                r(i).flags = flag.scan_code
+                If (code >> bit_count_in_byte) <> 0 Then
+                    r(i).flags = r(i).flags Or flag.extended_key
+                End If
+            Next
+            r(1).flags = r(1).flags Or flag.key_up
             Return r
         End Function
 
@@ -73,33 +89,34 @@ Public NotInheritable Class send_input
         hardware = 2
     End Enum
 
-    <StructLayout(LayoutKind.Explicit)>
+    <StructLayout(LayoutKind.Sequential)>
     Private Structure input
-        Public Shared ReadOnly size As Int32
-
-        Shared Sub New()
-            size = sizeof(Of input)()
-            assert(size > 0)
-        End Sub
-
-        <FieldOffset(0)>
         Public type As input_type
-        <FieldOffset(4)>
+        Public input As input_union
+    End Structure
+
+    <StructLayout(LayoutKind.Explicit)>
+    Private Structure input_union
+        <FieldOffset(0)>
         Public mouse_input As mouse_input
-        <FieldOffset(4)>
+        <FieldOffset(0)>
         Public keyboard_input As keyboard_input
-        <FieldOffset(4)>
+        <FieldOffset(0)>
         Public hardware_input As hardware_input
     End Structure
 
-    Private Declare Function SendInput _
-        Lib "user32.dll" _
-        (ByVal input_count As UInt32,
-         <MarshalAs(UnmanagedType.LPArray, ArraySubType:=UnmanagedType.Struct, SizeParamIndex:=0)>
-         ByVal inputs() As input,
-         ByVal input_size As Int32) As UInt32
+    Public Shared ReadOnly size_of_input As Int32
 
-    Private Shared Function send_input(Of T)(ByVal e() As T, ByVal attach As Action(Of input, T)) As UInt32
+    Shared Sub New()
+        size_of_input = sizeof(Of input)()
+        assert(size_of_input > 0)
+    End Sub
+
+    Private Declare Function SendInput Lib "user32.dll" (ByVal input_count As UInt32,
+                                                         ByVal inputs() As input,
+                                                         ByVal input_size As Int32) As UInt32
+
+    Private Shared Function send_input(Of T)(ByVal e() As T, ByVal attach As void(Of input, T)) As UInt32
         assert(Not attach Is Nothing)
         Dim o() As input = Nothing
         Dim c As UInt32 = 0
@@ -124,7 +141,7 @@ Public NotInheritable Class send_input
         Next
 
         Try
-            Return SendInput(c, o, input.size)
+            Return SendInput(c, o, size_of_input)
         Catch ex As Exception
             raise_error(error_type.exclamation, "Failed to execute SendInput() function, ex ", ex)
             Return uint32_0
@@ -132,23 +149,23 @@ Public NotInheritable Class send_input
     End Function
 
     Public Shared Function mouse(ByVal ParamArray inputs() As mouse_input) As UInt32
-        Return send_input(inputs, Sub(ByVal input As input, ByVal mouse_input As mouse_input)
+        Return send_input(inputs, Sub(ByRef input As input, ByRef mouse_input As mouse_input)
                                       input.type = input_type.mouse
-                                      input.mouse_input = mouse_input
+                                      input.input.mouse_input = mouse_input
                                   End Sub)
     End Function
 
     Public Shared Function keyboard(ByVal ParamArray inputs() As keyboard_input) As UInt32
-        Return send_input(inputs, Sub(ByVal input As input, ByVal keyboard_input As keyboard_input)
+        Return send_input(inputs, Sub(ByRef input As input, ByRef keyboard_input As keyboard_input)
                                       input.type = input_type.keyboard
-                                      input.keyboard_input = keyboard_input
+                                      input.input.keyboard_input = keyboard_input
                                   End Sub)
     End Function
 
     Public Shared Function hardware(ByVal ParamArray inputs() As hardware_input) As UInt32
-        Return send_input(inputs, Sub(ByVal input As input, ByVal hardware_input As hardware_input)
+        Return send_input(inputs, Sub(ByRef input As input, ByRef hardware_input As hardware_input)
                                       input.type = input_type.hardware
-                                      input.hardware_input = hardware_input
+                                      input.input.hardware_input = hardware_input
                                   End Sub)
     End Function
 

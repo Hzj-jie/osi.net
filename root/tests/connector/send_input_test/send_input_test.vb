@@ -26,9 +26,9 @@ Public Class send_input_test
                     Return True
                 End If
 
-                Dim e As send_input.keyboard_input = Nothing
-                e = send_input.keyboard_input.from_scan_code(code)
-                assert_equal(send_input.keyboard(e), uint32_1)
+                sleep_seconds(2)
+                Console.WriteLine(strcat("Will send scan code ", code))
+                assert_equal(send_input.keyboard(send_input.keyboard_input.from_scan_code(code)), uint32_2)
             End While
 
             assert(False)
