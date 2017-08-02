@@ -1,4 +1,6 @@
 ﻿
+#If 0 Then
+
 Option Explicit On
 Option Infer Off
 Option Strict On
@@ -190,3 +192,5 @@ Public Class udp_shared_component_test
                               End Function)
     End Function
 End Class
+
+#End If
