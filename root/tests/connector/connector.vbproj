@@ -204,6 +204,13 @@
     <Compile Include="wait_handle_behavior_test.vb" />
     <Compile Include="weakreference_behavior_test.vb" />
     <Compile Include="windows_hook\lowlevel_keyboard_hook_test.vb" />
+    <Compile Include="window_size_test\window_size_test.vb" />
+    <Compile Include="window_size_test\window_size_test_form.Designer.vb">
+      <DependentUpon>window_size_test_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="window_size_test\window_size_test_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -214,6 +221,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="send_input_test\send_input_test_form.resx">
       <DependentUpon>send_input_test_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="window_size_test\window_size_test_form.resx">
+      <DependentUpon>window_size_test_form.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
