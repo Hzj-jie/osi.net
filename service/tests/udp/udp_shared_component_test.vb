@@ -3,7 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports System.Net
 Imports System.Net.Sockets
 Imports osi.root.connector
 Imports osi.root.constants
@@ -23,6 +22,8 @@ Public Class udp_shared_component_test
     Private ReadOnly failure_count As atomic_int
     Private incoming_powerpoint As powerpoint
     Private outgoing_powerpoint As powerpoint
+    Private listen_component As ref_instance(Of UdpClient)
+    Private listen_dispenser As dispenser(Of Byte(), const_pair(Of String, UInt16))
 
     Shared Sub New()
         end_bytes = random_data()
@@ -55,6 +56,13 @@ Public Class udp_shared_component_test
                                                      with_host_or_ip("localhost").
                                                      create()
             failure_count.set(0)
+            assert_true(c.[New](incoming_powerpoint,
+                                incoming_powerpoint.local_port,
+                                listen_component))
+            assert_true(c.[New](incoming_powerpoint,
+                                incoming_powerpoint.local_port,
+                                listen_component,
+                                listen_dispenser))
             Return True
         Else
             Return False
@@ -68,13 +76,13 @@ Public Class udp_shared_component_test
 
     Private Function ping() As event_comb
         Const round As Int32 = 1000
-        Dim sc As shared_component(Of UInt16, IPAddress, UdpClient, Byte(), powerpoint) = Nothing
+        Dim sc As shared_component(Of UInt16, String, UdpClient, Byte(), powerpoint) = Nothing
         Dim ec As event_comb = Nothing
         Dim i As Int32 = 0
         Dim data() As Byte = Nothing
         Dim r As pointer(Of Byte()) = Nothing
         Return New event_comb(Function() As Boolean
-                                  sc = shared_component(Of UInt16, IPAddress, UdpClient, Byte(), powerpoint).creator.
+                                  sc = shared_component(Of UInt16, String, UdpClient, Byte(), powerpoint).creator.
                                            [New]().
                                            with_parameter(outgoing_powerpoint).
                                            with_remote(outgoing_powerpoint.remote_endpoint()).
@@ -89,6 +97,7 @@ Public Class udp_shared_component_test
                                   End If
                               End Function,
                               Function() As Boolean
+                                  i += 1
                                   If i = round Then
                                       Return goto_end()
                                   ElseIf i = round - 1 Then
@@ -121,7 +130,7 @@ Public Class udp_shared_component_test
                               End Function)
     End Function
 
-    Private Sub echo(ByVal c As shared_component(Of UInt16, IPAddress, UdpClient, Byte(), powerpoint))
+    Private Sub echo(ByVal c As shared_component(Of UInt16, String, UdpClient, Byte(), powerpoint))
         assert(Not c Is Nothing)
         Dim p As pointer(Of Byte()) = Nothing
         Dim ec As event_comb = Nothing
@@ -159,7 +168,7 @@ Public Class udp_shared_component_test
 
     Public Overrides Function create() As event_comb
         AddHandler c.new_shared_component_exported,
-                   Sub(ByVal new_component As shared_component(Of UInt16, IPAddress, UdpClient, Byte(), powerpoint))
+                   Sub(ByVal new_component As shared_component(Of UInt16, String, UdpClient, Byte(), powerpoint))
                        If assert_not_nothing(new_component) Then
                            echo(new_component)
                        End If
