@@ -5,10 +5,10 @@ Option Strict On
 
 Imports osi.root.connector
 
-Public Class window_size_test_form
-    Private ReadOnly cb As Action(Of window_size_test_form)
+Public Class native_window_test_form
+    Private ReadOnly cb As Action(Of native_window_test_form)
 
-    Public Sub New(ByVal cb As Action(Of window_size_test_form))
+    Public Sub New(ByVal cb As Action(Of native_window_test_form))
 
         ' This call is required by the designer.
         InitializeComponent()
@@ -20,5 +20,6 @@ Public Class window_size_test_form
 
     Private Sub window_size_test_form_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
         cb(Me)
+        Close()
     End Sub
 End Class

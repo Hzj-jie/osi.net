@@ -70,8 +70,9 @@
     <Compile Include="disposable.vb" />
     <Compile Include="endian.vb" />
     <Compile Include="ICloneable.vb" />
-    <Compile Include="send_input.vb" />
-    <Compile Include="virtual_key.vb" />
+    <Compile Include="windows_native\native_window.vb" />
+    <Compile Include="windows_native\send_input.vb" />
+    <Compile Include="windows_native\virtual_key.vb" />
     <Compile Include="null_wait_handle.vb" />
     <Compile Include="rnd_register.vb" />
     <Compile Include="string_utils\utf8_char.vb" />
@@ -99,13 +100,13 @@
     <Compile Include="time\high_res_ticks_retriever.vb" />
     <Compile Include="collections.vb" />
     <Compile Include="idisposable.vb" />
-    <Compile Include="intptr.vb" />
+    <Compile Include="windows_native\intptr.vb" />
     <Compile Include="time\low_res_ticks_retriever.vb" />
     <Compile Include="math.vb" />
     <Compile Include="memory_stream.vb" />
     <Compile Include="net.vb" />
     <Compile Include="operators.vb" />
-    <Compile Include="process_thread.vb" />
+    <Compile Include="windows_native\process_thread.vb" />
     <Compile Include="error_handler\raise_error.vb" />
     <Compile Include="string_utils\c_escape.vb" />
     <Compile Include="string_utils\lcs.vb" />
@@ -116,13 +117,13 @@
     <Compile Include="unchecked_int.ext.vb" />
     <Compile Include="ref.vb" />
     <Compile Include="weak_action.vb" />
-    <Compile Include="windows_error_mode.vb" />
-    <Compile Include="windows_hook\auto_release_windows_hook.vb" />
-    <Compile Include="windows_hook\lowlevel_keyboard_hook.vb" />
-    <Compile Include="windows_virtual_key.vb" />
-    <Compile Include="windows_hook\windows_hook.vb" />
-    <Compile Include="windows_message.vb" />
-    <Compile Include="windows_native_error.vb" />
+    <Compile Include="windows_native\windows_error_mode.vb" />
+    <Compile Include="windows_native\windows_hook\auto_release_windows_hook.vb" />
+    <Compile Include="windows_native\windows_hook\lowlevel_keyboard_hook.vb" />
+    <Compile Include="windows_native\windows_virtual_key.vb" />
+    <Compile Include="windows_native\windows_hook\windows_hook.vb" />
+    <Compile Include="windows_native\windows_message.vb" />
+    <Compile Include="windows_native\windows_native_error.vb" />
     <None Include="bytes\codegen\bytes_dependent_impl.vbp" />
     <None Include="bytes\codegen\bytes_dependent_types.vbp" />
     <None Include="bytes\codegen\bytes_dependent_types_impl.vbp" />
@@ -271,6 +272,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

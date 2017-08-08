@@ -133,6 +133,7 @@
     <Compile Include="managed_threadpool_behavior_test.vb" />
     <Compile Include="manual_reset_event_dead_lock_test.vb" />
     <Compile Include="memory_stream_behavior_test.vb" />
+    <Compile Include="native_window_test\get_thread_process_id_perf.vb" />
     <Compile Include="nothing_test.vb" />
     <Compile Include="npos_uint_all_bytes_test.vb" />
     <Compile Include="npos_uint_perf_test.vb" />
@@ -204,11 +205,11 @@
     <Compile Include="wait_handle_behavior_test.vb" />
     <Compile Include="weakreference_behavior_test.vb" />
     <Compile Include="windows_hook\lowlevel_keyboard_hook_test.vb" />
-    <Compile Include="window_size_test\window_size_test.vb" />
-    <Compile Include="window_size_test\window_size_test_form.Designer.vb">
-      <DependentUpon>window_size_test_form.vb</DependentUpon>
+    <Compile Include="native_window_test\native_window_test.vb" />
+    <Compile Include="native_window_test\native_window_test_form.Designer.vb">
+      <DependentUpon>native_window_test_form.vb</DependentUpon>
     </Compile>
-    <Compile Include="window_size_test\window_size_test_form.vb">
+    <Compile Include="native_window_test\native_window_test_form.vb">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
@@ -222,8 +223,8 @@
     <EmbeddedResource Include="send_input_test\send_input_test_form.resx">
       <DependentUpon>send_input_test_form.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="window_size_test\window_size_test_form.resx">
-      <DependentUpon>window_size_test_form.vb</DependentUpon>
+    <EmbeddedResource Include="native_window_test\native_window_test_form.resx">
+      <DependentUpon>native_window_test_form.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
