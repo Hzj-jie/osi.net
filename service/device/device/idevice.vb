@@ -105,4 +105,7 @@ Public Module _idevice_exporter
                                                                this.dispose()
                                                            End Sub)
     End Sub
+
+    Private Sub init()
+    End Sub
 End Module
