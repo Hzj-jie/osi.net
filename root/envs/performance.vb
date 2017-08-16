@@ -1,5 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.DateTime
+Imports osi.root.connector
 
 Public Module _performance
     Private Sub refresh_process_status()
@@ -13,28 +18,68 @@ Public Module _performance
         Return (usage - last_usage) * 100 / If(now_ticks = last_ticks, 1, now_ticks - last_ticks)
     End Function
 
-    Private last_usage_ticks As Int64 = 0
-    Private last_ticks As Int64 = 0
+    Public Class recent_processor_usage_record
+        Public Shared Function [New]() As recent_processor_usage_record
+            Return New recent_processor_usage_record_implementation()
+        End Function
 
-    Public Function recent_processor_usage() As Double
+        Protected Sub New()
+        End Sub
+    End Class
+
+    Private Class recent_processor_usage_record_implementation
+        Inherits recent_processor_usage_record
+
+        Public last_usage_ticks As Int64 = 0
+        Public last_ticks As Int64 = 0
+    End Class
+
+    Private Function recent_processor_usage(ByVal impl As recent_processor_usage_record_implementation) As Double
+        assert(Not impl Is Nothing)
         Dim ticks As Int64 = 0
         Dim usage As Int64 = 0
         ticks = Now().Ticks()
         usage = total_processor_time().Ticks()
-        If last_ticks = 0 Then
-            last_ticks = current_process.StartTime().Ticks()
+        If impl.last_ticks = 0 Then
+            impl.last_ticks = current_process.StartTime().Ticks()
         End If
         Dim rtn As Double = 0
-        rtn = processor_usage(usage, last_usage_ticks,
-                              ticks, last_ticks)
-        last_usage_ticks = usage
-        last_ticks = ticks
+        rtn = processor_usage(usage, impl.last_usage_ticks, ticks, impl.last_ticks)
+        impl.last_usage_ticks = usage
+        impl.last_ticks = ticks
         Return rtn
     End Function
 
+    Private ReadOnly default_recent_processor_usage_record As recent_processor_usage_record_implementation
+
+    ' Return the processor neutral usage between now and the timestamp when last recent_processor_usage() is called.
+    ' The resource usage does not depend on how many processors are installed on the system. The range of the return of
+    ' this function is [0, 100 * number-of-processors].
+    Public Function recent_processor_usage() As Double
+        Return recent_processor_usage(default_recent_processor_usage_record)
+    End Function
+
+    Public Function recent_processor_usage(ByVal record As recent_processor_usage_record) As Double
+        Return recent_processor_usage(direct_cast(Of recent_processor_usage_record_implementation)(record))
+    End Function
+
+    ' Return the processor neutral usage. I.e. the resource usage no matter how many processors are installed on the
+    ' system. The range of the return of this function is [0, 100 * number-of-processors].
     Public Function processor_usage() As Double
         Return processor_usage(total_processor_time().Ticks(), 0,
                                Now().Ticks(), current_process.StartTime().Ticks())
+    End Function
+
+    Public Function recent_processor_usage_percentage() As Double
+        Return recent_processor_usage() / Environment.ProcessorCount()
+    End Function
+
+    Public Function recent_processor_usage_percentage(ByVal record As recent_processor_usage_record) As Double
+        Return recent_processor_usage(record) / Environment.ProcessorCount()
+    End Function
+
+    Public Function processor_usage_percentage() As Double
+        Return processor_usage() / Environment.ProcessorCount()
     End Function
 
     Public Function total_processor_time() As TimeSpan
@@ -47,7 +92,7 @@ Public Module _performance
     End Function
 
     Public Function total_processor_time_ms() As Int64
-        Return Math.Floor(total_processor_time().TotalMilliseconds())
+        Return CLng(total_processor_time().TotalMilliseconds())
     End Function
 
     Public Function private_bytes_usage() As Int64
@@ -80,7 +125,7 @@ Public Module _performance
     Public Function min_workingset_bytes_usage() As Int64
         refresh_process_status()
         Try
-            Return current_process.MinWorkingSet()
+            Return current_process.MinWorkingSet().ToInt64()
         Catch
             Return 0
         End Try
@@ -89,7 +134,7 @@ Public Module _performance
     Public Function max_workingset_bytes_usage() As Int64
         refresh_process_status()
         Try
-            Return current_process.MaxWorkingSet()
+            Return current_process.MaxWorkingSet().ToInt64()
         Catch
             Return 0
         End Try
@@ -152,4 +197,8 @@ Public Module _performance
     Public Function gc_total_memory() As Int64
         Return GC.GetTotalMemory(False)
     End Function
+
+    Sub New()
+        default_recent_processor_usage_record = New recent_processor_usage_record_implementation()
+    End Sub
 End Module

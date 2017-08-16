@@ -1,9 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.delegates
-Imports osi.root.envs
-Imports osi.root.constants
 Imports osi.root.constants.counter
+Imports osi.root.envs
 
 Namespace counter
     Friend Module _counter_internal
@@ -25,6 +27,9 @@ Namespace counter
         Friend ReadOnly internal_counters() As internal_counter
 
         Sub New()
+            Dim recent_processor_usage_record As recent_processor_usage_record = Nothing
+            recent_processor_usage_record = recent_processor_usage_record.[New]()
+
             internal_counters = New internal_counter() {
                 New internal_counter("COUNTER_INCREASE_LATENCY_TICKS", AddressOf selfhealth.increase_latency),
                 New internal_counter("COUNTER_INCREASE_TIMES", AddressOf selfhealth.increase_times),
@@ -41,7 +46,7 @@ Namespace counter
                                     False),
                 New internal_counter("RECENT_PROCESSOR_USAGE",
                                      Function() As Int64
-                                         Return CLng(recent_processor_usage() * 100)
+                                         Return CLng(recent_processor_usage(recent_processor_usage_record) * 100)
                                      End Function)}
         End Sub
     End Module
