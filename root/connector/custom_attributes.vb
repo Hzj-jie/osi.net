@@ -1,4 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
@@ -10,7 +15,7 @@ Public Module _custom_attributes
     End Function
 
     <Extension()> Public Function custom_attribute(Of AT As Attribute) _
-                                                  (ByVal this As Type,
+                                                  (ByVal this As MemberInfo,
                                                    ByRef o As AT,
                                                    Optional ByVal inherit As Boolean = False) As Boolean
         Dim ats() As AT = Nothing
@@ -23,7 +28,7 @@ Public Module _custom_attributes
         End If
     End Function
 
-    <Extension()> Public Function custom_attribute(Of AT As Attribute)(ByVal this As Type,
+    <Extension()> Public Function custom_attribute(Of AT As Attribute)(ByVal this As MemberInfo,
                                                                        Optional ByVal inherit As Boolean = False) As AT
         Dim o As AT = Nothing
         assert(this.custom_attribute(o, inherit))
@@ -43,30 +48,37 @@ Public Module _custom_attributes
     End Function
 
     <Extension()> Public Function custom_attributes(Of AT As Attribute) _
-                                                   (ByVal this As Type,
+                                                   (ByVal this As MemberInfo,
                                                     ByRef o() As AT,
                                                     Optional ByVal inherit As Boolean = False) As Boolean
         If this Is Nothing Then
             Return False
         Else
             Dim objs() As Object = Nothing
-            objs = this.GetCustomAttributes(GetType(AT), inherit)
+            Try
+                objs = this.GetCustomAttributes(GetType(AT), inherit)
+            Catch ex As Exception
+                raise_error("failed to get attributes of type ",
+                            this.full_name(),
+                            ", ex ",
+                            ex.Message())
+                Return False
+            End Try
+
             If isemptyarray(objs) Then
                 Return False
             Else
-                ReDim o(array_size(objs) - uint32_1)
-                Dim i As UInt32 = uint32_0
-                While i < array_size(objs)
+                ReDim o(array_size_i(objs) - 1)
+                For i As Int32 = 0 To array_size_i(objs) - 1
                     assert(cast(objs(i), o(i)))
-                    i += uint32_1
-                End While
+                Next
                 Return True
             End If
         End If
     End Function
 
     <Extension()> Public Function custom_attributes(Of AT As Attribute) _
-                                                   (ByVal this As Type,
+                                                   (ByVal this As MemberInfo,
                                                     Optional ByVal inherit As Boolean = False) As AT()
         Dim o() As AT = Nothing
         assert(this.custom_attributes(o, inherit))

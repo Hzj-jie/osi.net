@@ -58,6 +58,7 @@
     <Compile Include="array_behavior_test.vb" />
     <Compile Include="array_test.vb" />
     <Compile Include="assert_test.vb" />
+    <Compile Include="custom_attributes_behavior_test4.vb" />
     <Compile Include="bit_test.vb" />
     <Compile Include="bytes_perf.vb" />
     <Compile Include="bytes_test.vb" />
@@ -132,6 +133,8 @@
     <Compile Include="levenshtein_test.vb" />
     <Compile Include="managed_threadpool_behavior_test.vb" />
     <Compile Include="manual_reset_event_dead_lock_test.vb" />
+    <Compile Include="member_info_behavior_test.vb" />
+    <Compile Include="member_info_test.vb" />
     <Compile Include="memory_stream_behavior_test.vb" />
     <Compile Include="native_window_test\get_thread_process_id_perf.vb" />
     <Compile Include="nothing_test.vb" />

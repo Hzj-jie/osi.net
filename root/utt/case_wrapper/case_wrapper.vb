@@ -19,7 +19,7 @@ Public Class case_wrapper
         Return c.preserved_processors()
     End Function
 
-    Protected Function my_base_prepare() As Boolean
+    Protected Function mybase_prepare() As Boolean
         Return MyBase.prepare()
     End Function
 

@@ -23,9 +23,8 @@ Public NotInheritable Class copy_constructor(Of T)
         Dim constructors() As ConstructorInfo = Nothing
         constructors = GetType(T).constructors()
         For i As Int32 = 0 To array_size_i(constructors) - 1
-            Dim objs() As Object = Nothing
-            objs = constructors(i).GetCustomAttributes(copy_constructorAttribute.type, False)
-            If Not isemptyarray(objs) Then
+            Dim cc As copy_constructorAttribute = Nothing
+            If constructors(i).custom_attribute(cc) Then
                 v = AddressOf constructors(i).Invoke
                 Return
             End If

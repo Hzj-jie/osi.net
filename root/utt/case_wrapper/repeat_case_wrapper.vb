@@ -42,7 +42,7 @@ Public Class rinne_case_wrapper
     End Function
 
     Public NotOverridable Overrides Function prepare() As Boolean
-        Return MyBase.my_base_prepare()
+        Return MyBase.mybase_prepare()
     End Function
 
     Public NotOverridable Overrides Function run() As Boolean

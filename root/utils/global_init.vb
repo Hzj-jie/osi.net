@@ -26,21 +26,7 @@ Public Class global_init
 
     Private Shared Function is_global_init_type(ByVal t As Type, ByRef gi As global_init_attribute) As Boolean
         assert(Not t Is Nothing)
-        Try
-            Dim objs() As Object = Nothing
-            objs = t.GetCustomAttributes(global_init_attribute.type, False)
-            If Not isemptyarray(objs) Then
-                assert(array_size(objs) = 1)
-                gi = cast(Of global_init_attribute)(objs(0))
-                Return True
-            End If
-        Catch ex As Exception
-            raise_error("failed to get attributes of type ",
-                        t.AssemblyQualifiedName(),
-                        ", ex ",
-                        ex.Message())
-        End Try
-        Return False
+        Return t.custom_attribute(gi)
     End Function
 
     Private Shared Sub execute_init(ByVal t As Type)

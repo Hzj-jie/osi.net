@@ -1,4 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.envs
 
 Public MustInherit Class [case]
@@ -10,6 +15,17 @@ Public MustInherit Class [case]
         full_name = Me.GetType().FullName()
         assembly_qualified_name = Me.GetType().AssemblyQualifiedName()
         name = Me.GetType().Name()
+    End Sub
+
+    Protected Sub New(ByVal full_name As String,
+                      ByVal assembly_qualified_name As String,
+                      ByVal name As String)
+        assert(Not String.IsNullOrEmpty(full_name))
+        assert(Not String.IsNullOrEmpty(assembly_qualified_name))
+        assert(Not String.IsNullOrEmpty(name))
+        Me.full_name = full_name
+        Me.assembly_qualified_name = assembly_qualified_name
+        Me.name = name
     End Sub
 
     Public Overridable Function preserved_processors() As Int16

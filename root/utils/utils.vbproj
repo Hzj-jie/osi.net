@@ -81,6 +81,7 @@
     <Compile Include="counter\self_maintained_counter\instance_count_counter.vb" />
     <Compile Include="error_handle\application_info_logging.vb" />
     <Compile Include="error_handle\trace.vb" />
+    <Compile Include="instance_count.vb" />
     <Compile Include="invoker\valuer.recursive.vb" />
     <Compile Include="invoker\valuer.vb" />
     <Compile Include="ipendpoint.vb" />

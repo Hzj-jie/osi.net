@@ -9,7 +9,10 @@
 *.netmodule
 *.psess
 *.vspx
+*.vsp
+*.sdf
 
+root/codegen/codegen.vcxproj.user
 root/envs/buildInfo.vb
 root/envs/tfver.vb
 root/envs/gitver.vb
