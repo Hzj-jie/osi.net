@@ -13,7 +13,7 @@ Public Class custom_attributes_behavior_test2
         i = New atomic_int()
     End Sub
 
-    Private Class testAttribute
+    Private Class test
         Inherits Attribute
 
         Public ReadOnly i As Int32
@@ -38,19 +38,19 @@ Public Class custom_attributes_behavior_test2
 
     Public Overrides Function run() As Boolean
         assert_equal(+i, 0)
-        Dim a As testAttribute = Nothing
-        assert_true(GetType(C).custom_attribute(Of testAttribute)(a))
+        Dim a As test = Nothing
+        assert_true(GetType(C).custom_attribute(Of test)(a))
         assert_equal(a.i, 1)
-        assert_true(GetType(C2).custom_attribute(Of testAttribute)(a))
+        assert_true(GetType(C2).custom_attribute(Of test)(a))
         assert_equal(a.i, 2)
-        assert_true(GetType(C3).custom_attribute(Of testAttribute)(a))
+        assert_true(GetType(C3).custom_attribute(Of test)(a))
         assert_equal(a.i, 3)
         assert_equal(+i, 3)
-        assert_true(GetType(C).custom_attribute(Of testAttribute)(a))
+        assert_true(GetType(C).custom_attribute(Of test)(a))
         assert_equal(a.i, 4)
-        assert_true(GetType(C2).custom_attribute(Of testAttribute)(a))
+        assert_true(GetType(C2).custom_attribute(Of test)(a))
         assert_equal(a.i, 5)
-        assert_true(GetType(C3).custom_attribute(Of testAttribute)(a))
+        assert_true(GetType(C3).custom_attribute(Of test)(a))
         assert_equal(a.i, 6)
         assert_equal(+i, 6)
         Return True

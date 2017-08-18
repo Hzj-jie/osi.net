@@ -41,6 +41,13 @@ Public Module _custom_attributes
         Return o
     End Function
 
+    <Extension()> Public Function has_custom_attribute(Of AT As Attribute) _
+                                                      (ByVal this As MemberInfo,
+                                                       Optional ByVal inherit As Boolean = False) As Boolean
+        Dim o As AT = Nothing
+        Return this.custom_attribute(o, inherit)
+    End Function
+
     Public Function custom_attributes(Of T, AT As Attribute) _
                                      (ByRef o() As AT,
                                       Optional ByVal inherit As Boolean = False) As Boolean

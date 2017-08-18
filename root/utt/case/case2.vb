@@ -49,9 +49,7 @@ Partial Public NotInheritable Class case2
 
     Public Shared Function create(ByVal t As Type) As case2()
         assert(Not t Is Nothing)
-        Dim test_attribute As testAttribute = Nothing
-        If t.custom_attribute(Of testAttribute)(test_attribute) Then
-            assert(Not test_attribute Is Nothing)
+        If t.has_custom_attribute(Of attributes.test)() Then
             Return New case2() {}
         Else
             Return Nothing
