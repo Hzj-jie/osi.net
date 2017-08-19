@@ -13,7 +13,7 @@ Public Class signal_event_wait_test
         MyBase.New(multithreading(New signal_event_wait_case(), thread_count), 128)
     End Sub
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return 1
     End Function
 

@@ -16,7 +16,7 @@ Public Class async_thread_safe_lazier_test
         MyBase.New(multi_procedure(New async_thread_safe_lazier_case(), procedure_count), 65536)
     End Sub
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return procedure_count
     End Function
 

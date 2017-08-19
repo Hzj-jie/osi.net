@@ -21,7 +21,7 @@ Public Class socket_overlapped_peek_behavior_test
         port = rnd_port()
     End Sub
 
-    Public NotOverridable Overrides Function preserved_processors() As Int16
+    Public NotOverridable Overrides Function reserved_processors() As Int16
         Return 2
     End Function
 

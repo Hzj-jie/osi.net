@@ -101,7 +101,7 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
                           End Function)
     End Function
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return CShort(Environment.ProcessorCount())
     End Function
 

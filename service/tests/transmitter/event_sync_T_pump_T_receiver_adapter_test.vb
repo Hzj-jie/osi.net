@@ -78,7 +78,7 @@ Public Class event_sync_T_pump_T_receiver_adapter_test
             received = New atomic_int()
         End Sub
 
-        Public Overrides Function preserved_processors() As Int16
+        Public Overrides Function reserved_processors() As Int16
             Return Environment.ProcessorCount()
         End Function
 

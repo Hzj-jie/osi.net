@@ -10,7 +10,7 @@ Public Class dev_pool_test
                    max(Environment.ProcessorCount() << 2, 8))
     End Sub
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return Environment.ProcessorCount()
     End Function
 End Class

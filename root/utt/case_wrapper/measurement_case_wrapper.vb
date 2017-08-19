@@ -97,7 +97,7 @@ Public MustInherit Class measurement_case_wrapper
                                "in case ", MyBase.name, ", value ", name, " is smaller than ", name, "_lower_bound")
     End Function
 
-    Public NotOverridable Overrides Function preserved_processors() As Int16
+    Public NotOverridable Overrides Function reserved_processors() As Int16
         Return Environment.ProcessorCount()
     End Function
 

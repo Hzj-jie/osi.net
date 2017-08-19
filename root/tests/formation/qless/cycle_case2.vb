@@ -52,7 +52,7 @@ Friend Class cycle_1024_128_case2
         End While
     End Sub
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return 2
     End Function
 

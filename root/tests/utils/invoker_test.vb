@@ -144,7 +144,7 @@ Public Class invoker_test
     End Function
 
     'suppress.invoker_error
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return Environment.ProcessorCount()
     End Function
 

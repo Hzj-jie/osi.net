@@ -53,7 +53,7 @@ Partial Friend NotInheritable Class host
         Dim proc_ms As Int64 = 0
         proc_ms = envs.total_processor_time_ms()
         execute_case(c)
-        Interlocked.Add(using_threads, -c.case.preserved_processors())
+        Interlocked.Add(using_threads, -c.case.reserved_processors())
 
         If Not self_health_stage() Then
             If envs.utt_report_background_worker_status Then
@@ -129,12 +129,12 @@ Partial Friend NotInheritable Class host
                 Dim c As case_info = Nothing
                 c = cases(i)
                 rtn = True
-                If (c.case.preserved_processors() >= 0 AndAlso
-                    c.case.preserved_processors() + using_threads <= utt_concurrency()) OrElse
+                If (c.case.reserved_processors() >= 0 AndAlso
+                    c.case.reserved_processors() + using_threads <= utt_concurrency()) OrElse
                    using_threads = 0 Then
                     new_case_started = True
                     Interlocked.Increment(running_cases)
-                    Interlocked.Add(using_threads, c.case.preserved_processors())
+                    Interlocked.Add(using_threads, c.case.reserved_processors())
                     start_thread(Nothing, Sub() run(c, finished))
                     c.finished = True
                 End If

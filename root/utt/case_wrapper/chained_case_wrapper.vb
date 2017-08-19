@@ -19,8 +19,8 @@ Public Class chained_case_wrapper
         Me.pp = 0
         For i As UInt32 = 0 To array_size(cs) - uint32_1
             assert(Not cs(i) Is Nothing)
-            If cs(i).preserved_processors() > pp Then
-                pp = cs(i).preserved_processors()
+            If cs(i).reserved_processors() > pp Then
+                pp = cs(i).reserved_processors()
             End If
         Next
     End Sub
@@ -37,7 +37,7 @@ Public Class chained_case_wrapper
         Return cwf
     End Function
 
-    Public NotOverridable Overrides Function preserved_processors() As Int16
+    Public NotOverridable Overrides Function reserved_processors() As Int16
         Return pp
     End Function
 

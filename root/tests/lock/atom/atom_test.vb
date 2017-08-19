@@ -8,7 +8,7 @@ Public MustInherit Class atom_test
     Protected Const thread_count As Int32 = 4
     Protected Const round As Int32 = 1000000
 
-    Public NotOverridable Overrides Function preserved_processors() As Int16
+    Public NotOverridable Overrides Function reserved_processors() As Int16
         Return thread_count
     End Function
 

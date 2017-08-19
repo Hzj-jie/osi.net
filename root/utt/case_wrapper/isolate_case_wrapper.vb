@@ -30,8 +30,8 @@ Public Class isolate_case_wrapper
         Me.New(DirectCast(c, [case]), timeout_ms)
     End Sub
 
-    Public Overrides Function preserved_processors() As Int16
-        Return c.preserved_processors()
+    Public Overrides Function reserved_processors() As Int16
+        Return c.reserved_processors()
     End Function
 
     Public Overrides Function prepare() As Boolean

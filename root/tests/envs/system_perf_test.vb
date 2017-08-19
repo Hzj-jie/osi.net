@@ -10,7 +10,7 @@ Imports osi.root.formation
 Public Class system_perf_test
     Inherits [case]
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return Environment.ProcessorCount()
     End Function
 

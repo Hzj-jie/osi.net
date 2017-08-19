@@ -51,7 +51,7 @@ Public Class generic_perf
         Public Shared v As Int32
     End Class
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return Environment.ProcessorCount()
     End Function
 

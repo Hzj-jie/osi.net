@@ -16,7 +16,7 @@ Public Class async_preparer_test
         MyBase.New(multi_procedure(New async_preparer_case(), procedure_count), 65536)
     End Sub
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return procedure_count
     End Function
 

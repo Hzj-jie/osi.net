@@ -64,7 +64,7 @@ Friend Class event_comb_case
         End If
     End Function
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         If strict_time_limited Then
             Return Environment.ProcessorCount()
         Else

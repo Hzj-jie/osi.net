@@ -22,7 +22,7 @@ Public Class cast_perf
     End Function
 
     'to avoid the impact from suppress.compare_error
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return CShort(Environment.ProcessorCount())
     End Function
 End Class

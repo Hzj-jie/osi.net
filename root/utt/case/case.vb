@@ -28,7 +28,7 @@ Public MustInherit Class [case]
         Me.name = name
     End Sub
 
-    Public Overridable Function preserved_processors() As Int16
+    Public Overridable Function reserved_processors() As Int16
         Return 1
     End Function
 

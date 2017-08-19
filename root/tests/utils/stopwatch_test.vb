@@ -26,7 +26,7 @@ Public Class stopwatch_test
         timeslice_sleep_wait_until(Function() finished)
     End Sub
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return Environment.ProcessorCount()
     End Function
 

@@ -125,7 +125,7 @@ Public Class nowadays_combined_test
         Me.New(100)
     End Sub
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return Environment.ProcessorCount()
     End Function
 End Class

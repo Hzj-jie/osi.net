@@ -12,7 +12,7 @@ Imports osi.service.device
 Public Class device_pool_checker_test
     Inherits [case]
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return 2
     End Function
 

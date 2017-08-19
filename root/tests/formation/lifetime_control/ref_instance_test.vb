@@ -16,7 +16,7 @@ Public Class ref_instance_test
         MyBase.New(repeat(New ref_ptr_case(), repeat_count), thread_count)
     End Sub
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return 1
     End Function
 

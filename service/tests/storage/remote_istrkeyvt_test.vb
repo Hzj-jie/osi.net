@@ -43,8 +43,8 @@ Public Class remote_istrkeyvt_test
         istrkeyvt_name = guid_str()
     End Sub
 
-    Public Overrides Function preserved_processors() As Int16
-        Return max(MyBase.preserved_processors(), CShort(2))
+    Public Overrides Function reserved_processors() As Int16
+        Return max(MyBase.reserved_processors(), CShort(2))
     End Function
 
     Private Function register_local_istrkeyvt() As Boolean

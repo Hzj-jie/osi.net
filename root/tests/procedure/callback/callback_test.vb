@@ -35,7 +35,7 @@ Public Class callback_single_test
         Me.strict_time_limited = strict_time_limited
     End Sub
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return If(strict_time_limited, Environment.ProcessorCount(), 1)
     End Function
 

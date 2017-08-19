@@ -25,7 +25,7 @@ Partial Public Class shared_component_test
             p = New parameter(10, True)
         End Sub
 
-        Public Overrides Function preserved_processors() As Int16
+        Public Overrides Function reserved_processors() As Int16
             Return 1
         End Function
 

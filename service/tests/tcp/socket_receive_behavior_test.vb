@@ -32,7 +32,7 @@ Public MustInherit Class socket_receive_behavior_test(Of IMPL)
         Me.receive_before_send = receive_before_send
     End Sub
 
-    Public NotOverridable Overrides Function preserved_processors() As Int16
+    Public NotOverridable Overrides Function reserved_processors() As Int16
         Return 2
     End Function
 

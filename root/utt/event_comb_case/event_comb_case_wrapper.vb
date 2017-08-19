@@ -16,8 +16,8 @@ Public Class event_comb_case_wrapper
         Return c.create()
     End Function
 
-    Public Overrides Function preserved_processors() As Int16
-        Return c.preserved_processors()
+    Public Overrides Function reserved_processors() As Int16
+        Return c.reserved_processors()
     End Function
 
     Public Overrides Function prepare() As Boolean

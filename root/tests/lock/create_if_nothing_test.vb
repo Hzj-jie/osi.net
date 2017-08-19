@@ -10,7 +10,7 @@ Public Class create_if_nothing_test
         MyBase.New(multithreading(repeat(New create_if_nothing_case(), 1024), 32), 1024)
     End Sub
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return 1
     End Function
 

@@ -10,7 +10,7 @@ Public Class auto_updating_resolver_test
     Private Class test_class
     End Class
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return Environment.ProcessorCount()
     End Function
 

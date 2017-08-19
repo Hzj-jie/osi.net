@@ -108,7 +108,7 @@ Public Class performance_case_wrapper
         End If
     End Function
 
-    Public NotOverridable Overrides Function preserved_processors() As Int16
+    Public NotOverridable Overrides Function reserved_processors() As Int16
         Return Environment.ProcessorCount()
     End Function
 End Class

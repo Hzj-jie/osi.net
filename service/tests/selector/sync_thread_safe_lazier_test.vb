@@ -13,7 +13,7 @@ Public Class sync_thread_safe_lazier_test
         MyBase.New(multithreading(New sync_thread_safe_lazier_case(), 32), 2048)
     End Sub
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return 1
     End Function
 

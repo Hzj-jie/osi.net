@@ -74,7 +74,7 @@ Partial Public NotInheritable Class case2
                MyBase.finish()
     End Function
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return _reserved_processor_count
     End Function
 End Class

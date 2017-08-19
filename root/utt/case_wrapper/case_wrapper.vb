@@ -15,8 +15,8 @@ Public Class case_wrapper
         Return c.run()
     End Function
 
-    Public Overrides Function preserved_processors() As Int16
-        Return c.preserved_processors()
+    Public Overrides Function reserved_processors() As Int16
+        Return c.reserved_processors()
     End Function
 
     Protected Function mybase_prepare() As Boolean

@@ -11,7 +11,7 @@ Imports osi.service.storage
 
 Public Interface iistrkeyvt_case
     Function create(ByVal i As istrkeyvt) As event_comb
-    Function preserved_processors() As Int16
+    Function reserved_processors() As Int16
 End Interface
 
 'MustInherit for utt
@@ -29,8 +29,8 @@ Public MustInherit Class istrkeyvt_case
         Me.New(New default_istrkeyvt_case())
     End Sub
 
-    Public Overrides Function preserved_processors() As Int16
-        Return i.preserved_processors()
+    Public Overrides Function reserved_processors() As Int16
+        Return i.reserved_processors()
     End Function
 
     Protected Overridable Function create_istrkeyvt() As istrkeyvt
@@ -554,7 +554,7 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                               End Function)
     End Function
 
-    Public Function preserved_processors() As Int16 Implements iistrkeyvt_case.preserved_processors
+    Public Function reserved_processors() As Int16 Implements iistrkeyvt_case.reserved_processors
         Return 1
     End Function
 

@@ -11,7 +11,7 @@ Imports osi.service.selector
 Partial Public Class dispenser_test
     Inherits [case]
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return 2
     End Function
 

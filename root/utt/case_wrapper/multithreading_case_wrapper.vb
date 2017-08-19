@@ -27,8 +27,8 @@ Public Class multithreading_case_wrapper
         finish_are = New AutoResetEvent(False)
     End Sub
 
-    Public Overrides Function preserved_processors() As Int16
-        Return max(threadcount(), MyBase.preserved_processors())
+    Public Overrides Function reserved_processors() As Int16
+        Return max(threadcount(), MyBase.reserved_processors())
     End Function
 
     Protected Overridable Function threadcount() As Int32

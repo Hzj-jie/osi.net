@@ -417,7 +417,7 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                                  End Function)
     End Function
 
-    Public Function preserved_processors() As Int16 Implements iistrkeyvt_case.preserved_processors
+    Public Function reserved_processors() As Int16 Implements iistrkeyvt_case.reserved_processors
         Return 1
     End Function
 End Class

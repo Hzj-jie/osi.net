@@ -48,7 +48,7 @@ Public Class fast_threadpool_test
         End If
     End Sub
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return osi.root.threadpool.threadpool.default_thread_count
     End Function
 

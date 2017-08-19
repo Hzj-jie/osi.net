@@ -22,7 +22,7 @@ Public Class suspend_all_process_threads_test
         Private Class c
             Inherits [case]
 
-            Public Overrides Function preserved_processors() As Int16
+            Public Overrides Function reserved_processors() As Int16
                 Return Environment.ProcessorCount()
             End Function
 

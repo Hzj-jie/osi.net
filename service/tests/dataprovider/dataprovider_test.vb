@@ -40,7 +40,7 @@ Public Class dataprovider_test
         Return True
     End Function
 
-    Public Overrides Function preserved_processors() As Int16
+    Public Overrides Function reserved_processors() As Int16
         Return Environment.ProcessorCount()
     End Function
 
