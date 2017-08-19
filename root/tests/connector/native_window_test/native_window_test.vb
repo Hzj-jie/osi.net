@@ -18,10 +18,11 @@ Public Class native_window_test
         Inherits [case]
 
         Public Overrides Function run() As Boolean
+            assert_true(dpi_awareness.set_aware())
             Windows.Forms.Application.Run(New native_window_test_form(
                     Sub(f As native_window_test_form)
                         f.ControlBox() = True
-                        f.FormBorderStyle() = Windows.Forms.FormBorderStyle.FixedDialog
+                        f.FormBorderStyle() = Windows.Forms.FormBorderStyle.Sizable
                         f.WindowState() = Windows.Forms.FormWindowState.Maximized
                         f.ControlBox() = True
                         f.MinimizeBox() = True
@@ -75,6 +76,7 @@ Public Class native_window_test
                         For i As Int32 = 0 To array_size_i(screens) - 1
                             Console.WriteLine(strcat("WinForms: screen rectangle: ", screens(i).Bounds()))
                         Next
+                        Console.ReadKey()
                     End Sub))
             Return True
         End Function
