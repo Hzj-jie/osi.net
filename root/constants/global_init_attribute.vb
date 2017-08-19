@@ -20,11 +20,6 @@ Public Class global_initAttribute
 
     Private Const default_init_once As Boolean = True
     Private Const default_level As Byte = 0
-    Public Shared ReadOnly type As Type
-
-    Shared Sub New()
-        type = GetType(global_initAttribute)
-    End Sub
 
     Public ReadOnly init_once As Boolean
     Public ReadOnly level As Byte

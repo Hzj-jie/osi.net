@@ -12,7 +12,7 @@ Public Class custom_attributes_behavior_test3
 
     Private Shared ReadOnly i As atomic_int
 
-    Private Class testAttribute
+    Private Class test
         Inherits Attribute
 
         Public ReadOnly i As Int32
@@ -44,12 +44,12 @@ Public Class custom_attributes_behavior_test3
 
     Public Overrides Function run() As Boolean
         assert_equal(+i, 0)
-        Dim a As testAttribute = Nothing
-        assert_true(GetType(C).custom_attribute(Of testAttribute)(a))
+        Dim a As test = Nothing
+        assert_true(GetType(C).custom_attribute(Of test)(a))
         assert_equal(a.i, 0)
-        assert_true(GetType(C2).custom_attribute(Of testAttribute)(a))
+        assert_true(GetType(C2).custom_attribute(Of test)(a))
         assert_equal(a.i, 0)
-        assert_true(GetType(C3).custom_attribute(Of testAttribute)(a))
+        assert_true(GetType(C3).custom_attribute(Of test)(a))
         assert_equal(a.i, 0)
         Return True
     End Function
@@ -58,7 +58,7 @@ End Class
 ' NullReferenceException may throw at runtime.
 #If CALLSTACK Then
 c, 15-11-25 22:09:14, caught unhandled exception, type System.NullReferenceException, source osi.tests.root.connector, message Object reference not set to an instance of an object.
-, stacktrace    at osi.tests.root.connector.custom_attributes_behavior_test3.testAttribute..ctor() in C:\Users\Hzj_jie\Documents\Visual Studio 2013\Projects\gemini\osi\root\tests\c
+, stacktrace    at osi.tests.root.connector.custom_attributes_behavior_test3.test..ctor() in C:\Users\Hzj_jie\Documents\Visual Studio 2013\Projects\gemini\osi\root\tests\c
 onnector\custom_attributes_behavior_test3.vb:line 18
    at System.RuntimeTypeHandle.CreateCaInstance(RuntimeMethodHandle ctor)
    at System.Reflection.CustomAttribute.GetCustomAttributes(Module decoratedModule, Int32 decoratedMetadataToken, Int32 pcaCount, RuntimeType attributeFilterType, Boolean mustBeInh

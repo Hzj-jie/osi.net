@@ -6,7 +6,7 @@ Imports osi.root.utt
 Public Class custom_attributes_behavior_test
     Inherits [case]
 
-    Private Class testAttribute
+    Private Class test
         Inherits Attribute
 
         Public ReadOnly v As Int32
@@ -51,7 +51,7 @@ Public Class custom_attributes_behavior_test
         If Not has OrElse assert_more_or_equal(array_size(objs), uint32_1) Then
             Dim i As UInt32 = uint32_0
             While i < array_size(objs)
-                Dim x As testAttribute = Nothing
+                Dim x As test = Nothing
                 If cast(objs(i), x) Then
                     assert_equal(x.v, v)
                     c += uint32_1

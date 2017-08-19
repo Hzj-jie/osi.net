@@ -5,14 +5,8 @@ Option Strict On
 
 Imports System.Reflection
 
-Public NotInheritable Class copy_constructorAttribute
+Public NotInheritable Class copy_constructor
     Inherits Attribute
-
-    Public Shared ReadOnly type As Type
-
-    Shared Sub New()
-        type = GetType(copy_constructorAttribute)
-    End Sub
 End Class
 
 ' Retrieve the copy or move constructor of type T.
@@ -23,8 +17,7 @@ Public NotInheritable Class copy_constructor(Of T)
         Dim constructors() As ConstructorInfo = Nothing
         constructors = GetType(T).constructors()
         For i As Int32 = 0 To array_size_i(constructors) - 1
-            Dim cc As copy_constructorAttribute = Nothing
-            If constructors(i).custom_attribute(cc) Then
+            If constructors(i).has_custom_attribute(Of copy_constructor)() Then
                 v = AddressOf constructors(i).Invoke
                 Return
             End If

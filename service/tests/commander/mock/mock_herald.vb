@@ -6,7 +6,7 @@ Imports osi.service.commander
 Imports osi.service.transmitter
 Imports osi.tests.service.transmitter
 
-<type_Attribute()>
+<type_attribute()>
 Public Class mock_herald
     Inherits mock_herald(Of _false, _false)
 

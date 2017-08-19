@@ -5,20 +5,20 @@ Option Strict On
 
 Imports osi.root.connector
 
-Partial Public NotInheritable Class case2
+Public NotInheritable Class attributes
     ' Define a test case for a class or a method.
     ' When describing class, it indicates the class contains test cases.
     ' When describing a method, it indicates the method as a test case.
     ' Each test case will be executed in a new "test" class instance.
     <AttributeUsage(AttributeTargets.Class Or AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)> _
-    Public NotInheritable Class testAttribute
-        Inherits Attribute
+    Public NotInheritable Class test
+        Inherits attribute
     End Class
 
     ' Define the repeat times of a class or a method.
     <AttributeUsage(AttributeTargets.Class Or AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)> _
-    Public NotInheritable Class repeatAttribute
-        Inherits Attribute
+    Public NotInheritable Class repeat
+        Inherits attribute
 
         Public ReadOnly times As UInt64
 
@@ -32,8 +32,8 @@ Partial Public NotInheritable Class case2
     ' If multiple methods are described with "prepare" attribute, they will be executed one-by-one, but the order is
     ' unexpected.
     <AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)> _
-    Public NotInheritable Class prepareAttribute
-        Inherits Attribute
+    Public NotInheritable Class prepare
+        Inherits attribute
     End Class
 
     ' Define a finish method for the test class.
@@ -41,14 +41,14 @@ Partial Public NotInheritable Class case2
     ' If multiple methods are described with "finish" attribute, they will be executed one-by-one, but the order is
     ' unexpected.
     <AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)> _
-    Public NotInheritable Class finishAttribute
-        Inherits Attribute
+    Public NotInheritable Class finish
+        Inherits attribute
     End Class
 
     ' Define a method as random-run target.
     <AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)> _
-    Public NotInheritable Class randomAttribute
-        Inherits Attribute
+    Public NotInheritable Class random
+        Inherits attribute
 
         Public ReadOnly percentage As Double
 
@@ -60,8 +60,8 @@ Partial Public NotInheritable Class case2
 
     ' Define the reserved processor count of a test case or test class.
     <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=True)> _
-    Public NotInheritable Class reserved_processor_countAttribute
-        Inherits Attribute
+    Public NotInheritable Class reserved_processor_count
+        Inherits attribute
 
         Public ReadOnly reserved_processor_count As Int16
 
@@ -73,7 +73,10 @@ Partial Public NotInheritable Class case2
 
     ' Define a test case to be executed only when command line specified.
     <AttributeUsage(AttributeTargets.Class Or AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)> _
-    Public NotInheritable Class command_line_specifiedAttribute
-        Inherits Attribute
+    Public NotInheritable Class command_line_specified
+        Inherits attribute
     End Class
+
+    Private Sub New()
+    End Sub
 End Class
