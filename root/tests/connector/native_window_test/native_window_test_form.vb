@@ -18,7 +18,7 @@ Public Class native_window_test_form
         Me.cb = cb
     End Sub
 
-    Private Sub window_size_test_form_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
+    Private Sub native_window_test_form_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         cb(Me)
         Close()
     End Sub
