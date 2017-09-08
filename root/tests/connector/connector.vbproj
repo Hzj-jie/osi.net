@@ -141,6 +141,7 @@
     <Compile Include="npos_uint_all_bytes_test.vb" />
     <Compile Include="npos_uint_perf_test.vb" />
     <Compile Include="npos_uint_test.vb" />
+    <Compile Include="object_extensions_test.vb" />
     <Compile Include="out_generic_behavior_test.vb" />
     <Compile Include="overload_behavior_test.vb" />
     <Compile Include="rate_timeout_test.vb" />

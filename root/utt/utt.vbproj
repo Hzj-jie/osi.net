@@ -60,6 +60,7 @@
     <Compile Include="assert\assert_timelimited_operation.vb" />
     <Compile Include="assert\assert_change.vb" />
     <Compile Include="case\case.vb" />
+    <Compile Include="case\case2.info.vb" />
     <Compile Include="case\case2.parse.vb" />
     <Compile Include="case\case2.vb" />
     <Compile Include="case\attributes.vb" />

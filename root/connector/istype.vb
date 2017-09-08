@@ -1,13 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
 Public Module _istype
-    <Extension()> Public Function get_type_or_null(ByVal this As Object) As Type
-        Return If(this Is Nothing, Nothing, this.GetType())
-    End Function
-
     <Extension()> Public Function has_finalizer(ByVal this As Type) As Boolean
         Return Not this.GetMethod("Finalize",
                                   BindingFlags.NonPublic Or
@@ -70,7 +70,7 @@ Public Module _istype
         Else
             Dim cs() As ConstructorInfo = Nothing
             cs = t.constructors()
-            For i As Int32 = 0 To array_size(cs) - 1
+            For i As Int32 = 0 To array_size_i(cs) - 1
                 If isemptyarray(cs(i).GetParameters()) AndAlso
                    (accept_private_constructor OrElse cs(i).IsPublic()) Then
                     Return True

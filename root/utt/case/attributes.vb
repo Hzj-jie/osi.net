@@ -23,6 +23,7 @@ Public NotInheritable Class attributes
         Public ReadOnly times As UInt64
 
         Public Sub New(ByVal times As UInt64)
+            assert(times > 1)
             Me.times = times
         End Sub
     End Class
@@ -59,15 +60,14 @@ Public NotInheritable Class attributes
     End Class
 
     ' Define the reserved processor count of a test case or test class.
-    <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=True)> _
-    Public NotInheritable Class reserved_processor_count
-        Inherits attribute
+    <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=True)>
+    Public NotInheritable Class reserved_processors
+        Inherits Attribute
 
-        Public ReadOnly reserved_processor_count As Int16
+        Public ReadOnly reserved_processors As Int16
 
-        Public Sub New(ByVal reserved_processor_count As Int16)
-            assert(reserved_processor_count >= 0 OrElse reserved_processor_count = -1)
-            Me.reserved_processor_count = reserved_processor_count
+        Public Sub New(ByVal reserved_processors As Int16)
+            Me.reserved_processors = reserved_processors
         End Sub
     End Class
 
