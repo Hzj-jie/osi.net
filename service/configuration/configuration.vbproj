@@ -78,6 +78,7 @@
     <Compile Include="filters\decimal\int_compare_filter.vb" />
     <Compile Include="filters\str\string_compare_filter.vb" />
     <Compile Include="filters\str\string_interval_filter.vb" />
+    <Compile Include="structure\sections.vb" />
     <Compile Include="structure\static_filter.vb" />
     <Compile Include="filters\decimal\double_filter.vb" />
     <Compile Include="filters\decimal\double_interval_filter.vb" />

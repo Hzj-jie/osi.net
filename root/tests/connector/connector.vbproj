@@ -58,6 +58,7 @@
     <Compile Include="array_behavior_test.vb" />
     <Compile Include="array_test.vb" />
     <Compile Include="assert_test.vb" />
+    <Compile Include="convert_tostring_behavior_test.vb" />
     <Compile Include="custom_attributes_behavior_test4.vb" />
     <Compile Include="bit_test.vb" />
     <Compile Include="bytes_perf.vb" />

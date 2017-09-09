@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
-Imports osi.root.delegates
+Imports osi.root.constants
 Imports osi.root.formation
 
 Public Module _filtered_value
@@ -45,15 +49,32 @@ Public Class filtered_value(Of T)
     End Property
 
     Private Function [get](ByVal vs As vector(Of pair(Of T, filter_set)),
+                           ByVal variants As vector(Of pair(Of String, String))) As vector(Of T)
+        assert(Not vs Is Nothing)
+        Dim r As vector(Of T) = Nothing
+        r = New vector(Of T)()
+        Dim i As UInt32 = 0
+        While i < vs.size()
+            If vs(i).second.match(variants) Then
+                r.emplace_back(vs(i).first)
+            End If
+            i += uint32_1
+        End While
+        Return r
+    End Function
+
+    Private Function [get](ByVal vs As vector(Of pair(Of T, filter_set)),
                            ByRef v As T,
                            ByVal variants As vector(Of pair(Of String, String))) As Boolean
         assert(Not vs Is Nothing)
-        For i As Int32 = 0 To vs.size() - 1
+        Dim i As UInt32 = 0
+        While i < vs.size()
             If vs(i).second.match(variants) Then
                 v = vs(i).first
                 Return True
             End If
-        Next
+            i += uint32_1
+        End While
         Return False
     End Function
 
@@ -66,6 +87,17 @@ Public Class filtered_value(Of T)
             Return False
         Else
             Return [get]((+it).second, v, variants)
+        End If
+    End Function
+
+    Public Function [get](ByVal key As String,
+                          Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) As vector(Of T)
+        Dim it As map(Of String, vector(Of pair(Of T, filter_set))).iterator = Nothing
+        it = m.find(key)
+        If it = m.end() Then
+            Return Nothing
+        Else
+            Return [get]((+it).second, variants)
         End If
     End Function
 

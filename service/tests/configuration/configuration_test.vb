@@ -1,15 +1,15 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
 Imports osi.root.connector
 Imports osi.root.utt
-Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.service.configuration
 Imports osi.service.convertor
 Imports envs = osi.root.envs
 Imports c = osi.service.configuration
-Imports sf = osi.service.configuration.constants.static_filter
-Imports fis = osi.service.configuration.constants.filter_selector
 
 Public Class configuration_test
     Inherits [case]
@@ -96,7 +96,7 @@ Public Class configuration_test
         End If
     End Function
 
-    Private Shared Function s() As section
+    Private Shared Function s() As sections
         Return c.default()(config_writer.file)("section")
     End Function
 

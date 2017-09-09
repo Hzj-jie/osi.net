@@ -1,12 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
-Imports osi.service.dataprovider
-Imports osi.root.delegates
-Imports osi.root.formation
-Imports osi.root.procedure
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.utils
+Imports osi.root.formation
+Imports osi.service.dataprovider
 
 Friend Class config_streamreader_dataloader
     Inherits streamreader_dataloader(Of config)
@@ -29,6 +30,7 @@ Friend Class config_streamreader_dataloader
         Public ReadOnly fs As filter_selector
         Public ReadOnly rc As raw_config
         Public rs As raw_section
+        Public ignore_section As Boolean
 
         Public Sub New(ByVal fs As filter_selector)
             assert(Not fs Is Nothing)
@@ -56,10 +58,10 @@ Friend Class config_streamreader_dataloader
                                    ByRef r As vector(Of pair(Of String, String))) As Boolean
         If Not String.IsNullOrEmpty(f) Then
             Dim ss() As String = Nothing
-            ss = f.Split(c.filter_separator)
+            ss = f.Split(c.filter_separator.c_str())
             assert(array_size(ss) > 0)
             r = New vector(Of pair(Of String, String))()
-            For i As Int32 = 0 To array_size(ss) - 1
+            For i As Int32 = 0 To array_size_i(ss) - 1
                 If Not String.IsNullOrEmpty(ss(i)) AndAlso
                    Not split_filter_value(ss(i), r) Then
                     Return False
@@ -90,7 +92,7 @@ Friend Class config_streamreader_dataloader
                 Dim v As String = Nothing
                 Dim is_section_line As Boolean = False
                 is_section_line = strstartwith(l, c.section_left, False) AndAlso
-                                   strendwith(l, c.section_right, False)
+                                  strendwith(l, c.section_right, False)
                 If is_section_line Then
                     l = strmid(l,
                                strlen(c.section_left),
@@ -108,6 +110,9 @@ Friend Class config_streamreader_dataloader
                         End If
                     End If
                 Else
+                    If s.ignore_section Then
+                        Return
+                    End If
                     If strsep(l, l, v, c.key_value_separator, False) Then
                         If String.IsNullOrEmpty(l) Then
                             If String.IsNullOrEmpty(v) Then
@@ -135,19 +140,26 @@ Friend Class config_streamreader_dataloader
                     Return
                 End If
 
-                If static_filter.match(s.fs, sf, static_variants) Then
-                    If is_section_line Then
-                        inject_section(s)
+                If is_section_line Then
+                    inject_section(s)
+                    If static_filter.match(s.fs, sf, static_variants) Then
                         s.rs = New raw_section(l, df)
-                    ElseIf s.rs Is Nothing Then
-                        If Not df Is Nothing Then
-                            raise_error(error_type.warning,
-                                        "dynamic filter does not work with filter selector configuration, ignore")
-                            Return
-                        End If
-                        s.fs.set(l, v)
+                        s.ignore_section = False
                     Else
-                        s.rs.insert(l, v, df)
+                        s.ignore_section = True
+                    End If
+                Else
+                    If static_filter.match(s.fs, sf, static_variants) Then
+                        If s.rs Is Nothing Then
+                            If Not df Is Nothing Then
+                                raise_error(error_type.warning,
+                                            "dynamic filter does not work with filter selector configuration, ignore")
+                                Return
+                            End If
+                            s.fs.set(l, v)
+                        Else
+                            s.rs.insert(l, v, df)
+                        End If
                     End If
                 End If
             End If

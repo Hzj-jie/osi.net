@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root
-Imports osi.root.formation
 Imports osi.root.connector
+Imports osi.root.formation
 Imports cons = osi.service.configuration.constants.static_filter
 
 Friend Module _default_static_variants
@@ -15,22 +19,20 @@ Friend Module _default_static_variants
                                            As vector(Of pair(Of String, String))
         Dim v As vector(Of pair(Of String, String)) = Nothing
         copy(v, default_static_variants)
-        If Not variants Is Nothing Then
-            For i As Int32 = 0 To variants.size() - 1
-                Dim f As Boolean = False
-                For j As Int32 = 0 To v.size() - 1
-                    If strsame(v(j).first, variants(i).first) Then
-                        copy(v(j).second, variants(i).second)
-                        f = True
-                        Exit For
-                    End If
-                Next
-
-                If Not f Then
-                    v.push_back(variants(i))
+        For i As Int32 = 0 To CInt(variants.size_or_0()) - 1
+            Dim f As Boolean = False
+            For j As Int32 = 0 To CInt(v.size()) - 1
+                If strsame(v(CUInt(j)).first, variants(CUInt(i)).first) Then
+                    copy(v(CUInt(j)).second, variants(CUInt(i)).second)
+                    f = True
+                    Exit For
                 End If
             Next
-        End If
+
+            If Not f Then
+                v.push_back(variants(CUInt(i)))
+            End If
+        Next
         Return v
     End Function
 
@@ -54,6 +56,6 @@ Friend Module _default_static_variants
         push(cons.user_name, envs.user_name)
         push(cons.version, envs.application_version)
         push(cons.working_directory, Environment.CurrentDirectory())
-        push(cons.application_directory, envs.application_directory)
+        push(cons.application_directory, envs.service_name)
     End Sub
 End Module

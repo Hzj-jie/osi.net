@@ -1,28 +1,21 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.utils
 
 Public Module _variants
     Public Function create_variants(ByRef r As vector(Of pair(Of String, String)),
-                                    ByVal ParamArray kvs() As String) As Boolean
-        If isemptyarray(kvs) OrElse (array_size(kvs) & 1) = 1 Then
-            Return False
-        Else
-            If r Is Nothing Then
-                r = New vector(Of pair(Of String, String))()
-            Else
-                r.clear()
-            End If
-            For i As Int32 = 0 To array_size(kvs) - 1 Step 2
-                r.emplace_back(make_pair(kvs(i), kvs(i + 1)))
-            Next
-            Return True
-        End If
+                                    ByVal ParamArray kvs() As Object) As Boolean
+        r.renew()
+        Return append_variants(r, kvs)
     End Function
 
-    Public Function create_variants(ByVal ParamArray kvs() As String) As vector(Of pair(Of String, String))
+    Public Function create_variants(ByVal ParamArray kvs() As Object) As vector(Of pair(Of String, String))
         Dim r As vector(Of pair(Of String, String)) = Nothing
         assert(create_variants(r, kvs))
         Return r
@@ -33,15 +26,13 @@ Public Module _variants
         If m Is Nothing Then
             Return False
         Else
-            If r Is Nothing Then
-                r = New vector(Of pair(Of String, String))()
-            Else
-                r.clear()
-            End If
+            r.renew()
             Dim i As map(Of String, String).iterator = Nothing
             i = m.begin()
             While i <> m.end()
-                r.push_back(make_pair((+i).first, (+i).second))
+                If Not append_variant(r, (+i).first, (+i).second) Then
+                    Return False
+                End If
                 i += 1
             End While
             Return True
@@ -68,6 +59,26 @@ Public Module _variants
             Return False
         Else
             r.emplace_back(make_pair(key, value))
+            Return True
+        End If
+    End Function
+
+    <Extension()> Public Function append_variant(ByVal r As vector(Of pair(Of String, String)),
+                                                 ByVal key As Object,
+                                                 ByVal value As Object) As Boolean
+        Return append_variant(r, Convert.ToString(key), Convert.ToString(value))
+    End Function
+
+    <Extension()> Public Function append_variants(ByVal r As vector(Of pair(Of String, String)),
+                                                  ByVal ParamArray kvs() As Object) As Boolean
+        If r Is Nothing OrElse isemptyarray(kvs) OrElse (array_size(kvs) And uint32_1) = uint32_1 Then
+            Return False
+        Else
+            For i As Int32 = 0 To array_size_i(kvs) - 1 Step 2
+                If Not append_variant(r, kvs(i), kvs(i + 1)) Then
+                    Return False
+                End If
+            Next
             Return True
         End If
     End Function
