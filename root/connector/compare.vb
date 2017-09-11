@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 #Const cached_compare = True
 Imports System.Threading
 Imports osi.root.constants
@@ -9,7 +13,7 @@ Public Module _compare
     Private Const object_compare_larger As Int32 = 1
     Private Const object_compare_less As Int32 = -1
     Public ReadOnly compare_error_result As Int32 = 0
-    Private ReadOnly suppress_compare_error_binder As  _
+    Private ReadOnly suppress_compare_error_binder As _
                          binder(Of Func(Of Boolean), suppress_compare_error_binder_protector)
     Private ReadOnly specifically_treated_types() As Type
 
@@ -20,9 +24,9 @@ Public Module _compare
         assert(object_compare_equal = 0)
         compare_error_result = rnd_int(min_int32, object_compare_less)
         assert(compare_error_result < 0 AndAlso
-                 compare_error_result <> object_compare_less AndAlso
-                 compare_error_result <> object_compare_equal AndAlso
-                 compare_error_result <> object_compare_larger)
+               compare_error_result <> object_compare_less AndAlso
+               compare_error_result <> object_compare_equal AndAlso
+               compare_error_result <> object_compare_larger)
         ReDim specifically_treated_types(0)
         specifically_treated_types(0) = GetType(Nullable(Of ))
     End Sub
@@ -58,19 +62,19 @@ Public Module _compare
     End Function
 
     Private Function this_to_t2(Of T)(ByVal this As Object, ByVal that As T) As Int32
-        Return cast(Of IComparable(Of T))(this).CompareTo(that)
+        Return direct_cast(Of IComparable(Of T))(this).CompareTo(that)
     End Function
 
     Private Function this_to_object(ByVal this As Object, ByVal that As Object) As Int32
-        Return cast(Of IComparable)(this).CompareTo(that)
+        Return direct_cast(Of IComparable)(this).CompareTo(that)
     End Function
 
     Private Function that_to_t(Of T)(ByVal this As T, ByVal that As Object) As Int32
-        Return -cast(Of IComparable(Of T))(that).CompareTo(this)
+        Return -direct_cast(Of IComparable(Of T))(that).CompareTo(this)
     End Function
 
     Private Function that_to_object(ByVal this As Object, ByVal that As Object) As Int32
-        Return -cast(Of IComparable)(that).CompareTo(this)
+        Return -direct_cast(Of IComparable)(that).CompareTo(this)
     End Function
 
     Private Function runtime_compare(Of T, T2)(ByVal this As T,
@@ -168,7 +172,7 @@ Public Module _compare
             'say Nullable<int> can only compare with int,
             'do not need to take care about object, since it does not have IComparable implemented.
             use_runtime_compare = False
-            For i As Int32 = 0 To array_size(specifically_treated_types) - 1
+            For i As Int32 = 0 To array_size_i(specifically_treated_types) - 1
                 If GetType(T).is(specifically_treated_types(i)) OrElse
                    GetType(T2).is(specifically_treated_types(i)) Then
                     use_runtime_compare = True
@@ -290,6 +294,10 @@ Public Module _compare
         Public Shared Function comparable(ByVal this As T, ByVal that As T2) As Boolean
             Return compare(this, that, Nothing, True)
         End Function
+
+        Public Shared Function comparable() As Boolean
+            Return Not c Is Nothing
+        End Function
     End Structure
 
     Public Function compare(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
@@ -299,6 +307,11 @@ Public Module _compare
     Public Function comparable(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
         Return compare_cache(Of T, T2).comparable(this, that)
     End Function
+
+    Public Function comparable(Of T, T2)() As Boolean
+        Return compare_cache(Of T, T2).comparable()
+    End Function
+
 #Else
     Public Function compare(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
         If object_comparable(this, that) Then
@@ -386,76 +399,5 @@ Public Module _compare
 
     Public Function compare(ByVal this As String, ByVal that As String) As Int32
         Return strcmp(this, that)
-    End Function
-
-    Public Function equals(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
-        Return compare(this, that) = 0
-    End Function
-
-    Public Function equals(Of T)(ByVal this As T, ByVal that As T) As Boolean
-        Return compare(Of T, T)(this, that) = 0
-    End Function
-
-    Public Function equals(Of T)(ByVal this As T, ByVal that As Object) As Boolean
-        Return compare(Of T)(this, that) = 0
-    End Function
-
-    Private Function operatorEqualImpl(Of T, T2)(ByVal this As T, ByVal that As T2, _
-                                                 ByVal compare As Func(Of T, T2, Int32)) As Boolean
-        assert(Not compare Is Nothing, "compare is a nothing compareDelegate.")
-        If this Is Nothing AndAlso that Is Nothing Then
-            Return True
-        ElseIf this Is Nothing OrElse that Is Nothing Then
-            Return False
-        Else
-            Return compare(this, that) = 0
-        End If
-    End Function
-
-    'save a call to compare(Of T,T2), and IComparable(Of Object)
-    Public Function operatorEqual(Of T)(ByVal this As T, ByVal that As Object) As Boolean
-        Return operatorEqualImpl(this, that, AddressOf compare(Of T))
-    End Function
-
-    Public Function operatorUnequal(Of T)(ByVal this As T, ByVal that As Object) As Boolean
-        Return Not operatorEqual(this, that)
-    End Function
-
-    Public Function operatorEqual(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
-        Return operatorEqualImpl(this, that, AddressOf compare(Of T, T2))
-    End Function
-
-    Public Function operatorUnequal(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
-        Return Not operatorEqual(this, that)
-    End Function
-
-    Private Function operatorLessImpl(Of T, T2)(ByVal this As T, ByVal that As T2, _
-                                                ByVal compare As Func(Of T, T2, Int32)) As Boolean
-        assert(Not compare Is Nothing)
-        If this Is Nothing AndAlso that Is Nothing Then
-            Return False
-        ElseIf this Is Nothing Then
-            Return True
-        ElseIf that Is Nothing Then
-            Return False
-        Else
-            Return compare(this, that) < 0
-        End If
-    End Function
-
-    Public Function operatorLess(Of T)(ByVal this As T, ByVal that As Object) As Boolean
-        Return operatorLessImpl(this, that, AddressOf compare(Of T))
-    End Function
-
-    Public Function operatorMore(Of T)(ByVal this As T, ByVal that As Object) As Boolean
-        Return Not operatorLess(this, that)
-    End Function
-
-    Public Function operatorLess(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
-        Return operatorLessImpl(this, that, AddressOf compare(Of T, T2))
-    End Function
-
-    Public Function operatorMore(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
-        Return Not operatorLess(this, that)
     End Function
 End Module

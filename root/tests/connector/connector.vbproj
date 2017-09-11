@@ -102,6 +102,7 @@
     <Compile Include="encoding_test.vb" />
     <Compile Include="endian_test.vb" />
     <Compile Include="enum_test.vb" />
+    <Compile Include="equal_test.vb" />
     <Compile Include="event_attach_perf.vb" />
     <Compile Include="event_handler_test.vb" />
     <Compile Include="event_pin_object_behavior_test.vb" />

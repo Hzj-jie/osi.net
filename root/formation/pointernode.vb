@@ -116,41 +116,41 @@ Public Class pointernode(Of T)
 
     'should call CompareTo(Object)
     Public Shared Operator =(ByVal this As pointernode(Of T), ByVal that As Object) As Boolean
-        Return operatorEqual(this, that)
+        Return equal(this, that)
     End Operator
 
     Public Shared Operator <>(ByVal this As pointernode(Of T), ByVal that As Object) As Boolean
-        Return operatorUnequal(this, that)
+        Return Not (this = that)
     End Operator
 
     'should call CompareTo(pointernode(Of T)
     Public Shared Operator =(ByVal this As pointernode(Of T), ByVal that As pointernode(Of T)) As Boolean
-        Return operatorEqual(this, that)
+        Return equal(this, that)
     End Operator
 
     Public Shared Operator <>(ByVal this As pointernode(Of T), ByVal that As pointernode(Of T)) As Boolean
-        Return operatorUnequal(this, that)
+        Return Not (this = that)
     End Operator
 
     'should call CompareTo(T)
     Public Shared Operator =(ByVal this As pointernode(Of T), ByVal that As T) As Boolean
-        Return operatorEqual(this, that)
+        Return equal(this, that)
     End Operator
 
     Public Shared Operator <>(ByVal this As pointernode(Of T), ByVal that As T) As Boolean
-        Return operatorUnequal(this, that)
+        Return Not (this = that)
     End Operator
 
     Public Shared Operator =(ByVal this As T, ByVal that As pointernode(Of T)) As Boolean
-        Return operatorEqual(that, this)
+        Return that = this
     End Operator
 
     Public Shared Operator <>(ByVal this As T, ByVal that As pointernode(Of T)) As Boolean
-        Return operatorUnequal(that, this)
+        Return Not (this = that)
     End Operator
 
     Public Overrides Function Equals(ByVal obj As Object) As Boolean
-        Return operatorEqual(Me, obj)
+        Return equal(Me, obj)
     End Function
 
     Public Overrides Function ToString() As String

@@ -368,19 +368,19 @@ Partial Public NotInheritable Class list(Of T)
     End Function
 
     Public Shared Operator =(ByVal this As list(Of T), ByVal that As list(Of T)) As Boolean
-        Return operatorEqual(this, that)
+        Return equal(this, that)
     End Operator
 
     Public Shared Operator <>(ByVal this As list(Of T), ByVal that As list(Of T)) As Boolean
-        Return operatorUnequal(this, that)
+        Return Not (this = that)
     End Operator
 
     Public Shared Operator =(ByVal this As list(Of T), ByVal that As Object) As Boolean
-        Return operatorEqual(this, that)
+        Return equal(this, that)
     End Operator
 
     Public Shared Operator <>(ByVal this As list(Of T), ByVal that As Object) As Boolean
-        Return operatorUnequal(this, that)
+        Return Not (this = that)
     End Operator
 
     Public Overloads Function ToString(ByVal seperator As String) As String

@@ -1,10 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 ' A cached_compare will be initialized once, so unregister a comparer usually won't take effect.
 Public NotInheritable Class comparer
     Public Shared Sub register(Of T, T2)(ByVal c As Func(Of T, T2, Int32))
         assert(Not c Is Nothing)
         comparer(Of T, T2).register(c)
-        If Not GetType(T).Equals(GetType(T2)) Then
+        If Not type_info(Of T, type_info_operators.is, T2).v Then
             comparer(Of T2, T).register(Function(i As T2, j As T) As Int32
                                             Return -c(j, i)
                                         End Function)

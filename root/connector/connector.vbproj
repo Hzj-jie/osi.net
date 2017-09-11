@@ -69,6 +69,8 @@
     <Compile Include="default_new.vb" />
     <Compile Include="disposable.vb" />
     <Compile Include="endian.vb" />
+    <Compile Include="equal.vb" />
+    <Compile Include="equaler.vb" />
     <Compile Include="ICloneable.vb" />
     <Compile Include="member_info.vb" />
     <Compile Include="object_extensions.vb" />
