@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.constants
 Imports osi.root.delegates
 
-' Use follow order to check the equality of two unknown types:
+' Use following order to check the equality of two unknown types:
 ' - object_compare()
 ' - equaler(of T, T2)
 ' (cached) {
@@ -41,7 +41,7 @@ Public Module _equal
                 raise_error(error_type.performance,
                             "equal_cache(Of *, Object) or equal_cache(Of Object, *) impacts performance seriously.")
                 If type_info(Of T).is_object AndAlso type_info(Of T2).is_object Then
-                    f = AddressOf runtime_equal(Of T, T2)
+                    f = AddressOf runtime_equal
                 ElseIf type_info(Of T).is_object Then
                     f = AddressOf runtime_this_to_t2(Of T2)
                 Else
@@ -66,13 +66,7 @@ Public Module _equal
             If f Is Nothing Then
                 Return False
             Else
-                Try
-                    Return f(this, that, o)
-                Catch ex As Exception
-                    raise_error(error_type.exclamation,
-                                "Failed to check the equality of ", GetType(T), " with ", GetType(T2), ", ex ", ex)
-                    Return False
-                End Try
+                Return f(this, that, o)
             End If
         End Function
 
@@ -104,27 +98,47 @@ Public Module _equal
         Return False
     End Function
 
-    Private Function runtime_equal(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Boolean) As Boolean
+    Private Function runtime_equal(ByVal this As Object, ByVal that As Object, ByRef o As Boolean) As Boolean
         Return runtime_this_to_t2(this, that, o) OrElse
                runtime_that_to_t(this, that, o)
     End Function
 
-    Public Function equal(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
+    Private Function do_equal(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
+        Dim o As Boolean = False
         Dim cmp As Int32 = 0
         cmp = object_compare(this, that)
-        Dim o As Boolean = False
         If cmp <> object_compare_undetermined Then
             Return (cmp = 0)
-        ElseIf equaler(Of T, T2).defined() Then
-            Return equaler.equal(this, that)
-        ElseIf equal_cache(Of T, T2).equal(this, that, o) Then
-            Return o
-        ElseIf compare(this, that, cmp) Then
-            Return (cmp = 0)
-        Else
-            ' This typically means reference-equality (for classes) or value-equality (for structures).
-            ' But anyway, we always have a result.
-            Return Object.Equals(this, that)
         End If
+        If equaler(Of T, T2).defined() Then
+            Return equaler.equal(this, that)
+        End If
+        If equal_cache(Of T, T2).equal(this, that, o) Then
+            Return o
+        End If
+        If non_null_compare(this, that, cmp) Then
+            Return (cmp = 0)
+        End If
+
+        ' This typically means reference-equality (for classes) or value-equality (for structures).
+        ' But anyway, we always have a result.
+        Return Object.Equals(this, that)
+    End Function
+
+    Public Function equal(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Boolean) As Boolean
+        Try
+            o = do_equal(this, that)
+            Return True
+        Catch ex As Exception
+            raise_error(error_type.exclamation,
+                        "Failed to check the equality of ", GetType(T), " with ", GetType(T2), ", ex ", ex)
+            Return False
+        End Try
+    End Function
+
+    Public Function equal(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
+        Dim o As Boolean = False
+        assert(equal(this, that, o))
+        Return o
     End Function
 End Module

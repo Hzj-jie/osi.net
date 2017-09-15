@@ -30,6 +30,11 @@ Public NotInheritable Class equaler(Of T, T2)
         equaler(Of T, T2).f = f
     End Sub
 
+    Public Shared Sub unregister()
+        assert(Not f Is Nothing)
+        f = Nothing
+    End Sub
+
     Public Shared Function defined() As Boolean
         Return Not f Is Nothing
     End Function

@@ -73,6 +73,7 @@
     <Compile Include="equaler.vb" />
     <Compile Include="ICloneable.vb" />
     <Compile Include="member_info.vb" />
+    <Compile Include="object_compare.vb" />
     <Compile Include="object_extensions.vb" />
     <Compile Include="windows_native\dpi_awareness.vb" />
     <Compile Include="windows_native\native_window.vb" />

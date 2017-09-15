@@ -3,32 +3,35 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-#Const cached_compare = True
-Imports System.Threading
 Imports osi.root.constants
+Imports osi.root.delegates
 
+' Use following order to compare two unknown types
+' - object_compare
+' - comparer(Of T, T2)
+' (cached) {
+'   - T.IComparable(T2) OR
+'   - T2.IComparable(T) OR
+'   - T.IComparable OR
+'   - T2.IComparable OR
+'   - Special treatments (Nullable(Of )) OR
+'   if T == object {
+'     - GetType(T).IComparable(T2) AND
+'     - GetType(T).IComparable AND
+'   }
+'   if T2 == object {
+'     - GetType(T2).IComparable(T) AND
+'     - GetType(T2).IComparable AND
+'   }
+' }
 Public Module _compare
-    Public Const object_compare_undetermined As Int32 = 2
-    Private Const object_compare_equal As Int32 = 0
-    Private Const object_compare_larger As Int32 = 1
-    Private Const object_compare_less As Int32 = -1
     Public ReadOnly compare_error_result As Int32 = 0
     Private ReadOnly suppress_compare_error_binder As _
                          binder(Of Func(Of Boolean), suppress_compare_error_binder_protector)
-    Private ReadOnly specifically_treated_types() As Type
 
     Sub New()
         suppress_compare_error_binder = New binder(Of Func(Of Boolean), suppress_compare_error_binder_protector)()
-        assert(object_compare_less = npos)
-        assert(object_compare_larger = 1)
-        assert(object_compare_equal = 0)
-        compare_error_result = rnd_int(min_int32, object_compare_less)
-        assert(compare_error_result < 0 AndAlso
-               compare_error_result <> object_compare_less AndAlso
-               compare_error_result <> object_compare_equal AndAlso
-               compare_error_result <> object_compare_larger)
-        ReDim specifically_treated_types(0)
-        specifically_treated_types(0) = GetType(Nullable(Of ))
+        compare_error_result = rnd_int(min_int32, min_int8)
     End Sub
 
     Private Function suppress_compare_error() As Boolean
@@ -36,30 +39,101 @@ Public Module _compare
                (+suppress_compare_error_binder)()
     End Function
 
-    Private Function object_comparable(ByVal this_is_value_type As Boolean,
-                                       ByVal that_is_value_type As Boolean) As Boolean
-        Return Not (this_is_value_type AndAlso that_is_value_type)
-    End Function
-
-    Public Function object_comparable(Of T, T2)() As Boolean
-        Return object_comparable(type_info(Of T).is_valuetype, type_info(Of T2).is_valuetype)
-    End Function
-
-    Public Function object_comparable(ByVal this As Object, ByVal that As Object) As Boolean
-        Return object_comparable(TypeOf this Is ValueType, TypeOf that Is ValueType)
-    End Function
-
-    Public Function object_compare(ByVal this As Object, ByVal that As Object) As Int32
-        If Object.ReferenceEquals(this, that) Then
-            Return object_compare_equal
-        ElseIf this Is Nothing Then
-            Return object_compare_less
-        ElseIf that Is Nothing Then
-            Return object_compare_larger
-        Else
-            Return object_compare_undetermined
+    Private Sub compare_error(Of T, T2)(ByVal ex As Exception)
+        If Not suppress_compare_error() Then
+            raise_error(error_type.exclamation,
+                        "caught exception when comparing ",
+                        GetType(T).FullName(),
+                        " with ",
+                        GetType(T2).FullName(),
+                        ", ex ",
+                        ex)
         End If
-    End Function
+    End Sub
+
+    Private NotInheritable Class compare_cache(Of T, T2)
+        Private Shared ReadOnly c As _do_val_val_ref(Of T, T2, Int32, Boolean)
+
+        Shared Sub New()
+            If comparer_for_specific_types(c) Then
+                '
+            ElseIf type_info(Of T, type_info_operators.is, IComparable(Of T2)).v Then
+                c = always_succeed(AddressOf this_to_t2(Of T2))
+            ElseIf type_info(Of T2, type_info_operators.is, IComparable(Of T)).v Then
+                c = always_succeed(AddressOf that_to_t(Of T))
+            ElseIf type_info(Of T, type_info_operators.is, IComparable).v Then
+                c = always_succeed(AddressOf this_to_object)
+            ElseIf type_info(Of T2, type_info_operators.is, IComparable).v Then
+                c = always_succeed(AddressOf that_to_object)
+            ElseIf type_info(Of T).is_object OrElse type_info(Of T2).is_object Then
+                raise_error(error_type.performance,
+                            "compare_cache(Of *, Object) or compare_cache(Of Object, *) impact performance seriously.")
+                If type_info(Of T).is_object AndAlso type_info(Of T2).is_object Then
+                    c = AddressOf runtime_object_compare
+                ElseIf type_info(Of T).is_object Then
+                    c = AddressOf runtime_this_compare(Of T2)
+                Else
+                    assert(type_info(Of T2).is_object)
+                    c = AddressOf runtime_that_compare(Of T)
+                End If
+            Else
+                If Not suppress_compare_error() Then
+                    raise_error(error_type.exclamation,
+                                "caught types do not have IComparable implement, unable to compare ",
+                                GetType(T).FullName(),
+                                " with ",
+                                GetType(T2).FullName())
+                End If
+            End If
+        End Sub
+
+        Private Shared Function always_succeed(ByVal i As Func(Of T, T2, Int32)) _
+                                              As _do_val_val_ref(Of T, T2, Int32, Boolean)
+            assert(Not i Is Nothing)
+            Return Function(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
+                       o = i(this, that)
+                       Return True
+                   End Function
+        End Function
+
+        Private Shared Function comparer_for_specific_types(
+                                    ByRef o As _do_val_val_ref(Of T, T2, Int32, Boolean)) As Boolean
+            If GetType(T).is(GetType(Nullable(Of ))) AndAlso
+               GetType(T2).is(Nullable.GetUnderlyingType(GetType(T))) Then
+                o = always_succeed(AddressOf this_to_t2(Of T2))
+                Return True
+            ElseIf GetType(T2).is(GetType(Nullable(Of ))) AndAlso
+                   GetType(T).is(Nullable.GetUnderlyingType(GetType(T2))) Then
+                o = always_succeed(AddressOf that_to_t(Of T))
+                Return True
+            Else
+                Return False
+            End If
+        End Function
+
+        Public Shared Function compare(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
+            If c Is Nothing Then
+                Return False
+            Else
+#If NDEBUG Then
+                Dim msg As String = Nothing
+                msg = strcat("Comparing ",
+                             GetType(T).FullName(),
+                             " with ",
+                             GetType(T2).FullName(),
+                             " needs to be specifically handled.")
+                Dim o2 As Int32 = 0
+                assert(c(this, that, o) = runtime_compare(this, that, o2), msg)
+                assert(o = o2, msg)
+#End If
+                Return c(this, that, o)
+            End If
+        End Function
+
+        Public Shared Function comparable() As Boolean
+            Return Not c Is Nothing
+        End Function
+    End Class
 
     Private Function this_to_t2(Of T)(ByVal this As Object, ByVal that As T) As Int32
         Return direct_cast(Of IComparable(Of T))(this).CompareTo(that)
@@ -77,259 +151,104 @@ Public Module _compare
         Return -direct_cast(Of IComparable)(that).CompareTo(this)
     End Function
 
-    Private Function runtime_compare(Of T, T2)(ByVal this As T,
-                                               ByVal that As T2,
-                                               ByRef o As Int32,
-                                               ByVal check_only As Boolean) As Boolean
+    Private Function runtime_this_to_t2(Of T)(ByVal this As Object, ByVal that As T, ByRef o As Int32) As Boolean
+        If TypeOf this Is IComparable(Of T) Then
+            o = this_to_t2(this, that)
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Private Function runtime_this_to_object(ByVal this As Object, ByVal that As Object, ByRef o As Int32) As Boolean
+        If TypeOf this Is IComparable Then
+            o = this_to_object(this, that)
+            Return True
+        ElseIf TypeOf this Is IComparable(Of Object) Then
+            o = this_to_t2(this, that)
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Private Function runtime_that_to_t(Of T)(ByVal this As T, ByVal that As Object, ByRef o As Int32) As Boolean
+        If TypeOf that Is IComparable(Of T) Then
+            o = that_to_t(this, that)
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Private Function runtime_that_to_object(ByVal this As Object, ByVal that As Object, ByRef o As Int32) As Boolean
+        If TypeOf that Is IComparable Then
+            o = that_to_object(this, that)
+            Return True
+        ElseIf TypeOf that Is IComparable(Of Object) Then
+            o = that_to_t(this, that)
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Private Function runtime_this_compare(Of T)(ByVal this As Object, ByVal that As T, ByRef o As Int32) As Boolean
+        Return runtime_this_to_t2(this, that, o) OrElse
+               runtime_this_to_object(this, that, o)
+    End Function
+
+    Private Function runtime_that_compare(Of T)(ByVal this As T, ByVal that As Object, ByRef o As Int32) As Boolean
+        Return runtime_that_to_t(this, that, o) OrElse
+               runtime_that_to_object(this, that, o)
+    End Function
+
+    Private Function runtime_object_compare(ByVal this As Object, ByVal that As Object, ByRef o As Int32) As Boolean
+        Return runtime_this_to_object(this, that, o) OrElse
+               runtime_that_to_object(this, that, o)
+    End Function
+
+    Private Function runtime_compare(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
+        Return runtime_this_to_t2(this, that, o) OrElse
+               runtime_that_to_t(this, that, o) OrElse
+               runtime_this_to_object(this, that, o) OrElse
+               runtime_that_to_object(this, that, o)
+    End Function
+
+    Private Function do_non_null_compare(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
+        If comparer(Of T, T2).defined() Then
+            o = comparer.compare(this, that)
+            Return True
+        ElseIf compare_cache(Of T, T2).compare(this, that, o) Then
+            Return True
+        End If
+        Return False
+    End Function
+
+    Public Function non_null_compare(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
         Try
-            If comparer(Of T, T2).defined() Then
-                o = comparer(Of T, T2).compare(this, that)
-                Return True
-            ElseIf TypeOf this Is IComparable(Of T2) Then
-                o = this_to_t2(this, that)
-                Return True
-            ElseIf TypeOf that Is IComparable(Of T) Then
-                o = that_to_t(this, that)
-                Return True
-            ElseIf TypeOf this Is IComparable Then
-                o = this_to_object(this, that)
-                Return True
-            ElseIf TypeOf that Is IComparable Then
-                o = that_to_object(this, that)
-                Return True
-            Else
-                If Not check_only AndAlso Not suppress_compare_error() Then
-                    raise_error(error_type.exclamation,
-                                "caught instances do not have IComparable implement or is nothing, ",
-                                "unable to compare ",
-                                this.GetType().FullName(), " with ", that.GetType().FullName())
-                End If
-                Return False
-            End If
+            Return do_non_null_compare(this, that, o)
         Catch ex As Exception
-            If Not check_only Then
-                compare_error(Of T, T2)(ex)
-            End If
+            compare_error(Of T, T2)(ex)
             Return False
         End Try
     End Function
 
-    Private Sub compare_error(Of T, T2)(ByVal ex As Exception)
-        If Not TypeOf ex Is ThreadAbortException AndAlso Not suppress_compare_error() Then
-            raise_error(error_type.exclamation,
-                        "caught exception when comparing ",
-                        GetType(T).FullName(), " with ", GetType(T2).FullName(),
-                        ", ex ", ex.Message, ", callstack ", ex.StackTrace())
-        End If
-    End Sub
-
-#If cached_compare Then
-    Private Structure compare_cache(Of T, T2)
-        ' A simple ternary. connector cannot refer formation.
-        Private Class ternary
-            Public Const _unknown As Int32 = 0
-            Public Const _true As Int32 = 1
-            Public Const _false As Int32 = 2
-
-            Private v As Int32
-
-            Public Sub New()
-                v = _unknown
-            End Sub
-
-            Public Sub [set](ByVal v As Boolean)
-                If v Then
-                    Me.v = _true
-                Else
-                    Me.v = _false
-                End If
-            End Sub
-
-            Public Function unknown() As Boolean
-                Return v = _unknown
-            End Function
-
-            Public Function true_() As Boolean
-                Return v = _true
-            End Function
-
-            Public Function false_() As Boolean
-                Return v = _false
-            End Function
-        End Class
-
-        Private Shared ReadOnly use_object_compare As Boolean
-        Private Shared ReadOnly use_runtime_compare As Boolean
-        Private Shared ReadOnly contains_object As Boolean
-        Private Shared ReadOnly c As Func(Of T, T2, Int32)
-        Private Shared ReadOnly ca As ternary
-
-        Shared Sub New()
-            use_object_compare = connector.object_comparable(Of T, T2)()
-            'special treatment for Nullable<>, GetType(Nullable(Of Int32)) does not implemented IComparable(Of Int32),
-            'but an instance of Nullable(Of Int32) has IComparable(Of Int32) implemented.
-            'this type is specific handled by CLI, so it also need to be taken care here
-            'say Nullable<int> can only compare with int,
-            'do not need to take care about object, since it does not have IComparable implemented.
-            use_runtime_compare = False
-            For i As Int32 = 0 To array_size_i(specifically_treated_types) - 1
-                If GetType(T).is(specifically_treated_types(i)) OrElse
-                   GetType(T2).is(specifically_treated_types(i)) Then
-                    use_runtime_compare = True
-                    Exit For
-                End If
-            Next
-            contains_object = type_info(Of T).is_object OrElse type_info(Of T2).is_object
-            If contains_object Then
-                raise_error(error_type.performance,
-                            "compare_cache(Of *, Object) or compare_cache(Of Object, *) are defintely performance ",
-                            "destroyers.")
-            End If
-            If Not use_runtime_compare Then
-                If comparer(Of T, T2).defined() Then
-                    c = comparer(Of T, T2).ref()
-                ElseIf type_info(Of T, type_info_operators.is, IComparable(Of T2)).v Then
-                    c = AddressOf this_to_t2
-                ElseIf type_info(Of T2, type_info_operators.is, IComparable(Of T)).v Then
-                    c = AddressOf that_to_t
-                ElseIf type_info(Of T, type_info_operators.is, IComparable).v Then
-                    c = AddressOf this_to_object
-                ElseIf type_info(Of T2, type_info_operators.is, IComparable).v Then
-                    c = AddressOf that_to_object
-                ElseIf contains_object Then
-                    'contains object does not mean we need to use_runtime_compare,
-                    'T or T2 may implement IComparable or IComparable(Of Object)
-                    use_runtime_compare = True
-                Else
-                    If Not suppress_compare_error() Then
-                        raise_error(error_type.exclamation,
-                                    "caught types do not have IComparable implement, unable to compare ",
-                                    GetType(T).FullName(),
-                                    " with ",
-                                    GetType(T2).FullName())
-                    End If
-                    c = Nothing
-                End If
-            End If
-            ca = New ternary()
-        End Sub
-
-        Private Shared Function object_comparable(ByVal this As T, ByVal that As T2) As Boolean
-            Return use_object_compare OrElse
-                   (contains_object AndAlso connector.object_comparable(this, that))
-        End Function
-
-        Private Shared Function comparable_cache_usable() As Boolean
-            Return Not contains_object AndAlso Not ca.unknown()
-        End Function
-
-        Private Shared Function cached_compare(ByVal this As T,
-                                               ByVal that As T2,
-                                               ByRef o As Int32,
-                                               ByVal check_only As Boolean) As Boolean
-            'the Nullable<> could be null, which is not expected since it's ValueType
-            'but the Nullable<> has been specifically treated as use_runtime_compare,
-            'so it will not hit the following line
-            assert(Not this Is Nothing AndAlso Not that Is Nothing)
-            If c Is Nothing Then
-                Return False
-            ElseIf Not comparable_cache_usable() OrElse ca.true_() Then
-                If comparable_cache_usable() AndAlso
-                   check_only Then
-                    Return assert(ca.true_())
-                Else
-                    Try
-                        o = c(this, that)
-                        ca.set(True)
-                        Return True
-                    Catch ex As Exception
-                        compare_error(Of T, T2)(ex)
-                        ca.set(False)
-                        Return False
-                    End Try
-                End If
-            Else
-                Return False
-            End If
-        End Function
-
-        Private Shared Function compare(ByVal this As T,
-                                        ByVal that As T2,
-                                        ByRef o As Int32,
-                                        ByVal check_only As Boolean) As Boolean
-            If object_comparable(this, that) Then
-                Dim cmp As Int32 = 0
-                cmp = object_compare(this, that)
-                If cmp <> object_compare_undetermined Then
-                    o = cmp
-                    Return True
-                End If
-            End If
-
-#If DEBUG Then
-            If Not use_runtime_compare Then
-                Dim c1 As Int32 = 0
-                Dim c2 As Int32 = 0
-                assert(cached_compare(this, that, c1, False) = runtime_compare(this, that, c2, False) AndAlso
-                       c1 = c2,
-                       "need specific treatment to compare type ",
-                       GetType(T).FullName(),
-                       " with ",
-                       GetType(T2).FullName())
-            End If
-#End If
-            'special treatment for object,
-            'since say int, it is comparable with int as object, but not comparable with long as object
-            If use_runtime_compare Then
-                Return runtime_compare(this, that, o, check_only)
-            Else
-                Return cached_compare(this, that, o, check_only)
-            End If
-        End Function
-
-        Public Shared Function compare(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
-            Return compare(this, that, o, False)
-        End Function
-
-        Public Shared Function comparable(ByVal this As T, ByVal that As T2) As Boolean
-            Return compare(this, that, Nothing, True)
-        End Function
-
-        Public Shared Function comparable() As Boolean
-            Return Not c Is Nothing
-        End Function
-    End Structure
-
     Public Function compare(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
-        Return compare_cache(Of T, T2).compare(this, that, o)
+        o = object_compare(this, that)
+        If o <> object_compare_undetermined Then
+            Return True
+        End If
+        Return non_null_compare(this, that, o)
     End Function
 
     Public Function comparable(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
-        Return compare_cache(Of T, T2).comparable(this, that)
+        Return compare(this, that, 0)
     End Function
 
     Public Function comparable(Of T, T2)() As Boolean
         Return compare_cache(Of T, T2).comparable()
     End Function
-
-#Else
-    Public Function compare(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
-        If object_comparable(this, that) Then
-            Dim c As Int32 = 0
-            c = object_compare(this, that)
-            If c <> object_compare_undetermined Then
-                o = c
-                Return True
-            End If
-        End If
-        assert(Not this Is Nothing AndAlso Not that Is Nothing)
-        Return runtime_compare(this, that, o)
-    End Function
-
-    Public Function comparable(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
-        Return compare(this, that, Nothing)
-    End Function
-#End If
 
     Public Function compare(Of T, T2)(ByVal this As T, ByVal that As T2) As Int32
         Dim o As Int32 = 0
