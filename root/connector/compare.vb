@@ -140,7 +140,7 @@ Public Module _compare
             If c Is Nothing Then
                 Return False
             Else
-#If NDEBUG Then
+#If DEBUG Then
                 Dim msg As String = Nothing
                 msg = strcat("Comparing ",
                              type_info(Of T).fullName,
