@@ -83,6 +83,9 @@ Public NotInheritable Class type_info(Of T)
     Public Shared ReadOnly is_cloneable As Boolean
     Public Shared ReadOnly is_cloneable_T As Boolean
     Public Shared ReadOnly is_delegate As Boolean
+    ' => GetType(T).IsPrimitive
+    Public Shared ReadOnly is_primitive As Boolean
+    Public Shared ReadOnly is_nullable As Boolean
 
     Shared Sub New()
         fullname = GetType(T).FullName()
@@ -95,6 +98,8 @@ Public NotInheritable Class type_info(Of T)
         is_cloneable_T = If(is_interface, type_info(Of T, type_info_operators.interface_inherit, ICloneable(Of T)).v,
                                           type_info(Of T, type_info_operators.implement, ICloneable(Of T)).v)
         is_delegate = type_info(Of T, type_info_operators.inherit, [Delegate]).v
+        is_primitive = GetType(T).IsPrimitive()
+        is_nullable = GetType(T).is(GetType(Nullable(Of )))
     End Sub
 
     Private NotInheritable Class has_finalizer_cache

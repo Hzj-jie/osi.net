@@ -299,6 +299,11 @@ Public Module _assert
         Return assert_compare(l, r, compare(l, r))
     End Function
 
+    Public Function assert_not_reach(ByVal ParamArray msg() As Object) As Boolean
+        assert_true(False, msg)
+        Return False
+    End Function
+
     <Extension()> Public Function assert_compare_to(Of T)(ByVal l As T, ByVal r As T) As Boolean
         Return assert_compare(Of T)(l, r)
     End Function
@@ -323,6 +328,24 @@ Public Module _assert
     <Extension()> Public Function assert_not_happening(ByVal f As Func(Of Boolean),
                                                        ByVal ParamArray msg() As Object) As Boolean
         Return assert_not_happening_in(f, default_assert_async_wait_time_ms, msg)
+    End Function
+
+    <Extension()> Public Function assert_throw(Of EXCEPTION_TYPE)(ByVal d As Action,
+                                                                  ByVal ParamArray msg() As Object) As Boolean
+        If Not assert_not_nothing(d) Then
+            Return False
+        End If
+        Try
+            d()
+            Return assert_not_reach(msg)
+        Catch ex As Exception
+            Return assert_true(ex.GetType().is(GetType(EXCEPTION_TYPE)), msg)
+        End Try
+    End Function
+
+    <Extension()> Public Function assert_throw(ByVal d As Action,
+                                               ByVal ParamArray msg() As Object) As Boolean
+        Return assert_throw(Of Exception)(d, msg)
     End Function
 
     Public Function failure_count() As Int64

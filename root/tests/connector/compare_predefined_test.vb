@@ -1,5 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.utils
 Imports osi.root.utt
 
@@ -32,6 +37,13 @@ Public Class compare_predefined_test
         assert_false(object_compare(New s(), New s(), 0))
         assert_false(object_comparable("", 0))
         assert_false(object_compare("", 0, 0))
+
+        assert_true(object_compare(0, Nothing, 0))
+        assert_more(object_compare(-1, Nothing), 0)
+        assert_true(object_compare(True, Nothing, 0))
+        assert_more(object_compare(False, Nothing), 0)
+        assert_true(object_compare("", Nothing, 0))
+        assert_more(object_compare("", Nothing), 0)
         Return True
     End Function
 
@@ -52,6 +64,10 @@ Public Class compare_predefined_test
         Return True
     End Function
 
+    Private Shared Function int32_to_int64() As Boolean
+        assert_false(compare(max_int32, max_int64, 0))
+        Return True
+    End Function
 
     Public Overrides Function run() As Boolean
         Using regional_atomic_bool(suppress.compare_error)

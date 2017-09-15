@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.utils
 Imports osi.root.constants
 Imports osi.root.connector
@@ -24,7 +28,7 @@ Public Class compare_test
     Inherits case_wrapper
 
     Public Sub New()
-        Me.New(20000, Environment.ProcessorCount() << 1)
+        Me.New(20000, 1)
     End Sub
 
     Private Shared Function chained_case(ByVal repeat_count As Int32) As [case]
@@ -42,7 +46,7 @@ Public Class compare_test
 
     'to avoid the impact from suppress_compare_error
     Public Overrides Function reserved_processors() As Int16
-        Return Environment.ProcessorCount()
+        Return CShort(Environment.ProcessorCount())
     End Function
 
     Public Overrides Function run() As Boolean
