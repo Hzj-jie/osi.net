@@ -60,7 +60,7 @@ Public NotInheritable Class attributes
     End Class
 
     ' Define the reserved processor count of a test case or test class.
-    <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=True)>
+    <AttributeUsage(AttributeTargets.Class Or AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
     Public NotInheritable Class reserved_processors
         Inherits Attribute
 

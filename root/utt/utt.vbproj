@@ -62,6 +62,8 @@
     <Compile Include="case\case.vb" />
     <Compile Include="case\case2.info.vb" />
     <Compile Include="case\case2.parse.vb" />
+    <Compile Include="case\case2.random_run_case.vb" />
+    <Compile Include="case\case2.case.vb" />
     <Compile Include="case\case2.vb" />
     <Compile Include="case\attributes.vb" />
     <Compile Include="case_wrapper\comparison_case_wrapper.vb" />
@@ -118,6 +120,7 @@
     </Compile>
     <Compile Include="case_wrapper\performance_case_wrapper.vb" />
     <Compile Include="case\random_run_case.vb" />
+    <Compile Include="selfhealth\case2_test.vb" />
     <Compile Include="selfhealth\commandline_specific_test.vb" />
     <Compile Include="selfhealth\commandline_specific_event_comb_test.vb" />
     <Compile Include="selfhealth\exec_case_exe.vb" />

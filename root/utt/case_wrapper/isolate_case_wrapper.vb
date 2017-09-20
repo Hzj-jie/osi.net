@@ -19,7 +19,7 @@ Public Class isolate_case_wrapper
         ' TODO: Why is the return value of osi.root.utt.exe 128 on Windows 2003 with .Net 4.0?
         ' On Windows 2003 with .Net 4.0 (?), the return value of osi.root.utt is 128. The reason is still unknown.
         Me.c = c
-        assert(host.case_type_restriction.accept(c.GetType()))
+        assert(host.case_type_restriction.accepted_case_type(c.GetType()))
     End Sub
 
     Public Sub New(ByVal c As commandline_specific_case_wrapper, Optional ByVal timeout_ms As Int64 = -1)

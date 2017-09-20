@@ -1,8 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.delegates
+Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.utils
 
 ' MustInherit to avoid utt-host to load this empty case.
 Public MustInherit Class random_run_case
@@ -11,6 +14,7 @@ Public MustInherit Class random_run_case
     Private ReadOnly r As random_run(Of Boolean)
 
     Protected Sub New()
+        MyBase.New()
         r = New random_run(Of Boolean)()
     End Sub
 
@@ -59,7 +63,7 @@ Public Class random_run(Of RT)
         assert(Not calls.empty())
         Dim j As Double = 0
         j = rnd_double(0, 1)
-        For i As Int64 = 0 To calls.size() - 1
+        For i As UInt32 = 0 To calls.size() - uint32_1
             If j < calls(i).first Then
                 Return calls(i).second()
             Else

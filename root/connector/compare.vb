@@ -301,7 +301,9 @@ Public Module _compare
     End Function
 
     Public Function comparable(Of T, T2)() As Boolean
-        Return compare_cache(Of T, T2).comparable()
+        Return object_comparable(Of T, T2)() OrElse
+               comparer(Of T, T2).defined() OrElse
+               compare_cache(Of T, T2).comparable()
     End Function
 
     Public Function compare(Of T, T2)(ByVal this As T, ByVal that As T2) As Int32

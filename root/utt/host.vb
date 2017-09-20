@@ -13,14 +13,21 @@ Imports osi.root.formation
 Imports osi.root.utils
 
 Partial Friend NotInheritable Class host
+    ' Use a standalone class to avoid executing host.cctor().
     Public NotInheritable Class case_type_restriction
-        Public Shared Function accept(ByVal j As Type) As Boolean
+        Public Shared Function accepted_case_type(ByVal j As Type) As Boolean
             assert(Not j Is Nothing)
             Return Not j.IsAbstract() AndAlso
                    Not j.IsGenericType() AndAlso
                    (j.IsPublic() OrElse j.IsNestedPublic()) AndAlso
                    j.inherit(Of [case])() AndAlso
                    j.has_parameterless_public_constructor()
+        End Function
+
+        Public Shared Function accepted_case2_type(ByVal j As Type) As Boolean
+            assert(Not j Is Nothing)
+            ' Other requirements are in the case2 implementation.
+            Return j.IsPublic() OrElse j.IsNestedPublic()
         End Function
 
         Private Sub New()
@@ -35,13 +42,26 @@ Partial Friend NotInheritable Class host
             concurrency_runner.execute(Sub(i As Assembly)
                                            Try
                                                For Each j As Type In i.GetTypes()
-                                                   If case_type_restriction.accept(j) Then
+                                                   If case_type_restriction.accepted_case_type(j) Then
                                                        Dim n As case_info = Nothing
                                                        n = New case_info(j.FullName(), alloc(Of [case])(j))
                                                        SyncLock cases
                                                            cases.emplace_back(n)
                                                        End SyncLock
                                                        raise_error("loaded case ", j.FullName())
+                                                   ElseIf case_type_restriction.accepted_case2_type(j) Then
+                                                       Dim cs As vector(Of [case]) = Nothing
+                                                       cs = case2.create(j)
+                                                       If Not cs.null_or_empty() Then
+                                                           For k As UInt32 = 0 To cs.size() - uint32_1
+                                                               Dim n As case_info = Nothing
+                                                               n = New case_info(cs(k).full_name, cs(k))
+                                                               SyncLock cases
+                                                                   cases.emplace_back(n)
+                                                               End SyncLock
+                                                               raise_error("loaded case ", cs(k).full_name)
+                                                           Next
+                                                       End If
                                                    End If
                                                Next
                                            Catch ex As Exception

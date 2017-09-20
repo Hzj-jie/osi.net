@@ -5,79 +5,96 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 
 ' Use attributes instead of inheritance to execute test case.
 Partial Public NotInheritable Class case2
-    Inherits [case]
-
-    Private ReadOnly obj As Object
-    Private ReadOnly _prepare As Func(Of Object, Boolean)
-    Private ReadOnly _run As Func(Of Object, Boolean)
-    Private ReadOnly _finish As Func(Of Object, Boolean)
-    Private ReadOnly _reserved_processor_count As Int16
-
-    Private Shared Function append_method_name(ByVal t As Type,
-                                               ByVal method_name As String,
-                                               ByVal id As Int32) As String
+    Private Shared Function create(ByVal t As Type,
+                                   ByVal class_info As info,
+                                   ByVal prepare As Func(Of Object, Boolean),
+                                   ByVal finish As Func(Of Object, Boolean),
+                                   ByVal function_info As function_info) As utt.[case]
         assert(Not t Is Nothing)
-        Dim base_name As String = Nothing
-        If id = 0 Then
-            base_name = t.FullName()
-        ElseIf id = 1 Then
-            base_name = t.AssemblyQualifiedName()
-        Else
-            assert(id = 2)
-            base_name = t.Name()
+        assert(Not class_info Is Nothing)
+        assert(Not function_info Is Nothing)
+
+        Dim r As utt.[case] = Nothing
+        r = New [case](t,
+                       function_info.name,
+                       prepare,
+                       function_info.f,
+                       finish,
+                       If(class_info.has_reserved_processors,
+                          class_info.reserved_processors,
+                          function_info.reserved_processors))
+        If class_info.repeat_times > 1 OrElse function_info.repeat_times > 1 Then
+            r = repeat(r, CLng(class_info.repeat_times * function_info.repeat_times))
         End If
-        Return strcat(base_name, character.dot, method_name)
+        If class_info.command_line_specified OrElse function_info.command_line_specified Then
+            r = commandline_specified(r)
+        End If
+        Return r
     End Function
 
-    Private Sub New(ByVal t As Type,
-                    ByVal method_name As String,
-                    ByVal prepare As Func(Of Object, Boolean),
-                    ByVal run As Func(Of Object, Boolean),
-                    ByVal finish As Func(Of Object, Boolean),
-                    ByVal reserved_processor_count As Int16)
-        MyBase.New(append_method_name(t, method_name, 0),
-                   append_method_name(t, method_name, 1),
-                   append_method_name(t, method_name, 2))
-        ' Allow Me.obj to be null: the test cases can be static methods.
-        Me.obj = t.alloc()
-        Me._prepare = prepare
-        assert(Not run Is Nothing)
-        Me._run = run
-        Me._finish = finish
-        Me._reserved_processor_count = reserved_processor_count
-    End Sub
-
-    Public Shared Function create(ByVal t As Type) As case2()
+    Private Shared Function create(ByVal t As Type,
+                                   ByVal class_info As info,
+                                   ByVal prepare As Func(Of Object, Boolean),
+                                   ByVal finish As Func(Of Object, Boolean),
+                                   ByVal randoms As vector(Of random_function_info)) As utt.[case]
         assert(Not t Is Nothing)
-        If t.has_custom_attribute(Of attributes.test)() Then
-            Return New case2() {}
+        assert(Not class_info Is Nothing)
+        assert(Not randoms Is Nothing)
+
+        Dim r As utt.[case] = Nothing
+        r = New random_run_case(t,
+                                prepare,
+                                finish,
+                                class_info.reserved_processors,
+                                randoms)
+        If class_info.repeat_times > 1 Then
+            r = repeat(r, CLng(class_info.repeat_times))
+        End If
+        If class_info.command_line_specified Then
+            r = commandline_specified(r)
+        End If
+        Return r
+    End Function
+
+    Public Shared Function create(ByVal t As Type) As vector(Of utt.[case])
+        assert(Not t Is Nothing)
+        If t.has_custom_attribute(Of attributes.test)() AndAlso
+           Not t.IsAbstract() AndAlso
+           Not t.IsGenericType() Then
+            Dim class_info As info = Nothing
+            class_info = info.from(t)
+
+            Dim r As vector(Of utt.[case]) = Nothing
+            r = New vector(Of utt.[case])()
+
+            Dim prepare As Func(Of Object, Boolean) = Nothing
+            Dim finish As Func(Of Object, Boolean) = Nothing
+            prepare = parse_prepare(t)
+            finish = parse_finish(t)
+
+            Dim tests As vector(Of function_info) = Nothing
+            tests = parse_tests(t)
+            Dim i As UInt32 = 0
+            While i < tests.size()
+                r.emplace_back(create(t, class_info, prepare, finish, tests(i)))
+                i += uint32_1
+            End While
+
+            Dim randoms As vector(Of random_function_info) = Nothing
+            randoms = parse_randoms(t)
+            If Not randoms.null_or_empty() Then
+                r.emplace_back(create(t, class_info, prepare, finish, randoms))
+            End If
+            Return r
         Else
             Return Nothing
         End If
     End Function
 
-    Private Function run_or_null(ByVal f As Func(Of Object, Boolean)) As Boolean
-        Return f Is Nothing OrElse f(obj)
-    End Function
-
-    Public Overrides Function prepare() As Boolean
-        Return MyBase.prepare() AndAlso
-               run_or_null(_prepare)
-    End Function
-
-    Public Overrides Function run() As Boolean
-        Return _run(obj)
-    End Function
-
-    Public Overrides Function finish() As Boolean
-        Return run_or_null(_finish) And
-               MyBase.finish()
-    End Function
-
-    Public Overrides Function reserved_processors() As Int16
-        Return _reserved_processor_count
-    End Function
+    Private Sub New()
+    End Sub
 End Class

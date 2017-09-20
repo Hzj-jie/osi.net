@@ -9,20 +9,6 @@ Imports osi.root.constants
 Imports osi.root.formation
 
 Partial Public NotInheritable Class case2
-    Private Shared Function apply_repeat(ByVal i As function_info) As Func(Of Object, Boolean)
-        assert(Not i Is Nothing)
-        assert(i.repeat_times >= uint64_1)
-        Return Function(ByVal obj As Object) As Boolean
-                   For j As UInt64 = 0 To i.repeat_times - uint64_1
-                       If Not i.f(obj) Then
-                           Return False
-                       End If
-                   Next
-                   Return True
-               End Function
-    End Function
-
-    ' Apply repeat only, for prepare and finish.
     Private Shared Function chain(ByVal vs As vector(Of function_info)) As Func(Of Object, Boolean)
         If vs.null_or_empty() Then
             Return Nothing
@@ -30,7 +16,9 @@ Partial Public NotInheritable Class case2
             Dim fs() As Func(Of Object, Boolean) = Nothing
             ReDim fs(CInt(vs.size() - uint32_1))
             For i As UInt32 = 0 To vs.size() - uint32_1
-                fs(CInt(i)) = apply_repeat(vs(i))
+                assert(Not vs(i) Is Nothing)
+                assert(Not vs(i).f Is Nothing)
+                fs(CInt(i)) = vs(i).f
             Next
             Return Function(ByVal obj As Object) As Boolean
                        For i As Int32 = 0 To array_size_i(fs) - 1
@@ -68,7 +56,7 @@ Partial Public NotInheritable Class case2
     End Function
 
     Private Shared Function parse_chained_function(Of AT As Attribute) _
-                                                          (ByVal t As Type) As Func(Of Object, Boolean)
+                                                  (ByVal t As Type) As Func(Of Object, Boolean)
         Return chain(parse_functions(Of AT)(t))
     End Function
 

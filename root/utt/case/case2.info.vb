@@ -10,21 +10,33 @@ Imports osi.root.constants
 Partial Public NotInheritable Class case2
     ' Container of supportive information from a MemberInfo
     Private Class info
+        Public ReadOnly name As String
+        Public ReadOnly full_name As String
         Public ReadOnly repeat_times As UInt64
         Public ReadOnly command_line_specified As Boolean
+        Public ReadOnly has_reserved_processors As Boolean
         Public ReadOnly reserved_processors As Int16
 
-        Private Sub New(ByVal repeat_times As UInt64,
+        Private Sub New(ByVal name As String,
+                        ByVal full_name As String,
+                        ByVal repeat_times As UInt64,
                         ByVal command_line_specified As Boolean,
+                        ByVal has_reserved_processors As Boolean,
                         ByVal reserved_processors As Int16)
+            Me.name = name
+            Me.full_name = full_name
             Me.repeat_times = repeat_times
             Me.command_line_specified = command_line_specified
+            Me.has_reserved_processors = has_reserved_processors
             Me.reserved_processors = reserved_processors
         End Sub
 
         Protected Sub New(ByVal info As info)
-            Me.New(assert_not_nothing_return(info).repeat_times,
+            Me.New(assert_not_nothing_return(info).name,
+                   assert_not_nothing_return(info).full_name,
+                   assert_not_nothing_return(info).repeat_times,
                    assert_not_nothing_return(info).command_line_specified,
+                   assert_not_nothing_return(info).has_reserved_processors,
                    assert_not_nothing_return(info).reserved_processors)
         End Sub
 
@@ -44,17 +56,25 @@ Partial Public NotInheritable Class case2
             Dim command_line_specified As Boolean = False
             command_line_specified = member.has_custom_attribute(Of attributes.command_line_specified)()
 
+            Dim has_reserved_processors As Boolean = False
             Dim reserved_processors As Int16 = 0
             Using code_block
                 Dim attribute As attributes.reserved_processors = Nothing
                 If member.custom_attribute(attribute) Then
+                    has_reserved_processors = True
                     reserved_processors = attribute.reserved_processors
                 Else
+                    has_reserved_processors = False
                     reserved_processors = 1
                 End If
             End Using
 
-            Return New info(repeat_times, command_line_specified, reserved_processors)
+            Return New info(member.Name(),
+                            member.full_name(),
+                            repeat_times,
+                            command_line_specified,
+                            has_reserved_processors,
+                            reserved_processors)
         End Function
     End Class
 

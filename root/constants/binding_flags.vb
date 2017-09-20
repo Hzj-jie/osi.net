@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Reflection
 
 Public NotInheritable Class binding_flags
@@ -26,8 +30,8 @@ Public NotInheritable Class binding_flags
     Public Const static_all_method As BindingFlags = static_all Or BindingFlags.InvokeMethod
 
     Public Const public_method As BindingFlags = [public] Or BindingFlags.InvokeMethod
-    Public Const private_method As BindingFlags = [public] Or BindingFlags.InvokeMethod
-    Public Const all_method As BindingFlags = [public] Or BindingFlags.InvokeMethod
+    Public Const private_method As BindingFlags = [private] Or BindingFlags.InvokeMethod
+    Public Const all_method As BindingFlags = [all] Or BindingFlags.InvokeMethod
 
     Private Sub New()
     End Sub
