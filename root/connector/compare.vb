@@ -111,7 +111,11 @@ Public Module _compare
         Private Shared Function comparer_for_specific_types(
                                     ByRef o As _do_val_val_ref(Of T, T2, Int32, Boolean)) As Boolean
             ' Nullable<T> implements IComparable<T> in runtime.
-            If type_info(Of T).is_nullable Then
+            If type_info(Of T).is_nullable AndAlso
+               type_info(Of T, type_info_operators.is, T2).v Then
+                o = always_succeed(AddressOf this_to_object)
+                Return True
+            ElseIf type_info(Of T).is_nullable Then
                 If GetType(T2).is(Nullable.GetUnderlyingType(GetType(T))) Then
                     o = always_succeed(AddressOf this_to_t2(Of T2))
                     Return True
