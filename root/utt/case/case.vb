@@ -42,7 +42,7 @@ Public MustInherit Class [case]
         Return True
     End Function
 
-    Protected Function commandline_specific() As Boolean
+    Protected Function commandline_specified() As Boolean
         Return commandline.specific(Me)
     End Function
 

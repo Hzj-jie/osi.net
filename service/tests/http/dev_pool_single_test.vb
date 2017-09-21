@@ -11,7 +11,7 @@ Imports osi.service.http
 Imports osi.service.transmitter
 
 Public Class dev_pool_single_test
-    Inherits commandline_specific_event_comb_case_wrapper
+    Inherits commandline_specified_event_comb_case_wrapper
 
     Public Sub New()
         MyBase.New(repeat(New dev_pool_case(uint32_1), 1024))

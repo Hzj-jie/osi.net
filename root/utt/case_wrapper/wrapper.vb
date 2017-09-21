@@ -112,11 +112,11 @@ Public Module _wrapper
         Return New sleep_case_wrapper(ms, c)
     End Function
 
-    Public Function isolated(ByVal c As commandline_specific_case_wrapper) As [case]
+    Public Function isolated(ByVal c As commandline_specified_case_wrapper) As [case]
         Return New isolate_case_wrapper(c)
     End Function
 
-    Public Function isolated(ByVal c As commandline_specific_event_comb_case_wrapper) As [case]
+    Public Function isolated(ByVal c As commandline_specified_event_comb_case_wrapper) As [case]
         Return New isolate_case_wrapper(c)
     End Function
 
@@ -125,10 +125,10 @@ Public Module _wrapper
     End Function
 
     Public Function commandline_specified(ByVal c As [case]) As [case]
-        Return New commandline_specific_case_wrapper(c)
+        Return New commandline_specified_case_wrapper(c)
     End Function
 
     Public Function commandline_specified(ByVal c As event_comb_case) As event_comb_case
-        Return New commandline_specific_event_comb_case_wrapper(c)
+        Return New commandline_specified_event_comb_case_wrapper(c)
     End Function
 End Module

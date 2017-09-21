@@ -29,7 +29,7 @@ Namespace logic
     End Class
 
     Public Class while_then_perf(Of _UPPER_BOUND As _int64)
-        Inherits commandline_specific_case_wrapper
+        Inherits commandline_specified_case_wrapper
 
         Public Sub New()
             MyBase.New(New while_then_perf_case())

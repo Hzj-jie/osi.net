@@ -4,7 +4,7 @@ Imports osi.root.utt
 Imports osi.service.iosys
 
 Public Class process_io_manual_test
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Shared Sub New()
         process_io_test.dump()

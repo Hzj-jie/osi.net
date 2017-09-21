@@ -9,7 +9,7 @@ Imports osi.root.envs
 Imports osi.root.utt
 
 Public Class lowlevel_keyboard_hook_test
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New lowlevel_keyboard_hook_case())

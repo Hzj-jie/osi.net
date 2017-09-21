@@ -26,7 +26,7 @@ Public Class guid_str_test
 End Class
 
 Public Class guid_str_specific_test
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(multithreading(repeat(New guid_str_case(),

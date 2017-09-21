@@ -70,7 +70,7 @@ Public Class map_hashmap_unordered_map_perf_test
     End Class
 
     Public Class map_manual_perf
-        Inherits commandline_specific_case_wrapper
+        Inherits commandline_specified_case_wrapper
 
         Public Sub New()
             MyBase.New(repeat(New map_case(), 1000000000))
@@ -105,7 +105,7 @@ Public Class map_hashmap_unordered_map_perf_test
     End Class
 
     Public Class hashmap_manual_perf
-        Inherits commandline_specific_case_wrapper
+        Inherits commandline_specified_case_wrapper
 
         Public Sub New()
             MyBase.New(repeat(New hashmap_case(), 1000000000))
@@ -163,7 +163,7 @@ Public Class map_hashmap_unordered_map_perf_test
     End Class
 
     Public Class unordered_map_manual_perf
-        Inherits commandline_specific_case_wrapper
+        Inherits commandline_specified_case_wrapper
 
         Public Sub New()
             MyBase.New(repeat(New unordered_map_case(), 1000000000))

@@ -17,7 +17,7 @@ Imports osi.root.threadpool
 Imports osi.root.utt
 
 Public Class slimheapless_threadpool_manual_test
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(rinne(New slimheapless_threadpool_test(1024 * 1024), 1024 * 32))

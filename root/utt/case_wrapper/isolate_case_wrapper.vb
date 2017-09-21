@@ -22,11 +22,11 @@ Public Class isolate_case_wrapper
         assert(host.case_type_restriction.accepted_case_type(c.GetType()))
     End Sub
 
-    Public Sub New(ByVal c As commandline_specific_case_wrapper, Optional ByVal timeout_ms As Int64 = -1)
+    Public Sub New(ByVal c As commandline_specified_case_wrapper, Optional ByVal timeout_ms As Int64 = -1)
         Me.New(DirectCast(c, [case]), timeout_ms)
     End Sub
 
-    Public Sub New(ByVal c As commandline_specific_event_comb_case_wrapper, Optional ByVal timeout_ms As Int64 = -1)
+    Public Sub New(ByVal c As commandline_specified_event_comb_case_wrapper, Optional ByVal timeout_ms As Int64 = -1)
         Me.New(DirectCast(c, [case]), timeout_ms)
     End Sub
 

@@ -5,7 +5,7 @@ Imports osi.root.utt
 Imports osi.service.math
 
 Public Class big_int_predefined_test
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New big_int_predefined_case())

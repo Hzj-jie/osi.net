@@ -43,7 +43,7 @@ Public Class slimheapless_test3
 End Class
 
 Public Class qless_manual_test3
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New qless_case3(max_int64, 32))
@@ -51,7 +51,7 @@ Public Class qless_manual_test3
 End Class
 
 Public Class qless2_manual_test3
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New qless2_case3(max_int64, 32))
@@ -59,7 +59,7 @@ Public Class qless2_manual_test3
 End Class
 
 Public Class heapless_manual_test3
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New heapless_case3(max_int64, 32))
@@ -67,7 +67,7 @@ Public Class heapless_manual_test3
 End Class
 
 Public Class slimqless2_manual_test3
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New slimqless2_case3(max_int64, 32))
@@ -75,7 +75,7 @@ Public Class slimqless2_manual_test3
 End Class
 
 Public Class slimheapless_manual_test3
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New slimheapless_case3(max_int64, 32))
@@ -92,7 +92,7 @@ Public Class cycle_test3
 End Class
 
 Public Class cycle_manual_test3
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New cycle_1024_128_case3(max_int64, 32))

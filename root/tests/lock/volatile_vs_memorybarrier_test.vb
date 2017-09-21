@@ -7,7 +7,7 @@ Imports osi.root.utils
 Imports osi.root.utt
 
 Public Class volatile_vs_memorybarrier_test
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Private Const size As Int32 = 1024 * 1024 * 32
     Private Shared ReadOnly thread_count As Int32 = Environment.ProcessorCount() << 2

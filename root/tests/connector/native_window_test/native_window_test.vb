@@ -8,7 +8,7 @@ Imports osi.root.utt
 Imports Screen = System.Windows.Forms.Screen
 
 Public Class native_window_test
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New window_size_case())

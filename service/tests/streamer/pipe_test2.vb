@@ -5,8 +5,8 @@ Imports osi.root.procedure
 Imports osi.root.utt
 Imports osi.service.streamer
 
-Public Class pipe_commandline_specific_test2
-    Inherits commandline_specific_case_wrapper
+Public Class pipe_commandline_specified_test2
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New pipe_test2(4 * 1024 * 1024))

@@ -52,7 +52,7 @@ Public Class cycle_test5
 End Class
 
 Public Class cycle_manual_test5
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New cycle_1024_128_case5(max_int64, 32))

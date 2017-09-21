@@ -13,7 +13,7 @@ Public Class suspend_all_process_threads_test
     End Sub
 
     Public Class suspend_all_process_threads_case
-        Inherits commandline_specific_case_wrapper
+        Inherits commandline_specified_case_wrapper
 
         Public Sub New()
             MyBase.New(New c())

@@ -71,7 +71,7 @@ Public Class nowadays_test
 End Class
 
 Public Class nowadays_specific_test_10
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Friend Sub New(ByVal sleep_ms As Int64)
         MyBase.New(realtime_wrappered(repeat(sleep_wrappered(New nowadays_case(),
@@ -131,7 +131,7 @@ Public Class nowadays_combined_test
 End Class
 
 Public Class nowadays_combined_specific_test
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New nowadays_combined_test(max_int64))

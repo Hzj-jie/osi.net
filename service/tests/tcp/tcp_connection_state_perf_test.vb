@@ -149,7 +149,7 @@ Public Class tcp_connection_state_perf_test
             Dim r As Boolean = False
             r = True
 
-            If commandline_specific() Then
+            If commandline_specified() Then
                 c = performance(multithreading(repeat(New get_tcp_connection_states(),
                                                       repeat_count),
                                                thread_count))

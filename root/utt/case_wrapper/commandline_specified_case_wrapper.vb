@@ -1,7 +1,7 @@
 ﻿
 Imports osi.root.connector
 
-Public Class commandline_specific_case_wrapper
+Public Class commandline_specified_case_wrapper
     Inherits case_wrapper
 
     Public Sub New(ByVal c As [case])
@@ -9,7 +9,7 @@ Public Class commandline_specific_case_wrapper
     End Sub
 
     Public NotOverridable Overrides Function prepare() As Boolean
-        If commandline_specific() Then
+        If commandline_specified() Then
             Return MyBase.prepare()
         Else
             Return True
@@ -17,7 +17,7 @@ Public Class commandline_specific_case_wrapper
     End Function
 
     Public NotOverridable Overrides Function run() As Boolean
-        If commandline_specific() Then
+        If commandline_specified() Then
             Return MyBase.run()
         Else
             raise_error("did not select ", name, " with commandline arguemnts, ignore")
@@ -26,7 +26,7 @@ Public Class commandline_specific_case_wrapper
     End Function
 
     Public NotOverridable Overrides Function finish() As Boolean
-        If commandline_specific() Then
+        If commandline_specified() Then
             Return MyBase.finish()
         Else
             Return True

@@ -11,7 +11,7 @@ Public Class trie_test
 End Class
 
 Public Class trie_specific_test
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(repeat(New trie_case(True), 1000000000 << (If(isreleasebuild(), 2, 0))))

@@ -4,7 +4,7 @@ Imports osi.root.formation
 Imports osi.root.utt
 
 Public Class ordered_sset_perf
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(performance(New ordered_sset_case()))

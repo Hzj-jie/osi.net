@@ -1,6 +1,6 @@
 ﻿
-Public Class commandline_specific_test
-    Inherits commandline_specific_case_wrapper
+Public Class commandline_specified_test
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New failure_case())
@@ -11,7 +11,7 @@ Public Class commandline_specific_test
 
         Public Overrides Function run() As Boolean
             Return assert_true(False,
-                               "should never called only when commandline specific commandline_specific_test")
+                               "should never called only when commandline specific commandline_specified_test")
         End Function
     End Class
 End Class

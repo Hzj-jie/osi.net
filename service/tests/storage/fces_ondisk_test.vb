@@ -25,7 +25,7 @@ Public Class fces_ondisk_test
 End Class
 
 Public Class fces_ondisk_specific_test
-    Inherits commandline_specific_event_comb_case_wrapper
+    Inherits commandline_specified_event_comb_case_wrapper
 
     Public Sub New()
         MyBase.New(New fces_ondisk_test(New default_istrkeyvt_case2()))

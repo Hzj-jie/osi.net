@@ -4,7 +4,7 @@ Imports osi.root.connector
 Imports osi.root.utt
 
 Public Class console_key_test
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New console_key_case())

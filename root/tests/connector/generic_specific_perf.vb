@@ -6,7 +6,7 @@ Imports osi.root.utt
 Imports osi.root.formation
 
 Public Class generic_specific_perf
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New generic_perf(1024))

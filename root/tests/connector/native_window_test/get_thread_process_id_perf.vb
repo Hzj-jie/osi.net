@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.utt
 
 Public Class get_thread_process_id_perf
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(performance(New get_thread_process_id_case()))

@@ -6,7 +6,7 @@ Imports osi.root.lock
 Imports osi.root.utt
 
 Public Class manual_reset_event_dead_lock_test
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New manual_reset_event_dead_lock_case())

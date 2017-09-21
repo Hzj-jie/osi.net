@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.utt
 
 Public Class send_input_test2
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New case2())

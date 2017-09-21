@@ -2,7 +2,7 @@
 Imports osi.root.connector
 
 Public Class exec_failure_case_1
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New exec_failure_case())

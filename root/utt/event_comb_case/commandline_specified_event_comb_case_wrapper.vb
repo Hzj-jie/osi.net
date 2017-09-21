@@ -2,7 +2,7 @@
 Imports osi.root.procedure
 Imports osi.root.connector
 
-Public Class commandline_specific_event_comb_case_wrapper
+Public Class commandline_specified_event_comb_case_wrapper
     Inherits event_comb_case_wrapper
 
     Public Sub New(ByVal c As event_comb_case)

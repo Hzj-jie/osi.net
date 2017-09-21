@@ -13,7 +13,7 @@ Partial Public Class shared_component_test
     End Sub
 
     Public Class shared_component_outgoing_test
-        Inherits commandline_specific_case_wrapper
+        Inherits commandline_specified_case_wrapper
 
         Public Sub New()
             MyBase.New(New outgoing_test())
@@ -21,7 +21,7 @@ Partial Public Class shared_component_test
     End Class
 
     Public Class shared_component_incoming_test
-        Inherits commandline_specific_case_wrapper
+        Inherits commandline_specified_case_wrapper
 
         Public Sub New()
             MyBase.New(New incoming_test())
@@ -29,7 +29,7 @@ Partial Public Class shared_component_test
     End Class
 
     Public Class shared_component_bidirectional_test
-        Inherits commandline_specific_case_wrapper
+        Inherits commandline_specified_case_wrapper
 
         Public Sub New()
             MyBase.New(New bidirectional_test())

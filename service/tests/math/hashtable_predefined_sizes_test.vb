@@ -8,7 +8,7 @@ Imports osi.root.utt
 Imports osi.service.math
 
 Public Class hashtable_predefined_sizes_test
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New delegate_case(Sub()

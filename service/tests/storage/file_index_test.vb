@@ -22,7 +22,7 @@ Public Class file_index_test
 End Class
 
 Public Class file_index_specific_test
-    Inherits commandline_specific_event_comb_case_wrapper
+    Inherits commandline_specified_event_comb_case_wrapper
 
     Public Sub New()
         MyBase.New(New file_index_test(New short_key_istrkeyvt_case2()))

@@ -76,10 +76,10 @@
     <Compile Include="case_wrapper\performance_comparison_case_wrapper.vb" />
     <Compile Include="case_wrapper\sleep_case_wrapper.vb" />
     <Compile Include="case_wrapper\chained_case_wrapper.vb" />
-    <Compile Include="case_wrapper\commandline_specific_case_wrapper.vb" />
+    <Compile Include="case_wrapper\commandline_specified_case_wrapper.vb" />
     <Compile Include="case_wrapper\realtime_wrapper.vb" />
     <Compile Include="commandline.vb" />
-    <Compile Include="event_comb_case\commandline_specific_event_comb_case_wrapper.vb" />
+    <Compile Include="event_comb_case\commandline_specified_event_comb_case_wrapper.vb" />
     <Compile Include="event_comb_case\count_event_comb_case.vb" />
     <Compile Include="event_comb_case\event_comb_case.vb" />
     <Compile Include="case_wrapper\measurement_case_wrapper.vb" />
@@ -121,8 +121,8 @@
     <Compile Include="case_wrapper\performance_case_wrapper.vb" />
     <Compile Include="case\random_run_case.vb" />
     <Compile Include="selfhealth\case2_test.vb" />
-    <Compile Include="selfhealth\commandline_specific_test.vb" />
-    <Compile Include="selfhealth\commandline_specific_event_comb_test.vb" />
+    <Compile Include="selfhealth\commandline_specified_test.vb" />
+    <Compile Include="selfhealth\commandline_specified_event_comb_test.vb" />
     <Compile Include="selfhealth\exec_case_exe.vb" />
     <Compile Include="selfhealth\exec_case_test.vb" />
     <Compile Include="selfhealth\exec_failure_case_1.vb" />

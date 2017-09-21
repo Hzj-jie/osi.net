@@ -5,7 +5,7 @@ Imports osi.root.connector
 Imports osi.service.math
 
 Public Class big_int_predefined_perf_test
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(performance(New big_int_predefined_calculate()))

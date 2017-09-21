@@ -12,7 +12,7 @@ Imports osi.service.device
 '--herald=tcp --host=localhost --port=11000 --target=fces --token=token
 '--herald=http --host=localhost --port=11001 --target=fces
 Public Class sider_test
-    Inherits commandline_specific_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New sider_case())
