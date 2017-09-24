@@ -43,7 +43,7 @@ Public MustInherit Class [case]
     End Function
 
     Protected Function commandline_specified() As Boolean
-        Return commandline.specific(Me)
+        Return commandline.specified(Me)
     End Function
 
     Public Shared Function exceed_memory_limit(ByVal expected_memory_usage As Int64) As Boolean

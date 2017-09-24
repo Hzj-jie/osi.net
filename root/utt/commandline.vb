@@ -23,22 +23,22 @@ Friend Class commandline
         Return v
     End Function
 
-    Public Shared Function has_specific_selections() As Boolean
+    Public Shared Function has_specified_selections() As Boolean
         assert(v.empty() = s.empty())
         Return Not v.empty()
     End Function
 
-    Private Shared Function specific(ByVal c As String) As Boolean
+    Private Shared Function specified(ByVal c As String) As Boolean
         Return s.find(c) <> s.end()
     End Function
 
-    Public Shared Function specific(ByVal c As [case]) As Boolean
+    Public Shared Function specified(ByVal c As [case]) As Boolean
         If c Is Nothing Then
             Return False
         Else
-            Return specific(c.full_name) OrElse
-                   specific(c.assembly_qualified_name) OrElse
-                   specific(c.name)
+            Return specified(c.full_name) OrElse
+                   specified(c.assembly_qualified_name) OrElse
+                   specified(c.name)
         End If
     End Function
 End Class

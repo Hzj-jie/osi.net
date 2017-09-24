@@ -18,7 +18,7 @@ Partial Friend NotInheritable Class host
     Private Shared running_cases As Int32 = 0
 
     Private Shared Sub assert_running_time()
-        assert(commandline.has_specific_selections() OrElse
+        assert(commandline.has_specified_selections() OrElse
                assert_less_or_equal(nowadays.milliseconds(), expected_end_ms))
     End Sub
 
