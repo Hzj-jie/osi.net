@@ -110,7 +110,6 @@
     <Compile Include="finalizer_test.vb" />
     <Compile Include="gc_behavior_test.vb" />
     <Compile Include="generic_perf.vb" />
-    <Compile Include="generic_specific_perf.vb" />
     <Compile Include="compress_test.vb" />
     <Compile Include="gettype_perf.vb" />
     <Compile Include="gettype_test.vb" />
