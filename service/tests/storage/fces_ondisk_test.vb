@@ -24,7 +24,7 @@ Public Class fces_ondisk_test
     End Function
 End Class
 
-Public Class fces_ondisk_specific_test
+Public Class fces_ondisk_specified_test
     Inherits commandline_specified_event_comb_case_wrapper
 
     Public Sub New()

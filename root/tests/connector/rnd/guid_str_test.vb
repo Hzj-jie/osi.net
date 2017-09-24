@@ -25,7 +25,7 @@ Public Class guid_str_test
     End Sub
 End Class
 
-Public Class guid_str_specific_test
+Public Class guid_str_specified_test
     Inherits commandline_specified_case_wrapper
 
     Public Sub New()

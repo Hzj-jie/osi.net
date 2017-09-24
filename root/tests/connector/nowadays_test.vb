@@ -70,7 +70,7 @@ Public Class nowadays_test
     End Sub
 End Class
 
-Public Class nowadays_specific_test_10
+Public Class nowadays_specified_test_10
     Inherits commandline_specified_case_wrapper
 
     Friend Sub New(ByVal sleep_ms As Int64)
@@ -84,16 +84,16 @@ Public Class nowadays_specific_test_10
     End Sub
 End Class
 
-Public Class nowadays_specific_test_100
-    Inherits nowadays_specific_test_10
+Public Class nowadays_specified_test_100
+    Inherits nowadays_specified_test_10
 
     Public Sub New()
         MyBase.New(100)
     End Sub
 End Class
 
-Public Class nowadays_specific_test_1000
-    Inherits nowadays_specific_test_10
+Public Class nowadays_specified_test_1000
+    Inherits nowadays_specified_test_10
 
     Public Sub New()
         MyBase.New(1000)
@@ -130,7 +130,7 @@ Public Class nowadays_combined_test
     End Function
 End Class
 
-Public Class nowadays_combined_specific_test
+Public Class nowadays_combined_specified_test
     Inherits commandline_specified_case_wrapper
 
     Public Sub New()

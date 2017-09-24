@@ -10,7 +10,7 @@ Public Class trie_test
     End Sub
 End Class
 
-Public Class trie_specific_test
+Public Class trie_specified_test
     Inherits commandline_specified_case_wrapper
 
     Public Sub New()
