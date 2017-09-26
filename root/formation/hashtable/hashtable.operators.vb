@@ -10,12 +10,12 @@ Imports osi.root.template
 Partial Public Class hashtable(Of T,
                                   _UNIQUE As _boolean,
                                   _HASHER As _to_uint32(Of T),
-                                  _COMPARER As _comparer(Of T))
+                                  _EQUALER As _equaler(Of T))
     Public Function find(ByVal value As T) As iterator
         Dim index As UInt32 = 0
         index = hash(value)
         For i As UInt32 = 0 To last_row()
-            If Not cell(i, index) Is Nothing AndAlso compare(+cell(i, index), value) = 0 Then
+            If Not cell(i, index) Is Nothing AndAlso equaler(+cell(i, index), value) Then
                 Return iterator_at(i, index)
             End If
         Next
@@ -27,7 +27,7 @@ Partial Public Class hashtable(Of T,
         index = hash(value)
         If unique Then
             For i As UInt32 = 0 To last_row()
-                If Not cell(i, index) Is Nothing AndAlso compare(+cell(i, index), value) = 0 Then
+                If Not cell(i, index) Is Nothing AndAlso equaler(+cell(i, index), value) Then
                     Return emplace_make_pair(iterator_at(i, index), False)
                 End If
             Next
@@ -57,7 +57,7 @@ Partial Public Class hashtable(Of T,
         Dim index As UInt32 = 0
         index = hash(value)
         For i As UInt32 = 0 To last_row()
-            If Not cell(i, index) Is Nothing AndAlso compare(+cell(i, index), value) = 0 Then
+            If Not cell(i, index) Is Nothing AndAlso equaler(+cell(i, index), value) Then
                 clear_cell(i, index)
                 r += uint32_1
                 If unique Then

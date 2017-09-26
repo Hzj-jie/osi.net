@@ -7,16 +7,15 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.template
 
-' TODO: Use _equaler instead of _comparer.
 Partial Public Class hashtable(Of T,
                                   _UNIQUE As _boolean,
                                   _HASHER As _to_uint32(Of T),
-                                  _COMPARER As _comparer(Of T))
+                                  _EQUALER As _equaler(Of T))
 
     Private Shared ReadOnly predefined_column_counts As const_array(Of UInt32)
     Private Shared ReadOnly unique As Boolean
     Private Shared ReadOnly hasher As _HASHER
-    Private Shared ReadOnly compare As _comparer(Of T)
+    Private Shared ReadOnly equaler As _equaler(Of T)
 
     Shared Sub New()
         predefined_column_counts = New const_array(Of UInt32)({3, 7, 17, 37, 79, 163, 331, 673, 1361, 2729, 5471, 10949,
@@ -24,7 +23,7 @@ Partial Public Class hashtable(Of T,
                 89834777, 179669557, 359339171, 718678369, 1437356741})
         unique = +(alloc(Of _UNIQUE)())
         hasher = alloc(Of _HASHER)()
-        compare = alloc(Of _COMPARER)()
+        equaler = alloc(Of _EQUALER)()
     End Sub
 
     Private v As vector(Of array(Of constant(Of T)))

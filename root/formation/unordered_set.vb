@@ -9,9 +9,9 @@ Imports osi.root.template
 
 Public Class unordered_set(Of T,
                               _HASHER As _to_uint32(Of T),
-                              _COMPARER As _comparer(Of T))
-    Inherits hashtable(Of T, _true, _HASHER, _COMPARER)
-    Implements ICloneable, ICloneable(Of unordered_set(Of T, _HASHER, _COMPARER))
+                              _EQUALER As _equaler(Of T))
+    Inherits hashtable(Of T, _true, _HASHER, _EQUALER)
+    Implements ICloneable, ICloneable(Of unordered_set(Of T, _HASHER, _EQUALER))
 
     <copy_constructor()>
     Protected Sub New(ByVal v As vector(Of array(Of constant(Of T))), ByVal s As UInt32, ByVal c As UInt32)
@@ -22,7 +22,7 @@ Public Class unordered_set(Of T,
         MyBase.New()
     End Sub
 
-    Protected Shadows Function clone(Of R As unordered_set(Of T, _HASHER, _COMPARER))() As R
+    Protected Shadows Function clone(Of R As unordered_set(Of T, _HASHER, _EQUALER))() As R
         Return MyBase.clone(Of R)()
     End Function
 
@@ -30,24 +30,24 @@ Public Class unordered_set(Of T,
         Return CloneT()
     End Function
 
-    Public Shadows Function CloneT() As unordered_set(Of T, _HASHER, _COMPARER) _
-            Implements ICloneable(Of unordered_set(Of T, _HASHER, _COMPARER)).Clone
-        Return MyBase.clone(Of unordered_set(Of T, _HASHER, _COMPARER))()
+    Public Shadows Function CloneT() As unordered_set(Of T, _HASHER, _EQUALER) _
+            Implements ICloneable(Of unordered_set(Of T, _HASHER, _EQUALER)).Clone
+        Return MyBase.clone(Of unordered_set(Of T, _HASHER, _EQUALER))()
     End Function
 
-    Public Shared Shadows Function move(ByVal v As unordered_set(Of T, _HASHER, _COMPARER)) _
-                                       As unordered_set(Of T, _HASHER, _COMPARER)
-        Return hashtable(Of T, _true, _HASHER, _COMPARER) _
-                   .move(Of unordered_set(Of T, _HASHER, _COMPARER))(v)
+    Public Shared Shadows Function move(ByVal v As unordered_set(Of T, _HASHER, _EQUALER)) _
+                                       As unordered_set(Of T, _HASHER, _EQUALER)
+        Return hashtable(Of T, _true, _HASHER, _EQUALER) _
+                   .move(Of unordered_set(Of T, _HASHER, _EQUALER))(v)
     End Function
 
-    Protected Shared Shadows Function move(Of R As unordered_set(Of T, _HASHER, _COMPARER))(ByVal v As R) As R
-        Return hashtable(Of T, _true, _HASHER, _COMPARER).move(Of R)(v)
+    Protected Shared Shadows Function move(Of R As unordered_set(Of T, _HASHER, _EQUALER))(ByVal v As R) As R
+        Return hashtable(Of T, _true, _HASHER, _EQUALER).move(Of R)(v)
     End Function
 
-    Public Shared Shadows Function swap(ByVal this As unordered_set(Of T, _HASHER, _COMPARER),
-                                        ByVal that As unordered_set(Of T, _HASHER, _COMPARER)) As Boolean
-        Return hashtable(Of T, _true, _HASHER, _COMPARER).swap(this, that)
+    Public Shared Shadows Function swap(ByVal this As unordered_set(Of T, _HASHER, _EQUALER),
+                                        ByVal that As unordered_set(Of T, _HASHER, _EQUALER)) As Boolean
+        Return hashtable(Of T, _true, _HASHER, _EQUALER).swap(this, that)
     End Function
 
     Public Shadows Function [erase](ByVal it As iterator) As Boolean
@@ -60,7 +60,7 @@ Public Class unordered_set(Of T,
 End Class
 
 Public Class unordered_set(Of T)
-    Inherits unordered_set(Of T, fast_to_uint32(Of T), default_comparer(Of T))
+    Inherits unordered_set(Of T, fast_to_uint32(Of T), default_equaler(Of T))
     Implements ICloneable, ICloneable(Of unordered_set(Of T))
 
     <copy_constructor()>
@@ -87,12 +87,12 @@ Public Class unordered_set(Of T)
 
     Public Shared Shadows Function move(ByVal v As unordered_set(Of T)) _
                                        As unordered_set(Of T)
-        Return unordered_set(Of T, fast_to_uint32(Of T), default_comparer(Of T)) _
+        Return unordered_set(Of T, fast_to_uint32(Of T), default_equaler(Of T)) _
                   .move(Of unordered_set(Of T))(v)
     End Function
 
     Public Shared Shadows Function swap(ByVal this As unordered_set(Of T),
                                         ByVal that As unordered_set(Of T)) As Boolean
-        Return unordered_set(Of T, fast_to_uint32(Of T), default_comparer(Of T)).swap(this, that)
+        Return unordered_set(Of T, fast_to_uint32(Of T), default_equaler(Of T)).swap(this, that)
     End Function
 End Class

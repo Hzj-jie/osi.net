@@ -9,7 +9,7 @@ Imports osi.root.template
 Partial Public Class unordered_map(Of KEY_T,
                                       VALUE_T,
                                       _HASHER As _to_uint32(Of KEY_T),
-                                      _COMPARER As _comparer(Of KEY_T))
+                                      _EQUALER As _equaler(Of KEY_T))
     Public Class first_const_pair_hasher
         Inherits _to_uint32(Of first_const_pair(Of KEY_T, VALUE_T))
 
@@ -30,25 +30,25 @@ Partial Public Class unordered_map(Of KEY_T,
         End Function
     End Class
 
-    Public Class first_const_pair_comparer
-        Inherits _comparer(Of first_const_pair(Of KEY_T, VALUE_T))
+    Public Class first_const_pair_equaler
+        Inherits _equaler(Of first_const_pair(Of KEY_T, VALUE_T))
 
-        Private Shared ReadOnly comparer As _COMPARER
+        Private Shared ReadOnly equaler As _EQUALER
 
         Shared Sub New()
-            comparer = alloc(Of _COMPARER)()
+            equaler = alloc(Of _EQUALER)()
         End Sub
 
         Public Overrides Function at(ByRef i As first_const_pair(Of KEY_T, VALUE_T),
-                                     ByRef j As first_const_pair(Of KEY_T, VALUE_T)) As Int32
+                                     ByRef j As first_const_pair(Of KEY_T, VALUE_T)) As Boolean
             Dim c As Int32 = 0
             c = object_compare(i, j)
             If c = object_compare_undetermined Then
                 assert(Not i Is Nothing)
                 assert(Not j Is Nothing)
-                Return comparer(i.first, j.first)
+                Return equaler(i.first, j.first)
             Else
-                Return c
+                Return c = 0
             End If
         End Function
     End Class

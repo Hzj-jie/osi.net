@@ -9,13 +9,13 @@ Imports osi.root.template
 Partial Public Class hashtable(Of T,
                                   _UNIQUE As _boolean,
                                   _HASHER As _to_uint32(Of T),
-                                  _COMPARER As _comparer(Of T))
+                                  _EQUALER As _equaler(Of T))
     Protected Friend Class ref
-        Public ReadOnly owner As hashtable(Of T, _UNIQUE, _HASHER, _COMPARER)
+        Public ReadOnly owner As hashtable(Of T, _UNIQUE, _HASHER, _EQUALER)
         Public ReadOnly row As UInt32
         Public ReadOnly column As UInt32
 
-        Public Sub New(ByVal owner As hashtable(Of T, _UNIQUE, _HASHER, _COMPARER),
+        Public Sub New(ByVal owner As hashtable(Of T, _UNIQUE, _HASHER, _EQUALER),
                        ByVal row As UInt32,
                        ByVal column As UInt32)
             assert(Not owner Is Nothing)

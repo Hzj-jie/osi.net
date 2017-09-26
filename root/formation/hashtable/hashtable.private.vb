@@ -10,7 +10,7 @@ Imports osi.root.template
 Partial Public Class hashtable(Of T,
                                   _UNIQUE As _boolean,
                                   _HASHER As _to_uint32(Of T),
-                                  _COMPARER As _comparer(Of T))
+                                  _EQUALER As _equaler(Of T))
     Private Function hash(ByVal v As T) As UInt32
         Return hasher(v) Mod column_count()
     End Function
@@ -86,8 +86,8 @@ Partial Public Class hashtable(Of T,
             Return False
         End If
 
-        Dim r As hashtable(Of T, _UNIQUE, _HASHER, _COMPARER) = Nothing
-        r = New hashtable(Of T, _UNIQUE, _HASHER, _COMPARER)(c + uint32_1)
+        Dim r As hashtable(Of T, _UNIQUE, _HASHER, _EQUALER) = Nothing
+        r = New hashtable(Of T, _UNIQUE, _HASHER, _EQUALER)(c + uint32_1)
         Dim it As iterator = Nothing
         it = begin()
         While it <> [end]()

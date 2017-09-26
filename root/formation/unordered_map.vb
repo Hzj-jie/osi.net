@@ -9,12 +9,12 @@ Imports osi.root.template
 Partial Public Class unordered_map(Of KEY_T,
                                       VALUE_T,
                                       _HASHER As _to_uint32(Of KEY_T),
-                                      _COMPARER As _comparer(Of KEY_T))
-    Inherits hashtable(Of first_const_pair(Of KEY_T, VALUE_T),
-                          _true,
-                          first_const_pair_hasher,
-                          first_const_pair_comparer)
-    Implements ICloneable, ICloneable(Of unordered_map(Of KEY_T, VALUE_T, _HASHER, _COMPARER))
+                                      _EQUALER As _equaler(Of KEY_T))
+    Inherits hashtable(Of first_const_pair(Of KEY_T, VALUE_T), 
+                          _true, 
+                          first_const_pair_hasher, 
+                          first_const_pair_equaler)
+    Implements ICloneable, ICloneable(Of unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER))
 
     <copy_constructor()>
     Protected Sub New(ByVal v As vector(Of array(Of constant(Of first_const_pair(Of KEY_T, VALUE_T)))),
@@ -27,34 +27,34 @@ Partial Public Class unordered_map(Of KEY_T,
         MyBase.New()
     End Sub
 
-    Protected Shadows Function clone(Of R As unordered_map(Of KEY_T, VALUE_T, _HASHER, _COMPARER))() As R
-        Return MyBase.clone(Of R)()
+    Protected Shadows Function clone(Of R As unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER))() As R
+        Return MyBase.Clone(Of R)()
     End Function
 
     Public Shadows Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
 
-    Public Shadows Function CloneT() As unordered_map(Of KEY_T, VALUE_T, _HASHER, _COMPARER) _
-            Implements ICloneable(Of unordered_map(Of KEY_T, VALUE_T, _HASHER, _COMPARER)).Clone
-        Return MyBase.clone(Of unordered_map(Of KEY_T, VALUE_T, _HASHER, _COMPARER))()
+    Public Shadows Function CloneT() As unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER) _
+            Implements ICloneable(Of unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER)).Clone
+        Return MyBase.Clone(Of unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER))()
     End Function
 
-    Public Shared Shadows Function move(ByVal v As unordered_map(Of KEY_T, VALUE_T, _HASHER, _COMPARER)) _
-                                       As unordered_map(Of KEY_T, VALUE_T, _HASHER, _COMPARER)
-        Return hashtable(Of first_const_pair(Of KEY_T, VALUE_T),
-                            _true,
-                            first_const_pair_hasher,
-                            first_const_pair_comparer) _
-                   .move(Of unordered_map(Of KEY_T, VALUE_T, _HASHER, _COMPARER))(v)
+    Public Shared Shadows Function move(ByVal v As unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER)) _
+                                       As unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER)
+        Return hashtable(Of first_const_pair(Of KEY_T, VALUE_T), 
+                            _true, 
+                            first_const_pair_hasher, 
+                            first_const_pair_equaler) _
+                   .move(Of unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER))(v)
     End Function
 
-    Public Shared Shadows Function swap(ByVal this As unordered_map(Of KEY_T, VALUE_T, _HASHER, _COMPARER),
-                                        ByVal that As unordered_map(Of KEY_T, VALUE_T, _HASHER, _COMPARER)) As Boolean
-        Return hashtable(Of first_const_pair(Of KEY_T, VALUE_T),
-                            _true,
-                            first_const_pair_hasher,
-                            first_const_pair_comparer) _
+    Public Shared Shadows Function swap(ByVal this As unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER),
+                                        ByVal that As unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER)) As Boolean
+        Return hashtable(Of first_const_pair(Of KEY_T, VALUE_T), 
+                            _true, 
+                            first_const_pair_hasher, 
+                            first_const_pair_equaler) _
                    .swap(this, that)
     End Function
 
@@ -98,7 +98,7 @@ Partial Public Class unordered_map(Of KEY_T,
 End Class
 
 Public Class unordered_map(Of KEY_T, VALUE_T)
-    Inherits unordered_map(Of KEY_T, VALUE_T, fast_to_uint32(Of KEY_T), default_comparer(Of KEY_T))
+    Inherits unordered_map(Of KEY_T, VALUE_T, fast_to_uint32(Of KEY_T), default_equaler(Of KEY_T))
     Implements ICloneable, ICloneable(Of unordered_map(Of KEY_T, VALUE_T))
 
     <copy_constructor()>
@@ -127,13 +127,13 @@ Public Class unordered_map(Of KEY_T, VALUE_T)
 
     Public Shared Shadows Function move(ByVal v As unordered_map(Of KEY_T, VALUE_T)) _
                                        As unordered_map(Of KEY_T, VALUE_T)
-        Return hashtable(Of first_const_pair(Of KEY_T, VALUE_T), _true, first_const_pair_hasher, first_const_pair_comparer) _
+        Return hashtable(Of first_const_pair(Of KEY_T, VALUE_T), _true, first_const_pair_hasher, first_const_pair_equaler) _
                    .move(Of unordered_map(Of KEY_T, VALUE_T))(v)
     End Function
 
     Public Shared Shadows Function swap(ByVal this As unordered_map(Of KEY_T, VALUE_T),
                                         ByVal that As unordered_map(Of KEY_T, VALUE_T)) As Boolean
-        Return hashtable(Of first_const_pair(Of KEY_T, VALUE_T), _true, first_const_pair_hasher, first_const_pair_comparer) _
+        Return hashtable(Of first_const_pair(Of KEY_T, VALUE_T), _true, first_const_pair_hasher, first_const_pair_equaler) _
                    .swap(this, that)
     End Function
 End Class

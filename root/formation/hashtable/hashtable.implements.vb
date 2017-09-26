@@ -9,24 +9,24 @@ Imports osi.root.template
 Partial Public Class hashtable(Of T,
                                   _UNIQUE As _boolean,
                                   _HASHER As _to_uint32(Of T),
-                                  _COMPARER As _comparer(Of T))
-    Implements ICloneable, ICloneable(Of hashtable(Of T, _UNIQUE, _HASHER, _COMPARER))
+                                  _EQUALER As _equaler(Of T))
+    Implements ICloneable, ICloneable(Of hashtable(Of T, _UNIQUE, _HASHER, _EQUALER))
 
     Public Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
 
-    Public Function CloneT() As hashtable(Of T, _UNIQUE, _HASHER, _COMPARER) _
-                             Implements ICloneable(Of hashtable(Of T, _UNIQUE, _HASHER, _COMPARER)).Clone
-        Return New hashtable(Of T, _UNIQUE, _HASHER, _COMPARER)(v.CloneT(), s, c)
+    Public Function CloneT() As hashtable(Of T, _UNIQUE, _HASHER, _EQUALER) _
+                             Implements ICloneable(Of hashtable(Of T, _UNIQUE, _HASHER, _EQUALER)).Clone
+        Return New hashtable(Of T, _UNIQUE, _HASHER, _EQUALER)(v.CloneT(), s, c)
     End Function
 
-    Protected Function clone(Of R As hashtable(Of T, _UNIQUE, _HASHER, _COMPARER))() As R
+    Protected Function clone(Of R As hashtable(Of T, _UNIQUE, _HASHER, _EQUALER))() As R
         Return copy_constructor(Of R).invoke(v.CloneT(), s, c)
     End Function
 
-    Protected Shared Sub move_to(ByVal f As hashtable(Of T, _UNIQUE, _HASHER, _COMPARER),
-                                 ByVal t As hashtable(Of T, _UNIQUE, _HASHER, _COMPARER))
+    Protected Shared Sub move_to(ByVal f As hashtable(Of T, _UNIQUE, _HASHER, _EQUALER),
+                                 ByVal t As hashtable(Of T, _UNIQUE, _HASHER, _EQUALER))
         assert(Not f Is Nothing)
         assert(Not t Is Nothing)
         t.v = vector(Of array(Of constant(Of T))).move(f.v)
@@ -36,19 +36,19 @@ Partial Public Class hashtable(Of T,
         f.clear()
     End Sub
 
-    Public Shared Function move(ByVal v As hashtable(Of T, _UNIQUE, _HASHER, _COMPARER)) _
-                               As hashtable(Of T, _UNIQUE, _HASHER, _COMPARER)
+    Public Shared Function move(ByVal v As hashtable(Of T, _UNIQUE, _HASHER, _EQUALER)) _
+                               As hashtable(Of T, _UNIQUE, _HASHER, _EQUALER)
         If v Is Nothing Then
             Return Nothing
         Else
-            Dim r As hashtable(Of T, _UNIQUE, _HASHER, _COMPARER) = Nothing
+            Dim r As hashtable(Of T, _UNIQUE, _HASHER, _EQUALER) = Nothing
             r = _new(r)
             move_to(v, r)
             Return r
         End If
     End Function
 
-    Protected Shared Function move(Of R As hashtable(Of T, _UNIQUE, _HASHER, _COMPARER))(ByVal v As R) As R
+    Protected Shared Function move(Of R As hashtable(Of T, _UNIQUE, _HASHER, _EQUALER))(ByVal v As R) As R
         If v Is Nothing Then
             Return Nothing
         Else
@@ -59,8 +59,8 @@ Partial Public Class hashtable(Of T,
         End If
     End Function
 
-    Public Shared Function swap(ByVal this As hashtable(Of T, _UNIQUE, _HASHER, _COMPARER),
-                                ByVal that As hashtable(Of T, _UNIQUE, _HASHER, _COMPARER)) As Boolean
+    Public Shared Function swap(ByVal this As hashtable(Of T, _UNIQUE, _HASHER, _EQUALER),
+                                ByVal that As hashtable(Of T, _UNIQUE, _HASHER, _EQUALER)) As Boolean
         If this Is Nothing OrElse that Is Nothing Then
             Return False
         Else
