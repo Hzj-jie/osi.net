@@ -9,14 +9,26 @@ Imports osi.root.template
 Public Class fast_to_uint32(Of T)
     Inherits _to_uint32(Of T)
 
-    Public Overrides Function at(ByRef k As T) As UInt32
+    Private Shared ReadOnly f As Func(Of T, UInt32)
+
+    Shared Sub New()
         If type_info(Of T).is_valuetype Then
-            Return int32_uint32(k.GetHashCode())
-        ElseIf Not k Is Nothing Then
-            Return int32_uint32(k.GetHashCode())
+            f = Function(i As T) As UInt32
+                    Return int32_uint32(i.GetHashCode())
+                End Function
         Else
-            Return 0
+            f = Function(i As T) As UInt32
+                    If i Is Nothing Then
+                        Return 0
+                    Else
+                        Return int32_uint32(i.GetHashCode())
+                    End If
+                End Function
         End If
+    End Sub
+
+    Public Overrides Function at(ByRef k As T) As UInt32
+        Return f(k)
     End Function
 
     Public Overrides Function reverse(ByVal i As UInt32) As T
