@@ -91,7 +91,7 @@ Partial Public Class hashtable(Of T,
         Dim it As iterator = Nothing
         it = begin()
         While it <> [end]()
-            assert(r.emplace(+it).second)
+            assert(r.emplace(+it, uint32_0, uint32_0))
             it += 1
         End While
         move_to(r, Me)
@@ -100,5 +100,36 @@ Partial Public Class hashtable(Of T,
 
     Private Function should_rehash() As Boolean
         Return size() >= column_count()
+    End Function
+
+    Private Function emplace(ByVal value As T, ByRef row As UInt32, ByRef index As UInt32) As Boolean
+        index = hash(value)
+        If unique Then
+            For row = 0 To last_row()
+                If cell_is(row, index, value) Then
+                    Return False
+                End If
+            Next
+        End If
+
+        For row = 0 To last_row()
+            If cell(row, index) Is Nothing Then
+                set_cell(row, index, value)
+                Return True
+            End If
+        Next
+
+        If should_rehash() AndAlso rehash() Then
+            Return emplace(value, row, index)
+        End If
+
+        new_row()
+        row = last_row()
+        set_cell(row, index, value)
+        Return True
+    End Function
+
+    Private Function cell_is(ByVal row As UInt32, ByVal index As UInt32, ByVal value As T) As Boolean
+        Return Not cell(row, index) Is Nothing AndAlso equaler(+cell(row, index), value)
     End Function
 End Class

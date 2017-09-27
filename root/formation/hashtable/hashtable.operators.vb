@@ -15,7 +15,7 @@ Partial Public Class hashtable(Of T,
         Dim index As UInt32 = 0
         index = hash(value)
         For i As UInt32 = 0 To last_row()
-            If Not cell(i, index) Is Nothing AndAlso equaler(+cell(i, index), value) Then
+            If cell_is(i, index, value) Then
                 Return iterator_at(i, index)
             End If
         Next
@@ -23,29 +23,11 @@ Partial Public Class hashtable(Of T,
     End Function
 
     Public Function emplace(ByVal value As T) As pair(Of iterator, Boolean)
+        Dim row As UInt32 = 0
         Dim index As UInt32 = 0
-        index = hash(value)
-        If unique Then
-            For i As UInt32 = 0 To last_row()
-                If Not cell(i, index) Is Nothing AndAlso equaler(+cell(i, index), value) Then
-                    Return emplace_make_pair(iterator_at(i, index), False)
-                End If
-            Next
-        End If
-        For i As UInt32 = 0 To last_row()
-            If cell(i, index) Is Nothing Then
-                set_cell(i, index, value)
-                Return emplace_make_pair(iterator_at(i, index), True)
-            End If
-        Next
-
-        If should_rehash() AndAlso rehash() Then
-            Return emplace(value)
-        End If
-
-        new_row()
-        set_cell(last_row(), index, value)
-        Return emplace_make_pair(iterator_at(last_row(), index), True)
+        Dim r As Boolean = False
+        r = emplace(value, row, index)
+        Return emplace_make_pair(iterator_at(row, index), r)
     End Function
 
     Public Function insert(ByVal value As T) As pair(Of iterator, Boolean)
@@ -57,7 +39,7 @@ Partial Public Class hashtable(Of T,
         Dim index As UInt32 = 0
         index = hash(value)
         For i As UInt32 = 0 To last_row()
-            If Not cell(i, index) Is Nothing AndAlso equaler(+cell(i, index), value) Then
+            If cell_is(i, index, value) Then
                 clear_cell(i, index)
                 r += uint32_1
                 If unique Then
