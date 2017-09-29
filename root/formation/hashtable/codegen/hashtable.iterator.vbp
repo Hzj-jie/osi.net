@@ -12,7 +12,7 @@ Partial Public Class hashtable(Of T,
                                   _UNIQUE As _boolean,
                                   _HASHER As _to_uint32(Of T),
                                   _EQUALER As _equaler(Of T))
-    Public Class iterator
+    Public Structure iterator
 ##DEFINE TYPE ref
 ##DEFINE DEFINE_OPERATOR_PLUS False
 ##DEFINE FRIEND_CONSTRUCTOR False
@@ -67,5 +67,5 @@ Partial Public Class hashtable(Of T,
         Public Shared Operator +(ByVal this As iterator) As T
             Return If(this = [end], Nothing, this.value())
         End Operator
-    End Class
+    End Structure
 End Class

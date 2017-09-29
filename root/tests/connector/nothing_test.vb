@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.utt
 
@@ -15,8 +19,18 @@ Public Class nothing_test
         Implements test_interface
     End Structure
 
-    Private Shared Function is_nothing(Of T)(ByVal i As T) As Boolean
+    Private Shared Function is_nothing_object(ByVal i As Object) As Boolean
         Return i Is Nothing
+    End Function
+
+    Private Shared Function is_nothing(Of T)(ByVal i As T) As Boolean
+        If i Is Nothing Then
+            assert_true(is_nothing_object(i))
+            Return True
+        Else
+            assert_false(is_nothing_object(i))
+            Return False
+        End If
     End Function
 
     Private Shared Sub is_nothing_test(Of T)()
@@ -101,7 +115,7 @@ Public Class nothing_test
             i = New test_structure2()
             assert_false(is_nothing(i))
             assert_false(is_nothing(Of test_interface)(i))
-            i = alloc(Of test_interface)()
+            i = direct_cast(Of test_structure2)(alloc(Of test_interface)())
             assert_false(is_nothing(i))
             assert_false(is_nothing(Of test_interface)(i))
             i = alloc(Of test_structure2)()
