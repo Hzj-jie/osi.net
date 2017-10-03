@@ -36,7 +36,7 @@ Friend Class map_map_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     End Function
 
     Private Function retired(ByVal i As map(Of KEY_T, Int64).iterator) As Boolean
-        assert(Not i Is Nothing)
+        assert(Not i.is_null())
         assert(i <> kt.end())
         Return retired((+i).second)
     End Function

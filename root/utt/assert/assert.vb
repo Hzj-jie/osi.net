@@ -21,14 +21,14 @@ Public Module _assert
         Return v
     End Function
 
-    Public Function assert_nothing(Of T As Class)(ByVal i As T,
-                                                  ByVal ParamArray msg() As Object) As Boolean
-        Return assert_true(i Is Nothing, msg)
+    Public Function assert_nothing(Of T)(ByVal i As T,
+                                         ByVal ParamArray msg() As Object) As Boolean
+        Return assert_true(i.is_null(), msg)
     End Function
 
-    Public Function assert_not_nothing(Of T As Class)(ByVal i As T,
-                                                      ByVal ParamArray msg() As Object) As Boolean
-        Return assert_true(Not i Is Nothing, msg)
+    Public Function assert_not_nothing(Of T)(ByVal i As T,
+                                             ByVal ParamArray msg() As Object) As Boolean
+        Return assert_true(Not i.is_null(), msg)
     End Function
 
     Public Function assert_false(ByVal v As Boolean, ByVal ParamArray msg() As Object) As Boolean

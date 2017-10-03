@@ -166,7 +166,7 @@ Partial Public Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As 
     End Sub
 
     Private Function find(ByVal it As map(Of MAP_KEY, Int64).iterator) As iterator
-        If it Is Nothing OrElse it = _map.end() Then
+        If it.is_null() OrElse it = _map.end() Then
             Return [end]()
         Else
             Dim heapnode As pair(Of HEAP_KEY, MAP_KEY) = Nothing

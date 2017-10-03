@@ -70,7 +70,7 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
                                           ByVal index As UInt32,
                                           ByVal it As map(Of KEY_T, VALUE_T).iterator) As iterator
             assert(Not container Is Nothing)
-            assert(Not it Is Nothing)
+            assert(Not it.is_null())
             it += 1
             If it = container.data(index, False).end() Then
                 index = container.next_index(index)
@@ -87,7 +87,7 @@ Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
                                           ByVal index As UInt32,
                                           ByVal it As map(Of KEY_T, VALUE_T).iterator) As iterator
             assert(Not container Is Nothing)
-            assert(Not it Is Nothing)
+            assert(Not it.is_null())
             it -= 1
             If it = container.data(index, False).end() Then
                 index = container.prev_index(index)

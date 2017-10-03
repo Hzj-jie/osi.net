@@ -86,7 +86,7 @@ Friend Class trie_case
         Dim r As pair(Of stringtrie(Of Int32).iterator, Boolean) = Nothing
         r = t.emplace(s, i)
         assert_not_nothing(r)
-        assert_false(r.first.is_null())
+        assert_not_nothing(r.first)
         assert_not_equal(r.first, t.end())
         If validate() Then
             If r.second Then

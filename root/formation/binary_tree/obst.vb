@@ -104,7 +104,7 @@ Public Class obst(Of T)
             Return emplace_make_pair(New iterator(root), True)
         Else
             Dim n As node = Nothing
-            n = If(it Is Nothing OrElse it.is_end(), root, it.node())
+            n = If(it.null_or_end(), root, it.node())
             While True
                 assert(Not n Is Nothing)
                 Dim c As Int32 = 0
