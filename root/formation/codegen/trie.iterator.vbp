@@ -9,7 +9,7 @@ Public Module _trie_iterator
 End Module
 
 Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_INDEX As _to_uint32(Of KEY_T))
-    Public Class iterator
+    Public Structure iterator
 ##DEFINE TYPE node
 ##INCLUDE random_access_iterator.single_step.vbp
 
@@ -67,5 +67,5 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
         Friend Function [get]() As node
             Return p
         End Function
-    End Class
+    End Structure
 End Class

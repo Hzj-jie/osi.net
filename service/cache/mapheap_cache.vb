@@ -38,7 +38,7 @@ Friend Class mapheap_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     End Function
 
     Private Function retired(ByVal i As mapheap(Of KEY_T, reverse_date).iterator) As Boolean
-        assert(Not i Is Nothing)
+        assert(Not i.is_null())
         assert(i <> mh.end())
         Return retired((+i).first)
     End Function

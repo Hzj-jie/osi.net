@@ -388,7 +388,7 @@ Public Class chartrie(Of VALUE_T)
     End Property
 
     Public Shared Function first(ByVal it As iterator) As String
-        If it Is Nothing OrElse it.is_end() Then
+        If it.is_null() OrElse it.is_end() Then
             Return Nothing
         Else
             Return Convert.ToString(it.get().first())
@@ -465,7 +465,7 @@ Public Class stringtrie(Of VALUE_T)
     End Property
 
     Public Shared Function first(ByVal it As iterator) As String
-        If it Is Nothing OrElse it.is_end() Then
+        If it.is_null() OrElse it.is_end() Then
             Return Nothing
         Else
             Return bytes_str(it.get().first())

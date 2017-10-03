@@ -343,7 +343,7 @@ Partial Public NotInheritable Class list(Of T)
         i = begin()
         j = that.begin()
         While i <> [end]() AndAlso j <> that.end()
-            assert(Not i Is Nothing AndAlso Not j Is Nothing)
+            assert(Not i.is_null() AndAlso Not j.is_null())
             Dim cmp As Int32 = 0
             cmp = i.node().CompareTo(j.node())
             If cmp <> 0 Then

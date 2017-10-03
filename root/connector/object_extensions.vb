@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports System.Runtime.CompilerServices
+Imports osi.root.constants
 
 Public Module _object_extensions
     <Extension()> Public Function get_type_or_null(Of T)(ByVal this As T) As Type
@@ -24,6 +25,11 @@ Public Module _object_extensions
     End Function
 
     <Extension()> Public Function is_null(Of T)(ByVal i As T) As Boolean
+#If DEBUG Then
+        If type_info(Of T).is_valuetype Then
+            raise_error(error_type.performance, "is_null(Of ", type_info(Of T).fullname, ") is not necessary.")
+        End If
+#End If
         Return i Is Nothing
     End Function
 End Module

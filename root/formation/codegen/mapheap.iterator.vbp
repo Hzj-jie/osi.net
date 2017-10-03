@@ -8,8 +8,8 @@ Public Module _mapheap_iterator
 End Module
 
 Partial Public Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As IComparable(Of HEAP_KEY))
-    Public Class iterator
+    Public Structure iterator
 ##DEFINE TYPE pair(Of HEAP_KEY, MAP_KEY)
 ##INCLUDE static_iterator.vbp
-    End Class
+    End Structure
 End Class

@@ -81,7 +81,7 @@ Public Class adfa(Of KEY_T,
                                   CHILD_COUNT, 
                                   KEY_TO_INDEX).iterator = Nothing
                 it = trie.findfront(s, i)
-                assert(Not it Is Nothing AndAlso (it = trie.end() OrElse Not (+it) Is Nothing))
+                assert(Not it.is_null() AndAlso (it = trie.end() OrElse Not (+it) Is Nothing))
                 If it = trie.end() Then
                     If mismatch Is Nothing OrElse mismatch(s, i) Then
                         i += 1

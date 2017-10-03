@@ -8,7 +8,7 @@ Public Module _list_iterator
 End Module
 
 Partial Public Class list(Of T)
-    Public Class iterator
+    Public Structure iterator
 ##DEFINE TYPE node
 ##DEFINE DEFINE_OPERATOR_PLUS False
 ##INCLUDE random_access_iterator.vbp
@@ -48,5 +48,5 @@ Partial Public Class list(Of T)
         Friend Function node() As node
             Return p
         End Function
-    End Class
+    End Structure
 End Class
