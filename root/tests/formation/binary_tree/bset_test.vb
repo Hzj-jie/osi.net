@@ -102,11 +102,11 @@ Friend Class bset_case
         Dim k As String = Nothing
         k = rnd_key()
 #If pair_return_insert Then
-		Dim r As pair(Of [bset](Of String).iterator, Boolean) = Nothing
-		r = s.insert(k)
-		If assert_not_nothing(r) Then
-			assert_equal(r.second, s.find(k) <> s.end(), "s.insert(", k, ") <> s.find")
-		End If
+        Dim r As pair(Of [bset](Of String).iterator, Boolean) = Nothing
+        r = s.insert(k)
+        If assert_not_nothing(r) Then
+            assert_equal(r.second, s.find(k) <> s.end(), "s.insert(", k, ") <> s.find")
+        End If
 #Else
         assert_equal(s.insert(k), s.find(k), "s.insert(", k, ") <> s.find")
 #End If
