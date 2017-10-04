@@ -18,7 +18,7 @@ Option Strict On
 Public Module _weak_disposer
 #If 0 Then
     Public Function make_weak_disposer(Of T) _
-					    (ByVal p As Func(Of T),
+                        (ByVal p As Func(Of T),
                          Optional ByVal init As Action = Nothing,
                          Optional ByVal disposer As Action(Of T) = Nothing) _
                         As weak_disposer(Of T)
@@ -26,7 +26,7 @@ Public Module _weak_disposer
     End Function
 
     Public Function make_weak_disposer(Of T) _
-						(ByVal p As T,
+                        (ByVal p As T,
                          Optional ByVal init As Action = Nothing,
                          Optional ByVal disposer As Action(Of T) = Nothing) _
                         As weak_disposer(Of T)
@@ -35,7 +35,7 @@ Public Module _weak_disposer
 #End If
 
     Public Function make_weak_disposer(Of T) _
-						(ByVal p As T,
+                        (ByVal p As T,
                          Optional ByVal disposer As Action(Of T) = Nothing) _
                         As weak_disposer(Of T)
         Return New weak_disposer(Of T)(p, disposer)

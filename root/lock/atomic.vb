@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.envs
 
@@ -39,6 +43,15 @@ Public Class atomic
                                          assert(Not x Is Nothing)
                                          x.Close()
                                      End Sub
+    End Sub
+
+    Public Shared Sub eva(ByRef i As Single, ByVal j As Single)
+        If x86 OrElse amd64 Then
+            Thread.VolatileWrite(i, j)
+        Else
+            Interlocked.Exchange(i, j)
+        End If
+        Thread.MemoryBarrier()
     End Sub
 
     Public Shared Sub eva(ByRef i As Double, ByVal j As Double)
@@ -79,12 +92,8 @@ Public Class atomic
         Thread.MemoryBarrier()
     End Sub
 
-    Public Shared Sub eva(ByRef i As Single, ByVal j As Single)
-        If x86 OrElse amd64 Then
-            Thread.VolatileWrite(i, j)
-        Else
-            Interlocked.Exchange(i, j)
-        End If
+    Public Shared Sub eva(Of T As Class)(ByRef i As T, ByVal j As T)
+        Interlocked.Exchange(i, j)
         Thread.MemoryBarrier()
     End Sub
 
@@ -117,7 +126,7 @@ Public Class atomic
     Public Shared Function read(Of T As Class)(ByRef i As T) As T
         'no support in .net framework for cpu <32 bit
         Thread.MemoryBarrier()
-        Return Thread.VolatileRead(i)
+        Return direct_cast(Of T)(Thread.VolatileRead(unref(i)))
     End Function
 
     Public Shared Function compare_exchange(ByRef i As Int32, ByVal v As Int32, ByVal cmp As Int32) As Boolean

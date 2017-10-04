@@ -1,0 +1,6 @@
+﻿
+##DEFINE CLASS_TYPE ulong_math_divide
+##DEFINE TYPE UInt64
+##DEFINE RND rnd_uint64()
+##DEFINE BINARY_OPERATOR r = CULng(r1 / r2)
+##INCLUDE binary_operator_perf.vbp

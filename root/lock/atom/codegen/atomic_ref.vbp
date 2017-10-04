@@ -1,0 +1,5 @@
+﻿
+##DEFINE TYPE Object
+##DEFINE NO_LOCK_CLASS_TYPE atomic_ref
+##DEFINE BASE_TYPE atom_ref(Of ##DEFAULT_LOCK##)
+##INCLUDE atom_body.vbp

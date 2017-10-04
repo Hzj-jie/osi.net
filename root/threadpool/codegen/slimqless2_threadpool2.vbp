@@ -14,8 +14,8 @@ Public NotInheritable Class ##TYPE##_threadpool2
 
     Public Sub New()
         q = New waitable_##TYPE##(Of Action)()
-        ReDim rs(threadpool.default_thread_count - uint32_1)
-        For i As UInt32 = 0 To array_size(rs) - uint32_1
+        ReDim rs(CInt(threadpool.default_thread_count - uint32_1))
+        For i As Int32 = 0 To array_size_i(rs) - 1
             rs(i) = New ##TYPE##_runner(q)
         Next
     End Sub
@@ -29,7 +29,7 @@ Public NotInheritable Class ##TYPE##_threadpool2
     End Function
 
     Public Function running_in_current_thread() As Boolean
-        For i As UInt32 = 0 To array_size(rs) - uint32_1
+        For i As Int32 = 0 To array_size_i(rs) - 1
             If rs(i).running_in_current_thread() Then
                 Return True
             End If
@@ -42,7 +42,7 @@ Public NotInheritable Class ##TYPE##_threadpool2
     End Function
 
     Public Function stopping() As Boolean
-        For i As UInt32 = 0 To array_size(rs) - uint32_1
+        For i As Int32 = 0 To array_size_i(rs) - 1
             If rs(i).stopping() Then
                 Return True
             End If
@@ -54,7 +54,7 @@ Public NotInheritable Class ##TYPE##_threadpool2
         If object_compare(Me, newable_global_instance(Of ##TYPE##_threadpool2).ref()) <> 0 Then
             Dim r As Boolean = False
             r = True
-            For i As UInt32 = 0 To array_size(rs) - uint32_1
+            For i As Int32 = 0 To array_size_i(rs) - 1
                 If Not rs(i).stop() Then
                     r = False
                 End If
@@ -102,7 +102,7 @@ Public NotInheritable Class ##TYPE##_threadpool2
     End Function
 
     Public Function join(ByVal ms As Int64) As Boolean
-        For i As UInt32 = 0 To array_size(rs) - uint32_1
+        For i As Int32 = 0 To array_size_i(rs) - 1
             If Not rs(i).join(ms) Then
                 Return False
             End If
@@ -111,7 +111,7 @@ Public NotInheritable Class ##TYPE##_threadpool2
     End Function
 
     Public Sub join()
-        For i As UInt32 = 0 To array_size(rs) - uint32_1
+        For i As Int32 = 0 To array_size_i(rs) - 1
             rs(i).join()
         Next
     End Sub

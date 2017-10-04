@@ -31,4 +31,6 @@ precompile slimheapless_case3.vbp > slimheapless_case3.vb
 precompile slimheapless_case4.vbp > slimheapless_case4.vb
 precompile slimheapless_case5.vbp > slimheapless_case5.vb
 
+move /Y *.vb ..\
+
 endlocal

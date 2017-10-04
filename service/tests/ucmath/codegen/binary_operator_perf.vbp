@@ -23,14 +23,14 @@ Public Class ##CLASS_TYPE##_perf
             While r2 = 0
                 r2 = ##RND##
             End While
-			Dim r As ##TYPE## = 0
-			##BINARY_OPERATOR##
+            Dim r As ##TYPE## = 0
+            ##BINARY_OPERATOR##
         End Sub
 
         Public Overrides Function run() As Boolean
             For i As Int64 = 0 To ##TEST_SIZE## - 1
                 Dim r As ##TYPE## = 0
-				##BINARY_OPERATOR##
+                ##BINARY_OPERATOR##
             Next
             Return True
         End Function

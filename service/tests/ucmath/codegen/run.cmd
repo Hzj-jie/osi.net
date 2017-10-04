@@ -11,4 +11,6 @@ precompile ulong_divide_perf.vbp > ulong_divide_perf.vb
 precompile ulong_modulo_perf.vbp > ulong_modulo_perf.vb
 precompile ulong_divrem_perf.vbp > ulong_divrem_perf.vb
 precompile ulong_math_divide_perf.vbp > ulong_math_divide_perf.vb
+
+move /Y *.vb ..\
 endlocal

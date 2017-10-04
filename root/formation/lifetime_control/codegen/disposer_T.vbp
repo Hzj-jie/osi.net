@@ -5,7 +5,7 @@
 Public Module _##CLASS_NAME##
 #If 0 Then
     Public Function make_##CLASS_NAME##(Of T) _
-					    (ByVal p As Func(Of T),
+                        (ByVal p As Func(Of T),
                          Optional ByVal init As Action = Nothing,
                          Optional ByVal disposer As Action(Of T) = Nothing) _
                         As ##CLASS_NAME##(Of T)
@@ -13,7 +13,7 @@ Public Module _##CLASS_NAME##
     End Function
 
     Public Function make_##CLASS_NAME##(Of T) _
-						(ByVal p As T,
+                        (ByVal p As T,
                          Optional ByVal init As Action = Nothing,
                          Optional ByVal disposer As Action(Of T) = Nothing) _
                         As ##CLASS_NAME##(Of T)
@@ -22,7 +22,7 @@ Public Module _##CLASS_NAME##
 #End If
 
     Public Function make_##CLASS_NAME##(Of T) _
-						(ByVal p As T,
+                        (ByVal p As T,
                          Optional ByVal disposer As Action(Of T) = Nothing) _
                         As ##CLASS_NAME##(Of T)
         Return New ##CLASS_NAME##(Of T)(p, disposer)

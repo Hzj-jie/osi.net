@@ -1,6 +1,4 @@
 ﻿
-Imports osi.root.constants
-
 Public Module _minmax
 ##DEFINE TYPE Int32
 ##INCLUDE minmax.1.vbp
@@ -32,31 +30,31 @@ Public Module _minmax
 ##DEFINE TYPE String
 ##INCLUDE minmax.1.vbp
 
-	Public Function min(Of T)(ByVal f As T, ByVal s As T) As T
-		Return If(compare(f, s) < 0, f, s)
-	End Function
+    Public Function min(Of T)(ByVal f As T, ByVal s As T) As T
+        Return If(compare(f, s) < 0, f, s)
+    End Function
 
-	Public Function max(Of T)(ByVal f As T, ByVal s As T) As T
-		Return If(compare(f, s) < 0, s, f)
-	End Function
+    Public Function max(Of T)(ByVal f As T, ByVal s As T) As T
+        Return If(compare(f, s) < 0, s, f)
+    End Function
 
-	Public Function min(Of T)(ByVal f As T, ByVal s As T, ByVal ParamArray v() As T) As T
-		Dim r As T = min(f, s)
-		For i As Int32 = 0 To array_size(v) - 1
-			If compare(v(i), r) < 0 Then
-				r = v(i)
-			End If
-		Next
-		Return r
-	End Function
+    Public Function min(Of T)(ByVal f As T, ByVal s As T, ByVal ParamArray v() As T) As T
+        Dim r As T = min(f, s)
+        For i As Int32 = 0 To array_size_i(v) - 1
+            If compare(v(i), r) < 0 Then
+                r = v(i)
+            End If
+        Next
+        Return r
+    End Function
 
-	Public Function max(Of T)(ByVal f As T, ByVal s As T, ByVal ParamArray v() As T) As T
-		Dim r As T = max(f, s)
-		For i As Int32 = 0 To array_size(v) - 1
-			If compare(v(i), r) > 0 Then
-				r = v(i)
-			End If
-		Next
-		Return r
-	End Function
+    Public Function max(Of T)(ByVal f As T, ByVal s As T, ByVal ParamArray v() As T) As T
+        Dim r As T = max(f, s)
+        For i As Int32 = 0 To array_size_i(v) - 1
+            If compare(v(i), r) > 0 Then
+                r = v(i)
+            End If
+        Next
+        Return r
+    End Function
 End Module

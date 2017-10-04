@@ -19,13 +19,13 @@ Friend Class ##NAME##_case
     Inherits random_run_case
 
 #If ##LOCK_SELECTION## Then
-    Private ReadOnly q As ##NAME##(Of Int64, lock_t)
+    Private ReadOnly q As ##NAME##(Of Int32, lock_t)
 #Else
-    Private ReadOnly q As ##NAME##(Of Int64)
+    Private ReadOnly q As ##NAME##(Of Int32)
 #End If
-    Private ReadOnly max_iteration_count As Int64
+    Private ReadOnly max_iteration_count As Int32
     Private s() As Boolean
-    Private i As Int64 = 0
+    Private i As Int32 = 0
 #If ##PUSH_RETURN##
     Private l As slimlock.monitorlock
 #End If
@@ -35,7 +35,7 @@ Friend Class ##NAME##_case
     End Function
 
     Private Sub write()
-        Dim j As Int64 = 0
+        Dim j As Int32 = 0
 #If ##PUSH_RETURN## Then
         l.wait()
         j = i
@@ -53,7 +53,7 @@ Friend Class ##NAME##_case
 
     Private Sub read()
         assert_more_or_equal(q.size(), uint32_0)
-        Dim j As Int64 = 0
+        Dim j As Int32 = 0
         If q.pop(j) AndAlso validate() Then
             If assert_less(j, i) AndAlso
                assert_more_or_equal(j, 0) Then
@@ -63,12 +63,12 @@ Friend Class ##NAME##_case
         End If
     End Sub
 
-    Public Sub New(Optional ByVal max_iteration_count As Int64 = 0)
+    Public Sub New(Optional ByVal max_iteration_count As Int32 = 0)
         assert(max_iteration_count >= 0)
 #If ##LOCK_SELECTION## Then
-        q = New ##NAME##(Of Int64, lock_t)()
+        q = New ##NAME##(Of Int32, lock_t)()
 #Else
-        q = New ##NAME##(Of Int64)()
+        q = New ##NAME##(Of Int32)()
 #End If
         Me.max_iteration_count = max_iteration_count
         insert_call(0.6, AddressOf read)
@@ -96,7 +96,7 @@ Friend Class ##NAME##_case
         End If
         assert_equal(q.size(), uint32_0)
         If validate() Then
-            For j As Int64 = 0 To i - 1
+            For j As Int32 = 0 To i - 1
                 assert_true(s(j), j)
             Next
         End If

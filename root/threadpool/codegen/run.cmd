@@ -12,4 +12,6 @@ precompile slimheapless_threadpool2.vbp > slimheapless_threadpool2.vb
 precompile slimqless2_runner_synchronize_invoke.vbp > slimqless2_runner_synchronize_invoke.vb
 precompile slimheapless_runner_synchronize_invoke.vbp > slimheapless_runner_synchronize_invoke.vb
 
+move /Y *.vb ..\
+
 endlocal

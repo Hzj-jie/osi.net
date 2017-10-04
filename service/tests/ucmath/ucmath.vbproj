@@ -81,6 +81,7 @@
     <Compile Include="uint_modulo_perf.vb" />
     <Compile Include="ulong_divide_perf.vb" />
     <Compile Include="ulong_divrem_perf.vb" />
+    <Compile Include="ulong_math_divide_perf.vb" />
     <Compile Include="ulong_modulo_perf.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +104,7 @@
     <None Include="codegen\uint_modulo_perf.vbp" />
     <None Include="codegen\ulong_divide_perf.vbp" />
     <None Include="codegen\ulong_divrem_perf.vbp" />
+    <None Include="codegen\ulong_math_divide_perf.vbp" />
     <None Include="codegen\ulong_modulo_perf.vbp" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>

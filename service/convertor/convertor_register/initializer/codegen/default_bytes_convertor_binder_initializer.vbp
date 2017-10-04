@@ -31,9 +31,9 @@ Friend Class default_bytes_convertor_binder_initializer
 ##DEFINE NAME int32
 ##INCLUDE int_bytes_convertor_binder.vbp
 
-		'Conflict Function(ByVal b() As Byte, ByRef offset As UInt32) As Boolean
-		'         Function(ByVal b() As Byte, ByRef o As UInt32) As Boolean
-		'So use the second one, which is more common.
+        'Conflict Function(ByVal b() As Byte, ByRef offset As UInt32) As Boolean
+        '         Function(ByVal b() As Byte, ByRef o As UInt32) As Boolean
+        'So use the second one, which is more common.
         binder(Of _do_val_ref(Of Byte(), UInt32, Boolean), bytes_conversion_binder_protector).set_global(Nothing)
 
 ##DEFINE TYPE UInt32

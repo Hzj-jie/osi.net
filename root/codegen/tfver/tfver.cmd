@@ -15,16 +15,16 @@ REM this script will be called by run.cmd from osi/root/codegen
 if defined NO_TFVER (
     set tf_ver=""
 ) else (
-	for /F "delims=" %%i in ('tf history ..\..\ /r /noprompt /stopafter:1 /version:T ^| findstr /v /i "changeset ---------"') do (
-		set tf_ver="%%i" )
+    for /F "delims=" %%i in ('tf history ..\..\ /r /noprompt /stopafter:1 /version:T ^| findstr /v /i "changeset ---------"') do (
+        set tf_ver="%%i" )
 )
 echo          %tf_ver%.Trim()
 echo     Public ReadOnly tf_current_changeset As String = _
 if defined NO_TFVER (
-	set tf_cur_ver=""
+    set tf_cur_ver=""
 ) else (
-	for /F "delims=" %%i in ('tf history ..\..\ /r /noprompt /stopafter:1 /version:W ^| findstr /v /i "changeset ---------"') do (
-		set tf_cur_ver="%%i" )
+    for /F "delims=" %%i in ('tf history ..\..\ /r /noprompt /stopafter:1 /version:W ^| findstr /v /i "changeset ---------"') do (
+        set tf_cur_ver="%%i" )
 )
 echo          %tf_cur_ver%.Trim()
 echo End Module

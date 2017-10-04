@@ -85,10 +85,10 @@ Public Class weak_dispose_ptr(Of T)
 'with weak_dispose_ptr_do_dispose.vbp ----------
 'so change weak_dispose_ptr_do_dispose.vbp instead of this file
 
-		Dim v As T = Nothing
-		If [get](v) Then
-			dispose(v)
-		End If
+        Dim v As T = Nothing
+        If [get](v) Then
+            dispose(v)
+        End If
 'finish weak_dispose_ptr_do_dispose.vbp --------
     End Sub
 

@@ -1,4 +1,4 @@
-﻿		Dim v As T = Nothing
-		If [get](v) Then
-			dispose(v)
-		End If
+﻿        Dim v As T = Nothing
+        If [get](v) Then
+            dispose(v)
+        End If

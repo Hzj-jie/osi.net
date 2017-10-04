@@ -11,5 +11,5 @@ else return y; }
 
 int f2()
 {
-	return f1(100, 10);
+    return f1(100, 10);
 }

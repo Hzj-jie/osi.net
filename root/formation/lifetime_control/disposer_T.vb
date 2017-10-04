@@ -12,7 +12,7 @@ Option Strict On
 Public Module _disposer
 #If 0 Then
     Public Function make_disposer(Of T) _
-					    (ByVal p As Func(Of T),
+                        (ByVal p As Func(Of T),
                          Optional ByVal init As Action = Nothing,
                          Optional ByVal disposer As Action(Of T) = Nothing) _
                         As disposer(Of T)
@@ -20,7 +20,7 @@ Public Module _disposer
     End Function
 
     Public Function make_disposer(Of T) _
-						(ByVal p As T,
+                        (ByVal p As T,
                          Optional ByVal init As Action = Nothing,
                          Optional ByVal disposer As Action(Of T) = Nothing) _
                         As disposer(Of T)
@@ -29,7 +29,7 @@ Public Module _disposer
 #End If
 
     Public Function make_disposer(Of T) _
-						(ByVal p As T,
+                        (ByVal p As T,
                          Optional ByVal disposer As Action(Of T) = Nothing) _
                         As disposer(Of T)
         Return New disposer(Of T)(p, disposer)
