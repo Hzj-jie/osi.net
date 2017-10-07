@@ -14,6 +14,7 @@ Partial Public NotInheritable Class case2
         Public ReadOnly full_name As String
         Public ReadOnly repeat_times As UInt64
         Public ReadOnly command_line_specified As Boolean
+        Public ReadOnly flaky As Boolean
         Public ReadOnly has_reserved_processors As Boolean
         Public ReadOnly reserved_processors As Int16
 
@@ -21,12 +22,14 @@ Partial Public NotInheritable Class case2
                         ByVal full_name As String,
                         ByVal repeat_times As UInt64,
                         ByVal command_line_specified As Boolean,
+                        ByVal flaky As Boolean,
                         ByVal has_reserved_processors As Boolean,
                         ByVal reserved_processors As Int16)
             Me.name = name
             Me.full_name = full_name
             Me.repeat_times = repeat_times
             Me.command_line_specified = command_line_specified
+            Me.flaky = flaky
             Me.has_reserved_processors = has_reserved_processors
             Me.reserved_processors = reserved_processors
         End Sub
@@ -36,6 +39,7 @@ Partial Public NotInheritable Class case2
                    assert_not_nothing_return(info).full_name,
                    assert_not_nothing_return(info).repeat_times,
                    assert_not_nothing_return(info).command_line_specified,
+                   assert_not_nothing_return(info).flaky,
                    assert_not_nothing_return(info).has_reserved_processors,
                    assert_not_nothing_return(info).reserved_processors)
         End Sub
@@ -56,6 +60,9 @@ Partial Public NotInheritable Class case2
             Dim command_line_specified As Boolean = False
             command_line_specified = member.has_custom_attribute(Of attributes.command_line_specified)()
 
+            Dim flaky As Boolean = False
+            flaky = member.has_custom_attribute(Of attributes.flaky)()
+
             Dim has_reserved_processors As Boolean = False
             Dim reserved_processors As Int16 = 0
             Using code_block
@@ -73,6 +80,7 @@ Partial Public NotInheritable Class case2
                             member.full_name(),
                             repeat_times,
                             command_line_specified,
+                            flaky,
                             has_reserved_processors,
                             reserved_processors)
         End Function

@@ -1,9 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.root.utils
 
-Friend Class commandline
+Friend NotInheritable Class commandline
     Private Shared ReadOnly s As [set](Of String)
     Private Shared ReadOnly v As vector(Of String)
 
@@ -13,7 +16,7 @@ Friend Class commandline
     End Sub
 
     Public Shared Sub initialize(ByVal args() As String)
-        For i As Int32 = 0 To array_size(args) - 1
+        For i As Int32 = 0 To array_size_i(args) - 1
             v.emplace_back(args(i))
             assert(s.insert(args(i)).first <> s.end())
         Next
@@ -41,4 +44,7 @@ Friend Class commandline
                    specified(c.name)
         End If
     End Function
+
+    Private Sub New()
+    End Sub
 End Class

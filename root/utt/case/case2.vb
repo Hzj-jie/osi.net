@@ -33,6 +33,9 @@ Partial Public NotInheritable Class case2
         If class_info.command_line_specified OrElse function_info.command_line_specified Then
             r = commandline_specified(r)
         End If
+        If class_info.flaky OrElse function_info.flaky Then
+            r = flaky(r)
+        End If
         Return r
     End Function
 
@@ -56,6 +59,9 @@ Partial Public NotInheritable Class case2
         End If
         If class_info.command_line_specified Then
             r = commandline_specified(r)
+        End If
+        If class_info.flaky Then
+            r = flaky(r)
         End If
         Return r
     End Function

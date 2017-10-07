@@ -131,4 +131,8 @@ Public Module _wrapper
     Public Function commandline_specified(ByVal c As event_comb_case) As event_comb_case
         Return New commandline_specified_event_comb_case_wrapper(c)
     End Function
+
+    Public Function flaky(ByVal c As [case]) As [case]
+        Return New flaky_case_wrapper(c)
+    End Function
 End Module

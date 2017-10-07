@@ -71,6 +71,7 @@
     <Compile Include="case\delegate_case.vb" />
     <Compile Include="case\exec_case.vb" />
     <Compile Include="case\exec_export_case.vb" />
+    <Compile Include="case_wrapper\flaky_case_wrapper.vb" />
     <Compile Include="case_wrapper\isolate_case_wrapper.vb" />
     <Compile Include="case_wrapper\memory_usage_limited_case_wrapper.vb" />
     <Compile Include="case_wrapper\performance_comparison_case_wrapper.vb" />
@@ -79,6 +80,7 @@
     <Compile Include="case_wrapper\commandline_specified_case_wrapper.vb" />
     <Compile Include="case_wrapper\realtime_wrapper.vb" />
     <Compile Include="commandline.vb" />
+    <Compile Include="env_vars.vb" />
     <Compile Include="event_comb_case\commandline_specified_event_comb_case_wrapper.vb" />
     <Compile Include="event_comb_case\count_event_comb_case.vb" />
     <Compile Include="event_comb_case\event_comb_case.vb" />

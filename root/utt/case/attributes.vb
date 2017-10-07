@@ -74,7 +74,13 @@ Public NotInheritable Class attributes
     ' Define a test case to be executed only when command line specified.
     <AttributeUsage(AttributeTargets.Class Or AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)> _
     Public NotInheritable Class command_line_specified
-        Inherits attribute
+        Inherits Attribute
+    End Class
+
+    ' Define a flaky test case
+    <AttributeUsage(AttributeTargets.Class Or AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
+    Public NotInheritable Class flaky
+        Inherits Attribute
     End Class
 
     Private Sub New()
