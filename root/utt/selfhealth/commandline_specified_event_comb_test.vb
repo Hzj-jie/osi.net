@@ -1,8 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.procedure
 
 Public Class commandline_specified_event_comb_test
-    Inherits commandline_specified_event_comb_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New failure_case())

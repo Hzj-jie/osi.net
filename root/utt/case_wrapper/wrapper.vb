@@ -1,5 +1,7 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
 
 Public Module _wrapper
     Public Function gc_memory_measured(ByVal c As [case], ByVal interval_ms As Int64) As [case]
@@ -41,13 +43,6 @@ Public Module _wrapper
         Return New performance_case_wrapper(c, max_loops, min_loops, times)
     End Function
 
-    Public Function performance(ByVal c As event_comb_case,
-                                Optional ByVal max_loops As UInt64 = performance_case_wrapper.undetermined_max_loops,
-                                Optional ByVal min_loops As UInt64 = 0,
-                                Optional ByVal times As UInt64 = 1) As [case]
-        Return New performance_case_wrapper(c, max_loops, min_loops, times)
-    End Function
-
     Public Function processor_measured(ByVal c As [case], ByVal interval_ms As Int64) As [case]
         Return New processor_measured_case_wrapper(c, interval_ms)
     End Function
@@ -64,20 +59,20 @@ Public Module _wrapper
         Return New repeat_case_wrapper(c)
     End Function
 
-    Public Function rinne(ByVal c As [case], ByVal testsize As Int64) As [case]
-        Return New rinne_case_wrapper(c, testsize)
-    End Function
-
-    Public Function rinne(ByVal c As [case]) As [case]
-        Return New rinne_case_wrapper(c)
-    End Function
-
     Public Function repeat(ByVal c As event_comb_case, ByVal testsize As Int64) As event_comb_case
         Return New repeat_event_comb_case_wrapper(c, testsize)
     End Function
 
     Public Function repeat(ByVal c As event_comb_case) As event_comb_case
         Return New repeat_event_comb_case_wrapper(c)
+    End Function
+
+    Public Function rinne(ByVal c As [case], ByVal testsize As Int64) As [case]
+        Return New rinne_case_wrapper(c, testsize)
+    End Function
+
+    Public Function rinne(ByVal c As [case]) As [case]
+        Return New rinne_case_wrapper(c)
     End Function
 
     Public Function chained(ByVal ParamArray cs() As [case]) As [case]
@@ -116,20 +111,12 @@ Public Module _wrapper
         Return New isolate_case_wrapper(c)
     End Function
 
-    Public Function isolated(ByVal c As commandline_specified_event_comb_case_wrapper) As [case]
-        Return New isolate_case_wrapper(c)
-    End Function
-
     Public Function memory_usage_limited(ByVal c As [case], ByVal expected_memory_usage As Int64) As [case]
         Return New memory_usage_limited_case_wrapper(c, expected_memory_usage)
     End Function
 
     Public Function commandline_specified(ByVal c As [case]) As [case]
         Return New commandline_specified_case_wrapper(c)
-    End Function
-
-    Public Function commandline_specified(ByVal c As event_comb_case) As event_comb_case
-        Return New commandline_specified_event_comb_case_wrapper(c)
     End Function
 
     Public Function flaky(ByVal c As [case]) As [case]

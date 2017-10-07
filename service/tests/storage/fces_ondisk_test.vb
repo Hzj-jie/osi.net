@@ -1,12 +1,13 @@
 ﻿
-Imports System.IO
-Imports osi.root.template
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports osi.service.storage
-Imports osi.root.connector
-Imports osi.root.utils
 Imports osi.root.utt
+Imports osi.service.storage
 
 Public Class fces_ondisk_test
     Inherits temp_drive_istrkeyvt_case
@@ -25,7 +26,7 @@ Public Class fces_ondisk_test
 End Class
 
 Public Class fces_ondisk_specified_test
-    Inherits commandline_specified_event_comb_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New fces_ondisk_test(New default_istrkeyvt_case2()))

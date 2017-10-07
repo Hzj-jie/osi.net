@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 
 Public Class commandline_specified_case_wrapper

@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.utils
 
@@ -23,10 +27,6 @@ Public Class isolate_case_wrapper
     End Sub
 
     Public Sub New(ByVal c As commandline_specified_case_wrapper, Optional ByVal timeout_ms As Int64 = -1)
-        Me.New(DirectCast(c, [case]), timeout_ms)
-    End Sub
-
-    Public Sub New(ByVal c As commandline_specified_event_comb_case_wrapper, Optional ByVal timeout_ms As Int64 = -1)
         Me.New(DirectCast(c, [case]), timeout_ms)
     End Sub
 

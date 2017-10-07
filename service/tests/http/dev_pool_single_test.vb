@@ -1,17 +1,20 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.procedure
+Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.root.procedure
 Imports osi.root.lock
-Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.device
 Imports osi.service.http
 Imports osi.service.transmitter
 
 Public Class dev_pool_single_test
-    Inherits commandline_specified_event_comb_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(repeat(New dev_pool_case(uint32_1), 1024))

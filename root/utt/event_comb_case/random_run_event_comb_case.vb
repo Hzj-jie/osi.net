@@ -1,5 +1,8 @@
 ﻿
-Imports osi.root.connector
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.formation
 Imports osi.root.procedure
 

@@ -1,9 +1,12 @@
 ﻿
-Imports osi.root.template
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports osi.service.storage
 Imports osi.root.utt
+Imports osi.service.storage
 
 Public Class file_index_test
     Inherits temp_drive_istrkeyvt_case
@@ -22,7 +25,7 @@ Public Class file_index_test
 End Class
 
 Public Class file_index_specified_test
-    Inherits commandline_specified_event_comb_case_wrapper
+    Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New file_index_test(New short_key_istrkeyvt_case2()))

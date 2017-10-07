@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.procedure
 
@@ -17,12 +21,12 @@ Public Class isolate_case_wrapper_test
     End Sub
 
     Private Shared Function exec_case(ByVal c As [case], ByVal exp As Boolean) As Boolean
-        Dim i As isolate_case_wrapper = Nothing
+        Dim i As [case] = Nothing
         Dim cc As commandline_specified_case_wrapper = Nothing
         If cast(c, cc) AndAlso i Is Nothing Then
             i = isolated(cc)
         End If
-        Dim ce As commandline_specified_event_comb_case_wrapper = Nothing
+        Dim ce As commandline_specified_case_wrapper = Nothing
         If cast(c, ce) AndAlso i Is Nothing Then
             i = isolated(ce)
         End If
@@ -35,12 +39,12 @@ Public Class isolate_case_wrapper_test
 
     Public Overrides Function run() As Boolean
         Dim c As isolate_case_wrapper = Nothing
-        For i As Int32 = 0 To array_size(suc_cases) - 1
+        For i As Int32 = 0 To array_size_i(suc_cases) - 1
             If Not exec_case(suc_cases(i), True) Then
                 Return False
             End If
         Next
-        For i As Int32 = 0 To array_size(fail_cases) - 1
+        For i As Int32 = 0 To array_size_i(fail_cases) - 1
             If Not exec_case(fail_cases(i), False) Then
                 Return False
             End If
@@ -99,7 +103,7 @@ Public Class isolate_case_wrapper_test
     End Class
 
     Public Class success_event_comb_case
-        Inherits commandline_specified_event_comb_case_wrapper
+        Inherits commandline_specified_case_wrapper
 
         Public Sub New()
             MyBase.New(New c())
@@ -115,7 +119,7 @@ Public Class isolate_case_wrapper_test
     End Class
 
     Public Class failure_event_comb_case
-        Inherits commandline_specified_event_comb_case_wrapper
+        Inherits commandline_specified_case_wrapper
 
         Public Sub New()
             MyBase.New(New c())
@@ -134,7 +138,7 @@ Public Class isolate_case_wrapper_test
     End Class
 
     Public Class failure_event_comb_case2
-        Inherits commandline_specified_event_comb_case_wrapper
+        Inherits commandline_specified_case_wrapper
 
         Public Sub New()
             MyBase.New(New c())
