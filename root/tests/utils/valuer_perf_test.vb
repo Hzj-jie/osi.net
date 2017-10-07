@@ -14,9 +14,10 @@ Public Class valuer_perf_test
         MyBase.New(R(New valuer_perf_case()), R(repeat(New direct_access_perf_case(), 100)))
     End Sub
 
+    ' Make VS 2010 happy.
     Protected Overrides Function min_rate_table() As Double(,)
-        Return {{0, 4},
-                {1, 0}}
+        Return {{0, 4.0},
+                {1.0, 0}}
     End Function
 
     Private Shared Function R(ByVal i As [case]) As [case]
