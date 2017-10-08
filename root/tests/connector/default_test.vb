@@ -1,9 +1,13 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.envs
 Imports osi.root.utt
 
+' Performance of default.null(Of T)() is on-par with DirectCast(Nothing, T). But default(Of T).null is ~4x slower.
 Public Class default_test
     Inherits chained_case_wrapper
 
@@ -45,6 +49,14 @@ Public Class default_test
 
         Private Class default_null_case
             Inherits [case]
+
+            Private Class [default](Of T)
+                Public Shared ReadOnly null As T
+
+                Shared Sub New()
+                    null = Nothing
+                End Sub
+            End Class
 
             Private Shared Function null(Of T)() As T
                 Return [default](Of T).null

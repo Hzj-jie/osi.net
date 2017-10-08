@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Public Module _default
     Public Const default_sbyte As SByte = Nothing
     Public Const default_int8 As SByte = Nothing
@@ -16,6 +20,9 @@ Public Module _default
     Public ReadOnly default_bytes() As Byte = Nothing
 End Module
 
+' TODO: Use
+' Public Shared Function default.null(Of T)() As T
+' See default_null_perf.
 Public NotInheritable Class [default](Of T)
     Public Shared ReadOnly null As T
 

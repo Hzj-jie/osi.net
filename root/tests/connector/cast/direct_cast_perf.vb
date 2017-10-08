@@ -6,6 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.utt
 
+' Performance of direct_cast(Of T)() is on-par with DirectCast().
 Public Class direct_cast_perf
     Inherits performance_comparison_case_wrapper
 
