@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.envs
 Imports osi.root.utt
 
-' Performance of default.null(Of T)() is on-par with DirectCast(Nothing, T). But default(Of T).null is ~4x slower.
+' Performance of default(Of T).null, default.null(Of T)() and DirectCast(Nothing, T) are on-par.
 Public Class default_test
     Inherits chained_case_wrapper
 
@@ -26,24 +26,22 @@ Public Class default_test
 
         Public Sub New()
             MyBase.New(repeat(New default_null_case(), size),
+                       repeat(New default_without_shared_new_null_case(), size),
                        repeat(New direct_case_case(), size),
                        repeat(New generic_function_case(), size))
         End Sub
 
         Protected Overrides Function min_rate_table() As Double(,)
             If isdebugbuild() Then
-                If os.windows_major <= os.windows_major_t._5 Then
-                    Return {{0, 2.5, 1.2},
-                            {0.6, 0, 0.5},
-                            {1.5, 2.8, 0}}
-                End If
-                Return {{0, 1.8, 1.2},
-                        {0.9, 0, 0.8},
-                        {1.5, 2.3, 0}}
+                Return {{0, 2, 1.8, 1.8},
+                        {0.9, 0, 1.5, 1.5},
+                        {0.9, 0.9, 0, 0.9},
+                        {0.9, 1.5, 1.5, 0}}
             Else
-                Return {{0, 6, 4},
-                        {0.4, 0, 0.8},
-                        {0.6, 2, 0}}
+                Return {{0, 8, 8, 8},
+                        {0.4, 0, 1.5, 1.5},
+                        {0.4, 1.5, 0, 1.5},
+                        {0.4, 1.5, 1.5, 0}}
             End If
         End Function
 
@@ -56,6 +54,28 @@ Public Class default_test
                 Shared Sub New()
                     null = Nothing
                 End Sub
+            End Class
+
+            Private Shared Function null(Of T)() As T
+                Return [default](Of T).null
+            End Function
+
+            Public Overrides Function run() As Boolean
+                Dim x As String = [default](Of String).null
+                Dim y As temp_class = [default](Of temp_class).null
+                Dim z As Int32 = [default](Of Int32).null
+                Dim i As String = null(Of String)()
+                Dim j As temp_class = null(Of temp_class)()
+                Dim k As Int32 = null(Of Int32)()
+                Return True
+            End Function
+        End Class
+
+        Private Class default_without_shared_new_null_case
+            Inherits [case]
+
+            Private Class [default](Of T)
+                Public Shared ReadOnly null As T = Nothing
             End Class
 
             Private Shared Function null(Of T)() As T

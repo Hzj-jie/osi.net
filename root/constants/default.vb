@@ -20,13 +20,7 @@ Public Module _default
     Public ReadOnly default_bytes() As Byte = Nothing
 End Module
 
-' TODO: Use
-' Public Shared Function default.null(Of T)() As T
-' See default_null_perf.
+' Shared Sub New() significant impacts performance. See default_null_perf.
 Public NotInheritable Class [default](Of T)
-    Public Shared ReadOnly null As T
-
-    Shared Sub New()
-        null = Nothing
-    End Sub
+    Public Shared ReadOnly null As T = Nothing
 End Class
