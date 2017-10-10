@@ -193,11 +193,11 @@ Public Class alloc_perf2
 
     Protected Overrides Function min_rate_table() As Double(,)
         If isdebugbuild() Then
-            Return {{0, 1.5},
-                    {1.5, 0}}
+            Return {{0, 0.6},
+                    {6, 0}}
         Else
-            Return {{0, 3},
-                    {0.75, 0}}
+            Return {{0, 0.9},
+                    {4, 0}}
         End If
     End Function
 
