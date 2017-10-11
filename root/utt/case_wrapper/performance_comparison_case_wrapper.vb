@@ -1,16 +1,22 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utils
+Imports osi.root.constants
 
 Public Class performance_comparison_case_wrapper
     Inherits comparison_case_wrapper
 
+    Private Const multiple_factor As Double = 3
+    Private Shared ReadOnly loosening_factor As Double = Math.Sqrt(3)
+
     Private Shared Function to_perf_cases(ByVal times As UInt64, ByVal cs() As [case]) As [case]()
         assert(Not isemptyarray(cs))
         Dim r() As [case] = Nothing
-        ReDim r(array_size(cs) - 1)
-        For i As UInt32 = 0 To array_size(cs) - uint32_1
+        ReDim r(array_size_i(cs) - 1)
+        For i As Int32 = 0 To array_size_i(cs) - 1
             r(i) = performance(cs(i), times:=times)
         Next
         Return r
@@ -43,18 +49,27 @@ Public Class performance_comparison_case_wrapper
         Return Nothing
     End Function
 
-    Private Shared Function scan_table(ByVal t(,) As Double, ByVal i As UInt32, ByVal j As UInt32) As Double
+    Private Shared Function scan_table(ByVal t(,) As Double, ByVal i As Int32, ByVal j As Int32) As Double
         If t Is Nothing OrElse t.GetLength(0) <= i OrElse t.GetLength(1) <= j Then
             Return -1
         ElseIf t(i, j) = -1 AndAlso t.GetLength(0) > j AndAlso t.GetLength(1) > i AndAlso t(j, i) > 0 Then
-            Return 3 / t(j, i)
+            Return multiple_factor / t(j, i)
         Else
             Return t(i, j)
         End If
     End Function
 
+    Private Shared Function scan_table(ByVal t(,) As Double, ByVal i As UInt32, ByVal j As UInt32) As Double
+        Return scan_table(t, CInt(i), CInt(j))
+    End Function
+
     Private Function perf_case(ByVal i As UInt32) As performance_case_wrapper
-        Return cast(Of performance_case_wrapper)(cases(i))
+        Return direct_cast(Of performance_case_wrapper)([case](i))
+    End Function
+
+    Protected Shared Function loosen_bound(ByVal t() As Double, ByVal i As UInt32, ByVal j As UInt32) As Double
+        assert(array_size(t) > i AndAlso array_size(t) > j)
+        Return t(CInt(i)) / t(CInt(j)) * loosening_factor
     End Function
 
     Protected Overridable Function max_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double

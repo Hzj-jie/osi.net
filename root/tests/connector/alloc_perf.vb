@@ -1,8 +1,12 @@
 ﻿
-Imports osi.root.utils
-Imports osi.root.utt
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.root.utils
+Imports osi.root.utt
 
 Public Class alloc_perf
     Inherits performance_case_wrapper

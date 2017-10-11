@@ -1,7 +1,9 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utils
 
 Public Class chained_case_wrapper
     Inherits [case]
@@ -17,7 +19,7 @@ Public Class chained_case_wrapper
         Me.cs = cs
         assert(Not isemptyarray(cs))
         Me.pp = 0
-        For i As UInt32 = 0 To array_size(cs) - uint32_1
+        For i As Int32 = 0 To array_size_i(cs) - 1
             assert(Not cs(i) Is Nothing)
             If cs(i).reserved_processors() > pp Then
                 pp = cs(i).reserved_processors()
@@ -33,6 +35,10 @@ Public Class chained_case_wrapper
         Return cs
     End Function
 
+    Public Function [case](ByVal i As UInt32) As [case]
+        Return cases(CInt(i))
+    End Function
+
     Public Overridable Function continue_when_failure() As Boolean
         Return cwf
     End Function
@@ -43,7 +49,7 @@ Public Class chained_case_wrapper
 
     Public NotOverridable Overrides Function run() As Boolean
         Dim r As Boolean = True
-        For i As UInt32 = 0 To array_size(cs) - uint32_1
+        For i As Int32 = 0 To array_size_i(cs) - 1
             If Not cs(i).run() Then
                 r = False
                 utt_raise_error("failed to run case ", cs(i).GetType().Name())
@@ -57,7 +63,7 @@ Public Class chained_case_wrapper
 
     Public NotOverridable Overrides Function prepare() As Boolean
         If MyBase.prepare() Then
-            For i As UInt32 = 0 To array_size(cs) - uint32_1
+            For i As Int32 = 0 To array_size_i(cs) - 1
                 If Not cs(i).prepare() Then
                     Return False
                 End If
@@ -72,7 +78,7 @@ Public Class chained_case_wrapper
         If MyBase.finish() Then
             Dim r As Boolean = False
             r = True
-            For i As UInt32 = 0 To array_size(cs) - uint32_1
+            For i As Int32 = 0 To array_size_i(cs) - 1
                 r = r And cs(i).finish()
             Next
             RaiseEvent finished(r)
