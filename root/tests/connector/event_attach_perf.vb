@@ -1,8 +1,11 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.envs
-Imports osi.root.formation
 Imports osi.root.template
 Imports osi.root.utt
 
@@ -14,21 +17,19 @@ Public Class event_attach_perf
         MyBase.New(array_concat(c(Of _1)(), c(Of _10)(), c(Of _1000)()))
     End Sub
 
-    Protected Overrides Function min_rate_table() As Double(,)
+    Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
         If os.windows_major <= os.windows_major_t._5 Then
-            Return {{-1, 0.6, -1, -1, -1, -1},
-                    {6.67, -1, -1, -1, -1, -1},
-                    {-1, -1, -1, 2.5, -1, -1},
-                    {-1, -1, 1.6, -1, -1, -1},
-                    {-1, -1, -1, -1, -1, 200},
-                    {-1, -1, -1, -1, 0.02, -1}}
+            If isdebugbuild() Then
+                Return loosen_bound({141, 1861, 711, 1848, 59854, 1837}, i, j)
+            Else
+                Return loosen_bound({170, 681, 1039, 681, 90961, 699}, i, j)
+            End If
         Else
-            Return {{-1, 0.2, -1, -1, -1, -1},
-                    {20, -1, -1, -1, -1, -1},
-                    {-1, -1, -1, 1, -1, -1},
-                    {-1, -1, 4, -1, -1, -1},
-                    {-1, -1, -1, -1, -1, 100},
-                    {-1, -1, -1, -1, 0.04, -1}}
+            If isdebugbuild() Then
+                Return loosen_bound({183, 1466, 548, 1487, 36821, 1445}, i, j)
+            Else
+                Return loosen_bound({188, 466, 935, 511, 82558, 466}, i, j)
+            End If
         End If
     End Function
 
@@ -47,12 +48,12 @@ Public Class event_attach_perf
         Private a() As String
 
         Shared Sub New()
-            size = +alloc(Of _SIZE)()
+            size = CUInt(+alloc(Of _SIZE)())
         End Sub
 
         Public Overrides Function prepare() As Boolean
             If MyBase.prepare() Then
-                ReDim a(size - uint32_1)
+                ReDim a(CInt(size - uint32_1))
                 Return True
             Else
                 Return False
@@ -82,20 +83,20 @@ Public Class event_attach_perf
         Private a() As eEventHandler
 
         Shared Sub New()
-            size = +alloc(Of _SIZE)()
+            size = CUInt(+alloc(Of _SIZE)())
         End Sub
 
         Public Overrides Function prepare() As Boolean
             If MyBase.prepare() Then
-                ReDim a(size - uint32_1)
+                ReDim a(CInt(size - uint32_1))
                 For i As UInt32 = uint32_0 To size - uint32_1
                     Dim x As UInt32 = uint32_0
                     x = i
-                    a(i) = Sub()
-                               Dim j As UInt32 = uint32_0
-                               j += x
-                           End Sub
-                    AddHandler e, a(i)
+                    a(CInt(i)) = Sub()
+                                     Dim j As UInt32 = uint32_0
+                                     j += x
+                                 End Sub
+                    AddHandler e, a(CInt(i))
                 Next
                 Return True
             Else
@@ -111,7 +112,7 @@ Public Class event_attach_perf
 
         Public Overrides Function finish() As Boolean
             For i As UInt32 = uint32_0 To size - uint32_1
-                RemoveHandler e, a(i)
+                RemoveHandler e, a(CInt(i))
             Next
             Erase a
             Return MyBase.finish()
