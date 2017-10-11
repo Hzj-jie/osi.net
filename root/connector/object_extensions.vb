@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports System.Runtime.CompilerServices
+Imports System.Threading
 Imports osi.root.constants
 
 Public Module _object_extensions
@@ -24,9 +25,22 @@ Public Module _object_extensions
                r
     End Function
 
+    Private NotInheritable Class is_null_should_log(Of T)
+        Private Const logged As Int32 = 1
+        Private Const not_logged As Int32 = 0
+        Private Shared v As Int32 = not_logged
+
+        Public Shared Function [get]() As Boolean
+            Return Interlocked.CompareExchange(v, logged, not_logged) = not_logged
+        End Function
+
+        Private Sub New()
+        End Sub
+    End Class
+
     <Extension()> Public Function is_null(Of T)(ByVal i As T) As Boolean
 #If DEBUG Then
-        If type_info(Of T).is_valuetype Then
+        If type_info(Of T).is_valuetype AndAlso is_null_should_log(Of T).get() Then
             raise_error(error_type.performance, "is_null(Of ", type_info(Of T).fullname, ") is not necessary.")
         End If
 #End If

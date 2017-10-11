@@ -16,17 +16,11 @@ Public Class map_hashmap_unordered_map_perf_test
         MyBase.New(R(New map_case()), R(New hashmap_case()), R(New dictionary_case()), R(New unordered_map_case()))
     End Sub
 
-    Protected Overrides Function min_rate_table() As Double(,)
-        If isdebugmode() Then
-            Return {{0, 4, 10, -1},
-                    {0.5, 0, -1, -1},
-                    {0.2, -1, 0, -1},
-                    {-1, -1, -1, 0}}
+    Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+        If isdebugbuild() Then
+            Return loosen_bound({2159, 1242, 550, 1384}, i, j)
         Else
-            Return {{0, 3, 4, -1},
-                    {0.7, 0, -1, -1},
-                    {0.5, -1, 0, -1},
-                    {-1, -1, -1, 0}}
+            Return loosen_bound({1542, 1028, 699, 1399}, i, j)
         End If
     End Function
 
