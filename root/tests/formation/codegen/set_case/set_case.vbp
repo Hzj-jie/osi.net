@@ -166,7 +166,7 @@ Public Class ##TYPE##_perf
     End Sub
 
     Protected Overrides Function max_loops() As UInt64
-        Return CULng(If(isreleasebuild(), ##DEBUG_MAX_LOOPS##, ##RELEASE_MAX_LOOPS##))
+        Return CULng(If(isdebugbuild(), ##DEBUG_MAX_LOOPS##, ##RELEASE_MAX_LOOPS##))
     End Function
 End Class
 
