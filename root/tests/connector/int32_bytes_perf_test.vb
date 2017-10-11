@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.InteropServices
 Imports osi.root.connector
-Imports osi.root.utils
+Imports osi.root.constants
 Imports osi.root.utt
 
 Public Class int32_bytes_perf_test
@@ -13,14 +17,17 @@ Public Class int32_bytes_perf_test
         MyBase.New(New delegate_case(AddressOf bitconverter_getbytes), New delegate_case(AddressOf marshal_write))
     End Sub
 
-    Protected Overrides Function min_rate_table() As Double(,)
-        Return {{-1, 0.5},
-                {-1, -1}}
+    Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+        If isdebugbuild() Then
+            Return loosen_bound({5987, 51972}, i, j)
+        Else
+            Return loosen_bound({8026, 106053}, i, j)
+        End If
     End Function
 
     Private Shared Sub bitconverter_getbytes()
         Dim d() As Byte = Nothing
-        ReDim d(sizeof_int32 - 1)
+        ReDim d(CInt(sizeof_int32 - uint32_1))
         Dim t As Int32 = 0
         t = rnd_int()
         For i As UInt32 = 0 To size - 1
@@ -32,7 +39,7 @@ Public Class int32_bytes_perf_test
 
     Private Shared Sub marshal_write()
         Dim d() As Byte = Nothing
-        ReDim d(sizeof_int32 - 1)
+        ReDim d(CInt(sizeof_int32 - uint32_1))
         Dim t As Int32 = 0
         t = rnd_int()
         For i As UInt32 = 0 To size - 1
