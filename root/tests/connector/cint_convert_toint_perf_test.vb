@@ -1,4 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+' implicit_convert_run use implicit conversion.
+Option Strict Off
+
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.envs
@@ -7,7 +12,7 @@ Imports osi.root.utt
 Public Class cint_convert_toint_perf_test
     Inherits performance_comparison_case_wrapper
 
-    Private Const size As UInt64 = CULng(1024) * 1024 * 1024 * 16
+    Private Const size As UInt64 = CULng(1024) * CULng(1024) * CULng(1024) * CULng(16)
 
     Public Sub New()
         MyBase.New(New delegate_case(AddressOf cint_run),
@@ -15,15 +20,11 @@ Public Class cint_convert_toint_perf_test
                    New delegate_case(AddressOf implicit_convert_run))
     End Sub
 
-    Protected Overrides Function min_rate_table() As Double(,)
+    Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
         If os.windows_major <= os.windows_major_t._5 Then
-            Return {{0, 0.6, 1.1},
-                    {-1, 0, -1},
-                    {1.1, 0.6, 0}}
+            Return loosen_bound({448, 973, 447}, i, j)
         Else
-            Return {{0, 0.4, 1.1},
-                    {-1, 0, -1},
-                    {1.1, 0.4, 0}}
+            Return loosen_bound({279, 833, 143}, i, j)
         End If
     End Function
 
