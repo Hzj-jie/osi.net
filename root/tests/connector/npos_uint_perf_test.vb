@@ -1,5 +1,8 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.envs
 Imports osi.root.utt
@@ -22,13 +25,11 @@ Public Class npos_uint_perf_test
                    repeat(New delegate_case(AddressOf int_case), round))
     End Sub
 
-    Protected Overrides Function min_rate_table() As Double(,)
+    Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
         If os.windows_major <= os.windows_major_t._5 Then
-            Return {{0, 25},
-                    {0.08, 0}}
+            Return loosen_bound({7300, 1067}, i, j)
         Else
-            Return {{0, 18},
-                    {0.15, 0}}
+            Return loosen_bound({15430, 593}, i, j)
         End If
     End Function
 
@@ -36,7 +37,7 @@ Public Class npos_uint_perf_test
         Dim x As npos_uint = Nothing
         Dim y As UInt32 = 0
         Dim b As Boolean = False
-        For i As UInt32 = 0 To array_size(rnd_ints) - uint32_1
+        For i As Int32 = 0 To array_size_i(rnd_ints) - 1
             x = rnd_ints(i)
             b = (x > i)
             b = (x > rnd_ints(i))
@@ -57,7 +58,7 @@ Public Class npos_uint_perf_test
         Dim x As Int32 = 0
         Dim y As UInt32 = 0
         Dim b As Boolean = False
-        For i As UInt32 = 0 To array_size(rnd_ints) - uint32_1
+        For i As Int32 = 0 To array_size_i(rnd_ints) - 1
             x = rnd_ints(i)
             b = (x > i)
             b = (x > rnd_ints(i))
