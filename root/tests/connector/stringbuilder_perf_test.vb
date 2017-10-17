@@ -1,8 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Text
-Imports osi.root.template
-Imports osi.root.envs
 Imports osi.root.connector
+Imports osi.root.template
 Imports osi.root.utt
 
 Public Class stringbuilder_pre_alloc_perf_test
@@ -13,8 +16,7 @@ Public Class stringbuilder_auto_extend_perf_test
     Inherits stringbuilder_perf_test(Of _false, _false)
 End Class
 
-' On Windows XP (or maybe earlier), pre-allocating StringBuilder has almost no benefit.
-' On later OS, it has a 30% performance improvement.
+' Pre-allocating StringBuilder has no significant benefit.
 Public Class stringbuilder_perf_test(Of PRE_ALLOC As _boolean, RND_EACH_ROUND As _boolean)
     Inherits performance_comparison_case_wrapper
 
@@ -27,14 +29,8 @@ Public Class stringbuilder_perf_test(Of PRE_ALLOC As _boolean, RND_EACH_ROUND As
                    rinne(repeat(New stringbuilder_perf_case(l2, l1), l1), r))
     End Sub
 
-    Protected Overrides Function min_rate_table() As Double(,)
-        If os.windows_major <= os.windows_major_t._5 Then
-            Return {{0, 1.2},
-                    {1.2, 0}}
-        Else
-            Return {{0, 1.5},
-                    {1.0, 0}}
-        End If
+    Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+        Return loosen_bound({2589, 2581}, i, j)
     End Function
 
     Private Class stringbuilder_perf_case
@@ -60,7 +56,7 @@ Public Class stringbuilder_perf_test(Of PRE_ALLOC As _boolean, RND_EACH_ROUND As
                 Else
                     s = New StringBuilder()
                 End If
-                s.clear()
+                s.Clear()
                 Return True
             Else
                 Return False
@@ -77,7 +73,7 @@ Public Class stringbuilder_perf_test(Of PRE_ALLOC As _boolean, RND_EACH_ROUND As
         End Function
 
         Public Overrides Function finish() As Boolean
-            s.clear()
+            s.Clear()
             s.shrink_to_fit()
             repeat_gc_collect()
             Return MyBase.finish()
