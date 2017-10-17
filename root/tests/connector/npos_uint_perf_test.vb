@@ -28,6 +28,8 @@ Public Class npos_uint_perf_test
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
         If os.windows_major <= os.windows_major_t._5 Then
             Return loosen_bound({7300, 1067}, i, j)
+        ElseIf os.windows_major <= os.windows_major_t._6 Then
+            Return loosen_bound({8549, 759}, i, j)
         Else
             Return loosen_bound({15430, 593}, i, j)
         End If

@@ -23,6 +23,8 @@ Public Class cint_convert_toint_perf_test
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
         If os.windows_major <= os.windows_major_t._5 Then
             Return loosen_bound({448, 973, 447}, i, j)
+        ElseIf os.windows_major <= os.windows_major_t._6 Then
+            Return loosen_bound({306, 817, 310}, i, j)
         Else
             Return loosen_bound({279, 833, 143}, i, j)
         End If

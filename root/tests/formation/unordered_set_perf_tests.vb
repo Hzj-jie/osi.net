@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.envs
 
 Public Class unordered_set_uint_perf
     Inherits unordered_set_perf(Of UInt32, unordered_set_perf_templates.small_range_uint)
@@ -96,7 +97,11 @@ Public Class unordered_set_more_items_uint_large_range_perf
         If isdebugbuild() Then
             Return loosen_bound({1458, 9368}, i, j)
         Else
-            Return loosen_bound({792, 3737}, i, j)
+            If virtual_machine Then
+                Return loosen_bound({882, 3176}, i, j)
+            Else
+                Return loosen_bound({792, 3737}, i, j)
+            End If
         End If
     End Function
 End Class
