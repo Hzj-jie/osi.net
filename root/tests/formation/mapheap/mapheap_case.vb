@@ -1,9 +1,12 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utt
-Imports osi.root.utils
+Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.root.utt
 
 Friend Class mapheap_case
     Inherits random_run_case
@@ -191,7 +194,9 @@ Friend Class mapheap_case
                 Dim it2 As mapheap(Of String, Int64).iterator = Nothing
                 it2 = mh.find((+it).first)
                 If assert_not_equal(it2, mh.end()) Then
-                    assert_equal((+it2).first, (+it).second)
+                    If Not assert_equal((+it2).first, (+it).second) Then
+
+                    End If
                 End If
                 it += 1
             End While

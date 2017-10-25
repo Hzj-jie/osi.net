@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Security.Cryptography
 Imports System.Text
 Imports osi.root.constants
@@ -105,13 +109,13 @@ Public Module _signing
     End Function
 
     Private Function signing2(ByVal v As Int32) As UInt32
-        Return Convert.ToString(v).reverse().GetHashCode()
+        Return int32_uint32(Convert.ToString(v).reverse().GetHashCode())
     End Function
 
     Private Function signing3(ByVal v As Int32) As UInt32
         Dim v2 As String = Nothing
         v2 = Convert.ToString(v)
-        Return (v2 + v2).reverse().GetHashCode()
+        Return int32_uint32((v2 + v2).reverse().GetHashCode())
     End Function
 
     Private Function signing4(ByVal v As Int32) As UInt32
@@ -121,27 +125,28 @@ Public Module _signing
     Private Function signing5(ByVal v As Int32) As UInt32
         Dim v2 As UInt32 = 0
         v2 = signing8(v)
-        Return Convert.ToString(v2).GetHashCode()
+        Return int32_uint32(Convert.ToString(v2).GetHashCode())
     End Function
 
     Private Function signing6(ByVal v As Int32) As UInt32
-        Return Convert.ToBase64String(Encoding.UTF8().GetBytes(Convert.ToString(v.GetHashCode))).GetHashCode
+        Return int32_uint32(Convert.ToBase64String(
+                   Encoding.UTF8().GetBytes(Convert.ToString(v.GetHashCode))).GetHashCode)
     End Function
 
     Private Function signing7(ByVal v As Int32) As UInt32
-        Return Convert.ToString(v.GetHashCode()).GetHashCode
+        Return int32_uint32(Convert.ToString(v.GetHashCode()).GetHashCode)
     End Function
 
     Private Function signing8(ByVal v As Int32, Optional ByVal move_bits As Int32 = 16) As UInt32
         Dim v2 As UInt32 = 0
-        v2 = CLng(v) - min_int32
+        v2 = CUInt(CLng(v) - min_int32)
         While move_bits < 0
             move_bits += signing8_max_move_bits
         End While
         While move_bits >= signing8_max_move_bits
             move_bits -= signing8_max_move_bits
         End While
-        right_shift(v2, move_bits)
+        v2.right_shift(CByte(move_bits))
         Return v2
     End Function
 
