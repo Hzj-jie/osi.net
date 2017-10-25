@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.Reflection
 
+<AttributeUsage(AttributeTargets.Constructor, AllowMultiple:=False, Inherited:=False)>
 Public NotInheritable Class copy_constructor
     Inherits Attribute
 End Class

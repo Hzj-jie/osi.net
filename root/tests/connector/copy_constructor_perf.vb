@@ -10,16 +10,15 @@ Public Class copy_constructor_perf
     Inherits performance_comparison_case_wrapper
 
     Private Shared Function R(ByVal c As [case]) As [case]
-        Return repeat(c, 1024 * 1024 * 16)
+        Return repeat(c, 1024 * 1024)
     End Function
 
     Public Sub New()
         MyBase.New(R(New copy_constructor_case()), R(New new_case()))
     End Sub
 
-    Protected Overrides Function min_rate_table() As Double(,)
-        Return {{0, 1.5},
-                {0.9, 0}}
+    Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+        Return loosen_bound({1041, 860}, i, j)
     End Function
 
     Private Class test_class
@@ -32,7 +31,7 @@ Public Class copy_constructor_perf
         End Sub
 
         <copy_constructor()>
-        Protected Sub New(ByVal a As String, ByVal b As UInt32, ByVal c As Object)
+        Private Sub New(ByVal a As String, ByVal b As UInt32, ByVal c As Object)
             Me.a = a
             Me.b = b
             Me.c = c
