@@ -1,6 +1,10 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.utt
 
 Friend Class nowadays_case
@@ -126,7 +130,7 @@ Public Class nowadays_combined_test
     End Sub
 
     Public Overrides Function reserved_processors() As Int16
-        Return Environment.ProcessorCount()
+        Return CShort(Environment.ProcessorCount())
     End Function
 End Class
 
@@ -136,4 +140,22 @@ Public Class nowadays_combined_specified_test
     Public Sub New()
         MyBase.New(New nowadays_combined_test(max_int64))
     End Sub
+End Class
+
+Public Class high_res_normal_res_low_res_ticks_perf_test
+    Inherits performance_comparison_case_wrapper
+
+    Private Shared Function R(ByVal f As Action) As [case]
+        Return repeat(New delegate_case(f), 1024 * 1024 * 16)
+    End Function
+
+    Public Sub New()
+        MyBase.New(R(AddressOf nowadays.high_res_ticks),
+                   R(AddressOf nowadays.normal_res_ticks),
+                   R(AddressOf nowadays.low_res_ticks))
+    End Sub
+
+    Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+        Return loosen_bound({2428, 13106, 1146}, i, j)
+    End Function
 End Class
