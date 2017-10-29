@@ -14,7 +14,7 @@ Friend Class dataprovider_collection
 
     Public Sub start_auto_cleanup(ByVal lifetime_ms As Int64)
         If lifetime_ms <= 0 Then
-            lifetime_ms = minute_to_milliseconds(60)
+            lifetime_ms = minutes_to_milliseconds(60)
         End If
         assert(auto_cleanup_enabled.mark_in_use())
         waitfor_auto_cleanup_stop()

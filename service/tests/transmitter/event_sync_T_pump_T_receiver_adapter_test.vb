@@ -134,7 +134,7 @@ Public Class event_sync_T_pump_T_receiver_adapter_test
         End Function
 
         Public Overrides Function finish() As Boolean
-            assert_true(timeslice_sleep_wait_until(Function() +received = +index, minute_to_milliseconds(5)))
+            assert_true(timeslice_sleep_wait_until(Function() +received = +index, minutes_to_milliseconds(5)))
             assert(exp.stop())
             ' Ensure all the blocking receive procedures can finish.
             For i As Int32 = 0 To receive_procedure_count - 1

@@ -96,7 +96,7 @@ Public Class iosys_test
         Public Sub start(ByVal round As Int64, ByVal interval_ms As Int64)
             assert_true(async_sync(New event_comb(Function() As Boolean
                                                       Return waitfor(Function() q.size() < flower_size,
-                                                                     minute_to_milliseconds(1)) AndAlso
+                                                                     minutes_to_milliseconds(1)) AndAlso
                                                              (assert_less_or_equal(q.size(), flower_size) AndAlso
                                                               goto_next()) OrElse
                                                              False
@@ -118,7 +118,7 @@ Public Class iosys_test
                                                   End Function,
                                                   Function() As Boolean
                                                       Return waitfor(Function() q.empty(),
-                                                                     minute_to_milliseconds(1)) AndAlso
+                                                                     minutes_to_milliseconds(1)) AndAlso
                                                              goto_end()
                                                   End Function)))
             assert_true(q.empty())

@@ -47,13 +47,13 @@ Public Class waitable_##TYPE##_test
                     assert_true(lazy_sleep_wait_until(Function() As Boolean
                                                           Return +passed > c
                                                       End Function,
-                                                      seconds_to_milliseconds(1)))
+                                                      minutes_to_milliseconds(1)))
                 Next
                 finished.increment()
                 Return True
             Else
                 While +finished < push_thread
-                    assert_true(q.wait(seconds_to_milliseconds(1)) OrElse +finished = push_thread)
+                    assert_true(q.wait(minutes_to_milliseconds(1)) OrElse +finished = push_thread)
                     passed.increment()
                     assert_true(q.pop(Nothing))
                 End While

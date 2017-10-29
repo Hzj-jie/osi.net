@@ -9,7 +9,7 @@ Public Class suspend_all_process_threads_test
     Inherits isolate_case_wrapper
 
     Public Sub New()
-        MyBase.New(New suspend_all_process_threads_case(), minute_to_milliseconds(1))
+        MyBase.New(New suspend_all_process_threads_case(), minutes_to_milliseconds(1))
     End Sub
 
     Public Class suspend_all_process_threads_case
