@@ -17,13 +17,13 @@ Public Class waitable_slimqless2_test
     Inherits multithreading_case_wrapper
 
     Public Sub New()
-        MyBase.New(New waitable_slimqless2_case(), waitable_slimqless2_case.push_thread << 1)
+        MyBase.New(New waitable_slimqless2_case(), waitable_slimqless2_case.push_threads << 1)
     End Sub
 
     Private Class waitable_slimqless2_case
         Inherits [case]
 
-        Public Const push_thread As Int32 = 2
+        Public Const push_threads As Int32 = 2
         Private Const test_size As Int32 = 1000000
         Private ReadOnly q As waitable_slimqless2(Of Int32)
         Private ReadOnly passed As atomic_int
@@ -47,7 +47,7 @@ Public Class waitable_slimqless2_test
         End Function
 
         Public Overrides Function run() As Boolean
-            If multithreading_case_wrapper.thread_id() < push_thread Then
+            If multithreading_case_wrapper.thread_id() < push_threads Then
                 For i As Int32 = 0 To test_size - 1
                     Dim c As Int32 = 0
                     c = +passed
@@ -55,21 +55,28 @@ Public Class waitable_slimqless2_test
                     assert_true(lazy_sleep_wait_until(Function() As Boolean
                                                           Return +passed > c
                                                       End Function,
-                                                      minutes_to_milliseconds(1)))
+                                                      seconds_to_milliseconds(1)))
                 Next
                 finished.increment()
                 Return True
             Else
-                While +finished < push_thread
-                    assert_true(q.wait(minutes_to_milliseconds(1)) OrElse +finished = push_thread)
-                    passed.increment()
-                    assert_true(q.pop(Nothing))
+                While +finished < push_threads
+                    assert_true(q.wait(seconds_to_milliseconds(1)) OrElse +finished = push_threads)
+                    If +finished = push_threads Then
+                        While q.pop(Nothing)
+                            passed.increment()
+                        End While
+                    Else
+                        passed.increment()
+                        assert_true(q.pop(Nothing))
+                    End If
                 End While
                 Return True
             End If
         End Function
 
         Public Overrides Function finish() As Boolean
+            assert_equal(+passed, test_size * push_threads)
             q.clear()
             Return MyBase.finish()
         End Function
