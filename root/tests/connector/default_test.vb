@@ -31,17 +31,15 @@ Public Class default_test
                        repeat(New generic_function_case(), size))
         End Sub
 
-        Protected Overrides Function min_rate_table() As Double(,)
+        Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
             If isdebugbuild() Then
-                Return {{0, 2, 1.8, 1.8},
-                        {0.9, 0, 1.5, 1.5},
-                        {0.9, 0.9, 0, 0.9},
-                        {0.9, 1.5, 1.5, 0}}
+                Return loosen_bound({9714, 7902, 5539, 7005}, i, j)
             Else
-                Return {{0, 8, 8, 8},
-                        {0.4, 0, 1.5, 1.5},
-                        {0.4, 1.5, 0, 1.5},
-                        {0.4, 1.5, 1.5, 0}}
+                If os.windows_major <= os.windows_major_t._5 Then
+                    Return loosen_bound({1095, 100, 125, 208}, i, j)
+                Else
+                    Return loosen_bound({3850, 795, 833, 754}, i, j)
+                End If
             End If
         End Function
 
