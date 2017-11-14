@@ -104,7 +104,7 @@ Public Module _time
         End If
     End Function
 
-    Public Function minute_to_seconds(ByVal m As Int64) As Int64
+    Public Function minutes_to_seconds(ByVal m As Int64) As Int64
         Const ratio As Int64 = minute_second
         Const imax As Int64 = max_int64 \ ratio
         Const imin As Int64 = min_int64 \ ratio
@@ -122,7 +122,7 @@ Public Module _time
         End If
     End Function
 
-    Public Function minute_to_milliseconds(ByVal m As Int64) As Int64
+    Public Function minutes_to_milliseconds(ByVal m As Int64) As Int64
         Const ratio As Int64 = minute_second * second_milli
         Const imax As Int64 = max_int64 \ ratio
         Const imin As Int64 = min_int64 \ ratio

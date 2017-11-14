@@ -50,9 +50,9 @@ Public MustInherit Class flower_test
             first.receive_pump.emplace(v(i))
         Next
         first.receive_pump.emplace(max_int32)
-        assert_true(timeslice_sleep_wait_until(Function() f.stopped(), minute_to_milliseconds(1)))
+        assert_true(timeslice_sleep_wait_until(Function() f.stopped(), minutes_to_milliseconds(1)))
         assert_true(last.send_pump_equal(v))
-        assert_true(timeslice_sleep_wait_until(Function() +ended, minute_to_milliseconds(1)))
+        assert_true(timeslice_sleep_wait_until(Function() +ended, minutes_to_milliseconds(1)))
         Return True
     End Function
 End Class

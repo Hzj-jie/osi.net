@@ -84,7 +84,7 @@ Public Class slimheapless_threadpool2_test
     Public Overrides Function finish() As Boolean
         Using New thread_lazy()
             assert_true(timeslice_sleep_wait_until(Function() t.idle(),
-                                                   minute_to_milliseconds(1)))
+                                                   minutes_to_milliseconds(1)))
             assert_true(timeslice_sleep_wait_until(Function() (+executed) = round,
                                                    seconds_to_milliseconds(1)))
         End Using

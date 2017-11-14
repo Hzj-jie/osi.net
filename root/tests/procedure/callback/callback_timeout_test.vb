@@ -59,7 +59,7 @@ Public Class callback_timeout_test
                                                         (timeout_ms + four_timeslice_length_ms) * thread_count)
                 assert_false(async_sync(cb, timeout_ms))
             End Using
-            assert_true(timeslice_sleep_wait_until(Function() cb.finished(), minute_to_milliseconds(1)))
+            assert_true(timeslice_sleep_wait_until(Function() cb.finished(), minutes_to_milliseconds(1)))
 
             assert_false(cb.begin_result().unknown_())
             assert_true(cb.begin_result().true_())

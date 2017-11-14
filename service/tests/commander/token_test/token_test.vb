@@ -185,7 +185,7 @@ Partial Public Class token_test
         For i As UInt32 = uint32_0 To concurrency_connection - uint32_1
             assert_begin(execute(i, with_empty_token, c))
         Next
-        assert_true(c.wait(minute_to_milliseconds(10)))
+        assert_true(c.wait(minutes_to_milliseconds(10)))
         Return True
     End Function
 

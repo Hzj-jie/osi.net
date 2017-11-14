@@ -77,7 +77,7 @@ Public Class event_comb_timeout_test
             Using New auto_assert_timelimited_operation(timeout_ms, acceptable_latency_ms())
                 assert_false(async_sync(ec, timeout_ms))
             End Using
-            If assert_true(timeslice_sleep_wait_until(Function() ec.end(), minute_to_milliseconds(1))) Then
+            If assert_true(timeslice_sleep_wait_until(Function() ec.end(), minutes_to_milliseconds(1))) Then
                 assert_false(ec.end_result())
             End If
             'some event_combs may be timeouted before it's really started
@@ -98,7 +98,7 @@ Public Class event_comb_timeout_test
                                     Return goto_end()
                                 End Function)
             assert_true(async_sync(ec, acceptable_latency_ms()))
-            If assert_true(timeslice_sleep_wait_until(Function() ec.end(), minute_to_milliseconds(1))) Then
+            If assert_true(timeslice_sleep_wait_until(Function() ec.end(), minutes_to_milliseconds(1))) Then
                 assert_true(ec.end_result())
             End If
             'some event_combs may be timeouted before it's really started
