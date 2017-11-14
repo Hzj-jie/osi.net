@@ -60,16 +60,16 @@ void write_body(FILE*& fo, int pc, bool has_rtn, bool no_throw)
 {
     if(no_throw)
     {
-        fp("            assert(Not d Is Nothing)");
+        fp("        assert(Not d Is Nothing)");
     }
     else
     {
-        fp("            If d Is Nothing Then\n                Return");
+        fp("        If d Is Nothing Then\n            Return");
         if(has_rtn) fp(" false_value");
-        fp("\n            End If");
+        fp("\n        End If");
     }
-    fp("\n            Try"
-       "\n                ");
+    fp("\n        Try"
+       "\n            ");
     if(has_rtn) fp("Return ");
     fp("d(");
     for(int i = 0; i < pc; i++)
@@ -81,28 +81,28 @@ void write_body(FILE*& fo, int pc, bool has_rtn, bool no_throw)
     fp(")");
     if(no_throw)
     {
-        fp("\n            Catch ex As Exception"
-           "\n                log_unhandled_exception(ex)"
-           "\n                assert(False)"
-           "\n                Return");
+        fp("\n        Catch ex As Exception"
+           "\n            log_unhandled_exception(ex)"
+           "\n            assert(False)"
+           "\n            Return");
         if(has_rtn) fp(" Nothing");
     }
     else
     {
-        fp("\n            Catch ex As ThreadAbortException"
-           "\n                raise_error(error_type.warning, \"thread abort\")"
-           "\n                Return");
+        fp("\n        Catch ex As ThreadAbortException"
+           "\n            raise_error(error_type.warning, \"thread abort\")"
+           "\n            Return");
         if(has_rtn) fp(" false_value");
-        fp("\n            Catch ex As Exception"
-           "\n                log_unhandled_exception(ex)"
-           "\n                Return");
+        fp("\n        Catch ex As Exception"
+           "\n            log_unhandled_exception(ex)"
+           "\n            Return");
         if(has_rtn) fp(" false_value");
     }
-    fp("\n            End Try");
+    fp("\n        End Try");
     if(has_rtn)
-    fp("\n        End Function\n\n");
+    fp("\n    End Function\n\n");
     else
-    fp("\n        End Sub\n\n");
+    fp("\n    End Sub\n\n");
 }
 
 void write(FILE*& fo, int pc, const char* fn, const char* dn, bool has_rtn, bool para_byref)
