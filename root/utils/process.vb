@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Diagnostics
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
@@ -14,7 +18,7 @@ Public Module _process
         Else
             Try
                 If p.HasExited() Then
-                    Return False
+                    Return True
                 End If
             Catch ex As Exception
                 raise_error(error_type.warning,
@@ -25,9 +29,15 @@ Public Module _process
                 Return False
             End Try
 
+            If wait_ms > max_int32 Then
+                wait_ms = max_int32
+            ElseIf wait_ms < min_int32 Then
+                wait_ms = min_int32
+            End If
+
             Try
                 If Not p.CloseMainWindow() OrElse
-                   Not p.WaitForExit(wait_ms) Then
+                   Not p.WaitForExit(CInt(wait_ms)) Then
                     p.Kill()
                 End If
             Catch ex As Exception

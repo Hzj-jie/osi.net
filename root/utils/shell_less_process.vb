@@ -39,16 +39,16 @@ Public NotInheritable Class shell_less_process
                           disposer:=Sub(p As Process)
                                         trace("disposer")
                                         assert(Not p Is Nothing)
-                                        p.quit()
                                         If Not enable_raise_event Then
-                                            p.StandardOutput().Close()
-                                            p.StandardOutput().Dispose()
-                                            p.StandardError().Close()
-                                            p.StandardError().Dispose()
+                                            ignore_exceptions(AddressOf p.StandardOutput().Close)
+                                            ignore_exceptions(AddressOf p.StandardOutput().Dispose)
+                                            ignore_exceptions(AddressOf p.StandardError().Close)
+                                            ignore_exceptions(AddressOf p.StandardError().Dispose)
                                         End If
-                                        p.StandardInput().Close()
-                                        p.StandardInput().Dispose()
-                                        p.Dispose()
+                                        ignore_exceptions(AddressOf p.StandardInput().Close)
+                                        ignore_exceptions(AddressOf p.StandardInput().Dispose)
+                                        ignore_exceptions(AddressOf p.Dispose)
+                                        p.quit()
                                         trace("finish disposer")
                                     End Sub)
         Me.enable_raise_event = enable_raise_event
@@ -73,20 +73,29 @@ Public NotInheritable Class shell_less_process
         End If
     End Sub
 
-    Private Sub received_delegate(ByVal e As DataReceivedEventArgs, ByVal output As Boolean)
-        ce.increment()
-        trace("received_delegate")
+    Private Sub invoke_in_synchronizing_object(ByVal v As Action)
         If proc().SynchronizingObject() Is Nothing Then
-            received(e, output)
+            v()
         Else
+            Dim si As synchronize_invoke = Nothing
+            si = direct_cast(Of synchronize_invoke)(proc().SynchronizingObject(), False)
             ' This is definitely not the correct behavior, but Process.Exited() may be raised on a random ThreadPool
             ' thread.
             ' TODO: Why Process.Exited() won't respect SynchronizingObject().
-            proc().SynchronizingObject().Invoke(Sub()
-                                                    received(e, output)
-                                                End Sub,
-                                                Nothing)
+            If si Is Nothing Then
+                proc().SynchronizingObject().Invoke(v, Nothing)
+            Else
+                si.async_invoke(v, Nothing)
+            End If
         End If
+    End Sub
+
+    Private Sub received_delegate(ByVal e As DataReceivedEventArgs, ByVal output As Boolean)
+        ce.increment()
+        trace("received_delegate")
+        invoke_in_synchronizing_object(Sub()
+                                           received(e, output)
+                                       End Sub)
         trace("finish received_delegate")
         ce.decrement()
     End Sub
@@ -118,17 +127,7 @@ Public NotInheritable Class shell_less_process
 
     Private Sub process_exited(ByVal sender As Object, ByVal e As EventArgs)
         trace("start process_exited")
-        If proc().SynchronizingObject() Is Nothing Then
-            process_exited()
-        Else
-            ' This is definitely not the correct behavior, but Process.Exited() may be raised on a random ThreadPool
-            ' thread.
-            ' TODO: Why Process.Exited() won't respect SynchronizingObject().
-            proc().SynchronizingObject().Invoke(Sub()
-                                                    process_exited()
-                                                End Sub,
-                                                Nothing)
-        End If
+        invoke_in_synchronizing_object(AddressOf process_exited)
         trace("finish process_exited")
     End Sub
 

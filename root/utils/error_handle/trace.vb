@@ -1,6 +1,10 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.envs
 
 Public Module _trace
@@ -22,22 +26,22 @@ Public Module _trace
         If enabled Then
             If enable_detail_trace Then
                 raise_error(error_type.trace,
-                        character.null,
-                        additional_jump + 1,
-                        "thread id ",
-                        current_thread_id(),
-                        ", ",
-                        msg,
-                        ". Stack trace ",
-                        callstack())
+                            character.null,
+                            additional_jump + 1,
+                            "thread id ",
+                            current_thread_id(),
+                            ", ",
+                            msg,
+                            ". Stack trace ",
+                            callstack())
             Else
                 raise_error(error_type.trace,
-                        character.null,
-                        additional_jump + 1,
-                        "thread id ",
-                        current_thread_id(),
-                        ", ",
-                        msg)
+                            character.null,
+                            additional_jump + 1,
+                            "thread id ",
+                            current_thread_id(),
+                            ", ",
+                            msg)
             End If
         End If
     End Sub

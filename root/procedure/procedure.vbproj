@@ -85,6 +85,7 @@
     <Compile Include="event_comb\extensions\qless2_stream.vb" />
     <Compile Include="event_comb\extensions\resource.vb" />
     <Compile Include="event_comb\extensions\stream.vb" />
+    <Compile Include="event_comb\extensions\synchronize_invoke.vb" />
     <Compile Include="event_comb\extensions\tcpclient.vb" />
     <Compile Include="event_comb\extensions\tcplistener.vb" />
     <Compile Include="event_comb\extensions\udpclient.vb" />

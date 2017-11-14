@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 
 Public Module _delegate2
@@ -25,4 +29,22 @@ Public Module _delegate2
                    End Sub
         End If
     End Function
+
+    <Extension()> Public Function safe_invoke(ByVal method As [Delegate], ByVal args() As Object) As Object
+        If method Is Nothing Then
+            Return Nothing
+        Else
+            Return do_(AddressOf method.DynamicInvoke, args, Nothing)
+        End If
+    End Function
+
+    ' This should be rarely used, a typical scenario is to run clean up only.
+    <Extension()> Public Sub ignore_exceptions(ByVal v As Action)
+        If Not v Is Nothing Then
+            Try
+                v()
+            Catch
+            End Try
+        End If
+    End Sub
 End Module

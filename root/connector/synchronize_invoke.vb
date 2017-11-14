@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.ComponentModel
 Imports System.Threading
 
@@ -27,7 +31,7 @@ Public MustInherit Class synchronize_invoke
         End Sub
 
         Public Sub execute()
-            r = do_(AddressOf method.DynamicInvoke, args, Nothing)
+            r = method.safe_invoke(args)
             If Not sync Then
                 assert(mre.force_set())
             End If
@@ -110,6 +114,22 @@ Public MustInherit Class synchronize_invoke
     Public Function Invoke(ByVal method As [Delegate],
                            ByVal args() As Object) As Object Implements ISynchronizeInvoke.Invoke
         Return EndInvoke(BeginInvoke(method, args))
+    End Function
+
+    Public Function async_invoke(ByVal method As [Delegate], ByVal args() As Object) As Boolean
+        If method Is Nothing Then
+            Return False
+        Else
+            If synchronously() Then
+                method.safe_invoke(args)
+            Else
+                push(Sub()
+                         ' The underlying runner should take care of the exceptions.
+                         method.DynamicInvoke(args)
+                     End Sub)
+            End If
+            Return True
+        End If
     End Function
 
     Protected MustOverride Sub push(ByVal v As Action)
