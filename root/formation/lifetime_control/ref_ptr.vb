@@ -76,7 +76,10 @@ Public Class ref_ptr(Of T)
     End Function
 
     Protected Overrides Sub Finalize()
-        assert(i.get() = 0, "ref_ptr @ ", create_stack_trace, " has not been fully dereferred.")
+        If ref_count() > 0 Then
+            queue_dispose()
+            raise_error(error_type.warning, "ref_ptr @ ", create_stack_trace, " has not been fully dereferred.")
+        End If
         MyBase.Finalize()
     End Sub
 
