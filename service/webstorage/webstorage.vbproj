@@ -89,7 +89,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="webstorage.deps" />
+    <None Include="webstorage.dep" />
     <None Include="webstorage.props" />
   </ItemGroup>
   <ItemGroup>
