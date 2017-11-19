@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("webstorage")> 
+<Assembly: AssemblyTitle("osi.service.webstorage")> 
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("- Gemini -")> 
-<Assembly: AssemblyProduct("webstorage")> 
+<Assembly: AssemblyProduct("osi.service.webstorage")> 
 <Assembly: AssemblyCopyright("Copyright © - Gemini - 2017")> 
 <Assembly: AssemblyTrademark("")> 
 

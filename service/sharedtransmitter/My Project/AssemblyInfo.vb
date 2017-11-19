@@ -8,17 +8,17 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("osi.tests.service.webstorage")> 
+<Assembly: AssemblyTitle("osi.service.sharedtransmitter")> 
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("- Gemini -")> 
-<Assembly: AssemblyProduct("osi.tests.service.webstorage")> 
+<Assembly: AssemblyProduct("osi.service.sharedtransmitter")> 
 <Assembly: AssemblyCopyright("Copyright © - Gemini - 2017")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("b65e7d91-ff7f-4d7c-b72d-a4c6849b6e53")> 
+<Assembly: Guid("d4f6359d-70f1-4b4f-81b0-2e141ee76495")> 
 
 ' Version information for an assembly consists of the following four values:
 '

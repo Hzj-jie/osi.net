@@ -331,9 +331,13 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "webstorage", "webstorage\we
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "webstorage", "tests\webstorage\webstorage.vbproj", "{88157EDE-6AB9-4833-9BBA-20AA62E899C3}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "sharedtransmitter", "sharedtransmitter\sharedtransmitter.vbproj", "{078F8581-BE00-465E-94F7-C3C713A78752}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "sharedtransmitter", "tests\sharedtransmitter\sharedtransmitter.vbproj", "{11ED1188-5AA1-4A50-8FA9-B6F921497D5F}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 60
+		SccNumberOfProjects = 62
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs02
 		SccLocalPath0 = .
@@ -544,6 +548,13 @@ Global
 		SccProjectTopLevelParentUniqueName59 = service.sln
 		SccProjectName59 = tests/webstorage
 		SccLocalPath59 = tests\\webstorage
+		SccProjectUniqueName60 = sharedtransmitter\\sharedtransmitter.vbproj
+		SccProjectName60 = sharedtransmitter
+		SccLocalPath60 = sharedtransmitter
+		SccProjectUniqueName61 = tests\\sharedtransmitter\\sharedtransmitter.vbproj
+		SccProjectTopLevelParentUniqueName61 = service.sln
+		SccProjectName61 = tests/sharedtransmitter
+		SccLocalPath61 = tests\\sharedtransmitter
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -786,6 +797,14 @@ Global
 		{88157EDE-6AB9-4833-9BBA-20AA62E899C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88157EDE-6AB9-4833-9BBA-20AA62E899C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88157EDE-6AB9-4833-9BBA-20AA62E899C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{078F8581-BE00-465E-94F7-C3C713A78752}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{078F8581-BE00-465E-94F7-C3C713A78752}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{078F8581-BE00-465E-94F7-C3C713A78752}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{078F8581-BE00-465E-94F7-C3C713A78752}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11ED1188-5AA1-4A50-8FA9-B6F921497D5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11ED1188-5AA1-4A50-8FA9-B6F921497D5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11ED1188-5AA1-4A50-8FA9-B6F921497D5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11ED1188-5AA1-4A50-8FA9-B6F921497D5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -821,5 +840,6 @@ Global
 		{0AD7E6B4-F1CA-4BA8-8833-599691267260} = {80155CF9-F429-4110-9748-EC85E0C8FD0E}
 		{08986685-C36E-4CF8-AB33-B31824ADC213} = {80155CF9-F429-4110-9748-EC85E0C8FD0E}
 		{88157EDE-6AB9-4833-9BBA-20AA62E899C3} = {80155CF9-F429-4110-9748-EC85E0C8FD0E}
+		{11ED1188-5AA1-4A50-8FA9-B6F921497D5F} = {80155CF9-F429-4110-9748-EC85E0C8FD0E}
 	EndGlobalSection
 EndGlobal
