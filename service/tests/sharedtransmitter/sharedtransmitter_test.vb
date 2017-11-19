@@ -5,14 +5,14 @@ Option Strict On
 
 Imports osi.root.utt
 
-Partial Public Class shared_component_test
+Partial Public Class sharedtransmitter_test
     Inherits chained_case_wrapper
 
     Public Sub New()
         MyBase.New(New outgoing_test(), New incoming_test(), New bidirectional_test())
     End Sub
 
-    Public Class shared_component_outgoing_test
+    Public Class sharedtransmitter_outgoing_test
         Inherits commandline_specified_case_wrapper
 
         Public Sub New()
@@ -20,7 +20,7 @@ Partial Public Class shared_component_test
         End Sub
     End Class
 
-    Public Class shared_component_incoming_test
+    Public Class sharedtransmitter_incoming_test
         Inherits commandline_specified_case_wrapper
 
         Public Sub New()
@@ -28,7 +28,7 @@ Partial Public Class shared_component_test
         End Sub
     End Class
 
-    Public Class shared_component_bidirectional_test
+    Public Class sharedtransmitter_bidirectional_test
         Inherits commandline_specified_case_wrapper
 
         Public Sub New()

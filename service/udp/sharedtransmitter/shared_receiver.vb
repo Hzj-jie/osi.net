@@ -6,14 +6,14 @@ Option Strict On
 Imports System.Net.Sockets
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports base_shared_component = osi.service.selector.shared_component(Of System.UInt16,
-                                                                         String,
-                                                                         System.Net.Sockets.UdpClient,
-                                                                         Byte(),
-                                                                         osi.service.udp.powerpoint)
+Imports base_sharedtransmitter = osi.service.sharedtransmitter.sharedtransmitter(Of System.UInt16,
+                                                                                    String,
+                                                                                    System.Net.Sockets.UdpClient,
+                                                                                    Byte(),
+                                                                                    osi.service.udp.powerpoint)
 
 Public NotInheritable Class shared_receiver
-    Inherits base_shared_component.shared_receiver
+    Inherits base_sharedtransmitter.shared_receiver
 
     Private ReadOnly d As udp_bytes_dev
 

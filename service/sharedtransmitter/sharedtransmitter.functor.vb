@@ -4,8 +4,9 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.formation
+Imports osi.service.selector
 
-Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
+Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
     Public Interface functor
         Function is_valid_port(ByVal id As PORT_T) As Boolean
         Function accept_new_component(ByVal p As PARAMETER_T) As Boolean
@@ -17,7 +18,7 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
         Function new_accepter(ByVal p As PARAMETER_T,
                               ByVal remote As const_pair(Of ADDRESS_T, PORT_T)) _
                              As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)).accepter
-        Function new_shared_component(
+        Function new_sharedtransmitter(
                 ByVal p As PARAMETER_T,
                 ByVal id As PORT_T,
                 ByVal component As ref_instance(Of COMPONENT_T),
@@ -25,7 +26,7 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
                 ByVal remote As const_pair(Of ADDRESS_T, PORT_T),
                 ByVal functor As functor,
                 ByVal buff As DATA_T) _
-                As shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
+                As sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
         Function create_receiver(ByVal p As PARAMETER_T,
                                  ByVal id As PORT_T,
                                  ByVal dev As ref_instance(Of COMPONENT_T),

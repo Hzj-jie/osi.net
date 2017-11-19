@@ -9,7 +9,7 @@ Imports osi.root.procedure
 Imports osi.service.transmitter
 
 ' Send data to one specific receiver identified by remote address and port.
-Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
+Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
     Public MustInherit Class exclusive_sender
         Implements T_sender(Of DATA_T)
 

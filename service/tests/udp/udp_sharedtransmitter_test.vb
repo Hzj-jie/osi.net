@@ -15,7 +15,7 @@ Imports osi.root.utt
 Imports osi.service.selector
 Imports osi.service.udp
 
-Public Class udp_shared_component_test
+Public Class udp_sharedtransmitter_test
     Inherits event_comb_case
 
     Private Shared ReadOnly end_bytes() As Byte
@@ -78,13 +78,13 @@ Public Class udp_shared_component_test
 
     Private Function ping() As event_comb
         Const round As Int32 = 1000
-        Dim sc As shared_component(Of UInt16, String, UdpClient, Byte(), powerpoint) = Nothing
+        Dim sc As sharedtransmitter(Of UInt16, String, UdpClient, Byte(), powerpoint) = Nothing
         Dim ec As event_comb = Nothing
         Dim i As Int32 = 0
         Dim data() As Byte = Nothing
         Dim r As pointer(Of Byte()) = Nothing
         Return New event_comb(Function() As Boolean
-                                  sc = shared_component(Of UInt16, String, UdpClient, Byte(), powerpoint).creator.
+                                  sc = sharedtransmitter(Of UInt16, String, UdpClient, Byte(), powerpoint).creator.
                                            [New]().
                                            with_parameter(outgoing_powerpoint).
                                            with_remote(outgoing_powerpoint.remote_endpoint()).
@@ -132,7 +132,7 @@ Public Class udp_shared_component_test
                               End Function)
     End Function
 
-    Private Sub echo(ByVal c As shared_component(Of UInt16, String, UdpClient, Byte(), powerpoint))
+    Private Sub echo(ByVal c As sharedtransmitter(Of UInt16, String, UdpClient, Byte(), powerpoint))
         assert(Not c Is Nothing)
         Dim p As pointer(Of Byte()) = Nothing
         Dim ec As event_comb = Nothing
@@ -169,8 +169,8 @@ Public Class udp_shared_component_test
     End Sub
 
     Public Overrides Function create() As event_comb
-        AddHandler c.new_shared_component_exported,
-                   Sub(ByVal new_component As shared_component(Of UInt16, String, UdpClient, Byte(), powerpoint))
+        AddHandler c.new_sharedtransmitter_exported,
+                   Sub(ByVal new_component As sharedtransmitter(Of UInt16, String, UdpClient, Byte(), powerpoint))
                        If assert_not_nothing(new_component) Then
                            echo(new_component)
                        End If

@@ -5,8 +5,9 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.service.selector
 
-Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
+Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
     Public MustInherit Class default_functor
         Implements functor
 
@@ -105,7 +106,7 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
             Return New default_accepter(remote)
         End Function
 
-        Public Overridable Function new_shared_component(
+        Public Overridable Function new_sharedtransmitter(
                 ByVal p As PARAMETER_T,
                 ByVal id As PORT_T,
                 ByVal component As ref_instance(Of COMPONENT_T),
@@ -113,8 +114,8 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
                 ByVal remote As const_pair(Of ADDRESS_T, PORT_T),
                 ByVal functor As functor,
                 ByVal buff As DATA_T) _
-                As shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T) _
-                Implements functor.new_shared_component
+                As sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T) _
+                Implements functor.new_sharedtransmitter
             Return creator.[New]().
                        with_parameter(p).
                        with_local_port(id).

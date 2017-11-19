@@ -78,16 +78,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="shared_component\shared_component_test.bidirectional.vb" />
-    <Compile Include="shared_component\shared_component_test.collection.vb" />
-    <Compile Include="shared_component\shared_component_test.component.vb" />
-    <Compile Include="shared_component\shared_component_test.exclusive_sender.vb" />
-    <Compile Include="shared_component\shared_component_test.shared_receiver.vb" />
-    <Compile Include="shared_component\shared_component_test.functor.vb" />
-    <Compile Include="shared_component\shared_component_test.incoming.vb" />
-    <Compile Include="shared_component\shared_component_test.outgoing.vb" />
-    <Compile Include="shared_component\shared_component_test.parameter.vb" />
-    <Compile Include="shared_component\shared_component_test.vb" />
     <Compile Include="sync_lazier_valuetype_test.vb" />
     <Compile Include="sync_thread_safe_lazier_test.vb" />
   </ItemGroup>

@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.constants
 Imports osi.root.connector
 
-Partial Public Class shared_component_test
+Partial Public Class sharedtransmitter_test
     Public Class parameter
         Public ReadOnly local_port As Byte
         Public ReadOnly allow_new_component As Boolean

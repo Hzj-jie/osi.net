@@ -50,7 +50,7 @@
     <OptionCompare>Binary</OptionCompare>
   </PropertyGroup>
   <PropertyGroup>
-    <OptionStrict>On</OptionStrict>
+    <OptionStrict>Off</OptionStrict>
   </PropertyGroup>
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
@@ -74,6 +74,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="sharedtransmitter_test.bidirectional.vb" />
+    <Compile Include="sharedtransmitter_test.collection.vb" />
+    <Compile Include="sharedtransmitter_test.component.vb" />
+    <Compile Include="sharedtransmitter_test.exclusive_sender.vb" />
+    <Compile Include="sharedtransmitter_test.functor.vb" />
+    <Compile Include="sharedtransmitter_test.incoming.vb" />
+    <Compile Include="sharedtransmitter_test.outgoing.vb" />
+    <Compile Include="sharedtransmitter_test.parameter.vb" />
+    <Compile Include="sharedtransmitter_test.shared_receiver.vb" />
+    <Compile Include="sharedtransmitter_test.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -96,6 +106,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\..\..\root\root.utt.props" Condition="'$(RootUttProps)'==''" />
+  <Import Project="$(ServicePath)\selector\selector.props" Condition="'$(SelectorProps)'==''" />
   <Import Project="$(ServicePath)\sharedtransmitter\sharedtransmitter.props" Condition="'$(SharedtransmitterProps)'==''" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

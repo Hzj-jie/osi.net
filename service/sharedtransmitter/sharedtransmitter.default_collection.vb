@@ -6,22 +6,23 @@ Option Strict On
 Imports osi.root.template
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.service.selector
 
-Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
+Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
     Public Class collection(Of _RESOURCE_COUNT As _int64,
                                _PORT_TO_UINT32 As _to_uint32(Of PORT_T),
                                _FUNCTOR As functor)
-        Implements collection, exporter(Of shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T))
+        Implements collection, exporter(Of sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T))
 
         Private Shared ReadOnly resource_count As UInt32
         Private Shared ReadOnly port_to_uint32 As _to_uint32(Of PORT_T)
         Private Shared ReadOnly functor As functor
         Private ReadOnly devs As arrayless(Of ref_instance(Of COMPONENT_T))
         Private ReadOnly dispensers As arrayless(Of dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)))
-        Public Event new_shared_component_exported(
-                ByVal d As shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)) _
-                Implements exporter(Of shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)) _
-                .new_shared_component_exported
+        Public Event new_sharedtransmitter_exported(
+                ByVal d As sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)) _
+                Implements exporter(Of sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)) _
+                .new_sharedtransmitter_exported
 
         Shared Sub New()
             port_to_uint32 = alloc(Of _PORT_TO_UINT32)()
@@ -103,8 +104,8 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
                                                 AddHandler x.unaccepted,
                                                            Sub(ByVal buff As DATA_T,
                                                                ByVal remote As const_pair(Of ADDRESS_T, PORT_T))
-                                                               RaiseEvent new_shared_component_exported(
-                                                                       functor.new_shared_component(p,
+                                                               RaiseEvent new_sharedtransmitter_exported(
+                                                                       functor.new_sharedtransmitter(p,
                                                                                                     local_port,
                                                                                                     i,
                                                                                                     x,

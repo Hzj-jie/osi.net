@@ -5,8 +5,9 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.service.selector
 
-Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
+Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
     Private Class default_accepter
         Inherits dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)).accepter
 

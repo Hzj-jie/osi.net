@@ -9,7 +9,7 @@ Imports osi.root.procedure
 Imports osi.service.transmitter
 
 ' Receive data from one COMPONENT_T identified by local port.
-Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
+Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
     Public MustInherit Class shared_receiver
         Implements T_receiver(Of pair(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)))
 

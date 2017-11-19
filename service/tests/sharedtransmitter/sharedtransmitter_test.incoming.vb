@@ -10,8 +10,9 @@ Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.utt
 Imports osi.service.selector
+Imports osi.service.sharedtransmitter
 
-Partial Public Class shared_component_test
+Partial Public Class sharedtransmitter_test
     Private Class incoming_test
         Inherits [case]
 
@@ -32,10 +33,10 @@ Partial Public Class shared_component_test
         Private Function run_case() As Boolean
             Const ip_size As Byte = 10
             Const port_size As Byte = 10
-            Dim s As vector(Of shared_component(Of Byte, Byte, component, Int32, parameter)) = Nothing
+            Dim s As vector(Of sharedtransmitter(Of Byte, Byte, component, Int32, parameter)) = Nothing
             s = _new(s)
-            AddHandler c.new_shared_component_exported,
-                       Sub(ByVal new_component As shared_component(Of Byte, Byte, component, Int32, parameter))
+            AddHandler c.new_sharedtransmitter_exported,
+                       Sub(ByVal new_component As sharedtransmitter(Of Byte, Byte, component, Int32, parameter))
                            s.emplace_back(new_component)
                        End Sub
             Dim p As pointer(Of Int32) = Nothing
@@ -43,7 +44,7 @@ Partial Public Class shared_component_test
             If assert_true(component.referred()) Then
                 For i As Byte = 0 To ip_size - uint8_1
                     For j As Byte = 1 To port_size
-                        assert(shared_component_test.component.is_valid_port(j))
+                        assert(sharedtransmitter_test.component.is_valid_port(j))
                         Dim exp_size As UInt32
                         exp_size = i * CUInt(10) + j
                         assert_less(s.size(), exp_size)
@@ -97,7 +98,7 @@ Partial Public Class shared_component_test
         End Function
 
         Public Overrides Function run() As Boolean
-            assert_true(_shared_component_collection.[New](Of Byte, Byte, component, Int32, parameter) _
+            assert_true(_sharedtransmitter_collection.[New](Of Byte, Byte, component, Int32, parameter) _
                                                           (c, p, component, dispenser))
 
             Dim r As Boolean = False
@@ -110,10 +111,10 @@ Partial Public Class shared_component_test
             assert_true(dispenser.stopped())
             assert_equal(component.ref_count(), uint32_0)
             assert_false(component.referred())
-            ' TODO: Why cannot shared_component_test.dispenser.receiver.sense be finished here.
+            ' TODO: Why cannot sharedtransmitter_test.dispenser.receiver.sense be finished here.
             ' [event_comb] instance count 3,
             ' [event_sync_T_pump_T_receiver_adapter.vb(64):osi.service.transmitter.event_sync_T_pump_T_receiver_adapter`1.sense] - 1,
-            ' [shared_component_test.dispenser.receiver.vb(44):osi.tests.service.selector.shared_component_test+receiver.sense] - 1,
+            ' [sharedtransmitter_test.dispenser.receiver.vb(44):osi.tests.service.selector.sharedtransmitter_test+receiver.sense] - 1,
             ' [sensor.vb(95):osi.service.transmitter.dll.osi.service.transmitter._sensor.sense] - 1
             sleep(constants.default_sense_timeout_ms)
 

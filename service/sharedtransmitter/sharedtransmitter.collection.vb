@@ -6,8 +6,9 @@ Option Strict On
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.service.selector
 
-Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
+Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
     ' Implementation of this interface should be singleton to represent all devices in the system.
     Public Interface collection
         ' Create a new or retrieve existing device with the @local_port if it's valid.
@@ -24,9 +25,9 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
     End Interface
 End Class
 
-Public Module _shared_component_collection
+Public Module _sharedtransmitter_collection
     <Extension()> Public Function [New](Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T) _
-                                       (ByVal this As shared_component(Of PORT_T,
+                                       (ByVal this As sharedtransmitter(Of PORT_T,
                                                                           ADDRESS_T,
                                                                           COMPONENT_T,
                                                                           DATA_T,

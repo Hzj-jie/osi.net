@@ -9,8 +9,9 @@ Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utt
 Imports osi.service.selector
+Imports osi.service.sharedtransmitter
 
-Partial Public Class shared_component_test
+Partial Public Class sharedtransmitter_test
     Private Class bidirectional_test
         Inherits [case]
 
@@ -18,8 +19,8 @@ Partial Public Class shared_component_test
         Private ReadOnly ic As collection
         Private ReadOnly oc As collection
         Private ReadOnly f As functor
-        Private ReadOnly ins As vector(Of shared_component(Of Byte, Byte, component, Int32, parameter))
-        Private ReadOnly outs As vector(Of shared_component(Of Byte, Byte, component, Int32, parameter))
+        Private ReadOnly ins As vector(Of sharedtransmitter(Of Byte, Byte, component, Int32, parameter))
+        Private ReadOnly outs As vector(Of sharedtransmitter(Of Byte, Byte, component, Int32, parameter))
         Private ReadOnly inp As parameter
         Private ReadOnly outp As parameter
 
@@ -42,7 +43,7 @@ Partial Public Class shared_component_test
         End Sub
 
         Private Shared Function execute_receive_then_send(
-                ByVal sc As shared_component(Of Byte, Byte, component, Int32, parameter),
+                ByVal sc As sharedtransmitter(Of Byte, Byte, component, Int32, parameter),
                 ByVal first As Int32,
                 ByVal self_increment As Boolean) As event_comb
             assert(Not sc Is Nothing)
@@ -87,20 +88,20 @@ Partial Public Class shared_component_test
         End Function
 
         Private Shared Function execute_receive_then_send_next(
-                ByVal sc As shared_component(Of Byte, Byte, component, Int32, parameter),
+                ByVal sc As sharedtransmitter(Of Byte, Byte, component, Int32, parameter),
                 ByVal first As Int32) As event_comb
             Return execute_receive_then_send(sc, first, True)
         End Function
 
         Private Shared Function execute_receive_then_send(
-                ByVal sc As shared_component(Of Byte, Byte, component, Int32, parameter),
+                ByVal sc As sharedtransmitter(Of Byte, Byte, component, Int32, parameter),
                 ByVal first As Int32) As event_comb
             Return execute_receive_then_send(sc, first, False)
         End Function
 
         Private Shared Function execute_send_receive(
-            ByVal sender As shared_component(Of Byte, Byte, component, Int32, parameter),
-            ByVal receiver As shared_component(Of Byte, Byte, component, Int32, parameter),
+            ByVal sender As sharedtransmitter(Of Byte, Byte, component, Int32, parameter),
+            ByVal receiver As sharedtransmitter(Of Byte, Byte, component, Int32, parameter),
             ByVal first As Int32) As event_comb
             Dim ec1 As event_comb = Nothing
             Dim ec2 As event_comb = Nothing
@@ -130,8 +131,8 @@ Partial Public Class shared_component_test
         Public Overrides Function run() As Boolean
             Dim inc As ref_instance(Of component) = Nothing
             Dim ind As dispenser(Of Int32, const_pair(Of Byte, Byte)) = Nothing
-            AddHandler ic.new_shared_component_exported,
-                       Sub(ByVal sc As shared_component(Of Byte, Byte, component, Int32, parameter))
+            AddHandler ic.new_sharedtransmitter_exported,
+                       Sub(ByVal sc As sharedtransmitter(Of Byte, Byte, component, Int32, parameter))
                            assert_not_nothing(sc)
                            assert_true(sc.is_valid())
                            ins.emplace_back(sc)
@@ -156,8 +157,8 @@ Partial Public Class shared_component_test
                 j = i
                 Dim first As Int32 = 0
                 first = iteration_count * i
-                Dim sc As shared_component(Of Byte, Byte, component, Int32, parameter) = Nothing
-                sc = shared_component(Of Byte, Byte, component, Int32, parameter).creator.
+                Dim sc As sharedtransmitter(Of Byte, Byte, component, Int32, parameter) = Nothing
+                sc = sharedtransmitter(Of Byte, Byte, component, Int32, parameter).creator.
                          [New]().
                          with_parameter(outp).
                          with_remote(make_const_pair((+inc).address, inp.local_port)).

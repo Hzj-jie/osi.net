@@ -75,9 +75,9 @@
     <Compile Include="extension.vb" />
     <Compile Include="powerpoint.create.vb" />
     <Compile Include="powerpoint.vb" />
-    <Compile Include="shared_component\collection.vb" />
-    <Compile Include="shared_component\exclusive_sender.vb" />
-    <Compile Include="shared_component\functor.vb" />
+    <Compile Include="sharedtransmitter\collection.vb" />
+    <Compile Include="sharedtransmitter\exclusive_sender.vb" />
+    <Compile Include="sharedtransmitter\functor.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -93,7 +93,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="shared_component\shared_receiver.vb" />
+    <Compile Include="sharedtransmitter\shared_receiver.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

@@ -5,11 +5,11 @@ Option Strict On
 
 Imports osi.root.formation
 Imports osi.root.utt
-Imports osi.service.selector
+Imports osi.service.sharedtransmitter
 
-Partial Public Class shared_component_test
+Partial Public Class sharedtransmitter_test
     Private NotInheritable Class functor
-        Inherits shared_component(Of Byte, Byte, component, Int32, parameter).default_functor
+        Inherits sharedtransmitter(Of Byte, Byte, component, Int32, parameter).default_functor
 
         Public Shared address As Byte
 
@@ -39,7 +39,7 @@ Partial Public Class shared_component_test
                 ByVal p As parameter,
                 ByVal id As Byte,
                 ByVal dev As ref_instance(Of component),
-                ByRef o As shared_component(Of Byte, Byte, component, Int32, parameter).shared_receiver) As Boolean
+                ByRef o As sharedtransmitter(Of Byte, Byte, component, Int32, parameter).shared_receiver) As Boolean
             assert_not_nothing(p)
             o = New shared_receiver(dev)
             Return True
@@ -48,7 +48,7 @@ Partial Public Class shared_component_test
         Protected Overrides Function create_sender(
                 ByVal dev As ref_instance(Of component),
                 ByVal remote As const_pair(Of Byte, Byte)) _
-                As shared_component(Of Byte, Byte, component, Int32, parameter).exclusive_sender
+                As sharedtransmitter(Of Byte, Byte, component, Int32, parameter).exclusive_sender
             Return New exclusive_sender(dev, remote)
         End Function
     End Class

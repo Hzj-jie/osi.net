@@ -50,7 +50,7 @@
     <OptionCompare>Binary</OptionCompare>
   </PropertyGroup>
   <PropertyGroup>
-    <OptionStrict>On</OptionStrict>
+    <OptionStrict>Off</OptionStrict>
   </PropertyGroup>
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
@@ -74,6 +74,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="sharedtransmitter.collection.vb" />
+    <Compile Include="sharedtransmitter.creator.vb" />
+    <Compile Include="sharedtransmitter.default_accepter.vb" />
+    <Compile Include="sharedtransmitter.default_collection.vb" />
+    <Compile Include="sharedtransmitter.default_functor.vb" />
+    <Compile Include="sharedtransmitter.exclusive_sender.vb" />
+    <Compile Include="sharedtransmitter.exporter.vb" />
+    <Compile Include="sharedtransmitter.functor.vb" />
+    <Compile Include="sharedtransmitter.shared_receiver.vb" />
+    <Compile Include="sharedtransmitter.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

@@ -6,11 +6,11 @@ Option Strict On
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utt
-Imports osi.service.selector
+Imports osi.service.sharedtransmitter
 
-Partial Public Class shared_component_test
+Partial Public Class sharedtransmitter_test
     Private Class exclusive_sender
-        Inherits shared_component(Of Byte, Byte, component, Int32, parameter).exclusive_sender
+        Inherits sharedtransmitter(Of Byte, Byte, component, Int32, parameter).exclusive_sender
 
         Public Sub New(ByVal c As ref_instance(Of component), ByVal remote As const_pair(Of Byte, Byte))
             MyBase.New(c, remote)

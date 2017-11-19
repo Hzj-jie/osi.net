@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.service.selector
 Imports osi.service.transmitter
 
 ' Share one local shareable component with several components, each one is identified by
@@ -16,7 +17,7 @@ Imports osi.service.transmitter
 ' @DATA_T: the type of the data send to and receive from COMPONENT_T, say, byte() for udp.
 ' @PARAMETER_T: the type of an extra parameter for device collection, to create COMPONENT_T or dispenser, say,
 '               udp.powerpoint for udp.
-Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
+Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
     Inherits disposer
     ' The input PARAMETER_T of constructor.
     Public ReadOnly p As PARAMETER_T

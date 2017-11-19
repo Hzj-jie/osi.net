@@ -10,7 +10,7 @@ Imports osi.root.utt
 Imports osi.service.transmitter
 Imports lock_t = osi.root.lock.slimlock.monitorlock
 
-Partial Public Class shared_component_test
+Partial Public Class sharedtransmitter_test
     Private Class component
         Private Shared ReadOnly instances()() As component
         Private Shared instances_lock As lock_t
@@ -53,7 +53,7 @@ Partial Public Class shared_component_test
         End Sub
 
         Public Sub dispose()
-            ' shared_component (ref_instance) should guarantee to call this function exactly once per instance.
+            ' sharedtransmitter (ref_instance) should guarantee to call this function exactly once per instance.
             instances_lock.wait()
             assert_reference_equal(instances(Me.address)(Me.local_port), Me)
             instances(Me.address)(Me.local_port) = Nothing

@@ -6,7 +6,7 @@
   <Import Project="sharedtransmitter.dep" />
   <ItemGroup>
     <Reference Include="osi.service.sharedtransmitter">
-      <HintPath>$(ServicePath)\selector\bin\$(Configuration)\osi.service.sharedtransmitter.dll</HintPath>
+      <HintPath>$(ServicePath)\sharedtransmitter\bin\$(Configuration)\osi.service.sharedtransmitter.dll</HintPath>
       <Private>true</Private>
     </Reference>
   </ItemGroup>

@@ -6,8 +6,9 @@ Option Strict On
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.service.selector
 
-Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
+Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
     Public Class creator
         Private p As PARAMETER_T
         Private component_ref As ref_instance(Of COMPONENT_T)
@@ -120,8 +121,8 @@ Partial Public Class shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T,
                    Not dispenser Is Nothing
         End Function
 
-        Public Function create() As shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
-            Return New shared_component(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T) _
+        Public Function create() As sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)
+            Return New sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T) _
                            (valid(), p, component_ref, local_port, remote, sender, accepter, dispenser, data, has_data)
         End Function
     End Class

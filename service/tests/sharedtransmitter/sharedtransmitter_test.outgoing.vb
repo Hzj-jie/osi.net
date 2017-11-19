@@ -9,9 +9,10 @@ Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.selector
+Imports osi.service.sharedtransmitter
 Imports osi.service.transmitter
 
-Partial Public Class shared_component_test
+Partial Public Class sharedtransmitter_test
     Private Class outgoing_test
         Inherits [case]
 
@@ -29,8 +30,8 @@ Partial Public Class shared_component_test
         Public Overrides Function run() As Boolean
             Dim param As parameter = Nothing
             param = New parameter(False)
-            Dim s As shared_component(Of Byte, Byte, component, Int32, parameter) = Nothing
-            s = shared_component(Of Byte, Byte, component, Int32, parameter).creator.[New]().
+            Dim s As sharedtransmitter(Of Byte, Byte, component, Int32, parameter) = Nothing
+            s = sharedtransmitter(Of Byte, Byte, component, Int32, parameter).creator.[New]().
                         with_parameter(param).
                         with_local_port(param.local_port).
                         with_remote(emplace_make_const_pair(Of Byte, Byte)(100, 100)).

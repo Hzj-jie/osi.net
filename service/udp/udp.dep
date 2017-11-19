@@ -1,9 +1,9 @@
 ﻿
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\root\root.props" Condition="'$(RootProps)'==''" />
+  <Import Project="$(ServicePath)\commander\commander.props" Condition="'$(CommanderProps)'==''" />
   <Import Project="$(ServicePath)\device\device.props" Condition="'$(DeviceProps)'==''" />
   <Import Project="$(ServicePath)\dns\dns.props" Condition="'$(DnsProps)'==''" />
-  <Import Project="$(ServicePath)\commander\commander.props" Condition="'$(CommanderProps)'==''" />
+  <Import Project="$(ServicePath)\sharedtransmitter\sharedtransmitter.props" Condition="'$(SharedtransmitterProps)'==''" />
   <Import Project="$(ServicePath)\transmitter\transmitter.props" Condition="'$(TransmitterProps)'==''" />
-  <Import Project="$(ServicePath)\selector\selector.props" Condition="'$(SelectorProps)'==''" />
 </Project>

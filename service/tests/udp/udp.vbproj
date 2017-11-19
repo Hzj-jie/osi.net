@@ -76,7 +76,7 @@
     <Compile Include="udp_dev_test.vb" />
     <Compile Include="udp_extension_test.vb" />
     <Compile Include="udp_listener_test.vb" />
-    <Compile Include="udp_shared_component_test.vb" />
+    <Compile Include="udp_sharedtransmitter_test.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
