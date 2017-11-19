@@ -89,6 +89,8 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="webstorage.deps" />
+    <None Include="webstorage.props" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
