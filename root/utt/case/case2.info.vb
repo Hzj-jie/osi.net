@@ -5,7 +5,6 @@ Option Strict On
 
 Imports System.Reflection
 Imports osi.root.connector
-Imports osi.root.constants
 
 Partial Public NotInheritable Class case2
     ' Container of supportive information from a MemberInfo
@@ -13,6 +12,7 @@ Partial Public NotInheritable Class case2
         Public ReadOnly name As String
         Public ReadOnly full_name As String
         Public ReadOnly repeat_times As UInt64
+        Public ReadOnly thread_count As UInt32
         Public ReadOnly command_line_specified As Boolean
         Public ReadOnly flaky As Boolean
         Public ReadOnly has_reserved_processors As Boolean
@@ -21,6 +21,7 @@ Partial Public NotInheritable Class case2
         Private Sub New(ByVal name As String,
                         ByVal full_name As String,
                         ByVal repeat_times As UInt64,
+                        ByVal thread_count As UInt32,
                         ByVal command_line_specified As Boolean,
                         ByVal flaky As Boolean,
                         ByVal has_reserved_processors As Boolean,
@@ -28,6 +29,7 @@ Partial Public NotInheritable Class case2
             Me.name = name
             Me.full_name = full_name
             Me.repeat_times = repeat_times
+            Me.thread_count = thread_count
             Me.command_line_specified = command_line_specified
             Me.flaky = flaky
             Me.has_reserved_processors = has_reserved_processors
@@ -38,11 +40,25 @@ Partial Public NotInheritable Class case2
             Me.New(assert_not_nothing_return(info).name,
                    assert_not_nothing_return(info).full_name,
                    assert_not_nothing_return(info).repeat_times,
+                   assert_not_nothing_return(info).thread_count,
                    assert_not_nothing_return(info).command_line_specified,
                    assert_not_nothing_return(info).flaky,
                    assert_not_nothing_return(info).has_reserved_processors,
                    assert_not_nothing_return(info).reserved_processors)
         End Sub
+
+        Public Shared Function merge(ByVal i As info, ByVal j As info) As info
+            assert(Not i Is Nothing)
+            assert(Not j Is Nothing)
+            Return New info("",
+                            "",
+                            i.repeat_times * j.repeat_times,
+                            i.thread_count * j.thread_count,
+                            i.command_line_specified OrElse j.command_line_specified,
+                            i.flaky OrElse j.flaky,
+                            i.has_reserved_processors OrElse j.has_reserved_processors,
+                            If(i.has_reserved_processors, i.reserved_processors, j.reserved_processors))
+        End Function
 
         Public Shared Function from(ByVal member As MemberInfo) As info
             assert(Not member Is Nothing)
@@ -50,10 +66,19 @@ Partial Public NotInheritable Class case2
             Using code_block
                 Dim attribute As attributes.repeat = Nothing
                 If member.custom_attribute(attribute) Then
-                    assert(attribute.times > uint64_1)
                     repeat_times = attribute.times
                 Else
                     repeat_times = 1
+                End If
+            End Using
+
+            Dim thread_count As UInt32 = 0
+            Using code_block
+                Dim attribute As attributes.multi_threading = Nothing
+                If member.custom_attribute(attribute) Then
+                    thread_count = attribute.thread_count
+                Else
+                    thread_count = 1
                 End If
             End Using
 
@@ -79,6 +104,7 @@ Partial Public NotInheritable Class case2
             Return New info(member.Name(),
                             member.full_name(),
                             repeat_times,
+                            thread_count,
                             command_line_specified,
                             flaky,
                             has_reserved_processors,

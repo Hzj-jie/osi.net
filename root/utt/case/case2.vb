@@ -9,6 +9,31 @@ Imports osi.root.formation
 
 ' Use attributes instead of inheritance to execute test case.
 Partial Public NotInheritable Class case2
+    Private Shared Function create(ByVal c As [case], ByVal info As info) As utt.case
+        assert(Not c Is Nothing)
+        assert(Not info Is Nothing)
+        Dim r As utt.[case] = Nothing
+        r = c
+        If info.repeat_times > 1 Then
+            r = repeat(r, CLng(info.repeat_times))
+        End If
+        If info.thread_count > 1 Then
+            assert(info.thread_count <= max_int32)
+            r = multithreading(r, CInt(info.thread_count))
+        End If
+        If info.command_line_specified Then
+            r = commandline_specified(r)
+        End If
+        If info.flaky Then
+            r = flaky(r)
+        End If
+        If object_compare(r, c) <> 0 Then
+            Return New case_wrapper(r, c.full_name, c.assembly_qualified_name, c.name)
+        Else
+            Return c
+        End If
+    End Function
+
     Private Shared Function create(ByVal t As Type,
                                    ByVal class_info As info,
                                    ByVal prepare As Func(Of Object, Boolean),
@@ -18,25 +43,15 @@ Partial Public NotInheritable Class case2
         assert(Not class_info Is Nothing)
         assert(Not function_info Is Nothing)
 
-        Dim r As utt.[case] = Nothing
-        r = New [case](t,
-                       function_info.name,
-                       prepare,
-                       function_info.f,
-                       finish,
-                       If(class_info.has_reserved_processors,
-                          class_info.reserved_processors,
-                          function_info.reserved_processors))
-        If class_info.repeat_times > 1 OrElse function_info.repeat_times > 1 Then
-            r = repeat(r, CLng(class_info.repeat_times * function_info.repeat_times))
-        End If
-        If class_info.command_line_specified OrElse function_info.command_line_specified Then
-            r = commandline_specified(r)
-        End If
-        If class_info.flaky OrElse function_info.flaky Then
-            r = flaky(r)
-        End If
-        Return r
+        Dim n As info = Nothing
+        n = info.merge(class_info, function_info)
+        Return create(New [case](t,
+                                 function_info.name,
+                                 prepare,
+                                 function_info.f,
+                                 finish,
+                                 n.reserved_processors),
+                      n)
     End Function
 
     Private Shared Function create(ByVal t As Type,
@@ -48,22 +63,12 @@ Partial Public NotInheritable Class case2
         assert(Not class_info Is Nothing)
         assert(Not randoms Is Nothing)
 
-        Dim r As utt.[case] = Nothing
-        r = New random_run_case(t,
-                                prepare,
-                                finish,
-                                class_info.reserved_processors,
-                                randoms)
-        If class_info.repeat_times > 1 Then
-            r = repeat(r, CLng(class_info.repeat_times))
-        End If
-        If class_info.command_line_specified Then
-            r = commandline_specified(r)
-        End If
-        If class_info.flaky Then
-            r = flaky(r)
-        End If
-        Return r
+        Return create(New random_run_case(t,
+                                          prepare,
+                                          finish,
+                                          class_info.reserved_processors,
+                                          randoms),
+                      class_info)
     End Function
 
     Public Shared Function create(ByVal t As Type) As vector(Of utt.[case])

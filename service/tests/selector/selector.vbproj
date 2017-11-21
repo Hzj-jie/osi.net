@@ -59,6 +59,7 @@
     <Compile Include="async_preparer_test.vb" />
     <Compile Include="async_preparer_valuetype_test.vb" />
     <Compile Include="async_thread_safe_lazier_test.vb" />
+    <Compile Include="constructor\wrapper_test.vb" />
     <Compile Include="dispenser\dispenser_test.accepter.vb" />
     <Compile Include="dispenser\dispenser_test.receiver.vb" />
     <Compile Include="dispenser\dispenser_test.vb" />
@@ -100,9 +101,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="constructor\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\..\..\root\root.utt.props" Condition="'$(RootUttProps)'==''" />
   <Import Project="$(ServicePath)\selector\selector.props" Condition="'$(SelectorProps)'==''" />

@@ -7,6 +7,16 @@ Public Class case_wrapper
     Private ReadOnly c As [case] = Nothing
 
     Protected Sub New(ByVal c As [case])
+        MyBase.New()
+        assert(Not c Is Nothing)
+        Me.c = c
+    End Sub
+
+    Public Sub New(ByVal c As [case],
+                   ByVal full_name As String,
+                   ByVal assembly_qualified_name As String,
+                   ByVal name As String)
+        MyBase.New(full_name, assembly_qualified_name, name)
         assert(Not c Is Nothing)
         Me.c = c
     End Sub

@@ -1,10 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
-Imports osi.root.constants
-Imports osi.root.utils
-Imports osi.root.delegates
-Imports osi.root.lock
 Imports osi.root.connector
+Imports osi.root.constants
 
 Public Class multithreading_case_wrapper
     Inherits case_wrapper
@@ -19,6 +20,10 @@ Public Class multithreading_case_wrapper
     Private accepted As Boolean = False
     Private failed As Boolean = False
 
+    Public Shared Function valid_thread_count(ByVal tc As Int32) As Boolean
+        Return tc > 1 OrElse envs.single_cpu
+    End Function
+
     Public Sub New(ByVal c As [case], Optional ByVal threadcount As Int32 = 8)
         MyBase.New(c)
         Me.tc = threadcount
@@ -28,14 +33,16 @@ Public Class multithreading_case_wrapper
     End Sub
 
     Public Overrides Function reserved_processors() As Int16
-        Return max(threadcount(), MyBase.reserved_processors())
+        Return CShort(min(max(threadcount(), MyBase.reserved_processors()), max_int16))
     End Function
 
     Protected Overridable Function threadcount() As Int32
         Return tc
     End Function
 
-    Private Sub workon(ByVal i As Int32)
+    Private Sub workon(ByVal input As Object)
+        Dim i As Int32 = 0
+        i = direct_cast(Of Int32)(input)
         Interlocked.Increment(running_thread)
         assert(start_are.Set())
         id = i
@@ -70,7 +77,7 @@ Public Class multithreading_case_wrapper
     End Function
 
     Public NotOverridable Overrides Function run() As Boolean
-        assert(Me.threadcount() > 1 OrElse envs.single_cpu)
+        assert(valid_thread_count(threadcount()))
         accepted = False
         failed = False
         start_are.Reset()
@@ -85,7 +92,7 @@ Public Class multithreading_case_wrapper
         Next
         Dim wait_round As Int32 = 1000
         While _dec(wait_round) > 0
-            start_are.WaitOne(envs.half_timeslice_length_ms)
+            start_are.wait(envs.half_timeslice_length_ms)
             assert(running_thread <= threadcount())
             If running_thread = threadcount() Then
                 Exit While

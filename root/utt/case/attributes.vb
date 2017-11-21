@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 
 Public NotInheritable Class attributes
     ' Define a test case for a class or a method.
@@ -81,6 +82,19 @@ Public NotInheritable Class attributes
     <AttributeUsage(AttributeTargets.Class Or AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
     Public NotInheritable Class flaky
         Inherits Attribute
+    End Class
+
+    <AttributeUsage(AttributeTargets.Class Or AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
+    Public NotInheritable Class multi_threading
+        Inherits Attribute
+
+        Public ReadOnly thread_count As UInt32
+
+        Public Sub New(ByVal thread_count As UInt32)
+            assert(thread_count <= max_int32)
+            assert(multithreading_case_wrapper.valid_thread_count(CInt(thread_count)))
+            Me.thread_count = thread_count
+        End Sub
     End Class
 
     Private Sub New()
