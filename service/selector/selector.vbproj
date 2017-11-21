@@ -59,6 +59,11 @@
     <Compile Include="async_parameter_allocator.vb" />
     <Compile Include="async_parameter_resolve.vb" />
     <Compile Include="constants.vb" />
+    <Compile Include="constructor\constructor.infer.vb" />
+    <Compile Include="constructor\constructor.vb" />
+    <Compile Include="constructor\convertor.vb" />
+    <Compile Include="constructor\wrapper.infer.vb" />
+    <Compile Include="constructor\wrapper.vb" />
     <Compile Include="dispenser\dispenser.accepter.vb" />
     <Compile Include="dispenser\dispenser.vb" />
     <Compile Include="lazier\async_getter.vb" />

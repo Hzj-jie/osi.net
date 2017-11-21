@@ -5,8 +5,6 @@ Option Strict On
 
 Imports System.Threading
 Imports osi.root.connector
-Imports osi.root.constants
-Imports osi.root.delegates
 Imports osi.root.envs
 
 Public Class atomic
@@ -158,7 +156,7 @@ Public Class atomic
         If i Is Nothing AndAlso Not n Is Nothing Then
             Thread.MemoryBarrier()
             If Interlocked.CompareExchange(i, n, Nothing) Is Nothing AndAlso
-                   assert(Not i Is Nothing) Then
+               assert(Not i Is Nothing) Then
                 Return True
             Else
                 If Not destroy Is Nothing Then

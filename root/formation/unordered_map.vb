@@ -28,7 +28,7 @@ Partial Public Class unordered_map(Of KEY_T,
     End Sub
 
     Protected Shadows Function clone(Of R As unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER))() As R
-        Return MyBase.Clone(Of R)()
+        Return MyBase.clone(Of R)()
     End Function
 
     Public Shadows Function Clone() As Object Implements ICloneable.Clone
@@ -37,7 +37,7 @@ Partial Public Class unordered_map(Of KEY_T,
 
     Public Shadows Function CloneT() As unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER) _
             Implements ICloneable(Of unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER)).Clone
-        Return MyBase.Clone(Of unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER))()
+        Return clone(Of unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER))()
     End Function
 
     Public Shared Shadows Function move(ByVal v As unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER)) _

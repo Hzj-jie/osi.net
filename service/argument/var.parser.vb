@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.root.utils
 
 Partial Public Class var
     Private Sub parse_one(ByVal s As String)
@@ -9,7 +13,7 @@ Partial Public Class var
             Dim a As String = Nothing
             Dim b As String = Nothing
             If c.is_switcher(s, a) Then
-                For j As Int32 = 0 To strlen(a) - 1
+                For j As Int32 = 0 To strlen_i(a) - 1
                     If raw.find(a(j)) = raw.end() Then
                         raw.insert(a(j), Nothing)
                     End If
@@ -33,7 +37,7 @@ Partial Public Class var
     Public Sub parse(ByVal ParamArray args() As String)
         raw.clear()
         others.clear()
-        For i As Int32 = 0 To array_size(args) - 1
+        For i As Int32 = 0 To array_size_i(args) - 1
             parse_one(args(i))
         Next
     End Sub
@@ -42,7 +46,7 @@ Partial Public Class var
         raw.clear()
         others.clear()
         If Not args Is Nothing Then
-            For i As Int32 = 0 To args.size() - 1
+            For i As UInt32 = uint32_0 To args.size() - uint32_1
                 assert(Not args(i) Is Nothing)
                 assert(Not (String.IsNullOrEmpty(args(i).first) AndAlso
                             String.IsNullOrEmpty(args(i).second)))

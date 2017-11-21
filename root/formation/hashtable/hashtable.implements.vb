@@ -18,7 +18,7 @@ Partial Public Class hashtable(Of T,
 
     Public Function CloneT() As hashtable(Of T, _UNIQUE, _HASHER, _EQUALER) _
                              Implements ICloneable(Of hashtable(Of T, _UNIQUE, _HASHER, _EQUALER)).Clone
-        Return New hashtable(Of T, _UNIQUE, _HASHER, _EQUALER)(v.CloneT(), s, c)
+        Return clone(Of hashtable(Of T, _UNIQUE, _HASHER, _EQUALER))()
     End Function
 
     Protected Function clone(Of R As hashtable(Of T, _UNIQUE, _HASHER, _EQUALER))() As R

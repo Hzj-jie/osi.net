@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.formation
 
@@ -30,7 +34,7 @@ Partial Public Class var
         binded.clear()
 #End If
         Dim r As Boolean = True
-        For i As Int32 = 0 To array_size(s) - 1
+        For i As Int32 = 0 To array_size_i(s) - 1
             If Not bind(s(i)) Then
                 r = False
             End If

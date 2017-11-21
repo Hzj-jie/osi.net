@@ -32,7 +32,7 @@ Public Class unordered_set(Of T,
 
     Public Shadows Function CloneT() As unordered_set(Of T, _HASHER, _EQUALER) _
             Implements ICloneable(Of unordered_set(Of T, _HASHER, _EQUALER)).Clone
-        Return MyBase.clone(Of unordered_set(Of T, _HASHER, _EQUALER))()
+        Return clone(Of unordered_set(Of T, _HASHER, _EQUALER))()
     End Function
 
     Public Shared Shadows Function move(ByVal v As unordered_set(Of T, _HASHER, _EQUALER)) _

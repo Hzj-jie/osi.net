@@ -55,6 +55,7 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="filtered_var.vb" />
     <Compile Include="var.implement.vb" />
     <Compile Include="var.vb" />
     <Compile Include="var.binding.vb" />

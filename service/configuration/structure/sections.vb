@@ -3,8 +3,22 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 Imports osi.root.formation
+
+Public Module _sections
+    <Extension()> Public Function values_or_null(
+                                      ByVal this As sections,
+                                      Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) _
+                                      As vector(Of pair(Of String, String))
+        If this Is Nothing Then
+            Return Nothing
+        Else
+            Return this.values(variants)
+        End If
+    End Function
+End Module
 
 ' A thin wrapper of vector(Of section)
 Public Class sections

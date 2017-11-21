@@ -131,6 +131,7 @@
     <Compile Include="istype_test.vb" />
     <Compile Include="kick_between_test.vb" />
     <Compile Include="error_message_test.vb" />
+    <Compile Include="lambda_behavior_test.vb" />
     <Compile Include="lambda_test.vb" />
     <Compile Include="lcs_test.vb" />
     <Compile Include="levenshtein_test.vb" />
