@@ -6,6 +6,7 @@ Option Strict On
 Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.utils
 
 Public Class multithreading_case_wrapper
     Inherits case_wrapper
@@ -47,19 +48,22 @@ Public Class multithreading_case_wrapper
         assert(start_are.Set())
         id = i
         this = Me
-        assert(accept_mre.WaitOne())
-        If failed Then
-            Return
-        Else
-            assert(accepted)
-        End If
-        If Not do_(AddressOf MyBase.run, False) Then
-            failed = True
-        End If
-        this = Nothing
-        id = npos
-        Interlocked.Decrement(running_thread)
-        assert(finish_are.Set())
+        Using defer(Sub()
+                        id = npos
+                        this = Nothing
+                        assert(finish_are.Set())
+                        Interlocked.Decrement(running_thread)
+                    End Sub)
+            assert(accept_mre.WaitOne())
+            If failed Then
+                Return
+            Else
+                assert(accepted)
+            End If
+            If Not do_(AddressOf MyBase.run, False) Then
+                failed = True
+            End If
+        End Using
     End Sub
 
     Public Shared Function current() As multithreading_case_wrapper

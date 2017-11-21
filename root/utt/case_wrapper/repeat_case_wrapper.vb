@@ -1,10 +1,17 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.utils
 
 Public Class repeat_case_wrapper
     Inherits case_wrapper
 
+    <ThreadStatic> Private Shared this As repeat_case_wrapper
+    <ThreadStatic> Private Shared this_round As Func(Of Int64)
     Private ReadOnly size As Int64
 
     Public Sub New(ByVal c As [case], Optional ByVal test_size As Int64 = npos)
@@ -12,18 +19,38 @@ Public Class repeat_case_wrapper
         Me.size = test_size
     End Sub
 
+    Public Shared Function current() As repeat_case_wrapper
+        assert(Not this Is Nothing)
+        Return this
+    End Function
+
+    Public Shared Function current_round() As Int64
+        assert(Not this_round Is Nothing)
+        Return this_round()
+    End Function
+
     Protected Overridable Function test_size() As Int64
         Return size
     End Function
 
     Public NotOverridable Overrides Function run() As Boolean
-        assert(test_size() > 0)
-        For i As Int64 = 0 To test_size() - 1
-            If Not MyBase.run() Then
-                Return False
-            End If
-        Next
-        Return True
+        Dim i As Int64 = 0
+        this = Me
+        this_round = Function()
+                         Return i
+                     End Function
+        Using defer(Sub()
+                        this = Nothing
+                        this_round = Nothing
+                    End Sub)
+            assert(test_size() > 0)
+            For i = 0 To test_size() - 1
+                If Not MyBase.run() Then
+                    Return False
+                End If
+            Next
+            Return True
+        End Using
     End Function
 End Class
 
