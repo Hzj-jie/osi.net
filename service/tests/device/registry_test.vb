@@ -1,8 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
 Option Strict On
 
 Imports osi.root.constants
-Imports osi.root.template
 Imports osi.root.connector
 Imports osi.root.procedure
 Imports osi.root.utils
@@ -10,6 +11,8 @@ Imports osi.root.utt
 Imports osi.service.argument
 Imports osi.service.device
 Imports osi.service.selector
+Imports constructor = osi.service.device.constructor
+Imports wrapper = osi.service.device.wrapper
 
 Public Class registry_test
     Inherits [case]

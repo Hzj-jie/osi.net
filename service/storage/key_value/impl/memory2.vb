@@ -1,14 +1,15 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.template
-Imports osi.root.utils
 Imports osi.service.argument
 Imports osi.service.device
-Imports osi.service.selector
 Imports store_t = osi.root.formation.hashmap(Of osi.root.formation.array_pointer(Of Byte),
-                                                Byte(), 
+                                                Byte(),
                                                 osi.root.template._63)
 
 <global_init(global_init_level.server_services)>
@@ -45,9 +46,9 @@ Public Class memory2
                                    Implements isynckeyvalue2(Of store_t.iterator).append_existing
         assert(Not it Is Nothing AndAlso it <> m.end())
         If enough_storage(array_size(value)) Then
-            Dim original_size As Int64 = 0
+            Dim original_size As UInt32 = 0
             original_size = array_size((+it).second)
-            ReDim Preserve (+it).second(original_size + array_size(value) - 1)
+            ReDim Preserve (+it).second(CInt(original_size) + array_size_i(value) - 1)
             memcpy((+it).second, original_size, value)
             result = True
         Else

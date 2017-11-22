@@ -66,6 +66,22 @@ Public NotInheritable Class constructor
         Return constructor(Of T).resolve(Of DT)(v, o)
     End Function
 
+    ' For test purpose: this function should not be used explicitly.
+    Public Shared Function resolve(Of T)(ByVal v As var, ByRef o As T) As Boolean
+        Dim r As pointer(Of T) = Nothing
+        r = New pointer(Of T)()
+        Return async_sync(resolve(v, r)) AndAlso
+               eva(o, +r)
+    End Function
+
+    ' For test purpose: this function should not be used explicitly.
+    Public Shared Function resolve(Of T, DT As T)(ByVal v As var, ByRef o As T) As Boolean
+        Dim r As pointer(Of T) = Nothing
+        r = New pointer(Of T)()
+        Return async_sync(resolve(Of T, DT)(v, r)) AndAlso
+               eva(o, +r)
+    End Function
+
     Private Sub New()
     End Sub
 End Class

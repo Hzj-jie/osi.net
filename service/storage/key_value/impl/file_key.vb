@@ -1,13 +1,14 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.template
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports osi.root.utils
 Imports osi.service.argument
 Imports osi.service.device
-Imports osi.service.selector
 
 <global_init(global_init_level.server_services)>
 Partial Public Class file_key

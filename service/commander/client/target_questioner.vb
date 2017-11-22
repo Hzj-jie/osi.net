@@ -1,14 +1,17 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.root.template
 Imports osi.root.procedure
 Imports osi.service.argument
-Imports osi.service.convertor
 Imports osi.service.device
 Imports osi.service.selector
+Imports constructor = osi.service.device.constructor
 
 <global_init(global_init_level.server_services)>
 Public Class target_questioner

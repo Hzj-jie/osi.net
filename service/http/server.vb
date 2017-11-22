@@ -1,18 +1,19 @@
 ﻿
-Imports System.Collections.Generic
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net
-Imports osi.root.constants
-Imports osi.root.procedure
 Imports osi.root.connector
-Imports osi.root.utils
-Imports osi.root.lock
+Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.root.lock
+Imports osi.root.procedure
 Imports osi.root.threadpool
 Imports osi.service.argument
 Imports osi.service.convertor
-Imports osi.service.device
 Imports osi.service.http.constants.interval_ms
-Imports osi.service.selector
+Imports constructor = osi.service.device.constructor
 
 <global_init(global_init_level.server_services)>
 Public Class server
@@ -117,10 +118,10 @@ Public Class server
         assert(Not a Is Nothing)
         Dim vs As vector(Of String) = Nothing
         vs = s.to_string_array()
-        If vs Is Nothing OrElse vs.empty() Then
+        If vs.null_or_empty() Then
             Return False
         Else
-            For i As Int32 = 0 To vs.size() - 1
+            For i As UInt32 = 0 To vs.size() - uint32_1
                 If Not a(vs(i)) Then
                     Return False
                 End If
@@ -193,7 +194,7 @@ Public Class server
     End Sub
 
     Private Sub listen()
-        For i As Int32 = 0 To min(thread_pool().thread_count(), Environment.ProcessorCount()) - 1
+        For i As Int32 = 0 To min(CInt(thread_pool().thread_count()), Environment.ProcessorCount()) - 1
             Dim ctx As pointer(Of HttpListenerContext) = Nothing
             Dim ec As event_comb = Nothing
             assert_begin(New event_comb(Function() As Boolean

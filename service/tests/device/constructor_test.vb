@@ -1,12 +1,13 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.delegates
-Imports osi.root.utils
+Imports osi.root.constants
 Imports osi.root.utt
 Imports osi.service.argument
 Imports osi.service.device
-Imports osi.service.selector
 
 Public Class constructor_test
     Inherits [case]
@@ -36,14 +37,14 @@ Public Class constructor_test
         mock_dev(Of protector2).reset()
         Return assert_true(constructor(Of mock_dev_interface).register(
                                t1,
-                               make_allocator(Function(s As var) As mock_dev_interface
-                                                  Return New mock_dev(Of protector1)()
-                                              End Function))) AndAlso
+                               osi.service.selector.make_allocator(Function(s As var) As mock_dev_interface
+                                                                       Return New mock_dev(Of protector1)()
+                                                                   End Function))) AndAlso
                assert_true(constructor(Of mock_dev_interface).register(
                                t2,
-                               make_allocator(Function(s As var) As mock_dev_interface
-                                                  Return New mock_dev(Of protector2)()
-                                              End Function))) AndAlso
+                               osi.service.selector.make_allocator(Function(s As var) As mock_dev_interface
+                                                                       Return New mock_dev(Of protector2)()
+                                                                   End Function))) AndAlso
                MyBase.prepare()
     End Function
 
@@ -69,7 +70,8 @@ Public Class constructor_test
         assert_equal(mock_dev(Of protector2).destructed(), uint32_0)
         If assert_true(device_pool_manager.register(name, singleton_device_pool.[New](r.make_device()))) Then
             Dim p As singleton_device_pool(Of mock_dev_interface) = Nothing
-            assert_true(device_pool_manager.get(name, p))
+            assert_true(device_pool_manager.get(Of mock_dev_interface, singleton_device_pool(Of mock_dev_interface)) _
+                                               (name, p))
             If assert_not_nothing(p) Then
                 Dim i As idevice(Of mock_dev_interface) = Nothing
                 assert_true(p.get(i))

@@ -1,15 +1,19 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.procedure
+Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.service.argument
 Imports osi.service.convertor
-Imports osi.service.device
 Imports osi.service.selector
-Imports store_t = osi.root.formation.hashmap(Of osi.root.formation.array_pointer(Of Byte), 
-                                                osi.root.formation.pair(Of System.Int64, System.Int64), 
+Imports constructor = osi.service.device.constructor
+Imports store_t = osi.root.formation.hashmap(Of osi.root.formation.array_pointer(Of Byte),
+                                                osi.root.formation.pair(Of System.Int64, System.Int64),
                                                 osi.root.template._1023)
 
 <global_init(global_init_level.server_services)>
