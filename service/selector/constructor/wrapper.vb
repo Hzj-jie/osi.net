@@ -100,6 +100,7 @@ Public NotInheritable Class wrapper(Of T)
                                  ByVal i As T,
                                  ByRef o As T) As Boolean
         assert(Not vs Is Nothing)
+        o = i
         Dim j As UInt32 = uint32_0
         While j < vs.pool_size()
             Dim x As _do_val_val_ref(Of var, T, T, Boolean) = Nothing

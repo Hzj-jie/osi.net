@@ -155,8 +155,7 @@ Public Class atomic
                                                          Optional ByVal destroy As Action(Of T) = Nothing) As Boolean
         If i Is Nothing AndAlso Not n Is Nothing Then
             Thread.MemoryBarrier()
-            If Interlocked.CompareExchange(i, n, Nothing) Is Nothing AndAlso
-               assert(Not i Is Nothing) Then
+            If Interlocked.CompareExchange(i, n, Nothing) Is Nothing Then
                 Return True
             Else
                 If Not destroy Is Nothing Then
@@ -176,8 +175,7 @@ Public Class atomic
             Dim v As T = Nothing
             v = ctor()
             Thread.MemoryBarrier()
-            If Interlocked.CompareExchange(i, v, Nothing) Is Nothing AndAlso
-                   assert(Not i Is Nothing) Then
+            If Interlocked.CompareExchange(i, v, Nothing) Is Nothing Then
                 Return True
             Else
                 If Not destroy Is Nothing Then

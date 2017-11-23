@@ -76,16 +76,11 @@ Public NotInheritable Class constructor(Of T)
                                   End If
                               End Function,
                               Function() As Boolean
-                                  If ec.end_result() AndAlso Not o.empty() Then
-                                      Dim r As T = Nothing
-                                      If wrapper.wrap(v, +o, r) Then
-                                          Return goto_end()
-                                      Else
-                                          Return False
-                                      End If
-                                  Else
-                                      Return False
-                                  End If
+                                  Dim r As T = Nothing
+                                  Return ec.end_result() AndAlso
+                                         wrapper.wrap(v, +o, r) AndAlso
+                                         eva(o, r) AndAlso
+                                         goto_end()
                               End Function)
     End Function
 

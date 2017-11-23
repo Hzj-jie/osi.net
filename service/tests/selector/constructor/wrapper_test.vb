@@ -93,7 +93,7 @@ Partial Public NotInheritable Class wrapper_test
                                      End Function))
         Dim r As test_class = Nothing
         assert_false(wrapper.wrap(New var(strcat("--wrapper=", type)), New test_class(), r))
-        assert_nothing(r)
+        assert_not_nothing(r)
         assert_true(wrapper(Of test_class).erase(type))
     End Sub
 
@@ -110,7 +110,7 @@ Partial Public NotInheritable Class wrapper_test
                                      End Function))
         Dim r As test_class(Of return_false_when_wrapper_failed2_protector) = Nothing
         assert_false(wrapper.wrap(New var(), New test_class(Of return_false_when_wrapper_failed2_protector)(), r))
-        assert_nothing(r)
+        assert_not_nothing(r)
         assert_true(wrapper(Of test_class(Of return_false_when_wrapper_failed2_protector)).erase())
     End Sub
 
@@ -165,7 +165,7 @@ Partial Public NotInheritable Class wrapper_test
         assert_true(wrapper.wrap(New var(), [default](Of test_return_true_if_no_wrapper_class).null, r))
         assert_nothing(r)
         assert_true(wrapper.wrap(New var(), New test_return_true_if_no_wrapper_class(), r))
-        assert_nothing(r)
+        assert_not_nothing(r)
     End Sub
 
     Private Sub New()
