@@ -92,7 +92,7 @@ Public NotInheritable Class attributes
 
         Public Sub New(ByVal thread_count As UInt32)
             assert(thread_count <= max_int32)
-            assert(multithreading_case_wrapper.valid_thread_count(CInt(thread_count)))
+            assert(multithreading_case_wrapper.valid_thread_count(thread_count))
             Me.thread_count = thread_count
         End Sub
     End Class

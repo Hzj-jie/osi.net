@@ -4,6 +4,8 @@ Option Infer Off
 Option Strict On
 
 Imports System.Runtime.CompilerServices
+Imports System.Text
+Imports osi.root.constants
 
 Public Module _delegate2
     Public Function delegate_is_pinning_object(ByVal d As [Delegate], ByVal o As Object) As Boolean
@@ -47,4 +49,42 @@ Public Module _delegate2
             End Try
         End If
     End Sub
+
+    <Extension()> Public Function method_name(ByVal d As [Delegate]) As String
+#If PocketPC OrElse Smartphone Then
+        Return "#CANNOT_GET_INVOKE_NAME#"
+#Else
+        If Not d Is Nothing Then
+            Try
+                Return d.Method().Name()
+            Catch
+            End Try
+        End If
+        Return "#CANNOT_GET_INVOKE_NAME#"
+#End If
+    End Function
+
+    <Extension()> Public Function method_identity(ByVal d As [Delegate]) As String
+        If Not d Is Nothing Then
+            Try
+                Dim rtn As StringBuilder = Nothing
+                rtn = New StringBuilder()
+                If Not d.Target() Is Nothing Then
+                    rtn.Append(d.Target().GetType().FullName()) _
+                       .Append(character.colon)
+                End If
+                rtn.Append(d.Method().DeclaringType().FullName()) _
+                   .Append(character.dot) _
+                   .Append(d.Method().Name())
+                If isdebugmode() Then
+                    rtn.Append(character.at) _
+                       .Append(d.Method().Module().FullyQualifiedName())
+                End If
+                Return Convert.ToString(rtn)
+            Catch
+            End Try
+        End If
+
+        Return "#CANNOT_GET_INVOKE_IDENTITY#"
+    End Function
 End Module

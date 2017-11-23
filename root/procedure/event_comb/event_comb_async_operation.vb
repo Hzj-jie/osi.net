@@ -51,7 +51,7 @@ Public Class event_comb_async_operation
                                           If event_comb_trace Then
                                               raise_error(error_type.warning,
                                                           "failed to end ",
-                                                          invoke_method_name(original_end),
+                                                          original_end.method_identity(),
                                                           ", callstack, ",
                                                           c.callstack(),
                                                           ", ex ",
@@ -67,7 +67,7 @@ Public Class event_comb_async_operation
                             If event_comb_trace Then
                                 raise_error(error_type.warning,
                                             "failed to begin ",
-                                            invoke_method_name(begin),
+                                            begin.method_identity(),
                                             ", callstack, ",
                                             c.callstack(),
                                             ", ex ",

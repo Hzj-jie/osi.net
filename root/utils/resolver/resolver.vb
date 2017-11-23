@@ -81,7 +81,7 @@ Partial Public Class resolver
         Dim rtn As Object = Nothing
         rtn = d()
         If rtn Is Nothing AndAlso Not T.IsValueType() Then
-            assert(False, "failed to resolve ", T.FullName, " via ", invoke_method_name(d))
+            assert(False, "failed to resolve ", T.full_name(), " via ", d.method_identity())
         End If
         Return rtn
     End Function
@@ -110,7 +110,7 @@ Partial Public Class resolver
     Public Shared Function resolve(ByVal T As Type) As Object
         assert(Not T Is Nothing)
         Dim o As Object = Nothing
-        assert(resolve(T, o), "type ", T.FullName(), " has not been registered.")
+        assert(resolve(T, o), "type ", T.full_name(), " has not been registered.")
         Return o
     End Function
 

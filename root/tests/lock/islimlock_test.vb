@@ -1,17 +1,19 @@
 ﻿
-Imports osi.root.utt
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
+Imports osi.root.envs
 Imports osi.root.lock
 Imports osi.root.lock.slimlock
-Imports osi.root.connector
-Imports osi.root.delegates
-Imports osi.root.utils
-Imports osi.root.envs
+Imports osi.root.utt
 
 Public Class islimlock_test(Of T As {islimlock, Structure})
     Inherits processor_measured_case_wrapper
 
     Private Shared ReadOnly size As Int64
-    Private Shared ReadOnly thread_count As Int64
+    Private Shared ReadOnly thread_count As UInt32
 
     Shared Sub New()
         size = 524288
@@ -20,7 +22,7 @@ Public Class islimlock_test(Of T As {islimlock, Structure})
 
     Protected Sub New(ByVal lc As islimlock_case, Optional ByVal small_size As Boolean = False)
         MyBase.New(multithreading(repeat(lc, If(small_size, size, size * If(isdebugbuild(), 1, 8))),
-                                  If(small_size, thread_count, thread_count * If(isdebugbuild(), 1, 4))),
+                                  If(small_size, thread_count, thread_count * CUInt(If(isdebugbuild(), 1, 4)))),
                    timeslice_length_ms)
     End Sub
 

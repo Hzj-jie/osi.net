@@ -96,7 +96,7 @@ Public Class case2_test
         Private Shared Sub multi_threading_case()
             _multi_threading_case_runs.increment()
             Dim thread_id As Int32 = 0
-            thread_id = multithreading_case_wrapper.thread_id()
+            thread_id = CInt(multithreading_case_wrapper.thread_id())
             assert_more_or_equal_and_less(thread_id, 0, CInt(multi_threading_case_thread_count))
             Static b(multi_threading_case_thread_count - uint32_1) As Boolean
             assert_false(b(thread_id))

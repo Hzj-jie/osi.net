@@ -12,7 +12,7 @@ Public Module _assert
 
     Public Function assert_true(ByVal v As Boolean, ByVal ParamArray msg() As Object) As Boolean
         If Not v Then
-            utt_raise_error("assert failed, ", msg, " @ ", callingcode("_assert"), ", stacktrace ", callstack())
+            utt_raise_error("assert failed, ", msg, " @ ", backtrace("_assert"), ", stacktrace ", callstack())
             If Not envs.utt_no_assert Then
                 Interlocked.Increment(failure)
                 assert(atomic.read(failure) < If(envs.mono, 10000, 1000), "too many assert failures")

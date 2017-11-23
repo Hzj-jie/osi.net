@@ -1,13 +1,17 @@
 ﻿
-Imports osi.root.utt
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.root.utt
 
 Partial Public Class vector_test
     Inherits repeat_case_wrapper
     Private ReadOnly size_base As Int32 = 0
 
-    Friend Sub New(ByVal validation As Boolean, ByVal size_base As Int32)
+    Public Sub New(ByVal validation As Boolean, ByVal size_base As Int32)
         MyBase.New(New vector_case(validation))
         Me.size_base = size_base
     End Sub
@@ -16,8 +20,8 @@ Partial Public Class vector_test
         Me.New(True, 1024)
     End Sub
 
-    Protected Overrides Function test_size() As Int64
-        Return If(isreleasebuild(), 4, 1) * size_base
+    Protected Overrides Function test_size() As UInt64
+        Return CULng(If(isreleasebuild(), 4, 1) * size_base)
     End Function
 
     Partial Private Class vector_case

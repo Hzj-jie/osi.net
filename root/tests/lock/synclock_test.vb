@@ -1,10 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
-Imports osi.root.utt
-Imports osi.root.lock
 Imports osi.root.connector
 Imports osi.root.envs
+Imports osi.root.lock
 Imports osi.root.template
+Imports osi.root.utt
 
 Public Class synclock_test
     Inherits synclock_test(Of _true)
@@ -19,12 +23,12 @@ Public Class synclock_test(Of S As _boolean)
     Inherits processor_measured_case_wrapper
 
     Private Shared ReadOnly size As Int64
-    Private Shared ReadOnly thread_count As Int64
+    Private Shared ReadOnly thread_count As UInt32
     Private Shared ReadOnly sync_lock As Boolean
 
     Shared Sub New()
         size = 524288 * If(isdebugbuild(), 1, 8)
-        thread_count = 4 * If(isdebugbuild(), 1, 4)
+        thread_count = CUInt(4 * If(isdebugbuild(), 1, 4))
         sync_lock = +(alloc(Of S)())
     End Sub
 

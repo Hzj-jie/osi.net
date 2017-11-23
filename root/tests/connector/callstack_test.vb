@@ -9,7 +9,7 @@ Public Class callstack_test
     Private Structure test_structure2
         <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)> _
         Public Function func6(ByVal ignores() As String) As String
-            Return callingcode(ignores)
+            Return backtrace(ignores)
         End Function
     End Structure
 

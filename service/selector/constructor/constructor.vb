@@ -64,7 +64,8 @@ Public NotInheritable Class constructor(Of T)
                                       Return False
                                   End If
                                   Dim allocator As Func(Of var, pointer(Of T), event_comb) = Nothing
-                                  If lt.get(v("type"), allocator) Then
+                                  If lt.get(v("type"), allocator) OrElse
+                                     (Not l Is Nothing AndAlso eva(allocator, l)) Then
                                       assert(Not allocator Is Nothing)
                                       o.renew()
                                       ec = allocator(v, o)

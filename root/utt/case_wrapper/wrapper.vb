@@ -3,6 +3,9 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
+Imports osi.root.constants
+
 Public Module _wrapper
     Public Function gc_memory_measured(ByVal c As [case], ByVal interval_ms As Int64) As [case]
         Return New gc_memory_measured_case_wrapper(c, interval_ms)
@@ -21,6 +24,13 @@ Public Module _wrapper
     End Function
 
     Public Function multithreading(ByVal c As [case], ByVal threadcount As Int32) As [case]
+        raise_error(error_type.deprecated,
+                    "multithreading([case], int32) is deprecated, use uint32 overloads: ", backtrace())
+        assert(threadcount >= 0)
+        Return multithreading(c, CUInt(threadcount))
+    End Function
+
+    Public Function multithreading(ByVal c As [case], ByVal threadcount As UInt32) As [case]
         Return New multithreading_case_wrapper(c, threadcount)
     End Function
 
@@ -29,6 +39,13 @@ Public Module _wrapper
     End Function
 
     Public Function multi_procedure(ByVal c As event_comb_case, ByVal procedure_count As Int32) As event_comb_case
+        raise_error(error_type.deprecated,
+                    "multi_procedure(event_comb_case, int32) is deprecated, use uint32 overloads: ", backtrace())
+        assert(procedure_count >= 0)
+        Return multi_procedure(c, CUInt(procedure_count))
+    End Function
+
+    Public Function multi_procedure(ByVal c As event_comb_case, ByVal procedure_count As UInt32) As event_comb_case
         Return New multi_procedure_case_wrapper(c, procedure_count)
     End Function
 
@@ -51,8 +68,16 @@ Public Module _wrapper
         Return New processor_measured_case_wrapper(c)
     End Function
 
-    Public Function repeat(ByVal c As [case], ByVal testsize As Int64) As [case]
+    Public Function repeat(ByVal c As [case], ByVal testsize As UInt64) As [case]
         Return New repeat_case_wrapper(c, testsize)
+    End Function
+
+    Public Function repeat(ByVal c As [case], ByVal testsize As Int64) As [case]
+        raise_error(error_type.deprecated,
+                    "repeat([case], int64) is deprecated, use uint64 overloads: ",
+                    backtrace())
+        assert(testsize >= 0)
+        Return repeat(c, CULng(testsize))
     End Function
 
     Public Function repeat(ByVal c As [case]) As [case]
@@ -60,6 +85,14 @@ Public Module _wrapper
     End Function
 
     Public Function repeat(ByVal c As event_comb_case, ByVal testsize As Int64) As event_comb_case
+        raise_error(error_type.deprecated,
+                    "repeat(event_comb_case, int64) is deprecated, use uint64 overloads: ",
+                    backtrace())
+        assert(testsize >= 0)
+        Return repeat(c, CULng(testsize))
+    End Function
+
+    Public Function repeat(ByVal c As event_comb_case, ByVal testsize As UInt64) As event_comb_case
         Return New repeat_event_comb_case_wrapper(c, testsize)
     End Function
 

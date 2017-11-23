@@ -11,12 +11,19 @@ Public Class repeat_case_wrapper
     Inherits case_wrapper
 
     <ThreadStatic> Private Shared this As repeat_case_wrapper
-    <ThreadStatic> Private Shared this_round As Func(Of Int64)
-    Private ReadOnly size As Int64
+    <ThreadStatic> Private Shared this_round As Func(Of UInt64)
+    Private ReadOnly size As UInt64
 
-    Public Sub New(ByVal c As [case], Optional ByVal test_size As Int64 = npos)
+    Public Sub New(ByVal c As [case], Optional ByVal test_size As UInt64 = 1)
         MyBase.New(c)
         Me.size = test_size
+    End Sub
+
+    Public Sub New(ByVal c As [case], ByVal test_size As Int64)
+        Me.New(c, assert_return(test_size >= 0, CULng(test_size)))
+        raise_error(error_type.deprecated,
+                    "repeat_case_wrapper([case], int64) is deprecated, use uint64 overloads: ",
+                    backtrace())
     End Sub
 
     Public Shared Function current() As repeat_case_wrapper
@@ -24,19 +31,19 @@ Public Class repeat_case_wrapper
         Return this
     End Function
 
-    Public Shared Function current_round() As Int64
+    Public Shared Function current_round() As UInt64
         assert(Not this_round Is Nothing)
         Return this_round()
     End Function
 
-    Protected Overridable Function test_size() As Int64
+    Protected Overridable Function test_size() As UInt64
         Return size
     End Function
 
     Public NotOverridable Overrides Function run() As Boolean
-        Dim i As Int64 = 0
+        Dim i As UInt64 = 0
         this = Me
-        this_round = Function()
+        this_round = Function() As UInt64
                          Return i
                      End Function
         Using defer(Sub()
@@ -44,7 +51,7 @@ Public Class repeat_case_wrapper
                         this_round = Nothing
                     End Sub)
             assert(test_size() > 0)
-            For i = 0 To test_size() - 1
+            For i = 0 To test_size() - uint64_1
                 If Not MyBase.run() Then
                     Return False
                 End If

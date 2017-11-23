@@ -19,7 +19,7 @@ Partial Public NotInheritable Class case2
         End If
         If info.thread_count > 1 Then
             assert(info.thread_count <= max_int32)
-            r = multithreading(r, CInt(info.thread_count))
+            r = multithreading(r, info.thread_count)
         End If
         If info.command_line_specified Then
             r = commandline_specified(r)

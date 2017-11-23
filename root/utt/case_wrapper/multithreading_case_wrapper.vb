@@ -13,7 +13,7 @@ Public Class multithreading_case_wrapper
 
     <ThreadStatic()> Private Shared id As Int32
     <ThreadStatic()> Private Shared this As multithreading_case_wrapper
-    Private ReadOnly tc As Int32 = 0
+    Private ReadOnly tc As UInt32 = 0
     Private ReadOnly start_are As AutoResetEvent
     Private ReadOnly accept_mre As ManualResetEvent
     Private ReadOnly finish_are As AutoResetEvent
@@ -21,11 +21,11 @@ Public Class multithreading_case_wrapper
     Private accepted As Boolean = False
     Private failed As Boolean = False
 
-    Public Shared Function valid_thread_count(ByVal tc As Int32) As Boolean
+    Public Shared Function valid_thread_count(ByVal tc As UInt32) As Boolean
         Return tc > 1 OrElse envs.single_cpu
     End Function
 
-    Public Sub New(ByVal c As [case], Optional ByVal threadcount As Int32 = 8)
+    Public Sub New(ByVal c As [case], Optional ByVal threadcount As UInt32 = 8)
         MyBase.New(c)
         Me.tc = threadcount
         start_are = New AutoResetEvent(False)
@@ -33,20 +33,24 @@ Public Class multithreading_case_wrapper
         finish_are = New AutoResetEvent(False)
     End Sub
 
+    Public Sub New(ByVal c As [case], ByVal threadcount As Int32)
+        Me.New(c, CUInt(assert_return(threadcount >= 0, threadcount)))
+        raise_error(error_type.deprecated,
+                    "multithreading_case_wrapper([case], int32) is deprecated, use uint32 overloads: ", backtrace())
+    End Sub
+
     Public Overrides Function reserved_processors() As Int16
         Return CShort(min(max(threadcount(), MyBase.reserved_processors()), max_int16))
     End Function
 
-    Protected Overridable Function threadcount() As Int32
+    Protected Overridable Function threadcount() As UInt32
         Return tc
     End Function
 
     Private Sub workon(ByVal input As Object)
-        Dim i As Int32 = 0
-        i = direct_cast(Of Int32)(input)
         Interlocked.Increment(running_thread)
         assert(start_are.Set())
-        id = i
+        id = direct_cast(Of Int32)(input)
         this = Me
         Using defer(Sub()
                         id = npos
@@ -71,13 +75,18 @@ Public Class multithreading_case_wrapper
         Return this
     End Function
 
-    Public Shared Function running_thread_count() As Int32
-        Return current().running_thread
+    Public Shared Function running_thread_count() As UInt32
+        Dim r As Int32 = 0
+        r = current().running_thread
+        assert(r >= 0)
+        Return CUInt(r)
     End Function
 
-    Public Shared Function thread_id() As Int32
-        assert(id <> npos)
-        Return id
+    Public Shared Function thread_id() As UInt32
+        Dim r As Int32 = 0
+        r = id
+        assert(r >= 0)
+        Return CUInt(r)
     End Function
 
     Public NotOverridable Overrides Function run() As Boolean
@@ -88,8 +97,8 @@ Public Class multithreading_case_wrapper
         accept_mre.Reset()
         finish_are.Reset()
         Dim ts() As Thread = Nothing
-        ReDim ts(threadcount() - 1)
-        For i As Int32 = 0 To threadcount() - 1
+        ReDim ts(CInt(threadcount()) - 1)
+        For i As Int32 = 0 To CInt(threadcount()) - 1
             ts(i) = New Thread(AddressOf workon)
             ts(i).Name() = "MULTITHREADING_CASE_WRAPPER_THREAD"
             ts(i).Start(i)
@@ -110,7 +119,7 @@ Public Class multithreading_case_wrapper
         assert(accept_mre.Set())
         While assert(finish_are.WaitOne()) AndAlso running_thread > 0
         End While
-        For i As Int32 = 0 To threadcount() - 1
+        For i As Int32 = 0 To CInt(threadcount()) - 1
             ts(i).Abort()
             ts(i).Join()
         Next

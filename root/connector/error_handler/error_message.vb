@@ -1,10 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Text
 Imports osi.root.constants
 
 Public Class error_message
     Public Const error_type_count As Int64 = error_type.last - error_type.first + 1
-    Public Const error_type_char As String = "_aceiswupto_"
+    Public Const error_type_char As String = "_aceiswuptod_"
     Public Shared ReadOnly error_type_defination() As String = {"_",
                                                                 "application",
                                                                 "critical",
@@ -16,6 +20,7 @@ Public Class error_message
                                                                 "performance",
                                                                 "trace",
                                                                 "other",
+                                                                "deprecated",
                                                                 "_"}
     Public Const seperator As String = character.comma + character.blank
 
@@ -48,7 +53,7 @@ Public Class error_message
         prefix = strcat(prefix, seperator, short_time(), seperator)
         errmsg = strcat(prefix, errmsg)
         If err_type <> error_type.information Then
-            errmsg.append(seperator, callingcode(additional_jump + 1))
+            errmsg.append(seperator, backtrace(additional_jump + 1))
         End If
 
         'keep one \r\n
@@ -61,7 +66,7 @@ Public Class error_message
         assert(Not m Is Nothing)
         ' shortcut
         If m.Length() = 1 AndAlso TypeOf m(0) Is String Then
-            Return m(0)
+            Return Convert.ToString(m(0))
         End If
         Dim s As StringBuilder = Nothing
         s = New StringBuilder()

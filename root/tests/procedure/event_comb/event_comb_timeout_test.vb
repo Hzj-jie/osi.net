@@ -1,18 +1,20 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
+Imports osi.root.envs
+Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.utt
-Imports osi.root.lock
-Imports osi.root.constants
-Imports osi.root.utils
-Imports osi.root.envs
-Imports osi.root.connector
 
 Public Class event_comb_timeout_test
     Inherits case_wrapper
 
     Private Shared ReadOnly timeout_ms As Int64
     Private Shared ReadOnly test_size As Int64
-    Private Shared ReadOnly thread_count As Int64
+    Private Shared ReadOnly thread_count As UInt32
 
     Shared Sub New()
         test_size = 128 * If(isdebugbuild(), 1, 2)
@@ -85,7 +87,7 @@ Public Class event_comb_timeout_test
             Return True
         End Function
 
-        Private Function waitfor_test()
+        Private Function waitfor_test() As Boolean
             Dim this As Int32 = 0
             this = +counter
             Dim ec As event_comb = Nothing

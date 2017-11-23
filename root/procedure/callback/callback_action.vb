@@ -267,7 +267,7 @@ Partial Public Class callback_action
         Me.ctor_ticks() = nowadays.ticks()
         Me.timeoutticks = timeoutticks
         If callback_trace Then
-            Me._callstack = callingcode(additional_jump + 1)
+            Me._callstack = backtrace(additional_jump + 1)
         Else
             Me._callstack = "##NOT_TRACE##"
         End If

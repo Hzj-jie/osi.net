@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Diagnostics
 Imports System.Reflection
 Imports System.Text
@@ -22,12 +26,12 @@ Public Module _callstack
         Return in_shared_constructor_of(GetType(T))
     End Function
 
-    Public Function callstack(Optional ByVal removeblanks As Boolean = False,
+    Public Function callstack(Optional ByVal remove_blanks As Boolean = False,
                               Optional ByVal separator As Char = character.colon) As String
 #If Not PocketPC AndAlso Not Smartphone Then
         Dim rtn As String = Nothing
         rtn = Environment.StackTrace()
-        If removeblanks Then
+        If remove_blanks Then
             rtn = rtn.Replace("   ", empty_string) _
                      .Replace(newline.incode(), separator)
         End If
@@ -61,12 +65,12 @@ Public Module _callstack
         Return Convert.ToString(r)
     End Function
 
-    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)> _
-    Public Function callingcode(Optional ByVal additionalJump As Int32 = 0) As String
+    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
+    Public Function backtrace(Optional ByVal additional_jump As Int32 = 1) As String
 #If Not (PocketPC OrElse Smartphone) Then
         Dim callstack As StackFrame = Nothing
         Dim jump As Int32 = 0
-        jump = additionalJump + 1
+        jump = additional_jump + 1
         If isdebugmode() Then
             callstack = New StackFrame(jump, True)
         Else
@@ -78,8 +82,8 @@ Public Module _callstack
 #End If
     End Function
 
-    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)> _
-    Public Function callingcode(ByVal ParamArray ignores() As String) As String
+    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
+    Public Function backtrace(ByVal ParamArray ignores() As String) As String
         Dim i As Int32 = 0
         While True
             'jump myself
@@ -96,7 +100,7 @@ Public Module _callstack
                 Exit While
             End If
             Dim j As Int32 = 0
-            For j = 0 To array_size(ignores) - 1
+            For j = 0 To array_size_i(ignores) - 1
                 If strcontains(m.Module().Name(), ignores(j), False) OrElse
                    strcontains(m.DeclaringType().FullName(), ignores(j), False) OrElse
                    strcontains(m.Name(), ignores(j), False) Then
@@ -109,48 +113,5 @@ Public Module _callstack
         End While
 
         Return "##NO_MATCH##"
-    End Function
-
-    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)> _
-    Public Function invokingcode(Optional ByVal additionalJump As Int32 = 0) As String
-        Return callingcode(additionalJump + 1)
-    End Function
-
-    Public Function invoke_method_name(ByVal invoke As [Delegate]) As String
-#If PocketPC OrElse Smartphone Then
-        Return "#CANNOT_GET_INVOKE_NAME#"
-#Else
-        If Not invoke Is Nothing Then
-            Try
-                Return invoke.Method().Name()
-            Catch
-            End Try
-        End If
-        Return "#CANNOT_GET_INVOKE_NAME#"
-#End If
-    End Function
-
-    Public Function invoke_method_identity(ByVal invoke As [Delegate]) As String
-        If Not invoke Is Nothing Then
-            Try
-                Dim rtn As StringBuilder = Nothing
-                rtn = New StringBuilder()
-                If Not invoke.Target() Is Nothing Then
-                    rtn.Append(invoke.Target().GetType().FullName()) _
-                       .Append(character.colon)
-                End If
-                rtn.Append(invoke.Method().DeclaringType().FullName()) _
-                   .Append(character.dot) _
-                   .Append(invoke.Method().Name())
-                If isdebugmode() Then
-                    rtn.Append(character.at) _
-                       .Append(invoke.Method().Module().FullyQualifiedName())
-                End If
-                Return Convert.ToString(rtn)
-            Catch
-            End Try
-        End If
-
-        Return "#CANNOT_GET_INVOKE_IDENTITY#"
     End Function
 End Module

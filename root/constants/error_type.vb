@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Public Enum error_type
     first                   'begin of errorType
     application             'for information around application
@@ -11,5 +15,6 @@ Public Enum error_type
     performance             'for performance information output
     trace                   'for debugging trace
     other                   'for other output
+    deprecated              'for API deprecation info
     last                    'last of errorType
 End Enum

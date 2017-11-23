@@ -86,7 +86,7 @@ Partial Public Class event_comb
             If event_comb_full_alloc_stack Then
                 _callstack = connector.callstack()
             Else
-                _callstack = callingcode("event_comb")
+                _callstack = backtrace("event_comb")
             End If
         Else
             _callstack = "##NOT_TRACE##"

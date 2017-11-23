@@ -1,21 +1,24 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
+Imports osi.root.envs
+Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.utt
-Imports osi.root.connector
-Imports osi.root.lock
-Imports osi.root.utils
-Imports osi.root.envs
 
 Public Class callback_timeout_test
     Inherits case_wrapper
 
     Private Shared ReadOnly timeout_ms As Int64
     Private Shared ReadOnly test_size As Int64
-    Private Shared ReadOnly thread_count As Int64
+    Private Shared ReadOnly thread_count As UInt32
 
     Shared Sub New()
         test_size = 1024 * If(isdebugbuild(), 1, 8)
-        thread_count = 8 * If(isdebugbuild(), 1, 4)
+        thread_count = CUInt(8 * If(isdebugbuild(), 1, 4))
         timeout_ms = 1
     End Sub
 
