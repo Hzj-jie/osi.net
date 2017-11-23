@@ -55,8 +55,8 @@ Public Class multithreading_case_wrapper
         Using defer(Sub()
                         id = npos
                         this = Nothing
-                        assert(finish_are.Set())
                         Interlocked.Decrement(running_thread)
+                        assert(finish_are.Set())
                     End Sub)
             assert(accept_mre.WaitOne())
             If failed Then
