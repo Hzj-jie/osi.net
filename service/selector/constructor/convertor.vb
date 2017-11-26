@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.procedure
@@ -26,6 +27,7 @@ Public NotInheritable Class convertor
                                                ByVal T_type_prefix As String) _
                                     As Func(Of var, pointer(Of T2), event_comb)
         assert(Not f Is Nothing)
+        T_type_prefix = strcat(T_type_prefix, character.dot)
         Return Function(ByVal v As var, ByVal o As pointer(Of T2)) As event_comb
                    Dim ec As event_comb = Nothing
                    Dim p As pointer(Of T) = Nothing
@@ -38,7 +40,6 @@ Public NotInheritable Class convertor
                                          Function() As Boolean
                                              Dim r As T2 = Nothing
                                              Return ec.end_result() AndAlso
-                                                    Not p.empty() AndAlso
                                                     f(v, +p, r) AndAlso
                                                     eva(o, r) AndAlso
                                                     goto_end()

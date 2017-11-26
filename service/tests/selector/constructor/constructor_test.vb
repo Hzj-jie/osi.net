@@ -32,7 +32,7 @@ Partial Public Class constructor_test
                                              Return New test_prefer_type_constructor_class(2)
                                          End Function))
         Dim r As test_prefer_type_constructor_class = Nothing
-        assert_true(constructor.resolve(New var(strcat("--type=", type)), r))
+        assert_true(constructor.sync_resolve(New var(strcat("--type=", type)), r))
         assert_not_nothing(r)
         assert_equal(r.i, 1)
         assert_true(constructor(Of test_prefer_type_constructor_class).erase(type))
@@ -61,7 +61,7 @@ Partial Public Class constructor_test
                                              Return False
                                          End Function))
         Dim r As test_class = Nothing
-        assert_false(constructor.resolve(New var(strcat("--type=", type)), r))
+        assert_false(constructor.sync_resolve(New var(strcat("--type=", type)), r))
         assert_nothing(r)
         assert_true(constructor(Of test_class).erase(type))
     End Sub
@@ -77,7 +77,7 @@ Partial Public Class constructor_test
                                              Return False
                                          End Function))
         Dim r As test_return_false_when_constructor_failed2_class = Nothing
-        assert_false(constructor.resolve(New var(), r))
+        assert_false(constructor.sync_resolve(New var(), r))
         assert_nothing(r)
         assert_true(constructor(Of test_return_false_when_constructor_failed2_class).erase())
     End Sub
@@ -89,7 +89,7 @@ Partial Public Class constructor_test
     Private Shared Sub return_false_if_no_constructor()
         assert_true(constructor(Of test_return_false_if_no_constructor_class).empty())
         Dim r As test_return_false_if_no_constructor_class = Nothing
-        assert_false(constructor.resolve(New var(), r))
+        assert_false(constructor.sync_resolve(New var(), r))
         assert_nothing(r)
     End Sub
 
@@ -118,7 +118,7 @@ Partial Public Class constructor_test
                                      End Function))
         Dim r As test_class = Nothing
         Dim w As test_class_wrapper = Nothing
-        assert_true(constructor.resolve(New var(strcat("--type=", type, " --wrapper=", type)), r))
+        assert_true(constructor.sync_resolve(New var(strcat("--type=", type, " --wrapper=", type)), r))
         assert_not_nothing(r)
         assert_true(direct_cast(r, w))
         assert_not_nothing(w)

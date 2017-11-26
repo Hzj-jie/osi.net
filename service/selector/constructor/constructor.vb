@@ -100,6 +100,24 @@ Public NotInheritable Class constructor(Of T)
                               End Function)
     End Function
 
+    Public Shared Function resolve(Of RT As T)(ByVal v As var, ByVal o As pointer(Of RT)) As event_comb
+        Dim ec As event_comb = Nothing
+        Dim r As pointer(Of T) = Nothing
+        Return New event_comb(Function() As Boolean
+                                  r = New pointer(Of T)()
+                                  ec = resolve(v, r)
+                                  Return waitfor(ec) AndAlso
+                                         goto_next()
+                              End Function,
+                              Function() As Boolean
+                                  Dim t As RT = Nothing
+                                  Return ec.end_result() AndAlso
+                                         cast(+r, t) AndAlso
+                                         eva(o, t) AndAlso
+                                         goto_end()
+                              End Function)
+    End Function
+
     Private Sub New()
     End Sub
 End Class
