@@ -12,6 +12,17 @@ Imports osi.root.utils
 Imports osi.service.argument
 
 Public NotInheritable Class convertor
+    Private Shared Function convert(Of T, T2)(ByVal f As Func(Of T, pointer(Of T2), event_comb)) _
+                                             As Func(Of var, T, pointer(Of T2), event_comb)
+        If f Is Nothing Then
+            Return Nothing
+        Else
+            Return Function(ByVal v As var, ByVal i As T, ByVal o As pointer(Of T2)) As event_comb
+                       Return f(i, o)
+                   End Function
+        End If
+    End Function
+
     Private Shared Function convert(Of T, T2)(ByVal f As _do_val_val_ref(Of var, T, T2, Boolean)) _
                                              As Func(Of var, T, pointer(Of T2), event_comb)
         If f Is Nothing Then
@@ -27,6 +38,17 @@ Public NotInheritable Class convertor
         End If
     End Function
 
+    Private Shared Function convert(Of T, T2)(ByVal f As _do_val_ref(Of T, T2, Boolean)) _
+                                             As Func(Of var, T, pointer(Of T2), event_comb)
+        If f Is Nothing Then
+            Return Nothing
+        Else
+            Return convert(Function(ByVal v As var, ByVal i As T, ByRef o As T2) As Boolean
+                               Return f(i, o)
+                           End Function)
+        End If
+    End Function
+
     Private Shared Function convert(Of T, T2)(ByVal f As Func(Of var, T, T2)) _
                                              As Func(Of var, T, pointer(Of T2), event_comb)
 
@@ -36,6 +58,17 @@ Public NotInheritable Class convertor
             Return convert(Function(ByVal v As var, ByVal i As T, ByRef o As T2) As Boolean
                                o = f(v, i)
                                Return True
+                           End Function)
+        End If
+    End Function
+
+    Private Shared Function convert(Of T, T2)(ByVal f As Func(Of T, T2)) _
+                                             As Func(Of var, T, pointer(Of T2), event_comb)
+        If f Is Nothing Then
+            Return Nothing
+        Else
+            Return convert(Function(ByVal v As var, ByVal i As T) As T2
+                               Return f(i)
                            End Function)
         End If
     End Function
@@ -79,14 +112,29 @@ Public NotInheritable Class convertor
         End If
     End Function
 
+    Public Shared Function register(Of T, T2)(ByVal f As Func(Of T, pointer(Of T2), event_comb),
+                                              ByVal T_type_filter As String) As Boolean
+        Return register(convert(f), T_type_filter)
+    End Function
+
     Public Shared Function register(Of T, T2)(ByVal f As _do_val_val_ref(Of var, T, T2, Boolean),
                                               ByVal T_type_filter As String) As Boolean
         Return register(convert(f), T_type_filter)
     End Function
 
-    Public Shared Function register(Of T, T2)(ByVal v As Func(Of var, T, T2),
+    Public Shared Function register(Of T, T2)(ByVal f As _do_val_ref(Of T, T2, Boolean),
                                               ByVal T_type_filter As String) As Boolean
-        Return register(convert(v), T_type_filter)
+        Return register(convert(f), T_type_filter)
+    End Function
+
+    Public Shared Function register(Of T, T2)(ByVal f As Func(Of var, T, T2),
+                                              ByVal T_type_filter As String) As Boolean
+        Return register(convert(f), T_type_filter)
+    End Function
+
+    Public Shared Function register(Of T, T2)(ByVal f As Func(Of T, T2),
+                                              ByVal T_type_filter As String) As Boolean
+        Return register(convert(f), T_type_filter)
     End Function
 
     Public Shared Function register(Of T, T2)(ByVal type As String,
@@ -100,13 +148,31 @@ Public NotInheritable Class convertor
     End Function
 
     Public Shared Function register(Of T, T2)(ByVal type As String,
+                                              ByVal f As Func(Of T, pointer(Of T2), event_comb),
+                                              ByVal T_type_filter As String) As Boolean
+        Return register(type, convert(f), T_type_filter)
+    End Function
+
+    Public Shared Function register(Of T, T2)(ByVal type As String,
                                               ByVal f As _do_val_val_ref(Of var, T, T2, Boolean),
                                               ByVal T_type_filter As String) As Boolean
         Return register(type, convert(f), T_type_filter)
     End Function
 
     Public Shared Function register(Of T, T2)(ByVal type As String,
+                                              ByVal f As _do_val_ref(Of T, T2, Boolean),
+                                              ByVal T_type_filter As String) As Boolean
+        Return register(type, convert(f), T_type_filter)
+    End Function
+
+    Public Shared Function register(Of T, T2)(ByVal type As String,
                                               ByVal v As Func(Of var, T, T2),
+                                              ByVal T_type_filter As String) As Boolean
+        Return register(type, convert(v), T_type_filter)
+    End Function
+
+    Public Shared Function register(Of T, T2)(ByVal type As String,
+                                              ByVal v As Func(Of T, T2),
                                               ByVal T_type_filter As String) As Boolean
         Return register(type, convert(v), T_type_filter)
     End Function
