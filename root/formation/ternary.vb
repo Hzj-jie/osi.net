@@ -33,6 +33,10 @@ Public Structure ternary
         Return this.true_()
     End Operator
 
+    Public Shared Operator Not(ByVal this As ternary) As Boolean
+        Return this.false_()
+    End Operator
+
     Public Shared Widening Operator CType(ByVal this As Boolean) As ternary
         Return If(this, ternary.true, ternary.false)
     End Operator

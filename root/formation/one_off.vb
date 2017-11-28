@@ -18,7 +18,16 @@ Public Module _one_off
     End Function
 End Module
 
-Public Class one_off(Of T As Class)
+Public NotInheritable Class one_off
+    Public Shared Function [New](Of T As Class)(ByVal i As T) As one_off(Of T)
+        Return New one_off(Of T)(i)
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
+
+Public NotInheritable Class one_off(Of T As Class)
     Private i As T
 
     Public Sub New(ByVal i As T)
@@ -36,6 +45,10 @@ Public Class one_off(Of T As Class)
             Return Interlocked.CompareExchange(Me.i, i, Nothing) Is Nothing
         End If
     End Function
+
+    Public Shared Widening Operator CType(ByVal this As one_off(Of T)) As Boolean
+        Return Not this Is Nothing AndAlso this.has()
+    End Operator
 
     Public Function has() As Boolean
         Return Not Me.i Is Nothing

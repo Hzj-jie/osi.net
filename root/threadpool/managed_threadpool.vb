@@ -1,9 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.utils
-Imports osi.root.delegates
 Imports tp = System.Threading.ThreadPool
 
 Public Class managed_threadpool
@@ -22,11 +24,19 @@ Public Class managed_threadpool
     Public Overrides Property thread_count() As UInt32
         Get
             Dim ft As Int32 = 0
-            tp.GetMaxThreads(ft, Nothing)
-            If ft <= 0 Then
+            Dim bt As Int32 = 0
+            tp.GetMaxThreads(ft, bt)
+
+            Dim aft As Int32 = 0
+            Dim abt As Int32 = 0
+            tp.GetAvailableThreads(aft, abt)
+
+            Dim r As Int32 = 0
+            r = ft + bt - aft - abt
+            If r <= 0 Then
                 Return 0
             Else
-                Return ft
+                Return CUInt(r)
             End If
         End Get
         Set(ByVal value As UInt32)

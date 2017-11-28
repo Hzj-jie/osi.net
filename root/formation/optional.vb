@@ -36,11 +36,11 @@ Public Class [optional](Of T)
     End Sub
 
     Public Shared Widening Operator CType(ByVal this As [optional](Of T)) As Boolean
-        If this Is Nothing Then
-            Return False
-        Else
-            Return this.b
-        End If
+        Return Not this Is Nothing AndAlso this.b
+    End Operator
+
+    Public Shared Operator Not(ByVal this As [optional](Of T)) As Boolean
+        Return this Is Nothing OrElse Not this.b
     End Operator
 
     Public Shared Operator +(ByVal this As [optional](Of T)) As T

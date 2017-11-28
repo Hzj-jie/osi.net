@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 
 Partial Public Class big_int
@@ -30,11 +34,11 @@ Partial Public Class big_int
     End Operator
 
     Public Shared Widening Operator CType(ByVal this As big_int) As Boolean
-        If this Is Nothing Then
-            Return False
-        Else
-            Return this.true()
-        End If
+        Return Not this Is Nothing AndAlso this.true()
+    End Operator
+
+    Public Shared Operator Not(ByVal this As big_int) As Boolean
+        Return this Is Nothing OrElse this.false()
     End Operator
 
     Public Function as_uint64(ByRef overflow As Boolean) As UInt64

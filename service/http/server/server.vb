@@ -10,22 +10,57 @@ Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.threadpool
+Imports osi.root.utils
 Imports osi.service.argument
 Imports osi.service.convertor
 Imports osi.service.http.constants.interval_ms
 Imports constructor = osi.service.device.constructor
 
 <global_init(global_init_level.server_services)>
-Public Class server
-    Public Event handle_context(ByVal ctx As HttpListenerContext, ByRef ec As event_comb)
-    Public Event handle_context_sync(ByVal ctx As HttpListenerContext)
-    Public Event handle_context_async(ByVal ctx As HttpListenerContext, ByRef ec As event_comb)
-    Public Event handle_context_offline(ByVal ctx As HttpListenerContext,
-                                        ByVal response_timeout_ms As Int64,
-                                        ByVal after_respond As Action)
+Public NotInheritable Class server
+    Public Event context_received(ByVal ctx As context)
 
     Private Const default_max_connection_count As Int32 = 1024
     Private Const default_response_timeout_ms As Int64 = 60 * minute_second * second_milli
+
+    Public Class context
+        Public ReadOnly server As server
+        Public ReadOnly context As HttpListenerContext
+        Public ReadOnly response_timeout_ms As Int64
+        Private ReadOnly f As once_action
+        Private ReadOnly se As stopwatch.event
+
+        Public abort As Boolean = False
+
+        Public Sub New(ByVal server As server,
+                       ByVal context As HttpListenerContext,
+                       ByVal response_timeout_ms As Int64)
+            assert(Not server Is Nothing)
+            assert(Not context Is Nothing)
+            assert(response_timeout_ms > 0)
+            Me.server = server
+            Me.context = context
+            Me.response_timeout_ms = response_timeout_ms
+            Me.f = New once_action(Sub()
+                                       server.end_context(context, abort)
+                                   End Sub)
+            Me.se = stopwatch.push(response_timeout_ms,
+                                   Sub()
+                                       f.run()
+                                   End Sub)
+            assert(Not se Is Nothing)
+        End Sub
+
+        Public Sub finish()
+            f.run()
+            se.cancel()
+        End Sub
+
+        Public Sub finish(ByVal abort As Boolean)
+            Me.abort = abort
+            finish()
+        End Sub
+    End Class
 
     Private ReadOnly max_connection_count As Int32
     Private ReadOnly response_timeout_ms As Int64
@@ -39,7 +74,7 @@ Public Class server
         ServicePointManager.UseNagleAlgorithm() = False
         Try
             DirectCast(System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration(Nothing) _
-                .GetSection("system.web/httpRuntime"), 
+                .GetSection("system.web/httpRuntime"),
                 System.Web.Configuration.HttpRuntimeSection).EnableHeaderChecking() = False
         Catch ex As Exception
             raise_error(error_type.warning, "failed to set EnableHeaderChecking to false, ex ", ex.Message())
@@ -138,59 +173,10 @@ Public Class server
         Return add_several(ports, AddressOf add_port)
     End Function
 
-    Private Function end_context(ByVal ctx As HttpListenerContext, ByVal abort As Boolean) As Boolean
-        If ctx Is Nothing Then
-            Return False
-        Else
-            ctx.shutdown(abort)
-            Return assert(cc.decrement() >= 0)
-        End If
-    End Function
-
-    Private Function end_context(ByVal ctx As HttpListenerContext) As Boolean
-        Return end_context(ctx, False)
-    End Function
-
-    Private Sub start_context(ByVal ctx As HttpListenerContext)
+    Private Sub end_context(ByVal ctx As HttpListenerContext, ByVal abort As Boolean)
         assert(Not ctx Is Nothing)
-        Dim ec As event_comb = Nothing
-        assert_begin(New event_comb(Function() As Boolean
-                                        If event_attached(handle_contextEvent) Then
-                                            RaiseEvent handle_context(ctx, ec)
-                                            If ec Is Nothing Then
-                                                Return end_context(ctx) AndAlso
-                                                       goto_end()
-                                            Else
-                                                Return waitfor(ec, response_timeout_ms) AndAlso
-                                                       goto_next()
-                                            End If
-                                        ElseIf event_attached(handle_context_syncEvent) Then
-                                            RaiseEvent handle_context_sync(ctx)
-                                            Return end_context(ctx) AndAlso
-                                                   goto_end()
-                                        ElseIf event_attached(handle_context_asyncEvent) Then
-                                            RaiseEvent handle_context_async(ctx, ec)
-                                            Return waitfor(ec, response_timeout_ms) AndAlso
-                                                   goto_next()
-                                        ElseIf event_attached(handle_context_offlineEvent) Then
-                                            RaiseEvent handle_context_offline(ctx,
-                                                                              response_timeout_ms,
-                                                                              Sub()
-                                                                                  assert(end_context(ctx))
-                                                                              End Sub)
-                                            Return goto_end()
-                                        Else
-                                            ctx.Response().StatusCode() = HttpStatusCode.InternalServerError
-                                            ctx.Response().StatusDescription() = "NOT_IMPLEMENTED"
-                                            Return end_context(ctx) AndAlso
-                                                   goto_end()
-                                        End If
-                                    End Function,
-                                    Function() As Boolean
-                                        assert(Not ec Is Nothing)
-                                        Return end_context(ctx, Not ec.end_result()) AndAlso
-                                               goto_end()
-                                    End Function))
+        ctx.shutdown(abort)
+        assert(cc.decrement() >= 0)
     End Sub
 
     Private Sub listen()
@@ -200,13 +186,8 @@ Public Class server
             assert_begin(New event_comb(Function() As Boolean
                                             If listener.IsListening() Then
                                                 ec = Nothing
-                                                If Not ctx Is Nothing Then
-                                                    ctx.clear()
-                                                End If
+                                                ctx.renew()
                                                 If cc.increment() <= max_connection_count Then
-                                                    If ctx Is Nothing Then
-                                                        ctx = New pointer(Of HttpListenerContext)()
-                                                    End If
                                                     ec = listener.get_context(ctx)
                                                     Return waitfor(ec) AndAlso
                                                            goto_next()
@@ -223,7 +204,7 @@ Public Class server
                                             If Not ec Is Nothing AndAlso
                                                ec.end_result() AndAlso
                                                Not +ctx Is Nothing Then
-                                                start_context(+ctx)
+                                                RaiseEvent context_received(New context(Me, +ctx, response_timeout_ms))
                                             Else
                                                 assert(cc.decrement() >= 0)
                                             End If

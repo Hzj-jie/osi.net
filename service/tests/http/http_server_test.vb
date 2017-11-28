@@ -1,14 +1,17 @@
 ﻿
-Imports System.IO
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net
+Imports System.Text
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.procedure
-Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.root.lock
 Imports osi.root.utt
 Imports osi.service.http
-Imports osi.root.utils
-Imports osi.root.lock
 Imports osi.service.transmitter
 
 Public Class http_server_test
@@ -24,7 +27,7 @@ Public Class http_server_test
         Private Shared ReadOnly repeat As Int32 = 2
         Private Shared ReadOnly parallel As Int32 = 8
         Private Shared ReadOnly iteration As Int32 = 1024
-        Private Shared ReadOnly enc
+        Private Shared ReadOnly enc As Encoding
         Private ReadOnly port As UInt16
         Private ReadOnly request_times As atomic_int
         Private ReadOnly response_times As atomic_int
@@ -79,7 +82,7 @@ Public Class http_server_test
                                   Function() As Boolean
                                       If ec.end_result() AndAlso
                                          assert_not_nothing(+resp) Then
-                                          ReDim buff((+resp).ContentLength() - 1)
+                                          ReDim buff(CInt((+resp).ContentLength() - 1))
                                           ec = (New stream_flow_adapter((+resp).GetResponseStream())). _
                                                    receive(buff,
                                                            0,
@@ -103,8 +106,8 @@ Public Class http_server_test
                                           w.Abort()
                                       Else
                                           Dim wr As HttpWebResponse = Nothing
-                                          wr = (+resp)
-                                          assert(Not wr Is Nothing)
+                                          assert_true(direct_cast(+resp, wr))
+                                          assert_not_nothing(Not wr Is Nothing)
                                           wr.GetResponseStream().Close()
                                           wr.GetResponseStream().Dispose()
                                           wr.Close()
@@ -119,7 +122,7 @@ Public Class http_server_test
             Dim p As UInt32 = 0
             Dim s As server = Nothing
             s = New server(response_timeout_ms:=seconds_to_milliseconds(15))
-            AddHandler s.handle_context, AddressOf handle_context
+            AddHandler context_handle.[New](s).handle_context, AddressOf handle_context
             For j As Int32 = 0 To repeat - 1
                 If assert_true(s.add_port(port)) AndAlso
                    assert_true(s.start()) Then
@@ -145,7 +148,7 @@ Public Class http_server_test
         End Function
 
         Public Overrides Function reserved_processors() As Int16
-            Return Environment.ProcessorCount()
+            Return CShort(Environment.ProcessorCount())
         End Function
 
         Private Function success_rate(ByVal i As atomic_int) As Double

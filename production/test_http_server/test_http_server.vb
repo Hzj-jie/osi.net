@@ -1,11 +1,15 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.procedure
-Imports osi.service.http
-Imports osi.root.utils
 Imports osi.root.threadpool
+Imports osi.root.utils
+Imports osi.service.http
 
 Public Module test_http_server
     Private Sub handle_context(ByVal ctx As HttpListenerContext, ByRef ec As event_comb)
@@ -36,11 +40,11 @@ Public Module test_http_server
         ServicePointManager.MaxServicePoints() = max_int32
         Dim port As UInt16 = 0
         If isemptyarray(args) OrElse Not UInt16.TryParse(args(0), port) OrElse port = 0 Then
-            port = rnd_int(10000, 60001)
+            port = CUShort(rnd_int(10000, 60001))
         End If
         Dim s As server = Nothing
         s = New server(max_connection_count:=max_int32)
-        AddHandler s.handle_context, AddressOf handle_context
+        AddHandler context_handle.[New](s).handle_context, AddressOf handle_context
         assert(s.add_port(port))
         assert(s.start())
         write_console_line(strcat("server started on port ", port))

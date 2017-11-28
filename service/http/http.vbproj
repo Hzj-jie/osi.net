@@ -72,9 +72,10 @@
     <Compile Include="extension.vb" />
     <Compile Include="headers.vb" />
     <Compile Include="constants.vb" />
-    <Compile Include="proxy.vb" />
+    <Compile Include="server\context_handle.vb" />
+    <Compile Include="server\proxy.vb" />
     <Compile Include="headers_extension.vb" />
-    <Compile Include="server.vb" />
+    <Compile Include="server\server.vb" />
     <Compile Include="rr.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

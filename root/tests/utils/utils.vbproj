@@ -79,6 +79,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="once_action_test.vb" />
     <Compile Include="pather_test.vb" />
     <Compile Include="pattern_match_test.vb" />
     <Compile Include="reference_count_runner_test2.vb" />

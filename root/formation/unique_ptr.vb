@@ -78,6 +78,10 @@ Public NotInheritable Class unique_ptr(Of T As Class)
         Return Not this Is Nothing AndAlso Not this.empty()
     End Operator
 
+    Public Shared Operator Not(ByVal this As unique_ptr(Of T)) As Boolean
+        Return this Is Nothing OrElse this.empty()
+    End Operator
+
     Public Shared Operator +(ByVal this As unique_ptr(Of T)) As T
         If this Is Nothing Then
             Return Nothing

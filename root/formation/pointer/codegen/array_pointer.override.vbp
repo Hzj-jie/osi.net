@@ -6,7 +6,7 @@
     Private Shared Function hash(ByVal i As T()) As Int32
         'WTF, the Array.GetHashCode returns some random number in .net 3.5
         Dim r As Int32 = 0
-        For j As Int32 = 0 To min(32, array_size(i)) - 1
+        For j As Int32 = 0 To min(32, array_size_i(i)) - 1
             If i(j) Is Nothing Then
                 r = r Xor 0
             Else

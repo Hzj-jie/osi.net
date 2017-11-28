@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net
 Imports osi.root.constants
 Imports osi.root.connector
@@ -148,7 +152,19 @@ Public Class server_dev
     End Function
 
     Public Shared Operator +(ByVal this As server_dev) As idevice(Of text)
-        Return New delegate_device(Of text)(this, AddressOf validate, AddressOf close, AddressOf identity)
+        Return New delegate_device(Of text)(this,
+                                            Function(ByVal input As text) As Boolean
+                                                assert(object_compare(this, input) = 0)
+                                                Return validate(this)
+                                            End Function,
+                                            Sub(ByVal input As text)
+                                                assert(object_compare(this, input) = 0)
+                                                close(this)
+                                            End Sub,
+                                            Function(ByVal input As text) As String
+                                                assert(object_compare(this, input) = 0)
+                                                Return identity(this)
+                                            End Function)
     End Operator
 
     Public Shared Function device_exporter(ByVal s As server,
@@ -157,7 +173,7 @@ Public Class server_dev
         assert(Not s Is Nothing)
         Dim o As imanual_device_exporter(Of text) = Nothing
         o = New manual_device_exporter(Of text)(s.identity())
-        AddHandler s.handle_context_offline,
+        AddHandler context_handle.[New](s).handle_context_offline,
             Sub(ctx As HttpListenerContext, response_timeout_ms As Int64, after_respond As Action)
                 ' TODO: the response_timeout_ms cannot be sent to responder
                 If Not o.inject(+(New server_dev(ctx, ls, after_respond))) Then

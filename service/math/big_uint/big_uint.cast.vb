@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.constants
 
@@ -19,12 +23,14 @@ Partial Public Class big_uint
     End Operator
 
     Public Shared Widening Operator CType(ByVal this As big_uint) As Boolean
-        If this Is Nothing Then
-            Return False
-        Else
-            Return this.true()
-        End If
+        Return Not this Is Nothing AndAlso this.true()
     End Operator
+
+    ' This has been implemented by big_uint.not() function. Revise the performance impact: big_uint.not() is a bit-wise
+    ' reverse operation.
+    'Public Shared Operator Not(ByVal this As big_uint) As Boolean
+    '    Return this Is Nothing OrElse this.false()
+    'End Operator
 
     Public Function fit_uint64() As Boolean
         Return v.size() <= 2
@@ -72,7 +78,7 @@ Partial Public Class big_uint
             Else
                 overflow = (v(0) > max_int32)
             End If
-            Return (v(0) And max_int32)
+            Return CInt((v(0) And CUInt(max_int32)))
         End If
     End Function
 
@@ -81,7 +87,7 @@ Partial Public Class big_uint
         If v.empty() Then
             ReDim r(-1)
         Else
-            ReDim r(v.size() * byte_count_in_uint32 - uint32_1)
+            ReDim r(CInt(v.size() * byte_count_in_uint32 - uint32_1))
             Dim start As Int64 = 0
             Dim [end] As Int64 = 0
             Dim [step] As Int32 = 0
@@ -95,7 +101,7 @@ Partial Public Class big_uint
                 [step] = -1
             End If
             For i As Int64 = start To [end] Step [step]
-                assert(uint32_bytes(v(i), r, i * byte_count_in_uint32))
+                assert(uint32_bytes(v(CUInt(i)), r, CUInt(i) * byte_count_in_uint32))
             Next
         End If
 

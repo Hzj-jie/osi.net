@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
 
-Public Class atomic_bool
+Public NotInheritable Class atomic_bool
     Private ReadOnly init_value As Int32
     Private v As Int32
 
@@ -57,6 +61,10 @@ Public Class atomic_bool
 
     Public Shared Widening Operator CType(ByVal this As atomic_bool) As Boolean
         Return +this
+    End Operator
+
+    Public Shared Operator Not(ByVal this As atomic_bool) As Boolean
+        Return Not (+this)
     End Operator
 
     Public Shared Operator +(ByVal this As atomic_bool) As Boolean
