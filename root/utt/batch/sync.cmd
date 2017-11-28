@@ -1,2 +1,2 @@
 
-robocopy ..\bin\Release . /MIR /XF *.cmd
+robocopy %~dp0\..\bin\Release . /MIR /XF *.cmd
