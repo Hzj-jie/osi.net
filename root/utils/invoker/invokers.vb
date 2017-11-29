@@ -1,8 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Reflection
 Imports osi.root.connector
 
-Public Class invokers(Of delegate_t)
+Public NotInheritable Class invokers(Of delegate_t)
     Private ReadOnly m() As invoker(Of delegate_t) = Nothing
 
     Private Sub New(ByVal t As Type,
@@ -12,8 +16,8 @@ Public Class invokers(Of delegate_t)
                     ByVal ctor As Func(Of Type, BindingFlags, Object, String, invoker(Of delegate_t)))
         assert(Not ctor Is Nothing)
         If Not names Is Nothing AndAlso Not isemptyarray(names) Then
-            ReDim m(array_size(names) - 1)
-            For i As Int32 = 0 To array_size(names) - 1
+            ReDim m(array_size_i(names) - 1)
+            For i As Int32 = 0 To array_size_i(names) - 1
                 m(i) = ctor(t, bindingFlags, obj, names(i))
             Next
         End If
@@ -52,7 +56,7 @@ Public Class invokers(Of delegate_t)
 
     Default Public ReadOnly Property at(ByVal i As UInt32) As delegate_t
         Get
-            Return +m(i)
+            Return +m(CInt(i))
         End Get
     End Property
 

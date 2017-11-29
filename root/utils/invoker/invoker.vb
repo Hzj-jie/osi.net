@@ -7,10 +7,9 @@ Imports System.Reflection
 Imports osi.root.connector
 Imports osi.root.constants
 
-' TODO: Is this useful? This delegate is used in chmod only.
 Public Delegate Sub not_resolved_type_delegate()
 
-Public Class invoker(Of delegate_t)
+Public NotInheritable Class invoker(Of delegate_t)
     Private Shared ReadOnly dt As Type
     Private Shared ReadOnly is_not_resolved_type_delegate As Boolean
     Private ReadOnly s As Boolean
@@ -28,7 +27,7 @@ Public Class invoker(Of delegate_t)
     End Sub
 
     Public Sub New(ByVal t As Type,
-                   ByVal bindingflags As BindingFlags,
+                   ByVal binding_flags As BindingFlags,
                    ByVal obj As Object,
                    ByVal name As String,
                    ByVal suppress_error As Boolean)
@@ -44,7 +43,7 @@ Public Class invoker(Of delegate_t)
             Me.t = t
             Me.name = name
             Try
-                mi = t.GetMethod(name, bindingflags)
+                mi = t.GetMethod(name, binding_flags)
             Catch ex As Exception
                 If Not suppress_error Then
                     raise_error(error_type.warning,
@@ -79,21 +78,21 @@ Public Class invoker(Of delegate_t)
     End Sub
 
     Public Sub New(ByVal t As Type,
-                   ByVal bindingflags As BindingFlags,
+                   ByVal binding_flags As BindingFlags,
                    ByVal obj As Object,
                    ByVal name As String)
-        Me.New(t, bindingflags, obj, name, suppress.invoker_error)
+        Me.New(t, binding_flags, obj, name, suppress.invoker_error)
     End Sub
 
     Public Sub New(ByVal t As Type,
-                   ByVal bindingflags As BindingFlags,
+                   ByVal binding_flags As BindingFlags,
                    ByVal name As String,
                    ByVal suppress_error As Boolean)
-        Me.New(t, bindingflags, Nothing, name, suppress_error)
+        Me.New(t, binding_flags, Nothing, name, suppress_error)
     End Sub
 
-    Public Sub New(ByVal t As Type, ByVal bindingflags As BindingFlags, ByVal name As String)
-        Me.New(t, bindingflags, name, suppress.invoker_error)
+    Public Sub New(ByVal t As Type, ByVal binding_flags As BindingFlags, ByVal name As String)
+        Me.New(t, binding_flags, name, suppress.invoker_error)
     End Sub
 
     Public Sub New(ByVal t As Type, ByVal name As String, ByVal suppress_error As Boolean)
@@ -121,25 +120,25 @@ Public Class invoker(Of delegate_t)
     End Sub
 
     Public Sub New(ByVal obj As Object,
-                   ByVal bindingflags As BindingFlags,
+                   ByVal binding_flags As BindingFlags,
                    ByVal name As String,
                    ByVal suppress_error As Boolean)
-        Me.New(obj.GetType(), bindingflags, obj, name, suppress_error)
+        Me.New(obj.GetType(), binding_flags, obj, name, suppress_error)
     End Sub
 
-    Public Sub New(ByVal obj As Object, ByVal bindingflags As BindingFlags, ByVal name As String)
-        Me.New(obj, bindingflags, name, suppress.invoker_error)
+    Public Sub New(ByVal obj As Object, ByVal binding_flags As BindingFlags, ByVal name As String)
+        Me.New(obj, binding_flags, name, suppress.invoker_error)
     End Sub
 
-    Public Sub New(ByVal bindingflags As BindingFlags,
+    Public Sub New(ByVal binding_flags As BindingFlags,
                    ByVal obj As Object,
                    ByVal name As String,
                    ByVal suppress_error As Boolean)
-        Me.New(obj, bindingflags, name, suppress_error)
+        Me.New(obj, binding_flags, name, suppress_error)
     End Sub
 
-    Public Sub New(ByVal bindingflags As BindingFlags, ByVal obj As Object, ByVal name As String)
-        Me.New(bindingflags, obj, name, suppress.invoker_error)
+    Public Sub New(ByVal binding_flags As BindingFlags, ByVal obj As Object, ByVal name As String)
+        Me.New(binding_flags, obj, name, suppress.invoker_error)
     End Sub
 
     Private Function create_delegate(ByVal obj As Object,
