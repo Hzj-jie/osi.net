@@ -31,8 +31,13 @@ Public Class managed_threadpool
             Dim abt As Int32 = 0
             tp.GetAvailableThreads(aft, abt)
 
+            Dim mft As Int32 = 0
+            Dim mbt As Int32 = 0
+            tp.GetMinThreads(mft, mbt)
+
             Dim r As Int32 = 0
             r = ft + bt - aft - abt
+            r = max(r, mft + mbt)
             If r <= 0 Then
                 Return 0
             Else

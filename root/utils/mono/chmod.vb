@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.connector
 
@@ -39,7 +43,7 @@ Public Module _chmod
     Private Const mono_posix_assembly_v2 As String =
                       "Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756"
     Private Const mono_posix_assembly_v4 As String =
-                  "Mono.Posix, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756"
+                      "Mono.Posix, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756"
     Private ReadOnly f As invoker(Of not_resolved_type_delegate)
 
     Sub New()
@@ -60,6 +64,7 @@ Public Module _chmod
                             ex.Message())
                 Return
             End Try
+            ' Mono.Unix.Native.FilePermissions is not available.
             f = New invoker(Of not_resolved_type_delegate)(
                         Type.GetType("Mono.Unix.Native.Syscall, " +
                                      If(envs.clr_2, mono_posix_assembly_v2, mono_posix_assembly_v4)),
@@ -69,7 +74,7 @@ Public Module _chmod
 
     Public Sub chmod(ByVal file As String, ByVal permissions As FilePermissions, ByRef o As Int32)
         If Not f Is Nothing AndAlso f.valid() AndAlso f.static() AndAlso f.pre_binding() Then
-            o = f.invoke(Nothing, file, CUInt(permissions))
+            o = direct_cast(Of Int32)(f.invoke(Nothing, file, CUInt(permissions)))
         Else
             o = -2
         End If
@@ -82,6 +87,6 @@ Public Module _chmod
     End Function
 
     Public Function chmod_exe(ByVal file As String) As Boolean
-        Return chmod(file, FilePermissions.S_IXUSR)
+        Return chmod(file, FilePermissions.S_IXUSR Or FilePermissions.S_IRUSR)
     End Function
 End Module

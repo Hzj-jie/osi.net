@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
 Imports osi.root.connector
 Imports osi.root.constants
@@ -13,7 +17,11 @@ Public Module _app_info
     Public ReadOnly application_sign As String
 
     Sub New()
-        application_full_path = current_process.MainModule().FileName()
+        If mono Then
+            application_full_path = Reflection.Assembly.GetEntryAssembly().Location()
+        Else
+            application_full_path = current_process.MainModule().FileName()
+        End If
         application_directory = Path.GetDirectoryName(application_full_path)
         application_file_name = Path.GetFileName(application_full_path)
         assert(Not String.IsNullOrEmpty(application_full_path))

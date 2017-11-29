@@ -1,8 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Reflection
 Imports osi.root.connector
 Imports osi.root.constants
 
+' TODO: Is this useful? This delegate is used in chmod only.
 Public Delegate Sub not_resolved_type_delegate()
 
 Public Class invoker(Of delegate_t)

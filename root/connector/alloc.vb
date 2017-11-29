@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 #Const cached_alloc = True
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
@@ -31,8 +35,10 @@ Public Module _alloc
             Catch ex As Exception
                 If isdebugmode() AndAlso Not suppress_alloc_error() Then
                     raise_error(error_type.warning,
-                                 "failed to invoke constructors of type ", t.AssemblyQualifiedName(),
-                                 ", ex ", ex.Message)
+                                "Failed to invoke constructors of type ",
+                                t.AssemblyQualifiedName(),
+                                ", ex ",
+                                ex.details())
                 End If
             End Try
             'assert(Not obj Is Nothing, "allocate of type " + t.FullName + " failed")
@@ -49,12 +55,12 @@ Public Module _alloc
         Catch ex As Exception
             If isdebugmode() AndAlso Not suppress_alloc_error() Then
                 raise_error(error_type.warning,
-                             "failed to create instance of type ",
-                             t.AssemblyQualifiedName(),
-                             " by Activator with non_public = ",
-                             non_public,
-                             ", ex ",
-                             ex.Message)
+                            "Failed to create instance of type ",
+                            t.AssemblyQualifiedName(),
+                            " by Activator with non_public = ",
+                            non_public,
+                            ", ex ",
+                            ex.details())
             End If
             Return False
         End Try
@@ -111,7 +117,7 @@ Public Module _alloc
         If obj Is Nothing Then
             Return alloc(Of T)()
         Else
-            Return alloc(obj.GetType())
+            Return direct_cast(Of T)(alloc(obj.GetType()))
         End If
     End Function
 
@@ -128,11 +134,11 @@ Public Module _alloc
             If type.allocatable() Then
                 If type.has_parameterless_public_constructor() Then
                     a = Function() As T
-                            Return type.alloc_with_public_parameterless_constructor()
+                            Return direct_cast(Of T)(type.alloc_with_public_parameterless_constructor())
                         End Function
                 ElseIf type.has_parameterless_constructor() Then
                     a = Function() As T
-                            Return type.alloc_with_parameterless_constructor()
+                            Return direct_cast(Of T)(type.alloc_with_parameterless_constructor())
                         End Function
                 Else
                     Dim cs() As ConstructorInfo = Nothing
@@ -141,7 +147,7 @@ Public Module _alloc
                         a = null_allocator
                     Else
                         a = Function() As T
-                                Return type.alloc_with_parameters_constructor()
+                                Return direct_cast(Of T)(type.alloc_with_parameters_constructor())
                             End Function
                     End If
                 End If
