@@ -15,27 +15,38 @@ Public NotInheritable Class typeless_invoker_test
         Return i + 1
     End Function
 
+    Private Shared Sub run_case(ByVal type_name As String)
+        Dim i As invoker(Of Func(Of Int32, Int32)) = Nothing
+        assert_true(typeless_invoker.[New](type_name,
+                                           binding_flags.static_private_method,
+                                           "f",
+                                           i))
+        assert_not_nothing(i)
+        For j As Int32 = -100 To 100
+            assert_equal(direct_cast(Of Int32)(i.invoke(Nothing, j)), j + 1)
+        Next
+    End Sub
+
+    Private Shared Sub run_case(ByVal type_name As String, ByVal assembly_name As String)
+        Dim i As invoker(Of Func(Of Int32, Int32)) = Nothing
+        assert_true(typeless_invoker.[New](type_name, assembly_name,
+                                           binding_flags.static_private_method,
+                                           "f",
+                                           i))
+        assert_not_nothing(i)
+        For j As Int32 = -100 To 100
+            assert_equal(direct_cast(Of Int32)(i.invoke(Nothing, j)), j + 1)
+        Next
+    End Sub
+
     <test>
     Private Shared Sub run()
+        run_case("osi.tests.root.utils.typeless_invoker_test, osi.tests.root.utils")
+        run_case(GetType(typeless_invoker_test).AssemblyQualifiedName())
+        run_case(".typeless_invoker_test", "osi.tests.root.utils")
+        run_case(".typeless_invoker_test", GetType(typeless_invoker_test).Assembly().FullName())
+
         Dim i As invoker(Of Func(Of Int32, Int32)) = Nothing
-        assert_true(typeless_invoker.[New]("osi.tests.root.utils.typeless_invoker_test, osi.tests.root.utils",
-                                           binding_flags.static_private_method,
-                                           "f",
-                                           i))
-        assert_not_nothing(i)
-        For j As Int32 = -100 To 100
-            assert_equal(direct_cast(Of Int32)(i.invoke(Nothing, j)), j + 1)
-        Next
-
-        assert_true(typeless_invoker.[New](GetType(typeless_invoker_test).AssemblyQualifiedName(),
-                                           binding_flags.static_private_method,
-                                           "f",
-                                           i))
-        assert_not_nothing(i)
-        For j As Int32 = -100 To 100
-            assert_equal(direct_cast(Of Int32)(i.invoke(Nothing, j)), j + 1)
-        Next
-
         ' TODO: Make typeless_invoker.[New] safe when handling unexisting functions.
         ' assert_false(typeless_invoker.[New]("osi.tests.root.utils.typeless_invoker_test, osi.tests.root.utils",
         '                                     binding_flags.static_public_method,

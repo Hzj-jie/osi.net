@@ -80,7 +80,7 @@ Partial Public NotInheritable Class wrapper_test
                                                          Return True
                                                      End Function))
         assert_false(wrapper(Of test_class).register(Nothing, Nothing, Nothing))
-        assert_false(wrapper(Of test_class).erase([default](Of String).null))
+        assert_false(wrapper(Of test_class).erase(default_str))
         assert_false(wrapper(Of test_class).erase())
     End Sub
 

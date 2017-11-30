@@ -317,8 +317,8 @@ Public Class configuration_test2
         assert_equal(config()("section", v)("message", v), "You Are Not Welcomed To Use Our Service")
         assert_equal(config()("section", v)("message-head", v), "Yes?")
 
-        assert_equal(config()("section", v)("unknown-key", v), [default](Of String).null)
-        assert_equal(config()("section", v)("unknown-key2", v), [default](Of String).null)
+        assert_equal(config()("section", v)("unknown-key", v), default_str)
+        assert_equal(config()("section", v)("unknown-key2", v), default_str)
 
         Return True
     End Function

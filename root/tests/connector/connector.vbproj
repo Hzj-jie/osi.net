@@ -206,6 +206,7 @@
     <Compile Include="thread_timing_test.vb" />
     <Compile Include="time_test.vb" />
     <Compile Include="type_name_perf.vb" />
+    <Compile Include="type_test.vb" />
     <Compile Include="uint32_perf_test.vb" />
     <Compile Include="unchecked_int_test.vb" />
     <Compile Include="uri_path_test.vb" />

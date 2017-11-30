@@ -6,7 +6,6 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.utt
-Imports osi.tests.root.connector
 
 Public Class equal_test
     Inherits [case]
@@ -15,8 +14,8 @@ Public Class equal_test
         assert_true(equal(1, 1))
         assert_false(equal(1, 10))
         assert_true(equal(True, True))
-        assert_true(equal([default](Of String).null, [default](Of String).null))
-        assert_true(equal([default](Of Object).null, [default](Of String).null))
+        assert_true(equal(default_str, default_str))
+        assert_true(equal([default](Of Object).null, default_str))
         assert_true(equal(1, 1.0))
         Return True
     End Function
