@@ -42,7 +42,14 @@ Public NotInheritable Class typeless_invoker_test
     <test>
     Private Shared Sub run()
         run_case("osi.tests.root.utils.typeless_invoker_test, osi.tests.root.utils")
+        run_case("osi.tests.root.utils.typeless_invoker_test, osi.tests.root.utils", default_str)
+        run_case("osi.tests.root.utils.typeless_invoker_test, osi.tests.root.utils", default_string)
+        run_case("osi.tests.root.utils.typeless_invoker_test")
+        run_case("osi.tests.root.utils.typeless_invoker_test", default_str)
+        run_case("osi.tests.root.utils.typeless_invoker_test", default_string)
         run_case(GetType(typeless_invoker_test).AssemblyQualifiedName())
+        run_case(GetType(typeless_invoker_test).AssemblyQualifiedName(), default_str)
+        run_case(GetType(typeless_invoker_test).AssemblyQualifiedName(), default_string)
         run_case(".typeless_invoker_test", "osi.tests.root.utils")
         run_case(".typeless_invoker_test", GetType(typeless_invoker_test).Assembly().FullName())
 

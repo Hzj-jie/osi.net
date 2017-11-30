@@ -40,15 +40,29 @@ Public NotInheritable Class type_test
     Private Shared Sub run()
         ' osi.tests.root.connector.type_test, osi.tests.root.connector, version ...
         run_case(GetType(type_test).AssemblyQualifiedName())
+        run_case(GetType(type_test).AssemblyQualifiedName(), default_str)
+        run_case(GetType(type_test).AssemblyQualifiedName(), default_string)
 
         ' osi.tests.root.connector.type_test, osi.tests.root.connector
         run_case(strcat(GetType(type_test).full_name(),
                         character.comma,
                         character.blank,
                         GetType(type_test).Assembly().GetName().Name()))
+        run_case(strcat(GetType(type_test).full_name(),
+                        character.comma,
+                        character.blank,
+                        GetType(type_test).Assembly().GetName().Name()),
+                 default_str)
+        run_case(strcat(GetType(type_test).full_name(),
+                        character.comma,
+                        character.blank,
+                        GetType(type_test).Assembly().GetName().Name()),
+                 default_string)
 
         ' osi.tests.root.connector.type_test
         run_case(GetType(type_test).full_name())
+        run_case(GetType(type_test).full_name(), default_str)
+        run_case(GetType(type_test).full_name(), default_string)
 
         run_case(GetType(type_test).full_name(), GetType(type_test).Assembly().GetName().FullName())
         run_case(GetType(type_test).full_name(), GetType(type_test).Assembly().GetName().Name())
