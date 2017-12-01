@@ -12,4 +12,5 @@ precompile slimqless2_runner_test.vbp > slimqless2_runner_test.vb
 precompile slimheapless_runner_test.vbp > slimheapless_runner_test.vb
 precompile slimqless2_runner_synchronize_invoke_test.vbp > slimqless2_runner_synchronize_invoke_test.vb
 precompile slimheapless_runner_synchronize_invoke_test.vbp > slimheapless_runner_synchronize_invoke_test.vb
+move /y *.vb ..\
 endlocal

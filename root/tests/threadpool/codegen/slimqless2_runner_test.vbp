@@ -1,5 +1,6 @@
 ﻿
 ##DEFAULT TYPE slimqless2
+Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.threadpool
@@ -20,8 +21,8 @@ Public Class ##TYPE##_runner_test
         assert_false(r.running_in_current_thread())
         assert_false(##TYPE##_runner.current_thread_is_managed())
         For i As Int32 = 0 To size - 1
-            Dim j As Int32 = 0
-            j = i
+            Dim j As UInt32 = 0
+            j = CUInt(i)
             r.push(Sub()
                        assert_true(r.running_in_current_thread())
                        assert_true(##TYPE##_runner.current_thread_is_managed())
@@ -32,7 +33,7 @@ Public Class ##TYPE##_runner_test
                        End If
                    End Sub)
         Next
-        assert_true(r.join(seconds_to_milliseconds(size / 32 / 1024 / 1024 * 240)))
+        assert_true(r.join(seconds_to_milliseconds(size * 240 \ 32 \ 1024 \ 1024)))
         assert_equal(+c, size)
         assert_false(r.stopping())
         assert_true(r.stopped())
@@ -51,14 +52,17 @@ Public Class ##TYPE##_runner_test
         c = New atomic_int32()
         Dim executed As atomic_int32 = Nothing
         executed = New atomic_int32()
+        Dim mre As ManualResetEvent = Nothing
+        mre = New ManualResetEvent(False)
         Dim r As ##TYPE##_runner = Nothing
         r = New ##TYPE##_runner()
         assert_false(r.running_in_current_thread())
         assert_false(##TYPE##_runner.current_thread_is_managed())
         For i As Int32 = 0 To size - 1
-            Dim j As Int32 = 0
-            j = i
+            Dim j As UInt32 = 0
+            j = CUInt(i)
             r.push(Sub()
+                       assert(mre.wait())
                        If Not r.running_in_current_thread() Then
                            assert_false(##TYPE##_runner.current_thread_is_managed())
                            executed.increment()
@@ -71,6 +75,7 @@ Public Class ##TYPE##_runner_test
                        fake_processor_ticks_work(1)
                    End Sub)
         Next
+        assert(mre.force_set())
         While r.execute()
         End While
         assert_true(timeslice_sleep_wait_until(Function() +c = size, seconds_to_milliseconds(1)))

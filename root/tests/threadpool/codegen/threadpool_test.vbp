@@ -47,7 +47,7 @@ Public Class ##THREADPOOL_TYPE##_test
     End Sub
 
     Public Overrides Function reserved_processors() As Int16
-        Return osi.root.threadpool.threadpool.default_thread_count
+        Return CShort(osi.root.threadpool.threadpool.default_thread_count)
     End Function
 
     Public Overrides Function prepare() As Boolean
