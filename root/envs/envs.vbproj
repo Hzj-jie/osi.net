@@ -118,7 +118,6 @@
     <Compile Include="trace\trace_trace.vb" />
     <Compile Include="trace\udp_trace.vb" />
     <Compile Include="trace\utt_assert_trace.vb" />
-    <Compile Include="trace\utt_report.vb" />
     <Compile Include="utt.vb" />
     <Compile Include="vm.vb" />
   </ItemGroup>

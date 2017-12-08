@@ -6,11 +6,10 @@ Option Strict On
 Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.envs
-Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports counter = osi.root.utils.counter
+Imports envs = osi.root.envs
 
 Partial Friend NotInheritable Class host
     Private Shared expected_end_ms As Int64
@@ -41,7 +40,7 @@ Partial Friend NotInheritable Class host
         If Not self_health_stage() Then
             Dim msg() As Object = Nothing
             msg = {"start running ", c.full_name(), " at ", short_time()}
-            If envs.utt_report_case_name Then
+            If env_vars.utt_report_case_name Then
                 utt_raise_error(msg)
             Else
                 raise_error(msg)
@@ -56,7 +55,7 @@ Partial Friend NotInheritable Class host
         Interlocked.Add(using_threads, -c.case.reserved_processors())
 
         If Not self_health_stage() Then
-            If envs.utt_report_background_worker_status Then
+            If env_vars.utt_report_background_worker_status Then
                 raise_error("background worker status after case ",
                             c.full_name(),
                             ": event_comb count is ",
@@ -64,7 +63,7 @@ Partial Friend NotInheritable Class host
                             ", queue_runner queue length is ",
                             queue_runner.size())
             End If
-            If envs.utt_report_memory_status Then
+            If env_vars.utt_report_memory_status Then
                 ' utt_concurrency == 0 means no two cases will run together, so it's safe to force GC to collect.
                 If utt_concurrency() = 0 Then
                     repeat_gc_collect()
@@ -99,7 +98,7 @@ Partial Friend NotInheritable Class host
                    pms,
                    ", processor usage percentage ",
                    pms * 100 / ms}
-            If envs.utt_report_case_name Then
+            If env_vars.utt_report_case_name Then
                 utt_raise_error(msg)
             Else
                 raise_error(msg)
@@ -167,7 +166,8 @@ Partial Friend NotInheritable Class host
 
     Public Shared Sub run()
         expected_end_ms = nowadays.milliseconds()
-        expected_end_ms += CLng(minutes_to_milliseconds(36 * 60) / 20 / max(utt_concurrency(), 1) * perf_run_ms * 4)
+        expected_end_ms +=
+            CLng(minutes_to_milliseconds(36 * 60) / 20 / max(utt_concurrency(), 1) * envs.perf_run_ms * 4)
         Dim finished As AutoResetEvent = Nothing
         finished = New AutoResetEvent(False)
         While go_through_all(finished)

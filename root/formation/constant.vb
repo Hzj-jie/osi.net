@@ -35,6 +35,10 @@ Public NotInheritable Class constant(Of T)
         Return v
     End Function
 
+    Public Function empty() As Boolean
+        Return v Is Nothing
+    End Function
+
     Public Shared Operator +(ByVal this As constant(Of T)) As T
         Return this.get_or_null()
     End Operator
