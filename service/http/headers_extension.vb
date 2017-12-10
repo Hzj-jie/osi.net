@@ -1,9 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.root.utils
 
 Public Module _headers_extension
     <Extension()> Public Function cast_headers(ByVal i As HttpListenerRequest) As WebHeaderCollection
@@ -231,20 +234,24 @@ Public Module _headers_extension
         End If
     End Function
 
+    ' Returns false if request body is not www-form-urlencoded or the encoder is not supported by the system.
     <Extension()> Public Function is_www_form_urlencoded(ByVal r As HttpListenerRequest,
-                                                         Optional ByRef cs As String = Nothing) As Boolean
+                                                         Optional ByRef cs As String = Nothing,
+                                                         Optional ByRef encoder As Text.Encoding = Nothing) As Boolean
         Return Not r Is Nothing AndAlso
                r.HasEntityBody() AndAlso
                strsame(r.ContentType(),
                        constants.headers.values.content_type.request.www_form_urlencoded,
                        strlen(constants.headers.values.content_type.request.www_form_urlencoded),
                        False) AndAlso
-               eva(cs, parse_charset(r.ContentType()))
+               parse_charset(r.ContentType(), cs) AndAlso
+               parse_encoding(r.ContentType(), encoder)
     End Function
 
     <Extension()> Public Function is_www_form_urlencoded(ByVal ctx As HttpListenerContext,
-                                                         Optional ByRef charset As String = Nothing) As Boolean
+                                                         Optional ByRef charset As String = Nothing,
+                                                         Optional ByRef encoder As Text.Encoding = Nothing) As Boolean
         Return Not ctx Is Nothing AndAlso
-               is_www_form_urlencoded(ctx.Request(), charset)
+               is_www_form_urlencoded(ctx.Request(), charset, encoder)
     End Function
 End Module

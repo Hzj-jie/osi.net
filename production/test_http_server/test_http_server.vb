@@ -43,8 +43,8 @@ Public Module test_http_server
             port = CUShort(rnd_int(10000, 60001))
         End If
         Dim s As server = Nothing
-        s = New server(max_connection_count:=max_int32)
-        AddHandler context_handle.[New](s).handle_context, AddressOf handle_context
+        s = New server(New server.configuration() With {.max_connection_count = max_int32})
+        AddHandler http_listener_context_handle.[New](s).handle_context, AddressOf handle_context
         assert(s.add_port(port))
         assert(s.start())
         write_console_line(strcat("server started on port ", port))

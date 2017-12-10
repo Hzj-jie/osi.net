@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports System.Runtime.CompilerServices
+Imports osi.root.connector
 
 Public Module _constant
     <Extension()> Public Function get_or_null(Of T)(ByVal this As constant(Of T)) As T
@@ -50,4 +51,12 @@ Public NotInheritable Class constant(Of T)
     Public Shared Widening Operator CType(ByVal this As T) As constant(Of T)
         Return constant.[New](this)
     End Operator
+
+    Public Overrides Function ToString() As String
+        Return strcat("constant(", Convert.ToString(v), ")")
+    End Function
+
+    Public Overrides Function GetHashCode() As Int32
+        Return If(v Is Nothing, 0, v.GetHashCode())
+    End Function
 End Class

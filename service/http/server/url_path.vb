@@ -1,0 +1,46 @@
+﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports System.Net
+Imports osi.root.connector
+Imports osi.root.formation
+
+Public NotInheritable Class url_path
+    Private Shared ReadOnly path_separators() As Char = {constants.uri.path_separator}
+
+    Public Shared Function parse(ByVal request As HttpListenerRequest,
+                                 ByRef result As vector(Of String),
+                                 Optional ByVal e As Text.Encoding = Nothing) As Boolean
+        If request Is Nothing Then
+            Return False
+        Else
+            result.renew()
+            If Not String.IsNullOrEmpty(request.Url().AbsolutePath()) Then
+                Dim ss() As String = Nothing
+                ss = request.Url().AbsolutePath().Split(path_separators,
+                                                        StringSplitOptions.RemoveEmptyEntries)
+                If isemptyarray(ss) Then
+                    'odd, should not happen
+                    Return False
+                Else
+                    For i As Int32 = 0 To array_size_i(ss) - 1
+                        result.emplace_back(uri_path_decode(ss(i), e))
+                    Next
+                End If
+            End If
+            Return True
+        End If
+    End Function
+
+    Public Shared Function parse(ByVal request As HttpListenerRequest,
+                                 Optional ByVal e As Text.Encoding = Nothing) As vector(Of String)
+        Dim r As vector(Of String) = Nothing
+        assert(parse(request, r, e))
+        Return r
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class

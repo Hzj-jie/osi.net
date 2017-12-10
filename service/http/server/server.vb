@@ -4,110 +4,75 @@ Option Infer Off
 Option Strict On
 
 Imports System.Net
+Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.threadpool
-Imports osi.root.utils
 Imports osi.service.argument
 Imports osi.service.convertor
 Imports osi.service.http.constants.interval_ms
 Imports constructor = osi.service.device.constructor
 
 <global_init(global_init_level.server_services)>
-Public NotInheritable Class server
+Partial Public NotInheritable Class server
     Public Event context_received(ByVal ctx As context)
 
-    Private Const default_max_connection_count As Int32 = 1024
-    Private Const default_response_timeout_ms As Int64 = 60 * minute_second * second_milli
-
-    Public Class context
-        Public ReadOnly server As server
-        Public ReadOnly context As HttpListenerContext
-        Public ReadOnly response_timeout_ms As Int64
-        Private ReadOnly f As once_action
-        Private ReadOnly se As stopwatch.event
-
-        Public abort As Boolean = False
-
-        Public Sub New(ByVal server As server,
-                       ByVal context As HttpListenerContext,
-                       ByVal response_timeout_ms As Int64)
-            assert(Not server Is Nothing)
-            assert(Not context Is Nothing)
-            assert(response_timeout_ms > 0)
-            Me.server = server
-            Me.context = context
-            Me.response_timeout_ms = response_timeout_ms
-            Me.f = New once_action(Sub()
-                                       server.end_context(context, abort)
-                                   End Sub)
-            Me.se = stopwatch.push(response_timeout_ms,
-                                   Sub()
-                                       f.run()
-                                   End Sub)
-            assert(Not se Is Nothing)
-        End Sub
-
-        Public Sub finish()
-            f.run()
-            se.cancel()
-        End Sub
-
-        Public Sub finish(ByVal abort As Boolean)
-            Me.abort = abort
-            finish()
-        End Sub
-    End Class
-
     Private ReadOnly max_connection_count As Int32
-    Private ReadOnly response_timeout_ms As Int64
+    Private ReadOnly ls As link_status
+    Private ReadOnly encoder As Encoding
 
     Private ReadOnly listener As HttpListener
     Private ReadOnly cc As atomic_int
+
+    Public NotInheritable Class configuration
+        Public max_connection_count As Int32 = constants.default_value.max_connection_count
+        Public ls As link_status = Nothing
+        Public encoder As Encoding = Nothing
+    End Class
 
     Shared Sub New()
         assert(HttpListener.IsSupported())
         ServicePointManager.DefaultConnectionLimit() = max_int32
         ServicePointManager.UseNagleAlgorithm() = False
         Try
-            DirectCast(System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration(Nothing) _
+            DirectCast(Web.Configuration.WebConfigurationManager.OpenWebConfiguration(Nothing) _
                 .GetSection("system.web/httpRuntime"),
-                System.Web.Configuration.HttpRuntimeSection).EnableHeaderChecking() = False
+                Web.Configuration.HttpRuntimeSection).EnableHeaderChecking() = False
         Catch ex As Exception
             raise_error(error_type.warning, "failed to set EnableHeaderChecking to false, ex ", ex.Message())
         End Try
     End Sub
 
-    Public Sub New(ByVal max_connection_count As Int32,
-                   ByVal response_timeout_ms As Int64)
-        assert(max_connection_count > 0)
-        assert(response_timeout_ms > 0)
-        Me.max_connection_count = max_connection_count
-        Me.response_timeout_ms = response_timeout_ms
+    Public Sub New(ByVal c As configuration)
+        If c Is Nothing Then
+            c = New configuration()
+        End If
+
+        If c.max_connection_count <= 0 Then
+            c.max_connection_count = max_int32
+        End If
+        max_connection_count = c.max_connection_count
+
+        If c.ls Is Nothing Then
+            c.ls = link_status.server
+        End If
+        ls = c.ls
+
+        If c.encoder Is Nothing Then
+            c.encoder = constants.default_value.encoder
+        End If
+        encoder = c.encoder
+
         cc = New atomic_int()
         listener = New HttpListener()
         listener.IgnoreWriteExceptions() = True
     End Sub
 
-    Public Sub New(ByVal max_connection_count As Int32)
-        Me.New(max_connection_count, default_response_timeout_ms)
-    End Sub
-
-    Public Sub New(ByVal response_timeout_ms As Int64)
-        Me.New(default_max_connection_count, response_timeout_ms)
-    End Sub
-
     Public Sub New()
-        Me.New(default_max_connection_count, default_response_timeout_ms)
-    End Sub
-
-    Public Sub New(ByVal max_connection_count As String,
-                   ByVal response_timeout_ms As String)
-        Me.New(max_connection_count.to_int32(default_max_connection_count),
-               response_timeout_ms.to_int64(default_response_timeout_ms))
+        Me.New(Nothing)
     End Sub
 
     Public Function prefixes_count() As Int32
@@ -204,7 +169,7 @@ Public NotInheritable Class server
                                             If Not ec Is Nothing AndAlso
                                                ec.end_result() AndAlso
                                                Not +ctx Is Nothing Then
-                                                RaiseEvent context_received(New context(Me, +ctx, response_timeout_ms))
+                                                RaiseEvent context_received(New context(Me, +ctx, ls, encoder))
                                             Else
                                                 assert(cc.decrement() >= 0)
                                             End If
@@ -252,12 +217,19 @@ Public NotInheritable Class server
             Const p_ports As String = "ports"
             Const p_prefixes As String = "prefixes"
             Const p_max_connection_count As String = "max-connection-count"
-            Const p_response_timeout_ms As String = "response-timeout-ms"
+            Const p_encoder As String = "encoder"
             v.bind(p_ports,
                    p_prefixes,
                    p_max_connection_count,
-                   p_response_timeout_ms)
-            o = New server(v(p_max_connection_count), v(p_response_timeout_ms))
+                   p_encoder)
+            Dim c As configuration = Nothing
+            c = New configuration()
+            c.max_connection_count = v(p_max_connection_count).to_int32(c.max_connection_count)
+            c.ls = link_status.create_server_link_status(v)
+            If Not try_get_encoding(v(p_encoder), c.encoder) Then
+                raise_error(error_type.warning, "Cannot get encoder from ", v(p_encoder))
+            End If
+            o = New server(c)
             Dim s As String = Nothing
             If v.value(p_ports, s) Then
                 If Not o.add_ports(s) Then

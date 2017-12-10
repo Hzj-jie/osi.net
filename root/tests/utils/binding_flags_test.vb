@@ -48,6 +48,17 @@ Public NotInheritable Class binding_flags_test
     End Sub
 
     <test>
+    Private Shared Sub predefined_cases()
+        Dim bf As BindingFlags = Nothing
+        assert_true(bf.from_str("private"))
+        assert_equal(bf, BindingFlags.NonPublic)
+
+        bf = Nothing
+        assert_true(bf.from_str("protected"))
+        assert_equal(bf, BindingFlags.NonPublic)
+    End Sub
+
+    <test>
     <repeat(1000)>
     Private Shared Sub random_case()
         Dim separators() As String = Nothing

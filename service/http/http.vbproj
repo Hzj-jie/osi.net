@@ -72,7 +72,12 @@
     <Compile Include="extension.vb" />
     <Compile Include="headers.vb" />
     <Compile Include="constants.vb" />
-    <Compile Include="server\context_handle.vb" />
+    <Compile Include="server\module_handles.vb" />
+    <Compile Include="server\server.context.attributes.vb" />
+    <Compile Include="server\server.context.vb" />
+    <Compile Include="server\http_listener_context_handle.vb" />
+    <Compile Include="server\module_handle.vb" />
+    <Compile Include="server\procedure_handle.vb" />
     <Compile Include="server\proxy.vb" />
     <Compile Include="headers_extension.vb" />
     <Compile Include="server\server.vb" />
@@ -92,10 +97,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="server\path.vb" />
+    <Compile Include="server\url_path.vb" />
     <Compile Include="server\responder.vb" />
     <Compile Include="server\server.rr.vb" />
-    <Compile Include="server\url_encoded_parameters.vb" />
+    <Compile Include="server\url_query.vb" />
     <Compile Include="status.vb" />
   </ItemGroup>
   <ItemGroup>

@@ -121,8 +121,8 @@ Public Class http_server_test
 
             Dim p As UInt32 = 0
             Dim s As server = Nothing
-            s = New server(response_timeout_ms:=seconds_to_milliseconds(15))
-            AddHandler context_handle.[New](s).handle_context, AddressOf handle_context
+            s = New server(New server.configuration() With {.ls = New link_status(seconds_to_milliseconds(15))})
+            AddHandler http_listener_context_handle.[New](s).handle_context, AddressOf handle_context
             For j As Int32 = 0 To repeat - 1
                 If assert_true(s.add_port(port)) AndAlso
                    assert_true(s.start()) Then

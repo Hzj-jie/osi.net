@@ -1,4 +1,6 @@
 ﻿
+Option Explicit On
+Option Infer Off
 Option Strict On
 
 Imports System.IO
@@ -11,11 +13,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports osi.root.utils
 Imports osi.service.http.constants
-Imports osi.service.http.constants.request_method
-Imports osi.service.device
-Imports Text = System.Text
 
 Public Module _client_rr
     Public Const undefined_content_length As UInt64 = 0
@@ -70,7 +68,7 @@ Public Module _client_rr
                 r.Append(HttpUtility.UrlEncode((+it).first, e)) _
                  .Append(constants.uri.argument_name_value_separator) _
                  .Append(HttpUtility.UrlEncode((+it).second, e))
-                it = DirectCast(it + 1, map(Of String, String).iterator)
+                it += 1
             End While
             Return Convert.ToString(r)
         End If

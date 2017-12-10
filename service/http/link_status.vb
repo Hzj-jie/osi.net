@@ -47,7 +47,7 @@ Public Class link_status
     Shared Sub New()
         request = New link_status(default_value.connect_timeout_ms)
         response = New link_status(default_value.response_timeout_ms)
-        server = New link_status(0)
+        server = response
         unlimited = New link_status(npos, npos, npos, npos)
         null = Nothing
     End Sub

@@ -1,15 +1,16 @@
 ﻿
+Option Explicit On
+Option Infer Off
 Option Strict On
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Net
-Imports osi.root.constants
-Imports osi.root.procedure
-Imports osi.root.formation
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.formation
+Imports osi.root.procedure
 Imports osi.root.utils
-Imports osi.service.device
 Imports Text = System.Text
 
 Public Module _server_rr
@@ -81,13 +82,13 @@ Public Module _server_rr
                                send_rate_sec,
                                max_content_length,
                                result,
-                               Function(x As HttpListenerRequest) As WebHeaderCollection
-                                   Return cast(Of WebHeaderCollection)(x.Headers())
+                               Function(ByVal x As HttpListenerRequest) As WebHeaderCollection
+                                   Return direct_cast(Of WebHeaderCollection)(x.Headers())
                                End Function,
-                               Function(x As HttpListenerRequest) As Stream
+                               Function(ByVal x As HttpListenerRequest) As Stream
                                    Return x.InputStream()
                                End Function,
-                               Function(x As HttpListenerRequest) As Int64
+                               Function(ByVal x As HttpListenerRequest) As Int64
                                    Return x.ContentLength64()
                                End Function)
     End Function
@@ -175,11 +176,11 @@ Public Module _server_rr
                                 buff_size,
                                 receive_rate_sec,
                                 send_rate_sec,
-                                Sub(x As HttpListenerResponse, l As Int64)
+                                Sub(ByVal x As HttpListenerResponse, ByVal l As Int64)
                                     x.ContentLength64() = l
                                 End Sub,
-                                Function(x As HttpListenerResponse,
-                                         os As pointer(Of Stream)) As event_comb
+                                Function(ByVal x As HttpListenerResponse,
+                                         ByVal os As pointer(Of Stream)) As event_comb
                                     Return sync_async(Sub()
                                                           eva(os, x.OutputStream())
                                                       End Sub)
@@ -214,11 +215,11 @@ Public Module _server_rr
                                 buff_size,
                                 receive_rate_sec,
                                 send_rate_sec,
-                                Sub(x As HttpListenerResponse)
+                                Sub(ByVal x As HttpListenerResponse)
                                     x.SendChunked() = True
                                 End Sub,
-                                Function(x As HttpListenerResponse,
-                                         os As pointer(Of Stream)) As event_comb
+                                Function(ByVal x As HttpListenerResponse,
+                                         ByVal os As pointer(Of Stream)) As event_comb
                                     Return sync_async(Sub()
                                                           eva(os, x.OutputStream())
                                                       End Sub)

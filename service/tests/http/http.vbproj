@@ -60,6 +60,7 @@
     <Compile Include="dev_pool_test.vb" />
     <Compile Include="http_client_test.vb" />
     <Compile Include="http_server_test.vb" />
+    <Compile Include="module_handles_test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

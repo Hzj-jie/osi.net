@@ -125,7 +125,8 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
                                                   seconds_to_milliseconds(30)))
         End If
         If enable_http Then
-            s = New http.server(response_timeout_ms:=seconds_to_milliseconds(15))
+            s = New http.server(New http.server.configuration() With
+                                {.ls = New http.link_status(seconds_to_milliseconds(15))})
             assert_true(s.add_port(http_port))
             assert_true(s.start())
             assert_true(http.responder.respond(s, dispatcher))

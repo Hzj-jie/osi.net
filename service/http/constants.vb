@@ -1,163 +1,180 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
 
-Namespace constants
-    Public Module _constants
-        Public Const commander_content_type As String = "text/commander;"
-        Public ReadOnly dev_enc As Text.Encoding
+Public Module _request_method
+    <Extension()> Public Function str(ByVal i As constants.request_method) As String
+        If i < 0 OrElse i >= array_size(constants.request_method_str) Then
+            Return Nothing
+        Else
+            Return constants.request_method_str(i)
+        End If
+    End Function
+End Module
 
-        Sub New()
-            dev_enc = default_encoding
+Public NotInheritable Class constants
+    Public Const commander_content_type As String = "text/commander;"
+    Public Shared ReadOnly dev_enc As Text.Encoding = default_encoding
+    Public Shared ReadOnly request_method_str() As String = [Enum].GetNames(GetType(request_method))
+
+    Public NotInheritable Class default_value
+        Public Const buff_size As UInt32 = 4096
+        Public Const max_connection_count As UInt32 = 1024
+        Public Const connect_timeout_ms As Int64 = 30 * second_milli
+        Public Const rate_sec As UInt32 = 1
+        Public Const response_timeout_ms As Int64 = 30 * second_milli
+        Public Const max_content_length As UInt64 = 1024 * 1024
+        Public Const port As UInt16 = 80
+        Public Shared ReadOnly encoder As Encoding = Encoding.UTF8
+
+        Private Sub New()
         End Sub
-    End Module
+    End Class
 
-    Namespace default_value
-        Public Module _default_value
-            Public Const buff_size As UInt32 = 4096
-            Public Const max_connection_count As UInt32 = 0
-            Public Const connect_timeout_ms As Int64 = 30 * second_milli
-            Public Const rate_sec As UInt32 = 1
-            Public Const response_timeout_ms As Int64 = 30 * second_milli
-            Public Const max_content_length As UInt64 = 1024 * 1024
-            Public Const port As UInt16 = 80
-        End Module
-    End Namespace
+    Public NotInheritable Class interval_ms
+        Public Const over_max_connection_count_wait_time As Int64 = 1 * second_milli
 
-    Namespace interval_ms
-        Public Module _interval_ms
-            Public Const over_max_connection_count_wait_time As Int64 = 1 * second_milli
-        End Module
-    End Namespace
+        Private Sub New()
+        End Sub
+    End Class
 
-    Namespace protocol
-        Public Module _protocol
-            Public Const http As String = "http"
-            Public Const https As String = "https"
-            Public Const mailto As String = "mailto"
-            Public Const ftp As String = "ftp"
-        End Module
-    End Namespace
+    Public NotInheritable Class protocol
+        Public Const http As String = "http"
+        Public Const https As String = "https"
+        Public Const mailto As String = "mailto"
+        Public Const ftp As String = "ftp"
 
-    Namespace uri
-        Public Module _uri
-            Public Const protocol_mark As Char = character.colon
-            Public Const user_mark As Char = character.at
-            Public Const user_password_separator As Char = character.colon
-            Public Const domain_separator As Char = character.dot
-            Public Const port_mark As Char = character.colon
-            Public Const path_separator As Char = root.constants.uri.path_separator
-            Public Const query_mark As Char = character.question_mark
-            Public Const argument_separator As Char = character.and_mark
-            Public Const argument_name_value_separator As Char = character.equal_sign
-            Public Const parent_path_mark As String = filesystem.parent_level_path_mark
-            Public Const this_level_mark As Char = filesystem.this_level_path_mark
-        End Module
-    End Namespace
+        Private Sub New()
+        End Sub
+    End Class
 
-    Namespace request_method
-        'http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
-        Public Enum request_method
-            OPTIONS
-            [GET]
-            HEAD
-            POST
-            PUT
-            DELETE
-            TRACE
-            CONNECT
-        End Enum
+    Public NotInheritable Class uri
+        Public Const protocol_mark As Char = character.colon
+        Public Const user_mark As Char = character.at
+        Public Const user_password_separator As Char = character.colon
+        Public Const domain_separator As Char = character.dot
+        Public Const port_mark As Char = character.colon
+        Public Const path_separator As Char = root.constants.uri.path_separator
+        Public Const query_mark As Char = character.question_mark
+        Public Const argument_separator As Char = character.and_mark
+        Public Const argument_name_value_separator As Char = character.equal_sign
+        Public Const parent_path_mark As String = filesystem.parent_level_path_mark
+        Public Const this_level_mark As Char = filesystem.this_level_path_mark
 
-        Public Module _request_method
-            Public ReadOnly request_method_str() As String
+        Private Sub New()
+        End Sub
+    End Class
 
-            Sub New()
-                request_method_str = [Enum].GetNames(GetType(request_method))
+    Public Enum request_method
+        OPTIONS
+        [GET]
+        HEAD
+        POST
+        PUT
+        DELETE
+        TRACE
+        CONNECT
+    End Enum
+
+    Public NotInheritable Class protocol_address_head
+        Private Const address_head As String = uri.protocol_mark + uri.path_separator + uri.path_separator
+        Public Const http As String = protocol.http + address_head
+        Public Const https As String = protocol.https + address_head
+        Public Const mailto As String = protocol.mailto + uri.protocol_mark
+        Public Const ftp As String = protocol.ftp + address_head
+
+        Private Sub New()
+        End Sub
+    End Class
+
+    Public NotInheritable Class headers
+        Public NotInheritable Class patterns
+            Public NotInheritable Class range
+                Public Const unit_range_set_separator As String = character.equal_sign
+                Public Const range_separator As String = character.comma
+                Public Shared ReadOnly range_separator_array() As String = {range_separator}
+                Public Const range_value_separator As String = character.minus_sign
+
+                Private Sub New()
+                End Sub
+            End Class
+
+            Private Sub New()
             End Sub
+        End Class
 
-            <Extension()> Public Function str(ByVal i As request_method) As String
-                If i < 0 OrElse i >= array_size(request_method_str) Then
-                    Return Nothing
-                Else
-                    Return request_method_str(i)
-                End If
-            End Function
-        End Module
-    End Namespace
+        Public NotInheritable Class values
+            Public NotInheritable Class content_type
+                Public Const charset_prefix As String = content_type_charset_prefix
 
-    Namespace protocol_address_head
-        Public Module _protocol_address_head
-            Private Const address_head As String = uri.protocol_mark + uri.path_separator + uri.path_separator
-            Public Const http As String = protocol.http + address_head
-            Public Const https As String = protocol.https + address_head
-            Public Const mailto As String = protocol.mailto + uri.protocol_mark
-            Public Const ftp As String = protocol.ftp + address_head
-        End Module
-    End Namespace
+                Public NotInheritable Class response
+                    Private Sub New()
+                    End Sub
+                End Class
 
-    Namespace headers
-        Namespace patterns
-            Namespace range
-                Public Module _range
-                    Public Const unit_range_set_separator As String = character.equal_sign
-                    Public Const range_separator As String = character.comma
-                    Public ReadOnly range_separator_array() As String = {range_separator}
-                    Public Const range_value_separator As String = character.minus_sign
-                End Module
-            End Namespace
-        End Namespace
+                Public NotInheritable Class request
+                    Public Const multipart_form_data As String = "multipart/form-data"
+                    Public Const www_form_urlencoded As String = "application/x-www-form-urlencoded"
 
-        Namespace values
-            Namespace content_type
-                Public Module _content_type
-                    Public Const charset_prefix As String = content_type_charset_prefix
-                End Module
+                    Private Sub New()
+                    End Sub
+                End Class
 
-                Namespace response
-                    Public Module _response
-                    End Module
-                End Namespace
+                Private Sub New()
+                End Sub
+            End Class
 
-                Namespace request
-                    Public Module _request
-                        Public Const multipart_form_data As String = "multipart/form-data"
-                        Public Const www_form_urlencoded As String = "application/x-www-form-urlencoded"
-                    End Module
-                End Namespace
-            End Namespace
+            Public NotInheritable Class content_encoding
+                Public Const gzip As String = "gzip"
+                Public Const deflate As String = "deflate"
 
-            Namespace content_encoding
-                Public Module _content_encoding
-                    Public Const gzip As String = "gzip"
-                    Public Const deflate As String = "deflate"
-                End Module
-            End Namespace
+                Private Sub New()
+                End Sub
+            End Class
 
-            Namespace transfer_encoding
-                Public Module _transfer_encoding
-                    Public Const chunked As String = "chunked"
-                End Module
-            End Namespace
+            Public NotInheritable Class transfer_encoding
+                Public Const chunked As String = "chunked"
 
-            Namespace range
-                Public Module _range
-                    Public Const not_presented As Int64 = -1
-                    Public Const bytes_unit As String = "bytes"
-                End Module
-            End Namespace
+                Private Sub New()
+                End Sub
+            End Class
 
-            Namespace connection
-                Public Module _connection
-                    Public Const keep_alive As String = "keep-alive"
-                End Module
-            End Namespace
+            Public NotInheritable Class range
+                Public Const not_presented As Int64 = -1
+                Public Const bytes_unit As String = "bytes"
 
-            Namespace keep_alive
-                Public Module _keep_alive
-                    Public Const [true] As String = "true"
-                End Module
-            End Namespace
-        End Namespace
-    End Namespace
-End Namespace
+                Private Sub New()
+                End Sub
+            End Class
+
+            Public NotInheritable Class connection
+                Public Const keep_alive As String = "keep-alive"
+
+                Private Sub New()
+                End Sub
+            End Class
+
+            Public NotInheritable Class keep_alive
+                Public Const [true] As String = "true"
+
+                Private Sub New()
+                End Sub
+            End Class
+
+            Private Sub New()
+            End Sub
+        End Class
+
+        Private Sub New()
+        End Sub
+    End Class
+
+    Private Sub New()
+    End Sub
+End Class

@@ -19,6 +19,9 @@ Public Module _binding_flags
         For i As Int32 = 0 To array_size_i(ps) - 1
             assert(m.emplace(strtolower(ps(i).second), ps(i).first).second)
         Next
+
+        assert(m.emplace("private", BindingFlags.NonPublic).second)
+        assert(m.emplace("protected", BindingFlags.NonPublic).second)
     End Sub
 
     <Extension()> Public Function from_str(ByRef bf As BindingFlags, ByVal s As String) As Boolean

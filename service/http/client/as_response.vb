@@ -1,4 +1,6 @@
 ﻿
+Option Explicit On
+Option Infer Off
 Option Strict On
 
 Imports System.IO
@@ -8,7 +10,6 @@ Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.service.http.constants
-Imports osi.service.http.constants.request_method
 
 Partial Public Class client
     Public Class response
@@ -125,7 +126,7 @@ Partial Public Class client
                                                                                         (+it).second(i))
                                                       Next
                                                   End If
-                                                  it = DirectCast((it + 1), map(Of String, vector(Of String)).iterator)
+                                                  it += 1
                                               End While
                                           End If
                                           If Not request_body Is Nothing Then

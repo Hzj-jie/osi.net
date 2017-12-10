@@ -173,7 +173,7 @@ Public Class server_dev
         assert(Not s Is Nothing)
         Dim o As imanual_device_exporter(Of text) = Nothing
         o = New manual_device_exporter(Of text)(s.identity())
-        AddHandler context_handle.[New](s).handle_context_offline,
+        AddHandler http_listener_context_handle.[New](s).handle_context_offline,
             Sub(ctx As HttpListenerContext, response_timeout_ms As Int64, after_respond As Action)
                 ' TODO: the response_timeout_ms cannot be sent to responder
                 If Not o.inject(+(New server_dev(ctx, ls, after_respond))) Then

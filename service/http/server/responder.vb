@@ -16,7 +16,7 @@ Public NotInheritable Class responder
         If s Is Nothing Then
             Return False
         Else
-            AddHandler context_handle.[New](s).handle_context_async,
+            AddHandler http_listener_context_handle.[New](s).handle_context_async,
                        Sub(ctx As HttpListenerContext, ByRef ec As event_comb)
                            ec = +(New commander.responder(Of _false) _
                                                          (New text_herald_adapter(New server_dev(ctx, ls)), npos, e))
