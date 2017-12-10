@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Public Module _enum
     Private Function traversal(Of T)(ByVal d As Func(Of T, String, Boolean),
                                      ByVal count As Func(Of Int32, Boolean)) As Boolean
@@ -187,5 +191,28 @@ Public Module _enum
         Else
             Return False
         End If
+    End Function
+
+    Public Function enum_to_string(Of T)(ByRef o() As String) As Boolean
+        Dim i As Int32 = 0
+        Dim r() As String = Nothing
+        If enum_traversal(Sub(ByVal x As T, ByVal s As String)
+                              r(i) = s
+                              i += 1
+                          End Sub,
+                          Sub(ByVal c As Int32)
+                              ReDim r(c - 1)
+                          End Sub) Then
+            o = r
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Public Function enum_to_string(Of T)() As String()
+        Dim r() As String = Nothing
+        assert(enum_to_string(Of T)(r))
+        Return r
     End Function
 End Module

@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.utt
 
@@ -71,9 +75,18 @@ Public Class enum_test
         Return True
     End Function
 
+    Private Shared Function to_string_case() As Boolean
+        Dim o() As String = Nothing
+        assert_true(enum_to_string(Of test_enum)(o))
+        assert_not_nothing(o)
+        assert_array_equal(o, test_enum_str)
+        Return True
+    End Function
+
     Public Overrides Function run() As Boolean
         Return traversal_case() AndAlso
                has_case() AndAlso
-               cast_case()
+               cast_case() AndAlso
+               to_string_case()
     End Function
 End Class

@@ -1,18 +1,22 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 
-Public Module _strsplit
-    Private ReadOnly default_separators() As String
-    Private ReadOnly default_surround_strs() As pair(Of String, String)
+Public NotInheritable Class strsplitter
+    Private Shared ReadOnly default_separators() As String
+    Private Shared ReadOnly default_surround_strs() As pair(Of String, String)
 
-    Sub New()
+    Shared Sub New()
         assert(npos < 0)
-        ReDim default_separators(strlen(space_chars) - 1)
-        For i As Int32 = 0 To strlen(space_chars) - 1
+        ReDim default_separators(strlen_i(space_chars) - 1)
+        For i As Int32 = 0 To strlen_i(space_chars) - 1
             default_separators(i) = Convert.ToString(space_chars(i))
         Next
         default_surround_strs = {emplace_make_pair(Convert.ToString(character.quote),
@@ -23,16 +27,32 @@ Public Module _strsplit
                                                    Convert.ToString(character.backquote))}
     End Sub
 
-    Private Function is_inarray(ByVal s As String,
-                                ByVal i As UInt32,
-                                ByVal a() As String,
-                                ByRef l As UInt32,
-                                ByRef hit As String,
-                                ByVal case_sensitive As Boolean) As Boolean
-        For j As Int32 = 0 To array_size(a) - 1
+    Public Shared Function with_default_separators(ParamArray ByVal separators() As String) As String()
+        If isemptyarray(separators) Then
+            Return default_separators
+        Else
+            Return array_concat(separators, default_separators)
+        End If
+    End Function
+
+    Public Shared Function with_default_surround_strs(ByVal ParamArray surround_strs() As pair(Of String, String)) _
+                                                     As pair(Of String, String)()
+        If isemptyarray(surround_strs) Then
+            Return default_surround_strs
+        Else
+            Return array_concat(surround_strs, default_surround_strs)
+        End If
+    End Function
+
+    Private Shared Function is_inarray(ByVal s As String,
+                                       ByVal i As UInt32,
+                                       ByVal a() As String,
+                                       ByRef l As UInt32,
+                                       ByRef hit As String,
+                                       ByVal case_sensitive As Boolean) As Boolean
+        For j As Int32 = 0 To array_size_i(a) - 1
             l = strlen(a(j))
-            If l > 0 AndAlso
-               strsame(s, i, a(j), uint32_0, l, case_sensitive) Then
+            If l > 0 AndAlso strsame(s, i, a(j), uint32_0, l, case_sensitive) Then
                 hit = a(j)
                 Return True
             End If
@@ -40,17 +60,16 @@ Public Module _strsplit
         Return False
     End Function
 
-    Private Function is_inarray(ByVal s As String,
-                                ByVal i As UInt32,
-                                ByVal a() As pair(Of String, String),
-                                ByRef index As Int32,
-                                ByRef l As UInt32,
-                                ByRef hit As String,
-                                ByVal case_sensitive As Boolean) As Boolean
-        For j As Int32 = 0 To array_size(a) - 1
+    Private Shared Function is_inarray(ByVal s As String,
+                                       ByVal i As UInt32,
+                                       ByVal a() As pair(Of String, String),
+                                       ByRef index As Int32,
+                                       ByRef l As UInt32,
+                                       ByRef hit As String,
+                                       ByVal case_sensitive As Boolean) As Boolean
+        For j As Int32 = 0 To array_size_i(a) - 1
             l = strlen(a(j).first)
-            If l > 0 AndAlso
-               strsame(s, i, a(j).first, 0, l, case_sensitive) Then
+            If l > 0 AndAlso strsame(s, i, a(j).first, 0, l, case_sensitive) Then
                 hit = a(j).first
                 index = j
                 Return True
@@ -59,181 +78,180 @@ Public Module _strsplit
         Return False
     End Function
 
-    <Extension()> Public Function strsplit(ByVal s As String,
-                                           ByRef result As vector(Of String)) As Boolean
-        Return strsplit(s,
-                        default_separators,
-                        default_surround_strs,
-                        result,
-                        True,
-                        True,
-                        False)
+    Public Shared Function split(ByVal s As String, ByRef result As vector(Of String)) As Boolean
+        Return split(s,
+                     default_separators,
+                     default_surround_strs,
+                     result,
+                     True,
+                     True,
+                     False)
     End Function
 
-    <Extension()> Public Function strsplit(ByVal s As String,
-                                           ByRef result As vector(Of String),
-                                           ByVal ignore_empty_entity As Boolean,
-                                           ByVal ignore_surround_strs As Boolean) As Boolean
-        Return strsplit(s,
-                        default_separators,
-                        default_surround_strs,
-                        result,
-                        ignore_empty_entity,
-                        ignore_surround_strs,
-                        False)
+    Public Shared Function split(ByVal s As String,
+                                 ByRef result As vector(Of String),
+                                 ByVal ignore_empty_entity As Boolean,
+                                 ByVal ignore_surround_strs As Boolean) As Boolean
+        Return split(s,
+                     default_separators,
+                     default_surround_strs,
+                     result,
+                     ignore_empty_entity,
+                     ignore_surround_strs,
+                     False)
     End Function
 
-    <Extension()> Public Function strsplit(ByVal s As String,
-                                           ByVal surround_strs() As String,
-                                           ByRef result As vector(Of String)) As Boolean
-        Return strsplit(s,
-                        default_separators,
-                        surround_strs,
-                        result,
-                        True,
-                        True,
-                        True)
+    Public Shared Function split(ByVal s As String,
+                                 ByVal surround_strs() As String,
+                                 ByRef result As vector(Of String)) As Boolean
+        Return split(s,
+                     default_separators,
+                     surround_strs,
+                     result,
+                     True,
+                     True,
+                     True)
     End Function
 
-    <Extension()> Public Function strsplit(ByVal s As String,
-                                           ByVal surround_strs() As String,
-                                           ByRef result As vector(Of String),
-                                           ByVal ignore_empty_entity As Boolean,
-                                           ByVal ignore_surround_strs As Boolean) As Boolean
-        Return strsplit(s,
-                        default_separators,
-                        surround_strs,
-                        result,
-                        ignore_empty_entity,
-                        ignore_surround_strs,
-                        True)
+    Public Shared Function split(ByVal s As String,
+                                 ByVal surround_strs() As String,
+                                 ByRef result As vector(Of String),
+                                 ByVal ignore_empty_entity As Boolean,
+                                 ByVal ignore_surround_strs As Boolean) As Boolean
+        Return split(s,
+                     default_separators,
+                     surround_strs,
+                     result,
+                     ignore_empty_entity,
+                     ignore_surround_strs,
+                     True)
     End Function
 
-    <Extension()> Public Function strsplit(ByVal s As String,
-                                           ByVal separators() As String,
-                                           ByVal surround_strs() As String,
-                                           ByRef result As vector(Of String)) As Boolean
-        Return strsplit(s,
-                        separators,
-                        surround_strs,
-                        result,
-                        True,
-                        True,
-                        True)
+    Public Shared Function split(ByVal s As String,
+                                 ByVal separators() As String,
+                                 ByVal surround_strs() As String,
+                                 ByRef result As vector(Of String)) As Boolean
+        Return split(s,
+                     separators,
+                     surround_strs,
+                     result,
+                     True,
+                     True,
+                     True)
     End Function
 
-    <Extension()> Public Function strsplit(ByVal s As String,
-                                           ByVal separators() As String,
-                                           ByVal surround_strs() As String,
-                                           ByRef result As vector(Of String),
-                                           ByVal ignore_empty_entity As Boolean,
-                                           ByVal ignore_surround_strs As Boolean) As Boolean
-        Return strsplit(s,
-                        separators,
-                        surround_strs,
-                        result,
-                        ignore_empty_entity,
-                        ignore_surround_strs,
-                        True)
+    Public Shared Function split(ByVal s As String,
+                                 ByVal separators() As String,
+                                 ByVal surround_strs() As String,
+                                 ByRef result As vector(Of String),
+                                 ByVal ignore_empty_entity As Boolean,
+                                 ByVal ignore_surround_strs As Boolean) As Boolean
+        Return split(s,
+                     separators,
+                     surround_strs,
+                     result,
+                     ignore_empty_entity,
+                     ignore_surround_strs,
+                     True)
     End Function
 
-    <Extension()> Public Function strsplit(ByVal s As String,
-                                           ByVal separators() As String,
-                                           ByVal surround_strs() As String,
-                                           ByRef result As vector(Of String),
-                                           ByVal ignore_empty_entity As Boolean,
-                                           ByVal ignore_surround_strs As Boolean,
-                                           ByVal case_sensitive As Boolean) As Boolean
+    Public Shared Function split(ByVal s As String,
+                                 ByVal separators() As String,
+                                 ByVal surround_strs() As String,
+                                 ByRef result As vector(Of String),
+                                 ByVal ignore_empty_entity As Boolean,
+                                 ByVal ignore_surround_strs As Boolean,
+                                 ByVal case_sensitive As Boolean) As Boolean
         Dim p() As pair(Of String, String) = Nothing
-        ReDim p(array_size(surround_strs) - 1)
-        For i As Int32 = 0 To array_size(surround_strs) - 1
+        ReDim p(array_size_i(surround_strs) - 1)
+        For i As Int32 = 0 To array_size_i(surround_strs) - 1
             p(i) = emplace_make_pair(surround_strs(i), surround_strs(i))
         Next
-        Return strsplit(s,
-                        separators,
-                        p,
-                        result,
-                        ignore_empty_entity,
-                        ignore_surround_strs,
-                        case_sensitive)
+        Return split(s,
+                     separators,
+                     p,
+                     result,
+                     ignore_empty_entity,
+                     ignore_surround_strs,
+                     case_sensitive)
     End Function
 
-    <Extension()> Public Function strsplit(ByVal s As String,
-                                           ByVal surround_strs() As pair(Of String, String),
-                                           ByRef result As vector(Of String)) As Boolean
-        Return strsplit(s,
-                        default_separators,
-                        surround_strs,
-                        result,
-                        True,
-                        True,
-                        True)
+    Public Shared Function split(ByVal s As String,
+                                 ByVal surround_strs() As pair(Of String, String),
+                                 ByRef result As vector(Of String)) As Boolean
+        Return split(s,
+                     default_separators,
+                     surround_strs,
+                     result,
+                     True,
+                     True,
+                     True)
     End Function
 
-    <Extension()> Public Function strsplit(ByVal s As String,
-                                           ByVal surround_strs() As pair(Of String, String),
-                                           ByRef result As vector(Of String),
-                                           ByVal ignore_empty_entity As Boolean,
-                                           ByVal ignore_surround_strs As Boolean) As Boolean
-        Return strsplit(s,
-                        default_separators,
-                        surround_strs,
-                        result,
-                        ignore_empty_entity,
-                        ignore_surround_strs,
-                        True)
+    Public Shared Function split(ByVal s As String,
+                                 ByVal surround_strs() As pair(Of String, String),
+                                 ByRef result As vector(Of String),
+                                 ByVal ignore_empty_entity As Boolean,
+                                 ByVal ignore_surround_strs As Boolean) As Boolean
+        Return split(s,
+                     default_separators,
+                     surround_strs,
+                     result,
+                     ignore_empty_entity,
+                     ignore_surround_strs,
+                     True)
     End Function
 
-    <Extension()> Public Function strsplit(ByVal s As String,
-                                           ByVal surround_strs() As pair(Of String, String),
-                                           ByRef result As vector(Of String),
-                                           ByVal ignore_empty_entity As Boolean,
-                                           ByVal ignore_surround_strs As Boolean,
-                                           ByVal case_sensitive As Boolean) As Boolean
-        Return strsplit(s,
-                        default_separators,
-                        surround_strs,
-                        result,
-                        ignore_empty_entity,
-                        ignore_surround_strs,
-                        case_sensitive)
+    Public Shared Function split(ByVal s As String,
+                                 ByVal surround_strs() As pair(Of String, String),
+                                 ByRef result As vector(Of String),
+                                 ByVal ignore_empty_entity As Boolean,
+                                 ByVal ignore_surround_strs As Boolean,
+                                 ByVal case_sensitive As Boolean) As Boolean
+        Return split(s,
+                     default_separators,
+                     surround_strs,
+                     result,
+                     ignore_empty_entity,
+                     ignore_surround_strs,
+                     case_sensitive)
     End Function
 
-    <Extension()> Public Function strsplit(ByVal s As String,
-                                           ByVal separators() As String,
-                                           ByVal surround_strs() As pair(Of String, String),
-                                           ByRef result As vector(Of String)) As Boolean
-        Return strsplit(s,
-                        separators,
-                        surround_strs,
-                        result,
-                        True,
-                        True,
-                        True)
+    Public Shared Function split(ByVal s As String,
+                                 ByVal separators() As String,
+                                 ByVal surround_strs() As pair(Of String, String),
+                                 ByRef result As vector(Of String)) As Boolean
+        Return split(s,
+                     separators,
+                     surround_strs,
+                     result,
+                     True,
+                     True,
+                     True)
     End Function
 
-    <Extension()> Public Function strsplit(ByVal s As String,
-                                           ByVal separators() As String,
-                                           ByVal surround_strs() As pair(Of String, String),
-                                           ByRef result As vector(Of String),
-                                           ByVal ignore_empty_entity As Boolean,
-                                           ByVal ignore_surround_strs As Boolean) As Boolean
-        Return strsplit(s,
-                        separators,
-                        surround_strs,
-                        result,
-                        ignore_empty_entity,
-                        ignore_surround_strs,
-                        True)
+    Public Shared Function split(ByVal s As String,
+                                 ByVal separators() As String,
+                                 ByVal surround_strs() As pair(Of String, String),
+                                 ByRef result As vector(Of String),
+                                 ByVal ignore_empty_entity As Boolean,
+                                 ByVal ignore_surround_strs As Boolean) As Boolean
+        Return split(s,
+                     separators,
+                     surround_strs,
+                     result,
+                     ignore_empty_entity,
+                     ignore_surround_strs,
+                     True)
     End Function
 
-    <Extension()> Public Function strsplit(ByVal s As String,
-                                           ByVal separators() As String,
-                                           ByVal surround_strs() As pair(Of String, String),
-                                           ByRef result As vector(Of String),
-                                           ByVal ignore_empty_entity As Boolean,
-                                           ByVal ignore_surround_strs As Boolean,
-                                           ByVal case_sensitive As Boolean) As Boolean
+    Public Shared Function split(ByVal s As String,
+                                 ByVal separators() As String,
+                                 ByVal surround_strs() As pair(Of String, String),
+                                 ByRef result As vector(Of String),
+                                 ByVal ignore_empty_entity As Boolean,
+                                 ByVal ignore_surround_strs As Boolean,
+                                 ByVal case_sensitive As Boolean) As Boolean
         If String.IsNullOrEmpty(s) Then
             Return False
         Else
@@ -243,9 +261,10 @@ Public Module _strsplit
                 Return True
             ElseIf isemptyarray(surround_strs) Then
                 Dim ss() As String = Nothing
-                ss = s.Split(separators, If(ignore_empty_entity,
-                                            StringSplitOptions.RemoveEmptyEntries,
-                                            StringSplitOptions.None))
+                ss = s.Split(separators,
+                             If(ignore_empty_entity,
+                                StringSplitOptions.RemoveEmptyEntries,
+                                StringSplitOptions.None))
                 'should have at least one entity, so false should not be returned
                 Return assert(result.emplace_back(ss))
             Else
@@ -270,13 +289,13 @@ Public Module _strsplit
                             End If
                             surrounded = npos
                         Else
-                            l.Append(s(i))
-                            i += 1
+                            l.Append(s(CInt(i)))
+                            i += uint32_1
                         End If
                     ElseIf is_inarray(s, i, separators, len, hit, case_sensitive) Then
                         If Not ignore_empty_entity OrElse strlen(l) > 0 Then
                             result.emplace_back(Convert.ToString(l))
-                            l.clear()
+                            l.Clear()
                         End If
                         i += len
                     ElseIf is_inarray(s, i, surround_strs, surrounded, len, hit, case_sensitive) Then
@@ -285,8 +304,8 @@ Public Module _strsplit
                             l.Append(hit)
                         End If
                     Else
-                        l.Append(s(i))
-                        i += 1
+                        l.Append(s(CInt(i)))
+                        i += uint32_1
                     End If
                 End While
                 If Not ignore_empty_entity OrElse strlen(l) > 0 Then
@@ -295,5 +314,142 @@ Public Module _strsplit
                 Return True
             End If
         End If
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
+
+Public Module _strsplit
+    <Extension()> Public Function strsplit(ByVal s As String,
+                                           ByRef result As vector(Of String)) As Boolean
+        Return strsplitter.split(s, result)
+    End Function
+
+    <Extension()> Public Function strsplit(ByVal s As String,
+                                           ByRef result As vector(Of String),
+                                           ByVal ignore_empty_entity As Boolean,
+                                           ByVal ignore_surround_strs As Boolean) As Boolean
+        Return strsplitter.split(s, result, ignore_empty_entity, ignore_surround_strs)
+    End Function
+
+    <Extension()> Public Function strsplit(ByVal s As String,
+                                           ByVal surround_strs() As String,
+                                           ByRef result As vector(Of String)) As Boolean
+        Return strsplitter.split(s, surround_strs, result)
+    End Function
+
+    <Extension()> Public Function strsplit(ByVal s As String,
+                                           ByVal surround_strs() As String,
+                                           ByRef result As vector(Of String),
+                                           ByVal ignore_empty_entity As Boolean,
+                                           ByVal ignore_surround_strs As Boolean) As Boolean
+        Return strsplitter.split(s, surround_strs, result, ignore_empty_entity, ignore_surround_strs)
+    End Function
+
+    <Extension()> Public Function strsplit(ByVal s As String,
+                                           ByVal separators() As String,
+                                           ByVal surround_strs() As String,
+                                           ByRef result As vector(Of String)) As Boolean
+        Return strsplitter.split(s, separators, surround_strs, result)
+    End Function
+
+    <Extension()> Public Function strsplit(ByVal s As String,
+                                           ByVal separators() As String,
+                                           ByVal surround_strs() As String,
+                                           ByRef result As vector(Of String),
+                                           ByVal ignore_empty_entity As Boolean,
+                                           ByVal ignore_surround_strs As Boolean) As Boolean
+        Return strsplitter.split(s,
+                                 separators,
+                                 surround_strs,
+                                 result,
+                                 ignore_empty_entity,
+                                 ignore_surround_strs)
+    End Function
+
+    <Extension()> Public Function strsplit(ByVal s As String,
+                                           ByVal separators() As String,
+                                           ByVal surround_strs() As String,
+                                           ByRef result As vector(Of String),
+                                           ByVal ignore_empty_entity As Boolean,
+                                           ByVal ignore_surround_strs As Boolean,
+                                           ByVal case_sensitive As Boolean) As Boolean
+        Return strsplitter.split(s,
+                                 separators,
+                                 surround_strs,
+                                 result,
+                                 ignore_empty_entity,
+                                 ignore_surround_strs,
+                                 case_sensitive)
+    End Function
+
+    <Extension()> Public Function strsplit(ByVal s As String,
+                                           ByVal surround_strs() As pair(Of String, String),
+                                           ByRef result As vector(Of String)) As Boolean
+        Return strsplitter.split(s, surround_strs, result)
+    End Function
+
+    <Extension()> Public Function strsplit(ByVal s As String,
+                                           ByVal surround_strs() As pair(Of String, String),
+                                           ByRef result As vector(Of String),
+                                           ByVal ignore_empty_entity As Boolean,
+                                           ByVal ignore_surround_strs As Boolean) As Boolean
+        Return strsplitter.split(s,
+                                 surround_strs,
+                                 result,
+                                 ignore_empty_entity,
+                                 ignore_surround_strs)
+    End Function
+
+    <Extension()> Public Function strsplit(ByVal s As String,
+                                           ByVal surround_strs() As pair(Of String, String),
+                                           ByRef result As vector(Of String),
+                                           ByVal ignore_empty_entity As Boolean,
+                                           ByVal ignore_surround_strs As Boolean,
+                                           ByVal case_sensitive As Boolean) As Boolean
+        Return strsplitter.split(s,
+                                 surround_strs,
+                                 result,
+                                 ignore_empty_entity,
+                                 ignore_surround_strs,
+                                 case_sensitive)
+    End Function
+
+    <Extension()> Public Function strsplit(ByVal s As String,
+                                           ByVal separators() As String,
+                                           ByVal surround_strs() As pair(Of String, String),
+                                           ByRef result As vector(Of String)) As Boolean
+        Return strsplitter.split(s, separators, surround_strs, result)
+    End Function
+
+    <Extension()> Public Function strsplit(ByVal s As String,
+                                           ByVal separators() As String,
+                                           ByVal surround_strs() As pair(Of String, String),
+                                           ByRef result As vector(Of String),
+                                           ByVal ignore_empty_entity As Boolean,
+                                           ByVal ignore_surround_strs As Boolean) As Boolean
+        Return strsplitter.split(s,
+                                 separators,
+                                 surround_strs,
+                                 result,
+                                 ignore_empty_entity,
+                                 ignore_surround_strs)
+    End Function
+
+    <Extension()> Public Function strsplit(ByVal s As String,
+                                           ByVal separators() As String,
+                                           ByVal surround_strs() As pair(Of String, String),
+                                           ByRef result As vector(Of String),
+                                           ByVal ignore_empty_entity As Boolean,
+                                           ByVal ignore_surround_strs As Boolean,
+                                           ByVal case_sensitive As Boolean) As Boolean
+        Return strsplitter.split(s,
+                                 separators,
+                                 surround_strs,
+                                 result,
+                                 ignore_empty_entity,
+                                 ignore_surround_strs,
+                                 case_sensitive)
     End Function
 End Module

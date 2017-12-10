@@ -58,6 +58,7 @@
     <Compile Include="affinity.vb" />
     <Compile Include="assembly.vb" />
     <Compile Include="autolock\autolock_dll_exporter.vb" />
+    <Compile Include="binding_flags.vb" />
     <Compile Include="caster.vb" />
     <Compile Include="choose_group.vb" />
     <Compile Include="comparer.vb" />
@@ -79,6 +80,7 @@
     <Compile Include="counter\icounter_writer.vb" />
     <Compile Include="counter\file_counter_writer.vb" />
     <Compile Include="counter\self_maintained_counter\instance_count_counter.vb" />
+    <Compile Include="enum.vb" />
     <Compile Include="error_handle\application_info_logging.vb" />
     <Compile Include="error_handle\trace.vb" />
     <Compile Include="instance_count.vb" />
