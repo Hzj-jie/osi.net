@@ -100,6 +100,7 @@
     <Compile Include="fake\cd_object.vb" />
     <Compile Include="fake\fake.vb" />
     <Compile Include="fake\fake_rnd.vb" />
+    <Compile Include="fake\mock_tick_clock.vb" />
     <Compile Include="fake\type_counter.vb" />
     <Compile Include="fake\to_string_shadower.vb" />
     <Compile Include="host.run.vb" />

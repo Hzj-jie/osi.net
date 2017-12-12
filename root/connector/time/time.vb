@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
@@ -56,12 +60,30 @@ Public Module _time
         End If
     End Function
 
+    Public Function milliseconds_to_ticks(ByVal ms As UInt64) As UInt64
+        assert(ms <= max_int64)
+        Dim r As Int64 = 0
+        r = milliseconds_to_ticks(CLng(ms))
+        assert(r >= 0)
+        Return CULng(r)
+    End Function
+
     Public Function ticks_to_milliseconds(ByVal ticks As Int64) As Int64
         Return ticks \ milli_tick
     End Function
 
+    Public Function ticks_to_milliseconds(ByVal ticks As UInt64) As UInt64
+        Const uint_milli_tick As UInt32 = milli_tick
+        Return ticks \ uint_milli_tick
+    End Function
+
     Public Function milliseconds_to_seconds(ByVal ms As Int64) As Int64
         Return ms \ second_milli
+    End Function
+
+    Public Function milliseconds_to_seconds(ByVal ms As UInt64) As UInt64
+        Const uint_second_milli As UInt32 = second_milli
+        Return ms \ uint_second_milli
     End Function
 
     Public Function seconds_to_milliseconds(ByVal s As Int64) As Int64
@@ -80,6 +102,14 @@ Public Module _time
                 Return 0
             End Try
         End If
+    End Function
+
+    Public Function seconds_to_milliseconds(ByVal s As UInt64) As UInt64
+        assert(s <= max_int64)
+        Dim r As Int64 = 0
+        r = seconds_to_milliseconds(CLng(s))
+        assert(r >= 0)
+        Return CULng(r)
     End Function
 
     Public Function ticks_to_seconds(ByVal ticks As Int64) As Int64
@@ -367,7 +397,7 @@ Public Module _time
         If rate_sec = 0 Then
             Return npos
         Else
-            Return max(seconds_to_milliseconds(If(count = 0, 1, count)) \ rate_sec, min_value)
+            Return max(CLng(seconds_to_milliseconds(If(count = 0, uint64_1, count)) \ rate_sec), min_value)
         End If
     End Function
 End Module

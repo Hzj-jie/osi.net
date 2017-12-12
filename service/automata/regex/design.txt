@@ -21,7 +21,7 @@ a matching group can be suffixed by
    if it follows a [*], consume 1 character.
    otherwise, consume 0 character.
 -, unmatched, i.e. if the matching group does not match, go to next step
-   always does not consume characters.
+   never consumes characters.
 say, [a]?bc can match both 'abc' and 'bc'
 [a]+bc can match 'abc', 'aabc' ..., but cannot match 'bc'
 so if want to match 'abc', 'aabc' and 'bc', [a,]+bc is acceptable

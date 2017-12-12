@@ -76,6 +76,7 @@
     <Compile Include="object_compare.vb" />
     <Compile Include="object_extensions.vb" />
     <Compile Include="template\equaler.vb" />
+    <Compile Include="time\tick_clock.vb" />
     <Compile Include="type.vb" />
     <Compile Include="windows_native\dpi_awareness.vb" />
     <Compile Include="windows_native\native_window.vb" />

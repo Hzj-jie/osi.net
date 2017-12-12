@@ -169,6 +169,7 @@
     <Compile Include="strrplc_test.vb" />
     <Compile Include="str_bool_test.vb" />
     <Compile Include="template\to_uint32_test.vb" />
+    <Compile Include="tick_clock_test.vb" />
     <Compile Include="type_behavior_test.vb" />
     <Compile Include="type_info_perf.vb" />
     <Compile Include="type_initializer_behavior_test.vb" />
