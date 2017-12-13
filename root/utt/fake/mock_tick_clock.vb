@@ -31,15 +31,23 @@ Public NotInheritable Class mock_tick_clock
         set_milliseconds(seconds_to_milliseconds(s))
     End Sub
 
-    Public Sub add_ticks(ByVal t As UInt64)
+    Public Sub advance_ticks(ByVal t As UInt64)
         Me.t += t
     End Sub
 
-    Public Sub add_milliseconds(ByVal ms As UInt64)
-        add_ticks(milliseconds_to_ticks(ms))
+    Public Sub advance_milliseconds(ByVal ms As UInt64)
+        advance_ticks(milliseconds_to_ticks(ms))
     End Sub
 
-    Public Sub add_seconds(ByVal s As UInt64)
-        add_milliseconds(seconds_to_milliseconds(s))
+    Public Sub advance_seconds(ByVal s As UInt64)
+        advance_milliseconds(seconds_to_milliseconds(s))
+    End Sub
+
+    Public Sub advance(ByVal ts As TimeSpan)
+        Dim t As Int64 = 0
+        t = ts.Ticks()
+        ' Negative ticks (clock goes backward) is not allowed.
+        assert(t >= 0)
+        advance_milliseconds(CULng(t))
     End Sub
 End Class
