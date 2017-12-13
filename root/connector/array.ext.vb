@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports osi.root.constants
@@ -9,9 +13,9 @@ Public Module _array_ext
             Return i
         Else
             Dim r() As T = Nothing
-            ReDim r(array_size(i) - uint32_1)
-            For j As UInt32 = 0 To array_size(i) - uint32_1
-                copy(r(j), i(array_size(i) - j - uint32_1))
+            ReDim r(array_size_i(i) - 1)
+            For j As Int32 = 0 To array_size_i(i) - 1
+                copy(r(j), i(array_size_i(i) - j - 1))
             Next
             Return r
         End If
@@ -22,9 +26,9 @@ Public Module _array_ext
             Return i
         Else
             Dim r() As T = Nothing
-            ReDim r(array_size(i) - uint32_1)
-            For j As UInt32 = 0 To array_size(i) - uint32_1
-                r(j) = i(array_size(i) - j - uint32_1)
+            ReDim r(array_size_i(i) - 1)
+            For j As Int32 = 0 To array_size_i(i) - 1
+                r(j) = i(array_size_i(i) - j - 1)
             Next
             Return r
         End If
@@ -32,14 +36,14 @@ Public Module _array_ext
 
     <Extension()> Public Sub in_place_reverse(Of T)(ByVal i() As T)
         If array_size(i) > 1 Then
-            For j As UInt32 = 0 To array_size(i) \ 2 - uint32_1
-                swap(i(j), i(array_size(i) - j - uint32_1))
+            For j As Int32 = 0 To (array_size_i(i) >> 1) - 1
+                swap(i(j), i(array_size_i(i) - j - 1))
             Next
         End If
     End Sub
 
     <Extension()> Public Sub gc_keepalive(Of T)(ByVal v() As T)
-        For i As UInt32 = 0 To array_size(v) - 1
+        For i As Int32 = 0 To array_size_i(v) - 1
             GC.KeepAlive(v(i))
         Next
         GC.KeepAlive(v)
@@ -84,8 +88,9 @@ Public Module _array_ext
                             ByVal count As UInt32,
                             ByVal src As T)
         If count > 0 Then
-            For i As UInt32 = start To start + count - 1
-                copy(dest(i), src)
+            assert(start + count <= max_int32)
+            For i As UInt32 = start To start + count - uint32_1
+                copy(dest(CInt(i)), src)
             Next
         End If
     End Sub
@@ -96,7 +101,7 @@ Public Module _array_ext
 
     Public Sub memclr(Of T)(ByVal dest() As T, ByVal start As UInt32, ByVal count As UInt32)
         If count > uint32_0 Then
-            Array.Clear(dest, start, count)
+            Array.Clear(dest, CInt(start), CInt(count))
         End If
     End Sub
 
@@ -119,7 +124,7 @@ Public Module _array_ext
             Dim s As StringBuilder = Nothing
             s = New StringBuilder()
             Dim i As Int32 = 0
-            For i = 0 To min(array_size(this), limited_length) - 1
+            For i = 0 To min(array_size_i(this), CInt(limited_length)) - 1
                 If i > 0 AndAlso Not String.IsNullOrEmpty(separator) Then
                     s.Append(separator)
                 End If
@@ -139,16 +144,16 @@ Public Module _array_ext
             Return i(0)
         Else
             Dim l As UInt32 = 0
-            For j As UInt32 = 0 To array_size(i) - uint32_1
+            For j As Int32 = 0 To array_size_i(i) - 1
                 l += array_size(i(j))
             Next
             Dim r() As T = Nothing
-            If l = Nothing Then
+            If l = 0 Then
                 ReDim r(-1)
             Else
-                ReDim r(l - uint32_1)
+                ReDim r(CInt(l - uint32_1))
                 l = 0
-                For j As UInt32 = 0 To array_size(i) - uint32_1
+                For j As Int32 = 0 To array_size_i(i) - 1
                     memcpy(r, l, i(j), uint32_0, array_size(i(j)))
                     l += array_size(i(j))
                 Next
@@ -159,7 +164,7 @@ Public Module _array_ext
 
     <Extension()> Public Function concat(Of T)(ByVal i() As T, ByVal ParamArray j()() As T) As T()
         Dim r()() As T = Nothing
-        ReDim r(array_size(j))
+        ReDim r(array_size_i(j))
         r(0) = i
         memcpy(r, uint32_1, j)
         Return array_concat(r)
@@ -170,9 +175,9 @@ Public Module _array_ext
         If isemptyarray(i) Then
             ReDim o(-1)
         Else
-            ReDim o(array_size(i) * sizeof_uint32 - uint32_1)
-            For j As Int32 = 0 To array_size_i(i) - 1
-                assert(uint32_bytes(i(j), o, j * sizeof_uint32))
+            ReDim o(CInt(array_size(i) * sizeof_uint32 - uint32_1))
+            For j As UInt32 = 0 To array_size(i) - uint32_1
+                assert(uint32_bytes(i(CInt(j)), o, j * sizeof_uint32))
             Next
         End If
         Return o
@@ -183,9 +188,9 @@ Public Module _array_ext
             ReDim o(-1)
             Return True
         ElseIf array_size(i) Mod sizeof_uint32 = 0 Then
-            ReDim o(array_size(i) \ sizeof_uint32 - uint32_1)
-            For j As Int32 = 0 To array_size_i(i) - 1 Step sizeof_uint32
-                assert(bytes_uint32(i, j, sizeof_uint32, o(j \ sizeof_uint32)))
+            ReDim o(array_size_i(i) \ CInt(sizeof_uint32) - 1)
+            For j As UInt32 = 0 To array_size(i) - uint32_1 Step sizeof_uint32
+                assert(bytes_uint32(i, j, sizeof_uint32, o(CInt(j \ sizeof_uint32))))
             Next
             Return True
         Else
@@ -209,5 +214,18 @@ Public Module _array_ext
 
     <Extension()> Public Function uint32_array(ByVal i() As Byte) As UInt32()
         Return byte_array_uint32_array(i)
+    End Function
+
+    <Extension()> Public Function deep_clone(Of T)(ByVal i() As T) As T()
+        If isemptyarray(i) Then
+            Return Nothing
+        Else
+            Dim r() As T = Nothing
+            ReDim r(array_size_i(i) - 1)
+            For j As Int32 = 0 To array_size_i(i) - 1
+                r(j) = copy_no_error(i(j))
+            Next
+            Return r
+        End If
     End Function
 End Module

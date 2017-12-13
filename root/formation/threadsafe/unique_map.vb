@@ -1,24 +1,34 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 #Const USE_DUALLOCK = False
+
 Imports osi.root.connector
-Imports osi.root.template
-Imports osi.root.formation
+Imports osi.root.constants
 Imports osi.root.delegates
+Imports osi.root.formation
 Imports osi.root.lock
+
 #If Not USE_DUALLOCK Then
 Imports lock_t = osi.root.lock.slimlock.monitorlock
 #End If
 
-Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, VALUE_T, HASH_SIZE As _int64)
-    Private ReadOnly m As hashmap(Of KEY_T, STORE_T, HASH_SIZE) = Nothing
+Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, VALUE_T)
+    Private ReadOnly m As hashmap(Of KEY_T, STORE_T)
 #If USE_DUALLOCK Then
     Private l As duallock
 #Else
     Private l As lock_t
 #End If
 
+    Public Sub New(ByVal hash_size As UInt32)
+        m = New hashmap(Of KEY_T, STORE_T)(hash_size)
+    End Sub
+
     Public Sub New()
-        m = New hashmap(Of KEY_T, STORE_T, HASH_SIZE)()
+        m = New hashmap(Of KEY_T, STORE_T)()
     End Sub
 
     Protected MustOverride Function store_value(ByVal i As STORE_T, ByRef o As VALUE_T) As Boolean
@@ -75,7 +85,7 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
         If key Is Nothing Then
             Return False
         Else
-            Dim it As hashmap(Of KEY_T, STORE_T, HASH_SIZE).iterator = Nothing
+            Dim it As hashmap(Of KEY_T, STORE_T).iterator = Nothing
             it = m.find(key)
             If it = m.end() Then
                 Return False
@@ -111,7 +121,7 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
             Return writer_locked(Function() As Boolean
                                      Dim r As Boolean = False
                                      r = True
-                                     For i As Int32 = 0 To keys.size() - 1
+                                     For i As UInt32 = uint32_0 To keys.size() - uint32_1
                                          Dim v As VALUE_T = Nothing
                                          If unlocked_erase(keys(i), v) Then
                                              If Not vs Is Nothing Then
@@ -132,7 +142,7 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
         Else
             Return reader_locked(Function() As T
                                      Dim v As VALUE_T = Nothing
-                                     Dim it As hashmap(Of KEY_T, STORE_T, HASH_SIZE).iterator = Nothing
+                                     Dim it As hashmap(Of KEY_T, STORE_T).iterator = Nothing
                                      it = m.find(key)
                                      If it <> m.end() AndAlso
                                         store_value((+it).second, v) Then
@@ -176,7 +186,7 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
         Dim r As Boolean = False
         r = True
         o.renew()
-        For i As Int32 = 0 To array_size(keys) - 1
+        For i As Int32 = 0 To array_size_i(keys) - 1
             Dim t As VALUE_T = Nothing
             If [get](keys(i), t) Then
                 o.emplace_back(t)
@@ -205,7 +215,7 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
             o = v
             Dim result As Boolean = False
             result = writer_locked(Function() As Boolean
-                                       Dim it As hashmap(Of KEY_T, STORE_T, HASH_SIZE).iterator = Nothing
+                                       Dim it As hashmap(Of KEY_T, STORE_T).iterator = Nothing
                                        Dim r As VALUE_T = Nothing
                                        it = m.find(k)
                                        If it = m.end() OrElse Not store_value((+it).second, r) Then

@@ -1,14 +1,17 @@
 ﻿
-Imports osi.root.formation
-Imports osi.root.procedure
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
+Imports osi.root.procedure
 Imports osi.root.utils
-Imports clusters_t = osi.root.formation.hashmap(Of System.Int64, osi.service.storage.cluster, osi.root.template._1023)
+Imports clusters_t = osi.root.formation.hashmap(Of System.Int64, osi.service.storage.cluster)
 
 Partial Public Class free_cluster
-    Public Function read(ByVal id As Int64,
-                         ByVal r As pointer(Of Byte())) As event_comb
+    Public Function read(ByVal id As Int64, ByVal r As pointer(Of Byte())) As event_comb
         Dim buff() As Byte = Nothing
         Dim ecs() As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -17,15 +20,17 @@ Partial Public Class free_cluster
                                       Dim cs As vector(Of cluster) = Nothing
                                       cs = New vector(Of cluster)()
                                       chained_clusters(h, cs)
+                                      assert(Not cs.empty())
                                       Dim offset As Int64 = 0
-                                      For i As Int32 = 0 To cs.size() - 1
+                                      For i As UInt32 = 0 To cs.size() - uint32_1
                                           offset += cs(i).used_bytes()
                                       Next
-                                      ReDim buff(offset - 1)
+                                      assert(offset <= max_int32)
+                                      ReDim buff(CInt(offset) - 1)
                                       offset = 0
-                                      ReDim ecs(cs.size() - 1)
-                                      For i As Int32 = 0 To cs.size() - 1
-                                          ecs(i) = cs(i).read(buff, offset)
+                                      ReDim ecs(CInt(cs.size()) - 1)
+                                      For i As UInt32 = 0 To cs.size() - uint32_1
+                                          ecs(CInt(i)) = cs(i).read(buff, CInt(offset))
                                           offset += cs(i).used_bytes()
                                       Next
                                       Return waitfor(ecs) AndAlso
@@ -62,7 +67,8 @@ Partial Public Class free_cluster
                                       If head_cluster(id, h) Then
                                           cs = New vector(Of cluster)()
                                           chained_clusters(h, cs)
-                                          h = cs(cs.size() - 1)
+                                          assert(Not cs.empty())
+                                          h = cs(cs.size() - uint32_1)
                                           cs.clear()
                                           offsets = New vector(Of Int64)()
                                           hr = h.remain_bytes()
@@ -83,7 +89,7 @@ Partial Public Class free_cluster
                                   If ec Is Nothing OrElse ec.end_result() Then
                                       assert(cs.size() = offsets.size())
                                       assert(Not h Is Nothing)
-                                      ReDim ecs(cs.size())
+                                      ReDim ecs(CInt(cs.size()))
                                       Dim bs As Int64 = 0
                                       bs = array_size(buff)
                                       If cs.empty() Then
@@ -92,16 +98,18 @@ Partial Public Class free_cluster
                                       Else
                                           assert(hr < bs)
                                           ecs(0) = h.append(buff, 0, hr)
+                                          For i As UInt32 = 0 To cs.size() - uint32_1
+                                              If i < cs.size() - 1 Then
+                                                  assert(cs(i).remain_bytes() < bs - offsets(i) - hr)
+                                                  ecs(CInt(i) + 1) = cs(i).append(
+                                                                         buff, offsets(i) + hr, cs(i).remain_bytes())
+                                              Else
+                                                  assert(cs(i).remain_bytes() >= bs - offsets(i) - hr)
+                                                  ecs(CInt(i) + 1) = cs(i).append(
+                                                                         buff, offsets(i) + hr, bs - offsets(i) - hr)
+                                              End If
+                                          Next
                                       End If
-                                      For i As Int32 = 0 To cs.size() - 1
-                                          If i < cs.size() - 1 Then
-                                              assert(cs(i).remain_bytes() < bs - offsets(i) - hr)
-                                              ecs(i + 1) = cs(i).append(buff, offsets(i) + hr, cs(i).remain_bytes())
-                                          Else
-                                              assert(cs(i).remain_bytes() >= bs - offsets(i) - hr)
-                                              ecs(i + 1) = cs(i).append(buff, offsets(i) + hr, bs - offsets(i) - hr)
-                                          End If
-                                      Next
                                       Return waitfor(ecs) AndAlso
                                              goto_next()
                                   Else
@@ -134,9 +142,10 @@ Partial Public Class free_cluster
                                       assert(hcs.erase(h.id()))
                                       cs = New vector(Of cluster)()
                                       chained_clusters(h, cs)
-                                      ReDim ecs(cs.size() - 1)
-                                      For i As Int32 = 0 To cs.size() - 1
-                                          ecs(i) = cs(i).delete()
+                                      assert(Not cs.empty())
+                                      ReDim ecs(CInt(cs.size()) - 1)
+                                      For i As UInt32 = 0 To cs.size() - uint32_1
+                                          ecs(CInt(i)) = cs(i).delete()
                                       Next
                                       Return waitfor(ecs) AndAlso
                                              goto_next()
@@ -146,10 +155,11 @@ Partial Public Class free_cluster
                                   End If
                               End Function,
                               Function() As Boolean
+                                  assert(Not isemptyarray(ecs))
                                   Dim r As Boolean = False
                                   r = True
-                                  For i As Int32 = 0 To array_size(ecs) - 1
-                                      If ecs(i).end_result() Then
+                                  For i As UInt32 = 0 To array_size(ecs) - uint32_1
+                                      If ecs(CInt(i)).end_result() Then
                                           assert(fcs.push(cs(i)))
                                       Else
                                           r = False
@@ -190,8 +200,9 @@ Partial Public Class free_cluster
                               If head_cluster(id, h) Then
                                   cs = New vector(Of cluster)()
                                   chained_clusters(h, cs)
+                                  assert(Not cs.empty())
                                   Dim r As Int64 = 0
-                                  For i As Int32 = 0 To cs.size() - 1
+                                  For i As UInt32 = 0 To cs.size() - uint32_1
                                       r += cs(i).used_bytes()
                                   Next
                                   Return eva(result, r)

@@ -1,12 +1,14 @@
 ﻿
-Imports osi.root.procedure
-Imports osi.root.formation
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.formation
+Imports osi.root.procedure
 Imports osi.root.utils
-Imports osi.root.template
-Imports store_t = osi.root.formation.hashmap(Of osi.root.formation.array_pointer(Of Byte), 
-                                                osi.root.formation.pair(Of System.Int64, System.Int64), 
-                                                osi.root.template._1023)
+Imports store_t = osi.root.formation.hashmap(Of osi.root.formation.array_pointer(Of Byte),
+                                                osi.root.formation.pair(Of System.Int64, System.Int64))
 
 Partial Public Class fces
     Implements ikeyvalue2(Of store_t.iterator)

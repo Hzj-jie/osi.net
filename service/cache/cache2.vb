@@ -1,11 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root
-Imports osi.root.delegates
 Imports osi.root.connector
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
-Imports osi.root.template
 Imports mhc = osi.service.cache.constants.mapheap_cache
 
 Public Module _cache2
@@ -15,9 +18,9 @@ Public Module _cache2
         Return New cache2(Of KEY_T, VALUE_T)(i)
     End Function
 
-    Public Function hashmap_cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T, SIZE As _int64)() _
+    Public Function hashmap_cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T)(ByVal hash_size As UInt32) _
                                  As icache2(Of KEY_T, VALUE_T)
-        Return wrapper(New hashmap_cache(Of KEY_T, VALUE_T, SIZE)())
+        Return wrapper(New hashmap_cache(Of KEY_T, VALUE_T)(hash_size))
     End Function
 
     Public Function hashmap_cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T)() As icache2(Of KEY_T, VALUE_T)

@@ -1,16 +1,23 @@
 ﻿
-Imports osi.root.delegates
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.template
+Imports osi.root.delegates
 Imports osi.root.formation
 
-Friend Class hashmap_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T, _SIZE As _int64)
+Friend Class hashmap_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     Implements islimcache2(Of KEY_T, VALUE_T)
 
-    Private ReadOnly m As hashmap(Of KEY_T, VALUE_T, _SIZE)
+    Private ReadOnly m As hashmap(Of KEY_T, VALUE_T)
 
     Public Sub New()
-        m = New hashmap(Of KEY_T, VALUE_T, _SIZE)
+        Me.New(1023)
+    End Sub
+
+    Public Sub New(ByVal hash_size As UInt32)
+        m = New hashmap(Of KEY_T, VALUE_T)(hash_size)
     End Sub
 
     Public Sub clear() Implements islimcache2(Of KEY_T, VALUE_T).clear
@@ -28,7 +35,7 @@ Friend Class hashmap_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T, _SIZE As 
 
     Public Function [get](ByVal key As KEY_T, ByRef value As VALUE_T) As Boolean _
                          Implements islimcache2(Of KEY_T, VALUE_T).get
-        Dim i As hashmap(Of KEY_T, VALUE_T, _SIZE).iterator = Nothing
+        Dim i As hashmap(Of KEY_T, VALUE_T).iterator = Nothing
         i = m.find(key)
         If i = m.end() Then
             Return False
@@ -53,8 +60,4 @@ Friend Class hashmap_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T, _SIZE As 
     Public Function have(ByVal key As KEY_T) As Boolean Implements islimcache2(Of KEY_T, VALUE_T).have
         Return m.find(key) <> m.end()
     End Function
-End Class
-
-Friend Class hashmap_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
-    Inherits hashmap_cache(Of KEY_T, VALUE_T, _1023)
 End Class

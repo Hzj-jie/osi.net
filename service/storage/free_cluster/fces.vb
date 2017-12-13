@@ -1,12 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.procedure
 Imports osi.root.formation
-Imports osi.root.utils
-Imports store_t = osi.root.formation.hashmap(Of osi.root.formation.array_pointer(Of Byte), 
-                                                osi.root.formation.pair(Of System.Int64, System.Int64), 
-                                                osi.root.template._1023)
+Imports store_t = osi.root.formation.hashmap(Of osi.root.formation.array_pointer(Of Byte),
+                                                osi.root.formation.pair(Of System.Int64, System.Int64))
 
 Partial Public Class fces
     Private ReadOnly index As free_cluster
@@ -21,7 +23,7 @@ Partial Public Class fces
             Return False
         Else
             cid = bytes_int64(b)
-            ReDim key(array_size(b) - sizeof_int64 - 1)
+            ReDim key(CInt(array_size(b) - sizeof_int64 - uint32_1))
             memcpy(key, 0, b, sizeof_int64, array_size(key))
             Return True
         End If
@@ -31,7 +33,7 @@ Partial Public Class fces
         If array_size(key) <= 0 Then
             Return False
         Else
-            ReDim b(array_size(key) + sizeof_int64 - 1)
+            ReDim b(CInt(array_size(key) + sizeof_int64 - uint32_1))
             assert(int64_bytes(cid, b))
             memcpy(b, sizeof_int64, key)
             Return True
@@ -78,7 +80,7 @@ Partial Public Class fces
 
     Private Function open() As event_comb
         Dim hcs As vector(Of Int64) = Nothing
-        Dim i As Int64 = 0
+        Dim i As UInt32 = 0
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   m.clear()
@@ -100,7 +102,7 @@ Partial Public Class fces
                                       Return goto_end()
                                   End If
                                   ec = inject_index(hcs(i))
-                                  i += 1
+                                  i += uint32_1
                                   Return waitfor(ec)
                               End Function)
     End Function

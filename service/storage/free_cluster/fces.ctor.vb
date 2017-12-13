@@ -13,8 +13,7 @@ Imports osi.service.convertor
 Imports osi.service.selector
 Imports constructor = osi.service.device.constructor
 Imports store_t = osi.root.formation.hashmap(Of osi.root.formation.array_pointer(Of Byte),
-                                                osi.root.formation.pair(Of System.Int64, System.Int64),
-                                                osi.root.template._1023)
+                                                osi.root.formation.pair(Of System.Int64, System.Int64))
 
 <global_init(global_init_level.server_services)>
 Partial Public Class fces
@@ -24,7 +23,7 @@ Partial Public Class fces
         Me.index = index
         Me.content = content
         Me.max_key_count = If(max_key_count <= 0, max_int64, max_key_count)
-        Me.m = New store_t()
+        Me.m = New store_t(1023)
     End Sub
 
     Private Shared Function ctor(ByVal r As pointer(Of fces),

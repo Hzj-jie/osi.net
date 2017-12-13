@@ -26,8 +26,8 @@ Public Module foreach
         Return True
     End Function
 
-    <Extension()> Public Function foreach(Of KEY_T As IComparable(Of KEY_T), VALUE_T, HASH_SIZE As _int64) _
-                                         (ByVal m As hashmap(Of KEY_T, VALUE_T, HASH_SIZE),
+    <Extension()> Public Function foreach(Of KEY_T As IComparable(Of KEY_T), VALUE_T) _
+                                         (ByVal m As hashmap(Of KEY_T, VALUE_T),
                                           ByVal d As _do(Of KEY_T, VALUE_T, Boolean, Boolean)) As Boolean
         If m Is Nothing OrElse d Is Nothing Then
             Return False

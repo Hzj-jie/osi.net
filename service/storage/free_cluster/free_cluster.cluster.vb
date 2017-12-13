@@ -1,11 +1,14 @@
 ﻿
-Imports osi.root.template
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
-Imports clusters_t = osi.root.formation.hashmap(Of System.Int64, osi.service.storage.cluster, osi.root.template._1023)
+Imports clusters_t = osi.root.formation.hashmap(Of System.Int64, osi.service.storage.cluster)
 
 Partial Public Class free_cluster
     Private Shared Function head_cluster(ByVal c As cluster) As Boolean

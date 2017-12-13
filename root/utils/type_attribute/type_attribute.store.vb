@@ -5,11 +5,11 @@ Imports osi.root.formation
 
 Partial Public Class type_attribute
     Private Class store
-        Public Shared ReadOnly m As unique_strong_map(Of comparable_type, store, _127)
+        Public Shared ReadOnly m As unique_strong_map(Of comparable_type, store)
         Private Shared ReadOnly ctor As Func(Of store)
 
         Shared Sub New()
-            m = New unique_strong_map(Of comparable_type, store, _127)()
+            m = New unique_strong_map(Of comparable_type, store)(127)
             ctor = Function() As store
                        Return New store()
                    End Function

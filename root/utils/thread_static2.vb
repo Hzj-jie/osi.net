@@ -1,15 +1,18 @@
 ﻿
-Imports osi.root.template
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.envs
 Imports osi.root.formation
 
 ' ~23x slower than internal <ThreadStatic()> or connector.thread_static.
 Public Class thread_static2(Of T)
-    Private ReadOnly m As hashmapless(Of UInt32, T, _63, _uint32_to_uint32)
+    Private ReadOnly m As hashmapless(Of UInt32, T, _uint32_to_uint32)
 
     Public Sub New()
-        _new(m)
+        m = New hashmapless(Of UInt32, T, _uint32_to_uint32)(63)
     End Sub
 
     Private Function current_id() As UInt32

@@ -17,6 +17,7 @@ Friend Class mapheap_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     Private ReadOnly retire_ticks As UInt64
     Private ReadOnly update_ticks_when_refer As Boolean
 
+    ' TODO: Use tick_clock
     Public Sub New(Optional ByVal max_size As UInt64 = default_max_size,
                    Optional ByVal retire_ticks As UInt64 = default_retire_ticks,
                    Optional ByVal update_ticks_when_refer As Boolean = default_update_ticks_when_refer)

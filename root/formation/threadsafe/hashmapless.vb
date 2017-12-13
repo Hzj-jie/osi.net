@@ -1,70 +1,105 @@
 ﻿
-Imports osi.root.template
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.formation
+Imports osi.root.template
 Imports lock_t = osi.root.lock.slimlock.monitorlock
 
-Public Class hashmapless(Of keyT As IComparable(Of keyT), valueT, HASH_SIZE As _int64)
-    Inherits hashmapless(Of keyT, valueT, HASH_SIZE, default_to_uint32(Of keyT))
+Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
+    Inherits hashmapless(Of KEY_T, VALUE_T, default_to_uint32(Of KEY_T))
+    Implements ICloneable(Of hashmapless(Of KEY_T, VALUE_T)), ICloneable
+
+    Public Sub New(ByVal hash_size As UInt32)
+        MyBase.New(hash_size)
+    End Sub
+
+    <copy_constructor()>
+    Protected Sub New(ByVal hash_size As UInt32, ByVal data() As map(Of KEY_T, VALUE_T))
+        MyBase.New(hash_size, data)
+    End Sub
+
+    Public Shadows Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
+    End Function
+
+    Public Shadows Function CloneT() As hashmapless(Of KEY_T, VALUE_T) _
+                                     Implements ICloneable(Of hashmapless(Of KEY_T, VALUE_T)).Clone
+        Return MyBase.clone(Of hashmapless(Of KEY_T, VALUE_T))()
+    End Function
 End Class
 
-Public Class hashmapless(Of keyT As IComparable(Of keyT), valueT,
-                            HASH_SIZE As _int64, KEY_TO_INDEX As _to_uint32(Of keyT))
-    Implements ICloneable
+Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T),
+                            VALUE_T,
+                            KEY_TO_INDEX As _to_uint32(Of KEY_T))
+    Implements ICloneable, ICloneable(Of hashmapless(Of KEY_T, VALUE_T, KEY_TO_INDEX))
 
-    Private Shared ReadOnly hashSize As UInt32 = 0
-    Private Shared ReadOnly _keyToIndex As KEY_TO_INDEX = Nothing
-    Private data() As map(Of keyT, valueT)
-    Private _lock() As lock_t
+    Private Shared ReadOnly _KEY_TO_INDEX As KEY_TO_INDEX = Nothing
+    Private ReadOnly hash_size As UInt32 = 0
+    Private ReadOnly data() As map(Of KEY_T, VALUE_T)
+    Private ReadOnly _lock() As lock_t
 
     Private Sub lock(ByVal index As UInt32)
-        _lock(index).wait()
+        _lock(CInt(index)).wait()
     End Sub
 
     Private Sub unlock(ByVal index As UInt32)
-        _lock(index).release()
+        _lock(CInt(index)).release()
     End Sub
 
-    Private Shared Function valid_index(ByVal index As UInt32) As Boolean
-        Return index < hashSize
+    Private Function valid_index(ByVal index As UInt32) As Boolean
+        Return index < hash_size
     End Function
 
-    Private Shared Function invalid_index(ByVal index As UInt32) As Boolean
+    Private Function invalid_index(ByVal index As UInt32) As Boolean
         Return Not valid_index(index)
     End Function
 
-    Private Function empty(ByVal i As Int64) As Boolean
+    Private Function empty(ByVal i As UInt32) As Boolean
         assert(valid_index(i))
-        Return data(i).empty()
+        Return data(CInt(i)).empty()
     End Function
 
     Public Sub clear()
-        ReDim data(hashSize - 1)
-        For i As Int64 = 0 To hashSize - 1
-            data(i) = New map(Of keyT, valueT)()
+        For i As Int32 = 0 To CInt(hash_size) - 1
+            data(i) = New map(Of KEY_T, VALUE_T)()
         Next
     End Sub
 
     Shared Sub New()
-        _keyToIndex = alloc(Of KEY_TO_INDEX)()
-        hashSize = +(alloc(Of HASH_SIZE)())
+        _KEY_TO_INDEX = alloc(Of KEY_TO_INDEX)()
     End Sub
 
-    Private Shared Function keyToIndex(ByVal k As keyT) As UInt32
-        Return _keyToIndex(k) Mod hashSize
-    End Function
+    Public Sub New(ByVal hash_size As UInt32)
+        Me.New(hash_size, New map(Of KEY_T, VALUE_T)(CInt(hash_size) - 1) {})
+    End Sub
 
-    Public Sub New()
-        ReDim _lock(hashSize - 1)
+    <copy_constructor()>
+    Protected Sub New(ByVal hash_size As UInt32, ByVal data() As map(Of KEY_T, VALUE_T))
+        assert(hash_size > 0)
+        assert(hash_size <= max_int32)
+        Me.hash_size = hash_size
+        ReDim _lock(CInt(hash_size) - 1)
+        assert(array_size(data) = hash_size)
+        Me.data = data
         clear()
     End Sub
 
-    Public Function [get](ByVal k As keyT, ByRef o As valueT) As Boolean
-        Dim work As map(Of keyT, valueT).iterator = Nothing
+    Private Function index_of_key(ByVal k As KEY_T) As UInt32
+        Return _KEY_TO_INDEX(k) Mod hash_size
+    End Function
+
+    Public Function [get](ByVal k As KEY_T, ByRef o As VALUE_T) As Boolean
+        Dim work As map(Of KEY_T, VALUE_T).iterator = Nothing
         Dim rtn As Boolean = False
-        Dim index As UInt32 = keyToIndex(k)
+        Dim index As UInt32 = 0
+        index = index_of_key(k)
         lock(index)
-        work = data(index).find(k)
-        If work <> data(index).end() Then
+        work = data(CInt(index)).find(k)
+        If work <> data(CInt(index)).end() Then
             o = (+work).second
             rtn = True
         Else
@@ -74,38 +109,39 @@ Public Class hashmapless(Of keyT As IComparable(Of keyT), valueT,
         Return rtn
     End Function
 
-    Default Public Property _D(ByVal k As keyT) As valueT
+    Default Public Property _D(ByVal k As KEY_T) As VALUE_T
         Get
-            Dim o As valueT = Nothing
+            Dim o As VALUE_T = Nothing
             If [get](k, o) Then
                 Return o
             Else
                 Return Nothing
             End If
         End Get
-        Set(ByVal value As valueT)
-            Dim index As UInt32 = keyToIndex(k)
+        Set(ByVal value As VALUE_T)
+            Dim index As UInt32 = 0
+            index = index_of_key(k)
             lock(index)
-            data(index).insert(k, value)
+            data(CInt(index)).insert(k, value)
             unlock(index)
         End Set
     End Property
 
-    Public Sub insert(ByVal k As keyT, ByVal v As valueT)
+    Public Sub insert(ByVal k As KEY_T, ByVal v As VALUE_T)
         Dim index As UInt32 = 0
-        index = keyToIndex(k)
+        index = index_of_key(k)
         lock(index)
-        data(index).insert(k, v)
+        data(CInt(index)).insert(k, v)
         unlock(index)
     End Sub
 
-    Public Function unique_insert(ByVal k As keyT, ByVal v As valueT) As Boolean
+    Public Function unique_insert(ByVal k As KEY_T, ByVal v As VALUE_T) As Boolean
         Dim index As UInt32 = 0
-        index = keyToIndex(k)
+        index = index_of_key(k)
         Dim rtn As Boolean = False
         lock(index)
-        If data(index).find(k) = data(index).end() Then
-            data(index).insert(k, v)
+        If data(CInt(index)).find(k) = data(CInt(index)).end() Then
+            data(CInt(index)).insert(k, v)
             rtn = True
         Else
             rtn = False
@@ -114,23 +150,35 @@ Public Class hashmapless(Of keyT As IComparable(Of keyT), valueT,
         Return rtn
     End Function
 
-    Public Function insert(ByVal other As hashmapless(Of keyT, valueT, HASH_SIZE, KEY_TO_INDEX)) As Boolean
+    Public Function insert(ByVal other As hashmapless(Of KEY_T, VALUE_T, KEY_TO_INDEX)) As Boolean
         If other Is Nothing Then
             Return False
-        Else
-            For i As Int64 = 0 To hashSize - 1
+        End If
+        If hash_size = other.hash_size Then
+            For i As UInt32 = 0 To hash_size - uint32_1
                 lock(i)
                 other.lock(i)
-                data(i).insert(other.data(i))
+                data(CInt(i)).insert(other.data(CInt(i)))
                 other.unlock(i)
                 unlock(i)
             Next
-            Return True
+        Else
+            For i As UInt32 = 0 To other.hash_size - uint32_1
+                other.lock(i)
+                Dim it As map(Of KEY_T, VALUE_T).iterator = Nothing
+                it = other.data(CInt(i)).begin()
+                While it <> other.data(CInt(i)).end()
+                    insert((+it).first, (+it).second)
+                    it += 1
+                End While
+                other.unlock(i)
+            Next
         End If
+        Return True
     End Function
 
     Public Function empty() As Boolean
-        For i As Int64 = 0 To hashSize - 1
+        For i As UInt32 = 0 To hash_size - uint32_1
             If Not empty(i) Then
                 Return False
             End If
@@ -138,26 +186,34 @@ Public Class hashmapless(Of keyT As IComparable(Of keyT), valueT,
         Return True
     End Function
 
-    Public Function [erase](ByVal k As keyT) As Boolean
+    Public Function [erase](ByVal k As KEY_T) As Boolean
         Dim index As UInt32 = 0
         Dim rtn As Boolean = False
-        index = keyToIndex(k)
+        index = index_of_key(k)
         lock(index)
-        rtn = data(index).erase(k)
+        rtn = data(CInt(index)).erase(k)
         unlock(index)
         Return rtn
     End Function
 
-    Public Function Clone() As Object Implements System.ICloneable.Clone
-        Dim rtn As hashmapless(Of keyT, valueT, HASH_SIZE, KEY_TO_INDEX) = Nothing
-        rtn = alloc(Me)
-        Dim i As Int32
-        For i = 0 To hashSize - 1
+    Public Function CloneT() As hashmapless(Of KEY_T, VALUE_T, KEY_TO_INDEX) _
+                              Implements ICloneable(Of hashmapless(Of KEY_T, VALUE_T, KEY_TO_INDEX)).Clone
+        Return clone(Of hashmapless(Of KEY_T, VALUE_T, KEY_TO_INDEX))()
+    End Function
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
+    End Function
+
+    Protected Function clone(Of R As hashmapless(Of KEY_T, VALUE_T, KEY_TO_INDEX))() As R
+        Dim data() As map(Of KEY_T, VALUE_T) = Nothing
+        ReDim data(CInt(hash_size) - 1)
+        For i As UInt32 = 0 To hash_size - uint32_1
             lock(i)
-            copy(rtn.data(i), data(i))
+            copy(data(CInt(i)), Me.data(CInt(i)))
             unlock(i)
         Next
 
-        Return rtn
+        Return copy_constructor(Of R).invoke(hash_size, data)
     End Function
 End Class

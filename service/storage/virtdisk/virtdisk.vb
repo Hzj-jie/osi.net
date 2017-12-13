@@ -129,6 +129,7 @@ Partial Public Class virtdisk
         Return If(valid(), stream().Length(), npos)
     End Function
 
+    ' TODO: offset should be uint64
     Public Function read(ByVal start As Int64,
                          ByVal len As Int32,
                          ByVal buff() As Byte,

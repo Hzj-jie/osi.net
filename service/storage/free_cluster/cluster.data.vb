@@ -6,6 +6,7 @@ Imports osi.root.utils
 Imports osi.root.lock
 
 Partial Public Class cluster
+    ' TODO: offset should be uint64.
     Public Function read(ByVal buff() As Byte, Optional ByVal offset As Int32 = 0) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean

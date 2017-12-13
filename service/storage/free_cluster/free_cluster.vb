@@ -1,11 +1,14 @@
 ﻿
-Imports osi.root.template
-Imports osi.root.formation
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
-Imports clusters_t = osi.root.formation.hashmap(Of System.Int64, osi.service.storage.cluster, osi.root.template._1023)
+Imports clusters_t = osi.root.formation.hashmap(Of System.Int64, osi.service.storage.cluster)
 
 Partial Public Class free_cluster
     'all the clusters
@@ -23,8 +26,8 @@ Partial Public Class free_cluster
 
     Private Sub New(ByVal i As virtdisk)
         assert(Not i Is Nothing)
-        cs = New clusters_t()
-        hcs = New clusters_t()
+        cs = New clusters_t(1023)
+        hcs = New clusters_t(1023)
         fcs = New queue(Of cluster)()
         max_cluster_id = 0
         vd = i

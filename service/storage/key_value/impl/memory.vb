@@ -3,14 +3,12 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.connector
 Imports osi.service.argument
 Imports osi.service.device
-Imports store_t = osi.root.formation.hashmap(Of osi.root.formation.array_pointer(Of Byte),
-                                                Byte(),
-                                                osi.root.template._63)
+Imports store_t = osi.root.formation.hashmap(Of osi.root.formation.array_pointer(Of Byte), Byte())
 
 <global_init(global_init_level.server_services)>
 Public Class memory
@@ -21,7 +19,7 @@ Public Class memory
 
     Public Sub New(Optional ByVal max_value_size As Int64 = npos)
         Me.max_value_size = If(max_value_size <= 0, max_int64, max_value_size)
-        m = New store_t()
+        m = New store_t(63)
         vs = 0
     End Sub
 
