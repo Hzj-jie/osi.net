@@ -32,14 +32,14 @@ Partial Public Class virtdisk
             End If
         End Sub
 
-        Public Shared Operator +(ByVal i As capinfo) As Int64
+        Public Shared Operator +(ByVal i As capinfo) As UInt64
             If i Is Nothing Then
                 Return 0
             ElseIf i.is_fs Then
                 assert(Not i.di Is Nothing)
                 Return i.di.capacity()
             ElseIf i.is_ms Then
-                Return CLng(available_virtual_memory())
+                Return CULng(available_virtual_memory())
             Else
                 Return 0
             End If

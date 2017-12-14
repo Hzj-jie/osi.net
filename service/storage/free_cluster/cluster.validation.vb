@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 
 Partial Public Class cluster
@@ -18,11 +22,11 @@ Partial Public Class cluster
         assert_valid_id(_id)
     End Sub
 
-    Private Shared Function valid_offset(ByVal offset As Int64) As Boolean
+    Private Shared Function valid_offset(ByVal offset As UInt64) As Boolean
         Return offset >= 0
     End Function
 
-    Private Shared Sub assert_valid_offset(ByVal offset As Int64)
+    Private Shared Sub assert_valid_offset(ByVal offset As UInt64)
         assert(valid_offset(offset), "valid_offset, offset = ", offset)
     End Sub
 
@@ -34,11 +38,11 @@ Partial Public Class cluster
         assert_valid_offset(_offset)
     End Sub
 
-    Private Shared Function valid_length(ByVal length As Int64) As Boolean
+    Private Shared Function valid_length(ByVal length As UInt64) As Boolean
         Return length > 0
     End Function
 
-    Private Shared Sub assert_valid_length(ByVal length As Int64)
+    Private Shared Sub assert_valid_length(ByVal length As UInt64)
         assert(valid_length(length), "valid_length, length = ", length)
     End Sub
 
@@ -106,13 +110,13 @@ Partial Public Class cluster
         assert_valid_next_id(_id, _next_id)
     End Sub
 
-    Private Shared Function valid_used_length(ByVal used As Int64, ByVal length As Int64) As Boolean
+    Private Shared Function valid_used_length(ByVal used As Int64, ByVal length As UInt64) As Boolean
         Return valid_used(used) AndAlso
                valid_length(length) AndAlso
                used <= length
     End Function
 
-    Private Shared Sub assert_valid_used_length(ByVal used As Int64, ByVal length As Int64)
+    Private Shared Sub assert_valid_used_length(ByVal used As Int64, ByVal length As UInt64)
         assert(valid_used_length(used, length), "valid_used_length, used = ", used, ", length = ", length)
     End Sub
 
@@ -162,7 +166,7 @@ Partial Public Class cluster
     End Function
 
     Private Shared Sub assert_valid_virtdisk(ByVal vd As virtdisk)
-        assert(valid_virtdisk(vd), "valid_virtdisk, vd = ", If(vd Is Nothing, "Nothing", vd.valid()))
+        assert(valid_virtdisk(vd), "valid_virtdisk, vd = ", If(vd Is Nothing, "Nothing", CStr(vd.valid())))
     End Sub
 
     Private Function valid_virtdisk() As Boolean
@@ -174,8 +178,8 @@ Partial Public Class cluster
     End Sub
 
     Private Shared Function virtdisk_is_fitting(ByVal vd As virtdisk,
-                                                ByVal offset As Int64,
-                                                ByVal length As Int64) As Boolean
+                                                ByVal offset As UInt64,
+                                                ByVal length As UInt64) As Boolean
         Return valid_virtdisk(vd) AndAlso
                vd.size() >= end_disk_offset(offset, length)
     End Function

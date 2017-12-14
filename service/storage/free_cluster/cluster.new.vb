@@ -1,7 +1,12 @@
 ﻿
-Imports osi.root.procedure
-Imports osi.root.formation
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.formation
+Imports osi.root.procedure
 Imports osi.root.utils
 
 Partial Public Class cluster
@@ -10,8 +15,8 @@ Partial Public Class cluster
     End Sub
 
     Private Sub New(ByVal id As Int64,
-                    ByVal offset As Int64,
-                    ByVal length As Int64,
+                    ByVal offset As UInt64,
+                    ByVal length As UInt64,
                     ByVal vd As virtdisk,
                     ByVal used As Int64,
                     ByVal prev_id As Int64,
@@ -28,11 +33,11 @@ Partial Public Class cluster
     End Sub
 
     'create a new cluster in the virtdisk
-    'the real cluster length does not guarantee to be same as length input
+    'the real cluster length is not guaranteed to be same as length input
     Public Shared Function ctor(ByVal vd As virtdisk,
                                 ByVal id As Int64,
-                                ByVal offset As Int64,
-                                ByVal length As Int64,
+                                ByVal offset As UInt64,
+                                ByVal length As UInt64,
                                 ByVal r As pointer(Of cluster)) As event_comb
         Dim ec As event_comb = Nothing
         Dim c As cluster = Nothing
@@ -45,7 +50,7 @@ Partial Public Class cluster
                                           length = MIN_CLUSTER_LENGTH
                                       ElseIf ((length - MIN_CLUSTER_LENGTH) Mod DISK_CLUSTER_SIZE) <> 0 Then
                                           length = MIN_CLUSTER_LENGTH +
-                                                   ((((length - MIN_CLUSTER_LENGTH) Mod DISK_CLUSTER_SIZE) + 1) *
+                                                   ((((length - MIN_CLUSTER_LENGTH) Mod DISK_CLUSTER_SIZE) + uint32_1) *
                                                     DISK_CLUSTER_SIZE)
                                       End If
                                       assert(((length + STRUCTURE_SIZE) Mod DISK_CLUSTER_SIZE) = 0)
@@ -75,18 +80,18 @@ Partial Public Class cluster
 
     Public Shared Function ctor(ByVal vd As virtdisk,
                                 ByVal id As Int64,
-                                ByVal length As Int64,
+                                ByVal length As UInt64,
                                 ByVal r As pointer(Of cluster)) As event_comb
-        Return ctor(vd, id, If(vd Is Nothing, INVALID_OFFSET, vd.size()), length, r)
+        Return ctor(vd, id, If(vd Is Nothing, uint64_0, vd.size()), length, r)
     End Function
 
     'create an existing cluster from the virtdisk
     Public Shared Function ctor(ByVal vd As virtdisk,
-                                ByVal offset As Int64,
+                                ByVal offset As UInt64,
                                 ByVal r As pointer(Of cluster)) As event_comb
         Dim id As pointer(Of Int64) = Nothing
         Dim used As pointer(Of Int64) = Nothing
-        Dim length As pointer(Of Int64) = Nothing
+        Dim length As pointer(Of UInt64) = Nothing
         Dim next_id As pointer(Of Int64) = Nothing
         Dim prev_id As pointer(Of Int64) = Nothing
         Dim ec As event_comb = Nothing
@@ -96,7 +101,7 @@ Partial Public Class cluster
                                   Else
                                       id = New pointer(Of Int64)()
                                       used = New pointer(Of Int64)()
-                                      length = New pointer(Of Int64)()
+                                      length = New pointer(Of UInt64)()
                                       next_id = New pointer(Of Int64)()
                                       prev_id = New pointer(Of Int64)()
                                       ec = read_structure(vd, offset, id, used, length, next_id, prev_id)

@@ -21,16 +21,19 @@ Partial Public Class free_cluster
                                       cs = New vector(Of cluster)()
                                       chained_clusters(h, cs)
                                       assert(Not cs.empty())
-                                      Dim offset As Int64 = 0
+                                      Dim offset As UInt64 = 0
                                       For i As UInt32 = 0 To cs.size() - uint32_1
                                           offset += cs(i).used_bytes()
+                                          If offset > max_uint32 Then
+                                              Return False
+                                          End If
                                       Next
-                                      assert(offset <= max_int32)
+
                                       ReDim buff(CInt(offset) - 1)
                                       offset = 0
                                       ReDim ecs(CInt(cs.size()) - 1)
                                       For i As UInt32 = 0 To cs.size() - uint32_1
-                                          ecs(CInt(i)) = cs(i).read(buff, CInt(offset))
+                                          ecs(CInt(i)) = cs(i).read(buff, CUInt(offset))
                                           offset += cs(i).used_bytes()
                                       Next
                                       Return waitfor(ecs) AndAlso
@@ -53,9 +56,9 @@ Partial Public Class free_cluster
     Public Function append(ByVal id As Int64,
                            ByVal buff() As Byte,
                            ByVal result As pointer(Of Boolean)) As event_comb
-        Dim offsets As vector(Of Int64) = Nothing
+        Dim offsets As vector(Of UInt64) = Nothing
         Dim cs As vector(Of cluster) = Nothing
-        Dim hr As Int64 = 0
+        Dim hr As UInt64 = 0
         Dim ecs() As event_comb = Nothing
         Dim ec As event_comb = Nothing
         Dim h As cluster = Nothing
@@ -70,7 +73,7 @@ Partial Public Class free_cluster
                                           assert(Not cs.empty())
                                           h = cs(cs.size() - uint32_1)
                                           cs.clear()
-                                          offsets = New vector(Of Int64)()
+                                          offsets = New vector(Of UInt64)()
                                           hr = h.remain_bytes()
                                           If hr < array_size(buff) Then
                                               ec = free_clusters(array_size(buff) - hr, cs, offsets)
@@ -89,24 +92,29 @@ Partial Public Class free_cluster
                                   If ec Is Nothing OrElse ec.end_result() Then
                                       assert(cs.size() = offsets.size())
                                       assert(Not h Is Nothing)
-                                      ReDim ecs(CInt(cs.size()))
-                                      Dim bs As Int64 = 0
+                                      ecs.resize(cs.size() + uint32_1)
+                                      Dim bs As UInt32 = 0
                                       bs = array_size(buff)
                                       If cs.empty() Then
                                           assert(hr >= bs)
                                           ecs(0) = h.append(buff, 0, bs)
                                       Else
                                           assert(hr < bs)
-                                          ecs(0) = h.append(buff, 0, hr)
+                                          ecs(0) = h.append(buff, 0, CUInt(hr))
                                           For i As UInt32 = 0 To cs.size() - uint32_1
+                                              Dim current_offset As UInt64 = 0
+                                              current_offset = offsets(i) + hr
+                                              assert(current_offset <= max_uint32)
                                               If i < cs.size() - 1 Then
                                                   assert(cs(i).remain_bytes() < bs - offsets(i) - hr)
-                                                  ecs(CInt(i) + 1) = cs(i).append(
-                                                                         buff, offsets(i) + hr, cs(i).remain_bytes())
+                                                  ecs(CInt(i) + 1) = cs(i).append(buff,
+                                                                                  CUInt(current_offset),
+                                                                                  CUInt(cs(i).remain_bytes()))
                                               Else
                                                   assert(cs(i).remain_bytes() >= bs - offsets(i) - hr)
-                                                  ecs(CInt(i) + 1) = cs(i).append(
-                                                                         buff, offsets(i) + hr, bs - offsets(i) - hr)
+                                                  ecs(CInt(i) + 1) = cs(i).append(buff,
+                                                                                  CUInt(current_offset),
+                                                                                  CUInt(bs - offsets(i) - hr))
                                               End If
                                           Next
                                       End If
@@ -132,8 +140,7 @@ Partial Public Class free_cluster
                               End Function)
     End Function
 
-    Public Function delete(ByVal id As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb
+    Public Function delete(ByVal id As Int64, ByVal result As pointer(Of Boolean)) As event_comb
         Dim cs As vector(Of cluster) = Nothing
         Dim ecs() As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -182,18 +189,17 @@ Partial Public Class free_cluster
                           End Sub)
     End Function
 
-    Public Function valuesize() As Int64
+    Public Function valuesize() As UInt64
         Return vd.size()
     End Function
 
-    Public Function valuesize(ByVal result As pointer(Of Int64)) As event_comb
+    Public Function valuesize(ByVal result As pointer(Of UInt64)) As event_comb
         Return sync_async(Sub()
                               eva(result, valuesize())
                           End Sub)
     End Function
 
-    Public Function sizeof(ByVal id As Int64,
-                           ByVal result As pointer(Of Int64)) As event_comb
+    Public Function sizeof(ByVal id As Int64, ByVal result As pointer(Of Int64)) As event_comb
         Dim cs As vector(Of cluster) = Nothing
         Return sync_async(Function() As Boolean
                               Dim h As cluster = Nothing
@@ -201,18 +207,21 @@ Partial Public Class free_cluster
                                   cs = New vector(Of cluster)()
                                   chained_clusters(h, cs)
                                   assert(Not cs.empty())
-                                  Dim r As Int64 = 0
+                                  Dim r As UInt64 = 0
                                   For i As UInt32 = 0 To cs.size() - uint32_1
                                       r += cs(i).used_bytes()
+                                      If r > max_int64 Then
+                                          Return False
+                                      End If
                                   Next
-                                  Return eva(result, r)
+                                  Return eva(result, CLng(r))
                               Else
                                   Return eva(result, npos)
                               End If
                           End Function)
     End Function
 
-    Public Function alloc(ByVal exp_size As Int64, ByVal id As pointer(Of Int64)) As event_comb
+    Public Function alloc(ByVal exp_size As UInt64, ByVal id As pointer(Of Int64)) As event_comb
         Dim ec As event_comb = Nothing
         Dim c As pointer(Of cluster) = Nothing
         Return New event_comb(Function() As Boolean

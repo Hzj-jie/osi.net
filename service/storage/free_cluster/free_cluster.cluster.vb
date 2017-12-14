@@ -84,8 +84,7 @@ Partial Public Class free_cluster
     End Sub
 
     'exp_size is the real size of the data
-    Private Function free_cluster(ByVal exp_size As Int64,
-                                  ByVal c As pointer(Of cluster)) As event_comb
+    Private Function free_cluster(ByVal exp_size As UInt64, ByVal c As pointer(Of cluster)) As event_comb
         assert(exp_size > 0)
         assert(Not c Is Nothing)
         Dim ec As event_comb = Nothing
@@ -110,15 +109,15 @@ Partial Public Class free_cluster
                               End Function)
     End Function
 
-    Private Function free_clusters(ByVal exp_size As Int64,
+    Private Function free_clusters(ByVal exp_size As UInt64,
                                    ByVal cs As vector(Of cluster),
-                                   ByVal offsets As vector(Of Int64)) As event_comb
+                                   ByVal offsets As vector(Of UInt64)) As event_comb
         assert(exp_size > 0)
         assert(Not cs Is Nothing AndAlso cs.empty())
         assert(Not offsets Is Nothing AndAlso offsets.empty())
         Dim ec As event_comb = Nothing
         Dim c As pointer(Of cluster) = Nothing
-        Dim i As Int64 = 0
+        Dim i As UInt64 = 0
         Return New event_comb(Function() As Boolean
                                   If ec Is Nothing OrElse
                                      ec.end_result() Then

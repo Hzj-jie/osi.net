@@ -1,11 +1,13 @@
 ﻿
-Imports System.IO
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utt
-Imports osi.root.procedure
-Imports osi.service.storage
-Imports osi.root.utils
 Imports osi.root.constants
+Imports osi.root.procedure
+Imports osi.root.utt
+Imports osi.service.storage
 
 Public Class virtdisk_ps_test
     Inherits multi_procedure_case_wrapper
@@ -26,30 +28,30 @@ Public Class virtdisk_ps_test
         End Sub
 
         Private Shared Function expected(ByVal p As UInt64) As Byte
-            Return p And max_uint8
+            Return CByte(p And max_uint8)
         End Function
 
         Private Shared Sub rnd_write_data(ByRef start As UInt64, ByRef len As UInt32, ByRef buff() As Byte)
-            start = rnd_int(0, 8192 * 8192 + 1)
-            len = rnd_int(1024, 1024 * 16 + 1)
-            ReDim buff(len - 1)
-            For i As UInt32 = 0 To len - 1
-                buff(i) = expected(start + i)
+            start = CULng(rnd_int(0, 8192 * 8192 + 1))
+            len = CUInt(rnd_int(1024, 1024 * 16 + 1))
+            ReDim buff(CInt(len) - 1)
+            For i As UInt32 = 0 To len - uint32_1
+                buff(CInt(i)) = expected(start + i)
             Next
         End Sub
 
         Private Sub rnd_read_data(ByRef start As UInt64, ByRef len As UInt32)
-            assert_more(vd.size(), 0)
-            start = rnd_int(0, vd.size())
-            len = rnd_int(1, min(vd.size() - start, 1024 * 16) + 1)
+            assert_more(vd.size(), uint64_0)
+            start = rnd_uint64(0, vd.size())
+            len = rnd_uint(1, min(CUInt(vd.size() - start), CUInt(1024 * 16)) + uint32_1)
         End Sub
 
         Private Sub verify_data(ByVal start As UInt64, ByVal len As UInt32, ByVal buff() As Byte)
             assert(len > 0)
             assert_equal(array_size(buff), len)
-            assert_more_or_equal(vd.size(), CLng(start + len))
-            For i As Int32 = 0 To len - 1
-                assert_true((buff(i) = expected(start + i)) OrElse (buff(i) = 0))
+            assert_more_or_equal(vd.size(), start + len)
+            For i As Int32 = 0 To CInt(len) - 1
+                assert_true((buff(i) = expected(start + CUInt(i))) OrElse (buff(i) = 0))
             Next
         End Sub
 
@@ -67,7 +69,7 @@ Public Class virtdisk_ps_test
                                   Function() As Boolean
                                       assert_true(ec.end_result())
                                       rnd_read_data(start, len)
-                                      ReDim buff(len - 1)
+                                      ReDim buff(CInt(len) - 1)
                                       ec = vd.read(start, len, buff)
                                       Return waitfor(ec) AndAlso
                                              goto_next()

@@ -1,12 +1,14 @@
 ﻿
-Imports System.IO
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
+Imports osi.root.procedure
 Imports osi.root.utt
 Imports osi.service.storage
-Imports osi.root.procedure
-Imports osi.root.formation
-Imports osi.root.connector
-Imports osi.root.utils
 
 Public Class free_cluster_test
     Inherits event_comb_case
@@ -16,19 +18,18 @@ Public Class free_cluster_test
 
     Private Shared Function rand_id() As Int64
         'the id will not exceed round_count * reopen_round_count \ 5
-        Return rnd_int(0, round_count * reopen_round_count \ 5)
+        Return rnd_int(0, CInt(round_count * reopen_round_count \ 5))
     End Function
 
-    Private Shared Function rand_buff_size() As Int32
-        Return rnd_int(8, 2048 + 1)
+    Private Shared Function rand_buff_size() As UInt32
+        Return rnd_uint(8, 2048 + 1)
     End Function
 
     Private Shared Function rand_bytes() As Byte()
         Return next_bytes(rand_buff_size())
     End Function
 
-    Private Shared Function read_case(ByVal fc As free_cluster,
-                                      ByVal d As map(Of Int64, Byte())) As event_comb
+    Private Shared Function read_case(ByVal fc As free_cluster, ByVal d As map(Of Int64, Byte())) As event_comb
         Dim id As Int64 = 0
         Dim p As pointer(Of Byte()) = Nothing
         Dim ec As event_comb = Nothing
@@ -74,7 +75,7 @@ Public Class free_cluster_test
                                           Dim b() As Byte = Nothing
                                           Dim ob() As Byte = Nothing
                                           ob = d(id)
-                                          ReDim b(array_size(ob) + array_size(buff) - 1)
+                                          ReDim b(array_size_i(ob) + array_size_i(buff) - 1)
                                           memcpy(b, ob)
                                           memcpy(b, array_size(ob), buff)
                                           buff = b
@@ -85,8 +86,7 @@ Public Class free_cluster_test
                               End Function)
     End Function
 
-    Private Shared Function apply_alloc_append(ByVal fc As free_cluster,
-                                               ByVal d As map(Of Int64, Byte())) As event_comb
+    Private Shared Function apply_alloc_append(ByVal fc As free_cluster, ByVal d As map(Of Int64, Byte())) As event_comb
         Dim ec As event_comb = Nothing
         Dim id As pointer(Of Int64) = Nothing
         Return New event_comb(Function() As Boolean
@@ -108,8 +108,7 @@ Public Class free_cluster_test
                               End Function)
     End Function
 
-    Private Shared Function append_case(ByVal fc As free_cluster,
-                                        ByVal d As map(Of Int64, Byte())) As event_comb
+    Private Shared Function append_case(ByVal fc As free_cluster, ByVal d As map(Of Int64, Byte())) As event_comb
         Dim id As Int64 = 0
         id = rand_id()
         If d.find(id) = d.end() Then
@@ -123,8 +122,7 @@ Public Class free_cluster_test
         End If
     End Function
 
-    Private Shared Function delete_case(ByVal fc As free_cluster,
-                                        ByVal d As map(Of Int64, Byte())) As event_comb
+    Private Shared Function delete_case(ByVal fc As free_cluster, ByVal d As map(Of Int64, Byte())) As event_comb
         Dim id As Int64 = 0
         Dim ec As event_comb = Nothing
         Dim r As pointer(Of Boolean) = Nothing
@@ -135,7 +133,7 @@ Public Class free_cluster_test
                                       it = d.begin()
                                       While it <> d.end()
                                           If array_size((+it).second) > max Then
-                                              max = array_size((+it).second)
+                                              max = array_size_i((+it).second)
                                               id = (+it).first
                                           End If
                                           it += 1
@@ -155,8 +153,7 @@ Public Class free_cluster_test
                               End Function)
     End Function
 
-    Private Shared Function seek_case(ByVal fc As free_cluster,
-                                      ByVal d As map(Of Int64, Byte())) As event_comb
+    Private Shared Function seek_case(ByVal fc As free_cluster, ByVal d As map(Of Int64, Byte())) As event_comb
         Dim id As Int64 = 0
         Dim ec As event_comb = Nothing
         Dim r As pointer(Of Boolean) = Nothing
@@ -174,8 +171,7 @@ Public Class free_cluster_test
                               End Function)
     End Function
 
-    Private Shared Function sizeof_case(ByVal fc As free_cluster,
-                                        ByVal d As map(Of Int64, Byte())) As event_comb
+    Private Shared Function sizeof_case(ByVal fc As free_cluster, ByVal d As map(Of Int64, Byte())) As event_comb
         Dim id As Int64 = 0
         Dim ec As event_comb = Nothing
         Dim r As pointer(Of Int64) = Nothing
@@ -197,8 +193,7 @@ Public Class free_cluster_test
                               End Function)
     End Function
 
-    Private Shared Function rnd_case(ByVal fc As free_cluster,
-                                     ByVal d As map(Of Int64, Byte())) As event_comb
+    Private Shared Function rnd_case(ByVal fc As free_cluster, ByVal d As map(Of Int64, Byte())) As event_comb
         Dim r As Int32 = 0
         r = rnd_int(0, 5)
         Select Case r

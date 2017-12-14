@@ -1,21 +1,27 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports osi.root.connector
-Imports osi.root.utils
-Imports osi.root.lock
 
 Partial Public Class cluster
-    ' TODO: offset should be uint64.
-    Public Function read(ByVal buff() As Byte, Optional ByVal offset As Int32 = 0) As event_comb
+    Public Function read(ByVal buff() As Byte, Optional ByVal offset As UInt32 = 0) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If free() OrElse empty() Then
                                       Return goto_end()
                                   Else
-                                      ec = virtdisk().read(data_disk_offset(), used_bytes(), buff, offset)
-                                      Return waitfor(ec) AndAlso
+                                      If used_bytes() > max_uint32 Then
+                                          Return False
+                                      Else
+                                          ec = virtdisk().read(data_disk_offset(), CUInt(used_bytes()), buff, offset)
+                                          Return waitfor(ec) AndAlso
                                              goto_next()
+                                      End If
                                   End If
                               End Function,
                               Function() As Boolean
@@ -28,10 +34,13 @@ Partial Public Class cluster
         Dim ec As event_comb = Nothing
         Dim buff() As Byte = Nothing
         Return New event_comb(Function() As Boolean
-                                  ReDim buff(used_bytes() - 1)
-                                  ec = read(buff)
-                                  Return waitfor(ec) AndAlso
-                                         goto_next()
+                                  If Not buff.resize(used_bytes()) Then
+                                      Return False
+                                  Else
+                                      ec = read(buff)
+                                      Return waitfor(ec) AndAlso
+                                             goto_next()
+                                  End If
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso
@@ -72,7 +81,7 @@ Partial Public Class cluster
                                   If h Is Nothing OrElse isemptyarray(others) Then
                                       Return False
                                   Else
-                                      For i As Int32 = 0 To array_size(others) - 1
+                                      For i As Int32 = 0 To array_size_i(others) - 1
                                           If others(i) Is Nothing Then
                                               Return False
                                           End If
@@ -81,7 +90,7 @@ Partial Public Class cluster
                                   If h.has_next_id() Then
                                       Return False
                                   End If
-                                  For i As Int32 = 0 To array_size(others) - 2
+                                  For i As Int32 = 0 To array_size_i(others) - 2
                                       If others(i).has_prev_id() OrElse others(i).has_next_id() Then
                                           Return False
                                       End If
@@ -89,13 +98,13 @@ Partial Public Class cluster
                                           Return False
                                       End If
                                   Next
-                                  If others(array_size(others) - 1).has_prev_id() Then
+                                  If others(array_size_i(others) - 1).has_prev_id() Then
                                       Return False
                                   End If
 
-                                  ReDim ecs(array_size(others))
+                                  ReDim ecs(array_size_i(others))
                                   h.mark_free_as_empty()
-                                  For i As Int32 = 0 To array_size(others) - 1
+                                  For i As Int32 = 0 To array_size_i(others) - 1
                                       Dim l As cluster = Nothing
                                       l = If(i = 0, h, others(i - 1))
                                       others(i)._prev_id = l.id()
@@ -103,7 +112,7 @@ Partial Public Class cluster
                                       others(i).mark_free_as_empty()
                                       ecs(i) = l.write_structure()
                                   Next
-                                  ecs(array_size(others)) = others(array_size(others) - 1).write_structure()
+                                  ecs(array_size_i(others)) = others(array_size_i(others) - 1).write_structure()
                                   Return waitfor(ecs) AndAlso
                                          goto_next()
                               End Function,
@@ -114,13 +123,11 @@ Partial Public Class cluster
     End Function
 
     Public Function append(ByVal buff() As Byte,
-                           ByVal offset As Int64,
-                           ByVal count As Int64) As event_comb
+                           ByVal offset As UInt32,
+                           ByVal count As UInt32) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  If offset < 0 OrElse
-                                     count < 0 OrElse
-                                     array_size(buff) < offset + count OrElse
+                                  If array_size(buff) < offset + count OrElse
                                      remain_bytes() < count Then
                                       Return False
                                   ElseIf count = 0 Then
@@ -151,8 +158,7 @@ Partial Public Class cluster
                               End Function)
     End Function
 
-    Public Function append(ByVal buff() As Byte,
-                           Optional ByVal offset As Int64 = 0) As event_comb
+    Public Function append(ByVal buff() As Byte, Optional ByVal offset As UInt32 = 0) As event_comb
         Return append(buff, offset, array_size(buff))
     End Function
 

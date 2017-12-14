@@ -64,13 +64,13 @@ Partial Public Class free_cluster
         Return vd.file_name()
     End Function
 
-    Public Function capacity() As Int64
+    Public Function capacity() As UInt64
         Return vd.capacity()
     End Function
 
     'only return false if cluster.ctor failed and drop data failed, which means harddisk error may happen
     Private Function open() As event_comb
-        Dim offset As Int64 = 0
+        Dim offset As UInt64 = 0
         Dim ec As event_comb = Nothing
         Dim r As pointer(Of cluster) = Nothing
         Return New event_comb(Function() As Boolean

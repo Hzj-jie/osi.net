@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
@@ -37,7 +38,13 @@ Partial Public Class fces
     Public Function capacity(ByVal result As pointer(Of Int64)) As event_comb _
                             Implements ikeyvalue2(Of store_t.iterator).capacity
         Return sync_async(Function() As Int64
-                              Return content.capacity()
+                              Dim r As UInt64 = 0
+                              r = content.capacity()
+                              If r > max_int64 Then
+                                  Return max_int64
+                              Else
+                                  Return CLng(r)
+                              End If
                           End Function,
                           result,
                           +result)
@@ -206,7 +213,20 @@ Partial Public Class fces
 
     Public Function valuesize(ByVal result As pointer(Of Int64)) As event_comb _
                              Implements ikeyvalue2(Of store_t.iterator).valuesize
-        Return content.valuesize(result)
+        Dim ec As event_comb = Nothing
+        Dim p As pointer(Of UInt64) = Nothing
+        Return New event_comb(Function() As Boolean
+                                  _new(p)
+                                  ec = content.valuesize(p)
+                                  Return waitfor(ec) AndAlso
+                                         goto_next()
+                              End Function,
+                              Function() As Boolean
+                                  Return ec.end_result() AndAlso
+                                         +p <= max_int64 AndAlso
+                                         eva(result, CLng(+p)) AndAlso
+                                         goto_end()
+                              End Function)
     End Function
 
     Public Function write_new(ByVal key() As Byte,
