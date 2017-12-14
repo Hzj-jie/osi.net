@@ -140,6 +140,9 @@
     <None Include="bytes\codegen\bytes_independent_types.vbp" />
     <None Include="bytes\codegen\bytes_independent_types_impl.vbp" />
     <None Include="bytes\codegen\run.cmd" />
+    <None Include="ints\codegen\limited_ints.vbp" />
+    <None Include="ints\codegen\limited_ints_timeout.vbp" />
+    <None Include="ints\codegen\limited_ints_types.vbp" />
     <None Include="ints\codegen\npos_uint_ctor.vbp" />
     <None Include="ints\codegen\positive_npos_uint.vbp" />
     <None Include="ints\codegen\positive_npos_uint32.vbp" />

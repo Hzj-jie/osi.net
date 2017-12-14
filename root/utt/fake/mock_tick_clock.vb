@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 
 Public NotInheritable Class mock_tick_clock
     Inherits tick_clock
@@ -12,7 +13,8 @@ Public NotInheritable Class mock_tick_clock
 
     Public Sub New()
         MyBase.New()
-        t = 0
+        ' Consumers should not reply on a specific initial value of the tick_clock.
+        t = rnd_uint64(max_uint16, max_uint32)
     End Sub
 
     Public Overrides Function ticks() As UInt64
