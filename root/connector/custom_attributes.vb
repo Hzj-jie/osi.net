@@ -5,19 +5,16 @@ Option Strict On
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports osi.root.constants
 
 Public Module _custom_attributes
-    Public Function custom_attribute(Of T, AT As Attribute) _
-                                    (ByRef o As AT,
-                                     Optional ByVal inherit As Boolean = False) As Boolean
+    Public Function custom_attribute(Of T, AT)(ByRef o As AT,
+                                               Optional ByVal inherit As Boolean = False) As Boolean
         Return GetType(T).custom_attribute(o, inherit)
     End Function
 
-    <Extension()> Public Function custom_attribute(Of AT As Attribute) _
-                                                  (ByVal this As MemberInfo,
-                                                   ByRef o As AT,
-                                                   Optional ByVal inherit As Boolean = False) As Boolean
+    <Extension()> Public Function custom_attribute(Of AT)(ByVal this As MemberInfo,
+                                                          ByRef o As AT,
+                                                          Optional ByVal inherit As Boolean = False) As Boolean
         Dim ats() As AT = Nothing
         If custom_attributes(this, ats) Then
             assert(Not isemptyarray(ats))
@@ -28,36 +25,33 @@ Public Module _custom_attributes
         End If
     End Function
 
-    <Extension()> Public Function custom_attribute(Of AT As Attribute)(ByVal this As MemberInfo,
-                                                                       Optional ByVal inherit As Boolean = False) As AT
+    <Extension()> Public Function custom_attribute(Of AT)(ByVal this As MemberInfo,
+                                                          Optional ByVal inherit As Boolean = False) As AT
         Dim o As AT = Nothing
         assert(this.custom_attribute(o, inherit))
         Return o
     End Function
 
-    Public Function custom_attribute(Of T, AT As Attribute)(Optional ByVal inherit As Boolean = False) As AT
+    Public Function custom_attribute(Of T, AT)(Optional ByVal inherit As Boolean = False) As AT
         Dim o As AT = Nothing
         assert(custom_attribute(Of T, AT)(o, inherit))
         Return o
     End Function
 
-    <Extension()> Public Function has_custom_attribute(Of AT As Attribute) _
-                                                      (ByVal this As MemberInfo,
-                                                       Optional ByVal inherit As Boolean = False) As Boolean
+    <Extension()> Public Function has_custom_attribute(Of AT)(ByVal this As MemberInfo,
+                                                              Optional ByVal inherit As Boolean = False) As Boolean
         Dim o As AT = Nothing
         Return this.custom_attribute(o, inherit)
     End Function
 
-    Public Function custom_attributes(Of T, AT As Attribute) _
-                                     (ByRef o() As AT,
-                                      Optional ByVal inherit As Boolean = False) As Boolean
+    Public Function custom_attributes(Of T, AT)(ByRef o() As AT,
+                                                Optional ByVal inherit As Boolean = False) As Boolean
         Return GetType(T).custom_attributes(o, inherit)
     End Function
 
-    <Extension()> Public Function custom_attributes(Of AT As Attribute) _
-                                                   (ByVal this As MemberInfo,
-                                                    ByRef o() As AT,
-                                                    Optional ByVal inherit As Boolean = False) As Boolean
+    <Extension()> Public Function custom_attributes(Of AT)(ByVal this As MemberInfo,
+                                                           ByRef o() As AT,
+                                                           Optional ByVal inherit As Boolean = False) As Boolean
         If this Is Nothing Then
             Return False
         Else
@@ -84,15 +78,14 @@ Public Module _custom_attributes
         End If
     End Function
 
-    <Extension()> Public Function custom_attributes(Of AT As Attribute) _
-                                                   (ByVal this As MemberInfo,
-                                                    Optional ByVal inherit As Boolean = False) As AT()
+    <Extension()> Public Function custom_attributes(Of AT)(ByVal this As MemberInfo,
+                                                           Optional ByVal inherit As Boolean = False) As AT()
         Dim o() As AT = Nothing
         assert(this.custom_attributes(o, inherit))
         Return o
     End Function
 
-    Public Function custom_attributes(Of T, AT As Attribute)(Optional ByVal inherit As Boolean = False) As AT()
+    Public Function custom_attributes(Of T, AT)(Optional ByVal inherit As Boolean = False) As AT()
         Dim o() As AT = Nothing
         assert(custom_attributes(Of T, AT)(o, inherit))
         Return o

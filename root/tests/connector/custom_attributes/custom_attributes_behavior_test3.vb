@@ -7,6 +7,7 @@ Imports osi.root.connector
 Imports osi.root.lock
 Imports osi.root.utt
 
+' Custom attributes will only be generated when GetCustomAttributes() is called.
 Public Class custom_attributes_behavior_test3
     Inherits [case]
 

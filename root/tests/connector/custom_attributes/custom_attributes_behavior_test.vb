@@ -1,8 +1,13 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.utt
 
+' Custom attributes should be able to be inherited by the classes which declared the attributes.
 Public Class custom_attributes_behavior_test
     Inherits [case]
 
@@ -52,7 +57,7 @@ Public Class custom_attributes_behavior_test
             Dim i As UInt32 = uint32_0
             While i < array_size(objs)
                 Dim x As test = Nothing
-                If cast(objs(i), x) Then
+                If direct_cast(objs(CInt(i)), x) Then
                     assert_equal(x.v, v)
                     c += uint32_1
                 End If

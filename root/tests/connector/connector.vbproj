@@ -60,7 +60,7 @@
     <Compile Include="assert_test.vb" />
     <Compile Include="comparable_behavior_test.vb" />
     <Compile Include="convert_tostring_behavior_test.vb" />
-    <Compile Include="custom_attributes_behavior_test4.vb" />
+    <Compile Include="custom_attributes\custom_attributes_behavior_test4.vb" />
     <Compile Include="bit_test.vb" />
     <Compile Include="bytes_perf.vb" />
     <Compile Include="bytes_test.vb" />
@@ -88,9 +88,10 @@
     <Compile Include="cstr_convert_tostring_perf_test.vb" />
     <Compile Include="ctype_bool_perf_test.vb" />
     <Compile Include="ctype_bool_test.vb" />
-    <Compile Include="custom_attributes_behavior_test.vb" />
-    <Compile Include="custom_attributes_behavior_test2.vb" />
-    <Compile Include="custom_attributes_behavior_test3.vb" />
+    <Compile Include="custom_attributes\custom_attributes_behavior_test.vb" />
+    <Compile Include="custom_attributes\custom_attributes_behavior_test2.vb" />
+    <Compile Include="custom_attributes\custom_attributes_behavior_test3.vb" />
+    <Compile Include="custom_attributes\custom_attributes_test.vb" />
     <Compile Include="c_escape_test.vb" />
     <Compile Include="date_behavior_test.vb" />
     <Compile Include="declare_nonexiting_api_behavior_test.vb" />

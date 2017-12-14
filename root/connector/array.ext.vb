@@ -228,4 +228,24 @@ Public Module _array_ext
             Return r
         End If
     End Function
+
+    <Extension()> Public Function resize(Of T)(ByRef i() As T, ByVal size As UInt32, ByVal preserve As Boolean) As T()
+        assert(size <= max_int32)
+        If size = uint32_0 Then
+            ReDim i(-1)
+        ElseIf preserve Then
+            ReDim Preserve i(CInt(size) - 1)
+        Else
+            ReDim i(CInt(size) - 1)
+        End If
+        Return i
+    End Function
+
+    <Extension()> Public Function resize(Of T)(ByRef i() As T, ByVal size As UInt32) As T()
+        Return resize(i, size, False)
+    End Function
+
+    <Extension()> Public Function preserve(Of T)(ByRef i() As T, ByVal size As UInt32) As T()
+        Return resize(i, size, True)
+    End Function
 End Module

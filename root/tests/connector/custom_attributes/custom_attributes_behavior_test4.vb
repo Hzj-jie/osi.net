@@ -7,6 +7,7 @@ Imports osi.root.connector
 Imports osi.root.utils
 Imports osi.root.utt
 
+' The attribute class with "Attribute" in the name is preferred.
 Public Class custom_attributes_behavior_test4
     Inherits [case]
 

@@ -1,5 +1,9 @@
 ﻿
-'global_init is helping to decouple with stopwatch / event / bind
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+' global_init is helping to decouple the dependencies between stopwatch / event / bind, etc.
 Public Enum global_init_level As Byte
     foundamental = 0
     debugging
@@ -14,8 +18,9 @@ Public Enum global_init_level As Byte
     all = max
 End Enum
 
-'follow .net naming rules, so it will be able to use global_init as attribute name
-Public Class global_initAttribute
+' Follow .net naming rules: using global_init as attribute name will be accepted. It also avoids conflict with
+' osi.root.utils.global_init class.
+Public NotInheritable Class global_initAttribute
     Inherits Attribute
 
     Private Const default_init_once As Boolean = True
