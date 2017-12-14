@@ -238,7 +238,7 @@ Public Class pointer_test
 
         Private Shared Function finalized_event() As Boolean
             Dim c As Int32 = 0
-            For i As Int32 = 0 To 10000
+            For i As Int32 = 0 To 100
                 Dim p As pointer(Of Int32) = Nothing
                 p = New pointer(Of Int32)(i)
                 Dim ci As Int32 = 0
