@@ -72,6 +72,7 @@
     <Compile Include="equal.vb" />
     <Compile Include="equaler.vb" />
     <Compile Include="ICloneable.vb" />
+    <Compile Include="ints\limited_ints.vb" />
     <Compile Include="member_info.vb" />
     <Compile Include="object_compare.vb" />
     <Compile Include="object_extensions.vb" />

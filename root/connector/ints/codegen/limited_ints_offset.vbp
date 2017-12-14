@@ -1,0 +1,59 @@
+
+##DEFAULT TYPE Int32
+
+' Represent an offset. Can be invalid.
+' int_offset is for memory buffer. Allocating a byte array larger than 2G is not supported in .Net.
+' offset is for file or stream. Typically there is no size limitation for these resources.
+
+#If "##TYPE##" = "SByte" Then
+    Public Const offset_invalid As Int32 = npos
+#End If
+
+    <Extension()> Public Function is_offset(ByVal i As ##TYPE##) As Boolean
+        Return i >= 0 OrElse i = offset_invalid
+    End Function
+
+    <Extension()> Public Function is_int_offset(ByVal i As ##TYPE##) As Boolean
+        Return (i >= 0 AndAlso i <= max_int32) OrElse i = offset_invalid
+    End Function
+
+    <Extension()> Public Sub assert_is_offset(ByVal i As ##TYPE##)
+        assert(i.is_offset())
+    End Sub
+
+    <Extension()> Public Sub assert_is_int_offset(ByVal i As ##TYPE##)
+        assert(i.is_int_offset())
+    End Sub
+
+    <Extension()> Public Function invalid_offset(ByVal i As ##TYPE##) As Boolean
+        i.assert_is_offset()
+        Return i = offset_invalid
+    End Function
+
+    <Extension()> Public Function invalid_int_offset(ByVal i As ##TYPE##) As Boolean
+        i.assert_is_int_offset()
+        Return i = offset_invalid
+    End Function
+
+    <Extension()> Public Function valid_offset(ByVal i As ##TYPE##) As Boolean
+        i.assert_is_offset()
+        Return i <> offset_invalid
+    End Function
+
+    <Extension()> Public Function valid_int_offset(ByVal i As ##TYPE##) As Boolean
+        i.assert_is_int_offset()
+        Return i <> offset_invalid
+    End Function
+
+    <Extension()> Public Function offset(ByVal i As ##TYPE##) As UInt64
+        i.assert_is_offset()
+        assert(i.valid_offset())
+        Return CULng(i)
+    End Function
+
+    <Extension()> Public Function int_offset(ByVal i As ##TYPE##) As Int32
+        i.assert_is_int_offset()
+        assert(i.valid_int_offset())
+        Return CInt(i)
+    End Function
+

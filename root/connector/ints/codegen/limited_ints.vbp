@@ -1,0 +1,34 @@
+
+Imports System.Runtime.CompilerServices
+Imports osi.root.constants
+
+Public Module _limited_ints
+
+##DEFINE TYPE SByte
+##INCLUDE limited_ints_types.vbp
+
+##DEFINE TYPE Int16
+##INCLUDE limited_ints_types.vbp
+
+##DEFINE TYPE Int32
+##INCLUDE limited_ints_types.vbp
+
+##DEFINE TYPE Int64
+##INCLUDE limited_ints_types.vbp
+
+##DEFINE TYPE Decimal
+##INCLUDE limited_ints_types.vbp
+
+##DEFINE TYPE Byte
+##INCLUDE limited_ints_types.vbp
+
+##DEFINE TYPE UInt16
+##INCLUDE limited_ints_types.vbp
+
+##DEFINE TYPE UInt32
+##INCLUDE limited_ints_types.vbp
+
+##DEFINE TYPE UInt64
+##INCLUDE limited_ints_types.vbp
+
+End Module

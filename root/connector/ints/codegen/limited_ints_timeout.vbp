@@ -1,0 +1,45 @@
+
+##DEFAULT TYPE Int32
+
+' Represent a timeout. Can be infinite.
+
+#If "##TYPE##" = "SByte" Then
+    Public Const timeout_inf As Int32 = npos
+#End If
+
+    <Extension()> Public Function is_timeout(ByVal i As ##TYPE##) As Boolean
+        Return i >= 0 OrElse i = timeout_inf
+    End Function
+
+    <Extension()> Public Sub assert_is_timeout(ByVal i As ##TYPE##)
+        assert(i.is_timeout())
+    End Sub
+
+    <Extension()> Public Function infinite_timeout(ByVal i As ##TYPE##) As Boolean
+        i.assert_is_timeout()
+        Return i = timeout_inf
+    End Function
+
+    <Extension()> Public Function finite_timeout(ByVal i As ##TYPE##) As Boolean
+        i.assert_is_timeout()
+        Return i <> timeout_inf
+    End Function
+
+    <Extension()> Public Function timeout_ms(ByVal i As ##TYPE##) As UInt32
+        i.assert_is_timeout()
+        If i.infinite_timeout() Then
+            Return max_uint32
+        Else
+            Return CUInt(i)
+        End If
+    End Function
+
+    <Extension()> Public Function timeout_ticks(ByVal i As ##TYPE##) As UInt64
+        i.assert_is_timeout()
+        If i.infinite_timeout() Then
+            Return max_uint64
+        Else
+            Return CULng(i)
+        End If
+    End Function
+
