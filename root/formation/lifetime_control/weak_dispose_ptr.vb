@@ -114,6 +114,7 @@ Public Class weak_dispose_ptr(Of T)
                 End If
             End Try
         End If
+        GC.KeepAlive(Me)
     End Sub
 
     Public Function disposed() As Boolean
@@ -147,6 +148,7 @@ Public Class weak_dispose_ptr(Of T)
 
     Protected NotOverridable Overrides Sub Finalize()
         queue_dispose()
+        GC.KeepAlive(Me)
         MyBase.Finalize()
     End Sub
 'finish disposer_dispose.vbp --------

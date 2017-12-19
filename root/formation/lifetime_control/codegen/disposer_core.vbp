@@ -16,6 +16,7 @@
                 End If
             End Try
         End If
+        GC.KeepAlive(Me)
     End Sub
 
     Public Function disposed() As Boolean

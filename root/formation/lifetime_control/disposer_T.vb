@@ -90,6 +90,7 @@ Public Class disposer(Of T)
 
     Protected NotOverridable Overrides Sub Finalize()
         queue_dispose()
+        GC.KeepAlive(Me)
         MyBase.Finalize()
     End Sub
 'finish disposer_dispose.vbp --------

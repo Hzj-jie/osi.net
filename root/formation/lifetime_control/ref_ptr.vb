@@ -71,7 +71,6 @@ Public Class ref_ptr(Of T)
     Public Function ref_count() As UInt32
         Dim r As Int32 = 0
         r = i.get()
-        GC.KeepAlive(i)
         assert(r >= 0)
         Return CUInt(r)
     End Function
@@ -81,6 +80,7 @@ Public Class ref_ptr(Of T)
             queue_dispose()
             raise_error(error_type.warning, "ref_ptr @ ", create_stack_trace, " has not been fully dereferred.")
         End If
+        GC.KeepAlive(Me)
         MyBase.Finalize()
     End Sub
 
