@@ -27,4 +27,6 @@ Public MustInherit Class filtered_module
                                     Implements module_handle.module.context_received
         Return procedure_handle.process_context(context, AddressOf filter.select, AddressOf execute)
     End Function
+
+    Public MustOverride Function name() As String Implements module_handle.module.name
 End Class

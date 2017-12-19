@@ -9,9 +9,11 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.service.argument
+Imports counter = osi.root.utils.counter
 
 Partial Public Class module_handle
     Public Interface [module]
+        Function name() As String
         Function context_received(ByVal context As server.context) As Boolean
     End Interface
 
@@ -27,7 +29,8 @@ Partial Public Class module_handle
         If m Is Nothing Then
             Return False
         Else
-            v.push_back(m)
+            v.emplace_back(m)
+            c.emplace_back(counter.register(m.name(), write_count:=True, write_rate:=True, write_last_rate:=True))
             Return True
         End If
     End Function

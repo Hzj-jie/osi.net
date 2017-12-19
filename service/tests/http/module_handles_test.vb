@@ -3,7 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports System.IO
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
@@ -13,6 +12,7 @@ Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.argument
 Imports osi.service.http
+Imports counter = osi.root.utils.counter
 
 <test>
 Public NotInheritable Class module_handles_test
@@ -161,16 +161,14 @@ Public NotInheritable Class module_handles_test
 
                                   request_count.increment()
                                   r = New client.string_response()
-                                  If rnd_bool() Then
-                                      ec = client.request(strcat("http://localhost:", port, "/", path), r)
-                                  Else
-                                      ec = client.request(strcat("http://localhost:", port, "/", path),
-                                                          constants.request_method.POST,
-                                                          Nothing,
-                                                          New MemoryStream(),
-                                                          0,
-                                                          r)
-                                  End If
+                                  Dim request As request_builder = Nothing
+                                  request = request_builder.
+                                                  [New]().
+                                                  with_url(strcat("http://localhost:", port, "/", path)).
+                                                  with_method(If(rnd_bool(),
+                                                                 constants.request_method.POST,
+                                                                 constants.request_method.GET))
+                                  ec = request.request(r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
                               End Function,
@@ -261,6 +259,17 @@ Public NotInheritable Class module_handles_test
         s.stop(30)
         assert_equal(s.connection_count(), 0)
         assert_more_or_equal_and_less_or_equal(+response_count, (+request_count) * 0.999, (+request_count))
+        For i As UInt32 = 0 To m.module_count() - uint32_1
+            Dim name As String = Nothing
+            Dim c As Int64? = 0
+            assert_true(counter.counter(m.module_counter(i), name, count:=c))
+            assert_true(c.HasValue())
+            If strcontains(name, "should_not_be_called") Then
+                assert_equal(c.Value(), 0, name)
+            Else
+                assert_more(c.Value(), 0, name)
+            End If
+        Next
     End Sub
 
     Private Sub New()

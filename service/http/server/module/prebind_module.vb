@@ -18,7 +18,8 @@ Public NotInheritable Class prebind_module
 
     Private ReadOnly i As _do_val_ref(Of server.context, event_comb, Boolean)
 
-    Private Sub New(ByVal i As _do_val_ref(Of server.context, event_comb, Boolean))
+    Private Sub New(ByVal name As String, ByVal i As _do_val_ref(Of server.context, event_comb, Boolean))
+        MyBase.New(name)
         assert(Not i Is Nothing)
         Me.i = i
     End Sub
@@ -35,7 +36,7 @@ Public NotInheritable Class prebind_module
                                           assert(Not invoker Is Nothing)
                                           Dim i As _do_val_ref(Of server.context, event_comb, Boolean) = Nothing
                                           If invoker.pre_bind(i) Then
-                                              Return New prebind_module(i)
+                                              Return New prebind_module(invoker.identity(), i)
                                           Else
                                               Return Nothing
                                           End If

@@ -114,9 +114,13 @@ Partial Public Class client
                                       If response_comm Is Nothing Then
                                           response_comm = link_status.response
                                       End If
+                                      If request_method = request_method.POST AndAlso request_body Is Nothing Then
+                                          request_body = Stream.Null
+                                          request_length = 0
+                                      End If
                                       If try_create_http_web_request(url, r) Then
                                           r.Method() = request_method.str()
-                                          If Not request_headers Is Nothing AndAlso Not request_headers.empty() Then
+                                          If Not request_headers.null_or_empty Then
                                               Dim it As map(Of String, vector(Of String)).iterator = Nothing
                                               it = request_headers.begin()
                                               While it <> request_headers.end()

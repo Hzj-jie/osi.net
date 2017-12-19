@@ -60,6 +60,7 @@
     <Compile Include="client\as_stream.vb" />
     <Compile Include="client\as_string.vb" />
     <Compile Include="client\client.rr.vb" />
+    <Compile Include="client\request_builder.vb" />
     <Compile Include="client\spider.vb" />
     <Compile Include="client\response_status.vb" />
     <Compile Include="dev\client_block_dev.vb" />

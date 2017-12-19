@@ -296,4 +296,28 @@ Public NotInheritable Class invoker(Of delegate_t)
         assert(target_type(r))
         Return r
     End Function
+
+    Public Function identity(ByRef o As String) As Boolean
+        Dim d As delegate_t = Nothing
+        If pre_bind(d) Then
+            assert(Not d Is Nothing)
+            o = direct_cast(Of [Delegate])(d).method_identity()
+            Return True
+        Else
+            Dim r As MethodInfo = Nothing
+            If method_info(r) Then
+                assert(Not r Is Nothing)
+                o = r.full_name()
+                Return True
+            Else
+                Return False
+            End If
+        End If
+    End Function
+
+    Public Function identity() As String
+        Dim r As String = Nothing
+        assert(identity(r))
+        Return r
+    End Function
 End Class

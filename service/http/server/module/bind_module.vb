@@ -21,7 +21,10 @@ End Class
 Public MustInherit Class bind_module(Of delegate_type)
     Implements module_handle.module
 
-    Protected Sub New()
+    Private ReadOnly n As String
+
+    Protected Sub New(ByVal name As String)
+        n = name
     End Sub
 
     Public Shared Function bind(ByVal type As String,
@@ -61,5 +64,9 @@ Public MustInherit Class bind_module(Of delegate_type)
     Public Function context_received(ByVal context As server.context) As Boolean _
                                     Implements module_handle.module.context_received
         Return procedure_handle.process_context(context, AddressOf execute)
+    End Function
+
+    Public Function name() As String Implements module_handle.module.name
+        Return n
     End Function
 End Class

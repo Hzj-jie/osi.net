@@ -6,13 +6,16 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
+Imports counter = osi.root.utils.counter
 
 Partial Public NotInheritable Class module_handle
     Private ReadOnly v As vector(Of [module])
+    Private ReadOnly c As vector(Of Int64)
     Private ReadOnly handle As server.context_receivedEventHandler
 
     Public Sub New()
         v = New vector(Of [module])()
+        c = New vector(Of Int64)()
         handle = AddressOf context_received
     End Sub
 
@@ -35,10 +38,20 @@ Partial Public NotInheritable Class module_handle
         RemoveHandler server.context_received, handle
     End Sub
 
+    Public Function module_count() As UInt32
+        Return v.size()
+    End Function
+
+    Public Function module_counter(ByVal i As UInt32) As Int64
+        Return c(i)
+    End Function
+
     Private Sub context_received(ByVal ctx As server.context)
         Dim i As UInt32 = 0
         While i < v.size()
             If v(i).context_received(ctx) Then
+                assert(i < c.size())
+                counter.increase(c(i))
                 Return
             End If
             i += uint32_1

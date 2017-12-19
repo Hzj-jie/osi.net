@@ -23,7 +23,7 @@ Public Module _memory_stream
     End Function
 End Module
 
-Public Class memory_stream
+Public NotInheritable Class memory_stream
     Private Sub New()
     End Sub
 
@@ -31,7 +31,8 @@ Public Class memory_stream
                                   ByVal offset As Int32,
                                   ByVal count As Int32,
                                   ByRef o As MemoryStream) As Boolean
-        If offset < 0 OrElse
+        If i Is Nothing OrElse
+           offset < 0 OrElse
            count < 0 OrElse
            array_size(i) < offset + count Then
             Return False
