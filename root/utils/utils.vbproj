@@ -64,7 +64,9 @@
     <Compile Include="comparer.vb" />
     <Compile Include="console_key_info_mapping.vb" />
     <Compile Include="control_c_trace.vb" />
+    <Compile Include="counter\counter.builder.vb" />
     <Compile Include="counter\counter.collection.vb" />
+    <Compile Include="counter\counter.snapshot.vb" />
     <Compile Include="counter\counter_backend_writer.vb" />
     <Compile Include="counter\counter_locked_writer.vb" />
     <Compile Include="counter\counter_record\counter.counter_record.ctor.vb" />

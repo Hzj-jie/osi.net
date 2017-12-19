@@ -80,6 +80,7 @@
     <Compile Include="server\module\filtered_module.vb" />
     <Compile Include="server\module\filtered_prebind_module.vb" />
     <Compile Include="server\module\module_handle.module.vb" />
+    <Compile Include="server\module_handle.ref.vb" />
     <Compile Include="server\module_handle.vb" />
     <Compile Include="server\server.context.attributes.vb" />
     <Compile Include="server\server.context.vb" />

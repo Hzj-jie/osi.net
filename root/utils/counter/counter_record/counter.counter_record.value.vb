@@ -1,8 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.DateTime
-Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.constants.counter
+Imports osi.root.connector
+Imports osi.root.formation
 
 Namespace counter
     Partial Friend Class counter_record
@@ -21,10 +25,10 @@ Namespace counter
         End Function
 
         Private Function last_average_count() As Int64
-            If debug_assert(Not last_averages Is Nothing AndAlso last_averages.Length() > 0, _
+            If debug_assert(Not last_averages Is Nothing AndAlso last_averages.Length() > 0,
                            "last_averages is not initialized, the counter may not enabled last_average.") Then
                 Dim c As Int64 = 0
-                For i As Int64 = 0 To min(last_averages.Length(), calltimes) - 1
+                For i As Int32 = 0 To CInt(min(last_averages.Length(), calltimes)) - 1
                     try_inc(c, last_averages(i), name)
                 Next
                 Return c
@@ -52,12 +56,12 @@ Namespace counter
         End Function
 
         Public Function last_rate() As Int64
-            If debug_assert(Not last_times_ticks Is Nothing AndAlso last_times_ticks.Length() > 0, _
-                           "lastTimes is not initialized, the counter may not enabled lastRate.") Then
+            If debug_assert(Not last_times_ticks Is Nothing AndAlso last_times_ticks.Length() > 0,
+                           "last_times_ticks is not initialized, the counter may not enabled last_rate.") Then
                 Dim c As Int64 = 0
                 Dim oldest As Int64 = 0
                 oldest = max_int64
-                For i As Int64 = 0 To min(calltimes, last_times_ticks.Length()) - 1
+                For i As Int32 = 0 To CInt(min(calltimes, last_times_ticks.Length())) - 1
                     c = last_times_ticks(i)
                     If c > 0 Then
                         If oldest > c Then
@@ -75,41 +79,30 @@ Namespace counter
             End If
         End Function
 
-        Public Function value(ByRef name As String,
-                              ByRef count As Int64?,
-                              ByRef average As Int64?,
-                              ByRef last_average As Int64?,
-                              ByRef rate As Int64?,
-                              ByRef last_rate As Int64?) As Boolean
+        Public Function snapshot() As snapshot
+            Dim count As constant(Of Int64) = Nothing
+            Dim average As constant(Of Int64) = Nothing
+            Dim last_average As constant(Of Int64) = Nothing
+            Dim rate As constant(Of Int64) = Nothing
+            Dim last_rate As constant(Of Int64) = Nothing
             With Me
-                copy(name, .name)
                 If count_selected() Then
                     count = .count
-                Else
-                    count = Nothing
                 End If
                 If average_selected() Then
                     average = .average()
-                Else
-                    average = Nothing
                 End If
                 If last_average_selected() Then
                     last_average = .last_average()
-                Else
-                    last_average = Nothing
                 End If
                 If rate_selected() Then
                     rate = .rate()
-                Else
-                    rate = Nothing
                 End If
                 If last_rate_selected() Then
                     last_rate = .last_rate()
-                Else
-                    last_rate = Nothing
                 End If
             End With
-            Return True
+            Return New snapshot(name, count, average, last_average, rate, last_rate)
         End Function
     End Class
 End Namespace

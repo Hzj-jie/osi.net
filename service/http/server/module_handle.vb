@@ -9,13 +9,11 @@ Imports osi.root.formation
 Imports counter = osi.root.utils.counter
 
 Partial Public NotInheritable Class module_handle
-    Private ReadOnly v As vector(Of [module])
-    Private ReadOnly c As vector(Of Int64)
+    Private ReadOnly v As vector(Of ref)
     Private ReadOnly handle As server.context_receivedEventHandler
 
     Public Sub New()
-        v = New vector(Of [module])()
-        c = New vector(Of Int64)()
+        v = New vector(Of ref)()
         handle = AddressOf context_received
     End Sub
 
@@ -42,16 +40,22 @@ Partial Public NotInheritable Class module_handle
         Return v.size()
     End Function
 
-    Public Function module_counter(ByVal i As UInt32) As Int64
-        Return c(i)
+    Public Function module_counter_snapshot(ByVal i As UInt32) As counter.snapshot
+        If i >= v.size() Then
+            Return Nothing
+        Else
+            Dim r As counter.snapshot = Nothing
+            r = counter.snapshot.[New](v(i).counter_index)
+            assert(Not r Is Nothing)
+            Return r
+        End If
     End Function
 
     Private Sub context_received(ByVal ctx As server.context)
         Dim i As UInt32 = 0
         While i < v.size()
-            If v(i).context_received(ctx) Then
-                assert(i < c.size())
-                counter.increase(c(i))
+            If v(i).module.context_received(ctx) Then
+                assert(counter.increase(v(i).counter_index))
                 Return
             End If
             i += uint32_1

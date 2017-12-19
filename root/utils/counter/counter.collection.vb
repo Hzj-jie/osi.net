@@ -1,9 +1,13 @@
 ﻿
-Imports osi.root.lock
-Imports osi.root.formation
-Imports osi.root.delegates
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.delegates
+Imports osi.root.formation
+Imports osi.root.lock
 
 Namespace counter
     Public Module _counter_collection
@@ -17,8 +21,9 @@ Namespace counter
         Friend Function counter(ByVal index As Int64) As counter_record
             l.reader_wait()
             Try
-                If v.available_index(index) Then
-                    Return v(index)
+                Dim o As counter_record = Nothing
+                If v.take(index, o) Then
+                    Return o
                 Else
                     Return Nothing
                 End If
@@ -27,16 +32,14 @@ Namespace counter
             End Try
         End Function
 
-        Public Function counter(ByVal index As Int64,
-                                ByRef name As String,
-                                Optional ByRef count As Int64? = Nothing,
-                                Optional ByRef average As Int64? = Nothing,
-                                Optional ByRef lastAverage As Int64? = Nothing,
-                                Optional ByRef rate As Int64? = Nothing,
-                                Optional ByRef lastRate As Int64? = Nothing) As Boolean
+        Public Function snapshot(ByVal index As Int64) As snapshot
             Dim cr As counter_record = Nothing
             cr = counter(index)
-            Return Not cr Is Nothing AndAlso cr.value(name, count, average, lastAverage, rate, lastRate)
+            If cr Is Nothing Then
+                Return Nothing
+            Else
+                Return cr.snapshot()
+            End If
         End Function
 
         Public Function count() As Int64
@@ -62,7 +65,12 @@ Namespace counter
 
         Friend Sub workon(ByVal i As Int64, ByVal d As void(Of counter_record))
             assert(Not d Is Nothing)
-            l.reader_locked(Sub() d(v(i)))
+            assert(i <= max_uint32)
+            assert(i >= 0)
+            l.reader_locked(Function() As Boolean
+                                d(counter(i))
+                                Return True
+                            End Function)
         End Sub
     End Module
 End Namespace

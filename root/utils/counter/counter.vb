@@ -1,7 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.DateTime
 Imports osi.root.connector
-Imports osi.root.delegates
 Imports osi.root.formation
 
 Namespace counter

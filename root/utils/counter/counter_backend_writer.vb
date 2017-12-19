@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.DateTime
 Imports System.Text
 Imports osi.root.connector
@@ -28,29 +32,25 @@ Namespace counter
             If envs.counter_selfhealth Then
                 startticks = Now().Ticks()
             End If
-            Dim count As Int64? = 0
-            Dim average As Int64? = 0
-            Dim last_average As Int64? = 0
-            Dim rate As Int64? = 0
-            Dim last_rate As Int64? = 0
+            Dim snapshot As snapshot = Nothing
+            snapshot = cr.snapshot()
             Dim msg As StringBuilder = Nothing
             msg = New StringBuilder()
-            assert(cr.value(Nothing, count, average, last_average, rate, last_rate))
             With cr
-                If Not count Is Nothing Then
-                    msg.Append(patchup_counter_msg(.count_name, count))
+                If Not snapshot.count Is Nothing Then
+                    msg.Append(patchup_counter_msg(.count_name, +snapshot.count))
                 End If
-                If Not average Is Nothing Then
-                    msg.Append(patchup_counter_msg(.average_name, average))
+                If Not snapshot.average Is Nothing Then
+                    msg.Append(patchup_counter_msg(.average_name, +snapshot.average))
                 End If
-                If Not last_average Is Nothing Then
-                    msg.Append(patchup_counter_msg(.last_average_name, last_average))
+                If Not snapshot.last_average Is Nothing Then
+                    msg.Append(patchup_counter_msg(.last_average_name, +snapshot.last_average))
                 End If
-                If Not rate Is Nothing Then
-                    msg.Append(patchup_counter_msg(.rate_name, rate))
+                If Not snapshot.rate Is Nothing Then
+                    msg.Append(patchup_counter_msg(.rate_name, +snapshot.rate))
                 End If
-                If Not last_rate Is Nothing Then
-                    msg.Append(patchup_counter_msg(.last_rate_name, last_rate))
+                If Not snapshot.last_rate Is Nothing Then
+                    msg.Append(patchup_counter_msg(.last_rate_name, +snapshot.last_rate))
                 End If
             End With
             counter_distributor.distribute(startticks, Convert.ToString(msg))

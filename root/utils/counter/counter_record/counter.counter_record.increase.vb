@@ -1,11 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.DateTime
-Imports osi.root.formation
-Imports osi.root.connector
-Imports osi.root.lock
-Imports osi.root.constants
-Imports osi.root.constants.counter
 Imports System.Threading
+Imports osi.root.connector
+Imports osi.root.formation
 
 Namespace counter
     Partial Friend Class counter_record
@@ -27,13 +28,13 @@ Namespace counter
             End If
             If last_average_selected() OrElse
                last_rate_selected() Then
-                last_averages(index Mod last_averages.Length()) = v
+                last_averages(CInt(index Mod last_averages.Length())) = v
             End If
             If last_rate_selected() Then
                 If Not envs.counter_selfhealth Then
                     startticks = Now().Ticks()
                 End If
-                last_times_ticks(index Mod last_times_ticks.Length()) = startticks
+                last_times_ticks(CInt(index Mod last_times_ticks.Length())) = startticks
             End If
             If envs.counter_selfhealth Then
                 selfhealth.record_increase_latency(startticks)

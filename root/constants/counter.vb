@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Namespace counter
     Public Module _counter
 #If DEBUG Then

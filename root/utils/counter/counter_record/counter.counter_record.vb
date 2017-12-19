@@ -1,9 +1,7 @@
 ﻿
-' TODO: Rewrite
-Imports osi.root.connector
-Imports osi.root.lock
-Imports osi.root.constants
-Imports osi.root.constants.counter
+Option Explicit On
+Option Infer Off
+Option Strict On
 
 Namespace counter
     Partial Friend Class counter_record
@@ -19,6 +17,7 @@ Namespace counter
         Public ReadOnly rate_name As String = Nothing
         Public ReadOnly last_rate_name As String = Nothing
 
+        ' Interlocked.Increment is used to avoid lock.
         Private count As Int64 = 0
         Private last_averages() As Int64 = Nothing
         Private last_times_ticks() As Int64 = Nothing
@@ -26,9 +25,9 @@ Namespace counter
         Private sample_rate As Double = 0
 
         Public Function can_sample() As Boolean
-            Return (Not type And counter_type.count) AndAlso
-                   (Not type And counter_type.rate) AndAlso
-                   (Not type And counter_type.last_rate)
+            Return Not count_selected() AndAlso
+                   Not rate_selected() AndAlso
+                   Not last_rate_selected()
         End Function
 
         Public Function has_value() As Boolean

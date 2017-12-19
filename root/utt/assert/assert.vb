@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports osi.root.formation
@@ -83,7 +87,7 @@ Public Module _assert
                                              ByVal j() As T,
                                              ByVal ParamArray msg() As Object) As Boolean
         If assert_equal(array_size(i), array_size(j), msg) Then
-            For k As Int32 = 0 To array_size(i) - 1
+            For k As Int32 = 0 To array_size_i(i) - 1
                 If Not assert_equal(i(k), j(k), msg) Then
                     Return False
                 End If
@@ -106,7 +110,7 @@ Public Module _assert
         If array_size(i) <> array_size(j) Then
             Return True
         Else
-            For k As Int32 = 0 To array_size(i) - 1
+            For k As Int32 = 0 To array_size_i(i) - 1
                 If compare(i(k), j(k)) <> 0 Then
                     Return True
                 End If

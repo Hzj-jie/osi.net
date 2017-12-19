@@ -9,15 +9,24 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.service.argument
-Imports counter = osi.root.utils.counter
 
 Partial Public Class module_handle
     Public Interface [module]
-        Function name() As String
         Function context_received(ByVal context As server.context) As Boolean
     End Interface
 
-    Private Shared ReadOnly module_constructor As vector(Of Func(Of String, String, BindingFlags, String, [module]))
+    Public NotInheritable Class named_module
+        Public ReadOnly name As String
+        Public ReadOnly [module] As [module]
+
+        Public Sub New(ByVal name As String, ByVal [module] As [module])
+            assert(Not [module] Is Nothing)
+            Me.name = name
+            Me.module = [module]
+        End Sub
+    End Class
+
+    Private Shared ReadOnly module_constructor As vector(Of Func(Of String, String, BindingFlags, String, named_module))
 
     Shared Sub New()
         _new(module_constructor)
@@ -25,12 +34,11 @@ Partial Public Class module_handle
         module_constructor.emplace_back(AddressOf filtered_prebind_module.[New])
     End Sub
 
-    Public Function add(ByVal m As [module]) As Boolean
+    Public Function add(ByVal m As named_module) As Boolean
         If m Is Nothing Then
             Return False
         Else
-            v.emplace_back(m)
-            c.emplace_back(counter.register(m.name(), write_count:=True, write_rate:=True, write_last_rate:=True))
+            v.emplace_back(New ref(m.name, m.module))
             Return True
         End If
     End Function

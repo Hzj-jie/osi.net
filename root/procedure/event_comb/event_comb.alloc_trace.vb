@@ -52,11 +52,12 @@ Partial Public Class event_comb
                                             Dim it As map(Of String, Int64).iterator = Nothing
                                             it = callstack_alloc.begin()
                                             While it <> callstack_alloc.end()
-                                                Dim count As Int64? = Nothing
-                                                assert(counter.counter((+it).second, Nothing, count))
-                                                assert(Not count Is Nothing)
-                                                If count > 0 Then
-                                                    r.Append(", [").Append((+it).first).Append("] - ").Append(count)
+                                                Dim s As counter.snapshot = Nothing
+                                                s = counter.snapshot.[New]((+it).second)
+                                                assert(Not s Is Nothing)
+                                                assert(Not s.count Is Nothing)
+                                                If +s.count > 0 Then
+                                                    r.Append(", [").Append((+it).first).Append("] - ").Append(+s.count)
                                                 End If
                                                 it += 1
                                             End While

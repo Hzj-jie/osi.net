@@ -1,5 +1,8 @@
 ﻿
-Imports System.Threading
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 
 Namespace counter
@@ -19,10 +22,11 @@ Namespace counter
         End Sub
 
         Public Shared Function count() As Int64
-            Dim c As Int64? = Nothing
-            assert(counter(instance_count_counter(Of T).c, Nothing, count:=c))
-            assert(c.HasValue())
-            Return c.Value()
+            Dim s As snapshot = Nothing
+            s = snapshot.[New](instance_count_counter(Of T).c)
+            assert(Not s Is Nothing)
+            assert(Not s.count Is Nothing)
+            Return +s.count
         End Function
     End Class
 End Namespace

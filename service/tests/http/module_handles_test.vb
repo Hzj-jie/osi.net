@@ -260,14 +260,14 @@ Public NotInheritable Class module_handles_test
         assert_equal(s.connection_count(), 0)
         assert_more_or_equal_and_less_or_equal(+response_count, (+request_count) * 0.999, (+request_count))
         For i As UInt32 = 0 To m.module_count() - uint32_1
-            Dim name As String = Nothing
-            Dim c As Int64? = 0
-            assert_true(counter.counter(m.module_counter(i), name, count:=c))
-            assert_true(c.HasValue())
-            If strcontains(name, "should_not_be_called") Then
-                assert_equal(c.Value(), 0, name)
+            Dim snapshot As counter.snapshot = Nothing
+            snapshot = m.module_counter_snapshot(i)
+            assert_not_nothing(snapshot)
+            assert_not_nothing(snapshot.count)
+            If strcontains(snapshot.name, "should_not_be_called") Then
+                assert_equal(+snapshot.count, 0, snapshot.name)
             Else
-                assert_more(c.Value(), 0, name)
+                assert_more(+snapshot.count, 0, snapshot.name)
             End If
         Next
     End Sub

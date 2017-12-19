@@ -161,7 +161,7 @@ Public NotInheritable Class request_builder
     End Function
 
     Public Function spider(ByVal r As client.response,
-                           Optional ByVal consume_data As Boolean = Nothing) As event_comb
+                           Optional ByVal consume_data As Boolean = True) As event_comb
         Return client.spider(url,
                              method,
                              headers,
@@ -171,5 +171,9 @@ Public NotInheritable Class request_builder
                              request_link_status,
                              response_link_status,
                              consume_data)
+    End Function
+
+    Public Function spider(Optional ByVal consume_data As Boolean = True) As event_comb
+        Return spider(New client.response(), consume_data)
     End Function
 End Class
