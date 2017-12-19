@@ -71,6 +71,7 @@ Public Class ref_ptr(Of T)
     Public Function ref_count() As UInt32
         Dim r As Int32 = 0
         r = i.get()
+        GC.KeepAlive(i)
         assert(r >= 0)
         Return CUInt(r)
     End Function

@@ -29,8 +29,7 @@ Public Class configuration_test2
             If Not test_config.sync_export(config_file) Then
                 Return False
             End If
-            c.default().assert_load(config_file)
-            Return True
+            Return c.default().load(config_file)
         Else
             Return False
         End If
