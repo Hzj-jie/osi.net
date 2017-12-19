@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.delegates
 Imports osi.root.formation
-Imports osi.root.connector
 Imports osi.root.utils
 
 Public Module _sync_async

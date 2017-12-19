@@ -1,6 +1,10 @@
 ﻿
-Imports osi.root.formation
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
 
@@ -17,7 +21,7 @@ Partial Public Class file_index
 
     Public Function capacity(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvt2(Of atom).capacity
         Return sync_async(Function() As Int64
-                              Return ci.capacity()
+                              Return CLng(ci.capacity())
                           End Function,
                           result,
                           +result)
@@ -69,7 +73,7 @@ Partial Public Class file_index
     Public Function full(ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt2(Of atom).full
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  If ci.capacity() <= 0 Then
+                                  If ci.capacity() = 0 Then
                                       Return eva(result, True) AndAlso
                                              goto_end()
                                   Else

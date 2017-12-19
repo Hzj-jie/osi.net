@@ -1,7 +1,9 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.template
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
@@ -18,7 +20,7 @@ Partial Public Class file_key
 
     Public Function capacity(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvt2(Of String).capacity
         Return sync_async(Function() As Int64
-                              Return ci.capacity()
+                              Return CLng(ci.capacity())
                           End Function,
                           result,
                           +result)
@@ -104,7 +106,7 @@ Partial Public Class file_key
                                   If ec.end_result() Then
                                       Dim v As vector(Of Byte()) = Nothing
                                       v = New vector(Of Byte())()
-                                      For i As Int32 = 0 To array_size(+r) - 1
+                                      For i As Int32 = 0 To array_size_i(+r) - 1
                                           Dim k() As Byte = Nothing
                                           If key((+r)(i), k) Then
                                               v.emplace_back(k)

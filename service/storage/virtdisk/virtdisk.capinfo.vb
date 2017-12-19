@@ -39,7 +39,7 @@ Partial Public Class virtdisk
                 assert(Not i.di Is Nothing)
                 Return i.di.capacity()
             ElseIf i.is_ms Then
-                Return CULng(available_virtual_memory())
+                Return available_virtual_memory()
             Else
                 Return 0
             End If
