@@ -36,8 +36,12 @@ Public Module _stream_flow_adapter
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  i.Dispose()
-                                  o.Dispose()
+                                  If close_input_stream Then
+                                      i.Dispose()
+                                  End If
+                                  If close_output_stream Then
+                                      o.Dispose()
+                                  End If
                                   Return ec.end_result() AndAlso
                                          goto_end()
                               End Function)
@@ -70,8 +74,12 @@ Public Module _stream_flow_adapter
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  i.Dispose()
-                                  o.Dispose()
+                                  If close_input_stream Then
+                                      i.Dispose()
+                                  End If
+                                  If close_output_stream Then
+                                      o.Dispose()
+                                  End If
                                   Return ec.end_result() AndAlso
                                          goto_end()
                               End Function)

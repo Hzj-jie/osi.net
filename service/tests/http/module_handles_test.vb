@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.IO
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
@@ -30,9 +31,26 @@ Public NotInheritable Class module_handles_test
         Return strcat(question_path, "-answer")
     End Function
 
+    <request_path("/" + question_path)>
+    <request_method(constants.request_method.GET)>
+    Private Shared Function filtered_sync_exec_question(ByVal ctx As server.context) As event_comb
+        assert_not_nothing(ctx)
+        assert_equal(ctx.parse_method(), constants.request_method.GET)
+        Dim path As vector(Of String) = Nothing
+        path = ctx.parse_path()
+        assert_false(path.empty())
+        assert_true(strsame(path(0), question_path, False))
+        ctx.set_status(Net.HttpStatusCode.OK, create_answer(question_path))
+        Return Nothing
+    End Function
+
     Private Shared Function sync_exec_question(ByVal ctx As server.context, ByRef ec As event_comb) As Boolean
         assert_not_nothing(ctx)
         assert_nothing(ec)
+        If ctx.parse_method() <> constants.request_method.POST Then
+            Return False
+        End If
+
         Dim path As vector(Of String) = Nothing
         path = ctx.parse_path()
         If Not path.empty() AndAlso strsame(path(0), question_path, False) Then
@@ -43,9 +61,25 @@ Public NotInheritable Class module_handles_test
         End If
     End Function
 
+    <request_path("/" + async_question_path)>
+    <request_method(constants.request_method.POST)>
+    Private Shared Function filtered_async_exec_question(ByVal ctx As server.context) As event_comb
+        assert_not_nothing(ctx)
+        assert_equal(ctx.parse_method(), constants.request_method.POST)
+        Dim path As vector(Of String) = Nothing
+        path = ctx.parse_path()
+        assert_false(path.empty())
+        assert_true(strsame(path(0), async_question_path, False))
+        Return ctx.respond(create_answer(async_question_path))
+    End Function
+
     Private Shared Function async_exec_question(ByVal ctx As server.context, ByRef ec As event_comb) As Boolean
         assert_not_nothing(ctx)
         assert_nothing(ec)
+        If ctx.parse_method() <> constants.request_method.GET Then
+            Return False
+        End If
+
         Dim path As vector(Of String) = Nothing
         path = ctx.parse_path()
         If Not path.empty() AndAlso strsame(path(0), async_question_path, False) Then
@@ -87,6 +121,12 @@ Public NotInheritable Class module_handles_test
         Return False
     End Function
 
+    <request_path("")>
+    Private Shared Function filtered_should_not_be_called(ByVal ctx As server.context) As event_comb
+        assert_not_reach()
+        Return Nothing
+    End Function
+
     <prepare>
     Private Sub initialize()
         request_count.set(0)
@@ -121,7 +161,16 @@ Public NotInheritable Class module_handles_test
 
                                   request_count.increment()
                                   r = New client.string_response()
-                                  ec = client.request(strcat("http://localhost:", port, "/", path), r)
+                                  If rnd_bool() Then
+                                      ec = client.request(strcat("http://localhost:", port, "/", path), r)
+                                  Else
+                                      ec = client.request(strcat("http://localhost:", port, "/", path),
+                                                          constants.request_method.POST,
+                                                          Nothing,
+                                                          New MemoryStream(),
+                                                          0,
+                                                          r)
+                                  End If
                                   Return waitfor(ec) AndAlso
                                          goto_next()
                               End Function,
@@ -132,15 +181,21 @@ Public NotInheritable Class module_handles_test
                                               If r.status() = Net.HttpStatusCode.OK AndAlso
                                                  strsame(r.status_description(), create_answer(path)) Then
                                                   response_count.increment()
+                                              Else
+                                                  raise_error(path)
                                               End If
                                           Case async_question_path, async_ask_path
                                               If r.status() = Net.HttpStatusCode.OK AndAlso
                                                  strsame(r.result(), create_answer(path)) Then
                                                   response_count.increment()
+                                              Else
+                                                  raise_error(path)
                                               End If
                                           Case Else
                                               If r.status() = Net.HttpStatusCode.NotImplemented Then
                                                   response_count.increment()
+                                              Else
+                                                  raise_error(path)
                                               End If
                                       End Select
                                   End If
@@ -152,8 +207,8 @@ Public NotInheritable Class module_handles_test
     Private Sub run()
         Dim s As server = Nothing
         s = New server(New server.configuration() With {.ls = New link_status(seconds_to_milliseconds(15))})
-        Dim m As module_handles = Nothing
-        m = New module_handles(s)
+        Dim m As module_handle = Nothing
+        m = New module_handle(s)
 
         assert_true(m.add("osi.tests.service.http.module_handles_test",
                           default_str,
@@ -163,6 +218,13 @@ Public NotInheritable Class module_handles_test
                           default_str,
                           binding_flags.static_private_method,
                           "async_exec_question"))
+        assert_true(m.add("osi.tests.service.http.module_handles_test",
+                          default_str,
+                          binding_flags.static_private_method,
+                          "filtered_sync_exec_question"))
+        assert_true(m.add(New var(strcat("--type=osi.tests.service.http.module_handles_test ",
+                                         "--function=filtered_async_exec_question ",
+                                         "--binding-flags=static,private"))))
         assert_true(m.add(New var(strcat("--type=osi.tests.service.http.module_handles_test ",
                                          "--function=sync_exec_ask ",
                                          "--binding-flags=static,private"))))
@@ -175,6 +237,9 @@ Public NotInheritable Class module_handles_test
         assert_false(m.add(New var(strcat("--type=osi.tests.service.http.module_handles_test ",
                                           "--function=should_not_be_called ",
                                           "--binding-flags=private"))))
+        assert_true(m.add(New var(strcat("--type=osi.tests.service.http.module_handles_test ",
+                                         "--function=filtered_should_not_be_called ",
+                                         "--binding-flags=static|private"))))
 
         If Not assert_true(s.add_port(port)) Then
             Return

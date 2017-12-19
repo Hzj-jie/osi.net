@@ -72,7 +72,7 @@ Public NotInheritable Class constants
     End Class
 
     Public Enum request_method
-        OPTIONS
+        OPTIONS = 0
         [GET]
         HEAD
         POST

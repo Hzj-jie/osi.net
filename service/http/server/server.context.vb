@@ -36,6 +36,8 @@ Partial Public NotInheritable Class server
         Private www_form_urlencoded_body As constant(Of www_form_urlencoded)
         ' The merged query from both url and www-form-urlencoded request body.
         Private merged_query As constant(Of map(Of String, vector(Of String)))
+        ' The request method.
+        Private method As constant(Of constants.request_method)
 
         Public Sub New(ByVal server As server,
                        ByVal context As HttpListenerContext,
@@ -310,6 +312,25 @@ Partial Public NotInheritable Class server
             End If
             assert(Not path Is Nothing)
             Return +path
+        End Function
+
+        Public Function parse_method() As constants.request_method
+            If method Is Nothing Then
+                Dim m As constants.request_method = Nothing
+                m = constants.request_method.GET
+                Dim s As String = Nothing
+                s = context.Request().HttpMethod()
+                For i As Int32 = 0 To array_size_i(constants.request_method_str) - 1
+                    If strsame(constants.request_method_str(i), s, False) Then
+                        m = enum_cast(Of constants.request_method, Int32)(i)
+                        Exit For
+                    End If
+                Next
+
+                method = constant.[New](m)
+            End If
+            assert(Not method Is Nothing)
+            Return +method
         End Function
     End Class
 End Class

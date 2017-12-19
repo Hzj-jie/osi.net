@@ -184,6 +184,12 @@ Public Module _enum
         End If
     End Function
 
+    Public Function enum_cast(Of T, VT)(ByVal i As VT) As T
+        Dim o As T = Nothing
+        assert(enum_cast(i, o))
+        Return o
+    End Function
+
     Public Function enum_cast(Of T)(ByVal i As String, ByRef o As T) As Boolean
         If enum_has(Of T)(i) Then
             o = cast(Of T)([Enum].Parse(GetType(T), i))
@@ -193,6 +199,13 @@ Public Module _enum
         End If
     End Function
 
+    Public Function enum_cast(Of T)(ByVal i As String) As T
+        Dim o As T = Nothing
+        assert(enum_cast(i, o))
+        Return o
+    End Function
+
+    ' Do not use it, use [Enum].GetNames() instead: see enum_to_string_perf.
     Public Function enum_to_string(Of T)(ByRef o() As String) As Boolean
         Dim i As Int32 = 0
         Dim r() As String = Nothing

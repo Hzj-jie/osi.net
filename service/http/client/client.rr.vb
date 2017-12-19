@@ -148,12 +148,13 @@ Public Module _client_rr
                                   ls.this_or_unlimited().rate_sec)
     End Function
 
-    <Extension()> Public Function write_request_body(ByVal o As HttpWebRequest,
-                                                     ByVal i As Stream,
-                                                     ByVal send_link_status As link_status,
-                                                     ByVal receive_link_status As link_status,
-                                                     ByVal close_input_stream As Boolean,
-                                                     Optional ByVal result As pointer(Of UInt64) = Nothing) As event_comb
+    <Extension()> Public Function write_request_body(
+                                           ByVal o As HttpWebRequest,
+                                           ByVal i As Stream,
+                                           ByVal send_link_status As link_status,
+                                           ByVal receive_link_status As link_status,
+                                           ByVal close_input_stream As Boolean,
+                                           Optional ByVal result As pointer(Of UInt64) = Nothing) As event_comb
         Return write_request_body(o,
                                   i,
                                   send_link_status.this_or_unlimited().buff_size,
@@ -163,13 +164,14 @@ Public Module _client_rr
                                   result)
     End Function
 
-    <Extension()> Public Function write_request_body(ByVal o As HttpWebRequest,
-                                                     ByVal i As Stream,
-                                                     ByVal buff_size As UInt32,
-                                                     ByVal send_rate_sec As UInt32,
-                                                     ByVal receive_rate_sec As UInt32,
-                                                     ByVal close_input_stream As Boolean,
-                                                     Optional ByVal result As pointer(Of UInt64) = Nothing) As event_comb
+    <Extension()> Public Function write_request_body(
+                                           ByVal o As HttpWebRequest,
+                                           ByVal i As Stream,
+                                           ByVal buff_size As UInt32,
+                                           ByVal send_rate_sec As UInt32,
+                                           ByVal receive_rate_sec As UInt32,
+                                           ByVal close_input_stream As Boolean,
+                                           Optional ByVal result As pointer(Of UInt64) = Nothing) As event_comb
         Return read_from_stream(i,
                                 o,
                                 buff_size,

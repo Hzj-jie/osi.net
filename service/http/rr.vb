@@ -12,7 +12,8 @@ Imports Text = System.Text
 Public Module _rr
     Public Sub set_chunked_transfer(ByVal x As HttpWebRequest)
         assert(Not x Is Nothing)
-        x.TransferEncoding() = constants.headers.values.transfer_encoding.chunked
+        x.SendChunked() = True
+        ' x.TransferEncoding() = constants.headers.values.transfer_encoding.chunked
     End Sub
 
     Public Sub set_content_length(ByVal x As HttpWebRequest, ByVal l As Int64)

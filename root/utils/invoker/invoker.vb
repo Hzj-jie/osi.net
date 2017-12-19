@@ -266,4 +266,34 @@ Public NotInheritable Class invoker(Of delegate_t)
         assert(valid())
         Return mi.Invoke(obj, params)
     End Function
+
+    Public Function method_info(ByRef o As MethodInfo) As Boolean
+        If valid() Then
+            o = mi
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Public Function method_info() As MethodInfo
+        Dim r As MethodInfo = Nothing
+        assert(method_info(r))
+        Return r
+    End Function
+
+    Public Function target_type(ByRef o As Type) As Boolean
+        If valid() Then
+            o = t
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Public Function target_type() As Type
+        Dim r As Type = Nothing
+        assert(target_type(r))
+        Return r
+    End Function
 End Class
