@@ -96,6 +96,7 @@ Public NotInheritable Class request_builder
             Dim r As Int64 = 0
             r = ms.Length()
             If r < 0 Then
+                ' Odd, this should not happen.
                 Return without_body()
             Else
                 with_body(direct_cast(Of Stream)(ms))
@@ -109,20 +110,29 @@ Public NotInheritable Class request_builder
     End Function
 
     Public Function with_body(ByVal p As piece) As request_builder
-        If p Is Nothing Then
+        If p.null_or_empty() Then
             Return without_body()
         Else
-            Dim ms As MemoryStream = Nothing
-            If memory_stream.create(p.buff, CInt(p.offset), CInt(p.count), ms) Then
-                Return with_body(ms)
-            Else
-                Return without_body()
-            End If
+            ' MemoryStream.Dispose() or MemoryStream.Close() is not necessary. Meanwhile Close() or Dispose() before the
+            ' finish of request() procedure also introduces Bad Request error: Stream.copy_to(Stream) fails if the
+            ' source Stream has been Close()d or Dispose()d.
+            Return with_body(memory_stream.create(p.buff, CInt(p.offset), CInt(p.count)))
         End If
     End Function
 
     Public Function with_body(ByVal s As String, Optional ByVal encoder As Encoding = Nothing) As request_builder
         Return with_body(memory_stream.create(s, encoder))
+    End Function
+
+    Public Function with_body(ByVal s As String,
+                              ByVal offset As UInt32,
+                              ByVal len As UInt32,
+                              Optional ByVal encoder As Encoding = Nothing) As request_builder
+        If s Is Nothing Then
+            Return without_body()
+        Else
+            Return with_body(memory_stream.create(s, CInt(offset), CInt(len), encoder))
+        End If
     End Function
 
     Public Function without_request_length() As request_builder

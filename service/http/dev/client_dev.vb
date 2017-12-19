@@ -1,10 +1,11 @@
 ﻿
-Imports System.IO
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net
-Imports System.Text
 Imports osi.root.connector
-Imports osi.root.utils
-Imports osi.root.formation
+Imports osi.root.constants
 Imports osi.root.procedure
 Imports osi.service.convertor
 Imports osi.service.transmitter
@@ -44,8 +45,8 @@ Public Class client_dev
     Public Sub New(ByVal remote As IPEndPoint,
                    Optional ByVal send_link_status As link_status = Nothing,
                    Optional ByVal receive_link_status As link_status = Nothing)
-        Me.New(If(remote Is Nothing, DirectCast(Nothing, IPAddress), remote.Address()),
-               If(remote Is Nothing, 0, remote.Port()),
+        Me.New(If(remote Is Nothing, [default](Of IPAddress).null, remote.Address()),
+               If(remote Is Nothing, uint16_0, CUShort(remote.Port())),
                send_link_status,
                receive_link_status)
     End Sub
@@ -70,28 +71,24 @@ Public Class client_dev
                                max_content_length))
     End Sub
 
-    Public Function question(ByVal sr As Func(Of pointer(Of HttpStatusCode), 
-                                                 pointer(Of WebHeaderCollection), 
-                                                 event_comb)) As event_comb
+    Public Function question(Of R As {client.response, New})(ByVal sr As Func(Of R, event_comb)) As event_comb
         Dim ec As event_comb = Nothing
-        Dim sc As pointer(Of HttpStatusCode) = Nothing
-        Dim hc As pointer(Of WebHeaderCollection) = Nothing
+        Dim result As R = Nothing
         Return New event_comb(Function() As Boolean
                                   If sr Is Nothing Then
                                       Return False
                                   Else
-                                      sc = New pointer(Of HttpStatusCode)()
-                                      hc = New pointer(Of WebHeaderCollection)()
-                                      ec = sr(sc, hc)
+                                      result = New R()
+                                      ec = sr(result)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
                                   End If
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso
-                                         (+sc) = HttpStatusCode.OK AndAlso
-                                         Not (+hc) Is Nothing AndAlso
-                                         strsame((+hc)(HttpResponseHeader.ContentType),
+                                         result.status() = HttpStatusCode.OK AndAlso
+                                         Not result.headers() Is Nothing AndAlso
+                                         strsame(result.headers()(HttpResponseHeader.ContentType),
                                                  constants.commander_content_type,
                                                  strlen(constants.commander_content_type),
                                                  False) AndAlso

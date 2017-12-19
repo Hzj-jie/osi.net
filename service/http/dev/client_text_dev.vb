@@ -1,15 +1,16 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
 Imports System.Net
-Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.utils
-Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.procedure
+Imports osi.root.utils
 Imports osi.service.device
 Imports osi.service.transmitter
-Imports default_value = osi.service.http.constants.default_value
 
 Public MustInherit Class client_text_dev
     Inherits client_dev
@@ -65,19 +66,27 @@ Public MustInherit Class client_text_dev
                           End Function)
     End Function
 
-    Protected MustOverride Function issue_request(ByVal hs As pointer(Of HttpStatusCode),
-                                                  ByVal hc As pointer(Of WebHeaderCollection),
-                                                  ByVal r As pointer(Of String)) As event_comb
+    Protected MustOverride Function issue_request(ByVal r As client.string_response) As event_comb
 
-    Public Function receive(ByVal r As pointer(Of String)) As event_comb Implements text_pump.receive
-        Return question(Function(hs As pointer(Of HttpStatusCode),
-                                 hc As pointer(Of WebHeaderCollection)) As event_comb
-                            Return issue_request(hs, hc, r)
+    Public Function receive(ByVal result As pointer(Of String)) As event_comb Implements text_pump.receive
+        Return question(Function(ByVal r As client.string_response) As event_comb
+                            assert(Not r Is Nothing)
+                            Dim ec As event_comb = Nothing
+                            Return New event_comb(Function() As Boolean
+                                                      ec = issue_request(r)
+                                                      Return waitfor(ec) AndAlso
+                                                             goto_next()
+                                                  End Function,
+                                                  Function() As Boolean
+                                                      Return ec.end_result() AndAlso
+                                                             eva(result, r.result()) AndAlso
+                                                             goto_end()
+                                                  End Function)
                         End Function)
     End Function
 
     Public Function as_device() As idevice(Of text)
-        Return New delegate_device(Of text)(Me, AddressOf validate, AddressOf close, AddressOf identity)
+        Return delegate_device(Of text).[New](Me, AddressOf validate, AddressOf close, AddressOf identity)
     End Function
 
     Public MustInherit Class creator
@@ -154,15 +163,13 @@ Partial Public NotInheritable Class client_get_dev
                    max_content_length)
     End Sub
 
-    Protected Overrides Function issue_request(ByVal hs As pointer(Of HttpStatusCode),
-                                               ByVal hc As pointer(Of WebHeaderCollection),
-                                               ByVal r As pointer(Of String)) As event_comb
-        Return client.request(generate_url(host, port, path),
-                              hs,
-                              hc,
-                              r,
-                              send_link_status,
-                              receive_link_status)
+    Protected Overrides Function issue_request(ByVal r As client.string_response) As event_comb
+        Return request_builder.
+                       [New]().
+                       with_url(generate_url(host, port, path)).
+                       with_request_link_status(send_link_status).
+                       with_response_link_status(receive_link_status).
+                       request(r)
     End Function
 
     Protected Overrides Function store_request(ByVal s As String,
@@ -174,7 +181,7 @@ Partial Public NotInheritable Class client_get_dev
         Else
             path = strcat(constants.uri.path_separator,
                           constants.uri.query_mark,
-                          Convert.ToBase64String(constants.dev_enc.GetBytes(strmid(s, offset, len))))
+                          Convert.ToBase64String(constants.dev_enc.GetBytes(s, CInt(offset), CInt(len))))
         End If
         Return True
     End Function
@@ -228,36 +235,14 @@ Partial Public NotInheritable Class client_post_dev
                    max_content_length)
     End Sub
 
-    Protected Overrides Function issue_request(ByVal hs As pointer(Of HttpStatusCode),
-                                               ByVal hc As pointer(Of WebHeaderCollection),
-                                               ByVal r As pointer(Of String)) As event_comb
-        Dim ec As event_comb = Nothing
-        Dim ms As MemoryStream = Nothing
-        Return New event_comb(Function() As Boolean
-                                  assert(memory_stream.create(s,
-                                                              offset,
-                                                              len,
-                                                              constants.dev_enc,
-                                                              ms),
-                                         "s = ", s, ", offset = ", offset, ", len = ", len, ", strlen(s) = ", strlen(s))
-                                  ec = client.request(generate_url(host, port),
-                                                      ms,
-                                                      ms.Length(),
-                                                      hs,
-                                                      hc,
-                                                      r,
-                                                      send_link_status,
-                                                      receive_link_status)
-                                  Return waitfor(ec) AndAlso
-                                         goto_next()
-                              End Function,
-                              Function() As Boolean
-                                  assert(Not ms Is Nothing)
-                                  ms.Dispose()
-                                  ms.Close()
-                                  Return ec.end_result() AndAlso
-                                         goto_end()
-                              End Function)
+    Protected Overrides Function issue_request(ByVal r As client.string_response) As event_comb
+        Return request_builder.
+                       [New]().
+                       with_url(generate_url(host, port)).
+                       with_body(s, offset, len, constants.dev_enc).
+                       with_request_link_status(send_link_status).
+                       with_response_link_status(receive_link_status).
+                       request(r)
     End Function
 
     Protected Overrides Function store_request(ByVal s As String,

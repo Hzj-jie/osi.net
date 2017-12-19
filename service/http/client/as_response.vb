@@ -11,7 +11,7 @@ Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.service.http.constants
 
-Partial Public Class client
+Partial Public NotInheritable Class client
     Public Class response
         Private _headers As WebHeaderCollection
         Private _mutually_authenticated As Boolean
@@ -179,87 +179,6 @@ Partial Public Class client
                               End Function)
     End Function
 
-    Public Shared Function request(ByVal url As String,
-                                   ByVal request_headers As map(Of String, vector(Of String)),
-                                   ByVal request_body As Stream,
-                                   ByVal request_length As UInt64,
-                                   ByVal response As pointer(Of HttpWebResponse),
-                                   Optional ByVal request_comm As link_status = Nothing,
-                                   Optional ByVal response_comm As link_status = Nothing) As event_comb
-        Return request(url,
-                       If(request_body Is Nothing, request_method.GET, request_method.POST),
-                       request_headers,
-                       request_body,
-                       request_length,
-                       response,
-                       request_comm,
-                       response_comm)
-    End Function
-
-    Public Shared Function request(ByVal url As String,
-                                   ByVal request_body As Stream,
-                                   ByVal request_length As UInt64,
-                                   ByVal response As pointer(Of HttpWebResponse),
-                                   Optional ByVal request_comm As link_status = Nothing,
-                                   Optional ByVal response_comm As link_status = Nothing) As event_comb
-        Return request(url,
-                       Nothing,
-                       request_body,
-                       request_length,
-                       response,
-                       request_comm,
-                       response_comm)
-    End Function
-
-    Public Shared Function request(ByVal url As String,
-                                   ByVal request_headers As map(Of String, vector(Of String)),
-                                   ByVal request_body As Stream,
-                                   ByVal response As pointer(Of HttpWebResponse),
-                                   Optional ByVal request_comm As link_status = Nothing,
-                                   Optional ByVal response_comm As link_status = Nothing) As event_comb
-        Return request(url,
-                       request_headers,
-                       request_body,
-                       undefined_content_length,
-                       response,
-                       request_comm,
-                       response_comm)
-    End Function
-
-    Public Shared Function request(ByVal url As String,
-                                   ByVal request_body As Stream,
-                                   ByVal response As pointer(Of HttpWebResponse),
-                                   Optional ByVal request_comm As link_status = Nothing,
-                                   Optional ByVal response_comm As link_status = Nothing) As event_comb
-        Return request(url,
-                       Nothing,
-                       request_body,
-                       response,
-                       request_comm,
-                       response_comm)
-    End Function
-
-    Public Shared Function request(ByVal url As String,
-                                   ByVal request_headers As map(Of String, vector(Of String)),
-                                   ByVal response As pointer(Of HttpWebResponse),
-                                   Optional ByVal request_comm As link_status = Nothing,
-                                   Optional ByVal response_comm As link_status = Nothing) As event_comb
-        Return request(url,
-                       request_headers,
-                       Nothing,
-                       response,
-                       request_comm,
-                       response_comm)
-    End Function
-
-    Public Shared Function request(ByVal url As String,
-                                   ByVal response As pointer(Of HttpWebResponse),
-                                   Optional ByVal request_comm As link_status = Nothing,
-                                   Optional ByVal response_comm As link_status = Nothing) As event_comb
-        Return request(url,
-                       DirectCast(Nothing, map(Of String, vector(Of String))),
-                       response,
-                       request_comm,
-                       response_comm)
-    End Function
+    Private Sub New()
+    End Sub
 End Class

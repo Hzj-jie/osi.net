@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Text
 Imports osi.root.constants
 
@@ -51,7 +55,7 @@ Public Module _str_bytes
                               ByVal len As UInt32,
                               ByRef d() As Byte) As Boolean
         If valid_input_parameters(s, start, len) Then
-            d = default_encoding.GetBytes(c_str(s), start, len)
+            d = default_encoding.GetBytes(s, CInt(start), CInt(len))
             Return True
         Else
             Return False
@@ -93,7 +97,7 @@ Public Module _str_bytes
 
     Public Function str_bytes(ByVal s As String, ByVal start As UInt32, ByVal len As UInt32) As Byte()
         If valid_input_parameters(s, start, len) Then
-            Return default_encoding.GetBytes(c_str(s), start, len)
+            Return default_encoding.GetBytes(s, CInt(start), CInt(len))
         Else
             Return Nothing
         End If
@@ -116,8 +120,14 @@ Public Module _str_bytes
                                    ByVal len As UInt32,
                                    ByRef count As UInt32) As Boolean
         If valid_input_parameters(s, start, len) Then
-            count = default_encoding.GetByteCount(c_str(s), CInt(start), CInt(len))
-            Return True
+            Dim r As Int32 = 0
+            r = default_encoding.GetByteCount(s, CInt(start), CInt(len))
+            If r >= 0 Then
+                count = CUInt(r)
+                Return True
+            Else
+                Return False
+            End If
         Else
             Return False
         End If
@@ -146,7 +156,13 @@ Public Module _str_bytes
 
     Public Function bytes_char_count(ByVal b() As Byte, ByVal start As UInt32, ByVal len As UInt32) As UInt32
         If valid_input_parameters(b, start, len) Then
-            Return default_encoding.GetCharCount(b, start, len)
+            Dim r As Int32 = 0
+            r = default_encoding.GetCharCount(b, CInt(start), CInt(len))
+            If r >= 0 Then
+                Return CUInt(r)
+            Else
+                Return uint32_0
+            End If
         Else
             Return uint32_0
         End If
@@ -169,7 +185,7 @@ Public Module _str_bytes
                               ByVal len As UInt32,
                               ByRef o As String) As Boolean
         If valid_input_parameters(b, start, len) Then
-            o = default_encoding.GetString(b, start, len)
+            o = default_encoding.GetString(b, CInt(start), CInt(len))
             Return True
         Else
             Return False

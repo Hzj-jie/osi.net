@@ -146,7 +146,7 @@ Public Class weak_dispose_ptr(Of T)
     End Sub
 
     Protected NotOverridable Overrides Sub Finalize()
-        dispose()
+        queue_dispose()
         MyBase.Finalize()
     End Sub
 'finish disposer_dispose.vbp --------

@@ -164,7 +164,7 @@ Public NotInheritable Class module_handles_test
                                   Dim request As request_builder = Nothing
                                   request = request_builder.
                                                   [New]().
-                                                  with_url(strcat("http://localhost:", port, "/", path)).
+                                                  with_url(generate_url("localhost", port, path)).
                                                   with_method(If(rnd_bool(),
                                                                  constants.request_method.POST,
                                                                  constants.request_method.GET))

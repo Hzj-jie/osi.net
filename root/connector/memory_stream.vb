@@ -1,11 +1,22 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports osi.root.constants
 
 Public Module _memory_stream
     <Extension()> Public Sub shrink_to_fit(ByVal i As MemoryStream)
         assert(Not i Is Nothing)
-        i.Capacity() = i.Length()
+        If i.Length() > max_int32 Then
+            raise_error(error_type.warning, "Length of a MemoryStream instance is over max_int32.")
+        ElseIf i.Length() < 0 Then
+            raise_error(error_type.warning, "Length of a MemoryStream instance is less than 0.")
+        Else
+            i.Capacity() = CInt(i.Length())
+        End If
     End Sub
 
     <Extension()> Public Function fit_buffer(ByVal i As MemoryStream) As Byte()
@@ -16,9 +27,11 @@ Public Module _memory_stream
 
     <Extension()> Public Function export(ByVal i As MemoryStream) As Byte()
         assert(Not i Is Nothing)
+        assert(i.Length() <= max_int32)
+        assert(i.Length() >= 0)
         Dim o() As Byte = Nothing
-        ReDim o(i.Length() - 1)
-        memcpy(o, i.GetBuffer(), i.Length())
+        ReDim o(CInt(i.Length()) - 1)
+        memcpy(o, i.GetBuffer(), CUInt(i.Length()))
         Return o
     End Function
 End Module
@@ -48,9 +61,8 @@ Public NotInheritable Class memory_stream
         Return create(i, 0, count, o)
     End Function
 
-    Public Shared Function create(ByVal i() As Byte,
-                                  ByRef o As MemoryStream) As Boolean
-        Return create(i, array_size(i), o)
+    Public Shared Function create(ByVal i() As Byte, ByRef o As MemoryStream) As Boolean
+        Return create(i, array_size_i(i), o)
     End Function
 
     Public Shared Function create(ByVal i() As Byte,
@@ -86,7 +98,7 @@ Public NotInheritable Class memory_stream
         Else
             Dim b() As Byte = Nothing
             b = If(enc Is Nothing, default_encoding, enc).GetBytes(i, offset, count)
-            Return assert(create(b, 0, array_size(b), o))
+            Return assert(create(b, 0, array_size_i(b), o))
         End If
     End Function
 
@@ -116,9 +128,8 @@ Public NotInheritable Class memory_stream
         Return create(i, 0, enc, o)
     End Function
 
-    Public Shared Function create(ByVal i As String,
-                                  ByRef o As MemoryStream) As Boolean
-        Return create(i, strlen(i), o)
+    Public Shared Function create(ByVal i As String, ByRef o As MemoryStream) As Boolean
+        Return create(i, strlen_i(i), o)
     End Function
 
     Public Shared Function create(ByVal i As String,
@@ -146,15 +157,13 @@ Public NotInheritable Class memory_stream
         Return o
     End Function
 
-    Public Shared Function create(ByVal i As String,
-                                  ByVal count As Int32) As MemoryStream
+    Public Shared Function create(ByVal i As String, ByVal count As Int32) As MemoryStream
         Dim o As MemoryStream = Nothing
         assert(create(i, count, o))
         Return o
     End Function
 
-    Public Shared Function create(ByVal i As String,
-                                  ByVal enc As Text.Encoding) As MemoryStream
+    Public Shared Function create(ByVal i As String, ByVal enc As Text.Encoding) As MemoryStream
         Dim o As MemoryStream = Nothing
         assert(create(i, enc, o))
         Return o

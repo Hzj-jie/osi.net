@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports System.Text
 
@@ -60,5 +64,49 @@ Public Module _encoding
                 Return False
             End Try
         End If
+    End Function
+
+    <Extension()> Public Function GetBytes(ByVal e As Encoding,
+                                           ByVal chars() As Char,
+                                           ByVal count As Int32) As Byte()
+        assert(Not e Is Nothing)
+        Return e.GetBytes(chars, 0, count)
+    End Function
+
+    <Extension()> Public Function GetBytes(ByVal e As Encoding,
+                                           ByVal s As String,
+                                           ByVal index As Int32,
+                                           ByVal length As Int32) As Byte()
+        assert(Not e Is Nothing)
+        assert(Not s Is Nothing)
+        Return e.GetBytes(s.ToCharArray(index, length))
+    End Function
+
+    <Extension()> Public Function GetBytes(ByVal e As Encoding,
+                                           ByVal s As String,
+                                           ByVal length As Int32) As Byte()
+        Return GetBytes(e, s, 0, length)
+    End Function
+
+    <Extension()> Public Function GetByteCount(ByVal e As Encoding,
+                                               ByVal chars() As Char,
+                                               ByVal count As Int32) As Int32
+        assert(Not e Is Nothing)
+        Return e.GetByteCount(chars, 0, count)
+    End Function
+
+    <Extension()> Public Function GetByteCount(ByVal e As Encoding,
+                                               ByVal s As String,
+                                               ByVal index As Int32,
+                                               ByVal length As Int32) As Int32
+        assert(Not e Is Nothing)
+        assert(Not s Is Nothing)
+        Return e.GetByteCount(s.ToCharArray(index, length))
+    End Function
+
+    <Extension()> Public Function GetByteCount(ByVal e As Encoding,
+                                               ByVal s As String,
+                                               ByVal length As Int32) As Int32
+        Return GetByteCount(e, s, 0, length)
     End Function
 End Module

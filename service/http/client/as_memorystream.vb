@@ -1,16 +1,16 @@
 ﻿
+Option Explicit On
+Option Infer Off
 Option Strict On
 
 Imports System.IO
 Imports System.Net
-Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.service.http.constants
-Imports osi.service.http.constants.request_method
 
-Partial Public Class client
+Partial Public NotInheritable Class client
     Public Class memory_stream_response
         Inherits response
         Public ReadOnly ms As MemoryStream

@@ -1,10 +1,14 @@
 
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
 Imports System.Net
-Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.procedure
+Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.service.transmitter
 Imports Text = System.Text
@@ -182,7 +186,7 @@ Public Module _rr
                                                                                buff_size,
                                                                                receive_rate_sec,
                                                                                send_rate_sec)
-                                                  eva(result, content_length)
+                                                  eva(result, CULng(content_length))
                                               End If
                                           End If
                                       End If
@@ -211,7 +215,7 @@ Public Module _rr
                                   If o Is Nothing Then
                                       Return False
                                   Else
-                                      set_content_length(o, count)
+                                      set_content_length(o, CLng(count))
                                       If count = 0 Then
                                           Return goto_end()
                                       Else
@@ -250,7 +254,12 @@ Public Module _rr
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim b() As Byte = Nothing
-                                  b = If(enc Is Nothing, default_encoding, enc).GetBytes(i, offset, count)
+                                  If Not i Is Nothing Then
+                                      If enc Is Nothing Then
+                                          enc = default_encoding
+                                      End If
+                                      b = enc.GetBytes(i, CInt(offset), CInt(count))
+                                  End If
                                   ec = read_from_bytes(b,
                                                        uint32_0,
                                                        array_size(b),
@@ -279,10 +288,10 @@ Public Module _rr
                     count,
                     set_content_length,
                     fetch_stream,
-                    Function(x As Stream, l As UInt64) As event_comb
+                    Function(ByVal x As Stream, ByVal l As UInt64) As event_comb
                         Return x.send(i,
                                       offset,
-                                      l,
+                                      CUInt(l),
                                       send_rate_sec,
                                       True)
                     End Function)
@@ -301,7 +310,7 @@ Public Module _rr
                     count,
                     set_content_length,
                     fetch_stream,
-                    Function(x As Stream, l As UInt64) As event_comb
+                    Function(ByVal x As Stream, ByVal l As UInt64) As event_comb
                         Return i.copy_to(x,
                                          l,
                                          buff_size,

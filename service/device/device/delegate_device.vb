@@ -1,8 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.template
-Imports osi.root.utils
 
 Public Module _delegate_device
     <Extension()> Public Function make_device(Of T)(ByVal i As T,
@@ -27,6 +30,42 @@ Public Class delegate_device(Of T)
     Inherits device(Of T)
 
     Private ReadOnly sr As delegate_device_status_retriever(Of T)
+
+    Public Shared Function [New](Of DT As T)(ByVal i As DT,
+                                             Optional ByVal validator As Func(Of DT, Boolean) = Nothing,
+                                             Optional ByVal closer As Action(Of DT) = Nothing,
+                                             Optional ByVal identifier As Func(Of DT, String) = Nothing,
+                                             Optional ByVal checker As Action(Of DT) = Nothing) As delegate_device(Of T)
+        Dim tvalidator As Func(Of T, Boolean) = Nothing
+        Dim tcloser As Action(Of T) = Nothing
+        Dim tidentifier As Func(Of T, String) = Nothing
+        Dim tchecker As Action(Of T) = Nothing
+        If Not validator Is Nothing Then
+            tvalidator = Function(ByVal x As T) As Boolean
+                             assert(object_compare(i, x) = 0)
+                             Return validator(i)
+                         End Function
+        End If
+        If Not closer Is Nothing Then
+            tcloser = Sub(ByVal x As T)
+                          assert(object_compare(i, x) = 0)
+                          closer(i)
+                      End Sub
+        End If
+        If Not identifier Is Nothing Then
+            tidentifier = Function(ByVal x As T) As String
+                              assert(object_compare(i, x) = 0)
+                              Return identifier(i)
+                          End Function
+        End If
+        If Not checker Is Nothing Then
+            tchecker = Sub(ByVal x As T)
+                           assert(object_compare(i, x) = 0)
+                           checker(i)
+                       End Sub
+        End If
+        Return New delegate_device(Of T)(i, tvalidator, tcloser, tidentifier, tchecker)
+    End Function
 
     Protected Sub New(ByVal c As T, ByVal sr As delegate_device_status_retriever(Of T))
         MyBase.New(c)

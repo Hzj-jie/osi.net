@@ -1,9 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net
 Imports osi.root.connector
-Imports osi.root.utils
 Imports osi.root.formation
 Imports osi.root.procedure
+Imports osi.root.utils
 Imports osi.service.transmitter
 
 Public MustInherit Class client_block_dev
@@ -53,24 +57,20 @@ Public MustInherit Class client_block_dev
                           End Function)
     End Function
 
-    Protected MustOverride Function isseu_request(ByVal hs As pointer(Of HttpStatusCode),
-                                                  ByVal hc As pointer(Of WebHeaderCollection),
-                                                  ByVal r As pointer(Of String)) As event_comb
+    Protected MustOverride Function issue_request(ByVal r As client.memory_stream_response) As event_comb
 
     Public Function receive(ByVal result As pointer(Of Byte())) As event_comb Implements block_pump.receive
-        Return question(Function(hs As pointer(Of HttpStatusCode),
-                                 hc As pointer(Of WebHeaderCollection)) As event_comb
-                            Dim content As pointer(Of String) = Nothing
+        Return question(Function(ByVal r As client.memory_stream_response) As event_comb
+                            assert(Not r Is Nothing)
                             Dim ec As event_comb = Nothing
                             Return New event_comb(Function() As Boolean
-                                                      content = New pointer(Of String)()
-                                                      ec = isseu_request(hs, hc, content)
+                                                      ec = issue_request(r)
                                                       Return waitfor(ec) AndAlso
                                                              goto_next()
                                                   End Function,
                                                   Function() As Boolean
                                                       Return ec.end_result() AndAlso
-                                                             eva(result, str_bytes(+content)) AndAlso
+                                                             eva(result, r.ms.ToArray()) AndAlso
                                                              goto_end()
                                                   End Function)
                         End Function)
