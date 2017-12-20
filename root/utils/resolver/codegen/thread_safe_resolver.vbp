@@ -1,0 +1,3 @@
+##DEFINE THREAD_SAFE True
+##DEFINE TYPE_NAME thread_safe_resolver
+##INCLUDE resolver.vbp

@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 #Const USE_FAST_THREAD_POOL = False
 #Const USE_THREAD_POOL2 = True
 

@@ -1,11 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
-Imports osi.root.constants
-Imports osi.root.template
-Imports osi.root.delegates
-Imports osi.root.envs
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.envs
 Imports osi.root.formation
+Imports osi.root.template
 Imports osi.root.utils
 Imports counter = osi.root.utils.counter
 
@@ -40,11 +43,11 @@ Partial Public MustInherit Class threadpool
                 envs.thread_count <= Environment.ProcessorCount()) OrElse
                envs.thread_count = npos)
         default_thread_count = If(envs.thread_count <> npos,
-                                  envs.thread_count,
-                                  max(If(envs.busy_wait,
-                                         Environment.ProcessorCount() - queue_runner.thread_count,
-                                         Environment.ProcessorCount()),
-                                      1))
+                                  CUInt(envs.thread_count),
+                                  CUInt(max(If(busy_wait,
+                                               Environment.ProcessorCount() - CInt(queue_runner.thread_count),
+                                               Environment.ProcessorCount()),
+                                            1)))
     End Sub
 
     Protected Sub New()
@@ -97,7 +100,7 @@ Partial Public MustInherit Class threadpool
         Try
             thread.Abort()
             If stop_wait_seconds > 0 Then
-                thread.Join(seconds_to_milliseconds(stop_wait_seconds))
+                thread.Join(TimeSpan.FromSeconds(stop_wait_seconds))
             End If
         Catch
         Finally
@@ -112,20 +115,17 @@ Partial Public MustInherit Class threadpool
         End If
         raise_error("threadpool starts to stop, running before step.")
         before_stop()
-        If Not threads Is Nothing AndAlso threads.Length() > 0 Then
-            Dim i As Int64
-            For i = 0 To threads.Length() - 1
+        For i As Int32 = 0 To array_size_i(threads) - 1
 #If Not (PocketPC OrElse Smartphone) Then
-                If Not threads(i) Is Nothing AndAlso threads(i).IsAlive() Then
-                    stop_thread(threads(i), stop_wait_seconds)
-                End If
+            If Not threads(i) Is Nothing AndAlso threads(i).IsAlive() Then
+                stop_thread(threads(i), stop_wait_seconds)
+            End If
 #Else
                 If Not threads(i) Is Nothing Then
                     stop_thread(threads(i), stop_wait_seconds)
                 End If
 #End If
-            Next
-        End If
+        Next
         after_stop()
         raise_error("threadpool finished stopping.")
     End Sub
@@ -138,14 +138,14 @@ Partial Public MustInherit Class threadpool
     Protected Shared Sub register(Of T As ithreadpool)(ByVal i As T)
         assert(Not i Is Nothing)
         Dim j As ithreadpool = Nothing
-        If resolver.resolve(Of ithreadpool)(j) Then
+        If global_resolver.resolve(j) Then
             assert(Not j Is Nothing)
         Else
             assert(j Is Nothing)
         End If
         If j Is Nothing OrElse
            object_compare(i, j) = object_compare_undetermined Then
-            resolver.register(Of ithreadpool)(i)
+            global_resolver(Of ithreadpool).register(i)
             If Not j Is Nothing Then
                 j.stop()
             End If
