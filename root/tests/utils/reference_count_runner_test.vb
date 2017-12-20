@@ -1,9 +1,13 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.template
 Imports osi.root.utils
 Imports osi.root.utt
-Imports osi.root.template
 
 Public Class reference_count_runner_test
     Inherits case_wrapper

@@ -1,4 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.constants
+
 Public Module _gc
     Public Sub waitfor_gc_collect()
         GC.Collect()
@@ -7,7 +13,7 @@ Public Module _gc
 
     ' Repeats waitfor_gc_collect() for a magic eight times.
     Public Sub repeat_gc_collect(Optional ByVal round As UInt32 = 8)
-        For i As Int32 = 0 To round - 1
+        For i As Int32 = 0 To CInt(round) - 1
             waitfor_gc_collect()
         Next
     End Sub
@@ -23,7 +29,7 @@ Public Module _gc
                                              Optional ByVal round As UInt32 = 1000) As Boolean
         assert(Not check Is Nothing)
         While round > 0
-            round -= 1
+            round -= uint32_1
             If check() Then
                 Return True
             Else

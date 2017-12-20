@@ -77,7 +77,7 @@ Public Class ref_ptr(Of T)
 
     Protected Overrides Sub Finalize()
         If ref_count() > 0 Then
-            queue_dispose()
+            dispose()
             raise_error(error_type.warning, "ref_ptr @ ", create_stack_trace, " has not been fully dereferred.")
         End If
         GC.KeepAlive(Me)

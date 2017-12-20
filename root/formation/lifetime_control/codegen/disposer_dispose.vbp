@@ -4,7 +4,7 @@
     End Sub
 
     Protected NotOverridable Overrides Sub Finalize()
-        queue_dispose()
+        dispose()
         GC.KeepAlive(Me)
         MyBase.Finalize()
     End Sub

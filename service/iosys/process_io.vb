@@ -150,8 +150,4 @@ Public MustInherit Class process_io(Of INPUT_T, OUTPUT_T)
     Public Sub dispose()
         process.dispose()
     End Sub
-
-    Public Sub queue_dispose()
-        process.queue_dispose()
-    End Sub
 End Class
