@@ -1,0 +1,14 @@
+
+    <ThreadStatic()> Private Shared resolver As resolver(Of T)
+
+    Private Shared Function create_resolver() As resolver(Of T)
+        Dim r As resolver(Of T) = Nothing
+        r = resolver
+        If r Is Nothing Then
+            r = New resolver(Of T)()
+            resolver = r
+        End If
+        assert(Not r Is Nothing)
+        Return r
+    End Function
+

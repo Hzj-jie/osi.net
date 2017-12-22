@@ -1,0 +1,5 @@
+
+##DEFINE TYPE_NAME global_resolver
+##DEFINE TARGET r
+
+##INCLUDE resolver_wrapper.vbp

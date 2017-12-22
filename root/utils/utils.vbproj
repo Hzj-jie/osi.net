@@ -183,9 +183,14 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="resolver\codegen\global_resolver.vbp" />
+    <None Include="resolver\codegen\global_resolver_impl.vbp" />
     <None Include="resolver\codegen\resolver.vbp" />
+    <None Include="resolver\codegen\resolver_wrapper.vbp" />
     <None Include="resolver\codegen\run.cmd" />
     <None Include="resolver\codegen\thread_safe_resolver.vbp" />
+    <None Include="resolver\codegen\thread_static_resolver.vbp" />
+    <None Include="resolver\codegen\thread_static_resolver_impl.vbp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\connector\connector.vbproj">
