@@ -16,7 +16,7 @@ Public Class cast_perf
     End Sub
 
     Public Overrides Function run() As Boolean
-        Using regional_atomic_bool(suppress.compare_error)
+        Using scoped_atomic_bool(suppress.compare_error)
             Return MyBase.run()
         End Using
     End Function

@@ -71,7 +71,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="regional_environments_test.vb" />
+    <Compile Include="scoped_environments_test.vb" />
     <Compile Include="system_perf_test.vb" />
   </ItemGroup>
   <ItemGroup>

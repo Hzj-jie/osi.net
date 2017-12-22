@@ -70,7 +70,7 @@ Public Class compare_predefined_test
     End Function
 
     Public Overrides Function run() As Boolean
-        Using regional_atomic_bool(suppress.compare_error)
+        Using scoped_atomic_bool(suppress.compare_error)
             Return value_type_with_null() AndAlso
                    value_type_object_compare() AndAlso
                    value_with_reference_compare() AndAlso

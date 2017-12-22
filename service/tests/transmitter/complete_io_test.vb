@@ -64,7 +64,7 @@ Public MustInherit Class complete_io_test(Of T As flow)
     End Function
 
     Public NotOverridable Overrides Function run() As Boolean
-        Using regional_atomic_bool(suppress.pending_io_punishment)
+        Using scoped_atomic_bool(suppress.pending_io_punishment)
             Return send_case() AndAlso
                    receive_case()
         End Using

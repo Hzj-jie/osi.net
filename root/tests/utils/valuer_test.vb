@@ -35,7 +35,7 @@ Public Class valuer_test
     End Class
 
     Public Overrides Function run() As Boolean
-        Using regional_atomic_bool(suppress.valuer_error)
+        Using scoped_atomic_bool(suppress.valuer_error)
             Return run_case(Of Int32)("a", rnd_int(), binding_flags.instance_public) AndAlso
                    run_case(Of Int32)("b", rnd_int(), binding_flags.instance_public) AndAlso
                    run_case(Of test_int)("c", New test_imp(), binding_flags.instance_public) AndAlso

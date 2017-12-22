@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.formation
 
 Public NotInheritable Class thread_static_resolver
     Public Shared Function resolve(Of T As Class)(ByRef o As T) As Boolean
@@ -38,6 +39,28 @@ Public NotInheritable Class thread_static_resolver(Of T As Class)
     Public Shared Sub register(ByVal i As Func(Of T))
         create_resolver().register(i)
     End Sub
+
+    Public Shared Sub unregister()
+        create_resolver().unregister()
+    End Sub
+
+    Public Shared Function scoped_register(ByVal i As T) As disposer
+        Return scoped_action(Sub()
+                                 register(i)
+                             End Sub,
+                             Sub()
+                                 unregister()
+                             End Sub)
+    End Function
+
+    Public Shared Function scoped_register(ByVal i As Func(Of T)) As disposer
+        Return scoped_action(Sub()
+                                 register(i)
+                             End Sub,
+                             Sub()
+                                 unregister()
+                             End Sub)
+    End Function
 
     Public Shared Function resolve(ByRef o As T) As Boolean
         Return create_resolver().resolve(o)

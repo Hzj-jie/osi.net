@@ -16,7 +16,6 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.template
 
 #If True Then
 Imports osi.root.lock

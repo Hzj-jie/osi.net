@@ -76,7 +76,7 @@ Public Module _init
         If Not ss.empty() Then
             Dim loaded As atomic_int = Nothing
             loaded = New atomic_int()
-            Using New regional_environments({{"data", data_folder},
+            Using New scoped_environments({{"data", data_folder},
                                              {"service", service_name},
                                              {"service_data", service_data_folder}})
                 For i As UInt32 = 0 To ss.size() - uint32_1

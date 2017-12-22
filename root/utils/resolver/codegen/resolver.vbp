@@ -4,7 +4,6 @@
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.template
 
 #If ##THREAD_SAFE## Then
 Imports osi.root.lock

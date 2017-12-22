@@ -27,6 +27,10 @@ Public NotInheritable Class global_resolver(Of T As Class)
         r.register(i)
     End Sub
 
+    Public Shared Sub unregister()
+        r.unregister()
+    End Sub
+
     Public Shared Function resolve(ByRef o As T) As Boolean
         Return r.resolve(o)
     End Function

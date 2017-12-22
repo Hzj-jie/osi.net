@@ -26,6 +26,7 @@ Public NotInheritable Class thread_static_resolver_test
         Dim o As Object = Nothing
         assert_true(thread_static_resolver(Of Object).resolve(o))
         assert_reference_equal(i, o)
+        thread_static_resolver(Of Object).unregister()
     End Sub
 
     <test>
@@ -43,6 +44,30 @@ Public NotInheritable Class thread_static_resolver_test
         Dim o As Object = Nothing
         assert_true(thread_static_resolver.resolve(o))
         assert_reference_equal(i, o)
+        thread_static_resolver(Of Object).unregister()
+    End Sub
+
+    <test>
+    Private Shared Sub scoped_register_case()
+        Dim i As Object = Nothing
+        i = New Object()
+        Using thread_static_resolver(Of Object).scoped_register(i)
+            Dim o As Object = Nothing
+            assert_true(thread_static_resolver.resolve(o))
+            assert_reference_equal(i, o)
+        End Using
+        assert_false(thread_static_resolver(Of Object).resolve(Nothing))
+
+        Using thread_static_resolver(Of Object).scoped_register(Function() As Object
+                                                                    Return i
+                                                                End Function)
+            Dim o As Object = Nothing
+            assert_true(thread_static_resolver.resolve(o))
+            assert_reference_equal(i, o)
+        End Using
+        assert_false(thread_static_resolver(Of Object).resolve(Nothing))
+
+        thread_static_resolver(Of Object).unregister()
     End Sub
 
     Private Sub New()

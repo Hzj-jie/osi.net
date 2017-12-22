@@ -49,7 +49,7 @@ Public Class environment_transform_test
     End Function
 
     Public Overrides Function run() As Boolean
-        Using New regional_environments(kv.to_array())
+        Using New scoped_environments(kv.to_array())
             For i As Int32 = 0 To 1024 * 32 - 1
                 If Not run_case() Then
                     Return False

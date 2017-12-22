@@ -82,7 +82,7 @@ Public MustInherit Class rule
             Return False
         End Try
 
-        Using regional_action(Sub()
+        Using scoped_action(Sub()
                                   cur_file = rule_file
                               End Sub,
                               Sub()

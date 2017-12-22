@@ -8,7 +8,7 @@ Imports osi.root.lock
 Imports osi.root.connector
 
 Public Module _disposer
-    Public Function regional_action(ByVal start As Action,
+    Public Function scoped_action(ByVal start As Action,
                                     ByVal [end] As Action) As disposer
         assert(Not start Is Nothing)
         assert(Not [end] Is Nothing)
@@ -16,9 +16,9 @@ Public Module _disposer
         Return New disposer([end])
     End Function
 
-    Public Function regional_atomic_bool(ByVal i As atomic_bool) As disposer
+    Public Function scoped_atomic_bool(ByVal i As atomic_bool) As disposer
         assert(Not i Is Nothing)
-        Return regional_action(AddressOf i.inc, AddressOf i.dec)
+        Return scoped_action(AddressOf i.inc, AddressOf i.dec)
     End Function
 
     Public Function defer(ByVal [end] As Action) As disposer

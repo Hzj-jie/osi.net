@@ -79,7 +79,7 @@ Public Module _env_value
     End Function
 End Module
 
-Public Class regional_environments
+Public Class scoped_environments
     Implements IDisposable
 
     Private ReadOnly envs() As String
