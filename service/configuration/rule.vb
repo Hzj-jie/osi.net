@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utils
 
@@ -35,7 +39,7 @@ Public MustInherit Class rule
             Return True
         End If
 
-        For i As UInt32 = 0 To array_size(ls) - uint32_1
+        For i As Int32 = 0 To array_size_i(ls) - 1
             If Not ls(i).null_or_whitespace() Then
                 ls(i) = ls(i).Trim()
                 If Not ls(i).strstartwith(comment_start) Then

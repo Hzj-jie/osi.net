@@ -1,8 +1,7 @@
 ﻿
 Option Explicit On
 Option Infer Off
-' implicit_convert_run use implicit conversion.
-Option Strict Off
+Option Strict On
 
 Imports osi.root.constants
 Imports osi.root.connector
@@ -26,7 +25,7 @@ Public Class cint_convert_toint_perf_test
         ElseIf os.windows_major <= os.windows_major_t._6 Then
             Return loosen_bound({306, 817, 310}, i, j)
         Else
-            Return loosen_bound({279, 833, 143}, i, j)
+            Return loosen_bound({154, 896, 158}, i, j)
         End If
     End Function
 
@@ -53,7 +52,7 @@ Public Class cint_convert_toint_perf_test
         i = rnd_uint(0, max_int32)
         Dim k As Int32 = 0
         For j As UInt64 = 0 To CULng(size - 1)
-            k = i
+            implicit_conversions.cint_convert_toint_perf_test_implicit_convert_run(k, i)
         Next
     End Sub
 End Class

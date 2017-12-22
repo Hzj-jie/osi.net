@@ -1,19 +1,23 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Collections
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 
 Public Module _env_value
     Public Function env_value(ByVal str() As String, ByRef value As String) As Boolean
-        If str Is Nothing OrElse str.Length() = 0 Then
+        If isemptyarray(str) Then
             Return False
         Else
             Dim envs As IDictionary = Nothing
             envs = Environment.GetEnvironmentVariables()
             If Not envs.null_or_empty() Then
-                For i As Int64 = 0 To str.Length() - 1
+                For i As Int32 = 0 To array_size_i(str) - 1
                     If envs.Contains(str(i)) Then
-                        value = envs(str(i))
+                        value = Convert.ToString(envs(str(i)))
                         raise_error("environment variable ", str(i), " = ", value)
                         Return True
                     End If
@@ -86,16 +90,16 @@ Public Class scoped_environments
 
     Public Sub New(ByVal envs(,) As String)
         assert(envs.GetLength(1) >= 2)
-        ReDim Me.envs(array_size(envs) - 1)
-        For i As Int32 = 0 To array_size(envs) - 1
+        ReDim Me.envs(array_size_i(envs) - 1)
+        For i As Int32 = 0 To array_size_i(envs) - 1
             Me.envs(i) = envs(i, 0)
             assert(set_env(envs(i, 0), envs(i, 1)))
         Next
     End Sub
 
     Public Sub New(ByVal envs()() As String)
-        ReDim Me.envs(array_size(envs) - 1)
-        For i As Int32 = 0 To array_size(envs) - 1
+        ReDim Me.envs(array_size_i(envs) - 1)
+        For i As Int32 = 0 To array_size_i(envs) - 1
             assert(array_size(envs(i)) >= 2)
             Me.envs(i) = envs(i)(0)
             assert(set_env(envs(i)(0), envs(i)(1)))
@@ -108,24 +112,16 @@ Public Class scoped_environments
         assert(set_env(name, value))
     End Sub
 
-#Region "IDisposable Support"
-    Private disposedValue As Boolean
-
-    Protected Overridable Sub Dispose(disposing As Boolean)
-        If Not Me.disposedValue Then
-            If disposing Then
-                For i As Int32 = 0 To array_size(envs) - 1
-                    assert(set_env(envs(i), Nothing))
-                Next
-            End If
-        End If
-        Me.disposedValue = True
-    End Sub
-
     Public Sub Dispose() Implements IDisposable.Dispose
-        Dispose(True)
+        For i As Int32 = 0 To array_size_i(envs) - 1
+            assert(set_env(envs(i), Nothing))
+        Next
         GC.SuppressFinalize(Me)
     End Sub
-#End Region
 
+    Protected Overrides Sub Finalize()
+        Dispose()
+        GC.KeepAlive(Me)
+        MyBase.Finalize()
+    End Sub
 End Class

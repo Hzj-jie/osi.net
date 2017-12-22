@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.envs
 Imports osi.root.formation
@@ -12,7 +16,7 @@ Public Class environment_transform_test
 
     Sub New()
         ReDim kv(16 - 1)
-        For i As Int32 = 0 To array_size(kv) - 1
+        For i As Int32 = 0 To array_size_i(kv) - 1
             kv(i) = emplace_make_pair(guid_str(), guid_str())
         Next
     End Sub
@@ -25,7 +29,7 @@ Public Class environment_transform_test
         For i As Int32 = 0 To 128 - 1
             If rnd_bool() Then
                 Dim r As Int32 = 0
-                r = rnd_int(0, array_size(kv))
+                r = rnd_int(0, array_size_i(kv))
                 p += start_str + kv(r).first + end_str
                 e += kv(r).second
             ElseIf rnd_bool() Then

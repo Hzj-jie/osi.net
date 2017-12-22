@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.lock
 Imports osi.root.utils
@@ -145,7 +149,7 @@ Public Class invoker_test
 
     'suppress.invoker_error
     Public Overrides Function reserved_processors() As Int16
-        Return Environment.ProcessorCount()
+        Return CShort(Environment.ProcessorCount())
     End Function
 
     Public Overrides Function run() As Boolean

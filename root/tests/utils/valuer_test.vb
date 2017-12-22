@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Reflection
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.utils
 Imports osi.root.utt
 
@@ -59,7 +63,7 @@ Public Class valuer_test
     End Function
 
     Private Shared Function new_valuer(Of T)(ByVal name As String, ByVal bindingflags As BindingFlags) As valuer(Of T)
-        Return new_valuer(Of T)(If(bindingflags And Reflection.BindingFlags.Instance, New test_class(), Nothing),
+        Return new_valuer(Of T)(If((bindingflags And BindingFlags.Instance) <> 0, New test_class(), Nothing),
                                 name,
                                 bindingflags)
     End Function
@@ -85,7 +89,7 @@ Public Class valuer_test
             assert_equal(value, w)
         End If
 
-        If bindingflags And Reflection.BindingFlags.Instance Then
+        If (bindingflags And BindingFlags.Instance) <> 0 Then
             v = new_valuer(Of T)(Nothing, name, bindingflags)
             If assert_true(v.valid()) Then
                 Dim c As test_class = Nothing
@@ -125,7 +129,9 @@ Public Class valuer_test
             assert_false(new_valuer(Of T)(name, bindingflags).try_set(New T()))
             assert_true(v.try_set(New T2()))
             Dim w As T = Nothing
-            assert_true(v.try_get(w))
+            w = v.get_or_null()
+            assert_not_nothing(w)
+            assert_true(implicit_conversions.valuer_test_get_only_case_try_get(Of T, T2)(v, w))
         End If
         Return True
     End Function

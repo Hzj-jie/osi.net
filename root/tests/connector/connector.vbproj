@@ -117,6 +117,7 @@
     <Compile Include="gettype_perf.vb" />
     <Compile Include="gettype_test.vb" />
     <Compile Include="implement_test.vb" />
+    <Compile Include="implicit_conversions.vb" />
     <Compile Include="inherit\base2_perf.vb" />
     <Compile Include="inherit\base_perf.vb" />
     <Compile Include="inherit\impl_perf.vb" />

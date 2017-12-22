@@ -4,8 +4,8 @@ Option Infer Off
 Option Strict On
 
 Imports System.Reflection
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 
 Partial Public NotInheritable Class valuer
     Private Shared Function get_type(Of T)(ByVal obj As T) As Type
@@ -329,6 +329,15 @@ Public Class valuer(Of VT)
         End Try
     End Function
 
+    Public Function get_or_null() As VT
+        Dim o As VT = Nothing
+        If try_get(o) Then
+            Return o
+        Else
+            Return Nothing
+        End If
+    End Function
+
     Public Sub [set](ByVal v As VT)
         assert(pre_binding())
         setter(v)
@@ -363,6 +372,15 @@ Public Class valuer(Of VT)
             get_error(ex)
             Return False
         End Try
+    End Function
+
+    Public Function get_or_null(ByVal o As Object) As VT
+        Dim r As VT = Nothing
+        If try_get(o, r) Then
+            Return r
+        Else
+            Return Nothing
+        End If
     End Function
 
     Public Sub [set](ByVal o As Object, ByVal v As VT)
