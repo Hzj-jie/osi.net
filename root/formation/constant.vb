@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+Imports osi.root.formation
 
 Public Module _constant
     <Extension()> Public Function get_or_null(Of T)(ByVal this As constant(Of T)) As T
@@ -26,6 +27,8 @@ Public NotInheritable Class constant
 End Class
 
 Public NotInheritable Class constant(Of T)
+    Implements IComparable(Of constant(Of T)), IComparable(Of T), IComparable, ICloneable, ICloneable(Of constant(Of T))
+
     Private ReadOnly v As T
 
     Public Sub New(ByVal v As T)
@@ -44,19 +47,36 @@ Public NotInheritable Class constant(Of T)
         Return this.get_or_null()
     End Operator
 
-    Public Shared Widening Operator CType(ByVal this As constant(Of T)) As T
-        Return +this
-    End Operator
-
-    Public Shared Widening Operator CType(ByVal this As T) As constant(Of T)
-        Return constant.[New](this)
-    End Operator
-
     Public Overrides Function ToString() As String
-        Return strcat("constant(", Convert.ToString(v), ")")
+        Return strcat("constant(", v, ")")
     End Function
 
     Public Overrides Function GetHashCode() As Int32
         Return If(v Is Nothing, 0, v.GetHashCode())
+    End Function
+
+    Public Function CompareTo(ByVal other As constant(Of T)) As Int32 Implements IComparable(Of constant(Of T)).CompareTo
+        Return CompareTo(+other)
+    End Function
+
+    Public Function CompareTo(ByVal other As T) As Int32 Implements IComparable(Of T).CompareTo
+        Return compare(v, other)
+    End Function
+
+    Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
+        Dim v As constant(Of T) = Nothing
+        If cast(obj, v) Then
+            Return CompareTo(v)
+        Else
+            Return CompareTo(cast(Of T)(obj, False))
+        End If
+    End Function
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
+    End Function
+
+    Public Function CloneT() As constant(Of T) Implements ICloneable(Of constant(Of T)).Clone
+        Return constant.[New](copy_no_error(v))
     End Function
 End Class

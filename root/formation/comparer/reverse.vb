@@ -1,8 +1,25 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 
-Public Class reverse(Of T)
-    Implements IComparable(Of reverse(Of T)), IComparable(Of T), IComparable
+Public NotInheritable Class reverse
+    Public Shared Function [New](Of T)(ByVal i As T) As reverse(Of T)
+        Return New reverse(Of T)(i)
+    End Function
+
+    Public Shared Function [New](Of T)(ByVal i As reverse(Of T)) As reverse(Of T)
+        Return New reverse(Of T)(i)
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
+
+Public NotInheritable Class reverse(Of T)
+    Implements IComparable(Of reverse(Of T)), IComparable(Of T), IComparable, ICloneable, ICloneable(Of reverse(Of T))
 
     Private ReadOnly v As T
 
@@ -29,7 +46,7 @@ Public Class reverse(Of T)
 
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
         Dim v As reverse(Of T) = Nothing
-        If cast(Of reverse(Of T))(obj, v) Then
+        If cast(obj, v) Then
             Return CompareTo(v)
         Else
             Return CompareTo(cast(Of T)(obj, False))
@@ -38,5 +55,21 @@ Public Class reverse(Of T)
 
     Public Function CompareTo(ByVal other As T) As Int32 Implements IComparable(Of T).CompareTo
         Return compare(other, +Me)
+    End Function
+
+    Public Overrides Function ToString() As String
+        Return strcat("reverse(", v, ")")
+    End Function
+
+    Public Overrides Function GetHashCode() As Int32
+        Return Not If(v Is Nothing, 0, v.GetHashCode())
+    End Function
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
+    End Function
+
+    Public Function CloneT() As reverse(Of T) Implements ICloneable(Of reverse(Of T)).Clone
+        Return reverse.[New](copy_no_error(v))
     End Function
 End Class

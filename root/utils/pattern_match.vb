@@ -4,8 +4,8 @@ Option Infer Off
 Option Strict On
 
 Imports System.Runtime.CompilerServices
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 
 ' TODO: Update the name of functions in this file.
@@ -93,8 +93,10 @@ Public NotInheritable Class pattern_match
         i = definition_start
         Dim j As Int32 = 0
         j = name_start
-        Dim definition_len As constant(Of UInt32) = strlen(definition)
-        Dim name_len As constant(Of UInt32) = strlen(name)
+        Dim definition_len As UInt32 = 0
+        definition_len = strlen(definition)
+        Dim name_len As UInt32 = 0
+        name_len = strlen(name)
 
         While (i < +definition_len AndAlso j < +name_len)
             If definition(i) = multi_char_sign Then

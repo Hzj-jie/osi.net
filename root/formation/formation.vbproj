@@ -130,7 +130,6 @@
     <Compile Include="pool\unmanaged_pool.vb" />
     <Compile Include="qless2_stream.vb" />
     <Compile Include="queue.vb" />
-    <Compile Include="comparer\reverse_date.vb" />
     <Compile Include="set.vb" />
     <Compile Include="setqueue.vb" />
     <Compile Include="stack.vb" />

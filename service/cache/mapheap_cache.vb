@@ -6,18 +6,19 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.delegates
 Imports osi.root.formation
+Imports osi.root.utils
 Imports osi.service.cache.constants.mapheap_cache
 
 Friend Class mapheap_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     Implements islimcache2(Of KEY_T, VALUE_T)
 
-    Private ReadOnly m As map(Of KEY_T, VALUE_T)
-    Private ReadOnly mh As mapheap(Of KEY_T, reverse_date)
     Private ReadOnly max_size As UInt64
     Private ReadOnly retire_ticks As UInt64
     Private ReadOnly update_ticks_when_refer As Boolean
+    Private ReadOnly m As map(Of KEY_T, VALUE_T)
+    Private ReadOnly mh As mapheap(Of KEY_T, reverse(Of UInt64))
+    Private ReadOnly clock As tick_clock
 
-    ' TODO: Use tick_clock
     Public Sub New(Optional ByVal max_size As UInt64 = default_max_size,
                    Optional ByVal retire_ticks As UInt64 = default_retire_ticks,
                    Optional ByVal update_ticks_when_refer As Boolean = default_update_ticks_when_refer)
@@ -26,26 +27,28 @@ Friend Class mapheap_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
         Me.retire_ticks = retire_ticks
         Me.update_ticks_when_refer = update_ticks_when_refer
         m = New map(Of KEY_T, VALUE_T)()
-        mh = New mapheap(Of KEY_T, reverse_date)()
+        mh = New mapheap(Of KEY_T, reverse(Of UInt64))()
+        clock = thread_static_resolver.resolve_or_default(default_tick_clock.instance)
+        assert(Not clock Is Nothing)
     End Sub
 
     Private Function no_retire() As Boolean
         Return retire_ticks = no_retire_ticks
     End Function
 
-    Private Function retired(ByVal d As reverse_date) As Boolean
+    Private Function retired(ByVal d As reverse(Of UInt64)) As Boolean
         assert(Not d Is Nothing)
-        Return Not no_retire() AndAlso nowadays.ticks() - (+d).Ticks() >= retire_ticks
+        Return Not no_retire() AndAlso clock.ticks() - (+d) >= retire_ticks
     End Function
 
-    Private Function retired(ByVal i As mapheap(Of KEY_T, reverse_date).iterator) As Boolean
+    Private Function retired(ByVal i As mapheap(Of KEY_T, reverse(Of UInt64)).iterator) As Boolean
         assert(Not i.is_null())
         assert(i <> mh.end())
         Return retired((+i).first)
     End Function
 
     Private Sub update_refer_ticks(ByVal k As KEY_T)
-        assert(mh.insert(k, New reverse_date()))
+        assert(mh.insert(k, reverse.[New](clock.ticks())))
     End Sub
 
     Public Sub clear() Implements islimcache2(Of KEY_T, VALUE_T).clear
@@ -88,7 +91,7 @@ Friend Class mapheap_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
             End If
             Return False
         Else
-            Dim j As mapheap(Of KEY_T, reverse_date).iterator = Nothing
+            Dim j As mapheap(Of KEY_T, reverse(Of UInt64)).iterator = Nothing
             j = mh.find(key)
             assert(j <> mh.end())
             If retired(j) Then

@@ -92,13 +92,13 @@ Public NotInheritable Class normal_res_tick_clock
     End Function
 End Class
 
-Public NotInheritable Class default_res_tick_clock
+Public NotInheritable Class default_tick_clock
     Inherits tick_clock
 
-    Public Shared ReadOnly instance As default_res_tick_clock
+    Public Shared ReadOnly instance As default_tick_clock
 
     Shared Sub New()
-        instance = New default_res_tick_clock()
+        instance = New default_tick_clock()
     End Sub
 
     Private Sub New()

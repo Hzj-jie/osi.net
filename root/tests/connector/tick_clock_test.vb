@@ -28,10 +28,10 @@ Public NotInheritable Class tick_clock_test
         normal_res_tick_clock.instance.seconds()
         normal_res_tick_clock.instance.ToString()
 
-        default_res_tick_clock.instance.milliseconds()
-        default_res_tick_clock.instance.ticks()
-        default_res_tick_clock.instance.seconds()
-        default_res_tick_clock.instance.ToString()
+        default_tick_clock.instance.milliseconds()
+        default_tick_clock.instance.ticks()
+        default_tick_clock.instance.seconds()
+        default_tick_clock.instance.ToString()
     End Sub
 
     Private Sub New()
