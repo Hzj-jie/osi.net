@@ -1,0 +1,13 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <DevicepoolProps>true</DevicepoolProps>
+  </PropertyGroup>
+  <Import Project="devicepool.dep" />
+  <ItemGroup>
+    <Reference Include="osi.service.devicepool">
+      <HintPath>$(ServicePath)\devicepool\bin\$(Configuration)\osi.service.devicepool.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>
