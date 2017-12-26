@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.argument
-Imports osi.service.selector
+Imports osi.service.constructor
 
 <test>
 Partial Public NotInheritable Class wrapper_test

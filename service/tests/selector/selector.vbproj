@@ -59,11 +59,6 @@
     <Compile Include="async_preparer_test.vb" />
     <Compile Include="async_preparer_valuetype_test.vb" />
     <Compile Include="async_thread_safe_lazier_test.vb" />
-    <Compile Include="constructor\constructor_register_in_multiple_threads_test.vb" />
-    <Compile Include="constructor\constructor_test.vb" />
-    <Compile Include="constructor\convertor_test.vb" />
-    <Compile Include="constructor\wrapper_register_in_multiple_threads_test.vb" />
-    <Compile Include="constructor\wrapper_test.vb" />
     <Compile Include="dispenser\dispenser_test.accepter.vb" />
     <Compile Include="dispenser\dispenser_test.receiver.vb" />
     <Compile Include="dispenser\dispenser_test.vb" />

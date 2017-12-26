@@ -8,7 +8,7 @@ Imports osi.root.connector
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.argument
-Imports osi.service.selector
+Imports osi.service.constructor
 
 Partial Public Class wrapper_test
     <test>
