@@ -66,8 +66,50 @@ Public NotInheritable Class thread_static_resolver_test
             assert_reference_equal(i, o)
         End Using
         assert_false(thread_static_resolver(Of Object).resolve(Nothing))
+    End Sub
 
-        thread_static_resolver(Of Object).unregister()
+    <test>
+    Private Shared Sub resolve_rt_case()
+        Dim i As Int32 = 0
+        i = rnd_int()
+        Dim o As Int32 = 0
+        Using thread_static_resolver(Of Object).scoped_register(i)
+            assert_true(thread_static_resolver(Of Object).resolve(o))
+            assert_equal(i, o)
+        End Using
+        assert_false(thread_static_resolver(Of Object).resolve(o))
+
+        Using thread_static_resolver(Of Object).scoped_register(New Int64())
+            assert_false(thread_static_resolver(Of Object).resolve(o))
+        End Using
+    End Sub
+
+    <test>
+    Private Shared Sub resolve_shortcuts_case()
+        Dim i As Object = Nothing
+        i = New Object()
+        assert_nothing(thread_static_resolver(Of Object).resolve_or_null())
+        assert_reference_equal(thread_static_resolver(Of Object).resolve_or_default(i), i)
+        Using thread_static_resolver(Of Object).scoped_register(i)
+            assert_reference_equal(thread_static_resolver(Of Object).resolve_or_null(), i)
+            assert_reference_equal(thread_static_resolver(Of Object).resolve_or_default(New Object()), i)
+        End Using
+
+        Using thread_static_resolver(Of Object).scoped_register(100)
+            assert_equal(thread_static_resolver(Of Object).resolve_or_null(), 100)
+            assert_equal(thread_static_resolver(Of Object).resolve_or_default(New Object()), 100)
+
+            assert_equal(thread_static_resolver(Of Object).resolve_or_null(Of Int32)(), 100)
+            assert_equal(thread_static_resolver(Of Object).resolve_or_default(Of Int32)(200), 100)
+        End Using
+
+        Using thread_static_resolver(Of Object).scoped_register(1.0)
+            assert_equal(thread_static_resolver(Of Object).resolve_or_null(), 1.0)
+            assert_equal(thread_static_resolver(Of Object).resolve_or_default(New Object()), 1.0)
+
+            assert_equal(thread_static_resolver(Of Object).resolve_or_null(Of Int32)(), 0)
+            assert_equal(thread_static_resolver(Of Object).resolve_or_default(Of Int32)(200), 200)
+        End Using
     End Sub
 
     Private Sub New()

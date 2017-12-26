@@ -1,0 +1,25 @@
+
+##DEFAULT TEMPLATE (Of RT As T)
+##DEFAULT RETURN_TYPE RT
+
+    Public Shared Function resolve##TEMPLATE##() As ##RETURN_TYPE##
+        Dim o As ##RETURN_TYPE## = Nothing
+        assert(resolve(o))
+        Return o
+    End Function
+
+    Public Shared Function resolve_or_null##TEMPLATE##() As ##RETURN_TYPE##
+        Dim o As ##RETURN_TYPE## = Nothing
+        resolve(o)
+        Return o
+    End Function
+
+    Public Shared Function resolve_or_default##TEMPLATE##(Optional ByVal [default] As ##RETURN_TYPE## = Nothing) As ##RETURN_TYPE##
+        Dim o As ##RETURN_TYPE## = Nothing
+        If resolve(o) Then
+            Return o
+        Else
+            Return [default]
+        End If
+    End Function
+

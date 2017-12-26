@@ -187,6 +187,7 @@
     <None Include="resolver\codegen\global_resolver_impl.vbp" />
     <None Include="resolver\codegen\resolver.vbp" />
     <None Include="resolver\codegen\resolver_wrapper.vbp" />
+    <None Include="resolver\codegen\resolver_wrapper_resolve.vbp" />
     <None Include="resolver\codegen\run.cmd" />
     <None Include="resolver\codegen\thread_safe_resolver.vbp" />
     <None Include="resolver\codegen\thread_static_resolver.vbp" />

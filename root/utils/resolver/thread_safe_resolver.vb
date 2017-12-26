@@ -75,27 +75,6 @@ Public NotInheritable Class thread_safe_resolver(Of T As Class)
         o = cached
         Return True
     End Function
-
-    Public Function resolve() As T
-        Dim o As T = Nothing
-        assert(resolve(o))
-        Return o
-    End Function
-
-    Public Function resolve_or_null() As T
-        Dim o As T = Nothing
-        resolve(o)
-        Return o
-    End Function
-
-    Public Function resolve_or_default(Optional ByVal [default] As T = Nothing) As T
-        Dim o As T = Nothing
-        If resolve(o) Then
-            Return o
-        Else
-            Return [default]
-        End If
-    End Function
 End Class
 'finish resolver.vbp --------
 'finish thread_safe_resolver.vbp --------

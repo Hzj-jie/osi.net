@@ -58,7 +58,6 @@ Public NotInheritable Class resolver_test
         r = New resolver(Of Object)()
 
         assert_false(r.resolve(Nothing))
-        assert_nothing(r.resolve_or_null())
     End Sub
 
     <test>

@@ -95,7 +95,7 @@ End Class
 Public NotInheritable Class default_tick_clock
     Inherits tick_clock
 
-    Public Shared ReadOnly instance As default_tick_clock
+    Public Shared ReadOnly instance As tick_clock
 
     Shared Sub New()
         instance = New default_tick_clock()

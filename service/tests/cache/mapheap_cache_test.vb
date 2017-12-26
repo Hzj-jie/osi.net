@@ -7,6 +7,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.formation
+Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.cache
 
@@ -16,6 +17,7 @@ Public Class mapheap_cache_test
     Private Const max_size As UInt64 = 16
     Private Shared ReadOnly retire_ticks As UInt64
     Private Shared ReadOnly enc As Text.Encoding
+    Private ReadOnly clock As mock_tick_clock
     Private ReadOnly c As icache(Of String, Byte())
 
     Shared Sub New()
@@ -24,7 +26,10 @@ Public Class mapheap_cache_test
     End Sub
 
     Public Sub New()
-        mapheap_cache(c, max_size, retire_ticks)
+        clock = New mock_tick_clock()
+        Using thread_static_resolver(Of tick_clock).scoped_register(clock)
+            mapheap_cache(c, max_size, retire_ticks)
+        End Using
     End Sub
 
     Private Shared Function key_value(ByVal k As String) As Byte()
@@ -54,39 +59,37 @@ Public Class mapheap_cache_test
     End Function
 
     Private Function retired_test() As Boolean
-        Using New realtime()
-            Dim sleep_half_retire_ticks As Action = Sub()
-                                                        sleep_ticks(CLng(retire_ticks * 4 / 7))
-                                                    End Sub
-            assert(c.empty())
-            Dim v As vector(Of pair(Of String, Byte())) = Nothing
-            v = create_data(max_size)
-            For i As UInt32 = 0 To v.size() - uint32_1
-                c.set(v(i).first, v(i).second)
-            Next
-            sleep_half_retire_ticks()
-            For i As UInt32 = (v.size() >> 1) To v.size() - uint32_1
-                assert_true(c.have(v(i).first))
-                Dim b() As Byte = Nothing
-                assert_true(c.get(v(i).first, b))
-                assert_key_value(v(i).first, b)
-            Next
-            sleep_half_retire_ticks()
-            assert_equal(v.size(), c.size())
-            For i As UInt32 = 0 To (v.size() >> 1) - uint32_1
-                assert_true(c.have(v(i).first))
-                assert_false(c.get(v(i).first, Nothing))
-                assert_equal(v.size() - i - 1, c.size())
-            Next
-            sleep_half_retire_ticks()
-            For i As UInt32 = (v.size() >> 1) To v.size() - uint32_1
-                assert_true(c.have(v(i).first))
-                assert_false(c.get(v(i).first, Nothing))
-                assert_equal(v.size() - i - 1, c.size())
-            Next
-            assert_true(c.empty())
-            c.clear()
-        End Using
+        Dim sleep_half_retire_ticks As Action = Sub()
+                                                    clock.advance_ticks(CULng(retire_ticks * 4 / 7))
+                                                End Sub
+        assert(c.empty())
+        Dim v As vector(Of pair(Of String, Byte())) = Nothing
+        v = create_data(max_size)
+        For i As UInt32 = 0 To v.size() - uint32_1
+            c.set(v(i).first, v(i).second)
+        Next
+        sleep_half_retire_ticks()
+        For i As UInt32 = (v.size() >> 1) To v.size() - uint32_1
+            assert_true(c.have(v(i).first))
+            Dim b() As Byte = Nothing
+            assert_true(c.get(v(i).first, b))
+            assert_key_value(v(i).first, b)
+        Next
+        sleep_half_retire_ticks()
+        assert_equal(v.size(), c.size())
+        For i As UInt32 = 0 To (v.size() >> 1) - uint32_1
+            assert_true(c.have(v(i).first))
+            assert_false(c.get(v(i).first, Nothing))
+            assert_equal(v.size() - i - 1, c.size())
+        Next
+        sleep_half_retire_ticks()
+        For i As UInt32 = (v.size() >> 1) To v.size() - uint32_1
+            assert_true(c.have(v(i).first))
+            assert_false(c.get(v(i).first, Nothing))
+            assert_equal(v.size() - i - 1, c.size())
+        Next
+        assert_true(c.empty())
+        c.clear()
         Return True
     End Function
 
@@ -105,7 +108,7 @@ Public Class mapheap_cache_test
                 assert_true(c.get(v(k).first, b))
                 assert_key_value(v(k).first, b)
             Next
-            sleep(two_timeslice_length_ms)
+            clock.advance_ticks(1)
         Next
 
         For i As UInt32 = max_size To v.size() - uint32_1

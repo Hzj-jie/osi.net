@@ -3,6 +3,7 @@
 ##DEFAULT TARGET create_resolver()
 ##DEFAULT IMPL_SOURCE ##TYPE_NAME##_impl.vbp
 
+Imports osi.root.connector
 Imports osi.root.formation
 
 Public NotInheritable Class ##TYPE_NAME##
@@ -40,17 +41,16 @@ Public NotInheritable Class ##TYPE_NAME##(Of T As Class)
         Return ##TARGET##.resolve(o)
     End Function
 
-    Public Shared Function resolve() As T
-        Return ##TARGET##.resolve()
+    Public Shared Function resolve(Of RT As T)(ByRef r As RT) As Boolean
+        Dim o As T = Nothing
+        Return resolve(o) AndAlso direct_cast(o, r)
     End Function
 
-    Public Shared Function resolve_or_null() As T
-        Return ##TARGET##.resolve_or_null()
-    End Function
+    ##INCLUDE resolver_wrapper_resolve.vbp
 
-    Public Shared Function resolve_or_default(Optional ByVal [default] As T = Nothing) As T
-        Return ##TARGET##.resolve_or_default([default])
-    End Function
+    ##DEFINE TEMPLATE 
+    ##DEFINE RETURN_TYPE T
+    ##INCLUDE resolver_wrapper_resolve.vbp
 
     Public Shared Function scoped_register(ByVal i As T) As disposer
         Return scoped_action(Sub()
