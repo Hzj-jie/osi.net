@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 

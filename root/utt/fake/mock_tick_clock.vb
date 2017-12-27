@@ -5,15 +5,13 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.formation
-Imports osi.root.utils
 
 Public NotInheritable Class thread_static_mock_tick_clock
     Public Shared Sub register()
         thread_static_resolver(Of tick_clock).register(New mock_tick_clock())
     End Sub
 
-    Public Shared Function scoped_register() As disposer
+    Public Shared Function scoped_register() As IDisposable
         Return thread_static_resolver(Of tick_clock).scoped_register(New mock_tick_clock())
     End Function
 

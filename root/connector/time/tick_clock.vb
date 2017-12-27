@@ -29,6 +29,24 @@ Public Class tick_clock
     End Function
 End Class
 
+Public NotInheritable Class thread_static_tick_clock
+    Public Shared Function resolve_or_default() As tick_clock
+        Return thread_static_resolver(Of tick_clock).resolve_or_default(default_tick_clock.instance)
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
+
+Public NotInheritable Class global_tick_clock
+    Public Shared Function resolve_or_default() As tick_clock
+        Return global_resolver(Of tick_clock).resolve_or_default(default_tick_clock.instance)
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
+
 Public NotInheritable Class high_res_tick_clock
     Inherits tick_clock
 

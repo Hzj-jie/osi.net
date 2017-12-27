@@ -152,6 +152,7 @@
     <Compile Include="out_generic_behavior_test.vb" />
     <Compile Include="overload_behavior_test.vb" />
     <Compile Include="rate_timeout_test.vb" />
+    <Compile Include="resolver_test.vb" />
     <Compile Include="rnd\guid_strs_test.vb" />
     <Compile Include="rnd_register_test.vb" />
     <Compile Include="send_input_test\send_input_test2.vb" />
@@ -172,6 +173,7 @@
     <Compile Include="strrplc_test.vb" />
     <Compile Include="str_bool_test.vb" />
     <Compile Include="template\to_uint32_test.vb" />
+    <Compile Include="thread_static_resolver_test.vb" />
     <Compile Include="tick_clock_test.vb" />
     <Compile Include="type_behavior_test.vb" />
     <Compile Include="type_info_perf.vb" />

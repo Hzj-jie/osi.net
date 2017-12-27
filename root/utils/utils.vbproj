@@ -131,11 +131,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="pattern_match.vb" />
-    <Compile Include="resolver\global_resolver.vb" />
-    <Compile Include="resolver\thread_safe_resolver.vb" />
-    <Compile Include="resolver\resolver.vb" />
     <Compile Include="domain_unhandled_exception.vb" />
-    <Compile Include="resolver\thread_static_resolver.vb" />
     <Compile Include="thread_static2.vb" />
     <Compile Include="transceive_timeout.vb" />
     <Compile Include="type_attribute\type_attribute.copy.vb" />
@@ -183,15 +179,6 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="resolver\codegen\global_resolver.vbp" />
-    <None Include="resolver\codegen\global_resolver_impl.vbp" />
-    <None Include="resolver\codegen\resolver.vbp" />
-    <None Include="resolver\codegen\resolver_wrapper.vbp" />
-    <None Include="resolver\codegen\resolver_wrapper_resolve.vbp" />
-    <None Include="resolver\codegen\run.cmd" />
-    <None Include="resolver\codegen\thread_safe_resolver.vbp" />
-    <None Include="resolver\codegen\thread_static_resolver.vbp" />
-    <None Include="resolver\codegen\thread_static_resolver_impl.vbp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\connector\connector.vbproj">

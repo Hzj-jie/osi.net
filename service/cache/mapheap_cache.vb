@@ -6,7 +6,6 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.delegates
 Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.service.cache.constants.mapheap_cache
 
 Friend Class mapheap_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
@@ -28,7 +27,7 @@ Friend Class mapheap_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
         Me.update_ticks_when_refer = update_ticks_when_refer
         m = New map(Of KEY_T, VALUE_T)()
         mh = New mapheap(Of KEY_T, reverse(Of UInt64))()
-        clock = thread_static_resolver.resolve_or_default(default_tick_clock.instance)
+        clock = thread_static_tick_clock.resolve_or_default()
         assert(Not clock Is Nothing)
     End Sub
 

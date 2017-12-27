@@ -12,24 +12,26 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 
-#If False Then
-Imports osi.root.lock
-#End If
-
 Public NotInheritable Class resolver(Of T As Class)
 #If False Then
-    Private l As slimlock.monitorlock
+    Private ReadOnly l As Object
 #End If
     Private f As Func(Of T)
     Private cached As T
 
+#If False Then
+    Public Sub New()
+        l = New Object()
+    End Sub
+#End If
+
     Public Sub register(ByVal i As T)
 #If False Then
-        l.wait()
+        SyncLock l
 #End If
         cached = i
 #If False Then
-        l.release()
+        End SyncLock
 #End If
     End Sub
 
@@ -39,32 +41,29 @@ Public NotInheritable Class resolver(Of T As Class)
 
     Public Sub register(ByVal i As Func(Of T))
 #If False Then
-        l.wait()
+        SyncLock l
 #End If
         f = i
         cached = Nothing
 #If False Then
-        l.release()
+        End SyncLock
 #End If
     End Sub
 
     Public Function resolve(ByRef o As T) As Boolean
         If cached Is Nothing Then
 #If False Then
-            l.wait()
+            SyncLock l
 #End If
-            Try
-                If cached Is Nothing Then
-                    If f Is Nothing Then
-                        Return False
-                    End If
-                    cached = f()
+            If cached Is Nothing Then
+                If f Is Nothing Then
+                    Return False
                 End If
-            Finally
+                cached = f()
+            End If
 #If False Then
-                l.release()
+            End SyncLock
 #End If
-            End Try
         End If
         assert(Not cached Is Nothing)
         o = cached

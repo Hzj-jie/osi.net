@@ -4,7 +4,6 @@
 ##DEFAULT IMPL_SOURCE ##TYPE_NAME##_impl.vbp
 
 Imports osi.root.connector
-Imports osi.root.formation
 
 Public NotInheritable Class ##TYPE_NAME##
     Public Shared Function resolve(Of T As Class)(ByRef o As T) As Boolean
@@ -24,6 +23,23 @@ Public NotInheritable Class ##TYPE_NAME##
 End Class
 
 Public NotInheritable Class ##TYPE_NAME##(Of T As Class)
+    Private NotInheritable Class unregister_delegate
+        Implements IDisposable
+
+        Public Shared ReadOnly instance As unregister_delegate
+
+        Shared Sub New()
+            instance = New unregister_delegate()
+        End Sub
+
+        Private Sub New()
+        End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            unregister()
+        End Sub
+    End Class
+
 ##INCLUDE ##IMPL_SOURCE##
     Public Shared Sub register(ByVal i As T)
         ##TARGET##.register(i)
@@ -52,22 +68,14 @@ Public NotInheritable Class ##TYPE_NAME##(Of T As Class)
     ##DEFINE RETURN_TYPE T
     ##INCLUDE resolver_wrapper_resolve.vbp
 
-    Public Shared Function scoped_register(ByVal i As T) As disposer
-        Return scoped_action(Sub()
-                                 register(i)
-                             End Sub,
-                             Sub()
-                                 unregister()
-                             End Sub)
+    Public Shared Function scoped_register(ByVal i As T) As IDisposable
+        register(i)
+        Return unregister_delegate.instance
     End Function
 
-    Public Shared Function scoped_register(ByVal i As Func(Of T)) As disposer
-        Return scoped_action(Sub()
-                                 register(i)
-                             End Sub,
-                             Sub()
-                                 unregister()
-                             End Sub)
+    Public Shared Function scoped_register(ByVal i As Func(Of T)) As IDisposable
+        register(i)
+        Return unregister_delegate.instance
     End Function
 
     Private Sub New()

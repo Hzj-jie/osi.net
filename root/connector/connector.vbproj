@@ -76,6 +76,10 @@
     <Compile Include="member_info.vb" />
     <Compile Include="object_compare.vb" />
     <Compile Include="object_extensions.vb" />
+    <Compile Include="resolver\global_resolver.vb" />
+    <Compile Include="resolver\resolver.vb" />
+    <Compile Include="resolver\thread_safe_resolver.vb" />
+    <Compile Include="resolver\thread_static_resolver.vb" />
     <Compile Include="template\equaler.vb" />
     <Compile Include="time\tick_clock.vb" />
     <Compile Include="type.vb" />
@@ -242,6 +246,15 @@
     <Compile Include="unref.vb" />
     <Compile Include="uri.vb" />
     <None Include="ints\codegen\size_t_64.vbp" />
+    <None Include="resolver\codegen\global_resolver.vbp" />
+    <None Include="resolver\codegen\global_resolver_impl.vbp" />
+    <None Include="resolver\codegen\resolver.vbp" />
+    <None Include="resolver\codegen\resolver_wrapper.vbp" />
+    <None Include="resolver\codegen\resolver_wrapper_resolve.vbp" />
+    <None Include="resolver\codegen\run.cmd" />
+    <None Include="resolver\codegen\thread_safe_resolver.vbp" />
+    <None Include="resolver\codegen\thread_static_resolver.vbp" />
+    <None Include="resolver\codegen\thread_static_resolver_impl.vbp" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
