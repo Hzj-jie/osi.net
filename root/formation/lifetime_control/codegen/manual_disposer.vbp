@@ -1,0 +1,6 @@
+
+' Do not use, this class provides very limited functionalities. Use once_action
+' or dispose_ptr<>.
+##DEFINE IMPLEMENT_FINALIZER False
+##DEFINE TYPE_NAME manual_disposer
+##INCLUDE disposer.vbp

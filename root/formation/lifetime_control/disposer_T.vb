@@ -79,15 +79,21 @@ Public Class disposer(Of T)
 'so change disposer_dispose.vbp instead of this file
 
 
+
+#If True Then
     Public Sub IDisposable_Dispose() Implements IDisposable.Dispose
         dispose()
     End Sub
 
+#End If
+
+#If True Then
     Protected NotOverridable Overrides Sub Finalize()
         dispose()
         GC.KeepAlive(Me)
         MyBase.Finalize()
     End Sub
+#End If
 'finish disposer_dispose.vbp --------
 End Class
 'finish disposer_T.vbp --------

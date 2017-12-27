@@ -104,6 +104,7 @@
     <Compile Include="lifetime_control\dispose_ptr.vb" />
     <Compile Include="lifetime_control\event_disposer.vb" />
     <Compile Include="lifetime_control\lifetime_binder.vb" />
+    <Compile Include="lifetime_control\manual_disposer.vb" />
     <Compile Include="lifetime_control\ref_instance.vb" />
     <Compile Include="lifetime_control\ref_ptr.vb" />
     <Compile Include="lifetime_control\weak_disposer_T.vb" />
@@ -218,6 +219,7 @@
     <None Include="lifetime_control\codegen\disposer_T.vbp" />
     <None Include="lifetime_control\codegen\dispose_ptr.vbp" />
     <None Include="lifetime_control\codegen\dispose_ptr_do_dispose.vbp" />
+    <None Include="lifetime_control\codegen\manual_disposer.vbp" />
     <None Include="lifetime_control\codegen\run.cmd" />
     <None Include="lifetime_control\codegen\weak_disposer_T.vbp" />
     <None Include="lifetime_control\codegen\weak_dispose_ptr.vbp" />

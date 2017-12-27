@@ -1,16 +1,21 @@
 ﻿
-Imports osi.root.lock
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.template
-Imports osi.service.selector
+Imports osi.root.formation
+Imports osi.root.utils
 
 Public MustInherit Class device
-    Inherits Object  ' Avoid any potential non-trivial finalizer, since we suppress finalizer when closing.
     Implements idevice
 
     Public Event closing() Implements idevice.closing
+    Private ReadOnly disposer As once_action
 
-    Private close_se As singleentry
+    Public Sub New()
+        disposer = New once_action(AddressOf close_device)
+    End Sub
 
     Protected MustOverride Sub close()
 
@@ -21,29 +26,27 @@ Public MustInherit Class device
     End Sub
 
     Public Sub idevice_close() Implements idevice.close
-        If close_se.mark_in_use() Then
 #If 0 Then
-            'may use async_sync to close the device
-            'so there is possibility a deadlock
-            'async_sync is locking current thread, while no other thread to run the real close procedure
-            'ps. closing device should not block the follow-up procedure, such as creating device,
-            'so queue the closing procedure into managed threadpool is not a bad idea
-            'the only problem is, if the managed threadpool does not have enough threads to handle the request,
-            'the closing may be delayed, and cause the resource exhausted trouble
-            'FIXME: find a better solution
-            If in_restricted_threadpool_thread() Then
-                queue_in_managed_threadpool(AddressOf close_device)
-            Else
-                close_device()
-            End If
-#End If
-            close_device()
+        'may use async_sync to close the device
+        'so there is possibility a deadlock
+        'async_sync is locking current thread, while no other thread to run the real close procedure
+        'ps. closing device should not block the followup procedure, such as creating device,
+        'so queue the closing procedure into managed threadpool is not a bad idea
+        'the only problem is, if the managed threadpool does not have enough threads to handle the request,
+        'the closing may be delayed, and cause the resource exhausted trouble
+        'FIXME: find a better solution
+        If in_restricted_threadpool_thread() Then
+            queue_in_managed_threadpool(AddressOf disposer.run)
+        Else
+            disposer.run()
         End If
+#End If
+        disposer.run()
         GC.SuppressFinalize(Me)
     End Sub
 
     Public Function closed() As Boolean Implements idevice.closed
-        Return close_se.in_use()
+        Return Not disposer.has()
     End Function
 
     Public MustOverride Function identity() As String Implements idevice.identity

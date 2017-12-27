@@ -1,5 +1,6 @@
 ﻿
 ##DEFAULT IMPLEMENT_DISPOSE True
+##DEFAULT IMPLEMENT_FINALIZER ##IMPLEMENT_DISPOSE##
 
     Public Event dispose_exception(ByVal ex As Exception)
     Private exp As singleentry
@@ -25,11 +26,9 @@
 
     Public Sub dispose()
         mark_and_dispose()
-#If ##IMPLEMENT_DISPOSE## Then
+#If ##IMPLEMENT_FINALIZER## Then
         GC.SuppressFinalize(Me)
 #End If
     End Sub
 
-#If ##IMPLEMENT_DISPOSE## Then
 ##INCLUDE disposer_dispose.vbp
-#End If

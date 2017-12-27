@@ -2,6 +2,7 @@
 setlocal
 PATH %PATH%;..\..\..\codegen\precompile;
 precompile.exe disposer.vbp > disposer.vb
+precompile.exe manual_disposer.vbp > manual_disposer.vb
 precompile.exe dispose_ptr.vbp > dispose_ptr.vb
 precompile.exe weak_dispose_ptr.vbp > weak_dispose_ptr.vb
 precompile.exe disposer_T.vbp > disposer_T.vb

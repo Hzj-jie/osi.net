@@ -1,7 +1,9 @@
 ﻿
+##DEFAULT TYPE_NAME disposer
+
 ##INCLUDE disposer_imports.vbp
 
-Public Class disposer
+Public Class ##TYPE_NAME##
     Implements IDisposable
 
     Private ReadOnly _disposer As Action

@@ -1,10 +1,18 @@
-﻿
+
+##DEFAULT IMPLEMENT_DISPOSE True
+##DEFAULT IMPLEMENT_FINALIZER ##IMPLEMENT_DISPOSE##
+
+#If ##IMPLEMENT_DISPOSE## Then
     Public Sub IDisposable_Dispose() Implements IDisposable.Dispose
         dispose()
     End Sub
 
+#End If
+
+#If ##IMPLEMENT_FINALIZER## Then
     Protected NotOverridable Overrides Sub Finalize()
         dispose()
         GC.KeepAlive(Me)
         MyBase.Finalize()
     End Sub
+#End If
