@@ -1,9 +1,12 @@
 ﻿
-Imports System.Threading
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.lock
+Imports osi.root.constants
 Imports osi.root.event
+Imports osi.root.lock
 Imports osi.root.utt
 
 Public Class count_reset_event_basic_test
@@ -85,7 +88,7 @@ Public Class count_reset_event_concurrently_release_test
             If multithreading_case_wrapper.thread_id() = 0 Then
                 atomic.eva(this_round, round)
                 lazy_wait_when(Function() +pending < multithreading_case_wrapper.running_thread_count() - 1)
-                For i As Int32 = 0 To multithreading_case_wrapper.running_thread_count() - 2
+                For i As Int32 = 0 To CInt(multithreading_case_wrapper.running_thread_count()) - 2
                     e.set()
                 Next
                 assert_true(lazy_sleep_wait_when(Function() +pending > 0, seconds_to_milliseconds(1)))
@@ -104,12 +107,12 @@ Public Class count_reset_event_timed_wait_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        Using e As count_reset_event = New count_reset_event()
-            Using New auto_assert_timelimited_operation(100)
-                assert_false(e.wait(50))
-            End Using
-            e.set()
-            Using New auto_assert_timelimited_operation(10)
+        Dim clock As mock_tick_clock = Nothing
+        clock = New mock_tick_clock(milliseconds_to_ticks(uint64_1))
+        Using thread_static_mock_tick_clock.scoped_register(clock)
+            Using e As count_reset_event = New count_reset_event()
+                assert_false(e.wait(1))
+                e.set()
                 assert_true(e.wait(1))
             End Using
         End Using

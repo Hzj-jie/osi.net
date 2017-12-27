@@ -1,8 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
-Imports osi.root.template
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.template
 Imports lock_t = osi.root.lock.slimlock.monitorlock
 
 Public NotInheritable Class count_reset_event
@@ -14,19 +18,24 @@ End Class
 Public Class count_reset_event(Of _MAX_COUNT As _int64)
     Implements IDisposable
 
-    Private Shared ReadOnly MAX_COUNT As Int64
+    Private Shared ReadOnly MAX_COUNT As Int32
     Private ReadOnly m As ManualResetEvent
+    Private ReadOnly clock As tick_clock
     Private l As lock_t
     Private p As Int32
 
     Shared Sub New()
-        MAX_COUNT = +alloc(Of _MAX_COUNT)()
-        assert(MAX_COUNT >= 0)
-        assert(MAX_COUNT <> 1)
+        Dim c As Int64 = 0
+        c = +alloc(Of _MAX_COUNT)()
+        assert(c <= max_int32)
+        assert(c >= 0)
+        assert(c <> 1)
+        MAX_COUNT = CInt(c)
     End Sub
 
     Public Sub New()
         m = New ManualResetEvent(False)
+        clock = thread_static_tick_clock.resolve_or_default()
     End Sub
 
     Public Sub [set]()
@@ -65,13 +74,13 @@ Public Class count_reset_event(Of _MAX_COUNT As _int64)
             Return True
         Else
             Dim until_ms As Int64 = int64_0
-            until_ms = nowadays.milliseconds() + ms
+            until_ms = clock.milliseconds_l() + ms
             While True
                 If acquire() Then
                     Return True
                 Else
                     Dim wait_ms As Int64 = int64_0
-                    wait_ms = until_ms - nowadays.milliseconds()
+                    wait_ms = until_ms - clock.milliseconds_l()
                     If wait_ms < 0 OrElse Not m.wait(wait_ms) Then
                         Return False
                     End If

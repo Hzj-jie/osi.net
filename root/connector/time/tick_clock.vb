@@ -3,6 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.constants
+
 ' A class to retrieve ticks. The public functions should not be expected to return data which can be converted to a
 ' human readable format. All the public functions are thread-safe.
 Public Class tick_clock
@@ -20,6 +22,13 @@ Public Class tick_clock
         Return ticks_to_milliseconds(ticks())
     End Function
 
+    Public Function milliseconds_l() As Int64
+        Dim r As UInt64 = 0
+        r = milliseconds()
+        assert(r <= max_int64)
+        Return CLng(r)
+    End Function
+
     Public Function seconds() As UInt64
         Return milliseconds_to_seconds(milliseconds())
     End Function
@@ -34,6 +43,18 @@ Public NotInheritable Class thread_static_tick_clock
         Return thread_static_resolver(Of tick_clock).resolve_or_default(default_tick_clock.instance)
     End Function
 
+    Public Shared Function resolve_or_low_res() As tick_clock
+        Return thread_static_resolver(Of tick_clock).resolve_or_default(low_res_tick_clock.instance)
+    End Function
+
+    Public Shared Function resolve_or_normal_res() As tick_clock
+        Return thread_static_resolver(Of tick_clock).resolve_or_default(normal_res_tick_clock.instance)
+    End Function
+
+    Public Shared Function resolve_or_high_res() As tick_clock
+        Return thread_static_resolver(Of tick_clock).resolve_or_default(high_res_tick_clock.instance)
+    End Function
+
     Private Sub New()
     End Sub
 End Class
@@ -41,6 +62,18 @@ End Class
 Public NotInheritable Class global_tick_clock
     Public Shared Function resolve_or_default() As tick_clock
         Return global_resolver(Of tick_clock).resolve_or_default(default_tick_clock.instance)
+    End Function
+
+    Public Shared Function resolve_or_low_res() As tick_clock
+        Return global_resolver(Of tick_clock).resolve_or_default(low_res_tick_clock.instance)
+    End Function
+
+    Public Shared Function resolve_or_normal_res() As tick_clock
+        Return global_resolver(Of tick_clock).resolve_or_default(normal_res_tick_clock.instance)
+    End Function
+
+    Public Shared Function resolve_or_high_res() As tick_clock
+        Return global_resolver(Of tick_clock).resolve_or_default(high_res_tick_clock.instance)
     End Function
 
     Private Sub New()
