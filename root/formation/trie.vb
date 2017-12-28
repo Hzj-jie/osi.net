@@ -3,9 +3,9 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.template
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.template
 
 Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_INDEX As _to_uint32(Of KEY_T))
     Implements ICloneable
@@ -81,7 +81,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
 
         Public Function Clone() As Object Implements System.ICloneable.Clone
             Dim rtn As node = Nothing
-            rtn = alloc(Me)
+            rtn = allocate_instance_of(Me)
             rtn.initial(CUInt(child.Length()))
             copy(rtn.value, value)
             copy(rtn.has_value, has_value)
@@ -317,7 +317,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
 
     Public Function Clone() As Object Implements ICloneable.Clone
         Dim rtn As trie(Of KEY_T, VALUE_T, _CHILD_COUNT, _KEY_TO_INDEX) = Nothing
-        alloc(Me)
+        rtn = allocate_instance_of(Me)
         copy_node(rtn.root, root)
         Return rtn
     End Function

@@ -26,21 +26,13 @@ Imports osi.root.delegates
 ' }
 Public Module _compare
     Public ReadOnly compare_error_result As Int32 = 0
-    Private ReadOnly suppress_compare_error_binder As _
-                         binder(Of Func(Of Boolean), suppress_compare_error_binder_protector)
 
     Sub New()
-        suppress_compare_error_binder = New binder(Of Func(Of Boolean), suppress_compare_error_binder_protector)()
         compare_error_result = rnd_int(min_int32, min_int8)
     End Sub
 
-    Private Function suppress_compare_error() As Boolean
-        Return suppress_compare_error_binder.has_value() AndAlso
-               (+suppress_compare_error_binder)()
-    End Function
-
     Private Sub compare_error(Of T, T2)(ByVal ex As Exception)
-        If Not suppress_compare_error() Then
+        If Not is_suppressed.compare_error() Then
             raise_error(error_type.exclamation,
                         "caught exception when comparing ",
                         type_info(Of T).fullname,
@@ -89,7 +81,7 @@ Public Module _compare
                     c = AddressOf runtime_that_compare(Of T)
                 End If
             Else
-                If Not suppress_compare_error() Then
+                If Not is_suppressed.compare_error() Then
                     raise_error(error_type.exclamation,
                                 "caught types do not have IComparable implement, unable to compare ",
                                 type_info(Of T).fullname,

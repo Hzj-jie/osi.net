@@ -3,8 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 
 ' make sure T is comparable
 Public Class heap(Of T As IComparable(Of T))
@@ -203,9 +203,9 @@ Public Class heap(Of T As IComparable(Of T))
         Return data().size()
     End Function
 
-    Public Function clone() As Object Implements System.ICloneable.Clone
+    Public Function clone() As Object Implements ICloneable.Clone
         Dim rtn As heap(Of T)
-        rtn = alloc(Me)
+        rtn = allocate_instance_of(Me)
         copy(rtn._data, data())
         Return rtn
     End Function

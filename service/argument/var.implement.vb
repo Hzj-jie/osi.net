@@ -13,7 +13,7 @@ Partial Public Class var
     Implements ICloneable, ICloneable(Of var), IComparable, IComparable(Of var)
 
     Protected Function clone(Of R As var)() As R
-        Return copy_constructor(Of R).invoke(copy(c), copy(raw), copy(binded), copy(others))
+        Return copy_constructor(Of R).copy_from(c, raw, binded, others)
     End Function
 
     Public Function Clone() As Object Implements ICloneable.Clone

@@ -177,6 +177,7 @@
     <Compile Include="tick_clock_test.vb" />
     <Compile Include="type_behavior_test.vb" />
     <Compile Include="type_info_perf.vb" />
+    <Compile Include="type_info_test.vb" />
     <Compile Include="type_initializer_behavior_test.vb" />
     <Compile Include="non_integer_overflow_test.vb" />
     <Compile Include="nowadays_gap_consistency_test.vb" />

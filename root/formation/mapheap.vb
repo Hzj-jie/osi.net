@@ -3,8 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 
 Partial Public Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As IComparable(Of HEAP_KEY))
     Implements ICloneable
@@ -201,7 +201,7 @@ Partial Public Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As 
 
     Public Function Clone() As Object Implements ICloneable.Clone
         Dim rtn As mapheap(Of MAP_KEY, HEAP_KEY) = Nothing
-        rtn = alloc(Me)
+        rtn = allocate_instance_of(Me)
 
         copy(rtn._heap, _heap)
         copy(rtn._map, _map)

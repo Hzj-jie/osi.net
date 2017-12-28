@@ -3,8 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 
 Public Class pointernode(Of T)
     Implements ICloneable, IComparable(Of pointernode(Of T)), IComparable(Of T), IComparable
@@ -73,7 +73,7 @@ Public Class pointernode(Of T)
 
     Public Function Clone() As Object Implements ICloneable.Clone
         Dim rtn As pointernode(Of T) = Nothing
-        rtn = alloc(Me)
+        rtn = allocate_instance_of(Me)
         rtn.data = _data
 
         rtn.initial_pointers(pointer_count())

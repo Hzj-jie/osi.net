@@ -46,7 +46,7 @@ Partial Public Class case2
                        append_method_name(t, method_name, 1),
                        append_method_name(t, method_name, 2))
             ' Allow Me.obj to be null: the test cases can be static methods.
-            Me.obj = t.alloc()
+            Me.obj = t.allocate()
             Me._prepare = prepare
             Me._run = run
             Me._finish = finish

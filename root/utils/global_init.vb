@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Reflection
 Imports osi.root.connector
 Imports osi.root.constants
@@ -48,13 +52,11 @@ Public Class global_init
                             ", ex ",
                             ex.Message())
             End Try
-        ElseIf alloc(t) Is Nothing Then
-            'it should have an constructor, no matter public or private for class
-            'if it's a module with no contructor, then we have nothing to do
-            'but there is a chance,
-            'the static constructor has been invoked, the normal constructor thrown an exception,
-            'so the alloc returns nothing, it's not good to assert in such case,
-            'though the implementation may not be correct
+        ElseIf t.allocate() Is Nothing Then
+            ' A public or private class should have an constructor.
+            ' A module may not have a contructor, but nothing else can be done.
+            ' t.allocate() returns null if the constructor threw an exception. But the static constructor should be
+            ' triggered already. Though the implementation may not be correct, it's not good to assert here.
             raise_error(error_type.warning,
                         "may fail to invoke any initialization functions in type ",
                         t.FullName())
@@ -83,10 +85,10 @@ Public Class global_init
         times.increment()
         Dim its() As vector(Of Type) = Nothing
         ReDim its(level)
-        For Each i In AppDomain.CurrentDomain().GetAssemblies()
+        For Each i As Assembly In AppDomain.CurrentDomain().GetAssemblies()
             assert(Not i Is Nothing)
             Try
-                For Each j In i.GetTypes()
+                For Each j As Type In i.GetTypes()
                     Dim gi As global_init_attribute = Nothing
                     If is_global_init_type(j, gi) AndAlso
                        assert(Not gi Is Nothing) AndAlso

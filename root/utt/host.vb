@@ -44,7 +44,7 @@ Partial Friend NotInheritable Class host
                                                For Each j As Type In i.GetTypes()
                                                    If case_type_restriction.accepted_case_type(j) Then
                                                        Dim n As case_info = Nothing
-                                                       n = New case_info(j.FullName(), alloc(Of [case])(j))
+                                                       n = New case_info(j.FullName(), j.allocate(Of [case])())
                                                        SyncLock cases
                                                            cases.emplace_back(n)
                                                        End SyncLock

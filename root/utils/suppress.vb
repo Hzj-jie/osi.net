@@ -1,12 +1,16 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.lock
 
 ' Control behavior in program level, without changing environment variables
 <global_init(global_init_level.foundamental)>
-Public Class suppress
+Public NotInheritable Class suppress
     Public Shared ReadOnly compare_error As atomic_bool
     Public Shared ReadOnly invoker_error As atomic_bool
     Public Shared ReadOnly valuer_error As atomic_bool

@@ -126,15 +126,7 @@ Public NotInheritable Class pair(Of FT, ST)
     End Operator
 
     Public Function CloneT() As pair(Of FT, ST) Implements ICloneable(Of pair(Of FT, ST)).Clone
-        If Me Is Nothing Then
-            Return Nothing
-        Else
-            Dim rtn As pair(Of FT, ST) = Nothing
-            rtn = alloc(Me)
-            copy(rtn.first, first)
-            copy(rtn.second, second)
-            Return rtn
-        End If
+        Return New pair(Of FT, ST)(copy_no_error(first), copy_no_error(second))
     End Function
 
     Public Function Clone() As Object Implements ICloneable.Clone

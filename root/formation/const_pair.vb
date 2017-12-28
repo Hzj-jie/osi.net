@@ -132,15 +132,7 @@ Public NotInheritable Class const_pair(Of FT, ST)
     End Operator
 
     Public Function CloneT() As const_pair(Of FT, ST) Implements ICloneable(Of const_pair(Of FT, ST)).Clone
-        If Me Is Nothing Then
-            Return Nothing
-        Else
-            Dim rtn As const_pair(Of FT, ST) = Nothing
-            rtn = alloc(Me)
-            copy(rtn.first, first)
-            copy(rtn.second, second)
-            Return rtn
-        End If
+        Return New const_pair(Of FT, ST)(copy_no_error(first), copy_no_error(second))
     End Function
 
     Public Function Clone() As Object Implements ICloneable.Clone

@@ -15,19 +15,6 @@ Public Module _binder
 End Module
 
 Public Class binder
-    Private Shared ReadOnly suppress_rebind_global_value_error_binder As _
-                                binder(Of Func(Of Boolean), suppress_rebind_global_value_error_binder_protector)
-
-    Shared Sub New()
-        suppress_rebind_global_value_error_binder =
-            New binder(Of Func(Of Boolean), suppress_rebind_global_value_error_binder_protector)()
-    End Sub
-
-    Protected Shared Function suppress_rebind_global_value_error() As Boolean
-        Return suppress_rebind_global_value_error_binder.has_value() AndAlso
-               (+suppress_rebind_global_value_error_binder)()
-    End Function
-
     Public Shared Function [New](Of T As Class, PROTECTOR)(ByVal i As T) As binder(Of T, PROTECTOR)
         Dim r As binder(Of T, PROTECTOR) = Nothing
         r = New binder(Of T, PROTECTOR)(i)
@@ -79,7 +66,7 @@ Public Class binder(Of T As Class, PROTECTOR)
     End Sub
 
     Public Shared Sub set_global(ByVal i As T)
-        If Not suppress_rebind_global_value_error() Then
+        If Not is_suppressed.rebind_global_value() Then
 #If DEBUG Then
             assert(_global Is Nothing OrElse i Is Nothing,
                    "rebind ",

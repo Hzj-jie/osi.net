@@ -76,6 +76,7 @@
     <Compile Include="functor\string_serializer.vb" />
     <Compile Include="ICloneable.vb" />
     <Compile Include="ints\limited_ints.vb" />
+    <Compile Include="is_suppressed.vb" />
     <Compile Include="member_info.vb" />
     <Compile Include="object_compare.vb" />
     <Compile Include="object_extensions.vb" />
@@ -85,7 +86,12 @@
     <Compile Include="resolver\thread_static_resolver.vb" />
     <Compile Include="template\equaler.vb" />
     <Compile Include="time\tick_clock.vb" />
-    <Compile Include="type.vb" />
+    <Compile Include="type\type.finalizer.vb" />
+    <Compile Include="type\type.is.vb" />
+    <Compile Include="type\type.new.vb" />
+    <Compile Include="type\type_info.cache.vb" />
+    <Compile Include="type\type_info.compare.vb" />
+    <Compile Include="type\type_info.typed_constructor.vb" />
     <Compile Include="windows_native\dpi_awareness.vb" />
     <Compile Include="windows_native\native_window.vb" />
     <Compile Include="windows_native\send_input.vb" />
@@ -178,7 +184,7 @@
     <Compile Include="ints\size_t_64.vb" />
     <Compile Include="ints\timeout_ms_t.vb" />
     <Compile Include="ints\union_int.vb" />
-    <Compile Include="type_info.vb" />
+    <Compile Include="type\type_info.vb" />
     <Compile Include="unchecked_int.vb" />
     <Compile Include="console_key_info.vb" />
     <Compile Include="console_key_info_mapping.vb" />
@@ -203,8 +209,8 @@
     <Compile Include="debug_mode.vb" />
     <Compile Include="error_handler\error_message.vb" />
     <Compile Include="gc.vb" />
-    <Compile Include="inherit.vb" />
-    <Compile Include="istype.vb" />
+    <Compile Include="type\type.inherit.vb" />
+    <Compile Include="type\type.constructor.vb" />
     <Compile Include="minmax.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
