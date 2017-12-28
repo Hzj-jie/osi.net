@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
@@ -110,12 +114,22 @@ Public Class binder(Of T As Class, PROTECTOR)
         Return _local
     End Function
 
-    Public Shared Function has_global_value() As Boolean
+    Public Shared Function has_global() As Boolean
         Return Not [global]() Is Nothing
     End Function
 
-    Public Function has_local_value() As Boolean
+    ' TODO: Remove, use has_global().
+    Public Shared Function has_global_value() As Boolean
+        Return has_global()
+    End Function
+
+    Public Function has_local() As Boolean
         Return Not local() Is Nothing
+    End Function
+
+    ' TODO: Remove, use has_local().
+    Public Function has_local_value() As Boolean
+        Return has_local()
     End Function
 
     Public Function [get]() As T
