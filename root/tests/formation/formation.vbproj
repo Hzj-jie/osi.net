@@ -118,6 +118,7 @@
     </Compile>
     <Compile Include="one_off_test.vb" />
     <Compile Include="optional_test.vb" />
+    <Compile Include="piece_test.vb" />
     <Compile Include="pointer_test.vb" />
     <Compile Include="qless2_stream_test\qless2_stream_case.vb" />
     <Compile Include="qless2_stream_test\qless2_stream_test.vb" />

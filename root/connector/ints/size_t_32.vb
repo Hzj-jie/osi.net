@@ -27,6 +27,7 @@ Option Strict On
 
 
 
+Imports System.IO
 Imports osi.root.constants
 Imports constants = osi.root.constants
 
@@ -51,6 +52,55 @@ Partial Public Structure size_t_32
         Else
             assert(zero.npos())
         End If
+
+        bytes_serializer.fixed.register(
+                Function(ByVal i As size_t_32, ByVal o As MemoryStream) As Boolean
+                    #If Not True Then
+                        If i.npos() Then
+                            Return bytes_serializer.append_to(uint32_0, o)
+                        Else
+                            Return bytes_serializer.append_to(i.raw_value(), o)
+                        End If
+                    #ElseIf Not True Then
+                        If i.npos() Then
+                            Return bytes_serializer.append_to(max_uint32, o)
+                        Else
+                            Return bytes_serializer.append_to(i.raw_value(), o)
+                        End If
+                    #Else
+                        If i.npos() Then
+                            Return bytes_serializer.append_to(True, o)
+                        Else
+                            Return bytes_serializer.append_to(False, o) AndAlso
+                                   bytes_serializer.append_to(i.raw_value(), o)
+                        End If
+                    #End If
+                End Function,
+                Function(ByVal i As MemoryStream, ByRef o As size_t_32) As Boolean
+                    #If Not True OrElse Not True Then
+                        Dim u As UInt32 = uint32_0
+                        If Not bytes_serializer.consume_from(i, u) Then
+                            Return False
+                        End If
+                        o = New size_t_32(u)
+                        Return True
+                    #Else
+                        Dim n As Boolean = False
+                        If Not bytes_serializer.consume_from(i, n) Then
+                            Return False
+                        End If
+                        If n Then
+                            o = inf
+                            Return True
+                        End If
+                        Dim u As UInt32 = uint32_0
+                        If Not bytes_serializer.consume_from(i, u) Then
+                            Return False
+                        End If
+                        o = New size_t_32(u)
+                        Return True
+                    #End If
+                End Function)
     End Sub
 
     Private ReadOnly i As UInt32
@@ -490,138 +540,6 @@ Partial Public Structure size_t_32
         i = that.i
         n = that.n
     End Sub
-
-    Public Shared Function to_bytes(ByVal this As size_t_32) As Byte()
-        Dim r() As Byte = Nothing
-#If Not True OrElse Not True Then
-        ReDim r(CInt(sizeof_value - uint32_1))
-#Else
-        If this.npos() Then
-            ReDim r(CInt(sizeof_uint8 - uint32_1))
-        Else
-            ReDim r(CInt(sizeof_uint8 + sizeof_value - uint32_1))
-        End If
-#End If
-        Dim offset As UInt32 = uint32_0
-        assert(to_bytes(this, r, offset))
-        assert(offset = array_size(r))
-        Return r
-    End Function
-
-    Public Function to_bytes() As Byte()
-        Return to_bytes(Me)
-    End Function
-
-    Public Shared Function to_bytes(ByVal this As size_t_32, ByRef o() As Byte) As Boolean
-        o = to_bytes(this)
-        Return True
-    End Function
-
-    Public Function to_bytes(ByRef o() As Byte) As Boolean
-        Return to_bytes(Me, o)
-    End Function
-
-    Public Shared Function to_bytes(ByVal this As size_t_32,
-                                    ByVal o() As Byte,
-                                    ByRef offset As UInt32) As Boolean
-#If Not True Then
-        If this.npos() Then
-            Return uint32_bytes(uint32_0, o, offset)
-        Else
-            Return uint32_bytes(this.raw_value(), o, offset)
-        End If
-#ElseIf Not True Then
-        If this.npos() Then
-            Return uint32_bytes(max_uint32, o, offset)
-        Else
-            Return uint32_bytes(this.raw_value(), o, offset)
-        End If
-#Else
-        If this.npos() Then
-            Return bool_bytes(True, o, offset)
-        Else
-            Return bool_bytes(False, o, offset) AndAlso
-                   uint32_bytes(this.raw_value(), o, offset)
-        End If
-#End If
-    End Function
-
-    Public Function to_bytes(ByVal o() As Byte, ByRef offset As UInt32) As Boolean
-        Return to_bytes(Me, o, offset)
-    End Function
-
-    Public Shared Function from_bytes(ByVal b() As Byte,
-                                      ByVal ii As UInt32,
-                                      ByVal il As UInt32,
-                                      ByRef o As size_t_32) As Boolean
-#If Not True OrElse Not True Then
-        Dim u As UInt32 = uint32_0
-        If bytes_uint32(b, ii, il, u) Then
-            o = New size_t_32(u)
-            Return True
-        Else
-            Return False
-        End If
-#Else
-        If il < sizeof_uint8 Then
-            Return False
-        Else
-            Dim n As Boolean = False
-            If bytes_bool(b, n, ii) Then
-                If n Then
-                    If il = sizeof_uint8 Then
-                        o = inf
-                        Return True
-                    Else
-                        Return False
-                    End If
-                Else
-                    Dim u As UInt32 = uint32_0
-                    If bytes_uint32(b, ii, il - sizeof_uint8, u) Then
-                        o = New size_t_32(u)
-                        Return True
-                    Else
-                        Return False
-                    End If
-                End If
-            Else
-                Return False
-            End If
-        End If
-#End If
-    End Function
-
-    Public Shared Function from_bytes(ByVal b() As Byte,
-                                      ByRef o As size_t_32,
-                                      Optional ByRef offset As UInt32 = uint32_0) As Boolean
-#If Not True OrElse Not True Then
-        Dim u As UInt32 = uint32_0
-        If bytes_uint32(b, u, offset) Then
-            o = New size_t_32(u)
-            Return True
-        Else
-            Return False
-        End If
-#Else
-        Dim n As Boolean = False
-        If bytes_bool(b, n, offset) Then
-            If n Then
-                o = inf
-                Return True
-            Else
-                Dim u As UInt32 = uint32_0
-                If bytes_uint32(b, u, offset) Then
-                    o = New size_t_32(u)
-                    Return True
-                Else
-                    Return False
-                End If
-            End If
-        Else
-            Return False
-        End If
-#End If
-    End Function
 
 #If True Then
     Public Function value() As UInt32

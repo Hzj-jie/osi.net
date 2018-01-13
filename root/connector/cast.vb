@@ -3,9 +3,11 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+' TODO: Move to type_info.
 #Const cached_cast = True
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports osi.root.constants
 Imports osi.root.delegates
 
 Public Module _cast
@@ -96,6 +98,7 @@ Public Module _cast
 #If cached_cast Then
     Private Structure runtime_casting_cache(Of T, IT)
         Private Shared ReadOnly c As _do_val_ref(Of IT, T, Boolean)
+
         Private Shared Function select_casting(ByVal ms() As MethodInfo,
                                                ByVal itt As Type,
                                                ByVal n As String,
@@ -129,8 +132,8 @@ Public Module _cast
         Private Shared Function select_casting(ByVal ms() As MethodInfo,
                                                ByVal itt As Type,
                                                ByRef c As _do_val_ref(Of IT, T, Boolean)) As Boolean
-            Return select_casting(ms, itt, constants.implicit_cast_operator, c) OrElse
-                   select_casting(ms, itt, constants.explicit_cast_operator, c)
+            Return select_casting(ms, itt, implicit_cast_operator, c) OrElse
+                   select_casting(ms, itt, explicit_cast_operator, c)
         End Function
 
         Private Shared Function select_casting(ByVal ms() As MethodInfo,
@@ -138,20 +141,33 @@ Public Module _cast
             Return select_casting(ms, GetType(IT), c)
         End Function
 
+        Private Shared Function select_casting(ByVal ct As Type,
+                                               ByVal it As Type,
+                                               ByRef c As _do_val_ref(Of IT, T, Boolean)) As Boolean
+            assert(Not ct Is Nothing)
+            Return select_casting(ct.GetMethods(cast_operator_binding_flags), it, c)
+        End Function
+
+        Private Shared Function select_casting(Of CT)(ByVal it As Type,
+                                                      ByRef c As _do_val_ref(Of IT, T, Boolean)) As Boolean
+            assert(Not it Is Nothing)
+            assert(GetType(T) Is GetType(CT) OrElse GetType(IT) Is GetType(CT))
+            Return select_casting(GetType(CT), it, c)
+        End Function
+
         Private Shared Function select_casting(Of CT)(ByRef c As _do_val_ref(Of IT, T, Boolean)) As Boolean
-            assert(GetType(T) Is GetType(CT) OrElse
-                     GetType(IT) Is GetType(CT))
-            Return select_casting(GetType(CT).GetMethods(constants.cast_operator_binding_flags), c)
+            assert(GetType(T) Is GetType(CT) OrElse GetType(IT) Is GetType(CT))
+            Return select_casting(Of CT)(GetType(IT), c)
         End Function
 
         Private Shared Function select_casting(ByRef c As _do_val_ref(Of IT, T, Boolean)) As Boolean
             c = Function(i As IT, ByRef o As T) As Boolean
+                    assert(Not i Is Nothing)
+                    Dim it As Type = Nothing
+                    it = i.GetType()
                     Dim v As _do_val_ref(Of IT, T, Boolean) = Nothing
                     'for object
-                    If Not i Is Nothing AndAlso
-                       select_casting(i.GetType().GetMethods(constants.cast_operator_binding_flags),
-                                      i.GetType(),
-                                      v) Then
+                    If select_casting(it, it, v) OrElse select_casting(Of T)(it, v) Then
                         Return v(i, o)
                     Else
                         Return False
@@ -207,8 +223,8 @@ Public Module _cast
         If isemptyarray(ms) Then
             Return False
         Else
-            Return runtime_casting(i, o, ms, constants.implicit_cast_operator) OrElse
-                   runtime_casting(i, o, ms, constants.explicit_cast_operator)
+            Return runtime_casting(i, o, ms, implicit_cast_operator) OrElse
+                   runtime_casting(i, o, ms, explicit_cast_operator)
         End If
     End Function
 
@@ -217,13 +233,13 @@ Public Module _cast
         assert(GetType(T) Is GetType(CT) OrElse
                  GetType(IT) Is GetType(CT))
 #End If
-        Return runtime_casting(i, o, GetType(CT).GetMethods(constants.cast_operator_binding_flags))
+        Return runtime_casting(i, o, GetType(CT).GetMethods(cast_operator_binding_flags))
     End Function
 
     Private Function runtime_casting_a_b(Of T, IT)(ByVal i As IT, ByRef o As T) As Boolean
         Return If(i Is Nothing,
                   False,
-                  runtime_casting(i, o, i.GetType().GetMethods(constants.cast_operator_binding_flags))) OrElse
+                  runtime_casting(i, o, i.GetType().GetMethods(cast_operator_binding_flags))) OrElse
                runtime_casting(Of T, IT, IT)(i, o)
     End Function
 
@@ -245,20 +261,60 @@ Public Module _cast
         End Try
     End Function
 
+    Public NotInheritable Class cast_type_inferrer(Of T)
+        Public Shared ReadOnly instance As cast_type_inferrer(Of T)
+
+        Shared Sub New()
+            instance = New cast_type_inferrer(Of T)()
+        End Sub
+
+        Public Function from(Of IT)(ByVal i As IT, Optional ByVal require_assert As Boolean = True) As T
+            Return cast(Of T, IT)(i, require_assert)
+        End Function
+
+        Public Function [to](Of OT)(ByVal i As T, Optional ByVal require_assert As Boolean = True) As OT
+            Return cast(Of OT, T)(i, require_assert)
+        End Function
+
+        Private Sub New()
+        End Sub
+    End Class
+
     Public Function cast(Of T, IT)(ByVal i As IT, ByRef o As T) As Boolean
-        Return c_nothing(i, o) OrElse
-               _direct_cast(i, o) OrElse
-               (on_mono() AndAlso change_type(i, o)) OrElse
-               c_type(i, o) OrElse
-               runtime_casting_proxy(i, o)
-        '1. may not be able to CType(i, t)
-        '2. may not be able to GetType(t).IsValueType?
-        'On Error Resume Next
-        'o = CType(i, t)
-        'Return Not o Is Nothing OrElse GetType(t).IsValueType
+        If c_nothing(i, o) Then
+            Return True
+        End If
+        If caster(Of IT, T).defined() Then
+            o = caster(Of IT, T).cast(i)
+            Return True
+        End If
+        If _direct_cast(i, o) Then
+            Return True
+        End If
+        If on_mono() AndAlso change_type(i, o) Then
+            Return True
+        End If
+        If c_type(i, o) Then
+            Return True
+        End If
+        If runtime_casting_proxy(i, o) Then
+            Return True
+        End If
+
+        Return False
+    End Function
+
+    Public Function cast(Of T)() As cast_type_inferrer(Of T)
+        Return cast_type_inferrer(Of T).instance
     End Function
 
     Public Function cast(Of T)(ByVal i As Object, ByRef o As T) As Boolean
+        If typed_once_action(Of cast_type_inferrer(Of T)).should_do() Then
+            raise_error(error_type.performance,
+                        "cast(Of ",
+                        GetType(T).Name(),
+                        ")(i) seriously impacts performance. cast(Of T)().from(i) is preferred.")
+        End If
         Return cast(Of T, Object)(i, o)
     End Function
 

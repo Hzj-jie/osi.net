@@ -1,4 +1,5 @@
 ﻿
+#If RETIRED
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.utils
@@ -68,3 +69,4 @@ Friend Class string_bytes_convertor_binder_initializer
     Private Sub New()
     End Sub
 End Class
+#End If

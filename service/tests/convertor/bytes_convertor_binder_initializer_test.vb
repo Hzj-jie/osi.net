@@ -1,4 +1,5 @@
 ﻿
+#If RETIRED
 Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.connector
@@ -68,3 +69,4 @@ Public Class bytes_convertor_binder_initializer_test
         Return piece_case()
     End Function
 End Class
+#End If

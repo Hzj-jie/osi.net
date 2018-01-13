@@ -1,4 +1,5 @@
 
+#If RETIRED
 Option Explicit On
 Option Infer Off
 Option Strict On
@@ -303,3 +304,5 @@ Friend Class default_bytes_convertor_binder_initializer
     End Sub
 End Class
 'finish default_bytes_convertor_binder_initializer.vbp --------
+
+#End If

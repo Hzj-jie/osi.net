@@ -1,6 +1,10 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.service.commander
@@ -59,13 +63,13 @@ Public Class token_info_sign_test
         assert(Not f Is Nothing)
         Dim code() As Byte = Nothing
         code = rnd_bytes(rnd_uint(100, 200))
-        Dim o() As Byte = Nothing
+        Dim o As piece = Nothing
         If assert_true(f.sign(Nothing, code, o)) Then
             assert_true(f.sign_match(Nothing, code, o))
         End If
-        Dim t() As Byte = Nothing
+        Dim t As piece = Nothing
         assert_true(f.forge_signature(Nothing, code, t))
-        assert_array_not_equal(o, t)
+        assert_not_equal(o, t)
         Return True
     End Function
 
@@ -77,8 +81,8 @@ Public Class token_info_sign_test
         assert(array_size(prefix) = prefix_len)
         Dim code() As Byte = Nothing
         code = rnd_bytes(rnd_uint(100, 200))
-        Dim o() As Byte = Nothing
-        If assert_true(f.sign(Nothing, (New piece(array_concat(prefix, code))).consume(prefix_len), o)) Then
+        Dim o As piece = Nothing
+        If assert_true(f.sign(Nothing, New piece(array_concat(prefix, code)).consume(prefix_len), o)) Then
             assert_true(f.sign_match(Nothing, code, o))
         End If
         Return True
@@ -99,7 +103,7 @@ Public Class token_info_sign_test
     Public Overrides Function run() As Boolean
         Dim ss() As signer = Nothing
         ss = sign.all_signers()
-        For i As UInt32 = uint32_0 To array_size(ss) - uint32_1
+        For i As Int32 = 0 To array_size_i(ss) - 1
             If Not sign_case(ss(i)) Then
                 Return False
             End If

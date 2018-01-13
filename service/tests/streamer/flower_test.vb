@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.utt
@@ -37,15 +41,12 @@ Public MustInherit Class flower_test
         last = New mock_dev_int()
         Dim f As flower(Of Int32) = Nothing
         f = create_flower(first, last)
-        flower(Of Int32).is_eos.set_local(Function(i As Int32) As Boolean
-                                              Return i = max_int32
-                                          End Function)
         Dim ended As pointer(Of Boolean) = Nothing
         ended = New pointer(Of Boolean)()
         execute(f, ended)
         Dim v() As Int32 = Nothing
         v = rnd_ints(rnd_int(16384, 32768))
-        For i As Int32 = 0 To array_size(v) - 1
+        For i As Int32 = 0 To array_size_i(v) - 1
             assert(v(i) <> max_int32)
             first.receive_pump.emplace(v(i))
         Next

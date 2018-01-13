@@ -32,10 +32,10 @@ Public Class shell_less_process_test
     Private Shared Function raise_on_invoke_case() As Boolean
         Dim t As slimqless2_runner = Nothing
         t = New slimqless2_runner()
-        Dim s As ISynchronizeInvoke = Nothing
-        s = New slimqless2_runner_synchronize_invoke(t)
         Dim p As shell_less_process = Nothing
-        p = New shell_less_process(True, binder.[New](s))
+        p = New shell_less_process(
+                    True,
+                    implementation_of(Of ISynchronizeInvoke).from_instance(New slimqless2_runner_synchronize_invoke(t)))
         p.start_info().FileName() = shell_less_process_test_exe_full_path
         AddHandler p.receive_error, Sub()
                                         assert_true(t.running_in_current_thread())

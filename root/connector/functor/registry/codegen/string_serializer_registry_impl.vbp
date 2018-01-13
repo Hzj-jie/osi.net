@@ -1,0 +1,11 @@
+
+##DEFAULT TYPE Byte
+        string_serializer.register(Sub(ByVal i As ##TYPE##, ByVal o As StringWriter)
+                                       assert(Not o Is Nothing)
+                                       o.Write(i)
+                                   End Sub)
+
+        string_serializer.register(Function(ByVal i As StringReader, ByRef o As ##TYPE##) As Boolean
+                                       assert(Not i Is Nothing)
+                                       Return ##TYPE##.TryParse(i.ReadToEnd(), o)
+                                   End Function)

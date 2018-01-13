@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.formation
@@ -101,7 +105,8 @@ Public Module _list
                               Function() As Boolean
                                   Dim vs As vector(Of String) = Nothing
                                   Return ec.end_result() AndAlso
-                                         (+r).from_vector_bytes(vs) AndAlso
+                                         bytes_serializer(Of vector(Of Byte())).default.
+                                                 to_container(Of vector(Of String), String)(+r, vs) AndAlso
                                          eva(result, vs) AndAlso
                                          goto_end()
                               End Function)

@@ -35,7 +35,7 @@ Public Class count_reset_event(Of _MAX_COUNT As _int64)
 
     Public Sub New()
         m = New ManualResetEvent(False)
-        clock = thread_static_tick_clock.resolve_or_default()
+        clock = thread_static_implementation_of(Of tick_clock).resolve_or_default(tick_clock.default)
     End Sub
 
     Public Sub [set]()

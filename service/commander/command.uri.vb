@@ -1,20 +1,28 @@
 ﻿
+#If RETIRED
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports osi.root.formation
-Imports osi.root.constants
-Imports osi.root.connector.uri
 Imports osi.root.connector
-Imports osi.root.utils
+Imports osi.root.connector.uri
+Imports osi.root.constants
 
 Public Module _command_uri
-    Private Const separator As Char = root.constants.character.dot
+    Private Const separator As Char = character.dot
     Private ReadOnly separators() As Char = {separator}
-    Private Const escape As Char = root.constants.character.dollar
+    Private Const escape As Char = character.dollar
 
     Sub New()
         assert(separator.unreserved())
         assert(escape.unreserved())
+
+        uri_serializer.register(Sub(ByVal i As command, ByVal o As StringWriter)
+
+                                End Sub)
     End Sub
 
     'only return nothing when b is empty
@@ -24,7 +32,7 @@ Public Module _command_uri
         Else
             Dim o As StringBuilder = Nothing
             o = New StringBuilder()
-            For i As Int32 = 0 To array_size(b) - 1
+            For i As Int32 = 0 To array_size_i(b) - 1
                 Dim c As Char = Nothing
                 c = Convert.ToChar(b(i))
                 If c.unreserved() AndAlso
@@ -46,13 +54,13 @@ Public Module _command_uri
             Return Nothing
         Else
             Dim o() As Byte = Nothing
-            ReDim o(strlen(s) - 1)
+            ReDim o(strlen_i(s) - 1)
             Dim l As Int32 = 0
-            For i As Int32 = 0 To strlen(s) - 1
+            For i As Int32 = 0 To strlen_i(s) - 1
                 assert(s(i) <> separator)
                 If s(i) = escape Then
                     Dim b As Byte = 0
-                    If hex_byte(strmid(s, i + 1, expected_hex_byte_length), b) Then
+                    If hex_byte(strmid(s, CUInt(i + 1), expected_hex_byte_length), b) Then
                         o(l) = b
                         l += 1
                         i += expected_hex_byte_length
@@ -63,7 +71,7 @@ Public Module _command_uri
                     Dim t As Int32 = 0
                     t = Convert.ToInt32(s(i))
                     assert(t >= 0 AndAlso t <= max_uint8)
-                    o(l) = t
+                    o(l) = CByte(t)
                     l += 1
                 Else
                     Return Nothing
@@ -73,7 +81,7 @@ Public Module _command_uri
             assert(l > 0)
             Dim r() As Byte = Nothing
             ReDim r(l - 1)
-            memcpy(r, o, l)
+            memcpy(r, o, CUInt(l))
             Return r
         End If
     End Function
@@ -111,7 +119,7 @@ Public Module _command_uri
             Else
                 this.clear()
                 this.set_action_no_copy(uri_decode(ss(0)))
-                For i As Int32 = 1 To array_size(ss) - 1 Step 2
+                For i As Int32 = 1 To array_size_i(ss) - 1 Step 2
                     this.set_parameter_no_copy(uri_decode(ss(i)), uri_decode(ss(i + 1)))
                 Next
                 Return True
@@ -119,3 +127,4 @@ Public Module _command_uri
         End If
     End Function
 End Module
+#End If

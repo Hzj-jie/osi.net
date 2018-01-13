@@ -1,7 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.delegates
 
+' TODO: Move to type_info.
 Public Module _copy
     Private NotInheritable Class clone_cache(Of T)
         Public Shared ReadOnly cloneable As Boolean
@@ -40,7 +45,7 @@ Public Module _copy
                                    End Function
                 cloneable = False
             ElseIf type_info(Of T).is_object Then
-                raise_error(error_type.performance, "copy(Of Object) is definitely a performance destroyer.")
+                raise_error(error_type.performance, "copy(Of Object) impacts performance seriously.")
                 non_nothing_copy = Function(ByVal i As T, ByRef o As T) As Boolean
                                        assert(Not i Is Nothing)
                                        Using code_block

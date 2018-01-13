@@ -62,7 +62,6 @@ Partial Public Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As 
         End Function
     End Class
 
-    Public Shared ReadOnly boa As binder(Of Func(Of HEAP_KEY, HEAP_KEY, HEAP_KEY), binary_operator_add_protector)
     Private Shared ReadOnly _end As iterator = Nothing
     Private _heap As heap2 = Nothing
     Private _map As map(Of MAP_KEY, Int64) = Nothing
@@ -84,18 +83,10 @@ Partial Public Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As 
     End Function
 
     Shared Sub New()
-        boa = New binder(Of Func(Of HEAP_KEY, HEAP_KEY, HEAP_KEY), binary_operator_add_protector)()
         _end = iterator.end
 
-        If isdebugmode() AndAlso
-           Not boa.has_value() AndAlso
-           Not accumulatable(Of HEAP_KEY).v Then
-            assert(Not accumulatable(Of HEAP_KEY).ex Is Nothing)
-            raise_error(error_type.warning,
-                          "cannot add a HEAP_KEY to another, HEAP_KEY = ",
-                          GetType(HEAP_KEY).FullName(),
-                          ", may cause data lost in accumulate function, ex ",
-                          accumulatable(Of HEAP_KEY).ex.Message())
+        If isdebugmode() Then
+            binary_operator(Of HEAP_KEY).log_addable()
         End If
     End Sub
 
@@ -128,12 +119,7 @@ Partial Public Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As 
             heap_node = _heap((+heap_pos).second)
             debug_assert(Not heap_node Is Nothing, "heapNode is nothing, _map is not concur with _heap.")
             If accumulate Then
-                assert(boa.has_value() OrElse accumulatable(Of HEAP_KEY).v)
-                If boa.has_value() Then
-                    heap_node.first = (+boa)(heap_node.first, value)
-                Else
-                    heap_node.first = inc(heap_node.first, value)
-                End If
+                heap_node.first = binary_operator.add(heap_node.first, value)
             Else
                 heap_node.first = value
             End If

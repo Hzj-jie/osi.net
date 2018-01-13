@@ -3,11 +3,11 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.template
 Imports osi.root.procedure
+Imports osi.root.template
 Imports osi.service.argument
 Imports osi.service.device
 Imports osi.service.selector
@@ -39,12 +39,9 @@ Public Class target_questioner
 
     Public Shared Shadows Function ctor(Of KEY_T)(ByVal name As KEY_T,
                                                   ByVal q As questioner(Of _true),
-                                                  Optional ByVal key_t_bytes As  _
-                                                      binder(Of Func(Of KEY_T, Byte()), 
-                                                                bytes_conversion_binder_protector) = Nothing) _
+                                                  Optional ByVal key_t_bytes As bytes_serializer(Of KEY_T) = Nothing) _
                                                  As target_questioner
-        assert(key_t_bytes.has_value())
-        Return New target_questioner((+key_t_bytes)(name), q, True)
+        Return New target_questioner((+key_t_bytes).to_bytes(name), q, True)
     End Function
 
     Private Shared Function create(ByVal v As var,

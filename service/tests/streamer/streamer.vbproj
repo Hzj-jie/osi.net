@@ -60,6 +60,7 @@
     <Compile Include="convector_test.vb" />
     <Compile Include="direct_convector_test.vb" />
     <Compile Include="direct_flower_test.vb" />
+    <Compile Include="flower_int32_initializer.vb" />
     <Compile Include="flower_test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

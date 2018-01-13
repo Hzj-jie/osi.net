@@ -16,26 +16,21 @@ Option Strict On
 
 
 
-Imports osi.root.connector
+Imports osi.root.constants
 
-Public NotInheritable Class global_resolver
-    Public Shared Function resolve(Of T As Class)(ByRef o As T) As Boolean
-        Return global_resolver(Of T).resolve(o)
-    End Function
+' Auto-infer is error-prone. E.g.
+' global_resolver.register(Of T)(ByVal i As Func(Of T))
+' cannot work as expected, the compiler automatically infers to
+' global_resolver.register(Of T As Func(Of ?))(ByVal i As T).
 
-    Public Shared Function resolve_or_default(Of T As Class)(ByVal [default] As T) As T
-        Return global_resolver(Of T).resolve_or_default([default])
-    End Function
-
-    ' global_resolver.register(Of T)(ByVal i As Func(Of T))
-    ' cannot work as expected, the compiler automatically infers to
-    ' global_resolver.register(Of T As Func(Of ?))(ByVal i As T).
+Public NotInheritable Class global_resolver(Of T As Class)
+    Inherits global_resolver(Of T, Object)
 
     Private Sub New()
     End Sub
 End Class
 
-Public NotInheritable Class global_resolver(Of T As Class)
+Public Class global_resolver(Of T As Class, PROTECTOR)
     Private NotInheritable Class unregister_delegate
         Implements IDisposable
 
@@ -74,8 +69,20 @@ Public NotInheritable Class global_resolver(Of T As Class)
         r.register(i)
     End Sub
 
+    Public Shared Sub assert_first_register(ByVal i As T)
+        r.assert_first_register(i)
+    End Sub
+
+    Public Shared Sub assert_first_register(ByVal i As Func(Of T))
+        r.assert_first_register(i)
+    End Sub
+
     Public Shared Sub unregister()
         r.unregister()
+    End Sub
+
+    Public Shared sub assert_unregister()
+        r.assert_unregister()
     End Sub
 
     Public Shared Function resolve(ByRef o As T) As Boolean
@@ -85,6 +92,10 @@ Public NotInheritable Class global_resolver(Of T As Class)
     Public Shared Function resolve(Of RT As T)(ByRef r As RT) As Boolean
         Dim o As T = Nothing
         Return resolve(o) AndAlso direct_cast(o, r)
+    End Function
+
+    Public Shared Function registered() As Boolean
+        Return r.registered()
     End Function
 
 
@@ -101,9 +112,7 @@ Public NotInheritable Class global_resolver(Of T As Class)
     End Function
 
     Public Shared Function resolve_or_null(Of RT As T)() As RT
-        Dim o As RT = Nothing
-        resolve(o)
-        Return o
+        Return resolve_or_default([default](Of RT).null)
     End Function
 
     Public Shared Function resolve_or_default(Of RT As T)(ByVal [default] As RT) As RT
@@ -131,9 +140,7 @@ Public NotInheritable Class global_resolver(Of T As Class)
     End Function
 
     Public Shared Function resolve_or_null() As T
-        Dim o As T = Nothing
-        resolve(o)
-        Return o
+        Return resolve_or_default([default](Of T).null)
     End Function
 
     Public Shared Function resolve_or_default(ByVal [default] As T) As T
@@ -148,16 +155,16 @@ Public NotInheritable Class global_resolver(Of T As Class)
 'finish resolver_wrapper_resolve.vbp --------
 
     Public Shared Function scoped_register(ByVal i As T) As IDisposable
-        register(i)
+        assert_first_register(i)
         Return unregister_delegate.instance
     End Function
 
     Public Shared Function scoped_register(ByVal i As Func(Of T)) As IDisposable
-        register(i)
+        assert_first_register(i)
         Return unregister_delegate.instance
     End Function
 
-    Private Sub New()
+    Protected Sub New()
     End Sub
 End Class
 

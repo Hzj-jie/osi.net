@@ -30,29 +30,53 @@ Public NotInheritable Class thread_safe_resolver(Of T As Class)
     End Sub
 #End If
 
-    Public Sub register(ByVal i As T)
+    Public Function registered() As Boolean
+        Return Not cached Is Nothing OrElse Not f Is Nothing
+    End Function
+
+    Private Sub register(ByVal f As Func(Of T),
+                         ByVal cached As T,
+                         ByVal when_registered As Boolean,
+                         ByVal when_not_registered As Boolean)
 #If True Then
         SyncLock l
 #End If
-        cached = i
+        If registered() Then
+            assert(when_registered)
+        Else
+            assert(when_not_registered)
+        End If
+        Me.f = f
+        Me.cached = cached
 #If True Then
         End SyncLock
 #End If
     End Sub
 
-    Public Sub unregister()
-        register([default](Of Func(Of T)).null)
+    Public Sub register(ByVal i As T)
+        register(Nothing, i, True, True)
     End Sub
 
     Public Sub register(ByVal i As Func(Of T))
-#If True Then
-        SyncLock l
-#End If
-        f = i
-        cached = Nothing
-#If True Then
-        End SyncLock
-#End If
+        register(i, Nothing, True, True)
+    End Sub
+
+    Public Sub unregister()
+        register(Nothing, Nothing, True, True)
+    End Sub
+
+    Public Sub assert_first_register(ByVal i As T)
+        assert(Not i Is Nothing)
+        register(Nothing, i, False, True)
+    End Sub
+
+    Public Sub assert_first_register(ByVal i As Func(Of T))
+        assert(Not i Is Nothing)
+        register(i, Nothing, False, True)
+    End Sub
+
+    Public Sub assert_unregister()
+        register(Nothing, Nothing, True, False)
     End Sub
 
     Public Function resolve(ByRef o As T) As Boolean

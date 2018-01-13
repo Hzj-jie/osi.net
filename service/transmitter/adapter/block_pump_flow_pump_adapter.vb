@@ -1,6 +1,10 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
@@ -60,7 +64,7 @@ Public Class block_pump_flow_pump_adapter
                                   assert(Not b Is Nothing)
                                   If ec.end_result() Then
                                       If isemptyarray(+b) Then
-                                          Return eva(result, 0) AndAlso
+                                          Return eva(result, uint32_0) AndAlso
                                                  goto_end()
                                       Else
                                           If array_size(+b) > count Then

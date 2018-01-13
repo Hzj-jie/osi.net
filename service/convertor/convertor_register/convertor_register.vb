@@ -1,4 +1,9 @@
 ﻿
+#If RETIRED
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.delegates
@@ -274,11 +279,8 @@ Public Class convertor_register(Of FROM_T, TO_T, PROTECTOR)
         End If
     End Function
 
-    Shared Sub New()
-        sizeof_register_internal_types.init()
-    End Sub
-
     'Enable inheritance only
     Protected Sub New()
     End Sub
 End Class
+#End If

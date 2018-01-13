@@ -5,10 +5,18 @@ Option Strict On
 
 Imports System.Reflection
 Imports osi.root.connector
+Imports osi.root.formation
 
 <AttributeUsage(AttributeTargets.All, AllowMultiple:=True, Inherited:=True)>
 Public MustInherit Class context_filter
     Inherits Attribute
+
+    ' TODO: Use slim_constructor
+    Private Shared ReadOnly constructors As vector(Of pair(Of String, Func(Of String, context_filter)))
+
+    Shared Sub New()
+        _new(constructors)
+    End Sub
 
     Protected Sub New()
     End Sub

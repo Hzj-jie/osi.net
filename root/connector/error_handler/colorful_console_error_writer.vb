@@ -1,11 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 
-<global_init(global_init_level.log_and_counter_services)>
 Public Class colorful_console_error_writer
     Shared Sub New()
         error_writer_ignore_types(Of colorful_console_error_writer).ignore(
-            error_type.performance, error_type.information)
+            error_type.performance, error_type.information, error_type.deprecated)
         AddHandler error_event.R3,
                    Sub(err_type As error_type, s As String)
                        If error_writer_ignore_types(Of colorful_console_error_writer).valued(err_type) Then
@@ -55,7 +58,4 @@ Public Class colorful_console_error_writer
         End Try
     End Sub
 #End If
-
-    Private Shared Sub init()
-    End Sub
 End Class

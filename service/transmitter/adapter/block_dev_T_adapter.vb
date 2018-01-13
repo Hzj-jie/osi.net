@@ -1,9 +1,11 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.delegates
-Imports osi.root.procedure
 Imports osi.root.formation
+Imports osi.root.procedure
 Imports osi.root.utils
 
 <type_attribute()>
@@ -11,26 +13,18 @@ Public Class block_dev_T_adapter(Of T)
     Inherits T_adapter(Of block)
     Implements dev_T(Of T)
 
-    Private ReadOnly T_bytes As binder(Of _do_val_ref(Of T, Byte(), Boolean), bytes_conversion_binder_protector)
-    Private ReadOnly bytes_T As binder(Of _do_val_ref(Of Byte(), T, Boolean), bytes_conversion_binder_protector)
+    Private ReadOnly T_bytes As bytes_serializer(Of T)
 
-    Public Sub New(ByVal b As block,
-                   Optional ByVal T_bytes As binder(Of _do_val_ref(Of T, Byte(), Boolean), 
-                                                       bytes_conversion_binder_protector) = Nothing,
-                   Optional ByVal bytes_T As binder(Of _do_val_ref(Of Byte(), T, Boolean), 
-                                                       bytes_conversion_binder_protector) = Nothing)
+    Public Sub New(ByVal b As block, Optional ByVal T_bytes As bytes_serializer(Of T) = Nothing)
         MyBase.New(b)
-        assert(T_bytes.has_value())
-        assert(bytes_T.has_value())
-        Me.T_bytes = T_bytes
-        Me.bytes_T = bytes_T
+        Me.T_bytes = +T_bytes
     End Sub
 
     Public Function send(ByVal i As T) As event_comb Implements dev_T(Of T).send
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim b() As Byte = Nothing
-                                  If (+T_bytes)(i, b) Then
+                                  If T_bytes.to_bytes(i, b) Then
                                       ec = underlying_device.send(b)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -55,7 +49,7 @@ Public Class block_dev_T_adapter(Of T)
                               End Function,
                               Function() As Boolean
                                   Dim r As T = Nothing
-                                  Return (+bytes_T)(+p, r) AndAlso
+                                  Return T_bytes.from_bytes(+p, r) AndAlso
                                          eva(o, r) AndAlso
                                          goto_end()
                               End Function)

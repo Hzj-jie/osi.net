@@ -1,9 +1,13 @@
 ﻿
-Imports osi.root.utt
-Imports osi.root.constants
-Imports osi.root.connector
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Public Class uri_path_test
+Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.utt
+
+Public Class uri_path_encoder_string_test
     Inherits [case]
 
     Private Shared Function basic_function() As Boolean
@@ -12,8 +16,8 @@ Public Class uri_path_test
             s = strcat(s, If(rnd_bool(), "H", character.sbc0))
         Next
         Dim s2 As String = Nothing
-        s2 = uri_path_encode(s)
-        s2 = uri_path_decode(s2)
+        s2 = uri.path_encoder.encode(s)
+        s2 = uri.path_encoder.decode(s2)
         assert_equal(s, s2)
         Return True
     End Function
@@ -22,7 +26,7 @@ Public Class uri_path_test
         Dim s As String = Nothing
         s = "abc%FG%FG%FGabc"
         Dim s2 As String = Nothing
-        s2 = uri_path_decode(s)
+        s2 = uri.path_encoder.decode(s)
         assert_equal(s, s2)
         Return True
     End Function
@@ -32,9 +36,9 @@ Public Class uri_path_test
         For i As Int32 = 0 To 128 - 1
             strcat(s, If(rnd_bool(), "H", character.sbc0))
         Next
-        s = uri_path_encode(s, Text.Encoding.Unicode())
+        s = uri.path_encoder.encode(s, Text.Encoding.Unicode())
         Dim s2 As String = Nothing
-        s2 = uri_path_decode(s, New Text.UTF8Encoding(False, True))
+        s2 = uri.path_encoder.decode(s, New Text.UTF8Encoding(False, True))
         assert_equal(s, s2)
         Return True
     End Function
@@ -43,11 +47,11 @@ Public Class uri_path_test
         Dim s As String = Nothing
         s = "abc%D"
         Dim s2 As String = Nothing
-        s2 = uri_path_decode(s)
+        s2 = uri.path_encoder.decode(s)
         assert_equal(s, s2)
 
         s = "abc%%"
-        s2 = uri_path_decode(s)
+        s2 = uri.path_encoder.decode(s)
         assert_equal(s, s2)
         Return True
     End Function
@@ -58,16 +62,16 @@ Public Class uri_path_test
             s = strcat(s, If(rnd_bool(), character.sbc0, character.sbcblank))
         Next
         Dim s2 As String = Nothing
-        s2 = uri_path_encode(s)
-        s2 = uri_path_decode(s2)
+        s2 = uri.path_encoder.encode(s)
+        s2 = uri.path_encoder.decode(s2)
         assert_equal(s, s2)
         Return True
     End Function
 
     Private Shared Function special_cases() As Boolean
-        assert_equal(uri_path_encode("//"), "%2F%2F")
-        assert_equal(uri_path_decode("%2F%2F"), "//")
-        assert_equal(uri_path_decode("%2f%2f"), "//")
+        assert_equal(uri.path_encoder.encode("//"), "%2F%2F")
+        assert_equal(uri.path_encoder.decode("%2F%2F"), "//")
+        assert_equal(uri.path_encoder.decode("%2f%2f"), "//")
         Return True
     End Function
 

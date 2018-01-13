@@ -1,42 +1,38 @@
 ﻿
-Imports System.Runtime.CompilerServices
-Imports osi.root.formation
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports System.IO
 Imports osi.root.connector
-Imports osi.root.utils
-Imports osi.service.convertor
+Imports osi.root.constants
+Imports osi.root.formation
 
-Public Module _command_bytes
-    <Extension()> Public Function to_bytes(ByVal this As command) As Byte()
-        If this Is Nothing Then
-            Return Nothing
-        Else
-            Dim v As vector(Of Byte()) = Nothing
-            v = New vector(Of Byte())()
-            v.emplace_back(this.action())
-            assert(this.foreach(Sub(x, y)
-                                    v.emplace_back(x)
-                                    v.emplace_back(y)
-                                End Sub))
-            Return v.to_bytes()
-        End If
-    End Function
+<global_init(global_init_level.server_services)>
+Partial Public Class command
+    Shared Sub New()
+        assert(global_init_level.services < global_init_level.server_services)
+        bytes_serializer(Of constants.action).forward_registration.from(Of SByte)()
+        bytes_serializer(Of constants.response).forward_registration.from(Of SByte)()
+        bytes_serializer(Of constants.parameter).forward_registration.from(Of SByte)()
 
-    <Extension()> Public Function from_bytes(ByVal this As command, ByVal b() As Byte) As Boolean
-        If this Is Nothing OrElse isemptyarray(b) Then
-            Return False
-        Else
-            Dim v As vector(Of Byte()) = Nothing
-            v = b.to_vector_bytes()
-            If v Is Nothing OrElse ((v.size() And 1) <> 1) Then
-                Return False
-            Else
-                this.clear()
-                this.set_action_no_copy(v(0))
-                For i As Int64 = 1 To v.size() - 1 Step 2
-                    this.set_parameter_no_copy(v(i), v(i + 1))
-                Next
-                Return True
-            End If
-        End If
-    End Function
-End Module
+        bytes_serializer.fixed.register(Function(ByVal i As command, ByVal o As MemoryStream) As Boolean
+                                            assert(Not i Is Nothing)
+                                            Return bytes_serializer.append_to(i.a, o) AndAlso
+                                                   bytes_serializer.append_to(i.ps, o)
+                                        End Function,
+                                        Function(ByVal i As MemoryStream, ByRef o As command) As Boolean
+                                            Dim a As array_pointer(Of Byte) = Nothing
+                                            Dim ps As map(Of array_pointer(Of Byte), Byte()) = Nothing
+                                            If bytes_serializer.consume_from(i, a) AndAlso
+                                               bytes_serializer.consume_from(i, ps) Then
+                                                o = New command(a, ps)
+                                                Return True
+                                            End If
+                                            Return False
+                                        End Function)
+    End Sub
+
+    Private Shared Sub init()
+    End Sub
+End Class

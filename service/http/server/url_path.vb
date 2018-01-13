@@ -22,7 +22,7 @@ Public NotInheritable Class url_path
                 Return False
             Else
                 For i As Int32 = 0 To array_size_i(ss) - 1
-                    result.emplace_back(uri_path_decode(ss(i), e))
+                    result.emplace_back(uri.path_encoder.decode(ss(i), e))
                 Next
             End If
         End If

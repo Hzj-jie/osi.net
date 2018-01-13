@@ -24,6 +24,16 @@ Public NotInheritable Class attributes
         Public ReadOnly times As UInt64
 
         Public Sub New(ByVal times As UInt64)
+            Me.New(times, times)
+        End Sub
+
+        Public Sub New(ByVal debug_times As UInt64, ByVal release_times As UInt64)
+            Dim times As UInt64 = 0
+            If isdebugbuild() Then
+                times = debug_times
+            Else
+                times = release_times
+            End If
             assert(times > 1)
             Me.times = times
         End Sub

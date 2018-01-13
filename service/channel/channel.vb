@@ -1,12 +1,15 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.event
 Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.service.commander
-Imports osi.service.convertor
 Imports osi.service.transmitter
 
 Partial Public Class channel
@@ -20,8 +23,8 @@ Partial Public Class channel
     Private ReadOnly send_queue As slimqless2(Of command)
 
     Shared Sub New()
-        bytes_sbyte_convertor_register(Of constants.remote.action).assert_bind()
-        bytes_sbyte_convertor_register(Of constants.remote.parameter).assert_bind()
+        bytes_serializer(Of constants.remote.action).forward_registration.from(Of SByte)()
+        bytes_serializer(Of constants.remote.parameter).forward_registration.from(Of SByte)()
     End Sub
 
     Public Sub New(ByVal h As herald,
@@ -38,7 +41,7 @@ Partial Public Class channel
         assert(Not h Is Nothing)
         assert(max_channel_count > 0)
         Me.h = h
-        ReDim Me.m(max_channel_count - 1)
+        ReDim Me.m(CInt(max_channel_count - uint32_1))
         Me.pending_io = New pending_io_punishment()
         Me.send_event = New signal_event()
         Me.send_queue = New slimqless2(Of command)()
@@ -131,9 +134,9 @@ Partial Public Class channel
                                             Dim n As Int64 = 0
                                             n = nowadays.milliseconds()
                                             For i As UInt32 = 0 To array_size(m) - uint32_1
-                                                If Not m(i) Is Nothing AndAlso
-                                                   n - m(i).last_active_ms() >= idle_timeout_ms Then
-
+                                                If Not m(CInt(i)) Is Nothing AndAlso
+                                                   n - m(CInt(i)).last_active_ms() >= idle_timeout_ms Then
+                                                    ' TODO
                                                 End If
                                             Next
                                         End Function))

@@ -3,12 +3,14 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 
+<global_init(default_global_init_level.functor)>
 Public Module _binding_flags
     Private ReadOnly m As map(Of String, BindingFlags)
 
@@ -22,6 +24,21 @@ Public Module _binding_flags
 
         assert(m.emplace("private", BindingFlags.NonPublic).second)
         assert(m.emplace("protected", BindingFlags.NonPublic).second)
+
+        string_serializer.register(Function(ByVal i As StringReader, ByRef o As BindingFlags) As Boolean
+                                       assert(Not i Is Nothing)
+                                       Return o.from_str(i.ReadToEnd())
+                                   End Function)
+        string_serializer.register(Function(ByVal i As StringReader, ByRef o As method_binding_flags) As Boolean
+                                       assert(Not i Is Nothing)
+                                       Dim bf As BindingFlags = Nothing
+                                       If string_serializer.from_str(i, bf) Then
+                                           o = New method_binding_flags(bf)
+                                           Return True
+                                       Else
+                                           Return False
+                                       End If
+                                   End Function)
     End Sub
 
     <Extension()> Public Function from_str(ByRef bf As BindingFlags, ByVal s As String) As Boolean
@@ -59,4 +76,7 @@ Public Module _binding_flags
         bf = bf Or BindingFlags.InvokeMethod
         Return from_str(bf, s)
     End Function
+
+    Private Sub init()
+    End Sub
 End Module

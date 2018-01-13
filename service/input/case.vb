@@ -1,9 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
-Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.service.convertor
-Imports osi.service.iosys
 
 Public Enum mode
     VOID
@@ -23,34 +26,47 @@ Public Enum action
     COUNT
 End Enum
 
+Public Module _case
+    <Extension()> Public Function mode_or_void(ByVal this As [case]) As mode
+        Return If(this Is Nothing, mode.VOID, this.mode)
+    End Function
+
+    <Extension()> Public Function action_or_void(ByVal this As [case]) As action
+        Return If(this Is Nothing, action.VOID, this.action)
+    End Function
+
+    <Extension()> Public Function meta_or_null(ByVal this As [case]) As Byte()
+        Return If(this Is Nothing, Nothing, this.meta)
+    End Function
+End Module
+
 Public NotInheritable Class [case]
-    Implements ICloneable
+    Implements ICloneable, ICloneable(Of [case])
 
     Public ReadOnly mode As mode
     Public ReadOnly action As action
     Public ReadOnly meta() As Byte
 
     Shared Sub New()
-        'TODO a better solution without copy byte()
-        bytes_convertor_register(Of [case]).assert_bind(
-            Function(i() As Byte, ByRef offset As UInt32, ByRef o As [case]) As Boolean
-                Dim b() As Byte = Nothing
-                Return bytes_bytes_ref(i, b, offset) AndAlso
-                       from_bytes(b, o)
-            End Function,
-            Function(i() As Byte, ii As UInt32, il As UInt32, ByRef o As [case]) As Boolean
-                Dim b() As Byte = Nothing
-                Return bytes_bytes_ref(i, ii, il, b) AndAlso
-                       from_bytes(b, o)
-            End Function,
-            Function(i As [case], o() As Byte, ByRef offset As UInt32) As Boolean
-                Dim b() As Byte = Nothing
-                Return to_bytes(i, b) AndAlso
-                       bytes_bytes_val(b, o, offset)
-            End Function,
-            Function(i As [case], ByRef o() As Byte) As Boolean
-                Return to_bytes(i, o)
-            End Function)
+        bytes_serializer(Of mode).forward_registration.from(Of Int32)()
+        bytes_serializer(Of action).forward_registration.from(Of Int32)()
+        bytes_serializer.fixed.register(Function(ByVal i As [case], ByVal o As MemoryStream) As Boolean
+                                            assert(Not o Is Nothing)
+                                            Return bytes_serializer.append_to(i.mode_or_void(), o) AndAlso
+                                                   bytes_serializer.append_to(i.action_or_void(), o) AndAlso
+                                                   bytes_serializer.append_to(i.meta_or_null(), o)
+                                        End Function,
+                                        Function(ByVal i As MemoryStream, ByRef o As [case]) As Boolean
+                                            Dim m As mode = Nothing
+                                            Dim a As action = Nothing
+                                            Dim b() As Byte = Nothing
+                                            If bytes_serializer.consume_from(i, m) AndAlso
+                                               bytes_serializer.consume_from(i, a) AndAlso
+                                               bytes_serializer.consume_from(i, b) Then
+                                                o = New [case](m, a, b, True)
+                                            End If
+                                            Return False
+                                        End Function)
     End Sub
 
     Private Sub New(ByVal mode As mode,
@@ -66,49 +82,15 @@ Public NotInheritable Class [case]
         Me.New(mode, action, copy(meta), True)
     End Sub
 
-    Public Function Clone() As Object Implements ICloneable.Clone
+    Public Function CloneT() As [case] Implements ICloneable(Of [case]).Clone
         Return New [case](mode, action, meta)
+    End Function
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
     End Function
 
     Public Overrides Function ToString() As String
         Return strcat("case[", mode, ", ", action, ", ", meta.to_string(), "]")
-    End Function
-
-    Public Shared Function to_bytes(ByVal i As [case], ByRef o() As Byte) As Boolean
-        If i Is Nothing Then
-            Return False
-        Else
-            Dim v As vector(Of Byte()) = Nothing
-            v = New vector(Of Byte())()
-            v.emplace_back(CInt(i.mode).to_bytes())
-            v.emplace_back(CInt(i.action).to_bytes())
-            v.emplace_back(i.meta)
-            o = v.to_bytes()
-            Return True
-        End If
-    End Function
-
-    Public Shared Function from_bytes(ByVal i() As Byte, ByRef o As [case]) As Boolean
-        Dim v As vector(Of Byte()) = Nothing
-        v = i.to_vector_bytes()
-        If v Is Nothing OrElse Not v.size() = 3 Then
-            Return False
-        Else
-            Dim mi As Int32 = 0
-            Dim ai As Int32 = 0
-            Dim meta() As Byte = Nothing
-            If bytes_int32(v(0), mi) AndAlso
-               mi >= mode.VOID AndAlso
-               mi < mode.COUNT AndAlso
-               bytes_int32(v(1), ai) AndAlso
-               ai >= action.VOID AndAlso
-               ai < action.COUNT Then
-                meta = v(2)
-                o = New [case](mi, ai, meta, True)
-                Return True
-            Else
-                Return False
-            End If
-        End If
     End Function
 End Class

@@ -1,10 +1,12 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
-Imports osi.service.device
 Imports osi.service.secure
 
 Public NotInheritable Class token2_challenger
@@ -91,9 +93,10 @@ Public NotInheritable Class token2_challenger(Of COLLECTION, CONNECTION)
                                   Dim reply As piece = Nothing
                                   If ec.end_result() AndAlso Not r.empty() Then
                                       assert(Not code Is Nothing AndAlso Not code.empty())
-                                      If (+r).has_action() AndAlso info.sign_match(p, code, (+r).action()) Then
+                                      If (+r).has_action() AndAlso
+                                         info.sign_match(p, code, (+r).action()) Then
                                           eva(accepted, True)
-                                          reply = New piece(constants.token2_prefix)
+                                          reply = constants.token2_prefix
                                       Else
                                           If info.trace(p) Then
                                               raise_error(info.identity(p), " did not pass the challenge")

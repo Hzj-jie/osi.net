@@ -1,17 +1,16 @@
 ﻿
-Imports osi.root.constants
-Imports osi.root.delegates
-Imports osi.root.lock
-Imports osi.root.formation
-Imports osi.root.procedure
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utils
-Imports osi.service.convertor
-Imports osi.service.commander.constants
-Imports action_map = osi.root.formation.map(Of  _
-                            osi.root.formation.array_pointer(Of Byte), 
-                            System.Func(Of osi.service.commander.command, 
-                                           osi.service.commander.command, 
+Imports osi.root.formation
+Imports osi.root.lock
+Imports osi.root.procedure
+Imports action_map = osi.root.formation.map(Of
+                            osi.root.formation.array_pointer(Of Byte),
+                            System.Func(Of osi.service.commander.command,
+                                           osi.service.commander.command,
                                            osi.root.procedure.event_comb))
 
 Public Class dispatcher
@@ -41,12 +40,9 @@ Public Class dispatcher
     End Function
 
     Public Function [erase](Of T)(ByVal action As T,
-                                  Optional ByVal T_bytes As binder(Of _do_val_ref(Of T, Byte(), Boolean), 
-                                                                      bytes_conversion_binder_protector) = Nothing) _
-                                 As Boolean
-        assert(T_bytes.has_value())
+                                  Optional ByVal T_bytes As bytes_serializer(Of T) = Nothing) As Boolean
         Dim b() As Byte = Nothing
-        Return (+T_bytes)(action, b) AndAlso
+        Return (+T_bytes).to_bytes(action, b) AndAlso
                [erase](b)
     End Function
 
@@ -72,17 +68,13 @@ Public Class dispatcher
     Public Function register(Of T)(ByVal action As T,
                                    ByVal act As Func(Of command, command, event_comb),
                                    Optional ByVal replace As Boolean = False,
-                                   Optional ByVal T_bytes As binder(Of _do_val_ref(Of T, Byte(), Boolean), 
-                                                                       bytes_conversion_binder_protector) = Nothing) _
-                                  As Boolean
-        assert(T_bytes.has_value())
+                                   Optional ByVal T_bytes As bytes_serializer(Of T) = Nothing) As Boolean
         Dim b() As Byte = Nothing
-        Return (+T_bytes)(action, b) AndAlso
+        Return (+T_bytes).to_bytes(action, b) AndAlso
                register(b, act, replace)
     End Function
 
-    Public Function execute(ByVal i As command,
-                            ByVal o As command) As event_comb Implements executor.execute
+    Public Function execute(ByVal i As command, ByVal o As command) As event_comb Implements executor.execute
         Dim a As Func(Of command, command, event_comb) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean

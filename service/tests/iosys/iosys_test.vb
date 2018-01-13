@@ -1,13 +1,14 @@
 ﻿
-Imports osi.root.constants
-Imports osi.root.formation
-Imports osi.root.lock
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.formation
 Imports osi.root.procedure
-Imports osi.root.utils
 Imports osi.root.utt
+Imports osi.service.commander
 Imports osi.service.iosys
-Imports osi.service.convertor
 
 Public Class iosys_test
     Inherits [case]
@@ -17,28 +18,6 @@ Public Class iosys_test
     Protected Class iosys_test_case
         Public ReadOnly value As Int32
 
-        Shared Sub New()
-            bytes_convertor_register(Of iosys_test_case).assert_bind(
-            Function(i() As Byte, ByRef offset As UInt32, ByRef o As iosys_test_case) As Boolean
-                Dim b() As Byte = Nothing
-                Return bytes_bytes_ref(i, b, offset) AndAlso
-                       from_bytes(b, o)
-            End Function,
-            Function(i() As Byte, ii As UInt32, il As UInt32, ByRef o As iosys_test_case) As Boolean
-                Dim b() As Byte = Nothing
-                Return bytes_bytes_ref(i, ii, il, b) AndAlso
-                       from_bytes(b, o)
-            End Function,
-            Function(i As iosys_test_case, o() As Byte, ByRef offset As UInt32) As Boolean
-                Dim b() As Byte = Nothing
-                Return to_bytes(i, b) AndAlso
-                       bytes_bytes_val(b, o, offset)
-            End Function,
-            Function(i As iosys_test_case, ByRef o() As Byte) As Boolean
-                Return to_bytes(i, o)
-            End Function)
-        End Sub
-
         Public Sub New()
             Me.New(rnd_int())
         End Sub
@@ -47,24 +26,23 @@ Public Class iosys_test
             value = v
         End Sub
 
-        Public Shared Function to_bytes(ByVal i As iosys_test_case, ByRef o() As Byte) As Boolean
-            If i Is Nothing Then
-                Return False
-            Else
-                o = i.value.to_bytes()
-                Return True
+        Public Shared Narrowing Operator CType(ByVal this As iosys_test_case) As command
+            If this Is Nothing Then
+                Return Nothing
             End If
-        End Function
+            Return command.[New]().attach(this.value)
+        End Operator
 
-        Public Shared Function from_bytes(ByVal i() As Byte, ByRef o As iosys_test_case) As Boolean
-            Dim v As Int32 = 0
-            If bytes_int32(i, v) Then
-                o = New iosys_test_case(v)
-                Return True
-            Else
-                Return False
+        Public Shared Narrowing Operator CType(ByVal this As command) As iosys_test_case
+            If this Is Nothing Then
+                Return Nothing
             End If
-        End Function
+            Dim v As Int32 = 0
+            If bytes_serializer.from_bytes(this.action(), v) Then
+                Return New iosys_test_case(v)
+            End If
+            Return Nothing
+        End Operator
     End Class
 
     Private Class iosys_test_ar

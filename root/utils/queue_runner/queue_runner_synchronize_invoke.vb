@@ -1,9 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 #If DEPRECATED Then
 Imports System.ComponentModel
 #End If
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 
 <global_init(global_init_level.foundamental)>
 Public NotInheritable Class queue_runner_synchronize_invoke
@@ -14,7 +18,7 @@ Public NotInheritable Class queue_runner_synchronize_invoke
     Shared Sub New()
         instance = New queue_runner_synchronize_invoke()
 #If DEPRECATED Then
-        binder(Of ISynchronizeInvoke).set_global(instance)
+        implementation_of(Of ISynchronizeInvoke).register(instance)
 #End If
     End Sub
 

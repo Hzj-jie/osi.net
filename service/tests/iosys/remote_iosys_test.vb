@@ -1,18 +1,17 @@
 ﻿
-Imports System.IO
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net
-Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.procedure
-Imports osi.root.formation
+Imports osi.root.constants
 Imports osi.root.utt
-Imports osi.root.utils
 Imports osi.service.http
 Imports osi.service.commander
 Imports osi.service.iosys
 Imports osi.service.device
 Imports http = osi.service.http
-Imports uri = osi.service.http.constants.uri
 
 Public Class remote_iosys_test
     Inherits iosys_test

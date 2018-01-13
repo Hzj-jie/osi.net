@@ -16,9 +16,56 @@ Option Strict On
 
 Imports osi.root.connector
 
-Public Class omap(Of KEY_T, VALUE_T)
+Public NotInheritable Class omap(Of KEY_T, VALUE_T)
     Inherits obst(Of first_const_pair(Of KEY_T, VALUE_T))
     Implements ICloneable, ICloneable(Of omap(Of KEY_T, VALUE_T))
+
+    Shared Sub New()
+        container_operator(Of omap(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).register(
+                Function(ByVal i As omap(Of KEY_T, VALUE_T)) As UInt32
+                    assert(Not i Is Nothing)
+                    Return i.size()
+                End Function)
+        container_operator.register(Function(ByVal i As omap(Of KEY_T, VALUE_T),
+                                             ByVal j As first_const_pair(Of KEY_T, VALUE_T)) As Boolean
+                                        assert(Not i Is Nothing)
+                                        Return i.emplace(j).second
+                                    End Function)
+        container_operator.register(Function(ByVal i As omap(Of KEY_T, VALUE_T)) _
+                                            As container_operator(Of omap(Of KEY_T, VALUE_T),
+                                                                     first_const_pair(Of KEY_T, VALUE_T)).enumerator
+                                        Return New enumerator(i)
+                                    End Function)
+        bytes_serializer(Of omap(Of KEY_T, VALUE_T)).container(Of first_const_pair(Of KEY_T, VALUE_T)).register()
+    End Sub
+
+    Private NotInheritable Class enumerator
+        Implements container_operator(Of omap(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).enumerator
+
+        Private it As omap(Of KEY_T, VALUE_T).iterator
+
+        Public Sub New(ByVal m As omap(Of KEY_T, VALUE_T))
+            assert(Not m Is Nothing)
+            it = m.begin()
+        End Sub
+
+        Public Sub [next]() Implements container_operator(Of omap(Of KEY_T, VALUE_T),
+                                                             first_const_pair(Of KEY_T, VALUE_T)).enumerator.next
+            it += 1
+        End Sub
+
+        Public Function current() As first_const_pair(Of KEY_T, VALUE_T) _
+                Implements container_operator(Of omap(Of KEY_T, VALUE_T),
+                                                 first_const_pair(Of KEY_T, VALUE_T)).enumerator.current
+            Return +it
+        End Function
+
+        Public Function [end]() As Boolean _
+                Implements container_operator(Of omap(Of KEY_T, VALUE_T),
+                                                 first_const_pair(Of KEY_T, VALUE_T)).enumerator.end
+            Return it.is_end()
+        End Function
+    End Class
 
     Public Sub New()
         MyBase.New(AddressOf first_compare)

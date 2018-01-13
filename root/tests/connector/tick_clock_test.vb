@@ -13,25 +13,25 @@ Public NotInheritable Class tick_clock_test
     <repeat(1000)>
     <multi_threading(16)>
     Private Shared Sub run()
-        low_res_tick_clock.instance.milliseconds()
-        low_res_tick_clock.instance.ticks()
-        low_res_tick_clock.instance.seconds()
-        low_res_tick_clock.instance.ToString()
+        tick_clock.low_resolution.milliseconds()
+        tick_clock.low_resolution.ticks()
+        tick_clock.low_resolution.seconds()
+        tick_clock.low_resolution.ToString()
 
-        high_res_tick_clock.instance.milliseconds()
-        high_res_tick_clock.instance.ticks()
-        high_res_tick_clock.instance.seconds()
-        high_res_tick_clock.instance.ToString()
+        tick_clock.high_resolution.milliseconds()
+        tick_clock.high_resolution.ticks()
+        tick_clock.high_resolution.seconds()
+        tick_clock.high_resolution.ToString()
 
-        normal_res_tick_clock.instance.milliseconds()
-        normal_res_tick_clock.instance.ticks()
-        normal_res_tick_clock.instance.seconds()
-        normal_res_tick_clock.instance.ToString()
+        tick_clock.normal_resolution.milliseconds()
+        tick_clock.normal_resolution.ticks()
+        tick_clock.normal_resolution.seconds()
+        tick_clock.normal_resolution.ToString()
 
-        default_tick_clock.instance.milliseconds()
-        default_tick_clock.instance.ticks()
-        default_tick_clock.instance.seconds()
-        default_tick_clock.instance.ToString()
+        tick_clock.default.milliseconds()
+        tick_clock.default.ticks()
+        tick_clock.default.seconds()
+        tick_clock.default.ToString()
     End Sub
 
     Private Sub New()

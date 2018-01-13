@@ -1,11 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.delegates
-Imports osi.root.connector
-Imports osi.root.utils
-Imports osi.root.procedure
 Imports osi.root.formation
-Imports osi.service.convertor
+Imports osi.root.procedure
 Imports osi.service.device
 
 Public Class target_dispatcher(Of T)
@@ -17,7 +19,7 @@ Public Class target_dispatcher(Of T)
     End Sub
 
     Public Sub New()
-        Me.New(commander.dispatcher.default)
+        Me.New(dispatcher.default)
     End Sub
 
     Private Shared Function handle(ByVal i As command,
@@ -78,9 +80,8 @@ Public Class target_dispatcher(Of T)
                                            ByVal action As AT,
                                            ByVal act As Func(Of T, command, command, event_comb),
                                            Optional ByVal replace As Boolean = False,
-                                           Optional ByVal T_bytes As binder(Of _do_val_ref(Of AT, Byte(), Boolean), 
-                                                                               bytes_conversion_binder_protector) _
-                                                                     = Nothing) As Boolean
+                                           Optional ByVal T_bytes As bytes_serializer(Of AT) = Nothing) _
+                                          As Boolean
         Return Not dispatcher Is Nothing AndAlso
                dispatcher.register(action, handle(act), replace, T_bytes)
     End Function
@@ -88,9 +89,8 @@ Public Class target_dispatcher(Of T)
     Public Function register(Of AT)(ByVal action As AT,
                                     ByVal act As Func(Of T, command, command, event_comb),
                                     Optional ByVal replace As Boolean = False,
-                                    Optional ByVal T_bytes As binder(Of _do_val_ref(Of AT, Byte(), Boolean), 
-                                                                        bytes_conversion_binder_protector) _
-                                                              = Nothing) As Boolean
+                                    Optional ByVal T_bytes As bytes_serializer(Of AT) = Nothing) _
+                                   As Boolean
         Return register(dispatcher, action, act, replace, T_bytes)
     End Function
 
@@ -99,9 +99,8 @@ Public Class target_dispatcher(Of T)
     End Function
 
     Public Function [erase](Of AT)(ByVal action As AT,
-                                   Optional ByVal T_bytes As binder(Of _do_val_ref(Of AT, Byte(), Boolean), 
-                                                                       bytes_conversion_binder_protector) = Nothing) _
-                                 As Boolean
+                                   Optional ByVal T_bytes As bytes_serializer(Of AT) = Nothing) _
+                                  As Boolean
         Return dispatcher.erase(action, T_bytes)
     End Function
 

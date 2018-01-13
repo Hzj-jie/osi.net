@@ -7,7 +7,7 @@ Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.envs
 
-Public Class atomic
+Public NotInheritable Class atomic
     Private Shared ReadOnly x86 As Boolean = False
     Private Shared ReadOnly amd64 As Boolean = False
     Private Shared ReadOnly create_auto_reset_event_true As Func(Of AutoResetEvent)
@@ -125,6 +125,33 @@ Public Class atomic
         'no support in .net framework for cpu <32 bit
         Thread.MemoryBarrier()
         Return direct_cast(Of T)(Thread.VolatileRead(unref(i)))
+    End Function
+
+    Public Shared Function increment(ByRef i As Int32, ByVal max As UInt32) As Boolean
+        Thread.MemoryBarrier()
+        If Interlocked.Increment(i) > max Then
+            Interlocked.Decrement(i)
+            Return False
+        End If
+        Thread.MemoryBarrier()
+        Return True
+    End Function
+
+    Public Shared Function increment(ByRef i As Int32, ByVal max As Int32) As Boolean
+        If max < 0 Then
+            Return False
+        End If
+        Return increment(i, CUInt(max))
+    End Function
+
+    Public Shared Function decrement(ByRef i As Int32, ByVal min As Int32) As Boolean
+        Thread.MemoryBarrier()
+        If Interlocked.Decrement(i) < min Then
+            Interlocked.Increment(i)
+            Return False
+        End If
+        Thread.MemoryBarrier()
+        Return True
     End Function
 
     Public Shared Function compare_exchange(ByRef i As Int32, ByVal v As Int32, ByVal cmp As Int32) As Boolean

@@ -1,9 +1,13 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utils
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
+Imports osi.root.utils
 Imports osi.service.transmitter
 
 <type_attribute()>
@@ -27,7 +31,7 @@ Public Class mock_flow_dev
                    ByVal random_zero As Boolean,
                    ByVal random_failure As Boolean)
         Me.receive_buff = read_buff
-        ReDim Me.send_buff(write_buff_size - 1)
+        ReDim Me.send_buff(CInt(write_buff_size) - 1)
         Me.random_zero = random_zero
         Me.random_failure = random_failure
         Me.receive_position = 0
@@ -37,7 +41,7 @@ Public Class mock_flow_dev
     Public Sub New(ByVal write_buff_size As UInt32,
                    ByVal random_zero As Boolean,
                    ByVal random_failure As Boolean)
-        Me.New(next_bytes(rnd_int(4096, 8192)),
+        Me.New(next_bytes(rnd_uint(4096, 8192)),
                write_buff_size,
                random_zero,
                random_failure)
@@ -69,9 +73,9 @@ Public Class mock_flow_dev
                               ElseIf array_size(buff) < offset + count Then
                                   Return False
                               Else
-                                  Dim s As Int32 = 0
+                                  Dim s As UInt32 = 0
+                                  assert(array_size(Me.send_buff) >= Me.send_position)
                                   s = min(count, array_size(Me.send_buff) - Me.send_position)
-                                  assert(s >= 0)
                                   If s > 0 Then
                                       memcpy(Me.send_buff, Me.send_position, buff, offset, s)
                                       Me.send_position += s
@@ -99,7 +103,8 @@ Public Class mock_flow_dev
                               ElseIf array_size(buff) < offset + count Then
                                   Return False
                               Else
-                                  Dim s As Int32 = 0
+                                  Dim s As UInt32 = 0
+                                  assert(array_size(Me.receive_buff) >= Me.receive_position)
                                   s = min(count, array_size(Me.receive_buff) - Me.receive_position)
                                   assert(s >= 0)
                                   If s > 0 Then

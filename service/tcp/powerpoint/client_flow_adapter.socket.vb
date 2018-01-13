@@ -1,6 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net.Sockets
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
@@ -41,14 +46,17 @@ Partial Public Class client_flow_adapter
                                       size = min(count, single_send_size)
                                       assert(size > 0)
                                       Try
-                                          assert(c.Client().Send(buff, offset, size, SocketFlags.None) = size)
+                                          assert(c.Client().Send(buff,
+                                                                 CInt(offset),
+                                                                 CInt(size),
+                                                                 SocketFlags.None) = size)
                                       Catch
                                           Return False
                                       End Try
                                       timeout.update_send(size)
                                       Return eva(sent, size)
                                   Else
-                                      Return Not timeout.send_timeout() AndAlso eva(sent, 0)
+                                      Return Not timeout.send_timeout() AndAlso eva(sent, uint32_0)
                                   End If
                               End Function)
         End Function
@@ -74,14 +82,17 @@ Partial Public Class client_flow_adapter
                                           size = min(count, CUInt(b))
                                           assert(size > 0)
                                           Try
-                                              assert(c.Client().Receive(buff, offset, size, SocketFlags.None) = size)
+                                              assert(c.Client().Receive(buff,
+                                                                        CInt(offset),
+                                                                        CInt(size),
+                                                                        SocketFlags.None) = size)
                                           Catch
                                               Return False
                                           End Try
                                           timeout.update_receive(size)
                                           Return eva(result, size)
                                       Else
-                                          Return Not timeout.receive_timeout() AndAlso eva(result, 0)
+                                          Return Not timeout.receive_timeout() AndAlso eva(result, uint32_0)
                                       End If
                                   End If
                               End Function)

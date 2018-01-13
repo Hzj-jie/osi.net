@@ -1,10 +1,11 @@
 ﻿
+#If RETIRED
 Option Explicit On
 Option Infer Off
 Option Strict On
 
+' TODO: Remove, use global_resolver.
 Imports System.Runtime.CompilerServices
-Imports osi.root.constants
 
 Public Module _binder
     <Extension()> Public Function has_value(Of T As Class, PROTECTOR) _
@@ -135,3 +136,4 @@ Public Class binder(Of T As Class, PROTECTOR)
         End If
     End Operator
 End Class
+#End If

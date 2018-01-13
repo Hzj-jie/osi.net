@@ -109,7 +109,7 @@ Public Class count_reset_event_timed_wait_test
     Public Overrides Function run() As Boolean
         Dim clock As mock_tick_clock = Nothing
         clock = New mock_tick_clock(milliseconds_to_ticks(uint64_1))
-        Using thread_static_mock_tick_clock.scoped_register(clock)
+        Using thread_static_implementation_of(Of tick_clock).scoped_register(clock)
             Using e As count_reset_event = New count_reset_event()
                 assert_false(e.wait(1))
                 e.set()

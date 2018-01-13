@@ -1,5 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.utils
@@ -23,14 +28,14 @@ Public Class suspend_all_process_threads_test
             Inherits [case]
 
             Public Overrides Function reserved_processors() As Int16
-                Return Environment.ProcessorCount()
+                Return CShort(Environment.ProcessorCount())
             End Function
 
             Private Sub exec(ByVal p As pointer(Of UInt32), ByVal stopping As pointer(Of Boolean))
                 assert(Not p Is Nothing)
                 assert(Not stopping Is Nothing)
                 While Not +stopping
-                    eva(p, (+p) + 1)
+                    eva(p, (+p) + uint32_1)
                     sleep(100)
                 End While
             End Sub

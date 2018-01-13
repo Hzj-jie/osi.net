@@ -1,6 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Reflection
 
+' TODO: Move to type_info.
 Public NotInheritable Class static_constructor
     Public Shared Function retrieve(ByVal t As Type) As ConstructorInfo
         Return If(t Is Nothing, Nothing, t.TypeInitializer())

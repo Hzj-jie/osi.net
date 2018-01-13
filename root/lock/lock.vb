@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.DateTime
 Imports System.Threading
 Imports osi.root.constants
@@ -32,10 +36,10 @@ Public Structure lock(Of T As {Structure, islimlock})
         l.wait()
         If Now().milliseconds() - n > half_timeslice_length_ms Then
             raise_error(error_type.performance,
-                          callstack(),
-                          " is using ",
-                          Now().milliseconds() - n,
-                          "ms to wait for another thread to finish")
+                        callstack(),
+                        " used ",
+                        Now().milliseconds() - n,
+                        "ms to wait for another thread to finish.")
         End If
     End Sub
 

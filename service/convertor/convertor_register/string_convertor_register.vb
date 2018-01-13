@@ -1,4 +1,5 @@
 ﻿
+#If RETIRED
 Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.connector
@@ -49,3 +50,4 @@ Public Class uri_convertor_register(Of T)
     Private Sub New()
     End Sub
 End Class
+#End If

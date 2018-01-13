@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.service.commander
 Imports osi.service.device
@@ -10,7 +14,7 @@ Public Class command_ragent(Of CASE_T)
         Dim c As CASE_T = Nothing
         If Not i Is Nothing AndAlso
            i.action_is(constants.remote.action.push) AndAlso
-           case_codec(Of CASE_T).deserialize(i, c) Then
+           cast(i, c) Then
             Dim f As Boolean = False
             received(c, f)
             Return Not f

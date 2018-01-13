@@ -54,6 +54,7 @@
     <Compile Include="constructor.infer.vb" />
     <Compile Include="constructor.vb" />
     <Compile Include="convertor.vb" />
+    <Compile Include="injector_constructor.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -69,6 +70,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="slim_constructor.vb" />
     <Compile Include="wrapper.infer.vb" />
     <Compile Include="wrapper.vb" />
   </ItemGroup>

@@ -1,15 +1,18 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.envs
-Imports osi.service.convertor
 
 Namespace constants
     Namespace remote
         <global_init(global_init_level.server_services)>
         Friend Module binder_register
             Sub New()
-                bytes_sbyte_convertor_register(Of action).assert_bind()
-                bytes_sbyte_convertor_register(Of parameters).assert_bind()
+                bytes_serializer(Of action).forward_registration.from(Of SByte)()
+                bytes_serializer(Of parameters).forward_registration.from(Of SByte)()
             End Sub
 
             Private Sub init()

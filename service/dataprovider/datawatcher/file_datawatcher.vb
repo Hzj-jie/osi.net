@@ -1,10 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
-Imports osi.root.procedure
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.root.procedure
 Imports osi.root.utils
-Imports osi.root.delegates
 Imports osi.service.dataprovider.constants.trigger_datawatcher
 
 Public Class file_datawatcher
@@ -33,8 +36,8 @@ Public Class file_datawatcher
                                                      If File.Exists(filename) Then
                                                          Dim fi As FileInfo = Nothing
                                                          fi = New FileInfo(filename)
-                                                         suc = eva(sz, fi.Length()) AndAlso
-                                                               eva(tm, fi.LastWriteTime().Ticks())
+                                                         suc = eva(sz, CULng(fi.Length())) AndAlso
+                                                               eva(tm, CULng(fi.LastWriteTime().Ticks()))
                                                      Else
                                                          suc = False
                                                      End If

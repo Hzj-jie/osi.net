@@ -43,6 +43,7 @@ Partial Friend NotInheritable Class host
                                            Try
                                                For Each j As Type In i.GetTypes()
                                                    If case_type_restriction.accepted_case_type(j) Then
+                                                       raise_error("loading case ", j.FullName())
                                                        Dim n As case_info = Nothing
                                                        n = New case_info(j.FullName(), j.allocate(Of [case])())
                                                        SyncLock cases
@@ -55,6 +56,7 @@ Partial Friend NotInheritable Class host
                                                        If Not cs.null_or_empty() Then
                                                            For k As UInt32 = 0 To cs.size() - uint32_1
                                                                Dim n As case_info = Nothing
+                                                               raise_error("loading case ", cs(k).full_name)
                                                                n = New case_info(cs(k).full_name, cs(k))
                                                                SyncLock cases
                                                                    cases.emplace_back(n)

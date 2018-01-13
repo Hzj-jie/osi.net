@@ -1,10 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports osi.root.connector
 Imports osi.root.utils
-Imports osi.service.convertor
 Imports osi.service.commander
 Imports osi.service.storage.constants.remote
 
@@ -15,8 +18,8 @@ Public Class remote_fs
     Private ReadOnly target As String
 
     Shared Sub New()
-        bytes_sbyte_convertor_register(Of action).assert_bind()
-        bytes_sbyte_convertor_register(Of parameter).assert_bind()
+        bytes_serializer(Of action).forward_registration.from(Of SByte)()
+        bytes_serializer(Of parameter).forward_registration.from(Of SByte)()
     End Sub
 
     Private Sub New(ByVal target As String, ByVal q As questioner)

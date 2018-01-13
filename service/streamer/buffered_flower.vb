@@ -1,10 +1,12 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.formation
+Imports osi.root.constants
 Imports osi.root.lock
 Imports osi.root.procedure
-Imports osi.root.utils
 Imports osi.service.transmitter
 
 Public Class buffered_flower(Of T)
@@ -19,8 +21,6 @@ Public Class buffered_flower(Of T)
                                                 ByVal broken_pipe As ref(Of singleentry),
                                                 ByVal idle_timeout_ms As Int64,
                                                 ByVal result As atomic_int64,
-                                                ByVal sizeof As binder(Of Func(Of T, UInt64), 
-                                                                          sizeof_binder_protector),
                                                 ByVal treat_no_flow_as_failure As Boolean) _
                                                As direct_flower(Of T)
         assert(Not input Is Nothing)
@@ -32,7 +32,6 @@ Public Class buffered_flower(Of T)
                                        broken_pipe,
                                        idle_timeout_ms,
                                        result,
-                                       sizeof,
                                        treat_no_flow_as_failure)
     End Function
 
@@ -54,7 +53,6 @@ Public Class buffered_flower(Of T)
                    ByVal pipe As pipe(Of T),
                    ByVal idle_timoeut_ms As Int64,
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
         MyBase.New()
         assert(Not pipe Is Nothing)
@@ -69,7 +67,6 @@ Public Class buffered_flower(Of T)
                                               broken_pipe,
                                               idle_timoeut_ms,
                                               result,
-                                              sizeof,
                                               treat_no_flow_as_failure)
         Me.output_flower = create_output_flower(pipe_dev, output, sense_timeout_ms, broken_pipe, idle_timoeut_ms)
     End Sub
@@ -80,9 +77,8 @@ Public Class buffered_flower(Of T)
                    ByVal broken_pipe As ref(Of singleentry),
                    ByVal pipe As pipe(Of T),
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
-        Me.New(input, output, sense_timeout_ms, broken_pipe, pipe, npos, result, sizeof, treat_no_flow_as_failure)
+        Me.New(input, output, sense_timeout_ms, broken_pipe, pipe, npos, result, treat_no_flow_as_failure)
     End Sub
 
     Public Sub New(ByVal input As T_receiver(Of T),
@@ -91,7 +87,6 @@ Public Class buffered_flower(Of T)
                    ByVal broken_pipe As ref(Of singleentry),
                    ByVal idle_timeout_ms As Int64,
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
         Me.New(input,
                output,
@@ -100,7 +95,6 @@ Public Class buffered_flower(Of T)
                New pipe(Of T)(),
                idle_timeout_ms,
                result,
-               sizeof,
                treat_no_flow_as_failure)
     End Sub
 
@@ -109,9 +103,8 @@ Public Class buffered_flower(Of T)
                    ByVal sense_timeout_ms As Int64,
                    ByVal broken_pipe As ref(Of singleentry),
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
-        Me.New(input, output, sense_timeout_ms, broken_pipe, npos, result, sizeof, treat_no_flow_as_failure)
+        Me.New(input, output, sense_timeout_ms, broken_pipe, npos, result, treat_no_flow_as_failure)
     End Sub
 
     Public Sub New(ByVal input As T_receiver(Of T),
@@ -120,7 +113,6 @@ Public Class buffered_flower(Of T)
                    ByVal pipe As pipe(Of T),
                    ByVal idle_timeout_ms As Int64,
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
         Me.New(input,
                output,
@@ -129,7 +121,7 @@ Public Class buffered_flower(Of T)
                pipe,
                idle_timeout_ms,
                result,
-               sizeof, treat_no_flow_as_failure)
+               treat_no_flow_as_failure)
     End Sub
 
     Public Sub New(ByVal input As T_receiver(Of T),
@@ -137,9 +129,8 @@ Public Class buffered_flower(Of T)
                    ByVal broken_pipe As ref(Of singleentry),
                    ByVal pipe As pipe(Of T),
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
-        Me.New(input, output, broken_pipe, pipe, npos, result, sizeof, treat_no_flow_as_failure)
+        Me.New(input, output, broken_pipe, pipe, npos, result, treat_no_flow_as_failure)
     End Sub
 
     Public Sub New(ByVal input As T_receiver(Of T),
@@ -147,18 +138,16 @@ Public Class buffered_flower(Of T)
                    ByVal broken_pipe As ref(Of singleentry),
                    ByVal idle_timeout_ms As Int64,
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
-        Me.New(input, output, broken_pipe, New pipe(Of T)(), idle_timeout_ms, result, sizeof, treat_no_flow_as_failure)
+        Me.New(input, output, broken_pipe, New pipe(Of T)(), idle_timeout_ms, result, treat_no_flow_as_failure)
     End Sub
 
     Public Sub New(ByVal input As T_receiver(Of T),
                    ByVal output As T_sender(Of T),
                    ByVal broken_pipe As ref(Of singleentry),
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
-        Me.New(input, output, broken_pipe, npos, result, sizeof, treat_no_flow_as_failure)
+        Me.New(input, output, broken_pipe, npos, result, treat_no_flow_as_failure)
     End Sub
 
     Public Sub New(ByVal input As T_receiver(Of T),
@@ -166,35 +155,31 @@ Public Class buffered_flower(Of T)
                    ByVal pipe As pipe(Of T),
                    ByVal idle_timeout_ms As Int64,
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
-        Me.New(input, output, Nothing, pipe, idle_timeout_ms, result, sizeof, treat_no_flow_as_failure)
+        Me.New(input, output, Nothing, pipe, idle_timeout_ms, result, treat_no_flow_as_failure)
     End Sub
 
     Public Sub New(ByVal input As T_receiver(Of T),
                    ByVal output As T_sender(Of T),
                    ByVal pipe As pipe(Of T),
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
-        Me.New(input, output, pipe, npos, result, sizeof, treat_no_flow_as_failure)
+        Me.New(input, output, pipe, npos, result, treat_no_flow_as_failure)
     End Sub
 
     Public Sub New(ByVal input As T_receiver(Of T),
                    ByVal output As T_sender(Of T),
                    ByVal idle_timeout_ms As Int64,
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
-        Me.New(input, output, New pipe(Of T)(), idle_timeout_ms, result, sizeof, treat_no_flow_as_failure)
+        Me.New(input, output, New pipe(Of T)(), idle_timeout_ms, result, treat_no_flow_as_failure)
     End Sub
 
     Public Sub New(ByVal input As T_receiver(Of T),
                    ByVal output As T_sender(Of T),
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
-        Me.New(input, output, npos, result, sizeof, treat_no_flow_as_failure)
+        Me.New(input, output, npos, result, treat_no_flow_as_failure)
     End Sub
 
     Public Overrides Function [stop]() As Boolean

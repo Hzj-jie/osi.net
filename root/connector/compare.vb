@@ -6,6 +6,7 @@ Option Strict On
 Imports osi.root.constants
 Imports osi.root.delegates
 
+' TODO: Move to type_info.
 ' Use following order to compare two unknown types
 ' - object_compare
 ' - comparer(Of T, T2)
@@ -71,7 +72,8 @@ Public Module _compare
                 End If
             ElseIf type_info(Of T).is_object OrElse type_info(Of T2).is_object Then
                 raise_error(error_type.performance,
-                            "compare_cache(Of *, Object) or compare_cache(Of Object, *) impact performance seriously.")
+                            "compare_cache(Of *, Object) or compare_cache(Of Object, *) ",
+                            "impact performance seriously.")
                 If type_info(Of T).is_object AndAlso type_info(Of T2).is_object Then
                     c = AddressOf runtime_object_compare
                 ElseIf type_info(Of T).is_object Then
@@ -144,10 +146,16 @@ Public Module _compare
                              type_info(Of T2).fullName,
                              " needs to be specifically handled.")
                 Dim o2 As Int32 = 0
-                assert(c(this, that, o) = runtime_compare(this, that, o2), msg)
-                assert(o = o2, msg)
-#End If
+                Dim r As Boolean = False
+                r = c(this, that, o)
+                If Not r Then
+                    assert(r = runtime_compare(this, that, o2), msg)
+                    assert(o = o2, msg)
+                End If
+                Return r
+#Else
                 Return c(this, that, o)
+#End If
             End If
         End Function
 

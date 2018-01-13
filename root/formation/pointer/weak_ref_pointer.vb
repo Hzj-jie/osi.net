@@ -14,6 +14,7 @@ Option Strict On
 
 
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports osi.root.lock
 Imports osi.root.lock.slimlock
@@ -56,6 +57,7 @@ Public Class weak_ref_pointer(Of T)
             assert(Not tp Is GetType(singleentry))
             assert(Not tp Is GetType(forks))
         End If
+        bytes_serializer(Of weak_ref_pointer(Of T)).forward_registration.from(Of T)()
     End Sub
 
     ' This event is not guaranteed to be executed when p is finalized, but if this object is the
@@ -321,6 +323,14 @@ finish:
 
     Public Shared Widening Operator CType(ByVal this As weak_ref_pointer(Of T)) As Boolean
         Return Not this Is Nothing AndAlso Not this.empty()
+    End Operator
+
+    Public Shared Narrowing Operator CType(ByVal i As T) As weak_ref_pointer(Of T)
+        Return New weak_ref_pointer(Of T)(i)
+    End Operator
+
+    Public Shared Narrowing Operator CType(ByVal i As weak_ref_pointer(Of T)) As T
+        Return +i
     End Operator
 
     Public Shared Operator Not(ByVal this As weak_ref_pointer(Of T)) As Boolean

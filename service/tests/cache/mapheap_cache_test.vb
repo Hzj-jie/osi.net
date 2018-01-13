@@ -5,9 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.envs
 Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.cache
 
@@ -27,7 +25,7 @@ Public Class mapheap_cache_test
 
     Public Sub New()
         clock = New mock_tick_clock()
-        Using thread_static_resolver(Of tick_clock).scoped_register(clock)
+        Using thread_static_implementation_of(Of tick_clock).scoped_register(clock)
             mapheap_cache(c, max_size, retire_ticks)
         End Using
     End Sub

@@ -1,4 +1,5 @@
 ﻿
+#If RETIRED
 Imports osi.root.constants
 Imports osi.root.connector
 
@@ -33,3 +34,4 @@ Friend Class bytes_bytes_convertor_register
     Private Shared Sub init()
     End Sub
 End Class
+#End If

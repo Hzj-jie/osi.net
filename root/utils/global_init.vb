@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+' TODO: Remove inited and times, move to connector.
 Imports System.Reflection
 Imports osi.root.connector
 Imports osi.root.constants
@@ -37,10 +38,7 @@ Public Class global_init
         assert(Not t Is Nothing)
         assert(Not t.IsGenericTypeDefinition())
         Dim m As invoker(Of Action) = Nothing
-        m = New invoker(Of Action)(t,
-                                   BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Static,
-                                   "init",
-                                   True)
+        m = New invoker(Of Action)(t, binding_flags.static_all_method, "init", True)
         Dim v As Action = Nothing
         If m.pre_bind(v) Then
             Try
@@ -57,9 +55,7 @@ Public Class global_init
             ' A module may not have a contructor, but nothing else can be done.
             ' t.allocate() returns null if the constructor threw an exception. But the static constructor should be
             ' triggered already. Though the implementation may not be correct, it's not good to assert here.
-            raise_error(error_type.warning,
-                        "may fail to invoke any initialization functions in type ",
-                        t.FullName())
+            raise_error(error_type.warning, "may fail to invoke any initialization functions in type ", t.FullName())
         End If
     End Sub
 
@@ -102,10 +98,7 @@ Public Class global_init
                     End If
                 Next
             Catch ex As Exception
-                raise_error("Failed to load types from assembly ",
-                            i,
-                            ", ex ",
-                            ex)
+                raise_error("Failed to load types from assembly ", i, ", ex ", ex.details())
             End Try
         Next
         initiating.wait()

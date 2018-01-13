@@ -12,11 +12,19 @@ Public Enum global_init_level As Byte
     services
     server_services
     productions
+    test
 
     max = max_uint8
     other = max
     all = max
 End Enum
+
+Public NotInheritable Class default_global_init_level
+    Public Const functor As global_init_level = global_init_level.foundamental
+
+    Private Sub New()
+    End Sub
+End Class
 
 ' Follow .net naming rules: using global_init as attribute name will be accepted. It also avoids conflict with
 ' osi.root.utils.global_init class.

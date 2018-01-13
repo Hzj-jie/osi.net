@@ -216,7 +216,8 @@
     <Compile Include="type_test.vb" />
     <Compile Include="uint32_perf_test.vb" />
     <Compile Include="unchecked_int_test.vb" />
-    <Compile Include="uri_path_test.vb" />
+    <Compile Include="uri_path_encoder_bytes_test.vb" />
+    <Compile Include="uri_path_encoder_string_test.vb" />
     <Compile Include="virtual_key_test.vb" />
     <Compile Include="wait_handle_behavior_test.vb" />
     <Compile Include="weakreference_behavior_test.vb" />

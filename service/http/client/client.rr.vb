@@ -13,7 +13,6 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports osi.service.http.constants
 
 Public Module _client_rr
     Public Const undefined_content_length As UInt64 = 0
@@ -76,15 +75,15 @@ Public Module _client_rr
 
     'always start from /, so it can be used directly in http request
     <Extension()> Public Function url_encoded_path(ByVal i As vector(Of String),
-                                                   Optional ByVal e As Text.Encoding = Nothing) As String
+                                                   Optional ByVal e As Encoding = Nothing) As String
         If i.null_or_empty() Then
             Return constants.uri.path_separator
         Else
-            Dim o As StringBuilder = Nothing
-            o = New StringBuilder()
+            Dim o As StringWriter = Nothing
+            o = New StringWriter()
             For j As UInt32 = 0 To i.size() - uint32_1
-                o.Append(constants.uri.path_separator) _
-                 .Append(uri_path_encode(i(j), e))
+                o.Write(constants.uri.path_separator)
+                uri.path_encoder.encode(i(j), o, e)
             Next
             Return Convert.ToString(o)
         End If
@@ -416,10 +415,10 @@ Public Module _client_rr
         If Not String.IsNullOrEmpty(path_query) AndAlso path_query(0) <> constants.uri.path_separator Then
             extra = constants.uri.path_separator
         End If
-        If port = default_value.port Then
-            Return strcat(protocol_address_head.http, host, extra, path_query)
+        If port = constants.default_value.port Then
+            Return strcat(constants.protocol_address_head.http, host, extra, path_query)
         Else
-            Return strcat(protocol_address_head.http, host, constants.uri.port_mark, port, extra, path_query)
+            Return strcat(constants.protocol_address_head.http, host, constants.uri.port_mark, port, extra, path_query)
         End If
     End Function
 

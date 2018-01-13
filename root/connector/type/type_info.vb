@@ -4,7 +4,7 @@ Option Infer Off
 Option Strict On
 
 Partial Public NotInheritable Class type_info(Of T)
-    ' Do not add type, refer to gettype_perf test, since this is a template class, cache GetType(T) result cannot
+    ' Do not add type, refer to gettype_perf test, since this is a template class, caching GetType(T) result cannot
     ' provide benefit.
     ' Public Shared ReadOnly type As Type
     Public Shared ReadOnly fullname As String
@@ -22,6 +22,8 @@ Partial Public NotInheritable Class type_info(Of T)
     ' => GetType(T).IsPrimitive
     Public Shared ReadOnly is_primitive As Boolean
     Public Shared ReadOnly is_nullable As Boolean
+    ' => GetType(T) Is GetType(String)
+    Public Shared ReadOnly is_string As Boolean
 
     Shared Sub New()
         fullname = GetType(T).FullName()
@@ -36,6 +38,7 @@ Partial Public NotInheritable Class type_info(Of T)
         is_delegate = type_info(Of T, type_info_operators.inherit, [Delegate]).v
         is_primitive = GetType(T).IsPrimitive()
         is_nullable = GetType(T).is(GetType(Nullable(Of )))
+        is_string = GetType(T) Is GetType(String)
     End Sub
 
     Public Shared Function has_finalizer() As Boolean
@@ -68,6 +71,15 @@ Partial Public NotInheritable Class type_info(Of T)
 
     Public Shared Function dominated_constructor() As Func(Of T)
         Return constructor_cache.dominated.typed
+    End Function
+
+    Public Shared Function size() As Int32
+        Return size_cache.size
+    End Function
+
+    Public Shared Function size_uint32() As UInt32
+        assert(size() >= 0)
+        Return CUInt(size())
     End Function
 
     Private Sub New()

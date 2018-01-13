@@ -1,4 +1,5 @@
 ﻿
+#If RETIRED Then
 Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.connector
@@ -30,3 +31,4 @@ Public Class bytes_bytes_convertor_binder_initializer_test
                assert_has_value(Of Func(Of Byte(), Byte()))()
     End Function
 End Class
+#End If

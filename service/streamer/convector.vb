@@ -1,10 +1,11 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.procedure
-Imports osi.root.utils
 Imports osi.service.transmitter
 
 Public Class convector(Of T)
@@ -18,26 +19,27 @@ Public Class convector(Of T)
                                           ByVal use_buffered_flow As Boolean,
                                           ByVal idle_timeout_ms As Int64,
                                           ByVal result As atomic_int64,
-                                          ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector),
                                           ByVal treat_no_flow_as_failure As Boolean) _
                                          As flower(Of T)
-        Return If(use_buffered_flow,
-                  New buffered_flower(Of T)(dev1,
-                                            dev2,
-                                            sense_timeout_ms,
-                                            broken_pipe,
-                                            idle_timeout_ms,
-                                            result,
-                                            sizeof,
-                                            treat_no_flow_as_failure),
-                  New direct_flower(Of T)(dev1,
+        Dim r As flower(Of T) = Nothing
+        If use_buffered_flow Then
+            r = New buffered_flower(Of T)(dev1,
                                           dev2,
                                           sense_timeout_ms,
                                           broken_pipe,
                                           idle_timeout_ms,
                                           result,
-                                          sizeof,
-                                          treat_no_flow_as_failure))
+                                          treat_no_flow_as_failure)
+        Else
+            r = New direct_flower(Of T)(dev1,
+                                        dev2,
+                                        sense_timeout_ms,
+                                        broken_pipe,
+                                        idle_timeout_ms,
+                                        result,
+                                        treat_no_flow_as_failure)
+        End If
+        Return r
     End Function
 
     Public Sub New(ByVal create_flower_a_b As Func(Of ref(Of singleentry), flower(Of T)),
@@ -56,7 +58,6 @@ Public Class convector(Of T)
                    ByVal use_buffered_flower As Boolean,
                    ByVal idle_timeout_ms As Int64,
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
         Me.New(Function(broken_pipe As ref(Of singleentry)) As flower(Of T)
                    Return create_flower(dev1,
@@ -66,7 +67,6 @@ Public Class convector(Of T)
                                         use_buffered_flower,
                                         idle_timeout_ms,
                                         result,
-                                        sizeof,
                                         treat_no_flow_as_failure)
                End Function,
                Function(broken_pipe As ref(Of singleentry)) As flower(Of T)
@@ -77,7 +77,6 @@ Public Class convector(Of T)
                                         use_buffered_flower,
                                         idle_timeout_ms,
                                         result,
-                                        sizeof,
                                         treat_no_flow_as_failure)
                End Function)
     End Sub
@@ -89,7 +88,6 @@ Public Class convector(Of T)
                    ByVal pipe2 As pipe(Of T),
                    ByVal idle_timeout_ms As Int64,
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
         Me.New(Function(broken_pipe As ref(Of singleentry)) As flower(Of T)
                    Return New buffered_flower(Of T)(dev1,
@@ -99,7 +97,6 @@ Public Class convector(Of T)
                                                     assert_return(object_compare(pipe1, pipe2) <> 0, pipe1),
                                                     idle_timeout_ms,
                                                     result,
-                                                    sizeof,
                                                     treat_no_flow_as_failure)
                End Function,
                Function(broken_pipe As ref(Of singleentry)) As flower(Of T)
@@ -110,7 +107,6 @@ Public Class convector(Of T)
                                                     assert_return(object_compare(pipe1, pipe2) <> 0, pipe2),
                                                     idle_timeout_ms,
                                                     result,
-                                                    sizeof,
                                                     treat_no_flow_as_failure)
                End Function)
     End Sub
@@ -121,7 +117,6 @@ Public Class convector(Of T)
                    ByVal pipe As pipe(Of T),
                    ByVal idle_timeout_ms As Int64,
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
         Me.New(dev1,
                dev2,
@@ -130,20 +125,18 @@ Public Class convector(Of T)
                New pipe(Of T)(pipe),
                idle_timeout_ms,
                result,
-               sizeof,
                treat_no_flow_as_failure)
     End Sub
 
     Public Sub New(ByVal dev1 As dev_T(Of T),
                    ByVal dev2 As dev_T(Of T),
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
         Me.New(Function(broken_pipe As ref(Of singleentry)) As flower(Of T)
-                   Return New buffered_flower(Of T)(dev1, dev2, broken_pipe, treat_no_flow_as_failure)
+                   Return New buffered_flower(Of T)(dev1, dev2, broken_pipe, result, treat_no_flow_as_failure)
                End Function,
                Function(broken_pipe As ref(Of singleentry)) As flower(Of T)
-                   Return New buffered_flower(Of T)(dev2, dev1, broken_pipe, treat_no_flow_as_failure)
+                   Return New buffered_flower(Of T)(dev2, dev1, broken_pipe, Nothing, treat_no_flow_as_failure)
                End Function)
     End Sub
 

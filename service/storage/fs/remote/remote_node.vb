@@ -1,8 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports osi.root.connector
+Imports osi.root.template
 Imports osi.root.utils
 Imports osi.service.commander
 Imports osi.service.storage.constants.remote
@@ -14,7 +19,7 @@ Public Class remote_node
     Private ReadOnly target As String
     Private ReadOnly p As String
 
-    Private Sub New(ByVal target As String, ByVal q As questioner, ByVal path As String)
+    Private Sub New(ByVal target As String, ByVal q As questioner(Of _true), ByVal path As String)
         assert(Not String.IsNullOrEmpty(target))
         Me.target = target
         Me.q = target_questioner.ctor(target, q)
@@ -22,7 +27,7 @@ Public Class remote_node
     End Sub
 
     Public Shared Function ctor(ByVal target As String,
-                                ByVal q As questioner,
+                                ByVal q As questioner(Of _true),
                                 ByVal path As String,
                                 ByRef o As remote_node) As Boolean
         Return Not String.IsNullOrEmpty(target) AndAlso
@@ -31,7 +36,7 @@ Public Class remote_node
     End Function
 
     Public Shared Function ctor(ByVal target As String,
-                                ByVal q As questioner,
+                                ByVal q As questioner(Of _true),
                                 ByVal path As String) As remote_node
         Dim o As remote_node = Nothing
         assert(ctor(target, q, path, o))

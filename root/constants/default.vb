@@ -24,3 +24,7 @@ End Module
 Public NotInheritable Class [default](Of T)
     Public Shared ReadOnly null As T = Nothing
 End Class
+
+Public NotInheritable Class default_array(Of T)
+    Public Shared ReadOnly empty(-1) As T
+End Class

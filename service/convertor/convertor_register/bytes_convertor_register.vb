@@ -1,4 +1,5 @@
 ﻿
+#If RETIRED
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.delegates
@@ -38,3 +39,4 @@ Public Class bytes_convertor_register(Of T)
     Private Sub New()
     End Sub
 End Class
+#End If

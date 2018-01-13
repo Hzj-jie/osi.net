@@ -1,9 +1,12 @@
 ﻿
-Imports osi.root.constants
+#If RETIRED
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.formation
+Imports osi.root.constants
 Imports osi.root.delegates
-Imports osi.root.utils
 Imports osi.service.commander
 Imports parameters = osi.service.iosys.constants.remote.parameters
 
@@ -102,3 +105,4 @@ Public Class case_codec(Of CASE_T)
         End If
     End Function
 End Class
+#End If

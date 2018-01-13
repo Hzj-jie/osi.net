@@ -34,7 +34,7 @@ Public NotInheritable Class shell_less_process
 #End If
 
     Public Sub New(Optional ByVal enable_raise_event As Boolean = False,
-                   Optional ByVal synchronize_invoke As binder(Of ISynchronizeInvoke) = Nothing)
+                   Optional ByVal isynchronize_invoke_injector As implementation_of(Of ISynchronizeInvoke) = Nothing)
         p = make_disposer(New Process(),
                           disposer:=Sub(p As Process)
                                         trace("disposer")
@@ -57,7 +57,7 @@ Public NotInheritable Class shell_less_process
 #End If
         Me.ce = New count_event()
         proc().EnableRaisingEvents() = True
-        proc().SynchronizingObject() = +synchronize_invoke
+        proc().SynchronizingObject() = (+isynchronize_invoke_injector).resolve_or_null()
         AddHandler proc().OutputDataReceived, AddressOf output_received
         AddHandler proc().ErrorDataReceived, AddressOf error_received
         AddHandler proc().Exited, AddressOf process_exited

@@ -1,4 +1,5 @@
 ﻿
+#If RETIRED
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
@@ -50,3 +51,4 @@ Friend Class bytes_convertor_binder_initializer
     Private Shared Sub init()
     End Sub
 End Class
+#End If

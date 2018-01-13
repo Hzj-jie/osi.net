@@ -17,6 +17,7 @@ Option Strict On
 #Const IS_CONST = ("first_const_" = "const_")
 #Const IS_FIRST_CONST = ("first_const_" = "first_const_")
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 Imports osi.root.connector
@@ -35,6 +36,24 @@ Public NotInheritable Class first_const_pair(Of FT, ST)
     Public first As FT
     Public second As ST
 #End If
+
+    Shared Sub New()
+        bytes_serializer.fixed.register(Function(ByVal i As first_const_pair(Of FT, ST), ByVal o As MemoryStream) As Boolean
+                                            Return bytes_serializer.append_to(i.first_or_null(), o) AndAlso
+                                                   bytes_serializer.append_to(i.second_or_null(), o)
+                                        End Function,
+                                        Function(ByVal i As MemoryStream, ByRef o As first_const_pair(Of FT, ST)) As Boolean
+                                            Dim f As FT = Nothing
+                                            Dim s As ST = Nothing
+                                            If bytes_serializer.consume_from(i, f) AndAlso
+                                               bytes_serializer.consume_from(i, s) Then
+                                                o = New first_const_pair(Of FT, ST)(f, s)
+                                                Return True
+                                            Else
+                                                Return False
+                                            End If
+                                        End Function)
+    End Sub
 
     Private Sub New(ByVal first As FT, ByVal second As ST)
         Me.first = first
@@ -211,6 +230,14 @@ Public Module _first_const_pair
 
     Public Function emplace_make_first_const_pair(Of FT, ST)() As first_const_pair(Of FT, ST)
         Return first_const_pair(Of FT, ST).emplace_make_first_const_pair()
+    End Function
+
+    <Extension()> Public Function first_or_null(Of FT, ST)(ByVal i As first_const_pair(Of FT, ST)) As FT
+        Return If(i Is Nothing, Nothing, i.first)
+    End Function
+
+    <Extension()> Public Function second_or_null(Of FT, ST)(ByVal i As first_const_pair(Of FT, ST)) As ST
+        Return If(i Is Nothing, Nothing, i.second)
     End Function
 
     <Extension()> Public Function to_array(Of T)(ByVal i() As first_const_pair(Of T, T)) As T(,)

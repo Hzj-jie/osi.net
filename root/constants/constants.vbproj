@@ -62,6 +62,7 @@
     <Compile Include="default.vb" />
     <Compile Include="git.vb" />
     <Compile Include="global_init_attribute.vb" />
+    <Compile Include="joint_type.vb" />
     <Compile Include="queue_runner.vb" />
     <Compile Include="error_type.vb" />
     <Compile Include="filesystem.vb" />

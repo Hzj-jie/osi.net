@@ -41,7 +41,7 @@ Public NotInheritable Class thread_static_resolver_test
                                                        End Function)
         End If
         Dim o As Object = Nothing
-        assert_true(thread_static_resolver.resolve(o))
+        assert_true(thread_static_resolver(Of Object).resolve(o))
         assert_reference_equal(i, o)
         thread_static_resolver(Of Object).unregister()
     End Sub
@@ -52,7 +52,7 @@ Public NotInheritable Class thread_static_resolver_test
         i = New Object()
         Using thread_static_resolver(Of Object).scoped_register(i)
             Dim o As Object = Nothing
-            assert_true(thread_static_resolver.resolve(o))
+            assert_true(thread_static_resolver(Of Object).resolve(o))
             assert_reference_equal(i, o)
         End Using
         assert_false(thread_static_resolver(Of Object).resolve(Nothing))
@@ -61,7 +61,7 @@ Public NotInheritable Class thread_static_resolver_test
                                                                     Return i
                                                                 End Function)
             Dim o As Object = Nothing
-            assert_true(thread_static_resolver.resolve(o))
+            assert_true(thread_static_resolver(Of Object).resolve(o))
             assert_reference_equal(i, o)
         End Using
         assert_false(thread_static_resolver(Of Object).resolve(Nothing))

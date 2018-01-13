@@ -1,8 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.connector
 Imports osi.root.procedure
+Imports osi.root.template
 Imports osi.root.utils
 Imports osi.service.commander
 Imports osi.service.storage.constants.remote
@@ -15,7 +20,7 @@ Public Class remote_property
     Private ReadOnly p As String
 
     Private Sub New(ByVal target As String,
-                    ByVal q As questioner,
+                    ByVal q As questioner(Of _true),
                     ByVal path As String,
                     ByVal name As String)
         assert(Not String.IsNullOrEmpty(target))
@@ -25,7 +30,7 @@ Public Class remote_property
     End Sub
 
     Public Shared Function ctor(ByVal target As String,
-                                ByVal q As questioner,
+                                ByVal q As questioner(Of _true),
                                 ByVal path As String,
                                 ByVal name As String,
                                 ByRef o As remote_property) As Boolean
@@ -35,7 +40,7 @@ Public Class remote_property
     End Function
 
     Public Shared Function ctor(ByVal target As String,
-                                ByVal q As questioner,
+                                ByVal q As questioner(Of _true),
                                 ByVal path As String,
                                 ByVal name As String) As remote_property
         Dim o As remote_property = Nothing

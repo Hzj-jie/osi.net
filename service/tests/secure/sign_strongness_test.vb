@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utt
@@ -21,7 +25,7 @@ Public Class sign_strongness_test
     Private Shared Function c(ByVal ParamArray s() As signer) As [case]()
         assert(Not isemptyarray(s))
         Dim r() As [case] = Nothing
-        For i As Int32 = 0 To array_size(s) - 1
+        For i As Int32 = 0 To array_size_i(s) - 1
             r = array_concat(r, oc(s(i)))
         Next
         Return r
@@ -100,7 +104,7 @@ Public Class sign_strongness_test
     Private Class sign_strongness_case3
         Inherits sign_strongness_case
 
-        Private Shared ReadOnly weak_signer() = {
+        Private Shared ReadOnly weak_signer() As signer = {
             bypass.instance,
             bypass2.instance,
             ring.instance,

@@ -36,6 +36,7 @@ Public Class error_event
         r4lock = New Object()
         r5lock = New Object()
         r6lock = New Object()
+        static_constructor(Of colorful_console_error_writer).execute()
     End Sub
 
     Public Shared Sub A()
@@ -59,30 +60,23 @@ Public Class error_event
         r4a = event_attached(R4Event)
         r5a = event_attached(R5Event)
         r6a = event_attached(R6Event)
-        Dim unattached As Boolean = False
-        unattached = Not (r1a OrElse r2a OrElse r3a OrElse r4a OrElse r5a OrElse r6a)
+        ' colorful_console_error_writer should have been initialized.
+        If Not (r1a OrElse r2a OrElse r3a OrElse r4a OrElse r5a OrElse r6a) Then
+            assert_break()
+        End If
 
         err_type_char = Char.ToLower(err_type_char)
 
         Dim merged_msg As String = Nothing
-        If unattached OrElse r2a OrElse r3a OrElse r4a OrElse r6a Then
+        If r2a OrElse r3a OrElse r4a OrElse r6a Then
             merged_msg = error_message.P(msg)
         End If
         Dim full_msg As String = Nothing
-        If unattached OrElse r3a OrElse r4a OrElse r6a Then
+        If r3a OrElse r4a OrElse r6a Then
             If merged_msg Is Nothing Then
                 assert_break()
             End If
             full_msg = error_message.P(err_type, err_type_char, merged_msg, additional_jump + 1)
-        End If
-
-        If unattached Then
-            If full_msg Is Nothing Then
-                assert_break()
-            End If
-            ' Before global_init(), no event is attached, we at least should print the message to console.
-            write_console_line(full_msg)
-            Return
         End If
 
         SyncLock r1lock

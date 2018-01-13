@@ -1,0 +1,18 @@
+
+Imports System.IO
+Imports osi.root.constants
+
+<global_init(default_global_init_level.functor)>
+Friend NotInheritable Class string_serializer_registry
+    Shared Sub New()
+        ##DEFINE IMPL string_serializer_registry_impl.vbp
+        ##INCLUDE all_number_types.vbp
+    End Sub
+
+    Private Shared Sub init()
+    End Sub
+
+    Private Sub New()
+    End Sub
+End Class
+

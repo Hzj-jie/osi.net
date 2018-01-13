@@ -43,7 +43,7 @@ Public NotInheritable Class invoker(Of delegate_t)
             Me.t = t
             Me.name = name
             Try
-                mi = t.GetMethod(name, binding_flags)
+                mi = t.GetMethod(name, binding_flags Or BindingFlags.InvokeMethod)
             Catch ex As Exception
                 If Not suppress_error Then
                     raise_error(error_type.warning,
@@ -52,7 +52,7 @@ Public NotInheritable Class invoker(Of delegate_t)
                                 " in type ",
                                 t,
                                 ", ex ",
-                                ex.Message)
+                                ex.details())
                 End If
                 Return
             End Try

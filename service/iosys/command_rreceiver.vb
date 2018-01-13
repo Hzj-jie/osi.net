@@ -1,6 +1,10 @@
 ﻿
-Imports osi.root.procedure
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.procedure
 Imports osi.service.commander
 
 Public MustInherit Class command_rreceiver(Of CASE_T)
@@ -12,7 +16,7 @@ Public MustInherit Class command_rreceiver(Of CASE_T)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim r As command = Nothing
-                                  If case_codec(Of CASE_T).serialize(c, r) Then
+                                  If cast(c, r) Then
                                       r.attach(constants.remote.action.push)
                                       ec = receive(r)
                                       Return waitfor(ec) AndAlso

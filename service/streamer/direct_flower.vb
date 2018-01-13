@@ -1,8 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.lock
 Imports osi.root.formation
+Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.service.transmitter
@@ -10,19 +14,13 @@ Imports osi.service.transmitter
 Public Class direct_flower(Of T)
     Inherits flower(Of T)
 
-    Private Shared ReadOnly is_class_type As Boolean
     Private ReadOnly input As T_receiver(Of T)
     Private ReadOnly output As T_sender(Of T)
     Private ReadOnly sense_timeout_ms As Int64
     Private ReadOnly broken_pipe As ref(Of singleentry)
     Private ReadOnly idle_timeout_ms As Int64
     Private ReadOnly result As atomic_int64
-    Private ReadOnly sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector)
     Private ReadOnly treat_no_flow_as_failure As Boolean
-
-    Shared Sub New()
-        is_class_type = Not GetType(T).IsValueType()
-    End Sub
 
     Public Sub New(ByVal input As T_receiver(Of T),
                    ByVal output As T_sender(Of T),
@@ -30,7 +28,6 @@ Public Class direct_flower(Of T)
                    ByVal broken_pipe As ref(Of singleentry),
                    ByVal idle_timeout_ms As Int64,
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
         MyBase.New()
         assert(Not input Is Nothing)
@@ -55,7 +52,6 @@ Public Class direct_flower(Of T)
             Me.idle_timeout_ms = idle_timeout_ms
         End If
         Me.result = result
-        Me.sizeof = sizeof
         Me.treat_no_flow_as_failure = treat_no_flow_as_failure
     End Sub
 
@@ -64,9 +60,8 @@ Public Class direct_flower(Of T)
                    ByVal sense_timeout_ms As Int64,
                    ByVal broken_pipe As ref(Of singleentry),
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
-        Me.New(input, output, sense_timeout_ms, broken_pipe, npos, result, sizeof, treat_no_flow_as_failure)
+        Me.New(input, output, sense_timeout_ms, broken_pipe, npos, result, treat_no_flow_as_failure)
     End Sub
 
     Public Sub New(ByVal input As T_receiver(Of T),
@@ -74,7 +69,6 @@ Public Class direct_flower(Of T)
                    ByVal broken_pipe As ref(Of singleentry),
                    ByVal idle_timeout_ms As Int64,
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
         Me.New(input,
                output,
@@ -82,7 +76,6 @@ Public Class direct_flower(Of T)
                broken_pipe,
                idle_timeout_ms,
                result,
-               sizeof,
                treat_no_flow_as_failure)
     End Sub
 
@@ -90,26 +83,23 @@ Public Class direct_flower(Of T)
                    ByVal output As T_sender(Of T),
                    ByVal broken_pipe As ref(Of singleentry),
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
-        Me.New(input, output, broken_pipe, npos, result, sizeof, treat_no_flow_as_failure)
+        Me.New(input, output, broken_pipe, npos, result, treat_no_flow_as_failure)
     End Sub
 
     Public Sub New(ByVal input As T_receiver(Of T),
                    ByVal output As T_sender(Of T),
                    ByVal idle_timeout_ms As Int64,
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
-        Me.New(input, output, Nothing, idle_timeout_ms, result, sizeof, treat_no_flow_as_failure)
+        Me.New(input, output, Nothing, idle_timeout_ms, result, treat_no_flow_as_failure)
     End Sub
 
     Public Sub New(ByVal input As T_receiver(Of T),
                    ByVal output As T_sender(Of T),
                    Optional ByVal result As atomic_int64 = Nothing,
-                   Optional ByVal sizeof As binder(Of Func(Of T, UInt64), sizeof_binder_protector) = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
-        Me.New(input, output, npos, result, sizeof, treat_no_flow_as_failure)
+        Me.New(input, output, npos, result, treat_no_flow_as_failure)
     End Sub
 
     Public Overrides Function [stop]() As Boolean
@@ -117,8 +107,7 @@ Public Class direct_flower(Of T)
     End Function
 
     Protected Overridable Shadows Function is_eos(ByVal i As T) As Boolean
-        Return (is_class_type AndAlso i Is Nothing) OrElse
-               (flower(Of T).is_eos.has_value() AndAlso (+flower(Of T).is_eos)(i))
+        Return flower(Of T).is_eos(i)
     End Function
 
     Private Function flow_once(ByVal sense_timeout_ms As Int64,
@@ -165,8 +154,7 @@ Public Class direct_flower(Of T)
                               End Function,
                               Function() As Boolean
                                   If Not result Is Nothing Then
-                                      assert(sizeof.has_value())
-                                      result.add((+sizeof)(+p))
+                                      result.add(1)
                                   End If
                                   Return ec.end_result() AndAlso
                                          eva(transfered, True) AndAlso
@@ -207,7 +195,7 @@ Public Class direct_flower(Of T)
                                                   Not treat_no_flow_as_failure) AndAlso
                                                  goto_end()
                                       ElseIf (+transfered) Then
-                                          transfered_times += 1
+                                          transfered_times += uint32_1
                                           last_active_ms = nowadays.milliseconds()
                                       End If
                                       Return goto_prev()
@@ -225,7 +213,7 @@ Public Class direct_flower(Of T)
                               Function() As Boolean
                                   If ec.end_result() Then
                                       If (+transfered) Then
-                                          transfered_times += 1
+                                          transfered_times += uint32_1
                                           Return goto_prev()
                                       Else
                                           Return (transfered_times > 0 OrElse

@@ -1,10 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utt
 Imports osi.root.constants
-Imports osi.service.convertor
+Imports osi.root.utt
 Imports osi.service.commander
-Imports osi.root.utils
+Imports osi.service.convertor
 
 Public Class command_test
     Inherits [case]
@@ -38,8 +41,10 @@ Public Class command_test
     End Class
 
     Private Shared Function command_validation(ByVal c As command, ByVal constants As constants) As Boolean
-        assert(Not c Is Nothing)
         assert(Not constants Is Nothing)
+        If Not assert_not_nothing(c) Then
+            Return False
+        End If
         If assert_not_nothing(c.action()) Then
             assert_equal(c.action().to_string(), constants.action)
         End If
@@ -78,28 +83,25 @@ Public Class command_test
             Return False
         End If
         Dim b() As Byte = Nothing
-        b = c.to_bytes()
+        assert_true(bytes_serializer.to_bytes(c, b))
         assert_more(array_size(b), uint32_0)
         Dim r As command = Nothing
-        r = New command()
-        assert_true(r.from_bytes(b))
+        assert_true(bytes_serializer.from_bytes(b, r))
         If Not command_validation(r, constants) Then
             Return False
         End If
 
         Dim s As String = Nothing
-        s = c.to_uri()
+        assert_true(uri_serializer.to_str(c, s))
         assert_false(String.IsNullOrEmpty(s))
-        r.clear()
-        assert_true(r.from_uri(s))
+        assert_true(uri_serializer.from_str(s, r))
         If Not command_validation(r, constants) Then
             Return False
         End If
 
-        s = c.to_str()
+        assert_true(string_serializer.to_str(c, s))
         assert_false(String.IsNullOrEmpty(s))
-        r.clear()
-        assert_true(r.from_str(s))
+        assert_true(string_serializer.from_str(s, r))
         If Not command_validation(r, constants) Then
             Return False
         End If

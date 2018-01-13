@@ -1,6 +1,10 @@
 ﻿
-Imports osi.root.procedure
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.procedure
 Imports osi.service.commander
 
 Public Class bytes_rreceiver(Of CASE_T)
@@ -21,7 +25,7 @@ Public Class bytes_rreceiver(Of CASE_T)
                                       Return False
                                   Else
                                       Dim b() As Byte = Nothing
-                                      b = i.to_bytes()
+                                      b = bytes_serializer.to_bytes(i)
                                       ec = s(b)
                                       Return waitfor(ec) AndAlso
                                              goto_next()

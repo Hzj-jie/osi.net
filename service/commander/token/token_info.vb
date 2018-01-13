@@ -1,9 +1,11 @@
 ﻿
-Imports osi.root.constants
-Imports osi.root.template
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.lock
 Imports osi.service.secure
 Imports osi.service.secure.sign
 
@@ -106,7 +108,7 @@ Public MustInherit Class token_info(Of COLLECTION, CONNECTION)
                                     ByVal code As piece,
                                     ByRef o As piece) As Boolean
         Do
-            o = challenge_code(p)
+            o = New piece(challenge_code(p))
             assert(Not o.empty())
         Loop While sign_match(p, code, o)
         Return True

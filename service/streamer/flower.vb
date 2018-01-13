@@ -1,17 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.formation
-Imports osi.root.procedure
-Imports osi.root.utils
 Imports osi.root.lock
+Imports osi.root.procedure
 
 Public MustInherit Class flower(Of T)
-    Public Shared ReadOnly is_eos As binder(Of Func(Of T, Boolean), flower(Of T))
     Private ReadOnly s As ref(Of singleentry)
-
-    Shared Sub New()
-        is_eos = New binder(Of Func(Of T, Boolean), flower(Of T))()
-    End Sub
 
     Public Sub New()
         s = New ref(Of singleentry)()
@@ -42,4 +39,17 @@ Public MustInherit Class flower(Of T)
                                          goto_end()
                               End Function)
     End Operator
+
+    Public Shared Sub register_is_eos(ByVal f As Func(Of T, Boolean))
+        global_resolver(Of Func(Of T, Boolean), flower(Of T)).register(f)
+    End Sub
+
+    Protected Shared Function is_eos(ByVal i As T) As Boolean
+        If i Is Nothing Then
+            Return True
+        End If
+        Dim f As Func(Of T, Boolean) = Nothing
+        f = global_resolver(Of Func(Of T, Boolean), flower(Of T)).resolve_or_null()
+        Return Not f Is Nothing AndAlso f(i)
+    End Function
 End Class

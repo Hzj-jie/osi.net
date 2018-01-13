@@ -68,7 +68,6 @@
     <Compile Include="environment_transform.vb" />
     <Compile Include="convertor_register\initializer\npos_uint_bytes_all_binder.vb" />
     <Compile Include="others_bytes.vb" />
-    <Compile Include="sizeof_register.vb" />
     <Compile Include="convertor_register\initializer\string_bytes_convertor_binder_initializer.vb" />
     <Compile Include="convertor_register\string_convertor_register.vb" />
     <Compile Include="string_others.vb" />

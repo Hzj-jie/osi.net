@@ -1,4 +1,5 @@
 ﻿
+' TODO: Remove
 Public Interface icaster(Of In T1, T2)
     Function cast(ByVal i As T1, ByRef o As T2) As Boolean
 End Interface

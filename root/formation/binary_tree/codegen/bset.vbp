@@ -1,0 +1,75 @@
+
+##DEFAULT TYPE bset
+
+Imports osi.root.connector
+
+Public Class ##TYPE##(Of T)
+    Inherits bbst(Of T)
+    Implements ICloneable, ICloneable(Of ##TYPE##(Of T))
+
+    Shared Sub New()
+        container_operator(Of ##TYPE##(Of T), T).register(Function(ByVal i As ##TYPE##(Of T)) As UInt32
+                                                           assert(Not i Is Nothing)
+                                                           Return i.size()
+                                                       End Function)
+        container_operator(Of ##TYPE##(Of T), T).register(Function(ByVal i As ##TYPE##(Of T), ByVal j As T) As Boolean
+                                                           assert(Not i Is Nothing)
+                                                           Return i.emplace(j).second
+                                                       End Function)
+        container_operator(Of ##TYPE##(Of T), T).register(Function(ByVal i As ##TYPE##(Of T)) _
+                                                               As container_operator(Of ##TYPE##(Of T), T).enumerator
+                                                           Return New enumerator(i)
+                                                       End Function)
+        bytes_serializer(Of ##TYPE##(Of T)).container(Of T).register()
+    End Sub
+
+    Private NotInheritable Class enumerator
+        Implements container_operator(Of ##TYPE##(Of T), T).enumerator
+
+        Private it As iterator
+
+        Public Sub New(ByVal s As ##TYPE##(Of T))
+            assert(Not s Is Nothing)
+            it = s.begin()
+        End Sub
+
+        Public Sub [next]() Implements container_operator(Of ##TYPE##(Of T), T).enumerator.next
+            it += 1
+        End Sub
+
+        Public Function current() As T Implements container_operator(Of ##TYPE##(Of T), T).enumerator.current
+            Return +it
+        End Function
+
+        Public Function [end]() As Boolean Implements container_operator(Of ##TYPE##(Of T), T).enumerator.end
+            Return it.is_end()
+        End Function
+    End Class
+
+    Public Shared Shadows Function move(ByVal v As ##TYPE##(Of T)) As ##TYPE##(Of T)
+        If v Is Nothing Then
+            Return Nothing
+        Else
+            Dim r As ##TYPE##(Of T) = Nothing
+            r = New ##TYPE##(Of T)()
+            move_to(v, r)
+            Return r
+        End If
+    End Function
+
+    Public Shadows Function clone() As ##TYPE##(Of T)
+        Dim r As ##TYPE##(Of T) = Nothing
+        r = New ##TYPE##(Of T)()
+        clone_to(Me, r)
+        Return r
+    End Function
+
+    Public Function CloneT() As ##TYPE##(Of T) Implements ICloneable(Of ##TYPE##(Of T)).Clone
+        Return clone()
+    End Function
+
+    Public Function ICloneable_Clone() As Object Implements ICloneable.Clone
+        Return clone()
+    End Function
+End Class
+

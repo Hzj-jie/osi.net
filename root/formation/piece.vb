@@ -3,10 +3,13 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.formation
 
+<global_init(default_global_init_level.functor)>
 Public Module _piece
     <Extension()> Public Function null_or_empty(ByVal this As piece) As Boolean
         Return this Is Nothing OrElse this.empty()
@@ -19,10 +22,60 @@ Public Module _piece
     <Extension()> Public Function size(ByVal this As piece) As UInt32
         Return If(this Is Nothing, uint32_0, this.count)
     End Function
+
+    <Extension()> Public Function from_bytes(Of T)(ByVal this As bytes_serializer(Of T),
+                                                   ByVal i As piece,
+                                                   ByRef o As T) As Boolean
+        assert(Not this Is Nothing)
+        If i Is Nothing OrElse i.buff Is Nothing Then
+            Return False
+        Else
+            Using ms As MemoryStream = memory_stream.create(i.buff, CInt(i.offset), CInt(i.count))
+                Return this.read_from(ms, o)
+            End Using
+        End If
+    End Function
+
+    <Extension()> Public Function to_bytes(Of T)(ByVal this As bytes_serializer(Of T),
+                                                 ByVal i As T,
+                                                 ByRef o As piece) As Boolean
+        assert(Not this Is Nothing)
+        Dim b() As Byte = Nothing
+        If this.to_bytes(i, b) Then
+            o = New piece(b)
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+    Sub New()
+        ' Do not convert from byte() to avoid performance impacts.
+        bytes_serializer.byte_size.register(AddressOf size,
+                                            Function(ByVal i As piece, ByVal o As MemoryStream) As Boolean
+                                                If i.size() > 0 Then
+                                                    o.Write(i.buff, CInt(i.offset), CInt(i.count))
+                                                End If
+                                                Return True
+                                            End Function,
+                                            Function(ByVal l As UInt32,
+                                                     ByVal i As MemoryStream,
+                                                     ByRef o As piece) As Boolean
+                                                assert(Not i Is Nothing)
+                                                If piece.create(i, l, o) Then
+                                                    i.Seek(l, SeekOrigin.Current)
+                                                    Return True
+                                                End If
+                                                Return False
+                                            End Function)
+    End Sub
+
+    Private Sub init()
+    End Sub
 End Module
 
 Public NotInheritable Class piece
-    Implements ICloneable, IComparable, IComparable(Of piece), IComparable(Of Byte())
+    Implements ICloneable, ICloneable(Of piece), IComparable, IComparable(Of piece), IComparable(Of Byte())
 
     Public Shared ReadOnly null As piece
     Public Shared ReadOnly blank As piece
@@ -33,7 +86,7 @@ Public NotInheritable Class piece
     Public Shared Function valid(ByVal buff() As Byte,
                                  ByVal offset As UInt32,
                                  ByVal count As UInt32) As Boolean
-        Return array_size(buff) >= offset + count
+        Return array_size(buff) >= offset + count AndAlso offset <= max_int32 AndAlso count <= max_int32
     End Function
 
     Shared Sub New()
@@ -240,11 +293,39 @@ Public NotInheritable Class piece
     End Function
 
     Public Shared Function create(ByRef o As piece) As Boolean
-        Return create(Nothing, o)
+        Return create([default](Of Byte()).null, o)
+    End Function
+
+    Public Shared Function create(ByVal ms As MemoryStream, ByRef o As piece) As Boolean
+        If ms Is Nothing Then
+            Return False
+        Else
+            Dim b() As Byte = Nothing
+            Dim offset As UInt32 = 0
+            Dim len As UInt32 = 0
+            ms.get_buffer(b, offset, len)
+            assert(len >= offset)
+            Return assert(create(b, offset, len - offset, o))
+        End If
+    End Function
+
+    Public Shared Function create(ByVal ms As MemoryStream, ByVal count As UInt32, ByRef o As piece) As Boolean
+        If ms Is Nothing Then
+            Return False
+        Else
+            Dim b() As Byte = Nothing
+            Dim offset As UInt32 = 0
+            ms.get_buffer(b, offset)
+            Return create(b, offset, count, o)
+        End If
+    End Function
+
+    Public Function CloneT() As piece Implements ICloneable(Of piece).Clone
+        Return New piece(buff, offset, count)
     End Function
 
     Public Function Clone() As Object Implements ICloneable.Clone
-        Return New piece(buff, offset, count)
+        Return CloneT()
     End Function
 
     Public Shared Function compare(ByVal this As piece, ByVal that As piece) As Int32
@@ -354,7 +435,7 @@ Public NotInheritable Class piece
         Return New piece(b)
     End Operator
 
-    Public Shared Widening Operator CType(ByVal p As piece) As Byte()
-        Return +p
+    Public Shared Narrowing Operator CType(ByVal i As piece) As Byte()
+        Return +i
     End Operator
 End Class

@@ -1,7 +1,10 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.delegates
+Imports osi.root.constants
 Imports osi.service.selector
 Imports osi.service.transmitter
 
@@ -57,15 +60,15 @@ Public Class async_device_device_converter(Of T)
     Private ReadOnly c As Func(Of async_getter(Of T), T)
 
     Private Shared Sub set_global(ByVal v As Func(Of async_getter(Of T), T))
-        binder(Of Func(Of async_getter(Of T), T), async_device_device_converter).set_global(v)
+        global_resolver(Of Func(Of async_getter(Of T), T), async_device_device_converter(Of T)).register(v)
     End Sub
 
     Public Shared Function registered() As Boolean
-        Return binder(Of Func(Of async_getter(Of T), T), async_device_device_converter).has_global_value()
+        Return global_resolver(Of Func(Of async_getter(Of T), T), async_device_device_converter(Of T)).registered()
     End Function
 
     Public Shared Function [default]() As Func(Of async_getter(Of T), T)
-        Return binder(Of Func(Of async_getter(Of T), T), async_device_device_converter).global()
+        Return global_resolver(Of Func(Of async_getter(Of T), T), async_device_device_converter(Of T)).resolve_or_null()
     End Function
 
     Public Shared Function register(ByVal v As Func(Of async_getter(Of T), T),
@@ -92,7 +95,7 @@ Public Class async_device_device_converter(Of T)
 
     Public Sub New(Optional ByVal converter As Func(Of async_getter(Of T), T) = Nothing)
         If converter Is Nothing Then
-            Me.c = binder(Of Func(Of async_getter(Of T), T), async_device_device_converter).global()
+            Me.c = [default]()
         Else
             Me.c = converter
         End If

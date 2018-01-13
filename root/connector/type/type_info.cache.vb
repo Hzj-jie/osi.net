@@ -6,7 +6,7 @@ Option Strict On
 Imports System.Reflection
 
 Partial Public NotInheritable Class type_info(Of T)
-    Public NotInheritable Class finalizer_cache
+    Private NotInheritable Class finalizer_cache
         Public Shared ReadOnly f As MethodInfo
         Public Shared ReadOnly v As Action(Of T)
 
@@ -27,7 +27,7 @@ Partial Public NotInheritable Class type_info(Of T)
         End Sub
     End Class
 
-    Public NotInheritable Class annotated_constructor_cache(Of ATTR)
+    Private NotInheritable Class annotated_constructor_cache(Of ATTR)
         Public Shared ReadOnly v As typed_parameters_constructor
 
         Shared Sub New()
@@ -69,6 +69,14 @@ Partial Public NotInheritable Class type_info(Of T)
         End Sub
 
         Private Sub New()
+        End Sub
+    End Class
+
+    Private NotInheritable Class size_cache
+        Public Shared ReadOnly size As Int32
+
+        Shared Sub New()
+            size = sizeof(GetType(T))
         End Sub
     End Class
 End Class

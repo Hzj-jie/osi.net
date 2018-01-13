@@ -136,21 +136,15 @@ Public NotInheritable Class disposable(Of T)
     End Sub
 
     Public Shared Sub register(ByVal d As Action(Of T))
-        assert(Not binder(Of Action(Of T), disposer_binder_protector).has_global_value())
-        binder(Of Action(Of T), disposer_binder_protector).set_global(d)
+        global_resolver(Of Action(Of T), disposable(Of T)).assert_first_register(d)
     End Sub
 
     Public Shared Sub unregister()
-        assert(binder(Of Action(Of T), disposer_binder_protector).has_global_value())
-        binder(Of Action(Of T), disposer_binder_protector).set_global(Nothing)
+        global_resolver(Of Action(Of T), disposable(Of T)).assert_unregister()
     End Sub
 
     Public Shared Function D() As Action(Of T)
-        If binder(Of Action(Of T), disposer_binder_protector).has_global_value() Then
-            Return binder(Of Action(Of T), disposer_binder_protector).global()
-        Else
-            Return [default]
-        End If
+        Return global_resolver(Of Action(Of T), disposable(Of T)).resolve_or_default([default])
     End Function
 
     Public Shared Sub dispose(ByVal v As T)

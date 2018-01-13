@@ -1,12 +1,13 @@
 ﻿
+' TODO Remove
+Option Explicit On
+Option Infer Off
 Option Strict On
 
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
-Imports osi.root.delegates
-Imports osi.root.formation
 Imports osi.root.constants
-Imports osi.root.utils
+Imports osi.root.formation
 
 Public Module _string_others
     Private ReadOnly default_array_separators() As Char = {character.comma}
@@ -174,15 +175,12 @@ Public Module _string_others
     End Function
 
     <Extension()> Public Function to_any_array(Of T)(ByVal v As vector(Of String),
-                                                     Optional ByVal string_T As  _
-                                                         binder(Of _do_val_ref(Of String, T, Boolean), 
-                                                                   string_conversion_binder_protector) = Nothing) _
+                                                     Optional ByVal string_T As string_serializer(Of T) = Nothing) _
                                                     As vector(Of T)
-        assert(string_T.has_value())
         Return to_any_array(v,
                             Function(s As String) As T
                                 Dim o As T = Nothing
-                                If (+string_T)(s, o) Then
+                                If (+string_T).from_str(s, o) Then
                                     Return o
                                 Else
                                     Return Nothing
@@ -198,14 +196,11 @@ Public Module _string_others
 
     <Extension()> Public Function to_any_array(Of T)(ByVal s As String,
                                                      ByVal separators() As Char,
-                                                     Optional ByVal string_T As  _
-                                                         binder(Of _do_val_ref(Of String, T, Boolean), 
-                                                                   string_conversion_binder_protector) = Nothing) _
+                                                     Optional ByVal string_T As string_serializer(Of T) = Nothing) _
                                                     As vector(Of T)
-        assert(string_T.has_value())
         Return to_any_array(s, separators, Function(x As String) As T
                                                Dim o As T = Nothing
-                                               If (+string_T)(x, o) Then
+                                               If (+string_T).from_str(x, o) Then
                                                    Return o
                                                Else
                                                    Return Nothing

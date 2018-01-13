@@ -1,4 +1,5 @@
 
+#If RETIRED
 Option Explicit On
 Option Infer Off
 Option Strict On
@@ -398,3 +399,5 @@ Friend Class npos_uint_bytes_all_binder_initializer
     End Sub
 End Class
 'finish npos_uint_bytes_all_binder.vbp --------
+
+#End If

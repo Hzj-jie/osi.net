@@ -1,4 +1,9 @@
 ﻿
+#If RETIRED Then
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 ' if a function is globally using, such as sizeof / operator+ / operator- / from_bytes / to_bytes
 ' there should be a global binder_protector, and use it everywhere
 ' if a function has a specific meaning in a class, such as flower.is_eos
@@ -35,6 +40,11 @@ Public NotInheritable Class string_conversion_binder_protector
     End Sub
 End Class
 
+Public NotInheritable Class json_conversion_binder_protector
+    Private Sub New()
+    End Sub
+End Class
+
 ' compare is in connector, while suppress is in utils, it depends on atomic_bool, which is in lock
 Public NotInheritable Class suppress_compare_error_binder_protector
     Private Sub New()
@@ -57,3 +67,4 @@ Public NotInheritable Class disposer_binder_protector
     Private Sub New()
     End Sub
 End Class
+#End If

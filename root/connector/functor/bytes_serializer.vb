@@ -3,41 +3,104 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
+Imports System.IO
 Imports osi.root.delegates
 
-Public Class bytes_serializer(Of T)
+' A functor to implement T to bytes and bytes to T operations.
+Partial Public Class bytes_serializer(Of T)
     Public Shared ReadOnly [default] As bytes_serializer(Of T)
 
     Shared Sub New()
         [default] = New bytes_serializer(Of T)()
     End Sub
 
-    Public Shared Sub register(ByVal sizeof As Func(Of T, UInt64))
-        binder(Of Func(Of T, UInt64), sizeof_binder_protector).set_global(sizeof)
-    End Sub
+    ' Write i into a MemoryStream.
+    Private Function to_bytes(ByVal i As T, ByVal o As MemoryStream, ByVal append As Boolean) As Boolean
+        If o Is Nothing Then
+            Return False
+        End If
 
-    Public Shared Sub register(ByVal to_bytes As _do_val_ref(Of T, Byte(), Boolean))
-        binder(Of _do_val_ref(Of T, Byte(), Boolean), bytes_conversion_binder_protector).set_global(to_bytes)
-    End Sub
+        Dim f As Func(Of T, MemoryStream, Boolean) = Nothing
+        If append Then
+            f = append_to()
+        Else
+            f = write_to()
+        End If
+        If Not f Is Nothing Then
+            Return f(i, o)
+        End If
 
-    Public Shared Sub register(ByVal from_bytes As _do_val_ref(Of Byte(), T, Boolean))
-        binder(Of _do_val_ref(Of Byte(), T, Boolean), bytes_conversion_binder_protector).set_global(from_bytes)
-    End Sub
+        Dim s As String = Nothing
+        If json_serializer.to_str(i, s) Then
+            If append Then
+                Return bytes_serializer.append_to(s, o)
+            Else
+                Return bytes_serializer.write_to(s, o)
+            End If
+        End If
 
-    Public Overridable Function sizeof(ByVal i As T) As UInt64
-        assert(binder(Of Func(Of T, UInt64), sizeof_binder_protector).has_global())
-        Return binder(Of Func(Of T, UInt64), sizeof_binder_protector).global()(i)
+        Return False
     End Function
 
-    Public Overridable Function to_bytes(ByVal i As T, ByRef o() As Byte) As Boolean
-        assert(binder(Of _do_val_ref(Of T, Byte(), Boolean), bytes_conversion_binder_protector).has_global())
-        Return binder(Of _do_val_ref(Of T, Byte(), Boolean), bytes_conversion_binder_protector).global()(i, o)
+    Public Function append_to(ByVal i As T, ByVal o As MemoryStream) As Boolean
+        Return to_bytes(i, o, True)
     End Function
 
-    Public Overridable Function from_bytes(ByVal i() As Byte, ByRef o As T) As Boolean
-        assert(binder(Of _do_val_ref(Of Byte(), T, Boolean), bytes_conversion_binder_protector).has_global())
-        Return binder(Of _do_val_ref(Of Byte(), T, Boolean), bytes_conversion_binder_protector).global()(i, o)
+    Public Function write_to(ByVal i As T, ByVal o As MemoryStream) As Boolean
+        Return to_bytes(i, o, False)
+    End Function
+
+    Private Function do_from_bytes(ByVal i As MemoryStream, ByRef o As T, ByVal consume As Boolean) As Boolean
+        assert(Not i Is Nothing)
+
+        Dim f As _do_val_ref(Of MemoryStream, T, Boolean) = Nothing
+        If consume Then
+            f = consume_from()
+        Else
+            f = read_from()
+        End If
+        If Not f Is Nothing Then
+            Return f(i, o)
+        End If
+
+        Dim s As String = Nothing
+        If consume Then
+            If Not bytes_serializer.consume_from(i, s) Then
+                Return False
+            End If
+        Else
+            If Not bytes_serializer.read_from(i, s) Then
+                Return False
+            End If
+        End If
+        Return json_serializer.from_str(s, o)
+    End Function
+
+    ' Read enough bytes from i and construct o.
+    Private Function from_bytes(ByVal i As MemoryStream, ByRef o As T, ByVal consume As Boolean) As Boolean
+        If i Is Nothing Then
+            Return False
+        End If
+
+        Dim p As UInt32 = 0
+        i.assert_valid()
+        p = CUInt(i.Position())
+        If do_from_bytes(i, o, consume) Then
+            If consume Then
+                Return True
+            End If
+            Return i.eos()
+        End If
+        i.Position() = p
+        Return False
+    End Function
+
+    Public Function consume_from(ByVal i As MemoryStream, ByRef o As T) As Boolean
+        Return from_bytes(i, o, True)
+    End Function
+
+    Public Function read_from(ByVal i As MemoryStream, ByRef o As T) As Boolean
+        Return from_bytes(i, o, False)
     End Function
 
     Public Shared Operator +(ByVal this As bytes_serializer(Of T)) As bytes_serializer(Of T)

@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
@@ -10,16 +14,12 @@ Public Class dev_T_herald_adapter(Of T)
     Inherits T_adapter(Of dev_T(Of T))
     Implements herald
 
-    Private ReadOnly convertor As command_T_conversion(Of T)
-
     Shared Sub New()
         assert(Not GetType(T).is(GetType(command)))
     End Sub
 
-    Public Sub New(ByVal dev_T As dev_T(Of T),
-                   Optional ByVal convertor As command_T_conversion(Of T) = Nothing)
+    Public Sub New(ByVal dev_T As dev_T(Of T))
         MyBase.New(dev_T)
-        Me.convertor = convertor
     End Sub
 
     Public Function sense(ByVal pending As pointer(Of Boolean),
@@ -31,7 +31,7 @@ Public Class dev_T_herald_adapter(Of T)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim v As T = Nothing
-                                  If convertor.command_to_T(i, v) Then
+                                  If cast(i, v) Then
                                       ec = underlying_device.send(v)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -57,7 +57,7 @@ Public Class dev_T_herald_adapter(Of T)
                               Function() As Boolean
                                   Dim v As command = Nothing
                                   Return ec.end_result() AndAlso
-                                         convertor.T_to_command(+p, v) AndAlso
+                                         cast(+p, v) AndAlso
                                          eva(o, v) AndAlso
                                          goto_end()
                               End Function)

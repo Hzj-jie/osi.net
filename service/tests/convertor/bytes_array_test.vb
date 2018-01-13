@@ -1,4 +1,5 @@
 ﻿
+#If RETIRED
 Imports osi.root.connector
 Imports osi.root.utt
 Imports osi.root.formation
@@ -78,3 +79,4 @@ Public Class bytes_array_test
         Return True
     End Function
 End Class
+#End If

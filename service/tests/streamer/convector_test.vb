@@ -1,10 +1,14 @@
 ﻿
-Imports osi.root.lock
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utils
+Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.root.lock
 Imports osi.root.procedure
+Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.streamer
 Imports osi.tests.service.transmitter
@@ -36,17 +40,14 @@ Public MustInherit Class convector_test
         dev2 = New mock_dev_int()
         Dim c As convector(Of Int32) = Nothing
         c = create_convector(dev1, dev2)
-        flower(Of Int32).is_eos.set_local(Function(i As Int32) As Boolean
-                                              Return i = max_int32
-                                          End Function)
         Dim ended As pointer(Of Boolean) = Nothing
         ended = New pointer(Of Boolean)()
         execute(c, ended)
         Dim v1() As Int32 = Nothing
         v1 = rnd_ints(rnd_int(16384, 32768))
         Dim v2() As Int32 = Nothing
-        v2 = rnd_ints(array_size(v1))
-        For i As Int32 = 0 To array_size(v1) - 1
+        v2 = rnd_ints(array_size_i(v1))
+        For i As Int32 = 0 To array_size_i(v1) - 1
             assert(v1(i) <> max_int32)
             dev1.receive_pump.emplace(v1(i))
             assert(v2(i) <> max_int32)

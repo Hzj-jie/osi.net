@@ -1,12 +1,54 @@
 ﻿
-Imports System.Runtime.CompilerServices
-Imports System.Text
-Imports osi.root.constants
-Imports osi.root.connector
+#If RETIRED
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Public Module _command_str
+Imports System.IO
+Imports osi.root.connector
+Imports osi.root.constants
+
+<global_init(default_global_init_level.functor)>
+Friend Module _command_str
     Private Const separator As Char = character.newline
     Private ReadOnly separators() As Char = {separator}
+
+    Sub New()
+        string_serializer.register(Function(ByVal i As StringReader, ByRef o As command) As Boolean
+                                       assert(Not i Is Nothing)
+                                       Dim s As String = Nothing
+                                       s = i.ReadToEnd()
+                                       If String.IsNullOrEmpty(s) Then
+                                           Return False
+                                       End If
+                                       Dim ss() As String = Nothing
+                                       ss = s.Split(separators)
+                                       If (array_size(ss) And 1) <> 1 Then
+                                           Return False
+                                       End If
+                                       o = New command()
+                                       o.set_action_no_copy(decode(ss(0)))
+                                       For j As Int32 = 1 To array_size_i(ss) - 1 Step 2
+                                           o.set_parameter_no_copy(decode(ss(j)), decode(ss(j + 1)))
+                                       Next
+                                       Return True
+                                   End Function)
+        string_serializer.register(Sub(ByVal i As command, ByVal o As StringWriter)
+                                       If i Is Nothing Then
+                                           Return
+                                       End If
+
+                                       assert(Not o Is Nothing)
+                                       o.Write(encode(i.action()))
+                                       o.Write(separator)
+                                       i.foreach(Sub(x, y)
+                                                     o.Write(separator)
+                                                     o.Write(encode(x))
+                                                     o.Write(separator)
+                                                     o.Write(encode(y))
+                                                 End Sub)
+                                   End Sub)
+    End Sub
 
     Private Function encode(ByVal i() As Byte) As String
         If isemptyarray(i) Then
@@ -23,41 +65,5 @@ Public Module _command_str
             Return Convert.FromBase64String(i)
         End If
     End Function
-
-    <Extension()> Public Function to_str(ByVal this As command) As String
-        If this Is Nothing Then
-            Return Nothing
-        Else
-            Dim o As StringBuilder = Nothing
-            o = New StringBuilder()
-            o.Append(encode(this.action()))
-            this.foreach(Sub(x, y)
-                             o.Append(separator) _
-                              .Append(encode(x)) _
-                              .Append(separator) _
-                              .Append(encode(y))
-                         End Sub)
-            Return Convert.ToString(o)
-        End If
-    End Function
-
-    <Extension()> Public Function from_str(ByVal this As command, ByVal s As String) As Boolean
-        If this Is Nothing OrElse
-           String.IsNullOrEmpty(s) Then
-            Return False
-        Else
-            Dim ss() As String = Nothing
-            ss = s.Split(separators)
-            If (array_size(ss) And 1) <> 1 Then
-                Return False
-            Else
-                this.clear()
-                this.set_action_no_copy(decode(ss(0)))
-                For i As Int32 = 1 To array_size(ss) - 1 Step 2
-                    this.set_parameter_no_copy(decode(ss(i)), decode(ss(i + 1)))
-                Next
-                Return True
-            End If
-        End If
-    End Function
 End Module
+#End If

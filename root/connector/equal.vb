@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+' TODO: Move to type_info.
 Imports osi.root.constants
 Imports osi.root.delegates
 

@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports osi.root.connector
 Imports osi.service.commander
 
 Public Class bytes_ragent(Of CASE_T)
@@ -25,8 +29,7 @@ Public Class bytes_ragent(Of CASE_T)
                                     Function() As Boolean
                                         If ec.end_result() Then
                                             Dim c As command = Nothing
-                                            c = New command()
-                                            If c.from_bytes(+p) Then
+                                            If bytes_serializer.from_bytes(+p, c) Then
                                                 MyBase.push(c)
                                             End If
                                             Return goto_begin()

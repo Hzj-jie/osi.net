@@ -1,10 +1,11 @@
 ﻿
-Imports System.IO
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.delegates
-Imports osi.root.procedure
 Imports osi.root.formation
+Imports osi.root.procedure
 Imports osi.root.utils
 
 <type_attribute()>
@@ -12,19 +13,11 @@ Public Class text_dev_T_adapter(Of T)
     Inherits T_adapter(Of text)
     Implements dev_T(Of T)
 
-    Private ReadOnly T_string As binder(Of _do_val_ref(Of T, String, Boolean), string_conversion_binder_protector)
-    Private ReadOnly string_T As binder(Of _do_val_ref(Of String, T, Boolean), string_conversion_binder_protector)
+    Private ReadOnly T_string As string_serializer(Of T)
 
-    Public Sub New(ByVal t As text,
-                   Optional ByVal T_string As binder(Of _do_val_ref(Of T, String, Boolean), 
-                                                        string_conversion_binder_protector) = Nothing,
-                   Optional ByVal string_T As binder(Of _do_val_ref(Of String, T, Boolean), 
-                                                        string_conversion_binder_protector) = Nothing)
+    Public Sub New(ByVal t As text, Optional ByVal T_string As string_serializer(Of T) = Nothing)
         MyBase.New(t)
-        assert(T_string.has_value())
-        assert(string_T.has_value())
-        Me.T_string = T_string
-        Me.string_T = string_T
+        Me.T_string = +T_string
     End Sub
 
     Public Function sense(ByVal pending As pointer(Of Boolean),
@@ -36,7 +29,7 @@ Public Class text_dev_T_adapter(Of T)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim s As String = Nothing
-                                  If (+T_string)(i, s) Then
+                                  If T_string.to_str(i, s) Then
                                       ec = underlying_device.send(s)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -51,6 +44,6 @@ Public Class text_dev_T_adapter(Of T)
     End Function
 
     Public Function receive(ByVal o As pointer(Of T)) As event_comb Implements dev_T(Of T).receive
-        Return underlying_device.receive(o, string_T)
+        Return underlying_device.receive(o, T_string)
     End Function
 End Class

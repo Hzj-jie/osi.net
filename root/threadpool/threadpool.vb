@@ -138,7 +138,7 @@ Partial Public MustInherit Class threadpool
     Protected Shared Sub register(Of T As ithreadpool)(ByVal i As T)
         assert(Not i Is Nothing)
         Dim j As ithreadpool = Nothing
-        If global_resolver.resolve(j) Then
+        If global_resolver(Of ithreadpool).resolve(j) Then
             assert(Not j Is Nothing)
         Else
             assert(j Is Nothing)

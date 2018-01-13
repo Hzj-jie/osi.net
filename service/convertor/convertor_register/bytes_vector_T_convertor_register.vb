@@ -1,4 +1,5 @@
 ﻿
+#If RETIRED
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
@@ -71,3 +72,4 @@ Public Class bytes_vector_T_convertor_register(Of T)
     Private Sub New()
     End Sub
 End Class
+#End If

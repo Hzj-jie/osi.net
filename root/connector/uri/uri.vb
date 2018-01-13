@@ -1,7 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports osi.root.constants
+Imports osi.root.connector.uri
 
 'http://tools.ietf.org/html/rfc1738
 Namespace uri
@@ -91,86 +96,3 @@ Namespace uri
         End Function
     End Module
 End Namespace
-
-Public Module _uri
-    'a minimum set of characters for different uri protocols,
-    'it's safe, but we may need to extra encode several characters
-    <Extension()> Public Function uri_path_encode(ByVal s As String, Optional ByVal e As Encoding = Nothing) As String
-        If String.IsNullOrEmpty(s) Then
-            Return empty_string
-        Else
-            If e Is Nothing Then
-                e = default_encoding
-            End If
-            Dim o As StringBuilder = Nothing
-            o = New StringBuilder()
-            For i As UInt32 = uint32_0 To strlen(s) - uint32_1
-                If uri.unreserved(s(i)) Then
-                    o.Append(s(i))
-                Else
-                    Dim bs() As Byte = Nothing
-                    bs = e.GetBytes(s(i))
-                    assert(Not isemptyarray(bs))
-                    For j As UInt32 = uint32_0 To array_size(bs) - uint32_1
-                        o.Append(constants.uri.escape)
-                        o.Append(bs(j).hex())
-                    Next
-                End If
-            Next
-            Return Convert.ToString(o)
-        End If
-    End Function
-
-    <Extension()> Public Function uri_path_decode(ByVal s As String, Optional ByVal e As Encoding = Nothing) As String
-        If String.IsNullOrEmpty(s) Then
-            Return empty_string
-        Else
-            If e Is Nothing Then
-                e = default_encoding
-            End If
-            Dim o As StringBuilder = Nothing
-            Dim buff() As Byte = Nothing
-            Dim last As Int32 = 0
-            Dim append_last As Action = Nothing
-            Dim append_with_last As Action(Of String) = Nothing
-            o = New StringBuilder()
-            ReDim buff((strlen(s) \ (expected_hex_byte_length + 1)) - 1)
-            append_last = Sub()
-                              If last > 0 Then
-                                  Dim t As String = Nothing
-                                  If e.try_get_string(buff, 0, last, t) Then
-                                      o.Append(t)
-                                  Else
-                                      For i As Int32 = 0 To last - 1
-                                          o.Append(constants.uri.escape) _
-                                           .Append(buff(i).hex())
-                                      Next
-                                  End If
-                                  last = 0
-                              End If
-                          End Sub
-            append_with_last = Sub(x As String)
-                                   append_last()
-                                   o.Append(x)
-                               End Sub
-            For i As UInt32 = uint32_0 To strlen(s) - uint32_1
-                If s(i) = constants.uri.escape Then
-                    Dim t As String = Nothing
-                    t = strmid(s, i + 1, expected_hex_byte_length)
-                    Dim b As Byte = 0
-                    If hex_byte(t, b) Then
-                        buff(last) = b
-                        last += 1
-                    Else
-                        append_with_last(strcat(constants.uri.escape, t))
-                    End If
-                    i += expected_hex_byte_length
-                Else
-                    append_with_last(s(i))
-                End If
-            Next
-            append_last()
-            Return Convert.ToString(o)
-        End If
-    End Function
-End Module

@@ -3,9 +3,9 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.template
-Imports osi.root.connector
 
 Public Class accumulate_segment_tree(Of T As IComparable(Of T))
     Inherits segment_tree(Of T, _true)
@@ -91,22 +91,13 @@ End Class
 Public Class segment_tree(Of T As IComparable(Of T), is_acc As _boolean)
     Inherits bt(Of segment)
 
-    Public Shared ReadOnly boa As binder(Of Func(Of T, T, T), binary_operator_add_protector)
     Private Shared ReadOnly acc As Boolean
 
     Shared Sub New()
         acc = +(alloc(Of is_acc)())
         If acc Then
-            boa = New binder(Of Func(Of T, T, T), binary_operator_add_protector)()
-            If isdebugmode() AndAlso
-               Not boa.has_value() AndAlso
-               Not accumulatable(Of T).v Then
-                assert(Not accumulatable(Of T).ex Is Nothing)
-                raise_error(error_type.warning,
-                              "cannot add a T to another, T = ",
-                              GetType(T).FullName(),
-                              ", accumulate function is disabled, ex ",
-                              accumulatable(Of T).ex.Message())
+            If isdebugmode() Then
+                binary_operator(Of T).log_addable()
             End If
         End If
     End Sub
@@ -133,7 +124,7 @@ Public Class segment_tree(Of T As IComparable(Of T), is_acc As _boolean)
         Friend Sub set_value(ByVal v As T)
             Me.hv = True
             If acc Then
-                Me.v = add(Me.v, v)
+                Me.v = binary_operator.add(Me.v, v)
             Else
                 Me.v = v
             End If
@@ -192,15 +183,6 @@ Public Class segment_tree(Of T As IComparable(Of T), is_acc As _boolean)
         Return r
     End Function
 
-    Private Shared Function add(ByVal i As T, ByVal j As T) As T
-        assert(boa.has_value() OrElse accumulatable(Of T).v)
-        If boa.has_value() Then
-            Return (+boa)(i, j)
-        Else
-            Return inc(i, j)
-        End If
-    End Function
-
     Private Shared Function create_node(ByVal min As Int64,
                                         ByVal max As Int64,
                                         ByVal has_value As Boolean,
@@ -257,7 +239,7 @@ Public Class segment_tree(Of T As IComparable(Of T), is_acc As _boolean)
         assert(n.cover(v))
         Dim r As Boolean = False
         If n.value().has_value() Then
-            o = add(o, n.value().value())
+            o = binary_operator.add(o, n.value().value())
             r = True
         End If
         assert(n.has_left_child() = n.has_right_child())

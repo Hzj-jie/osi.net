@@ -15,10 +15,7 @@ Public NotInheritable Class threadpool_synchronize_invoke
     Shared Sub New()
         instance = New threadpool_synchronize_invoke()
 #If DEPRECATED Then
-        If binder(Of ISynchronizeInvoke).has_global_value() Then
-            binder(Of ISynchronizeInvoke).set_global(Nothing)
-        End If
-        binder(Of ISynchronizeInvoke).set_global(instance)
+        implementation_of(Of ISynchronizeInvoke).register(instance)
 #End If
     End Sub
 

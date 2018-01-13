@@ -1,11 +1,12 @@
 ﻿
-Imports osi.root.template
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports osi.root.utils
-Imports osi.service.secure
 
 Public NotInheritable Class token2_defender
     Public Shared Function [New](Of COLLECTION As Class, CONNECTION) _
@@ -83,17 +84,19 @@ Public NotInheritable Class token2_defender(Of COLLECTION As Class, CONNECTION)
                                       assert(Not code Is Nothing AndAlso Not code.empty())
                                       If (+cmd).has_action() AndAlso
                                          search_for_token(Function(x As COLLECTION) As Boolean
-                                                              Return info.sign_match(x, code, (+cmd).action())
+                                                              Return info.sign_match(x,
+                                                                                     code,
+                                                                                     New piece((+cmd).action()))
                                                           End Function,
                                                           r) AndAlso
                                          assert(Not r.empty()) Then
-                                          assert(info.sign(+r, (+cmd).action(), reply))
+                                          assert(info.sign(+r, New piece((+cmd).action()), reply))
                                       Else
                                           assert(r.empty())
                                           If info.trace(p) Then
                                               raise_error(info.identity(c), " did not send a valid signing result")
                                           End If
-                                          If Not info.forge_signature(p, (+cmd).action(), reply) Then
+                                          If Not info.forge_signature(p, New piece((+cmd).action()), reply) Then
                                               reply = New piece(info.challenge_code(p))
                                           End If
                                       End If

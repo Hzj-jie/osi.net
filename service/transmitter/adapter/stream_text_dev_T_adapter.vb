@@ -1,8 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
-Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.delegates
 Imports osi.root.procedure
 Imports osi.root.formation
 Imports osi.root.utils
@@ -14,21 +16,14 @@ Public Class stream_text_dev_T_adapter(Of T)
     Implements dev_T(Of T)
 
     Private ReadOnly enc As Encoding
-    Private ReadOnly T_string As binder(Of _do_val_ref(Of T, String, Boolean), string_conversion_binder_protector)
-    Private ReadOnly string_T As binder(Of _do_val_ref(Of String, T, Boolean), string_conversion_binder_protector)
+    Private ReadOnly T_string As string_serializer(Of T)
 
     Public Sub New(ByVal st As stream_text,
                    Optional ByVal enc As Encoding = Nothing,
-                   Optional ByVal T_string As binder(Of _do_val_ref(Of T, String, Boolean), 
-                                                        string_conversion_binder_protector) = Nothing,
-                   Optional ByVal string_T As binder(Of _do_val_ref(Of String, T, Boolean), 
-                                                        string_conversion_binder_protector) = Nothing)
+                   Optional ByVal T_string As string_serializer(Of T) = Nothing)
         MyBase.New(st)
-        assert(T_string.has_value())
-        assert(string_T.has_value())
         Me.enc = If(enc Is Nothing, default_encoding, enc)
-        Me.T_string = T_string
-        Me.string_T = string_T
+        Me.T_string = +T_string
     End Sub
 
     Public Function sense(ByVal pending As pointer(Of Boolean),
@@ -41,7 +36,7 @@ Public Class stream_text_dev_T_adapter(Of T)
         Dim ms As MemoryStream = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim s As String = Nothing
-                                  If (+T_string)(i, s) AndAlso
+                                  If T_string.to_str(i, s) AndAlso
                                      memory_stream.create(s, enc, ms) Then
                                       assert(Not ms Is Nothing)
                                       ec = underlying_device.send(ms)
@@ -61,6 +56,6 @@ Public Class stream_text_dev_T_adapter(Of T)
     End Function
 
     Public Function receive(ByVal o As pointer(Of T)) As event_comb Implements dev_T(Of T).receive
-        Return underlying_device.receive(o, string_T)
+        Return underlying_device.receive(o, T_string)
     End Function
 End Class

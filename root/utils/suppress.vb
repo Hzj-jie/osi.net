@@ -29,18 +29,17 @@ Public NotInheritable Class suppress
                             env_bool(env_keys("suppress", "rebind", "error")))
         alloc_error = New atomic_bool(env_bool(env_keys("suppress", "alloc", "error")))
 
-        binder(Of Func(Of Boolean), suppress_compare_error_binder_protector).set_global(
-            Function() As Boolean
-                Return compare_error.true_()
-            End Function)
-        binder(Of Func(Of Boolean), suppress_rebind_global_value_error_binder_protector).set_global(
-            Function() As Boolean
-                Return rebind_global_value_error.true_()
-            End Function)
-        binder(Of Func(Of Boolean), suppress_alloc_error_binder_protector).set_global(
-            Function() As Boolean
-                Return alloc_error.true_()
-            End Function)
+        register(Of is_suppressed.compare_error_protector)(compare_error)
+        register(Of is_suppressed.rebind_global_value_protector)(rebind_global_value_error)
+        register(Of is_suppressed.alloc_error_protector)(alloc_error)
+    End Sub
+
+    Private Shared Sub register(Of PROTECTOR)(ByVal i As atomic_bool)
+        assert(Not i Is Nothing)
+        global_resolver(Of Func(Of Boolean), PROTECTOR).assert_first_register(
+                Function() As Boolean
+                    Return i.true_()
+                End Function)
     End Sub
 
     Public Shared Function init_state() As Boolean
