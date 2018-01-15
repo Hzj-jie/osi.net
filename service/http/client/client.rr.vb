@@ -13,6 +13,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
+Imports uri = osi.root.connector.uri
 
 Public Module _client_rr
     Public Const undefined_content_length As UInt64 = 0

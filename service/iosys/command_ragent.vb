@@ -24,7 +24,7 @@ Public Class command_ragent(Of CASE_T)
     End Function
 
     Public Function as_device() As idevice(Of command_ragent(Of CASE_T))
-        Return make_device()
+        Return Me.make_device()
     End Function
 
     Public Function device_pool() As idevice_pool(Of command_ragent(Of CASE_T))
