@@ -1,6 +1,10 @@
 ﻿
-Imports osi.root.template
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.template
 
 Public MustInherit Class string_based_filter(Of case_sensitive As _boolean)
     Implements ifilter

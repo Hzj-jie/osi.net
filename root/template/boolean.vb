@@ -1,9 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Public MustInherit Class _boolean
     Inherits __do(Of Boolean)
 End Class
 
-Public Class _true
+Public NotInheritable Class _true
     Inherits _boolean
 
     Protected Overrides Function at() As Boolean
@@ -11,7 +15,7 @@ Public Class _true
     End Function
 End Class
 
-Public Class _false
+Public NotInheritable Class _false
     Inherits _boolean
 
     Protected Overrides Function at() As Boolean

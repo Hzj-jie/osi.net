@@ -1,10 +1,12 @@
 ﻿
-Imports osi.root.utils
+Option Explicit On
+Option Infer Off
+Option Strict On
 
 Friend Class int_filter
     Inherits cast_filter(Of Int32)
 
     Public Sub New(ByVal s As String)
-        MyBase.New(string_int_caster.instance, int_comparer.instance, s)
+        MyBase.New(s)
     End Sub
 End Class

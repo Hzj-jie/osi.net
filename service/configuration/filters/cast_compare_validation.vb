@@ -1,19 +1,17 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.utils
+Imports c = osi.root.connector
 
 Public MustInherit Class cast_compare_validation(Of T, ST)
-    Private ReadOnly c As icaster(Of String, T)
-    Private ReadOnly cm As icomparer(Of T)
     Private ReadOnly v As Boolean
     Private ReadOnly s As ST
 
-    Protected Sub New(ByVal c As icaster(Of String, T), ByVal cm As icomparer(Of T), ByVal s As String)
-        assert(Not c Is Nothing)
-        assert(Not cm Is Nothing)
-        Me.c = c
-        Me.cm = cm
+    Protected Sub New(ByVal s As String)
         v = parse(s, Me.s)
         If Not validate() Then
             raise_error(error_type.exclamation,
@@ -28,19 +26,19 @@ Public MustInherit Class cast_compare_validation(Of T, ST)
     End Function
 
     Protected Function equal(ByVal x As T, ByVal y As T) As Boolean
-        Return cm.equal(x, y)
+        Return compare(x, y) = 0
     End Function
 
     Protected Function less(ByVal x As T, ByVal y As T) As Boolean
-        Return cm.less(x, y)
+        Return compare(x, y) < 0
     End Function
 
     Protected Function less_or_equal(ByVal x As T, ByVal y As T) As Boolean
-        Return cm.less_or_equal(x, y)
+        Return compare(x, y) <= 0
     End Function
 
-    Protected Function compare(ByVal x As T, ByVal y As T) As Int32
-        Return cm.compare(x, y)
+    Protected Overridable Function compare(ByVal x As T, ByVal y As T) As Int32
+        Return c.compare(x, y)
     End Function
 
     Protected Function validate() As Boolean

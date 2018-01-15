@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Friend Class string_serial_filter
     Inherits multi_filter
 

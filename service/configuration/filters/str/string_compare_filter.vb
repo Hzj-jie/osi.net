@@ -1,13 +1,21 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.template
-Imports osi.root.utils
 
 Friend Class string_compare_filter(Of case_sensitive As _boolean)
     Inherits compare_filter(Of String)
 
     Public Sub New(ByVal s As String)
-        MyBase.New(string_string_caster.instance, string_comparer(Of case_sensitive).instance, s)
+        MyBase.New(s)
     End Sub
+
+    Protected NotOverridable Overrides Function compare(ByVal x As String, ByVal y As String) As Int32
+        Return strcmp(Of case_sensitive)(x, y)
+    End Function
 End Class
 
 Friend Class string_compare_filter

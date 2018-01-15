@@ -113,6 +113,7 @@
     <Compile Include="resolver\thread_safe_resolver.vb" />
     <Compile Include="resolver\thread_static_resolver.vb" />
     <Compile Include="string_reader.vb" />
+    <Compile Include="template\boolean.vb" />
     <Compile Include="template\equaler.vb" />
     <Compile Include="time\tick_clock.vb" />
     <Compile Include="time\tick_clock.implementations.vb" />
@@ -151,7 +152,6 @@
     <Compile Include="iaction.vb" />
     <Compile Include="static_constructor.vb" />
     <Compile Include="synchronize_invoke.vb" />
-    <Compile Include="template\comparer.vb" />
     <Compile Include="template\int64.vb" />
     <Compile Include="template\to_uint32.vb" />
     <Compile Include="time\high_res_ticks_retriever.vb" />

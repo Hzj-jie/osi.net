@@ -1,6 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utils
 Imports osi.root.constants
 Imports osi.service.configuration.constants.interval_filter
 Imports cons = osi.service.configuration.constants.interval_filter
@@ -33,8 +36,8 @@ Public Class interval_filter(Of T)
         assert(strlen(cons.exclude_max) = 1)
     End Sub
 
-    Public Sub New(ByVal caster As icaster(Of String, T), ByVal comparer As icomparer(Of T), ByVal s As String)
-        MyBase.New(caster, comparer, s)
+    Public Sub New(ByVal s As String)
+        MyBase.New(s)
     End Sub
 
     Public Function match(ByVal i As String) As Boolean Implements ifilter.match
@@ -74,7 +77,7 @@ Public Class interval_filter(Of T)
                     Else
                         include_max = False
                     End If
-                    ss(1) = strleft(ss(1), strlen(ss(1)) - 1)
+                    ss(1) = strleft(ss(1), strlen(ss(1)) - uint32_1)
                 End If
                 If cast(ss(0), min) AndAlso cast(ss(1), max) Then
                     o = New s(min, max, include_min, include_max)

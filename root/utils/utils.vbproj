@@ -59,9 +59,7 @@
     <Compile Include="assembly.vb" />
     <Compile Include="autolock\autolock_dll_exporter.vb" />
     <Compile Include="binding_flags.vb" />
-    <Compile Include="caster.vb" />
     <Compile Include="choose_group.vb" />
-    <Compile Include="comparer.vb" />
     <Compile Include="console_key_info_mapping.vb" />
     <Compile Include="control_c_trace.vb" />
     <Compile Include="counter\counter.builder.vb" />

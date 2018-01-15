@@ -272,10 +272,6 @@ Public Module _cast
             Return cast(Of T, IT)(i, require_assert)
         End Function
 
-        Public Function [to](Of OT)(ByVal i As T, Optional ByVal require_assert As Boolean = True) As OT
-            Return cast(Of OT, T)(i, require_assert)
-        End Function
-
         Private Sub New()
         End Sub
     End Class
@@ -313,7 +309,8 @@ Public Module _cast
             raise_error(error_type.performance,
                         "cast(Of ",
                         GetType(T).Name(),
-                        ")(i) seriously impacts performance. cast(Of T)().from(i) is preferred.")
+                        ")(i) seriously impacts performance. cast(Of T)().from(i) is preferred: ",
+                        backtrace())
         End If
         Return cast(Of T, Object)(i, o)
     End Function

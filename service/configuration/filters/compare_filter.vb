@@ -1,7 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utils
-Imports osi.root.constants
 Imports cons = osi.service.configuration.constants.compare_filter
 
 Public Class compare_filter(Of T)
@@ -26,8 +28,8 @@ Public Class compare_filter(Of T)
         End Sub
     End Structure
 
-    Public Sub New(ByVal caster As icaster(Of String, T), ByVal comparer As icomparer(Of T), ByVal s As String)
-        MyBase.New(caster, comparer, s)
+    Public Sub New(ByVal s As String)
+        MyBase.New(s)
     End Sub
 
     Public Function match(ByVal i As String) As Boolean Implements ifilter.match

@@ -1,7 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports osi.root.constants
+Imports osi.root.template
 
 Public Module _strcmp
     <Extension()> Public Function charsame(ByVal c1 As Char,
@@ -50,6 +55,10 @@ Public Module _strcmp
                                          ByVal s2 As String,
                                          Optional ByVal case_sensitive As Boolean = True) As Int32
         Return strcmp(s1, uint32_0, strlen(s1), s2, uint32_0, strlen(s2), case_sensitive)
+    End Function
+
+    <Extension()> Public Function strcmp(Of case_sensitive As _boolean)(ByVal s1 As String, ByVal s2 As String) As Int32
+        Return strcmp(s1, s2, boolean_cache(Of case_sensitive).v)
     End Function
 
     <Extension()> Public Function strcmp(ByVal s1 As StringBuilder,
@@ -149,15 +158,11 @@ Public Module _strcmp
     End Function
 
     <Extension()> Public Function str_empty_or_whitespaces(ByVal s As String) As Boolean
-        If String.IsNullOrEmpty(s) Then
-            Return True
-        Else
-            For i As UInt32 = 0 To strlen(s) - uint32_1
-                If Not s(i).space() Then
-                    Return False
-                End If
-            Next
-            Return True
-        End If
+        For i As Int32 = 0 To strlen_i(s) - 1
+            If Not s(i).space() Then
+                Return False
+            End If
+        Next
+        Return True
     End Function
 End Module
