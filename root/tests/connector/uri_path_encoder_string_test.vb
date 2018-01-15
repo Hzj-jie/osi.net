@@ -6,6 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.utt
+Imports uri = osi.root.connector.uri
 
 Public Class uri_path_encoder_string_test
     Inherits [case]
