@@ -59,7 +59,6 @@
     <Compile Include="array.ext.vb" />
     <Compile Include="array.vb" />
     <Compile Include="assert.vb" />
-    <Compile Include="binder.vb" />
     <Compile Include="bit.vb" />
     <Compile Include="bytes\byte.vb" />
     <Compile Include="bytes\bytes_array.vb" />

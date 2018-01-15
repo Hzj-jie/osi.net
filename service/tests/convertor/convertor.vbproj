@@ -56,8 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="bytes_array_test.vb" />
-    <Compile Include="bytes_bytes_convertor_binder_initializer_test.vb" />
-    <Compile Include="bytes_convertor_binder_initializer_test.vb" />
     <Compile Include="bytes_transformer_collection_test.vb" />
     <Compile Include="bytes_transformer_test.vb" />
     <Compile Include="environment_transform_test.vb" />
@@ -77,7 +75,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="string_bytes_convertor_binder_initializer_test.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

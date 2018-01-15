@@ -52,7 +52,6 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="binder_protector.vb" />
     <Compile Include="binding_flags.vb" />
     <Compile Include="cast.vb" />
     <Compile Include="character.vb" />

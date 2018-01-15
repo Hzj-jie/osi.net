@@ -55,21 +55,11 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="convertor_register\bytes_convertor_register.vb" />
     <Compile Include="bytes_others.vb" />
     <Compile Include="bytes_array.vb" />
-    <Compile Include="convertor_register\bytes_sbyte_convertor_register.vb" />
     <Compile Include="bytes_transformer.vb" />
-    <Compile Include="convertor_register\bytes_vector_T_convertor_register.vb" />
-    <Compile Include="convertor_register\convertor_register.vb" />
-    <Compile Include="convertor_register\initializer\bytes_bytes_convertor_binder_initializer.vb" />
-    <Compile Include="convertor_register\initializer\bytes_convertor_binder_initializer.vb" />
-    <Compile Include="convertor_register\initializer\default_bytes_convertor_binder_initializer.vb" />
     <Compile Include="environment_transform.vb" />
-    <Compile Include="convertor_register\initializer\npos_uint_bytes_all_binder.vb" />
     <Compile Include="others_bytes.vb" />
-    <Compile Include="convertor_register\initializer\string_bytes_convertor_binder_initializer.vb" />
-    <Compile Include="convertor_register\string_convertor_register.vb" />
     <Compile Include="string_others.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -86,7 +76,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="vector_bytes.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -97,11 +86,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="convertor_register\initializer\codegen\default_bytes_convertor_binder_initializer.vbp" />
-    <None Include="convertor_register\initializer\codegen\int_bytes_convertor_binder.vbp" />
-    <None Include="convertor_register\initializer\codegen\npos_uint_bytes_all_binder.vbp" />
-    <None Include="convertor_register\initializer\codegen\npos_uint_bytes_binder.vbp" />
-    <None Include="convertor_register\initializer\codegen\run.cmd" />
     <None Include="convertor.dep" />
     <None Include="convertor.props" />
     <None Include="My Project\Application.myapp">
