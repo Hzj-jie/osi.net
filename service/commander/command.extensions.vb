@@ -5,7 +5,6 @@ Option Strict On
 
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
-Imports osi.root.constants
 
 Public Module _command_extensions
     <Extension()> Public Function attach(ByVal i As command, ByVal action() As Byte) As command

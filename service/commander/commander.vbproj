@@ -66,8 +66,6 @@
     <Compile Include="client\target_questioner.vb" />
     <Compile Include="command.bytes.vb" />
     <Compile Include="command.extensions.vb" />
-    <Compile Include="command.str.vb" />
-    <Compile Include="command.uri.vb" />
     <Compile Include="command.vb" />
     <Compile Include="constants.vb" />
     <Compile Include="device_construction.vb" />
