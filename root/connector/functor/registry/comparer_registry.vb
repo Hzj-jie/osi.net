@@ -11,7 +11,7 @@ Imports osi.root.constants
 <global_init(global_init_level.foundamental)>
 Friend Module _comparer_registry
     Sub New()
-        comparer.register(Function(i As IPAddress, j As IPAddress) As Int32
+        comparer.register(Function(ByVal i As IPAddress, ByVal j As IPAddress) As Int32
                               assert(Not i Is Nothing)
                               assert(Not j Is Nothing)
                               If i.AddressFamily() = j.AddressFamily() Then
@@ -20,8 +20,12 @@ Friend Module _comparer_registry
                                   Return i.AddressFamily() - j.AddressFamily()
                               End If
                           End Function)
-        comparer.register(Function(i As String, j As String) As Int32
+        comparer.register(Function(ByVal i As String, ByVal j As String) As Int32
                               Return strcmp(i, j)
+                          End Function)
+
+        comparer.register(Function(ByVal i() As Byte, ByVal j() As Byte) As Int32
+                              Return memcmp(i, j)
                           End Function)
 
         comparer.register(Function(ByVal i As SByte, ByVal j As Byte) As Int32

@@ -16,6 +16,19 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 Imports osi.root.connector
 
+Public NotInheritable Class pair
+    Public Shared Function [of](Of FT, ST)(ByVal first As FT, ByVal second As ST) As pair(Of FT, ST)
+        Return make_pair(first, second)
+    End Function
+
+    Public Shared Function emplace_of(Of FT, ST)(ByVal first As FT, ByVal second As ST) As pair(Of FT, ST)
+        Return emplace_make_pair(first, second)
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
+
 Public NotInheritable Class pair(Of FT, ST)
     Implements IComparable(Of pair(Of FT, ST)), IComparable,
                ICloneable(Of pair(Of FT, ST)), ICloneable

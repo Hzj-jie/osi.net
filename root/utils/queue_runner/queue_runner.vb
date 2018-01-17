@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.root.lock
@@ -37,9 +41,9 @@ Partial Public NotInheritable Class queue_runner
         assert((queue_runner_thread_count > 0 AndAlso
                 queue_runner_thread_count <= Environment.ProcessorCount()) OrElse
                queue_runner_thread_count = npos)
-        Return If(queue_runner_thread_count <> npos,
-                  queue_runner_thread_count,
-                  max(1, Environment.ProcessorCount() >> 2))
+        Return CUInt(If(queue_runner_thread_count <> npos,
+                        queue_runner_thread_count,
+                        max(1, Environment.ProcessorCount() >> 2)))
     End Function
 
     Public Shared Sub trigger()
@@ -73,7 +77,7 @@ Partial Public NotInheritable Class queue_runner
                                                 size = q.size()
                                                 counter.increase(LENGTH, size)
                                                 If thread_count > 1 Then
-                                                    size = Math.Ceiling(size / thread_count)
+                                                    size = CUInt(Math.Ceiling(size / thread_count))
                                                 End If
                                                 counter.record_time_begin()
                                                 Dim e As Func(Of Boolean) = Nothing

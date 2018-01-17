@@ -55,7 +55,6 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="bytes_array_test.vb" />
     <Compile Include="bytes_transformer_collection_test.vb" />
     <Compile Include="bytes_transformer_test.vb" />
     <Compile Include="environment_transform_test.vb" />

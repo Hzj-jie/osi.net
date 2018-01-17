@@ -207,3 +207,29 @@ Public Module vector_extension
         Return v.push_back(vs)
     End Function
 End Module
+
+Public NotInheritable Class vector
+    Private Shared Function create(Of T)(ByVal vs() As T, ByVal require_copy As Boolean) As vector(Of T)
+        Dim r As vector(Of T) = Nothing
+        r = New vector(Of T)()
+        For i As Int32 = 0 To array_size_i(vs) - 1
+            If require_copy Then
+                r.push_back(vs(i))
+            Else
+                r.emplace_back(vs(i))
+            End If
+        Next
+        Return r
+    End Function
+
+    Public Shared Function [of](Of T)(ByVal ParamArray vs() As T) As vector(Of T)
+        Return create(vs, True)
+    End Function
+
+    Public Shared Function emplace_of(Of T)(ByVal ParamArray vs() As T) As vector(Of T)
+        Return create(vs, False)
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class

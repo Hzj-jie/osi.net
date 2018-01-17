@@ -58,6 +58,9 @@
     <Compile Include="binary_tree\bmap_test.vb" />
     <Compile Include="binary_tree\bset_test.vb" />
     <Compile Include="binary_tree\map_compare_test.vb" />
+    <Compile Include="binary_tree\map_test3.vb" />
+    <Compile Include="binary_tree\set_test2.vb" />
+    <Compile Include="chunk_test.vb" />
     <Compile Include="hashtable\hashtable_test.vb" />
     <Compile Include="map_hashmap_unordered_map_perf_test.vb" />
     <Compile Include="binary_tree\map_test.vb" />

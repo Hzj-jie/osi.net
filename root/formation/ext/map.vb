@@ -63,3 +63,34 @@ Public Module _map
         End If
     End Sub
 End Module
+
+Public NotInheritable Class map
+    Private Shared Function create(Of KEY_T, VALUE_T)(ByVal vs() As pair(Of KEY_T, VALUE_T),
+                                                      ByVal require_copy As Boolean) As map(Of KEY_T, VALUE_T)
+        Dim r As map(Of KEY_T, VALUE_T) = Nothing
+        r = New map(Of KEY_T, VALUE_T)()
+        For i As Int32 = 0 To array_size_i(vs) - 1
+            If Not vs(i) Is Nothing Then
+                If require_copy Then
+                    r.emplace(vs(i).to_first_const_pair())
+                Else
+                    r.emplace(vs(i).emplace_to_first_const_pair())
+                End If
+            End If
+        Next
+        Return r
+    End Function
+
+    Public Shared Function [of](Of KEY_T, VALUE_T) _
+                               (ByVal ParamArray vs() As pair(Of KEY_T, VALUE_T)) As map(Of KEY_T, VALUE_T)
+        Return create(vs, True)
+    End Function
+
+    Public Shared Function emplace_of(Of KEY_T, VALUE_T) _
+                                     (ByVal ParamArray vs() As pair(Of KEY_T, VALUE_T)) As map(Of KEY_T, VALUE_T)
+        Return create(vs, False)
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class

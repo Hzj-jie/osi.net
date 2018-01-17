@@ -74,6 +74,7 @@
     <Compile Include="binary_tree\sset.vb" />
     <Compile Include="bit_array.vb" />
     <Compile Include="bit_array_thread_safe.vb" />
+    <Compile Include="chunk.vb" />
     <Compile Include="hashmap.iterator.vb" />
     <Compile Include="hashmap.private.vb" />
     <Compile Include="hashmap.specialization.vb" />
