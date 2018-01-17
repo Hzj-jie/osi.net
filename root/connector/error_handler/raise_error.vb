@@ -1,8 +1,16 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 
 Public Module _raise_error
-    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)> _
+    Sub New()
+        static_constructor(Of colorful_console_error_writer).execute()
+    End Sub
+
+    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
     Public Sub raise_error(ByVal errmsg As String,
                            Optional ByVal errtype As error_type = error_type.information,
                            Optional ByVal errtype_char As Char = character.null,

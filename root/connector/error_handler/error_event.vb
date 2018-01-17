@@ -36,10 +36,10 @@ Public Class error_event
         r4lock = New Object()
         r5lock = New Object()
         r6lock = New Object()
-        static_constructor(Of colorful_console_error_writer).execute()
     End Sub
 
     Public Shared Sub A()
+        static_constructor(Of colorful_console_error_writer).execute()
         RaiseEvent A1()
     End Sub
 
@@ -48,6 +48,7 @@ Public Class error_event
                         ByVal err_type_char As Char,
                         ByVal msg() As Object,
                         ByVal additional_jump As Int32)
+        static_constructor(Of colorful_console_error_writer).execute()
         Dim r1a As Boolean = False
         Dim r2a As Boolean = False
         Dim r3a As Boolean = False

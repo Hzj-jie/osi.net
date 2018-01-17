@@ -8,7 +8,11 @@ Imports System.Reflection
 ' TODO: Move to type_info.
 Public NotInheritable Class static_constructor
     Public Shared Function retrieve(ByVal t As Type) As ConstructorInfo
-        Return If(t Is Nothing, Nothing, t.TypeInitializer())
+        ' See
+        ' https://stackoverflow.com/questions/11593615/why-would-finding-a-types-initializer-throw-a-nullreferenceexception
+        ' about the reason of casting t to _Type.
+        ' It may randomly throw System.NullReferenceException within System.RuntimeType.GetConstructorImpl().
+        Return If(t Is Nothing, Nothing, direct_cast(Of Runtime.InteropServices._Type)(t).TypeInitializer())
     End Function
 
     Private Shared Function as_action(ByVal c As ConstructorInfo) As Action
@@ -58,27 +62,39 @@ Public NotInheritable Class static_constructor
 End Class
 
 Public NotInheritable Class static_constructor(Of T)
-    Private Class executor
+    Private NotInheritable Class executor
         Shared Sub New()
             Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(GetType(T).TypeHandle())
         End Sub
 
         Public Shared Sub execute()
         End Sub
+
+        Private Sub New()
+        End Sub
     End Class
 
-    Private Shared ReadOnly s As static_constructor
+    Private NotInheritable Class holder
+        Public Shared ReadOnly s As static_constructor
 
-    Shared Sub New()
-        s = New static_constructor(GetType(T))
-    End Sub
+        Shared Sub New()
+            s = New static_constructor(GetType(T))
+        End Sub
+
+        Private Sub New()
+        End Sub
+    End Class
+
+    Public Shared Function static_constructor() As static_constructor
+        Return holder.s
+    End Function
 
     Public Shared Function retrieve() As ConstructorInfo
-        Return s.retrieve()
+        Return static_constructor().retrieve()
     End Function
 
     Public Shared Function as_action() As Action
-        Return s.as_action()
+        Return static_constructor().as_action()
     End Function
 
     ' This function guarantees the TypeInitializer will be executed only once, even not through this function.
