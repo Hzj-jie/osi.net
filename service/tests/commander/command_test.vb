@@ -46,23 +46,23 @@ Public Class command_test
             Return False
         End If
         If assert_not_nothing(c.action()) Then
-            assert_equal(c.action().to_string(), constants.action)
+            assert_equal(c.action(Of String)(), constants.action)
         End If
         If assert_not_nothing(c.parameter(constants.para1)) Then
-            assert_equal(c.parameter(constants.para1).to_int64(), constants.value1)
+            assert_equal(c.parameter(Of String, Int64)(constants.para1), constants.value1)
         End If
         assert_equal(c.parameter(Of String, Int64)(constants.para1), constants.value1)
         If assert_not_nothing(c.parameter(constants.para2)) Then
-            assert_equal(c.parameter(constants.para2).to_bool(), constants.value2)
+            assert_equal(c.parameter(Of String, Boolean)(constants.para2), constants.value2)
         End If
         assert_equal(c.parameter(Of String, Boolean)(constants.para2), constants.value2)
         If assert_not_nothing(c.parameter(constants.para3)) Then
-            assert_equal(c.parameter(constants.para3).to_string(), constants.value3)
+            assert_equal(c.parameter(Of String, String)(constants.para3), constants.value3)
         End If
         assert_equal(c.parameter(Of String, String)(constants.para3), constants.value3)
         assert_nothing(c.parameter(constants.para4))
         If assert_not_nothing(c.parameter(constants.para5)) Then
-            assert_equal(c.parameter(constants.para5).to_int32(), constants.value5)
+            assert_equal(c.parameter(Of Int32, Int32)(constants.para5), constants.value5)
         End If
         assert_equal(c.parameter(Of Int32, Int32)(constants.para5), constants.value5)
         Return True

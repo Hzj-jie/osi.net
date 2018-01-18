@@ -90,9 +90,9 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
                                  o Is Nothing Then
                                   Return False
                               Else
-                                  If i.action().to_int32() = ask_command Then
+                                  If i.action(Of Int32)() = ask_command Then
                                       o.attach(answer_command) _
-                                       .attach(answer_para, i.parameter(ask_para).to_int32() + 1)
+                                       .attach(answer_para, i.parameter(Of Int32, Int32)(ask_para) + 1)
                                   Else
                                       o.attach(answer_command + 1)
                                   End If
@@ -287,8 +287,8 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
                                   Function() As Boolean
                                       If ec.end_result() AndAlso
                                          Not (+r) Is Nothing AndAlso
-                                         (+r).action().to_int32(answer_command + 1) = answer_command AndAlso
-                                         (+r).parameter(answer_para).to_int32(para) = para + 1 Then
+                                         (+r).action(Of Int32)() = answer_command AndAlso
+                                         (+r).parameter(Of Int32, Int32)(answer_para) = para + 1 Then
                                           Select Case choice
                                               Case 0
                                                   assert(enable_tcp)

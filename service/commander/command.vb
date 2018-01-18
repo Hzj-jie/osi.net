@@ -55,6 +55,14 @@ Partial Public Class command
         Return +a
     End Function
 
+    Public Function action(Of T)(Optional ByVal bytes_T As bytes_serializer(Of T) = Nothing) As T
+        Dim r As T = Nothing
+        If (+bytes_T).from_bytes(action(), r) Then
+            Return r
+        End If
+        Return Nothing
+    End Function
+
     Public Function action_is(ByVal b() As Byte) As Boolean
         Return has_action() AndAlso
                (memcmp(action(), b) = 0)

@@ -1,10 +1,12 @@
 ﻿
-Imports osi.root.constants
-Imports osi.root.procedure
-Imports osi.root.formation
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.formation
+Imports osi.root.procedure
 Imports osi.root.utils
-Imports osi.service.convertor
 
 <type_attribute()>
 Public Class flow_block_adapter
@@ -25,15 +27,14 @@ Public Class flow_block_adapter
         Dim exp_len As UInt32 = 0
         Dim r() As Byte = Nothing
         Return New event_comb(Function() As Boolean
-                                  ReDim r(preamble_length - 1)
+                                  r = chunk.head()
                                   ec = underlying_device.receive(r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
                               End Function,
                               Function() As Boolean
                                   If ec.end_result() AndAlso
-                                     parse_as_preamble(r, exp_len) Then
-                                      ReDim r(exp_len - 1)
+                                     chunk.parse_head(r, r) Then
                                       ec = underlying_device.receive(r)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -54,15 +55,13 @@ Public Class flow_block_adapter
                         Implements block.send
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  If offset + count > array_size(buff) Then
+                                  Dim p As piece = Nothing
+                                  If Not piece.create(buff, offset, count, p) Then
                                       Return False
-                                  ElseIf count = 0 Then
-                                      Return goto_end()
-                                  Else
-                                      ec = underlying_device.send(to_chunk(buff, offset, count))
-                                      Return waitfor(ec) AndAlso
-                                             goto_next()
                                   End If
+                                  ec = underlying_device.send(chunk.from_bytes(p))
+                                  Return waitfor(ec) AndAlso
+                                         goto_next()
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso

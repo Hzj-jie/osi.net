@@ -29,7 +29,7 @@ Friend NotInheritable Class bytes_serializer_registry
 
         bytes_serializer.fixed.register(Function(ByVal i As SByte, ByVal o As MemoryStream) As Boolean
                                             assert(Not o Is Nothing)
-                                            Return o.write(BitConverter.GetBytes(i))
+                                            Return o.write(BitConverter.GetBytes(endian.to_little_endian(i)))
                                         End Function,
                                         Function(ByVal i As MemoryStream, ByRef o As SByte) As Boolean
                                             assert(Not i Is Nothing)
@@ -44,7 +44,7 @@ Friend NotInheritable Class bytes_serializer_registry
                                                 Dim b() As Byte = Nothing
                                                 Dim offset As UInt32 = 0
                                                 i.get_buffer(b, offset)
-                                                o = BitConverter.ToSByte(b, CInt(offset))
+                                                o = endian.to_little_endian(BitConverter.ToSByte(b, CInt(offset)))
                                                 i.Position() += type_info(Of SByte).size()
                                             #End If
                                             Return True
@@ -58,7 +58,7 @@ Friend NotInheritable Class bytes_serializer_registry
 
         bytes_serializer.fixed.register(Function(ByVal i As Byte, ByVal o As MemoryStream) As Boolean
                                             assert(Not o Is Nothing)
-                                            Return o.write(BitConverter.GetBytes(i))
+                                            Return o.write(BitConverter.GetBytes(endian.to_little_endian(i)))
                                         End Function,
                                         Function(ByVal i As MemoryStream, ByRef o As Byte) As Boolean
                                             assert(Not i Is Nothing)
@@ -73,7 +73,7 @@ Friend NotInheritable Class bytes_serializer_registry
                                                 Dim b() As Byte = Nothing
                                                 Dim offset As UInt32 = 0
                                                 i.get_buffer(b, offset)
-                                                o = BitConverter.ToByte(b, CInt(offset))
+                                                o = endian.to_little_endian(BitConverter.ToByte(b, CInt(offset)))
                                                 i.Position() += type_info(Of Byte).size()
                                             #End If
                                             Return True
@@ -87,7 +87,7 @@ Friend NotInheritable Class bytes_serializer_registry
 
         bytes_serializer.fixed.register(Function(ByVal i As Int16, ByVal o As MemoryStream) As Boolean
                                             assert(Not o Is Nothing)
-                                            Return o.write(BitConverter.GetBytes(i))
+                                            Return o.write(BitConverter.GetBytes(endian.to_little_endian(i)))
                                         End Function,
                                         Function(ByVal i As MemoryStream, ByRef o As Int16) As Boolean
                                             assert(Not i Is Nothing)
@@ -102,7 +102,7 @@ Friend NotInheritable Class bytes_serializer_registry
                                                 Dim b() As Byte = Nothing
                                                 Dim offset As UInt32 = 0
                                                 i.get_buffer(b, offset)
-                                                o = BitConverter.ToInt16(b, CInt(offset))
+                                                o = endian.to_little_endian(BitConverter.ToInt16(b, CInt(offset)))
                                                 i.Position() += type_info(Of Int16).size()
                                             #End If
                                             Return True
@@ -116,7 +116,7 @@ Friend NotInheritable Class bytes_serializer_registry
 
         bytes_serializer.fixed.register(Function(ByVal i As UInt16, ByVal o As MemoryStream) As Boolean
                                             assert(Not o Is Nothing)
-                                            Return o.write(BitConverter.GetBytes(i))
+                                            Return o.write(BitConverter.GetBytes(endian.to_little_endian(i)))
                                         End Function,
                                         Function(ByVal i As MemoryStream, ByRef o As UInt16) As Boolean
                                             assert(Not i Is Nothing)
@@ -131,7 +131,7 @@ Friend NotInheritable Class bytes_serializer_registry
                                                 Dim b() As Byte = Nothing
                                                 Dim offset As UInt32 = 0
                                                 i.get_buffer(b, offset)
-                                                o = BitConverter.ToUInt16(b, CInt(offset))
+                                                o = endian.to_little_endian(BitConverter.ToUInt16(b, CInt(offset)))
                                                 i.Position() += type_info(Of UInt16).size()
                                             #End If
                                             Return True
@@ -145,7 +145,7 @@ Friend NotInheritable Class bytes_serializer_registry
 
         bytes_serializer.fixed.register(Function(ByVal i As Int32, ByVal o As MemoryStream) As Boolean
                                             assert(Not o Is Nothing)
-                                            Return o.write(BitConverter.GetBytes(i))
+                                            Return o.write(BitConverter.GetBytes(endian.to_little_endian(i)))
                                         End Function,
                                         Function(ByVal i As MemoryStream, ByRef o As Int32) As Boolean
                                             assert(Not i Is Nothing)
@@ -160,7 +160,7 @@ Friend NotInheritable Class bytes_serializer_registry
                                                 Dim b() As Byte = Nothing
                                                 Dim offset As UInt32 = 0
                                                 i.get_buffer(b, offset)
-                                                o = BitConverter.ToInt32(b, CInt(offset))
+                                                o = endian.to_little_endian(BitConverter.ToInt32(b, CInt(offset)))
                                                 i.Position() += type_info(Of Int32).size()
                                             #End If
                                             Return True
@@ -174,7 +174,7 @@ Friend NotInheritable Class bytes_serializer_registry
 
         bytes_serializer.fixed.register(Function(ByVal i As UInt32, ByVal o As MemoryStream) As Boolean
                                             assert(Not o Is Nothing)
-                                            Return o.write(BitConverter.GetBytes(i))
+                                            Return o.write(BitConverter.GetBytes(endian.to_little_endian(i)))
                                         End Function,
                                         Function(ByVal i As MemoryStream, ByRef o As UInt32) As Boolean
                                             assert(Not i Is Nothing)
@@ -189,7 +189,7 @@ Friend NotInheritable Class bytes_serializer_registry
                                                 Dim b() As Byte = Nothing
                                                 Dim offset As UInt32 = 0
                                                 i.get_buffer(b, offset)
-                                                o = BitConverter.ToUInt32(b, CInt(offset))
+                                                o = endian.to_little_endian(BitConverter.ToUInt32(b, CInt(offset)))
                                                 i.Position() += type_info(Of UInt32).size()
                                             #End If
                                             Return True
@@ -203,7 +203,7 @@ Friend NotInheritable Class bytes_serializer_registry
 
         bytes_serializer.fixed.register(Function(ByVal i As Int64, ByVal o As MemoryStream) As Boolean
                                             assert(Not o Is Nothing)
-                                            Return o.write(BitConverter.GetBytes(i))
+                                            Return o.write(BitConverter.GetBytes(endian.to_little_endian(i)))
                                         End Function,
                                         Function(ByVal i As MemoryStream, ByRef o As Int64) As Boolean
                                             assert(Not i Is Nothing)
@@ -218,7 +218,7 @@ Friend NotInheritable Class bytes_serializer_registry
                                                 Dim b() As Byte = Nothing
                                                 Dim offset As UInt32 = 0
                                                 i.get_buffer(b, offset)
-                                                o = BitConverter.ToInt64(b, CInt(offset))
+                                                o = endian.to_little_endian(BitConverter.ToInt64(b, CInt(offset)))
                                                 i.Position() += type_info(Of Int64).size()
                                             #End If
                                             Return True
@@ -232,7 +232,7 @@ Friend NotInheritable Class bytes_serializer_registry
 
         bytes_serializer.fixed.register(Function(ByVal i As UInt64, ByVal o As MemoryStream) As Boolean
                                             assert(Not o Is Nothing)
-                                            Return o.write(BitConverter.GetBytes(i))
+                                            Return o.write(BitConverter.GetBytes(endian.to_little_endian(i)))
                                         End Function,
                                         Function(ByVal i As MemoryStream, ByRef o As UInt64) As Boolean
                                             assert(Not i Is Nothing)
@@ -247,7 +247,7 @@ Friend NotInheritable Class bytes_serializer_registry
                                                 Dim b() As Byte = Nothing
                                                 Dim offset As UInt32 = 0
                                                 i.get_buffer(b, offset)
-                                                o = BitConverter.ToUInt64(b, CInt(offset))
+                                                o = endian.to_little_endian(BitConverter.ToUInt64(b, CInt(offset)))
                                                 i.Position() += type_info(Of UInt64).size()
                                             #End If
                                             Return True
@@ -261,7 +261,7 @@ Friend NotInheritable Class bytes_serializer_registry
 
         bytes_serializer.fixed.register(Function(ByVal i As Double, ByVal o As MemoryStream) As Boolean
                                             assert(Not o Is Nothing)
-                                            Return o.write(BitConverter.GetBytes(i))
+                                            Return o.write(BitConverter.GetBytes(endian.to_little_endian(i)))
                                         End Function,
                                         Function(ByVal i As MemoryStream, ByRef o As Double) As Boolean
                                             assert(Not i Is Nothing)
@@ -276,7 +276,7 @@ Friend NotInheritable Class bytes_serializer_registry
                                                 Dim b() As Byte = Nothing
                                                 Dim offset As UInt32 = 0
                                                 i.get_buffer(b, offset)
-                                                o = BitConverter.ToDouble(b, CInt(offset))
+                                                o = endian.to_little_endian(BitConverter.ToDouble(b, CInt(offset)))
                                                 i.Position() += type_info(Of Double).size()
                                             #End If
                                             Return True
@@ -290,7 +290,7 @@ Friend NotInheritable Class bytes_serializer_registry
 
         bytes_serializer.fixed.register(Function(ByVal i As Single, ByVal o As MemoryStream) As Boolean
                                             assert(Not o Is Nothing)
-                                            Return o.write(BitConverter.GetBytes(i))
+                                            Return o.write(BitConverter.GetBytes(endian.to_little_endian(i)))
                                         End Function,
                                         Function(ByVal i As MemoryStream, ByRef o As Single) As Boolean
                                             assert(Not i Is Nothing)
@@ -305,7 +305,7 @@ Friend NotInheritable Class bytes_serializer_registry
                                                 Dim b() As Byte = Nothing
                                                 Dim offset As UInt32 = 0
                                                 i.get_buffer(b, offset)
-                                                o = BitConverter.ToSingle(b, CInt(offset))
+                                                o = endian.to_little_endian(BitConverter.ToSingle(b, CInt(offset)))
                                                 i.Position() += type_info(Of Single).size()
                                             #End If
                                             Return True

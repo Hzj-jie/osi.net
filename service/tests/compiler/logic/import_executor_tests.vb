@@ -54,7 +54,7 @@ Namespace logic
             End Try
 
             Dim o As vector(Of Byte()) = Nothing
-            If Not assert_true(bytes_vector_bytes(b, o)) Then
+            If Not assert_true(chunks.parse(b, o)) Then
                 MyBase.check_result(e)
                 Return
             End If
@@ -87,7 +87,7 @@ Namespace logic
             End Try
 
             Dim o As vector(Of Byte()) = Nothing
-            If Not assert_true(bytes_vector_bytes(b, o)) Then
+            If Not assert_true(chunks.parse(b, o)) Then
                 MyBase.check_result(e)
                 Return
             End If

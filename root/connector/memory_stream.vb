@@ -54,16 +54,32 @@ Public Module _memory_stream
     End Sub
 
     <Extension()> Public Function write(ByVal this As MemoryStream, ByVal b() As Byte) As Boolean
+        Return try_write(this, b, 0, array_size(b))
+    End Function
+
+    <Extension()> Public Function try_write(ByVal this As MemoryStream,
+                                            ByVal b() As Byte,
+                                            ByVal offset As UInt32,
+                                            ByVal count As UInt32) As Boolean
         assert(Not this Is Nothing)
         If b Is Nothing Then
             Return False
         End If
+
+        If offset > max_int32 OrElse count > max_int32 Then
+            Return False
+        End If
+
+        If array_size(b) < offset + count Then
+            Return False
+        End If
+
         Try
-            this.Write(b, 0, array_size_i(b))
-            Return True
+            this.Write(b, CInt(offset), CInt(count))
         Catch
+            Return False
         End Try
-        Return False
+        Return True
     End Function
 
     <Extension()> Public Function read(ByVal this As MemoryStream, ByVal o() As Byte) As Boolean
@@ -114,7 +130,10 @@ Public NotInheritable Class memory_stream
            array_size(i) < offset + count Then
             Return False
         Else
-            o = New MemoryStream(i, offset, count, True, True)
+            ' The constructor of MemoryStream sets only _position but not Position(). So create a MemoryStream and
+            ' manually set Position.
+            o = New MemoryStream(i, 0, array_size_i(i), True, True)
+            o.Position() = offset
             Return True
         End If
     End Function

@@ -5,10 +5,10 @@ Option Strict On
 
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
-Imports osi.service.convertor
 
 Public Module _list
     <Extension()> Public Function push_back(ByVal this As istrkeyvt,
@@ -19,7 +19,7 @@ Public Module _list
         If this Is Nothing Then
             Return Nothing
         Else
-            Return this.append(key, value.to_chunk(), ts, result)
+            Return this.append(key, chunk.from_bytes(value), ts, result)
         End If
     End Function
 
@@ -58,8 +58,7 @@ Public Module _list
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso
-                                         Not isemptyarray(+p) AndAlso
-                                         eva(result, (+p).to_vector_bytes()) AndAlso
+                                         eva(result, chunks.parse_or_null(+p)) AndAlso
                                          goto_end()
                               End Function)
     End Function
@@ -140,17 +139,15 @@ Public Module _list
         Return New event_comb(Function() As Boolean
                                   If i Is Nothing Then
                                       Return False
-                                  Else
-                                      p = New pointer(Of Byte())()
-                                      ec = i.read(key, p)
-                                      Return waitfor(ec) AndAlso
-                                             goto_next()
                                   End If
+                                  p = New pointer(Of Byte())()
+                                  ec = i.read(key, p)
+                                  Return waitfor(ec) AndAlso
+                                         goto_next()
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso
-                                         Not isemptyarray(+p) AndAlso
-                                         eva(r, (+p).contains_chunk(v)) AndAlso
+                                         eva(r, chunks.contains(+p, v)) AndAlso
                                          goto_end()
                               End Function)
     End Function

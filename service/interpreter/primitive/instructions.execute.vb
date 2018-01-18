@@ -361,7 +361,7 @@ Namespace primitive
                 assert(Not imi Is Nothing)
                 Dim p0 As pointer(Of Byte()) = Nothing
                 p0 = Me.p0(imi)
-                p0.set(array_concat(+p0, to_chunk(+p1(imi))))
+                p0.set(array_concat(+p0, chunk.from_bytes(+p1(imi))))
             End Sub
         End Class
 
@@ -434,7 +434,7 @@ Namespace primitive
                 Dim vs As vector(Of Byte()) = Nothing
                 Dim u As UInt32 = 0
                 u = imi.access_stack_as_uint32(d2)
-                If bytes_vector_bytes(+p1(imi), vs) AndAlso
+                If chunks.parse(+p1(imi), vs) AndAlso
                    u < vs.size() Then
                     p0(imi).set(vs(u))
                 Else

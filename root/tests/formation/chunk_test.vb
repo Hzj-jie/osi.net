@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.IO
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utt
@@ -13,22 +14,22 @@ Public NotInheritable Class chunk_test
     <test>
     <repeat(1000, 40000)>
     Private Shared Sub random_case()
-        Dim c As chunk = Nothing
-        c = New chunk()
+        Dim c As chunks = Nothing
+        c = New chunks()
         For i As Int32 = 0 To rnd_int(20, 100) - 1
             c.emplace(next_bytes(rnd_uint(0, 256)))
         Next
 
-        Dim d As chunk = Nothing
+        Dim d As chunks = Nothing
         ' TODO: How to compare null with empty array?
-        assert_true(chunk.[New](c.export(), d))
+        assert_true(chunks.[New](c.export(), d))
         assert_equal(c, d)
     End Sub
 
     <test>
     Private Shared Sub predefined_case()
-        Dim c As chunk = Nothing
-        c = New chunk()
+        Dim c As chunks = Nothing
+        c = New chunks()
         c.insert(1)
         c.insert(1.0)
         c.insert("abc")
@@ -38,8 +39,8 @@ Public NotInheritable Class chunk_test
         Dim b() As Byte = Nothing
         b = c.export()
 
-        Dim d As chunk = Nothing
-        assert_true(chunk.[New](b, d))
+        Dim d As chunks = Nothing
+        assert_true(chunks.[New](b, d))
 
         assert_equal(c, d)
 
@@ -72,6 +73,19 @@ Public NotInheritable Class chunk_test
             assert_true(d.read(4, i))
             assert_equal(i, vector.of(1, 2, 3))
         End Using
+    End Sub
+
+    <test>
+    Private Shared Sub parse_head()
+        Dim b() As Byte = Nothing
+        b = rnd_bytes(rnd_uint(10, 100))
+        Dim serialized() As Byte = Nothing
+        Using ms As MemoryStream = New MemoryStream()
+            assert_true(chunk.append_to(b, ms))
+            serialized = ms.ToArray()
+        End Using
+        assert_true(chunk.parse_head(serialized, serialized))
+        assert_equal(array_size(serialized), array_size(b))
     End Sub
 
     Private Sub New()

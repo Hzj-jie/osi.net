@@ -10,7 +10,6 @@ Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
-Imports osi.service.convertor
 
 Public Interface iproperty
     Function path() As String
@@ -206,7 +205,7 @@ Public Module _iproperty
                                   If i Is Nothing Then
                                       Return False
                                   Else
-                                      ec = i.append(value.to_chunk())
+                                      ec = i.append(chunk.from_bytes(value))
                                       Return waitfor(ec) AndAlso
                                              goto_next()
                                   End If
@@ -267,7 +266,7 @@ Public Module _iproperty
                               Function() As Boolean
                                   Return ec.end_result() AndAlso
                                          Not isemptyarray(+p) AndAlso
-                                         eva(v, (+p).to_vector_bytes()) AndAlso
+                                         eva(v, chunks.parse_or_null(+p)) AndAlso
                                          goto_end()
                               End Function)
     End Function
@@ -289,8 +288,7 @@ Public Module _iproperty
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso
-                                         Not isemptyarray(+p) AndAlso
-                                         eva(r, (+p).contains_chunk(v)) AndAlso
+                                         eva(r, chunks.contains((+p), v)) AndAlso
                                          goto_end()
                               End Function)
     End Function
