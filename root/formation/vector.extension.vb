@@ -201,24 +201,17 @@ Public Module vector_extension
     <Extension()> Public Function str(Of T)(ByVal v As vector(Of T)) As String
         Return ToString(v, Nothing)
     End Function
-
-    <Extension()> Public Function from(Of T)(ByRef v As vector(Of T), ByVal ParamArray vs() As T) As Boolean
-        v.renew()
-        Return v.push_back(vs)
-    End Function
 End Module
 
 Public NotInheritable Class vector
     Private Shared Function create(Of T)(ByVal vs() As T, ByVal require_copy As Boolean) As vector(Of T)
         Dim r As vector(Of T) = Nothing
         r = New vector(Of T)()
-        For i As Int32 = 0 To array_size_i(vs) - 1
-            If require_copy Then
-                r.push_back(vs(i))
-            Else
-                r.emplace_back(vs(i))
-            End If
-        Next
+        If require_copy Then
+            assert(r.push_back(vs))
+        Else
+            assert(r.emplace_back(vs))
+        End If
         Return r
     End Function
 

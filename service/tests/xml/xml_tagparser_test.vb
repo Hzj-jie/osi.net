@@ -1,7 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.xml
 
@@ -37,10 +40,10 @@ Public Class xml_tagparser_test
         predefined_cases = {New case_t("<abc k1=""v1"" k2=v2 k3='v3' k4=""v 4"" />",
                                        True,
                                        "abc",
-                                       create_attributes(emplace_make_pair("k1", "v1"),
-                                                         emplace_make_pair("k2", "v2"),
-                                                         emplace_make_pair("k3", "v3"),
-                                                         emplace_make_pair("k4", "v 4")),
+                                       vector.of(emplace_make_pair("k1", "v1"),
+                                                 emplace_make_pair("k2", "v2"),
+                                                 emplace_make_pair("k3", "v3"),
+                                                 emplace_make_pair("k4", "v 4")),
                                        True,
                                        False),
                             New case_t("  <  / abc > ",
@@ -63,13 +66,6 @@ Public Class xml_tagparser_test
                                        False)}
     End Sub
 
-    Private Shared Function create_attributes(ByVal ParamArray vs() As pair(Of String, String)) _
-                                             As vector(Of pair(Of String, String))
-        Dim r As vector(Of pair(Of String, String)) = Nothing
-        assert(r.from(vs))
-        Return r
-    End Function
-
     Private Shared Function run_case(ByVal c As case_t) As Boolean
         assert(Not c Is Nothing)
         Dim tag As String = Nothing
@@ -87,7 +83,7 @@ Public Class xml_tagparser_test
     End Function
 
     Private Shared Function run_predefined_cases() As Boolean
-        For i As Int32 = 0 To array_size(predefined_cases) - 1
+        For i As Int32 = 0 To array_size_i(predefined_cases) - 1
             If Not run_case(predefined_cases(i)) Then
                 Return False
             End If

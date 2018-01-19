@@ -254,66 +254,68 @@ Public NotInheritable Class strsplitter
                                  ByVal case_sensitive As Boolean) As Boolean
         If String.IsNullOrEmpty(s) Then
             Return False
-        Else
-            result.renew()
-            If isemptyarray(separators) Then
-                result.emplace_back(s)
-                Return True
-            ElseIf isemptyarray(surround_strs) Then
-                Dim ss() As String = Nothing
-                ss = s.Split(separators,
-                             If(ignore_empty_entity,
-                                StringSplitOptions.RemoveEmptyEntries,
-                                StringSplitOptions.None))
-                'should have at least one entity, so false should not be returned
-                Return assert(result.emplace_back(ss))
-            Else
-                Dim surrounded As Int32 = 0
-                surrounded = npos
-                Dim l As StringBuilder = Nothing
-                l = New StringBuilder()
-                Dim i As UInt32 = 0
-                While i < strlen(s)
-                    Dim len As UInt32 = 0
-                    Dim hit As String = Nothing
-                    If surrounded >= 0 Then
-                        If strsame(s,
-                                   i,
-                                   surround_strs(surrounded).second,
-                                   uint32_0,
-                                   strlen(surround_strs(surrounded).second),
-                                   case_sensitive) Then
-                            i += strlen(surround_strs(surrounded).second)
-                            If Not ignore_surround_strs Then
-                                l.Append(surround_strs(surrounded).second)
-                            End If
-                            surrounded = npos
-                        Else
-                            l.Append(s(CInt(i)))
-                            i += uint32_1
-                        End If
-                    ElseIf is_inarray(s, i, separators, len, hit, case_sensitive) Then
-                        If Not ignore_empty_entity OrElse strlen(l) > 0 Then
-                            result.emplace_back(Convert.ToString(l))
-                            l.Clear()
-                        End If
-                        i += len
-                    ElseIf is_inarray(s, i, surround_strs, surrounded, len, hit, case_sensitive) Then
-                        i += len
-                        If Not ignore_surround_strs Then
-                            l.Append(hit)
-                        End If
-                    Else
-                        l.Append(s(CInt(i)))
-                        i += uint32_1
+        End If
+
+        result.renew()
+        If isemptyarray(separators) Then
+            result.emplace_back(s)
+            Return True
+        End If
+
+        If isemptyarray(surround_strs) Then
+            Dim ss() As String = Nothing
+            ss = s.Split(separators,
+                         If(ignore_empty_entity,
+                            StringSplitOptions.RemoveEmptyEntries,
+                            StringSplitOptions.None))
+            'should have at least one entity, so false should not be returned
+            Return assert(result.emplace_back(ss))
+        End If
+
+        Dim surrounded As Int32 = 0
+        surrounded = npos
+        Dim l As StringBuilder = Nothing
+        l = New StringBuilder()
+        Dim i As UInt32 = 0
+        While i < strlen(s)
+            Dim len As UInt32 = 0
+            Dim hit As String = Nothing
+            If surrounded >= 0 Then
+                If strsame(s,
+                           i,
+                           surround_strs(surrounded).second,
+                           uint32_0,
+                           strlen(surround_strs(surrounded).second),
+                           case_sensitive) Then
+                    i += strlen(surround_strs(surrounded).second)
+                    If Not ignore_surround_strs Then
+                        l.Append(surround_strs(surrounded).second)
                     End If
-                End While
+                    surrounded = npos
+                Else
+                    l.Append(s(CInt(i)))
+                    i += uint32_1
+                End If
+            ElseIf is_inarray(s, i, separators, len, hit, case_sensitive) Then
                 If Not ignore_empty_entity OrElse strlen(l) > 0 Then
                     result.emplace_back(Convert.ToString(l))
+                    l.Clear()
                 End If
-                Return True
+                i += len
+            ElseIf is_inarray(s, i, surround_strs, surrounded, len, hit, case_sensitive) Then
+                i += len
+                If Not ignore_surround_strs Then
+                    l.Append(hit)
+                End If
+            Else
+                l.Append(s(CInt(i)))
+                i += uint32_1
             End If
+        End While
+        If Not ignore_empty_entity OrElse strlen(l) > 0 Then
+            result.emplace_back(Convert.ToString(l))
         End If
+        Return True
     End Function
 
     Private Sub New()
@@ -451,5 +453,47 @@ Public Module _strsplit
                                  ignore_empty_entity,
                                  ignore_surround_strs,
                                  case_sensitive)
+    End Function
+
+    <Extension()> Public Function split_from(ByRef o As vector(Of String), ByVal s As String) As Boolean
+        Return strsplit(s, o)
+    End Function
+
+    <Extension()> Public Function split_from_or_null(ByRef o As vector(Of String),
+                                                     ByVal s As String) As vector(Of String)
+        If split_from(o, s) Then
+            Return o
+        End If
+        Return Nothing
+    End Function
+
+    <Extension()> Public Function split_from(Of T)(ByRef o As vector(Of T),
+                                                   ByVal s As String,
+                                                   Optional ByVal str_T As string_serializer(Of T) = Nothing) As Boolean
+        Dim r As vector(Of String) = Nothing
+        If Not strsplit(s, r) Then
+            Return False
+        End If
+        o.renew()
+        Dim i As UInt32 = 0
+        While i < r.size()
+            Dim v As T = Nothing
+            If Not (+str_T).from_str(r(i), v) Then
+                Return False
+            End If
+            o.emplace_back(v)
+            i += uint32_1
+        End While
+        Return True
+    End Function
+
+    <Extension()> Public Function split_from_or_null(Of T)(ByRef o As vector(Of T),
+                                                           ByVal s As String,
+                                                           Optional ByVal str_T As string_serializer(Of T) = Nothing) _
+                                                          As vector(Of T)
+        If split_from(o, s, str_T) Then
+            Return o
+        End If
+        Return Nothing
     End Function
 End Module

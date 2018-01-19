@@ -126,6 +126,10 @@ Public NotInheritable Class string_serializer
         Return string_serializer(Of T).default.from_str(i, o)
     End Function
 
+    Public Shared Function from_str_or_default(Of T)(ByVal i As String, ByVal [default] As T) As T
+        Return string_serializer(Of T).default.from_str_or_default(i, [default])
+    End Function
+
     Public Shared Function to_str(Of T)(ByVal i As T, ByVal o As StringWriter) As Boolean
         Return string_serializer(Of T).default.to_str(i, o)
     End Function
