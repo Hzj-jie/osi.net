@@ -1,10 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.delegates
-Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.root.utils
 
 Public Interface bytes_transformer
     Function transform(ByVal i() As Byte,
@@ -184,7 +187,7 @@ Public Class bytes_transformer_collection
     End Sub
 
     Public Function chain(ByVal ParamArray v() As bytes_transformer) As Boolean
-        For i As Int32 = 0 To array_size(v) - 1
+        For i As Int32 = 0 To array_size_i(v) - 1
             If v(i) Is Nothing Then
                 Return False
             Else
@@ -214,15 +217,15 @@ Public Class bytes_transformer_collection
             Dim g As Int32 = 0
             If forward Then
                 s = 0
-                e = trans.size() - 1
+                e = trans.size() - uint32_1
                 g = 1
             Else
-                s = trans.size() - 1
+                s = trans.size() - uint32_1
                 e = 0
                 g = -1
             End If
-            For j As Int32 = s To e Step g
-                If trans(j).transform(i, offset, count, o) Then
+            For j As Int32 = CInt(s) To CInt(e) Step g
+                If trans(CUInt(j)).transform(i, offset, count, o) Then
                     i = o
                     offset = 0
                     count = array_size(i)
