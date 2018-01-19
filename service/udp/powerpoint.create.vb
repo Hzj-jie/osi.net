@@ -1,11 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
 Option Strict On
 
 Imports System.Net
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.service.argument
-Imports osi.service.convertor
 
 Partial Public Class powerpoint
     Public Class creator
@@ -78,7 +79,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_remote_port_str(ByVal port As String) As creator
-            Return with_remote_port(port.to_uint16())
+            Return with_remote_port(port.to(Of UInt16)())
         End Function
 
         Public Function without_remote_port() As creator
@@ -105,7 +106,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_local_port_str(ByVal port As String) As creator
-            Return with_local_port(port.to_uint16())
+            Return with_local_port(port.to(Of UInt16)())
         End Function
 
         Public Function without_local_port() As creator
@@ -118,7 +119,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_response_timeout_ms_str(ByVal ms As String) As creator
-            Return with_response_timeout_ms(ms.to_int64(default_value.response_timeout_ms))
+            Return with_response_timeout_ms(ms.to(Of Int64)(default_value.response_timeout_ms))
         End Function
 
         Public Function without_response_timeout_ms() As creator
@@ -131,7 +132,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_send_rate_sec_str(ByVal rate_sec As String) As creator
-            Return with_send_rate_sec(rate_sec.to_uint32(default_value.send_rate_sec))
+            Return with_send_rate_sec(rate_sec.to(Of UInt32)(default_value.send_rate_sec))
         End Function
 
         Public Function without_send_rate_sec() As creator
@@ -144,7 +145,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_receive_rate_sec_str(ByVal rate_sec As String) As creator
-            Return with_receive_rate_sec(rate_sec.to_uint32(default_value.receive_rate_sec))
+            Return with_receive_rate_sec(rate_sec.to(Of UInt32)(default_value.receive_rate_sec))
         End Function
 
         Public Function without_receive_rate_sec() As creator
@@ -157,7 +158,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_ipv4_str(ByVal ipv4 As String) As creator
-            If ipv4.to_bool(default_value.ipv4) Then
+            If ipv4.to(Of Boolean)(default_value.ipv4) Then
                 Return with_ipv4()
             Else
                 Return with_ipv6()
@@ -181,7 +182,7 @@ Partial Public Class powerpoint
 
         Public Function with_max_receive_buffer_size_str(ByVal max_receive_buffer_size As String) As creator
             Return with_max_receive_buffer_size(
-                       max_receive_buffer_size.to_uint32(default_value.max_receive_buffer_size))
+                       max_receive_buffer_size.to(Of UInt32)(default_value.max_receive_buffer_size))
         End Function
 
         Public Function without_max_receive_buffer_size() As creator
@@ -194,7 +195,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_accept_new_connection_str(ByVal accept_new_connection As String) As creator
-            Return with_accept_new_connection(accept_new_connection.to_bool(default_value.accept_new_connection))
+            Return with_accept_new_connection(accept_new_connection.to(Of Boolean)(default_value.accept_new_connection))
         End Function
 
         Public Function without_accept_new_connection() As creator
@@ -207,7 +208,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_max_connected_str(ByVal max_connected As String) As creator
-            Return with_max_connected(max_connected.to_uint32(default_value.max_connected))
+            Return with_max_connected(max_connected.to(Of UInt32)(default_value.max_connected))
         End Function
 
         Public Function without_max_connected() As creator

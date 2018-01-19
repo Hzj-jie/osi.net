@@ -7,7 +7,6 @@ Imports System.IO
 Imports osi.root.connector
 Imports osi.root.utt
 Imports osi.service.configuration
-Imports osi.service.convertor
 Imports envs = osi.root.envs
 Imports c = osi.service.configuration
 
@@ -123,10 +122,10 @@ Public Class configuration_test
         assert_equal(s()("key3", create_variants("sf", "string3")), "string3")
         assert_equal(s()("key3", create_variants("sf", "string4")), "key3 no match")
 
-        assert_equal(s()("key4", create_variants("iif", rnd_int(0, 100))).to_int32(), 100)
-        assert_equal(s()("key4", create_variants("iif", rnd_int(100, 200))).to_int32(), 200)
-        assert_equal(s()("key4", create_variants("iif", rnd_int(200, 300))).to_int32(), 300)
-        assert_equal(s()("key4", create_variants("iif", rnd_int(300, 400))).to_int32(), 400)
+        assert_equal(s()("key4", create_variants("iif", rnd_int(0, 100))).to(Of Int32)(), 100)
+        assert_equal(s()("key4", create_variants("iif", rnd_int(100, 200))).to(Of Int32)(), 200)
+        assert_equal(s()("key4", create_variants("iif", rnd_int(200, 300))).to(Of Int32)(), 300)
+        assert_equal(s()("key4", create_variants("iif", rnd_int(300, 400))).to(Of Int32)(), 400)
 
         assert_equal(s()("key5", create_variants("ssf", "string1")), "string1,string2,string3")
         assert_equal(s()("key5", create_variants("ssf", "string2")), "string1,string2,string3")
@@ -139,22 +138,22 @@ Public Class configuration_test
         assert_equal(s()("key5", create_variants("ssf", "string9")), "string7,string8,string9")
         assert_equal(s()("key5", create_variants("ssf", "string10")), "string10")
 
-        assert_equal(s()("key6", create_variants("dcf", rnd_double(0, 100) + 0.1)).to_double(), 100.1)
-        assert_equal(s()("key6", create_variants("dcf", rnd_double(100.1, 200.1) + 0.1)).to_double(), 200.2)
-        assert_equal(s()("key6", create_variants("dcf", rnd_double(200.2, 300.2) + 0.1)).to_double(), 300.3)
-        assert_equal(s()("key6", create_variants("dcf", rnd_double(300.3, 400.3) + 0.1)).to_double(), 400.4)
-        assert_equal(s()("key6", create_variants("dcf", rnd_double(400.4, 500.4))).to_double(), 500.5)
-        assert_equal(s()("key6", create_variants("dcf", rnd_double(-100, -1))).to_double(), 500.5)
-        assert_equal(s()("key6", create_variants("dcf", 0)).to_double(), 500.5)
-        assert_equal(s()("key6", create_variants("dcf", 100.1)).to_double(), 500.5)
-        assert_equal(s()("key6", create_variants("dcf", 200.2)).to_double(), 500.5)
-        assert_equal(s()("key6", create_variants("dcf", 300.3)).to_double(), 500.5)
+        assert_equal(s()("key6", create_variants("dcf", rnd_double(0, 100) + 0.1)).to(Of Double)(), 100.1)
+        assert_equal(s()("key6", create_variants("dcf", rnd_double(100.1, 200.1) + 0.1)).to(Of Double)(), 200.2)
+        assert_equal(s()("key6", create_variants("dcf", rnd_double(200.2, 300.2) + 0.1)).to(Of Double)(), 300.3)
+        assert_equal(s()("key6", create_variants("dcf", rnd_double(300.3, 400.3) + 0.1)).to(Of Double)(), 400.4)
+        assert_equal(s()("key6", create_variants("dcf", rnd_double(400.4, 500.4))).to(Of Double)(), 500.5)
+        assert_equal(s()("key6", create_variants("dcf", rnd_double(-100, -1))).to(Of Double)(), 500.5)
+        assert_equal(s()("key6", create_variants("dcf", 0)).to(Of Double)(), 500.5)
+        assert_equal(s()("key6", create_variants("dcf", 100.1)).to(Of Double)(), 500.5)
+        assert_equal(s()("key6", create_variants("dcf", 200.2)).to(Of Double)(), 500.5)
+        assert_equal(s()("key6", create_variants("dcf", 300.3)).to(Of Double)(), 500.5)
 
-        assert_equal(s()("write_times").to_int32(), 1)
+        assert_equal(s()("write_times").to(Of Int32)(), 1)
 
         config_writer.write()
         sleep_seconds(10)
-        assert_equal(s()("write_times").to_int32(), 2)
+        assert_equal(s()("write_times").to(Of Int32)(), 2)
 
         c.default().unload(config_writer.file)
         sleep()

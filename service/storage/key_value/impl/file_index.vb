@@ -209,8 +209,8 @@ Public Class file_index
                                              max_key_count)
                                       Dim bs As Int32 = 0
                                       Dim mkc As Int64 = 0
-                                      bs = v.value(buff_size).to_int32(npos)
-                                      mkc = v.value(max_key_count).to_int64(npos)
+                                      bs = v.value(buff_size).to(Of Int32)(npos)
+                                      mkc = v.value(max_key_count).to(Of Int64)(npos)
                                       ec = ctor(o,
                                                 v.other_values()(0),
                                                 bs,

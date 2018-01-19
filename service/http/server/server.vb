@@ -11,8 +11,8 @@ Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.threadpool
+Imports osi.root.utils
 Imports osi.service.argument
-Imports osi.service.convertor
 Imports osi.service.http.constants.interval_ms
 Imports constructor = osi.service.device.constructor
 
@@ -111,23 +111,22 @@ Partial Public NotInheritable Class server
     End Function
 
     Public Function add_port(ByVal port As String) As Boolean
-        Return add_port(port.to_uint16())
+        Return add_port(port.to(Of UInt16)())
     End Function
 
     Private Function add_several(ByVal s As String, ByVal a As Func(Of String, Boolean)) As Boolean
         assert(Not a Is Nothing)
         Dim vs As vector(Of String) = Nothing
-        vs = s.to_string_array()
-        If vs.null_or_empty() Then
+        If Not vs.split_from(s) Then
             Return False
-        Else
-            For i As UInt32 = 0 To vs.size() - uint32_1
-                If Not a(vs(i)) Then
-                    Return False
-                End If
-            Next
-            Return True
         End If
+        assert(Not vs.null_or_empty())
+        For i As UInt32 = 0 To vs.size() - uint32_1
+            If Not a(vs(i)) Then
+                Return False
+            End If
+        Next
+        Return True
     End Function
 
     Public Function add_prefixes(ByVal prefixes As String) As Boolean
@@ -224,7 +223,7 @@ Partial Public NotInheritable Class server
                    p_encoder)
             Dim c As configuration = Nothing
             c = New configuration()
-            c.max_connection_count = v(p_max_connection_count).to_int32(c.max_connection_count)
+            c.max_connection_count = v(p_max_connection_count).to(Of Int32)(c.max_connection_count)
             c.ls = link_status.create_server_link_status(v)
             If Not try_get_encoding(v(p_encoder), c.encoder) Then
                 raise_error(error_type.warning, "Cannot get encoder from ", v(p_encoder))

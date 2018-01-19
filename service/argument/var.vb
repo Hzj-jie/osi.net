@@ -7,7 +7,6 @@ Imports Microsoft.VisualBasic
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.service.convertor
 
 Partial Public Class var
     Public Shared ReadOnly [default] As var
@@ -181,7 +180,7 @@ Partial Public Class var
             If s Is Nothing Then
                 o = True
             Else
-                o = s.to_bool()
+                o = s.to(Of Boolean)()
             End If
             Return True
         Else

@@ -1,11 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.utils
+Imports osi.root.constants
 Imports osi.service.argument
-Imports osi.service.convertor
 Imports osi.service.device
 Imports osi.service.transmitter
 
@@ -17,7 +17,7 @@ Friend Module _registry
         assert(Not v Is Nothing)
         v.bind(p_host, p_port)
         host = v(p_host)
-        port = v(p_port).to_uint16()
+        port = v(p_port).to(Of UInt16)()
     End Sub
 
     Private Function create(ByVal v As var, ByRef o As client_get_dev) As Boolean

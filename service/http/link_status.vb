@@ -32,10 +32,10 @@ Public Class link_status
                    ByVal buff_size As String,
                    ByVal rate_sec As String,
                    ByVal max_content_length As String)
-        Me.New(timeout_ms.to_int64(default_value.connect_timeout_ms),
-               buff_size.to_uint32(default_value.buff_size),
-               rate_sec.to_uint32(default_value.rate_sec),
-               max_content_length.to_uint64(default_value.max_content_length))
+        Me.New(timeout_ms.to(Of Int64)(default_value.connect_timeout_ms),
+               buff_size.to(Of UInt32)(default_value.buff_size),
+               rate_sec.to(Of UInt32)(default_value.rate_sec),
+               max_content_length.to(Of UInt64)(default_value.max_content_length))
     End Sub
 
     Public Shared ReadOnly request As link_status

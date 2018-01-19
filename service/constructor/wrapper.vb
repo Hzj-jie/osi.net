@@ -3,12 +3,12 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.formation
+Imports osi.root.utils
 Imports osi.service.argument
-Imports osi.service.convertor
 
 Public NotInheritable Class wrapper(Of T)
     Private Shared ReadOnly wt As unique_strong_map(Of String,
@@ -120,23 +120,22 @@ Public NotInheritable Class wrapper(Of T)
     Public Shared Function wrap(ByVal v As var, ByVal i As T, ByRef o As T) As Boolean
         If v Is Nothing Then
             Return False
-        Else
-            Dim ss As vector(Of String) = Nothing
-            ss = v("wrapper").to_string_array()
-            If Not ss Is Nothing Then
-                Dim j As UInt32 = uint32_0
-                While j < ss.size()
-                    Dim vs As collectionless(Of _do_val_val_ref(Of var, T, T, Boolean)) = Nothing
-                    If wt.get(ss(j), vs) AndAlso wrap(vs, v, i, o) Then
-                        i = o
-                    Else
-                        Return False
-                    End If
-                    j += uint32_1
-                End While
-            End If
-            Return wrap(w, v, i, o)
         End If
+        Dim ss As vector(Of String) = Nothing
+        If ss.split_from(v("wrapper")) Then
+            assert(Not ss.null_or_empty())
+            Dim j As UInt32 = uint32_0
+            While j < ss.size()
+                Dim vs As collectionless(Of _do_val_val_ref(Of var, T, T, Boolean)) = Nothing
+                If wt.get(ss(j), vs) AndAlso wrap(vs, v, i, o) Then
+                    i = o
+                Else
+                    Return False
+                End If
+                j += uint32_1
+            End While
+        End If
+        Return wrap(w, v, i, o)
     End Function
 
     Private Sub New()

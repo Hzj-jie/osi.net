@@ -1,10 +1,13 @@
 ﻿
+' TODO: Remove
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 #Const REGISTER_RAW_DEVICE = True
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.service.argument
-Imports osi.service.convertor
-Imports osi.service.selector
 Imports osi.service.transmitter
 
 <global_init(global_init_level.services)>
@@ -93,7 +96,7 @@ Public NotInheritable Class registry(Of T)
         assert(Not v Is Nothing)
         Const s As String = "max-count"
         v.bind(s)
-        Return v(s).to_uint32()
+        Return v(s).to(Of UInt32)()
     End Function
 
     Private Shared Sub attach_checker(ByVal v As var, ByVal d As device_pool(Of T))
@@ -152,9 +155,10 @@ Public NotInheritable Class registry(Of T)
                                Dim cms As Int64 = uint64_0
                                Dim fms As Int64 = uint64_0
                                Dim mc As Int32 = 0
-                               cms = v(check_interval_ms).to_int64(constants.default_auto_generation_check_interval_ms)
-                               fms = v(failure_wait_ms).to_int64(constants.default_auto_generation_failure_wait_ms)
-                               mc = v(max_concurrent_generations).to_int32(
+                               cms = v(check_interval_ms).to(Of Int64) _
+                                                            (constants.default_auto_generation_check_interval_ms)
+                               fms = v(failure_wait_ms).to(Of Int64)(constants.default_auto_generation_failure_wait_ms)
+                               mc = v(max_concurrent_generations).to(Of Int32)(
                                         constants.default_auto_generation_max_concurrent_generations)
                                If Not x Is Nothing Then
                                    o = auto_device_exporter.[New](x, cms, fms, mc)

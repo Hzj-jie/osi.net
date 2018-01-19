@@ -1,12 +1,13 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.formation
-Imports osi.root.utils
+Imports osi.root.constants
 Imports osi.service.argument
-Imports osi.service.convertor
-Imports osi.service.transmitter
 Imports osi.service.device
+Imports osi.service.transmitter
 Imports osi.service.secure.encrypt
 
 Public Enum encrypt_mode
@@ -82,7 +83,7 @@ Public Module _create
                 Return False
             Else
                 Dim key() As Byte = Nothing
-                key = token.to_bytes()
+                key.from(token)
                 assert(Not isemptyarray(key))
                 Return bytes_transformer_block_wrapper.create(i,
                                                               If(encrypt,
@@ -152,7 +153,13 @@ Public Module _create
                             v As var,
                             i As block,
                             ByRef o As block) As Boolean
-                       Return create_encrypt_bytes_transformer_block_wrapper(mode, v, i, o)
+                       Dim r As bytes_transformer_block_wrapper = Nothing
+                       If Not create_encrypt_bytes_transformer_block_wrapper(mode, v, i, r) Then
+                           Return False
+                       End If
+                       assert(Not r Is Nothing)
+                       o = r
+                       Return True
                    End Function)))
         assert(wrapper.register(wrapper.parameter(
                    "decryptor",
@@ -160,7 +167,13 @@ Public Module _create
                             v As var,
                             i As block,
                             ByRef o As block) As Boolean
-                       Return create_decrypt_bytes_transformer_block_wrapper(mode, v, i, o)
+                       Dim r As bytes_transformer_block_wrapper = Nothing
+                       If Not create_decrypt_bytes_transformer_block_wrapper(mode, v, i, r) Then
+                           Return False
+                       End If
+                       assert(Not r Is Nothing)
+                       o = r
+                       Return True
                    End Function)))
     End Sub
 End Module

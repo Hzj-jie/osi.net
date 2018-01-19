@@ -9,7 +9,6 @@ Imports osi.root.procedure
 Imports osi.root.template
 Imports osi.root.utils
 Imports osi.service.argument
-Imports osi.service.convertor
 Imports osi.service.device
 Imports osi.service.selector
 Imports constructor = osi.service.device.constructor
@@ -92,7 +91,7 @@ Public Class responder
                                    ByRef o As responder) As Boolean
         Dim pending_request_timeout_ms As Int64 = 0
         pending_request_timeout_ms =
-            v("pending-request-timeout-ms").to_int64(default_value:=npos)
+            v("pending-request-timeout-ms").to(Of Int64)(npos)
         Dim name As String = Nothing
         If v.value("name", name) Then
             Return eva(o,

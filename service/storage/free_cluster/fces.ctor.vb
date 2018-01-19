@@ -192,9 +192,9 @@ Partial Public Class fces
                                              max_key_count)
                                       Dim bs As Int32 = 0
                                       Dim mkc As Int64 = 0
-                                      bs = p.value(buff_size).to_int32(npos)
-                                      mkc = p.value(max_key_count).to_int64(npos)
-                                      If p.value(in_mem).to_bool() Then
+                                      bs = p.value(buff_size).to(Of Int32)(npos)
+                                      mkc = p.value(max_key_count).to(Of Int64)(npos)
+                                      If p.value(in_mem).to(Of Boolean)() Then
                                           ec = memory_fces(o, mkc)
                                       ElseIf p.other_values().empty() Then
                                           Return False

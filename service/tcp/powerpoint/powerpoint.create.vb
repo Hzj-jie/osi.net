@@ -1,11 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
 Option Strict On
 
 Imports System.Net
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.service.argument
-Imports osi.service.convertor
 Imports osi.service.tcp.constants
 
 Partial Public Class powerpoint
@@ -111,7 +112,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_port_str(ByVal port As String) As creator
-            Return with_port(port.to_uint16())
+            Return with_port(port.to(Of UInt16)())
         End Function
 
         Public Function without_port() As creator
@@ -138,7 +139,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_ipv4_str(ByVal ipv4 As String) As creator
-            If ipv4.to_bool(default_value.ipv4) Then
+            If ipv4.to(Of Boolean)(default_value.ipv4) Then
                 Return with_ipv4()
             Else
                 Return with_ipv6()
@@ -161,7 +162,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_connecting_timeout_ms_str(ByVal ms As String) As creator
-            Return with_connecting_timeout_ms(ms.to_int64(default_value.outgoing.connecting_timeout_ms))
+            Return with_connecting_timeout_ms(ms.to(Of Int64)(default_value.outgoing.connecting_timeout_ms))
         End Function
 
         Public Function without_connecting_timeout_ms() As creator
@@ -174,7 +175,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_send_rate_sec_str(ByVal rate_sec As String) As creator
-            Return with_send_rate_sec(rate_sec.to_uint32(default_value.send_rate_sec))
+            Return with_send_rate_sec(rate_sec.to(Of UInt32)(default_value.send_rate_sec))
         End Function
 
         Public Function without_send_rate_sec() As creator
@@ -187,7 +188,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_response_timeout_ms_str(ByVal ms As String) As creator
-            Return with_response_timeout_ms(ms.to_int64(default_value.response_timeout_ms))
+            Return with_response_timeout_ms(ms.to(Of Int64)(default_value.response_timeout_ms))
         End Function
 
         Public Function without_response_timeout_ms() As creator
@@ -200,7 +201,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_receive_rate_sec_str(ByVal rate_sec As String) As creator
-            Return with_receive_rate_sec(rate_sec.to_uint32(default_value.receive_rate_sec))
+            Return with_receive_rate_sec(rate_sec.to(Of UInt32)(default_value.receive_rate_sec))
         End Function
 
         Public Function without_receive_rate_sec() As creator
@@ -213,7 +214,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_max_connecting_str(ByVal max_connecting As String) As creator
-            Return with_max_connecting(max_connecting.to_uint32(If(is_outgoing,
+            Return with_max_connecting(max_connecting.to(Of UInt32)(If(is_outgoing,
                                                                    default_value.outgoing.max_connecting,
                                                                    default_value.incoming.max_connecting)))
         End Function
@@ -230,7 +231,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_max_connected_str(ByVal max_connected As String) As creator
-            Return with_max_connected(max_connected.to_uint32(If(is_outgoing,
+            Return with_max_connected(max_connected.to(Of UInt32)(If(is_outgoing,
                                                                  default_value.outgoing.max_connected,
                                                                  default_value.incoming.max_connected)))
         End Function
@@ -247,7 +248,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_no_delay_str(ByVal no_delay As String) As creator
-            Return with_no_delay(no_delay.to_bool(default_value.no_delay))
+            Return with_no_delay(no_delay.to(Of Boolean)(default_value.no_delay))
         End Function
 
         Public Function without_no_delay() As creator
@@ -260,7 +261,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_max_lifetime_ms_str(ByVal max_lifetime_ms As String) As creator
-            Return with_max_lifetime_ms(max_lifetime_ms.to_int64(If(is_outgoing,
+            Return with_max_lifetime_ms(max_lifetime_ms.to(Of Int64)(If(is_outgoing,
                                                                     default_value.outgoing.max_lifetime_ms,
                                                                     default_value.incoming.max_lifetime_ms)))
         End Function
@@ -282,7 +283,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_is_outgoing_str(ByVal is_outgoing As String) As creator
-            If is_outgoing.to_bool(Not String.IsNullOrEmpty(host_or_ip)) Then
+            If is_outgoing.to(Of Boolean)(Not String.IsNullOrEmpty(host_or_ip)) Then
                 Return with_outgoing()
             Else
                 Return with_incoming()
@@ -303,7 +304,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_enable_keepalive_str(ByVal enable_keepalive As String) As creator
-            Return with_enable_keepalive(enable_keepalive.to_bool(enable_socket_keepalive))
+            Return with_enable_keepalive(enable_keepalive.to(Of Boolean)(enable_socket_keepalive))
         End Function
 
         Public Function without_enable_keepalive() As creator
@@ -316,7 +317,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_first_keepalive_ms_str(ByVal ms As String) As creator
-            Return with_first_keepalive_ms(ms.to_uint32(socket_first_keepalive_ms))
+            Return with_first_keepalive_ms(ms.to(Of UInt32)(socket_first_keepalive_ms))
         End Function
 
         Public Function without_first_keepalive_ms() As creator
@@ -329,7 +330,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_keepalive_interval_ms_str(ByVal ms As String) As creator
-            Return with_keepalive_interval_ms(ms.to_uint32(socket_keepalive_interval_ms))
+            Return with_keepalive_interval_ms(ms.to(Of UInt32)(socket_keepalive_interval_ms))
         End Function
 
         Public Function without_keepalive_interval_ms() As creator
@@ -359,7 +360,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_delay_connect_str(ByVal delay_connect As String) As creator
-            Return with_delay_connect(delay_connect.to_bool(default_value.delay_connect))
+            Return with_delay_connect(delay_connect.to(Of Boolean)(default_value.delay_connect))
         End Function
 
         Public Function without_delay_connect() As creator

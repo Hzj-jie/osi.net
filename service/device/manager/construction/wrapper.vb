@@ -1,11 +1,15 @@
 ﻿
+' TODO: Remove
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.formation
-Imports osi.root.connector
+Imports osi.root.utils
 Imports osi.service.argument
-Imports osi.service.convertor
-Imports osi.service.selector
 
 Public Class wrapper(Of T)
     Private Shared ReadOnly wt As unique_strong_map(Of String, 
@@ -160,8 +164,8 @@ Public Class wrapper(Of T)
                 End If
                 type_key = strcat(type_key, "wrapper")
                 Dim ss As vector(Of String) = Nothing
-                ss = v(type_key).to_string_array()
-                If Not ss Is Nothing Then
+                If ss.split_from(v(type_key)) Then
+                    assert(Not ss.null_or_empty())
                     Dim j As UInt32 = uint32_0
                     While j < ss.size()
                         Dim vs As collectionless(Of _do_val_val_ref(Of var, T, T, Boolean)) = Nothing

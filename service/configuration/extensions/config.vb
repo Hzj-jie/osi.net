@@ -1,9 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
-Imports osi.root.formation
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.formation
 Imports osi.root.utils
-Imports osi.service.convertor
 
 Public Module _config
     Private Function gs(ByVal c As config,
@@ -49,20 +53,19 @@ Public Module _config
             Return Nothing
         Else
             Dim ss As vector(Of String) = Nothing
-            ss = to_string_array(parameter(c, s, key, variants))
-            If ss Is Nothing Then
+            If Not ss.split_from(parameter(c, s, key, variants)) Then
                 Return Nothing
-            Else
-                Dim r As vector(Of section) = Nothing
-                r = New vector(Of section)()
-                For i As Int32 = 0 To ss.size() - 1
-                    Dim t As section = Nothing
-                    If gs(c, ss(i), t, variants) Then
-                        r.push_back(t)
-                    End If
-                Next
-                Return r
             End If
+            assert(Not ss.null_or_empty())
+            Dim r As vector(Of section) = Nothing
+            r = New vector(Of section)()
+            For i As UInt32 = 0 To ss.size() - uint32_1
+                Dim t As section = Nothing
+                If gs(c, ss(i), t, variants) Then
+                    r.push_back(t)
+                End If
+            Next
+            Return r
         End If
     End Function
 
@@ -86,241 +89,39 @@ Public Module _config
         End If
     End Function
 
-    Private Function secondary_any_array(Of T)(ByVal c As config,
-                                               ByVal section As String,
-                                               ByVal key As String,
-                                               ByVal variants As vector(Of pair(Of String, String)),
-                                               ByVal a As Func(Of section,
-                                                                  String, 
-                                                                  vector(Of pair(Of String, String)), 
-                                                                  vector(Of T))) As vector(Of T)
-        assert(Not a Is Nothing)
+    Private Function secondary_array(Of T)(ByVal c As config,
+                                           ByVal section As String,
+                                           ByVal key As String,
+                                           Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing,
+                                           Optional ByVal str_T As string_serializer(Of T) = Nothing) _
+                                          As vector(Of T)
         Dim s As section = Nothing
         If gs(c, section, s, variants) Then
-            Return a(s, key, variants)
-        Else
-            Return Nothing
+            Return _section.secondary_array(s, key, variants, str_T)
         End If
+        Return Nothing
     End Function
 
-    <Extension()> Public Function secondary_string_array(
-                                        ByVal c As config,
-                                        ByVal section As String,
-                                        ByVal key As String,
-                                        Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) _
-                                        As vector(Of String)
-        Return secondary_any_array(c, section, key, variants, AddressOf _section.secondary_string_array)
-    End Function
-
-    <Extension()> Public Function secondary_bool_array(
-                                        ByVal c As config,
-                                        ByVal section As String,
-                                        ByVal key As String,
-                                        Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) _
-                                        As vector(Of Boolean)
-        Return secondary_any_array(c, section, key, variants, AddressOf _section.secondary_bool_array)
-    End Function
-
-    <Extension()> Public Function secondary_int32_array(
-                                        ByVal c As config,
-                                        ByVal section As String,
-                                        ByVal key As String,
-                                        Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) _
-                                        As vector(Of Int32)
-        Return secondary_any_array(c, section, key, variants, AddressOf _section.secondary_int32_array)
-    End Function
-
-    <Extension()> Public Function secondary_double_array(
-                                        ByVal c As config,
-                                        ByVal section As String,
-                                        ByVal key As String,
-                                        Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) _
-                                        As vector(Of Double)
-        Return secondary_any_array(c, section, key, variants, AddressOf _section.secondary_double_array)
-    End Function
-
-    <Extension()> Public Function secondary_uint32_array(
-                                        ByVal c As config,
-                                        ByVal section As String,
-                                        ByVal key As String,
-                                        Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) _
-                                        As vector(Of UInt32)
-        Return secondary_any_array(c, section, key, variants, AddressOf _section.secondary_uint32_array)
-    End Function
-
-    Private Function parameter_any_list(Of T)(ByVal c As config,
-                                              ByVal section As String,
-                                              ByVal base_key As String,
-                                              ByVal base_index As Int32,
-                                              ByVal variants As vector(Of pair(Of String, String)),
-                                              ByVal p As Func(Of section,
-                                                                 String, 
-                                                                 Int32, 
-                                                                 vector(Of pair(Of String, String)), 
-                                                                 vector(Of T))) As vector(Of T)
-        assert(Not p Is Nothing)
+    Public Function parameter_list(Of T)(ByVal c As config,
+                                         ByVal section As String,
+                                         ByVal base_key As String,
+                                         ByVal base_index As Int32,
+                                         Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing,
+                                         Optional ByVal str_T As string_serializer(Of T) = Nothing) _
+                                        As vector(Of T)
         Dim s As section = Nothing
         If gs(c, section, s, variants) Then
-            Return p(s, base_key, base_index, variants)
-        Else
-            Return Nothing
+            Return _section.parameter_list(s, base_key, base_index, variants, str_T)
         End If
+        Return Nothing
     End Function
 
-    Private Function parameter_any_list(Of T)(ByVal c As config,
-                                              ByVal section As String,
-                                              ByVal base_key As String,
-                                              ByVal variants As vector(Of pair(Of String, String)),
-                                              ByVal p As Func(Of section,
-                                                                 String, 
-                                                                 vector(Of pair(Of String, String)), 
-                                                                 vector(Of T))) As vector(Of T)
-        assert(Not p Is Nothing)
-        Dim s As section = Nothing
-        If gs(c, section, s, variants) Then
-            Return p(s, base_key, variants)
-        Else
-            Return Nothing
-        End If
-    End Function
-
-    <Extension()> Public Function parameter_string_list(
-                                        ByVal c As config,
-                                        ByVal section As String,
-                                        ByVal base_key As String,
-                                        ByVal base_index As Int32,
-                                        Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) _
-                                        As vector(Of String)
-        Return parameter_any_list(c,
-                                  section,
-                                  base_key,
-                                  base_index,
-                                  variants,
-                                  AddressOf _section.parameter_string_list)
-    End Function
-
-    <Extension()> Public Function parameter_string_list(
-                                        ByVal c As config,
-                                        ByVal section As String,
-                                        ByVal base_key As String,
-                                        Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) _
-                                        As vector(Of String)
-        Return parameter_any_list(c,
-                                  section,
-                                  base_key,
-                                  variants,
-                                  AddressOf _section.parameter_string_list)
-    End Function
-
-    <Extension()> Public Function parameter_bool_list(
-                                        ByVal c As config,
-                                        ByVal section As String,
-                                        ByVal base_key As String,
-                                        ByVal base_index As Int32,
-                                        Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) _
-                                        As vector(Of Boolean)
-        Return parameter_any_list(c,
-                                  section,
-                                  base_key,
-                                  base_index,
-                                  variants,
-                                  AddressOf _section.parameter_bool_list)
-    End Function
-
-    <Extension()> Public Function parameter_bool_list(
-                                        ByVal c As config,
-                                        ByVal section As String,
-                                        ByVal base_key As String,
-                                        Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) _
-                                        As vector(Of Boolean)
-        Return parameter_any_list(c,
-                                  section,
-                                  base_key,
-                                  variants,
-                                  AddressOf _section.parameter_bool_list)
-    End Function
-
-    <Extension()> Public Function parameter_int32_list(
-                                        ByVal c As config,
-                                        ByVal section As String,
-                                        ByVal base_key As String,
-                                        ByVal base_index As Int32,
-                                        Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) _
-                                        As vector(Of Int32)
-        Return parameter_any_list(c,
-                                  section,
-                                  base_key,
-                                  base_index,
-                                  variants,
-                                  AddressOf _section.parameter_int32_list)
-    End Function
-
-    <Extension()> Public Function parameter_int32_list(
-                                        ByVal c As config,
-                                        ByVal section As String,
-                                        ByVal base_key As String,
-                                        Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) _
-                                        As vector(Of Int32)
-        Return parameter_any_list(c,
-                                  section,
-                                  base_key,
-                                  variants,
-                                  AddressOf _section.parameter_int32_list)
-    End Function
-
-    <Extension()> Public Function parameter_double_list(
-                                        ByVal c As config,
-                                        ByVal section As String,
-                                        ByVal base_key As String,
-                                        ByVal base_index As Int32,
-                                        Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) _
-                                        As vector(Of Double)
-        Return parameter_any_list(c,
-                                  section,
-                                  base_key,
-                                  base_index,
-                                  variants,
-                                  AddressOf _section.parameter_double_list)
-    End Function
-
-    <Extension()> Public Function parameter_double_list(
-                                        ByVal c As config,
-                                        ByVal section As String,
-                                        ByVal base_key As String,
-                                        Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) _
-                                        As vector(Of Double)
-        Return parameter_any_list(c,
-                                  section,
-                                  base_key,
-                                  variants,
-                                  AddressOf _section.parameter_double_list)
-    End Function
-
-    <Extension()> Public Function parameter_uint32_list(
-                                        ByVal c As config,
-                                        ByVal section As String,
-                                        ByVal base_key As String,
-                                        ByVal base_index As Int32,
-                                        Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) _
-                                        As vector(Of UInt32)
-        Return parameter_any_list(c,
-                                  section,
-                                  base_key,
-                                  base_index,
-                                  variants,
-                                  AddressOf _section.parameter_uint32_list)
-    End Function
-
-    <Extension()> Public Function parameter_uint32_list(
-                                        ByVal c As config,
-                                        ByVal section As String,
-                                        ByVal base_key As String,
-                                        Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) _
-                                        As vector(Of UInt32)
-        Return parameter_any_list(c,
-                                  section,
-                                  base_key,
-                                  variants,
-                                  AddressOf _section.parameter_uint32_list)
+    Public Function parameter_list(Of T)(ByVal c As config,
+                                         ByVal section As String,
+                                         ByVal base_key As String,
+                                         Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing,
+                                         Optional ByVal str_T As string_serializer(Of T) = Nothing) _
+                                        As vector(Of T)
+        Return parameter_list(c, section, base_key, 0, variants, str_T)
     End Function
 End Module

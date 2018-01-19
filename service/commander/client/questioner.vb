@@ -1,14 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
 Option Strict On
 
-Imports System.IO
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.template
-Imports osi.root.connector
 Imports osi.service.argument
-Imports osi.service.convertor
 Imports osi.service.device
 
 <global_init(global_init_level.server_services)>
@@ -33,7 +33,7 @@ Public Class questioner
 
     Public Shared Function create(ByVal v As var, ByRef o As questioner) As Boolean
         Dim timeout_ms As Int64 = 0
-        timeout_ms = v("timeout-ms").to_int64(default_value:=npos)
+        timeout_ms = v("timeout-ms").to(Of Int64)(npos)
         Dim name As String = Nothing
         If v.value("name", name) Then
             o = New questioner(name, timeout_ms)

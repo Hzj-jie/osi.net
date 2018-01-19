@@ -60,7 +60,7 @@ Public Class client_dev
                    ByVal rate_sec As String,
                    ByVal max_content_length As String)
         Me.New(host,
-               port.to_uint16(),
+               port.to(Of UInt16)(),
                New link_status(connect_timeout_ms,
                                buff_size,
                                rate_sec,
