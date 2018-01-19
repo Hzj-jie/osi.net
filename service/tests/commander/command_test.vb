@@ -83,7 +83,7 @@ Public Class command_test
             Return False
         End If
         Dim b() As Byte = Nothing
-        assert_true(bytes_serializer.to_bytes(c, b))
+        b = bytes_serializer.to_bytes(c)
         assert_more(array_size(b), uint32_0)
         Dim r As command = Nothing
         assert_true(bytes_serializer.from_bytes(b, r))
@@ -92,14 +92,14 @@ Public Class command_test
         End If
 
         Dim s As String = Nothing
-        assert_true(uri_serializer.to_str(c, s))
+        s = uri_serializer.to_str(c)
         assert_false(String.IsNullOrEmpty(s))
         assert_true(uri_serializer.from_str(s, r))
         If Not command_validation(r, constants) Then
             Return False
         End If
 
-        assert_true(string_serializer.to_str(c, s))
+        s = string_serializer.to_str(c)
         assert_false(String.IsNullOrEmpty(s))
         assert_true(string_serializer.from_str(s, r))
         If Not command_validation(r, constants) Then

@@ -29,13 +29,10 @@ Public Class text_dev_T_adapter(Of T)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim s As String = Nothing
-                                  If T_string.to_str(i, s) Then
-                                      ec = underlying_device.send(s)
-                                      Return waitfor(ec) AndAlso
-                                             goto_next()
-                                  Else
-                                      Return False
-                                  End If
+                                  s = T_string.to_str(i)
+                                  ec = underlying_device.send(s)
+                                  Return waitfor(ec) AndAlso
+                                         goto_next()
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso

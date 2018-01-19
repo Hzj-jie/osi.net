@@ -31,7 +31,7 @@ Public Class npos_uint_bytes_test
                 x = rnd_uint64()
             End If
             Dim b() As Byte = Nothing
-            assert_true(bytes_serializer.to_bytes(x, b))
+            b = bytes_serializer.to_bytes(x)
             Dim y As npos_uint = Nothing
             Dim p As UInt32 = uint32_0
             assert_true(bytes_serializer.consume_from(b, p, y))
@@ -87,7 +87,7 @@ Public Class npos_uint32_bytes_test
                 x = rnd_uint64()
             End If
             Dim b() As Byte = Nothing
-            assert_true(bytes_serializer.to_bytes(x, b))
+            b = bytes_serializer.to_bytes(x)
             Dim y As npos_uint32 = Nothing
             Dim p As UInt32 = uint32_0
             assert_true(bytes_serializer.consume_from(b, p, y))
@@ -143,7 +143,7 @@ Public Class npos_uint64_bytes_test
                 x = rnd_uint64()
             End If
             Dim b() As Byte = Nothing
-            assert_true(bytes_serializer.to_bytes(x, b))
+            b = bytes_serializer.to_bytes(x)
             Dim y As npos_uint64 = Nothing
             Dim p As UInt32 = uint32_0
             assert_true(bytes_serializer.consume_from(b, p, y))
@@ -199,7 +199,7 @@ Public Class positive_npos_uint_bytes_test
                 x = rnd_uint64()
             End If
             Dim b() As Byte = Nothing
-            assert_true(bytes_serializer.to_bytes(x, b))
+            b = bytes_serializer.to_bytes(x)
             Dim y As positive_npos_uint = Nothing
             Dim p As UInt32 = uint32_0
             assert_true(bytes_serializer.consume_from(b, p, y))
@@ -255,7 +255,7 @@ Public Class positive_npos_uint32_bytes_test
                 x = rnd_uint64()
             End If
             Dim b() As Byte = Nothing
-            assert_true(bytes_serializer.to_bytes(x, b))
+            b = bytes_serializer.to_bytes(x)
             Dim y As positive_npos_uint32 = Nothing
             Dim p As UInt32 = uint32_0
             assert_true(bytes_serializer.consume_from(b, p, y))
@@ -311,7 +311,7 @@ Public Class positive_npos_uint64_bytes_test
                 x = rnd_uint64()
             End If
             Dim b() As Byte = Nothing
-            assert_true(bytes_serializer.to_bytes(x, b))
+            b = bytes_serializer.to_bytes(x)
             Dim y As positive_npos_uint64 = Nothing
             Dim p As UInt32 = uint32_0
             assert_true(bytes_serializer.consume_from(b, p, y))
@@ -367,7 +367,7 @@ Public Class positive_size_t_bytes_test
                 x = rnd_uint64()
             End If
             Dim b() As Byte = Nothing
-            assert_true(bytes_serializer.to_bytes(x, b))
+            b = bytes_serializer.to_bytes(x)
             Dim y As positive_size_t = Nothing
             Dim p As UInt32 = uint32_0
             assert_true(bytes_serializer.consume_from(b, p, y))
@@ -423,7 +423,7 @@ Public Class positive_size_t_32_bytes_test
                 x = rnd_uint64()
             End If
             Dim b() As Byte = Nothing
-            assert_true(bytes_serializer.to_bytes(x, b))
+            b = bytes_serializer.to_bytes(x)
             Dim y As positive_size_t_32 = Nothing
             Dim p As UInt32 = uint32_0
             assert_true(bytes_serializer.consume_from(b, p, y))
@@ -479,7 +479,7 @@ Public Class positive_size_t_64_bytes_test
                 x = rnd_uint64()
             End If
             Dim b() As Byte = Nothing
-            assert_true(bytes_serializer.to_bytes(x, b))
+            b = bytes_serializer.to_bytes(x)
             Dim y As positive_size_t_64 = Nothing
             Dim p As UInt32 = uint32_0
             assert_true(bytes_serializer.consume_from(b, p, y))
@@ -535,7 +535,7 @@ Public Class retry_times_t_bytes_test
                 x = rnd_uint64()
             End If
             Dim b() As Byte = Nothing
-            assert_true(bytes_serializer.to_bytes(x, b))
+            b = bytes_serializer.to_bytes(x)
             Dim y As retry_times_t = Nothing
             Dim p As UInt32 = uint32_0
             assert_true(bytes_serializer.consume_from(b, p, y))
@@ -591,7 +591,7 @@ Public Class size_t_bytes_test
                 x = rnd_uint64()
             End If
             Dim b() As Byte = Nothing
-            assert_true(bytes_serializer.to_bytes(x, b))
+            b = bytes_serializer.to_bytes(x)
             Dim y As size_t = Nothing
             Dim p As UInt32 = uint32_0
             assert_true(bytes_serializer.consume_from(b, p, y))
@@ -647,7 +647,7 @@ Public Class size_t_32_bytes_test
                 x = rnd_uint64()
             End If
             Dim b() As Byte = Nothing
-            assert_true(bytes_serializer.to_bytes(x, b))
+            b = bytes_serializer.to_bytes(x)
             Dim y As size_t_32 = Nothing
             Dim p As UInt32 = uint32_0
             assert_true(bytes_serializer.consume_from(b, p, y))
@@ -703,7 +703,7 @@ Public Class size_t_64_bytes_test
                 x = rnd_uint64()
             End If
             Dim b() As Byte = Nothing
-            assert_true(bytes_serializer.to_bytes(x, b))
+            b = bytes_serializer.to_bytes(x)
             Dim y As size_t_64 = Nothing
             Dim p As UInt32 = uint32_0
             assert_true(bytes_serializer.consume_from(b, p, y))
@@ -759,7 +759,7 @@ Public Class timeout_ms_t_bytes_test
                 x = rnd_uint64()
             End If
             Dim b() As Byte = Nothing
-            assert_true(bytes_serializer.to_bytes(x, b))
+            b = bytes_serializer.to_bytes(x)
             Dim y As timeout_ms_t = Nothing
             Dim p As UInt32 = uint32_0
             assert_true(bytes_serializer.consume_from(b, p, y))

@@ -4,23 +4,14 @@ Option Infer Off
 Option Strict On
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 
 Partial Public Class bytes_serializer(Of T)
-    Public Function to_bytes(ByVal i As T, ByRef o() As Byte) As Boolean
-        Using ms As MemoryStream = New MemoryStream()
-            If write_to(i, ms) Then
-                o = ms.ToArray()
-                Return True
-            Else
-                Return False
-            End If
-        End Using
-    End Function
-
     Public Function to_bytes(ByVal i As T) As Byte()
-        Dim r() As Byte = Nothing
-        assert(to_bytes(i, r))
-        Return r
+        Using ms As MemoryStream = New MemoryStream()
+            assert(write_to(i, ms))
+            Return ms.ToArray()
+        End Using
     End Function
 
     Public Function append_to(ByVal i As T, ByVal o() As Byte, ByRef offset As UInt32) As Boolean
@@ -118,3 +109,14 @@ Partial Public Class bytes_serializer(Of T)
         Return True
     End Function
 End Class
+
+Public Module _bytes_serializer
+    <Extension()> Public Function [to](Of T)(ByVal i() As Byte, ByRef o As T) As Boolean
+        Return bytes_serializer.from_bytes(i, o)
+    End Function
+
+    <Extension()> Public Function [from](Of T)(ByRef o() As Byte, ByVal i As T) As Byte()
+        o = bytes_serializer.to_bytes(i)
+        Return o
+    End Function
+End Module

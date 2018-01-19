@@ -48,10 +48,6 @@ Partial Public NotInheritable Class bytes_serializer
         Return bytes_serializer(Of T).default.write_to(i, o)
     End Function
 
-    Public Shared Function to_bytes(Of T)(ByVal i As T, ByRef o() As Byte) As Boolean
-        Return bytes_serializer(Of T).default.to_bytes(i, o)
-    End Function
-
     Public Shared Function append_to(Of T)(ByVal i As T, ByVal o() As Byte, ByRef offset As UInt32) As Boolean
         Return bytes_serializer(Of T).default.append_to(i, o, offset)
     End Function

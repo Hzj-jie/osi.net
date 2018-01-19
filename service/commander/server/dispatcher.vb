@@ -41,9 +41,7 @@ Public Class dispatcher
 
     Public Function [erase](Of T)(ByVal action As T,
                                   Optional ByVal T_bytes As bytes_serializer(Of T) = Nothing) As Boolean
-        Dim b() As Byte = Nothing
-        Return (+T_bytes).to_bytes(action, b) AndAlso
-               [erase](b)
+        Return [erase]((+T_bytes).to_bytes(action))
     End Function
 
     Public Function register(ByVal action() As Byte,
@@ -69,9 +67,7 @@ Public Class dispatcher
                                    ByVal act As Func(Of command, command, event_comb),
                                    Optional ByVal replace As Boolean = False,
                                    Optional ByVal T_bytes As bytes_serializer(Of T) = Nothing) As Boolean
-        Dim b() As Byte = Nothing
-        Return (+T_bytes).to_bytes(action, b) AndAlso
-               register(b, act, replace)
+        Return register((+T_bytes).to_bytes(action), act, replace)
     End Function
 
     Public Function execute(ByVal i As command, ByVal o As command) As event_comb Implements executor.execute

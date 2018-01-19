@@ -27,10 +27,6 @@ Public NotInheritable Class uri_serializer
         Return uri_serializer(Of T).default.to_str(i, o)
     End Function
 
-    Public Shared Function to_str(Of T)(ByVal i As T, ByRef o As String) As Boolean
-        Return uri_serializer(Of T).default.to_str(i, o)
-    End Function
-
     Public Shared Function to_str(Of T)(ByVal i As T) As String
         Return uri_serializer(Of T).default.to_str(i)
     End Function
@@ -62,7 +58,7 @@ Public Class uri_serializer(Of T)
                    assert(Not i Is Nothing)
                    assert(Not o Is Nothing)
                    Dim b() As Byte = Nothing
-                   assert(bytes_serializer.to_bytes(i, b))
+                   b = bytes_serializer.to_bytes(i)
                    o.Write(constants.uri.path_separator)
                    o.Write(uri.path_encoder.encode(b))
                End Sub

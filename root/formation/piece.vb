@@ -23,7 +23,7 @@ Public Module _piece
         Return If(this Is Nothing, uint32_0, this.count)
     End Function
 
-    <Extension()> Public Function from_bytes(Of T)(ByVal this As bytes_serializer(Of T),
+    <Extension()> Public Function from_piece(Of T)(ByVal this As bytes_serializer(Of T),
                                                    ByVal i As piece,
                                                    ByRef o As T) As Boolean
         assert(Not this Is Nothing)
@@ -36,17 +36,15 @@ Public Module _piece
         End If
     End Function
 
-    <Extension()> Public Function to_bytes(Of T)(ByVal this As bytes_serializer(Of T),
-                                                 ByVal i As T,
-                                                 ByRef o As piece) As Boolean
+    <Extension()> Public Function from_bytes(Of T)(ByVal this As bytes_serializer(Of T),
+                                                   ByVal i As piece,
+                                                   ByRef o As T) As Boolean
+        Return from_piece(this, i, o)
+    End Function
+
+    <Extension()> Public Function to_piece(Of T)(ByVal this As bytes_serializer(Of T), ByVal i As T) As piece
         assert(Not this Is Nothing)
-        Dim b() As Byte = Nothing
-        If this.to_bytes(i, b) Then
-            o = New piece(b)
-            Return True
-        Else
-            Return False
-        End If
+        Return New piece(this.to_bytes(i))
     End Function
 
     Sub New()

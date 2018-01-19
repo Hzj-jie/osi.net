@@ -69,8 +69,7 @@ Partial Public Class command
     End Function
 
     Public Function action_is(Of T)(ByVal k As T, Optional ByVal T_bytes As bytes_serializer(Of T) = Nothing) As Boolean
-        Dim key() As Byte = Nothing
-        Return (+T_bytes).to_bytes(k, key) AndAlso action_is(key)
+        Return action_is((+T_bytes).to_bytes(k))
     End Function
 
     Public Function foreach(ByVal v As Action(Of Byte(), Byte())) As Boolean
@@ -105,9 +104,7 @@ Partial Public Class command
     Public Function parameter(Of KT)(ByVal k As KT,
                                      ByRef v() As Byte,
                                      Optional ByVal KT_bytes As bytes_serializer(Of KT) = Nothing) As Boolean
-        Dim key() As Byte = Nothing
-        Return (+KT_bytes).to_bytes(k, key) AndAlso
-               parameter(key, v)
+        Return parameter((+KT_bytes).to_bytes(k), v)
     End Function
 
     Public Function parameter(Of KT)(ByVal k As KT,
@@ -132,10 +129,8 @@ Partial Public Class command
                                          ByRef v As VT,
                                          Optional ByVal KT_bytes As bytes_serializer(Of KT) = Nothing,
                                          Optional ByVal bytes_VT As bytes_serializer(Of VT) = Nothing) As Boolean
-        Dim key() As Byte = Nothing
         Dim value() As Byte = Nothing
-        Return (+KT_bytes).to_bytes(k, key) AndAlso
-               parameter(key, value) AndAlso
+        Return parameter((+KT_bytes).to_bytes(k), value) AndAlso
                (+bytes_VT).from_bytes(value, v)
     End Function
 
@@ -187,9 +182,7 @@ Partial Public Class command
 
     Public Function has_parameter(Of KT)(ByVal k As KT,
                                          Optional ByVal KT_bytes As bytes_serializer(Of KT) = Nothing) As Boolean
-        Dim key() As Byte = Nothing
-        Return (+KT_bytes).to_bytes(k, key) AndAlso
-               has_parameter(key)
+        Return has_parameter((+KT_bytes).to_bytes(k))
     End Function
 
     Public Function parameter(ByVal key() As Byte) As Byte()

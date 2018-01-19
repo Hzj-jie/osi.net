@@ -17,7 +17,7 @@ Public Class ##TYPE##_bytes_test
                 x = rnd_uint64()
             End If
             Dim b() As Byte = Nothing
-            assert_true(bytes_serializer.to_bytes(x, b))
+            b = bytes_serializer.to_bytes(x)
             Dim y As ##TYPE## = Nothing
             Dim p As UInt32 = uint32_0
             assert_true(bytes_serializer.consume_from(b, p, y))

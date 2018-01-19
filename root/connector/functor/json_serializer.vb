@@ -27,10 +27,6 @@ Public NotInheritable Class json_serializer
         Return json_serializer(Of T).default.to_str(i, o)
     End Function
 
-    Public Shared Function to_str(Of T)(ByVal i As T, ByRef o As String) As Boolean
-        Return json_serializer(Of T).default.to_str(i, o)
-    End Function
-
     Public Shared Function to_str(Of T)(ByVal i As T) As String
         Return json_serializer(Of T).default.to_str(i)
     End Function

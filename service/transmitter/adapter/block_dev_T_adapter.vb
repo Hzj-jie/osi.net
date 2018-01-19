@@ -24,13 +24,10 @@ Public Class block_dev_T_adapter(Of T)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim b() As Byte = Nothing
-                                  If T_bytes.to_bytes(i, b) Then
-                                      ec = underlying_device.send(b)
-                                      Return waitfor(ec) AndAlso
-                                             goto_next()
-                                  Else
-                                      Return False
-                                  End If
+                                  b = T_bytes.to_bytes(i)
+                                  ec = underlying_device.send(b)
+                                  Return waitfor(ec) AndAlso
+                                         goto_next()
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso

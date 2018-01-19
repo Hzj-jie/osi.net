@@ -31,15 +31,11 @@ Partial Public Class bytes_serializer(Of T)
         End If
 
         Dim s As String = Nothing
-        If json_serializer.to_str(i, s) Then
-            If append Then
-                Return bytes_serializer.append_to(s, o)
-            Else
-                Return bytes_serializer.write_to(s, o)
-            End If
+        s = json_serializer.to_str(i)
+        If append Then
+            Return bytes_serializer.append_to(s, o)
         End If
-
-        Return False
+        Return bytes_serializer.write_to(s, o)
     End Function
 
     Public Function append_to(ByVal i As T, ByVal o As MemoryStream) As Boolean
