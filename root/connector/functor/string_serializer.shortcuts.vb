@@ -23,6 +23,9 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
     End Function
 
     Public Function from_str(ByVal i As String, ByRef o As T) As Boolean
+        If i Is Nothing Then
+            Return False
+        End If
         Using sr As StringReader = New StringReader(i)
             Return from_str(sr, o) AndAlso sr.Peek() = npos
         End Using
