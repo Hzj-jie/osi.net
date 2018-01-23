@@ -1,8 +1,6 @@
 ﻿
 ##DEFAULT TYPE pointer
 ##DEFAULT INNER_TYPE T
-##DEFAULT CAN_REFER_OBJ_IN_FINALIZE True
-##DEFAULT RAISE_FINALIZED_IN_FINALIZE True
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
@@ -49,14 +47,6 @@ Public Class ##TYPE##(Of T)
         End If
         bytes_serializer(Of ##TYPE##(Of T)).forward_registration.from(Of ##INNER_TYPE##)()
     End Sub
-
-    ' This event is not guaranteed to be executed when p is finalized, but if this object is the
-    ' only reference of p, it would be eventually finalized afterward.
-#If ##CAN_REFER_OBJ_IN_FINALIZE## Then
-    Public Event finalized(ByVal p As ##INNER_TYPE##)
-#Else
-    Public Event finalized()
-#End If
 
     Public Shared Function move(ByVal that As ##TYPE##(Of T)) As ##TYPE##(Of T)
         If that Is Nothing Then
@@ -241,15 +231,4 @@ finish:
     Public NotOverridable Overrides Function ToString() As String
         Return Convert.ToString([get]())
     End Function
-
-#If ##RAISE_FINALIZED_IN_FINALIZE## Then
-    Protected Overrides Sub Finalize()
-#If ##CAN_REFER_OBJ_IN_FINALIZE## Then
-        RaiseEvent finalized([get]())
-#Else
-        RaiseEvent finalized()
-#End If
-        MyBase.Finalize()
-    End Sub
-#End If
 End Class

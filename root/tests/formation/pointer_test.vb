@@ -236,23 +236,6 @@ Public Class pointer_test
             Return True
         End Function
 
-        Private Shared Function finalized_event() As Boolean
-            Dim c As Int32 = 0
-            For i As Int32 = 0 To 100
-                Dim p As pointer(Of Int32) = Nothing
-                p = New pointer(Of Int32)(i)
-                Dim ci As Int32 = 0
-                ci = i
-                AddHandler p.finalized, Sub(j As Int32)
-                                            assert_equal(ci, j)
-                                            c += 1
-                                        End Sub
-                repeat_gc_collect()
-            Next
-            assert_more(c, 0)
-            Return True
-        End Function
-
         Public Overrides Function reserved_processors() As Int16
             Return Environment.ProcessorCount()
         End Function
@@ -264,8 +247,7 @@ Public Class pointer_test
                    operators() AndAlso
                    [overrides]() AndAlso
                    clone() AndAlso
-                   operator_less_or_great() AndAlso
-                   finalized_event()
+                   operator_less_or_great()
         End Function
     End Class
 End Class

@@ -55,14 +55,6 @@ Public Class pointer(Of T)
         bytes_serializer(Of pointer(Of T)).forward_registration.from(Of T)()
     End Sub
 
-    ' This event is not guaranteed to be executed when p is finalized, but if this object is the
-    ' only reference of p, it would be eventually finalized afterward.
-#If True Then
-    Public Event finalized(ByVal p As T)
-#Else
-    Public Event finalized()
-#End If
-
     Public Shared Function move(ByVal that As pointer(Of T)) As pointer(Of T)
         If that Is Nothing Then
             Return Nothing
@@ -291,16 +283,5 @@ finish:
     Public NotOverridable Overrides Function ToString() As String
         Return Convert.ToString([get]())
     End Function
-
-#If True Then
-    Protected Overrides Sub Finalize()
-#If True Then
-        RaiseEvent finalized([get]())
-#Else
-        RaiseEvent finalized()
-#End If
-        MyBase.Finalize()
-    End Sub
-#End If
 End Class
 'finish pointer.vbp --------

@@ -110,7 +110,7 @@ Public Class weak_pointer_test
 
         Public Overrides Function run() As Boolean
             Return not_pinning_case() AndAlso
-               not_pinning_multiple_instance_case()
+                   not_pinning_multiple_instance_case()
         End Function
     End Class
 End Class

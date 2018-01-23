@@ -27,28 +27,7 @@ Public Class weak_ref_pointer_test
         Return True
     End Function
 
-    Private Shared Function event_raised() As Boolean
-        Const size As Int32 = 1000
-        Dim ps() As weak_ref_pointer(Of Int32) = Nothing
-        ReDim ps(size - 1)
-        Dim c As Int32 = 0
-        For i As Int32 = 0 To size - 1
-            ps(i) = make_weak_ref_pointer(i)
-            Dim ci As Int32 = 0
-            ci = i
-            AddHandler ps(i).finalized, Sub(j As Int32)
-                                            assert_false(ps(ci).alive())
-                                            assert_equal(ci, j)
-                                            c += 1
-                                        End Sub
-            repeat_gc_collect()
-        Next
-        assert_more(c, 0)
-        Return True
-    End Function
-
     Public Overrides Function run() As Boolean
-        Return wont_pin_objects() AndAlso
-               event_raised()
+        Return wont_pin_objects()
     End Function
 End Class

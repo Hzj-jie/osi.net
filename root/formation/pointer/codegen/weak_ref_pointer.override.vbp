@@ -13,10 +13,5 @@
     End Function
 
     Public Sub [set](ByVal i As T)
-        Dim p As pointer(Of T) = Nothing
-        p = make_pointer(i)
-        AddHandler p.finalized, Sub(ByVal j As T)
-                                    RaiseEvent finalized(j)
-                                End Sub
-        [set](p)
+        [set](make_pointer(i))
     End Sub
