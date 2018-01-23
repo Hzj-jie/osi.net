@@ -1,10 +1,13 @@
 ﻿
-Imports System.Diagnostics
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
-Imports osi.root.envs
-Imports osi.root.formation
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.envs
+Imports osi.root.formation
 
 <global_init(global_init_level.debugging)>
 Public Module _domain_unhandled_exception
@@ -18,9 +21,11 @@ Public Module _domain_unhandled_exception
         handler = AddressOf handle
         suspended_threads = New vector(Of Thread)()
         application_lifetime.stopping_handle(Sub()
-                                                 For i As Int32 = 0 To suspended_threads.size() - 1
+                                                 Dim i As UInt32 = 0
+                                                 While i < suspended_threads.size()
                                                      suspended_threads(i).Interrupt()
-                                                 Next
+                                                     i += uint32_1
+                                                 End While
                                              End Sub)
         AddHandler AppDomain.CurrentDomain.UnhandledException, handler
     End Sub
@@ -38,18 +43,20 @@ Public Module _domain_unhandled_exception
     End Function
 
     Public Function is_suspended_thread(ByVal t As Thread) As Boolean
-        For i As Int32 = 0 To suspended_threads.size() - 1
+        Dim i As UInt32 = 0
+        While i < suspended_threads.size()
             If object_compare(suspended_threads(i), t) = 0 Then
                 Return True
             End If
-        Next
+            i += uint32_1
+        End While
         Return False
     End Function
 
     Private Sub raise_exception(ByVal arg As UnhandledExceptionEventArgs)
         Dim ex As Exception = Nothing
         ex = cast(Of Exception)(arg.ExceptionObject())
-        log_unhandled_exception("unhandled domain exception occured", ex)
+        log_unhandled_exception("unhandled domain exception occured: ", ex)
         RaiseEvent domain_unhandled_exception(ex)
     End Sub
 

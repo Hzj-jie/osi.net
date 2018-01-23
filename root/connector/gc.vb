@@ -47,4 +47,19 @@ Public Module _gc
                                         End Function,
                                         round)
     End Function
+
+    Public Sub safe_finalize(Of T)(ByVal this As T, ByVal f As Action(Of T))
+        assert(Not f Is Nothing)
+        safe_finalize(this,
+                      Sub()
+                          f(this)
+                      End Sub)
+    End Sub
+
+    Public Sub safe_finalize(Of T)(ByVal this As T, ByVal f As Action)
+        assert(Not this Is Nothing)
+        assert(Not f Is Nothing)
+        f()
+        GC.KeepAlive(this)
+    End Sub
 End Module
