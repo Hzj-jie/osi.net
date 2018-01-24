@@ -49,17 +49,22 @@ Public Module _gc
     End Function
 
     Public Sub safe_finalize(Of T)(ByVal this As T, ByVal f As Action(Of T))
+        assert(Not this Is Nothing)
         assert(Not f Is Nothing)
-        safe_finalize(this,
-                      Sub()
-                          f(this)
-                      End Sub)
+        Try
+            f(this)
+        Catch
+        End Try
+        GC.KeepAlive(this)
     End Sub
 
     Public Sub safe_finalize(Of T)(ByVal this As T, ByVal f As Action)
         assert(Not this Is Nothing)
         assert(Not f Is Nothing)
-        f()
+        Try
+            f()
+        Catch
+        End Try
         GC.KeepAlive(this)
     End Sub
 End Module
