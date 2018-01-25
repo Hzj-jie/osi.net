@@ -4,7 +4,7 @@ Option Infer Off
 Option Strict On
 
 Partial Public NotInheritable Class type_info(Of T)
-    Public NotInheritable Class typed_constructor
+    Private NotInheritable Class typed_constructor
         Public ReadOnly raw As Func(Of Object)
         Public ReadOnly typed As Func(Of T)
 
@@ -23,7 +23,7 @@ Partial Public NotInheritable Class type_info(Of T)
         End Function
     End Class
 
-    Public NotInheritable Class typed_parameters_constructor
+    Private NotInheritable Class typed_parameters_constructor
         Public ReadOnly raw As Func(Of Object(), Object)
         Public ReadOnly typed As Func(Of Object(), T)
 

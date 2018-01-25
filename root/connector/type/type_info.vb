@@ -3,6 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.delegates
+
 Partial Public NotInheritable Class type_info(Of T)
     ' Do not add type, refer to gettype_perf test, since this is a template class, caching GetType(T) result cannot
     ' provide benefit.
@@ -53,22 +55,6 @@ Partial Public NotInheritable Class type_info(Of T)
         Return annotated_constructor_cache(Of ATTR).v.typed
     End Function
 
-    Public Shared Function public_parameterless_constructor() As Func(Of T)
-        Return constructor_cache.parameterless_public.typed
-    End Function
-
-    Public Shared Function parameterless_constructor() As Func(Of T)
-        Return constructor_cache.parameterless.typed
-    End Function
-
-    Public Shared Function parameters_constructor() As Func(Of Object(), T)
-        Return constructor_cache.parameters.typed
-    End Function
-
-    Public Shared Function default_parameters_constructor() As Func(Of T)
-        Return constructor_cache.default_parameters.typed
-    End Function
-
     Public Shared Function dominated_constructor() As Func(Of T)
         Return constructor_cache.dominated.typed
     End Function
@@ -80,6 +66,14 @@ Partial Public NotInheritable Class type_info(Of T)
     Public Shared Function size_uint32() As UInt32
         assert(size() >= 0)
         Return CUInt(size())
+    End Function
+
+    Public Shared Function new_object_clone() As _do_val_ref(Of T, T, Boolean)
+        Return clone_cache.new_object_clone
+    End Function
+
+    Public Shared Function dominated_clone() As _do_val_ref(Of T, T, Boolean)
+        Return clone_cache.dominated_clone
     End Function
 
     Private Sub New()
