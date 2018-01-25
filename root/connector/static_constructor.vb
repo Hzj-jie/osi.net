@@ -58,9 +58,11 @@ Public NotInheritable Class static_constructor
     Private ReadOnly oa As Action
 
     Public Sub New(ByVal t As Type)
+        assert(Not t Is Nothing)
         c = retrieve(t)
         a = as_action(c)
         oa = as_once_action(t)
+        assert(Not oa Is Nothing)
     End Sub
 
     Public Function retrieve() As ConstructorInfo
@@ -82,9 +84,7 @@ Public NotInheritable Class static_constructor
     End Sub
 
     Public Sub once_execute()
-        If Not oa Is Nothing Then
-            oa()
-        End If
+        oa()
     End Sub
 End Class
 
