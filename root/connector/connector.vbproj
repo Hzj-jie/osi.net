@@ -123,6 +123,7 @@
     <Compile Include="type\type_info.cache.vb" />
     <Compile Include="type\type_info.compare.vb" />
     <Compile Include="type\type_info.clone.vb" />
+    <Compile Include="type\type_info.static_constructor.vb" />
     <Compile Include="type\type_info.typed_constructor.vb" />
     <Compile Include="uri\uri.path_encoder.bytes.vb" />
     <Compile Include="uri\uri.path_encoder.string.vb" />

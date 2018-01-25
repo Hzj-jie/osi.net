@@ -76,6 +76,10 @@ Partial Public NotInheritable Class type_info(Of T)
         Return clone_cache.dominated_clone
     End Function
 
+    Public Shared Function static_constructor() As static_constructor
+        Return static_constructor_cache.s
+    End Function
+
     Private Sub New()
     End Sub
 End Class

@@ -30,6 +30,15 @@ Public Class static_constructor_test
     Private Class D
     End Class
 
+    Private Class E
+        Private Shared v As Boolean
+
+        Shared Sub New()
+            assert_false(v)
+            v = True
+        End Sub
+    End Class
+
     Public Overrides Function run() As Boolean
         Dim c As C = Nothing
         assert_equal(v, def)
@@ -51,6 +60,9 @@ Public Class static_constructor_test
         assert_nothing(static_constructor(Of D).retrieve())
         assert_nothing(static_constructor(Of D).as_action())
         static_constructor(Of D).execute()
+
+        static_constructor(Of E).execute()
+        static_constructor(Of E).execute()
         Return True
     End Function
 End Class

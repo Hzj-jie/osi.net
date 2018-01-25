@@ -106,5 +106,8 @@ Partial Public NotInheritable Class type_info(Of T)
                         ", ex ",
                         ex.details())
         End Sub
+
+        Private Sub New()
+        End Sub
     End Class
 End Class
