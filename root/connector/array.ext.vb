@@ -229,21 +229,31 @@ Public Module _array_ext
         End If
     End Function
 
+    <Extension()> Public Function deep_compare(Of T, T2)(ByVal i() As T,
+                                                         ByVal j() As T2,
+                                                         ByVal count As UInt32) As Int32
+        assert(count <= max_int32)
+        assert(array_size(i) >= count)
+        assert(array_size(j) >= count)
+
+        For k As Int32 = 0 To CInt(count) - 1
+            Dim c As Int32 = 0
+            c = compare(i(k), j(k))
+            If c <> 0 Then
+                Return c
+            End If
+        Next
+        Return 0
+    End Function
+
     <Extension()> Public Function deep_compare(Of T, T2)(ByVal i() As T, ByVal j() As T2) As Int32
         If array_size(i) < array_size(j) Then
             Return -1
-        ElseIf array_size(i) > array_size(j) Then
-            Return 1
-        Else
-            For k As Int32 = 0 To array_size_i(i) - 1
-                Dim c As Int32 = 0
-                c = compare(i(k), j(k))
-                If c <> 0 Then
-                    Return c
-                End If
-            Next
-            Return 0
         End If
+        If array_size(i) > array_size(j) Then
+            Return 1
+        End If
+        Return deep_compare(i, j, array_size(i))
     End Function
 
     <Extension()> Public Function resize(Of T)(ByRef i() As T,

@@ -10,7 +10,7 @@ Imports osi.root.constants
 
 Partial Public Class vector(Of T)
 Private Class adaptive_array_t
-    Implements ICloneable, IComparable(Of adaptive_array_t), IComparable
+    Implements ICloneable, ICloneable(Of adaptive_array_t), IComparable(Of adaptive_array_t), IComparable
 
     Private Const size_limitation As UInt32 = (max_uint32 >> 1)
     Private Shared ReadOnly default_value As T = Nothing
@@ -36,22 +36,16 @@ Private Class adaptive_array_t
     Public Shared Function move(ByVal that As adaptive_array_t) As adaptive_array_t
         If that Is Nothing Then
             Return Nothing
-        Else
-            Dim r As adaptive_array_t = Nothing
-            r = New adaptive_array_t()
-            move_to(that, r)
-            Return r
         End If
-    End Function
 
-    Protected Shared Sub move_to(ByVal this As adaptive_array_t, ByVal that As adaptive_array_t)
-        assert(Not this Is Nothing)
-        assert(Not that Is Nothing)
-        that.d = this.d
-        that.s = this.s
-        this.d = Nothing
-        this.s = 0
-    End Sub
+        Dim r As adaptive_array_t = Nothing
+        r = New adaptive_array_t()
+        r.d = that.d
+        r.s = that.s
+        that.d = Nothing
+        that.s = 0
+        Return r
+    End Function
 
     Public Shared Function swap(ByVal this As adaptive_array_t, ByVal that As adaptive_array_t) As Boolean
         If this Is Nothing OrElse that Is Nothing Then
@@ -75,24 +69,6 @@ Private Class adaptive_array_t
 
     Public Sub replace_by(ByVal d() As T)
         assert(replace_by(d, array_size(d)))
-    End Sub
-
-    Public Function clone() As adaptive_array_t
-        Dim r As adaptive_array_t
-        r = New adaptive_array_t
-        clone_to(Me, r)
-        Return r
-    End Function
-
-    Protected Shared Sub clone_to(ByVal this As adaptive_array_t, ByVal that As adaptive_array_t)
-        assert(Not this Is Nothing)
-        assert(Not that Is Nothing)
-        that.resize(this.size())
-        If Not this.empty() Then
-            For i As UInt32 = 0 To this.size() - uint32_1
-                copy(that.d(i), this.d(i))
-            Next
-        End If
     End Sub
 
     Public Function max_size() As UInt32
@@ -192,25 +168,32 @@ Private Class adaptive_array_t
         End If
     End Sub
 
-    Public Function ICloneable_Clone() As Object Implements ICloneable.Clone
-        Return clone()
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
+    End Function
+
+    Public Function CloneT() As adaptive_array_t Implements ICloneable(Of adaptive_array_t).Clone
+        Dim r As adaptive_array_t = Nothing
+        r = New adaptive_array_t()
+        r.d = deep_clone(d)
+        r.s = s
+        Return r
     End Function
 
     Public Shared Function compare(ByVal this As adaptive_array_t, ByVal that As adaptive_array_t) As Int32
         Dim c As Int32 = 0
         c = object_compare(this, that)
-        If c = object_compare_undetermined Then
-            assert(Not this Is Nothing)
-            assert(Not that Is Nothing)
-            If this.size() < that.size() Then
-                Return -1
-            ElseIf this.size() > that.size() Then
-                Return 1
-            Else
-                Return memcmp(this.d, that.d, this.size())
-            End If
-        Else
+        If c <> object_compare_undetermined Then
             Return c
+        End If
+        assert(Not this Is Nothing)
+        assert(Not that Is Nothing)
+        If this.size() < that.size() Then
+            Return -1
+        ElseIf this.size() > that.size() Then
+            Return 1
+        Else
+            Return deep_compare(this.d, that.d, this.size())
         End If
     End Function
 

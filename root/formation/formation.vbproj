@@ -75,6 +75,13 @@
     <Compile Include="bit_array.vb" />
     <Compile Include="bit_array_thread_safe.vb" />
     <Compile Include="chunk.vb" />
+    <Compile Include="hasharray\hasharray.implements.vb" />
+    <Compile Include="hasharray\hasharray.iterator.vb" />
+    <Compile Include="hasharray\hasharray.operators.vb" />
+    <Compile Include="hasharray\hasharray.predefined.vb" />
+    <Compile Include="hasharray\hasharray.private.vb" />
+    <Compile Include="hasharray\hasharray.ref.vb" />
+    <Compile Include="hasharray\hasharray.vb" />
     <Compile Include="hashmap.iterator.vb" />
     <Compile Include="hashmap.private.vb" />
     <Compile Include="hashmap.specialization.vb" />
@@ -211,6 +218,8 @@
     <None Include="codegen\tuple8.vbp" />
     <None Include="codegen\tuple_compare.vbp" />
     <None Include="codegen\tuple_make.vbp" />
+    <None Include="hasharray\codegen\hasharray.iterator.vbp" />
+    <None Include="hasharray\codegen\run.cmd" />
     <None Include="hashtable\codegen\hashtable.iterator.vbp" />
     <None Include="hashtable\codegen\run.cmd" />
     <None Include="lifetime_control\codegen\disposer.vbp" />

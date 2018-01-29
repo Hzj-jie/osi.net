@@ -2,13 +2,13 @@
 ##INCLUDE ..\..\codegen\iterator.imports.vbp
 Imports osi.root.template
 
-Public Module _hashtable_iterator
-##DEFINE PARENT_CLASS hashtable(Of T, _UNIQUE, _HASHER, _EQUALER)
+Public Module _hasharray_iterator
+##DEFINE PARENT_CLASS hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)
 ##DEFINE TEMPLATE_TYPE (Of T, _UNIQUE As _boolean, _HASHER As _to_uint32(Of T), _EQUALER As _equaler(Of T))
 ##INCLUDE ..\..\codegen\iterator.ext.vbp
 End Module
 
-Partial Public Class hashtable(Of T,
+Partial Public Class hasharray(Of T,
                                   _UNIQUE As _boolean,
                                   _HASHER As _to_uint32(Of T),
                                   _EQUALER As _equaler(Of T))
@@ -19,18 +19,18 @@ Partial Public Class hashtable(Of T,
 ##DEFINE DEFAULT_COMPARER False
 ##INCLUDE ..\..\codegen\random_access_iterator.single_step.vbp
 
-        Friend Sub New(ByVal owner As hashtable(Of T, _UNIQUE, _HASHER, _EQUALER),
-                       ByVal row As UInt32,
-                       ByVal column As UInt32)
-            Me.New(assert_not_nothing_return(owner).ref_at(row, column))
+        Friend Sub New(ByVal owner As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER), ByVal column As UInt32)
+            Me.New(assert_not_nothing_return(owner).ref_at(column))
         End Sub
 
         Private Function move_next() As iterator
             Dim i As UInt32 = 0
-            i = p.cell_id() + uint32_1
-            While i < p.cell_count()
-                If Not p.cell(i) Is Nothing Then
-                    Return New iterator(p.ref_at(i))
+            i = p.column + uint32_1
+            While i < p.column_count()
+                Dim r As ref = Nothing
+                r = p.ref_at(i)
+                If Not r.empty() Then
+                    Return New iterator(r)
                 End If
                 i += uint32_1
             End While
@@ -38,9 +38,9 @@ Partial Public Class hashtable(Of T,
         End Function
 
         Private Function move_prev() As iterator
-            If p.cell_id() > uint32_0 Then
+            If p.column > uint32_0 Then
                 Dim i As UInt32 = 0
-                i = p.cell_id()
+                i = p.column
                 Do
                     i -= uint32_1
                     Dim r As ref = Nothing

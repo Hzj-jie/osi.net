@@ -4,9 +4,9 @@ Option Infer Off
 Option Strict On
 
 Imports System.Runtime.CompilerServices
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.template
-Imports osi.root.connector
 
 Public Module _const_array
     <Extension()> Public Function null_or_empty(Of T, SIZE As _int64)(ByVal this As const_array(Of T, SIZE)) As Boolean
@@ -24,6 +24,8 @@ Public NotInheritable Class const_array
 End Class
 
 Public Class const_array(Of T, __SIZE As _int64)
+    Implements ICloneable, ICloneable(Of const_array(Of T, __SIZE))
+
     Private Shared ReadOnly _size As Int64
     Protected ReadOnly v() As T
 
@@ -40,10 +42,29 @@ Public Class const_array(Of T, __SIZE As _int64)
         ReDim v(CInt(size) - 1)
     End Sub
 
+    <copy_constructor>
     Public Sub New(ByVal v() As T)
         assert(array_size(v) = _size OrElse _size = npos)
         Me.v = v
     End Sub
+
+    Protected Shared Function move(Of R As const_array(Of T, __SIZE))(ByVal i As R) As R
+        If i Is Nothing Then
+            Return Nothing
+        End If
+
+        Dim a() As T = Nothing
+        ReDim a(CInt(i.size()) - 1)
+        Dim o As R = Nothing
+        o = copy_constructor(Of R).invoke(a)
+        memcpy(o.v, i.v)
+        memclr(i.v)
+        Return o
+    End Function
+
+    Public Shared Function move(ByVal i As const_array(Of T, __SIZE)) As const_array(Of T, __SIZE)
+        Return move(Of const_array(Of T, __SIZE))(i)
+    End Function
 
     Default Public ReadOnly Property [get](ByVal i As UInt32) As T
         Get
@@ -55,9 +76,8 @@ Public Class const_array(Of T, __SIZE As _int64)
     Public Function size() As UInt32
         If _size < 0 Then
             Return array_size(v)
-        Else
-            Return CUInt(_size)
         End If
+        Return CUInt(_size)
     End Function
 
     Public Function empty() As Boolean
@@ -84,18 +104,48 @@ Public Class const_array(Of T, __SIZE As _int64)
         End If
         Return New const_array(Of T, __SIZE)(this)
     End Operator
+
+    Protected Function clone(Of R As const_array(Of T, __SIZE))() As R
+        Return copy_constructor(Of R).invoke(deep_clone(v))
+    End Function
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
+    End Function
+
+    Public Function CloneT() As const_array(Of T, __SIZE) Implements ICloneable(Of const_array(Of T, __SIZE)).Clone
+        Return clone(Of const_array(Of T, __SIZE))()
+    End Function
 End Class
 
 Public Class const_array(Of T)
     Inherits const_array(Of T, _NPOS)
+    Implements ICloneable(Of const_array(Of T)), ICloneable
 
     Public Sub New(ByVal size As Int64)
         MyBase.New(size)
     End Sub
 
+    <copy_constructor>
     Public Sub New(ByVal v() As T)
         MyBase.New(v)
     End Sub
+
+    Public Shared Shadows Function move(ByVal i As const_array(Of T)) As const_array(Of T)
+        Return const_array(Of T, _NPOS).move(Of const_array(Of T))(i)
+    End Function
+
+    Protected Shadows Function clone(Of R As const_array(Of T))() As R
+        Return MyBase.clone(Of R)()
+    End Function
+
+    Public Shadows Function CloneT() As const_array(Of T) Implements ICloneable(Of const_array(Of T)).Clone
+        Return clone(Of const_array(Of T))()
+    End Function
+
+    Public Shadows Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
+    End Function
 
     Public Shared Shadows Widening Operator CType(ByVal this() As T) As const_array(Of T)
         If isemptyarray(this) Then

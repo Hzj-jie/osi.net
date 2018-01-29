@@ -23,7 +23,8 @@ Public Class hashtable_case(Of T)
         insert_call(0.26, AddressOf find)
         insert_call(0.25, AddressOf [erase])
         insert_call(0.01, AddressOf clone)
-        insert_call(0.001, AddressOf clear)
+        insert_call(0.0009, AddressOf clear)
+        insert_call(0.0001, AddressOf traversal)
     End Sub
 
     Private Function random_select_key_from_h() As T
@@ -117,6 +118,26 @@ Public Class hashtable_case(Of T)
             assert_not_equal(s.find(+it), s.end())
             it += 1
         End While
+    End Sub
+
+    Private Sub traversal()
+        Dim it As hashtable(Of T).iterator = Nothing
+        it = h.begin()
+        Dim c As UInt32 = 0
+        While it <> h.end()
+            c += uint32_1
+            it += 1
+        End While
+
+        Dim c2 As UInt32 = 0
+        it = h.rbegin()
+        While it <> h.rend()
+            c2 += uint32_1
+            it -= 1
+        End While
+
+        assert_equal(c, h.size())
+        assert_equal(c2, h.size())
     End Sub
 End Class
 

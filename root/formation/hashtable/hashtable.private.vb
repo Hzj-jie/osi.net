@@ -96,12 +96,12 @@ Partial Public Class hashtable(Of T,
             assert(r.emplace(+it, uint32_0, uint32_0))
             it += 1
         End While
-        move_to(r, Me)
+        swap(r, Me)
         Return True
     End Function
 
     Private Function should_rehash() As Boolean
-        Return size() >= column_count()
+        Return row_count() > row_count_upper_bound(c)
     End Function
 
     Private Function emplace(ByVal value As T, ByRef row As UInt32, ByRef index As UInt32) As Boolean

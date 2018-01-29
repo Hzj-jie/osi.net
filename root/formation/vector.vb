@@ -225,7 +225,7 @@ Public NotInheritable Class vector(Of T)
     End Function
 
     Public Function CloneT() As vector(Of T) Implements ICloneable(Of vector(Of T)).Clone
-        Return New vector(Of T)(v.clone())
+        Return New vector(Of T)(v.CloneT())
     End Function
 
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo

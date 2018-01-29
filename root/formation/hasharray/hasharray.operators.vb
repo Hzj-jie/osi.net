@@ -7,27 +7,24 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.template
 
-Partial Public Class hashtable(Of T,
+Partial Public Class hasharray(Of T,
                                   _UNIQUE As _boolean,
                                   _HASHER As _to_uint32(Of T),
                                   _EQUALER As _equaler(Of T))
     Public Function find(ByVal value As T) As iterator
-        Dim index As UInt32 = 0
-        index = hash(value)
-        For i As UInt32 = 0 To last_row()
-            If cell_is(i, index, value) Then
-                Return iterator_at(i, index)
-            End If
-        Next
-        Return iterator.[end]
+        Dim column As UInt32 = 0
+        column = hash(value)
+        If [is](column, value) Then
+            Return iterator_at(column)
+        End If
+        Return iterator.end
     End Function
 
     Public Function emplace(ByVal value As T) As pair(Of iterator, Boolean)
-        Dim row As UInt32 = 0
-        Dim index As UInt32 = 0
+        Dim column As UInt32 = 0
         Dim r As Boolean = False
-        r = emplace(value, row, index)
-        Return emplace_make_pair(iterator_at(row, index), r)
+        r = emplace(value, column)
+        Return emplace_make_pair(iterator_at(column), r)
     End Function
 
     Public Function insert(ByVal value As T) As pair(Of iterator, Boolean)
@@ -35,19 +32,13 @@ Partial Public Class hashtable(Of T,
     End Function
 
     Public Function [erase](ByVal value As T) As UInt32
-        Dim r As UInt32 = 0
-        Dim index As UInt32 = 0
-        index = hash(value)
-        For i As UInt32 = 0 To last_row()
-            If cell_is(i, index, value) Then
-                clear_cell(i, index)
-                r += uint32_1
-                If unique Then
-                    Exit For
-                End If
-            End If
-        Next
-        Return r
+        Dim column As UInt32 = 0
+        column = hash(value)
+        If [is](column, value) Then
+            clear(column)
+            Return uint32_1
+        End If
+        Return uint32_0
     End Function
 
     Public Function [erase](ByVal it As iterator) As Boolean
@@ -55,13 +46,12 @@ Partial Public Class hashtable(Of T,
             Return False
         End If
 
-        clear_cell(it.ref().row, it.ref().column)
+        clear(it.ref().column)
         Return True
     End Function
 
     Public Sub clear()
-        v.clear()
-        new_row()
+        reset_array()
         s = 0
     End Sub
 End Class

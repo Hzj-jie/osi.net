@@ -40,8 +40,7 @@ Public Class hashtable(Of T, _UNIQUE As _boolean)
 
     Public Shared Shadows Function swap(ByVal this As hashtable(Of T, _UNIQUE),
                                         ByVal that As hashtable(Of T, _UNIQUE)) As Boolean
-        Return hashtable(Of T, _UNIQUE, fast_to_uint32(Of T), default_equaler(Of T)) _
-                   .swap(this, that)
+        Return hashtable(Of T, _UNIQUE, fast_to_uint32(Of T), default_equaler(Of T)).swap(this, that)
     End Function
 End Class
 
@@ -77,8 +76,7 @@ Public Class hashtable(Of T)
 
     Public Shared Shadows Function swap(ByVal this As hashtable(Of T),
                                         ByVal that As hashtable(Of T)) As Boolean
-        Return hashtable(Of T, _true, fast_to_uint32(Of T), default_equaler(Of T)) _
-                   .swap(this, that)
+        Return hashtable(Of T, _true, fast_to_uint32(Of T), default_equaler(Of T)).swap(this, that)
     End Function
 End Class
 
@@ -114,7 +112,6 @@ Public Class multi_hashtable(Of T)
 
     Public Shared Shadows Function swap(ByVal this As multi_hashtable(Of T),
                                         ByVal that As multi_hashtable(Of T)) As Boolean
-        Return hashtable(Of T, _false, fast_to_uint32(Of T), default_equaler(Of T)) _
-                   .swap(this, that)
+        Return hashtable(Of T, _false, fast_to_uint32(Of T), default_equaler(Of T)).swap(this, that)
     End Function
 End Class
