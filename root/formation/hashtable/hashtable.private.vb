@@ -60,11 +60,13 @@ Partial Public Class hashtable(Of T,
     End Function
 
     Private Sub set_cell(ByVal row As UInt32, ByVal column As UInt32, ByVal value As T)
+        assert(v(row)(column) Is Nothing)
         v(row)(column) = constant.[New](value)
         s += uint32_1
     End Sub
 
     Private Sub clear_cell(ByVal row As UInt32, ByVal column As UInt32)
+        assert(Not v(row)(column) Is Nothing)
         v(row)(column) = Nothing
         s -= uint32_1
     End Sub
@@ -130,6 +132,8 @@ Partial Public Class hashtable(Of T,
     End Function
 
     Private Function cell_is(ByVal row As UInt32, ByVal index As UInt32, ByVal value As T) As Boolean
-        Return Not cell(row, index) Is Nothing AndAlso equaler(+cell(row, index), value)
+        Dim c As constant(Of T) = Nothing
+        c = cell(row, index)
+        Return Not c Is Nothing AndAlso equaler(+c, value)
     End Function
 End Class

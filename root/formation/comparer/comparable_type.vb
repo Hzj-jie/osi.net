@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 #Const recursive_compare = False
 Imports osi.root.constants
 Imports osi.root.connector
@@ -53,14 +57,12 @@ Public NotInheritable Class comparable_type
                     gl = i.GetGenericArguments()
                     gr = j.GetGenericArguments()
                     assert(array_size(gl) = array_size(gr))
-                    Dim k As UInt32 = uint32_0
-                    While k < array_size(gl)
+                    For k As Int32 = 0 To array_size_i(gl) - 1
                         r = compare_type(gl(k), gr(k))
                         If r <> 0 Then
                             Return r
                         End If
-                        k += uint32_1
-                    End While
+                    Next
                     Return 0
                 Else
                     Return r
