@@ -32,9 +32,8 @@ Partial Public Class unordered_map( _
     <copy_constructor()>
     Protected Sub New(ByVal v As array(Of vector(Of constant(Of first_const_pair(Of KEY_T, VALUE_T)))),
                       ByVal s As UInt32,
-                      ByVal c As UInt32,
-                      ByVal rc As UInt32)
-        MyBase.New(v, s, c, rc)
+                      ByVal c As UInt32)
+        MyBase.New(v, s, c)
     End Sub
 
 'finish hasharray.copy_constructor.vbp --------
@@ -169,9 +168,8 @@ Public Class unordered_map(Of KEY_T, VALUE_T)
     <copy_constructor()>
     Protected Sub New(ByVal v As array(Of vector(Of constant(Of first_const_pair(Of KEY_T, VALUE_T)))),
                       ByVal s As UInt32,
-                      ByVal c As UInt32,
-                      ByVal rc As UInt32)
-        MyBase.New(v, s, c, rc)
+                      ByVal c As UInt32)
+        MyBase.New(v, s, c)
     End Sub
 
 'finish hasharray.copy_constructor.vbp --------

@@ -20,7 +20,7 @@ Partial Public Class hashtable(Of T,
 
     Shared Sub New()
         predefined_column_counts = New const_array(Of UInt32)(doubled_prime_sequence_int32())
-        row_count_upper_bound = New const_array(Of UInt32)(doubled_prime_sequence_int32_log3())
+        row_count_upper_bound = New const_array(Of UInt32)(doubled_prime_sequence_int32_ln())
         unique = +(alloc(Of _UNIQUE)())
         hasher = alloc(Of _HASHER)()
         equaler = alloc(Of _EQUALER)()

@@ -20,7 +20,7 @@ Partial Public Class hasharray(Of T,
 
     Shared Sub New()
         predefined_column_counts = New const_array(Of UInt32)(doubled_prime_sequence_int32())
-        row_count_upper_bound = New const_array(Of UInt32)(doubled_prime_sequence_int32_log3())
+        row_count_upper_bound = New const_array(Of UInt32)(doubled_prime_sequence_int32_ln())
         unique = +(alloc(Of _UNIQUE)())
         hasher = alloc(Of _HASHER)()
         equaler = alloc(Of _EQUALER)()
@@ -29,7 +29,6 @@ Partial Public Class hasharray(Of T,
     Private v As array(Of vector(Of constant(Of T)))
     Private c As UInt32
     Private s As UInt32
-    Private rc As UInt32
 
     Private Sub New(ByVal c As UInt32)
         assert(c < predefined_column_counts.size())
@@ -40,17 +39,13 @@ Partial Public Class hasharray(Of T,
     <copy_constructor()>
     Protected Sub New(ByVal v As array(Of vector(Of constant(Of T))),
                       ByVal s As UInt32,
-                      ByVal c As UInt32,
-                      ByVal rc As UInt32)
+                      ByVal c As UInt32)
         assert(Not v.null_or_empty())
         assert(v.size() = predefined_column_counts(c))
         assert(c < predefined_column_counts.size())
         Me.v = v
         Me.s = s
         Me.c = c
-        Me.rc = rc
-
-        debug_assert_row_count()
     End Sub
 
     Public Sub New()

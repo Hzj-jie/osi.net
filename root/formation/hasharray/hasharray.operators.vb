@@ -62,7 +62,6 @@ Partial Public Class hasharray(Of T,
 
     Public Sub clear()
         reset_array()
-        rc = 0
         s = 0
     End Sub
 End Class

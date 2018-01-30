@@ -26,30 +26,8 @@ Partial Public Class hasharray(Of T,
         Next
     End Sub
 
-    Private Function debug_assert_row_count() As Boolean
-#If DEBUG Then
-        Return assert_row_count()
-#Else
-        Return True
-#End If
-    End Function
-
-    Private Function assert_row_count() As Boolean
-        For i As UInt32 = 0 To v.size() - uint32_1
-            assert(v(i).size() <= rc)
-            If v(i).size() = rc Then
-                Return True
-            End If
-        Next
-        assert(False)
-        Return False
-    End Function
-
-    Private Function row_count() As UInt32
-        If Not debug_assert_row_count() Then
-            Return max_uint32
-        End If
-        Return rc
+    Private Function average_row_count() As UInt32
+        Return size() \ column_count()
     End Function
 
     Private Function row_count(ByVal column As UInt32) As UInt32
@@ -79,10 +57,6 @@ Partial Public Class hasharray(Of T,
     Private Sub emplace_back(ByVal column As UInt32, ByVal value As constant(Of T))
         assert(Not value Is Nothing)
         v(column).emplace_back(value)
-        If v(column).size() > rc Then
-            rc = v(column).size()
-            debug_assert_row_count()
-        End If
         s += uint32_1
     End Sub
 
@@ -180,7 +154,7 @@ Partial Public Class hasharray(Of T,
     End Function
 
     Private Function should_rehash() As Boolean
-        Return row_count() > row_count_upper_bound(c)
+        Return average_row_count() >= row_count_upper_bound(c)
     End Function
 
     Private Sub rehash_move_in(ByVal c As constant(Of T))

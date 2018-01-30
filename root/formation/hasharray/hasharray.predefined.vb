@@ -13,9 +13,8 @@ Public Class hasharray(Of T, UNIQUE As _boolean)
     <copy_constructor()>
     Protected Sub New(ByVal v As array(Of vector(Of constant(Of T))),
                       ByVal s As UInt32,
-                      ByVal c As UInt32,
-                      ByVal rc As UInt32)
-        MyBase.New(v, s, c, rc)
+                      ByVal c As UInt32)
+        MyBase.New(v, s, c)
     End Sub
 
     Public Sub New()
@@ -51,9 +50,8 @@ Public Class hasharray(Of T)
     <copy_constructor()>
     Protected Sub New(ByVal v As array(Of vector(Of constant(Of T))),
                       ByVal s As UInt32,
-                      ByVal c As UInt32,
-                      ByVal rc As UInt32)
-        MyBase.New(v, s, c, rc)
+                      ByVal c As UInt32)
+        MyBase.New(v, s, c)
     End Sub
 
     Public Sub New()
@@ -90,9 +88,8 @@ Public Class multi_hasharray(Of T)
     <copy_constructor()>
     Protected Sub New(ByVal v As array(Of vector(Of constant(Of T))),
                       ByVal s As UInt32,
-                      ByVal c As UInt32,
-                      ByVal rc As UInt32)
-        MyBase.New(v, s, c, rc)
+                      ByVal c As UInt32)
+        MyBase.New(v, s, c)
     End Sub
 
     Public Sub New()

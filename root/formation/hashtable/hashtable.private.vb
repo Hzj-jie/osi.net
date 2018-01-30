@@ -27,6 +27,10 @@ Partial Public Class hashtable(Of T,
         Return column_count() - uint32_1
     End Function
 
+    Private Function average_row_count() As UInt32
+        Return size() \ column_count()
+    End Function
+
     Private Function row_count() As UInt32
         Return v.size()
     End Function
@@ -101,7 +105,7 @@ Partial Public Class hashtable(Of T,
     End Function
 
     Private Function should_rehash() As Boolean
-        Return row_count() > row_count_upper_bound(c)
+        Return average_row_count() >= row_count_upper_bound(c)
     End Function
 
     Private Function find_first_cell(ByVal value As T, ByRef row As UInt32, ByVal column As UInt32) As Boolean
