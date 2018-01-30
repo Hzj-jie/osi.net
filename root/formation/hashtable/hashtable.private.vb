@@ -60,13 +60,13 @@ Partial Public Class hashtable(Of T,
     End Function
 
     Private Sub set_cell(ByVal row As UInt32, ByVal column As UInt32, ByVal value As T)
-        assert(v(row)(column) Is Nothing)
+        assert(cell_is_empty(row, column))
         v(row)(column) = constant.[New](value)
         s += uint32_1
     End Sub
 
     Private Sub clear_cell(ByVal row As UInt32, ByVal column As UInt32)
-        assert(Not v(row)(column) Is Nothing)
+        assert(Not cell_is_empty(row, column))
         v(row)(column) = Nothing
         s -= uint32_1
     End Sub
@@ -104,36 +104,52 @@ Partial Public Class hashtable(Of T,
         Return row_count() > row_count_upper_bound(c)
     End Function
 
-    Private Function emplace(ByVal value As T, ByRef row As UInt32, ByRef index As UInt32) As Boolean
-        index = hash(value)
-        If unique Then
-            For row = 0 To last_row()
-                If cell_is(row, index, value) Then
-                    Return False
-                End If
-            Next
-        End If
-
+    Private Function find_first_cell(ByVal value As T, ByRef row As UInt32, ByVal column As UInt32) As Boolean
         For row = 0 To last_row()
-            If cell(row, index) Is Nothing Then
-                set_cell(row, index, value)
+            If cell_is(row, column, value) Then
                 Return True
             End If
         Next
+        Return False
+    End Function
+
+    Private Function find_empty_cell(ByRef row As UInt32, ByVal column As UInt32) As Boolean
+        For row = 0 To last_row()
+            If cell_is_empty(row, column) Then
+                Return True
+            End If
+        Next
+        Return False
+    End Function
+
+    Private Function emplace(ByVal value As T, ByRef row As UInt32, ByRef column As UInt32) As Boolean
+        column = hash(value)
+        If unique Then
+            If find_first_cell(value, row, column) Then
+                Return False
+            End If
+        End If
+
+        If find_empty_cell(row, column) Then
+            set_cell(row, column, value)
+            Return True
+        End If
 
         If should_rehash() AndAlso rehash() Then
-            Return emplace(value, row, index)
+            Return emplace(value, row, column)
         End If
 
         new_row()
         row = last_row()
-        set_cell(row, index, value)
+        set_cell(row, column, value)
         Return True
     End Function
 
-    Private Function cell_is(ByVal row As UInt32, ByVal index As UInt32, ByVal value As T) As Boolean
-        Dim c As constant(Of T) = Nothing
-        c = cell(row, index)
-        Return Not c Is Nothing AndAlso equaler(+c, value)
+    Private Function cell_is_empty(ByVal row As UInt32, ByVal column As UInt32) As Boolean
+        Return cell(row, column) Is Nothing
+    End Function
+
+    Private Function cell_is(ByVal row As UInt32, ByVal column As UInt32, ByVal value As T) As Boolean
+        Return Not cell_is_empty(row, column) AndAlso equaler(+cell(row, column), value)
     End Function
 End Class

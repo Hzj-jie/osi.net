@@ -13,19 +13,23 @@ Partial Public Class hasharray(Of T,
                                   _EQUALER As _equaler(Of T))
 
     Private Shared ReadOnly predefined_column_counts As const_array(Of UInt32)
+    Private Shared ReadOnly row_count_upper_bound As const_array(Of UInt32)
+    Private Shared ReadOnly unique As Boolean
     Private Shared ReadOnly hasher As _HASHER
     Private Shared ReadOnly equaler As _equaler(Of T)
 
     Shared Sub New()
-        assert(+alloc(Of _UNIQUE)() = True, "_UNIQUE of hasharray should be true.")
         predefined_column_counts = New const_array(Of UInt32)(doubled_prime_sequence_int32())
+        row_count_upper_bound = New const_array(Of UInt32)(doubled_prime_sequence_int32_log3())
+        unique = +(alloc(Of _UNIQUE)())
         hasher = alloc(Of _HASHER)()
         equaler = alloc(Of _EQUALER)()
     End Sub
 
-    Private v As array(Of constant(Of T))
+    Private v As array(Of vector(Of constant(Of T)))
     Private c As UInt32
     Private s As UInt32
+    Private rc As UInt32
 
     Private Sub New(ByVal c As UInt32)
         assert(c < predefined_column_counts.size())
@@ -34,13 +38,19 @@ Partial Public Class hasharray(Of T,
     End Sub
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As array(Of constant(Of T)), ByVal s As UInt32, ByVal c As UInt32)
+    Protected Sub New(ByVal v As array(Of vector(Of constant(Of T))),
+                      ByVal s As UInt32,
+                      ByVal c As UInt32,
+                      ByVal rc As UInt32)
         assert(Not v.null_or_empty())
         assert(v.size() = predefined_column_counts(c))
         assert(c < predefined_column_counts.size())
         Me.v = v
         Me.s = s
         Me.c = c
+        Me.rc = rc
+
+        debug_assert_row_count()
     End Sub
 
     Public Sub New()
@@ -56,9 +66,12 @@ Partial Public Class hasharray(Of T,
     End Function
 
     Public Function begin() As iterator
+        If empty() Then
+            Return [end]()
+        End If
         Dim it As iterator = Nothing
-        it = iterator_at(0)
-        If v(0) Is Nothing Then
+        it = iterator_at(first_non_empty_column(), 0)
+        If it.ref().empty() Then
             it += 1
         End If
         Return it
@@ -69,9 +82,14 @@ Partial Public Class hasharray(Of T,
     End Function
 
     Public Function rbegin() As iterator
+        If empty() Then
+            Return rend()
+        End If
         Dim it As iterator = Nothing
-        it = iterator_at(last_column())
-        If v(last_column()) Is Nothing Then
+        Dim c As UInt32 = 0
+        c = last_non_empty_column()
+        it = iterator_at(c, last_row(c))
+        If it.ref().empty() Then
             it -= 1
         End If
         Return it

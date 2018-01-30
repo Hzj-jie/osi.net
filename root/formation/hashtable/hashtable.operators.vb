@@ -12,22 +12,21 @@ Partial Public Class hashtable(Of T,
                                   _HASHER As _to_uint32(Of T),
                                   _EQUALER As _equaler(Of T))
     Public Function find(ByVal value As T) As iterator
-        Dim index As UInt32 = 0
-        index = hash(value)
-        For i As UInt32 = 0 To last_row()
-            If cell_is(i, index, value) Then
-                Return iterator_at(i, index)
-            End If
-        Next
+        Dim column As UInt32 = 0
+        Dim row As UInt32 = 0
+        column = hash(value)
+        If find_first_cell(value, row, column) Then
+            Return iterator_at(row, column)
+        End If
         Return iterator.[end]
     End Function
 
     Public Function emplace(ByVal value As T) As pair(Of iterator, Boolean)
         Dim row As UInt32 = 0
-        Dim index As UInt32 = 0
+        Dim column As UInt32 = 0
         Dim r As Boolean = False
-        r = emplace(value, row, index)
-        Return emplace_make_pair(iterator_at(row, index), r)
+        r = emplace(value, row, column)
+        Return emplace_make_pair(iterator_at(row, column), r)
     End Function
 
     Public Function insert(ByVal value As T) As pair(Of iterator, Boolean)
@@ -36,11 +35,11 @@ Partial Public Class hashtable(Of T,
 
     Public Function [erase](ByVal value As T) As UInt32
         Dim r As UInt32 = 0
-        Dim index As UInt32 = 0
-        index = hash(value)
+        Dim column As UInt32 = 0
+        column = hash(value)
         For i As UInt32 = 0 To last_row()
-            If cell_is(i, index, value) Then
-                clear_cell(i, index)
+            If cell_is(i, column, value) Then
+                clear_cell(i, column)
                 r += uint32_1
                 If unique Then
                     Exit For

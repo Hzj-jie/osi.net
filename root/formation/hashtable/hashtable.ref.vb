@@ -43,7 +43,7 @@ Partial Public Class hashtable(Of T,
         End Function
 
         Public Function empty() As Boolean
-            Return owner.cell(row, column) Is Nothing
+            Return owner.cell_is_empty(row, column)
         End Function
 
         Public Function is_equal_to(ByVal that As ref) As Boolean

@@ -8,19 +8,23 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utt
 
-' Compare perf of map, hashmap, unordered_map and Dictionary
+' Compare perf of map, hashmap, unordered_map, unordered_map2 and Dictionary
 Public Class map_hashmap_unordered_map_perf_test
     Inherits performance_comparison_case_wrapper
 
     Public Sub New()
-        MyBase.New(R(New map_case()), R(New hashmap_case()), R(New dictionary_case()), R(New unordered_map_case()))
+        MyBase.New(R(New map_case()),
+                   R(New hashmap_case()),
+                   R(New dictionary_case()),
+                   R(New unordered_map_case()),
+                   R(New unordered_map2_case()))
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
         If isdebugbuild() Then
-            Return loosen_bound({1711, 1263, 578, 1527}, i, j)
+            Return loosen_bound({1711, 1263, 578, 1527, 1527}, i, j)
         Else
-            Return loosen_bound({1542, 1028, 699, 1399}, i, j)
+            Return loosen_bound({1542, 1028, 699, 1399, 1399}, i, j)
         End If
     End Function
 
@@ -172,6 +176,41 @@ Public Class map_hashmap_unordered_map_perf_test
         Public Sub New()
             MyBase.New()
             m = New unordered_map(Of String, String)()
+        End Sub
+
+        Protected Overrides Sub clear()
+            m.clear()
+        End Sub
+
+        Protected Overrides Sub [erase]()
+            m.erase(rnd_str())
+        End Sub
+
+        Protected Overrides Sub find()
+            m.find(rnd_str())
+        End Sub
+
+        Protected Overrides Sub insert()
+            m.emplace(rnd_str(), rnd_str())
+        End Sub
+    End Class
+
+    Public Class unordered_map2_manual_perf
+        Inherits commandline_specified_case_wrapper
+
+        Public Sub New()
+            MyBase.New(repeat(New unordered_map2_case(), 1000000))
+        End Sub
+    End Class
+
+    Private Class unordered_map2_case
+        Inherits run_case
+
+        Private ReadOnly m As unordered_map2(Of String, String) = Nothing
+
+        Public Sub New()
+            MyBase.New()
+            m = New unordered_map2(Of String, String)()
         End Sub
 
         Protected Overrides Sub clear()

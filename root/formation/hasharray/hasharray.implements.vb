@@ -18,11 +18,11 @@ Partial Public Class hasharray(Of T,
 
     Public Function CloneT() As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER) _
                              Implements ICloneable(Of hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)).Clone
-        Throw New NotImplementedException()
+        Return clone(Of hasharray(Of T, _UNIQUE, _HASHER, _EQUALER))()
     End Function
 
     Protected Function clone(Of R As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER))() As R
-        Return copy_constructor(Of R).invoke(v.CloneT(), s, c)
+        Return copy_constructor(Of R).invoke(v.CloneT(), s, c, rc)
     End Function
 
     Protected Shared Function move(Of R As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER))(ByVal v As R) As R
@@ -30,7 +30,7 @@ Partial Public Class hasharray(Of T,
             Return Nothing
         End If
         Dim o As R = Nothing
-        o = copy_constructor(Of R).invoke(array(Of constant(Of T)).move(v.v), v.s, v.c)
+        o = copy_constructor(Of R).invoke(array(Of vector(Of constant(Of T))).move(v.v), v.s, v.c, v.rc)
         v.clear()
         Return o
     End Function
@@ -49,6 +49,7 @@ Partial Public Class hasharray(Of T,
         _swap.swap(this.v, that.v)
         _swap.swap(this.s, that.s)
         _swap.swap(this.c, that.c)
+        _swap.swap(this.rc, that.rc)
         Return True
     End Function
 End Class

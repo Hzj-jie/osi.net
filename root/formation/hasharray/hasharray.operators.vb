@@ -13,18 +13,20 @@ Partial Public Class hasharray(Of T,
                                   _EQUALER As _equaler(Of T))
     Public Function find(ByVal value As T) As iterator
         Dim column As UInt32 = 0
+        Dim row As UInt32 = 0
         column = hash(value)
-        If [is](column, value) Then
-            Return iterator_at(column)
+        If find_first_cell(value, column, row) Then
+            Return iterator_at(column, row)
         End If
         Return iterator.end
     End Function
 
     Public Function emplace(ByVal value As T) As pair(Of iterator, Boolean)
         Dim column As UInt32 = 0
+        Dim row As UInt32 = 0
         Dim r As Boolean = False
-        r = emplace(value, column)
-        Return emplace_make_pair(iterator_at(column), r)
+        r = emplace(value, column, row)
+        Return emplace_make_pair(iterator_at(column, row), r)
     End Function
 
     Public Function insert(ByVal value As T) As pair(Of iterator, Boolean)
@@ -32,13 +34,21 @@ Partial Public Class hasharray(Of T,
     End Function
 
     Public Function [erase](ByVal value As T) As UInt32
+        Dim r As UInt32 = 0
         Dim column As UInt32 = 0
+        Dim row As UInt32 = 0
         column = hash(value)
-        If [is](column, value) Then
-            clear(column)
-            Return uint32_1
-        End If
-        Return uint32_0
+        While row < row_count(column)
+            If cell_is(column, row, value) Then
+                clear_cell(column, row)
+                r += uint32_1
+                If unique Then
+                    Exit While
+                End If
+            End If
+            row += uint32_1
+        End While
+        Return r
     End Function
 
     Public Function [erase](ByVal it As iterator) As Boolean
@@ -46,12 +56,13 @@ Partial Public Class hasharray(Of T,
             Return False
         End If
 
-        clear(it.ref().column)
+        clear_cell(it.ref().column, it.ref().row)
         Return True
     End Function
 
     Public Sub clear()
         reset_array()
+        rc = 0
         s = 0
     End Sub
 End Class

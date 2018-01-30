@@ -20,15 +20,7 @@ Partial Public Class hashtable(Of T,
 
     Shared Sub New()
         predefined_column_counts = New const_array(Of UInt32)(doubled_prime_sequence_int32())
-        row_count_upper_bound = New const_array(Of UInt32)(
-                (Function() As UInt32()
-                     Dim r() As UInt32 = Nothing
-                     ReDim r(CInt(predefined_column_counts.size()) - 1)
-                     For i As UInt32 = 0 To predefined_column_counts.size() - uint32_1
-                         r(CInt(i)) = CUInt(Math.Log(predefined_column_counts(i), 4))
-                     Next
-                     Return r
-                 End Function)())
+        row_count_upper_bound = New const_array(Of UInt32)(doubled_prime_sequence_int32_log3())
         unique = +(alloc(Of _UNIQUE)())
         hasher = alloc(Of _HASHER)()
         equaler = alloc(Of _EQUALER)()
@@ -71,7 +63,7 @@ Partial Public Class hashtable(Of T,
     Public Function begin() As iterator
         Dim it As iterator = Nothing
         it = iterator_at(0, 0)
-        If cell(0, 0) Is Nothing Then
+        If it.ref().empty() Then
             it += 1
         End If
         Return it
@@ -84,7 +76,7 @@ Partial Public Class hashtable(Of T,
     Public Function rbegin() As iterator
         Dim it As iterator = Nothing
         it = iterator_at(last_row(), last_column())
-        If cell(last_row(), last_column()) Is Nothing Then
+        If it.ref().empty() Then
             it -= 1
         End If
         Return it

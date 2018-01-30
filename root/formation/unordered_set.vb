@@ -13,9 +13,10 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.template
 
-Public Class unordered_set(Of T,
-                              _HASHER As _to_uint32(Of T),
-                              _EQUALER As _equaler(Of T))
+Public Class unordered_set(Of _
+                 T,
+                 _HASHER As _to_uint32(Of T),
+                 _EQUALER As _equaler(Of T))
     Inherits hashtable(Of T, _true, _HASHER, _EQUALER)
     Implements ICloneable, ICloneable(Of unordered_set(Of T, _HASHER, _EQUALER))
 

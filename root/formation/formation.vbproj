@@ -187,9 +187,10 @@
     <Compile Include="tuple7.vb" />
     <Compile Include="tuple8.vb" />
     <Compile Include="unique_ptr.vb" />
-    <Compile Include="unordered_map.pair_adapter.vb" />
     <Compile Include="unordered_map.vb" />
+    <Compile Include="unordered_map2.vb" />
     <Compile Include="unordered_set.vb" />
+    <Compile Include="unordered_set2.vb" />
     <Compile Include="vector.adaptive_array.vb" />
     <Compile Include="vector.container.vb" />
     <Compile Include="vector.extension.vb" />

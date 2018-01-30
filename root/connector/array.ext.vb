@@ -217,16 +217,23 @@ Public Module _array_ext
     End Function
 
     <Extension()> Public Function deep_clone(Of T)(ByVal i() As T) As T()
-        If isemptyarray(i) Then
+        If i Is Nothing Then
             Return Nothing
-        Else
-            Dim r() As T = Nothing
-            ReDim r(array_size_i(i) - 1)
-            For j As Int32 = 0 To array_size_i(i) - 1
-                r(j) = copy_no_error(i(j))
-            Next
-            Return r
         End If
+        Dim r() As T = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            r(j) = copy_no_error(i(j))
+        Next
+        Return r
+    End Function
+
+    <Extension()> Public Function shallow_clone(Of T)(ByVal i() As T) As T()
+        If i Is Nothing Then
+            Return Nothing
+        End If
+
+        Return direct_cast(Of T())(i.Clone())
     End Function
 
     <Extension()> Public Function deep_compare(Of T, T2)(ByVal i() As T,

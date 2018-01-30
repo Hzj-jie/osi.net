@@ -44,12 +44,16 @@ Public Class hasharray_case(Of T)
     Private Sub insert_or_emplace(ByVal insert As Boolean)
         Dim n As T = Nothing
         n = rnd(Of T)()
-        If If(insert, h.insert(n).second, h.emplace(n).second) Then
+        Dim p As pair(Of hasharray(Of T).iterator, Boolean) = Nothing
+        p = If(insert, h.insert(n), h.emplace(n))
+        assert_not_nothing(p)
+        If p.second Then
             assert_equal(s.find(n), s.end())
             s.insert(n)
         Else
             assert_not_equal(s.find(n), s.end())
         End If
+        assert_equal(+p.first, n)
         assert_equal(h.size(), s.size())
         assert_equal(h.empty(), s.empty())
     End Sub
@@ -143,10 +147,10 @@ Public Class hasharray_case(Of T)
 End Class
 
 Public Class hasharray_test(Of T)
-    Inherits commandline_specified_case_wrapper
+    Inherits repeat_case_wrapper
 
     Public Sub New()
-        MyBase.New(repeat(New hasharray_case(Of T)(), 1024 * 64))
+        MyBase.New(New hasharray_case(Of T)(), 1024 * 64)
     End Sub
 End Class
 

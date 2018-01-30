@@ -167,37 +167,50 @@ Partial Public Class hasharray(Of T,
         End Function
 'finish ..\..\codegen\random_access_iterator.single_step.vbp --------
 
-        Friend Sub New(ByVal owner As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER), ByVal column As UInt32)
-            Me.New(assert_not_nothing_return(owner).ref_at(column))
+        Friend Sub New(ByVal owner As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER), ByVal column As UInt32, ByVal row As UInt32)
+            Me.New(assert_not_nothing_return(owner).ref_at(column, row))
         End Sub
 
         Private Function move_next() As iterator
             Dim i As UInt32 = 0
-            i = p.column + uint32_1
+            Dim j As UInt32 = 0
+            i = p.column
+            j = p.row + uint32_1
             While i < p.column_count()
-                Dim r As ref = Nothing
-                r = p.ref_at(i)
-                If Not r.empty() Then
-                    Return New iterator(r)
-                End If
+                While j < p.row_count(i)
+                    Dim r As ref = Nothing
+                    r = p.ref_at(i, j)
+                    If Not r.empty() Then
+                        Return New iterator(r)
+                    End If
+                    j += uint32_1
+                End While
+                j = uint32_0
                 i += uint32_1
             End While
             Return [end]
         End Function
 
         Private Function move_prev() As iterator
-            If p.column > uint32_0 Then
-                Dim i As UInt32 = 0
-                i = p.column
-                Do
-                    i -= uint32_1
+            Dim i As UInt32 = 0
+            Dim j As UInt32 = 0
+            i = p.column
+            j = p.row
+            While True
+                While j > uint32_0
+                    j -= uint32_1
                     Dim r As ref = Nothing
-                    r = p.ref_at(i)
+                    r = p.ref_at(i, j)
                     If Not r.empty() Then
                         Return New iterator(r)
                     End If
-                Loop Until i = uint32_0
-            End If
+                End While
+                If i = uint32_0 Then
+                    Exit While
+                End If
+                i -= uint32_1
+                j = p.row_count(i)
+            End While
             Return [end]
         End Function
 
