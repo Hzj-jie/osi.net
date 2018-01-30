@@ -105,7 +105,7 @@ Partial Public Class hashtable(Of T,
     End Function
 
     Private Function should_rehash() As Boolean
-        Return average_row_count() >= row_count_upper_bound(c)
+        Return average_row_count() >= row_count_upper_bound
     End Function
 
     Private Function find_first_cell(ByVal value As T, ByRef row As UInt32, ByVal column As UInt32) As Boolean

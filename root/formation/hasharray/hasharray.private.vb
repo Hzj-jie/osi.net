@@ -154,7 +154,7 @@ Partial Public Class hasharray(Of T,
     End Function
 
     Private Function should_rehash() As Boolean
-        Return average_row_count() >= row_count_upper_bound(c)
+        Return average_row_count() >= row_count_upper_bound
     End Function
 
     Private Sub rehash_move_in(ByVal c As constant(Of T))

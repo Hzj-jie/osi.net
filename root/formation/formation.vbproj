@@ -82,9 +82,16 @@
     <Compile Include="hasharray\hasharray.private.vb" />
     <Compile Include="hasharray\hasharray.ref.vb" />
     <Compile Include="hasharray\hasharray.vb" />
-    <Compile Include="hashmap.iterator.vb" />
-    <Compile Include="hashmap.private.vb" />
-    <Compile Include="hashmap.specialization.vb" />
+    <Compile Include="hashmap\hashmap.iterator.vb" />
+    <Compile Include="hashmap\hashmap.private.vb" />
+    <Compile Include="hashmap\hashmap.specialization.vb" />
+    <Compile Include="hashset\hashset.implements.vb" />
+    <Compile Include="hashset\hashset.iterator.vb" />
+    <Compile Include="hashset\hashset.operators.vb" />
+    <Compile Include="hashset\hashset.predefined.vb" />
+    <Compile Include="hashset\hashset.private.vb" />
+    <Compile Include="hashset\hashset.ref.vb" />
+    <Compile Include="hashset\hashset.vb" />
     <Compile Include="hashtable\hashtable.implements.vb" />
     <Compile Include="hashtable\hashtable.iterator.vb" />
     <Compile Include="hashtable\hashtable.operators.vb" />
@@ -146,7 +153,7 @@
     <Compile Include="threadsafe\cycle.vb" />
     <Compile Include="fixed_queue.vb" />
     <Compile Include="fixed_stack.vb" />
-    <Compile Include="hashmap.vb" />
+    <Compile Include="hashmap\hashmap.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -221,6 +228,8 @@
     <None Include="codegen\tuple_make.vbp" />
     <None Include="hasharray\codegen\hasharray.iterator.vbp" />
     <None Include="hasharray\codegen\run.cmd" />
+    <None Include="hashset\codegen\hashset.iterator.vbp" />
+    <None Include="hashset\codegen\run.cmd" />
     <None Include="hashtable\codegen\hashtable.iterator.vbp" />
     <None Include="hashtable\codegen\run.cmd" />
     <None Include="lifetime_control\codegen\disposer.vbp" />

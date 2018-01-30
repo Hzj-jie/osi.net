@@ -13,14 +13,14 @@ Partial Public Class hashtable(Of T,
                                   _EQUALER As _equaler(Of T))
 
     Private Shared ReadOnly predefined_column_counts As const_array(Of UInt32)
-    Private Shared ReadOnly row_count_upper_bound As const_array(Of UInt32)
+    Private Shared ReadOnly row_count_upper_bound As UInt32
     Private Shared ReadOnly unique As Boolean
     Private Shared ReadOnly hasher As _HASHER
     Private Shared ReadOnly equaler As _equaler(Of T)
 
     Shared Sub New()
         predefined_column_counts = New const_array(Of UInt32)(doubled_prime_sequence_int32())
-        row_count_upper_bound = New const_array(Of UInt32)(doubled_prime_sequence_int32_ln())
+        row_count_upper_bound = 4
         unique = +(alloc(Of _UNIQUE)())
         hasher = alloc(Of _HASHER)()
         equaler = alloc(Of _EQUALER)()
