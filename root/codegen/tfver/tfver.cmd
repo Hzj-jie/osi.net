@@ -1,7 +1,7 @@
 
-setlocal
-
 @echo off
+
+setlocal
 
 set NO_TFVER=""
 
