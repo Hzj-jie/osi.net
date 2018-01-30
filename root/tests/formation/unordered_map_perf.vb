@@ -15,6 +15,7 @@ Public Class unordered_map_perf(Of KEY_T, VALUE_T)
                    ByVal rnd_key As Func(Of KEY_T),
                    ByVal rnd_value As Func(Of VALUE_T))
         MyBase.New(R(New unordered_map_case(percentages, rnd_key, rnd_value)),
+                   R(New unordered_map2_case(percentages, rnd_key, rnd_value)),
                    R(New map_case(percentages, rnd_key, rnd_value)))
     End Sub
 
@@ -114,6 +115,39 @@ Public Class unordered_map_perf(Of KEY_T, VALUE_T)
                        ByVal rnd_value As Func(Of VALUE_T))
             MyBase.New(percentages, rnd_key, rnd_value)
             m = New unordered_map(Of KEY_T, VALUE_T)()
+        End Sub
+
+        Protected Overrides Sub clear()
+            m.clear()
+        End Sub
+
+        Protected Overrides Sub emplace(ByVal k As KEY_T, ByVal v As VALUE_T)
+            m.emplace(k, v)
+        End Sub
+
+        Protected Overrides Sub [erase](ByVal k As KEY_T)
+            m.erase(k)
+        End Sub
+
+        Protected Overrides Sub find(ByVal k As KEY_T)
+            m.find(k)
+        End Sub
+
+        Protected Overrides Sub insert(ByVal k As KEY_T, ByVal v As VALUE_T)
+            m.insert(k, v)
+        End Sub
+    End Class
+
+    Private Class unordered_map2_case
+        Inherits perf_case
+
+        Private ReadOnly m As unordered_map2(Of KEY_T, VALUE_T)
+
+        Public Sub New(ByVal percentages() As Double,
+                       ByVal rnd_key As Func(Of KEY_T),
+                       ByVal rnd_value As Func(Of VALUE_T))
+            MyBase.New(percentages, rnd_key, rnd_value)
+            m = New unordered_map2(Of KEY_T, VALUE_T)()
         End Sub
 
         Protected Overrides Sub clear()
