@@ -1,6 +1,6 @@
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As vector(Of array(Of constant(Of first_const_pair(Of KEY_T, VALUE_T)))),
+    Protected Sub New(ByVal v As vector(Of array(Of constant(Of ##PAIR##(Of KEY_T, VALUE_T)))),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
         MyBase.New(v, s, c)

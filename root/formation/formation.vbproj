@@ -76,6 +76,7 @@
     <Compile Include="bit_array_thread_safe.vb" />
     <Compile Include="chunk.vb" />
     <Compile Include="const_fast_pair.vb" />
+    <Compile Include="fast_constant.vb" />
     <Compile Include="fast_pair.vb" />
     <Compile Include="first_const_fast_pair.vb" />
     <Compile Include="hasharray\hasharray.implements.vb" />
@@ -208,8 +209,10 @@
     <None Include="binary_tree\codegen\bt.iterator.vbp" />
     <None Include="codegen\bit_array.vbp" />
     <None Include="codegen\bit_array_thread_safe.vbp" />
+    <None Include="codegen\constant.vbp" />
     <None Include="codegen\const_fast_pair.vbp" />
     <None Include="codegen\const_pair.vbp" />
+    <None Include="codegen\fast_constant.vbp" />
     <None Include="codegen\fast_pair.vbp" />
     <None Include="codegen\first_const_fast_pair.vbp" />
     <None Include="codegen\first_const_pair.vbp" />
@@ -233,6 +236,7 @@
     <None Include="codegen\tuple7.vbp" />
     <None Include="codegen\tuple8.vbp" />
     <None Include="codegen\tuple_compare.vbp" />
+    <None Include="codegen\tuple_impl.vbp" />
     <None Include="codegen\tuple_make.vbp" />
     <None Include="codegen\unordered_map.vbp" />
     <None Include="codegen\unordered_map2.vbp" />

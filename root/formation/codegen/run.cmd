@@ -16,6 +16,8 @@ precompile unordered_map.vbp > unordered_map.vb
 precompile unordered_set.vbp > unordered_set.vb
 precompile unordered_map2.vbp > unordered_map2.vb
 precompile unordered_set2.vbp > unordered_set2.vb
+precompile constant.vbp > constant.vb
+precompile fast_constant.vbp > fast_constant.vb
 
 for /l %%x in (3,1,8) do precompile tuple%%x.vbp > tuple%%x.vb
 precompile make_tuple.vbp > make_tuple.vb
