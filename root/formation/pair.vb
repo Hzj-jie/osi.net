@@ -10,6 +10,7 @@ Option Strict On
 
 #Const IS_CONST = ("" = "const_")
 #Const IS_FIRST_CONST = ("" = "first_const_")
+#Const IS_CLASS = ("Class" = "Class")
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
@@ -29,7 +30,11 @@ Public NotInheritable Class pair
     End Sub
 End Class
 
+#If IS_CLASS Then
 Public NotInheritable Class pair(Of FT, ST)
+#Else
+Public Class pair(Of FT, ST)
+#End If
     Implements IComparable(Of pair(Of FT, ST)), IComparable,
                ICloneable(Of pair(Of FT, ST)), ICloneable
 
@@ -67,7 +72,7 @@ Public NotInheritable Class pair(Of FT, ST)
         Me.second = second
     End Sub
 
-#If Not IS_CONST Then
+#If Not IS_CONST AndAlso IS_CLASS Then
     Public Sub New()
     End Sub
 #End If
@@ -106,32 +111,32 @@ Public NotInheritable Class pair(Of FT, ST)
 
 #If Not IS_CONST AndAlso Not IS_FIRST_CONST Then
     Public Shared Function move(ByVal that As pair(Of FT, ST)) As pair(Of FT, ST)
+#If IS_CLASS Then
         If that Is Nothing Then
             Return Nothing
-        Else
-            Dim r As pair(Of FT, ST) = Nothing
-            r = New pair(Of FT, ST)()
-            r.first = that.first
-            r.second = that.second
-            that.first = Nothing
-            that.second = Nothing
-            Return r
         End If
+#End If
+        Dim r As pair(Of FT, ST) = Nothing
+        r = New pair(Of FT, ST)()
+        r.first = that.first
+        r.second = that.second
+        that.first = Nothing
+        that.second = Nothing
+        Return r
     End Function
 #End If
 
     Public Function CompareTo(ByVal other As pair(Of FT, ST)) As Int32 _
                              Implements IComparable(Of pair(Of FT, ST)).CompareTo
+#If IS_CLASS Then
+        If other Is Nothing Then
+            Return 1
+        End If
+#End If
         Dim c As Int32 = 0
-        c = object_compare(Me, other)
-        If c = object_compare_undetermined Then
-            assert(Not other Is Nothing)
-            c = compare(first, other.first)
-            If c = 0 Then
-                Return compare(second, other.second)
-            Else
-                Return c
-            End If
+        c = compare(first, other.first)
+        If c = 0 Then
+            Return compare(second, other.second)
         Else
             Return c
         End If
@@ -240,11 +245,19 @@ Public Module _pair
     End Function
 
     <Extension()> Public Function first_or_null(Of FT, ST)(ByVal i As pair(Of FT, ST)) As FT
+#If IS_CLASS Then
         Return If(i Is Nothing, Nothing, i.first)
+#Else
+        Return i.first
+#End If
     End Function
 
     <Extension()> Public Function second_or_null(Of FT, ST)(ByVal i As pair(Of FT, ST)) As ST
+#If IS_CLASS Then
         Return If(i Is Nothing, Nothing, i.second)
+#Else
+        Return i.second
+#End If
     End Function
 
     <Extension()> Public Function to_array(Of T)(ByVal i() As pair(Of T, T)) As T(,)
@@ -254,10 +267,13 @@ Public Module _pair
             Dim r(,) As T = Nothing
             ReDim r(CInt(array_size(i) - uint32_1), 2 - 1)
             For j As Int32 = 0 To CInt(array_size(i) - uint32_1)
-                If Not i(j) Is Nothing Then
-                    r(j, 0) = i(j).first
-                    r(j, 1) = i(j).second
+#If IS_CLASS Then
+                If i(j) Is Nothing Then
+                    Continue For
                 End If
+#End If
+                r(j, 0) = i(j).first
+                r(j, 1) = i(j).second
             Next
             Return r
         End If

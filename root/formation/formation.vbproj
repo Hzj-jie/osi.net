@@ -75,6 +75,9 @@
     <Compile Include="bit_array.vb" />
     <Compile Include="bit_array_thread_safe.vb" />
     <Compile Include="chunk.vb" />
+    <Compile Include="const_fast_pair.vb" />
+    <Compile Include="fast_pair.vb" />
+    <Compile Include="first_const_fast_pair.vb" />
     <Compile Include="hasharray\hasharray.implements.vb" />
     <Compile Include="hasharray\hasharray.iterator.vb" />
     <Compile Include="hasharray\hasharray.operators.vb" />
@@ -205,8 +208,13 @@
     <None Include="binary_tree\codegen\bt.iterator.vbp" />
     <None Include="codegen\bit_array.vbp" />
     <None Include="codegen\bit_array_thread_safe.vbp" />
+    <None Include="codegen\const_fast_pair.vbp" />
     <None Include="codegen\const_pair.vbp" />
+    <None Include="codegen\fast_pair.vbp" />
+    <None Include="codegen\first_const_fast_pair.vbp" />
     <None Include="codegen\first_const_pair.vbp" />
+    <None Include="codegen\hasharray.copy_constructor.vbp" />
+    <None Include="codegen\hashtable.copy_constructor.vbp" />
     <None Include="codegen\iterator.ext.vbp" />
     <None Include="codegen\iterator.imports.vbp" />
     <None Include="codegen\make_tuple.vbp" />
@@ -226,6 +234,10 @@
     <None Include="codegen\tuple8.vbp" />
     <None Include="codegen\tuple_compare.vbp" />
     <None Include="codegen\tuple_make.vbp" />
+    <None Include="codegen\unordered_map.vbp" />
+    <None Include="codegen\unordered_map2.vbp" />
+    <None Include="codegen\unordered_set.vbp" />
+    <None Include="codegen\unordered_set2.vbp" />
     <None Include="hasharray\codegen\hasharray.iterator.vbp" />
     <None Include="hasharray\codegen\run.cmd" />
     <None Include="hashset\codegen\hashset.iterator.vbp" />
