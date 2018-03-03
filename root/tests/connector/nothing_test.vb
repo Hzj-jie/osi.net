@@ -112,6 +112,11 @@ Public Class nothing_test
             assert_false(is_nothing(i))
             assert_false(is_nothing(Of test_interface)(i))
             assert_true(is_nothing(Of test_interface)(Nothing))
+            Dim a As test_interface = Nothing
+            assert_true(is_nothing(a))
+            a = i
+            assert_false(is_nothing(a))
+
             i = New test_structure2()
             assert_false(is_nothing(i))
             assert_false(is_nothing(Of test_interface)(i))
