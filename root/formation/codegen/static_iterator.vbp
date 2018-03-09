@@ -2,6 +2,9 @@
 ##DEFAULT DEFINE_OPERATOR_PLUS True
 ##DEFAULT FRIEND_CONSTRUCTOR True
 ##DEFAULT DEFAULT_COMPARER True
+##DEFAULT USE_P_END False
+##DEFAULT TYPE_IS_STRUCT False
+
         Implements IComparable(Of iterator), IComparable
 
         Public Shared ReadOnly [end] As iterator
@@ -17,10 +20,17 @@
 #Else
         Private Sub New(ByVal that As ##TYPE##)
 #End If
+#If Not ##TYPE_IS_STRUCT## Then
             assert(Not that Is Nothing)
+#End If
             p = that
         End Sub
 
+#If ##USE_P_END## Then
+        Public Function is_end() As Boolean
+            Return p.is_end()
+        End Function
+#Else
         Public Function is_end() As Boolean
             If type_info(Of iterator).is_valuetype Then
                 Return p Is Nothing
@@ -30,6 +40,7 @@
                         assert(object_compare(Me, [end]) = 0))
             End If
         End Function
+#End If
 
         Public Function is_not_end() As Boolean
             Return Not is_end()

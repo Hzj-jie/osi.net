@@ -46,6 +46,7 @@ Partial Public Class list(Of T)
 'so change static_iterator.vbp instead of this file
 
 
+
         Implements IComparable(Of iterator), IComparable
 
         Public Shared ReadOnly [end] As iterator
@@ -61,10 +62,17 @@ Partial Public Class list(Of T)
 #Else
         Private Sub New(ByVal that As node)
 #End If
+#If Not False Then
             assert(Not that Is Nothing)
+#End If
             p = that
         End Sub
 
+#If False Then
+        Public Function is_end() As Boolean
+            Return p.is_end()
+        End Function
+#Else
         Public Function is_end() As Boolean
             If type_info(Of iterator).is_valuetype Then
                 Return p Is Nothing
@@ -74,6 +82,7 @@ Partial Public Class list(Of T)
                         assert(object_compare(Me, [end]) = 0))
             End If
         End Function
+#End If
 
         Public Function is_not_end() As Boolean
             Return Not is_end()

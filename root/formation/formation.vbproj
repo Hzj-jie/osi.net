@@ -239,6 +239,7 @@
     <None Include="codegen\tuple_compare.vbp" />
     <None Include="codegen\tuple_impl.vbp" />
     <None Include="codegen\tuple_make.vbp" />
+    <None Include="codegen\unordered_map.iterator.vbp" />
     <None Include="codegen\unordered_map.vbp" />
     <None Include="codegen\unordered_map2.vbp" />
     <None Include="codegen\unordered_map3.vbp" />

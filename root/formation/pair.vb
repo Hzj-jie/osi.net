@@ -12,6 +12,7 @@ Option Strict On
 #Const IS_FIRST_CONST = ("" = "first_const_")
 #Const IS_CLASS = ("Class" = "Class")
 
+Imports System.Collections.Generic
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
@@ -24,6 +25,14 @@ Public NotInheritable Class pair
 
     Public Shared Function emplace_of(Of FT, ST)(ByVal first As FT, ByVal second As ST) As pair(Of FT, ST)
         Return emplace_make_pair(first, second)
+    End Function
+
+    Public Shared Function [of](Of FT, ST)(ByVal i as KeyValuePair(Of FT, ST)) As pair(Of FT, ST)
+        Return pair(Of FT, ST).from_key_value_pair(i)
+    End Function
+
+    Public Shared Function emplace_of(Of FT, ST)(ByVal i as KeyValuePair(Of FT, ST)) As pair(Of FT, ST)
+        Return pair(Of FT, ST).emplace_from_key_value_pair(i)
     End Function
 
     Private Sub New()
@@ -107,6 +116,14 @@ Public Class pair(Of FT, ST)
 
     Public Shared Function emplace_make_pair() As pair(Of FT, ST)
         Return emplace_make_pair(Nothing, Nothing)
+    End Function
+
+    Public Shared Function from_key_value_pair(ByVal i As KeyValuePair(Of FT, ST)) As pair(Of FT, ST)
+        Return make_pair(i.Key(), i.Value())
+    End Function
+
+    Public Shared Function emplace_from_key_value_pair(ByVal i As KeyValuePair(Of FT, ST)) As pair(Of FT, ST)
+        Return emplace_make_pair(i.Key(), i.Value())
     End Function
 
 #If Not IS_CONST AndAlso Not IS_FIRST_CONST Then

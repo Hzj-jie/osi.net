@@ -12,10 +12,11 @@ precompile first_const_pair.vbp > first_const_pair.vb
 precompile fast_pair.vbp > fast_pair.vb
 precompile const_fast_pair.vbp > const_fast_pair.vb
 precompile first_const_fast_pair.vbp > first_const_fast_pair.vb
-precompile unordered_map3.vbp > unordered_map3.vb
+precompile unordered_map.vbp > unordered_map.vb
 precompile unordered_set.vbp > unordered_set.vb
 precompile unordered_map2.vbp > unordered_map2.vb
 precompile unordered_set2.vbp > unordered_set2.vb
+precompile unordered_map3.vbp > unordered_map3.vb
 precompile constant.vbp > constant.vb
 precompile fast_constant.vbp > fast_constant.vb
 
