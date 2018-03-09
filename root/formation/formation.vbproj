@@ -200,7 +200,6 @@
     <Compile Include="unique_ptr.vb" />
     <Compile Include="unordered_map.vb" />
     <Compile Include="unordered_map2.vb" />
-    <Compile Include="unordered_map3.vb" />
     <Compile Include="unordered_set.vb" />
     <Compile Include="unordered_set2.vb" />
     <Compile Include="vector.adaptive_array.vb" />
@@ -242,7 +241,6 @@
     <None Include="codegen\unordered_map.iterator.vbp" />
     <None Include="codegen\unordered_map.vbp" />
     <None Include="codegen\unordered_map2.vbp" />
-    <None Include="codegen\unordered_map3.vbp" />
     <None Include="codegen\unordered_set.vbp" />
     <None Include="codegen\unordered_set2.vbp" />
     <None Include="hasharray\codegen\hasharray.iterator.vbp" />

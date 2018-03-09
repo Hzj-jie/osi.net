@@ -85,7 +85,6 @@
     <None Include="codegen\map_case\run.cmd" />
     <None Include="codegen\map_case\smap_test.vbp" />
     <None Include="codegen\map_case\unordered_map2_test.vbp" />
-    <None Include="codegen\map_case\unordered_map3_test.vbp" />
     <None Include="codegen\map_case\unordered_map_test.vbp" />
     <None Include="codegen\run.cmd" />
     <None Include="codegen\set_case\run.cmd" />
@@ -136,7 +135,6 @@
     <None Include="codegen\set_case\unordered_set_test.vbp" />
     <None Include="codegen\unordered_map.vbp" />
     <None Include="codegen\unordered_map2.vbp" />
-    <None Include="codegen\unordered_map3.vbp" />
     <None Include="codegen\unordered_set.vbp" />
     <None Include="codegen\unordered_set2.vbp" />
     <None Include="qless\codegen\cycle_case.vbp" />
@@ -184,8 +182,6 @@
     <Compile Include="unique_strong_map_test.vb" />
     <Compile Include="unordered_map2_test.vb" />
     <Compile Include="unordered_map2_test_2.vb" />
-    <Compile Include="unordered_map3_test.vb" />
-    <Compile Include="unordered_map3_test_2.vb" />
     <Compile Include="unordered_map_perf.vb" />
     <Compile Include="unordered_map_perf_tests.vb" />
     <Compile Include="unordered_map_test.vb" />

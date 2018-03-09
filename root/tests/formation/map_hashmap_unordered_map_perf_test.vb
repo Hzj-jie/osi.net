@@ -17,8 +17,7 @@ Public Class map_hashmap_unordered_map_perf_test
                    R(New hashmap_case()),
                    R(New dictionary_case()),
                    R(New unordered_map_case()),
-                   R(New unordered_map2_case()),
-                   R(New unordered_map3_case()))
+                   R(New unordered_map2_case()))
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
@@ -220,41 +219,6 @@ Public Class map_hashmap_unordered_map_perf_test
         Public Sub New()
             MyBase.New()
             m = New unordered_map2(Of String, String)()
-        End Sub
-
-        Protected Overrides Sub clear()
-            m.clear()
-        End Sub
-
-        Protected Overrides Sub [erase]()
-            m.erase(rnd_str())
-        End Sub
-
-        Protected Overrides Sub find()
-            m.find(rnd_str())
-        End Sub
-
-        Protected Overrides Sub insert()
-            m.emplace(rnd_str(), rnd_str())
-        End Sub
-    End Class
-
-    Public Class unordered_map3_manual_perf
-        Inherits commandline_specified_case_wrapper
-
-        Public Sub New()
-            MyBase.New(repeat(New unordered_map3_case(), 2000000))
-        End Sub
-    End Class
-
-    Private Class unordered_map3_case
-        Inherits run_case
-
-        Private ReadOnly m As unordered_map3(Of String, String) = Nothing
-
-        Public Sub New()
-            MyBase.New()
-            m = New unordered_map3(Of String, String)()
         End Sub
 
         Protected Overrides Sub clear()
