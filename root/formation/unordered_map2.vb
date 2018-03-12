@@ -14,7 +14,7 @@ Option Strict On
 'so change unordered_map.vbp instead of this file
 
 
-#Const PAIR_IS_CLASS = ("first_const_fast_pair" = "first_const_pair")
+#Const PAIR_IS_CLASS = ("first_const_pair" = "first_const_pair")
 Imports osi.root.connector
 Imports osi.root.template
 
@@ -24,10 +24,10 @@ Partial Public Class unordered_map2( _
                             _HASHER As _to_uint32(Of KEY_T),
                             _EQUALER As _equaler(Of KEY_T))
     Inherits hashtable( _
-                 Of first_const_fast_pair(Of KEY_T, VALUE_T),
+                 Of first_const_pair(Of KEY_T, VALUE_T),
                     _true,
-                    first_const_fast_pair_hasher,
-                    first_const_fast_pair_equaler)
+                    first_const_pair_hasher,
+                    first_const_pair_equaler)
     Implements ICloneable, ICloneable(Of unordered_map2(Of KEY_T, VALUE_T, _HASHER, _EQUALER))
 
 
@@ -37,7 +37,7 @@ Partial Public Class unordered_map2( _
 
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As vector(Of array(Of constant(Of first_const_fast_pair(Of KEY_T, VALUE_T)))),
+    Protected Sub New(ByVal v As vector(Of array(Of constant(Of first_const_pair(Of KEY_T, VALUE_T)))),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
         MyBase.New(v, s, c)
@@ -63,24 +63,24 @@ Partial Public Class unordered_map2( _
 
     Public Shared Shadows Function move(ByVal v As unordered_map2(Of KEY_T, VALUE_T, _HASHER, _EQUALER)) _
                                        As unordered_map2(Of KEY_T, VALUE_T, _HASHER, _EQUALER)
-        Return hashtable(Of first_const_fast_pair(Of KEY_T, VALUE_T),
+        Return hashtable(Of first_const_pair(Of KEY_T, VALUE_T),
                             _true,
-                            first_const_fast_pair_hasher,
-                            first_const_fast_pair_equaler) _
+                            first_const_pair_hasher,
+                            first_const_pair_equaler) _
                    .move(Of unordered_map2(Of KEY_T, VALUE_T, _HASHER, _EQUALER))(v)
     End Function
 
     Public Shared Shadows Function swap(ByVal this As unordered_map2(Of KEY_T, VALUE_T, _HASHER, _EQUALER),
                                         ByVal that As unordered_map2(Of KEY_T, VALUE_T, _HASHER, _EQUALER)) As Boolean
-        Return hashtable(Of first_const_fast_pair(Of KEY_T, VALUE_T),
+        Return hashtable(Of first_const_pair(Of KEY_T, VALUE_T),
                             _true,
-                            first_const_fast_pair_hasher,
-                            first_const_fast_pair_equaler) _
+                            first_const_pair_hasher,
+                            first_const_pair_equaler) _
                    .swap(this, that)
     End Function
 
     Public Overloads Function emplace(ByVal key As KEY_T, ByVal value As VALUE_T) As pair(Of iterator, Boolean)
-        Return MyBase.emplace(emplace_make_first_const_fast_pair(key, value))
+        Return MyBase.emplace(emplace_make_first_const_pair(key, value))
     End Function
 
     Public Overloads Function insert(ByVal key As KEY_T, ByVal value As VALUE_T) As pair(Of iterator, Boolean)
@@ -96,7 +96,7 @@ Partial Public Class unordered_map2( _
     End Function
 
     Public Shadows Function find(ByVal key As KEY_T) As iterator
-        Return MyBase.find(emplace_make_first_const_fast_pair(Of KEY_T, VALUE_T)(key))
+        Return MyBase.find(emplace_make_first_const_pair(Of KEY_T, VALUE_T)(key))
     End Function
 
     Default Public Property at(ByVal key As KEY_T) As VALUE_T
@@ -117,8 +117,8 @@ Partial Public Class unordered_map2( _
         End Set
     End Property
 
-    Public Class first_const_fast_pair_hasher
-        Inherits _to_uint32(Of first_const_fast_pair(Of KEY_T, VALUE_T))
+    Public Class first_const_pair_hasher
+        Inherits _to_uint32(Of first_const_pair(Of KEY_T, VALUE_T))
 
         Private Shared ReadOnly hasher As _HASHER
 
@@ -126,21 +126,21 @@ Partial Public Class unordered_map2( _
             hasher = alloc(Of _HASHER)()
         End Sub
 
-        Public Overrides Function at(ByRef k As first_const_fast_pair(Of KEY_T, VALUE_T)) As UInt32
+        Public Overrides Function at(ByRef k As first_const_pair(Of KEY_T, VALUE_T)) As UInt32
 #If PAIR_IS_CLASS Then
             assert(Not k Is Nothing)
 #End If
             Return hasher(k.first)
         End Function
 
-        Public Overrides Function reverse(ByVal i As UInt32) As first_const_fast_pair(Of KEY_T, VALUE_T)
+        Public Overrides Function reverse(ByVal i As UInt32) As first_const_pair(Of KEY_T, VALUE_T)
             assert(False)
             Return Nothing
         End Function
     End Class
 
-    Public Class first_const_fast_pair_equaler
-        Inherits _equaler(Of first_const_fast_pair(Of KEY_T, VALUE_T))
+    Public Class first_const_pair_equaler
+        Inherits _equaler(Of first_const_pair(Of KEY_T, VALUE_T))
 
         Private Shared ReadOnly equaler As _EQUALER
 
@@ -148,8 +148,8 @@ Partial Public Class unordered_map2( _
             equaler = alloc(Of _EQUALER)()
         End Sub
 
-        Public Overrides Function at(ByRef i As first_const_fast_pair(Of KEY_T, VALUE_T),
-                                     ByRef j As first_const_fast_pair(Of KEY_T, VALUE_T)) As Boolean
+        Public Overrides Function at(ByRef i As first_const_pair(Of KEY_T, VALUE_T),
+                                     ByRef j As first_const_pair(Of KEY_T, VALUE_T)) As Boolean
 #If PAIR_IS_CLASS Then
             Dim c As Int32 = 0
             c = object_compare(i, j)
@@ -175,7 +175,7 @@ Public Class unordered_map2(Of KEY_T, VALUE_T)
 
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As vector(Of array(Of constant(Of first_const_fast_pair(Of KEY_T, VALUE_T)))),
+    Protected Sub New(ByVal v As vector(Of array(Of constant(Of first_const_pair(Of KEY_T, VALUE_T)))),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
         MyBase.New(v, s, c)
@@ -201,19 +201,19 @@ Public Class unordered_map2(Of KEY_T, VALUE_T)
 
     Public Shared Shadows Function move(ByVal v As unordered_map2(Of KEY_T, VALUE_T)) _
                                        As unordered_map2(Of KEY_T, VALUE_T)
-        Return hashtable(Of first_const_fast_pair(Of KEY_T, VALUE_T),
+        Return hashtable(Of first_const_pair(Of KEY_T, VALUE_T),
                                 _true,
-                                first_const_fast_pair_hasher,
-                                first_const_fast_pair_equaler) _
+                                first_const_pair_hasher,
+                                first_const_pair_equaler) _
                    .move(Of unordered_map2(Of KEY_T, VALUE_T))(v)
     End Function
 
     Public Shared Shadows Function swap(ByVal this As unordered_map2(Of KEY_T, VALUE_T),
                                         ByVal that As unordered_map2(Of KEY_T, VALUE_T)) As Boolean
-        Return hashtable(Of first_const_fast_pair(Of KEY_T, VALUE_T),
+        Return hashtable(Of first_const_pair(Of KEY_T, VALUE_T),
                                 _true,
-                                first_const_fast_pair_hasher,
-                                first_const_fast_pair_equaler) _
+                                first_const_pair_hasher,
+                                first_const_pair_equaler) _
                    .swap(this, that)
     End Function
 End Class

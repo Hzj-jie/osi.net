@@ -1,6 +1,6 @@
 
 ##DEFAULT HASHTABLE hasharray
-##DEFAULT PAIR first_const_fast_pair
+##DEFAULT PAIR first_const_pair
 #Const PAIR_IS_CLASS = ("##PAIR##" = "first_const_pair")
 Imports osi.root.connector
 Imports osi.root.template
