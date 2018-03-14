@@ -157,6 +157,11 @@
     <Compile Include="timing_counter\processor_ms_timing_counter.vb" />
     <Compile Include="timing_counter\processor_ticks_timing_counter.vb" />
     <Compile Include="timing_counter\timing_counter.vb" />
+    <Compile Include="type_resolver\type_resolver.dictionary.vb" />
+    <Compile Include="type_resolver\type_resolver.static.vb" />
+    <Compile Include="type_resolver\type_resolver.storage.vb" />
+    <Compile Include="type_resolver\type_resolver.unordered_map.vb" />
+    <Compile Include="type_resolver\type_resolver.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

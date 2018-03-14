@@ -4,11 +4,14 @@ Option Infer Off
 Option Strict On
 
 #Const recursive_compare = False
-Imports osi.root.constants
 Imports osi.root.connector
 
 Public NotInheritable Class comparable_type
-    Implements IComparable(Of comparable_type), IComparable(Of Type), IComparable
+    Implements IComparable(Of comparable_type),
+               IComparable(Of Type),
+               IComparable,
+               IEquatable(Of comparable_type),
+               IEquatable(Of Type)
 
     Private Shared ReadOnly cmp As Func(Of Type, Type, Int32)
     Private ReadOnly t As Type
@@ -109,11 +112,29 @@ Public NotInheritable Class comparable_type
         Return compare_type(+Me, other)
     End Function
 
+    Public Overloads Function Equals(ByVal other As comparable_type) As Boolean _
+                                    Implements IEquatable(Of comparable_type).Equals
+        Return CompareTo(other) = 0
+    End Function
+
+    Public Overloads Function Equals(ByVal other As Type) As Boolean Implements IEquatable(Of Type).Equals
+        Return CompareTo(other) = 0
+    End Function
+
     Public Overrides Function GetHashCode() As Int32
         Return If(t Is Nothing, 0, t.GetHashCode())
     End Function
 
     Public Overrides Function ToString() As String
         Return If(t Is Nothing, Nothing, t.ToString())
+    End Function
+
+    Public Overrides Function Equals(ByVal obj As Object) As Boolean
+        Dim a As comparable_type = Nothing
+        If cast(Of comparable_type)(obj, a) Then
+            Return Equals(a)
+        Else
+            Return Equals(cast(Of Type)(obj, False))
+        End If
     End Function
 End Class
