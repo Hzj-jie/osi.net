@@ -97,6 +97,7 @@ Partial Public NotInheritable Class type_resolver(Of T)
         End If
 
         Dim types As vector(Of Type) = Nothing
+        types = New vector(Of Type)()
         While Not type Is Nothing
             types.emplace_back(type)
             type = type.BaseType()
