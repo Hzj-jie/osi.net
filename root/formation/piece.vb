@@ -9,7 +9,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 
-<global_init(default_global_init_level.functor)>
+<global_init(global_init_level.functor)>
 Public Module _piece
     <Extension()> Public Function null_or_empty(ByVal this As piece) As Boolean
         Return this Is Nothing OrElse this.empty()

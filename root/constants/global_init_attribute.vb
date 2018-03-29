@@ -6,6 +6,7 @@ Option Strict On
 ' global_init is helping to decouple the dependencies between stopwatch / event / bind, etc.
 Public Enum global_init_level As Byte
     foundamental = 0
+    functor
     debugging
     log_and_counter_services
     threading_and_procedure
@@ -18,13 +19,6 @@ Public Enum global_init_level As Byte
     other = max
     all = max
 End Enum
-
-Public NotInheritable Class default_global_init_level
-    Public Const functor As global_init_level = global_init_level.foundamental
-
-    Private Sub New()
-    End Sub
-End Class
 
 ' Follow .net naming rules: using global_init as attribute name will be accepted. It also avoids conflict with
 ' osi.root.utils.global_init class.

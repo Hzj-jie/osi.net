@@ -7,7 +7,7 @@ Imports System.IO
 Imports System.Text
 Imports osi.root.constants
 
-<global_init(default_global_init_level.functor)>
+<global_init(global_init_level.functor)>
 Friend NotInheritable Class bytes_serializer_registry2
     Shared Sub New()
         bytes_serializer.byte_size.register(Function(ByVal i As String) As UInt32

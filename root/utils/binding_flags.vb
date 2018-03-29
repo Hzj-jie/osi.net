@@ -10,7 +10,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 
-<global_init(default_global_init_level.functor)>
+<global_init(global_init_level.functor)>
 Public Module _binding_flags
     Private ReadOnly m As map(Of String, BindingFlags)
 

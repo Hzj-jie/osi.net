@@ -5,7 +5,7 @@ Option Strict On
 
 Imports osi.root.constants
 
-<global_init(default_global_init_level.functor)>
+<global_init(global_init_level.functor)>
 Friend NotInheritable Class binary_operator_registry2
     Shared Sub New()
         binary_operator.register_add(Function(x As String, y As String) As String

@@ -2,7 +2,7 @@
 Imports System.IO
 Imports osi.root.constants
 
-<global_init(default_global_init_level.functor)>
+<global_init(global_init_level.functor)>
 Friend NotInheritable Class string_serializer_registry
     Shared Sub New()
         ##DEFINE IMPL string_serializer_registry_impl.vbp

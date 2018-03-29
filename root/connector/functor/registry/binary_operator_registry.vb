@@ -10,7 +10,7 @@ Option Strict On
 
 Imports osi.root.constants
 
-<global_init(default_global_init_level.functor)>
+<global_init(global_init_level.functor)>
 Friend NotInheritable Class binary_operator_registry
     Shared Sub New()
 

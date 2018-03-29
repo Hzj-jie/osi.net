@@ -6,7 +6,7 @@ Option Strict On
 Imports System.IO
 Imports osi.root.constants
 
-<global_init(default_global_init_level.functor)>
+<global_init(global_init_level.functor)>
 Friend NotInheritable Class string_serializer_registry2
     Shared Sub New()
         string_serializer.register(Sub(ByVal i As Boolean, ByVal o As StringWriter)
