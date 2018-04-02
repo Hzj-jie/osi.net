@@ -19,6 +19,9 @@ Public Class type_behavior_test
         assert_equal(GetType(C(Of Int32)).GUID(), GetType(C(Of String)).GUID())
         assert_equal(GetType(vector(Of Int32)).GUID(), GetType(vector(Of String)).GUID())
         assert_equal(GetType(vector(Of C(Of Int32))).GUID(), GetType(vector(Of C(Of String))).GUID())
+
+        assert_false(GetType(C(Of Int32)) Is GetType(C(Of )))
+        assert_false(GetType(C(Of )) Is GetType(C(Of Int32)))
         Return True
     End Function
 End Class

@@ -98,6 +98,7 @@
     <Compile Include="stopwatch_test.vb" />
     <Compile Include="strsplit_test.vb" />
     <Compile Include="type_resolver_test.vb" />
+    <Compile Include="type_string_serializer_test.vb" />
     <Compile Include="valuer_create_recursively_test.vb" />
     <Compile Include="valuer_perf_test.vb" />
     <Compile Include="valuer_test.vb" />

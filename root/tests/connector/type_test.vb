@@ -37,7 +37,7 @@ Public NotInheritable Class type_test
     End Sub
 
     <test>
-    Private Shared Sub run()
+    Private Shared Sub new_tests()
         ' osi.tests.root.connector.type_test, osi.tests.root.connector, version ...
         run_case(GetType(type_test).AssemblyQualifiedName())
         run_case(GetType(type_test).AssemblyQualifiedName(), default_str)
@@ -79,6 +79,46 @@ Public NotInheritable Class type_test
         run_failed_case("..type_test", GetType(type_test).Assembly().GetName().Name())
         run_failed_case("type_test", GetType(type_test).Assembly().GetName().FullName())
         run_failed_case("type_test", GetType(type_test).Assembly().GetName().Name())
+    End Sub
+
+    Private Interface i1(Of T)
+    End Interface
+
+    Private Interface i2(Of T, T2)
+    End Interface
+
+    Private Class c1(Of T)
+        Implements i1(Of T)
+    End Class
+
+    Private Class c2(Of T, T2)
+        Implements i2(Of T, T2)
+    End Class
+
+    Private Class c3(Of T)
+        Inherits c1(Of T)
+    End Class
+
+    <test>
+    Private Shared Sub generic_type_is_tests()
+        assert_true(GetType(i1(Of Int32)).generic_type_is(GetType(i1(Of ))))
+        assert_true(GetType(c1(Of Int32)).generic_type_is(GetType(c1(Of ))))
+        assert_false(GetType(i1(Of Int32)).generic_type_is(GetType(c1(Of ))))
+        assert_false(GetType(c1(Of Int32)).generic_type_is(GetType(i1(Of ))))
+
+        assert_false(GetType(i1(Of Int32)).generic_type_is(GetType(i1(Of Int32))))
+        assert_false(GetType(c1(Of Int32)).generic_type_is(GetType(c1(Of Int32))))
+
+        assert_true(GetType(i2(Of Int32, UInt32)).generic_type_is(GetType(i2(Of ,))))
+        assert_true(GetType(c2(Of Int32, UInt32)).generic_type_is(GetType(c2(Of ,))))
+        assert_false(GetType(i2(Of Int32, UInt32)).generic_type_is(GetType(c2(Of ,))))
+        assert_false(GetType(c2(Of Int32, UInt32)).generic_type_is(GetType(i2(Of ,))))
+
+        assert_false(GetType(i2(Of Int32, UInt32)).generic_type_is(GetType(i2(Of Int32, UInt32))))
+        assert_false(GetType(c2(Of Int32, UInt32)).generic_type_is(GetType(c2(Of Int32, UInt32))))
+
+        assert_true(GetType(c3(Of Int32)).generic_type_is(GetType(c3(Of ))))
+        assert_false(GetType(c3(Of Int32)).generic_type_is(GetType(c1(Of ))))
     End Sub
 
     Private Sub New()

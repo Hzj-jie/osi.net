@@ -22,10 +22,27 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
 
     Public Shared Sub register(ByVal to_str As Action(Of T, StringWriter))
         global_resolver(Of Action(Of T, StringWriter), PROTECTOR).assert_first_register(to_str)
+        assert(Not to_str Is Nothing)
+        string_serializer.raise_to_str_registered(GetType(T),
+                                                  GetType(PROTECTOR),
+                                                  Function(ByVal i As Object, ByVal o As StringWriter) As Boolean
+                                                      Return [default].to_str(direct_cast(Of T)(i), o)
+                                                  End Function)
     End Sub
 
     Public Shared Sub register(ByVal from_str As _do_val_ref(Of StringReader, T, Boolean))
         global_resolver(Of _do_val_ref(Of StringReader, T, Boolean), PROTECTOR).assert_first_register(from_str)
+        assert(Not from_str Is Nothing)
+        string_serializer.raise_from_str_registered(GetType(T),
+                                                    GetType(PROTECTOR),
+                                                    Function(ByVal i As StringReader, ByRef o As Object) As Boolean
+                                                        Dim r As T = Nothing
+                                                        If Not [default].from_str(i, r) Then
+                                                            Return False
+                                                        End If
+                                                        o = r
+                                                        Return True
+                                                    End Function)
     End Sub
 
     Protected Overridable Function to_str() As Action(Of T, StringWriter)
@@ -109,7 +126,31 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
     End Sub
 End Class
 
-Public NotInheritable Class string_serializer
+Partial Public NotInheritable Class string_serializer
+    Public Shared Event to_str_registered(ByVal type As Type,
+                                          ByVal protector As Type,
+                                          ByVal to_str As Func(Of Object, StringWriter, Boolean))
+
+    Public Shared Event from_str_registered(ByVal type As Type,
+                                            ByVal protector As Type,
+                                            ByVal from_str As _do_val_ref(Of StringReader, Object, Boolean))
+
+    Public Shared Sub raise_to_str_registered(ByVal type As Type,
+                                              ByVal protector As Type,
+                                              ByVal to_str As Func(Of Object, StringWriter, Boolean))
+        RaiseEvent to_str_registered(type, protector, to_str)
+    End Sub
+
+    Public Shared Sub raise_from_str_registered(ByVal type As Type,
+                                                ByVal protector As Type,
+                                                ByVal from_str As _do_val_ref(Of StringReader, Object, Boolean))
+        RaiseEvent from_str_registered(type, protector, from_str)
+    End Sub
+
+    Public Shared Function is_global_protector(ByVal protector As Type) As Boolean
+        Return protector.generic_type_is(GetType(string_serializer(Of )))
+    End Function
+
     Public Shared Sub register(Of T)(ByVal to_str As Action(Of T, StringWriter))
         string_serializer(Of T).register(to_str)
     End Sub
@@ -126,6 +167,10 @@ Public NotInheritable Class string_serializer
         Return string_serializer(Of T).default.from_str(i, o)
     End Function
 
+    Public Shared Function from_str(Of T)(ByVal i As String) As T
+        Return string_serializer(Of T).default.from_str(i)
+    End Function
+
     Public Shared Function from_str_or_default(Of T)(ByVal i As String, ByVal [default] As T) As T
         Return string_serializer(Of T).default.from_str_or_default(i, [default])
     End Function
@@ -134,8 +179,20 @@ Public NotInheritable Class string_serializer
         Return string_serializer(Of T).default.to_str(i, o)
     End Function
 
+    Public Shared Function to_str(Of T)(ByVal i As T, ByRef o As String) As Boolean
+        Return string_serializer(Of T).default.to_str(i, o)
+    End Function
+
     Public Shared Function to_str(Of T)(ByVal i As T) As String
         Return string_serializer(Of T).default.to_str(i)
+    End Function
+
+    Public Shared Function to_str_or_default(Of T)(ByVal i As T, ByVal [default] As String) As String
+        Return string_serializer(Of T).default.to_str_or_default(i, [default])
+    End Function
+
+    Public Shared Function to_str_or_null(Of T)(ByVal i As T) As String
+        Return string_serializer(Of T).default.to_str_or_null(i)
     End Function
 
     Private Sub New()

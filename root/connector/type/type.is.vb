@@ -24,6 +24,13 @@ Public Module _is
         End If
     End Function
 
+    <Extension()> Public Function generic_type_is(ByVal this As Type, ByVal base As Type) As Boolean
+        Return base.IsGenericTypeDefinition() AndAlso
+               this.IsGenericType() AndAlso
+               Not this.IsGenericTypeDefinition() AndAlso
+               this.GetGenericTypeDefinition() Is base
+    End Function
+
     <Extension()> Public Function [is](Of T)(ByVal this As Type) As Boolean
         Return [is](this, GetType(T))
     End Function
