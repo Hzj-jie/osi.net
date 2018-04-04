@@ -54,7 +54,7 @@
     <Compile Include="constructor.infer.vb" />
     <Compile Include="constructor.vb" />
     <Compile Include="convertor.vb" />
-    <Compile Include="injector_constructor.vb" />
+    <Compile Include="inject_constructor.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

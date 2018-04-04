@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Reflection
 Imports osi.root.delegates
 
 Partial Public NotInheritable Class type_info(Of T)
@@ -49,6 +50,10 @@ Partial Public NotInheritable Class type_info(Of T)
 
     Public Shared Function finalizer() As Action(Of T)
         Return finalizer_cache.v
+    End Function
+
+    Public Shared Function annotated_constructor_info(Of ATTR)() As ConstructorInfo
+        Return annotated_constructor_cache(Of ATTR).info
     End Function
 
     Public Shared Function annotated_constructor(Of ATTR)() As Func(Of Object(), T)

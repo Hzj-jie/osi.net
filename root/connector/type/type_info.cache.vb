@@ -28,9 +28,11 @@ Partial Public NotInheritable Class type_info(Of T)
     End Class
 
     Private NotInheritable Class annotated_constructor_cache(Of ATTR)
+        Public Shared ReadOnly info As ConstructorInfo
         Public Shared ReadOnly v As typed_parameters_constructor
 
         Shared Sub New()
+            info = GetType(T).annotated_constructor_info(Of ATTR)()
             v = New typed_parameters_constructor(GetType(T).annotated_constructor(Of ATTR)())
         End Sub
 

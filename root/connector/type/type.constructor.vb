@@ -34,19 +34,27 @@ Public Module _constructor
         End Try
     End Function
 
-    <Extension()> Public Function annotated_constructor(Of ATTR)(ByVal t As Type) As Func(Of Object(), Object)
+    <Extension()> Public Function annotated_constructor_info(Of ATTR)(ByVal t As Type) As ConstructorInfo
         If t Is Nothing Then
             Return Nothing
-        Else
-            Dim constructors() As ConstructorInfo = Nothing
-            constructors = t.constructors()
-            For i As Int32 = 0 To array_size_i(constructors) - 1
-                If constructors(i).has_custom_attribute(Of ATTR)() Then
-                    Return AddressOf constructors(i).Invoke
-                End If
-            Next
+        End If
+        Dim constructors() As ConstructorInfo = Nothing
+        constructors = t.constructors()
+        For i As Int32 = 0 To array_size_i(constructors) - 1
+            If constructors(i).has_custom_attribute(Of ATTR)() Then
+                Return constructors(i)
+            End If
+        Next
+        Return Nothing
+    End Function
+
+    <Extension()> Public Function annotated_constructor(Of ATTR)(ByVal t As Type) As Func(Of Object(), Object)
+        Dim info As ConstructorInfo = Nothing
+        info = annotated_constructor_info(Of ATTR)(t)
+        If info Is Nothing Then
             Return Nothing
         End If
+        Return AddressOf info.Invoke
     End Function
 
     <Extension()> Public Function has_parameterless_constructor(ByVal t As Type,
