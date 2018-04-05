@@ -8,7 +8,6 @@ Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.formation
 
-' TODO: tests
 ' A container of constructors of RETURN_TYPE. It selects the first constructor which can create an instance by matching
 ' the KEY_TYPE and returning true.
 Public Class slim_constructor(Of KEY_TYPE, PARAMETER, RETURN_TYPE)

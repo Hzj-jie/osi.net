@@ -69,6 +69,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="slim_constructor_test.vb" />
     <Compile Include="wrapper_register_in_multiple_threads_test.vb" />
     <Compile Include="wrapper_test.vb" />
   </ItemGroup>
