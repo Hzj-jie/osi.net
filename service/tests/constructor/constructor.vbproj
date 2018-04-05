@@ -54,6 +54,7 @@
     <Compile Include="constructor_register_in_multiple_threads_test.vb" />
     <Compile Include="constructor_test.vb" />
     <Compile Include="convertor_test.vb" />
+    <Compile Include="inject_constructor_test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

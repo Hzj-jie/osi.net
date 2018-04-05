@@ -11,10 +11,21 @@ Imports osi.service.argument
 <AttributeUsage(AttributeTargets.Constructor, AllowMultiple:=False, Inherited:=False)>
 Public NotInheritable Class inject_constructor
     Inherits Attribute
+
+    Public Shared Function invoke(Of T)(ByRef o As T, ByVal ParamArray args() As Object) As Boolean
+        Return inject_constructor(Of T).invoke(o, args)
+    End Function
+
+    Public Shared Function invoke(Of T)(ByRef o As T, ByVal ParamArray args() As String) As Boolean
+        Return inject_constructor(Of T).invoke(o, args)
+    End Function
+
+    Public Shared Function invoke(Of T)(ByVal v As var, ByRef o As T) As Boolean
+        Return inject_constructor(Of T).invoke(v, o)
+    End Function
 End Class
 
-' TODO: tests
-' For an implementation to use predefined injector constructor.
+' For an implementation to use predefined inject constructor.
 Public NotInheritable Class inject_constructor(Of T)
     Private Shared ReadOnly info As ConstructorInfo
     Private Shared ReadOnly f As Func(Of Object(), T)
