@@ -11,19 +11,26 @@ Imports osi.root.formation
 ' A container of constructors of RETURN_TYPE. It selects the first constructor which can create an instance by matching
 ' the KEY_TYPE and returning true.
 Public Class slim_constructor(Of KEY_TYPE, PARAMETER, RETURN_TYPE)
-    Private ReadOnly cs As vector(Of pair(Of KEY_TYPE, _do_val_ref(Of PARAMETER, RETURN_TYPE, Boolean)))
+    Private ReadOnly cs As unordered_map(Of KEY_TYPE, vector(Of _do_val_ref(Of PARAMETER, RETURN_TYPE, Boolean)))
 
     Public Sub New()
-        cs = New vector(Of pair(Of KEY_TYPE, _do_val_ref(Of PARAMETER, RETURN_TYPE, Boolean)))()
+        cs = New unordered_map(Of KEY_TYPE, vector(Of _do_val_ref(Of PARAMETER, RETURN_TYPE, Boolean)))()
     End Sub
 
     Public Function [New](ByVal key As KEY_TYPE, ByVal p As PARAMETER, ByRef o As RETURN_TYPE) As Boolean
+        Dim it As unordered_map(Of KEY_TYPE,
+                                   vector(Of _do_val_ref(Of PARAMETER, RETURN_TYPE, Boolean))).iterator = Nothing
+        it = cs.find(key)
+        If it = cs.end() Then
+            Return False
+        End If
+        Dim v As vector(Of _do_val_ref(Of PARAMETER, RETURN_TYPE, Boolean)) = Nothing
+        v = (+it).second
+        assert(Not v Is Nothing)
         Dim i As UInt32 = 0
-        While i < cs.size()
-            If equal(key, cs(i).first) Then
-                If cs(i).second(p, o) Then
-                    Return True
-                End If
+        While i < v.size()
+            If v(i)(p, o) Then
+                Return True
             End If
             i += uint32_1
         End While
@@ -38,7 +45,7 @@ Public Class slim_constructor(Of KEY_TYPE, PARAMETER, RETURN_TYPE)
 
     Public Sub register(ByVal key As KEY_TYPE, ByVal c As _do_val_ref(Of PARAMETER, RETURN_TYPE, Boolean))
         assert(Not c Is Nothing)
-        cs.emplace_back(emplace_make_pair(key, c))
+        cs(key).emplace_back(c)
     End Sub
 
     Public Sub register(ByVal key As KEY_TYPE, ByVal c As Func(Of PARAMETER, RETURN_TYPE))
