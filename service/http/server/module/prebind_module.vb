@@ -9,6 +9,7 @@ Imports osi.root.delegates
 Imports osi.root.procedure
 Imports osi.root.utils
 
+' TODO: Remove.
 Public NotInheritable Class prebind_module
     Inherits bind_module(Of _do_val_ref(Of server.context, event_comb, Boolean))
 

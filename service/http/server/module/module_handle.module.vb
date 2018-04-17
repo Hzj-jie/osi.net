@@ -11,10 +11,13 @@ Imports osi.root.utils
 Imports osi.service.argument
 
 Partial Public Class module_handle
+    ' The interface of a module in module_handle.
     Public Interface [module]
+        ' Return true if the context will be handled by current module.
         Function context_received(ByVal context As server.context) As Boolean
     End Interface
 
+    ' All module constructors should return a named_module rather than a module.
     Public NotInheritable Class named_module
         Public ReadOnly name As String
         Public ReadOnly [module] As [module]
@@ -26,6 +29,7 @@ Partial Public Class module_handle
         End Sub
     End Class
 
+    ' TODO: Use slim_constructor
     Private Shared ReadOnly module_constructor As vector(Of Func(Of String, String, BindingFlags, String, named_module))
 
     Shared Sub New()

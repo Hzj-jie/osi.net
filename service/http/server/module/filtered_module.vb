@@ -7,6 +7,7 @@ Imports System.Reflection
 Imports osi.root.connector
 Imports osi.root.procedure
 
+' The typical base implementation of a module. It contains two steps, filtering and execute.
 Public MustInherit Class filtered_module
     Implements module_handle.module
 

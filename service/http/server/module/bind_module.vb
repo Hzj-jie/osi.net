@@ -8,6 +8,10 @@ Imports osi.root.connector
 Imports osi.root.procedure
 Imports osi.root.utils
 
+' TODO: Rename to module_binder.
+' TODO: Support binding of static or member functions
+'   bool context_received(server.context)
+'   event_comb execute(server.context)
 Public NotInheritable Class bind_module
     Public Shared Function [New](Of delegate_type) _
                                 (ByVal type As String,

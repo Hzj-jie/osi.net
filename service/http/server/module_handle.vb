@@ -8,6 +8,9 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports counter = osi.root.utils.counter
 
+' A replacement of http_listener_context_handler to forward server.context_received event to multiple "module"
+' instances. Each module can decide to handle the context_received event or not according to its own configuration or
+' implementation.
 Partial Public NotInheritable Class module_handle
     Private ReadOnly v As vector(Of ref)
     Private ReadOnly handle As server.context_receivedEventHandler

@@ -7,13 +7,20 @@ Imports System.Net
 Imports osi.root.connector
 Imports osi.root.procedure
 
+' Convert server.context_received event into various and handy formats for different scenarios. In general, this class
+' should be used instead of using server.context_received event directly.
 Public NotInheritable Class http_listener_context_handle
+    ' The event_comb is optional.
     Public Event handle_context(ByVal ctx As HttpListenerContext, ByRef ec As event_comb)
+    ' No further operation should be performed after the return of this event handler.
     Public Event handle_context_sync(ByVal ctx As HttpListenerContext)
+    ' The event_comb is required.
     Public Event handle_context_async(ByVal ctx As HttpListenerContext, ByRef ec As event_comb)
+    ' The after_respond should be called once the handling has been finished.
     Public Event handle_context_offline(ByVal ctx As HttpListenerContext,
                                         ByVal response_timeout_ms As Int64,
                                         ByVal after_respond As Action)
+
     Private ReadOnly handle As server.context_receivedEventHandler
 
     Public Sub New()

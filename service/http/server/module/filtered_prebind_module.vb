@@ -8,6 +8,7 @@ Imports osi.root.connector
 Imports osi.root.procedure
 Imports osi.root.utils
 
+' A derived filtered_module implementation to get the execute() function from a pre-binding static function.
 Public NotInheritable Class filtered_prebind_module
     Inherits filtered_module
 

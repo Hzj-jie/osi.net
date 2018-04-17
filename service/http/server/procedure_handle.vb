@@ -7,6 +7,8 @@ Imports osi.root.connector
 Imports osi.root.delegates
 Imports osi.root.procedure
 
+' A set of static functions to help execute an event_comb on a server.context. I.e. call the server.context.finish()
+' when the event_comb has been finished or timed out.
 Public NotInheritable Class procedure_handle
     Public Shared Sub process_context(ByVal ctx As server.context, ByVal ec As event_comb)
         assert(Not ctx Is Nothing)
