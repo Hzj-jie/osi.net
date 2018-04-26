@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports System.Runtime.CompilerServices
-Imports System.Threading
 Imports osi.root.constants
 
 Public Module _object_extensions

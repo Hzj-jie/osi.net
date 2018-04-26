@@ -64,6 +64,7 @@
     <Compile Include="global_init_test.vb" />
     <Compile Include="implicit_conversions.vb" />
     <Compile Include="invoker_perf.vb" />
+    <Compile Include="invoker_post_alloc_bind_test.vb" />
     <Compile Include="invoker_test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

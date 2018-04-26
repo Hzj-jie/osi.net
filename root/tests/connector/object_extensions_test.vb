@@ -27,7 +27,14 @@ Public Class object_extensions_test
         Return True
     End Function
 
+    Private Shared Function is_null_case() As Boolean
+        assert_false(_object_extensions.is_null(Of Int32)(Nothing))
+        assert_true(_object_extensions.is_null(Of String)(Nothing))
+        Return True
+    End Function
+
     Public Overrides Function run() As Boolean
-        Return boolean_cast_case()
+        Return boolean_cast_case() AndAlso
+               is_null_case()
     End Function
 End Class

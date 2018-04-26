@@ -157,9 +157,8 @@ Public NotInheritable Class invoker(Of delegate_t)
                 Else
                     If obj Is Nothing Then
                         Return False
-                    Else
-                        d = [Delegate].CreateDelegate(dt, obj, mi)
                     End If
+                    d = [Delegate].CreateDelegate(dt, obj, mi)
                 End If
             Catch ex As Exception
                 If Not suppress_error Then
@@ -224,9 +223,8 @@ Public NotInheritable Class invoker(Of delegate_t)
             assert(Not m Is Nothing)
             d = m
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 
     Public Shared Operator +(ByVal this As invoker(Of delegate_t)) As delegate_t
@@ -271,9 +269,8 @@ Public NotInheritable Class invoker(Of delegate_t)
         If valid() Then
             o = mi
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 
     Public Function method_info() As MethodInfo
@@ -286,9 +283,8 @@ Public NotInheritable Class invoker(Of delegate_t)
         If valid() Then
             o = t
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 
     Public Function target_type() As Type
@@ -303,16 +299,16 @@ Public NotInheritable Class invoker(Of delegate_t)
             assert(Not d Is Nothing)
             o = direct_cast(Of [Delegate])(d).method_identity()
             Return True
-        Else
-            Dim r As MethodInfo = Nothing
-            If method_info(r) Then
-                assert(Not r Is Nothing)
-                o = r.full_name()
-                Return True
-            Else
-                Return False
-            End If
         End If
+
+        Dim r As MethodInfo = Nothing
+        If method_info(r) Then
+            assert(Not r Is Nothing)
+            o = r.full_name()
+            Return True
+        End If
+
+        Return False
     End Function
 
     Public Function identity() As String
