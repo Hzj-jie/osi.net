@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.formation
 
@@ -26,11 +27,11 @@ Public MustInherit Class context_filter
     Public Shared Function [New](ByVal mi As MemberInfo) As context_filter
         If mi Is Nothing Then
             Return Nothing
-        Else
-            Dim attrs() As context_filter = Nothing
-            custom_attributes(mi, attrs, True)
-            Return New filter_set(attrs)
         End If
+
+        Dim attrs() As context_filter = Nothing
+        custom_attributes(mi, attrs, True)
+        Return New filter_set(attrs)
     End Function
 
     Private Class filter_set

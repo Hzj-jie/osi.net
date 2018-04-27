@@ -29,15 +29,6 @@ Partial Public Class module_handle
         End Sub
     End Class
 
-    ' TODO: Use slim_constructor
-    Private Shared ReadOnly module_constructor As vector(Of Func(Of String, String, BindingFlags, String, named_module))
-
-    Shared Sub New()
-        _new(module_constructor)
-        module_constructor.emplace_back(AddressOf prebind_module.[New])
-        module_constructor.emplace_back(AddressOf filtered_prebind_module.[New])
-    End Sub
-
     Public Function add(ByVal m As named_module) As Boolean
         If m Is Nothing Then
             Return False
@@ -51,12 +42,7 @@ Partial Public Class module_handle
                         ByVal assembly As String,
                         ByVal binding_flags As BindingFlags,
                         ByVal function_name As String) As Boolean
-        For i As UInt32 = 0 To module_constructor.size() - uint32_1
-            If add(module_constructor(i)(type, assembly, binding_flags, function_name)) Then
-                Return True
-            End If
-        Next
-        Return False
+        Return add(module_binder.[New](type, assembly, binding_flags, function_name))
     End Function
 
     Public Function add(ByVal v As var) As Boolean

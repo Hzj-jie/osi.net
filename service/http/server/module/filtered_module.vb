@@ -3,11 +3,9 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports System.Reflection
 Imports osi.root.connector
-Imports osi.root.procedure
 
-' The typical base implementation of a module. It contains two steps, filtering and execute.
+' The typical base implementation of a module. It contains two steps, filtering and processing.
 Public MustInherit Class filtered_module
     Implements module_handle.module
 
@@ -18,14 +16,14 @@ Public MustInherit Class filtered_module
         Me.filter = filter
     End Sub
 
-    Protected Sub New(ByVal mi As MemberInfo)
-        Me.New(context_filter.[New](mi))
-    End Sub
-
-    Protected MustOverride Function execute(ByVal context As server.context) As event_comb
+    Protected MustOverride Sub process(ByVal context As server.context)
 
     Public Function context_received(ByVal context As server.context) As Boolean _
                                     Implements module_handle.module.context_received
-        Return procedure_handle.process_context(context, AddressOf filter.select, AddressOf execute)
+        If Not filter.select(context) Then
+            process(context)
+            Return True
+        End If
+        Return False
     End Function
 End Class
