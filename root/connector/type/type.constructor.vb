@@ -11,7 +11,6 @@ Public Module _constructor
     <Extension()> Public Function allocatable(ByVal t As Type) As Boolean
         Return Not t Is Nothing AndAlso
                Not t.IsArray() AndAlso
-               Not t.IsValueType() AndAlso
                Not t.IsAbstract() AndAlso
                Not t.IsEnum() AndAlso
                Not t.IsGenericTypeDefinition() AndAlso

@@ -39,7 +39,7 @@ Public NotInheritable Class invoker_post_alloc_bind_test
         End Sub
     End Structure
 
-    ' <test> Cannot work, "obj is nothing" check cannot work with value-type casted nothing in object type.
+    <test>
     Private Shared Sub allocate_struct()
         Dim i As invoker(Of Action) = Nothing
         i = New invoker(Of Action)(GetType(test_struct), binding_flags.instance_public_method, "check")

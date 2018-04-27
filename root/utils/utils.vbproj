@@ -84,6 +84,7 @@
     <Compile Include="error_handle\application_info_logging.vb" />
     <Compile Include="error_handle\trace.vb" />
     <Compile Include="instance_count.vb" />
+    <Compile Include="invoker\invoker.builder.vb" />
     <Compile Include="invoker\invoker.post_alloc_bind.vb" />
     <Compile Include="invoker\typeless_invoker.vb" />
     <Compile Include="invoker\valuer.recursive.vb" />

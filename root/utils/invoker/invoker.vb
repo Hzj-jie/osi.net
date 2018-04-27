@@ -35,45 +35,53 @@ Public NotInheritable Class invoker(Of delegate_t)
             If Not suppress_error Then
                 raise_error(error_type.warning, "input type is nothing")
             End If
-        ElseIf String.IsNullOrEmpty(name) Then
+            Return
+        End If
+        If String.IsNullOrEmpty(name) Then
             If Not suppress_error Then
                 raise_error(error_type.warning, "input method name is empty")
             End If
+            Return
+        End If
+
+        Me.t = t
+        Me.name = name
+        Try
+            mi = t.GetMethod(name, binding_flags Or BindingFlags.InvokeMethod)
+        Catch ex As Exception
+            If Not suppress_error Then
+                raise_error(error_type.warning,
+                            "cannot find method ",
+                            name,
+                            " in type ",
+                            t,
+                            ", ex ",
+                            ex.details())
+            End If
+            Return
+        End Try
+
+        If mi Is Nothing Then
+            If Not suppress_error Then
+                raise_error(error_type.warning,
+                            "cannot find method ",
+                            name,
+                            " in type ",
+                            t)
+            End If
+            Return
+        End If
+
+        s = mi.IsStatic()
+        postb = False
+        If t.IsValueType() Then
+            postb = Not [static]()
         Else
-            Me.t = t
-            Me.name = name
-            Try
-                mi = t.GetMethod(name, binding_flags Or BindingFlags.InvokeMethod)
-            Catch ex As Exception
-                If Not suppress_error Then
-                    raise_error(error_type.warning,
-                                "cannot find method ",
-                                name,
-                                " in type ",
-                                t,
-                                ", ex ",
-                                ex.details())
-                End If
-                Return
-            End Try
-
-            If mi Is Nothing Then
-                If Not suppress_error Then
-                    raise_error(error_type.warning,
-                                "cannot find method ",
-                                name,
-                                " in type ",
-                                t)
-                End If
-                Return
-            End If
-
-            s = mi.IsStatic()
-            If Not [static]() AndAlso obj Is Nothing Then
-                postb = True
-            Else
-                preb = create_delegate(obj, m, suppress_error)
-            End If
+            postb = Not [static]() AndAlso obj Is Nothing
+        End If
+        If Not postb Then
+            assert([static]() OrElse is_target_valid(obj))
+            preb = create_delegate(obj, m, suppress_error)
         End If
     End Sub
 
@@ -149,45 +157,44 @@ Public NotInheritable Class invoker(Of delegate_t)
         assert(Not mi Is Nothing)
         If is_not_resolved_type_delegate Then
             Return True
-        Else
-            Dim d As [Delegate] = Nothing
-            Try
-                If [static]() Then
-                    d = [Delegate].CreateDelegate(dt, mi)
-                Else
-                    If obj Is Nothing Then
-                        Return False
-                    End If
-                    d = [Delegate].CreateDelegate(dt, obj, mi)
-                End If
-            Catch ex As Exception
-                If Not suppress_error Then
-                    raise_error(error_type.warning,
-                                "cannot create delegate for method ",
-                                name,
-                                " of type ",
-                                t,
-                                ", ex ",
-                                ex.Message)
-                End If
-                Return False
-            End Try
-
-            If Not cast(Of delegate_t)(d, m) Then
-                If Not suppress_error Then
-                    raise_error(error_type.warning,
-                                "failed to convert method ",
-                                name,
-                                " in type ",
-                                t,
-                                " to delegate ",
-                                dt)
-                End If
-                Return False
-            End If
-
-            Return True
         End If
+        Dim d As [Delegate] = Nothing
+        Try
+            If [static]() Then
+                d = [Delegate].CreateDelegate(dt, mi)
+            Else
+                If Not is_target_valid(obj) Then
+                    Return False
+                End If
+                d = [Delegate].CreateDelegate(dt, obj, mi)
+            End If
+        Catch ex As Exception
+            If Not suppress_error Then
+                raise_error(error_type.warning,
+                            "cannot create delegate for method ",
+                            name,
+                            " of type ",
+                            t,
+                            ", ex ",
+                            ex.details())
+            End If
+            Return False
+        End Try
+
+        If Not cast(Of delegate_t)(d, m) Then
+            If Not suppress_error Then
+                raise_error(error_type.warning,
+                            "failed to convert method ",
+                            name,
+                            " in type ",
+                            t,
+                            " to delegate ",
+                            dt)
+            End If
+            Return False
+        End If
+
+        Return True
     End Function
 
     Public Function valid() As Boolean
@@ -235,7 +242,7 @@ Public NotInheritable Class invoker(Of delegate_t)
     End Operator
 
     Public Function post_bind(ByVal obj As Object, ByRef d As delegate_t, ByVal suppress_error As Boolean) As Boolean
-        Return Not obj Is Nothing AndAlso
+        Return is_target_valid(obj) AndAlso
                valid() AndAlso
                Not [static]() AndAlso
                post_binding() AndAlso
@@ -315,5 +322,12 @@ Public NotInheritable Class invoker(Of delegate_t)
         Dim r As String = Nothing
         assert(identity(r))
         Return r
+    End Function
+
+    Private Function is_target_valid(ByVal i As Object) As Boolean
+        If t.IsValueType() Then
+            Return True
+        End If
+        Return Not i Is Nothing
     End Function
 End Class
