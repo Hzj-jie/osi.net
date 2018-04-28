@@ -26,6 +26,20 @@ Public NotInheritable Class invoker(Of delegate_t)
         is_not_resolved_type_delegate = (dt Is GetType(not_resolved_type_delegate))
     End Sub
 
+    Public Shared Function [New](ByVal t As Type,
+                                 ByVal binding_flags As BindingFlags,
+                                 ByVal obj As Object,
+                                 ByVal name As String,
+                                 ByVal suppress_error As Boolean) As invoker(Of delegate_t)
+        Dim r As invoker(Of delegate_t) = Nothing
+        r = New invoker(Of delegate_t)(t, binding_flags, obj, name, suppress_error)
+        If r.valid() Then
+            Return r
+        End If
+        Return Nothing
+    End Function
+
+    ' TODO: Privatize, static [New] is preferred.
     Public Sub New(ByVal t As Type,
                    ByVal binding_flags As BindingFlags,
                    ByVal obj As Object,
@@ -199,6 +213,7 @@ Public NotInheritable Class invoker(Of delegate_t)
         Return True
     End Function
 
+    ' TODO: Privatize
     Public Function valid() As Boolean
         Return Not mi Is Nothing
     End Function

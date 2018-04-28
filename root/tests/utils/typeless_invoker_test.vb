@@ -54,22 +54,18 @@ Public NotInheritable Class typeless_invoker_test
         run_case(".typeless_invoker_test", GetType(typeless_invoker_test).Assembly().FullName())
 
         Dim i As invoker(Of Func(Of Int32, Int32)) = Nothing
-        ' TODO: Make typeless_invoker.[New] safe when handling unexisting functions.
-        assert_true(typeless_invoker.[New]("osi.tests.root.utils.typeless_invoker_test, osi.tests.root.utils",
-                                           binding_flags.static_public_method,
-                                           "f",
-                                           i))
-        assert_false(i.valid())
-        assert_true(typeless_invoker.[New]("osi.tests.root.utils.typeless_invoker_test, osi.tests.root.utils",
-                                           binding_flags.instance_private_method,
-                                           "f",
-                                           i))
-        assert_false(i.valid())
-        assert_true(typeless_invoker.[New]("osi.tests.root.utils.typeless_invoker_test,
+        assert_false(typeless_invoker.[New]("osi.tests.root.utils.typeless_invoker_test, osi.tests.root.utils",
+                                            binding_flags.static_public_method,
+                                            "f",
+                                            i))
+        assert_false(typeless_invoker.[New]("osi.tests.root.utils.typeless_invoker_test, osi.tests.root.utils",
+                                            binding_flags.instance_private_method,
+                                            "f",
+                                            i))
+        assert_false(typeless_invoker.[New]("osi.tests.root.utils.typeless_invoker_test,
                                             osi.tests.root.utils",
-                                           "fg",
-                                           i))
-        assert_false(i.valid())
+                                            "fg",
+                                            i))
         assert_false(typeless_invoker.[New]("osi.tests.root.utils.typeless_invoker_test2, osi.tests.root.utils",
                                             "fg",
                                             i))

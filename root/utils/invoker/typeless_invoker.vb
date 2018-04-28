@@ -107,7 +107,11 @@ Public NotInheritable Class typeless_invoker(Of delegate_t)
                                  ByVal name As String) As invoker(Of delegate_t)
         Dim t As Type = Nothing
         If t.[New](type_name, assembly_name) Then
-            Return New invoker(Of delegate_t)(t, binding_flags, name)
+            Return invoker.of(Of delegate_t).
+                       with_type(t).
+                       with_binding_flags(binding_flags).
+                       with_name(name).
+                       build()
         End If
         Return Nothing
     End Function
@@ -124,7 +128,11 @@ Public NotInheritable Class typeless_invoker(Of delegate_t)
                                  ByVal suppress_error As Boolean) As invoker(Of delegate_t)
         Dim t As Type = Nothing
         If t.[New](type_name, assembly_name) Then
-            Return New invoker(Of delegate_t)(t, name, suppress_error)
+            Return invoker.of(Of delegate_t).
+                       with_type(t).
+                       with_name(name).
+                       with_suppress_error(suppress_error).
+                       build()
         End If
         Return Nothing
     End Function
@@ -140,7 +148,10 @@ Public NotInheritable Class typeless_invoker(Of delegate_t)
                                  ByVal name As String) As invoker(Of delegate_t)
         Dim t As Type = Nothing
         If t.[New](type_name, assembly_name) Then
-            Return New invoker(Of delegate_t)(t, name)
+            Return invoker.of(Of delegate_t).
+                       with_type(t).
+                       with_name(name).
+                       build()
         End If
         Return Nothing
     End Function

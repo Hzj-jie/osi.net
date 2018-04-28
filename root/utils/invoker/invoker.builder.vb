@@ -59,7 +59,7 @@ Public NotInheritable Class invoker
         End Function
 
         Public Function build() As invoker(Of delegate_t)
-            Return New invoker(Of delegate_t)(type, binding_flags, obj, name, suppress_error)
+            Return invoker(Of delegate_t).[New](type, binding_flags, obj, name, suppress_error)
         End Function
     End Class
 
