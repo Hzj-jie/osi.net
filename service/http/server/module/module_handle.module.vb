@@ -6,7 +6,6 @@ Option Strict On
 Imports System.Reflection
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.service.argument
 
@@ -56,7 +55,9 @@ Partial Public Class module_handle
         Const p_function_name As String = "function"
         v.bind(p_type, p_assembly, p_binding_flags, p_function_name)
         Dim bf As BindingFlags = Nothing
-        If Not bf.method_from_str(v(p_binding_flags)) Then
+        If String.IsNullOrEmpty(v(p_binding_flags)) Then
+            bf = binding_flags.static_all_method
+        ElseIf Not bf.method_from_str(v(p_binding_flags)) Then
             Return Nothing
         End If
 

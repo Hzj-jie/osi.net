@@ -31,6 +31,24 @@ Public NotInheritable Class module_handles_test
         Return strcat(question_path, "-answer")
     End Function
 
+    Private NotInheritable Class instance_async_exec_question
+        Private value As Int32 = 0
+
+        <request_path("/" + async_question_path)>
+        <request_method(constants.request_method.POST)>
+        Private Function filtered_async_exec_question(ByVal ctx As server.context) As event_comb
+            assert_equal(value, 0)
+            value += 1
+            assert_not_nothing(ctx)
+            assert_equal(ctx.parse_method(), constants.request_method.POST)
+            Dim path As vector(Of String) = Nothing
+            path = ctx.parse_path()
+            assert_false(path.empty())
+            assert_true(strsame(path(0), async_question_path, False))
+            Return ctx.respond(create_answer(async_question_path))
+        End Function
+    End Class
+
     <request_path("/" + question_path)>
     <request_method(constants.request_method.GET)>
     Private Shared Function filtered_sync_exec_question(ByVal ctx As server.context) As event_comb
@@ -59,18 +77,6 @@ Public NotInheritable Class module_handles_test
         Else
             Return False
         End If
-    End Function
-
-    <request_path("/" + async_question_path)>
-    <request_method(constants.request_method.POST)>
-    Private Shared Function filtered_async_exec_question(ByVal ctx As server.context) As event_comb
-        assert_not_nothing(ctx)
-        assert_equal(ctx.parse_method(), constants.request_method.POST)
-        Dim path As vector(Of String) = Nothing
-        path = ctx.parse_path()
-        assert_false(path.empty())
-        assert_true(strsame(path(0), async_question_path, False))
-        Return ctx.respond(create_answer(async_question_path))
     End Function
 
     Private Shared Function async_exec_question(ByVal ctx As server.context, ByRef ec As event_comb) As Boolean
@@ -220,9 +226,10 @@ Public NotInheritable Class module_handles_test
                           default_str,
                           binding_flags.static_private_method,
                           "filtered_sync_exec_question"))
-        assert_true(m.add(New var(strcat("--type=osi.tests.service.http.module_handles_test ",
+        assert_true(m.add(New var(strcat("--type=osi.tests.service.http.",
+                                                "module_handles_test+instance_async_exec_question ",
                                          "--function=filtered_async_exec_question ",
-                                         "--binding-flags=static,private"))))
+                                         "--binding-flags=private,instance"))))
         assert_true(m.add(New var(strcat("--type=osi.tests.service.http.module_handles_test ",
                                          "--function=sync_exec_ask ",
                                          "--binding-flags=static,private"))))
@@ -238,6 +245,8 @@ Public NotInheritable Class module_handles_test
         assert_true(m.add(New var(strcat("--type=osi.tests.service.http.module_handles_test ",
                                          "--function=filtered_should_not_be_called ",
                                          "--binding-flags=static|private"))))
+
+        assert_equal(m.module_count(), CUInt(7))
 
         If Not assert_true(s.add_port(port)) Then
             Return

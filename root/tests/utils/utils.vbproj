@@ -66,6 +66,7 @@
     <Compile Include="invoker\invoker_perf.vb" />
     <Compile Include="invoker\invoker_post_alloc_bind_test.vb" />
     <Compile Include="invoker\invoker_test.vb" />
+    <Compile Include="invoker\invoker_unmatch_signature_test.vb" />
     <Compile Include="invoker\invoker_value_type_test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

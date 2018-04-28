@@ -25,19 +25,17 @@ Public Module _delegate2
                                               As Action(Of Object)
         If v Is Nothing Then
             Return Nothing
-        Else
-            Return Sub(ByVal x As Object)
-                       v(direct_cast(Of T)(x, assert_on_cast_failure))
-                   End Sub
         End If
+        Return Sub(ByVal x As Object)
+                   v(direct_cast(Of T)(x, assert_on_cast_failure))
+               End Sub
     End Function
 
     <Extension()> Public Function safe_invoke(ByVal method As [Delegate], ByVal args() As Object) As Object
         If method Is Nothing Then
             Return Nothing
-        Else
-            Return do_(AddressOf method.DynamicInvoke, args, Nothing)
         End If
+        Return do_(AddressOf method.DynamicInvoke, args, Nothing)
     End Function
 
     ' This should be rarely used, a typical scenario is to run clean up only.

@@ -45,17 +45,19 @@ Public MustInherit Class context_filter
         End Sub
 
         Public Overrides Function [select](ByVal context As server.context) As Boolean
-            If context Is Nothing OrElse isemptyarray(v) Then
+            If context Is Nothing Then
                 Return False
-            Else
-                For i As Int32 = 0 To array_size_i(v) - 1
-                    assert(Not v(i) Is Nothing)
-                    If Not v(i).select(context) Then
-                        Return False
-                    End If
-                Next
+            End If
+            If isemptyarray(v) Then
                 Return True
             End If
+            For i As Int32 = 0 To array_size_i(v) - 1
+                assert(Not v(i) Is Nothing)
+                If Not v(i).select(context) Then
+                    Return False
+                End If
+            Next
+            Return True
         End Function
     End Class
 End Class

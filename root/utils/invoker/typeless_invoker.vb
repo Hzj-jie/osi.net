@@ -90,9 +90,8 @@ Public NotInheritable Class typeless_invoker(Of delegate_t)
         Dim t As Type = Nothing
         If t.[New](type_name, assembly_name) Then
             Return New invoker(Of delegate_t)(t, binding_flags, name, suppress_error)
-        Else
-            Return Nothing
         End If
+        Return Nothing
     End Function
 
     Public Shared Function [New](ByVal type_name As String,
@@ -109,9 +108,8 @@ Public NotInheritable Class typeless_invoker(Of delegate_t)
         Dim t As Type = Nothing
         If t.[New](type_name, assembly_name) Then
             Return New invoker(Of delegate_t)(t, binding_flags, name)
-        Else
-            Return Nothing
         End If
+        Return Nothing
     End Function
 
     Public Shared Function [New](ByVal type_name As String,
@@ -127,9 +125,8 @@ Public NotInheritable Class typeless_invoker(Of delegate_t)
         Dim t As Type = Nothing
         If t.[New](type_name, assembly_name) Then
             Return New invoker(Of delegate_t)(t, name, suppress_error)
-        Else
-            Return Nothing
         End If
+        Return Nothing
     End Function
 
     Public Shared Function [New](ByVal type_name As String,
@@ -144,9 +141,8 @@ Public NotInheritable Class typeless_invoker(Of delegate_t)
         Dim t As Type = Nothing
         If t.[New](type_name, assembly_name) Then
             Return New invoker(Of delegate_t)(t, name)
-        Else
-            Return Nothing
         End If
+        Return Nothing
     End Function
 
     Public Shared Function [New](ByVal type_name As String, ByVal name As String) As invoker(Of delegate_t)

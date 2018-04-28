@@ -20,7 +20,7 @@ Public MustInherit Class filtered_module
 
     Public Function context_received(ByVal context As server.context) As Boolean _
                                     Implements module_handle.module.context_received
-        If Not filter.select(context) Then
+        If filter.select(context) Then
             process(context)
             Return True
         End If

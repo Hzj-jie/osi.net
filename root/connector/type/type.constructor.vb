@@ -60,17 +60,17 @@ Public Module _constructor
                                                                 ByVal accept_private_constructor As Boolean) As Boolean
         If t Is Nothing Then
             Return False
-        Else
-            Dim cs() As ConstructorInfo = Nothing
-            cs = t.constructors()
-            For i As Int32 = 0 To array_size_i(cs) - 1
-                If isemptyarray(cs(i).GetParameters()) AndAlso
-                   (accept_private_constructor OrElse cs(i).IsPublic()) Then
-                    Return True
-                End If
-            Next
-            Return False
         End If
+
+        Dim cs() As ConstructorInfo = Nothing
+        cs = t.constructors()
+        For i As Int32 = 0 To array_size_i(cs) - 1
+            If isemptyarray(cs(i).GetParameters()) AndAlso
+                   (accept_private_constructor OrElse cs(i).IsPublic()) Then
+                Return True
+            End If
+        Next
+        Return False
     End Function
 
     <Extension()> Public Function has_parameterless_constructor(ByVal t As Type) As Boolean
@@ -86,31 +86,30 @@ Public Module _constructor
         cs = t.constructors()
         If isemptyarray(cs) Then
             Return Nothing
-        Else
-            Return cs(0)
         End If
+        Return cs(0)
     End Function
 
     <Extension()> Public Function execute(ByVal this As ConstructorInfo) As Object
         If this Is Nothing Then
             Return Nothing
-        Else
-            Dim parameters(this.GetParameters().Length - 1) As Object
-            'assert vb.net will clear the array here
-            'memclr(parameters, 0, parameters.Length())
-            Try
-                Return this.Invoke(parameters)
-            Catch ex As Exception
-                If isdebugmode() AndAlso Not is_suppressed.alloc_error() Then
-                    raise_error(error_type.warning,
-                                "Failed to invoke constructors of type ",
-                                this.DeclaringType().AssemblyQualifiedName(),
-                                ", ex ",
-                                ex.details())
-                End If
-            End Try
-            Return Nothing
         End If
+
+        Dim parameters(this.GetParameters().Length - 1) As Object
+        'assert vb.net will clear the array here
+        'memclr(parameters, 0, parameters.Length())
+        Try
+            Return this.Invoke(parameters)
+        Catch ex As Exception
+            If isdebugmode() AndAlso Not is_suppressed.alloc_error() Then
+                raise_error(error_type.warning,
+                            "Failed to invoke constructors of type ",
+                            this.DeclaringType().AssemblyQualifiedName(),
+                            ", ex ",
+                            ex.details())
+            End If
+        End Try
+        Return Nothing
     End Function
 
     <Extension()> Public Function alloc_with_parameters_constructor(ByVal t As Type) As Object
@@ -144,9 +143,8 @@ Public Module _constructor
         Dim o As Object = Nothing
         If alloc_with_parameterless_constructor(t, o, non_public) Then
             Return o
-        Else
-            Return Nothing
         End If
+        Return Nothing
     End Function
 
     <Extension()> Public Function alloc_with_public_parameterless_constructor(ByVal t As Type,
@@ -170,17 +168,15 @@ Public Module _constructor
     <Extension()> Public Function public_parameterless_constructor(ByVal t As Type) As Func(Of Object)
         If t.has_parameterless_public_constructor() Then
             Return AddressOf t.alloc_with_public_parameterless_constructor
-        Else
-            Return Nothing
         End If
+        Return Nothing
     End Function
 
     <Extension()> Public Function parameterless_constructor(ByVal t As Type) As Func(Of Object)
         If t.has_parameterless_constructor() Then
             Return AddressOf t.alloc_with_parameterless_constructor
-        Else
-            Return Nothing
         End If
+        Return Nothing
     End Function
 
     <Extension()> Public Function parameters_constructor(ByVal t As Type) As Func(Of Object(), Object)
@@ -188,9 +184,8 @@ Public Module _constructor
         c = t.first_constructor()
         If c Is Nothing Then
             Return Nothing
-        Else
-            Return AddressOf c.Invoke
         End If
+        Return AddressOf c.Invoke
     End Function
 
     <Extension()> Public Function default_parameters_constructor(ByVal t As Type) As Func(Of Object)
@@ -198,9 +193,8 @@ Public Module _constructor
         c = t.first_constructor()
         If c Is Nothing Then
             Return Nothing
-        Else
-            Return AddressOf c.execute
         End If
+        Return AddressOf c.execute
     End Function
 
     Public Function allocate(Of T)() As T
@@ -208,18 +202,20 @@ Public Module _constructor
     End Function
 
     <Extension()> Public Function allocate(ByVal t As Type) As Object
-        If allocatable(t) Then
-            Dim o As Object = Nothing
-            If alloc_with_public_parameterless_constructor(t, o) Then
-                Return o
-            ElseIf alloc_with_parameterless_constructor(t, o) Then
-                Return o
-            Else
-                Return t.alloc_with_parameters_constructor()
-            End If
-        Else
+        If Not allocatable(t) Then
             Return Nothing
         End If
+
+        Dim o As Object = Nothing
+        If alloc_with_public_parameterless_constructor(t, o) Then
+            Return o
+        End If
+
+        If alloc_with_parameterless_constructor(t, o) Then
+            Return o
+        End If
+
+        Return t.alloc_with_parameters_constructor()
     End Function
 
     <Extension()> Public Function allocate(Of RT)(ByVal t As Type) As RT
@@ -229,8 +225,7 @@ Public Module _constructor
     Public Function allocate_instance_of(Of T)(ByVal obj As T) As T
         If obj Is Nothing Then
             Return alloc(Of T)()
-        Else
-            Return direct_cast(Of T)(allocate(obj.GetType()))
         End If
+        Return direct_cast(Of T)(allocate(obj.GetType()))
     End Function
 End Module

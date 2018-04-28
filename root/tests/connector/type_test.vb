@@ -36,6 +36,9 @@ Public NotInheritable Class type_test
         assert_nothing(t)
     End Sub
 
+    Private Class c
+    End Class
+
     <test>
     Private Shared Sub new_tests()
         ' osi.tests.root.connector.type_test, osi.tests.root.connector, version ...
@@ -79,6 +82,15 @@ Public NotInheritable Class type_test
         run_failed_case("..type_test", GetType(type_test).Assembly().GetName().Name())
         run_failed_case("type_test", GetType(type_test).Assembly().GetName().FullName())
         run_failed_case("type_test", GetType(type_test).Assembly().GetName().Name())
+    End Sub
+
+    <test>
+    Private Shared Sub nested_classes_news_test()
+        Dim t As Type = Nothing
+        assert_true(t.[New](GetType(c).full_name()))
+        assert_equal(t, GetType(c))
+        assert_true(t.[New](".type_test+c", GetType(type_test).Assembly().GetName().FullName()))
+        assert_equal(t, GetType(c))
     End Sub
 
     Private Interface i1(Of T)

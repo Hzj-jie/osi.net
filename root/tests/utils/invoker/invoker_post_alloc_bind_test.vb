@@ -17,6 +17,7 @@ Public NotInheritable Class invoker_post_alloc_bind_test
 
         Public Sub check()
             assert_equal(value, 0)
+            value += 1
         End Sub
     End Class
 
@@ -36,6 +37,7 @@ Public NotInheritable Class invoker_post_alloc_bind_test
 
         Public Sub check()
             assert_equal(value, 0)
+            value += 1
         End Sub
     End Structure
 

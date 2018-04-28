@@ -96,9 +96,11 @@
     <Compile Include="date_behavior_test.vb" />
     <Compile Include="declare_nonexiting_api_behavior_test.vb" />
     <Compile Include="default_test.vb" />
-    <Compile Include="delegate_cloneable_test.vb" />
-    <Compile Include="delegate_perf_test.vb" />
-    <Compile Include="delegate_pinning_test.vb" />
+    <Compile Include="delegate\delegate_cloneable_test.vb" />
+    <Compile Include="delegate\delegate_conversion_test.vb" />
+    <Compile Include="delegate\delegate_info_test.vb" />
+    <Compile Include="delegate\delegate_perf_test.vb" />
+    <Compile Include="delegate\delegate_pinning_test.vb" />
     <Compile Include="disposable_test.vb" />
     <Compile Include="divide_perf_test.vb" />
     <Compile Include="encoding_test.vb" />

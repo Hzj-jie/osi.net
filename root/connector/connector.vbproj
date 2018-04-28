@@ -66,6 +66,7 @@
     <Compile Include="bytes\bytes_independent_types.vb" />
     <Compile Include="copy_constructor.vb" />
     <Compile Include="default_new.vb" />
+    <Compile Include="delegate\delegate_info.vb" />
     <Compile Include="disposable.vb" />
     <Compile Include="endian.vb" />
     <Compile Include="equal.vb" />
@@ -144,8 +145,8 @@
     <Compile Include="concurrency_runner.vb" />
     <Compile Include="custom_attributes.vb" />
     <Compile Include="error_handler\colorful_console_error_writer.vb" />
-    <Compile Include="delegate.vb" />
-    <Compile Include="delegate2.vb" />
+    <Compile Include="delegate\delegate.vb" />
+    <Compile Include="delegate\delegate2.vb" />
     <Compile Include="error_handler\error_event.vb" />
     <Compile Include="error_handler\error_writer_ignore_types.vb" />
     <Compile Include="event_wait_handle.vb" />

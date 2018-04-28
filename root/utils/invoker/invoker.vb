@@ -79,8 +79,10 @@ Public NotInheritable Class invoker(Of delegate_t)
         Else
             postb = Not [static]() AndAlso obj Is Nothing
         End If
+        If postb Then
+            postb = delegate_info(Of delegate_t).match(mi)
+        End If
         If Not postb Then
-            assert([static]() OrElse is_target_valid(obj))
             preb = create_delegate(obj, m, suppress_error)
         End If
     End Sub
@@ -163,7 +165,7 @@ Public NotInheritable Class invoker(Of delegate_t)
             If [static]() Then
                 d = [Delegate].CreateDelegate(dt, mi)
             Else
-                If Not is_target_valid(obj) Then
+                If obj Is Nothing Then
                     Return False
                 End If
                 d = [Delegate].CreateDelegate(dt, obj, mi)
@@ -181,7 +183,7 @@ Public NotInheritable Class invoker(Of delegate_t)
             Return False
         End Try
 
-        If Not cast(Of delegate_t)(d, m) Then
+        If Not direct_cast(Of delegate_t)(d, m) Then
             If Not suppress_error Then
                 raise_error(error_type.warning,
                             "failed to convert method ",
@@ -242,7 +244,7 @@ Public NotInheritable Class invoker(Of delegate_t)
     End Operator
 
     Public Function post_bind(ByVal obj As Object, ByRef d As delegate_t, ByVal suppress_error As Boolean) As Boolean
-        Return is_target_valid(obj) AndAlso
+        Return Not obj Is Nothing AndAlso
                valid() AndAlso
                Not [static]() AndAlso
                post_binding() AndAlso
@@ -322,12 +324,5 @@ Public NotInheritable Class invoker(Of delegate_t)
         Dim r As String = Nothing
         assert(identity(r))
         Return r
-    End Function
-
-    Private Function is_target_valid(ByVal i As Object) As Boolean
-        If t.IsValueType() Then
-            Return True
-        End If
-        Return Not i Is Nothing
     End Function
 End Class

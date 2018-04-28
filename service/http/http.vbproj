@@ -78,8 +78,10 @@
     <Compile Include="server\context_filters\request_path.vb" />
     <Compile Include="server\module\filtered_module.vb" />
     <Compile Include="server\module\filtered_procedure_module.vb" />
+    <Compile Include="server\module\module_binder.delegate_modules.vb" />
     <Compile Include="server\module\module_binder.vb" />
     <Compile Include="server\module\module_handle.module.vb" />
+    <Compile Include="server\module\procedure_module.vb" />
     <Compile Include="server\module_handle.ref.vb" />
     <Compile Include="server\module_handle.vb" />
     <Compile Include="server\server.context.attributes.vb" />
