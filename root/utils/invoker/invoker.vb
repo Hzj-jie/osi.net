@@ -47,11 +47,11 @@ Public NotInheritable Class invoker(Of delegate_t)
     End Function
 
     ' TODO: Privatize, static [New] is preferred.
-    Public Sub New(ByVal t As Type,
-                   ByVal binding_flags As BindingFlags,
-                   ByVal obj As Object,
-                   ByVal name As String,
-                   ByVal suppress_error As Boolean)
+    Private Sub New(ByVal t As Type,
+                    ByVal binding_flags As BindingFlags,
+                    ByVal obj As Object,
+                    ByVal name As String,
+                    ByVal suppress_error As Boolean)
         If t Is Nothing Then
             If Not suppress_error Then
                 raise_error(error_type.warning, "input type is nothing")
@@ -106,70 +106,6 @@ Public NotInheritable Class invoker(Of delegate_t)
         If Not postb Then
             preb = create_delegate(obj, m, suppress_error)
         End If
-    End Sub
-
-    Public Sub New(ByVal t As Type,
-                   ByVal binding_flags As BindingFlags,
-                   ByVal obj As Object,
-                   ByVal name As String)
-        Me.New(t, binding_flags, obj, name, suppress.invoker_error)
-    End Sub
-
-    Public Sub New(ByVal t As Type,
-                   ByVal binding_flags As BindingFlags,
-                   ByVal name As String,
-                   ByVal suppress_error As Boolean)
-        Me.New(t, binding_flags, Nothing, name, suppress_error)
-    End Sub
-
-    Public Sub New(ByVal t As Type, ByVal binding_flags As BindingFlags, ByVal name As String)
-        Me.New(t, binding_flags, name, suppress.invoker_error)
-    End Sub
-
-    Public Sub New(ByVal t As Type, ByVal name As String, ByVal suppress_error As Boolean)
-        Me.New(t, BindingFlags.Static Or BindingFlags.Public, name, suppress_error)
-    End Sub
-
-    Public Sub New(ByVal t As Type, ByVal name As String)
-        Me.New(t, name, suppress.invoker_error)
-    End Sub
-
-    Public Sub New(ByVal t As Type, ByVal obj As Object, ByVal name As String, ByVal suppress_error As Boolean)
-        Me.New(t, BindingFlags.Static Or BindingFlags.Instance Or BindingFlags.Public, obj, name, suppress_error)
-    End Sub
-
-    Public Sub New(ByVal t As Type, ByVal obj As Object, ByVal name As String)
-        Me.New(t, obj, name, suppress.invoker_error)
-    End Sub
-
-    Public Sub New(ByVal obj As Object, ByVal name As String, ByVal suppress_error As Boolean)
-        Me.New(obj.GetType(), obj, name, suppress_error)
-    End Sub
-
-    Public Sub New(ByVal obj As Object, ByVal name As String)
-        Me.New(obj, name, suppress.invoker_error)
-    End Sub
-
-    Public Sub New(ByVal obj As Object,
-                   ByVal binding_flags As BindingFlags,
-                   ByVal name As String,
-                   ByVal suppress_error As Boolean)
-        Me.New(obj.GetType(), binding_flags, obj, name, suppress_error)
-    End Sub
-
-    Public Sub New(ByVal obj As Object, ByVal binding_flags As BindingFlags, ByVal name As String)
-        Me.New(obj, binding_flags, name, suppress.invoker_error)
-    End Sub
-
-    Public Sub New(ByVal binding_flags As BindingFlags,
-                   ByVal obj As Object,
-                   ByVal name As String,
-                   ByVal suppress_error As Boolean)
-        Me.New(obj, binding_flags, name, suppress_error)
-    End Sub
-
-    Public Sub New(ByVal binding_flags As BindingFlags, ByVal obj As Object, ByVal name As String)
-        Me.New(binding_flags, obj, name, suppress.invoker_error)
     End Sub
 
     Private Function create_delegate(ByVal obj As Object,
