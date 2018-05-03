@@ -24,7 +24,11 @@ Public NotInheritable Class invoker_post_alloc_bind_test
     <test>
     Private Shared Sub allocate_new_object()
         Dim i As invoker(Of Action) = Nothing
-        i = New invoker(Of Action)(GetType(test_class), binding_flags.instance_public_method, "check")
+        i = invoker.of(i).
+                with_type(Of test_class).
+                with_binding_flags(binding_flags.instance_public_method).
+                with_name("check").
+                build()
         assert(i.valid() AndAlso i.post_binding())
         For j As UInt32 = 0 To 10
             assert_equal(test_class.constructed(), j)
@@ -44,7 +48,11 @@ Public NotInheritable Class invoker_post_alloc_bind_test
     <test>
     Private Shared Sub allocate_struct()
         Dim i As invoker(Of Action) = Nothing
-        i = New invoker(Of Action)(GetType(test_struct), binding_flags.instance_public_method, "check")
+        i = invoker.of(i).
+                with_type(Of test_struct).
+                with_binding_flags(binding_flags.instance_public_method).
+                with_name("check").
+                build()
         assert(i.valid() AndAlso i.post_binding())
         For j As UInt32 = 0 To 10
             i.post_allocate_bind()()
@@ -60,9 +68,11 @@ Public NotInheritable Class invoker_post_alloc_bind_test
     <test>
     Private Shared Sub forward_parameter_and_return()
         Dim i As invoker(Of Func(Of Int32, Int32)) = Nothing
-        i = New invoker(Of Func(Of Int32, Int32))(GetType(test_class2),
-                                                  binding_flags.instance_public_method,
-                                                  "increment")
+        i = invoker.of(i).
+                with_type(Of test_class2).
+                with_binding_flags(binding_flags.instance_public_method).
+                with_name("increment").
+                build()
         assert(i.valid() AndAlso i.post_binding())
         For j As Int32 = 0 To 10
             assert_equal(i.post_allocate_bind()(j), j + 1)
@@ -78,17 +88,20 @@ Public NotInheritable Class invoker_post_alloc_bind_test
         End Sub
     End Class
 
-    ' <test> not testable, post_allocate_bind()() asserts. Maybe use isolated_case_wrapper?
+    <test>
     Private Shared Sub forward_exceptions_from_constructor()
         Dim i As invoker(Of Action) = Nothing
-        i = New invoker(Of Action)(GetType(test_class3), binding_flags.instance_public_method, "exec")
+        i = invoker.of(i).
+                with_type(Of test_class3).
+                with_binding_flags(binding_flags.instance_public_method).
+                with_name("exec").
+                build()
         assert(i.valid() AndAlso i.post_binding())
-        assert_throw(Sub()
-                         i.post_allocate_bind()
-                     End Sub)
-        assert_throw(Sub()
-                         i.post_allocate_bind()()
-                     End Sub)
+        assert_true(i.post_allocate_bind(Nothing))
+        ' TODO: not testable
+        'assert_throw(Sub()
+        '                 i.post_allocate_bind()()
+        '             End Sub)
     End Sub
 
     Private NotInheritable Class test_class4
@@ -100,7 +113,11 @@ Public NotInheritable Class invoker_post_alloc_bind_test
     <test>
     Private Shared Sub forward_exceptions_from_invoke()
         Dim i As invoker(Of Action) = Nothing
-        i = New invoker(Of Action)(GetType(test_class4), binding_flags.instance_public_method, "exec")
+        i = invoker.of(i).
+                with_type(Of test_class4).
+                with_binding_flags(binding_flags.instance_public_method).
+                with_name("exec").
+                build()
         assert(i.valid() AndAlso i.post_binding())
         i.post_allocate_bind()
         assert_throw(Sub()
@@ -112,17 +129,20 @@ Public NotInheritable Class invoker_post_alloc_bind_test
         Sub exec()
     End Interface
 
-    ' <test> not testable, post_allocate_bind()() asserts. Maybe use isolated_case_wrapper?
+    <test>
     Private Shared Sub not_allocatable()
         Dim i As invoker(Of Action) = Nothing
-        i = New invoker(Of Action)(GetType(test_int), binding_flags.instance_public_method, "exec")
+        i = invoker.of(i).
+                with_type(Of test_int).
+                with_binding_flags(binding_flags.instance_public_method).
+                with_name("exec").
+                build()
         assert(i.valid() AndAlso i.post_binding())
-        assert_throw(Sub()
-                         i.post_allocate_bind()
-                     End Sub)
-        assert_throw(Sub()
-                         i.post_allocate_bind()()
-                     End Sub)
+        assert_true(i.post_allocate_bind(Nothing))
+        ' TODO: not testable
+        'assert_throw(Sub()
+        '                 i.post_allocate_bind()()
+        '             End Sub)
     End Sub
 
     Private Sub New()

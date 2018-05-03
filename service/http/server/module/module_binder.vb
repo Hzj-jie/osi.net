@@ -80,12 +80,15 @@ Partial Public NotInheritable Class module_binder
         assert(Not post_bind Is Nothing)
 
         Dim invoker As invoker(Of delegate_type) = Nothing
-        If Not typeless_invoker.[New](type, assembly, binding_flags, function_name, invoker) Then
+        If Not typeless_invoker.of(invoker).
+                   with_type_name(type).
+                   with_assembly_name(assembly).
+                   with_binding_flags(binding_flags).
+                   with_name(function_name).
+                   build(invoker) Then
             Return Nothing
         End If
-        If Not invoker.valid() Then
-            Return Nothing
-        End If
+        assert(invoker.valid())
 
         Dim filter As context_filter = Nothing
         filter = context_filter.[New](invoker.method_info())

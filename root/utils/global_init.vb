@@ -12,7 +12,7 @@ Imports osi.root.lock
 Imports global_init_attribute = osi.root.constants.global_initAttribute
 Imports lock_t = osi.root.lock.slimlock.monitorlock
 
-Public Class global_init
+Public NotInheritable Class global_init
     Private Shared ReadOnly times As atomic_int
     Private Shared ReadOnly inited As [set](Of comparable_type)
     Private Shared initiating As lock_t
@@ -20,9 +20,6 @@ Public Class global_init
     Shared Sub New()
         times = New atomic_int()
         inited = New [set](Of comparable_type)()
-    End Sub
-
-    Private Sub New()
     End Sub
 
     Public Shared Function init_times() As Int32
@@ -38,9 +35,14 @@ Public Class global_init
         assert(Not t Is Nothing)
         assert(Not t.IsGenericTypeDefinition())
         Dim m As invoker(Of Action) = Nothing
-        m = New invoker(Of Action)(t, binding_flags.static_all_method, "init", True)
+        invoker.of(m).
+            with_type(t).
+            with_binding_flags(binding_flags.static_all_method).
+            with_name("init").
+            with_suppress_error(True).
+            build(m)
         Dim v As Action = Nothing
-        If m.pre_bind(v) Then
+        If Not m Is Nothing AndAlso m.pre_bind(v) Then
             Try
                 v()
             Catch ex As Exception
@@ -106,5 +108,8 @@ Public Class global_init
             concurrency_runner.execute(AddressOf execute_init, +its(k))
         Next
         initiating.release()
+    End Sub
+
+    Private Sub New()
     End Sub
 End Class

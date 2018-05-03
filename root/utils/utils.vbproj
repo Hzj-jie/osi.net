@@ -84,8 +84,10 @@
     <Compile Include="error_handle\application_info_logging.vb" />
     <Compile Include="error_handle\trace.vb" />
     <Compile Include="instance_count.vb" />
+    <Compile Include="invoker\invoker.builder_base.vb" />
     <Compile Include="invoker\invoker.builder.vb" />
     <Compile Include="invoker\invoker.post_alloc_bind.vb" />
+    <Compile Include="invoker\typeless_invoker.builder.vb" />
     <Compile Include="invoker\typeless_invoker.vb" />
     <Compile Include="invoker\valuer.recursive.vb" />
     <Compile Include="invoker\valuer.vb" />
@@ -94,7 +96,6 @@
     <Compile Include="manual_gc.vb" />
     <Compile Include="global_init.vb" />
     <Compile Include="invoker\invoker.vb" />
-    <Compile Include="invoker\invokers.vb" />
     <Compile Include="lifetime_binder\application_lifetime.vb" />
     <Compile Include="lifetime_binder\disposer.vb" />
     <Compile Include="mono\chmod.vb" />

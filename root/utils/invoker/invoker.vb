@@ -30,13 +30,20 @@ Public NotInheritable Class invoker(Of delegate_t)
                                  ByVal binding_flags As BindingFlags,
                                  ByVal obj As Object,
                                  ByVal name As String,
+                                 ByVal suppress_error As Boolean,
+                                 ByRef o As invoker(Of delegate_t)) As Boolean
+        o = New invoker(Of delegate_t)(t, binding_flags, obj, name, suppress_error)
+        Return o.valid()
+    End Function
+
+    Public Shared Function [New](ByVal t As Type,
+                                 ByVal binding_flags As BindingFlags,
+                                 ByVal obj As Object,
+                                 ByVal name As String,
                                  ByVal suppress_error As Boolean) As invoker(Of delegate_t)
         Dim r As invoker(Of delegate_t) = Nothing
-        r = New invoker(Of delegate_t)(t, binding_flags, obj, name, suppress_error)
-        If r.valid() Then
-            Return r
-        End If
-        Return Nothing
+        assert([New](t, binding_flags, obj, name, suppress_error, r))
+        Return r
     End Function
 
     ' TODO: Privatize, static [New] is preferred.

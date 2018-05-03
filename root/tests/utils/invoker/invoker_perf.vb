@@ -102,14 +102,30 @@ Public Class invoker_perf
         Protected ReadOnly l As invoker(Of Action(Of Int32))
 
         Public Sub New()
-            i = New invoker(Of Func(Of Int32))(GetType(invoker_perf), binding_flags.static_private_method, "f1")
+            i = invoker.of(i).
+                    with_type(Of invoker_perf)().
+                    with_binding_flags(binding_flags.static_private_method).
+                    with_name("f1").
+                    build()
             assert(i.valid() AndAlso i.pre_binding())
-            j = New invoker(Of Func(Of Int32, Int32))(GetType(invoker_perf), binding_flags.static_private_method, "f2")
+            j = invoker.of(j).
+                    with_type(Of invoker_perf)().
+                    with_binding_flags(binding_flags.static_private_method).
+                    with_name("f2").
+                    build()
             assert(j.valid() AndAlso j.pre_binding())
-            k = New invoker(Of Action)(GetType(invoker_perf), binding_flags.static_private_method, "g1")
-            assert(k.valid() AndAlso j.pre_binding())
-            l = New invoker(Of Action(Of Int32))(GetType(invoker_perf), binding_flags.static_private_method, "g2")
-            assert(l.valid() AndAlso k.pre_binding())
+            k = invoker.of(k).
+                    with_type(Of invoker_perf).
+                    with_binding_flags(binding_flags.static_private_method).
+                    with_name("g1").
+                    build()
+            assert(k.valid() AndAlso k.pre_binding())
+            l = invoker.of(l).
+                    with_type(Of invoker_perf).
+                    with_binding_flags(binding_flags.static_private_method).
+                    with_name("g2").
+                    build()
+            assert(l.valid() AndAlso l.pre_binding())
         End Sub
 
         Public Overrides Function run() As Boolean
@@ -169,14 +185,30 @@ Public Class invoker_perf
         Public Sub New()
             Dim o As test_class = Nothing
             o = New test_class()
-            i = New invoker(Of Func(Of Int32))(o, binding_flags.instance_public_method, "f1")
+            i = invoker.of(i).
+                    with_object(o).
+                    with_binding_flags(binding_flags.instance_public_method).
+                    with_name("f1").
+                    build()
             assert(i.valid() AndAlso i.pre_binding())
-            j = New invoker(Of Func(Of Int32, Int32))(o, binding_flags.instance_public_method, "f2")
+            j = invoker.of(j).
+                    with_object(o).
+                    with_binding_flags(binding_flags.instance_public_method).
+                    with_name("f2").
+                    build()
             assert(j.valid() AndAlso j.pre_binding())
-            k = New invoker(Of Action)(o, binding_flags.instance_public_method, "g1")
-            assert(k.valid() AndAlso j.pre_binding())
-            l = New invoker(Of Action(Of Int32))(o, binding_flags.instance_public_method, "g2")
-            assert(l.valid() AndAlso k.pre_binding())
+            k = invoker.of(k).
+                    with_object(o).
+                    with_binding_flags(binding_flags.instance_public_method).
+                    with_name("g1").
+                    build()
+            assert(k.valid() AndAlso k.pre_binding())
+            l = invoker.of(l).
+                    with_object(o).
+                    with_binding_flags(binding_flags.instance_public_method).
+                    with_name("g2").
+                    build()
+            assert(l.valid() AndAlso l.pre_binding())
         End Sub
 
         Public Overrides Function run() As Boolean

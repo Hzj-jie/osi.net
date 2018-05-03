@@ -1,4 +1,9 @@
 ﻿
+
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
 Imports System.Reflection
 Imports osi.root.constants
@@ -43,7 +48,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
             Else
                 cid = id
             End If
-            If Not l.define(+((+it).second.first), cid, (+it).second.second) Then
+            If Not l.define(+((+it).second.first), CUInt(cid), (+it).second.second) Then
                 Return False
             End If
             If cid = id Then
@@ -65,7 +70,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
            Not strsame(name, end_status_name) AndAlso
            status_name_id.find(name) = status_name_id.end() Then
             status_name_id(name) = id
-            id += 1
+            id += uint32_1
         End If
         Return True
     End Function
@@ -130,10 +135,14 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
             Return True
         Else
             Dim inv As invoker(Of Func(Of lexer.typed_word(), UInt32, RESULT_T, Boolean)) = Nothing
-            inv = New invoker(Of Func(Of lexer.typed_word(), UInt32, RESULT_T, Boolean)) _
-                             (method_type,
-                              BindingFlags.Static Or BindingFlags.Public Or BindingFlags.NonPublic, name)
-            Return inv.valid() AndAlso assert(inv.static()) AndAlso eva(a, +inv)
+            Return invoker.of(inv).
+                       with_type(method_type).
+                       with_binding_flags(binding_flags.static_all_method).
+                       with_name(name).
+                       build(inv) AndAlso
+                   assert(inv.valid()) AndAlso
+                   assert(inv.static()) AndAlso
+                   eva(a, +inv)
         End If
     End Function
 
@@ -177,8 +186,8 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
                    retrieve_status_id(status_name_id, (+it2).second.first, t) AndAlso
                    retrieve_action(method_type, (+it2).second.second, a) Then
                     If Not If(a Is Nothing,
-                              p.define(f, v, t),
-                              p.define(f, v, t, a)) Then
+                              p.define(f, CUInt(v), t),
+                              p.define(f, CUInt(v), t, a)) Then
                         Return False
                     End If
                 Else

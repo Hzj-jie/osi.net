@@ -1,16 +1,16 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
 Imports System.Net.NetworkInformation
 Imports System.Net.Sockets
-Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports osi.root.envs
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.envs
 Imports osi.root.utils
-Imports osi.root.formation
-Imports osi.root.procedure
-Imports osi.service.tcp.constants
 
 #Const POLL_READ_SELECT = False
 
@@ -23,16 +23,16 @@ Public Module _extension
 
     Sub New()
         ReDim empty_buff(0)
-        empty_buff_size = array_size(empty_buff)
+        empty_buff_size = array_size_i(empty_buff)
         assert(npos < 0)
         donot_poll_status = env_bool(env_keys("do", "not", "poll", "status")) OrElse
                             env_bool(env_keys("donot", "poll", "status"))
         poll_status = Not donot_poll_status
-        act = New invoker(Of Func(Of Boolean))(GetType(TcpListener),
-                                               BindingFlags.Instance Or
-                                               BindingFlags.NonPublic Or
-                                               BindingFlags.InvokeMethod,
-                                               "get_Active")
+        assert(invoker.of(act).
+                   with_type(GetType(TcpListener)).
+                   with_binding_flags(binding_flags.instance_private_method).
+                   with_name("get_Active").
+                   build(act))
         assert(act.valid())
         assert(act.post_binding())
     End Sub

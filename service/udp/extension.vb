@@ -1,21 +1,24 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports System.Net
 Imports System.Net.Sockets
-Imports System.Reflection
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.utils
 
 Public Module _extension
     Private ReadOnly act As invoker(Of Func(Of Boolean))
 
     Sub New()
-        act = New invoker(Of Func(Of Boolean))(GetType(UdpClient),
-                                               BindingFlags.Instance Or
-                                               BindingFlags.NonPublic Or
-                                               BindingFlags.InvokeMethod,
-                                               "get_Active")
+        assert(invoker.of(act).
+                   with_type(GetType(UdpClient)).
+                   with_binding_flags(binding_flags.instance_private_method).
+                   with_name("get_Active").
+                   build(act))
         assert(act.valid())
         assert(act.post_binding())
     End Sub
@@ -148,8 +151,8 @@ Public Module _extension
         Else
             Dim rp As UInt16 = uint16_0
             Dim ep As UInt16 = uint16_0
-            rp = received_from.Port()
-            ep = expected.Port()
+            rp = CUShort(received_from.Port())
+            ep = CUShort(expected.Port())
             If rp = ep OrElse ep = socket_invalid_port Then
                 ' If port has not been set, treat them as equal.
                 Dim ea As IPAddress = Nothing
@@ -169,7 +172,7 @@ Public Module _extension
                     eb = ea.GetAddressBytes()
                     If array_size(rb) = array_size(eb) Then
                         assert(Not isemptyarray(rb))
-                        For i As UInt32 = uint32_0 To array_size(rb) - uint32_1
+                        For i As Int32 = uint32_0 To array_size_i(rb) - 1
                             ' IPAddress does not contain a sub network mask field, so make it simpler,
                             ' if one byte is 255, treat it as broadcast mask.
                             If rb(i) <> eb(i) AndAlso eb(i) <> max_uint8 Then

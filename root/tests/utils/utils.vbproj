@@ -66,6 +66,7 @@
     <Compile Include="invoker\invoker_perf.vb" />
     <Compile Include="invoker\invoker_post_alloc_bind_test.vb" />
     <Compile Include="invoker\invoker_test.vb" />
+    <Compile Include="invoker\invoker_test2.vb" />
     <Compile Include="invoker\invoker_unmatch_signature_test.vb" />
     <Compile Include="invoker\invoker_value_type_test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -90,7 +91,7 @@
     <Compile Include="reference_count_runner_test.vb" />
     <Compile Include="shell_less_process_test.vb" />
     <Compile Include="shell_less_process_test_exe.vb" />
-    <Compile Include="typeless_invoker_test.vb" />
+    <Compile Include="invoker\typeless_invoker_test.vb" />
     <Compile Include="type_attribute_forward_test.vb" />
     <Compile Include="type_attribute_perf_test.vb" />
     <Compile Include="type_attribute_signal_test.vb" />

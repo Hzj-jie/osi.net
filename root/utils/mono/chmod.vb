@@ -65,10 +65,13 @@ Public Module _chmod
                 Return
             End Try
             ' Mono.Unix.Native.FilePermissions is not available.
-            f = New invoker(Of not_resolved_type_delegate)(
-                        Type.GetType("Mono.Unix.Native.Syscall, " +
-                                     If(envs.clr_2, mono_posix_assembly_v2, mono_posix_assembly_v4)),
-                        "chmod")
+            If typeless_invoker.of(f).
+                   with_type_name(strcat("Mono.Unix.Native.Syscall, ",
+                                         If(envs.clr_2, mono_posix_assembly_v2, mono_posix_assembly_v4))).
+                   with_name("chmod").
+                   build(f) Then
+                assert(f.valid())
+            End If
         End If
     End Sub
 

@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.lock
 Imports osi.root.utils
 Imports osi.root.utt
@@ -33,10 +34,11 @@ Public Class invoker_test
         Dim c As atomic_int = Nothing
         c = New atomic_int()
         Dim ds As invoker(Of Action(Of atomic_int)) = Nothing
-        ds = New invoker(Of Action(Of atomic_int))(GetType(invoker_test),
-                                                   Reflection.BindingFlags.NonPublic Or
-                                                   Reflection.BindingFlags.Static,
-                                                   "ss1")
+        ds = invoker.of(ds).
+                 with_type(Of invoker_test).
+                 with_binding_flags(binding_flags.static_private_method).
+                 with_name("ss1").
+                 build()
         assert_true(ds.valid())
         assert_true(ds.static())
         assert_true(ds.pre_binding())
@@ -46,10 +48,11 @@ Public Class invoker_test
         End If
         assert_false(ds.post_bind(Me, Nothing))
 
-        ds = New invoker(Of Action(Of atomic_int))(Me,
-                                                   Reflection.BindingFlags.NonPublic Or
-                                                   Reflection.BindingFlags.Instance,
-                                                   "s1")
+        ds = invoker.of(ds).
+                 with_object(Me).
+                 with_binding_flags(binding_flags.instance_private_method).
+                 with_name("s1").
+                 build()
         assert_true(ds.valid())
         assert_false(ds.static())
         assert_true(ds.pre_binding())
@@ -60,10 +63,11 @@ Public Class invoker_test
         assert_false(ds.post_bind(Me, Nothing))
 
         Dim df As invoker(Of Func(Of atomic_int, Int32)) = Nothing
-        df = New invoker(Of Func(Of atomic_int, Int32))(GetType(invoker_test),
-                                                        Reflection.BindingFlags.NonPublic Or
-                                                        Reflection.BindingFlags.Static,
-                                                        "sf1")
+        df = invoker.of(df).
+                 with_type(Of invoker_test).
+                 with_binding_flags(binding_flags.static_private_method).
+                 with_name("sf1").
+                 build()
         assert_true(df.valid())
         assert_true(df.static())
         assert_true(df.pre_binding())
@@ -73,10 +77,11 @@ Public Class invoker_test
         End If
         assert_false(df.post_bind(Me, Nothing))
 
-        df = New invoker(Of Func(Of atomic_int, Int32))(Me,
-                                                        Reflection.BindingFlags.NonPublic Or
-                                                        Reflection.BindingFlags.Instance,
-                                                        "f1")
+        df = invoker.of(df).
+                 with_object(Me).
+                 with_binding_flags(binding_flags.instance_private_method).
+                 with_name("f1").
+                 build()
         assert_true(df.valid())
         assert_false(df.static())
         assert_true(df.pre_binding())
@@ -88,10 +93,12 @@ Public Class invoker_test
 
         assert_equal(+c, 4)
 
-        df = New invoker(Of Func(Of atomic_int, Int32))(Me,
-                                                        Reflection.BindingFlags.NonPublic Or
-                                                        Reflection.BindingFlags.Instance,
-                                                        "not_exist")
+        assert_false(invoker.of(df).
+                         with_object(Me).
+                         with_binding_flags(binding_flags.instance_private_method).
+                         with_name("not_exist").
+                         build(df))
+        assert_not_nothing(df)
         assert_false(df.valid())
         assert_false(df.pre_binding())
         assert_false(df.post_binding())
@@ -105,10 +112,11 @@ Public Class invoker_test
         Dim c As atomic_int = Nothing
         c = New atomic_int()
         Dim ds As invoker(Of Action(Of atomic_int)) = Nothing
-        ds = New invoker(Of Action(Of atomic_int))(Me.GetType(),
-                                                   Reflection.BindingFlags.NonPublic Or
-                                                   Reflection.BindingFlags.Instance,
-                                                   "s1")
+        ds = invoker.of(ds).
+                 with_type(Me.GetType()).
+                 with_binding_flags(binding_flags.instance_private_method).
+                 with_name("s1").
+                 build()
         assert_true(ds.valid())
         assert_false(ds.static())
         assert_false(ds.pre_binding())
@@ -119,10 +127,11 @@ Public Class invoker_test
         End If
 
         Dim df As invoker(Of Func(Of atomic_int, Int32)) = Nothing
-        df = New invoker(Of Func(Of atomic_int, Int32))(Me.GetType(),
-                                                        Reflection.BindingFlags.NonPublic Or
-                                                        Reflection.BindingFlags.Instance,
-                                                        "f1")
+        df = invoker.of(df).
+                 with_type(Me.GetType()).
+                 with_binding_flags(binding_flags.instance_private_method).
+                 with_name("f1").
+                 build()
         assert_true(df.valid())
         assert_false(df.static())
         assert_false(df.pre_binding())
@@ -134,10 +143,12 @@ Public Class invoker_test
 
         assert_equal(+c, 2)
 
-        df = New invoker(Of Func(Of atomic_int, Int32))(Me.GetType(),
-                                                        Reflection.BindingFlags.NonPublic Or
-                                                        Reflection.BindingFlags.Instance,
-                                                        "not_exist")
+        assert_false(invoker.of(df).
+                         with_type(Me.GetType()).
+                         with_binding_flags(binding_flags.instance_private_method).
+                         with_name("not_exist").
+                         build(df))
+        assert_not_nothing(df)
         assert_false(df.valid())
         assert_false(df.pre_binding())
         assert_false(df.post_binding())
