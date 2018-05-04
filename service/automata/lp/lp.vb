@@ -139,7 +139,6 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
                        with_binding_flags(binding_flags.static_all_method).
                        with_name(name).
                        build(inv) AndAlso
-                   assert(inv.valid()) AndAlso
                    assert(inv.static()) AndAlso
                    eva(a, +inv)
         End If

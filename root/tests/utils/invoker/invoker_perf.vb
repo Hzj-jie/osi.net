@@ -107,25 +107,25 @@ Public Class invoker_perf
                     with_binding_flags(binding_flags.static_private_method).
                     with_name("f1").
                     build()
-            assert(i.valid() AndAlso i.pre_binding())
+            assert(i.pre_binding())
             j = invoker.of(j).
                     with_type(Of invoker_perf)().
                     with_binding_flags(binding_flags.static_private_method).
                     with_name("f2").
                     build()
-            assert(j.valid() AndAlso j.pre_binding())
+            assert(j.pre_binding())
             k = invoker.of(k).
                     with_type(Of invoker_perf).
                     with_binding_flags(binding_flags.static_private_method).
                     with_name("g1").
                     build()
-            assert(k.valid() AndAlso k.pre_binding())
+            assert(k.pre_binding())
             l = invoker.of(l).
                     with_type(Of invoker_perf).
                     with_binding_flags(binding_flags.static_private_method).
                     with_name("g2").
                     build()
-            assert(l.valid() AndAlso l.pre_binding())
+            assert(l.pre_binding())
         End Sub
 
         Public Overrides Function run() As Boolean
@@ -190,25 +190,25 @@ Public Class invoker_perf
                     with_binding_flags(binding_flags.instance_public_method).
                     with_name("f1").
                     build()
-            assert(i.valid() AndAlso i.pre_binding())
+            assert(i.pre_binding())
             j = invoker.of(j).
                     with_object(o).
                     with_binding_flags(binding_flags.instance_public_method).
                     with_name("f2").
                     build()
-            assert(j.valid() AndAlso j.pre_binding())
+            assert(j.pre_binding())
             k = invoker.of(k).
                     with_object(o).
                     with_binding_flags(binding_flags.instance_public_method).
                     with_name("g1").
                     build()
-            assert(k.valid() AndAlso k.pre_binding())
+            assert(k.pre_binding())
             l = invoker.of(l).
                     with_object(o).
                     with_binding_flags(binding_flags.instance_public_method).
                     with_name("g2").
                     build()
-            assert(l.valid() AndAlso l.pre_binding())
+            assert(l.pre_binding())
         End Sub
 
         Public Overrides Function run() As Boolean

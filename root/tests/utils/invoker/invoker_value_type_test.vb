@@ -29,7 +29,6 @@ Public NotInheritable Class invoker_value_type_test
                         with_name("exec").
                         for_instance_public_methods().
                         build(i))
-        assert_true(i.valid())
         assert_true(i.post_binding())
         For j As Int32 = 0 To 10
             Dim f As Func(Of Int32) = Nothing
@@ -46,7 +45,6 @@ Public NotInheritable Class invoker_value_type_test
                         with_name("GetHashCode").
                         for_instance_public_methods().
                         build(i))
-        assert_true(i.valid())
         assert_true(i.post_binding())
         For j As Int32 = 0 To 10
             Dim f As Func(Of Int32) = Nothing

@@ -29,7 +29,7 @@ Public NotInheritable Class invoker_post_alloc_bind_test
                 with_binding_flags(binding_flags.instance_public_method).
                 with_name("check").
                 build()
-        assert(i.valid() AndAlso i.post_binding())
+        assert(i.post_binding())
         For j As UInt32 = 0 To 10
             assert_equal(test_class.constructed(), j)
             i.post_allocate_bind()()
@@ -53,7 +53,7 @@ Public NotInheritable Class invoker_post_alloc_bind_test
                 with_binding_flags(binding_flags.instance_public_method).
                 with_name("check").
                 build()
-        assert(i.valid() AndAlso i.post_binding())
+        assert(i.post_binding())
         For j As UInt32 = 0 To 10
             i.post_allocate_bind()()
         Next
@@ -73,7 +73,7 @@ Public NotInheritable Class invoker_post_alloc_bind_test
                 with_binding_flags(binding_flags.instance_public_method).
                 with_name("increment").
                 build()
-        assert(i.valid() AndAlso i.post_binding())
+        assert(i.post_binding())
         For j As Int32 = 0 To 10
             assert_equal(i.post_allocate_bind()(j), j + 1)
         Next
@@ -96,8 +96,9 @@ Public NotInheritable Class invoker_post_alloc_bind_test
                 with_binding_flags(binding_flags.instance_public_method).
                 with_name("exec").
                 build()
-        assert(i.valid() AndAlso i.post_binding())
+        assert(i.post_binding())
         assert_true(i.post_allocate_bind(Nothing))
+
         ' TODO: not testable
         'assert_throw(Sub()
         '                 i.post_allocate_bind()()
@@ -118,7 +119,7 @@ Public NotInheritable Class invoker_post_alloc_bind_test
                 with_binding_flags(binding_flags.instance_public_method).
                 with_name("exec").
                 build()
-        assert(i.valid() AndAlso i.post_binding())
+        assert(i.post_binding())
         i.post_allocate_bind()
         assert_throw(Sub()
                          i.post_allocate_bind()()
@@ -137,7 +138,7 @@ Public NotInheritable Class invoker_post_alloc_bind_test
                 with_binding_flags(binding_flags.instance_public_method).
                 with_name("exec").
                 build()
-        assert(i.valid() AndAlso i.post_binding())
+        assert(i.post_binding())
         assert_true(i.post_allocate_bind(Nothing))
         ' TODO: not testable
         'assert_throw(Sub()

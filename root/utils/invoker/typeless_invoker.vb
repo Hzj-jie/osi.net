@@ -29,12 +29,7 @@ Public NotInheritable Class typeless_invoker(Of delegate_t)
                                  ByRef o As invoker(Of delegate_t)) As Boolean
         Dim t As Type = Nothing
         Return t.[New](type_name, assembly_name) AndAlso
-               invoker.of(Of delegate_t).
-                   with_type(t).
-                   with_binding_flags(binding_flags).
-                   with_name(name).
-                   with_suppress_error(suppress_error).
-                   build(o)
+               invoker(Of delegate_t).[New](t, binding_flags, Nothing, name, suppress_error, o)
     End Function
 
     Public Shared Function [New](ByVal type_name As String,

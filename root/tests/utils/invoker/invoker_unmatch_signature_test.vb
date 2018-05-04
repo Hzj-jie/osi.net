@@ -28,7 +28,6 @@ Public NotInheritable Class invoker_unmatch_signature_test
                  with_binding_flags(binding_flags.instance_private_method).
                  with_name("f2").
                  build()
-        assert_true(i1.valid())
         assert_false(i1.pre_binding())
         assert_false(i1.post_binding())
         assert_false(i1.pre_bind(f1))
@@ -40,7 +39,6 @@ Public NotInheritable Class invoker_unmatch_signature_test
                  with_binding_flags(binding_flags.static_private_method).
                  with_name("f1").
                  build()
-        assert_true(i2.valid())
         assert_false(i2.pre_binding())
         assert_false(i2.post_binding())
         assert_false(i2.pre_bind(f2))

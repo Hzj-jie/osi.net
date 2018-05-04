@@ -19,7 +19,6 @@ Public Module _extension
                    with_binding_flags(binding_flags.instance_private_method).
                    with_name("get_Active").
                    build(act))
-        assert(act.valid())
         assert(act.post_binding())
     End Sub
 

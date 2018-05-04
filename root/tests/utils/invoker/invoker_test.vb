@@ -34,12 +34,11 @@ Public Class invoker_test
         Dim c As atomic_int = Nothing
         c = New atomic_int()
         Dim ds As invoker(Of Action(Of atomic_int)) = Nothing
-        ds = invoker.of(ds).
-                 with_type(Of invoker_test).
-                 with_binding_flags(binding_flags.static_private_method).
-                 with_name("ss1").
-                 build()
-        assert_true(ds.valid())
+        assert_true(invoker.of(ds).
+                        with_type(Of invoker_test).
+                        with_binding_flags(binding_flags.static_private_method).
+                        with_name("ss1").
+                        build(ds))
         assert_true(ds.static())
         assert_true(ds.pre_binding())
         assert_false(ds.post_binding())
@@ -48,12 +47,11 @@ Public Class invoker_test
         End If
         assert_false(ds.post_bind(Me, Nothing))
 
-        ds = invoker.of(ds).
-                 with_object(Me).
-                 with_binding_flags(binding_flags.instance_private_method).
-                 with_name("s1").
-                 build()
-        assert_true(ds.valid())
+        assert_true(invoker.of(ds).
+                        with_object(Me).
+                        with_binding_flags(binding_flags.instance_private_method).
+                        with_name("s1").
+                        build(ds))
         assert_false(ds.static())
         assert_true(ds.pre_binding())
         assert_false(ds.post_binding())
@@ -63,12 +61,11 @@ Public Class invoker_test
         assert_false(ds.post_bind(Me, Nothing))
 
         Dim df As invoker(Of Func(Of atomic_int, Int32)) = Nothing
-        df = invoker.of(df).
-                 with_type(Of invoker_test).
-                 with_binding_flags(binding_flags.static_private_method).
-                 with_name("sf1").
-                 build()
-        assert_true(df.valid())
+        assert_true(invoker.of(df).
+                        with_type(Of invoker_test).
+                        with_binding_flags(binding_flags.static_private_method).
+                        with_name("sf1").
+                        build(df))
         assert_true(df.static())
         assert_true(df.pre_binding())
         assert_false(df.post_binding())
@@ -77,12 +74,11 @@ Public Class invoker_test
         End If
         assert_false(df.post_bind(Me, Nothing))
 
-        df = invoker.of(df).
-                 with_object(Me).
-                 with_binding_flags(binding_flags.instance_private_method).
-                 with_name("f1").
-                 build()
-        assert_true(df.valid())
+        assert_true(invoker.of(df).
+                        with_object(Me).
+                        with_binding_flags(binding_flags.instance_private_method).
+                        with_name("f1").
+                        build(df))
         assert_false(df.static())
         assert_true(df.pre_binding())
         assert_false(df.post_binding())
@@ -98,12 +94,7 @@ Public Class invoker_test
                          with_binding_flags(binding_flags.instance_private_method).
                          with_name("not_exist").
                          build(df))
-        assert_not_nothing(df)
-        assert_false(df.valid())
-        assert_false(df.pre_binding())
-        assert_false(df.post_binding())
-        assert_false(df.pre_bind(Nothing))
-        assert_false(df.post_bind(Me, Nothing))
+        assert_nothing(df)
 
         Return True
     End Function
@@ -112,12 +103,11 @@ Public Class invoker_test
         Dim c As atomic_int = Nothing
         c = New atomic_int()
         Dim ds As invoker(Of Action(Of atomic_int)) = Nothing
-        ds = invoker.of(ds).
-                 with_type(Me.GetType()).
-                 with_binding_flags(binding_flags.instance_private_method).
-                 with_name("s1").
-                 build()
-        assert_true(ds.valid())
+        assert_true(invoker.of(ds).
+                        with_type(Me.GetType()).
+                        with_binding_flags(binding_flags.instance_private_method).
+                        with_name("s1").
+                        build(ds))
         assert_false(ds.static())
         assert_false(ds.pre_binding())
         assert_true(ds.post_binding())
@@ -127,12 +117,11 @@ Public Class invoker_test
         End If
 
         Dim df As invoker(Of Func(Of atomic_int, Int32)) = Nothing
-        df = invoker.of(df).
-                 with_type(Me.GetType()).
-                 with_binding_flags(binding_flags.instance_private_method).
-                 with_name("f1").
-                 build()
-        assert_true(df.valid())
+        assert_true(invoker.of(df).
+                        with_type(Me.GetType()).
+                        with_binding_flags(binding_flags.instance_private_method).
+                        with_name("f1").
+                        build(df))
         assert_false(df.static())
         assert_false(df.pre_binding())
         assert_true(df.post_binding())
@@ -148,12 +137,7 @@ Public Class invoker_test
                          with_binding_flags(binding_flags.instance_private_method).
                          with_name("not_exist").
                          build(df))
-        assert_not_nothing(df)
-        assert_false(df.valid())
-        assert_false(df.pre_binding())
-        assert_false(df.post_binding())
-        assert_false(df.pre_bind(Nothing))
-        assert_false(df.post_bind(Me, Nothing))
+        assert_nothing(df)
 
         Return True
     End Function

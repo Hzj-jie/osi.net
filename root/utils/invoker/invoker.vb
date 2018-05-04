@@ -33,7 +33,11 @@ Public NotInheritable Class invoker(Of delegate_t)
                                  ByVal suppress_error As Boolean,
                                  ByRef o As invoker(Of delegate_t)) As Boolean
         o = New invoker(Of delegate_t)(t, binding_flags, obj, name, suppress_error)
-        Return o.valid()
+        If o.valid() Then
+            Return True
+        End If
+        o = Nothing
+        Return False
     End Function
 
     Public Shared Function [New](ByVal t As Type,
@@ -46,7 +50,6 @@ Public NotInheritable Class invoker(Of delegate_t)
         Return r
     End Function
 
-    ' TODO: Privatize, static [New] is preferred.
     Private Sub New(ByVal t As Type,
                     ByVal binding_flags As BindingFlags,
                     ByVal obj As Object,
@@ -156,8 +159,7 @@ Public NotInheritable Class invoker(Of delegate_t)
         Return True
     End Function
 
-    ' TODO: Privatize
-    Public Function valid() As Boolean
+    Private Function valid() As Boolean
         Return Not mi Is Nothing
     End Function
 

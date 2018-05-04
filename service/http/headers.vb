@@ -21,29 +21,26 @@ Public Module _headers
                                  with_binding_flags(binding_flags.instance_private_method).
                                  with_name("AddWithoutValidate").
                                  build()
-        assert(_unsafe_add_header.valid())
         assert(_unsafe_add_header.post_binding())
 
-        invoker.of(_allow_http_response_header).
-            with_type(Of WebHeaderCollection)().
-            with_binding_flags(binding_flags.instance_private_method).
-            with_name("get_AllowHttpResponseHeader").
-            build(_allow_http_response_header)
         'for mono
-        If Not _allow_http_response_header.valid() OrElse
+        If Not invoker.of(_allow_http_response_header).
+                   with_type(Of WebHeaderCollection)().
+                   with_binding_flags(binding_flags.instance_private_method).
+                   with_name("get_AllowHttpResponseHeader").
+                   build(_allow_http_response_header) OrElse
            Not _allow_http_response_header.post_binding() Then
             raise_error(error_type.warning,
                         "get_AllowHttpResponseHeader is not presented in the implementation, ",
                         "the performance of get method will be impacted")
         End If
 
-        invoker.of(_allow_http_request_header).
-            with_type(Of WebHeaderCollection)().
-            with_binding_flags(binding_flags.instance_private_method).
-            with_name("get_AllowHttpRequestHeader").
-            build(_allow_http_request_header)
         'for mono
-        If Not _allow_http_request_header.valid() OrElse
+        If Not invoker.of(_allow_http_request_header).
+                   with_type(Of WebHeaderCollection)().
+                   with_binding_flags(binding_flags.instance_private_method).
+                   with_name("get_AllowHttpRequestHeader").
+                   build(_allow_http_request_header) OrElse
            Not _allow_http_request_header.post_binding() Then
             raise_error(error_type.warning,
                         "get_AllowHttpRequestHeader is not presented in the implementation, ",

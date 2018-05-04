@@ -88,7 +88,6 @@ Partial Public NotInheritable Class module_binder
                    build(invoker) Then
             Return Nothing
         End If
-        assert(invoker.valid())
 
         Dim filter As context_filter = Nothing
         filter = context_filter.[New](invoker.method_info())
