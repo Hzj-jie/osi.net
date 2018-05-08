@@ -1,7 +1,10 @@
 ﻿
-Imports osi.root.delegates
-Imports osi.root.formation
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.service.dataprovider
@@ -75,8 +78,8 @@ Public Class configuration
 
     Private Function providers(ByVal files() As String) As dataprovider(Of config)()
         Dim r() As dataprovider(Of config) = Nothing
-        ReDim r(array_size(files) - 1)
-        For i As Int32 = 0 To array_size(files) - 1
+        ReDim r(array_size_i(files) - 1)
+        For i As Int32 = 0 To array_size_i(files) - 1
             r(i) = provider(files(i))
         Next
         Return r
