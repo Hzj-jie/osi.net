@@ -55,6 +55,9 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="dotnet\source_executor.builder.build.vb" />
+    <Compile Include="dotnet\source_executor.builder.vb" />
+    <Compile Include="dotnet\source_executor.vb" />
     <Compile Include="logic\anchors.vb" />
     <Compile Include="logic\binary_math_operator.vb" />
     <Compile Include="logic\binary_operator.vb" />

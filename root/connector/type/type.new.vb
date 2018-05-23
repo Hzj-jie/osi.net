@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
@@ -22,9 +23,13 @@ Public Module _type
         Return strcat(type_name, character.comma, character.blank, assembly_name)
     End Function
 
-    Private Function create(ByVal type_name As String, ByRef o As Type) As Boolean
+    Private Function create(ByVal type_name As String, ByVal assembly As Assembly, ByRef o As Type) As Boolean
         Try
-            o = Type.GetType(type_name)
+            If assembly Is Nothing Then
+                o = Type.GetType(type_name)
+            Else
+                o = assembly.GetType(type_name)
+            End If
         Catch ex As Exception
             raise_error(error_type.warning, "Type.GetType(", type_name, ") throws exception ", ex.details())
             Return False
@@ -32,7 +37,9 @@ Public Module _type
         Return Not o Is Nothing
     End Function
 
-    <Extension()> Public Function [New](ByRef o As Type, ByVal type_name As String) As Boolean
+    <Extension()> Public Function [New](ByRef o As Type,
+                                        ByVal assembly As Assembly,
+                                        ByVal type_name As String) As Boolean
         If String.IsNullOrEmpty(type_name) Then
             Return False
         End If
@@ -47,10 +54,15 @@ Public Module _type
             End If
         End If
 
-        Return create(type_name, o)
+        Return create(type_name, assembly, o)
+    End Function
+
+    <Extension()> Public Function [New](ByRef o As Type, ByVal type_name As String) As Boolean
+        Return [New](o, [default](Of Assembly).null, type_name)
     End Function
 
     <Extension()> Public Function [New](ByRef o As Type,
+                                        ByVal assembly As Assembly,
                                         ByVal type_name As String,
                                         ByVal assembly_name As String) As Boolean
         If String.IsNullOrEmpty(type_name) Then
@@ -68,6 +80,12 @@ Public Module _type
             full_type_name = type_name
         End If
 
-        Return create(merge_type_name_with_assembly(full_type_name, assembly_name), o)
+        Return create(merge_type_name_with_assembly(full_type_name, assembly_name), assembly, o)
+    End Function
+
+    <Extension()> Public Function [New](ByRef o As Type,
+                                        ByVal type_name As String,
+                                        ByVal assembly_name As String) As Boolean
+        Return [New](o, Nothing, type_name, assembly_name)
     End Function
 End Module

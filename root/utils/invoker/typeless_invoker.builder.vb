@@ -3,12 +3,20 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Reflection
+
 Partial Public NotInheritable Class typeless_invoker
     Public NotInheritable Class builder(Of delegate_t)
         Inherits invoker.builder_base(Of builder(Of delegate_t))
 
+        Private assembly As Assembly
         Private type_name As String
         Private assembly_name As String
+
+        Public Function with_assembly(ByVal assembly As Assembly) As builder(Of delegate_t)
+            Me.assembly = assembly
+            Return Me
+        End Function
 
         Public Function with_type_name(ByVal type_name As String) As builder(Of delegate_t)
             Me.type_name = type_name
@@ -21,7 +29,8 @@ Partial Public NotInheritable Class typeless_invoker
         End Function
 
         Public Function build(ByRef o As invoker(Of delegate_t)) As Boolean
-            Return typeless_invoker(Of delegate_t).[New](type_name,
+            Return typeless_invoker(Of delegate_t).[New](assembly,
+                                                         type_name,
                                                          assembly_name,
                                                          binding_flags,
                                                          name,
@@ -30,7 +39,8 @@ Partial Public NotInheritable Class typeless_invoker
         End Function
 
         Public Function build() As invoker(Of delegate_t)
-            Return typeless_invoker(Of delegate_t).[New](type_name,
+            Return typeless_invoker(Of delegate_t).[New](assembly,
+                                                         type_name,
                                                          assembly_name,
                                                          binding_flags,
                                                          name,

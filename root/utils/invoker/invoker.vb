@@ -196,11 +196,15 @@ Public NotInheritable Class invoker(Of delegate_t)
         Return False
     End Function
 
+    Public Function pre_bind() As delegate_t
+        Dim o As delegate_t = Nothing
+        assert(pre_bind(o))
+        Return o
+    End Function
+
     Public Shared Operator +(ByVal this As invoker(Of delegate_t)) As delegate_t
         assert(Not this Is Nothing)
-        Dim o As delegate_t = Nothing
-        assert(this.pre_bind(o))
-        Return o
+        Return this.pre_bind()
     End Operator
 
     Public Function post_bind(ByVal obj As Object, ByRef d As delegate_t, ByVal suppress_error As Boolean) As Boolean
@@ -216,6 +220,12 @@ Public NotInheritable Class invoker(Of delegate_t)
         Return post_bind(obj, d, suppress.invoker_error)
     End Function
 
+    Public Function post_bind(ByVal obj As Object) As delegate_t
+        Dim r As delegate_t = Nothing
+        assert(post_bind(obj, r))
+        Return r
+    End Function
+
     Public Shared Operator +(ByVal this As invoker(Of delegate_t), ByVal obj As Object) As delegate_t
         assert(Not this Is Nothing)
         Return this(obj)
@@ -223,9 +233,7 @@ Public NotInheritable Class invoker(Of delegate_t)
 
     Default Public ReadOnly Property bind(ByVal obj As Object) As delegate_t
         Get
-            Dim o As delegate_t = Nothing
-            assert(post_bind(obj, o))
-            Return o
+            Return post_bind(obj)
         End Get
     End Property
 

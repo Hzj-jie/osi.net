@@ -32,7 +32,7 @@ Public NotInheritable Class invoker_post_alloc_bind_test
         assert(i.post_binding())
         For j As UInt32 = 0 To 10
             assert_equal(test_class.constructed(), j)
-            i.post_allocate_bind()()
+            i.post_alloc_bind()()
         Next
     End Sub
 
@@ -55,7 +55,7 @@ Public NotInheritable Class invoker_post_alloc_bind_test
                 build()
         assert(i.post_binding())
         For j As UInt32 = 0 To 10
-            i.post_allocate_bind()()
+            i.post_alloc_bind()()
         Next
     End Sub
 
@@ -75,7 +75,7 @@ Public NotInheritable Class invoker_post_alloc_bind_test
                 build()
         assert(i.post_binding())
         For j As Int32 = 0 To 10
-            assert_equal(i.post_allocate_bind()(j), j + 1)
+            assert_equal(i.post_alloc_bind()(j), j + 1)
         Next
     End Sub
 
@@ -97,11 +97,11 @@ Public NotInheritable Class invoker_post_alloc_bind_test
                 with_name("exec").
                 build()
         assert(i.post_binding())
-        assert_true(i.post_allocate_bind(Nothing))
+        assert_true(i.post_alloc_bind(Nothing))
 
         ' TODO: not testable
         'assert_throw(Sub()
-        '                 i.post_allocate_bind()()
+        '                 i.post_alloc_bind()()
         '             End Sub)
     End Sub
 
@@ -120,9 +120,9 @@ Public NotInheritable Class invoker_post_alloc_bind_test
                 with_name("exec").
                 build()
         assert(i.post_binding())
-        i.post_allocate_bind()
+        i.post_alloc_bind()
         assert_throw(Sub()
-                         i.post_allocate_bind()()
+                         i.post_alloc_bind()()
                      End Sub)
     End Sub
 
@@ -139,10 +139,10 @@ Public NotInheritable Class invoker_post_alloc_bind_test
                 with_name("exec").
                 build()
         assert(i.post_binding())
-        assert_true(i.post_allocate_bind(Nothing))
+        assert_true(i.post_alloc_bind(Nothing))
         ' TODO: not testable
         'assert_throw(Sub()
-        '                 i.post_allocate_bind()()
+        '                 i.post_alloc_bind()()
         '             End Sub)
     End Sub
 

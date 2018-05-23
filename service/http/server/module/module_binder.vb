@@ -26,7 +26,7 @@ Partial Public NotInheritable Class module_binder
                               binding_flags,
                               function_name,
                               AddressOf delegate_module.[New],
-                              AddressOf _invoker.post_allocate_bind)
+                              AddressOf _invoker.pre_or_post_alloc_bind)
             If Not m Is Nothing Then
                 Return m
             End If
@@ -37,7 +37,7 @@ Partial Public NotInheritable Class module_binder
                               binding_flags,
                               function_name,
                               AddressOf delegate_procedure_module.[New],
-                              AddressOf _invoker.post_allocate_bind)
+                              AddressOf _invoker.pre_or_post_alloc_bind)
             If Not m Is Nothing Then
                 Return m
             End If
@@ -48,7 +48,7 @@ Partial Public NotInheritable Class module_binder
                               binding_flags,
                               function_name,
                               AddressOf delegate_filtered_module.[New],
-                              AddressOf _invoker.post_allocate_bind)
+                              AddressOf _invoker.pre_or_post_alloc_bind)
             If Not m Is Nothing Then
                 Return m
             End If
@@ -59,7 +59,7 @@ Partial Public NotInheritable Class module_binder
                               binding_flags,
                               function_name,
                               AddressOf delegate_filtered_procedure_module.[New],
-                              AddressOf _invoker.post_allocate_bind)
+                              AddressOf _invoker.pre_or_post_alloc_bind)
             If Not m Is Nothing Then
                 Return m
             End If
@@ -74,10 +74,10 @@ Partial Public NotInheritable Class module_binder
              ByVal binding_flags As BindingFlags,
              ByVal function_name As String,
              ByVal create As Func(Of context_filter, delegate_type, module_handle.module),
-             ByVal post_bind As _do_val_ref(Of invoker(Of delegate_type), delegate_type, Boolean)) _
+             ByVal pre_or_post_alloc_bind As _do_val_ref(Of invoker(Of delegate_type), delegate_type, Boolean)) _
             As module_handle.named_module
         assert(Not create Is Nothing)
-        assert(Not post_bind Is Nothing)
+        assert(Not pre_or_post_alloc_bind Is Nothing)
 
         Dim invoker As invoker(Of delegate_type) = Nothing
         If Not typeless_invoker.of(invoker).
@@ -92,15 +92,10 @@ Partial Public NotInheritable Class module_binder
         Dim filter As context_filter = Nothing
         filter = context_filter.[New](invoker.method_info())
         Dim action As delegate_type = Nothing
-        If invoker.pre_bind(action) Then
-            Return New module_handle.named_module(invoker.identity(), create(filter, action))
+        If Not pre_or_post_alloc_bind(invoker, action) Then
+            Return Nothing
         End If
-
-        If post_bind(invoker, action) Then
-            Return New module_handle.named_module(invoker.identity(), create(filter, action))
-        End If
-
-        Return Nothing
+        Return New module_handle.named_module(invoker.identity(), create(filter, action))
     End Function
 
     Private Sub New()

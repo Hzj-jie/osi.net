@@ -14,6 +14,14 @@ Public NotInheritable Class [optional]
         Return New [optional](Of T)()
     End Function
 
+    Public Shared Function [of](Of T)(ByVal v As T) As [optional](Of T)
+        Return [New](v)
+    End Function
+
+    Public Shared Function [of](Of T)() As [optional](Of T)
+        Return [New](Of T)()
+    End Function
+
     Private Sub New()
     End Sub
 End Class
