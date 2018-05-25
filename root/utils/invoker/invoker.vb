@@ -104,7 +104,9 @@ Public NotInheritable Class invoker(Of delegate_t)
             postb = Not [static]() AndAlso obj Is Nothing
         End If
         If postb Then
-            postb = delegate_info(Of delegate_t).match(mi)
+            If Not is_not_resolved_type_delegate Then
+                postb = delegate_info(Of delegate_t).match(mi)
+            End If
         End If
         If Not postb Then
             preb = create_delegate(obj, m, suppress_error)

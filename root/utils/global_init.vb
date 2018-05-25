@@ -52,12 +52,16 @@ Public NotInheritable Class global_init
                             ", ex ",
                             ex.Message())
             End Try
-        ElseIf t.allocate() Is Nothing Then
-            ' A public or private class should have an constructor.
-            ' A module may not have a contructor, but nothing else can be done.
-            ' t.allocate() returns null if the constructor threw an exception. But the static constructor should be
-            ' triggered already. Though the implementation may not be correct, it's not good to assert here.
-            raise_error(error_type.warning, "may fail to invoke any initialization functions in type ", t.FullName())
+        Else
+            Using scoped_atomic_bool(suppress.alloc_error)
+                If t.allocate() Is Nothing Then
+                    ' A public or private class should have an constructor.
+                    ' A module may not have a contructor, but nothing else can be done.
+                    ' t.allocate() returns null if the constructor threw an exception. But the static constructor should be
+                    ' triggered already. Though the implementation may not be correct, it's not good to assert here.
+                    raise_error(error_type.warning, "may fail to invoke any initialization functions in type ", t.FullName())
+                End If
+            End Using
         End If
     End Sub
 

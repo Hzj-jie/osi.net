@@ -55,6 +55,8 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="dotnet\dotnet_test_data.vb" />
+    <Compile Include="dotnet\source_executor_test.vb" />
     <Compile Include="logic\caller_test.vb" />
     <Compile Include="logic\condition_test.vb" />
     <Compile Include="logic\executor_case.vb" />
@@ -91,6 +93,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="dotnet\codegen\run.cmd" />
     <None Include="logic\codegen\run.cmd" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -107,6 +110,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="dotnet\codegen\from_source1.cs" />
     <Content Include="logic\codegen\case1.txt" />
     <Content Include="logic\codegen\case2.txt" />
     <Content Include="logic\codegen\case3.txt" />

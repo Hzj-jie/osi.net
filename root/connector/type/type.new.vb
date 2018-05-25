@@ -70,7 +70,7 @@ Public Module _type
         End If
 
         If String.IsNullOrEmpty(assembly_name) Then
-            Return [New](o, type_name)
+            Return [New](o, assembly, type_name)
         End If
 
         Dim full_type_name As String = Nothing

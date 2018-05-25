@@ -21,6 +21,10 @@ Namespace dotnet
             Me.result = result
         End Sub
 
+        Public Shared Function [New]() As builder
+            Return New builder()
+        End Function
+
         Public Function execute(ByVal type_name As String,
                                 ByVal function_name As String,
                                 ByRef o As Object,

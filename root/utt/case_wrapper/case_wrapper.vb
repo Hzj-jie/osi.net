@@ -12,6 +12,7 @@ Public Class case_wrapper
         Me.c = c
     End Sub
 
+    ' TODO: Be smarter, if GetType() is not any wrapper, c.name should be used.
     Public Sub New(ByVal c As [case],
                    ByVal full_name As String,
                    ByVal assembly_qualified_name As String,

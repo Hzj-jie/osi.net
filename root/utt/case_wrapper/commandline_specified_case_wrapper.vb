@@ -12,6 +12,13 @@ Public Class commandline_specified_case_wrapper
         MyBase.New(c)
     End Sub
 
+    Public Sub New(ByVal c As [case],
+                   ByVal full_name As String,
+                   ByVal assembly_qualified_name As String,
+                   ByVal name As String)
+        MyBase.New(c, full_name, assembly_qualified_name, name)
+    End Sub
+
     Public NotOverridable Overrides Function prepare() As Boolean
         If commandline_specified() Then
             Return MyBase.prepare()

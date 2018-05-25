@@ -152,6 +152,13 @@ Public Module _wrapper
         Return New commandline_specified_case_wrapper(c)
     End Function
 
+    Public Function commandline_specified(ByVal c As [case],
+                                          ByVal full_name As String,
+                                          ByVal assembly_qualified_name As String,
+                                          ByVal name As String) As [case]
+        Return New commandline_specified_case_wrapper(c, full_name, assembly_qualified_name, name)
+    End Function
+
     Public Function flaky(ByVal c As [case]) As [case]
         Return New flaky_case_wrapper(c)
     End Function

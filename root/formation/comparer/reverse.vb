@@ -34,9 +34,18 @@ Public NotInheritable Class reverse(Of T)
     Public Shared Operator +(ByVal this As reverse(Of T)) As T
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return this.v
         End If
+        Return this.v
+    End Operator
+
+    Public Shared Operator +(ByVal this As reverse(Of T), ByVal that As reverse(Of T)) As reverse(Of T)
+        If this Is Nothing Then
+            Return that
+        End If
+        If that Is Nothing Then
+            Return this
+        End If
+        Return reverse.[New](binary_operator.add(+this, +that))
     End Operator
 
     Public Function CompareTo(ByVal other As reverse(Of T)) As Int32 _

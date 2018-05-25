@@ -22,7 +22,7 @@ Partial Public NotInheritable Class case2
             r = multithreading(r, info.thread_count)
         End If
         If info.command_line_specified Then
-            r = commandline_specified(r)
+            r = commandline_specified(r, c.full_name, c.assembly_qualified_name, c.name)
         End If
         If info.flaky Then
             r = flaky(r)

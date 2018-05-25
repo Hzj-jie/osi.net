@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.utils
 
 Partial Public Class case2
     Private Class [case]
@@ -46,7 +47,9 @@ Partial Public Class case2
                        append_method_name(t, method_name, 1),
                        append_method_name(t, method_name, 2))
             ' Allow Me.obj to be null: the test cases can be static methods.
-            Me.obj = t.allocate()
+            Using scoped_atomic_bool(suppress.alloc_error)
+                Me.obj = t.allocate()
+            End Using
             Me._prepare = prepare
             Me._run = run
             Me._finish = finish
@@ -69,7 +72,7 @@ Partial Public Class case2
 
         Public Overrides Function finish() As Boolean
             Return run_or_null(_finish) And
-               MyBase.finish()
+                   MyBase.finish()
         End Function
 
         Public Overrides Function reserved_processors() As Int16
