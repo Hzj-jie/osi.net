@@ -31,10 +31,9 @@ Partial Public Class module_handle
     Public Function add(ByVal m As named_module) As Boolean
         If m Is Nothing Then
             Return False
-        Else
-            v.emplace_back(New ref(m.name, m.module))
-            Return True
         End If
+        v.emplace_back(New ref(m.name, m.module))
+        Return True
     End Function
 
     Public Function add(ByVal type As String,
