@@ -197,8 +197,9 @@ Public Module _invoker
             Return False
         End If
         If invoker.pre_binding() Then
-            Return assert(invoker.pre_bind(o))
+            ' If T is not_resolved_type_delegate, pre_bind will still fail.
+            Return invoker.pre_bind(o)
         End If
-        Return assert(post_alloc_bind(invoker, o))
+        Return post_alloc_bind(invoker, o)
     End Function
 End Module
