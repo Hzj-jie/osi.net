@@ -1,0 +1,13 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <DynamiclogicProps>true</DynamiclogicProps>
+  </PropertyGroup>
+  <Import Project="dynamiclogic.dep" />
+  <ItemGroup>
+    <Reference Include="osi.service.dynamiclogic">
+      <HintPath>$(ServicePath)\dynamiclogic\bin\$(Configuration)\osi.service.dynamiclogic.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>
