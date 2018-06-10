@@ -7,51 +7,7 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.delegates
 
-Public Module _invoker
-    <Extension()> Public Function post_alloc_invoke(Of delegate_t) _
-                                                   (ByVal invoker As invoker(Of delegate_t),
-                                                    ByRef result As Object,
-                                                    ByVal ParamArray parameters() As Object) As Boolean
-        If invoker Is Nothing Then
-            Return False
-        End If
-        If Not invoker.post_binding() Then
-            Return False
-        End If
-        result = invoker.invoke(invoker.target_type().allocate(), parameters)
-        Return True
-    End Function
-
-    <Extension()> Public Function pre_or_post_alloc_invoke(Of delegate_t) _
-                                                          (ByVal invoker As invoker(Of delegate_t),
-                                                           ByRef result As Object,
-                                                           ByVal ParamArray parameters() As Object) As Boolean
-        If invoker Is Nothing Then
-            Return False
-        End If
-        If invoker.pre_binding() Then
-            result = invoker.invoke(Nothing, parameters)
-            Return True
-        End If
-        Return post_alloc_invoke(invoker, result, parameters)
-    End Function
-
-    <Extension()> Public Function post_alloc_invoke(Of delegate_t) _
-                                                   (ByVal invoker As invoker(Of delegate_t),
-                                                    ByVal ParamArray parameters() As Object) As Object
-        Dim o As Object = Nothing
-        assert(post_alloc_invoke(invoker, o, parameters))
-        Return o
-    End Function
-
-    <Extension()> Public Function pre_or_post_alloc_invoke(Of delegate_t) _
-                                                          (ByVal invoker As invoker(Of delegate_t),
-                                                           ByVal ParamArray parameters() As Object) As Object
-        Dim o As Object = Nothing
-        assert(pre_or_post_alloc_invoke(invoker, o, parameters))
-        Return o
-    End Function
-
+Public Module _invoker_post_alloc_bind
     <Extension()> Public Function post_alloc_bind(ByVal invoker As invoker(Of Action),
                                                   ByRef o As Action) As Boolean
         If invoker Is Nothing Then

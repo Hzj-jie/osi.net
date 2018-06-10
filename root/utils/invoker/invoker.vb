@@ -244,7 +244,8 @@ Public NotInheritable Class invoker(Of delegate_t)
         Return mi.Invoke(obj, params)
     End Function
 
-    Public Function method_info(ByRef o As MethodInfo) As Boolean
+    ' TODO: remove
+    Private Function method_info(ByRef o As MethodInfo) As Boolean
         If valid() Then
             o = mi
             Return True
@@ -258,7 +259,8 @@ Public NotInheritable Class invoker(Of delegate_t)
         Return r
     End Function
 
-    Public Function target_type(ByRef o As Type) As Boolean
+    ' TODO: remove
+    Private Function target_type(ByRef o As Type) As Boolean
         If valid() Then
             o = t
             Return True
@@ -272,7 +274,8 @@ Public NotInheritable Class invoker(Of delegate_t)
         Return r
     End Function
 
-    Public Function identity(ByRef o As String) As Boolean
+    ' TODO: remove
+    Private Function identity(ByRef o As String) As Boolean
         Dim d As delegate_t = Nothing
         If pre_bind(d) Then
             assert(Not d Is Nothing)

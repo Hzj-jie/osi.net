@@ -87,6 +87,8 @@
     <Compile Include="invoker\invoker.builder_base.vb" />
     <Compile Include="invoker\invoker.builder.vb" />
     <Compile Include="invoker\invoker.post_alloc_bind.vb" />
+    <Compile Include="invoker\invoker.post_alloc_invoke.vb" />
+    <Compile Include="invoker\invoker.post_alloc_raw_bind.vb" />
     <Compile Include="invoker\typeless_invoker.builder.vb" />
     <Compile Include="invoker\typeless_invoker.vb" />
     <Compile Include="invoker\valuer.recursive.vb" />
