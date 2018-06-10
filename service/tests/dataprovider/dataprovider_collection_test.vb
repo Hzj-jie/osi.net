@@ -1,12 +1,16 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.envs
+Imports osi.root.formation
+Imports osi.root.lock
+Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.root.utt
-Imports osi.root.procedure
-Imports osi.root.lock
-Imports osi.root.formation
-Imports osi.root.envs
 Imports osi.service.dataprovider
 
 Public Class dataprovider_collection_test
@@ -86,17 +90,17 @@ Public Class dataprovider_collection_test
     End Class
 
     Public Overrides Function reserved_processors() As Int16
-        Return Environment.ProcessorCount()
+        Return CShort(Environment.ProcessorCount())
     End Function
 
     Public Overrides Function run() As Boolean
         collection.start_auto_cleanup(lifetime_ms)
-        timeslice_sleep_wait_until(Function() dataprovider_count() = 0, lifetime_ms << 1)
-        assert_equal(dataprovider_count(), uint32_0)
+        timeslice_sleep_wait_until(Function() collection.dataprovider_count() = 0, lifetime_ms << 1)
+        assert_equal(collection.dataprovider_count(), uint32_0)
 
         Dim i As idataprovider = Nothing
         i = fake_dataprovider.generate()
-        assert_equal(dataprovider_count(), uint32_1)
+        assert_equal(collection.dataprovider_count(), uint32_1)
         timeslice_sleep_wait_until(Function() i.valid(), lifetime_ms >> 2)
         assert_true(i.valid())
         assert_equal(fake_datawatcher.constructed(), uint32_1)
@@ -107,14 +111,14 @@ Public Class dataprovider_collection_test
         i = Nothing
         sleep(lifetime_ms << 1)
         repeat_gc_collect()
-        assert_equal(dataprovider_count(), uint32_0)
+        assert_equal(collection.dataprovider_count(), uint32_0)
         assert_equal(fake_datawatcher.constructed(), uint32_1)
         assert_equal(fake_datafetcher.constructed(), uint32_1)
         assert_equal(fake_datawatcher.destructed(), uint32_1)
         assert_equal(fake_datafetcher.destructed(), uint32_1)
 
         i = fake_dataprovider.generate()
-        assert_equal(dataprovider_count(), uint32_1)
+        assert_equal(collection.dataprovider_count(), uint32_1)
         timeslice_sleep_wait_until(Function() i.valid(), lifetime_ms >> 2)
         assert_true(i.valid())
         assert_equal(fake_datawatcher.constructed(), uint32_2)
@@ -125,7 +129,7 @@ Public Class dataprovider_collection_test
         i = Nothing
         sleep(0)
         repeat_gc_collect()
-        assert_equal(dataprovider_count(), uint32_1)
+        assert_equal(collection.dataprovider_count(), uint32_1)
         assert_equal(fake_datawatcher.constructed(), uint32_2)
         assert_equal(fake_datafetcher.constructed(), uint32_2)
         assert_equal(fake_datawatcher.destructed(), uint32_1)
@@ -133,7 +137,7 @@ Public Class dataprovider_collection_test
 
         sleep(lifetime_ms << 1)
         repeat_gc_collect()
-        assert_equal(dataprovider_count(), uint32_0)
+        assert_equal(collection.dataprovider_count(), uint32_0)
         assert_equal(fake_datawatcher.constructed(), uint32_2)
         assert_equal(fake_datafetcher.constructed(), uint32_2)
         assert_equal(fake_datawatcher.destructed(), uint32_2)

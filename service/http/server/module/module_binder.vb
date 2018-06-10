@@ -26,7 +26,7 @@ Partial Public NotInheritable Class module_binder
                               binding_flags,
                               function_name,
                               AddressOf delegate_module.[New],
-                              AddressOf _invoker.pre_or_post_alloc_bind)
+                              AddressOf pre_or_post_alloc_bind)
             If Not m Is Nothing Then
                 Return m
             End If
@@ -37,7 +37,7 @@ Partial Public NotInheritable Class module_binder
                               binding_flags,
                               function_name,
                               AddressOf delegate_procedure_module.[New],
-                              AddressOf _invoker.pre_or_post_alloc_bind)
+                              AddressOf pre_or_post_alloc_bind)
             If Not m Is Nothing Then
                 Return m
             End If
@@ -48,7 +48,7 @@ Partial Public NotInheritable Class module_binder
                               binding_flags,
                               function_name,
                               AddressOf delegate_filtered_module.[New],
-                              AddressOf _invoker.pre_or_post_alloc_bind)
+                              AddressOf pre_or_post_alloc_bind)
             If Not m Is Nothing Then
                 Return m
             End If
@@ -59,7 +59,7 @@ Partial Public NotInheritable Class module_binder
                               binding_flags,
                               function_name,
                               AddressOf delegate_filtered_procedure_module.[New],
-                              AddressOf _invoker.pre_or_post_alloc_bind)
+                              AddressOf pre_or_post_alloc_bind)
             If Not m Is Nothing Then
                 Return m
             End If

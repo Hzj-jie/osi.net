@@ -1,11 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
-Imports osi.root.utt
-Imports osi.root.procedure
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.utils
-Imports osi.root.delegates
+Imports osi.root.utt
 Imports osi.service.dataprovider
 
 Public Class dataprovider_test
@@ -21,11 +22,11 @@ Public Class dataprovider_test
         assert(Not ctor Is Nothing)
         File.Delete(filename)
         Dim sz As Int64 = 0
-        sz = dataprovider_count()
+        sz = collection.dataprovider_count()
         Dim dp As dataprovider(Of String) = cast(Of dataprovider(Of String))(ctor())
-        assert_equal(dataprovider_count(), sz + 1)
+        assert_equal(collection.dataprovider_count(), sz + 1)
         assert_false(dp.valid())
-        For i As Int32 = 0 To array_size(ds) - 1
+        For i As Int32 = 0 To array_size_i(ds) - 1
             File.WriteAllText(filename, ds(i))
             sleep()
             If assert_true(dp.valid()) Then
@@ -34,19 +35,19 @@ Public Class dataprovider_test
         Next
         File.Delete(filename)
         If assert_true(dp.valid()) Then
-            assert_equal(dp.get(), ds(array_size(ds) - 1))
+            assert_equal(dp.get(), ds(array_size_i(ds) - 1))
         End If
         dp.expire()
         Return True
     End Function
 
     Public Overrides Function reserved_processors() As Int16
-        Return Environment.ProcessorCount()
+        Return CShort(Environment.ProcessorCount())
     End Function
 
     Public Overrides Function run() As Boolean
-        stop_auto_cleanup()
-        waitfor_auto_cleanup_stop()
+        collection.stop_auto_cleanup()
+        collection.waitfor_auto_cleanup_stop()
         Return run(Function() file_content_dataprovider.generate(filename, 500)) AndAlso
                run(Function() localfile_content_dataprovider.generate(filename))
     End Function
