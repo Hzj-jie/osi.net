@@ -1,12 +1,16 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
-Imports osi.root.delegates
-Imports osi.root.procedure
-Imports osi.root.event
+Imports System.Text
 Imports osi.root.connector
-Imports osi.root.utils
+Imports osi.root.event
 Imports osi.root.formation
 Imports osi.root.lock
+Imports osi.root.procedure
+Imports osi.root.utils
 
 Public Class dataprovider(Of T)
     Implements idataprovider
@@ -122,4 +126,33 @@ Public Class dataprovider(Of T)
                                             ByVal d As Action(Of OT)) Implements idataprovider.register_update_event
         assert(on_update.attach(v, d))
     End Sub
+
+    Protected Shared Function name(ByVal t As Type,
+                                   ByVal file As String,
+                                   ByVal ParamArray p() As pair(Of String, Object)) As String
+        Return strcat(t.AssemblyQualifiedName(), "://", file, merge(p))
+    End Function
+
+    Protected Shared Function name(Of IMPL)(ByVal file As String,
+                                            ByVal ParamArray p() As pair(Of String, Object)) As String
+        Return name(GetType(IMPL), file, p)
+    End Function
+
+    Private Shared Function merge(ByVal p() As pair(Of String, Object)) As String
+        Dim r As StringBuilder = Nothing
+        r = New StringBuilder()
+        For i As Int32 = 0 To array_size_i(p) - 1
+            assert(Not p(i) Is Nothing)
+            r.Append("&").
+              Append(Convert.ToString(p(i).first)).
+              Append("=").
+              Append(Convert.ToString(p(i).second))
+        Next
+        r.Chars(0) = "?"c
+        Return Convert.ToString(r)
+    End Function
+
+    Protected Shared Function parameter(ByVal name As String, ByVal value As Object) As pair(Of String, Object)
+        Return emplace_make_pair(name, value)
+    End Function
 End Class
