@@ -23,7 +23,9 @@ Public NotInheritable Class ref_ptr
     End Sub
 End Class
 
-Public Class ref_ptr(Of T)
+' A ref-counted pointer to an object. It calls dispose() when the ref-count reaches 0 for the first time.
+' Directly using this class is unsafe, calling ref() in parallel with unref() may end-up with disposed object.
+Public NotInheritable Class ref_ptr(Of T)
     Inherits dispose_ptr(Of T)
 
     Private ReadOnly i As atomic_int
@@ -50,7 +52,8 @@ Public Class ref_ptr(Of T)
     Public Function ref() As UInt32
         Dim r As Int32 = 0
         r = i.increment()
-        assert(r > 0)
+        ' If i has reached 0 already, using this object is unsafe.
+        assert(r > 1)
         Return CUInt(r)
     End Function
 

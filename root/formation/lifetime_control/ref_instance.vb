@@ -116,7 +116,16 @@ Public Class ref_instance(Of T)
     End Operator
 
     Protected Overrides Sub Finalize()
-        assert(r = 0, "ref_instance @ ", create_stack_trace, " has not been fully dereferred.")
+        safe_finalize(Me,
+                      Sub()
+                          If ref_count() > 0 Then
+                              p.dispose()
+                              raise_error(error_type.warning,
+                                          "ref_instance @ ",
+                                          create_stack_trace,
+                                          " has not been fully dereferred.")
+                          End If
+                      End Sub)
         MyBase.Finalize()
     End Sub
 
