@@ -17,6 +17,7 @@ Partial Public Class ##FILENAME##( _
                     ##PAIR##_equaler)
     Implements ICloneable, ICloneable(Of ##FILENAME##(Of KEY_T, VALUE_T, _HASHER, _EQUALER))
 
+##DEFINE VALUE_TYPE ##PAIR##(Of KEY_T, VALUE_T)
 ##INCLUDE ##HASHTABLE##.copy_constructor.vbp
 
     Public Sub New()

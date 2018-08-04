@@ -15,14 +15,19 @@ Partial Public Class hasharray(Of T,
         Return hasher(v) Mod column_count()
     End Function
 
+    Private Function hash(ByVal v As hasher_node(Of T)) As UInt32
+        assert(Not v Is Nothing)
+        Return v.hash_code() Mod column_count()
+    End Function
+
     Private Function column_count() As UInt32
         Return predefined_column_counts(c)
     End Function
 
     Private Sub reset_array()
-        v = New array(Of vector(Of constant(Of T)))(column_count())
+        v = New array(Of vector(Of hasher_node(Of T)))(column_count())
         For i As UInt32 = 0 To v.size() - uint32_1
-            v(i) = New vector(Of constant(Of T))()
+            v(i) = New vector(Of hasher_node(Of T))()
         Next
     End Sub
 
@@ -43,30 +48,34 @@ Partial Public Class hasharray(Of T,
         Return row_count(column) - uint32_1
     End Function
 
-    Private Sub set_cell(ByVal column As UInt32, ByVal row As UInt32, ByVal value As constant(Of T))
+    Private Sub set_cell(ByVal column As UInt32, ByVal row As UInt32, ByVal value As hasher_node(Of T))
         assert(row <= max_int32)
         v(column).data()(CInt(row)) = value
     End Sub
 
     Private Sub set_cell(ByVal column As UInt32, ByVal row As UInt32, ByVal value As T)
         assert(cell_is_empty(column, row))
-        set_cell(column, row, constant.[New](value))
+        set_cell(column, row, new_node(value))
         s += uint32_1
     End Sub
 
-    Private Sub emplace_back(ByVal column As UInt32, ByVal value As constant(Of T))
+    Private Sub emplace_back(ByVal column As UInt32, ByVal value As hasher_node(Of T))
         assert(Not value Is Nothing)
         v(column).emplace_back(value)
         s += uint32_1
     End Sub
 
     Private Sub emplace_back(ByVal column As UInt32, ByVal value As T)
-        emplace_back(column, constant.[New](value))
+        emplace_back(column, new_node(value))
     End Sub
+
+    Private Function new_node(ByVal value As T) As hasher_node(Of T)
+        Return New hasher_node(Of T)(value, hasher)
+    End Function
 
     Private Sub clear_cell(ByVal column As UInt32, ByVal row As UInt32)
         assert(Not cell_is_empty(column, row))
-        set_cell(column, row, [default](Of constant(Of T)).null)
+        set_cell(column, row, [default](Of hasher_node(Of T)).null)
         s -= uint32_1
     End Sub
 
@@ -157,10 +166,10 @@ Partial Public Class hasharray(Of T,
         Return average_row_count() >= row_count_upper_bound
     End Function
 
-    Private Sub rehash_move_in(ByVal c As constant(Of T))
+    Private Sub rehash_move_in(ByVal c As hasher_node(Of T))
         assert(Not c Is Nothing)
         Dim column As UInt32 = 0
-        column = hash(+c)
+        column = hash(c)
         assert(Not find_first_cell(+c, column, uint32_0))
         emplace_back(column, c)
     End Sub

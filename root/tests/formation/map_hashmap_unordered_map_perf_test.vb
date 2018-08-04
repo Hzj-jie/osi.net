@@ -22,9 +22,9 @@ Public Class map_hashmap_unordered_map_perf_test
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
         If isdebugbuild() Then
-            Return loosen_bound({1711, 1263, 578, 1527, 1527, 1527}, i, j)
+            Return loosen_bound({1711, 1263, 578, 1527, 1527}, i, j)
         Else
-            Return loosen_bound({1542, 1028, 699, 1399, 1399, 1399}, i, j)
+            Return loosen_bound({756, 813, 251, 717, 775}, i, j)
         End If
     End Function
 

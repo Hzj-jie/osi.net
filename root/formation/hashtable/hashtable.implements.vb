@@ -36,7 +36,7 @@ Partial Public Class hashtable(Of T,
         End If
 
         Dim o As R = Nothing
-        o = copy_constructor(Of R).invoke(vector(Of array(Of constant(Of T))).move(v.v), v.s, v.c)
+        o = copy_constructor(Of R).invoke(vector(Of array(Of hasher_node(Of T))).move(v.v), v.s, v.c)
         v.clear()
         Return o
     End Function

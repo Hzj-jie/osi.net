@@ -11,7 +11,7 @@ Public Class hashtable(Of T, _UNIQUE As _boolean)
     Implements ICloneable, ICloneable(Of hashtable(Of T, _UNIQUE))
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As vector(Of array(Of constant(Of T))), ByVal s As UInt32, ByVal c As UInt32)
+    Protected Sub New(ByVal v As vector(Of array(Of hasher_node(Of T))), ByVal s As UInt32, ByVal c As UInt32)
         MyBase.New(v, s, c)
     End Sub
 
@@ -49,7 +49,7 @@ Public Class hashtable(Of T)
     Implements ICloneable, ICloneable(Of hashtable(Of T))
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As vector(Of array(Of constant(Of T))), ByVal s As UInt32, ByVal c As UInt32)
+    Protected Sub New(ByVal v As vector(Of array(Of hasher_node(Of T))), ByVal s As UInt32, ByVal c As UInt32)
         MyBase.New(v, s, c)
     End Sub
 
@@ -85,7 +85,7 @@ Public Class multi_hashtable(Of T)
     Implements ICloneable, ICloneable(Of multi_hashtable(Of T))
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As vector(Of array(Of constant(Of T))), ByVal s As UInt32, ByVal c As UInt32)
+    Protected Sub New(ByVal v As vector(Of array(Of hasher_node(Of T))), ByVal s As UInt32, ByVal c As UInt32)
         MyBase.New(v, s, c)
     End Sub
 

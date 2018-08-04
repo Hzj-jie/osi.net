@@ -38,8 +38,12 @@ Partial Public Class hashtable(Of T,
             Return owner.cell_count()
         End Function
 
-        Public Function cell(ByVal id As UInt32) As constant(Of T)
+        Public Function cell(ByVal id As UInt32) As hasher_node(Of T)
             Return owner.cell(id)
+        End Function
+
+        Public Function cell() As hasher_node(Of T)
+            Return owner.cell(row, column)
         End Function
 
         Public Function empty() As Boolean

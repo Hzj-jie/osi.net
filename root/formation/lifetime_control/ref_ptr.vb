@@ -24,7 +24,8 @@ Public NotInheritable Class ref_ptr
 End Class
 
 ' A ref-counted pointer to an object. It calls dispose() when the ref-count reaches 0 for the first time.
-' Directly using this class is unsafe, calling ref() in parallel with unref() may end-up with disposed object.
+' Directly using this class is unsafe, calling ref() and get() in parallel with unref() may end-up getting disposed
+' object. Usually this class should be used together with ref_map.
 Public NotInheritable Class ref_ptr(Of T)
     Inherits dispose_ptr(Of T)
 

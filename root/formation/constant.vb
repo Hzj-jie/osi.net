@@ -11,6 +11,7 @@ Option Strict On
 #Const IS_CLASS = ("constant" = "constant")
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 
 Public Module _constant
@@ -40,10 +41,14 @@ Public Structure constant(Of T)
 #End If
     Implements IComparable(Of constant(Of T)), IComparable(Of T), IComparable, ICloneable, ICloneable(Of constant(Of T))
 
+    Private Shared ReadOnly uninitialized_hash_code As Int32 = min_int32
+
     Private ReadOnly v As T
+    Private hash_code As Int32
 
     Public Sub New(ByVal v As T)
         Me.v = v
+        Me.hash_code = uninitialized_hash_code
     End Sub
 
     Public Function [get]() As T
@@ -63,7 +68,10 @@ Public Structure constant(Of T)
     End Function
 
     Public Overrides Function GetHashCode() As Int32
-        Return If(v Is Nothing, 0, v.GetHashCode())
+        If hash_code = uninitialized_hash_code Then
+            hash_code = If(v Is Nothing, 0, v.GetHashCode())
+        End If
+        Return hash_code
     End Function
 
     Public Function CompareTo(ByVal other As constant(Of T)) As Int32 Implements IComparable(Of constant(Of T)).CompareTo

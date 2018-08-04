@@ -37,7 +37,7 @@ Partial Public Class unordered_map2( _
 
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As vector(Of array(Of constant(Of first_const_pair(Of KEY_T, VALUE_T)))),
+    Protected Sub New(ByVal v As vector(Of array(Of hasher_node(Of first_const_pair(Of KEY_T, VALUE_T)))),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
         MyBase.New(v, s, c)
@@ -175,7 +175,7 @@ Public Class unordered_map2(Of KEY_T, VALUE_T)
 
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As vector(Of array(Of constant(Of first_const_pair(Of KEY_T, VALUE_T)))),
+    Protected Sub New(ByVal v As vector(Of array(Of hasher_node(Of first_const_pair(Of KEY_T, VALUE_T)))),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
         MyBase.New(v, s, c)

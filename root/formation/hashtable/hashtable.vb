@@ -26,8 +26,7 @@ Partial Public Class hashtable(Of T,
         equaler = alloc(Of _EQUALER)()
     End Sub
 
-    ' Use constant<> to hold null as empty slot even T is nullable.
-    Private v As vector(Of array(Of constant(Of T)))
+    Private v As vector(Of array(Of hasher_node(Of T)))
     Private c As UInt32
     Private s As UInt32
 
@@ -39,7 +38,7 @@ Partial Public Class hashtable(Of T,
     End Sub
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As vector(Of array(Of constant(Of T))), ByVal s As UInt32, ByVal c As UInt32)
+    Protected Sub New(ByVal v As vector(Of array(Of hasher_node(Of T))), ByVal s As UInt32, ByVal c As UInt32)
         assert(Not v.null_or_empty())
         assert(c < predefined_column_counts.size())
         assert(v(0).size() = predefined_column_counts(c))

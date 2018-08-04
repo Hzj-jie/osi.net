@@ -86,6 +86,7 @@
     <Compile Include="hasharray\hasharray.private.vb" />
     <Compile Include="hasharray\hasharray.ref.vb" />
     <Compile Include="hasharray\hasharray.vb" />
+    <Compile Include="hasher_node.vb" />
     <Compile Include="hashmap\hashmap.iterator.vb" />
     <Compile Include="hashmap\hashmap.private.vb" />
     <Compile Include="hashmap\hashmap.specialization.vb" />
@@ -125,6 +126,7 @@
     <Compile Include="lifetime_control\lifetime_binder.vb" />
     <Compile Include="lifetime_control\manual_disposer.vb" />
     <Compile Include="lifetime_control\ref_instance.vb" />
+    <Compile Include="lifetime_control\ref_map.vb" />
     <Compile Include="lifetime_control\ref_ptr.vb" />
     <Compile Include="lifetime_control\weak_disposer_T.vb" />
     <Compile Include="lifetime_control\weak_dispose_ptr.vb" />
@@ -238,7 +240,6 @@
     <None Include="codegen\tuple_compare.vbp" />
     <None Include="codegen\tuple_impl.vbp" />
     <None Include="codegen\tuple_make.vbp" />
-    <None Include="codegen\unordered_map.iterator.vbp" />
     <None Include="codegen\unordered_map.vbp" />
     <None Include="codegen\unordered_map2.vbp" />
     <None Include="codegen\unordered_set.vbp" />

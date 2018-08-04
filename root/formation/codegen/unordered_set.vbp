@@ -1,5 +1,5 @@
 
-##DEFAULT HASHTABLE hashtable
+##DEFAULT HASHTABLE hasharray
 
 Imports osi.root.connector
 Imports osi.root.constants
@@ -12,10 +12,8 @@ Public Class ##FILENAME##(Of _
     Inherits ##HASHTABLE##(Of T, _true, _HASHER, _EQUALER)
     Implements ICloneable, ICloneable(Of ##FILENAME##(Of T, _HASHER, _EQUALER))
 
-    <copy_constructor()>
-    Protected Sub New(ByVal v As vector(Of array(Of constant(Of T))), ByVal s As UInt32, ByVal c As UInt32)
-        MyBase.New(v, s, c)
-    End Sub
+##DEFINE VALUE_TYPE T
+##INCLUDE ##HASHTABLE##.copy_constructor.vbp
 
     Public Sub New()
         MyBase.New()
@@ -62,10 +60,8 @@ Public Class ##FILENAME##(Of T)
     Inherits ##FILENAME##(Of T, fast_to_uint32(Of T), default_equaler(Of T))
     Implements ICloneable, ICloneable(Of ##FILENAME##(Of T))
 
-    <copy_constructor()>
-    Protected Sub New(ByVal v As vector(Of array(Of constant(Of T))), ByVal s As UInt32, ByVal c As UInt32)
-        MyBase.New(v, s, c)
-    End Sub
+##DEFINE VALUE_TYPE T
+##INCLUDE ##HASHTABLE##.copy_constructor.vbp
 
     Public Sub New()
         MyBase.New()

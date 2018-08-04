@@ -15,8 +15,13 @@ Partial Public Class hashtable(Of T,
         Return hasher(v) Mod column_count()
     End Function
 
+    Private Function hash(ByVal v As hasher_node(Of T)) As UInt32
+        assert(Not v Is Nothing)
+        Return v.hash_code() Mod column_count()
+    End Function
+
     Private Sub new_row()
-        v.emplace_back(New array(Of constant(Of T))(column_count()))
+        v.emplace_back(New array(Of hasher_node(Of T))(column_count()))
     End Sub
 
     Private Function column_count() As UInt32
@@ -55,17 +60,17 @@ Partial Public Class hashtable(Of T,
         Return cell_id Mod column_count()
     End Function
 
-    Private Function cell(ByVal row As UInt32, ByVal column As UInt32) As constant(Of T)
+    Private Function cell(ByVal row As UInt32, ByVal column As UInt32) As hasher_node(Of T)
         Return v(row)(column)
     End Function
 
-    Private Function cell(ByVal id As UInt32) As constant(Of T)
+    Private Function cell(ByVal id As UInt32) As hasher_node(Of T)
         Return cell(row(id), column(id))
     End Function
 
-    Private Sub set_cell(ByVal row As UInt32, ByVal column As UInt32, ByVal value As T)
+    Private Sub set_cell(ByVal row As UInt32, ByVal column As UInt32, ByVal value As hasher_node(Of T))
         assert(cell_is_empty(row, column))
-        v(row)(column) = constant.[New](value)
+        v(row)(column) = value
         s += uint32_1
     End Sub
 
@@ -97,7 +102,7 @@ Partial Public Class hashtable(Of T,
         Dim it As iterator = Nothing
         it = begin()
         While it <> [end]()
-            assert(r.emplace(+it, uint32_0, uint32_0))
+            assert(r.emplace(it.ref().cell(), uint32_0, uint32_0))
             it += 1
         End While
         swap(r, Me)
@@ -126,10 +131,11 @@ Partial Public Class hashtable(Of T,
         Return False
     End Function
 
-    Private Function emplace(ByVal value As T, ByRef row As UInt32, ByRef column As UInt32) As Boolean
+    Private Function emplace(ByVal value As hasher_node(Of T), ByRef row As UInt32, ByRef column As UInt32) As Boolean
+        assert(Not value Is Nothing)
         column = hash(value)
         If unique Then
-            If find_first_cell(value, row, column) Then
+            If find_first_cell(value.get(), row, column) Then
                 Return False
             End If
         End If
@@ -149,11 +155,15 @@ Partial Public Class hashtable(Of T,
         Return True
     End Function
 
+    Private Function emplace(ByVal value As T, ByRef row As UInt32, ByRef column As UInt32) As Boolean
+        Return emplace(New hasher_node(Of T)(value, hasher), row, column)
+    End Function
+
     Private Function cell_is_empty(ByVal row As UInt32, ByVal column As UInt32) As Boolean
         Return cell(row, column) Is Nothing
     End Function
 
     Private Function cell_is(ByVal row As UInt32, ByVal column As UInt32, ByVal value As T) As Boolean
-        Return Not cell_is_empty(row, column) AndAlso equaler(+cell(row, column), value)
+        Return Not cell_is_empty(row, column) AndAlso equaler(cell(row, column).get(), value)
     End Function
 End Class
