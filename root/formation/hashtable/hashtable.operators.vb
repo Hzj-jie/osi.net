@@ -21,15 +21,15 @@ Partial Public Class hashtable(Of T,
         Return iterator.[end]
     End Function
 
-    Public Function emplace(ByVal value As T) As pair(Of iterator, Boolean)
+    Public Function emplace(ByVal value As T) As fast_pair(Of iterator, Boolean)
         Dim row As UInt32 = 0
         Dim column As UInt32 = 0
         Dim r As Boolean = False
         r = emplace(value, row, column)
-        Return emplace_make_pair(iterator_at(row, column), r)
+        Return emplace_make_fast_pair(iterator_at(row, column), r)
     End Function
 
-    Public Function insert(ByVal value As T) As pair(Of iterator, Boolean)
+    Public Function insert(ByVal value As T) As fast_pair(Of iterator, Boolean)
         Return emplace(copy_no_error(value))
     End Function
 

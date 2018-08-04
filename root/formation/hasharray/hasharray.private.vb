@@ -53,9 +53,9 @@ Partial Public Class hasharray(Of T,
         v(column).data()(CInt(row)) = value
     End Sub
 
-    Private Sub set_cell(ByVal column As UInt32, ByVal row As UInt32, ByVal value As T)
+    Private Sub add_cell(ByVal column As UInt32, ByVal row As UInt32, ByVal value As hasher_node(Of T))
         assert(cell_is_empty(column, row))
-        set_cell(column, row, new_node(value))
+        set_cell(column, row, value)
         s += uint32_1
     End Sub
 
@@ -63,10 +63,6 @@ Partial Public Class hasharray(Of T,
         assert(Not value Is Nothing)
         v(column).emplace_back(value)
         s += uint32_1
-    End Sub
-
-    Private Sub emplace_back(ByVal column As UInt32, ByVal value As T)
-        emplace_back(column, new_node(value))
     End Sub
 
     Private Function new_node(ByVal value As T) As hasher_node(Of T)
@@ -142,14 +138,14 @@ Partial Public Class hasharray(Of T,
         Return False
     End Function
 
-    Private Function emplace(ByVal value As T, ByRef column As UInt32, ByRef row As UInt32) As Boolean
+    Private Function emplace(ByVal value As hasher_node(Of T), ByRef column As UInt32, ByRef row As UInt32) As Boolean
         column = hash(value)
-        If unique AndAlso find_first_cell(value, column, row) Then
+        If unique AndAlso find_first_cell(+value, column, row) Then
             Return False
         End If
 
         If find_empty_cell(column, row) Then
-            set_cell(column, row, value)
+            add_cell(column, row, value)
             Return True
         End If
 
@@ -160,6 +156,10 @@ Partial Public Class hasharray(Of T,
         emplace_back(column, value)
         row = last_row(column)
         Return True
+    End Function
+
+    Private Function emplace(ByVal value As T, ByRef column As UInt32, ByRef row As UInt32) As Boolean
+        Return emplace(new_node(value), column, row)
     End Function
 
     Private Function should_rehash() As Boolean

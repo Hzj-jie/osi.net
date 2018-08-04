@@ -237,6 +237,11 @@ Public Structure first_const_fast_pair(Of FT, ST)
         Return emplace_make_pair(first, second)
     End Function
 #End If
+#If Not IS_CONST AndAlso Not IS_FIRST_CONST AndAlso Not IS_CLASS Then
+    Public Shared Widening Operator CType(ByVal this As first_const_fast_pair(Of FT, ST)) As pair(Of FT, ST)
+        Return emplace_make_pair(this.first, this.second)
+    End Operator
+#End If
 End Structure
 
 Public Module _first_const_fast_pair

@@ -21,15 +21,15 @@ Partial Public Class hasharray(Of T,
         Return iterator.end
     End Function
 
-    Public Function emplace(ByVal value As T) As pair(Of iterator, Boolean)
+    Public Function emplace(ByVal value As T) As fast_pair(Of iterator, Boolean)
         Dim column As UInt32 = 0
         Dim row As UInt32 = 0
         Dim r As Boolean = False
         r = emplace(value, column, row)
-        Return emplace_make_pair(iterator_at(column, row), r)
+        Return emplace_make_fast_pair(iterator_at(column, row), r)
     End Function
 
-    Public Function insert(ByVal value As T) As pair(Of iterator, Boolean)
+    Public Function insert(ByVal value As T) As fast_pair(Of iterator, Boolean)
         Return emplace(copy_no_error(value))
     End Function
 
