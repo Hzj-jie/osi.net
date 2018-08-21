@@ -77,6 +77,7 @@
     <Compile Include="lock.vb" />
     <Compile Include="locked.vb" />
     <Compile Include="monitorlock.vb" />
+    <Compile Include="rwlock.vb" />
     <Compile Include="slimlocks\eventlock.vb" />
     <Compile Include="slimlocks\islimlock.vb" />
     <Compile Include="slimlocks\lazylock.vb" />
@@ -105,6 +106,7 @@
     <Compile Include="spinwait.vb" />
     <Compile Include="ref.vb" />
     <Compile Include="type_lock.vb" />
+    <Compile Include="zero_reset_event.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

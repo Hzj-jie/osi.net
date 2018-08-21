@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports osi.root.constants
@@ -60,26 +64,17 @@ Public Module _event_wait_handle
 
     <Extension()> Public Function wait(ByVal i As WaitHandle, ByVal ms As Int64) As Boolean
         assert(Not i Is Nothing)
-        If ms < 0 OrElse ms > max_int32 Then
-            Try
-                assert(i.WaitOne())
-                Return True
-            Catch ex As ThreadAbortException
-                Return False
-            Catch ex As Exception
-                log_unhandled_exception(ex)
-                Return False
-            End Try
-        Else
-            Try
-                Return i.WaitOne(CInt(ms))
-            Catch ex As ThreadAbortException
-                Return False
-            Catch ex As Exception
-                log_unhandled_exception(ex)
-                Return False
-            End Try
-        End If
+        Try
+            If ms < 0 OrElse ms > max_int32 Then
+                Return assert(i.WaitOne())
+            End If
+            Return i.WaitOne(CInt(ms))
+        Catch ex As ThreadAbortException
+            Return False
+        Catch ex As Exception
+            log_unhandled_exception(ex)
+            Return False
+        End Try
     End Function
 
     <Extension()> Public Function wait(ByVal i As WaitHandle) As Boolean

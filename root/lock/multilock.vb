@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 Public Class multilock(Of lock_t As {Structure, slimlock.islimlock})
-    Private Const default_lock_count As UInt32 = 8192
+    Private Const default_lock_count As UInt32 = 257
     Private ReadOnly locks() As lock_t
 
     Public Sub New(ByVal lock_count As UInt32)

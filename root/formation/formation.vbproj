@@ -323,7 +323,7 @@
     </ProjectReference>
     <ProjectReference Include="..\lock\lock.vbproj">
       <Project>{5bb4adde-7c12-4221-ae69-c669255c931e}</Project>
-      <Name>lock %28root\lock%29</Name>
+      <Name>lock</Name>
     </ProjectReference>
     <ProjectReference Include="..\template\template.vbproj">
       <Project>{8ef461f7-2f05-42a3-b65b-8e644f992582}</Project>
