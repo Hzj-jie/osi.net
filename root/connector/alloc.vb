@@ -3,6 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
+
 #Const cached_alloc = True
 
 Public Module _alloc
@@ -37,5 +39,9 @@ Public Module _alloc
     Public Function _new(Of T As New)(ByRef i As T) As T
         i = New T()
         Return i
+    End Function
+
+    <Extension()> Public Function [New](Of T As New)(ByRef i As T) As T
+        Return _new(i)
     End Function
 End Module
