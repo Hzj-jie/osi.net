@@ -35,6 +35,12 @@ Public NotInheritable Class ref_map(Of KEY_T, VALUE_T)
         End Using
     End Function
 
+    Public Function allocator_size() As UInt32
+        Using allocators_lock.scoped_read_lock()
+            Return allocators.size()
+        End Using
+    End Function
+
     Public Function [get](ByVal key As KEY_T) As ref_ptr(Of VALUE_T)
         Using instances_lock.scoped_read_lock()
             Dim r As ref_ptr(Of VALUE_T) = Nothing
@@ -53,6 +59,12 @@ Public NotInheritable Class ref_map(Of KEY_T, VALUE_T)
     Public Function created(ByVal key As KEY_T) As Boolean
         Using instances_lock.scoped_read_lock()
             Return instances.find(key) <> instances.end()
+        End Using
+    End Function
+
+    Public Function created_size() As UInt32
+        Using instances_lock.scoped_read_lock()
+            Return instances.size()
         End Using
     End Function
 

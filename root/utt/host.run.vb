@@ -9,7 +9,6 @@ Imports osi.root.constants
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports counter = osi.root.utils.counter
-Imports envs = osi.root.envs
 
 Partial Friend NotInheritable Class host
     Private Shared expected_end_ms As Int64
@@ -28,7 +27,7 @@ Partial Friend NotInheritable Class host
                assert_true(do_(AddressOf c.finish, False), "failed to finish case ", c.full_name)
     End Function
 
-    Public Shared Function execute_case(ByVal c As case_info) As Boolean
+    Private Shared Function execute_case(ByVal c As case_info) As Boolean
         assert(Not c Is Nothing)
         Return execute_case(c.case)
     End Function

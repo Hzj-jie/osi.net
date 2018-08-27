@@ -102,6 +102,42 @@ Public NotInheritable Class ref_map_test
         assert_equal(cd_object(Of joint_type(Of ref_map_test, _1)).disposed(), uint32_2)
     End Sub
 
+    <test>
+    Private Shared Sub multi_threading_get_should_succeed()
+        case2.run(Of multi_threading_get_should_succeed_case)().assert_succeeded()
+    End Sub
+
+    <test>
+    Private NotInheritable Class multi_threading_get_should_succeed_case
+        Private ReadOnly m As ref_map(Of Int32, cd_object(Of joint_type(Of ref_map_test, _2)))
+        Private ReadOnly s As [set](Of Int32)
+
+        <test>
+        <multi_threading(4)>
+        <repeat(10000)>
+        Private Sub get_object()
+            Dim i As Int32 = 0
+            i = rnd_int(0, 100)
+            SyncLock s
+                s.emplace(i)
+            End SyncLock
+            m.get(i, Function() As cd_object(Of joint_type(Of ref_map_test, _2))
+                         Return New cd_object(Of joint_type(Of ref_map_test, _2))()
+                     End Function)
+        End Sub
+
+        <finish>
+        Private Sub check_created_instances()
+            assert_equal(s.size(), m.created_size())
+            assert_equal(s.size(), cd_object(Of joint_type(Of ref_map_test, _2)).constructed())
+        End Sub
+
+        Private Sub New()
+            m.[New]()
+            s.[New]()
+        End Sub
+    End Class
+
     Private Sub New()
     End Sub
 End Class

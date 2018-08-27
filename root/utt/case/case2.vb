@@ -73,37 +73,76 @@ Partial Public NotInheritable Class case2
 
     Public Shared Function create(ByVal t As Type) As vector(Of utt.[case])
         assert(Not t Is Nothing)
-        If t.has_custom_attribute(Of attributes.test)() AndAlso
-           Not t.IsAbstract() AndAlso
-           Not t.IsGenericType() Then
-            Dim class_info As info = Nothing
-            class_info = info.from(t)
-
-            Dim r As vector(Of utt.[case]) = Nothing
-            r = New vector(Of utt.[case])()
-
-            Dim prepare As Func(Of Object, Boolean) = Nothing
-            Dim finish As Func(Of Object, Boolean) = Nothing
-            prepare = parse_prepare(t)
-            finish = parse_finish(t)
-
-            Dim tests As vector(Of function_info) = Nothing
-            tests = parse_tests(t)
-            Dim i As UInt32 = 0
-            While i < tests.size()
-                r.emplace_back(create(t, class_info, prepare, finish, tests(i)))
-                i += uint32_1
-            End While
-
-            Dim randoms As vector(Of random_function_info) = Nothing
-            randoms = parse_randoms(t)
-            If Not randoms.null_or_empty() Then
-                r.emplace_back(create(t, class_info, prepare, finish, randoms))
-            End If
-            Return r
-        Else
+        If Not t.has_custom_attribute(Of attributes.test)() OrElse
+            t.IsAbstract() OrElse
+            t.IsGenericType() Then
             Return Nothing
         End If
+
+        Dim class_info As info = Nothing
+        class_info = info.from(t)
+
+        Dim r As vector(Of utt.[case]) = Nothing
+        r = New vector(Of utt.[case])()
+
+        Dim prepare As Func(Of Object, Boolean) = Nothing
+        Dim finish As Func(Of Object, Boolean) = Nothing
+        prepare = parse_prepare(t)
+        finish = parse_finish(t)
+
+        Dim tests As vector(Of function_info) = Nothing
+        tests = parse_tests(t)
+        Dim i As UInt32 = 0
+        While i < tests.size()
+            r.emplace_back(create(t, class_info, prepare, finish, tests(i)))
+            i += uint32_1
+        End While
+
+        Dim randoms As vector(Of random_function_info) = Nothing
+        randoms = parse_randoms(t)
+        If Not randoms.null_or_empty() Then
+            r.emplace_back(create(t, class_info, prepare, finish, randoms))
+        End If
+        Return r
+    End Function
+
+    Public NotInheritable Class run_result
+        Public ReadOnly cases As UInt32
+        Public ReadOnly succeeded As UInt32
+
+        Public Sub New(ByVal cases As UInt32,
+                       ByVal succeeded As UInt32)
+            Me.cases = cases
+            Me.succeeded = succeeded
+        End Sub
+
+        Public Sub assert_succeeded(ByVal cases As UInt32)
+            assert_equal(Me.cases, cases)
+            assert_equal(Me.succeeded, cases)
+        End Sub
+
+        Public Sub assert_succeeded()
+            assert_succeeded(uint32_1)
+        End Sub
+    End Class
+
+    ' Runs a type as a case2
+    Public Shared Function run(Of T)() As run_result
+        Return run(GetType(T))
+    End Function
+
+    Public Shared Function run(ByVal t As Type) As run_result
+        Dim v As vector(Of utt.case) = Nothing
+        v = create(t)
+        Dim i As UInt32 = 0
+        Dim succeeded As UInt32 = 0
+        While i < v.size()
+            If host.execute_case(v(i)) Then
+                succeeded += uint32_1
+            End If
+            i += uint32_1
+        End While
+        Return New run_result(v.size(), succeeded)
     End Function
 
     Private Sub New()
