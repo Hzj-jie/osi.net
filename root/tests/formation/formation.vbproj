@@ -64,7 +64,9 @@
     <Compile Include="hasharray_test.vb" />
     <Compile Include="hashset_test.vb" />
     <Compile Include="hashtable_test.vb" />
+    <Compile Include="lifetime_control\ref_instance_test2.vb" />
     <Compile Include="lifetime_control\ref_map_test.vb" />
+    <Compile Include="lifetime_control\ref_ptr_test2.vb" />
     <Compile Include="map_hashmap_unordered_map_perf_test.vb" />
     <Compile Include="binary_tree\map_test.vb" />
     <Compile Include="binary_tree\map_test2.vb" />

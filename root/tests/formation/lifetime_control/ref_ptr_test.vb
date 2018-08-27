@@ -1,9 +1,12 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.lock
-Imports osi.root.utils
 Imports osi.root.utt
 
 Public Class ref_ptr_test
