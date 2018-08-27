@@ -27,7 +27,7 @@ End Class
 ' Directly using this class is unsafe, calling ref() and get() in parallel with unref() may end-up getting disposed
 ' object. Usually this class should be used together with ref_map.
 Public NotInheritable Class ref_ptr(Of T)
-    Inherits dispose_ptr(Of T)
+    Inherits disposer(Of T)
 
     Private ReadOnly i As atomic_int
     Private ReadOnly create_stack_trace As String
@@ -78,20 +78,6 @@ Public NotInheritable Class ref_ptr(Of T)
         assert(r >= 0)
         Return CUInt(r)
     End Function
-
-    Protected Overrides Sub Finalize()
-        safe_finalize(Me,
-                      Sub()
-                          If ref_count() > 0 Then
-                              dispose()
-                              raise_error(error_type.warning,
-                                          "ref_ptr @ ",
-                                          create_stack_trace,
-                                          " has not been fully dereferred.")
-                          End If
-                      End Sub)
-        MyBase.Finalize()
-    End Sub
 
     Public Function assert_getter() As getter(Of T)
         Return New _assert_getter(Me)

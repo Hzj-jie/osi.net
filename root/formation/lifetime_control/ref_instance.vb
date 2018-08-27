@@ -28,7 +28,7 @@ Public Class ref_instance(Of T)
     Public Event created()
     Public Event disposed()
     Private ReadOnly [New] As Func(Of T)
-    Private ReadOnly p As dispose_ptr(Of T)
+    Private ReadOnly p As disposer(Of T)
     Private ReadOnly create_stack_trace As String
     Private r As Int32
     Private l As lock_t
@@ -45,7 +45,7 @@ Public Class ref_instance(Of T)
         Else
             Me.[New] = [New]
         End If
-        Me.p = New dispose_ptr(Of T)(disposer:=disposer)
+        Me.p = New disposer(Of T)(disposer:=disposer)
         Me.create_stack_trace = build_create_stack_trace()
         assert(ref <= max_int32)
         Me.r = CInt(ref)
@@ -114,20 +114,6 @@ Public Class ref_instance(Of T)
             Return this.get()
         End If
     End Operator
-
-    Protected Overrides Sub Finalize()
-        safe_finalize(Me,
-                      Sub()
-                          If ref_count() > 0 Then
-                              p.dispose()
-                              raise_error(error_type.warning,
-                                          "ref_instance @ ",
-                                          create_stack_trace,
-                                          " has not been fully dereferred.")
-                          End If
-                      End Sub)
-        MyBase.Finalize()
-    End Sub
 
     Public Function assert_getter() As getter(Of T)
         Return New _assert_getter(Me)
