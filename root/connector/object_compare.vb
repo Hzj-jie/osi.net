@@ -38,27 +38,29 @@ Public Module _object_compare
     Public Function object_compare(ByVal this As Object, ByVal that As Object) As Int32
         If Object.ReferenceEquals(this, that) Then
             Return object_compare_equal
-        ElseIf this Is Nothing Then
-            Return object_compare_less
-        ElseIf that Is Nothing Then
-            Return object_compare_larger
-        Else
-            Return object_compare_undetermined
         End If
+        If this Is Nothing Then
+            Return object_compare_less
+        End If
+        If that Is Nothing Then
+            Return object_compare_larger
+        End If
+        Return object_compare_undetermined
     End Function
 
     Public Function object_compare(ByVal this As Object, ByVal that As Object, ByRef o As Int32) As Boolean
         If Object.ReferenceEquals(this, that) Then
             o = object_compare_equal
             Return True
-        ElseIf this Is Nothing Then
+        End If
+        If this Is Nothing Then
             o = object_compare_less
             Return True
-        ElseIf that Is Nothing Then
+        End If
+        If that Is Nothing Then
             o = object_compare_larger
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 End Module

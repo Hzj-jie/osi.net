@@ -73,24 +73,12 @@ Partial Public Class event_comb
         Return r
     End Function
 
-#If DEBUG Then
-    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)> _
-    Public Sub New(ByVal ParamArray d() As Func(Of Boolean))
-#Else
-    Public Sub New(ByVal ParamArray d() As Func(Of Boolean))
-#End If
+    Private Sub New(ByVal d() As Func(Of Boolean), ByVal callstack As String)
+        assert(Not callstack Is Nothing)
         _l = New lock_t(Me)
         ds = d
         ds_len = array_size(ds)
-        If event_comb_trace OrElse event_comb_alloc_trace Then
-            If event_comb_full_alloc_stack Then
-                _callstack = connector.callstack()
-            Else
-                _callstack = backtrace("event_comb")
-            End If
-        Else
-            _callstack = "##NOT_TRACE##"
-        End If
+        _callstack = callstack
         'following functions are all assert_in_lock protected
 #If DEBUG Then
         reenterable_locked(Sub()
@@ -106,6 +94,28 @@ Partial Public Class event_comb
                            End Sub)
 #End If
     End Sub
+
+#If DEBUG Then
+    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
+    Public Sub New(ByVal ParamArray d() As Func(Of Boolean))
+#Else
+    Public Sub New(ByVal ParamArray d() As Func(Of Boolean))
+#End If
+        Me.New(d, Function() As String
+                      If event_comb_trace OrElse event_comb_alloc_trace Then
+                          If event_comb_full_alloc_stack Then
+                              Return connector.callstack()
+                          End If
+                          Return backtrace("event_comb")
+                      End If
+                      Return "##NOT_TRACE##"
+                  End Function())
+    End Sub
+
+    ' Creates a new event_comb instance with initial state.
+    Public Function renew() As event_comb
+        Return New event_comb(ds, callstack())
+    End Function
 
     Protected Function callstack() As String
         Return _callstack
@@ -261,39 +271,39 @@ Partial Public Class event_comb
         assert_in_lock()
         If timeouted_event Is Nothing Then
             Return False
-        Else
-            timeouted_event.cancel()
-            timeouted_event = Nothing
-            Return True
         End If
+
+        timeouted_event.cancel()
+        timeouted_event = Nothing
+        Return True
     End Function
 
     Friend Sub set_timeout(ByVal timeout_ms As Int64)
         reenterable_locked(Sub()
                                If timeout_ms < 0 Then
                                    cancel_timeout_event()
-                               Else
-                                   If event_comb_trace AndAlso timeout_ms >= max_int32 Then
-                                       raise_error(error_type.performance,
-                                                   "timeout of event_comb @ ",
-                                                   callstack(),
-                                                   " has been set to a number over maxInt32, ",
-                                                   "which means it almost cannot be timeout forever")
-                                   End If
-                                   Dim wp As weak_pointer(Of event_comb) = Nothing
-                                   wp = New weak_pointer(Of event_comb)(Me)
-                                   timeouted_event = stopwatch.push(timeout_ms,
-                                                                    Sub()
-                                                                        'may be canceled between
-                                                                        'stopwatch canceled test and do
-                                                                        Dim ec As event_comb = Nothing
-                                                                        ec = (+wp)
-                                                                        If Not ec Is Nothing Then
-                                                                            ec.timeout()
-                                                                        End If
-                                                                    End Sub)
-                                   assert(Not timeouted_event Is Nothing)
+                                   Return
                                End If
+                               If event_comb_trace AndAlso timeout_ms >= max_int32 Then
+                                   raise_error(error_type.performance,
+                                               "timeout of event_comb @ ",
+                                                callstack(),
+                                                " has been set to a number over maxInt32, ",
+                                                "which means it almost cannot be timeout forever")
+                               End If
+                               Dim wp As weak_pointer(Of event_comb) = Nothing
+                               wp = New weak_pointer(Of event_comb)(Me)
+                               timeouted_event = stopwatch.push(timeout_ms,
+                                                                 Sub()
+                                                                     'may be canceled between
+                                                                     'stopwatch canceled test and do
+                                                                     Dim ec As event_comb = Nothing
+                                                                     ec = (+wp)
+                                                                     If Not ec Is Nothing Then
+                                                                         ec.timeout()
+                                                                     End If
+                                                                 End Sub)
+                               assert(Not timeouted_event Is Nothing)
                            End Sub)
     End Sub
 
@@ -301,12 +311,13 @@ Partial Public Class event_comb
     'it cancels itself only, so cancel from the latest event_comb is a good idea
     Public Sub cancel()
         reenterable_locked(Sub()
-                               If Not [end]() Then
-                                   If event_comb_trace Then
-                                       raise_error(error_type.warning, "event ", callstack(), " has been canceled")
-                                   End If
-                                   suspend()
+                               If [end]() Then
+                                   Return
                                End If
+                               If event_comb_trace Then
+                                   raise_error(error_type.warning, "event ", callstack(), " has been canceled")
+                               End If
+                               suspend()
                            End Sub)
     End Sub
 
@@ -322,13 +333,13 @@ Partial Public Class event_comb
 
     Private Sub timeout()
         reenterable_locked(Sub()
-                               If Not [end]() AndAlso
-                                  object_compare(timeouted_event, stopwatch.[event].current()) = 0 Then
-                                   If event_comb_trace Then
-                                       raise_error(error_type.warning, "event ", callstack(), " timeout")
-                                   End If
-                                   suspend()
+                               If [end]() OrElse object_compare(timeouted_event, stopwatch.[event].current()) <> 0 Then
+                                   Return
                                End If
+                               If event_comb_trace Then
+                                   raise_error(error_type.warning, "event ", callstack(), " timeout")
+                               End If
+                               suspend()
                            End Sub)
     End Sub
 End Class

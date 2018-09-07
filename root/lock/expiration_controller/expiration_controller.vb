@@ -1,4 +1,10 @@
 ﻿
+' USE event.flip_event INSTEAD
+
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 
 Partial Public MustInherit Class expiration_controller
@@ -26,25 +32,17 @@ Partial Public MustInherit Class expiration_controller
         End Operator
     End Class
 
-    Public Shared Function [New](ByVal ms As Int64, ByRef o As expiration_controller) As Boolean
-        o = New ms(ms)
-        Return True
-    End Function
-
     Public Shared Function [New](ByVal ms As Int64) As expiration_controller
-        Dim o As expiration_controller = Nothing
-        assert([New](ms, o))
-        Return o
+        Return New ms(ms)
     End Function
 
     Public Shared Function [New](ByVal stopping As Func(Of Boolean),
                                  ByRef o As expiration_controller) As Boolean
         If stopping Is Nothing Then
             Return False
-        Else
-            o = New func_bool(stopping)
-            Return True
         End If
+        o = New func_bool(stopping)
+        Return True
     End Function
 
     Public Shared Function [New](ByVal stopping As Func(Of Boolean)) As expiration_controller

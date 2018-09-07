@@ -83,6 +83,10 @@
     <Compile Include="enum.vb" />
     <Compile Include="error_handle\application_info_logging.vb" />
     <Compile Include="error_handle\trace.vb" />
+    <Compile Include="flip_events\flip_events.manual.vb" />
+    <Compile Include="flip_events\flip_events.ref_counted.vb" />
+    <Compile Include="flip_events\flip_events.timeout.vb" />
+    <Compile Include="flip_events\flip_events.vb" />
     <Compile Include="instance_count.vb" />
     <Compile Include="invoker\invoker.builder_base.vb" />
     <Compile Include="invoker\invoker.builder.vb" />
