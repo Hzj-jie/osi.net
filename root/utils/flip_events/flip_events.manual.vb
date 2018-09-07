@@ -6,11 +6,11 @@ Option Strict On
 Imports osi.root.event
 
 Partial Public NotInheritable Class flip_events
-    Private NotInheritable Class manual_impl
+    Public NotInheritable Class manual_flip_event
         Inherits flip_event
 
-        Public Sub New(ByVal to_high As Action, ByVal to_low As Action)
-            MyBase.New(to_high, to_low)
+        Public Sub New(ByVal e As events)
+            MyBase.New(e)
         End Sub
 
         Public Shadows Sub raise_to_high()

@@ -60,6 +60,9 @@
     <Compile Include="chmod_test_data.vb" />
     <Compile Include="console_key_info_mapping_test.vb" />
     <Compile Include="domain_unhandled_exception_test.vb" />
+    <Compile Include="flip_events\flip_events_manual_test.vb" />
+    <Compile Include="flip_events\flip_events_ref_counted_test.vb" />
+    <Compile Include="flip_events\flip_events_timeout_test.vb" />
     <Compile Include="global_init_order_test.vb" />
     <Compile Include="global_init_test.vb" />
     <Compile Include="implicit_conversions.vb" />
@@ -144,6 +147,10 @@
     <ProjectReference Include="..\..\envs\envs.vbproj">
       <Project>{D310BA86-0FA6-42BB-8EFD-2DEE526E6981}</Project>
       <Name>envs</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\event\event.vbproj">
+      <Project>{93adc952-439d-4968-9640-51bc34b066dd}</Project>
+      <Name>event</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\formation\formation.vbproj">
       <Project>{DA3051DC-A250-488F-AACA-F46977DD0F17}</Project>
