@@ -7,8 +7,8 @@ Imports osi.root.connector
 
 ' A signal to notice to_high and to_low events. One instance may trigger either event for multiple times.
 Public Class flip_event
-    Private ReadOnly to_high As Action
-    Private ReadOnly to_low As Action
+    Private to_high As Action
+    Private to_low As Action
 
     Public NotInheritable Class events
         Public to_high As Action
@@ -42,14 +42,21 @@ Public Class flip_event
     End Sub
 
     Protected Sub raise_to_high()
-        If Not to_high Is Nothing Then
-            to_high()
-        End If
+        raise(to_high)
     End Sub
 
     Protected Sub raise_to_low()
-        If Not to_low Is Nothing Then
-            to_low()
+        raise(to_low)
+    End Sub
+
+    Private Shared Sub raise(ByVal v As Action)
+        If Not v Is Nothing Then
+            v()
         End If
+    End Sub
+
+    Public Sub cancel()
+        to_high = Nothing
+        to_low = Nothing
     End Sub
 End Class
