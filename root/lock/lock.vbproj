@@ -60,6 +60,7 @@
     <Compile Include="atom\atomic_int64.vb" />
     <Compile Include="atom\atomic_long.vb" />
     <Compile Include="atom\atomic_ref.vb" />
+    <Compile Include="atom\atomic_ref_T.vb" />
     <Compile Include="atom\atomic_uint.vb" />
     <Compile Include="atom\atomic_uint32.vb" />
     <Compile Include="atom\atomic_uint64.vb" />

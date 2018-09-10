@@ -48,21 +48,21 @@ Partial Public Class stopwatch
         Friend Function [do]() As Boolean
             If canceled() Then
                 Return False
-            Else
-                Dim diff As Int64 = 0
-                diff = nowadays.milliseconds() - ms
-                If diff > 0 Then
-                    current() = Me
-                    Try
-                        void_(d)
-                    Finally
-                        current() = Nothing
-                    End Try
-                    Return False
-                Else
-                    Return True
-                End If
             End If
+
+            Dim diff As Int64 = 0
+            diff = nowadays.milliseconds() - ms
+            If diff <= 0 Then
+                Return True
+            End If
+
+            current() = Me
+            Try
+                void_(d)
+            Finally
+                current() = Nothing
+            End Try
+            Return False
         End Function
     End Class
 End Class

@@ -34,6 +34,7 @@ Public Class flip_event
     End Class
 
     Public Delegate Function [New](Of T As flip_event)(ByVal e As events) As T
+    Public Event cancelled()
 
     Protected Sub New(ByVal e As events)
         assert(Not e Is Nothing)
@@ -58,5 +59,6 @@ Public Class flip_event
     Public Sub cancel()
         to_high = Nothing
         to_low = Nothing
+        RaiseEvent cancelled()
     End Sub
 End Class

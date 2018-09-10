@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="atomic_test.vb" />
     <Compile Include="atom\atomic_int_test.vb" />
+    <Compile Include="atom\atomic_ref_T_test.vb" />
     <Compile Include="atom\atomic_uint_test.vb" />
     <Compile Include="atom\atom_reference_test.vb" />
     <Compile Include="atom\atom_test.vb" />

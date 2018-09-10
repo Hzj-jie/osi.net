@@ -12,7 +12,7 @@ Partial Public NotInheritable Class flip_events
         Public Sub New(ByVal e As events, ByVal timeout_ms As UInt32)
             MyBase.New(e)
             raise_to_high()
-            stopwatch.push(timeout_ms, AddressOf raise_to_low)
+            AddHandler cancelled, AddressOf stopwatch.push(timeout_ms, AddressOf raise_to_low).cancel
         End Sub
     End Class
 End Class
