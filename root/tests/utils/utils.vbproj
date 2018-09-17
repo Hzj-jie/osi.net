@@ -110,6 +110,7 @@
     <Compile Include="invoker\valuer_create_recursively_test.vb" />
     <Compile Include="invoker\valuer_perf_test.vb" />
     <Compile Include="invoker\valuer_test.vb" />
+    <Compile Include="weak_ref_delegate_test.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

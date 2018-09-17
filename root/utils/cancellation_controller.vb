@@ -4,9 +4,11 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.event
 Imports osi.root.lock
 
+' A combination of mutual excluded flip_event implementations.
 Public NotInheritable Class cancellation_controller
     Private ReadOnly manual_ref As atomic_ref(Of flip_events.manual_flip_event)
     Private ReadOnly ref_counted_ref As atomic_ref(Of flip_events.ref_counted_flip_event)
@@ -27,9 +29,14 @@ Public NotInheritable Class cancellation_controller
         Return manual_ref.get()
     End Function
 
-    Public Function ref_counted(ByVal init_value As UInt32, ByVal when_cancel As Action) As flip_events.ref_counted_flip_event
+    Public Function ref_counted(ByVal init_value As UInt32,
+                                ByVal when_cancel As Action) As flip_events.ref_counted_flip_event
         replace(ref_counted_ref, flip_events.ref_counted(init_value), when_cancel)
         Return ref_counted()
+    End Function
+
+    Public Function ref_counted(ByVal when_cancel As Action) As flip_events.ref_counted_flip_event
+        Return ref_counted(uint32_1, when_cancel)
     End Function
 
     Public Function ref_counted() As flip_events.ref_counted_flip_event
@@ -63,6 +70,12 @@ Public NotInheritable Class cancellation_controller
         End If
     End Sub
 
+    Public Sub cancel()
+        cancel(manual_ref)
+        cancel(ref_counted_ref)
+        cancel(timeout_ref)
+    End Sub
+
     Private Shared Sub cancel_if_not(Of T As flip_event, T2 As flip_event) _
                                     (ByVal ref As atomic_ref(Of T), ByVal cmp As atomic_ref(Of T2))
         Dim f As flip_event = Nothing
@@ -70,5 +83,9 @@ Public NotInheritable Class cancellation_controller
         If Not f Is Nothing AndAlso object_compare(ref, cmp) <> 0 Then
             f.cancel()
         End If
+    End Sub
+
+    Private Shared Sub cancel(Of T As flip_event)(ByVal ref As atomic_ref(Of T))
+        cancel_if_not(ref, [default](Of atomic_ref(Of flip_event)).null)
     End Sub
 End Class

@@ -173,6 +173,7 @@
     <Compile Include="type_resolver\type_resolver.storage.vb" />
     <Compile Include="type_resolver\type_resolver.unordered_map.vb" />
     <Compile Include="type_resolver\type_resolver.vb" />
+    <Compile Include="weak_ref_delegate.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
