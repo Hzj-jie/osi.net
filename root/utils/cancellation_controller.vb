@@ -20,6 +20,11 @@ Public NotInheritable Class cancellation_controller
         timeout_ref.[New]()
     End Sub
 
+    ' Prefers a weak_ref_delegate to avoid binding object.
+    Public Function manual(Of T)(ByVal obj As T, ByVal when_cancel As Action(Of T)) As flip_events.manual_flip_event
+        Return manual(weak_ref_delegate.bind(obj, when_cancel))
+    End Function
+
     Public Function manual(ByVal when_cancel As Action) As flip_events.manual_flip_event
         replace(manual_ref, flip_events.manual(), when_cancel)
         Return manual()
@@ -29,10 +34,21 @@ Public NotInheritable Class cancellation_controller
         Return manual_ref.get()
     End Function
 
+    Public Function ref_counted(Of T)(ByVal init_value As UInt32,
+                                      ByVal obj As T,
+                                      ByVal when_cancel As Action(Of T)) As flip_events.ref_counted_flip_event
+        Return ref_counted(init_value, weak_ref_delegate.bind(obj, when_cancel))
+    End Function
+
     Public Function ref_counted(ByVal init_value As UInt32,
                                 ByVal when_cancel As Action) As flip_events.ref_counted_flip_event
         replace(ref_counted_ref, flip_events.ref_counted(init_value), when_cancel)
         Return ref_counted()
+    End Function
+
+    Public Function ref_counted(Of T)(ByVal obj As T,
+                                      ByVal when_cancel As Action(Of T)) As flip_events.ref_counted_flip_event
+        Return ref_counted(uint32_1, obj, when_cancel)
     End Function
 
     Public Function ref_counted(ByVal when_cancel As Action) As flip_events.ref_counted_flip_event
@@ -41,6 +57,10 @@ Public NotInheritable Class cancellation_controller
 
     Public Function ref_counted() As flip_events.ref_counted_flip_event
         Return ref_counted_ref.get()
+    End Function
+
+    Public Function timeout(Of T)(ByVal ms As UInt32, ByVal obj As T, ByVal when_cancel As Action(Of T)) As flip_event
+        Return timeout(ms, weak_ref_delegate.bind(obj, when_cancel))
     End Function
 
     Public Function timeout(ByVal ms As UInt32, ByVal when_cancel As Action) As flip_event

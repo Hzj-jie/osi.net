@@ -90,6 +90,23 @@ Public NotInheritable Class cancellation_controller_test
         assert_equal(timeout, uint32_0)
     End Sub
 
+    <test>
+    Private Shared Sub bind_weak_ref_delegate()
+        Dim c As cancellation_controller = Nothing
+        c = New cancellation_controller()
+        Dim o As Object = Nothing
+        o = New Object()
+        Dim r As Boolean = False
+        Dim m As flip_events.manual_flip_event = Nothing
+        m = c.manual(o,
+                     Sub(ByVal i As Object)
+                         assert_reference_equal(i, o)
+                         r = True
+                     End Sub)
+        m.raise_to_low()
+        assert_true(r)
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
