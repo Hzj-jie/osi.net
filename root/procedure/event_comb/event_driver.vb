@@ -43,7 +43,7 @@ Friend Class event_driver
         If event_comb_valid(ec) Then
             'this should be consistent with set_timeout function
             If timeout_ms >= 0 Then
-                ec.set_timeout(timeout_ms)
+                ec.cancellation_control.timeout(timeout_ms)
             End If
             Return assert(begin(ec))
         Else

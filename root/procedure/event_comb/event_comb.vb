@@ -20,12 +20,12 @@ Partial Public Class event_comb
     Public Const end_step As Int32 = max_int32
     Public Const not_started_step As Int32 = -1
     Public Const first_step As Int32 = 0
+    Public ReadOnly cancellation_control As cancellation_controller
     Private ReadOnly ds() As Func(Of Boolean)
     Private ReadOnly _callstack As String
     Private ReadOnly ds_len As UInt32    'for perf concern
     Protected Event suspending()
     Private _end_result As ternary
-    Private timeouted_event As stopwatch.[event]
     Private cb As event_comb
     Private [step] As Int32
     Private pends As UInt32
@@ -79,13 +79,13 @@ Partial Public Class event_comb
         ds = d
         ds_len = array_size(ds)
         _callstack = callstack
+        cancellation_control = New cancellation_controller(Me)
+        _end_result = ternary.unknown
+        cb = Nothing
         'following functions are all assert_in_lock protected
 #If DEBUG Then
         reenterable_locked(Sub()
 #End If
-                               _end_result = ternary.unknown
-                               timeouted_event = Nothing
-                               cb = Nothing
                                assert_goto_not_started()
                                clear_pends()
                                begin_ticks() = npos
@@ -242,7 +242,7 @@ Partial Public Class event_comb
                 raise_error("event ", callstack(), " finished in step ", [step])
             End If
             end_ticks() = nowadays.ticks()
-            cancel_timeout_event()
+            cancellation_control.cancel()
             [resume](cb)
             assert([end]())
         ElseIf event_comb_trace Then
@@ -267,79 +267,30 @@ Partial Public Class event_comb
         reenterable_locked(AddressOf _do)
     End Sub
 
-    Private Function cancel_timeout_event() As Boolean
-        assert_in_lock()
-        If timeouted_event Is Nothing Then
-            Return False
-        End If
-
-        timeouted_event.cancel()
-        timeouted_event = Nothing
-        Return True
-    End Function
-
-    Friend Sub set_timeout(ByVal timeout_ms As Int64)
-        reenterable_locked(Sub()
-                               If timeout_ms < 0 Then
-                                   cancel_timeout_event()
-                                   Return
-                               End If
-                               If event_comb_trace AndAlso timeout_ms >= max_int32 Then
-                                   raise_error(error_type.performance,
-                                               "timeout of event_comb @ ",
-                                                callstack(),
-                                                " has been set to a number over maxInt32, ",
-                                                "which means it almost cannot be timeout forever")
-                               End If
-                               Dim wp As weak_pointer(Of event_comb) = Nothing
-                               wp = New weak_pointer(Of event_comb)(Me)
-                               timeouted_event = stopwatch.push(timeout_ms,
-                                                                 Sub()
-                                                                     'may be canceled between
-                                                                     'stopwatch canceled test and do
-                                                                     Dim ec As event_comb = Nothing
-                                                                     ec = (+wp)
-                                                                     If Not ec Is Nothing Then
-                                                                         ec.timeout()
-                                                                     End If
-                                                                 End Sub)
-                               assert(Not timeouted_event Is Nothing)
-                           End Sub)
-    End Sub
-
     'ATTENTION, the cancel function does not try to cancel all the event_combs / callback_actions / void it waits for
     'it cancels itself only, so cancel from the latest event_comb is a good idea
     Public Sub cancel()
+        suspend("has been canceled")
+    End Sub
+
+    Private Sub timeout()
+        suspend("timeout")
+    End Sub
+
+    Private Sub suspend(ByVal action As String)
         reenterable_locked(Sub()
                                If [end]() Then
                                    Return
                                End If
                                If event_comb_trace Then
-                                   raise_error(error_type.warning, "event ", callstack(), " has been canceled")
+                                   raise_error(error_type.warning, "event ", callstack(), " ", action)
                                End If
-                               suspend()
-                           End Sub)
-    End Sub
-
-    Private Sub suspend()
-        assert_in_lock()
-        RaiseEvent suspending()
-        assert_goto_end()
-        mark_as_failed()
-        clear_pends()
-        _do()
-        assert([end]())
-    End Sub
-
-    Private Sub timeout()
-        reenterable_locked(Sub()
-                               If [end]() OrElse object_compare(timeouted_event, stopwatch.[event].current()) <> 0 Then
-                                   Return
-                               End If
-                               If event_comb_trace Then
-                                   raise_error(error_type.warning, "event ", callstack(), " timeout")
-                               End If
-                               suspend()
+                               RaiseEvent suspending()
+                               assert_goto_end()
+                               mark_as_failed()
+                               clear_pends()
+                               _do()
+                               assert([end]())
                            End Sub)
     End Sub
 End Class

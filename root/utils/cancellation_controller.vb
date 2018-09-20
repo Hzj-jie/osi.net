@@ -34,6 +34,10 @@ Public NotInheritable Class cancellation_controller
         Return manual_ref.get()
     End Function
 
+    Public Sub cancel_manual()
+        cancel(manual_ref)
+    End Sub
+
     Public Function ref_counted(Of T)(ByVal init_value As UInt32,
                                       ByVal obj As T,
                                       ByVal when_cancel As Action(Of T)) As flip_events.ref_counted_flip_event
@@ -59,6 +63,10 @@ Public NotInheritable Class cancellation_controller
         Return ref_counted_ref.get()
     End Function
 
+    Public Sub cancel_ref_counted()
+        cancel(ref_counted_ref)
+    End Sub
+
     Public Function timeout(Of T)(ByVal ms As UInt32, ByVal obj As T, ByVal when_cancel As Action(Of T)) As flip_event
         Return timeout(ms, weak_ref_delegate.bind(obj, when_cancel))
     End Function
@@ -71,6 +79,10 @@ Public NotInheritable Class cancellation_controller
     Public Function timeout() As flip_event
         Return timeout_ref.get()
     End Function
+
+    Public Sub cancel_timeout()
+        cancel(timeout_ref)
+    End Sub
 
     Private Sub replace(Of T As flip_event)(ByVal ref As atomic_ref(Of T),
                                             ByVal f As flip_event.[New](Of T),
