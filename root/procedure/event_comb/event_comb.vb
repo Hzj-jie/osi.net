@@ -77,6 +77,7 @@ Partial Public Class event_comb
         _l = New lock_t(Me)
         ds = d
         ds_len = array_size(ds)
+        assert(ds_len > 0)
         _callstack = callstack
         cancellation_control = New cancellation_controller(Me)
         _end_result = ternary.unknown
