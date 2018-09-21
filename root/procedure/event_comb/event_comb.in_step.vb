@@ -5,8 +5,6 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.utils
-Imports osi.root.delegates
 
 Partial Public Class event_comb
     Private Function valid_working_step(ByVal i As Int32) As Boolean

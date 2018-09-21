@@ -1,19 +1,24 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
 Imports osi.root.connector
-Imports osi.root.threadpool
+Imports osi.root.constants
 Imports osi.root.lock
 Imports osi.root.procedure
+Imports osi.root.threadpool
 Imports osi.root.utt
 
 Public Class async_sync_test
     Inherits [case]
 
-    Public Overrides Function run() As Boolean
+    Private Shared Function case1() As Boolean
         Dim count As Int32 = 0
         ' A very large count may trigger stack overflow, as the following event_comb instances will only execute an
         ' async_sync.
-        count = (thread_pool().thread_count() << 1)
+        count = CInt(thread_pool().thread_count() << 1)
         Dim c As atomic_int = Nothing
         c = New atomic_int()
         Dim w As AutoResetEvent = Nothing
@@ -34,7 +39,20 @@ Public Class async_sync_test
                                             Return goto_end()
                                         End Function))
         Next
-        assert_true(w.WaitOne(seconds_to_milliseconds(10)))
+        assert_true(w.WaitOne(CInt(seconds_to_milliseconds(10))))
         Return True
+    End Function
+
+    Private Shared Function async_sync_with_huge_timeout() As Boolean
+        assert_true(async_sync(New event_comb(Function() As Boolean
+                                                  Return goto_end()
+                                              End Function),
+                               max_int64))
+        Return True
+    End Function
+
+    Public Overrides Function run() As Boolean
+        Return case1() AndAlso
+               async_sync_with_huge_timeout()
     End Function
 End Class
