@@ -1,5 +1,8 @@
 ﻿
-Imports System.Threading
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 
 Public Structure singleentry
@@ -24,11 +27,10 @@ Public Structure singleentry
     End Function
 
     Public Sub release()
-        assert(in_use())
-        mark_not_in_use()
+        assert(mark_not_in_use())
     End Sub
 
-    Public Sub mark_not_in_use()
-        atomic.eva(state, free)
-    End Sub
+    Public Function mark_not_in_use() As Boolean
+        Return atomic.compare_exchange(state, free, inuse)
+    End Function
 End Structure

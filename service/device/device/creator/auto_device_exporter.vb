@@ -10,6 +10,7 @@ Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.utils
 
+' TODO: Use flip_event
 Partial Public MustInherit Class auto_device_exporter(Of T)
     Inherits device_exporter(Of T)
     Implements iauto_device_exporter(Of T)

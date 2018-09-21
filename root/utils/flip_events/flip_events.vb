@@ -37,6 +37,12 @@ Partial Public NotInheritable Class flip_events
                End Function
     End Function
 
+    Public Shared Function combiner() As flip_event.[New](Of combiner_flip_event)
+        Return Function(ByVal e As flip_event.events) As combiner_flip_event
+                   Return New combiner_flip_event(e)
+               End Function
+    End Function
+
     Private Sub New()
     End Sub
 End Class

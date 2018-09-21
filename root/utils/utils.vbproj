@@ -84,6 +84,7 @@
     <Compile Include="enum.vb" />
     <Compile Include="error_handle\application_info_logging.vb" />
     <Compile Include="error_handle\trace.vb" />
+    <Compile Include="flip_events\flip_events.combiner.vb" />
     <Compile Include="flip_events\flip_events.manual.vb" />
     <Compile Include="flip_events\flip_events.ref_counted.vb" />
     <Compile Include="flip_events\flip_events.timeout.vb" />
