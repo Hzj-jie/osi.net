@@ -1,12 +1,16 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net
-Imports osi.service.cache
-Imports osi.root.procedure
-Imports osi.root.formation
 Imports osi.root.connector
-Imports osi.root.utils
-Imports osi.service.dns.constants
 Imports osi.root.constants
+Imports osi.root.formation
+Imports osi.root.procedure
+Imports osi.root.utils
+Imports osi.service.cache
+Imports osi.service.dns.constants
 
 Public Module _dns
     Private ReadOnly h2ip As icache2(Of String, IPHostEntry)
@@ -17,12 +21,10 @@ Public Module _dns
         mapheap_cache2(ip2h, max_size, retire_ticks, False)
     End Sub
 
-#If 0 Then
     Public Sub clear_cache()
         assert_begin(h2ip.clear())
         assert_begin(ip2h.clear())
     End Sub
-#End If
 
     Private Function operate(ByVal s As String,
                              ByVal result As pointer(Of IPHostEntry),
@@ -65,11 +67,11 @@ Public Module _dns
                                      Not +result Is Nothing Then
                                       assert_begin(c.set(s, +result))
                                       assert_begin(h2ip.set((+result).HostName(), +result))
-                                      For i As Int32 = 0 To array_size((+result).Aliases()) - 1
+                                      For i As Int32 = 0 To array_size_i((+result).Aliases()) - 1
                                           assert_begin(h2ip.set((+result).Aliases()(i),
                                                                 (+result)))
                                       Next
-                                      For i As Int32 = 0 To array_size((+result).AddressList()) - 1
+                                      For i As Int32 = 0 To array_size_i((+result).AddressList()) - 1
                                           assert_begin(ip2h.set(Convert.ToString((+result).AddressList()(i)),
                                                                 (+result)))
                                       Next
@@ -110,7 +112,7 @@ Public Module _dns
                               Function() As Boolean
                                   If ec.end_result() Then
                                       assert(Not +p Is Nothing)
-                                      For i As Int32 = 0 To array_size((+p).AddressList()) - 1
+                                      For i As Int32 = 0 To array_size_i((+p).AddressList()) - 1
                                           If selector Is Nothing OrElse selector((+p).AddressList()(i)) Then
                                               Return eva(result, (+p).AddressList()(i)) AndAlso
                                                      goto_end()
@@ -200,7 +202,7 @@ Public Module _dns
                                                  goto_end()
                                       End If
                                       assert(Not selector Is Nothing)
-                                      For i As Int32 = 0 To array_size((+p).Aliases()) - 1
+                                      For i As Int32 = 0 To array_size_i((+p).Aliases()) - 1
                                           If selector((+p).Aliases()(i)) Then
                                               Return eva(result, (+p).Aliases()(i)) AndAlso
                                                      goto_end()

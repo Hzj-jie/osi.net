@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Public Module _default
     Public ReadOnly func_bool_null As Func(Of Boolean) = Nothing
     Public ReadOnly func_bool_true As Func(Of Boolean) = Function() As Boolean

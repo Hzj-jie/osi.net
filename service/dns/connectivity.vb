@@ -1,6 +1,10 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
@@ -84,13 +88,13 @@ Public NotInheritable Class connectivity
                                       Return eva(result, result_t.fail) AndAlso
                                              goto_end()
                                   End If
-                                  ReDim r(hosts.size() - 1)
-                                  ReDim a(hosts.size() - 1)
-                                  ReDim ecs(hosts.size() - 1)
-                                  For i As Int32 = 0 To hosts.size() - 1
+                                  ReDim r(CInt(hosts.size()) - 1)
+                                  ReDim a(CInt(hosts.size()) - 1)
+                                  ReDim ecs(CInt(hosts.size()) - 1)
+                                  For i As Int32 = 0 To CInt(hosts.size()) - 1
                                       r(i).renew()
                                       a(i).renew()
-                                      ecs(i) = check_host(hosts(i), r(i), a(i))
+                                      ecs(i) = check_host(hosts(CUInt(i)), r(i), a(i))
                                   Next
                                   Return waitfor(ecs) AndAlso
                                          goto_next()
@@ -128,7 +132,7 @@ Public NotInheritable Class connectivity
     Private Shared Sub analyze(ByVal r() As pointer(Of Boolean), ByRef at As Boolean, ByRef af As Boolean)
         at = True
         af = True
-        For i As Int32 = 0 To array_size(r) - 1
+        For i As Int32 = 0 To array_size_i(r) - 1
             If +r(i) Then
                 af = False
                 If Not at Then

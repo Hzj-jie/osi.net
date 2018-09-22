@@ -1,6 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utt
 Imports osi.service.streamer
@@ -55,7 +58,7 @@ Public Class pipe_test2
         End Function
 
         Private Function pop() As event_comb
-            Return event_comb.return_true(p.pop(Nothing))
+            Return p.pop(Nothing).suppress_error()
         End Function
 
         Private Function sync_pop() As event_comb

@@ -16,91 +16,28 @@ Partial Public Class event_comb
     End Function
 
     Public Shared Function succeeded() As event_comb
+        Return succeeded(action_empty)
+    End Function
+
+    Public Shared Function succeeded(ByVal a As Action) As event_comb
+        assert(Not a Is Nothing)
         Return New event_comb(Function() As Boolean
+                                  a()
                                   Return goto_end()
                               End Function)
     End Function
 
-    Public Shared Function [return](ByVal d As Func(Of event_comb)) As event_comb
-        assert(Not d Is Nothing)
-        Return do_(Function() As event_comb
-                       Dim rtn As event_comb = Nothing
-                       rtn = d()
-                       If rtn Is Nothing Then
-                           Return event_comb.succeeded()
-                       Else
-                           Return rtn
-                       End If
-                   End Function,
-                   event_comb.failed())
-    End Function
-
-    Public Shared Function [return](ByVal v As void(Of event_comb)) As event_comb
-        assert(Not v Is Nothing)
-        Return [return](Function() As event_comb
-                            Dim r As event_comb = Nothing
-                            v(r)
-                            Return r
-                        End Function)
-    End Function
-
-    Private Shared Function repeat(ByVal c As Func(Of Int32, Boolean),
-                                   ByVal l As Func(Of Int32, Boolean),
-                                   ByVal w As Func(Of Boolean)) As event_comb
-        Dim i As Int32 = 0
+    Public Shared Function one_step(ByVal f As Func(Of Boolean)) As event_comb
+        assert(Not f Is Nothing)
         Return New event_comb(Function() As Boolean
-                                  If w Is Nothing Then
-                                      Return False
-                                  End If
-                                  If Not l Is Nothing AndAlso Not l(i) Then
-                                      Return False
-                                  End If
-                                  If c(i) Then
-                                      i += 1
-                                      Return w()
-                                  Else
-                                      Return goto_end()
-                                  End If
+                                  Return f() AndAlso
+                                         goto_end()
                               End Function)
     End Function
 
-    Private Shared Function repeat(ByVal c As Int32,
-                                   ByVal l As Func(Of Int32, Boolean),
-                                   ByVal w As Func(Of Boolean)) As event_comb
-        Return repeat(Function(i) i < c, l, w)
-    End Function
-
-    Public Shared Function repeat(ByVal c As Int32, ByVal w As Func(Of Boolean)) As event_comb
-        Return repeat(c, Nothing, w)
-    End Function
-
-    Public Shared Function repeat(ByVal c As Func(Of Int32, Boolean), ByVal w As Func(Of Boolean)) As event_comb
-        Return repeat(c, Nothing, w)
-    End Function
-
-    Public Shared Function repeat(ByVal c As Func(Of Int32, Boolean), ByVal d As Func(Of event_comb)) As event_comb
-        Dim ec As event_comb = Nothing
-        Return repeat(c,
-                      Function(i As Int32) As Boolean
-                          Return i = 0 OrElse
-                                 (assert(Not ec Is Nothing) AndAlso ec.end_result())
-                      End Function,
-                      Function() As Boolean
-                          If d Is Nothing Then
-                              Return False
-                          Else
-                              ec = d()
-                          End If
-                          Return waitfor(ec)
-                      End Function)
-    End Function
-
-    Public Shared Function repeat(ByVal c As Int32, ByVal d As Func(Of event_comb)) As event_comb
-        Return repeat(Function(i) i < c, d)
-    End Function
-
-    Public Shared Function [while](ByVal condition As Func(Of event_comb, 
-                                                              pointer(Of Boolean), 
+    ' TODO: Remove event_comb.while
+    Public Shared Function [while](ByVal condition As Func(Of event_comb,
+                                                              pointer(Of Boolean),
                                                               event_comb),
                                    ByVal execution As Func(Of event_comb)) As event_comb
         Dim cec As event_comb = Nothing
@@ -140,8 +77,8 @@ Partial Public Class event_comb
     End Function
 
     Public Shared Function [while](ByVal execution As Func(Of event_comb),
-                                   ByVal condition As Func(Of event_comb, 
-                                                              pointer(Of Boolean), 
+                                   ByVal condition As Func(Of event_comb,
+                                                              pointer(Of Boolean),
                                                               event_comb)) As event_comb
         Dim cec As event_comb = Nothing
         Dim ec As event_comb = Nothing
@@ -207,10 +144,9 @@ Partial Public Class event_comb
         Return [while](execution, condition_adapter(condition))
     End Function
 
-    Public Shared Function return_true(ByVal ec As event_comb) As event_comb
-        Return New event_comb(Function() As Boolean
-                                  Return waitfor(ec) AndAlso
-                                         goto_end()
-                              End Function)
+    Public Function suppress_error() As event_comb
+        Return one_step(Function() As Boolean
+                            Return waitfor(Me)
+                        End Function)
     End Function
 End Class

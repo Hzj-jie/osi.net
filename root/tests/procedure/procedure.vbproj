@@ -58,6 +58,7 @@
     <Compile Include="callback\callback_case.vb" />
     <Compile Include="event_comb\async_sync_test.vb" />
     <Compile Include="event_comb\event_comb_cancel_test.vb" />
+    <Compile Include="event_comb\event_comb_repeat_test2.vb" />
     <Compile Include="event_comb\event_comb_waitfor_concurrency_event_test.vb" />
     <Compile Include="event_comb\event_comb_waitfor_do_boolean_perf.vb" />
     <Compile Include="callback\callback_test.vb" />
@@ -169,7 +170,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="event_comb\event_comb_repeat2_test.vb" />
+    <Compile Include="event_comb\event_comb_flip_event_test.vb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

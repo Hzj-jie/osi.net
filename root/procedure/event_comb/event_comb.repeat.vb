@@ -4,27 +4,38 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.event
+Imports osi.root.constants
 
 Partial Public Class event_comb
-    Public Function repeat_when_high(Of T As flip_event)(ByVal f As flip_event.[New](Of T)) As T
-        assert(Not f Is Nothing)
-        Dim c As event_comb = Nothing
+    Public Function repeat(ByVal c As UInt32) As event_comb
         Dim e As event_comb = Nothing
-        Return f(flip_event.events.of(Sub()
-                                          e = New event_comb(Function() As Boolean
-                                                                 c = renew()
-                                                                 Return waitfor(c)
-                                                             End Function)
-                                          assert_begin(e)
-                                      End Sub,
-                                      Sub()
-                                          If Not e Is Nothing Then
-                                              e.cancel()
-                                          End If
-                                          If Not c Is Nothing Then
-                                              c.cancel()
-                                          End If
-                                      End Sub))
+        Return New event_comb(Function() As Boolean
+                                  If Not e.end_result_or_null() Then
+                                      Return False
+                                  End If
+                                  If c > uint32_0 Then
+                                      c -= uint32_1
+                                      e = renew()
+                                      Return waitfor(e)
+                                  End If
+                                  Return goto_end()
+                              End Function)
+    End Function
+
+    Public Shared Function repeat(ByVal c As UInt32, ByVal f As Func(Of UInt32, event_comb)) As event_comb
+        assert(Not f Is Nothing)
+        Dim e As event_comb = Nothing
+        Dim i As UInt32 = 0
+        Return New event_comb(Function() As Boolean
+                                  If Not e.end_result_or_null() Then
+                                      Return False
+                                  End If
+                                  If i < c Then
+                                      e = f(i)
+                                      i += uint32_1
+                                      Return waitfor(e)
+                                  End If
+                                  Return goto_end()
+                              End Function)
     End Function
 End Class

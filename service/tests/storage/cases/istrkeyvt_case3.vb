@@ -1,11 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports Microsoft.VisualBasic
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.root.procedure
-Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.storage
 
@@ -25,7 +28,7 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                                 _ROUND_BASE As _int64)
     Implements iistrkeyvt_case
 
-    Private Shared ReadOnly round_count As Int64
+    Private Shared ReadOnly round_count As UInt32
     Private Shared ReadOnly rnd As istrkeyvt_random_data(Of _KEY_LENGTH_LOW, 
                                                             _KEY_LENGTH_UP, 
                                                             _BYTES_LENGTH_LOW, 
@@ -33,7 +36,10 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
     Private ReadOnly m As map(Of String, Int64)
 
     Shared Sub New()
-        round_count = +(alloc(Of _ROUND_BASE)()) * If(isdebugbuild(), 1, 8)
+        Dim rc As Int64 = 0
+        rc = +(alloc(Of _ROUND_BASE)()) * If(isdebugbuild(), 1, 8)
+        assert(rc >= 0 AndAlso rc <= max_uint32)
+        round_count = CUInt(rc)
     End Sub
 
     Public Sub New()
@@ -146,9 +152,11 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                                       assert_more_or_equal((+r).size(), m.size())
                                       Dim m2 As [set](Of String) = Nothing
                                       m2 = New [set](Of String)()
-                                      For i As Int32 = 0 To (+r).size() - 1
+                                      Dim i As UInt32 = 0
+                                      While i < (+r).size()
                                           m2.insert((+r)(i))
-                                      Next
+                                          i += uint32_1
+                                      End While
                                       Dim it As map(Of String, Int64).iterator = Nothing
                                       it = m.begin()
                                       While it <> m.end()
@@ -411,10 +419,7 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
     End Function
 
     Public Function create(ByVal i As istrkeyvt) As event_comb Implements iistrkeyvt_case.create
-        Return event_comb.repeat(round_count,
-                                 Function() As event_comb
-                                     Return random_case(i)
-                                 End Function)
+        Return random_case(i).repeat(round_count)
     End Function
 
     Public Function reserved_processors() As Int16 Implements iistrkeyvt_case.reserved_processors

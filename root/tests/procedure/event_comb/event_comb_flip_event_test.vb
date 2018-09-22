@@ -3,7 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.procedure
@@ -12,7 +11,7 @@ Imports osi.root.utt
 Imports osi.root.utt.attributes
 
 <test>
-Public NotInheritable Class event_comb_repeat2_test
+Public NotInheritable Class event_comb_flip_event_test
     <test>
     Private Shared Sub repeat_when_high_with_stoppable_event_comb()
         Dim c As UInt32 = 0

@@ -30,7 +30,7 @@ Public Class repeat_event_comb_case_wrapper
 
     Public NotOverridable Overrides Function create() As event_comb
         assert(test_size() > 0)
-        assert(test_size() <= max_int32)
-        Return event_comb.repeat(CInt(test_size()), Function() MyBase.create())
+        assert(test_size() <= max_uint32)
+        Return MyBase.create().repeat(CUInt(test_size()))
     End Function
 End Class
