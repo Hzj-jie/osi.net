@@ -19,15 +19,14 @@ Public Class dns_cache_test
     End Sub
 
     Public Overrides Function prepare() As Boolean
-        If MyBase.prepare() Then
-            Dim p As pointer(Of connectivity.result_t) = Nothing
-            p.renew()
-            async_sync(connectivity.check_if_needed(p))
-            osi.service.dns.clear_cache()
-            Return (+p) >= connectivity.result_t.partial_dns_resolvable
-        Else
+        If Not MyBase.prepare() Then
             Return False
         End If
+        Dim p As pointer(Of connectivity.result_t) = Nothing
+        p.renew()
+        async_sync(connectivity.check_if_needed(p))
+        clear_cache()
+        Return (+p) >= connectivity.result_t.partial_dns_resolvable
     End Function
 
     Private Class dns_cache_case
