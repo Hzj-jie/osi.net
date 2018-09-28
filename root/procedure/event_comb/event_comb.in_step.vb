@@ -16,7 +16,7 @@ Partial Public Class event_comb
     End Function
 
     Private Function in_step(ByVal exp As Int32) As Boolean
-        Return assert(valid_step([step])) AndAlso ([step] = exp)
+        Return assert(valid_step([step]), "event ", callstack(), ":", [step]) AndAlso ([step] = exp)
     End Function
 
     'the step is in end_step, but may still have pendings
