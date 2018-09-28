@@ -3,7 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Public NotInheritable Class invoker
+Partial Public NotInheritable Class invoker
     Public NotInheritable Class builder(Of delegate_t)
         Inherits builder_base(Of builder(Of delegate_t))
 
@@ -43,7 +43,4 @@ Public NotInheritable Class invoker
     Public Shared Function [of](Of delegate_t)(ByVal i As invoker(Of delegate_t)) As builder(Of delegate_t)
         Return [of](Of delegate_t)()
     End Function
-
-    Private Sub New()
-    End Sub
 End Class

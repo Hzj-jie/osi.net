@@ -7,9 +7,10 @@ Imports System.Reflection
 Imports osi.root.connector
 Imports osi.root.constants
 
+' TODO: Use invoker.undefined_delegate_type, and hide the implementation detail by using invoker class.
 Public Delegate Sub not_resolved_type_delegate()
 
-Public NotInheritable Class invoker(Of delegate_t)
+Partial Public NotInheritable Class invoker(Of delegate_t)
     Private Shared ReadOnly dt As Type
     Private Shared ReadOnly is_not_resolved_type_delegate As Boolean
     Private ReadOnly s As Boolean
@@ -19,6 +20,12 @@ Public NotInheritable Class invoker(Of delegate_t)
     Private ReadOnly name As String
     Private ReadOnly preb As Boolean
     Private ReadOnly postb As Boolean
+
+    ' Conditions:
+    ' preb && postb: impossible
+    ' preb: The bind can be resolved during constructing, e.g. static or the object has been provided.
+    ' postb: The bind can not be resolved during constructing, e.g. not static and the object has not been provided.
+    ' !preb && !postb: The delegate_t is undefined_delegate_type, only invoke() can be used.
 
     Shared Sub New()
         assert(GetType(delegate_t).is(GetType([Delegate])))
@@ -161,6 +168,7 @@ Public NotInheritable Class invoker(Of delegate_t)
         Return True
     End Function
 
+    ' TODO: Maybe remove, invalid invoker instance should not be returned.
     Private Function valid() As Boolean
         Return Not mi Is Nothing
     End Function
@@ -244,58 +252,23 @@ Public NotInheritable Class invoker(Of delegate_t)
         Return mi.Invoke(obj, params)
     End Function
 
-    ' TODO: remove
-    Private Function method_info(ByRef o As MethodInfo) As Boolean
-        If valid() Then
-            o = mi
-            Return True
-        End If
-        Return False
-    End Function
-
     Public Function method_info() As MethodInfo
-        Dim r As MethodInfo = Nothing
-        assert(method_info(r))
-        Return r
-    End Function
-
-    ' TODO: remove
-    Private Function target_type(ByRef o As Type) As Boolean
-        If valid() Then
-            o = t
-            Return True
-        End If
-        Return False
+        assert(valid())
+        Return mi
     End Function
 
     Public Function target_type() As Type
-        Dim r As Type = Nothing
-        assert(target_type(r))
-        Return r
-    End Function
-
-    ' TODO: remove
-    Private Function identity(ByRef o As String) As Boolean
-        Dim d As delegate_t = Nothing
-        If pre_bind(d) Then
-            assert(Not d Is Nothing)
-            o = direct_cast(Of [Delegate])(d).method_identity()
-            Return True
-        End If
-
-        Dim r As MethodInfo = Nothing
-        If method_info(r) Then
-            assert(Not r Is Nothing)
-            o = r.full_name()
-            Return True
-        End If
-
-        Return False
+        assert(valid())
+        Return t
     End Function
 
     Public Function identity() As String
-        Dim r As String = Nothing
-        assert(identity(r))
-        Return r
+        Dim d As delegate_t = Nothing
+        If pre_bind(d) Then
+            assert(Not d Is Nothing)
+            Return direct_cast(Of [Delegate])(d).method_identity()
+        End If
+
+        Return method_info().full_name()
     End Function
 End Class
