@@ -62,8 +62,9 @@ Public NotInheritable Class invoker_test2
                         with_binding_flags(binding_flags.instance_public_method).
                         with_name("a").
                         build(f))
-        assert_true(f.post_binding())
+        assert_false(f.post_binding())
         assert_false(f.pre_binding())
+        assert_true(f.invoke_only())
         assert_true(f.post_alloc_invoke(r, Nothing))
         assert_false(direct_cast(Of Boolean)(r))
 
@@ -72,8 +73,9 @@ Public NotInheritable Class invoker_test2
                         with_binding_flags(binding_flags.instance_public_method).
                         with_name("a").
                         build(f))
-        assert_true(f.post_binding())
+        assert_false(f.post_binding())
         assert_false(f.pre_binding())
+        assert_true(f.invoke_only())
         assert_true(f.post_alloc_invoke(r, Nothing))
         assert_false(direct_cast(Of Boolean)(r))
     End Sub

@@ -14,7 +14,7 @@ Public Module _invoker_post_alloc_invoke
         If invoker Is Nothing Then
             Return False
         End If
-        If Not invoker.post_binding() Then
+        If Not invoker.instance_invokeable() Then
             Return False
         End If
         result = invoker.invoke(invoker.target_type().allocate(), parameters)

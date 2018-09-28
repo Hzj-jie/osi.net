@@ -13,11 +13,8 @@ Public Delegate Sub not_resolved_type_delegate()
 Partial Public NotInheritable Class invoker(Of delegate_t)
     Private Shared ReadOnly dt As Type
     Private Shared ReadOnly is_not_resolved_type_delegate As Boolean
-    Private ReadOnly s As Boolean
     Private ReadOnly mi As MethodInfo
     Private ReadOnly m As delegate_t
-    Private ReadOnly t As Type
-    Private ReadOnly name As String
     Private ReadOnly preb As Boolean
     Private ReadOnly postb As Boolean
 
@@ -39,44 +36,21 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
                                  ByVal name As String,
                                  ByVal suppress_error As Boolean,
                                  ByRef o As invoker(Of delegate_t)) As Boolean
-        o = New invoker(Of delegate_t)(t, binding_flags, obj, name, suppress_error)
-        If o.valid() Then
-            Return True
-        End If
         o = Nothing
-        Return False
-    End Function
-
-    Public Shared Function [New](ByVal t As Type,
-                                 ByVal binding_flags As BindingFlags,
-                                 ByVal obj As Object,
-                                 ByVal name As String,
-                                 ByVal suppress_error As Boolean) As invoker(Of delegate_t)
-        Dim r As invoker(Of delegate_t) = Nothing
-        assert([New](t, binding_flags, obj, name, suppress_error, r))
-        Return r
-    End Function
-
-    Private Sub New(ByVal t As Type,
-                    ByVal binding_flags As BindingFlags,
-                    ByVal obj As Object,
-                    ByVal name As String,
-                    ByVal suppress_error As Boolean)
         If t Is Nothing Then
             If Not suppress_error Then
                 raise_error(error_type.warning, "input type is nothing")
             End If
-            Return
+            Return False
         End If
         If String.IsNullOrEmpty(name) Then
             If Not suppress_error Then
                 raise_error(error_type.warning, "input method name is empty")
             End If
-            Return
+            Return False
         End If
 
-        Me.t = t
-        Me.name = name
+        Dim mi As MethodInfo = Nothing
         Try
             mi = t.GetMethod(name, binding_flags Or BindingFlags.InvokeMethod)
         Catch ex As Exception
@@ -89,7 +63,7 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
                             ", ex ",
                             ex.details())
             End If
-            Return
+            Return False
         End Try
 
         If mi Is Nothing Then
@@ -100,38 +74,73 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
                             " in type ",
                             t)
             End If
-            Return
+            Return False
         End If
 
-        s = mi.IsStatic()
-        postb = False
-        If t.IsValueType() Then
-            postb = Not [static]()
-        Else
-            postb = Not [static]() AndAlso obj Is Nothing
-        End If
-        If postb Then
-            If Not is_not_resolved_type_delegate Then
+        Dim postb As Boolean = False
+        Dim preb As Boolean = False
+        Dim m As delegate_t = Nothing
+        If Not is_not_resolved_type_delegate Then
+            If t.IsValueType() Then
+                postb = Not mi.IsStatic()
+            Else
+                postb = Not mi.IsStatic() AndAlso obj Is Nothing
+            End If
+            If postb Then
                 postb = delegate_info(Of delegate_t).match(mi)
             End If
+            If Not postb Then
+                preb = create_delegate(obj, mi, m, suppress_error)
+            End If
         End If
-        If Not postb Then
-            preb = create_delegate(obj, m, suppress_error)
+
+        o = New invoker(Of delegate_t)(mi, m, preb, postb)
+        Return True
+    End Function
+
+    Public Shared Function [New](ByVal t As Type,
+                                 ByVal binding_flags As BindingFlags,
+                                 ByVal obj As Object,
+                                 ByVal name As String,
+                                 ByVal suppress_error As Boolean) As invoker(Of delegate_t)
+        Dim r As invoker(Of delegate_t) = Nothing
+        assert([New](t, binding_flags, obj, name, suppress_error, r))
+        Return r
+    End Function
+
+    Private Sub New(ByVal mi As MethodInfo,
+                    ByVal m As delegate_t,
+                    ByVal preb As Boolean,
+                    ByVal postb As Boolean)
+        assert(Not mi Is Nothing)
+        assert(Not preb OrElse Not postb)
+        If preb Then
+            assert(Not m Is Nothing)
         End If
+        If preb OrElse postb Then
+            assert(Not is_not_resolved_type_delegate)
+        End If
+        If is_not_resolved_type_delegate Then
+            assert(m Is Nothing)
+        End If
+
+        Me.mi = mi
+        Me.m = m
+        Me.preb = preb
+        Me.postb = postb
     End Sub
 
-    Private Function create_delegate(ByVal obj As Object,
-                                     ByRef m As delegate_t,
-                                     ByVal suppress_error As Boolean) As Boolean
-        assert(Not t Is Nothing)
-        assert(Not String.IsNullOrEmpty(name))
+    Private Shared Function create_delegate(ByVal obj As Object,
+                                            ByVal mi As MethodInfo,
+                                            ByRef m As delegate_t,
+                                            ByVal suppress_error As Boolean) As Boolean
         assert(Not mi Is Nothing)
         If is_not_resolved_type_delegate Then
-            Return True
+            Return False
         End If
         Dim d As [Delegate] = Nothing
         Try
-            If [static]() Then
+            If mi.IsStatic() Then
                 d = [Delegate].CreateDelegate(dt, mi)
             Else
                 If obj Is Nothing Then
@@ -143,9 +152,9 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
             If Not suppress_error Then
                 raise_error(error_type.warning,
                             "cannot create delegate for method ",
-                            name,
+                            mi.Name(),
                             " of type ",
-                            t,
+                            mi.DeclaringType(),
                             ", ex ",
                             ex.details())
             End If
@@ -156,9 +165,9 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
             If Not suppress_error Then
                 raise_error(error_type.warning,
                             "failed to convert method ",
-                            name,
+                            mi.Name(),
                             " in type ",
-                            t,
+                            mi.DeclaringType(),
                             " to delegate ",
                             dt)
             End If
@@ -168,37 +177,42 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
         Return True
     End Function
 
-    ' TODO: Maybe remove, invalid invoker instance should not be returned.
-    Private Function valid() As Boolean
-        Return Not mi Is Nothing
+    Private Function create_delegate(ByVal obj As Object,
+                                     ByRef m As delegate_t,
+                                     ByVal suppress_error As Boolean) As Boolean
+        Return create_delegate(obj, mi, m, suppress_error)
     End Function
 
     Public Function [static]() As Boolean
-        Return s
+        Return mi.IsStatic()
     End Function
 
     Public Function [get]() As delegate_t
         Return +Me
     End Function
 
-    Public Function resolved_type_delegate() As Boolean
-        Return Not is_not_resolved_type_delegate
-    End Function
-
-    Public Function not_resolved_type_delegate() As Boolean
-        Return is_not_resolved_type_delegate
-    End Function
-
     Public Function pre_binding() As Boolean
-        Return preb AndAlso assert(valid())
+        Return preb
     End Function
 
     Public Function post_binding() As Boolean
-        Return postb AndAlso assert(valid())
+        Return postb
+    End Function
+
+    Public Function invoke_only() As Boolean
+        Return is_not_resolved_type_delegate
+    End Function
+
+    Public Function instance_invokeable() As Boolean
+        Return Not [static]() AndAlso Not pre_binding()
+    End Function
+
+    Public Function static_invokeable() As Boolean
+        Return [static]() AndAlso Not pre_binding()
     End Function
 
     Public Function pre_bind(ByRef d As delegate_t) As Boolean
-        If pre_binding() AndAlso resolved_type_delegate() Then
+        If pre_binding() Then
             assert(Not m Is Nothing)
             d = m
             Return True
@@ -219,10 +233,9 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
 
     Public Function post_bind(ByVal obj As Object, ByRef d As delegate_t, ByVal suppress_error As Boolean) As Boolean
         Return Not obj Is Nothing AndAlso
-               valid() AndAlso
                Not [static]() AndAlso
                post_binding() AndAlso
-               resolved_type_delegate() AndAlso
+               Not is_not_resolved_type_delegate AndAlso
                create_delegate(obj, d, suppress_error)
     End Function
 
@@ -248,18 +261,21 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
     End Property
 
     Public Function invoke(ByVal obj As Object, ByVal ParamArray params() As Object) As Object
-        assert(valid())
+        ' Allow sending null for instance invoke.
         Return mi.Invoke(obj, params)
     End Function
 
+    Public Function static_invoke(ByVal ParamArray params() As Object) As Object
+        assert([static]())
+        Return invoke(Nothing, params)
+    End Function
+
     Public Function method_info() As MethodInfo
-        assert(valid())
         Return mi
     End Function
 
     Public Function target_type() As Type
-        assert(valid())
-        Return t
+        Return mi.DeclaringType()
     End Function
 
     Public Function identity() As String
