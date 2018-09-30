@@ -129,10 +129,10 @@ Public Class invoker_perf
         End Sub
 
         Public Overrides Function run() As Boolean
-            i.get()()
-            j.get()(0)
-            k.get()()
-            l.get()(0)
+            i.pre_bind()()
+            j.pre_bind()(0)
+            k.pre_bind()()
+            l.pre_bind()(0)
             Return True
         End Function
     End Class
@@ -212,10 +212,10 @@ Public Class invoker_perf
         End Sub
 
         Public Overrides Function run() As Boolean
-            i.get()()
-            j.get()(0)
-            k.get()()
-            l.get()(0)
+            i.pre_bind()()
+            j.pre_bind()(0)
+            k.pre_bind()()
+            l.pre_bind()(0)
             Return True
         End Function
     End Class

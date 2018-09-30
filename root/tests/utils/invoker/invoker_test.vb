@@ -43,7 +43,7 @@ Public Class invoker_test
         assert_true(ds.pre_binding())
         assert_false(ds.post_binding())
         If assert_true(ds.pre_bind(Nothing)) Then
-            ds.get()(c)
+            ds.pre_bind()(c)
         End If
         assert_false(ds.post_bind(Me, Nothing))
 
@@ -56,7 +56,7 @@ Public Class invoker_test
         assert_true(ds.pre_binding())
         assert_false(ds.post_binding())
         If assert_true(ds.pre_bind(Nothing)) Then
-            ds.get()(c)
+            ds.pre_bind()(c)
         End If
         assert_false(ds.post_bind(Me, Nothing))
 
@@ -70,7 +70,7 @@ Public Class invoker_test
         assert_true(df.pre_binding())
         assert_false(df.post_binding())
         If assert_true(df.pre_bind(Nothing)) Then
-            assert_equal(df.get()(c), +c)
+            assert_equal(df.pre_bind()(c), +c)
         End If
         assert_false(df.post_bind(Me, Nothing))
 
@@ -83,7 +83,7 @@ Public Class invoker_test
         assert_true(df.pre_binding())
         assert_false(df.post_binding())
         If assert_true(df.pre_bind(Nothing)) Then
-            assert_equal(df.get()(c), +c)
+            assert_equal(df.pre_bind()(c), +c)
         End If
         assert_false(df.post_bind(Me, Nothing))
 

@@ -3,8 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 
 Public Module _chmod
     Public Enum FilePermissions As UInt32
@@ -44,7 +44,7 @@ Public Module _chmod
                       "Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756"
     Private Const mono_posix_assembly_v4 As String =
                       "Mono.Posix, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756"
-    Private ReadOnly f As invoker(Of not_resolved_type_delegate)
+    Private ReadOnly f As invoker
 
     Sub New()
         If envs.mono Then
@@ -75,7 +75,7 @@ Public Module _chmod
 
     Public Sub chmod(ByVal file As String, ByVal permissions As FilePermissions, ByRef o As Int32)
         If Not f Is Nothing AndAlso f.static() AndAlso f.pre_binding() Then
-            o = direct_cast(Of Int32)(f.invoke(Nothing, file, CUInt(permissions)))
+            o = direct_cast(Of Int32)((+f)({file, CUInt(permissions)}))
         Else
             o = -2
         End If

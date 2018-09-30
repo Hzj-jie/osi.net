@@ -25,26 +25,33 @@ Namespace dotnet
             Return New builder()
         End Function
 
-        Public Function invoker(ByVal type_name As String,
-                                ByVal function_name As String,
-                                ByRef o As invoker(Of not_resolved_type_delegate)) As Boolean
-            Return invoker(Of not_resolved_type_delegate)(type_name, function_name, o)
-        End Function
-
-        Public Function invoker(Of delegate_t)(ByVal type_name As String,
-                                               ByVal function_name As String,
-                                               ByRef o As invoker(Of delegate_t)) As Boolean
-            Return typeless_invoker.of(o).
+        Private Function invoker(Of RT)(ByVal builder As typeless_invoker.typeless_invoker_builder(Of RT),
+                                        ByVal type_name As String,
+                                        ByVal function_name As String,
+                                        ByRef o As RT) As Boolean
+            Return builder.
                 with_assembly(result).
                 with_type_name(type_name).
                 with_name(function_name).
                 build(o)
         End Function
 
+        Public Function invoker(ByVal type_name As String,
+                                ByVal function_name As String,
+                                ByRef o As invoker) As Boolean
+            Return invoker(typeless_invoker.of(o), type_name, function_name, o)
+        End Function
+
+        Public Function invoker(Of delegate_t)(ByVal type_name As String,
+                                               ByVal function_name As String,
+                                               ByRef o As invoker(Of delegate_t)) As Boolean
+            Return invoker(typeless_invoker.of(o), type_name, function_name, o)
+        End Function
+
         Public Function functor(ByVal type_name As String,
                                 ByVal function_name As String,
                                 ByRef o As Func(Of Object(), Object)) As Boolean
-            Dim i As invoker(Of not_resolved_type_delegate) = Nothing
+            Dim i As invoker = Nothing
             Return invoker(type_name, function_name, i) AndAlso
                    i.pre_or_post_alloc_raw_bind(o)
         End Function
@@ -52,7 +59,7 @@ Namespace dotnet
         Public Function functor(Of T)(ByVal type_name As String,
                                       ByVal function_name As String,
                                       ByRef o As Func(Of Object(), T)) As Boolean
-            Dim i As invoker(Of not_resolved_type_delegate) = Nothing
+            Dim i As invoker = Nothing
             Return invoker(type_name, function_name, i) AndAlso
                    pre_or_post_alloc_raw_bind(i, o)
         End Function
@@ -61,7 +68,7 @@ Namespace dotnet
                                 ByVal function_name As String,
                                 ByRef o As Object,
                                 ByVal ParamArray parameters() As Object) As Boolean
-            Dim i As invoker(Of not_resolved_type_delegate) = Nothing
+            Dim i As invoker = Nothing
             If Not invoker(type_name, function_name, i) Then
                 Return False
             End If

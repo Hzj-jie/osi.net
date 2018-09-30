@@ -7,7 +7,7 @@ Imports System.Reflection
 Imports osi.root.connector
 
 Partial Public NotInheritable Class invoker
-    Public Class builder_base(Of T As builder_base(Of T))
+    Public MustInherit Class builder_base(Of RT, T As builder_base(Of RT, T))
         Protected binding_flags As BindingFlags = constants.binding_flags.all_method
         Protected name As String
         Protected suppress_error As Boolean = +suppress.invoker_error
@@ -45,6 +45,14 @@ Partial Public NotInheritable Class invoker
         Public Function with_suppress_error(ByVal suppress_error As Boolean) As T
             Me.suppress_error = suppress_error
             Return this()
+        End Function
+
+        Public MustOverride Function build(ByRef o As RT) As Boolean
+
+        Public Function build() As RT
+            Dim r As RT = Nothing
+            assert(build(r))
+            Return r
         End Function
     End Class
 End Class

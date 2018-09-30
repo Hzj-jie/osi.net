@@ -90,12 +90,14 @@
     <Compile Include="flip_events\flip_events.timeout.vb" />
     <Compile Include="flip_events\flip_events.vb" />
     <Compile Include="instance_count.vb" />
+    <Compile Include="invoker\invocable.vb" />
     <Compile Include="invoker\invoker.builder_base.vb" />
     <Compile Include="invoker\invoker.builder.vb" />
-    <Compile Include="invoker\invoker.post_alloc_bind.vb" />
-    <Compile Include="invoker\invoker.post_alloc_invoke.vb" />
-    <Compile Include="invoker\invoker.post_alloc_raw_bind.vb" />
+    <Compile Include="invoker\invocable.post_alloc_bind.vb" />
+    <Compile Include="invoker\invocable.post_alloc_invoke.vb" />
+    <Compile Include="invoker\invocable.post_alloc_raw_bind.vb" />
     <Compile Include="invoker\typeless_invoker.builder.vb" />
+    <Compile Include="invoker\typeless_invoker.undefined_delegate.vb" />
     <Compile Include="invoker\typeless_invoker.vb" />
     <Compile Include="invoker\invoker.undefined_delegate.vb" />
     <Compile Include="invoker\valuer.recursive.vb" />

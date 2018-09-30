@@ -7,27 +7,28 @@ Imports System.Reflection
 Imports osi.root.connector
 Imports osi.root.constants
 
-' TODO: Use invoker.undefined_delegate_type, and hide the implementation detail by using invoker class.
-Public Delegate Sub not_resolved_type_delegate()
-
 Partial Public NotInheritable Class invoker(Of delegate_t)
+    Inherits invocable(Of delegate_t)
+
     Private Shared ReadOnly dt As Type
-    Private Shared ReadOnly is_not_resolved_type_delegate As Boolean
+    Private Shared ReadOnly is_delegate_undefined As Boolean
     Private ReadOnly mi As MethodInfo
     Private ReadOnly m As delegate_t
-    Private ReadOnly preb As Boolean
     Private ReadOnly postb As Boolean
+    Private ReadOnly obj As Object
 
     ' Conditions:
-    ' preb && postb: impossible
-    ' preb: The bind can be resolved during constructing, e.g. static or the object has been provided.
-    ' postb: The bind can not be resolved during constructing, e.g. not static and the object has not been provided.
-    ' !preb && !postb: The delegate_t is undefined_delegate_type, only invoke() can be used.
+    ' pre_binding && post_binding: impossible
+    ' pre_binding: The bind can be resolved during constructing, e.g. static or the object has been provided.
+    ' post_binding: The bind can not be resolved during constructing, e.g. not static and the object has not been
+    ' provided.
+    ' !pre_binding && !post_binding: The delegate_t is undefined_delegate_type or the delegate_t does not match the
+    ' signature, only invoke() can be used.
 
     Shared Sub New()
         assert(GetType(delegate_t).is(GetType([Delegate])))
         dt = GetType(delegate_t)
-        is_not_resolved_type_delegate = (dt Is GetType(not_resolved_type_delegate))
+        is_delegate_undefined = (dt Is GetType(invoker.undefined_delegate_type))
     End Sub
 
     Public Shared Function [New](ByVal t As Type,
@@ -78,23 +79,15 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
         End If
 
         Dim postb As Boolean = False
-        Dim preb As Boolean = False
         Dim m As delegate_t = Nothing
-        If Not is_not_resolved_type_delegate Then
-            If t.IsValueType() Then
-                postb = Not mi.IsStatic()
-            Else
-                postb = Not mi.IsStatic() AndAlso obj Is Nothing
-            End If
-            If postb Then
-                postb = delegate_info(Of delegate_t).match(mi)
-            End If
+        If Not is_delegate_undefined Then
+            postb = Not mi.IsStatic() AndAlso obj Is Nothing AndAlso delegate_info(Of delegate_t).match(mi)
             If Not postb Then
-                preb = create_delegate(obj, mi, m, suppress_error)
+                create_delegate(obj, mi, m, suppress_error)
             End If
         End If
 
-        o = New invoker(Of delegate_t)(mi, m, preb, postb)
+        o = New invoker(Of delegate_t)(mi, m, postb, obj)
         Return True
     End Function
 
@@ -110,24 +103,21 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
 
     Private Sub New(ByVal mi As MethodInfo,
                     ByVal m As delegate_t,
-                    ByVal preb As Boolean,
-                    ByVal postb As Boolean)
+                    ByVal postb As Boolean,
+                    ByVal obj As Object)
         assert(Not mi Is Nothing)
-        assert(Not preb OrElse Not postb)
-        If preb Then
-            assert(Not m Is Nothing)
-        End If
-        If preb OrElse postb Then
-            assert(Not is_not_resolved_type_delegate)
-        End If
-        If is_not_resolved_type_delegate Then
-            assert(m Is Nothing)
-        End If
-
         Me.mi = mi
         Me.m = m
-        Me.preb = preb
         Me.postb = postb
+        Me.obj = obj
+
+        assert(Not pre_binding() OrElse Not post_binding())
+        If pre_binding() OrElse post_binding() Then
+            assert(Not is_delegate_undefined)
+        End If
+        If is_delegate_undefined Then
+            assert(m Is Nothing)
+        End If
     End Sub
 
     Private Shared Function create_delegate(ByVal obj As Object,
@@ -135,7 +125,7 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
                                             ByRef m As delegate_t,
                                             ByVal suppress_error As Boolean) As Boolean
         assert(Not mi Is Nothing)
-        If is_not_resolved_type_delegate Then
+        If is_delegate_undefined Then
             Return False
         End If
         Dim d As [Delegate] = Nothing
@@ -183,35 +173,31 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
         Return create_delegate(obj, mi, m, suppress_error)
     End Function
 
-    Public Function [static]() As Boolean
+    Public Overrides Function [static]() As Boolean
         Return mi.IsStatic()
     End Function
 
-    Public Function [get]() As delegate_t
-        Return +Me
+    Public Overrides Function pre_binding() As Boolean
+        Return Not m Is Nothing
     End Function
 
-    Public Function pre_binding() As Boolean
-        Return preb
-    End Function
-
-    Public Function post_binding() As Boolean
+    Public Overrides Function post_binding() As Boolean
         Return postb
     End Function
 
     Public Function invoke_only() As Boolean
-        Return is_not_resolved_type_delegate
+        Return is_delegate_undefined AndAlso assert(Not pre_binding()) AndAlso assert(Not post_binding())
     End Function
 
-    Public Function instance_invokeable() As Boolean
-        Return Not [static]() AndAlso Not pre_binding()
+    Public Function instance_invocable() As Boolean
+        Return Not [static]() AndAlso Not pre_binding() AndAlso Not obj Is Nothing
     End Function
 
-    Public Function static_invokeable() As Boolean
+    Public Function static_invocable() As Boolean
         Return [static]() AndAlso Not pre_binding()
     End Function
 
-    Public Function pre_bind(ByRef d As delegate_t) As Boolean
+    Public Overrides Function pre_bind(ByRef d As delegate_t) As Boolean
         If pre_binding() Then
             assert(Not m Is Nothing)
             d = m
@@ -220,49 +206,28 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
         Return False
     End Function
 
-    Public Function pre_bind() As delegate_t
-        Dim o As delegate_t = Nothing
-        assert(pre_bind(o))
-        Return o
-    End Function
-
-    Public Shared Operator +(ByVal this As invoker(Of delegate_t)) As delegate_t
-        assert(Not this Is Nothing)
-        Return this.pre_bind()
-    End Operator
-
-    Public Function post_bind(ByVal obj As Object, ByRef d As delegate_t, ByVal suppress_error As Boolean) As Boolean
+    Public Overloads Function post_bind(ByVal obj As Object,
+                                        ByRef d As delegate_t,
+                                        ByVal suppress_error As Boolean) As Boolean
         Return Not obj Is Nothing AndAlso
                Not [static]() AndAlso
                post_binding() AndAlso
-               Not is_not_resolved_type_delegate AndAlso
+               Not is_delegate_undefined AndAlso
                create_delegate(obj, d, suppress_error)
     End Function
 
-    Public Function post_bind(ByVal obj As Object, ByRef d As delegate_t) As Boolean
+    Public Overrides Function post_bind(ByVal obj As Object, ByRef d As delegate_t) As Boolean
         Return post_bind(obj, d, suppress.invoker_error)
     End Function
 
-    Public Function post_bind(ByVal obj As Object) As delegate_t
-        Dim r As delegate_t = Nothing
-        assert(post_bind(obj, r))
-        Return r
-    End Function
-
-    Public Shared Operator +(ByVal this As invoker(Of delegate_t), ByVal obj As Object) As delegate_t
-        assert(Not this Is Nothing)
-        Return this(obj)
-    End Operator
-
-    Default Public ReadOnly Property bind(ByVal obj As Object) As delegate_t
-        Get
-            Return post_bind(obj)
-        End Get
-    End Property
-
-    Public Function invoke(ByVal obj As Object, ByVal ParamArray params() As Object) As Object
+    Public Overrides Function invoke(ByVal obj As Object, ByVal ParamArray params() As Object) As Object
         ' Allow sending null for instance invoke.
         Return mi.Invoke(obj, params)
+    End Function
+
+    Public Function instance_invoke(ByVal ParamArray params() As Object) As Object
+        assert(Not obj Is Nothing)
+        Return invoke(obj, params)
     End Function
 
     Public Function static_invoke(ByVal ParamArray params() As Object) As Object
@@ -270,21 +235,7 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
         Return invoke(Nothing, params)
     End Function
 
-    Public Function method_info() As MethodInfo
+    Public Overrides Function method_info() As MethodInfo
         Return mi
-    End Function
-
-    Public Function target_type() As Type
-        Return mi.DeclaringType()
-    End Function
-
-    Public Function identity() As String
-        Dim d As delegate_t = Nothing
-        If pre_bind(d) Then
-            assert(Not d Is Nothing)
-            Return direct_cast(Of [Delegate])(d).method_identity()
-        End If
-
-        Return method_info().full_name()
     End Function
 End Class
