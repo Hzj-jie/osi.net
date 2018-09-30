@@ -1,6 +1,10 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.utils
 Imports osi.root.utt
 
@@ -17,22 +21,11 @@ Public Class invoker_perf
                    r(New call_object_case()))
     End Sub
 
-    Protected Overrides Function min_rate_table() As Double(,)
+    Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
         If isdebugbuild() Then
-            Return {{0, 20, 28, -1, -1, -1},
-                    {-1, 0, 2, -1, -1, -1},
-                    {-1, -1, 0, -1, -1, -1},
-                    {-1, -1, -1, 0, 18, 20},
-                    {-1, -1, -1, -1, 0, 1.5},
-                    {-1, -1, -1, -1, -1, 0}}
-        Else
-            Return {{0, 25, 45, -1, -1, -1},
-                    {-1, 0, 2.5, -1, -1, -1},
-                    {-1, -1, 0, -1, -1, -1},
-                    {-1, -1, -1, 0, 25, 40},
-                    {-1, -1, -1, -1, 0, 2},
-                    {-1, -1, -1, -1, -1, 0}}
+            Return loosen_bound({49072, 7661, 6518, 47946, 7071, 7080}, i, j)
         End If
+        Return loosen_bound({7938, 2757, 1212, 6726, 2131, 1525}, i, j)
     End Function
 
     Private Shared Function r(ByVal c As [case]) As [case]

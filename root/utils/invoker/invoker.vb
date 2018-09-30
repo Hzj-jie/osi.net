@@ -14,7 +14,7 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
     Private Shared ReadOnly is_delegate_undefined As Boolean
     Private ReadOnly mi As MethodInfo
     Private ReadOnly m As delegate_t
-    Private ReadOnly postb As Boolean
+    Private ReadOnly match_d As Boolean
     Private ReadOnly obj As Object
 
     ' Conditions:
@@ -78,16 +78,14 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
             Return False
         End If
 
-        Dim postb As Boolean = False
         Dim m As delegate_t = Nothing
+        Dim match_d As Boolean = False
         If Not is_delegate_undefined Then
-            postb = Not mi.IsStatic() AndAlso obj Is Nothing AndAlso delegate_info(Of delegate_t).match(mi)
-            If Not postb Then
-                create_delegate(obj, mi, m, suppress_error)
-            End If
+            match_d = delegate_info(Of delegate_t).match(mi)
+            create_delegate(obj, mi, m, suppress_error)
         End If
 
-        o = New invoker(Of delegate_t)(mi, m, postb, obj)
+        o = New invoker(Of delegate_t)(mi, m, match_d, obj)
         Return True
     End Function
 
@@ -103,20 +101,24 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
 
     Private Sub New(ByVal mi As MethodInfo,
                     ByVal m As delegate_t,
-                    ByVal postb As Boolean,
+                    ByVal match_d As Boolean,
                     ByVal obj As Object)
         assert(Not mi Is Nothing)
+        If is_delegate_undefined Then
+            assert(m Is Nothing)
+            assert(Not match_d)
+        End If
+        If Not m Is Nothing Then
+            assert(match_d)
+        End If
         Me.mi = mi
         Me.m = m
-        Me.postb = postb
+        Me.match_d = match_d
         Me.obj = obj
 
         assert(Not pre_binding() OrElse Not post_binding())
         If pre_binding() OrElse post_binding() Then
             assert(Not is_delegate_undefined)
-        End If
-        If is_delegate_undefined Then
-            assert(m Is Nothing)
         End If
     End Sub
 
@@ -177,16 +179,20 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
         Return mi.IsStatic()
     End Function
 
+    Public Function match_signature() As Boolean
+        Return match_d
+    End Function
+
     Public Overrides Function pre_binding() As Boolean
         Return Not m Is Nothing
     End Function
 
     Public Overrides Function post_binding() As Boolean
-        Return postb
+        Return m Is Nothing AndAlso match_d
     End Function
 
     Public Function invoke_only() As Boolean
-        Return is_delegate_undefined AndAlso assert(Not pre_binding()) AndAlso assert(Not post_binding())
+        Return Not match_signature()
     End Function
 
     Public Function instance_invocable() As Boolean
