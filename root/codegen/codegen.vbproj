@@ -52,4 +52,5 @@
   <Target Name="GetNativeManifest" />
   <Target Name="GetCopyToOutputDirectoryItems" />
   <Target Name="GetTargetPath" />
+  <Target Name="GetTargetFrameworkProperties" />
 </Project>

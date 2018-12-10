@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.57
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "dataprovider", "dataprovider\dataprovider.vbproj", "{EC819CF1-1618-4E02-9DE1-C1F12A0ACCAC}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "configuration", "configuration\configuration.vbproj", "{C428976D-292A-49E8-9226-7D355AD3593C}"
@@ -67,6 +69,7 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "udp", "udp\udp.vbproj", "{A514D2E1-0A29-435D-972F-CF55F0580801}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5C50DC19-4D4C-48C6-9D52-6C1B1BC6AB9E} = {5C50DC19-4D4C-48C6-9D52-6C1B1BC6AB9E}
+		{078F8581-BE00-465E-94F7-C3C713A78752} = {078F8581-BE00-465E-94F7-C3C713A78752}
 		{F39134C1-058F-4CFB-835D-2D827B95B393} = {F39134C1-058F-4CFB-835D-2D827B95B393}
 	EndProjectSection
 EndProject
@@ -99,6 +102,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "commander", "tests\commande
 		{08986685-C36E-4CF8-AB33-B31824ADC213} = {08986685-C36E-4CF8-AB33-B31824ADC213}
 		{8FE479A4-71CA-445D-B388-5858D2D435B2} = {8FE479A4-71CA-445D-B388-5858D2D435B2}
 		{B1B03DD2-E30E-4C67-87A7-846BCBA97AEB} = {B1B03DD2-E30E-4C67-87A7-846BCBA97AEB}
+		{A514D2E1-0A29-435D-972F-CF55F0580801} = {A514D2E1-0A29-435D-972F-CF55F0580801}
 	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "streamer", "streamer\streamer.vbproj", "{6DB1C103-8D12-4125-8257-4FFCF90A2966}"
@@ -332,20 +336,39 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "webstorage", "tests\webstorage\webstorage.vbproj", "{88157EDE-6AB9-4833-9BBA-20AA62E899C3}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "sharedtransmitter", "sharedtransmitter\sharedtransmitter.vbproj", "{078F8581-BE00-465E-94F7-C3C713A78752}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1DE5E4A1-4A4D-4868-893C-E98035B421EC} = {1DE5E4A1-4A4D-4868-893C-E98035B421EC}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "sharedtransmitter", "tests\sharedtransmitter\sharedtransmitter.vbproj", "{11ED1188-5AA1-4A50-8FA9-B6F921497D5F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{078F8581-BE00-465E-94F7-C3C713A78752} = {078F8581-BE00-465E-94F7-C3C713A78752}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "constructor", "constructor\constructor.vbproj", "{3CE6B608-EB0B-4E59-A5AD-9CC76C3FD8C5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A53A7E47-5B3A-40FB-95B8-375691D14AAD} = {A53A7E47-5B3A-40FB-95B8-375691D14AAD}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "constructor", "tests\constructor\constructor.vbproj", "{D9D1D6F1-915F-4FFC-A75E-46741396496B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3CE6B608-EB0B-4E59-A5AD-9CC76C3FD8C5} = {3CE6B608-EB0B-4E59-A5AD-9CC76C3FD8C5}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "devicepool", "devicepool\devicepool.vbproj", "{E3AF16E1-F9F7-4053-8128-36281F422C7B}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "devicepool", "tests\devicepool\devicepool.vbproj", "{EE4695E6-9F9A-49EB-BCC6-E116762385D5}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "dynamiclogic", "dynamiclogic\dynamiclogic.vbproj", "{EE39361A-53A0-4B16-BEAE-1A064FA0FB58}"
+	ProjectSection(ProjectDependencies) = postProject
+		{565B3F91-E8B1-4922-BE27-05CA7DAD8815} = {565B3F91-E8B1-4922-BE27-05CA7DAD8815}
+		{EC819CF1-1618-4E02-9DE1-C1F12A0ACCAC} = {EC819CF1-1618-4E02-9DE1-C1F12A0ACCAC}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "dynamiclogic", "tests\dynamiclogic\dynamiclogic.vbproj", "{F764E13E-9DF6-46C5-836B-67BC8B90DBCF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EE39361A-53A0-4B16-BEAE-1A064FA0FB58} = {EE39361A-53A0-4B16-BEAE-1A064FA0FB58}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
