@@ -111,6 +111,7 @@
     <Compile Include="event_attach_perf.vb" />
     <Compile Include="event_handler_test.vb" />
     <Compile Include="event_pin_object_behavior_test.vb" />
+    <Compile Include="extension_behavior_test.vb" />
     <Compile Include="finalizer_test.vb" />
     <Compile Include="gc_behavior_test.vb" />
     <Compile Include="generic_perf.vb" />
