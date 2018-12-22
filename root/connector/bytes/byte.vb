@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports osi.root.constants
@@ -15,7 +19,7 @@ Public Module _byte
     End Function
 
     <Extension()> Public Function hex(ByVal i As Byte) As String
-        Return strcat(to_hex(i >> 4), to_hex(i And 15))
+        Return strcat(to_hex(i >> 4), to_hex(i And CByte(15)))
     End Function
 
     Public Const expected_hex_byte_length As Int32 = 2
@@ -68,11 +72,11 @@ Public Module _byte
 
     <Extension()> Public Function hex_str(ByVal i() As Byte,
                                           ByVal start As Int32) As String
-        Return hex_str(i, start, array_size(i) - start)
+        Return hex_str(i, start, array_size_i(i) - start)
     End Function
 
     <Extension()> Public Function hex_str(ByVal i() As Byte) As String
-        Return hex_str(i, 0, array_size(i))
+        Return hex_str(i, 0, array_size_i(i))
     End Function
 
     <Extension()> Public Function hex_str(ByVal i As UInt64) As String
@@ -125,7 +129,7 @@ Public Module _byte
                                             ByVal str_len As Int32,
                                             ByVal buff() As Byte,
                                             ByVal buff_start As Int32) As Boolean
-        Return hex_bytes(s, str_start, str_len, buff, buff_start, array_size(buff) - buff_start)
+        Return hex_bytes(s, str_start, str_len, buff, buff_start, array_size_i(buff) - buff_start)
     End Function
 
     <Extension()> Public Function hex_bytes(ByVal s As String,
@@ -133,45 +137,45 @@ Public Module _byte
                                             ByVal buff() As Byte,
                                             ByVal buff_start As Int32,
                                             ByVal buff_len As Int32) As Boolean
-        Return hex_bytes(s, str_start, strlen(s) - str_start, buff, buff_start, buff_len)
+        Return hex_bytes(s, str_start, strlen_i(s) - str_start, buff, buff_start, buff_len)
     End Function
 
     <Extension()> Public Function hex_bytes(ByVal s As String,
                                             ByVal str_start As Int32,
                                             ByVal buff() As Byte,
                                             ByVal buff_start As Int32) As Boolean
-        Return hex_bytes(s, str_start, strlen(s) - str_start, buff, buff_start, array_size(buff) - buff_start)
+        Return hex_bytes(s, str_start, strlen_i(s) - str_start, buff, buff_start, array_size_i(buff) - buff_start)
     End Function
 
     <Extension()> Public Function hex_bytes(ByVal s As String,
                                             ByVal str_start As Int32,
                                             ByVal str_len As Int32,
                                             ByVal buff() As Byte) As Boolean
-        Return hex_bytes(s, str_start, str_len, buff, 0, array_size(buff))
+        Return hex_bytes(s, str_start, str_len, buff, 0, array_size_i(buff))
     End Function
 
     <Extension()> Public Function hex_bytes(ByVal s As String,
                                             ByVal buff() As Byte,
                                             ByVal buff_start As Int32,
                                             ByVal buff_len As Int32) As Boolean
-        Return hex_bytes(s, 0, strlen(s), buff, buff_start, buff_len)
+        Return hex_bytes(s, 0, strlen_i(s), buff, buff_start, buff_len)
     End Function
 
     <Extension()> Public Function hex_bytes(ByVal s As String,
                                             ByVal str_start As Int32,
                                             ByVal buff() As Byte) As Boolean
-        Return hex_bytes(s, str_start, strlen(s) - str_start, buff, 0, array_size(buff))
+        Return hex_bytes(s, str_start, strlen_i(s) - str_start, buff, 0, array_size_i(buff))
     End Function
 
     <Extension()> Public Function hex_bytes(ByVal s As String,
                                             ByVal buff() As Byte,
                                             ByVal buff_start As Int32) As Boolean
-        Return hex_bytes(s, 0, strlen(s), buff, buff_start, array_size(buff) - buff_start)
+        Return hex_bytes(s, 0, strlen_i(s), buff, buff_start, array_size_i(buff) - buff_start)
     End Function
 
     <Extension()> Public Function hex_bytes(ByVal s As String,
                                             ByVal buff() As Byte) As Boolean
-        Return hex_bytes(s, 0, strlen(s), buff, 0, array_size(buff))
+        Return hex_bytes(s, 0, strlen_i(s), buff, 0, array_size_i(buff))
     End Function
 
     <Extension()> Public Function hex_bytes(ByVal s As String) As Byte()
@@ -197,11 +201,11 @@ Public Module _byte
 
     <Extension()> Public Function hex_bytes_len(ByVal s As String,
                                                 ByVal start As Int32) As Int32
-        Return hex_bytes_len(s, start, strlen(s) - start)
+        Return hex_bytes_len(s, start, strlen_i(s) - start)
     End Function
 
     <Extension()> Public Function hex_bytes_len(ByVal s As String) As Int32
-        Return hex_bytes_len(s, 0, strlen(s))
+        Return hex_bytes_len(s, 0, strlen_i(s))
     End Function
 
     <Extension()> Public Function hex_bytes_buff(ByVal s As String,
@@ -220,15 +224,15 @@ Public Module _byte
 
     <Extension()> Public Function hex_bytes_buff(ByVal s As String,
                                                  ByVal start As Int32) As Byte()
-        Return hex_bytes_buff(s, start, strlen(s) - start)
+        Return hex_bytes_buff(s, start, strlen_i(s) - start)
     End Function
 
     <Extension()> Public Function hex_bytes_buff(ByVal s As String) As Byte()
-        Return hex_bytes_buff(s, 0, strlen(s))
+        Return hex_bytes_buff(s, 0, strlen_i(s))
     End Function
 
     Public Function bool_byte(ByVal i As Boolean) As Byte
-        Return If(i, max_uint8, 0)
+        Return If(i, max_uint8, uint8_0)
     End Function
 
     Public Function byte_bool(ByVal i As Byte) As Boolean

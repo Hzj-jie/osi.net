@@ -61,7 +61,6 @@
     <Compile Include="assert.vb" />
     <Compile Include="bit.vb" />
     <Compile Include="bytes\byte.vb" />
-    <Compile Include="bytes\bytes_array.vb" />
     <Compile Include="bytes\bytes_dependent_types.vb" />
     <Compile Include="bytes\bytes_independent_types.vb" />
     <Compile Include="copy_constructor.vb" />
