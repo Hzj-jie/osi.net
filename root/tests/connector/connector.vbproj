@@ -114,6 +114,7 @@
     <Compile Include="extension_behavior_test.vb" />
     <Compile Include="finalizer_test.vb" />
     <Compile Include="functor\bytes_serializer_container_test.vb" />
+    <Compile Include="functor\bytes_serializer_test.vb" />
     <Compile Include="gc_behavior_test.vb" />
     <Compile Include="generic_perf.vb" />
     <Compile Include="compress_test.vb" />

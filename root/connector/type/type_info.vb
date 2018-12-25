@@ -27,6 +27,7 @@ Partial Public NotInheritable Class type_info(Of T)
     Public Shared ReadOnly is_nullable As Boolean
     ' => GetType(T) Is GetType(String)
     Public Shared ReadOnly is_string As Boolean
+    Public Shared ReadOnly is_number As Boolean
 
     Shared Sub New()
         fullname = GetType(T).FullName()
@@ -42,6 +43,19 @@ Partial Public NotInheritable Class type_info(Of T)
         is_primitive = GetType(T).IsPrimitive()
         is_nullable = GetType(T).is(GetType(Nullable(Of )))
         is_string = GetType(T) Is GetType(String)
+        ' Check is_primitive to reduce cost.
+        is_number = is_primitive AndAlso (
+            GetType(T) Is GetType(Byte) OrElse
+            GetType(T) Is GetType(SByte) OrElse
+            GetType(T) Is GetType(UInt16) OrElse
+            GetType(T) Is GetType(Int16) OrElse
+            GetType(T) Is GetType(UInt32) OrElse
+            GetType(T) Is GetType(Int32) OrElse
+            GetType(T) Is GetType(UInt64) OrElse
+            GetType(T) Is GetType(Int64) OrElse
+            GetType(T) Is GetType(Single) OrElse
+            GetType(T) Is GetType(Double) OrElse
+            GetType(T) Is GetType(Decimal))
     End Sub
 
     Public Shared Function has_finalizer() As Boolean

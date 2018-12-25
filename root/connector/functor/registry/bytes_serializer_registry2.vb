@@ -41,10 +41,9 @@ Friend NotInheritable Class bytes_serializer_registry2
                                             b = i.ReadByte()
                                             If b = npos Then
                                                 Return False
-                                            Else
-                                                o = (b = max_uint8)
-                                                Return True
                                             End If
+                                            o = (b = max_uint8)
+                                            Return True
                                         End Function)
         bytes_serializer.byte_size.register(Function(ByVal i() As Byte) As UInt32
                                                 Return array_size(i)
@@ -65,6 +64,38 @@ Friend NotInheritable Class bytes_serializer_registry2
                                                 ReDim o(CInt(l - uint32_1))
                                                 Return i.read(o)
                                             End Function)
+        bytes_serializer.fixed.register(Function(ByVal i As Decimal, ByVal o As MemoryStream) As Boolean
+                                            assert(Not o Is Nothing)
+                                            Dim b() As Int32 = Nothing
+                                            b = Decimal.GetBits(i)
+                                            assert(array_size(b) = 4)
+                                            ' According to
+                                            ' https://github.com/Microsoft/referencesource/blob/master/mscorlib/system/decimal.cs#L567
+                                            ' The Decimal.GetBits() always uses little endian.
+                                            For j As Int32 = 0 To array_size_i(b) - 1
+                                                If Not o.write(BitConverter.GetBytes(
+                                                                   endian.to_little_endian(b(j)))) Then
+                                                    Return False
+                                                End If
+                                            Next
+                                            Return True
+                                        End Function,
+                                        Function(ByVal i As MemoryStream, ByRef o As Decimal) As Boolean
+                                            assert(Not i Is Nothing)
+                                            Dim b() As Int32 = Nothing
+                                            ReDim b(4 - 1)
+                                            For j As Int32 = 0 To array_size_i(b) - 1
+                                                If Not bytes_serializer.consume_from(i, b(j)) Then
+                                                    Return False
+                                                End If
+                                            Next
+                                            Try
+                                                o = New Decimal(b)
+                                                Return True
+                                            Catch
+                                                Return False
+                                            End Try
+                                        End Function)
     End Sub
 
     Private Shared Sub init()

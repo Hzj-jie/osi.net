@@ -1,5 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
 Option Strict On
+
 Imports osi.root.constants
 
 Public NotInheritable Class endian
@@ -61,6 +64,13 @@ Public NotInheritable Class endian
     End Function
 
     Public Shared Function to_little_endian(ByVal i As Double) As Double
+        If BitConverter.IsLittleEndian Then
+            Return i
+        End If
+        Return reverse(i)
+    End Function
+
+    Public Shared Function to_little_endian(Of T)(ByVal i As T) As T
         If BitConverter.IsLittleEndian Then
             Return i
         End If
@@ -144,6 +154,66 @@ Public NotInheritable Class endian
     Public Shared Function reverse(ByVal i As Double) As Double
         Return BitConverter.Int64BitsToDouble(reverse(BitConverter.DoubleToInt64Bits(i)))
     End Function
+
+    Public Shared Function reverse(Of T)(ByVal i As T) As T
+        Return reverse_cache(Of T).f(i)
+    End Function
+
+    Public Shared Function supported(Of T)() As Boolean
+        Return reverse_supported_cache(Of T).v
+    End Function
+
+    Private NotInheritable Class reverse_supported_cache(Of T)
+        Public Shared ReadOnly v As Boolean
+
+        Shared Sub New()
+            v = type_info(Of T).is_number AndAlso Not type_info(Of T, type_info_operators.equal, Decimal).v
+        End Sub
+
+        Private Sub New()
+        End Sub
+    End Class
+
+    Private NotInheritable Class reverse_cache(Of T)
+        Public Shared ReadOnly f As Func(Of T, T)
+
+        Shared Sub New()
+            assert(supported(Of T)())
+            If type_info(Of T, type_info_operators.equal, SByte).v Then
+                f = c(Of SByte)(AddressOf reverse)
+            ElseIf type_info(Of T, type_info_operators.equal, Byte).v Then
+                f = c(Of Byte)(AddressOf reverse)
+            ElseIf type_info(Of T, type_info_operators.equal, Int16).v Then
+                f = c(Of Int16)(AddressOf reverse)
+            ElseIf type_info(Of T, type_info_operators.equal, UInt16).v Then
+                f = c(Of UInt16)(AddressOf reverse)
+            ElseIf type_info(Of T, type_info_operators.equal, Int32).v Then
+                f = c(Of Int32)(AddressOf reverse)
+            ElseIf type_info(Of T, type_info_operators.equal, UInt32).v Then
+                f = c(Of UInt32)(AddressOf reverse)
+            ElseIf type_info(Of T, type_info_operators.equal, Int64).v Then
+                f = c(Of Int64)(AddressOf reverse)
+            ElseIf type_info(Of T, type_info_operators.equal, UInt64).v Then
+                f = c(Of UInt64)(AddressOf reverse)
+            ElseIf type_info(Of T, type_info_operators.equal, Single).v Then
+                f = c(Of Single)(AddressOf reverse)
+            ElseIf type_info(Of T, type_info_operators.equal, Double).v Then
+                f = c(Of Double)(AddressOf reverse)
+            Else
+                assert(False)
+            End If
+        End Sub
+
+        Private Shared Function c(Of VT)(ByVal f As Func(Of VT, VT)) As Func(Of T, T)
+            assert(Not f Is Nothing)
+            Return Function(ByVal i As T) As T
+                       Return direct_cast(Of T)(f(direct_cast(Of VT)(i)))
+                   End Function
+        End Function
+
+        Private Sub New()
+        End Sub
+    End Class
 
     Private Sub New()
     End Sub

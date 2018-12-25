@@ -118,7 +118,7 @@ Partial Public Class bytes_serializer(Of T)
     End Function
 End Class
 
-Public Module _bytes_serializer
+Public Module _bytes_serializer_shortcuts
     <Extension()> Public Function [to](Of T)(ByVal i() As Byte, ByRef o As T) As Boolean
         Return bytes_serializer.from_bytes(i, o)
     End Function
