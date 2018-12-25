@@ -72,6 +72,76 @@ Partial Public NotInheritable Class bytes_serializer
         Return bytes_serializer(Of T).default.consume_from(i, offset, o)
     End Function
 
+    Public Shared Function from_container(Of CONTAINER, ELEMENT, T)(ByVal i As CONTAINER, ByRef o As T) As Boolean
+        Return bytes_serializer(Of T).default.from_container(Of CONTAINER, ELEMENT)(i, o)
+    End Function
+
+    Public Shared Function to_container(Of CONTAINER, ELEMENT, T)(ByVal i As T, ByRef o As CONTAINER) As Boolean
+        Return bytes_serializer(Of T).default.to_container(Of CONTAINER, ELEMENT)(i, o)
+    End Function
+
+    Public Shared Function from_container(Of ELEMENT)() As container_from(Of ELEMENT)
+        Return container_from(Of ELEMENT).instance
+    End Function
+
+    Public Shared Function to_container(Of ELEMENT)() As container_to(Of ELEMENT)
+        Return container_to(Of ELEMENT).instance
+    End Function
+
+    Public NotInheritable Class container_from(Of ELEMENT)
+        Public Shared ReadOnly instance As container_from(Of ELEMENT)
+
+        Shared Sub New()
+            instance = New container_from(Of ELEMENT)()
+        End Sub
+
+        Public Function [of](Of CONTAINER)(ByVal i As CONTAINER) As container_from_to(Of CONTAINER, ELEMENT)
+            Return New container_from_to(Of CONTAINER, ELEMENT)(i)
+        End Function
+
+        Private Sub New()
+        End Sub
+    End Class
+
+    Public NotInheritable Class container_from_to(Of CONTAINER, ELEMENT)
+        Private ReadOnly i As CONTAINER
+
+        Public Sub New(ByVal i As CONTAINER)
+            Me.i = i
+        End Sub
+
+        Public Function [to](Of T)(ByRef o As T) As Boolean
+            Return from_container(Of CONTAINER, ELEMENT, T)(i, o)
+        End Function
+    End Class
+
+    Public NotInheritable Class container_to(Of ELEMENT)
+        Public Shared ReadOnly instance As container_to(Of ELEMENT)
+
+        Shared Sub New()
+            instance = New container_to(Of ELEMENT)()
+        End Sub
+
+        Public Function from(Of T)(ByVal i As T) As container_to_to(Of T, ELEMENT)
+            Return New container_to_to(Of T, ELEMENT)(i)
+        End Function
+
+        Private Sub New()
+        End Sub
+    End Class
+
+    Public NotInheritable Class container_to_to(Of T, ELEMENT)
+        Private ReadOnly i As T
+
+        Public Sub New(ByVal i As T)
+            Me.i = i
+        End Sub
+
+        Public Function [to](Of CONTAINER)(ByRef o As CONTAINER) As Boolean
+            Return to_container(Of CONTAINER, ELEMENT, T)(i, o)
+        End Function
+    End Class
+
     Private Sub New()
     End Sub
 End Class

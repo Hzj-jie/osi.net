@@ -9,18 +9,22 @@ Imports osi.root.formation
 
 Partial Public NotInheritable Class vector(Of T)
     Shared Sub New()
-        container_operator(Of vector(Of T), T).register(Function(ByVal i As vector(Of T)) As UInt32
-                                                            Return i.size_or_0()
-                                                        End Function)
-        container_operator.register(Function(ByVal i As vector(Of T), ByVal j As T) As Boolean
-                                        assert(Not i Is Nothing)
-                                        i.emplace_back(j)
-                                        Return True
-                                    End Function)
-        container_operator.register(
+        container_operator(Of vector(Of T), T).size(Function(ByVal i As vector(Of T)) As UInt32
+                                                        Return i.size_or_0()
+                                                    End Function)
+        container_operator.emplace(Function(ByVal i As vector(Of T), ByVal j As T) As Boolean
+                                       assert(Not i Is Nothing)
+                                       i.emplace_back(j)
+                                       Return True
+                                   End Function)
+        container_operator.enumerate(
                 Function(ByVal i As vector(Of T)) As container_operator(Of vector(Of T), T).enumerator
                     Return New enumerator(i)
                 End Function)
+        container_operator(Of vector(Of T), T).clear(Sub(ByVal i As vector(Of T))
+                                                         assert(Not i Is Nothing)
+                                                         i.clear()
+                                                     End Sub)
         bytes_serializer(Of vector(Of T)).container(Of T).register()
     End Sub
 

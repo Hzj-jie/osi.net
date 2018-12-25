@@ -21,21 +21,26 @@ Public NotInheritable Class omap(Of KEY_T, VALUE_T)
     Implements ICloneable, ICloneable(Of omap(Of KEY_T, VALUE_T))
 
     Shared Sub New()
-        container_operator(Of omap(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).register(
+        container_operator(Of omap(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).size(
                 Function(ByVal i As omap(Of KEY_T, VALUE_T)) As UInt32
                     assert(Not i Is Nothing)
                     Return i.size()
                 End Function)
-        container_operator.register(Function(ByVal i As omap(Of KEY_T, VALUE_T),
-                                             ByVal j As first_const_pair(Of KEY_T, VALUE_T)) As Boolean
-                                        assert(Not i Is Nothing)
-                                        Return i.emplace(j).second
-                                    End Function)
-        container_operator.register(Function(ByVal i As omap(Of KEY_T, VALUE_T)) _
-                                            As container_operator(Of omap(Of KEY_T, VALUE_T),
-                                                                     first_const_pair(Of KEY_T, VALUE_T)).enumerator
-                                        Return New enumerator(i)
-                                    End Function)
+        container_operator.emplace(Function(ByVal i As omap(Of KEY_T, VALUE_T),
+                                            ByVal j As first_const_pair(Of KEY_T, VALUE_T)) As Boolean
+                                       assert(Not i Is Nothing)
+                                       Return i.emplace(j).second
+                                   End Function)
+        container_operator.enumerate(Function(ByVal i As omap(Of KEY_T, VALUE_T)) _
+                                             As container_operator(Of omap(Of KEY_T, VALUE_T),
+                                                                      first_const_pair(Of KEY_T, VALUE_T)).enumerator
+                                         Return New enumerator(i)
+                                     End Function)
+        container_operator(Of omap(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).clear(
+                Sub(ByVal i As omap(Of KEY_T, VALUE_T))
+                    assert(Not i Is Nothing)
+                    i.clear()
+                End Sub)
         bytes_serializer(Of omap(Of KEY_T, VALUE_T)).container(Of first_const_pair(Of KEY_T, VALUE_T)).register()
     End Sub
 

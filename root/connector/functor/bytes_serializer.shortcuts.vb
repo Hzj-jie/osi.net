@@ -73,7 +73,11 @@ Partial Public Class bytes_serializer(Of T)
 
         Dim it As container_operator(Of CONTAINER, ELEMENT).enumerator = Nothing
         it = container_operator(Of CONTAINER, ELEMENT).default.enumerate(i)
-        o = alloc(Of T)()
+        If o Is Nothing Then
+            o = alloc(Of T)()
+        Else
+            container_operator.clear(Of T, Byte())(o)
+        End If
         If it Is Nothing Then
             Return True
         End If
@@ -92,7 +96,11 @@ Partial Public Class bytes_serializer(Of T)
 
         Dim it As container_operator(Of T, Byte()).enumerator = Nothing
         it = container_operator(Of T, Byte()).default.enumerate(i)
-        o = alloc(Of CONTAINER)()
+        If o Is Nothing Then
+            o = alloc(Of CONTAINER)()
+        Else
+            container_operator.clear(Of CONTAINER, ELEMENT)(o)
+        End If
         If it Is Nothing Then
             Return True
         End If
@@ -118,5 +126,9 @@ Public Module _bytes_serializer
     <Extension()> Public Function [from](Of T)(ByRef o() As Byte, ByVal i As T) As Byte()
         o = bytes_serializer.to_bytes(i)
         Return o
+    End Function
+
+    <Extension()> Public Function bytes(Of T)(ByVal i As T) As Byte()
+        Return bytes_serializer.to_bytes(i)
     End Function
 End Module

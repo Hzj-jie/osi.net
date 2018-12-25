@@ -113,6 +113,7 @@
     <Compile Include="event_pin_object_behavior_test.vb" />
     <Compile Include="extension_behavior_test.vb" />
     <Compile Include="finalizer_test.vb" />
+    <Compile Include="functor\bytes_serializer_container_test.vb" />
     <Compile Include="gc_behavior_test.vb" />
     <Compile Include="generic_perf.vb" />
     <Compile Include="compress_test.vb" />
@@ -312,6 +313,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetDir)\$(TargetName).*" "$(ProjectDir)\..\..\utt\$(OutDir)" /y</PostBuildEvent>

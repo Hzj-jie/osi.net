@@ -46,6 +46,7 @@ Partial Public Class bt(OF T)
 'so change ..\..\codegen\static_iterator.vbp instead of this file
 
 
+
         Implements IComparable(Of iterator), IComparable
 
         Public Shared ReadOnly [end] As iterator
@@ -61,19 +62,27 @@ Partial Public Class bt(OF T)
 #Else
         Private Sub New(ByVal that As node)
 #End If
+#If Not True Then
             assert(Not that Is Nothing)
+#End If
             p = that
         End Sub
 
+#If False Then
         Public Function is_end() As Boolean
-            If type_info(Of iterator).is_valuetype Then
-                Return p Is Nothing
-            Else
-                Return p Is Nothing AndAlso
-                       (Not isdebugmode() OrElse
-                        assert(object_compare(Me, [end]) = 0))
-            End If
+            Return p.is_end()
         End Function
+#Else
+        Public Function is_end() As Boolean
+#If True Then
+            Return p Is Nothing
+#Else
+            Return p Is Nothing AndAlso
+                   (Not isdebugmode() OrElse
+                    assert(object_compare(Me, [end]) = 0))
+#End If
+        End Function
+#End If
 
         Public Function is_not_end() As Boolean
             Return Not is_end()
