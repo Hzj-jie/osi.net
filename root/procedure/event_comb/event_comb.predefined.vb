@@ -35,16 +35,8 @@ Partial Public Class event_comb
                               End Function)
     End Function
 
-    Public Shared Function one_step(ByVal f As Action) As event_comb
-        assert(Not f Is Nothing)
-        Return one_step(Function() As Boolean
-                            f()
-                            Return True
-                        End Function)
-    End Function
-
-    ' Provides a way to chain with repeat() and calls Func(of event_comb) for multiple times.
-    Public Shared Function from(ByVal f As Func(Of event_comb)) As event_comb
+    ' Provide a way to chain with repeat() and call Func(of event_comb) for multiple times.
+    Public Shared Function [of](ByVal f As Func(Of event_comb)) As event_comb
         assert(Not f Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -167,9 +159,13 @@ Partial Public Class event_comb
         Return [while](execution, condition_adapter(condition))
     End Function
 
+    Public Shared Function suppress_error(ByVal ec As event_comb) As event_comb
+        Return succeeded(Sub()
+                             waitfor(ec)
+                         End Sub)
+    End Function
+
     Public Function suppress_error() As event_comb
-        Return one_step(Sub()
-                            waitfor(Me)
-                        End Sub)
+        Return suppress_error(Me)
     End Function
 End Class

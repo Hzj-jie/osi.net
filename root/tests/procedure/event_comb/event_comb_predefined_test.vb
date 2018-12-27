@@ -32,9 +32,7 @@ Public NotInheritable Class event_comb_predefined_test
                                                   Return False
                                               End Function).suppress_error()))
         Dim ec As event_comb = Nothing
-        ec = event_comb.one_step(Function() As Boolean
-                                     Return False
-                                 End Function)
+        ec = event_comb.failed()
         For i As Int32 = 0 To 10
             assert_true(async_sync(ec.suppress_error()))
         Next
