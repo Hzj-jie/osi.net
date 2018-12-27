@@ -217,7 +217,7 @@ Public NotInheritable Class chunks
     End Function
 
     Public Function import(ByVal b() As Byte) As Boolean
-        Using ms As MemoryStream = memory_stream.create(b)
+        Using ms As MemoryStream = memory_stream.of(b)
             Return import(ms)
         End Using
     End Function

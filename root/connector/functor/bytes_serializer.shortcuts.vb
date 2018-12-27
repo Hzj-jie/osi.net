@@ -16,7 +16,7 @@ Partial Public Class bytes_serializer(Of T)
 
     Public Function append_to(ByVal i As T, ByVal o() As Byte, ByRef offset As UInt32) As Boolean
         Dim ms As MemoryStream = Nothing
-        If Not memory_stream.create_from_index(o, offset, ms) Then
+        If Not memory_stream.from_index(o, offset, ms) Then
             Return False
         End If
 
@@ -37,7 +37,7 @@ Partial Public Class bytes_serializer(Of T)
             Return False
         End If
 
-        Using ms As MemoryStream = memory_stream.create(b)
+        Using ms As MemoryStream = memory_stream.of(b)
             Return read_from(ms, o)
         End Using
     End Function
@@ -50,7 +50,7 @@ Partial Public Class bytes_serializer(Of T)
 
     Public Function consume_from(ByVal b() As Byte, ByRef offset As UInt32, ByRef o As T) As Boolean
         Dim ms As MemoryStream = Nothing
-        If memory_stream.create_from_index(b, offset, ms) Then
+        If memory_stream.from_index(b, offset, ms) Then
             assert(Not ms Is Nothing)
             Using ms
                 If consume_from(ms, o) Then

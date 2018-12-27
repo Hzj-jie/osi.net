@@ -116,12 +116,12 @@ Public NotInheritable Class request_builder
             ' MemoryStream.Dispose() or MemoryStream.Close() is not necessary. Meanwhile Close() or Dispose() before the
             ' finish of request() procedure also introduces Bad Request error: Stream.copy_to(Stream) fails if the
             ' source Stream has been Close()d or Dispose()d.
-            Return with_body(memory_stream.create(p.buff, CInt(p.offset), CInt(p.count)))
+            Return with_body(memory_stream.[of](p.buff, CInt(p.offset), CInt(p.count)))
         End If
     End Function
 
     Public Function with_body(ByVal s As String, Optional ByVal encoder As Encoding = Nothing) As request_builder
-        Return with_body(memory_stream.create(s, encoder))
+        Return with_body(memory_stream.[of](s, encoder))
     End Function
 
     Public Function with_body(ByVal s As String,
@@ -131,7 +131,7 @@ Public NotInheritable Class request_builder
         If s Is Nothing Then
             Return without_body()
         Else
-            Return with_body(memory_stream.create(s, CInt(offset), CInt(len), encoder))
+            Return with_body(memory_stream.[of](s, CInt(offset), CInt(len), encoder))
         End If
     End Function
 

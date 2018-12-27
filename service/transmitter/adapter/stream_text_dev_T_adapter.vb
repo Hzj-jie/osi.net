@@ -37,7 +37,7 @@ Public Class stream_text_dev_T_adapter(Of T)
         Return New event_comb(Function() As Boolean
                                   Dim s As String = Nothing
                                   s = T_string.to_str(i)
-                                  If memory_stream.create(s, enc, ms) Then
+                                  If memory_stream.[New](s, enc, ms) Then
                                       assert(Not ms Is Nothing)
                                       ec = underlying_device.send(ms)
                                       Return waitfor(ec) AndAlso

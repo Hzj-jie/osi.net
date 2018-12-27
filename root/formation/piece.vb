@@ -30,7 +30,7 @@ Public Module _piece
         If i Is Nothing OrElse i.buff Is Nothing Then
             Return False
         Else
-            Using ms As MemoryStream = memory_stream.create(i.buff, CInt(i.offset), CInt(i.count))
+            Using ms As MemoryStream = memory_stream.of(i.buff, CInt(i.offset), CInt(i.count))
                 Return this.read_from(ms, o)
             End Using
         End If

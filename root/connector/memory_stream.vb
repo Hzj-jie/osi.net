@@ -119,10 +119,10 @@ Public NotInheritable Class memory_stream
     Private Sub New()
     End Sub
 
-    Public Shared Function create(ByVal i() As Byte,
-                                  ByVal offset As Int32,
-                                  ByVal count As Int32,
-                                  ByRef o As MemoryStream) As Boolean
+    Public Shared Function [New](ByVal i() As Byte,
+                                 ByVal offset As Int32,
+                                 ByVal count As Int32,
+                                 ByRef o As MemoryStream) As Boolean
         If i Is Nothing OrElse
            offset < 0 OrElse
            count < 0 OrElse
@@ -136,154 +136,149 @@ Public NotInheritable Class memory_stream
         Return True
     End Function
 
-    Public Shared Function create(ByVal i() As Byte,
-                                  ByVal offset As UInt32,
-                                  ByVal count As UInt32,
-                                  ByRef o As MemoryStream) As Boolean
+    Public Shared Function [New](ByVal i() As Byte,
+                                 ByVal offset As UInt32,
+                                 ByVal count As UInt32,
+                                 ByRef o As MemoryStream) As Boolean
         If offset > max_int32 OrElse count > max_int32 Then
             Return False
-        Else
-            Return create(i, CInt(offset), CInt(count), o)
         End If
+        Return [New](i, CInt(offset), CInt(count), o)
     End Function
 
-    Public Shared Function create_from_index(ByVal i() As Byte,
-                                             ByVal offset As Int32,
-                                             ByRef o As MemoryStream) As Boolean
+    Public Shared Function from_index(ByVal i() As Byte,
+                                      ByVal offset As Int32,
+                                      ByRef o As MemoryStream) As Boolean
         If offset > array_size_i(i) Then
             Return False
-        Else
-            Return create(i, offset, array_size_i(i) - offset, o)
         End If
+        Return [New](i, offset, array_size_i(i) - offset, o)
     End Function
 
-    Public Shared Function create_from_index(ByVal i() As Byte,
-                                             ByVal offset As UInt32,
-                                             ByRef o As MemoryStream) As Boolean
+    Public Shared Function from_index(ByVal i() As Byte,
+                                      ByVal offset As UInt32,
+                                      ByRef o As MemoryStream) As Boolean
         If offset > array_size(i) Then
             Return False
-        Else
-            Return create(i, offset, array_size(i) - offset, o)
         End If
+        Return [New](i, offset, array_size(i) - offset, o)
     End Function
 
-    Public Shared Function create(ByVal i() As Byte,
-                                  ByVal count As Int32,
-                                  ByRef o As MemoryStream) As Boolean
-        Return create(i, 0, count, o)
+    Public Shared Function [New](ByVal i() As Byte,
+                                 ByVal count As Int32,
+                                 ByRef o As MemoryStream) As Boolean
+        Return [New](i, 0, count, o)
     End Function
 
-    Public Shared Function create(ByVal i() As Byte, ByRef o As MemoryStream) As Boolean
-        Return create(i, array_size_i(i), o)
+    Public Shared Function [New](ByVal i() As Byte, ByRef o As MemoryStream) As Boolean
+        Return [New](i, array_size_i(i), o)
     End Function
 
-    Public Shared Function create(ByVal i() As Byte,
-                                  ByVal offset As Int32,
-                                  ByVal count As Int32) As MemoryStream
+    Public Shared Function [of](ByVal i() As Byte,
+                                ByVal offset As Int32,
+                                ByVal count As Int32) As MemoryStream
         Dim o As MemoryStream = Nothing
-        assert(create(i, offset, count, o))
+        assert([New](i, offset, count, o))
         Return o
     End Function
 
-    Public Shared Function create(ByVal i() As Byte,
-                                  ByVal count As Int32) As MemoryStream
+    Public Shared Function [of](ByVal i() As Byte, ByVal count As Int32) As MemoryStream
         Dim o As MemoryStream = Nothing
-        assert(create(i, count, o))
+        assert([New](i, count, o))
         Return o
     End Function
 
-    Public Shared Function create(ByVal i() As Byte) As MemoryStream
+    Public Shared Function [of](ByVal i() As Byte) As MemoryStream
         Dim o As MemoryStream = Nothing
-        assert(create(i, o))
+        assert([New](i, o))
         Return o
     End Function
 
-    Public Shared Function create(ByVal i As String,
-                                  ByVal offset As Int32,
-                                  ByVal count As Int32,
-                                  ByVal enc As Text.Encoding,
-                                  ByRef o As MemoryStream) As Boolean
+    Public Shared Function [New](ByVal i As String,
+                                 ByVal offset As Int32,
+                                 ByVal count As Int32,
+                                 ByVal enc As Text.Encoding,
+                                 ByRef o As MemoryStream) As Boolean
         If offset < 0 OrElse
            count < 0 OrElse
            strlen(i) < offset + count Then
             Return False
-        Else
-            Dim b() As Byte = Nothing
-            b = If(enc Is Nothing, default_encoding, enc).GetBytes(i, offset, count)
-            Return assert(create(b, 0, array_size_i(b), o))
         End If
+        Dim b() As Byte = Nothing
+        b = If(enc Is Nothing, default_encoding, enc).GetBytes(i, offset, count)
+        Return assert([New](b, 0, array_size_i(b), o))
     End Function
 
-    Public Shared Function create(ByVal i As String,
-                                  ByVal offset As Int32,
-                                  ByVal count As Int32,
-                                  ByRef o As MemoryStream) As Boolean
-        Return create(i, offset, count, Nothing, o)
+    Public Shared Function [New](ByVal i As String,
+                                 ByVal offset As Int32,
+                                 ByVal count As Int32,
+                                 ByRef o As MemoryStream) As Boolean
+        Return [New](i, offset, count, Nothing, o)
     End Function
 
-    Public Shared Function create(ByVal i As String,
-                                  ByVal count As Int32,
-                                  ByVal enc As Text.Encoding,
-                                  ByRef o As MemoryStream) As Boolean
-        Return create(i, 0, count, enc, o)
+    Public Shared Function [New](ByVal i As String,
+                                 ByVal count As Int32,
+                                 ByVal enc As Text.Encoding,
+                                 ByRef o As MemoryStream) As Boolean
+        Return [New](i, 0, count, enc, o)
     End Function
 
-    Public Shared Function create(ByVal i As String,
-                                  ByVal count As Int32,
-                                  ByRef o As MemoryStream) As Boolean
-        Return create(i, 0, count, o)
+    Public Shared Function [New](ByVal i As String,
+                                 ByVal count As Int32,
+                                 ByRef o As MemoryStream) As Boolean
+        Return [New](i, 0, count, o)
     End Function
 
-    Public Shared Function create(ByVal i As String,
-                                  ByVal enc As Text.Encoding,
-                                  ByRef o As MemoryStream) As Boolean
-        Return create(i, 0, enc, o)
+    Public Shared Function [New](ByVal i As String,
+                                 ByVal enc As Text.Encoding,
+                                 ByRef o As MemoryStream) As Boolean
+        Return [New](i, 0, enc, o)
     End Function
 
-    Public Shared Function create(ByVal i As String, ByRef o As MemoryStream) As Boolean
-        Return create(i, strlen_i(i), o)
+    Public Shared Function [New](ByVal i As String, ByRef o As MemoryStream) As Boolean
+        Return [New](i, strlen_i(i), o)
     End Function
 
-    Public Shared Function create(ByVal i As String,
-                                  ByVal offset As Int32,
-                                  ByVal count As Int32,
-                                  ByVal enc As Text.Encoding) As MemoryStream
+    Public Shared Function [of](ByVal i As String,
+                                ByVal offset As Int32,
+                                ByVal count As Int32,
+                                ByVal enc As Text.Encoding) As MemoryStream
         Dim o As MemoryStream = Nothing
-        assert(create(i, offset, count, enc, o))
+        assert([New](i, offset, count, enc, o))
         Return o
     End Function
 
-    Public Shared Function create(ByVal i As String,
-                                  ByVal offset As Int32,
-                                  ByVal count As Int32) As MemoryStream
+    Public Shared Function [of](ByVal i As String,
+                                ByVal offset As Int32,
+                                ByVal count As Int32) As MemoryStream
         Dim o As MemoryStream = Nothing
-        assert(create(i, offset, count, o))
+        assert([New](i, offset, count, o))
         Return o
     End Function
 
-    Public Shared Function create(ByVal i As String,
-                                  ByVal count As Int32,
-                                  ByVal enc As Text.Encoding) As MemoryStream
+    Public Shared Function [of](ByVal i As String,
+                                ByVal count As Int32,
+                                ByVal enc As Text.Encoding) As MemoryStream
         Dim o As MemoryStream = Nothing
-        assert(create(i, count, enc, o))
+        assert([New](i, count, enc, o))
         Return o
     End Function
 
-    Public Shared Function create(ByVal i As String, ByVal count As Int32) As MemoryStream
+    Public Shared Function [of](ByVal i As String, ByVal count As Int32) As MemoryStream
         Dim o As MemoryStream = Nothing
-        assert(create(i, count, o))
+        assert([New](i, count, o))
         Return o
     End Function
 
-    Public Shared Function create(ByVal i As String, ByVal enc As Text.Encoding) As MemoryStream
+    Public Shared Function [of](ByVal i As String, ByVal enc As Text.Encoding) As MemoryStream
         Dim o As MemoryStream = Nothing
-        assert(create(i, enc, o))
+        assert([New](i, enc, o))
         Return o
     End Function
 
-    Public Shared Function create(ByVal i As String) As MemoryStream
+    Public Shared Function [of](ByVal i As String) As MemoryStream
         Dim o As MemoryStream = Nothing
-        assert(create(i, o))
+        assert([New](i, o))
         Return o
     End Function
 End Class

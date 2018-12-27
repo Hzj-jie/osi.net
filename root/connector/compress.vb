@@ -129,7 +129,7 @@ Public Module _compress
                                 ByVal ctor As Func(Of MemoryStream, Stream)) As Boolean
         assert(Not ctor Is Nothing)
         Dim ms As MemoryStream = Nothing
-        If memory_stream.create(i, offset, count, ms) Then
+        If memory_stream.[New](i, offset, count, ms) Then
             assert(Not ms Is Nothing)
             Using ms
                 Using os As MemoryStream = New MemoryStream()
