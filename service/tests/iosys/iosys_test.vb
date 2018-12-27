@@ -75,11 +75,10 @@ Public Class iosys_test
             assert_true(async_sync(New event_comb(Function() As Boolean
                                                       Return waitfor(Function() q.size() < flower_size,
                                                                      minutes_to_milliseconds(1)) AndAlso
-                                                             (assert_less_or_equal(q.size(), flower_size) AndAlso
-                                                              goto_next()) OrElse
-                                                             False
+                                                              goto_next()
                                                   End Function,
                                                   Function() As Boolean
+                                                      assert_less_or_equal(q.size(), flower_size)
                                                       Dim c As iosys_test_case = Nothing
                                                       c = New iosys_test_case()
                                                       Dim f As Boolean = False
@@ -88,11 +87,10 @@ Public Class iosys_test
                                                       q.emplace(c)
                                                       If round = 0 Then
                                                           Return goto_next()
-                                                      Else
-                                                          round -= 1
-                                                          Return waitfor(interval_ms) AndAlso
-                                                                 goto_begin()
                                                       End If
+                                                      round -= 1
+                                                      Return waitfor(interval_ms) AndAlso
+                                                             goto_begin()
                                                   End Function,
                                                   Function() As Boolean
                                                       Return waitfor(Function() q.empty(),
