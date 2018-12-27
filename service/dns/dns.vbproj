@@ -57,8 +57,8 @@
   <ItemGroup>
     <Compile Include="connectivity.vb" />
     <Compile Include="constants.vb" />
-    <Compile Include="dns.vb" />
-    <Compile Include="init.vb" />
+    <Compile Include="dns_cache.vb" />
+    <Compile Include="dns_cache.init.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

@@ -11,7 +11,7 @@ Imports osi.root.procedure
 Imports osi.root.utt
 Imports osi.service.dns
 
-Public Class dns_cache_test
+Public NotInheritable Class dns_cache_test
     Inherits repeat_event_comb_case_wrapper
 
     Public Sub New()
@@ -25,11 +25,15 @@ Public Class dns_cache_test
         Dim p As pointer(Of connectivity.result_t) = Nothing
         p.renew()
         async_sync(connectivity.check_if_needed(p))
-        clear_cache()
+        dns_cache.clear_cache()
         Return (+p) >= connectivity.result_t.partial_dns_resolvable
     End Function
 
-    Private Class dns_cache_case
+    Public Overrides Function reserved_processors() As Int16
+        Return 2
+    End Function
+
+    Private NotInheritable Class dns_cache_case
         Inherits event_comb_case
 
         Private single_time As Int64
@@ -43,10 +47,10 @@ Public Class dns_cache_test
                                      Function(ByVal i As UInt32) As event_comb
                                          Dim ec As event_comb = Nothing
                                          Return New event_comb(Function() As Boolean
-                                                                   ec = resolve(connectivity.golden_hosts(i),
-                                                                                New pointer(Of IPHostEntry)())
+                                                                   ec = dns_cache.resolve(connectivity.golden_hosts(i),
+                                                                                          New pointer(Of IPHostEntry)())
                                                                    Return waitfor(ec) AndAlso
-                                                                         goto_next()
+                                                                          goto_next()
                                                                End Function,
                                                               Function() As Boolean
                                                                   Return ec.end_result() AndAlso

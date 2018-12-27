@@ -10,6 +10,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
+Imports osi.service.dns
 
 Partial Public NotInheritable Class connector
     Public Shared Function [New](ByVal address_family As AddressFamily,
@@ -89,7 +90,7 @@ Partial Public NotInheritable Class connector
                                              goto_end()
                                   Else
                                       e = New pointer(Of IPHostEntry)()
-                                      ec = dns.resolve(p.host_or_ip, e, p.response_timeout_ms)
+                                      ec = dns_cache.resolve(p.host_or_ip, e, p.response_timeout_ms)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
                                   End If
@@ -156,7 +157,7 @@ Partial Public NotInheritable Class connector
                                              goto_end()
                                   Else
                                       result = New pointer(Of IPHostEntry)()
-                                      ec = dns.resolve(p.host_or_ip, result, p.response_timeout_ms)
+                                      ec = dns_cache.resolve(p.host_or_ip, result, p.response_timeout_ms)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
                                   End If

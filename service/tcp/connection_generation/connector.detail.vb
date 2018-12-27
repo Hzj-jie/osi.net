@@ -1,13 +1,16 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net
 Imports System.Net.Sockets
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.root.procedure
-Imports osi.service.commander
 Imports osi.service.dns
 
 Partial Public NotInheritable Class connector
@@ -58,8 +61,8 @@ Partial Public NotInheritable Class connector
         Return New event_comb(Function() As Boolean
                                   add = New pointer(Of IPAddress)()
                                   ec = If(p.ipv4,
-                                          resolve_ipv4(p.host_or_ip, add),
-                                          resolve_ipv6(p.host_or_ip, add))
+                                          dns_cache.resolve_ipv4(p.host_or_ip, add),
+                                          dns_cache.resolve_ipv6(p.host_or_ip, add))
                                   Return waitfor(ec) AndAlso
                                          goto_next()
                               End Function,
