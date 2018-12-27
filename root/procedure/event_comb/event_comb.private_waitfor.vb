@@ -55,43 +55,40 @@ Partial Public Class event_comb
         assert_in_lock()
         If isemptyarray(ecs) Then
             Return False
-        Else
-            For i As Int32 = 0 To array_size_i(ecs) - 1
-                If Not _waitfor(ecs(i)) Then
-                    Return False
-                End If
-            Next
-
-            Return True
         End If
+        For i As Int32 = 0 To array_size_i(ecs) - 1
+            If Not _waitfor(ecs(i)) Then
+                Return False
+            End If
+        Next
+
+        Return True
     End Function
 
     Private Function _waitfor_or_null(ByVal ecs() As event_comb) As Boolean
         assert_in_lock()
         If isemptyarray(ecs) Then
             Return True
-        Else
-            For i As Int32 = 0 To array_size_i(ecs) - 1
-                If Not _waitfor_or_null(ecs(i)) Then
-                    Return False
-                End If
-            Next
-
-            Return True
         End If
+        For i As Int32 = 0 To array_size_i(ecs) - 1
+            If Not _waitfor_or_null(ecs(i)) Then
+                Return False
+            End If
+        Next
+
+        Return True
     End Function
 
     Private Function _waitone(ByVal ecs() As event_comb) As Boolean
         assert_in_lock()
-        If _waitfor(ecs) Then
-            assert(Not ecs Is Nothing AndAlso ecs.Length() > 0)
-            For i As Int64 = 1 To ecs.Length() - 1
-                dec_pends()
-            Next
-            Return True
-        Else
+        If Not _waitfor(ecs) Then
             Return False
         End If
+        assert(Not ecs Is Nothing AndAlso ecs.Length() > 0)
+        For i As Int64 = 1 To ecs.Length() - 1
+            dec_pends()
+        Next
+        Return True
     End Function
 
     Private Function _waitfor(ByVal [try] As Func(Of Boolean),
@@ -100,9 +97,8 @@ Partial Public Class event_comb
         assert(Not w Is Nothing)
         If [try] Is Nothing Then
             Return False
-        Else
-            Return w([try], _wait())
         End If
+        Return w([try], _wait())
     End Function
 
     Private Function _waitfor(ByVal [try] As Func(Of Boolean), ByVal timeout_ms As Int64) As Boolean
@@ -114,15 +110,15 @@ Partial Public Class event_comb
                               ByVal timeout_ms As Int64) As Boolean
         If try_result Is Nothing Then
             Return _waitfor([try], timeout_ms)
-        ElseIf [try] Is Nothing Then
-            Return False
-        Else
-            Return _waitfor(Function() As Boolean
-                                assert(eva(try_result, [try]()))
-                                Return +try_result
-                            End Function,
-                            timeout_ms)
         End If
+        If [try] Is Nothing Then
+            Return False
+        End If
+        Return _waitfor(Function() As Boolean
+                            assert(eva(try_result, [try]()))
+                            Return +try_result
+                        End Function,
+                        timeout_ms)
     End Function
 
     Private Function _waitfor(ByVal [try] As Func(Of Boolean)) As Boolean
@@ -172,24 +168,23 @@ Partial Public Class event_comb
     Private Function _waitfor(ByVal d As Action) As Boolean
         If d Is Nothing Then
             Return False
-        Else
-            _waitfor(d, _wait())
-            Return True
         End If
+        _waitfor(d, _wait())
+        Return True
     End Function
 
     Private Function _waitfor(ByVal d As Action, ByVal timeout_ms As Int64) As Boolean
         If d Is Nothing Then
             Return False
-        ElseIf timeout_ms < 0 Then
-            Return _waitfor(d)
-        Else
-            Dim cb As Action = Nothing
-            cb = _multiple_resume_wait()
-            assert(Not stopwatch.push(timeout_ms, cb) Is Nothing)
-            _waitfor(d, cb)
-            Return True
         End If
+        If timeout_ms < 0 Then
+            Return _waitfor(d)
+        End If
+        Dim cb As Action = Nothing
+        cb = _multiple_resume_wait()
+        assert(Not stopwatch.push(timeout_ms, cb.as_weak_action()) Is Nothing)
+        _waitfor(d, cb)
+        Return True
     End Function
 
     Private Shared Function _do_void(Of T)(ByVal d As Func(Of T),
@@ -197,43 +192,38 @@ Partial Public Class event_comb
                                            ByRef v As Action) As Boolean
         If d Is Nothing Then
             Return False
-        Else
-            v = Sub()
-                    eva(r, d())
-                End Sub
-            Return True
         End If
+        v = Sub()
+                eva(r, d())
+            End Sub
+        Return True
     End Function
 
     Private Function _waitfor(Of T)(ByVal d As Func(Of T), ByVal r As pointer(Of T)) As Boolean
         Dim v As Action = Nothing
-        If _do_void(d, r, v) Then
+        If Not _do_void(d, r, v) Then
             Return _waitfor(v)
-        Else
-            Return False
         End If
+        Return False
     End Function
 
     Private Function _waitfor(Of T)(ByVal d As Func(Of T),
                                     ByVal r As pointer(Of T),
                                     ByVal timeout_ms As Int64) As Boolean
         Dim v As Action = Nothing
-        If _do_void(d, r, v) Then
-            Return _waitfor(v, timeout_ms)
-        Else
+        If Not _do_void(d, r, v) Then
             Return False
         End If
+        Return _waitfor(v, timeout_ms)
     End Function
 
     Private Function _waitfor(ByVal e As WaitHandle, ByVal timeout_ms As Int64) As Boolean
         If e Is Nothing Then
             Return False
-        Else
-            Return _waitfor(Sub()
-                                e.wait(timeout_ms)
-                            End Sub)
-            Return True
         End If
+        Return _waitfor(Sub()
+                            e.wait(timeout_ms)
+                        End Sub)
     End Function
 
     Private Function _waitfor(ByVal e As WaitHandle) As Boolean
@@ -255,45 +245,41 @@ Partial Public Class event_comb
     Private Function _waitfor(ByVal ms As Int64) As Boolean
         If ms < 0 Then
             Return False
-        ElseIf ms = 0 Then
-            Return _waitfor_yield()
-        Else
-            Return assert(Not stopwatch.push(ms, _wait()) Is Nothing)
         End If
+        If ms = 0 Then
+            Return _waitfor_yield()
+        End If
+        Return assert(Not stopwatch.push(ms, _wait()) Is Nothing)
     End Function
 
     Private Function _waitfor(ByVal l As ref(Of event_comb_lock)) As Boolean
         If l Is Nothing Then
             Return False
-        Else
-            l.wait()
-            Return True
         End If
+        l.wait()
+        Return True
     End Function
 
     Private Function _waitfor(ByVal i As ref(Of singleentry)) As Boolean
         If i Is Nothing Then
             Return False
-        Else
-            Return _waitfor(AddressOf i.in_use)
         End If
+        Return _waitfor(AddressOf i.in_use)
     End Function
 
     Private Function _waitfor(ByVal i As ref(Of singleentry), ByVal timeout_ms As Int64) As Boolean
         If i Is Nothing Then
             Return False
-        Else
-            Return _waitfor(AddressOf i.in_use, timeout_ms)
         End If
+        Return _waitfor(AddressOf i.in_use, timeout_ms)
     End Function
 
     Private Function _waitfor(Of T)(ByVal l As multilock(Of event_comb_lock), ByVal i As T) As Boolean
         If l Is Nothing Then
             Return False
-        Else
-            l.lock(i)
-            Return True
         End If
+        l.lock(i)
+        Return True
     End Function
 
     Private Function _waitfor_nap() As Boolean
@@ -308,31 +294,31 @@ Partial Public Class event_comb
     Private Function _waitfor(ByVal i As attachable_event) As Boolean
         If i Is Nothing Then
             Return False
-        ElseIf i.marked() Then
-            Return True
-        Else
-            Return assert(i.attach(_wait()))
         End If
+        If i.marked() Then
+            Return True
+        End If
+        Return assert(i.attach(_wait()))
     End Function
 
     Private Function _waitfor(ByVal i As attachable_event, ByVal timeout_ms As Int64) As Boolean
         If i Is Nothing Then
             Return False
-        ElseIf i.marked() Then
-            Return True
-        Else
-            Dim e As pointer(Of stopwatch.event) = Nothing
-            e = New pointer(Of stopwatch.event)()
-            Dim cb As Action = Nothing
-            cb = _multiple_resume_wait()
-            e.set(stopwatch.push(timeout_ms, cb.as_weak_action()))
-            assert(Not e.empty())
-            assert(i.attach(Sub()
-                                cb()
-                                assert(Not e.empty())
-                                e.get().cancel()
-                            End Sub))
+        End If
+        If i.marked() Then
             Return True
         End If
+        Dim e As pointer(Of stopwatch.event) = Nothing
+        e = New pointer(Of stopwatch.event)()
+        Dim cb As Action = Nothing
+        cb = _multiple_resume_wait()
+        e.set(stopwatch.push(timeout_ms, cb))
+        assert(Not e.empty())
+        assert(i.attach(Sub()
+                            cb()
+                            assert(Not e.empty())
+                            e.get().cancel()
+                        End Sub))
+        Return True
     End Function
 End Class
