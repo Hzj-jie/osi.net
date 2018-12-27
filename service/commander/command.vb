@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utils
 
-' TODO: Remove. Basic types and collections should be able to be used directly with herald.
+' TODO: Remove. Basic types and collections should be able to be used directly with dev_T.
 Partial Public Class command
     Private ReadOnly a As array_pointer(Of Byte)
     Private ReadOnly ps As map(Of array_pointer(Of Byte), Byte())
@@ -75,30 +75,27 @@ Partial Public Class command
     Public Function foreach(ByVal v As Action(Of Byte(), Byte())) As Boolean
         If v Is Nothing Then
             Return False
-        Else
-            Dim it As map(Of array_pointer(Of Byte), Byte()).iterator = Nothing
-            it = ps.begin()
-            While it <> ps.end()
-                v(+((+it).first), (+it).second)
-                it += 1
-            End While
-            Return True
         End If
+        Dim it As map(Of array_pointer(Of Byte), Byte()).iterator = Nothing
+        it = ps.begin()
+        While it <> ps.end()
+            v(+((+it).first), (+it).second)
+            it += 1
+        End While
+        Return True
     End Function
 
     Public Function parameter(ByVal key() As Byte, ByRef v() As Byte) As Boolean
         If isemptyarray(key) Then
             Return False
-        Else
-            Dim it As map(Of array_pointer(Of Byte), Byte()).iterator = Nothing
-            it = ps.find(make_array_pointer(key))
-            If it = ps.end() Then
-                Return False
-            Else
-                v = (+it).second
-                Return True
-            End If
         End If
+        Dim it As map(Of array_pointer(Of Byte), Byte()).iterator = Nothing
+        it = ps.find(make_array_pointer(key))
+        If it = ps.end() Then
+            Return False
+        End If
+        v = (+it).second
+        Return True
     End Function
 
     Public Function parameter(Of KT)(ByVal k As KT,
@@ -112,9 +109,8 @@ Partial Public Class command
         Dim value() As Byte = Nothing
         If parameter(k, value, KT_bytes) Then
             Return value
-        Else
-            Return Nothing
         End If
+        Return Nothing
     End Function
 
     Public Function parameter(Of VT)(ByVal key() As Byte,
@@ -140,9 +136,8 @@ Partial Public Class command
         Dim v As VT = Nothing
         If parameter(k, v, KT_bytes, bytes_VT) Then
             Return v
-        Else
-            Return Nothing
         End If
+        Return Nothing
     End Function
 
     Public Function parameter(ByVal key() As Byte, ByVal r As pointer(Of Byte())) As Boolean
@@ -189,9 +184,8 @@ Partial Public Class command
         Dim v() As Byte = Nothing
         If parameter(key, v) Then
             Return v
-        Else
-            Return Nothing
         End If
+        Return Nothing
     End Function
 
     'for bytes / uri

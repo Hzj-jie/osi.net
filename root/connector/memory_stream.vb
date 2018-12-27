@@ -6,7 +6,6 @@ Option Strict On
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
-Imports osi.root.delegates
 
 Public Module _memory_stream
     <Extension()> Public Sub assert_valid(ByVal this As MemoryStream)
@@ -129,13 +128,12 @@ Public NotInheritable Class memory_stream
            count < 0 OrElse
            array_size(i) < offset + count Then
             Return False
-        Else
-            ' The constructor of MemoryStream sets only _position but not Position(). So create a MemoryStream and
-            ' manually set Position.
-            o = New MemoryStream(i, 0, array_size_i(i), True, True)
-            o.Position() = offset
-            Return True
         End If
+        ' The constructor of MemoryStream sets only _position but not Position(). So create a MemoryStream and
+        ' manually set Position.
+        o = New MemoryStream(i, 0, offset + count, True, True)
+        o.Position() = offset
+        Return True
     End Function
 
     Public Shared Function create(ByVal i() As Byte,

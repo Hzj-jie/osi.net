@@ -106,10 +106,16 @@ Partial Public Class istrkeyvt_questioner
     End Function
 
     Public Function list(ByVal result As pointer(Of vector(Of String))) As event_comb Implements istrkeyvt.list
+        ' Special handle for list, it should always return a valid vector.
         Return q(request(action.istrkeyvt_list),
                  Function(c As command) As Boolean
-                     Return Not c Is Nothing AndAlso
-                            c.parameter(Of parameter, vector(Of String))(parameter.keys, result)
+                     If c Is Nothing Then
+                         Return False
+                     End If
+                     If c.has_parameter(Of parameter)(parameter.keys) Then
+                         Return c.parameter(Of parameter, vector(Of String))(parameter.keys, result)
+                     End If
+                     Return eva(result, New vector(Of String)())
                  End Function)
     End Function
 
