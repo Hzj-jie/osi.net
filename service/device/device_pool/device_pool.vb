@@ -1,4 +1,6 @@
 ﻿
+' TODO: Move to service.devicepool
+
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.lock

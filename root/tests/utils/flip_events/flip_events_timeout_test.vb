@@ -27,7 +27,7 @@ Public NotInheritable Class flip_events_timeout_test
         assert_true(lazy_sleep_wait_until(Function() As Boolean
                                               Return to_low = uint32_1
                                           End Function,
-                                          100))
+                                          1000))
     End Sub
 
     Private Sub New()

@@ -53,11 +53,24 @@ Public Class pipe_test2
 
         Private Function sync_push() As event_comb
             Return sync_async(Sub()
-                                  p.sync_push(rnd_int())
+                                  assert_true(p.sync_push(rnd_int()))
                               End Sub)
         End Function
 
         Private Function pop() As event_comb
+#If 0 Then
+            Dim ec As event_comb = Nothing
+            Return New event_comb(Function() As Boolean
+                                      ec = p.pop(Nothing).suppress_error()
+                                      Return waitfor(ec) AndAlso
+                                             goto_next()
+                                  End Function,
+                                  Function() As Boolean
+                                      assert_true(ec.end_result())
+                                      Return ec.end_result() AndAlso
+                                             goto_end()
+                                  End Function)
+#End If
             Return p.pop(Nothing).suppress_error()
         End Function
 
