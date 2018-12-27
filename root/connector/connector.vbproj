@@ -119,6 +119,7 @@
     <Compile Include="time\tick_clock.vb" />
     <Compile Include="time\tick_clock.implementations.vb" />
     <Compile Include="typed_once_action.vb" />
+    <Compile Include="type\enum_type_info.vb" />
     <Compile Include="type\type.finalizer.vb" />
     <Compile Include="type\type.is.vb" />
     <Compile Include="type\type.new.vb" />

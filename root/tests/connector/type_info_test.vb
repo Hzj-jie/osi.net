@@ -74,4 +74,20 @@ Public NotInheritable Class type_info_test
         assert_equal(info.GetParameters()(2).RawDefaultValue(), direct_cast(Of Object)("abc"))
         assert_equal(info.GetParameters()(3).RawDefaultValue(), direct_cast(Of Object)(Nothing))
     End Sub
+
+    Private Enum e1 As Int32
+        a
+    End Enum
+
+    Private Enum e2 As SByte
+        a
+    End Enum
+
+    <test>
+    Private Shared Sub enum_case()
+        assert_true(type_info(Of e1).is_enum)
+        assert_false(type_info(Of Integer).is_enum)
+        assert_true(enum_type_info(Of e1).underlying_type Is GetType(Int32))
+        assert_true(enum_type_info(Of e2).underlying_type Is GetType(SByte))
+    End Sub
 End Class
