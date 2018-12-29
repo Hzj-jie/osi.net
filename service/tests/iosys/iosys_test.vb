@@ -119,6 +119,10 @@ Public Class iosys_test
         Me.interval_ms = interval_ms
     End Sub
 
+    Public Overrides Function reserved_processors() As Int16
+        Return 2
+    End Function
+
     Protected Overridable Function create_iosys(ByRef first As iosys(Of iosys_test_case),
                                                 ByRef last As iosys(Of iosys_test_case)) As Boolean
         first = New iosys(Of iosys_test_case)(flower_size)
