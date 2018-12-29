@@ -1,10 +1,14 @@
 ﻿
-Imports osi.root.template
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utils
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
+Imports osi.root.template
+Imports osi.root.utils
 Imports osi.service.transmitter
 
 Public Class pipe(Of T)

@@ -1,8 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports osi.root.connector
-Imports osi.root.utils
 Imports osi.service.transmitter
 
 Public Class pipe_dev(Of T)

@@ -1,11 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.service.commander
-Imports osi.service.commander.constants
-Imports osi.service.convertor
-Imports osi.service.iosys.constants
 
 'the design cannot work with one connection
 Public Class rreceiver(Of CASE_T)

@@ -7,10 +7,10 @@ Imports System.Net
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.utt
-Imports osi.service.http
 Imports osi.service.commander
-Imports osi.service.iosys
 Imports osi.service.device
+Imports osi.service.http
+Imports osi.service.iosys
 Imports http = osi.service.http
 
 Public Class remote_iosys_test

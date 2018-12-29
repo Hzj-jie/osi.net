@@ -75,7 +75,7 @@ Public Class iosys_test
             assert_true(async_sync(New event_comb(Function() As Boolean
                                                       Return waitfor(Function() q.size() < flower_size,
                                                                      minutes_to_milliseconds(1)) AndAlso
-                                                              goto_next()
+                                                             goto_next()
                                                   End Function,
                                                   Function() As Boolean
                                                       assert_less_or_equal(q.size(), flower_size)
@@ -118,10 +118,6 @@ Public Class iosys_test
         Me.round = round * If(isdebugbuild(), 1, 4)
         Me.interval_ms = interval_ms
     End Sub
-
-    Public Overrides Function reserved_processors() As Int16
-        Return 2
-    End Function
 
     Protected Overridable Function create_iosys(ByRef first As iosys(Of iosys_test_case),
                                                 ByRef last As iosys(Of iosys_test_case)) As Boolean
