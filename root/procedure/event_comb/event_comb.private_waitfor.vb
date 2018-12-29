@@ -16,21 +16,20 @@ Partial Public Class event_comb
     Private Function _waitfor(ByVal ec As event_comb, ByVal begin As Func(Of Boolean)) As Boolean
         assert(Not begin Is Nothing)
         assert_in_lock()
-        If Not ec Is Nothing AndAlso
-           object_compare(Me, ec) <> 0 Then
-            Return ec.reenterable_locked(Function() As Boolean
-                                             If ec.not_started() AndAlso
-                                                ec.cb Is Nothing Then
-                                                 inc_pends()
-                                                 ec.cb = Me
-                                                 Return begin()
-                                             Else
-                                                 Return False
-                                             End If
-                                         End Function)
-        Else
+        If ec Is Nothing OrElse
+           object_compare(Me, ec) = 0 Then
             Return False
         End If
+        Return ec.reenterable_locked(Function() As Boolean
+                                         If ec.not_started() AndAlso
+                                                ec.cb Is Nothing Then
+                                             inc_pends()
+                                             ec.cb = Me
+                                             Return begin()
+                                         Else
+                                             Return False
+                                         End If
+                                     End Function)
     End Function
 
     Private Function _waitfor(ByVal ec As event_comb, ByVal timeout_ms As Int64) As Boolean
@@ -201,7 +200,7 @@ Partial Public Class event_comb
 
     Private Function _waitfor(Of T)(ByVal d As Func(Of T), ByVal r As pointer(Of T)) As Boolean
         Dim v As Action = Nothing
-        If Not _do_void(d, r, v) Then
+        If _do_void(d, r, v) Then
             Return _waitfor(v)
         End If
         Return False
@@ -211,10 +210,10 @@ Partial Public Class event_comb
                                     ByVal r As pointer(Of T),
                                     ByVal timeout_ms As Int64) As Boolean
         Dim v As Action = Nothing
-        If Not _do_void(d, r, v) Then
-            Return False
+        If _do_void(d, r, v) Then
+            Return _waitfor(v, timeout_ms)
         End If
-        Return _waitfor(v, timeout_ms)
+        Return False
     End Function
 
     Private Function _waitfor(ByVal e As WaitHandle, ByVal timeout_ms As Int64) As Boolean
