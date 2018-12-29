@@ -30,6 +30,7 @@ Public NotInheritable Class comparable_type
 
     Private Shared Function use_recursive_compare() As Boolean
 #If recursive_compare Then
+        ' mono does not support Type.GUID, it always returns an identical GUID.
         Return Not envs.mono
 #Else
         Return False
@@ -51,39 +52,38 @@ Public NotInheritable Class comparable_type
     Public Shared Function compare_type(ByVal i As Type, ByVal j As Type) As Int32
         Dim r As Int32 = 0
         r = object_compare(i, j)
-        If r = object_compare_undetermined Then
-            If use_recursive_compare() Then
-                r = cmp(i, j)
-                If r = 0 Then
-                    Dim gl() As Type = Nothing
-                    Dim gr() As Type = Nothing
-                    gl = i.GetGenericArguments()
-                    gr = j.GetGenericArguments()
-                    assert(array_size(gl) = array_size(gr))
-                    For k As Int32 = 0 To array_size_i(gl) - 1
-                        r = compare_type(gl(k), gr(k))
-                        If r <> 0 Then
-                            Return r
-                        End If
-                    Next
-                    Return 0
-                Else
-                    Return r
-                End If
-            Else
-                Return cmp(i, j)
-            End If
-        Else
+        If r <> object_compare_undetermined Then
             Return r
         End If
+
+        If Not use_recursive_compare() Then
+            Return cmp(i, j)
+        End If
+
+        ' recursive_compare
+        r = cmp(i, j)
+        If r <> 0 Then
+            Return r
+        End If
+        Dim gl() As Type = Nothing
+        Dim gr() As Type = Nothing
+        gl = i.GetGenericArguments()
+        gr = j.GetGenericArguments()
+        assert(array_size(gl) = array_size(gr))
+        For k As Int32 = 0 To array_size_i(gl) - 1
+            r = compare_type(gl(k), gr(k))
+            If r <> 0 Then
+                Return r
+            End If
+        Next
+        Return 0
     End Function
 
     Public Shared Operator +(ByVal this As comparable_type) As Type
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return this.t
         End If
+        Return this.t
     End Operator
 
     Public Shared Widening Operator CType(ByVal this As comparable_type) As Type
@@ -103,9 +103,8 @@ Public NotInheritable Class comparable_type
         Dim a As comparable_type = Nothing
         If cast(Of comparable_type)(obj, a) Then
             Return CompareTo(a)
-        Else
-            Return CompareTo(cast(Of Type)(obj, False))
         End If
+        Return CompareTo(cast(Of Type)(obj, False))
     End Function
 
     Public Function CompareTo(ByVal other As Type) As Int32 Implements IComparable(Of Type).CompareTo
@@ -131,10 +130,9 @@ Public NotInheritable Class comparable_type
 
     Public Overrides Function Equals(ByVal obj As Object) As Boolean
         Dim a As comparable_type = Nothing
-        If cast(Of comparable_type)(obj, a) Then
+        If cast(obj, a) Then
             Return Equals(a)
-        Else
-            Return Equals(cast(Of Type)(obj, False))
         End If
+        Return Equals(cast(Of Type)(obj, False))
     End Function
 End Class
