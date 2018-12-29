@@ -106,7 +106,6 @@
     <Compile Include="priority_activity_test.vb" />
     <Compile Include="stopwatch_test.vb" />
     <Compile Include="strsplit_test.vb" />
-    <Compile Include="type_string_serializer_test.vb" />
     <Compile Include="invoker\valuer_create_recursively_test.vb" />
     <Compile Include="invoker\valuer_perf_test.vb" />
     <Compile Include="invoker\valuer_test.vb" />

@@ -31,20 +31,38 @@ Partial Public Class bytes_serializer(Of T)
 
     Private NotInheritable Class default_functor
         Public NotInheritable Class register
+            Private NotInheritable Class object_register
+                Shared Sub New()
+                    type_resolver(Of bytes_serializer(Of Object)).default.assert_first_register(
+                        GetType(T),
+                        New bytes_serializer_object(Of T)([default]))
+                End Sub
+
+                Public Shared Sub init()
+                End Sub
+
+                Private Sub New()
+                End Sub
+            End Class
+
             Public Shared Sub append_to(ByVal f As Func(Of T, MemoryStream, Boolean))
                 global_resolver(Of Func(Of T, MemoryStream, Boolean), consume_append).assert_first_register(f)
+                object_register.init()
             End Sub
 
             Public Shared Sub write_to(ByVal f As Func(Of T, MemoryStream, Boolean))
                 global_resolver(Of Func(Of T, MemoryStream, Boolean), read_write).assert_first_register(f)
+                object_register.init()
             End Sub
 
             Public Shared Sub consume_from(ByVal f As _do_val_ref(Of MemoryStream, T, Boolean))
                 global_resolver(Of _do_val_ref(Of MemoryStream, T, Boolean), consume_append).assert_first_register(f)
+                object_register.init()
             End Sub
 
             Public Shared Sub read_from(ByVal f As _do_val_ref(Of MemoryStream, T, Boolean))
                 global_resolver(Of _do_val_ref(Of MemoryStream, T, Boolean), read_write).assert_first_register(f)
+                object_register.init()
             End Sub
 
             Private Sub New()
@@ -72,10 +90,10 @@ Partial Public Class bytes_serializer(Of T)
             Return global_resolver(Of _do_val_ref(Of MemoryStream, T, Boolean), read_write).resolve_or_null()
         End Function
 
-        Private Interface consume_append
+        Public Interface consume_append
         End Interface
 
-        Private Interface read_write
+        Public Interface read_write
         End Interface
 
         Private Sub New()

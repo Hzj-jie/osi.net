@@ -171,7 +171,6 @@
     <Compile Include="timing_counter\processor_ms_timing_counter.vb" />
     <Compile Include="timing_counter\processor_ticks_timing_counter.vb" />
     <Compile Include="timing_counter\timing_counter.vb" />
-    <Compile Include="type_functor\type_string_serializer.vb" />
     <Compile Include="weak_ref_delegate.vb" />
   </ItemGroup>
   <ItemGroup>

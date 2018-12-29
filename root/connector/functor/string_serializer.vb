@@ -20,49 +20,38 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
         Return type_info(Of T, type_info_operators.equal, String).v
     End Function
 
-    Private Shared Sub register_to_str(Of P)()
-        type_resolver(Of Func(Of Object, StringWriter, Boolean), P).register(
-            GetType(T),
-            Function(ByVal i As Object, ByVal o As StringWriter) As Boolean
-                Return string_serializer.to_str(direct_cast(Of T)(i), o)
-            End Function)
-    End Sub
+    Private NotInheritable Class object_register(Of P)
+        Shared Sub New()
+            type_resolver(Of string_serializer(Of Object), P).assert_first_register(
+                GetType(T),
+                New string_serializer_object(Of T, PROTECTOR)([default]))
+        End Sub
 
-    Private Shared Sub register_from_str(Of P)()
-        type_resolver(Of _do_val_ref(Of StringReader, Object, Boolean), P).register(
-            GetType(T),
-            Function(ByVal i As StringReader, ByRef o As Object) As Boolean
-                Dim r As T = Nothing
-                If Not string_serializer.from_str(i, r) Then
-                    Return False
-                End If
-                o = r
-                Return True
-            End Function)
+        Public Shared Sub init()
+        End Sub
+
+        Private Sub New()
+        End Sub
+    End Class
+
+    Private Shared Sub register_object()
+        If string_serializer.protector(Of PROTECTOR).is_global Then
+            object_register(Of string_serializer).init()
+        ElseIf string_serializer.protector(Of PROTECTOR).is_json Then
+            object_register(Of json_serializer).init()
+        ElseIf string_serializer.protector(Of PROTECTOR).is_uri Then
+            object_register(Of uri_serializer).init()
+        End If
     End Sub
 
     Public Shared Sub register(ByVal to_str As Action(Of T, StringWriter))
         global_resolver(Of Action(Of T, StringWriter), PROTECTOR).assert_first_register(to_str)
-        assert(Not to_str Is Nothing)
-        If string_serializer.protector(Of PROTECTOR).is_global Then
-            register_to_str(Of string_serializer)()
-        ElseIf string_serializer.protector(Of PROTECTOR).is_json Then
-            register_to_str(Of json_serializer)()
-        ElseIf string_serializer.protector(Of PROTECTOR).is_uri Then
-            register_to_str(Of uri_serializer)()
-        End If
+        register_object()
     End Sub
 
     Public Shared Sub register(ByVal from_str As _do_val_ref(Of StringReader, T, Boolean))
         global_resolver(Of _do_val_ref(Of StringReader, T, Boolean), PROTECTOR).assert_first_register(from_str)
-        assert(Not from_str Is Nothing)
-        If string_serializer.protector(Of PROTECTOR).is_global Then
-            register_from_str(Of string_serializer)()
-        ElseIf string_serializer.protector(Of PROTECTOR).is_json Then
-            register_from_str(Of json_serializer)()
-        ElseIf string_serializer.protector(Of PROTECTOR).is_uri Then
-            register_from_str(Of uri_serializer)()
-        End If
+        register_object()
     End Sub
 
     Protected Overridable Function to_str() As Action(Of T, StringWriter)
@@ -161,50 +150,6 @@ Partial Public NotInheritable Class string_serializer
         Private Sub New()
         End Sub
     End Class
-
-    Public Shared Sub register(Of T)(ByVal to_str As Action(Of T, StringWriter))
-        string_serializer(Of T).register(to_str)
-    End Sub
-
-    Public Shared Sub register(Of T)(ByVal from_str As _do_val_ref(Of StringReader, T, Boolean))
-        string_serializer(Of T).register(from_str)
-    End Sub
-
-    Public Shared Function from_str(Of T)(ByVal i As StringReader, ByRef o As T) As Boolean
-        Return string_serializer(Of T).default.from_str(i, o)
-    End Function
-
-    Public Shared Function from_str(Of T)(ByVal i As String, ByRef o As T) As Boolean
-        Return string_serializer(Of T).default.from_str(i, o)
-    End Function
-
-    Public Shared Function from_str(Of T)(ByVal i As String) As T
-        Return string_serializer(Of T).default.from_str(i)
-    End Function
-
-    Public Shared Function from_str_or_default(Of T)(ByVal i As String, ByVal [default] As T) As T
-        Return string_serializer(Of T).default.from_str_or_default(i, [default])
-    End Function
-
-    Public Shared Function to_str(Of T)(ByVal i As T, ByVal o As StringWriter) As Boolean
-        Return string_serializer(Of T).default.to_str(i, o)
-    End Function
-
-    Public Shared Function to_str(Of T)(ByVal i As T, ByRef o As String) As Boolean
-        Return string_serializer(Of T).default.to_str(i, o)
-    End Function
-
-    Public Shared Function to_str(Of T)(ByVal i As T) As String
-        Return string_serializer(Of T).default.to_str(i)
-    End Function
-
-    Public Shared Function to_str_or_default(Of T)(ByVal i As T, ByVal [default] As String) As String
-        Return string_serializer(Of T).default.to_str_or_default(i, [default])
-    End Function
-
-    Public Shared Function to_str_or_null(Of T)(ByVal i As T) As String
-        Return string_serializer(Of T).default.to_str_or_null(i)
-    End Function
 
     Private Sub New()
     End Sub

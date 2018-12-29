@@ -3,7 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.utils
+Imports osi.root.connector
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 

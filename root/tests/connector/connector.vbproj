@@ -219,6 +219,7 @@
     <Compile Include="time_test.vb" />
     <Compile Include="type_name_perf.vb" />
     <Compile Include="type_resolver_test.vb" />
+    <Compile Include="type_functor\type_string_serializer_test.vb" />
     <Compile Include="type_test.vb" />
     <Compile Include="uint32_perf_test.vb" />
     <Compile Include="unchecked_int_test.vb" />

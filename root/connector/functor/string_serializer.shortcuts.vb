@@ -8,32 +8,6 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 Imports osi.root.delegates
 
-Partial Public NotInheritable Class string_serializer
-    Public Shared Function forward_to_str(Of T)(ByVal i As T,
-                                                ByRef o As String,
-                                                ByVal v As Func(Of T, StringWriter, Boolean)) As Boolean
-        assert(Not v Is Nothing)
-        Using sw As StringWriter = New StringWriter()
-            If Not v(i, sw) Then
-                Return False
-            End If
-            o = Convert.ToString(sw)
-            Return True
-        End Using
-    End Function
-
-    Public Shared Function forward_from_str(Of T)(ByVal i As String,
-                                                  ByRef o As T,
-                                                  ByVal v As _do_val_ref(Of StringReader, T, Boolean)) As Boolean
-        If i Is Nothing Then
-            Return False
-        End If
-        Using sr As StringReader = New StringReader(i)
-            Return v(sr, o) AndAlso sr.Peek() = npos
-        End Using
-    End Function
-End Class
-
 Partial Public Class string_serializer(Of T, PROTECTOR)
     Public Shared Sub register(ByVal to_str As Action(Of T, StringWriter),
                                ByVal from_str As _do_val_ref(Of StringReader, T, Boolean))
@@ -42,7 +16,13 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
     End Sub
 
     Public Function to_str(ByVal i As T, ByRef o As String) As Boolean
-        Return string_serializer.forward_to_str(i, o, AddressOf to_str)
+        Using sw As StringWriter = New StringWriter()
+            If Not to_str(i, sw) Then
+                Return False
+            End If
+            o = Convert.ToString(sw)
+            Return True
+        End Using
     End Function
 
     Public Function to_str(ByVal i As T) As String
@@ -64,7 +44,12 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
     End Function
 
     Public Function from_str(ByVal i As String, ByRef o As T) As Boolean
-        Return string_serializer.forward_from_str(i, o, AddressOf from_str)
+        If i Is Nothing Then
+            Return False
+        End If
+        Using sr As StringReader = New StringReader(i)
+            Return from_str(sr, o) AndAlso sr.Peek() = npos
+        End Using
     End Function
 
     Public Function from_str(ByVal i As String) As T

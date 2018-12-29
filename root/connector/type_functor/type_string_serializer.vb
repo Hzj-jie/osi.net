@@ -4,42 +4,42 @@ Option Infer Off
 Option Strict On
 
 Imports System.IO
-Imports osi.root.connector
-Imports osi.root.delegates
 
 Public NotInheritable Class type_string_serializer
-    Private Shared ReadOnly to_strs As type_resolver(Of Func(Of Object, StringWriter, Boolean))
-    Private Shared ReadOnly from_strs As type_resolver(Of _do_val_ref(Of StringReader, Object, Boolean))
+    Private Shared ReadOnly ss As type_resolver(Of string_serializer(Of Object))
 
     Shared Sub New()
-        to_strs = type_resolver(Of Func(Of Object, StringWriter, Boolean), string_serializer).r
-        from_strs = type_resolver(Of _do_val_ref(Of StringReader, Object, Boolean), string_serializer).r
+        ss = type_resolver(Of string_serializer(Of Object), string_serializer).r
     End Sub
+
+    Public Shared Function serializer(ByVal type As Type, ByRef o As string_serializer(Of Object)) As Boolean
+        Return ss.from_type(type, o)
+    End Function
 
     Public Shared Function to_str(ByVal type As Type,
                                   ByRef implemented As Boolean,
                                   ByVal i As Object,
                                   ByVal o As StringWriter) As Boolean
-        Dim a As Func(Of Object, StringWriter, Boolean) = Nothing
-        implemented = to_strs.from_type(type, a)
+        Dim s As string_serializer(Of Object) = Nothing
+        implemented = ss.from_type(type, s)
         If Not implemented Then
             Return False
         End If
-        assert(Not a Is Nothing)
-        Return a(i, o)
+        assert(Not s Is Nothing)
+        Return s.to_str(i, o)
     End Function
 
     Public Shared Function to_str(ByVal type As Type,
                                   ByRef implemented As Boolean,
                                   ByVal i As Object,
                                   ByRef o As String) As Boolean
-        Dim a As Func(Of Object, StringWriter, Boolean) = Nothing
-        implemented = to_strs.from_type(type, a)
+        Dim s As string_serializer(Of Object) = Nothing
+        implemented = ss.from_type(type, s)
         If Not implemented Then
             Return False
         End If
-        assert(Not a Is Nothing)
-        Return string_serializer.forward_to_str(i, o, a)
+        assert(Not s Is Nothing)
+        Return s.to_str(i, o)
     End Function
 
     Public Shared Function to_str(ByVal type As Type, ByVal i As Object, ByVal o As StringWriter) As Boolean
@@ -80,28 +80,28 @@ Public NotInheritable Class type_string_serializer
 
     Public Shared Function from_str(ByVal type As Type,
                                     ByRef implemented As Boolean,
-                                    ByVal s As StringReader,
+                                    ByVal str As StringReader,
                                     ByRef o As Object) As Boolean
-        Dim a As _do_val_ref(Of StringReader, Object, Boolean) = Nothing
-        implemented = from_strs.from_type(type, a)
+        Dim s As string_serializer(Of Object) = Nothing
+        implemented = ss.from_type(type, s)
         If Not implemented Then
             Return False
         End If
-        assert(Not a Is Nothing)
-        Return a(s, o)
+        assert(Not s Is Nothing)
+        Return s.from_str(str, o)
     End Function
 
     Public Shared Function from_str(ByVal type As Type,
                                     ByRef implemented As Boolean,
-                                    ByVal s As String,
+                                    ByVal str As String,
                                     ByRef o As Object) As Boolean
-        Dim a As _do_val_ref(Of StringReader, Object, Boolean) = Nothing
-        implemented = from_strs.from_type(type, a)
+        Dim s As string_serializer(Of Object) = Nothing
+        implemented = ss.from_type(type, s)
         If Not implemented Then
             Return False
         End If
-        assert(Not a Is Nothing)
-        Return string_serializer.forward_from_str(s, o, a)
+        assert(Not s Is Nothing)
+        Return s.from_str(str, o)
     End Function
 
     Public Shared Function from_str(ByVal type As Type, ByVal s As StringReader, ByRef o As Object) As Boolean
@@ -139,9 +139,6 @@ Public NotInheritable Class type_string_serializer
     Public Shared Function from_str_or_null(ByVal type As Type, ByVal s As String) As Object
         Return from_str_or_default(type, s, Nothing)
     End Function
-
-    Private Shared Sub init()
-    End Sub
 
     Private Sub New()
     End Sub
