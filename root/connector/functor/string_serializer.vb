@@ -20,29 +20,49 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
         Return type_info(Of T, type_info_operators.equal, String).v
     End Function
 
+    Private Shared Sub register_to_str(Of P)()
+        type_resolver(Of Func(Of Object, StringWriter, Boolean), P).register(
+            GetType(T),
+            Function(ByVal i As Object, ByVal o As StringWriter) As Boolean
+                Return string_serializer.to_str(direct_cast(Of T)(i), o)
+            End Function)
+    End Sub
+
+    Private Shared Sub register_from_str(Of P)()
+        type_resolver(Of _do_val_ref(Of StringReader, Object, Boolean), P).register(
+            GetType(T),
+            Function(ByVal i As StringReader, ByRef o As Object) As Boolean
+                Dim r As T = Nothing
+                If Not string_serializer.from_str(i, r) Then
+                    Return False
+                End If
+                o = r
+                Return True
+            End Function)
+    End Sub
+
     Public Shared Sub register(ByVal to_str As Action(Of T, StringWriter))
         global_resolver(Of Action(Of T, StringWriter), PROTECTOR).assert_first_register(to_str)
         assert(Not to_str Is Nothing)
-        string_serializer.raise_to_str_registered(GetType(T),
-                                                  GetType(PROTECTOR),
-                                                  Function(ByVal i As Object, ByVal o As StringWriter) As Boolean
-                                                      Return [default].to_str(direct_cast(Of T)(i), o)
-                                                  End Function)
+        If string_serializer.protector(Of PROTECTOR).is_global Then
+            register_to_str(Of string_serializer)()
+        ElseIf string_serializer.protector(Of PROTECTOR).is_json Then
+            register_to_str(Of json_serializer)()
+        ElseIf string_serializer.protector(Of PROTECTOR).is_uri Then
+            register_to_str(Of uri_serializer)()
+        End If
     End Sub
 
     Public Shared Sub register(ByVal from_str As _do_val_ref(Of StringReader, T, Boolean))
         global_resolver(Of _do_val_ref(Of StringReader, T, Boolean), PROTECTOR).assert_first_register(from_str)
         assert(Not from_str Is Nothing)
-        string_serializer.raise_from_str_registered(GetType(T),
-                                                    GetType(PROTECTOR),
-                                                    Function(ByVal i As StringReader, ByRef o As Object) As Boolean
-                                                        Dim r As T = Nothing
-                                                        If Not [default].from_str(i, r) Then
-                                                            Return False
-                                                        End If
-                                                        o = r
-                                                        Return True
-                                                    End Function)
+        If string_serializer.protector(Of PROTECTOR).is_global Then
+            register_from_str(Of string_serializer)()
+        ElseIf string_serializer.protector(Of PROTECTOR).is_json Then
+            register_from_str(Of json_serializer)()
+        ElseIf string_serializer.protector(Of PROTECTOR).is_uri Then
+            register_from_str(Of uri_serializer)()
+        End If
     End Sub
 
     Protected Overridable Function to_str() As Action(Of T, StringWriter)
@@ -127,29 +147,20 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
 End Class
 
 Partial Public NotInheritable Class string_serializer
-    Public Shared Event to_str_registered(ByVal type As Type,
-                                          ByVal protector As Type,
-                                          ByVal to_str As Func(Of Object, StringWriter, Boolean))
+    Public NotInheritable Class protector(Of T)
+        Public Shared ReadOnly is_global As Boolean
+        Public Shared ReadOnly is_json As Boolean
+        Public Shared ReadOnly is_uri As Boolean
 
-    Public Shared Event from_str_registered(ByVal type As Type,
-                                            ByVal protector As Type,
-                                            ByVal from_str As _do_val_ref(Of StringReader, Object, Boolean))
+        Shared Sub New()
+            is_global = GetType(T).generic_type_is(GetType(string_serializer(Of )))
+            is_json = GetType(T).generic_type_is(GetType(json_serializer(Of )))
+            is_uri = GetType(T).generic_type_is(GetType(uri_serializer(Of )))
+        End Sub
 
-    Public Shared Sub raise_to_str_registered(ByVal type As Type,
-                                              ByVal protector As Type,
-                                              ByVal to_str As Func(Of Object, StringWriter, Boolean))
-        RaiseEvent to_str_registered(type, protector, to_str)
-    End Sub
-
-    Public Shared Sub raise_from_str_registered(ByVal type As Type,
-                                                ByVal protector As Type,
-                                                ByVal from_str As _do_val_ref(Of StringReader, Object, Boolean))
-        RaiseEvent from_str_registered(type, protector, from_str)
-    End Sub
-
-    Public Shared Function is_global_protector(ByVal protector As Type) As Boolean
-        Return protector.generic_type_is(GetType(string_serializer(Of )))
-    End Function
+        Private Sub New()
+        End Sub
+    End Class
 
     Public Shared Sub register(Of T)(ByVal to_str As Action(Of T, StringWriter))
         string_serializer(Of T).register(to_str)

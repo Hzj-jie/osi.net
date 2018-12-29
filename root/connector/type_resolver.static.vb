@@ -4,7 +4,7 @@ Option Infer Off
 Option Strict On
 
 Public NotInheritable Class type_resolver(Of T, PROTECTOR)
-    Private Shared ReadOnly r As type_resolver(Of T)
+    Public Shared ReadOnly r As type_resolver(Of T)
 
     Shared Sub New()
         r = New type_resolver(Of T)()

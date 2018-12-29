@@ -3,65 +3,41 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.connector
-Imports osi.root.constants
-Imports osi.root.formation
-Imports lock_t = osi.root.lock.slimlock.monitorlock
+Imports System.Collections.Concurrent
+Imports System.Collections.Generic
 
-Partial Public NotInheritable Class type_resolver(Of T)
-    Private ReadOnly s As storage
-    Private l As lock_t
+Public NotInheritable Class type_resolver(Of T)
+    Private ReadOnly d As ConcurrentDictionary(Of Type, T)
 
     Public Sub New()
-        s = New storage()
+        d = New ConcurrentDictionary(Of Type, T)()
     End Sub
 
     Public Function registered(ByVal type As Type) As Boolean
-        l.wait()
-        Try
-            Return s.has(type)
-        Finally
-            l.release()
-        End Try
-        l.release()
+        Return d.ContainsKey(type)
     End Function
 
     Public Sub register(ByVal type As Type, ByVal i As T)
-        l.wait()
-        s.erase(type)
-        s.[set](type, i)
-        l.release()
+        d(type) = i
     End Sub
 
     Public Sub assert_first_register(ByVal type As Type, ByVal i As T)
-        l.wait()
-        s.[set](type, i)
-        l.release()
+        assert(d.TryAdd(type, i))
     End Sub
 
     Public Sub unregister(ByVal type As Type)
-        l.wait()
-        s.erase(type)
-        l.release()
+        d.TryRemove(type, Nothing)
     End Sub
 
     Public Sub assert_unregister(ByVal type As Type)
-        l.wait()
-        assert(s.erase(type))
-        l.release()
+        assert(d.TryRemove(type, Nothing))
     End Sub
 
     Public Function from_type(ByVal type As Type, ByRef o As T) As Boolean
         If type Is Nothing Then
             Return False
         End If
-
-        l.wait()
-        Try
-            Return s.get(type, o)
-        Finally
-            l.release()
-        End Try
+        Return d.TryGetValue(type, o)
     End Function
 
     Public Function from_type(ByVal type As Type) As T
@@ -70,36 +46,24 @@ Partial Public NotInheritable Class type_resolver(Of T)
         Return o
     End Function
 
-    Private Function from_types(ByVal types As vector(Of Type), ByRef o As T) As Boolean
+    Public Function from_types(ByVal types As ICollection(Of Type), ByRef o As T) As Boolean
         assert(Not types Is Nothing)
-        If types.empty() Then
+        If types.Count() = 0 Then
             Return False
         End If
-
-        l.wait()
-        Try
-            Dim i As UInt32 = 0
-            While i < types.size()
-                If s.get(types(i), o) Then
-                    Return True
-                End If
-                i += uint32_1
-            End While
-        Finally
-            l.release()
-        End Try
+        For Each type As Type In types
+            If from_type(type, o) Then
+                Return True
+            End If
+        Next
         Return False
     End Function
 
     Public Function from_type_or_base(ByVal type As Type, ByRef o As T) As Boolean
-        If type Is Nothing Then
-            Return False
-        End If
-
-        Dim types As vector(Of Type) = Nothing
-        types = New vector(Of Type)()
+        Dim types As List(Of Type) = Nothing
+        types = New List(Of Type)()
         While Not type Is Nothing
-            types.emplace_back(type)
+            types.Add(type)
             type = type.BaseType()
         End While
         Return from_types(types, o)
@@ -112,13 +76,10 @@ Partial Public NotInheritable Class type_resolver(Of T)
     End Function
 
     Public Function from_type_or_interfaces(ByVal type As Type, ByRef o As T) As Boolean
-        If type Is Nothing Then
-            Return False
-        End If
-
-        Dim types As vector(Of Type) = Nothing
-        types = vector.emplace_of(type)
-        types.emplace_back(type.GetInterfaces())
+        Dim types As List(Of Type) = Nothing
+        types = New List(Of Type)()
+        types.Add(type)
+        types.AddRange(type.GetInterfaces())
         Return from_types(types, o)
     End Function
 
@@ -129,14 +90,7 @@ Partial Public NotInheritable Class type_resolver(Of T)
     End Function
 
     Public Function from_interfaces(ByVal type As Type, ByRef o As T) As Boolean
-        If type Is Nothing Then
-            Return False
-        End If
-
-        Dim types As vector(Of Type) = Nothing
-        types = New vector(Of Type)()
-        types.emplace_back(type.GetInterfaces())
-        Return from_types(types, o)
+        Return from_types(New List(Of Type)(type.GetInterfaces()), o)
     End Function
 
     Public Function from_interfaces(ByVal type As Type) As T

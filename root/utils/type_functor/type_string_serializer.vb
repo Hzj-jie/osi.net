@@ -5,33 +5,15 @@ Option Strict On
 
 Imports System.IO
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.delegates
 
-<global_init(global_init_level.foundamental)>
 Public NotInheritable Class type_string_serializer
     Private Shared ReadOnly to_strs As type_resolver(Of Func(Of Object, StringWriter, Boolean))
     Private Shared ReadOnly from_strs As type_resolver(Of _do_val_ref(Of StringReader, Object, Boolean))
 
     Shared Sub New()
-        to_strs = New type_resolver(Of Func(Of Object, StringWriter, Boolean))()
-        from_strs = New type_resolver(Of _do_val_ref(Of StringReader, Object, Boolean))()
-        AddHandler string_serializer.to_str_registered,
-                   Sub(ByVal type As Type,
-                       ByVal protector As Type,
-                       ByVal to_str As Func(Of Object, StringWriter, Boolean))
-                       If string_serializer.is_global_protector(protector) Then
-                           to_strs.assert_first_register(type, to_str)
-                       End If
-                   End Sub
-        AddHandler string_serializer.from_str_registered,
-                   Sub(ByVal type As Type,
-                       ByVal protector As Type,
-                       ByVal from_str As _do_val_ref(Of StringReader, Object, Boolean))
-                       If string_serializer.is_global_protector(protector) Then
-                           from_strs.assert_first_register(type, from_str)
-                       End If
-                   End Sub
+        to_strs = type_resolver(Of Func(Of Object, StringWriter, Boolean), string_serializer).r
+        from_strs = type_resolver(Of _do_val_ref(Of StringReader, Object, Boolean), string_serializer).r
     End Sub
 
     Public Shared Function to_str(ByVal type As Type,

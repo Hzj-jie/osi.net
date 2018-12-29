@@ -53,6 +53,7 @@ Public Class uri_serializer(Of T)
         Return this
     End Operator
 
+    ' TODO: Test
     Protected Overrides Function to_str() As Action(Of T, StringWriter)
         Return Sub(ByVal i As T, ByVal o As StringWriter)
                    assert(Not i Is Nothing)

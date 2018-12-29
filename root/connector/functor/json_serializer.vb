@@ -52,6 +52,13 @@ Public Class json_serializer(Of T)
         Return this
     End Operator
 
+    ' TODO: Implementation.
+    Protected Overrides Function to_str() As Action(Of T, StringWriter)
+    End Function
+
+    Protected Overrides Function from_str() As _do_val_ref(Of StringReader, T, Boolean)
+    End Function
+
     Protected Sub New()
     End Sub
 End Class
