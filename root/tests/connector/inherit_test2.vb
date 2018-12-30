@@ -29,6 +29,7 @@ Public NotInheritable Class inherit_test2
     End Class
 
     Private Class impl3(Of T)
+        Inherits impl2(Of T)
         Implements inf2
     End Class
 
@@ -54,6 +55,13 @@ Public NotInheritable Class inherit_test2
         assert_true(GetType(impl3(Of )).implement(GetType(inf2)))
         assert_true(GetType(impl3(Of )).implement(GetType(inf(Of Object))))
         assert_true(GetType(impl3(Of )).implement(GetType(inf(Of ))))
+    End Sub
+
+    <test>
+    Private Shared Sub inherit_case()
+        assert_true(GetType(impl3(Of String)).inherit(GetType(impl2(Of String))))
+        assert_true(GetType(impl3(Of String)).inherit(GetType(impl2(Of ))))
+        assert_true(GetType(impl3(Of )).inherit(GetType(impl2(Of ))))
     End Sub
 
     Private Sub New()
