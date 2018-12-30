@@ -16,12 +16,18 @@ Public NotInheritable Class type_string_serializer
         Return ss.from_type(type, o)
     End Function
 
+    Public Shared Function serializer(ByVal type As Type) As string_serializer(Of Object)
+        Dim r As string_serializer(Of Object) = Nothing
+        assert(serializer(type, r))
+        Return r
+    End Function
+
     Public Shared Function to_str(ByVal type As Type,
                                   ByRef implemented As Boolean,
                                   ByVal i As Object,
                                   ByVal o As StringWriter) As Boolean
         Dim s As string_serializer(Of Object) = Nothing
-        implemented = ss.from_type(type, s)
+        implemented = serializer(type, s)
         If Not implemented Then
             Return False
         End If
@@ -34,7 +40,7 @@ Public NotInheritable Class type_string_serializer
                                   ByVal i As Object,
                                   ByRef o As String) As Boolean
         Dim s As string_serializer(Of Object) = Nothing
-        implemented = ss.from_type(type, s)
+        implemented = serializer(type, s)
         If Not implemented Then
             Return False
         End If

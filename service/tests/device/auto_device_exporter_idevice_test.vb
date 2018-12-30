@@ -1,6 +1,10 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.lock
 Imports osi.root.utt
 Imports osi.service.device
@@ -42,21 +46,21 @@ Public Class auto_device_exporter_idevice_test
         assert_true(d.started())
         assert_false(d.stopping())
         assert_false(d.stopped())
-        assert_true(timeslice_sleep_wait_until(Function() c = count, seconds_to_milliseconds(10)))
+        assert_true(timeslice_sleep_wait_until(Function() c = count, minutes_to_milliseconds(10)))
         assert_equal(c, count)
         assert_equal(d.exported(), count)
         assert_equal(mock_dev(Of auto_device_exporter_idevice_test).constructed(), c)
         d.require(count)
-        assert_true(timeslice_sleep_wait_until(Function() c = (count << 1), seconds_to_milliseconds(10)))
+        assert_true(timeslice_sleep_wait_until(Function() c = (count << 1), minutes_to_milliseconds(10)))
         assert_equal(c, count << 1)
         assert_equal(d.exported(), count << 1)
         assert_equal(mock_dev(Of auto_device_exporter_idevice_test).constructed(), c)
         d.stop()
         d.wait_for_stop()
         assert_true(d.stopped())
-        assert_true(timeslice_sleep_wait_until(Function() stopped, seconds_to_milliseconds(10)))
+        assert_true(timeslice_sleep_wait_until(Function() stopped, minutes_to_milliseconds(10)))
         d.require(count)
-        assert_false(timeslice_sleep_wait_when(Function() c = (count << 1), seconds_to_milliseconds(10)))
+        assert_false(timeslice_sleep_wait_when(Function() c = (count << 1), minutes_to_milliseconds(10)))
         assert_equal(c, count << 1)
         assert_equal(d.exported(), count << 1)
         assert_equal(mock_dev(Of auto_device_exporter_idevice_test).constructed(), c)
@@ -84,12 +88,12 @@ Public Class auto_device_exporter_idevice_test
         assert_true(d.started())
         assert_false(d.stopping())
         assert_false(d.stopped())
-        assert_true(timeslice_sleep_wait_until(Function() +c = count, seconds_to_milliseconds(10)))
+        assert_true(timeslice_sleep_wait_until(Function() +c = count, minutes_to_milliseconds(10)))
         assert_equal(+c, count)
         assert_equal(d.exported(), count)
         assert_equal(mock_dev(Of auto_device_exporter_idevice_test).constructed(), +c)
         d.require(count)
-        assert_true(timeslice_sleep_wait_until(Function() +c = (count << 1), seconds_to_milliseconds(10)))
+        assert_true(timeslice_sleep_wait_until(Function() +c = (count << 1), minutes_to_milliseconds(10)))
         assert_equal(+c, count << 1)
         assert_equal(d.exported(), count << 1)
         assert_equal(mock_dev(Of auto_device_exporter_idevice_test).constructed(), +c)
@@ -97,7 +101,7 @@ Public Class auto_device_exporter_idevice_test
         d.wait_for_stop()
         assert_true(d.stopped())
         d.require(count)
-        assert_false(timeslice_sleep_wait_when(Function() +c = (count << 1), seconds_to_milliseconds(10)))
+        assert_false(timeslice_sleep_wait_when(Function() +c = (count << 1), minutes_to_milliseconds(10)))
         assert_equal(+c, count << 1)
         assert_equal(d.exported(), count << 1)
         assert_equal(mock_dev(Of auto_device_exporter_idevice_test).constructed(), +c)
