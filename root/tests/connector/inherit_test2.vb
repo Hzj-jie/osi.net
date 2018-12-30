@@ -40,6 +40,12 @@ Public NotInheritable Class inherit_test2
         assert_true(GetType(inf3(Of Object)).interface_inherit(GetType(inf(Of Object))))
         assert_true(GetType(inf3(Of Object)).interface_inherit(GetType(inf(Of ))))
         assert_true(GetType(inf3(Of )).interface_inherit(GetType(inf(Of ))))
+
+        assert_true(GetType(inf2).inherit(GetType(inf(Of Object))))
+        assert_true(GetType(inf2).inherit(GetType(inf(Of ))))
+        assert_true(GetType(inf3(Of Object)).inherit(GetType(inf(Of Object))))
+        assert_true(GetType(inf3(Of Object)).inherit(GetType(inf(Of ))))
+        assert_true(GetType(inf3(Of )).inherit(GetType(inf(Of ))))
     End Sub
 
     <test>
