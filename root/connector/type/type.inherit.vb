@@ -9,11 +9,24 @@ Public Module _inherit
     <Extension()> Public Function interface_inherit(ByVal t As Type, ByVal base As Type) As Boolean
         If Not t.IsInterface() OrElse Not base.IsInterface() Then
             Return False
-        ElseIf t Is base Then
-            Return False
-        Else
-            Return base.IsAssignableFrom(t)
         End If
+        If t Is base Then
+            Return False
+        End If
+        If base.IsGenericTypeDefinition() Then
+            If t.is_unspecified_generic_type() Then
+                Return interface_inherit(t.GetGenericTypeDefinition(), base)
+            End If
+            Dim ints() As Type = Nothing
+            ints = t.GetInterfaces()
+            For i As Int32 = 0 To array_size_i(ints) - 1
+                If ints(i).generic_type_definition_is(base) Then
+                    Return True
+                End If
+            Next
+            Return False
+        End If
+        Return base.IsAssignableFrom(t)
     End Function
 
     <Extension()> Public Function inherit(ByVal t As Type, ByVal base As Type) As Boolean
@@ -57,6 +70,9 @@ Public Module _inherit
             Return False
         End If
         If Not base.IsInterface() Then
+            Return False
+        End If
+        If t.IsInterface() Then
             Return False
         End If
         If base.IsGenericTypeDefinition() Then
