@@ -13,7 +13,7 @@ Public Module _constructor
                Not t.IsArray() AndAlso
                Not t.IsAbstract() AndAlso
                Not t.IsEnum() AndAlso
-               Not t.IsGenericTypeDefinition() AndAlso
+               Not t.is_unspecified_generic_type() AndAlso
                Not t.IsInterface() AndAlso
                Not t.[is](GetType([Delegate]))
     End Function

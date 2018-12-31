@@ -119,6 +119,7 @@
     <Compile Include="generic_perf.vb" />
     <Compile Include="compress_test.vb" />
     <Compile Include="generic_object_perf.vb" />
+    <Compile Include="generic_type_behavior_test.vb" />
     <Compile Include="gettype_perf.vb" />
     <Compile Include="gettype_test.vb" />
     <Compile Include="implement_test.vb" />

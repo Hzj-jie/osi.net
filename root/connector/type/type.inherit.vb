@@ -7,32 +7,25 @@ Imports System.Runtime.CompilerServices
 
 Public Module _inherit
     <Extension()> Public Function interface_inherit(ByVal t As Type, ByVal base As Type) As Boolean
+        If t Is Nothing OrElse base Is Nothing Then
+            Return False
+        End If
         If Not t.IsInterface() OrElse Not base.IsInterface() Then
             Return False
         End If
         If t Is base Then
             Return False
         End If
-        If base.IsGenericTypeDefinition() Then
-            If t.is_unspecified_generic_type() Then
-                Return interface_inherit(t.GetGenericTypeDefinition(), base)
+        If base.is_unspecified_generic_type() Then
+            If t.is_specified_generic_type() AndAlso t.generic_type_is(base) Then
+                Return True
             End If
-            Dim ints() As Type = Nothing
-            ints = t.GetInterfaces()
-            For i As Int32 = 0 To array_size_i(ints) - 1
-                If ints(i).generic_type_definition_is(base) Then
-                    Return True
-                End If
-            Next
-            Return False
+            Return t.generic_type_of_one_interface_is(base)
         End If
         Return base.IsAssignableFrom(t)
     End Function
 
     <Extension()> Public Function inherit(ByVal t As Type, ByVal base As Type) As Boolean
-        If t Is Nothing AndAlso base Is Nothing Then
-            Return True
-        End If
         If t Is Nothing OrElse base Is Nothing Then
             Return False
         End If
@@ -45,10 +38,9 @@ Public Module _inherit
         If t.IsInterface() OrElse base.IsInterface() Then
             Return False
         End If
-        If t.IsGenericType() AndAlso base.IsGenericTypeDefinition() Then
-            'object is not a generic type
-            While t.IsGenericType() 'AndAlso Not t Is GetType(Object)
-                If t.GetGenericTypeDefinition() Is base Then
+        If base.is_unspecified_generic_type() Then
+            While Not t Is GetType(Object)
+                If t.IsGenericType() AndAlso t.GetGenericTypeDefinition() Is base Then
                     Return True
                 End If
                 t = t.BaseType()
@@ -63,9 +55,6 @@ Public Module _inherit
     End Function
 
     <Extension()> Public Function implement(ByVal t As Type, ByVal base As Type) As Boolean
-        If t Is Nothing AndAlso base Is Nothing Then
-            Return True
-        End If
         If t Is Nothing OrElse base Is Nothing Then
             Return False
         End If
@@ -75,15 +64,8 @@ Public Module _inherit
         If t.IsInterface() Then
             Return False
         End If
-        If base.IsGenericTypeDefinition() Then
-            Dim ints() As Type = Nothing
-            ints = t.GetInterfaces()
-            For i As Int32 = 0 To array_size_i(ints) - 1
-                If ints(i).IsGenericType() AndAlso ints(i).GetGenericTypeDefinition() Is base Then
-                    Return True
-                End If
-            Next
-            Return False
+        If base.is_unspecified_generic_type() Then
+            Return t.generic_type_of_one_interface_is(base)
         End If
 #If RETIRED Then
         Try

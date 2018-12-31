@@ -33,6 +33,10 @@ Public NotInheritable Class inherit_test2
         Implements inf2
     End Class
 
+    Private Class impl4
+        Inherits impl2(Of Object)
+    End Class
+
     <test>
     Private Shared Sub interface_inherit_case()
         assert_true(GetType(inf2).interface_inherit(GetType(inf(Of Object))))
@@ -68,6 +72,8 @@ Public NotInheritable Class inherit_test2
         assert_true(GetType(impl3(Of String)).inherit(GetType(impl2(Of String))))
         assert_true(GetType(impl3(Of String)).inherit(GetType(impl2(Of ))))
         assert_true(GetType(impl3(Of )).inherit(GetType(impl2(Of ))))
+        assert_true(GetType(impl4).inherit(GetType(impl2(Of Object))))
+        assert_true(GetType(impl4).inherit(GetType(impl2(Of ))))
     End Sub
 
     Private Sub New()
