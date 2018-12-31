@@ -23,9 +23,9 @@ Public Class invoker_perf
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
         If isdebugbuild() Then
-            Return loosen_bound({49072, 7661, 6518, 47946, 7071, 7080}, i, j)
+            Return loosen_bound({64468, 18928, 5846, 40173, 6773, 5846}, i, j)
         End If
-        Return loosen_bound({7938, 2757, 1212, 6726, 2131, 1525}, i, j)
+        Return loosen_bound({13300, 10722, 922, 5166, 2400, 1300}, i, j)
     End Function
 
     Private Shared Function r(ByVal c As [case]) As [case]
