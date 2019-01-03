@@ -1,7 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.DateTime
 Imports osi.root.connector
-Imports osi.root.utils
 
 Public Module _assert_timelimited_operation
     Public Function assert_now_in_time_range(ByVal l As Int64, ByVal u As Int64) As Boolean

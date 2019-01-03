@@ -1,8 +1,11 @@
 ﻿
-Imports osi.root.utils
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.constants.utt
-Imports osi.root.connector
 
 Friend Module failure_handle
     Public Sub utt_raise_error(ByVal ParamArray msg() As Object)

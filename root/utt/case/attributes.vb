@@ -43,24 +43,24 @@ Public NotInheritable Class attributes
     ' The function will be executed for each test case in the test class.
     ' If multiple methods are described with "prepare" attribute, they will be executed one-by-one, but the order is
     ' unexpected.
-    <AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)> _
+    <AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
     Public NotInheritable Class prepare
-        Inherits attribute
+        Inherits Attribute
     End Class
 
     ' Define a finish method for the test class.
     ' The function will be executed after each test case in the test class.
     ' If multiple methods are described with "finish" attribute, they will be executed one-by-one, but the order is
     ' unexpected.
-    <AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)> _
+    <AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
     Public NotInheritable Class finish
-        Inherits attribute
+        Inherits Attribute
     End Class
 
     ' Define a method as random-run target.
-    <AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)> _
+    <AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
     Public NotInheritable Class random
-        Inherits attribute
+        Inherits Attribute
 
         Public ReadOnly percentage As Double
 
@@ -83,7 +83,7 @@ Public NotInheritable Class attributes
     End Class
 
     ' Define a test case to be executed only when command line specified.
-    <AttributeUsage(AttributeTargets.Class Or AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)> _
+    <AttributeUsage(AttributeTargets.Class Or AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
     Public NotInheritable Class command_line_specified
         Inherits Attribute
     End Class

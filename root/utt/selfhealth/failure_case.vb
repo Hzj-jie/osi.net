@@ -1,8 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.DateTime
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
-Imports osi.root.connector
 
 Public Class failure_case
     Inherits [case]
@@ -63,7 +67,7 @@ Public Class failure_case
                 "assert_now_in_time_range(Now().milliseconds() - 1001, Now().milliseconds() - 1000)")
             Using New auto_assert_timelimited_operation(0, 1)
                 Dim ma As manual_assert_timelimited_operation = New manual_assert_timelimited_operation(0, 1)
-                measure_sleep(two_timeslice_length_ms)
+                measure_sleep(CInt(two_timeslice_length_ms))
                 ma.finish()
                 report_self_health_failure(19, "manual_assert_timelimited_operation")
             End Using
