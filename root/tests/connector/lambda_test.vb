@@ -41,9 +41,9 @@ Public Class lambda_test
                           c.result = If(x > 100, ternary.true, ternary.false)
                       End Sub)
             End If
-            assert_equal(c.i, x)
-            assert_false(c.result.unknown_())
-            assert_equal(c.result.true_(), x > 100)
+            assertion.equal(c.i, x)
+            assertion.is_false(c.result.unknown_())
+            assertion.equal(c.result.true_(), x > 100)
         Next
         Return True
     End Function

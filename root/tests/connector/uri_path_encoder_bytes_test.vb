@@ -17,10 +17,10 @@ Public NotInheritable Class uri_path_encoder_bytes_test
         Dim b() As Byte = Nothing
         b = next_bytes(rnd_uint(1024, 4096))
         Using s As StringWriter = New StringWriter()
-            assert_true(encode(b, s))
+            assertion.is_true(encode(b, s))
             Using ms As MemoryStream = New MemoryStream()
-                assert_true(decode(Convert.ToString(s), ms))
-                assert_array_equal(ms.fit_buffer(), b)
+                assertion.is_true(decode(Convert.ToString(s), ms))
+                assertion.array_equal(ms.fit_buffer(), b)
             End Using
         End Using
     End Sub

@@ -13,21 +13,21 @@ Public Class pipe_test
         Const default_value As Int32 = 100
         Dim q As pipe(Of Int32) = Nothing
         q = New pipe(Of Int32)(1, 1000, False)
-        assert_true(async_sync(q.push(default_value)))
-        assert_equal(q.size(), uint32_1)
-        assert_false(async_sync(q.push(default_value)))
-        assert_equal(q.size(), uint32_1)
-        assert_false(async_sync(q.push(default_value)))
-        assert_equal(q.size(), uint32_1)
+        assertion.is_true(async_sync(q.push(default_value)))
+        assertion.equal(q.size(), uint32_1)
+        assertion.is_false(async_sync(q.push(default_value)))
+        assertion.equal(q.size(), uint32_1)
+        assertion.is_false(async_sync(q.push(default_value)))
+        assertion.equal(q.size(), uint32_1)
         Dim p As pointer(Of Int32) = Nothing
         p = New pointer(Of Int32)()
-        assert_true(async_sync(q.pop(p)))
-        assert_equal(+p, default_value)
-        assert_equal(q.size(), uint32_0)
-        assert_false(async_sync(q.pop(Nothing)))
-        assert_equal(q.size(), uint32_0)
-        assert_false(async_sync(q.pop(Nothing)))
-        assert_equal(q.size(), uint32_0)
+        assertion.is_true(async_sync(q.pop(p)))
+        assertion.equal(+p, default_value)
+        assertion.equal(q.size(), uint32_0)
+        assertion.is_false(async_sync(q.pop(Nothing)))
+        assertion.equal(q.size(), uint32_0)
+        assertion.is_false(async_sync(q.pop(Nothing)))
+        assertion.equal(q.size(), uint32_0)
         Return True
     End Function
 
@@ -37,12 +37,12 @@ Public Class pipe_test
         Dim q As pipe(Of Int32) = Nothing
         q = New pipe(Of Int32)(array_size(v), 0, False)
         For i As Int32 = 0 To array_size(v) - 1
-            assert_true(q.sync_push(v(i)))
+            assertion.is_true(q.sync_push(v(i)))
         Next
         For i As Int32 = 0 To array_size(v) - 1
             Dim o As Int32 = 0
-            assert_true(q.sync_pop(o))
-            assert_equal(o, v(i))
+            assertion.is_true(q.sync_pop(o))
+            assertion.equal(o, v(i))
         Next
         Return True
     End Function
@@ -52,33 +52,33 @@ Public Class pipe_test
         Const default_value As Int32 = 100
         Dim q As pipe(Of Int32) = Nothing
         q = New pipe(Of Int32)(1, npos, True)
-        assert_true(async_sync(q.push(default_value)))
+        assertion.is_true(async_sync(q.push(default_value)))
         assert_begin(New event_comb(Function() As Boolean
                                         Return waitfor(default_timeout_ms) AndAlso
                                                goto_next()
                                     End Function,
                                     Function() As Boolean
-                                        Return assert_true(begin(q.pop(Nothing))) AndAlso
+                                        Return assertion.is_true(begin(q.pop(Nothing))) AndAlso
                                                goto_end()
                                     End Function))
         Using New auto_assert_timelimited_operation(default_timeout_ms, default_timeout_ms * 2)
-            assert_true(async_sync(q.push(default_value)))
+            assertion.is_true(async_sync(q.push(default_value)))
         End Using
-        assert_equal(q.size(), uint32_1)
+        assertion.equal(q.size(), uint32_1)
         Dim p As pointer(Of Int32) = Nothing
         p = New pointer(Of Int32)()
-        assert_true(async_sync(q.pop(p)))
-        assert_equal(+p, default_value)
+        assertion.is_true(async_sync(q.pop(p)))
+        assertion.equal(+p, default_value)
         assert_begin(New event_comb(Function() As Boolean
                                         Return waitfor(default_timeout_ms) AndAlso
                                                goto_next()
                                     End Function,
                                     Function() As Boolean
-                                        Return assert_true(begin(q.push(default_value))) AndAlso
+                                        Return assertion.is_true(begin(q.push(default_value))) AndAlso
                                                goto_end()
                                     End Function))
         Using New auto_assert_timelimited_operation(default_timeout_ms, default_timeout_ms * 2)
-            assert_true(async_sync(q.pop(Nothing)))
+            assertion.is_true(async_sync(q.pop(Nothing)))
         End Using
         Return True
     End Function

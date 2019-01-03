@@ -23,8 +23,8 @@ Public Class event_comb_repeat_test
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_equal(i, size)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.equal(i, size)
                                   i = 0
                                   ec = event_comb.one_step(Function() As Boolean
                                                                i += 1
@@ -34,8 +34,8 @@ Public Class event_comb_repeat_test
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_false(ec.end_result())
-                                  assert_equal(i, 1)
+                                  assertion.is_false(ec.end_result())
+                                  assertion.equal(i, 1)
                                   i = 0
                                   ec = event_comb.succeeded(Sub()
                                                                 i += 1
@@ -44,8 +44,8 @@ Public Class event_comb_repeat_test
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_equal(i, size)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.equal(i, size)
                                   i = 0
                                   ec = event_comb.one_step(Function() As Boolean
                                                                i += 1
@@ -55,8 +55,8 @@ Public Class event_comb_repeat_test
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_false(ec.end_result())
-                                  assert_equal(i, 1)
+                                  assertion.is_false(ec.end_result())
+                                  assertion.equal(i, 1)
                                   Return goto_end()
                               End Function)
     End Function

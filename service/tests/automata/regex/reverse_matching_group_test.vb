@@ -14,7 +14,7 @@ Namespace rlexer
             g = New reverse_matching_group(New any_character_matching_group())
             Dim v As vector(Of UInt32) = Nothing
             v = g.match("abc")
-            assert_true(v.null_or_empty())
+            assertion.is_true(v.null_or_empty())
             Return True
         End Function
 
@@ -23,14 +23,14 @@ Namespace rlexer
             g = New reverse_matching_group(New string_matching_group("a", "b", "c"))
             Dim v As vector(Of UInt32) = Nothing
             v = g.match("d")
-            If assert_false(v.null_or_empty()) AndAlso
-               assert_equal(v.size(), uint32_1) Then
-                assert_equal(v(0), uint32_1)
+            If assertion.is_false(v.null_or_empty()) AndAlso
+               assertion.equal(v.size(), uint32_1) Then
+                assertion.equal(v(0), uint32_1)
             End If
             v = g.match("ad")
-            assert_true(v.null_or_empty())
+            assertion.is_true(v.null_or_empty())
             v = g.match("b")
-            assert_true(v.null_or_empty())
+            assertion.is_true(v.null_or_empty())
             Return True
         End Function
 

@@ -30,11 +30,11 @@ Public Class event_comb_cancel_test
                                              goto_next()
                                   End Function,
                                   Function() As Boolean
-                                      assert_true(ec.working())
+                                      assertion.is_true(ec.working())
                                       ec.cancel()
-                                      assert_true(ec.ending() OrElse ec.end())
-                                      assert_false(ec.working())
-                                      assert_false(ec.end_result())
+                                      assertion.is_true(ec.ending() OrElse ec.end())
+                                      assertion.is_false(ec.working())
+                                      assertion.is_false(ec.end_result())
                                       If rnd_bool() Then
                                           Return waitfor(Function() ec.end()) AndAlso
                                                  goto_next()
@@ -43,12 +43,12 @@ Public Class event_comb_cancel_test
                                       End If
                                   End Function,
                                   Function() As Boolean
-                                      assert_true(ec.end())
+                                      assertion.is_true(ec.end())
                                       ec.cancel()
-                                      assert_false(ec.ending())
-                                      assert_true(ec.end())
-                                      assert_false(ec.working())
-                                      assert_false(ec.end_result())
+                                      assertion.is_false(ec.ending())
+                                      assertion.is_true(ec.end())
+                                      assertion.is_false(ec.working())
+                                      assertion.is_false(ec.end_result())
                                       Return goto_end()
                                   End Function)
         End Function

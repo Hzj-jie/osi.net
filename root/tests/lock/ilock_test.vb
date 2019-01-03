@@ -14,24 +14,24 @@ Public Class ilock_test(Of T As {ilock, Structure})
 
         Protected Overrides Sub before_wait(ByRef l As T)
             MyBase.before_wait(l)
-            assert_false(l.held_in_thread())
+            assertion.is_false(l.held_in_thread())
         End Sub
 
         Protected Overrides Sub after_wait(ByRef l As T)
             MyBase.after_wait(l)
-            assert_true(l.held())
-            assert_true(l.held_in_thread())
+            assertion.is_true(l.held())
+            assertion.is_true(l.held_in_thread())
         End Sub
 
         Protected Overrides Sub before_release(ByRef l As T)
             MyBase.before_release(l)
-            assert_true(l.held())
-            assert_true(l.held_in_thread())
+            assertion.is_true(l.held())
+            assertion.is_true(l.held_in_thread())
         End Sub
 
         Protected Overrides Sub after_release(ByRef l As T)
             MyBase.after_release(l)
-            assert_false(l.held_in_thread())
+            assertion.is_false(l.held_in_thread())
         End Sub
     End Class
 End Class

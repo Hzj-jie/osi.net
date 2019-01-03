@@ -86,7 +86,7 @@ Public Class unique_strong_map_test
             k = rnd_key()
             Dim v As Int64 = 0
             If m.get(k, v) Then
-                assert_equal(v, value(k))
+                assertion.equal(v, value(k))
             End If
             Return True
         End Function
@@ -108,9 +108,9 @@ Public Class unique_strong_map_test
             k = rnd_key()
             Dim v As Int64 = 0
             v = value(k)
-            assert_equal(m.generate(k, Function() As Int64
-                                           Return v
-                                       End Function), v)
+            assertion.equal(m.generate(k, Function() As Int64
+                                              Return v
+                                          End Function), v)
             Return True
         End Function
 

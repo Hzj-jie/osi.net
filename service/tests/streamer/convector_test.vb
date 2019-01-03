@@ -28,7 +28,7 @@ Public MustInherit Class convector_test
                                     End Function,
                                     Function() As Boolean
                                         Return eva(ended, True) AndAlso
-                                               assert_true(ec.end_result()) AndAlso
+                                               assertion.is_true(ec.end_result()) AndAlso
                                                goto_end()
                                     End Function))
     End Sub
@@ -56,10 +56,10 @@ Public MustInherit Class convector_test
         sleep_seconds(5)
         dev1.receive_pump.emplace(max_int32)
         dev2.receive_pump.emplace(max_int32)
-        assert_true(timeslice_sleep_wait_until(Function() c.stopped(), minutes_to_milliseconds(1)))
-        assert_true(dev1.send_pump_equal(v2))
-        assert_true(dev2.send_pump_equal(v1))
-        assert_true(timeslice_sleep_wait_until(Function() +ended, minutes_to_milliseconds(1)))
+        assertion.is_true(timeslice_sleep_wait_until(Function() c.stopped(), minutes_to_milliseconds(1)))
+        assertion.is_true(dev1.send_pump_equal(v2))
+        assertion.is_true(dev2.send_pump_equal(v1))
+        assertion.is_true(timeslice_sleep_wait_until(Function() +ended, minutes_to_milliseconds(1)))
         Return True
     End Function
 End Class

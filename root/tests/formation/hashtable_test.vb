@@ -28,7 +28,7 @@ Public Class hashtable_case(Of T)
     End Sub
 
     Private Function random_select_key_from_h() As T
-        assert_false(h.empty())
+        assertion.is_false(h.empty())
         Dim it As hashtable(Of T).iterator = Nothing
         it = h.begin()
         Dim c As UInt32 = 0
@@ -37,7 +37,7 @@ Public Class hashtable_case(Of T)
             it += 1
             c -= uint32_1
         End While
-        assert_not_equal(it, h.end())
+        assertion.not_equal(it, h.end())
         Return +it
     End Function
 
@@ -46,16 +46,16 @@ Public Class hashtable_case(Of T)
         n = rnd(Of T)()
         Dim p As pair(Of hashtable(Of T).iterator, Boolean) = Nothing
         p = If(insert, h.insert(n), h.emplace(n))
-        assert_not_nothing(p)
+        assertion.is_not_null(p)
         If p.second Then
-            assert_equal(s.find(n), s.end())
+            assertion.equal(s.find(n), s.end())
             s.insert(n)
         Else
-            assert_not_equal(s.find(n), s.end())
+            assertion.not_equal(s.find(n), s.end())
         End If
-        assert_equal(+p.first, n)
-        assert_equal(h.size(), s.size())
-        assert_equal(h.empty(), s.empty())
+        assertion.equal(+p.first, n)
+        assertion.equal(h.size(), s.size())
+        assertion.equal(h.empty(), s.empty())
     End Sub
 
     Private Sub insert()
@@ -70,15 +70,15 @@ Public Class hashtable_case(Of T)
         If rnd_bool() AndAlso Not s.empty() Then
             Dim k As T = Nothing
             k = random_select_key_from_h()
-            assert_true(s.erase(k))
-            assert_equal(h.erase(k), uint32_1)
+            assertion.is_true(s.erase(k))
+            assertion.equal(h.erase(k), uint32_1)
         Else
             Dim k As T = Nothing
             k = rnd(Of T)()
             If s.erase(k) Then
-                assert_equal(h.erase(k), uint32_1)
+                assertion.equal(h.erase(k), uint32_1)
             Else
-                assert_equal(h.erase(k), uint32_0)
+                assertion.equal(h.erase(k), uint32_0)
             End If
         End If
     End Sub
@@ -86,21 +86,21 @@ Public Class hashtable_case(Of T)
     Private Sub find()
         If rnd_bool() Then
             If s.empty() Then
-                assert_true(h.empty())
-                assert_equal(h.find(rnd(Of T)()), h.end())
+                assertion.is_true(h.empty())
+                assertion.equal(h.find(rnd(Of T)()), h.end())
             Else
                 Dim k As T = Nothing
                 k = random_select_key_from_h()
-                assert_not_equal(h.find(k), h.end())
-                assert_not_equal(s.find(k), s.end())
+                assertion.not_equal(h.find(k), h.end())
+                assertion.not_equal(s.find(k), s.end())
             End If
         Else
             Dim k As T = Nothing
             k = rnd(Of T)()
             If s.find(k) = s.end() Then
-                assert_equal(h.find(k), h.end())
+                assertion.equal(h.find(k), h.end())
             Else
-                assert_not_equal(h.find(k), h.end())
+                assertion.not_equal(h.find(k), h.end())
             End If
         End If
     End Sub
@@ -108,18 +108,18 @@ Public Class hashtable_case(Of T)
     Private Sub clear()
         s.clear()
         h.clear()
-        assert_true(h.empty())
+        assertion.is_true(h.empty())
     End Sub
 
     Private Sub clone()
         Dim h2 As hashtable(Of T) = Nothing
         copy(h2, h)
 
-        assert_equal(h2.size(), s.size())
+        assertion.equal(h2.size(), s.size())
         Dim it As hashtable(Of T).iterator = Nothing
         it = h2.begin()
         While it <> h2.end()
-            assert_not_equal(s.find(+it), s.end())
+            assertion.not_equal(s.find(+it), s.end())
             it += 1
         End While
     End Sub
@@ -140,8 +140,8 @@ Public Class hashtable_case(Of T)
             it -= 1
         End While
 
-        assert_equal(c, h.size())
-        assert_equal(c2, h.size())
+        assertion.equal(c, h.size())
+        assertion.equal(c2, h.size())
     End Sub
 End Class
 

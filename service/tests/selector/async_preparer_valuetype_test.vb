@@ -20,8 +20,8 @@ Public Class async_preparer_valuetype_test
                                          End Function)
         p.wait_until_initialized()
         Dim r As Int32 = 0
-        assert_true(p.get(r))
-        assert_equal(r, value)
+        assertion.is_true(p.get(r))
+        assertion.equal(r, value)
         Return True
     End Function
 End Class

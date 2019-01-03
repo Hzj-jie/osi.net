@@ -91,7 +91,7 @@ Public Class compare_test
                 ElseIf TypeOf obj Is not_comparable Then
                     Return CompareTo(cast(Of not_comparable)(obj))
                 Else
-                    assert_true(False, "should not call CompareTo in comparable_class with unknown object")
+                    assertion.is_true(False, "should not call CompareTo in comparable_class with unknown object")
                     Throw New ArgumentException("not comparable")
                     Return rnd_int(min_int32, max_int32)
                 End If
@@ -136,11 +136,11 @@ Public Class compare_test
                                                        ByVal that As T2,
                                                        ByVal exp As Int32,
                                                        ByVal comparable As Boolean) As Boolean
-            assert_equal(osi.root.connector.comparable(this, that), comparable)
+            assertion.equal(osi.root.connector.comparable(this, that), comparable)
             If comparable Then
-                assert_equal(compare(this, that), exp)
+                assertion.equal(compare(this, that), exp)
             Else
-                assert_equal(compare(this, that), compare_error_result)
+                assertion.equal(compare(this, that), compare_error_result)
             End If
             Return True
         End Function
@@ -361,20 +361,20 @@ Public Class compare_test
         Shared Sub New()
             result = rnd_int()
             comparer.register(Function(i As C1, j As C2) As Int32
-                                  assert_not_nothing(i)
-                                  assert_not_nothing(j)
+                                  assertion.is_not_null(i)
+                                  assertion.is_not_null(j)
                                   Return result
                               End Function)
         End Sub
 
         Public Overrides Function run() As Boolean
             Dim o As Int32 = 0
-            assert_true(compare(Of C1, C2)(Nothing, New C2(), o))
-            assert_equal(o, -1)
-            assert_true(compare(New C1(), New C2(), o))
-            assert_equal(o, result)
-            assert_true(compare(Of C1, C2)(New C1(), Nothing, o))
-            assert_equal(o, 1)
+            assertion.is_true(compare(Of C1, C2)(Nothing, New C2(), o))
+            assertion.equal(o, -1)
+            assertion.is_true(compare(New C1(), New C2(), o))
+            assertion.equal(o, result)
+            assertion.is_true(compare(Of C1, C2)(New C1(), Nothing, o))
+            assertion.equal(o, 1)
             Return True
         End Function
     End Class

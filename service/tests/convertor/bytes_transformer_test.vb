@@ -33,11 +33,11 @@ Public Class bytes_transformer_test
         assert(Not isemptyarray(i))
         assert(transform(i, 0, array_size(i), o2))
 
-        assert_true(t.transform(i, o))
-        assert_array_equal(o, o2)
+        assertion.is_true(t.transform(i, o))
+        assertion.array_equal(o, o2)
 
-        assert_true(t.transform(i, array_size(i), o))
-        assert_array_equal(o, o2)
+        assertion.is_true(t.transform(i, array_size(i), o))
+        assertion.array_equal(o, o2)
 
         Dim i2() As Byte = Nothing
         Dim offset As Int32 = 0
@@ -45,10 +45,10 @@ Public Class bytes_transformer_test
         i2 = i
         offset = 0
         count = array_size(i)
-        assert_true(t.transform(i2, offset, count))
-        assert_equal(offset, 0)
-        assert_equal(CUInt(count), array_size(i2))
-        assert_array_equal(i2, o2)
+        assertion.is_true(t.transform(i2, offset, count))
+        assertion.equal(offset, 0)
+        assertion.equal(CUInt(count), array_size(i2))
+        assertion.array_equal(i2, o2)
 
         Return True
     End Function

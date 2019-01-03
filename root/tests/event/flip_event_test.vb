@@ -24,13 +24,13 @@ Public NotInheritable Class flip_event_test
                                                       End Sub))
         f.raise_to_high()
         f.raise_to_low()
-        assert_equal(to_high, uint32_1)
-        assert_equal(to_low, uint32_1)
+        assertion.equal(to_high, uint32_1)
+        assertion.equal(to_low, uint32_1)
         f.cancel()
         f.raise_to_high()
         f.raise_to_low()
-        assert_equal(to_high, uint32_1)
-        assert_equal(to_low, uint32_1)
+        assertion.equal(to_high, uint32_1)
+        assertion.equal(to_low, uint32_1)
     End Sub
 
     Private Sub New()

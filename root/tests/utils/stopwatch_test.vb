@@ -47,13 +47,13 @@ Public Class stopwatch_test
             wait_until_ms = max(wait_until_ms, high)
             sws(i) = stopwatch.push(waitms,
                                     Sub()
-                                        assert_less_or_equal(nowadays.milliseconds(), high)
-                                        assert_more_or_equal(nowadays.milliseconds(), low)
+                                        assertion.less_or_equal(nowadays.milliseconds(), high)
+                                        assertion.more_or_equal(nowadays.milliseconds(), low)
                                         Interlocked.Increment(finished)
                                     End Sub)
         Next
         timeslice_sleep_wait_when(Function() finished < count AndAlso nowadays.milliseconds() < wait_until_ms)
-        assert_equal(finished, count)
+        assertion.equal(finished, count)
         Return True
     End Function
 End Class

@@ -25,13 +25,13 @@ Public Class addhandler_behavior_test
                                 End Sub
         AddHandler ce.an_event, action
         ce.raise()
-        assert_equal(x, 2)
+        assertion.equal(x, 2)
         RemoveHandler ce.an_event, Nothing
         ce.raise()
-        assert_equal(x, 4)
+        assertion.equal(x, 4)
         RemoveHandler ce.an_event, action
         ce.raise()
-        assert_equal(x, 5)
+        assertion.equal(x, 5)
         Return True
     End Function
 End Class

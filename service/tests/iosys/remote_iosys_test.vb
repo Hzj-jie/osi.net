@@ -51,28 +51,28 @@ Public NotInheritable Class remote_iosys_test
             last = New iosys(Of iosys_test_case)(uint32_0)
             Dim rr As rreceiver(Of iosys_test_case) = Nothing
             rr = New rreceiver(Of iosys_test_case)(ra_name, q)
-            If Not assert_true(first.notice(rr)) Then
+            If Not assertion.is_true(first.notice(rr)) Then
                 Return False
             End If
             Dim cra As command_ragent(Of iosys_test_case) = Nothing
             cra = New command_ragent(Of iosys_test_case)()
-            If Not assert_true(device_pool_manager.register(
+            If Not assertion.is_true(device_pool_manager.register(
                                ra_name,
                                singleton_device_pool.[New](cra.make_device()))) OrElse
-           Not assert_true(last.listen(cra)) Then
+           Not assertion.is_true(last.listen(cra)) Then
                 Return False
             End If
-            If Not assert_true(s.add_port(p)) OrElse
-           Not assert_true(s.start()) Then
+            If Not assertion.is_true(s.add_port(p)) OrElse
+           Not assertion.is_true(s.start()) Then
                 Return False
             End If
-            assert_true(http.responder.respond(s, ++ra, ls))
+            assertion.is_true(http.responder.respond(s, ++ra, ls))
             Return True
         End Function
 
         Public Overrides Function finish() As Boolean
             s.stop(30)
-            Return assert_true(device_pool_manager.erase(
+            Return assertion.is_true(device_pool_manager.erase(
                    ra_name, [default](Of singleton_device_pool(Of command_ragent(Of iosys_test_case))).null)) And
                ra.ignore() And
                MyBase.finish()

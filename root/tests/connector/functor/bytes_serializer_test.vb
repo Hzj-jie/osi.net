@@ -16,17 +16,17 @@ Public NotInheritable Class bytes_serializer_test
         Dim b() As Byte = Nothing
         b = bytes_serializer.to_bytes(New Decimal(1000))
         Dim d As Decimal = 0
-        assert_true(bytes_serializer.from_bytes(b, d))
-        assert_equal(d, New Decimal(1000))
+        assertion.is_true(bytes_serializer.from_bytes(b, d))
+        assertion.equal(d, New Decimal(1000))
     End Sub
 
     <test>
     Private Shared Sub cannot_parse_invalid_decimal()
         Using ms As MemoryStream = New MemoryStream()
-            assert_true(bytes_serializer.append_to(CULng(100), ms))
-            assert_true(bytes_serializer.append_to(CULng(1000), ms))
+            assertion.is_true(bytes_serializer.append_to(CULng(100), ms))
+            assertion.is_true(bytes_serializer.append_to(CULng(1000), ms))
             Dim d As Decimal = 0
-            assert_false(bytes_serializer.read_from(ms, d))
+            assertion.is_false(bytes_serializer.read_from(ms, d))
         End Using
     End Sub
 
@@ -35,7 +35,7 @@ Public NotInheritable Class bytes_serializer_test
         Dim b() As Byte = Nothing
         b = bytes_serializer.to_bytes(uint64_0)
         Dim d As Decimal = 0
-        assert_false(bytes_serializer.from_bytes(b, d))
+        assertion.is_false(bytes_serializer.from_bytes(b, d))
     End Sub
 
     Private Sub New()

@@ -14,26 +14,26 @@ Public NotInheritable Class filtered_var_test
     Private Shared Sub get_filtered_values()
         Dim v As var = Nothing
         v = New var("--a=b -cde ~def --filtered.a=d ~filtered.efg hij klm")
-        assert_true(v.switch("c"))
-        assert_true(v.switch("d"))
-        assert_true(v.switch("e"))
-        assert_true(v.switch("def"))
-        assert_true(v.switch("filtered.efg"))
-        assert_equal(v("a"), "b")
-        assert_equal(v("filtered.a"), "d")
-        assert_array_equal(+(v.other_values()), {"hij", "klm"})
+        assertion.is_true(v.switch("c"))
+        assertion.is_true(v.switch("d"))
+        assertion.is_true(v.switch("e"))
+        assertion.is_true(v.switch("def"))
+        assertion.is_true(v.switch("filtered.efg"))
+        assertion.equal(v("a"), "b")
+        assertion.equal(v("filtered.a"), "d")
+        assertion.array_equal(+(v.other_values()), {"hij", "klm"})
 
         Dim f As var = Nothing
         f = filtered_var.[New](v, "filtered.")
-        assert_false(f.switch("c"))
-        assert_false(f.switch("d"))
-        assert_false(f.switch("e"))
-        assert_false(f.switch("def"))
-        assert_false(f.switch("filtered.efg"))
-        assert_false(f.value("filtered.a", String.Empty))
-        assert_true(f.switch("efg"))
-        assert_equal(f("a"), "d")
-        assert_array_equal(+(f.other_values()), {"hij", "klm"})
+        assertion.is_false(f.switch("c"))
+        assertion.is_false(f.switch("d"))
+        assertion.is_false(f.switch("e"))
+        assertion.is_false(f.switch("def"))
+        assertion.is_false(f.switch("filtered.efg"))
+        assertion.is_false(f.value("filtered.a", String.Empty))
+        assertion.is_true(f.switch("efg"))
+        assertion.equal(f("a"), "d")
+        assertion.array_equal(+(f.other_values()), {"hij", "klm"})
     End Sub
 
     <test>
@@ -46,14 +46,14 @@ Public NotInheritable Class filtered_var_test
 
         Dim f2 As var = Nothing
         Dim f3 As var = Nothing
-        assert_true(copy(f2, f))
-        assert_equal(f2("f"), "second")
-        assert_true(f2.switch("t"))
-        assert_false(f2.switch("c"))
-        assert_false(f2.switch("a"))
-        assert_false(f2.switch("s"))
-        assert_false(f2.switch("e"))
-        assert_array_equal(+(f2.other_values()), {"some", "other", "values"})
+        assertion.is_true(copy(f2, f))
+        assertion.equal(f2("f"), "second")
+        assertion.is_true(f2.switch("t"))
+        assertion.is_false(f2.switch("c"))
+        assertion.is_false(f2.switch("a"))
+        assertion.is_false(f2.switch("s"))
+        assertion.is_false(f2.switch("e"))
+        assertion.array_equal(+(f2.other_values()), {"some", "other", "values"})
     End Sub
 
     <test>
@@ -69,13 +69,13 @@ Public NotInheritable Class filtered_var_test
         Dim expected As var = Nothing
         expected = New var("--a=1 --b=2 ~c ~d some other values")
 
-        assert_equal(f, expected)
-        assert_equal(f, v2)
-        assert_equal(expected, v2)
+        assertion.equal(f, expected)
+        assertion.equal(f, v2)
+        assertion.equal(expected, v2)
 
-        assert_equal(v, v)
-        assert_equal(f, f)
-        assert_equal(v2, v2)
+        assertion.equal(v, v)
+        assertion.equal(f, f)
+        assertion.equal(v2, v2)
     End Sub
 
     Private Sub New()

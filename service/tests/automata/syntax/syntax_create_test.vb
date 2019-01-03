@@ -75,17 +75,17 @@ Namespace syntaxer
                     Dim collection As syntax_collection = Nothing
                     collection = New syntax_collection(cases(i).tokens, cases(i).syntaxes)
                     Dim o As syntax = Nothing
-                    assert_true(syntax.create(cases(i).str, collection, o))
-                    If assert_not_nothing(o) AndAlso
-                       assert_equal(array_size(+o), array_size(cases(i).matches)) AndAlso
+                    assertion.is_true(syntax.create(cases(i).str, collection, o))
+                    If assertion.is_not_null(o) AndAlso
+                       assertion.equal(array_size(+o), array_size(cases(i).matches)) AndAlso
                        Not isemptyarray(+o) Then
                         For j As UInt32 = 0 To array_size(+o) - uint32_1
                             ' fake_matching_delegate.CompareTo should be selected
-                            assert_equal(cases(i).matches(j), (+o)(j))
+                            assertion.equal(cases(i).matches(j), (+o)(j))
                         Next
                     End If
                 Else
-                    assert_false(syntax.create(cases(i).str, New syntax_collection(), Nothing))
+                    assertion.is_false(syntax.create(cases(i).str, New syntax_collection(), Nothing))
                 End If
             Next
             Return True

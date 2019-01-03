@@ -76,10 +76,10 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   If Not (+v) Is Nothing Then
-                                      assert_true(is_rand_bytes(k, +v))
-                                      assert_true(is_rand_timestamp(k, +t))
+                                      assertion.is_true(is_rand_bytes(k, +v))
+                                      assertion.is_true(is_rand_timestamp(k, +t))
                                   End If
                                   Return goto_end()
                               End Function)
@@ -101,8 +101,8 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_true(+r)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.is_true(+r)
                                   Return goto_end()
                               End Function)
     End Function
@@ -119,7 +119,7 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
     End Function
@@ -136,7 +136,7 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
     End Function
@@ -151,10 +151,10 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  If assert_not_nothing(+r) Then
+                                  assertion.is_true(ec.end_result())
+                                  If assertion.is_not_null(+r) Then
                                       For i As Int32 = 0 To (+r).size() - 1
-                                          assert_true(is_rand_key((+r)(i)))
+                                          assertion.is_true(is_rand_key((+r)(i)))
                                       Next
                                   End If
                                   Return goto_end()
@@ -177,8 +177,8 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_true(+r)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.is_true(+r)
                                   Return goto_end()
                               End Function)
     End Function
@@ -195,7 +195,7 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
     End Function
@@ -210,8 +210,8 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  'assert_false(+r)
+                                  assertion.is_true(ec.end_result())
+                                  'assertion.is_false(+r)
                                   Return goto_end()
                               End Function)
     End Function
@@ -226,7 +226,7 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
     End Function
@@ -244,7 +244,7 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                                   End If
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
     End Function
@@ -259,8 +259,8 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_more_or_equal(+r, 0)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.more_or_equal(+r, 0)
                                   Return goto_end()
                               End Function)
     End Function
@@ -275,8 +275,8 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_more_or_equal(+r, 0)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.more_or_equal(+r, 0)
                                   Return goto_end()
                               End Function)
     End Function
@@ -291,7 +291,7 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
     End Function
@@ -304,7 +304,7 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
     End Function
@@ -320,7 +320,7 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
 #Else
@@ -344,7 +344,7 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
     End Function
@@ -400,7 +400,7 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                                   If round < round_count Then
                                       If round > 0 Then
                                           assert(Not ec Is Nothing)
-                                          assert_true(ec.end_result())
+                                          assertion.is_true(ec.end_result())
                                       End If
                                       round += 1
                                       ec = rnd_case(keyvt)
@@ -424,7 +424,7 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  Return assert_true(ec.end_result()) AndAlso
+                                  Return assertion.is_true(ec.end_result()) AndAlso
                                          goto_end()
                               End Function)
     End Function

@@ -69,8 +69,8 @@ Public Class constructor_detect_test
     End Class
 
     Private Shared Function run_case(Of T)(ByVal has_pl_c As Boolean, ByVal has_pl_p_c As Boolean)
-        assert_equal(GetType(T).has_parameterless_constructor(), has_pl_c)
-        assert_equal(GetType(T).has_parameterless_public_constructor(), has_pl_p_c)
+        assertion.equal(GetType(T).has_parameterless_constructor(), has_pl_c)
+        assertion.equal(GetType(T).has_parameterless_public_constructor(), has_pl_p_c)
         Return True
     End Function
 

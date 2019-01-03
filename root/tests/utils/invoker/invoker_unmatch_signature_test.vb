@@ -28,10 +28,10 @@ Public NotInheritable Class invoker_unmatch_signature_test
                  with_binding_flags(binding_flags.instance_private_method).
                  with_name("f2").
                  build()
-        assert_false(i1.pre_binding())
-        assert_false(i1.post_binding())
-        assert_false(i1.pre_bind(f1))
-        assert_false(i1.post_bind(New Object(), f1))
+        assertion.is_false(i1.pre_binding())
+        assertion.is_false(i1.post_binding())
+        assertion.is_false(i1.pre_bind(f1))
+        assertion.is_false(i1.post_bind(New Object(), f1))
 
         Dim i2 As invoker(Of Func(Of UInt32)) = Nothing
         i2 = invoker.of(i2).
@@ -39,10 +39,10 @@ Public NotInheritable Class invoker_unmatch_signature_test
                  with_binding_flags(binding_flags.static_private_method).
                  with_name("f1").
                  build()
-        assert_false(i2.pre_binding())
-        assert_false(i2.post_binding())
-        assert_false(i2.pre_bind(f2))
-        assert_false(i2.post_bind(New Object(), f2))
+        assertion.is_false(i2.pre_binding())
+        assertion.is_false(i2.post_binding())
+        assertion.is_false(i2.pre_bind(f2))
+        assertion.is_false(i2.post_bind(New Object(), f2))
     End Sub
 
     Private Sub New()

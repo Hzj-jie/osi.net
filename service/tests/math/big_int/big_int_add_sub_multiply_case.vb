@@ -49,21 +49,21 @@ Friend Class big_int_add_sub_multiply_case
         ar = add_result(i, j)
         Dim mr As big_int = Nothing
         mr = multiply_result(i, j)
-        assert_true(ar.equal(mr))
+        assertion.is_true(ar.equal(mr))
         For k As UInt64 = 0 To j - 1
             ar.sub(i)
-            assert_true(ar.less(mr))
+            assertion.is_true(ar.less(mr))
         Next
-        assert_true(ar.is_zero())
+        assertion.is_true(ar.is_zero())
 
         ar = sub_result(i, j)
         mr = multiply_result(i, -j)
-        assert_true(ar.equal(mr))
+        assertion.is_true(ar.equal(mr))
         For k As UInt64 = 0 To j - 1
             ar.add(i)
-            assert_true(mr.less(ar))
+            assertion.is_true(mr.less(ar))
         Next
-        assert_true(ar.is_zero())
+        assertion.is_true(ar.is_zero())
         Return True
     End Function
 End Class

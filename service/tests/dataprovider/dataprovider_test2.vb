@@ -19,16 +19,16 @@ Public NotInheritable Class dataprovider_test2
                                    test_dataprovider.parameter("key2", "value2"),
                                    test_dataprovider.parameter("key3", False),
                                    test_dataprovider.parameter("key4", test_enum.enum1))
-        assert_true(strcontains(n, "a-file-name"))
-        assert_true(strcontains(n, "key1"))
-        assert_true(strcontains(n, "1"))
-        assert_true(strcontains(n, "key2"))
-        assert_true(strcontains(n, "value2"))
-        assert_true(strcontains(n, "key3"))
-        assert_true(strcontains(n, "False"))
-        assert_true(strcontains(n, "key4"))
-        assert_true(strcontains(n, "enum1"))
-        assert_false(strcontains(n, "key5"))
+        assertion.is_true(strcontains(n, "a-file-name"))
+        assertion.is_true(strcontains(n, "key1"))
+        assertion.is_true(strcontains(n, "1"))
+        assertion.is_true(strcontains(n, "key2"))
+        assertion.is_true(strcontains(n, "value2"))
+        assertion.is_true(strcontains(n, "key3"))
+        assertion.is_true(strcontains(n, "False"))
+        assertion.is_true(strcontains(n, "key4"))
+        assertion.is_true(strcontains(n, "enum1"))
+        assertion.is_false(strcontains(n, "key5"))
     End Sub
 
     Private Sub New()

@@ -14,33 +14,33 @@ Namespace dotnet
         <test>
         Private Shared Sub execute_from_source()
             Dim se As source_executor = Nothing
-            assert_true(source_executor.
+            assertion.is_true(source_executor.
                             [New]().
                             add_source(from_source1.as_text()).
                             with_language(source_executor.language.cs).
                             build(se))
             Dim r As Object = Nothing
-            assert_true(se.execute("from_source1", "execute", r, 1))
-            assert_equal(r, 2)
-            assert_true(se.execute("from_source1", "execute2", r, 2))
-            assert_equal(r, 1)
+            assertion.is_true(se.execute("from_source1", "execute", r, 1))
+            assertion.equal(r, 2)
+            assertion.is_true(se.execute("from_source1", "execute2", r, 2))
+            assertion.equal(r, 1)
         End Sub
 
         <test>
         <command_line_specified>
         Private Shared Sub execute_from_source_perf()
             Dim se As source_executor = Nothing
-            assert_true(source_executor.
+            assertion.is_true(source_executor.
                             [New]().
                             add_source(from_source1.as_text()).
                             with_language(source_executor.language.cs).
                             build(se))
             For i As Int32 = 0 To 1000000
                 Dim r As Object = Nothing
-                assert_true(se.execute("from_source1", "execute", r, 1))
-                assert_equal(r, 2)
-                assert_true(se.execute("from_source1", "execute2", r, 2))
-                assert_equal(r, 1)
+                assertion.is_true(se.execute("from_source1", "execute", r, 1))
+                assertion.equal(r, 2)
+                assertion.is_true(se.execute("from_source1", "execute2", r, 2))
+                assertion.equal(r, 1)
             Next
         End Sub
 

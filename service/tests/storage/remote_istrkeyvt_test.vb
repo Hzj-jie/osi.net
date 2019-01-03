@@ -50,17 +50,17 @@ Public Class remote_istrkeyvt_test
     Private Function register_local_istrkeyvt() As Boolean
         Dim l As istrkeyvt = Nothing
         l = memory.ctor()
-        Return assert_not_nothing(l) AndAlso
-               assert_true(manager.register(istrkeyvt_name, l))
+        Return assertion.is_not_null(l) AndAlso
+               assertion.is_true(manager.register(istrkeyvt_name, l))
     End Function
 
     Protected Overrides Function create_istrkeyvt() As istrkeyvt
-        assert_true(s.add_port(http_port))
-        If Not assert_true(s.start()) Then
+        assertion.is_true(s.add_port(http_port))
+        If Not assertion.is_true(s.start()) Then
             'the server cannot start, so cannot go on with the following test
             Return Nothing
         End If
-        assert_true(http.responder.respond(s, ++dispatcher, ls))
+        assertion.is_true(http.responder.respond(s, ++dispatcher, ls))
         If Not register_local_istrkeyvt() Then
             'the local istrkeyvt cannot work, so cannot go on with the following test
             Return Nothing
@@ -75,9 +75,9 @@ Public Class remote_istrkeyvt_test
     Protected Overrides Function clean_up() As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  assert_true(dispatcher.ignore())
+                                  assertion.is_true(dispatcher.ignore())
                                   s.stop(30)
-                                  assert_true(manager.erase(istrkeyvt_name, [default](Of istrkeyvt).null))
+                                  assertion.is_true(manager.erase(istrkeyvt_name, [default](Of istrkeyvt).null))
                                   ec = MyBase.clean_up()
                                   Return waitfor(ec) AndAlso
                                          goto_next()

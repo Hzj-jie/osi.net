@@ -25,7 +25,7 @@ Public Class http_client_test
             c += (+it).second.size()
             it += 1
         End While
-        assert_equal(c, array_size(headers))
+        assertion.equal(c, array_size(headers))
     End Sub
 
     Private Shared Sub assert_coverage(ByVal headers(,) As String, ByVal m As map(Of String, vector(Of String)))
@@ -33,16 +33,16 @@ Public Class http_client_test
         For i As Int32 = 0 To array_size(headers) - 1
             Dim it As map(Of String, vector(Of String)).iterator = Nothing
             it = m.find(headers(i, 0))
-            assert_true(it <> m.end())
-            assert_false(String.IsNullOrEmpty((+it).first))
-            assert_false((+it).second.empty())
-            assert_true((+((+it).second)).has(headers(i, 1)))
+            assertion.is_true(it <> m.end())
+            assertion.is_false(String.IsNullOrEmpty((+it).first))
+            assertion.is_false((+it).second.empty())
+            assertion.is_true((+((+it).second)).has(headers(i, 1)))
         Next
     End Sub
 
     Private Shared Function run_case(ByVal headers(,) As String) As Boolean
         Dim m As map(Of String, vector(Of String)) = Nothing
-        assert_true(headers.to_http_headers(m))
+        assertion.is_true(headers.to_http_headers(m))
         assert_result_size(headers, m)
         assert_coverage(headers, m)
         Return True
@@ -82,20 +82,20 @@ Public Class http_client_test
     Private Shared Function failure_case() As Boolean
         Dim r(,) As String = Nothing
         Dim m As map(Of String, vector(Of String)) = Nothing
-        assert_false(r.to_http_headers(m))
+        assertion.is_false(r.to_http_headers(m))
         ReDim r(10, 2)
-        assert_false(r.to_http_headers(m))
+        assertion.is_false(r.to_http_headers(m))
         ReDim r(10, 1)
-        assert_false(r.to_http_headers(m))
+        assertion.is_false(r.to_http_headers(m))
         For i As Int32 = 0 To array_size(r) - 1
             r(i, 0) = empty_string
         Next
-        assert_false(r.to_http_headers(m))
+        assertion.is_false(r.to_http_headers(m))
         For i As Int32 = 0 To array_size(r) - 1
             r(i, 0) = random_key()
         Next
         r(rnd_int(0, array_size(r) - 1), 0) = empty_string
-        assert_false(r.to_http_headers(m))
+        assertion.is_false(r.to_http_headers(m))
         Return True
     End Function
 

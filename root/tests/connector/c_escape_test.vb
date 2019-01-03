@@ -41,25 +41,25 @@ Public Class c_escape_test
         Public Overrides Function run() As Boolean
             For i As UInt32 = 0 To array_size(failed) - uint32_1
                 Dim s As String = Nothing
-                assert_false(failed(i).c_unescape(s), failed(i))
+                assertion.is_false(failed(i).c_unescape(s), failed(i))
             Next
 
             For i As Int32 = 0 To array_size(mapping) - 1
                 Dim escaped As String = Nothing
                 Dim unescaped As String = Nothing
                 escaped = mapping(i, 0)
-                assert_true(escaped.c_unescape(unescaped))
-                assert_not_nothing(unescaped)
-                assert_equal(unescaped, mapping(i, 1))
+                assertion.is_true(escaped.c_unescape(unescaped))
+                assertion.is_not_null(unescaped)
+                assertion.equal(unescaped, mapping(i, 1))
 
                 unescaped = mapping(i, 1)
-                assert_true(unescaped.c_escape(escaped))
-                assert_not_nothing(escaped)
+                assertion.is_true(unescaped.c_escape(escaped))
+                assertion.is_not_null(escaped)
                 If escaped <> mapping(i, 0) Then
-                    assert_equal(escaped, mapping(i, 1))
+                    assertion.equal(escaped, mapping(i, 1))
                 End If
                 If escaped <> mapping(i, 1) Then
-                    assert_equal(escaped, mapping(i, 0))
+                    assertion.equal(escaped, mapping(i, 0))
                 End If
             Next
             Return True
@@ -82,18 +82,18 @@ Public Class c_escape_test
             Dim s As String = Nothing
             s = rnd_chars(rnd_int(max_uint8, max_uint16))
             Dim escaped As String = Nothing
-            assert_true(s.c_escape(escaped))
-            assert_not_nothing(escaped)
+            assertion.is_true(s.c_escape(escaped))
+            assertion.is_not_null(escaped)
             For i As Int32 = 0 To array_size(should_not_contains) - 1
-                assert_false(escaped.Contains(should_not_contains(i)))
+                assertion.is_false(escaped.Contains(should_not_contains(i)))
             Next
             Dim unescaped As String = Nothing
-            assert_true(escaped.c_unescape(unescaped))
-            assert_not_nothing(unescaped)
-            If Not assert_equal(unescaped, s) Then
+            assertion.is_true(escaped.c_unescape(unescaped))
+            assertion.is_not_null(unescaped)
+            If Not assertion.equal(unescaped, s) Then
                 For i As Int32 = 0 To min(strlen(unescaped), strlen(s)) - 1
                     'debug
-                    If Not assert_equal(unescaped(i), s(i), unescaped(i), " <> ", s(i)) Then
+                    If Not assertion.equal(unescaped(i), s(i), unescaped(i), " <> ", s(i)) Then
                         Exit For
                     End If
                 Next

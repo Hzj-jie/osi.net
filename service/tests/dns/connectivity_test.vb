@@ -24,24 +24,24 @@ Public Class connectivity_test
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_equal(+r, connectivity.result_t.fail)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.equal(+r, connectivity.result_t.fail)
 
                                   ec = connectivity.check(r, bad_hosts.append(connectivity.golden_hosts.as_array()))
                                   Return waitfor(ec) AndAlso
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_equal(+r, connectivity.result_t.partial_accessible)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.equal(+r, connectivity.result_t.partial_accessible)
 
                                   ec = connectivity.check_if_needed(r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_equal(+r, connectivity.result_t.accessible)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.equal(+r, connectivity.result_t.accessible)
                                   Return goto_end()
                               End Function)
     End Function

@@ -71,27 +71,27 @@ Public Class type_attribute_signal_test
     End Class
 
     Public Overrides Function run() As Boolean
-        assert_equal(type_attribute.of(Of C1)().get(Of Int32), 1)
-        assert_equal(type_attribute.of(Of C2)().get(Of Int32), 2)
-        assert_equal(type_attribute.of(Of C3)().get(Of Int32), 3)
-        assert_equal(type_attribute.of(Of C4)().get(Of Int32), 3)
-        assert_equal(type_attribute.of(Of C5)().get(Of Int32)(), 5)
-        assert_false(type_attribute.has(Of C6)())
+        assertion.equal(type_attribute.of(Of C1)().get(Of Int32), 1)
+        assertion.equal(type_attribute.of(Of C2)().get(Of Int32), 2)
+        assertion.equal(type_attribute.of(Of C3)().get(Of Int32), 3)
+        assertion.equal(type_attribute.of(Of C4)().get(Of Int32), 3)
+        assertion.equal(type_attribute.of(Of C5)().get(Of Int32)(), 5)
+        assertion.is_false(type_attribute.has(Of C6)())
 
-        assert_equal(type_attribute.of(New C1()).get(Of Int32)(), 1)
-        assert_equal(type_attribute.of(New C2()).get(Of Int32)(), 2)
-        assert_equal(type_attribute.of(New C3()).get(Of Int32)(), 3)
-        assert_equal(type_attribute.of(New C4()).get(Of Int32)(), 3)
+        assertion.equal(type_attribute.of(New C1()).get(Of Int32)(), 1)
+        assertion.equal(type_attribute.of(New C2()).get(Of Int32)(), 2)
+        assertion.equal(type_attribute.of(New C3()).get(Of Int32)(), 3)
+        assertion.equal(type_attribute.of(New C4()).get(Of Int32)(), 3)
 
-        assert_equal(type_attribute.of(New C5(New C1())).get(Of Int32)(), 1)
-        assert_equal(type_attribute.of(New C5(New C2())).get(Of Int32)(), 2)
-        assert_equal(type_attribute.of(New C5(New C3())).get(Of Int32)(), 3)
-        assert_equal(type_attribute.of(New C5(New C4())).get(Of Int32)(), 3)
+        assertion.equal(type_attribute.of(New C5(New C1())).get(Of Int32)(), 1)
+        assertion.equal(type_attribute.of(New C5(New C2())).get(Of Int32)(), 2)
+        assertion.equal(type_attribute.of(New C5(New C3())).get(Of Int32)(), 3)
+        assertion.equal(type_attribute.of(New C5(New C4())).get(Of Int32)(), 3)
 
-        assert_equal(type_attribute.of(New C6(New C5(New C1()))).get(Of Int32)(), 1)
-        assert_equal(type_attribute.of(New C6(New C5(New C2()))).get(Of Int32)(), 2)
-        assert_equal(type_attribute.of(New C6(New C5(New C3()))).get(Of Int32)(), 3)
-        assert_equal(type_attribute.of(New C6(New C5(New C4()))).get(Of Int32)(), 3)
+        assertion.equal(type_attribute.of(New C6(New C5(New C1()))).get(Of Int32)(), 1)
+        assertion.equal(type_attribute.of(New C6(New C5(New C2()))).get(Of Int32)(), 2)
+        assertion.equal(type_attribute.of(New C6(New C5(New C3()))).get(Of Int32)(), 3)
+        assertion.equal(type_attribute.of(New C6(New C5(New C4()))).get(Of Int32)(), 3)
         Return True
     End Function
 End Class

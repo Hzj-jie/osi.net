@@ -50,34 +50,34 @@ Public Class tcp_connection_state_perf_test
             timeslice_sleep_wait_until(Function() connection_state.valid())
             Dim a() As TcpConnectionInformation = Nothing
             a = connection_state.active_connections()
-            If assert_true(Not isemptyarray(a)) Then
+            If assertion.is_true(Not isemptyarray(a)) Then
                 Dim c As UInt32 = 0
                 For i As Int32 = 0 To array_size(a) - 1
-                    If assert_not_nothing(a(i)) AndAlso
-                       assert_not_nothing(a(i).LocalEndPoint()) AndAlso
-                       assert_not_nothing(a(i).RemoteEndPoint()) AndAlso
+                    If assertion.is_not_null(a(i)) AndAlso
+                       assertion.is_not_null(a(i).LocalEndPoint()) AndAlso
+                       assertion.is_not_null(a(i).RemoteEndPoint()) AndAlso
                        (a(i).LocalEndPoint().Port() = port OrElse
                         a(i).RemoteEndPoint().Port() = port) Then
                         c += uint32_1
-                        assert_equal(connection_state.query(a(i).LocalEndPoint(), a(i).RemoteEndPoint()),
+                        assertion.equal(connection_state.query(a(i).LocalEndPoint(), a(i).RemoteEndPoint()),
                                      a(i).State())
                     Else
                         connection_state.query(a(i).LocalEndPoint(), a(i).RemoteEndPoint())
                     End If
                 Next
-                assert_equal(c, max_connected << 1)
+                assertion.equal(c, max_connected << 1)
             End If
 
             a = connection_state.active_connections()
-            If assert_true(Not isemptyarray(a)) Then
+            If assertion.is_true(Not isemptyarray(a)) Then
                 Dim m As map(Of String, TcpState) = Nothing
                 m = connection_state.states(a)
-                If assert_not_nothing(m) Then
+                If assertion.is_not_null(m) Then
                     For i As Int32 = 0 To array_size(a) - 1
-                        If assert_not_nothing(a(i)) AndAlso
-                           assert_not_nothing(a(i).LocalEndPoint()) AndAlso
-                           assert_not_nothing(a(i).RemoteEndPoint()) Then
-                            assert_equal(connection_state.query(m,
+                        If assertion.is_not_null(a(i)) AndAlso
+                           assertion.is_not_null(a(i).LocalEndPoint()) AndAlso
+                           assertion.is_not_null(a(i).RemoteEndPoint()) Then
+                            assertion.equal(connection_state.query(m,
                                                                 a(i).LocalEndPoint(),
                                                                 a(i).RemoteEndPoint()),
                                          a(i).State())
@@ -140,10 +140,10 @@ Public Class tcp_connection_state_perf_test
                  with_keepalive_interval_ms(CUInt(8000)).
                  create().ref_client_device_pool()
             'wait for the accepter to start and connection to be generated
-            assert_true(timeslice_sleep_wait_until(Function() As Boolean
-                                                       Return ap.total_count() = max_connected AndAlso
+            assertion.is_true(timeslice_sleep_wait_until(Function() As Boolean
+                                                             Return ap.total_count() = max_connected AndAlso
                                                               cp.total_count() = max_connected
-                                                   End Function,
+                                                         End Function,
                                                    seconds_to_milliseconds(1000)))
             Dim c As [case] = Nothing
             Dim r As Boolean = False

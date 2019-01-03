@@ -14,8 +14,8 @@ Public NotInheritable Class inject_constructor_test
     Private NotInheritable Class test_class
         <inject_constructor>
         Public Sub New(ByVal i As Int32, ByVal s As String, ByVal b As Boolean)
-            assert_equal(Convert.ToString(i), s)
-            assert_equal(b, int_bool(i))
+            assertion.equal(Convert.ToString(i), s)
+            assertion.equal(b, int_bool(i))
         End Sub
 
         Public Shared Function int_bool(ByVal i As Int32) As Boolean
@@ -29,7 +29,7 @@ Public NotInheritable Class inject_constructor_test
             Dim o As test_class = Nothing
             Dim i As Int32 = 0
             i = rnd_int()
-            assert_true(inject_constructor.invoke(o, i, Convert.ToString(i), test_class.int_bool(i)))
+            assertion.is_true(inject_constructor.invoke(o, i, Convert.ToString(i), test_class.int_bool(i)))
         Next
     End Sub
 
@@ -39,7 +39,7 @@ Public NotInheritable Class inject_constructor_test
             Dim o As test_class = Nothing
             Dim i As Int32 = 0
             i = rnd_int()
-            assert_true(inject_constructor.invoke(o,
+            assertion.is_true(inject_constructor.invoke(o,
                                                   Convert.ToString(i),
                                                   string_serializer.to_str(i),
                                                   string_serializer.to_str(test_class.int_bool(i))))
@@ -52,7 +52,7 @@ Public NotInheritable Class inject_constructor_test
             Dim o As test_class = Nothing
             Dim i As Int32 = 0
             i = rnd_int()
-            assert_true(inject_constructor.invoke(New var({"--i=" + Convert.ToString(i),
+            assertion.is_true(inject_constructor.invoke(New var({"--i=" + Convert.ToString(i),
                                                            "--s=" + string_serializer.to_str(i),
                                                            "--b=" + string_serializer.to_str(test_class.int_bool(i))}),
                                                   o))

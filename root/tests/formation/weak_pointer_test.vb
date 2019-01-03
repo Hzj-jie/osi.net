@@ -39,17 +39,17 @@ Public Class weak_pointer_test
             c = New test_class(s)
             Dim p As weak_pointer(Of test_class) = Nothing
             p = make_weak_pointer(c)
-            assert_true(p.alive())
+            assertion.is_true(p.alive())
             Dim c2 As test_class = Nothing
-            assert_true(p.get(c2))
-            assert_equal(c2.s, s)
+            assertion.is_true(p.get(c2))
+            assertion.equal(c2.s, s)
             c2 = Nothing
             GC.KeepAlive(c)
 
             c = Nothing
             repeat_gc_collect()
-            assert_false(p.alive())
-            assert_false(p.get(c2))
+            assertion.is_false(p.alive())
+            assertion.is_false(p.get(c2))
 
             GC.KeepAlive(p)
             Return True
@@ -72,9 +72,9 @@ Public Class weak_pointer_test
 
             For i As Int32 = 0 To size - 1
                 Dim t As test_class = Nothing
-                assert_true(ps(i).alive())
-                assert_true(ps(i).get(t))
-                assert_equal(t.s, s)
+                assertion.is_true(ps(i).alive())
+                assertion.is_true(ps(i).get(t))
+                assertion.equal(t.s, s)
             Next
             cs.gc_keepalive()
 
@@ -86,12 +86,12 @@ Public Class weak_pointer_test
             repeat_gc_collect()
 
             For i As Int32 = 0 To size - 1
-                assert_equal(Not cs(i) Is Nothing, ps(i).alive())
+                assertion.equal(Not cs(i) Is Nothing, ps(i).alive())
                 If Not cs(i) Is Nothing Then
-                    assert_true(ps(i).alive())
+                    assertion.is_true(ps(i).alive())
                     Dim t As test_class = Nothing
-                    assert_true(ps(i).get(t))
-                    assert_equal(t.s, s)
+                    assertion.is_true(ps(i).get(t))
+                    assertion.equal(t.s, s)
                 End If
             Next
             cs.gc_keepalive()
@@ -102,7 +102,7 @@ Public Class weak_pointer_test
             repeat_gc_collect()
 
             For i As Int32 = 0 To size - 1
-                assert_false(ps(i).alive())
+                assertion.is_false(ps(i).alive())
             Next
 
             Return True

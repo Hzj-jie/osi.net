@@ -52,11 +52,11 @@ Public Class cache_case
         If validate() Then
             Dim v() As Byte = Nothing
             If s1.get(k, v) Then
-                assert_true(key_value(k, v))
-                assert_true(s2.get(k, v))
-                assert_true(key_value(k, v))
+                assertion.is_true(key_value(k, v))
+                assertion.is_true(s2.get(k, v))
+                assertion.is_true(key_value(k, v))
             Else
-                assert_false(s2.get(k, v))
+                assertion.is_false(s2.get(k, v))
             End If
         Else
             s1.get(k, Nothing)
@@ -67,7 +67,7 @@ Public Class cache_case
         Dim v As Int64 = 0
         v = s1.size()
         If validate() Then
-            assert_equal(v, s2.size())
+            assertion.equal(v, s2.size())
         End If
     End Sub
 
@@ -82,7 +82,7 @@ Public Class cache_case
         Dim k As String = Nothing
         k = rnd_key()
         If validate() Then
-            assert_equal(s1.erase(k), s2.erase(k))
+            assertion.equal(s1.erase(k), s2.erase(k))
         Else
             s1.erase(k)
         End If
@@ -93,17 +93,17 @@ Public Class cache_case
         Dim f As void(Of String, Byte()) = Sub(ByRef k As String, ByRef v() As Byte)
                                                If validate() Then
                                                    c += 1
-                                                   assert_true(key_value(k, v))
+                                                   assertion.is_true(key_value(k, v))
                                                End If
                                            End Sub
         c = 0
-        assert_true(s1.foreach(f))
+        assertion.is_true(s1.foreach(f))
         If validate() Then
-            assert_equal(c, s1.size())
+            assertion.equal(c, s1.size())
             c = 0
             s2.foreach(f)
-            assert_equal(c, s1.size())
-            assert_equal(c, s2.size())
+            assertion.equal(c, s1.size())
+            assertion.equal(c, s2.size())
         End If
     End Sub
 
@@ -111,7 +111,7 @@ Public Class cache_case
         Dim k As String = Nothing
         k = rnd_key()
         If validate() Then
-            assert_equal(s1.have(k), s2.have(k))
+            assertion.equal(s1.have(k), s2.have(k))
         Else
             s1.have(k)
         End If
@@ -119,7 +119,7 @@ Public Class cache_case
 
     Private Sub empty()
         If validate() Then
-            assert_equal(s1.empty(), s2.empty())
+            assertion.equal(s1.empty(), s2.empty())
         Else
             s1.empty()
         End If

@@ -29,13 +29,13 @@ Public Class overload_behavior_test
 
     Public Overrides Function run() As Boolean
         Dim a As Object = Nothing
-        assert_equal(f(a), 0)
+        assertion.equal(f(a), 0)
         Dim b As B = Nothing
-        assert_equal(f(b), 2)
+        assertion.equal(f(b), 2)
         Dim c As D = Nothing
-        assert_equal(f(c), 0)
+        assertion.equal(f(c), 0)
         Dim d As I = Nothing
-        assert_equal(f(d), 1)
+        assertion.equal(f(d), 1)
         Return True
     End Function
 End Class

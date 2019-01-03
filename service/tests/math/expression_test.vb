@@ -17,9 +17,9 @@ Public Class expression_test
         For i As Int32 = 0 To array_size(cases) - 1
             Dim r As expression_result(Of Int32) = Nothing
             r = e.execute(cases(i, 0))
-            assert_equal(r.has_error(), has_error, cases(i, 0))
-            assert_equal(r.has_result(), has_result, cases(i, 0))
-            assert_equal(r.str(), cases(i, 1), cases(i, 0))
+            assertion.equal(r.has_error(), has_error, cases(i, 0))
+            assertion.equal(r.has_result(), has_result, cases(i, 0))
+            assertion.equal(r.str(), cases(i, 1), cases(i, 0))
         Next
         Return True
     End Function

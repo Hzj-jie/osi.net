@@ -52,19 +52,19 @@ Public NotInheritable Class piece_test
         p = random_serialized_piece(original)
 
         Dim v As vector(Of piece) = Nothing
-        assert_true(bytes_serializer(Of vector(Of piece)).default.from_piece(p, v))
-        assert_equal(v, original)
+        assertion.is_true(bytes_serializer(Of vector(Of piece)).default.from_piece(p, v))
+        assertion.equal(v, original)
 
         ' TODO: Should compare support delegating null to the implementation?
         empty_to_null(original)
 
         Dim bytes As vector(Of Byte()) = Nothing
-        assert_true(bytes_serializer(Of vector(Of Byte())).default.from_piece(p, bytes))
-        assert_true(deep_compare(+bytes, +original) = 0)
+        assertion.is_true(bytes_serializer(Of vector(Of Byte())).default.from_piece(p, bytes))
+        assertion.is_true(deep_compare(+bytes, +original) = 0)
 
         Dim serialized() As Byte = Nothing
         serialized = bytes_serializer(Of vector(Of Byte())).default.to_bytes(bytes)
-        assert_true(compare(p, serialized) = 0)
+        assertion.is_true(compare(p, serialized) = 0)
     End Sub
 
     <test>
@@ -72,9 +72,9 @@ Public NotInheritable Class piece_test
         Dim p As piece = Nothing
         Dim r() As Byte = Nothing
         r = bytes_serializer.to_bytes(p)
-        assert_true(bytes_serializer.from_bytes(r, p))
-        assert_not_nothing(p)
-        assert_true(p.empty())
+        assertion.is_true(bytes_serializer.from_bytes(r, p))
+        assertion.is_not_null(p)
+        assertion.is_true(p.empty())
     End Sub
 
     Private Sub New()

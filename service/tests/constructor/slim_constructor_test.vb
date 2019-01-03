@@ -37,15 +37,15 @@ Public NotInheritable Class slim_constructor_test
             Dim i As Int32 = 0
             i = rnd_int()
             Dim o As UInt32 = 0
-            assert_true(c.[New](key, i, o))
+            assertion.is_true(c.[New](key, i, o))
             If key = 1 Then
                 If (i And 1) = 1 Then
-                    assert_equal(o, int32_uint32(unchecked_inc(i)))
+                    assertion.equal(o, int32_uint32(unchecked_inc(i)))
                 Else
-                    assert_equal(o, int32_uint32(i))
+                    assertion.equal(o, int32_uint32(i))
                 End If
             Else
-                assert_equal(o, int32_uint32(unchecked_dec(i)))
+                assertion.equal(o, int32_uint32(unchecked_dec(i)))
             End If
         Next
     End Sub
@@ -61,9 +61,9 @@ Public NotInheritable Class slim_constructor_test
                           Return int32_uint32(i)
                       End Function)
         Dim o As UInt32 = 0
-        assert_true(c.[New](1, 1, o))
-        assert_true(c.[New](2, 1, o))
-        assert_false(c.[New](3, 1, o))
+        assertion.is_true(c.[New](1, 1, o))
+        assertion.is_true(c.[New](2, 1, o))
+        assertion.is_false(c.[New](3, 1, o))
     End Sub
 
     <test>
@@ -75,7 +75,7 @@ Public NotInheritable Class slim_constructor_test
                        Return False
                    End Function)
         Dim o As UInt32 = 0
-        assert_false(c.[New](1, 1, o))
+        assertion.is_false(c.[New](1, 1, o))
     End Sub
 
     <test>
@@ -96,11 +96,11 @@ Public NotInheritable Class slim_constructor_test
             Dim i As Int32 = 0
             i = rnd_int()
             Dim o As UInt32 = 0
-            assert_true(c.[New](i, o))
+            assertion.is_true(c.[New](i, o))
             If (i And 1) = 1 Then
-                assert_equal(o, int32_uint32(i))
+                assertion.equal(o, int32_uint32(i))
             Else
-                assert_equal(o, int32_uint32(unchecked_dec(i)))
+                assertion.equal(o, int32_uint32(unchecked_dec(i)))
             End If
         Next
     End Sub
@@ -116,8 +116,8 @@ Public NotInheritable Class slim_constructor_test
                        Return False
                    End Function)
         Dim o As UInt32 = 0
-        assert_false(c.[New](1, o))
-        assert_false(c.[New](2, o))
+        assertion.is_false(c.[New](1, o))
+        assertion.is_false(c.[New](2, o))
     End Sub
 
     Private Sub New()

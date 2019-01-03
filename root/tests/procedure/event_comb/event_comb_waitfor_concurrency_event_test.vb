@@ -39,8 +39,8 @@ Public Class event_comb_waitfor_concurrency_event_test
 
         Private Sub assert_concurrency()
             assert(Not i Is Nothing)
-            assert_more(+i, 0)
-            assert_less_or_equal(CUInt(+i), concurrency_count)
+            assertion.more(+i, 0)
+            assertion.less_or_equal(CUInt(+i), concurrency_count)
         End Sub
 
         Public Overrides Function create() As event_comb
@@ -70,8 +70,8 @@ Public Class event_comb_waitfor_concurrency_event_test
         End Function
 
         Public Overrides Function finish() As Boolean
-            assert_equal(i.get(), 0)
-            assert_equal(c.get(), procedure_count * repeat_count)
+            assertion.equal(i.get(), 0)
+            assertion.equal(c.get(), procedure_count * repeat_count)
             Return MyBase.finish()
         End Function
     End Class

@@ -57,9 +57,9 @@ Public Class duallock_test
             Dim s As String = Nothing
             copy(s, test_string)
             _sleep()
-            assert_equal(s, test_string)
+            assertion.equal(s, test_string)
             _sleep()
-            assert_equal(s, test_string)
+            assertion.equal(s, test_string)
             l.reader_release()
             Return True
         End Function

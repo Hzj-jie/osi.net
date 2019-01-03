@@ -74,13 +74,13 @@ Public Class custom_attributes_behavior_test4
         Dim fake As fake = Nothing
         Dim fake_attribute As fakeAttribute = Nothing
         Dim fake2 As fake2 = Nothing
-        assert_false(GetType(C1).custom_attribute(Of fake)(fake))
-        assert_true(GetType(C1).custom_attribute(Of fakeAttribute)(fake_attribute))
-        assert_true(GetType(C2).custom_attribute(Of fake2)(fake2))
+        assertion.is_false(GetType(C1).custom_attribute(Of fake)(fake))
+        assertion.is_true(GetType(C1).custom_attribute(Of fakeAttribute)(fake_attribute))
+        assertion.is_true(GetType(C2).custom_attribute(Of fake2)(fake2))
 
-        assert_equal(fake.count(), 0)
-        assert_equal(fakeAttribute.count(), 1)
-        assert_equal(fake2.count(), 1)
+        assertion.equal(fake.count(), 0)
+        assertion.equal(fakeAttribute.count(), 1)
+        assertion.equal(fake2.count(), 1)
         Return True
     End Function
 End Class

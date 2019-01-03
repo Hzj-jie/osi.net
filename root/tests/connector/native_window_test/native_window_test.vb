@@ -18,7 +18,7 @@ Public Class native_window_test
         Inherits [case]
 
         Public Overrides Function run() As Boolean
-            assert_true(dpi_awareness.set_aware())
+            assertion.is_true(dpi_awareness.set_aware())
             Windows.Forms.Application.Run(New native_window_test_form(
                     Sub(f As native_window_test_form)
                         f.ControlBox() = True
@@ -32,12 +32,12 @@ Public Class native_window_test
                         f.WindowState() = Windows.Forms.FormWindowState.Maximized
                         Dim process_id As UInt32 = 0
                         Dim thread_id As UInt32 = 0
-                        assert_true(native_window.get_thread_process_id(f, process_id, thread_id))
-                        assert_equal(process_id, CUInt(osi.root.envs.current_process.Id()))
-                        assert_equal(thread_id, CUInt(osi.root.envs.current_process_thread_id()))
+                        assertion.is_true(native_window.get_thread_process_id(f, process_id, thread_id))
+                        assertion.equal(process_id, CUInt(osi.root.envs.current_process.Id()))
+                        assertion.equal(thread_id, CUInt(osi.root.envs.current_process_thread_id()))
                         Console.WriteLine(strcat("Native API: process id: ", process_id, ", thread id: ", thread_id))
                         Dim rect As native_window.rect = Nothing
-                        assert_true(native_window.get_rect(f, rect))
+                        assertion.is_true(native_window.get_rect(f, rect))
                         Console.WriteLine(strcat("Native API: window rect width: ",
                                                  rect.width(),
                                                  ", height: ",
@@ -46,7 +46,7 @@ Public Class native_window_test
                                                  rect.left,
                                                  ", top: ",
                                                  rect.top))
-                        assert_true(native_window.get_client_rect(f, rect))
+                        assertion.is_true(native_window.get_client_rect(f, rect))
                         Console.WriteLine(strcat("Native API: client area width: ",
                                                  rect.width(),
                                                  ", height: ",
@@ -56,20 +56,20 @@ Public Class native_window_test
                                                  ", top: ",
                                                  rect.top))
                         Dim window As IntPtr = Nothing
-                        assert_true(native_window.get_window(f, native_window.get_window_command.hwnd_first, window))
+                        assertion.is_true(native_window.get_window(f, native_window.get_window_command.hwnd_first, window))
                         Console.WriteLine(strcat("Native API: first window: ", window))
-                        assert_true(native_window.get_window(f, native_window.get_window_command.hwnd_last, window))
+                        assertion.is_true(native_window.get_window(f, native_window.get_window_command.hwnd_last, window))
                         Console.WriteLine(strcat("Native API: last window: ", window))
-                        assert_true(native_window.get_window(f, native_window.get_window_command.hwnd_prev, window))
+                        assertion.is_true(native_window.get_window(f, native_window.get_window_command.hwnd_prev, window))
                         Console.WriteLine(strcat("Native API: previous window: ", window))
-                        assert_true(native_window.get_window(f, native_window.get_window_command.hwnd_next, window))
+                        assertion.is_true(native_window.get_window(f, native_window.get_window_command.hwnd_next, window))
                         Console.WriteLine(strcat("Native API: next window: ", window))
                         Console.WriteLine(strcat("WinForms: width: ",
                                                  f.Width(),
                                                  ", height: ",
                                                  f.Height()))
                         Console.WriteLine(strcat("WinForms: current window: ", f.Handle()))
-                        assert_true(native_window.get_ancestor(f, native_window.get_ancestor_flag.root_owner, window))
+                        assertion.is_true(native_window.get_ancestor(f, native_window.get_ancestor_flag.root_owner, window))
                         Console.WriteLine(strcat("Native API: root-owner of current window: ", f.Handle()))
                         Dim screens() As Screen = Nothing
                         screens = Screen.AllScreens()

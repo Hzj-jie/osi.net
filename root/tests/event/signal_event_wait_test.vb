@@ -33,13 +33,13 @@ Public Class signal_event_wait_test
                 sleep(rnd_int(0, 100))
             End If
             e.mark()
-            assert_true(timeslice_sleep_wait_when(Function() (+i) < thread_count - 1, seconds_to_milliseconds(1)))
+            assertion.is_true(timeslice_sleep_wait_when(Function() (+i) < thread_count - 1, seconds_to_milliseconds(1)))
             Return True
         End Function
 
         Private Function receiver() As Boolean
             e.wait(10)
-            assert_true(e.wait())
+            assertion.is_true(e.wait())
             i.increment()
             Return True
         End Function

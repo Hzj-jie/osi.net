@@ -87,7 +87,7 @@ Public Class synclock_test(Of S As _boolean)
         End Function
 
         Public Overrides Function finish() As Boolean
-            assert_equal(i, +run_times)
+            assertion.equal(i, +run_times)
             Return MyBase.finish()
         End Function
     End Class

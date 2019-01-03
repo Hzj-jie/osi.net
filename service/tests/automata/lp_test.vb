@@ -36,38 +36,38 @@ Partial Public Class lp_test
 
         Public Function assert_equal(ByVal from As Int32,
                                      ByVal [to] As Int32) As Boolean
-            Return root.utt.assert_equal(from, Me.from) AndAlso
-                   root.utt.assert_equal([to], Me.to)
+            Return root.utt.assertion.equal(from, Me.from) AndAlso
+                   root.utt.assertion.equal([to], Me.to)
         End Function
 
         Public Function assert_equal(ByVal from As Int32,
                                      ByVal [to] As Int32,
                                      ByVal key_word As String) As Boolean
-            Return assert_equal(from, [to]) AndAlso
-                   root.utt.assert_equal(key_word, Me.key_word)
+            Return assertion.equal(from, [to]) AndAlso
+                   root.utt.assertion.equal(key_word, Me.key_word)
         End Function
 
         Public Function assert_equal(ByVal from As Int32,
                                      ByVal varaible As Int32,
                                      ByVal [to] As Int32) As Boolean
-            Return assert_equal(from, [to]) AndAlso
-                   root.utt.assert_equal(varaible, Me.variable)
+            Return assertion.equal(from, [to]) AndAlso
+                   root.utt.assertion.equal(varaible, Me.variable)
         End Function
 
         Public Function assert_equal(ByVal from As Int32,
                                      ByVal variable As Int32,
                                      ByVal [to] As Int32,
                                      ByVal key_word As String) As Boolean
-            Return assert_equal(from, [to], key_word) AndAlso
-                   root.utt.assert_equal(key_word, Me.key_word)
+            Return assertion.equal(from, [to], key_word) AndAlso
+                   root.utt.assertion.equal(key_word, Me.key_word)
         End Function
     End Class
 
     Private Shared Function case1(ByVal p As lp(Of vector(Of transition))) As Boolean
         Dim r As lp(Of vector(Of transition)).result = Nothing
         r = p.execute(empty_string)
-        assert_true(r.has_error())
-        assert_true(r.lex_error)
+        assertion.is_true(r.has_error())
+        assertion.is_true(r.lex_error)
         Return True
     End Function
 
@@ -77,10 +77,10 @@ Partial Public Class lp_test
         Const [object] As String = "orange"
         Dim r As lp(Of vector(Of transition)).result = Nothing
         r = p.execute(strcat(subject, character.blank, predicate, character.blank, [object]))
-        assert_false(r.has_error())
-        Return (assert_not_nothing(r.result) AndAlso
-                assert_equal(r.result.size(), CUInt(4)) AndAlso
-                assert_not_nothing(r.result(0)) AndAlso
+        assertion.is_false(r.has_error())
+        Return (assertion.is_not_null(r.result) AndAlso
+                assertion.equal(r.result.size(), CUInt(4)) AndAlso
+                assertion.is_not_null(r.result(0)) AndAlso
                 r.result(0).assert_equal(test_status_id.start,
                                          test_status_id.after_subject,
                                          subject) AndAlso
@@ -100,7 +100,7 @@ Partial Public Class lp_test
         If write_syntax_file() Then
             Dim p As lp(Of vector(Of transition)) = Nothing
             p = lp(Of vector(Of transition)).ctor(Of lp_test)(syntax_file_name)
-            Return assert_not_nothing(p) AndAlso
+            Return assertion.is_not_null(p) AndAlso
                    (case1(p) AndAlso
                     case2(p))
         Else

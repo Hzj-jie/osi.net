@@ -50,8 +50,8 @@ Public Class cache_case2
     End Sub
 
     Private Sub assert_key_value(ByVal key As Int32, ByVal value As Int32)
-        assert_not_equal(m.find(key), m.end())
-        assert_equal((+m.find(key)).second, value)
+        assertion.not_equal(m.find(key), m.end())
+        assertion.equal((+m.find(key)).second, value)
     End Sub
 
     Private Sub [get]()
@@ -61,12 +61,12 @@ Public Class cache_case2
         If c.get(key, value) Then
             assert_key_value(key, value)
         Else
-            assert_equal(m.find(key), m.end())
+            assertion.equal(m.find(key), m.end())
         End If
     End Sub
 
     Private Sub size()
-        assert_equal(c.size(), m.size())
+        assertion.equal(c.size(), m.size())
     End Sub
 
     Private Sub clear()
@@ -77,7 +77,7 @@ Public Class cache_case2
     Private Sub [erase]()
         Dim key As Int32 = 0
         key = random_key()
-        assert_equal(c.erase(key), m.erase(key))
+        assertion.equal(c.erase(key), m.erase(key))
     End Sub
 
     Private Sub foreach()
@@ -92,11 +92,11 @@ Public Class cache_case2
         Dim key As Int32 = 0
         key = random_key()
         If c.have(key) Then
-            assert_not_equal(m.find(key), m.end())
+            assertion.not_equal(m.find(key), m.end())
         End If
     End Sub
 
     Private Sub empty()
-        assert_equal(c.empty(), m.empty())
+        assertion.equal(c.empty(), m.empty())
     End Sub
 End Class

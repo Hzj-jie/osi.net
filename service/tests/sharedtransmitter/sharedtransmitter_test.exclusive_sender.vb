@@ -18,7 +18,7 @@ Partial Public Class sharedtransmitter_test
 
         Public Overrides Function send(ByVal i As Int32) As event_comb
             Return New event_comb(Function() As Boolean
-                                      If assert_true(referred()) Then
+                                      If assertion.is_true(referred()) Then
                                           component().send(i, address(), port())
                                           Return goto_end()
                                       Else

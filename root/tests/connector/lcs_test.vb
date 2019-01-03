@@ -36,7 +36,7 @@ Public Class lcs_test
             s1 = lcs(a, b)
             Dim s2 As String = Nothing
             s2 = stupid_lcs(a, b)
-            assert_equal(s1, s2)
+            assertion.equal(s1, s2)
             Return True
         End Function
     End Class

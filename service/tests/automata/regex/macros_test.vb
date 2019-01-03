@@ -21,7 +21,7 @@ Namespace rlexer
 
         Public Overrides Function run() As Boolean
             For i As UInt32 = 0 To array_size(pairs) - uint32_1
-                assert_equal(macros.default.expand(pairs(i, 0)), pairs(i, 1))
+                assertion.equal(macros.default.expand(pairs(i, 0)), pairs(i, 1))
             Next
             Return True
         End Function

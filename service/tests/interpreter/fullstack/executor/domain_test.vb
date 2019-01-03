@@ -30,28 +30,28 @@ Namespace fullstack.executor
             For i As Int32 = 0 To root_size - 1
                 root.define(vars(i))
             Next
-            assert_equal(root.increment(), root_size)
+            assertion.equal(root.increment(), root_size)
             Dim domain As domain = Nothing
             Using root.create_disposer(domain)
                 For i As Int32 = 0 To sub_size - 1
                     domain.define(vars(i + root_size))
                 Next
-                assert_equal(domain.increment(), sub_size)
-                assert_equal(root.increment() + domain.increment(), root_size + sub_size)
-                assert_equal(CInt(vs.size()), root_size + sub_size)
-                assert_reference_equal(domain.parent(), root)
+                assertion.equal(domain.increment(), sub_size)
+                assertion.equal(root.increment() + domain.increment(), root_size + sub_size)
+                assertion.equal(CInt(vs.size()), root_size + sub_size)
+                assertion.reference_equal(domain.parent(), root)
                 For i As Int32 = 0 To sub_size - 1
-                    assert_reference_equal(domain.variable(0, i), vars(i + root_size))
+                    assertion.reference_equal(domain.variable(0, i), vars(i + root_size))
                 Next
                 For i As Int32 = 0 To root_size - 1
-                    assert_reference_equal(domain.variable(1, i), vars(i))
+                    assertion.reference_equal(domain.variable(1, i), vars(i))
                 Next
             End Using
-            assert_equal(domain.increment(), 0)
-            assert_equal(root.increment(), root_size)
-            assert_equal(CInt(vs.size()), root_size)
+            assertion.equal(domain.increment(), 0)
+            assertion.equal(root.increment(), root_size)
+            assertion.equal(CInt(vs.size()), root_size)
             For i As Int32 = 0 To root_size - 1
-                assert_reference_equal(root.variable(0, i), vars(i))
+                assertion.reference_equal(root.variable(0, i), vars(i))
             Next
 
             Return True

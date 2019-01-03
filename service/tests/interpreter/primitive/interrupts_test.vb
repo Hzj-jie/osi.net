@@ -15,12 +15,12 @@ Namespace primitive
             Dim f As interrupts = Nothing
             f = New interrupts()
             Dim p As UInt32 = 0
-            assert_true(f.find_interrupt("stdout", p))
-            assert_equal(p, uint32_0)
-            assert_true(f.find_interrupt("stderr", p))
-            assert_equal(p, uint32_1)
-            assert_true(f.find_interrupt("stdin", p))
-            assert_equal(p, uint32_2)
+            assertion.is_true(f.find_interrupt("stdout", p))
+            assertion.equal(p, uint32_0)
+            assertion.is_true(f.find_interrupt("stderr", p))
+            assertion.equal(p, uint32_1)
+            assertion.is_true(f.find_interrupt("stdin", p))
+            assertion.equal(p, uint32_2)
             Return True
         End Function
     End Class

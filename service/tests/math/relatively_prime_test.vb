@@ -42,7 +42,7 @@ Public Class relatively_prime_test
             Dim y As Int32 = 0
             x = rnd_int(0, max_int32)
             y = rnd_int(0, max_int32)
-            assert_equal(relatively_prime(x, y), stupid_relatively_prime(x, y), x, character.tab, y)
+            assertion.equal(relatively_prime(x, y), stupid_relatively_prime(x, y), x, character.tab, y)
         Next
         Return True
     End Function

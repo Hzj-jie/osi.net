@@ -20,14 +20,14 @@ Public Class ##TYPE##_bytes_test
             b = bytes_serializer.to_bytes(x)
             Dim y As ##TYPE## = Nothing
             Dim p As UInt32 = uint32_0
-            assert_true(bytes_serializer.consume_from(b, p, y))
-            assert_equal(p, array_size(b))
-            assert_equal(x, y)
-            assert_true(bytes_serializer.from_bytes(b, y))
-            assert_equal(x, y)
+            assertion.is_true(bytes_serializer.consume_from(b, p, y))
+            assertion.equal(p, array_size(b))
+            assertion.equal(x, y)
+            assertion.is_true(bytes_serializer.from_bytes(b, y))
+            assertion.equal(x, y)
             Dim o() As Byte = Nothing
             ReDim o(-1)
-            assert_false(bytes_serializer.append_to(y, o, uint32_0))
+            assertion.is_false(bytes_serializer.append_to(y, o, uint32_0))
 #If ##ACCEPT_ZERO## AndAlso ##ACCEPT_MAX## AndAlso (##HAS_NPOS## OrElse ##HAS_INF##) Then
 #If ##HAS_NPOS## Then
             If x.npos() Then
@@ -40,13 +40,13 @@ Public Class ##TYPE##_bytes_test
             Else
                 ReDim o(CInt(##TYPE##.sizeof_value + sizeof_int8 - uint32_1))
             End If
-            assert_true(bytes_serializer.append_to(y, o, uint32_0))
-            assert_equal(memcmp(b, o), 0)
+            assertion.is_true(bytes_serializer.append_to(y, o, uint32_0))
+            assertion.equal(memcmp(b, o), 0)
 #End If
             ReDim o(CInt(##TYPE##.sizeof_value + sizeof_int8))
             Dim offset As UInt32 = uint32_0
-            assert_true(bytes_serializer.append_to(y, o, offset))
-            assert_equal(memcmp(b, o, offset), 0)
+            assertion.is_true(bytes_serializer.append_to(y, o, offset))
+            assertion.equal(memcmp(b, o, offset), 0)
         Next
         Return True
     End Function

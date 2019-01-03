@@ -41,7 +41,7 @@ Public MustInherit Class istrkeyvt_case
         Return New event_comb(Function() As Boolean
                                   Return assert(Not p Is Nothing) AndAlso
                                          eva(p, create_istrkeyvt()) AndAlso
-                                         assert_not_nothing(+p) AndAlso
+                                         assertion.is_not_null(+p) AndAlso
                                          goto_end()
                               End Function)
     End Function
@@ -75,8 +75,8 @@ Public MustInherit Class istrkeyvt_case
                                   End If
                               End Function,
                               Function() As Boolean
-                                  If assert_true(ec.end_result()) AndAlso
-                                     assert_not_nothing(+keyvt) Then
+                                  If assertion.is_true(ec.end_result()) AndAlso
+                                     assertion.is_not_null(+keyvt) Then
                                       ec = (+keyvt).retire()
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -85,7 +85,7 @@ Public MustInherit Class istrkeyvt_case
                                   End If
                               End Function,
                               Function() As Boolean
-                                  If assert_true(ec.end_result()) Then
+                                  If assertion.is_true(ec.end_result()) Then
                                       ec = i.create(+keyvt)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -94,7 +94,7 @@ Public MustInherit Class istrkeyvt_case
                                   End If
                               End Function,
                               Function() As Boolean
-                                  If assert_true(ec.end_result()) Then
+                                  If assertion.is_true(ec.end_result()) Then
                                       ec = (+keyvt).retire()
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -103,7 +103,7 @@ Public MustInherit Class istrkeyvt_case
                                   End If
                               End Function,
                               Function() As Boolean
-                                  If assert_true(ec.end_result()) Then
+                                  If assertion.is_true(ec.end_result()) Then
                                       ec = (+keyvt).stop()
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -112,7 +112,7 @@ Public MustInherit Class istrkeyvt_case
                                   End If
                               End Function,
                               Function() As Boolean
-                                  If assert_true(ec.end_result()) Then
+                                  If assertion.is_true(ec.end_result()) Then
                                       ec = clean_up(+keyvt)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -121,7 +121,7 @@ Public MustInherit Class istrkeyvt_case
                                   End If
                               End Function,
                               Function() As Boolean
-                                  Return assert_true(ec.end_result()) AndAlso
+                                  Return assertion.is_true(ec.end_result()) AndAlso
                                          goto_end()
                               End Function)
     End Function
@@ -171,13 +171,13 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   If d.find(k) = d.end() Then
-                                      assert_nothing(+v)
-                                      assert_equal(+t, npos)
+                                      assertion.is_null(+v)
+                                      assertion.equal(+t, npos)
                                   Else
-                                      assert_equal(memcmp((+v), d(k).first), 0)
-                                      assert_equal((+t), d(k).second)
+                                      assertion.equal(memcmp((+v), d(k).first), 0)
+                                      assertion.equal((+t), d(k).second)
                                   End If
                                   Return goto_end()
                               End Function)
@@ -200,8 +200,8 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_true(+r)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.is_true(+r)
                                   If d.find(k) = d.end() Then
                                       d(k) = make_pair(v, t)
                                   Else
@@ -230,8 +230,8 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_equal(+p, d.erase(k))
+                                  assertion.is_true(ec.end_result())
+                                  assertion.equal(+p, d.erase(k))
                                   Return goto_end()
                               End Function)
     End Function
@@ -249,8 +249,8 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_equal(+p, d.find(k) <> d.end())
+                                  assertion.is_true(ec.end_result())
+                                  assertion.equal(+p, d.find(k) <> d.end())
                                   Return goto_end()
                               End Function)
     End Function
@@ -266,11 +266,11 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  If assert_not_nothing(+r) Then
-                                      assert_equal((+r).size(), d.size())
+                                  assertion.is_true(ec.end_result())
+                                  If assertion.is_not_null(+r) Then
+                                      assertion.equal((+r).size(), d.size())
                                       For i As Int32 = 0 To (+r).size() - 1
-                                          assert_true(d.find((+r)(i)) <> d.end())
+                                          assertion.is_true(d.find((+r)(i)) <> d.end())
                                       Next
                                   End If
                                   Return goto_end()
@@ -294,8 +294,8 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_true(+r)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.is_true(+r)
                                   d(k) = make_pair(v, t)
                                   Return goto_end()
                               End Function)
@@ -315,10 +315,10 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                               End Function,
                               Function() As Boolean
                                   If (+v) = npos Then
-                                      assert_true(d.find(k) = d.end())
+                                      assertion.is_true(d.find(k) = d.end())
                                   Else
-                                      If assert_true(d.find(k) <> d.end()) Then
-                                          assert_equal(+v, array_size(d(k).first))
+                                      If assertion.is_true(d.find(k) <> d.end()) Then
+                                          assertion.equal(+v, array_size(d(k).first))
                                       End If
                                   End If
                                   Return goto_end()
@@ -336,8 +336,8 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_false(+r)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.is_false(+r)
                                   Return goto_end()
                               End Function)
     End Function
@@ -353,8 +353,8 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_equal(+r, d.empty())
+                                  assertion.is_true(ec.end_result())
+                                  assertion.equal(+r, d.empty())
                                   Return goto_end()
                               End Function)
     End Function
@@ -373,7 +373,7 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                   End If
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   d.clear()
                                   Return goto_end()
                               End Function)
@@ -390,8 +390,8 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_more_or_equal(+r, 0)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.more_or_equal(+r, 0)
                                   Return goto_end()
                               End Function)
     End Function
@@ -407,8 +407,8 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_more_or_equal(+r, 0)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.more_or_equal(+r, 0)
                                   Return goto_end()
                               End Function)
     End Function
@@ -424,8 +424,8 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_equal(+r, d.size())
+                                  assertion.is_true(ec.end_result())
+                                  assertion.equal(+r, d.size())
                                   Return goto_end()
                               End Function)
     End Function
@@ -439,7 +439,7 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
     End Function
@@ -456,7 +456,7 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
 #Else
@@ -481,8 +481,8 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_equal(+r, d.find(k) = d.end())
+                                  assertion.is_true(ec.end_result())
+                                  assertion.equal(+r, d.find(k) = d.end())
                                   If +r Then
                                       d(k) = make_pair(v, t)
                                   End If
@@ -543,7 +543,7 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                   If round < round_count Then
                                       If round > 0 Then
                                           assert(Not ec Is Nothing)
-                                          assert_true(ec.end_result())
+                                          assertion.is_true(ec.end_result())
                                       End If
                                       round += 1
                                       ec = rnd_case(keyvt, d)
@@ -567,7 +567,7 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  Return assert_true(ec.end_result()) AndAlso
+                                  Return assertion.is_true(ec.end_result()) AndAlso
                                          goto_end()
                               End Function)
     End Function

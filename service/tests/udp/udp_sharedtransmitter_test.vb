@@ -58,10 +58,10 @@ Public Class udp_sharedtransmitter_test
                                                      with_host_or_ip("localhost").
                                                      create()
             failure_count.set(0)
-            assert_true(c.[New](incoming_powerpoint,
+            assertion.is_true(c.[New](incoming_powerpoint,
                                 incoming_powerpoint.local_port,
                                 listen_component))
-            assert_true(c.[New](incoming_powerpoint,
+            assertion.is_true(c.[New](incoming_powerpoint,
                                 incoming_powerpoint.local_port,
                                 listen_component,
                                 listen_dispenser))
@@ -91,7 +91,7 @@ Public Class udp_sharedtransmitter_test
                                            with_collection(c).
                                            with_functor(Of functor)().
                                            create()
-                                  If assert_not_nothing(sc) Then
+                                  If assertion.is_not_null(sc) Then
                                       r = New pointer(Of Byte())()
                                       Return goto_next()
                                   Else
@@ -124,7 +124,7 @@ Public Class udp_sharedtransmitter_test
                               End Function,
                               Function() As Boolean
                                   If ec.end_result() Then
-                                      assert_array_equal(+r, data)
+                                      assertion.array_equal(+r, data)
                                   Else
                                       failure_count.increment()
                                   End If
@@ -171,7 +171,7 @@ Public Class udp_sharedtransmitter_test
     Public Overrides Function create() As event_comb
         AddHandler c.new_sharedtransmitter_exported,
                    Sub(ByVal new_component As sharedtransmitter(Of UInt16, String, UdpClient, Byte(), powerpoint))
-                       If assert_not_nothing(new_component) Then
+                       If assertion.is_not_null(new_component) Then
                            echo(new_component)
                        End If
                    End Sub

@@ -27,11 +27,11 @@ Namespace logic
         End Sub
 
         Protected Overrides Sub check_result(ByVal e As not_null(Of simulator))
-            assert_equal(e.get().access_stack_as_bool(data_ref.abs(0)), False)
-            assert_equal(e.get().access_stack_as_uint32(data_ref.abs(1)), CUInt(1326))
-            assert_equal(e.get().access_stack_as_uint32(data_ref.abs(2)), CUInt(51))
-            assert_equal(e.get().access_stack_as_uint32(data_ref.abs(3)), CUInt(1))
-            assert_equal(e.get().access_stack_as_uint32(data_ref.abs(4)), CUInt(50))
+            assertion.equal(e.get().access_stack_as_bool(data_ref.abs(0)), False)
+            assertion.equal(e.get().access_stack_as_uint32(data_ref.abs(1)), CUInt(1326))
+            assertion.equal(e.get().access_stack_as_uint32(data_ref.abs(2)), CUInt(51))
+            assertion.equal(e.get().access_stack_as_uint32(data_ref.abs(3)), CUInt(1))
+            assertion.equal(e.get().access_stack_as_uint32(data_ref.abs(4)), CUInt(50))
         End Sub
     End Class
 End Namespace

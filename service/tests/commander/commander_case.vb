@@ -106,7 +106,7 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
     End Function
 
     Public Overrides Function run() As Boolean
-        assert_true(dispatcher.register(ask_command, AddressOf handle))
+        assertion.is_true(dispatcher.register(ask_command, AddressOf handle))
         Dim pp As idevice_pool(Of herald) = Nothing
         Dim udp_receive As idevice_pool(Of herald) = Nothing
         Dim s As http.server = Nothing
@@ -115,27 +115,27 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
                      with_token(token).
                      with_port(tcp_port).
                      create().herald_device_pool()
-            assert_true(-(New responder(pp, npos, dispatcher)))
+            assertion.is_true(-(New responder(pp, npos, dispatcher)))
             commander_case.opp.set(tcp.powerpoint.creator.[New]().
                                        with_token(token).
                                        with_endpoint(New IPEndPoint(IPAddress.Loopback, tcp_port)).
                                        with_max_connected(CUInt(connection_count)).
                                        create().herald_device_pool())
-            assert_true(timeslice_sleep_wait_when(Function() pp.total_count() < connection_count,
+            assertion.is_true(timeslice_sleep_wait_when(Function() pp.total_count() < connection_count,
                                                   seconds_to_milliseconds(30)))
         End If
         If enable_http Then
             s = New http.server(New http.server.configuration() With
                                 {.ls = New http.link_status(seconds_to_milliseconds(15))})
-            assert_true(s.add_port(http_port))
-            assert_true(s.start())
-            assert_true(http.responder.respond(s, dispatcher))
+            assertion.is_true(s.add_port(http_port))
+            assertion.is_true(s.start())
+            assertion.is_true(http.responder.respond(s, dispatcher))
         End If
         If enable_udp Then
             udp_receive = udp.powerpoint.creator.[New]().
                               with_local_port(udp_port).
                               create().herald_device_pool()
-            assert_true(-(New responder(udp_receive, npos, dispatcher)))
+            assertion.is_true(-(New responder(udp_receive, npos, dispatcher)))
             commander_case.udp_sender.set(udp.powerpoint.creator.[New]().
                                               with_remote_endpoint(New IPEndPoint(IPAddress.Loopback, udp_port)).
                                               create().herald_device_pool())
@@ -154,7 +154,7 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
             commander_case.udp_sender.get().close()
             udp_receive.close()
         End If
-        assert_true(dispatcher.erase(ask_command))
+        assertion.is_true(dispatcher.erase(ask_command))
         Return True
     End Function
 
@@ -314,21 +314,21 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
         End Function
 
         Public Overrides Function finish() As Boolean
-            assert_more_or_equal_and_less_or_equal(trigger_times(), 0.9999 * run_times(), run_times())
+            assertion.more_or_equal_and_less_or_equal(trigger_times(), 0.9999 * run_times(), run_times())
             Dim div As Int32 = 0
             div = enabled_choices
             assert(div > 0)
             If enable_tcp Then
-                assert_more_or_equal_and_less_or_equal(+tcp_suc, run_times() / div * 0.9, run_times() / div * 1.1)
+                assertion.more_or_equal_and_less_or_equal(+tcp_suc, run_times() / div * 0.9, run_times() / div * 1.1)
             End If
             If enable_http_get Then
-                assert_more_or_equal_and_less_or_equal(+http_get_suc, run_times() / div * 0.9, run_times() / div * 1.1)
+                assertion.more_or_equal_and_less_or_equal(+http_get_suc, run_times() / div * 0.9, run_times() / div * 1.1)
             End If
             If enable_http_post Then
-                assert_more_or_equal_and_less_or_equal(+http_post_suc, run_times() / div * 0.9, run_times() / div * 1.1)
+                assertion.more_or_equal_and_less_or_equal(+http_post_suc, run_times() / div * 0.9, run_times() / div * 1.1)
             End If
             If enable_udp Then
-                assert_more_or_equal_and_less_or_equal(+udp_suc, run_times() / div * 0.9, run_times() / div * 1.1)
+                assertion.more_or_equal_and_less_or_equal(+udp_suc, run_times() / div * 0.9, run_times() / div * 1.1)
             End If
             Return MyBase.finish()
         End Function

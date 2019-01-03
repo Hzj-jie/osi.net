@@ -22,8 +22,8 @@ Public NotInheritable Class chunk_test
 
         Dim d As chunks = Nothing
         ' TODO: How to compare null with empty array?
-        assert_true(chunks.[New](c.export(), d))
-        assert_equal(c, d)
+        assertion.is_true(chunks.[New](c.export(), d))
+        assertion.equal(c, d)
     End Sub
 
     <test>
@@ -40,38 +40,38 @@ Public NotInheritable Class chunk_test
         b = c.export()
 
         Dim d As chunks = Nothing
-        assert_true(chunks.[New](b, d))
+        assertion.is_true(chunks.[New](b, d))
 
-        assert_equal(c, d)
+        assertion.equal(c, d)
 
         Using code_block
             Dim i As Int32 = 0
-            assert_true(d.read(0, i))
-            assert_equal(i, 1)
+            assertion.is_true(d.read(0, i))
+            assertion.equal(i, 1)
         End Using
 
         Using code_block
             Dim i As Double = 0
-            assert_true(d.read(1, i))
-            assert_equal(i, 1.0)
+            assertion.is_true(d.read(1, i))
+            assertion.equal(i, 1.0)
         End Using
 
         Using code_block
             Dim i As String = Nothing
-            assert_true(d.read(2, i))
-            assert_equal(i, "abc")
+            assertion.is_true(d.read(2, i))
+            assertion.equal(i, "abc")
         End Using
 
         Using code_block
             Dim i As map(Of String, String) = Nothing
-            assert_true(d.read(3, i))
-            assert_equal(i, map.of(pair.of("abc", "def"), pair.of("efg", "hij")))
+            assertion.is_true(d.read(3, i))
+            assertion.equal(i, map.of(pair.of("abc", "def"), pair.of("efg", "hij")))
         End Using
 
         Using code_block
             Dim i As vector(Of Int32) = Nothing
-            assert_true(d.read(4, i))
-            assert_equal(i, vector.of(1, 2, 3))
+            assertion.is_true(d.read(4, i))
+            assertion.equal(i, vector.of(1, 2, 3))
         End Using
     End Sub
 
@@ -81,11 +81,11 @@ Public NotInheritable Class chunk_test
         b = rnd_bytes(rnd_uint(10, 100))
         Dim serialized() As Byte = Nothing
         Using ms As MemoryStream = New MemoryStream()
-            assert_true(chunk.append_to(b, ms))
+            assertion.is_true(chunk.append_to(b, ms))
             serialized = ms.ToArray()
         End Using
-        assert_true(chunk.parse_head(serialized, serialized))
-        assert_equal(array_size(serialized), array_size(b))
+        assertion.is_true(chunk.parse_head(serialized, serialized))
+        assertion.equal(array_size(serialized), array_size(b))
     End Sub
 
     Private Sub New()

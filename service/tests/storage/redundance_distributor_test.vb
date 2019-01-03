@@ -34,15 +34,15 @@ Public Class redundance_distributor_test
     Private Function register_istrkeyvt(ByVal n As String, ByVal broken As Boolean) As Boolean
         Dim i As istrkeyvt = Nothing
         i = memory.ctor()
-        Return assert_not_nothing(i) AndAlso
-               assert_true(manager.register(n, If(broken, New broken_istrkeyvt(i), i)))
+        Return assertion.is_not_null(i) AndAlso
+               assertion.is_true(manager.register(n, If(broken, New broken_istrkeyvt(i), i)))
     End Function
 
     Protected Overrides Function clean_up(ByVal i As istrkeyvt) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  assert_true(manager.erase(istrkeyvt1_name, [default](Of istrkeyvt).null))
-                                  assert_true(manager.erase(istrkeyvt2_name, [default](Of istrkeyvt).null))
+                                  assertion.is_true(manager.erase(istrkeyvt1_name, [default](Of istrkeyvt).null))
+                                  assertion.is_true(manager.erase(istrkeyvt2_name, [default](Of istrkeyvt).null))
                                   ec = MyBase.clean_up(i)
                                   Return waitfor(ec) AndAlso
                                          goto_next()

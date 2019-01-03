@@ -33,14 +33,14 @@ Public Class shared_ctor_callstack_behavior_test
     Public Overrides Function run() As Boolean
         Dim x As B = Nothing
         x = New B()
-        assert_true(strcontains(A_stack, ".B..cctor()"))
-        assert_true(in_shared_constructor_of(A_stack, GetType(B)))
+        assertion.is_true(strcontains(A_stack, ".B..cctor()"))
+        assertion.is_true(in_shared_constructor_of(A_stack, GetType(B)))
 
-        assert_false(strcontains(B_stack, ".A..cctor()"))
-        assert_false(in_shared_constructor_of(B_stack, GetType(A)))
+        assertion.is_false(strcontains(B_stack, ".A..cctor()"))
+        assertion.is_false(in_shared_constructor_of(B_stack, GetType(A)))
 
-        assert_equal(A_order, 0)
-        assert_equal(B_order, 1)
+        assertion.equal(A_order, 0)
+        assertion.equal(B_order, 1)
         Return True
     End Function
 End Class

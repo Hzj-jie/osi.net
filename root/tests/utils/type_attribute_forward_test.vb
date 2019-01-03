@@ -36,7 +36,7 @@ Public Class type_attribute_forward_test
     End Sub
 
     Private Shared Function run_case() As Boolean
-        assert_equal(type_attribute.of(Of a).get(Of String)(),
+        assertion.equal(type_attribute.of(Of a).get(Of String)(),
                      type_attribute.of(Of b).get(Of String)())
         Return True
     End Function

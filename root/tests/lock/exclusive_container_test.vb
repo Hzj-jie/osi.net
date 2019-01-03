@@ -53,9 +53,9 @@ Public Class exclusive_container_test
 
         Public Overrides Function run() As Boolean
             If ec.create(Of fake_class)() Then
-                assert_equal(Interlocked.Increment(create_suc), 1)
+                assertion.equal(Interlocked.Increment(create_suc), 1)
             End If
-            If assert_true(ec.has_value()) Then
+            If assertion.is_true(ec.has_value()) Then
                 ec.get().ref()
             End If
             Return True
@@ -63,9 +63,9 @@ Public Class exclusive_container_test
 
         Public Overrides Function finish() As Boolean
             If MyBase.finish() Then
-                assert_equal(create_suc, 1)
-                If assert_true(ec.has_value()) Then
-                    assert_equal(ec.get().ref_count(), CInt(thread_count * repeat_count))
+                assertion.equal(create_suc, 1)
+                If assertion.is_true(ec.has_value()) Then
+                    assertion.equal(ec.get().ref_count(), CInt(thread_count * repeat_count))
                 End If
                 Return True
             Else
@@ -97,16 +97,16 @@ Public Class exclusive_container_test
 
         Public Overrides Function run() As Boolean
             If ec.clear() Then
-                assert_equal(Interlocked.Increment(clear_suc), 1)
+                assertion.equal(Interlocked.Increment(clear_suc), 1)
             End If
-            assert_false(ec.has_value())
+            assertion.is_false(ec.has_value())
             Return True
         End Function
 
         Public Overrides Function finish() As Boolean
             If MyBase.finish() Then
-                assert_equal(clear_suc, 1)
-                assert_false(ec.has_value())
+                assertion.equal(clear_suc, 1)
+                assertion.is_false(ec.has_value())
                 Return True
             Else
                 Return False

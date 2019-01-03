@@ -13,18 +13,18 @@ Public NotInheritable Class atomic_ref_T_test
     Private Shared Sub can_exchange()
         Dim r As atomic_ref(Of String) = Nothing
         r = New atomic_ref(Of String)()
-        assert_nothing(r.exchange("abc"))
-        assert_reference_equal(r.exchange("def"), "abc")
-        assert_reference_equal(r.get(), "def")
+        assertion.is_null(r.exchange("abc"))
+        assertion.reference_equal(r.exchange("def"), "abc")
+        assertion.reference_equal(r.get(), "def")
     End Sub
 
     <test>
     Private Shared Sub can_compare_exchange()
         Dim r As atomic_ref(Of String) = Nothing
         r = New atomic_ref(Of String)()
-        assert_nothing(r.compare_exchange("abc", Nothing))
-        assert_reference_equal(r.compare_exchange("def", "abc"), "abc")
-        assert_reference_equal(r.get(), "def")
+        assertion.is_null(r.compare_exchange("abc", Nothing))
+        assertion.reference_equal(r.compare_exchange("def", "abc"), "abc")
+        assertion.reference_equal(r.get(), "def")
     End Sub
 
     Private Sub New()

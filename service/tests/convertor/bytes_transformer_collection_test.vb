@@ -55,7 +55,7 @@ Public Class bytes_transformer_collection_test
     Public Overrides Function run() As Boolean
         Dim bt As bytes_transformer_collection = Nothing
         bt = New bytes_transformer_collection()
-        assert_true(bt.chain(New bytes_transformer_wrapper(AddressOf trans0),
+        assertion.is_true(bt.chain(New bytes_transformer_wrapper(AddressOf trans0),
                              New bytes_transformer_wrapper(AddressOf trans1),
                              New bytes_transformer_wrapper(AddressOf trans2),
                              New bytes_transformer_wrapper(AddressOf trans3)))
@@ -64,17 +64,17 @@ Public Class bytes_transformer_collection_test
         i = rnd_bytes()
         assert(Not isemptyarray(i))
 
-        assert_true(bt.transform_forward(i, o))
-        If assert_equal(array_size(o), array_size(i) + 4) Then
+        assertion.is_true(bt.transform_forward(i, o))
+        If assertion.equal(array_size(o), array_size(i) + 4) Then
             For j As Int32 = 0 To 3
-                assert_equal(o(array_size(i) + j), j)
+                assertion.equal(o(array_size(i) + j), j)
             Next
         End If
 
-        assert_true(bt.transform_backward(i, o))
-        If assert_equal(array_size(o), array_size(i) + 4) Then
+        assertion.is_true(bt.transform_backward(i, o))
+        If assertion.equal(array_size(o), array_size(i) + 4) Then
             For j As Int32 = 0 To 3
-                assert_equal(o(array_size(i) + j), 3 - j)
+                assertion.equal(o(array_size(i) + j), 3 - j)
             Next
         End If
 

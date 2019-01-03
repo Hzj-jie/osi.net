@@ -55,14 +55,14 @@ Friend Class segment_tree_case
             If Not verify OrElse
                (v(i).second.second - v(i).second.first <= 1) OrElse
                rnd_bool() Then
-                assert_true(t.emplace(v(i).second.first, v(i).second.second, v(i).first))
+                assertion.is_true(t.emplace(v(i).second.first, v(i).second.second, v(i).first))
             Else
                 Dim tmp As Int64 = 0
                 tmp = rnd_int64(v(i).second.first, v(i).second.second)
-                assert_true(t.emplace(v(i).second.first,
+                assertion.is_true(t.emplace(v(i).second.first,
                                       If(rnd_bool(), tmp, rnd_int64(tmp, v(i).second.second)),
                                       v(i).first))
-                assert_true(t.emplace(If(rnd_bool(), tmp + 1, rnd_int64(v(i).second.first + 1, tmp + 1)),
+                assertion.is_true(t.emplace(If(rnd_bool(), tmp + 1, rnd_int64(v(i).second.first + 1, tmp + 1)),
                                       v(i).second.second,
                                       v(i).first))
             End If
@@ -70,10 +70,10 @@ Friend Class segment_tree_case
                 For j As Int64 = v(i).second.first To v(i).second.second
                     Dim it As segment_tree(Of Int64).iterator = Nothing
                     it = t.find(j)
-                    If assert_not_nothing(it) Then
-                        assert_false(it.is_end())
-                        assert_true((+it).has_value())
-                        assert_equal((+it).value(), v(i).first)
+                    If assertion.is_not_null(it) Then
+                        assertion.is_false(it.is_end())
+                        assertion.is_true((+it).has_value())
+                        assertion.equal((+it).value(), v(i).first)
                     End If
                 Next
             End If
@@ -85,16 +85,16 @@ Friend Class segment_tree_case
                 assert(i >= v(vi).second.first)
                 Dim it As segment_tree(Of Int64).iterator = Nothing
                 it = t.find(i)
-                If assert_not_nothing(it) Then
-                    assert_false(it.is_end())
+                If assertion.is_not_null(it) Then
+                    assertion.is_false(it.is_end())
                     If i <= v(vi).second.second Then
-                        assert_true((+it).has_value())
-                        assert_equal((+it).value(), v(vi).first)
+                        assertion.is_true((+it).has_value())
+                        assertion.equal((+it).value(), v(vi).first)
                     Else
                         assert(vi < v.size() - 1)
                         assert(i <= v(vi + 1).second.first)
                         If i < v(vi + 1).second.first Then
-                            assert_false((+it).has_value())
+                            assertion.is_false((+it).has_value())
                         Else
                             vi += 1
                             i -= 1
@@ -106,13 +106,13 @@ Friend Class segment_tree_case
             For i As Int64 = v.front().second.first - 100 To v.front().second.first - 1
                 Dim it As segment_tree(Of Int64).iterator = Nothing
                 it = t.find(i)
-                assert_true(it.null_or_end() OrElse Not (+it).has_value())
+                assertion.is_true(it.null_or_end() OrElse Not (+it).has_value())
             Next
             assert(v.back().second.second <= max_int64 - 100)
             For i As Int64 = v.back().second.second + 1 To v.back().second.second + 100
                 Dim it As segment_tree(Of Int64).iterator = Nothing
                 it = t.find(i)
-                assert_true(it.null_or_end() OrElse Not (+it).has_value())
+                assertion.is_true(it.null_or_end() OrElse Not (+it).has_value())
             Next
         End If
         Return True

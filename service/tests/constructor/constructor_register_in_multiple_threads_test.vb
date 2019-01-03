@@ -58,15 +58,15 @@ Public Class constructor_register_in_multiple_threads_test
     <finish>
     Private Shared Sub verify()
         Dim r As test_class = Nothing
-        assert_true(c.constructor.sync_resolve(New var(), r))
-        assert_not_nothing(r)
-        assert_more_or_equal_and_less(r.i, uint32_0, thread_count)
+        assertion.is_true(c.constructor.sync_resolve(New var(), r))
+        assertion.is_not_null(r)
+        assertion.more_or_equal_and_less(r.i, uint32_0, thread_count)
 
         For i As UInt32 = 0 To thread_count - uint32_1
             r = Nothing
-            assert_true(c.constructor.sync_resolve(New var(strcat("--type=", i)), r))
-            assert_not_nothing(r)
-            assert_equal(r.i, i)
+            assertion.is_true(c.constructor.sync_resolve(New var(strcat("--type=", i)), r))
+            assertion.is_not_null(r)
+            assertion.equal(r.i, i)
         Next
     End Sub
 End Class

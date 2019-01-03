@@ -19,7 +19,7 @@ Friend Class list_case
         l.push_back(guid_str())
         If validate() Then
             v.push_back(l.back())
-            assert_true(v.erase(l.front()), "cannot find first element of list in vector.")
+            assertion.is_true(v.erase(l.front()), "cannot find first element of list in vector.")
         End If
         l.front() = guid_str()
         If validate() Then
@@ -32,7 +32,7 @@ Friend Class list_case
         l.push_front(guid_str())
         If validate() Then
             v.push_back(l.front())
-            assert_true(v.erase(l.back()), "cannot find last element of list in vector.")
+            assertion.is_true(v.erase(l.back()), "cannot find last element of list in vector.")
         End If
         l.back() = guid_str()
         If validate() Then
@@ -53,10 +53,10 @@ Friend Class list_case
             s = v(rnd_int(0, v.size()))
             If rnd_int(0, 2) = 0 Then
                 it = l.find(s)
-                assert_true(it <> l.end(), "cannot find " + s + " in list.")
+                assertion.is_true(it <> l.end(), "cannot find " + s + " in list.")
             Else
                 it = l.rfind(s)
-                assert_true(it <> l.rend(), "cannot find " + s + " in list.")
+                assertion.is_true(it <> l.rend(), "cannot find " + s + " in list.")
             End If
         Else
             it = l.find(l(rnd_int(0, l.size())))
@@ -71,7 +71,7 @@ Friend Class list_case
         Dim s As String = Nothing
         s = guid_str()
         l.push_back(s)
-        assert_equal(l.back(), s, "l.push_back(" + s + ") <> l.back()")
+        assertion.equal(l.back(), s, "l.push_back(" + s + ") <> l.back()")
         If validate() Then
             v.push_back(s)
         End If
@@ -81,7 +81,7 @@ Friend Class list_case
         Dim s As String = Nothing
         s = guid_str()
         l.push_front(s)
-        assert_equal(l.front(), s, "l.push_front(" + s + ") <> l.front()")
+        assertion.equal(l.front(), s, "l.push_front(" + s + ") <> l.front()")
         If validate() Then
             v.push_back(s)
         End If
@@ -109,7 +109,7 @@ Friend Class list_case
 
     Private Sub size()
         If validate() Then
-            assert_equal(l.size(), v.size(), "l.size() <> v.size()")
+            assertion.equal(l.size(), v.size(), "l.size() <> v.size()")
             Dim it As list(Of String).iterator = Nothing
             it = l.begin()
             Dim count As Int64
@@ -118,7 +118,7 @@ Friend Class list_case
                 count += 1
                 it += 1
             End While
-            assert_equal(l.size(), count, "l.size() <> count")
+            assertion.equal(l.size(), count, "l.size() <> count")
         Else
             l.size()
         End If
@@ -126,7 +126,7 @@ Friend Class list_case
 
     Private Sub empty()
         If validate() Then
-            assert_equal(l.empty(), v.empty(), "l.empty() <> v.empty()")
+            assertion.equal(l.empty(), v.empty(), "l.empty() <> v.empty()")
         Else
             l.empty()
         End If
@@ -139,7 +139,7 @@ Friend Class list_case
             v.push_back(l.back())
             Dim s As String = Nothing
             s = v(rnd_int(0, v.size()))
-            assert_not_equal(l.find(s), l.end(), "l.find(" + s + ") = l.end()")
+            assertion.not_equal(l.find(s), l.end(), "l.find(" + s + ") = l.end()")
         Else
             l.find(l(rnd_int(0, l.size())))
         End If
@@ -152,7 +152,7 @@ Friend Class list_case
             v.push_back(l.front())
             Dim s As String = Nothing
             s = v(rnd_int(0, v.size()))
-            assert_not_equal(l.rfind(s), l.rend(), "l.rfind(" + s + ") = l.rend()")
+            assertion.not_equal(l.rfind(s), l.rend(), "l.rfind(" + s + ") = l.rend()")
         Else
             l.rfind(l(rnd_int(0, l.size())))
         End If
@@ -165,7 +165,7 @@ Friend Class list_case
         i = rnd_int(0, l.size())
         If validate() Then
             v.push_back(l.back())
-            assert_true(v.erase(l(i)), "v.erase(" + l(i) + ") returns false.")
+            assertion.is_true(v.erase(l(i)), "v.erase(" + l(i) + ") returns false.")
         End If
         l(i) = guid_str()
         If validate() Then
@@ -191,7 +191,7 @@ Friend Class list_case
             s = l(i)
             l.erase(i)
             If validate() Then
-                assert_true(v.erase(s), "cannot find " + s + " in vector.")
+                assertion.is_true(v.erase(s), "cannot find " + s + " in vector.")
             End If
         End If
     End Sub
@@ -199,8 +199,8 @@ Friend Class list_case
     Private Sub clone()
         Dim d2 As list(Of String) = Nothing
         copy(d2, l)
-        assert_equal(object_compare(l, d2), object_compare_undetermined, "d2 is the same object as l.")
-        assert_equal(compare(l, d2), 0, "l<>d2 after clone.")
+        assertion.equal(object_compare(l, d2), object_compare_undetermined, "d2 is the same object as l.")
+        assertion.equal(compare(l, d2), 0, "l<>d2 after clone.")
     End Sub
 
     Private Sub clear()
@@ -208,7 +208,7 @@ Friend Class list_case
         If validate() Then
             v.clear()
         End If
-        assert_true(l.empty(), "l.empty()=false after clear.")
+        assertion.is_true(l.empty(), "l.empty()=false after clear.")
     End Sub
 
     Public Sub New(ByVal validation As Boolean)

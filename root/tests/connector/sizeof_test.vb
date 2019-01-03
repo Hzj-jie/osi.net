@@ -26,18 +26,18 @@ Public Class sizeof_test
     End Class
 
     Public Overrides Function run() As Boolean
-        assert_equal(sizeof("abc"), npos)
-        assert_equal(sizeof(Of String)(), npos)
-        assert_equal(sizeof(1), 32 \ bit_count_in_byte)
-        assert_equal(sizeof(Of Int32)(), 32 \ bit_count_in_byte)
-        assert_equal(sizeof(Of s1)(), 1)
-        assert_equal(sizeof(New s1()), 1)
-        assert_equal(sizeof(Of s2)(), 3 * cpu_address_width \ bit_count_in_byte)
-        assert_equal(sizeof(New s2()), 3 * cpu_address_width \ bit_count_in_byte)
-        assert_equal(sizeof(Of c1)(), npos)
-        assert_equal(sizeof(New c1()), npos)
-        assert_equal(sizeof(Of c2)(), npos)
-        assert_equal(sizeof(New c2()), npos)
+        assertion.equal(sizeof("abc"), npos)
+        assertion.equal(sizeof(Of String)(), npos)
+        assertion.equal(sizeof(1), 32 \ bit_count_in_byte)
+        assertion.equal(sizeof(Of Int32)(), 32 \ bit_count_in_byte)
+        assertion.equal(sizeof(Of s1)(), 1)
+        assertion.equal(sizeof(New s1()), 1)
+        assertion.equal(sizeof(Of s2)(), 3 * cpu_address_width \ bit_count_in_byte)
+        assertion.equal(sizeof(New s2()), 3 * cpu_address_width \ bit_count_in_byte)
+        assertion.equal(sizeof(Of c1)(), npos)
+        assertion.equal(sizeof(New c1()), npos)
+        assertion.equal(sizeof(Of c2)(), npos)
+        assertion.equal(sizeof(New c2()), npos)
         Return True
     End Function
 End Class

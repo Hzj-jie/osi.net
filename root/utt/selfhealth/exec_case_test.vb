@@ -22,18 +22,18 @@ Public Class exec_case_test
     End Sub
 
     Private Sub output_received(ByVal s As String)
-        assert_equal(s, "output")
+        assertion.equal(s, "output")
         out_rec = True
     End Sub
 
     Private Sub error_received(ByVal s As String)
-        assert_equal(s, "output")
+        assertion.equal(s, "output")
         err_rec = True
     End Sub
 
     Public NotOverridable Overrides Function finish() As Boolean
-        assert_true(out_rec)
-        assert_false(err_rec)
+        assertion.is_true(out_rec)
+        assertion.is_false(err_rec)
         Return MyBase.finish()
     End Function
 End Class
@@ -53,18 +53,18 @@ Public Class exec_case_test2
     End Sub
 
     Private Sub output_received(ByVal s As String)
-        assert_equal(s, "output")
+        assertion.equal(s, "output")
         out_rec = True
     End Sub
 
     Private Sub error_received(ByVal s As String)
-        assert_equal(s, "error")
+        assertion.equal(s, "error")
         err_rec = True
     End Sub
 
     Public NotOverridable Overrides Function finish() As Boolean
-        assert_false(out_rec)
-        assert_true(err_rec)
+        assertion.is_false(out_rec)
+        assertion.is_true(err_rec)
         Return MyBase.finish()
     End Function
 End Class

@@ -43,16 +43,16 @@ Public Class virtdisk_perf
                                              goto_next()
                                   End Function,
                                   Function() As Boolean
-                                      assert_true(ec.end_result())
+                                      assertion.is_true(ec.end_result())
                                       p = New pointer(Of Byte())()
                                       ec = vd.read(start, len, p)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
                                   End Function,
                                   Function() As Boolean
-                                      assert_true(ec.end_result())
-                                      assert_not_nothing(+p)
-                                      assert_equal(array_size(+p), len)
+                                      assertion.is_true(ec.end_result())
+                                      assertion.is_not_null(+p)
+                                      assertion.equal(array_size(+p), len)
                                       Return goto_end()
                                   End Function)
         End Function

@@ -23,8 +23,8 @@ Public NotInheritable Class flip_events_timeout_test
                                                         Sub()
                                                             to_low += uint32_1
                                                         End Sub))
-        assert_equal(to_high, uint32_1)
-        assert_true(lazy_sleep_wait_until(Function() As Boolean
+        assertion.equal(to_high, uint32_1)
+        assertion.is_true(lazy_sleep_wait_until(Function() As Boolean
                                               Return to_low = uint32_1
                                           End Function,
                                           1000))

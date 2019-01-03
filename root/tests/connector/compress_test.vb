@@ -21,11 +21,11 @@ Public Class compress_test
             Dim unzipped() As Byte = Nothing
             Dim zipped() As Byte = Nothing
             unzipped = rnd_bytes(rnd_int(1024, 65536))
-            If assert_true(compress(unzipped, zipped)) Then
+            If assertion.is_true(compress(unzipped, zipped)) Then
                 Dim zipunzipped() As Byte = Nothing
-                If assert_true(decompress(zipped, zipunzipped)) Then
-                    assert_array_equal(unzipped, zipunzipped)
-                    assert_array_not_equal(zipped, unzipped)
+                If assertion.is_true(decompress(zipped, zipunzipped)) Then
+                    assertion.array_equal(unzipped, zipunzipped)
+                    assertion.array_not_equal(zipped, unzipped)
                 End If
             End If
             Return True

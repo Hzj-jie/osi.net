@@ -39,14 +39,14 @@ Public Class promise_share_test
         Dim p As promise = Nothing
         p = promise.all(ps)
         p.then(Sub(ByVal result As Object)
-                   assert_nothing(result)
+                   assertion.is_null(result)
                    For i As Int32 = 0 To size - 1
-                       assert_true(finished(i))
+                       assertion.is_true(finished(i))
                    Next
                    assert(mre.force_set())
                End Sub)
         assert(mre.wait())
-        assert_more_or_equal(nowadays.milliseconds() - start_ms, 10)
+        assertion.more_or_equal(nowadays.milliseconds() - start_ms, 10)
         Return True
     End Function
 
@@ -69,11 +69,11 @@ Public Class promise_share_test
                                          Return value2
                                      End Function))
         p.then(Sub(ByVal v As Object)
-                   assert_true(v.GetType().[is](Of Int32)())
-                   assert_equal(v, value2)
+                   assertion.is_true(v.GetType().[is](Of Int32)())
+                   assertion.equal(v, value2)
                    finished = True
                End Sub)
-        assert_true(finished)
+        assertion.is_true(finished)
         assert(ce.wait())
         Return True
     End Function

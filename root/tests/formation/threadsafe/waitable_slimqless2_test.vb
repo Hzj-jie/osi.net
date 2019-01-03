@@ -52,23 +52,23 @@ Public Class waitable_slimqless2_test
                     Dim c As Int32 = 0
                     c = +passed
                     q.emplace(i)
-                    assert_true(lazy_sleep_wait_until(Function() As Boolean
-                                                          Return +passed > c
-                                                      End Function,
+                    assertion.is_true(lazy_sleep_wait_until(Function() As Boolean
+                                                                Return +passed > c
+                                                            End Function,
                                                       seconds_to_milliseconds(1)))
                 Next
                 finished.increment()
                 Return True
             Else
                 While +finished < push_threads
-                    assert_true(q.wait(seconds_to_milliseconds(1)) OrElse +finished = push_threads)
+                    assertion.is_true(q.wait(seconds_to_milliseconds(1)) OrElse +finished = push_threads)
                     If +finished = push_threads Then
                         While q.pop(Nothing)
                             passed.increment()
                         End While
                     Else
                         passed.increment()
-                        assert_true(q.pop(Nothing))
+                        assertion.is_true(q.pop(Nothing))
                     End If
                 End While
                 Return True
@@ -76,7 +76,7 @@ Public Class waitable_slimqless2_test
         End Function
 
         Public Overrides Function finish() As Boolean
-            assert_equal(+passed, test_size * push_threads)
+            assertion.equal(+passed, test_size * push_threads)
             q.clear()
             Return MyBase.finish()
         End Function

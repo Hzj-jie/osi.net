@@ -24,32 +24,32 @@ Public NotInheritable Class invoker_value_type_test
     <test>
     Private Shared Sub post_bind_struct()
         Dim i As invoker(Of Func(Of Int32)) = Nothing
-        assert_true(invoker.of(Of Func(Of Int32)).
+        assertion.is_true(invoker.of(Of Func(Of Int32)).
                         with_type(Of test_struct).
                         with_name("exec").
                         for_instance_public_methods().
                         build(i))
-        assert_true(i.post_binding())
+        assertion.is_true(i.post_binding())
         For j As Int32 = 0 To 10
             Dim f As Func(Of Int32) = Nothing
-            assert_true(i.post_bind(New test_struct(j), f))
-            assert_equal(f(), j)
+            assertion.is_true(i.post_bind(New test_struct(j), f))
+            assertion.equal(f(), j)
         Next
     End Sub
 
     <test>
     Private Shared Sub post_bind_primitive_type()
         Dim i As invoker(Of Func(Of Int32)) = Nothing
-        assert_true(invoker.of(Of Func(Of Int32)).
+        assertion.is_true(invoker.of(Of Func(Of Int32)).
                         with_type(Of Int32).
                         with_name("GetHashCode").
                         for_instance_public_methods().
                         build(i))
-        assert_true(i.post_binding())
+        assertion.is_true(i.post_binding())
         For j As Int32 = 0 To 10
             Dim f As Func(Of Int32) = Nothing
-            assert_true(i.post_bind(j, f))
-            assert_equal(f(), j.GetHashCode())
+            assertion.is_true(i.post_bind(j, f))
+            assertion.equal(f(), j.GetHashCode())
         Next
     End Sub
 

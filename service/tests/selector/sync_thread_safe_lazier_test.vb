@@ -41,7 +41,7 @@ Public Class sync_thread_safe_lazier_test
                                 f = s
                             End If
                         End Sub)
-            assert_equal(s, f)
+            assertion.equal(s, f)
             Return True
         End Function
     End Class

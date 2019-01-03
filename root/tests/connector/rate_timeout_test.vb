@@ -10,10 +10,10 @@ Public Class rate_timeout_test
         t = New rate_timeout(0)
         t.update(0)
         sleep()
-        assert_false(t.timeout())
+        assertion.is_false(t.timeout())
         t.update(100)
         sleep()
-        assert_false(t.timeout())
+        assertion.is_false(t.timeout())
         Return True
     End Function
 
@@ -22,13 +22,13 @@ Public Class rate_timeout_test
         t = New rate_timeout(1)
         t.update(0)
         sleep_seconds()
-        assert_true(t.timeout())
+        assertion.is_true(t.timeout())
         t.update(1)
         sleep_seconds(2)
-        assert_true(t.timeout())
+        assertion.is_true(t.timeout())
         t.update(100)
         sleep_seconds()
-        assert_false(t.timeout())
+        assertion.is_false(t.timeout())
         Return True
     End Function
 

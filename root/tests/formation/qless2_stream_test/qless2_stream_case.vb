@@ -61,7 +61,7 @@ Friend Class qless2_stream_case
                 End If
             Next
             If Not isemptyarray(b) Then
-                assert_true(s.push(b))
+                assertion.is_true(s.push(b))
                 Return True
             End If
         End If
@@ -74,12 +74,12 @@ Friend Class qless2_stream_case
 
     Private Sub not_popped(ByVal b() As Byte)
         If verify() Then
-            assert_equal(array_size(b) Mod sizeof_int32, uint32_0)
+            assertion.equal(array_size(b) Mod sizeof_int32, uint32_0)
             For i As Int32 = 0 To (array_size(b) \ sizeof_int32) - 1
                 Dim j As Int32 = 0
-                assert_true(bytes_int32(b, j, i * sizeof_int32))
-                If assert_true(j < max_size AndAlso j >= 0) Then
-                    assert_false(popped(j), j)
+                assertion.is_true(bytes_int32(b, j, i * sizeof_int32))
+                If assertion.is_true(j < max_size AndAlso j >= 0) Then
+                    assertion.is_false(popped(j), j)
                     popped(j) = True
                 End If
             Next
@@ -91,7 +91,7 @@ Friend Class qless2_stream_case
         ReDim b((rnd_int(7, 16) + 1) * sizeof_int32 - 1)
         Dim p As Int64 = 0
         p = s.pop(b)
-        assert_equal(p Mod sizeof_int32, 0)
+        assertion.equal(p Mod sizeof_int32, 0)
         If verify() AndAlso p < array_size(b) AndAlso p > 0 Then
             ReDim Preserve b(p - 1)
             not_popped(b)

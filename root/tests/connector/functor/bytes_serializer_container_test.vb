@@ -15,13 +15,13 @@ Public NotInheritable Class bytes_serializer_container_test
         Dim v As vector(Of String) = Nothing
         v = vector.emplace_of("abc", "bcd", "def")
         Dim r As vector(Of Byte()) = Nothing
-        assert_true(bytes_serializer.from_container(Of String)().of(v).to(r))
-        assert_equal(v.size(), r.size())
+        assertion.is_true(bytes_serializer.from_container(Of String)().of(v).to(r))
+        assertion.equal(v.size(), r.size())
         Dim v2 As vector(Of String) = Nothing
         For i As Int32 = 0 To 1
-            assert_true(bytes_serializer.to_container(Of String)().from(r).to(v2))
-            assert_equal(v.size(), v2.size())
-            assert_equal(v, v2)
+            assertion.is_true(bytes_serializer.to_container(Of String)().from(r).to(v2))
+            assertion.equal(v.size(), v2.size())
+            assertion.equal(v, v2)
         Next
     End Sub
 
@@ -30,13 +30,13 @@ Public NotInheritable Class bytes_serializer_container_test
         Dim v As vector(Of vector(Of String)) = Nothing
         v = vector.emplace_of(vector.emplace_of("abc", "bcd"), vector.emplace_of("cde", "def", "efg"))
         Dim r As vector(Of Byte()) = Nothing
-        assert_true(bytes_serializer.from_container(Of vector(Of String))().of(v).to(r))
-        assert_equal(v.size(), r.size())
+        assertion.is_true(bytes_serializer.from_container(Of vector(Of String))().of(v).to(r))
+        assertion.equal(v.size(), r.size())
         Dim v2 As vector(Of vector(Of String)) = Nothing
         For i As Int32 = 0 To 1
-            assert_true(bytes_serializer.to_container(Of vector(Of String))().from(r).to(v2))
-            assert_equal(v.size(), v2.size())
-            assert_equal(v, v2)
+            assertion.is_true(bytes_serializer.to_container(Of vector(Of String))().from(r).to(v2))
+            assertion.equal(v.size(), v2.size())
+            assertion.equal(v, v2)
         Next
     End Sub
 
@@ -45,13 +45,13 @@ Public NotInheritable Class bytes_serializer_container_test
         Dim m As map(Of String, Int32) = Nothing
         m = map.emplace_of(pair.emplace_of("abc", 1), pair.emplace_of("bcd", 2), pair.emplace_of("cde", 3))
         Dim r As vector(Of Byte()) = Nothing
-        assert_true(bytes_serializer.from_container(Of first_const_pair(Of String, Int32))().of(m).to(r))
-        assert_equal(m.size(), r.size())
+        assertion.is_true(bytes_serializer.from_container(Of first_const_pair(Of String, Int32))().of(m).to(r))
+        assertion.equal(m.size(), r.size())
         Dim m2 As map(Of String, Int32) = Nothing
         For i As Int32 = 0 To 1
-            assert_true(bytes_serializer.to_container(Of first_const_pair(Of String, Int32))().from(r).to(m2))
-            assert_equal(m.size(), m2.size())
-            assert_equal(m, m2)
+            assertion.is_true(bytes_serializer.to_container(Of first_const_pair(Of String, Int32))().from(r).to(m2))
+            assertion.equal(m.size(), m2.size())
+            assertion.equal(m, m2)
         Next
     End Sub
 
@@ -62,15 +62,15 @@ Public NotInheritable Class bytes_serializer_container_test
                            pair.emplace_of("b", map.emplace_of(pair.emplace_of("cd", 3), pair.emplace_of("de", 4))),
                            pair.emplace_of("c", map.emplace_of(pair.emplace_of("ef", 5), pair.emplace_of("fg", 5))))
         Dim r As vector(Of Byte()) = Nothing
-        assert_true(bytes_serializer.
+        assertion.is_true(bytes_serializer.
                         from_container(Of first_const_pair(Of String, map(Of String, Int32)))().of(m).to(r))
-        assert_equal(m.size(), r.size())
+        assertion.equal(m.size(), r.size())
         Dim m2 As map(Of String, map(Of String, Int32)) = Nothing
         For i As Int32 = 0 To 1
-            assert_true(bytes_serializer.
+            assertion.is_true(bytes_serializer.
                         to_container(Of first_const_pair(Of String, map(Of String, Int32)))().from(r).to(m2))
-            assert_equal(m.size(), m2.size())
-            assert_equal(m, m2)
+            assertion.equal(m.size(), m2.size())
+            assertion.equal(m, m2)
         Next
     End Sub
 
@@ -82,14 +82,14 @@ Public NotInheritable Class bytes_serializer_container_test
                 pair.emplace_of("bcd", vector.of(2, 3, 4, 5)),
                 pair.emplace_of("cde", vector.of(3, 3)))
         Dim r As vector(Of Byte()) = Nothing
-        assert_true(bytes_serializer.from_container(Of first_const_pair(Of String, vector(Of Int32)))().of(m).to(r))
-        assert_equal(m.size(), r.size())
+        assertion.is_true(bytes_serializer.from_container(Of first_const_pair(Of String, vector(Of Int32)))().of(m).to(r))
+        assertion.equal(m.size(), r.size())
         Dim m2 As map(Of String, vector(Of Int32)) = Nothing
         For i As Int32 = 0 To 1
-            assert_true(bytes_serializer.
+            assertion.is_true(bytes_serializer.
                             to_container(Of first_const_pair(Of String, vector(Of Int32)))().from(r).to(m2))
-            assert_equal(m.size(), m2.size())
-            assert_equal(m, m2)
+            assertion.equal(m.size(), m2.size())
+            assertion.equal(m, m2)
         Next
     End Sub
 

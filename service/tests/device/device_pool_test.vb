@@ -44,7 +44,7 @@ Public Class device_pool_test
                     Dim i As atomic_int = Nothing
                     i = New atomic_int()
                     AddHandler d.closing, Sub()
-                                              assert_equal(i.increment(), 1)
+                                              assertion.equal(i.increment(), 1)
                                           End Sub
                     assert(e.Set())
                 Else

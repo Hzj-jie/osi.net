@@ -77,13 +77,13 @@ Public Class event_comb_timeout_test
             ec = create_event_comb()
             assert(Not ec Is Nothing)
             Using New auto_assert_timelimited_operation(timeout_ms, acceptable_latency_ms())
-                assert_false(async_sync(ec, timeout_ms))
+                assertion.is_false(async_sync(ec, timeout_ms))
             End Using
-            If assert_true(timeslice_sleep_wait_until(Function() ec.end(), minutes_to_milliseconds(1))) Then
-                assert_false(ec.end_result())
+            If assertion.is_true(timeslice_sleep_wait_until(Function() ec.end(), minutes_to_milliseconds(1))) Then
+                assertion.is_false(ec.end_result())
             End If
             'some event_combs may be timeouted before it's really started
-            assert_more_or_equal(+counter, this)
+            assertion.more_or_equal(+counter, this)
             Return True
         End Function
 
@@ -99,12 +99,12 @@ Public Class event_comb_timeout_test
                                     resumed.increment()
                                     Return goto_end()
                                 End Function)
-            assert_true(async_sync(ec, acceptable_latency_ms()))
-            If assert_true(timeslice_sleep_wait_until(Function() ec.end(), minutes_to_milliseconds(1))) Then
-                assert_true(ec.end_result())
+            assertion.is_true(async_sync(ec, acceptable_latency_ms()))
+            If assertion.is_true(timeslice_sleep_wait_until(Function() ec.end(), minutes_to_milliseconds(1))) Then
+                assertion.is_true(ec.end_result())
             End If
             'some event_combs may be timeouted before it's really started
-            assert_more_or_equal(+counter, this)
+            assertion.more_or_equal(+counter, this)
             Return True
         End Function
 
@@ -115,8 +115,8 @@ Public Class event_comb_timeout_test
         End Function
 
         Public Overrides Function finish() As Boolean
-            assert_less_or_equal(+counter, (+run_times) * 2)
-            assert_equal(+resumed, +run_times)
+            assertion.less_or_equal(+counter, (+run_times) * 2)
+            assertion.equal(+resumed, +run_times)
             Return MyBase.finish()
         End Function
     End Class

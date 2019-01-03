@@ -64,8 +64,8 @@ Public Class isolate_case_wrapper
     End Function
 
     Public Overrides Function finish() As Boolean
-        Return assert_true(case_started) AndAlso
-               assert_true(case_finished) AndAlso
+        Return assertion.is_true(case_started) AndAlso
+               assertion.is_true(case_finished) AndAlso
                Not assert_detected AndAlso
                MyBase.finish()
     End Function

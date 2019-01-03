@@ -17,7 +17,7 @@ Public NotInheritable Class event_comb_repeat_test2
                                                                               c += 1
                                                                           End Sub)
                                           End Function))
-        assert_equal(c, 100)
+        assertion.equal(c, 100)
     End Sub
 
     <test>
@@ -29,7 +29,7 @@ Public NotInheritable Class event_comb_repeat_test2
                                                                              Return False
                                                                          End Function)
                                           End Function))
-        assert_equal(c, 1)
+        assertion.equal(c, 1)
     End Sub
 
     Private Sub New()

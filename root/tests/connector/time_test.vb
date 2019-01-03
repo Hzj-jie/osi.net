@@ -12,8 +12,8 @@ Public Class time_test
                                   ByVal _2 As Func(Of Int64, Int64)) As Boolean
         assert(Not _1 Is Nothing)
         assert(Not _2 Is Nothing)
-        assert_equal(_1(d), exp)
-        assert_equal(_2(d.Ticks()), exp.Ticks())
+        assertion.equal(_1(d), exp)
+        assertion.equal(_2(d.Ticks()), exp.Ticks())
         Return True
     End Function
 

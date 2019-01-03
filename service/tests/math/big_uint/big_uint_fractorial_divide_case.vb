@@ -33,10 +33,10 @@ Friend Class big_uint_factorial_divide_case
         While Not l.is_one()
             Dim remainder As big_uint = Nothing
             r.assert_divide(l, remainder)
-            assert_true(remainder.is_zero())
+            assertion.is_true(remainder.is_zero())
             l.assert_sub(uint32_1)
         End While
-        assert_true(r.is_one())
+        assertion.is_true(r.is_one())
         Return True
     End Function
 End Class

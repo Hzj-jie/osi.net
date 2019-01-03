@@ -33,18 +33,18 @@ End Module
 Public NotInheritable Class extension_behavior_test
     <test>
     Private Shared Sub extension_selection_test()
-        assert_equal(100.execute(), 101)
-        assert_equal(True.execute(), 2)
-        assert_equal("".execute(), 3)
-        assert_equal(1.0.execute(), 3)
+        assertion.equal(100.execute(), 101)
+        assertion.equal(True.execute(), 2)
+        assertion.equal("".execute(), 3)
+        assertion.equal(1.0.execute(), 3)
     End Sub
 
     <test>
     Private Shared Sub object_extension_test()
-        assert_equal(100.execute2(), 4)
-        assert_equal(True.execute2(), 4)
-        assert_equal("".execute2(), 4)
-        assert_equal(1.0.execute2(), 4)
+        assertion.equal(100.execute2(), 4)
+        assertion.equal(True.execute2(), 4)
+        assertion.equal("".execute2(), 4)
+        assertion.equal(1.0.execute2(), 4)
     End Sub
 
     Private Sub New()

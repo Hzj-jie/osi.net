@@ -31,13 +31,13 @@ Public Class create_if_nothing_test
 
         Public Overrides Function run() As Boolean
             If atomic.create_if_nothing(i) Then
-                assert_equal(Interlocked.Increment(create_suc), 1)
+                assertion.equal(Interlocked.Increment(create_suc), 1)
             End If
             Return True
         End Function
 
         Public Overrides Function finish() As Boolean
-            assert_equal(create_suc, 1)
+            assertion.equal(create_suc, 1)
             Return MyBase.finish()
         End Function
     End Class

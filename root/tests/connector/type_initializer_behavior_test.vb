@@ -35,9 +35,9 @@ Public Class type_initializer_behavior_test
     End Class
 
     Private Shared Function nested_type_case() As Boolean
-        assert_false(nested_type_case_classes.holder.triggered())
+        assertion.is_false(nested_type_case_classes.holder.triggered())
         nested_type_case_classes.caller.nested_type.trigger()
-        assert_false(nested_type_case_classes.holder.triggered())
+        assertion.is_false(nested_type_case_classes.holder.triggered())
         Return True
     End Function
 
@@ -69,10 +69,10 @@ Public Class type_initializer_behavior_test
     End Class
 
     Private Shared Function delegate_case() As Boolean
-        assert_false(delegate_case_classes.holder.triggered())
+        assertion.is_false(delegate_case_classes.holder.triggered())
         Dim v As Action = Nothing
         v = AddressOf delegate_case_classes.caller.trigger
-        assert_false(delegate_case_classes.holder.triggered())
+        assertion.is_false(delegate_case_classes.holder.triggered())
         Return True
     End Function
 
@@ -104,12 +104,12 @@ Public Class type_initializer_behavior_test
     End Class
 
     Private Shared Function delegate_case2() As Boolean
-        assert_false(delegate_case2_classes.holder.triggered())
+        assertion.is_false(delegate_case2_classes.holder.triggered())
         Dim v As Action = Nothing
         v = Sub()
                 delegate_case2_classes.caller.trigger()
             End Sub
-        assert_false(delegate_case2_classes.holder.triggered())
+        assertion.is_false(delegate_case2_classes.holder.triggered())
         Return True
     End Function
 

@@ -24,9 +24,9 @@ Friend Class big_uint_power_divide_case
         For k As UInt64 = 0 To j - 1
             Dim r As big_uint = Nothing
             b.divide(i, r)
-            assert_true(r.is_zero())
+            assertion.is_true(r.is_zero())
         Next
-        assert_true(b.is_one())
+        assertion.is_true(b.is_one())
         Return True
     End Function
 

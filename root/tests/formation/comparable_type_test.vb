@@ -19,11 +19,11 @@ Public Class comparable_type_test
     Private Shared Function run_case(ByVal t1 As Type, ByVal t2 As Type, ByVal exp As Int32) As Boolean
         Dim f As Func(Of Int32, Int32, Boolean) = Nothing
         If exp > 0 Then
-            f = AddressOf assert_more
+            f = AddressOf assertion.more
         ElseIf exp = 0 Then
-            f = AddressOf assert_equal
+            f = AddressOf assertion.equal
         Else
-            f = AddressOf assert_less
+            f = AddressOf assertion.less
         End If
         assert(Not f Is Nothing)
         f(compare(New comparable_type(t1), New comparable_type(t2)), 0)
@@ -44,9 +44,9 @@ Public Class comparable_type_test
     End Function
 
     Private Shared Function run_case2() As Boolean
-        assert_not_equal(comparable_type.compare_type(GetType(c1), GetType(c2)), 0)
-        assert_not_equal(comparable_type.compare_type(GetType(c1), GetType(c3)), 0)
-        assert_not_equal(comparable_type.compare_type(GetType(c2), GetType(c3)), 0)
+        assertion.not_equal(comparable_type.compare_type(GetType(c1), GetType(c2)), 0)
+        assertion.not_equal(comparable_type.compare_type(GetType(c1), GetType(c3)), 0)
+        assertion.not_equal(comparable_type.compare_type(GetType(c2), GetType(c3)), 0)
         Dim t1 As Type = Nothing
         Dim t2 As Type = Nothing
         Dim t3 As Type = Nothing
@@ -64,7 +64,7 @@ Public Class comparable_type_test
             t2 = t1
             t1 = GetType(c3)
         Else
-            assert_true(comparable_type.compare_type(GetType(c3), t1) < 0 AndAlso
+            assertion.is_true(comparable_type.compare_type(GetType(c3), t1) < 0 AndAlso
                         comparable_type.compare_type(GetType(c3), t2) > 0)
             t3 = t2
             t2 = GetType(c3)
@@ -82,7 +82,7 @@ Public Class comparable_type_test
     End Function
 
     Private Shared Function not_equal_case(ByVal t1 As Type, ByVal t2 As Type) As Boolean
-        assert_not_equal(comparable_type.compare_type(t1, t2), 0)
+        assertion.not_equal(comparable_type.compare_type(t1, t2), 0)
         Return True
     End Function
 

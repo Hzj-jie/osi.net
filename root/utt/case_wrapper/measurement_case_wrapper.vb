@@ -86,14 +86,14 @@ Public MustInherit Class measurement_case_wrapper
     Private Function assert_less(Of T)(ByVal i As T,
                                        ByVal j As T,
                                        ByVal name As String)
-        Return utt.assert_less(i, j,
+        Return utt.assertion.less(i, j,
                                "in case ", MyBase.name, ", value ", name, " is larger than ", name, "_upper_bound")
     End Function
 
     Private Function assert_more(Of T)(ByVal i As T,
                                        ByVal j As T,
                                        ByVal name As String)
-        Return utt.assert_more(i, j,
+        Return utt.assertion.more(i, j,
                                "in case ", MyBase.name, ", value ", name, " is smaller than ", name, "_lower_bound")
     End Function
 
@@ -137,16 +137,16 @@ Public MustInherit Class measurement_case_wrapper
                     _count,
                     ", average = ",
                     _average)
-        assert_less(_max, max_upper_bound(), "max")
-        assert_more(_max, max_lower_bound(), "max")
-        assert_less(_min, min_upper_bound(), "min")
-        assert_more(_min, min_lower_bound(), "min")
-        assert_less(_count, count_upper_bound(), "count")
-        assert_more(_count, count_lower_bound(), "count")
-        assert_less(_average, average_upper_bound(), "average")
-        assert_more(_average, average_lower_bound(), "average")
-        assert_less(_last_sample, last_sample_upper_bound(), "last_sample")
-        assert_more(_last_sample, last_sample_lower_bound(), "last_sample")
+        assertion.less(_max, max_upper_bound(), "max")
+        assertion.more(_max, max_lower_bound(), "max")
+        assertion.less(_min, min_upper_bound(), "min")
+        assertion.more(_min, min_lower_bound(), "min")
+        assertion.less(_count, count_upper_bound(), "count")
+        assertion.more(_count, count_lower_bound(), "count")
+        assertion.less(_average, average_upper_bound(), "average")
+        assertion.more(_average, average_lower_bound(), "average")
+        assertion.less(_last_sample, last_sample_upper_bound(), "last_sample")
+        assertion.more(_last_sample, last_sample_lower_bound(), "last_sample")
         Return rtn
     End Function
 End Class

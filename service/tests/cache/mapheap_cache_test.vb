@@ -35,7 +35,7 @@ Public Class mapheap_cache_test
     End Function
 
     Private Shared Sub assert_key_value(ByVal k As String, ByVal v() As Byte)
-        assert_equal(memcmp(v, key_value(k)), 0, k)
+        assertion.equal(memcmp(v, key_value(k)), 0, k)
     End Sub
 
     Private Shared Sub rnd_key_value(ByRef k As String, ByRef v() As Byte)
@@ -68,25 +68,25 @@ Public Class mapheap_cache_test
         Next
         sleep_half_retire_ticks()
         For i As UInt32 = (v.size() >> 1) To v.size() - uint32_1
-            assert_true(c.have(v(i).first))
+            assertion.is_true(c.have(v(i).first))
             Dim b() As Byte = Nothing
-            assert_true(c.get(v(i).first, b))
+            assertion.is_true(c.get(v(i).first, b))
             assert_key_value(v(i).first, b)
         Next
         sleep_half_retire_ticks()
-        assert_equal(v.size(), c.size())
+        assertion.equal(v.size(), c.size())
         For i As UInt32 = 0 To (v.size() >> 1) - uint32_1
-            assert_true(c.have(v(i).first))
-            assert_false(c.get(v(i).first, Nothing))
-            assert_equal(v.size() - i - 1, c.size())
+            assertion.is_true(c.have(v(i).first))
+            assertion.is_false(c.get(v(i).first, Nothing))
+            assertion.equal(v.size() - i - 1, c.size())
         Next
         sleep_half_retire_ticks()
         For i As UInt32 = (v.size() >> 1) To v.size() - uint32_1
-            assert_true(c.have(v(i).first))
-            assert_false(c.get(v(i).first, Nothing))
-            assert_equal(v.size() - i - 1, c.size())
+            assertion.is_true(c.have(v(i).first))
+            assertion.is_false(c.get(v(i).first, Nothing))
+            assertion.equal(v.size() - i - 1, c.size())
         Next
-        assert_true(c.empty())
+        assertion.is_true(c.empty())
         c.clear()
         Return True
     End Function
@@ -100,22 +100,22 @@ Public Class mapheap_cache_test
                 Dim k As UInt32 = 0
                 k = CUInt(i * max_size) + j
                 c.set(v(k).first, v(k).second)
-                assert_true(c.size() <= max_size)
-                assert_true(c.have(v(k).first))
+                assertion.is_true(c.size() <= max_size)
+                assertion.is_true(c.have(v(k).first))
                 Dim b() As Byte = Nothing
-                assert_true(c.get(v(k).first, b))
+                assertion.is_true(c.get(v(k).first, b))
                 assert_key_value(v(k).first, b)
             Next
             clock.advance_ticks(1)
         Next
 
         For i As UInt32 = max_size To v.size() - uint32_1
-            assert_true(c.have(v(i).first), v(i).first)
+            assertion.is_true(c.have(v(i).first), v(i).first)
             Dim b() As Byte = Nothing
-            assert_true(c.get(v(i).first, b), v(i).first)
+            assertion.is_true(c.get(v(i).first, b), v(i).first)
             assert_key_value(v(i).first, b)
         Next
-        assert_equal(c.size(), Convert.ToInt64(max_size))
+        assertion.equal(c.size(), Convert.ToInt64(max_size))
         c.clear()
         Return True
     End Function

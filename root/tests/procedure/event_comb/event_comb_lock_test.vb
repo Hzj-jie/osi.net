@@ -48,7 +48,7 @@ Public Class event_comb_lock_test
 
         Public Overrides Function finish() As Boolean
             If started Then
-                assert_equal(i, pc * rc)
+                assertion.equal(i, pc * rc)
             End If
             Return MyBase.finish()
         End Function

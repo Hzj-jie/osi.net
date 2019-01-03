@@ -33,8 +33,8 @@ Public Class ref_instance_test
             If MyBase.prepare() Then
                 c = New atomic_int()
                 i = New ref_instance(Of atomic_int)(disposer:=Sub(x As atomic_int)
-                                                                  If assert_not_nothing(x) AndAlso
-                                                                     assert_equal(object_compare(x, i.get()), 0) Then
+                                                                  If assertion.is_not_null(x) AndAlso
+                                                                     assertion.equal(object_compare(x, i.get()), 0) Then
                                                                       x.increment()
                                                                       c.increment()
                                                                   End If
@@ -58,10 +58,10 @@ Public Class ref_instance_test
         End Function
 
         Public Overrides Function finish() As Boolean
-            assert_equal(i.ref(), uint32_2)
-            assert_equal(i.unref(), uint32_1)
-            assert_equal(i.unref(), uint32_0)
-            assert_equal(+c, 1)
+            assertion.equal(i.ref(), uint32_2)
+            assertion.equal(i.unref(), uint32_1)
+            assertion.equal(i.unref(), uint32_0)
+            assertion.equal(+c, 1)
             Return MyBase.finish()
         End Function
     End Class

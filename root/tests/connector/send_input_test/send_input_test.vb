@@ -28,7 +28,7 @@ Public Class send_input_test
 
                 sleep_seconds(2)
                 Console.WriteLine(strcat("Will send scan code ", code))
-                assert_equal(send_input.keyboard(send_input.keyboard_input.from_scan_code(code)), uint32_2)
+                assertion.equal(send_input.keyboard(send_input.keyboard_input.from_scan_code(code)), uint32_2)
             End While
 
             assert(False)

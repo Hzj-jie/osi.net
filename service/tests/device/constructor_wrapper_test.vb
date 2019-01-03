@@ -29,35 +29,35 @@ Public Class constructor_wrapper_test
 
     Public Overrides Function prepare() As Boolean
         Return MyBase.prepare() AndAlso
-               assert_true(constructor.register(Function(i As var) As int
-                                                    assert_not_nothing(i)
+               assertion.is_true(constructor.register(Function(i As var) As int
+                                                    assertion.is_not_null(i)
                                                     Return New impl()
                                                 End Function)) AndAlso
-               assert_true(wrapper.register(Function(v As var, i As int) As int
-                                                assert_not_nothing(v)
-                                                assert_not_nothing(i)
-                                                assert_true(TypeOf i Is impl)
+               assertion.is_true(wrapper.register(Function(v As var, i As int) As int
+                                                assertion.is_not_null(v)
+                                                assertion.is_not_null(i)
+                                                assertion.is_true(TypeOf i Is impl)
                                                 Return New wrap(i)
                                             End Function))
     End Function
 
     Public Overrides Function run() As Boolean
         Dim o As int = Nothing
-        assert_true(constructor.resolve(New var(), o))
-        If assert_not_nothing(o) Then
+        assertion.is_true(constructor.resolve(New var(), o))
+        If assertion.is_not_null(o) Then
             Dim w As wrap = Nothing
-            If assert_true(cast(Of wrap)(o, w)) Then
+            If assertion.is_true(cast(Of wrap)(o, w)) Then
                 assert(Not w Is Nothing)
-                assert_not_nothing(w.x)
-                assert_true(TypeOf w.x Is impl)
+                assertion.is_not_null(w.x)
+                assertion.is_true(TypeOf w.x Is impl)
             End If
         End If
         Return True
     End Function
 
     Public Overrides Function finish() As Boolean
-        Return assert_true(constructor(Of int).erase()) AndAlso
-               assert_true(wrapper.erase(Of int)()) AndAlso
+        Return assertion.is_true(constructor(Of int).erase()) AndAlso
+               assertion.is_true(wrapper.erase(Of int)()) AndAlso
                MyBase.finish()
     End Function
 End Class

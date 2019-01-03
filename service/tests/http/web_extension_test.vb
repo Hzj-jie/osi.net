@@ -33,11 +33,11 @@ Public Class web_extension_test
             prepare(h, ms, enc)
             Dim e As Encoding = Nothing
             Dim g As Boolean = False
-            If assert_true(parse_response_encoding(h, ms, e, g)) AndAlso
-               assert_not_nothing(e) Then
-                assert_true(strsame(e.WebName(), enc.Name(), False))
+            If assertion.is_true(parse_response_encoding(h, ms, e, g)) AndAlso
+               assertion.is_not_null(e) Then
+                assertion.is_true(strsame(e.WebName(), enc.Name(), False))
             End If
-            assert_equal(g, gzip)
+            assertion.equal(g, gzip)
         Next
         Return True
     End Function

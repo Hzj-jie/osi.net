@@ -18,7 +18,7 @@ Public Class sync_lazier_valuetype_test
                                          End Function)
         Dim r As Int32 = 0
         r = p.get()
-        assert_equal(r, value)
+        assertion.equal(r, value)
         Return True
     End Function
 

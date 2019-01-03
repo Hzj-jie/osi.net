@@ -29,27 +29,27 @@ Public Class event_sync_T_pump_T_receiver_adapter_test
             sp = New slimqless2_event_sync_T_pump(Of Int32)()
             r = event_sync_T_pump_T_receiver_adapter.[New](sp)
 
-            assert_true(async_sync(r.sense(b.renew(), 100)))
-            assert_false(+b)
+            assertion.is_true(async_sync(r.sense(b.renew(), 100)))
+            assertion.is_false(+b)
 
             v = rnd_int()
             sp.emplace(v)
-            assert_true(async_sync(r.sense(b.renew(), 1)))
-            assert_true(+b)
-            assert_true(async_sync(r.receive(p.renew()), 1))
-            assert_equal(+p, v)
+            assertion.is_true(async_sync(r.sense(b.renew(), 1)))
+            assertion.is_true(+b)
+            assertion.is_true(async_sync(r.receive(p.renew()), 1))
+            assertion.equal(+p, v)
 
             v = rnd_int()
             assert_begin(r.sense(b.renew(), 1000))
             sp.emplace(v)
-            assert_true(timeslice_sleep_wait_until(Function() +b, 100))
-            assert_true(async_sync(r.receive(p.renew()), 1))
-            assert_equal(+p, v)
+            assertion.is_true(timeslice_sleep_wait_until(Function() +b, 100))
+            assertion.is_true(async_sync(r.receive(p.renew()), 1))
+            assertion.equal(+p, v)
 
             v = rnd_int()
             assert_begin(r.receive(p.renew()), 1000)
             sp.emplace(v)
-            assert_true(timeslice_sleep_wait_until(Function() +p = v, 100))
+            assertion.is_true(timeslice_sleep_wait_until(Function() +p = v, 100))
 
             Return True
         End Function
@@ -66,7 +66,7 @@ Public Class event_sync_T_pump_T_receiver_adapter_test
         Private ReadOnly r As event_sync_T_pump_T_receiver_adapter(Of Int32)
         Private ReadOnly exp As expiration_controller.settable
         Private ReadOnly has As bit_array_thread_safe
-        Private ReadOnly index As atomic_Int
+        Private ReadOnly index As atomic_int
         Private ReadOnly received As atomic_int
 
         Public Sub New()
@@ -93,7 +93,7 @@ Public Class event_sync_T_pump_T_receiver_adapter_test
                                                         goto_next()
                                              End Function,
                                              Function() As Boolean
-                                                 assert_true(ec.end_result())
+                                                 assertion.is_true(ec.end_result())
                                                  If +b Then
                                                      ec = r.receive(p.renew())
                                                      Return waitfor(ec) AndAlso
@@ -103,10 +103,10 @@ Public Class event_sync_T_pump_T_receiver_adapter_test
                                                  End If
                                              End Function,
                                              Function() As Boolean
-                                                 assert_true(ec.end_result())
+                                                 assertion.is_true(ec.end_result())
                                                  If +p >= 0 Then
                                                      received.increment()
-                                                     assert_false(has(+p))
+                                                     assertion.is_false(has(+p))
                                                      has(+p) = True
                                                  End If
                                                  Return goto_begin()
@@ -134,7 +134,7 @@ Public Class event_sync_T_pump_T_receiver_adapter_test
         End Function
 
         Public Overrides Function finish() As Boolean
-            assert_true(timeslice_sleep_wait_until(Function() +received = +index, minutes_to_milliseconds(5)))
+            assertion.is_true(timeslice_sleep_wait_until(Function() +received = +index, minutes_to_milliseconds(5)))
             assert(exp.stop())
             ' Ensure all the blocking receive procedures can finish.
             For i As Int32 = 0 To receive_procedure_count - 1
@@ -142,7 +142,7 @@ Public Class event_sync_T_pump_T_receiver_adapter_test
             Next
             sleep(sense_timeout_ms * 2)
             For i As Int32 = 0 To has.size() - 1
-                assert_true(has(i))
+                assertion.is_true(has(i))
             Next
             sp.clear()
             has.resize(0)

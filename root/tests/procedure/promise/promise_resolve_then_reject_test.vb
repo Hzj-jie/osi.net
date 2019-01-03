@@ -23,7 +23,7 @@ Public Class promise_resolve_then_reject_test
                    assert(mre.force_set())
                End Sub,
                Sub(ByVal reason As Object)
-                   assert_true(False)
+                   assertion.is_true(False)
                End Sub)
         assert(mre.wait())
         Return True

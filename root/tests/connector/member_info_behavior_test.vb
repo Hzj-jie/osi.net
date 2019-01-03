@@ -19,25 +19,25 @@ Public Class member_info_behavior_test
     End Class
 
     Public Overrides Function run() As Boolean
-        assert_true(GetType(member_info_behavior_test).GetType().inherit(GetType(Type)))
-        assert_equal(GetType(member_info_behavior_test).ToString(), GetType(member_info_behavior_test).FullName())
-        assert_equal(GetType(member_info_behavior_test).ToString(),
+        assertion.is_true(GetType(member_info_behavior_test).GetType().inherit(GetType(Type)))
+        assertion.equal(GetType(member_info_behavior_test).ToString(), GetType(member_info_behavior_test).FullName())
+        assertion.equal(GetType(member_info_behavior_test).ToString(),
                      "osi.tests.root.connector.member_info_behavior_test")
-        assert_equal(GetType(member_info_behavior_test).Name(), "member_info_behavior_test")
-        assert_nothing(GetType(member_info_behavior_test).DeclaringType())
+        assertion.equal(GetType(member_info_behavior_test).Name(), "member_info_behavior_test")
+        assertion.is_null(GetType(member_info_behavior_test).DeclaringType())
 
-        assert_true(GetType(b).GetMember("c")(0).GetType().inherit(GetType(MemberInfo)))
-        assert_equal(GetType(b).GetMember("c")(0).ToString(), "Int32 c")
-        assert_equal(GetType(b).GetMember("c")(0).Name(), "c")
-        assert_not_nothing(GetType(b).GetMember("c")(0).DeclaringType())
-        assert_equal(GetType(b).GetMember("c")(0).DeclaringType().FullName(),
+        assertion.is_true(GetType(b).GetMember("c")(0).GetType().inherit(GetType(MemberInfo)))
+        assertion.equal(GetType(b).GetMember("c")(0).ToString(), "Int32 c")
+        assertion.equal(GetType(b).GetMember("c")(0).Name(), "c")
+        assertion.is_not_null(GetType(b).GetMember("c")(0).DeclaringType())
+        assertion.equal(GetType(b).GetMember("c")(0).DeclaringType().FullName(),
                      "osi.tests.root.connector.member_info_behavior_test+b")
 
-        assert_true(GetType(member_info_behavior_test).GetMethod("a").GetType().inherit(GetType(MethodInfo)))
-        assert_equal(GetType(member_info_behavior_test).GetMethod("a").ToString(), "Void a()")
-        assert_equal(GetType(member_info_behavior_test).GetMethod("a").Name(), "a")
-        assert_not_nothing(GetType(member_info_behavior_test).GetMethod("a").DeclaringType())
-        assert_equal(GetType(member_info_behavior_test).GetMethod("a").DeclaringType().FullName(),
+        assertion.is_true(GetType(member_info_behavior_test).GetMethod("a").GetType().inherit(GetType(MethodInfo)))
+        assertion.equal(GetType(member_info_behavior_test).GetMethod("a").ToString(), "Void a()")
+        assertion.equal(GetType(member_info_behavior_test).GetMethod("a").Name(), "a")
+        assertion.is_not_null(GetType(member_info_behavior_test).GetMethod("a").DeclaringType())
+        assertion.equal(GetType(member_info_behavior_test).GetMethod("a").DeclaringType().FullName(),
                      "osi.tests.root.connector.member_info_behavior_test")
         Return True
     End Function

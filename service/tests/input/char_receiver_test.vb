@@ -22,8 +22,8 @@ Public Class char_receiver_test
     End Sub
 
     Private Sub receive_character(ByVal c As Char, ByRef ec As event_comb)
-        assert_equal(Me.c, c)
-        assert_nothing(ec)
+        assertion.equal(Me.c, c)
+        assertion.is_null(ec)
     End Sub
 
     Public Overrides Function run() As Boolean
@@ -31,9 +31,9 @@ Public Class char_receiver_test
             c = Convert.ToChar(i)
             If Not Char.IsControl(c) Then
                 Dim v As vector(Of input_case) = Nothing
-                If assert_true(c.keyboard_case(v)) AndAlso
-                   assert_not_nothing(v) AndAlso
-                   assert_false(v.empty()) Then
+                If assertion.is_true(c.keyboard_case(v)) AndAlso
+                   assertion.is_not_null(v) AndAlso
+                   assertion.is_false(v.empty()) Then
                     For j As Int32 = 0 To v.size() - 1
                         r.receive(v(j))
                     Next

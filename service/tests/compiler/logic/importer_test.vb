@@ -77,9 +77,9 @@ Namespace logic
         Private Shared Function import_empty() As Boolean
             Dim e As executor = Nothing
             e = importer.[New]().import("")
-            assert_nothing(e)
+            assertion.is_null(e)
             e = importer.[New]().import(Nothing)
-            assert_nothing(e)
+            assertion.is_null(e)
             Return True
         End Function
 
@@ -87,7 +87,7 @@ Namespace logic
             For i As UInt32 = 0 To array_size(importable_cases) - uint32_1
                 Dim e As executor = Nothing
                 e = importer.[New]().import(importable_cases(CInt(i)))
-                assert_not_nothing(e)
+                assertion.is_not_null(e)
             Next
             Return True
         End Function
@@ -96,7 +96,7 @@ Namespace logic
             For i As UInt32 = 0 To array_size(not_importable_cases) - uint32_1
                 Dim e As executor = Nothing
                 e = importer.[New]().import(not_importable_cases(CInt(i)))
-                assert_nothing(e)
+                assertion.is_null(e)
             Next
             Return True
         End Function
@@ -105,19 +105,19 @@ Namespace logic
             For i As UInt32 = 0 To array_size(cases) - uint32_1
                 Dim e As executor = Nothing
                 e = importer.[New]().import(cases(CInt(i)).first)
-                If assert_not_nothing(e) Then
+                If assertion.is_not_null(e) Then
                     e.execute()
-                    assert_false(e.halt())
-                    assert_equal(e.errors().size(), uint32_0)
+                    assertion.is_false(e.halt())
+                    assertion.equal(e.errors().size(), uint32_0)
                     For j As UInt32 = 0 To array_size(cases(CInt(i)).second) - uint32_1
                         Dim x() As Byte = Nothing
                         Try
                             x = +e.access_stack(data_ref.abs(j))
                         Catch ex As executor_stop_error
-                            assert_true(False, ex)
+                            assertion.is_true(False, ex)
                             Continue For
                         End Try
-                        assert_array_equal(x, cases(CInt(i)).second(CInt(j)))
+                        assertion.array_equal(x, cases(CInt(i)).second(CInt(j)))
                     Next
                 End If
             Next

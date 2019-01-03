@@ -56,8 +56,8 @@ Public Class nowadays_perf
         'the performance of nowadays is 15 times faster than Now() on some machines,
         'but just 1.2 times on some others, which is wired.
         'the OS version or .net version are the same.
-        assert_less_or_equal(ams * 8, nms)
-        assert_less_or_equal(apms * 8, npms)
+        assertion.less_or_equal(ams * 8, nms)
+        assertion.less_or_equal(apms * 8, npms)
         Return True
     End Function
 

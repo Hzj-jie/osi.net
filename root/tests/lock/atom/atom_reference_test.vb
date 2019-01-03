@@ -56,7 +56,7 @@ Public Class atom_reference_test
     Protected Overrides Sub validate(ByVal ac As atom_case)
         assert(Not ac Is Nothing)
         assert(TypeOf ac Is atom_reference_case)
-        assert_equal(ac.direct_cast_to(Of atom_reference_case)().result().reverse(),
+        assertion.equal(ac.direct_cast_to(Of atom_reference_case)().result().reverse(),
                      Convert.ToString(round * thread_count))
     End Sub
 End Class

@@ -65,7 +65,7 @@ Friend Class hashmap_case
     Private Sub insert()
         Dim k As String = Nothing
         k = rnd_key()
-        assert_equal(m.emplace(k, value(k)).first, m.find(k))
+        assertion.equal(m.emplace(k, value(k)).first, m.find(k))
         If validate() Then
             v.emplace(k)
         End If
@@ -96,13 +96,13 @@ Friend Class hashmap_case
             confirm_not_empty()
             Dim it As [set](Of String).iterator = Nothing
             it = rnd_it()
-            assert_equal(m(+it), value(+it))
+            assertion.equal(m(+it), value(+it))
             Dim nv As UInt32 = 0
             nv = value(rnd_key())
             m(+it) = nv
-            assert_equal(m(+it), nv)
+            assertion.equal(m(+it), nv)
             m(+it) = value(+it)
-            assert_equal(m(+it), value(+it))
+            assertion.equal(m(+it), value(+it))
         Else
             m(rnd_key()) = value(rnd_key())
         End If
@@ -113,7 +113,7 @@ Friend Class hashmap_case
             confirm_not_empty()
             Dim it As [set](Of String).iterator = Nothing
             it = rnd_it()
-            assert_equal(m(+it), value(+it))
+            assertion.equal(m(+it), value(+it))
         Else
             Dim v As UInt32 = 0
             v = m(rnd_key())
@@ -126,11 +126,11 @@ Friend Class hashmap_case
                 confirm_not_empty()
                 Dim it As [set](Of String).iterator = Nothing
                 it = rnd_it()
-                assert_equal(m(+it), value(+it))
-                assert_true(m.erase(+it))
+                assertion.equal(m(+it), value(+it))
+                assertion.is_true(m.erase(+it))
                 assert(v.erase(+it))
             Else
-                assert_false(m.erase(rnd_key()))
+                assertion.is_false(m.erase(rnd_key()))
             End If
         Else
             m.erase(rnd_key())
@@ -143,10 +143,10 @@ Friend Class hashmap_case
                 confirm_not_empty()
                 Dim it As [set](Of String).iterator = Nothing
                 it = rnd_it()
-                assert_equal(m(+it), value(+it))
-                assert_not_equal(m.find(+it), m.end())
+                assertion.equal(m(+it), value(+it))
+                assertion.not_equal(m.find(+it), m.end())
             Else
-                assert_equal(m.find(rnd_key()), m.end())
+                assertion.equal(m.find(rnd_key()), m.end())
             End If
         Else
             m.find(rnd_key())
@@ -160,21 +160,21 @@ Friend Class hashmap_case
             Dim c As Int64 = 0
             While it <> m.end()
 #If first_with_brackets Then
-                assert_not_equal(v.find((+it).first()), v.end())
-                assert_equal((+it).second, value((+it).first()))
+                assertion.not_equal(v.find((+it).first()), v.end())
+                assertion.equal((+it).second, value((+it).first()))
 #Else
-                assert_not_equal(v.find((+it).first), v.end())
-                assert_equal((+it).second, value((+it).first))
+                assertion.not_equal(v.find((+it).first), v.end())
+                assertion.equal((+it).second, value((+it).first))
 #End If
                 c += 1
                 it += 1
             End While
-            assert_equal(c, v.size())
-            assert_equal(c, m.size())
+            assertion.equal(c, v.size())
+            assertion.equal(c, m.size())
         End If
         m.clear()
-        assert_equal(CUInt(m.size()), uint32_0)
-        assert_true(m.empty())
+        assertion.equal(CUInt(m.size()), uint32_0)
+        assertion.is_true(m.empty())
         If validate() Then
             v.clear()
         End If
@@ -183,9 +183,9 @@ Friend Class hashmap_case
     Private Sub clone()
         Dim m2 As hashmap(Of String, UInt32) = Nothing
         copy(m2, m)
-        assert_equal(object_compare(m, m2), object_compare_undetermined)
+        assertion.equal(object_compare(m, m2), object_compare_undetermined)
         If validate() Then
-            assert_equal(m.size(), m2.size())
+            assertion.equal(m.size(), m2.size())
             Dim sz As Int64 = 0
             sz = m.size()
             Dim c As Int64 = 0
@@ -199,24 +199,24 @@ Friend Class hashmap_case
                     it = base.begin()
                     While it <> base.end()
 #If first_with_brackets Then
-                        assert_not_equal(camp.find((+it).first()), camp.end())
-                        assert_equal((+it).second, value((+it).first()))
-                        assert_equal((+it).second, camp((+it).first()))
+                        assertion.not_equal(camp.find((+it).first()), camp.end())
+                        assertion.equal((+it).second, value((+it).first()))
+                        assertion.equal((+it).second, camp((+it).first()))
 #Else
-                        assert_not_equal(camp.find((+it).first), camp.end())
-                        assert_equal((+it).second, value((+it).first))
-                        assert_equal((+it).second, camp((+it).first))
+                        assertion.not_equal(camp.find((+it).first), camp.end())
+                        assertion.equal((+it).second, value((+it).first))
+                        assertion.equal((+it).second, camp((+it).first))
 #End If
                         c += 1
                         it += 1
                     End While
-                    assert_equal(c, base.size())
-                    assert_equal(c, sz)
+                    assertion.equal(c, base.size())
+                    assertion.equal(c, sz)
                 End Sub
             cmp(m, m2)
             cmp(m2, m)
 
-            assert_equal(m.size(), m2.size())
+            assertion.equal(m.size(), m2.size())
         End If
     End Sub
 End Class

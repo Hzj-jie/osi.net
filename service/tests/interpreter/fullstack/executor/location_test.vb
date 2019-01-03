@@ -22,7 +22,7 @@ Namespace fullstack.executor
             For i As Int32 = 0 To size - 1
                 Dim l As location = Nothing
                 l = New location(0, i)
-                assert_reference_equal(l(r), r.variable(0, i))
+                assertion.reference_equal(l(r), r.variable(0, i))
             Next
 
             Dim d As domain = Nothing
@@ -35,17 +35,17 @@ Namespace fullstack.executor
                 For j As Int32 = 0 To size - 1
                     Dim l As location = Nothing
                     l = New location(0, j)
-                    assert_reference_equal(l(d), d.variable(0, j))
+                    assertion.reference_equal(l(d), d.variable(0, j))
                 Next
                 For j As Int32 = 0 To size - 1
                     Dim l As location = Nothing
                     l = New location(i + 1, j)
-                    assert_reference_equal(l(d), r.variable(0, j))
+                    assertion.reference_equal(l(d), r.variable(0, j))
                 Next
                 For j As Int32 = 0 To i - 1
                     Dim l As location = Nothing
                     l = New location(j, 0)
-                    assert_reference_equal(l(d), d.variable(j, 0))
+                    assertion.reference_equal(l(d), d.variable(j, 0))
                 Next
             Next
             Return True

@@ -35,7 +35,7 @@ Public Class signal_event_test
             End Function
 
             Public Sub run() Implements iaction.run
-                assert_equal(called.increment(), 1)
+                assertion.equal(called.increment(), 1)
             End Sub
 
             Public Function valid() As Boolean Implements iaction.valid
@@ -71,7 +71,7 @@ Public Class signal_event_test
             SyncLock e
                 e.emplace_back(a)
             End SyncLock
-            assert_true(se.attach(a))
+            assertion.is_true(se.attach(a))
             random_sleep()
             Return True
         End Function
@@ -93,13 +93,13 @@ Public Class signal_event_test
 
         Public Overrides Function finish() As Boolean
             se.mark()
-            assert_true(se.marked())
-            assert_more(e.size(), uint32_0)
-            assert_equal(se.attached_count(), 0)
-            assert_false(se.attached())
+            assertion.is_true(se.marked())
+            assertion.more(e.size(), uint32_0)
+            assertion.equal(se.attached_count(), 0)
+            assertion.is_false(se.attached())
             For i As Int32 = 0 To e.size() - 1
                 assert(Not e(i) Is Nothing)
-                assert_equal(e(i).called_times(), 1)
+                assertion.equal(e(i).called_times(), 1)
             Next
             e.clear()
             se.clear()

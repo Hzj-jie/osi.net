@@ -22,17 +22,17 @@ Public Class member_info_test
     End Class
 
     Public Overrides Function run() As Boolean
-        assert_equal(GetType(member_info_test).full_name(),
+        assertion.equal(GetType(member_info_test).full_name(),
                      "osi.tests.root.connector.member_info_test")
-        assert_equal(GetType(a).full_name(),
+        assertion.equal(GetType(a).full_name(),
                      "osi.tests.root.connector.member_info_test+a")
-        assert_equal(GetType(a).GetMember("b")(0).full_name(),
+        assertion.equal(GetType(a).GetMember("b")(0).full_name(),
                      "osi.tests.root.connector.member_info_test+a.{Int32 b}")
-        assert_equal(GetType(a).GetMethod("c").full_name(),
+        assertion.equal(GetType(a).GetMethod("c").full_name(),
                      "osi.tests.root.connector.member_info_test+a.{Int32 c()}")
-        assert_equal(GetType(a).GetEvent("d").full_name(),
+        assertion.equal(GetType(a).GetEvent("d").full_name(),
                      "osi.tests.root.connector.member_info_test+a.{dEventHandler d}")
-        assert_equal(GetType(a).GetProperty("e").full_name(),
+        assertion.equal(GetType(a).GetProperty("e").full_name(),
                      "osi.tests.root.connector.member_info_test+a.{Int32 e}")
 
         Return True

@@ -15,12 +15,12 @@ Public Class console_key_info_mapping_test
         Dim c As Char = Nothing
         Dim v As vector(Of keyinfo) = Nothing
         If x.char(c, caps_lock, num_lock, shift) Then
-            assert_not_equal(c, character.null)
-            assert_true(c.keycode(v))
-            If assert_true(Not v Is Nothing AndAlso Not v.empty()) Then
+            assertion.not_equal(c, character.null)
+            assertion.is_true(c.keycode(v))
+            If assertion.is_true(Not v Is Nothing AndAlso Not v.empty()) Then
                 For i As Int32 = 0 To v.size() - 1
-                    If assert_true(v(i).valid()) Then
-                        assert_equal(v(i).c, c)
+                    If assertion.is_true(v(i).valid()) Then
+                        assertion.equal(v(i).c, c)
                         If v(i).console_key() = x AndAlso
                            v(i).caps_lock = caps_lock AndAlso
                            v(i).num_lock = num_lock AndAlso
@@ -51,7 +51,7 @@ Public Class console_key_info_mapping_test
 
     Public Overrides Function run() As Boolean
         Return assert(enum_traversal(Of ConsoleKey)(Sub(x As ConsoleKey)
-                                                        assert_true(verify(x))
+                                                        assertion.is_true(verify(x))
                                                     End Sub))
     End Function
 End Class

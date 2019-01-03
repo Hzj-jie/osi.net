@@ -25,8 +25,8 @@ Public Class signing_test
         Dim r As Int32 = 0
         For i As Int32 = 0 To 15
             r = rnd_int(min_int32, max_int32)
-            assert_equal(signing(g, r), signing(g, r))
-            assert_not_equal(signing(g, r), uint32_0)
+            assertion.equal(signing(g, r), signing(g, r))
+            assertion.not_equal(signing(g, r), uint32_0)
         Next
         Return True
     End Function
@@ -39,7 +39,7 @@ Public Class signing_test
                 Return True
             End If
         Next
-        assert_true(False)
+        assertion.is_true(False)
         Return True
     End Function
 

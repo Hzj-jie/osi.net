@@ -16,24 +16,24 @@ Public Class bytes_test
             le = v.little_endian_bytes()
             a = v.bytes()
             If BitConverter.IsLittleEndian Then
-                assert_array_equal(a, le)
+                assertion.array_equal(a, le)
             Else
-                assert_array_equal(a, be)
+                assertion.array_equal(a, be)
             End If
-            assert_array_equal(be.emplace_reverse(), le)
-            assert_equal(v, a.as_int64())
-            assert_equal(v, be.as_big_endian_int64())
-            assert_equal(v, le.as_little_endian_int64())
-            assert_equal(endian.reverse(v), be.as_little_endian_int64())
-            assert_equal(endian.reverse(v), le.as_big_endian_int64())
+            assertion.array_equal(be.emplace_reverse(), le)
+            assertion.equal(v, a.as_int64())
+            assertion.equal(v, be.as_big_endian_int64())
+            assertion.equal(v, le.as_little_endian_int64())
+            assertion.equal(endian.reverse(v), be.as_little_endian_int64())
+            assertion.equal(endian.reverse(v), le.as_big_endian_int64())
             If BitConverter.IsLittleEndian Then
-                assert_equal(endian.reverse(v), a.as_big_endian_int64())
-                assert_equal(v, le.as_int64())
-                assert_equal(endian.reverse(v), be.as_int64())
+                assertion.equal(endian.reverse(v), a.as_big_endian_int64())
+                assertion.equal(v, le.as_int64())
+                assertion.equal(endian.reverse(v), be.as_int64())
             Else
-                assert_equal(endian.reverse(v), a.as_little_endian_int64())
-                assert_equal(v, be.as_int64())
-                assert_equal(endian.reverse(v), le.as_int64())
+                assertion.equal(endian.reverse(v), a.as_little_endian_int64())
+                assertion.equal(v, be.as_int64())
+                assertion.equal(endian.reverse(v), le.as_int64())
             End If
         Next
         Return True

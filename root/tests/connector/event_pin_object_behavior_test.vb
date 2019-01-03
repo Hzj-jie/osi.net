@@ -23,7 +23,7 @@ Public Class event_pin_object_behavior_test
             AddHandler a.e, AddressOf handler
             repeat_gc_collect()
         Next
-        assert_more(c.destructed(), uint32_0)
+        assertion.more(c.destructed(), uint32_0)
         For i As Int32 = 0 To 1000
             Dim a As c = Nothing
             a = New c()
@@ -31,7 +31,7 @@ Public Class event_pin_object_behavior_test
                             End Sub
             repeat_gc_collect()
         Next
-        assert_more(c.destructed(), uint32_0)
+        assertion.more(c.destructed(), uint32_0)
         Return True
     End Function
 End Class

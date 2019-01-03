@@ -57,20 +57,20 @@ Namespace syntaxer
 
         Private Shared Function assert_node(ByVal s As synt, ByVal n As typed_node, ByVal t As tree_node) As Boolean
             assert(Not s Is Nothing)
-            If assert_not_nothing(n) AndAlso assert_not_nothing(t) Then
+            If assertion.is_not_null(n) AndAlso assertion.is_not_null(t) Then
                 If strsame(t.this, tree_node.root_name) Then
-                    If Not assert_equal(n.type, typed_node.ROOT_TYPE) Then
+                    If Not assertion.equal(n.type, typed_node.ROOT_TYPE) Then
                         Return False
                     End If
                 Else
                     Dim o As UInt32 = 0
-                    If Not assert_true(s.type_id(t.this, o)) OrElse
-                        Not assert_equal(n.type, o) Then
+                    If Not assertion.is_true(s.type_id(t.this, o)) OrElse
+                        Not assertion.equal(n.type, o) Then
                         Return False
                     End If
                 End If
                 If assert(Not n.subnodes Is Nothing) AndAlso
-                   assert_equal(n.subnodes.size(), array_size(t.subnodes)) Then
+                   assertion.equal(n.subnodes.size(), array_size(t.subnodes)) Then
                     Dim i As UInt32 = 0
                     While i < array_size(t.subnodes)
                         If Not assert_node(s, n(i), t(i)) Then
@@ -95,14 +95,14 @@ Namespace syntaxer
             assert(Not rlp Is Nothing)
             Dim n As typed_node = Nothing
             Dim w As vector(Of typed_word) = Nothing
-            If assert_true(r.match(txt, w)) Then
-                If assert_true(s.match(w, n)) Then
+            If assertion.is_true(r.match(txt, w)) Then
+                If assertion.is_true(s.match(w, n)) Then
                     If Not tree Is Nothing Then
                         assert_node(s, n, tree)
                     End If
                 End If
             End If
-            If assert_true(rlp.parse(txt, root:=n)) Then
+            If assertion.is_true(rlp.parse(txt, root:=n)) Then
                 If Not tree Is Nothing Then
                     assert_node(s, n, tree)
                 End If
@@ -358,16 +358,16 @@ Namespace syntaxer
         Private Shared Function run_case(ByVal rrf As String, ByVal srf As String) As Boolean
             Dim rr As rrule = Nothing
             rr = New rrule()
-            If assert_true(rr.parse_file(rrf)) Then
+            If assertion.is_true(rr.parse_file(rrf)) Then
                 Dim re As rrule.exporter = Nothing
-                If assert_true(rr.export(re)) AndAlso assert_not_nothing(re) Then
+                If assertion.is_true(rr.export(re)) AndAlso assertion.is_not_null(re) Then
                     Dim sr As srule = Nothing
                     sr = New srule(re.str_type_mapping())
-                    If assert_true(sr.parse_file(srf)) Then
+                    If assertion.is_true(sr.parse_file(srf)) Then
                         Dim se As srule.exporter = Nothing
                         se = sr.export()
                         Dim rlp As rlp = Nothing
-                        If assert_true(rlp.create_from_file(rrf, srf, rlp)) Then
+                        If assertion.is_true(rlp.create_from_file(rrf, srf, rlp)) Then
                             Return case1(re.rlexer, se.syntaxer, rlp) AndAlso
                                    case2(re.rlexer, se.syntaxer, rlp) AndAlso
                                    case3(re.rlexer, se.syntaxer, rlp) AndAlso

@@ -81,41 +81,41 @@ Public Class tcp_connection_generation_test
                  create().flow_device_pool()
             'wait for the accepter to start and connection to be generated
             If delay_connect OrElse
-               (assert_true(timeslice_sleep_wait_when(Function() As Boolean
-                                                          Return ap.empty()
-                                                      End Function,
+               (assertion.is_true(timeslice_sleep_wait_when(Function() As Boolean
+                                                                Return ap.empty()
+                                                            End Function,
                                                       seconds_to_milliseconds(20)), id) AndAlso
-                assert_false(ap.empty(), id) AndAlso
-                assert_false(cp.empty(), id)) Then
+                assertion.is_false(ap.empty(), id) AndAlso
+                assertion.is_false(cp.empty(), id)) Then
                 Dim c As idevice(Of flow) = Nothing
                 For i As Int32 = 0 To 10000
-                    assert_true(cp.get(c), id)
-                    If assert_not_nothing(c, id) Then
-                        assert_true(c.is_valid(), id)
+                    assertion.is_true(cp.get(c), id)
+                    If assertion.is_not_null(c, id) Then
+                        assertion.is_true(c.is_valid(), id)
                         If rnd_bool_trues(8) Then
                             c.close()
-                            assert_false(cp.release(c), id)
+                            assertion.is_false(cp.release(c), id)
                             If Not delay_connect Then
-                                assert_true(timeslice_sleep_wait_when(Function() As Boolean
-                                                                          Return cp.empty()
-                                                                      End Function,
+                                assertion.is_true(timeslice_sleep_wait_when(Function() As Boolean
+                                                                                Return cp.empty()
+                                                                            End Function,
                                                                       seconds_to_milliseconds(30)), id)
                             End If
                         Else
-                            assert_true(cp.release(c), id)
+                            assertion.is_true(cp.release(c), id)
                         End If
                     End If
                 Next
-                assert_equal(cp.total_count(), uint32_1, id)
-                assert_true(timeslice_sleep_wait_when(Function() As Boolean
-                                                          Return ap.total_count() > uint32_1
-                                                      End Function,
+                assertion.equal(cp.total_count(), uint32_1, id)
+                assertion.is_true(timeslice_sleep_wait_when(Function() As Boolean
+                                                                Return ap.total_count() > uint32_1
+                                                            End Function,
                                                       seconds_to_milliseconds(60)), id)
             End If
             cp.close()
-            assert_equal(cp.total_count(), uint32_0, id)
+            assertion.equal(cp.total_count(), uint32_0, id)
             ap.close()
-            assert_equal(ap.total_count(), uint32_0, id)
+            assertion.equal(ap.total_count(), uint32_0, id)
 
             connection_state.release()
             powerpoint.waitfor_stop()

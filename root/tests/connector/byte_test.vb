@@ -20,21 +20,21 @@ Public Class byte_test
 
     Private Shared Function hex_str_case() As Boolean
         For i As UInt32 = 0 To array_size(hex_str_cases) - uint32_1
-            assert_equal(hex_str_cases(i).first.hex_str(), hex_str_cases(i).second)
+            assertion.equal(hex_str_cases(i).first.hex_str(), hex_str_cases(i).second)
         Next
-        assert_equal(hex_str(uint16_0), "0000")
-        assert_equal(hex_str(uint32_0), "00000000")
-        assert_equal(hex_str(uint64_0), "0000000000000000")
-        assert_equal(hex_str(max_uint16), "FFFF")
-        assert_equal(hex_str(max_uint32), "FFFFFFFF")
-        assert_equal(hex_str(max_uint64), "FFFFFFFFFFFFFFFF")
-        assert_equal(hex_str((CUInt(&H12) << 24) + (CUInt(&H34) << 16) + (CUInt(&H56) << 8) + CUInt(&H78)), "12345678")
-        assert_equal(hex_str((CUInt(&HAB) << 24) + (CUInt(&HCD) << 16) + (CUInt(&HEF) << 8) + CUInt(&H12)), "ABCDEF12")
-        assert_equal(hex_str((CULng(&HAB) << 24) + (CULng(&HCD) << 16) + (CULng(&HEF) << 8) + CULng(&H12)),
+        assertion.equal(hex_str(uint16_0), "0000")
+        assertion.equal(hex_str(uint32_0), "00000000")
+        assertion.equal(hex_str(uint64_0), "0000000000000000")
+        assertion.equal(hex_str(max_uint16), "FFFF")
+        assertion.equal(hex_str(max_uint32), "FFFFFFFF")
+        assertion.equal(hex_str(max_uint64), "FFFFFFFFFFFFFFFF")
+        assertion.equal(hex_str((CUInt(&H12) << 24) + (CUInt(&H34) << 16) + (CUInt(&H56) << 8) + CUInt(&H78)), "12345678")
+        assertion.equal(hex_str((CUInt(&HAB) << 24) + (CUInt(&HCD) << 16) + (CUInt(&HEF) << 8) + CUInt(&H12)), "ABCDEF12")
+        assertion.equal(hex_str((CULng(&HAB) << 24) + (CULng(&HCD) << 16) + (CULng(&HEF) << 8) + CULng(&H12)),
                      "00000000ABCDEF12")
-        assert_equal(hex_str((CULng(&H87) << 24) + (CULng(&H65) << 16) + (CULng(&H43) << 8) + CULng(&HDE)),
+        assertion.equal(hex_str((CULng(&H87) << 24) + (CULng(&H65) << 16) + (CULng(&H43) << 8) + CULng(&HDE)),
                      "00000000876543DE")
-        assert_equal(hex_str((CULng(&H12) << 56) + (CULng(&H34) << 48) + (CULng(&H56) << 40) + (CULng(&H78) << 32) +
+        assertion.equal(hex_str((CULng(&H12) << 56) + (CULng(&H34) << 48) + (CULng(&H56) << 40) + (CULng(&H78) << 32) +
                              (CULng(&H9A) << 24) + (CULng(&HBC) << 16) + (CULng(&HDE) << 8) + CULng(&HF0)),
                      "123456789ABCDEF0")
         Return True
@@ -49,14 +49,14 @@ Public Class byte_test
         For i As UInt32 = 0 To array_size(hex_str_cases) - uint32_1
             Dim b() As Byte = Nothing
             b = hex_str_cases(i).second.hex_bytes_buff()
-            assert_true(hex_str_cases(i).second.hex_bytes(b))
-            assert_array_equal(b, hex_str_cases(i).first)
+            assertion.is_true(hex_str_cases(i).second.hex_bytes(b))
+            assertion.array_equal(b, hex_str_cases(i).first)
         Next
 
         For i As UInt32 = 0 To array_size(hex_bytes_failure_cases) - uint32_1
             Dim b() As Byte = Nothing
             b = hex_bytes_failure_cases(i).hex_bytes_buff()
-            assert_false(hex_bytes_failure_cases(i).hex_bytes(b))
+            assertion.is_false(hex_bytes_failure_cases(i).hex_bytes(b))
         Next
         Return True
     End Function

@@ -34,8 +34,8 @@ Public Class global_init_order_test
 
         Private Shared Sub init()
             i.increment()
-            assert_equal(case1.initialized_times(), initialized_times())
-            assert_equal(case4.initialized_times(), initialized_times())
+            assertion.equal(case1.initialized_times(), initialized_times())
+            assertion.equal(case4.initialized_times(), initialized_times())
         End Sub
 
         Public Shared Function initialized_times() As UInt32
@@ -53,9 +53,9 @@ Public Class global_init_order_test
 
         Private Shared Sub init()
             i.increment()
-            assert_equal(case1.initialized_times(), initialized_times())
-            assert_equal(case2.initialized_times(), initialized_times())
-            assert_equal(case4.initialized_times(), initialized_times())
+            assertion.equal(case1.initialized_times(), initialized_times())
+            assertion.equal(case2.initialized_times(), initialized_times())
+            assertion.equal(case4.initialized_times(), initialized_times())
         End Sub
 
         Public Shared Function initialized_times() As UInt32
@@ -83,13 +83,13 @@ Public Class global_init_order_test
     Public Overrides Function run() As Boolean
         type_lock(Of global_init).wait()
         global_init.execute()
-        assert_more(case1.initialized_times(), uint32_1)
-        assert_more(case2.initialized_times(), uint32_1)
-        assert_more(case3.initialized_times(), uint32_1)
-        assert_more(case4.initialized_times(), uint32_1)
-        assert_equal(case1.initialized_times(), case2.initialized_times())
-        assert_equal(case1.initialized_times(), case3.initialized_times())
-        assert_equal(case1.initialized_times(), case4.initialized_times())
+        assertion.more(case1.initialized_times(), uint32_1)
+        assertion.more(case2.initialized_times(), uint32_1)
+        assertion.more(case3.initialized_times(), uint32_1)
+        assertion.more(case4.initialized_times(), uint32_1)
+        assertion.equal(case1.initialized_times(), case2.initialized_times())
+        assertion.equal(case1.initialized_times(), case3.initialized_times())
+        assertion.equal(case1.initialized_times(), case4.initialized_times())
         type_lock(Of global_init).release()
         Return True
     End Function

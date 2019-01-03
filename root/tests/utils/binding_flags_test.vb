@@ -16,46 +16,46 @@ Public NotInheritable Class binding_flags_test
     <test>
     Private Shared Sub return_default()
         Dim bf As BindingFlags = Nothing
-        assert_true(bf.from_str(default_str))
-        assert_equal(bf, BindingFlags.Default)
+        assertion.is_true(bf.from_str(default_str))
+        assertion.equal(bf, BindingFlags.Default)
 
         bf = Nothing
-        assert_true(bf.from_str(""))
-        assert_equal(bf, BindingFlags.Default)
+        assertion.is_true(bf.from_str(""))
+        assertion.equal(bf, BindingFlags.Default)
 
         bf = Nothing
-        assert_true(bf.from_str("|,    " + character.tab))
-        assert_equal(bf, BindingFlags.Default)
+        assertion.is_true(bf.from_str("|,    " + character.tab))
+        assertion.equal(bf, BindingFlags.Default)
 
         bf = Nothing
-        assert_true(bf.method_from_str(default_str))
-        assert_equal(bf, BindingFlags.Default Or BindingFlags.InvokeMethod)
+        assertion.is_true(bf.method_from_str(default_str))
+        assertion.equal(bf, BindingFlags.Default Or BindingFlags.InvokeMethod)
 
         bf = Nothing
-        assert_true(bf.method_from_str(""))
-        assert_equal(bf, BindingFlags.Default Or BindingFlags.InvokeMethod)
+        assertion.is_true(bf.method_from_str(""))
+        assertion.equal(bf, BindingFlags.Default Or BindingFlags.InvokeMethod)
 
         bf = Nothing
-        assert_true(bf.method_from_str("|,"))
-        assert_equal(bf, BindingFlags.Default Or BindingFlags.InvokeMethod)
+        assertion.is_true(bf.method_from_str("|,"))
+        assertion.equal(bf, BindingFlags.Default Or BindingFlags.InvokeMethod)
     End Sub
 
     <test>
     Private Shared Sub should_fail()
         Dim bf As BindingFlags = Nothing
-        assert_false(bf.from_str("what's this"))
-        assert_false(bf.from_str("private|public?"))
+        assertion.is_false(bf.from_str("what's this"))
+        assertion.is_false(bf.from_str("private|public?"))
     End Sub
 
     <test>
     Private Shared Sub predefined_cases()
         Dim bf As BindingFlags = Nothing
-        assert_true(bf.from_str("private"))
-        assert_equal(bf, BindingFlags.NonPublic)
+        assertion.is_true(bf.from_str("private"))
+        assertion.equal(bf, BindingFlags.NonPublic)
 
         bf = Nothing
-        assert_true(bf.from_str("protected"))
-        assert_equal(bf, BindingFlags.NonPublic)
+        assertion.is_true(bf.from_str("protected"))
+        assertion.equal(bf, BindingFlags.NonPublic)
     End Sub
 
     <test>
@@ -83,12 +83,12 @@ Public NotInheritable Class binding_flags_test
                                                    End If
                                                End Sub))
         Dim nbf As BindingFlags = Nothing
-        assert_true(nbf.from_str(Convert.ToString(s)))
-        assert_equal(nbf, bf)
+        assertion.is_true(nbf.from_str(Convert.ToString(s)))
+        assertion.equal(nbf, bf)
 
         nbf = Nothing
-        assert_true(nbf.method_from_str(Convert.ToString(s)))
-        assert_equal(nbf, bf Or BindingFlags.InvokeMethod)
+        assertion.is_true(nbf.method_from_str(Convert.ToString(s)))
+        assertion.equal(nbf, bf Or BindingFlags.InvokeMethod)
     End Sub
 
     Private Sub New()

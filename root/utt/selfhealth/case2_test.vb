@@ -97,50 +97,50 @@ Public Class case2_test
             _multi_threading_case_runs.increment()
             Dim thread_id As Int32 = 0
             thread_id = CInt(multithreading_case_wrapper.thread_id())
-            assert_more_or_equal_and_less(thread_id, 0, CInt(multi_threading_case_thread_count))
+            assertion.more_or_equal_and_less(thread_id, 0, CInt(multi_threading_case_thread_count))
             Static b(multi_threading_case_thread_count - uint32_1) As Boolean
-            assert_false(b(thread_id))
+            assertion.is_false(b(thread_id))
             b(thread_id) = False
-            assert_false(b(thread_id))
+            assertion.is_false(b(thread_id))
             b(thread_id) = True
-            assert_true(b(thread_id))
+            assertion.is_true(b(thread_id))
             b(thread_id) = False
             Static c(multi_threading_case_thread_count - uint32_1) As UInt32
             c(thread_id) += uint32_1
-            assert_less_or_equal(c(thread_id), multi_threading_case_repeat_count)
+            assertion.less_or_equal(c(thread_id), multi_threading_case_repeat_count)
         End Sub
     End Class
 
     Public Overrides Function run() As Boolean
         Dim cases As vector(Of [case]) = Nothing
         cases = case2.create(GetType(case2_case))
-        assert_equal(cases.size(), CUInt(3))
+        assertion.equal(cases.size(), CUInt(3))
 
-        assert_true(cases(0).prepare())
-        assert_true(cases(0).run())
-        assert_true(cases(0).finish())
-        assert_equal(case2_case.constructed(), CUInt(3))
-        assert_equal(case2_case.prepare_runs(), CUInt(3))
-        assert_equal(case2_case.finish_runs(), CUInt(7))
-        assert_equal(case2_case.d_runs(), CUInt(5))
-        assert_equal(case2_case.multi_threading_case_runs(), uint32_0)
+        assertion.is_true(cases(0).prepare())
+        assertion.is_true(cases(0).run())
+        assertion.is_true(cases(0).finish())
+        assertion.equal(case2_case.constructed(), CUInt(3))
+        assertion.equal(case2_case.prepare_runs(), CUInt(3))
+        assertion.equal(case2_case.finish_runs(), CUInt(7))
+        assertion.equal(case2_case.d_runs(), CUInt(5))
+        assertion.equal(case2_case.multi_threading_case_runs(), uint32_0)
 
-        assert_true(cases(1).prepare())
-        assert_false(cases(1).run())
-        assert_equal(case2_case.constructed(), CUInt(3))
-        assert_equal(case2_case.prepare_runs(), CUInt(6))
-        assert_equal(case2_case.finish_runs(), CUInt(7))
-        assert_equal(case2_case.d_runs(), CUInt(5))
-        assert_equal(case2_case.multi_threading_case_runs(), uint32_0)
+        assertion.is_true(cases(1).prepare())
+        assertion.is_false(cases(1).run())
+        assertion.equal(case2_case.constructed(), CUInt(3))
+        assertion.equal(case2_case.prepare_runs(), CUInt(6))
+        assertion.equal(case2_case.finish_runs(), CUInt(7))
+        assertion.equal(case2_case.d_runs(), CUInt(5))
+        assertion.equal(case2_case.multi_threading_case_runs(), uint32_0)
 
-        assert_true(cases(2).prepare())
-        assert_true(cases(2).run())
-        assert_true(cases(2).finish())
-        assert_equal(case2_case.constructed(), CUInt(3))
-        assert_equal(case2_case.prepare_runs(), CUInt(9))
-        assert_equal(case2_case.finish_runs(), CUInt(14))
-        assert_equal(case2_case.d_runs(), CUInt(5))
-        assert_equal(case2_case.multi_threading_case_runs(),
+        assertion.is_true(cases(2).prepare())
+        assertion.is_true(cases(2).run())
+        assertion.is_true(cases(2).finish())
+        assertion.equal(case2_case.constructed(), CUInt(3))
+        assertion.equal(case2_case.prepare_runs(), CUInt(9))
+        assertion.equal(case2_case.finish_runs(), CUInt(14))
+        assertion.equal(case2_case.d_runs(), CUInt(5))
+        assertion.equal(case2_case.multi_threading_case_runs(),
                      case2_case.multi_threading_case_repeat_count * case2_case.multi_threading_case_thread_count)
         Return True
     End Function

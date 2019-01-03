@@ -27,20 +27,20 @@ Public Class collectionless_test
             r = rnd_uint()
             Dim p As UInt32 = 0
             p = c.emplace(r)
-            assert_false(c.empty())
-            assert_equal(c(p), r)
+            assertion.is_false(c.empty())
+            assertion.equal(c(p), r)
             If rnd_bool() Then
                 c.erase(p)
                 c.empty()
             Else
-                assert_false(c.empty())
+                assertion.is_false(c.empty())
             End If
             Return True
         End Function
 
         Public Overrides Function finish() As Boolean
-            assert_less_or_equal(c.free_pool_size(), thread_count)
-            assert_less_or_equal(c.pool_size(), size * thread_count / 2 * 1.1)
+            assertion.less_or_equal(c.free_pool_size(), thread_count)
+            assertion.less_or_equal(c.pool_size(), size * thread_count / 2 * 1.1)
             c.clear()
             Return MyBase.finish()
         End Function

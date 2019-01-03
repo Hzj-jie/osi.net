@@ -20,14 +20,14 @@ Public Class custom_attributes_behavior_test3
 
         Public Sub New()
             Try
-                assert_nothing(custom_attributes_behavior_test3.i)
+                assertion.is_null(custom_attributes_behavior_test3.i)
                 custom_attributes_behavior_test3.i.increment()
             Catch
                 Return
             Finally
                 Me.i = +(custom_attributes_behavior_test3.i)
             End Try
-            assert_true(False)
+            assertion.is_true(False)
         End Sub
     End Class
 
@@ -44,14 +44,14 @@ Public Class custom_attributes_behavior_test3
     End Class
 
     Public Overrides Function run() As Boolean
-        assert_equal(+i, 0)
+        assertion.equal(+i, 0)
         Dim a As test = Nothing
-        assert_true(GetType(C).custom_attribute(Of test)(a))
-        assert_equal(a.i, 0)
-        assert_true(GetType(C2).custom_attribute(Of test)(a))
-        assert_equal(a.i, 0)
-        assert_true(GetType(C3).custom_attribute(Of test)(a))
-        assert_equal(a.i, 0)
+        assertion.is_true(GetType(C).custom_attribute(Of test)(a))
+        assertion.equal(a.i, 0)
+        assertion.is_true(GetType(C2).custom_attribute(Of test)(a))
+        assertion.equal(a.i, 0)
+        assertion.is_true(GetType(C3).custom_attribute(Of test)(a))
+        assertion.equal(a.i, 0)
         Return True
     End Function
 End Class

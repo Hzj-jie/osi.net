@@ -22,7 +22,7 @@ Public Class get_thread_process_id_perf
                     For i As Int32 = 0 To 10000000
                         Dim process_id As UInt32 = 0
                         Dim thread_id As UInt32 = 0
-                        assert_true(native_window.get_thread_process_id(f, process_id, thread_id))
+                        assertion.is_true(native_window.get_thread_process_id(f, process_id, thread_id))
                     Next
                 End Sub))
             Return True

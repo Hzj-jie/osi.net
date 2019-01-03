@@ -34,7 +34,7 @@ Public Class secondary_resolve_test
         Private ReadOnly _i1 As i1
 
         Public Sub New(ByVal i1 As i1)
-            assert_not_nothing(i1)
+            assertion.is_not_null(i1)
             _i1 = i1
         End Sub
 
@@ -45,15 +45,15 @@ Public Class secondary_resolve_test
 
     Public Overrides Function prepare() As Boolean
         Return MyBase.prepare() AndAlso
-               assert_true(constructor.register(c1_name,
+               assertion.is_true(constructor.register(c1_name,
                                                 Function(v As var) As i1
                                                     Return New c1()
                                                 End Function)) AndAlso
-               assert_true(constructor.register(c2_name,
+               assertion.is_true(constructor.register(c2_name,
                                                 Function(v As var) As i1
                                                     Return New c2()
                                                 End Function)) AndAlso
-               assert_true(constructor.register(Of i2) _
+               assertion.is_true(constructor.register(Of i2) _
                                                (Function(v As var, ByRef o As i2) As Boolean
                                                     Return secondary_resolve(v,
                                                                              secondary_type_name,
@@ -66,33 +66,33 @@ Public Class secondary_resolve_test
 
     Public Overrides Function run() As Boolean
         Dim o As i2 = Nothing
-        assert_true(constructor.resolve(New var({strcat("--",
+        assertion.is_true(constructor.resolve(New var({strcat("--",
                                                         secondary_type_name,
                                                         "=",
                                                         c1_name)}),
                                          o))
-        If assert_not_nothing(o) AndAlso
-           assert_not_nothing(o.i1) Then
-            assert_true(TypeOf o.i1 Is c1)
+        If assertion.is_not_null(o) AndAlso
+           assertion.is_not_null(o.i1) Then
+            assertion.is_true(TypeOf o.i1 Is c1)
         End If
         o = Nothing
-        assert_true(constructor.resolve(New var({strcat("--",
+        assertion.is_true(constructor.resolve(New var({strcat("--",
                                                         secondary_type_name,
                                                         "=",
                                                         c2_name)}),
                                         o))
-        If assert_not_nothing(o) AndAlso
-           assert_not_nothing(o.i1) Then
-            assert_true(TypeOf o.i1 Is c2)
+        If assertion.is_not_null(o) AndAlso
+           assertion.is_not_null(o.i1) Then
+            assertion.is_true(TypeOf o.i1 Is c2)
         End If
-        assert_false(constructor.resolve(New var(), o))
+        assertion.is_false(constructor.resolve(New var(), o))
         Return True
     End Function
 
     Public Overrides Function finish() As Boolean
-        Return assert_true(constructor(Of i1).erase(c1_name)) AndAlso
-               assert_true(constructor(Of i1).erase(c2_name)) AndAlso
-               assert_true(constructor(Of i2).erase()) AndAlso
+        Return assertion.is_true(constructor(Of i1).erase(c1_name)) AndAlso
+               assertion.is_true(constructor(Of i1).erase(c2_name)) AndAlso
+               assertion.is_true(constructor(Of i2).erase()) AndAlso
                MyBase.finish()
     End Function
 End Class

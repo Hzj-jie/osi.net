@@ -105,7 +105,7 @@ Public Class exec_case
                             p.stdin().Write(s)
                         Next
                     End If
-                    If Not assert_true(p.wait_for_exit(timeout_ms),
+                    If Not assertion.is_true(p.wait_for_exit(timeout_ms),
                                        process_name,
                                        " cannot finish in ",
                                        timeout_ms,
@@ -114,11 +114,11 @@ Public Class exec_case
                             utt_raise_error("failed to stop ", process_name)
                         End If
                     End If
-                    assert_equal(p.exit_code(), expected_return)
+                    assertion.equal(p.exit_code(), expected_return)
                     Return True
                 Else
                     If Not ex Is Nothing Then
-                        assert_true(False, ex.Message())
+                        assertion.is_true(False, ex.Message())
                     End If
                     Return False
                 End If

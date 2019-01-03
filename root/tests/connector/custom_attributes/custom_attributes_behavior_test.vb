@@ -53,17 +53,17 @@ Public Class custom_attributes_behavior_test
         Dim objs() As Object = Nothing
         objs = GetType(T).GetCustomAttributes(inherit)
         Dim c As UInt32 = 0
-        If Not has OrElse assert_more_or_equal(array_size(objs), uint32_1) Then
+        If Not has OrElse assertion.more_or_equal(array_size(objs), uint32_1) Then
             Dim i As UInt32 = uint32_0
             While i < array_size(objs)
                 Dim x As test = Nothing
                 If direct_cast(objs(CInt(i)), x) Then
-                    assert_equal(x.v, v)
+                    assertion.equal(x.v, v)
                     c += uint32_1
                 End If
                 i += uint32_1
             End While
-            assert_equal(If(has, uint32_1, uint32_0), c)
+            assertion.equal(If(has, uint32_1, uint32_0), c)
         End If
         Return True
     End Function

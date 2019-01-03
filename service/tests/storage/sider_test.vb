@@ -39,7 +39,7 @@ Public Class sider_test
                                   Dim v As var = Nothing
                                   v = New var(Console.ReadLine())
                                   Return constructor.resolve(v, r) AndAlso
-                                         assert_not_nothing(r) AndAlso
+                                         assertion.is_not_null(r) AndAlso
                                          eva(p, r) AndAlso
                                          If(strsame(v("herald"), "tcp"), waitfor(milliseconds_to_seconds(5)), True)
                                   ' wait for TCP connections to be generated

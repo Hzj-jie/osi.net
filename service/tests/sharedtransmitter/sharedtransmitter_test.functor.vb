@@ -14,19 +14,19 @@ Partial Public Class sharedtransmitter_test
         Public Shared address As Byte
 
         Public Overrides Sub dispose_component(ByVal c As component)
-            assert_not_nothing(c)
+            assertion.is_not_null(c)
             c.dispose()
         End Sub
 
         Public Overrides Function accept_new_component(ByVal p As parameter) As Boolean
-            assert_not_nothing(p)
+            assertion.is_not_null(p)
             Return p.allow_new_component
         End Function
 
         Public Overrides Function create_component(ByVal p As parameter,
                                                    ByVal id As Byte,
                                                    ByRef o As component) As Boolean
-            assert_not_nothing(p)
+            assertion.is_not_null(p)
             o = New component(address, id)
             Return True
         End Function
@@ -40,7 +40,7 @@ Partial Public Class sharedtransmitter_test
                 ByVal id As Byte,
                 ByVal dev As ref_instance(Of component),
                 ByRef o As sharedtransmitter(Of Byte, Byte, component, Int32, parameter).shared_receiver) As Boolean
-            assert_not_nothing(p)
+            assertion.is_not_null(p)
             o = New shared_receiver(dev)
             Return True
         End Function

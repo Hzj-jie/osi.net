@@ -24,18 +24,18 @@ Public Class dataprovider_test
         Dim sz As Int64 = 0
         sz = collection.dataprovider_count()
         Dim dp As dataprovider(Of String) = cast(Of dataprovider(Of String))(ctor())
-        assert_equal(collection.dataprovider_count(), sz + 1)
-        assert_false(dp.valid())
+        assertion.equal(collection.dataprovider_count(), sz + 1)
+        assertion.is_false(dp.valid())
         For i As Int32 = 0 To array_size_i(ds) - 1
             File.WriteAllText(filename, ds(i))
             sleep()
-            If assert_true(dp.valid()) Then
-                assert_equal(dp.get(), ds(i))
+            If assertion.is_true(dp.valid()) Then
+                assertion.equal(dp.get(), ds(i))
             End If
         Next
         File.Delete(filename)
-        If assert_true(dp.valid()) Then
-            assert_equal(dp.get(), ds(array_size_i(ds) - 1))
+        If assertion.is_true(dp.valid()) Then
+            assertion.equal(dp.get(), ds(array_size_i(ds) - 1))
         End If
         dp.expire()
         Return True

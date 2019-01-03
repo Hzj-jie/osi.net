@@ -17,8 +17,8 @@ Namespace fullstack.executor
             Dim l As Int32 = 0
             l = d.increment()
             def.execute(d)
-            assert_equal(l + 1, d.increment())
-            assert_true(d.last().is_type(t))
+            assertion.equal(l + 1, d.increment())
+            assertion.is_true(d.last().is_type(t))
             Return True
         End Function
 

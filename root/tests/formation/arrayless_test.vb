@@ -45,14 +45,14 @@ Public Class arrayless_test
         End Function
 
         Private Sub assert_ids(ByVal id As Int32, ByVal o As cd_object(Of arrayless_case))
-            If assert_not_nothing(o) Then
-                assert_true(ids(id) = npos OrElse ids(id) = o.id)
+            If assertion.is_not_null(o) Then
+                assertion.is_true(ids(id) = npos OrElse ids(id) = o.id)
                 ids(id) = o.id
-                assert_equal(ids(id), CInt(o.id))
+                assertion.equal(ids(id), CInt(o.id))
             End If
-            assert_true(a.get(id, o))
-            If assert_not_nothing(o) Then
-                assert_equal(ids(id), CInt(o.id))
+            assertion.is_true(a.get(id, o))
+            If assertion.is_not_null(o) Then
+                assertion.equal(ids(id), CInt(o.id))
             End If
         End Sub
 
@@ -64,8 +64,8 @@ Public Class arrayless_test
                 If a.next(id, o) Then
                     assert_ids(id, o)
                 Else
-                    assert_equal(a.created_count(), size)
-                    assert_equal(cd_object(Of arrayless_case).constructed(), size)
+                    assertion.equal(a.created_count(), size)
+                    assertion.equal(cd_object(Of arrayless_case).constructed(), size)
                 End If
             ElseIf current_round.get() = round - 1 Then
                 While a.next(id, o)
@@ -73,25 +73,25 @@ Public Class arrayless_test
                 End While
             Else
                 id = rnd_uint(0, size)
-                assert_true(a.[New](id, o))
+                assertion.is_true(a.[New](id, o))
                 assert_ids(id, o)
             End If
-            assert_false(a.[New](rnd_uint(size, max_uint32), o))
-            assert_false(a.get(rnd_uint(size, max_uint32), o))
+            assertion.is_false(a.[New](rnd_uint(size, max_uint32), o))
+            assertion.is_false(a.get(rnd_uint(size, max_uint32), o))
             Return True
         End Function
 
         Public Overrides Function finish() As Boolean
             Dim o As cd_object(Of arrayless_case) = Nothing
-            assert_equal(cd_object(Of arrayless_case).constructed(), size)
-            assert_equal(a.created_count(), cd_object(Of arrayless_case).constructed())
+            assertion.equal(cd_object(Of arrayless_case).constructed(), size)
+            assertion.equal(a.created_count(), cd_object(Of arrayless_case).constructed())
             For i As Int32 = 0 To size - 1
-                assert_true(a.get(i, o))
-                assert_not_nothing(o)
-                assert_equal(CInt(o.id), CInt(ids(i)))
+                assertion.is_true(a.get(i, o))
+                assertion.is_not_null(o)
+                assertion.equal(CInt(o.id), CInt(ids(i)))
             Next
             a.clear()
-            assert_equal(a.created_count(), uint32_0)
+            assertion.equal(a.created_count(), uint32_0)
             a = Nothing
             ids = Nothing
             Return MyBase.finish()

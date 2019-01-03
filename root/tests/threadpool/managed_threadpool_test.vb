@@ -87,12 +87,12 @@ Public Class managed_threadpool_test
 
     Public Overrides Function finish() As Boolean
         Using New thread_lazy()
-            assert_true(timeslice_sleep_wait_until(Function() t.idle(),
+            assertion.is_true(timeslice_sleep_wait_until(Function() t.idle(),
                                                    minutes_to_milliseconds(1)))
-            assert_true(timeslice_sleep_wait_until(Function() (+executed) = round,
+            assertion.is_true(timeslice_sleep_wait_until(Function() (+executed) = round,
                                                    seconds_to_milliseconds(1)))
         End Using
-        assert_true(t.[stop]())
+        assertion.is_true(t.[stop]())
 #If False Then
         t.join()
 #End If

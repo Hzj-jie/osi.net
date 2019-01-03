@@ -57,7 +57,7 @@ Public Class cryptography_behavior_test
                 t = (id + uint32_1) * (size \ thread_count)
             End If
             For l As UInt32 = id * (size \ thread_count) To t - uint32_1
-                assert_array_equal(o(l), h.ComputeHash(i(l)), type_name)
+                assertion.array_equal(o(l), h.ComputeHash(i(l)), type_name)
             Next
             Return True
         End Function
@@ -145,7 +145,7 @@ Public Class cryptography_behavior_test
         End Function
 
         Public Overrides Function run() As Boolean
-            assert_array_equal(r, h.ComputeHash(b))
+            assertion.array_equal(r, h.ComputeHash(b))
             Return True
         End Function
 
@@ -204,7 +204,7 @@ Public Class cryptography_behavior_test
         Public Overrides Function run() As Boolean
             h.Key() = rnd_bytes(rnd_uint(100, 200))
             h.Key() = k
-            assert_array_equal(r, h.ComputeHash(b))
+            assertion.array_equal(r, h.ComputeHash(b))
             Return True
         End Function
 

@@ -55,9 +55,10 @@ Public Class map_compare_test
         Private Shared Function run_case(ByVal l As vector(Of pair(Of String, String)),
                                          ByVal r As vector(Of pair(Of String, String)),
                                          ByVal exp As Int32) As Boolean
-            assert_compare(create_map(l), create_map(r), exp)
-            assert_compare(create_map(l).direct_cast_to(Of bt(Of first_const_pair(Of String, String)))(),
-                           create_map(r).direct_cast_to(Of bt(Of first_const_pair(Of String, String)))())
+            assertion.equal_to_compare(create_map(l), create_map(r), exp)
+            assertion.consistently_compare(
+                create_map(l).direct_cast_to(Of bt(Of first_const_pair(Of String, String)))(),
+                create_map(r).direct_cast_to(Of bt(Of first_const_pair(Of String, String)))())
             Return True
         End Function
 

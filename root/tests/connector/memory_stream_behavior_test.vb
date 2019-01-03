@@ -12,15 +12,15 @@ Public Class memory_stream_behavior_test
         Dim buff() As Byte = Nothing
         buff = rnd_bytes()
         ms.Write(buff, 0, array_size(buff))
-        assert_equal(ms.Position(), array_size(buff))
+        assertion.equal(ms.Position(), array_size(buff))
         Dim buff2() As Byte = Nothing
         buff2 = ms.fit_buffer()
-        assert_array_equal(buff, buff2)
+        assertion.array_equal(buff, buff2)
         ms.Write(buff, 0, array_size(buff))
-        assert_equal(ms.Position(), array_size(buff) << 1)
+        assertion.equal(ms.Position(), array_size(buff) << 1)
         buff2 = ms.fit_buffer()
         buff.append(buff)
-        assert_array_equal(buff, buff2)
+        assertion.array_equal(buff, buff2)
         Return True
     End Function
 

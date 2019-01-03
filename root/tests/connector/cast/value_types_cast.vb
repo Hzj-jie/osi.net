@@ -6,12 +6,12 @@ Public Module _value_types_cast
     Private Function cast_case(Of T, T2)(ByVal i As T) As Boolean
         Dim j As T2 = Nothing
         Dim k As T = Nothing
-        assert_true(cast(Of T2)(i, j))
+        assertion.is_true(cast(Of T2)(i, j))
         'if T / T2 are cross casting
         If cast(Of T)(j, k) Then
-            assert_equal(i, k)
+            assertion.equal(i, k)
         ElseIf comparable(i, j) Then
-            assert_equal(compare(i, j), 0)
+            assertion.equal(compare(i, j), 0)
         Else
             'the casting is success, but the compare has trouble, such as int has only CompareTo(int)
         End If

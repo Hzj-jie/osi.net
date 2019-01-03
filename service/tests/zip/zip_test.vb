@@ -16,22 +16,22 @@ Public Class zip_test
 
         Private Shared Function run_case(ByVal parameter As String) As Boolean
             Dim zipper As zipper = Nothing
-            If assert_true(osi.service.zip.create(parameter, zipper)) AndAlso
-               assert_not_nothing(zipper) AndAlso
-               assert_true(Not zipper.bypass() OrElse
+            If assertion.is_true(osi.service.zip.create(parameter, zipper)) AndAlso
+               assertion.is_not_null(zipper) AndAlso
+               assertion.is_true(Not zipper.bypass() OrElse
                            strsame(parameter, bypass_mode)) Then
                 Dim raw() As Byte = Nothing
                 raw = rnd_bytes(rnd_int(4096, 65536))
                 assert(Not isemptyarray(raw))
                 Dim zipped() As Byte = Nothing
                 Dim unzipped() As Byte = Nothing
-                If assert_true(zipper.zip(raw, zipped)) AndAlso
-                   assert_true(zipper.unzip(zipped, unzipped)) Then
-                    assert_array_equal(raw, unzipped)
+                If assertion.is_true(zipper.zip(raw, zipped)) AndAlso
+                   assertion.is_true(zipper.unzip(zipped, unzipped)) Then
+                    assertion.array_equal(raw, unzipped)
                     If zipper.bypass() OrElse zipper.bypass2() Then
-                        assert_array_equal(zipped, raw)
+                        assertion.array_equal(zipped, raw)
                     Else
-                        assert_array_not_equal(zipped, raw)
+                        assertion.array_not_equal(zipped, raw)
                     End If
                 End If
             End If

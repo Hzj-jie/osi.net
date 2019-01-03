@@ -64,12 +64,12 @@ Public Class token_info_sign_test
         Dim code() As Byte = Nothing
         code = rnd_bytes(rnd_uint(100, 200))
         Dim o As piece = Nothing
-        If assert_true(f.sign(Nothing, code, o)) Then
-            assert_true(f.sign_match(Nothing, code, o))
+        If assertion.is_true(f.sign(Nothing, code, o)) Then
+            assertion.is_true(f.sign_match(Nothing, code, o))
         End If
         Dim t As piece = Nothing
-        assert_true(f.forge_signature(Nothing, code, t))
-        assert_not_equal(o, t)
+        assertion.is_true(f.forge_signature(Nothing, code, t))
+        assertion.not_equal(o, t)
         Return True
     End Function
 
@@ -82,8 +82,8 @@ Public Class token_info_sign_test
         Dim code() As Byte = Nothing
         code = rnd_bytes(rnd_uint(100, 200))
         Dim o As piece = Nothing
-        If assert_true(f.sign(Nothing, New piece(array_concat(prefix, code)).consume(prefix_len), o)) Then
-            assert_true(f.sign_match(Nothing, code, o))
+        If assertion.is_true(f.sign(Nothing, New piece(array_concat(prefix, code)).consume(prefix_len), o)) Then
+            assertion.is_true(f.sign_match(Nothing, code, o))
         End If
         Return True
     End Function

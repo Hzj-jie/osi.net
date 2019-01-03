@@ -23,22 +23,22 @@ Public Class phi_test
 
     Public Overrides Function run() As Boolean
         For i As Int32 = 0 To 1024
-            assert_equal(stupid_phi(i), phi(i), i)
+            assertion.equal(stupid_phi(i), phi(i), i)
         Next
         For i As Int32 = 0 To 32 - 1
             Dim x As Int32 = 0
             x = rnd_int(0, max_int16)
-            assert_equal(stupid_phi(x), phi(x), x)
+            assertion.equal(stupid_phi(x), phi(x), x)
         Next
         For i As Int32 = 0 To 2 - 1
             Dim x As Int32 = 0
             x = rnd_int(0, max_int32)
-            assert_equal(stupid_phi(x), phi(x), x)
+            assertion.equal(stupid_phi(x), phi(x), x)
         Next
         For i As Int32 = 0 To 128 - 1
             Dim x As Int32 = 0
             x = rnd_int(min_int32, 0)
-            assert_equal(stupid_phi(x), phi(x), x)
+            assertion.equal(stupid_phi(x), phi(x), x)
         Next
         Return True
     End Function

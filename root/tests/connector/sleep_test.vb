@@ -17,11 +17,11 @@ Public Class sleep_test
         assert(Not w2 Is Nothing)
         assert(Not d Is Nothing)
         Dim i As Int32 = 0
-        assert_true(w1(Function() d(i), 0))
-        assert_equal(i, exp)
+        assertion.is_true(w1(Function() d(i), 0))
+        assertion.equal(i, exp)
         i = 0
-        assert_true(w2(Function(ByRef x) d(x), i, 0))
-        assert_equal(i, exp)
+        assertion.is_true(w2(Function(ByRef x) d(x), i, 0))
+        assertion.equal(i, exp)
         Return True
     End Function
 
@@ -109,7 +109,7 @@ Public Class sleep_test
         Const timeout_ms As Int64 = second_milli
         Using t As New auto_assert_timelimited_operation(timeout_ms, timeout_ms + four_timeslice_length_ms),
               b As New boost()
-            assert_false(d(timeout_ms))
+            assertion.is_false(d(timeout_ms))
         End Using
         Return True
     End Function

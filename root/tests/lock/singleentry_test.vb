@@ -24,17 +24,17 @@ Public Class singleentry_test
 
         Public Overrides Function run() As Boolean
             If s.mark_in_use() Then
-                assert_false(in_use)
+                assertion.is_false(in_use)
                 in_use = True
-                assert_true(in_use)
-                assert_true(s.in_use())
-                assert_true(in_use)
-                assert_false(s.not_in_use())
-                assert_true(in_use)
-                assert_false(s.mark_in_use())
-                assert_true(in_use)
+                assertion.is_true(in_use)
+                assertion.is_true(s.in_use())
+                assertion.is_true(in_use)
+                assertion.is_false(s.not_in_use())
+                assertion.is_true(in_use)
+                assertion.is_false(s.mark_in_use())
+                assertion.is_true(in_use)
                 in_use = False
-                assert_false(in_use)
+                assertion.is_false(in_use)
                 s.release()
             End If
             Return True

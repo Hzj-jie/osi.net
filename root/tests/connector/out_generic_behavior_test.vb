@@ -43,19 +43,19 @@ Public Class out_generic_behavior_test
     Private Shared Function case1() As Boolean
         Dim x As TI(Of I) = Nothing
         x = New T(Of C)()
-        assert_true(TypeOf x Is TI(Of C))
-        assert_true(TypeOf x Is TI(Of I))
-        assert_true(TypeOf x Is T(Of C))
-        assert_false(TypeOf x Is T(Of I))
+        assertion.is_true(TypeOf x Is TI(Of C))
+        assertion.is_true(TypeOf x Is TI(Of I))
+        assertion.is_true(TypeOf x Is T(Of C))
+        assertion.is_false(TypeOf x Is T(Of I))
         x = New T(Of C3)()
-        assert_true(TypeOf x Is TI(Of C3))
-        assert_true(TypeOf x Is TI(Of I))
-        assert_true(TypeOf x Is T(Of C3))
-        assert_false(TypeOf x Is T(Of I))
+        assertion.is_true(TypeOf x Is TI(Of C3))
+        assertion.is_true(TypeOf x Is TI(Of I))
+        assertion.is_true(TypeOf x Is T(Of C3))
+        assertion.is_false(TypeOf x Is T(Of I))
 
-        assert_true(cast(New T(Of C)(), x))
-        assert_false(cast(New T(Of C2)(), x))
-        assert_true(cast(New T(Of C3)(), x))
+        assertion.is_true(cast(New T(Of C)(), x))
+        assertion.is_false(cast(New T(Of C2)(), x))
+        assertion.is_true(cast(New T(Of C3)(), x))
 
         Return True
     End Function
@@ -73,26 +73,26 @@ Public Class out_generic_behavior_test
         f = Function() As C
                 Return New C()
             End Function
-        assert_true(TypeOf f Is F(Of I))
-        assert_false(TypeOf f Is F(Of C))
-        assert_true(TypeOf f() Is I)
-        assert_true(TypeOf f() Is C)
+        assertion.is_true(TypeOf f Is F(Of I))
+        assertion.is_false(TypeOf f Is F(Of C))
+        assertion.is_true(TypeOf f() Is I)
+        assertion.is_true(TypeOf f() Is C)
 
         f = Function() As C3
                 Return New C3()
             End Function
-        assert_true(TypeOf f Is F(Of I))
-        assert_false(TypeOf f Is F(Of C3))
-        assert_true(TypeOf f() Is I)
-        assert_true(TypeOf f() Is C3)
+        assertion.is_true(TypeOf f Is F(Of I))
+        assertion.is_false(TypeOf f Is F(Of C3))
+        assertion.is_true(TypeOf f() Is I)
+        assertion.is_true(TypeOf f() Is C3)
 
-        assert_false(cast(Function() As C
+        assertion.is_false(cast(Function() As C
                               Return New C()
                           End Function, f))
-        assert_false(cast(Function() As C2
+        assertion.is_false(cast(Function() As C2
                               Return New C2()
                           End Function, f))
-        assert_false(cast(Function() As C3
+        assertion.is_false(cast(Function() As C3
                               Return New C3()
                           End Function, f))
 
@@ -104,26 +104,26 @@ Public Class out_generic_behavior_test
         f = Function() As T(Of C)
                 Return New T(Of C)()
             End Function
-        assert_true(TypeOf f Is F(Of TI(Of I)))
-        assert_false(TypeOf f Is F(Of TI(Of C)))
-        assert_false(TypeOf f Is F(Of T(Of I)))
-        assert_false(TypeOf f Is F(Of T(Of C)))
-        assert_true(TypeOf f() Is TI(Of I))
-        assert_true(TypeOf f() Is TI(Of C))
-        assert_false(TypeOf f() Is T(Of I))
-        assert_true(TypeOf f() Is T(Of C))
+        assertion.is_true(TypeOf f Is F(Of TI(Of I)))
+        assertion.is_false(TypeOf f Is F(Of TI(Of C)))
+        assertion.is_false(TypeOf f Is F(Of T(Of I)))
+        assertion.is_false(TypeOf f Is F(Of T(Of C)))
+        assertion.is_true(TypeOf f() Is TI(Of I))
+        assertion.is_true(TypeOf f() Is TI(Of C))
+        assertion.is_false(TypeOf f() Is T(Of I))
+        assertion.is_true(TypeOf f() Is T(Of C))
 
         f = Function() As T(Of C3)
                 Return New T(Of C3)()
             End Function
-        assert_true(TypeOf f Is F(Of TI(Of I)))
-        assert_false(TypeOf f Is F(Of TI(Of C3)))
-        assert_false(TypeOf f Is F(Of T(Of I)))
-        assert_false(TypeOf f Is F(Of T(Of C3)))
-        assert_true(TypeOf f() Is TI(Of I))
-        assert_true(TypeOf f() Is TI(Of C3))
-        assert_false(TypeOf f() Is T(Of I))
-        assert_true(TypeOf f() Is T(Of C3))
+        assertion.is_true(TypeOf f Is F(Of TI(Of I)))
+        assertion.is_false(TypeOf f Is F(Of TI(Of C3)))
+        assertion.is_false(TypeOf f Is F(Of T(Of I)))
+        assertion.is_false(TypeOf f Is F(Of T(Of C3)))
+        assertion.is_true(TypeOf f() Is TI(Of I))
+        assertion.is_true(TypeOf f() Is TI(Of C3))
+        assertion.is_false(TypeOf f() Is T(Of I))
+        assertion.is_true(TypeOf f() Is T(Of C3))
 
         Return True
     End Function
@@ -135,8 +135,8 @@ Public Class out_generic_behavior_test
                 Return True
             End Function
         Dim o As TI(Of I) = Nothing
-        assert_true(f(o))
-        assert_true(TypeOf o Is T(Of C))
+        assertion.is_true(f(o))
+        assertion.is_true(TypeOf o Is T(Of C))
 
         Return True
     End Function
@@ -145,20 +145,20 @@ Public Class out_generic_behavior_test
         Dim x As TI(Of TI(Of I)) = Nothing
         x = New T(Of TI(Of I))()
         x = New T(Of T(Of I))()
-        assert_true(TypeOf x Is TI(Of TI(Of I)))
-        assert_false(TypeOf x Is T(Of TI(Of I)))
-        assert_true(TypeOf x Is T(Of T(Of I)))
-        assert_true(TypeOf x Is TI(Of T(Of I)))
+        assertion.is_true(TypeOf x Is TI(Of TI(Of I)))
+        assertion.is_false(TypeOf x Is T(Of TI(Of I)))
+        assertion.is_true(TypeOf x Is T(Of T(Of I)))
+        assertion.is_true(TypeOf x Is TI(Of T(Of I)))
 
         x = New T(Of T(Of C))()
-        assert_true(TypeOf x Is TI(Of TI(Of I)))
-        assert_false(TypeOf x Is T(Of TI(Of I)))
-        assert_false(TypeOf x Is T(Of T(Of I)))
-        assert_true(TypeOf x Is TI(Of TI(Of C)))
-        assert_false(TypeOf x Is T(Of TI(Of C)))
-        assert_true(TypeOf x Is T(Of T(Of C)))
-        assert_false(TypeOf x Is TI(Of T(Of I)))
-        assert_true(TypeOf x Is TI(Of T(Of C)))
+        assertion.is_true(TypeOf x Is TI(Of TI(Of I)))
+        assertion.is_false(TypeOf x Is T(Of TI(Of I)))
+        assertion.is_false(TypeOf x Is T(Of T(Of I)))
+        assertion.is_true(TypeOf x Is TI(Of TI(Of C)))
+        assertion.is_false(TypeOf x Is T(Of TI(Of C)))
+        assertion.is_true(TypeOf x Is T(Of T(Of C)))
+        assertion.is_false(TypeOf x Is TI(Of T(Of I)))
+        assertion.is_true(TypeOf x Is TI(Of T(Of C)))
 
         Return True
     End Function
@@ -166,9 +166,9 @@ Public Class out_generic_behavior_test
     Private Shared Function case7() As Boolean
         Dim x As T(Of TI(Of I)) = Nothing
         x = New T(Of TI(Of I))()
-        assert_true(TypeOf x Is TI(Of TI(Of I)))
-        assert_true(TypeOf x Is T(Of TI(Of I)))
-        assert_false(TypeOf x Is TI(Of T(Of I)))
+        assertion.is_true(TypeOf x Is TI(Of TI(Of I)))
+        assertion.is_true(TypeOf x Is T(Of TI(Of I)))
+        assertion.is_false(TypeOf x Is TI(Of T(Of I)))
 
         Return True
     End Function

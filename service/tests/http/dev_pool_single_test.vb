@@ -58,12 +58,12 @@ Public Class dev_pool_single_test
 
         Public Overrides Function finish() As Boolean
             s.stop()
-            assert_equal(sp.total_count(), uint32_0)
-            assert_equal(sp.free_count(), uint32_0)
-            assert_equal(cgp.total_count(), uint32_0)
-            assert_equal(cgp.free_count(), uint32_0)
-            assert_equal(cpp.total_count(), uint32_0)
-            assert_equal(cpp.free_count(), uint32_0)
+            assertion.equal(sp.total_count(), uint32_0)
+            assertion.equal(sp.free_count(), uint32_0)
+            assertion.equal(cgp.total_count(), uint32_0)
+            assertion.equal(cgp.free_count(), uint32_0)
+            assertion.equal(cpp.total_count(), uint32_0)
+            assertion.equal(cpp.free_count(), uint32_0)
             Return MyBase.finish()
         End Function
 
@@ -74,8 +74,8 @@ Public Class dev_pool_single_test
             begin_lifetime_event_comb(expiration_controller.[New](Function() Not s.alive()),
                                       Function() As Boolean
                                           If sp.get(h) AndAlso
-                                             assert_not_nothing(h) AndAlso
-                                             assert_not_nothing(h.get()) Then
+                                             assertion.is_not_null(h) AndAlso
+                                             assertion.is_not_null(h.get()) Then
                                               ec = h.get().sense()
                                               Return waitfor(ec) AndAlso
                                                      goto_next()
@@ -87,27 +87,27 @@ Public Class dev_pool_single_test
                                       End Function,
                                       Function() As Boolean
                                           p.renew()
-                                          If assert_true(ec.end_result()) Then
+                                          If assertion.is_true(ec.end_result()) Then
                                               assert(Not h.get() Is Nothing)
                                               ec = h.get().receive(p)
                                               Return waitfor(ec) AndAlso
                                                      goto_next()
                                           Else
-                                              assert_false(sp.release(h))
+                                              assertion.is_false(sp.release(h))
                                               Return goto_begin()
                                           End If
                                       End Function,
                                       Function()
-                                          assert_true(ec.end_result())
-                                          assert_true(Not p.empty())
+                                          assertion.is_true(ec.end_result())
+                                          assertion.is_true(Not p.empty())
                                           assert(Not h.get() Is Nothing)
                                           ec = h.get().send(+p)
                                           Return waitfor(ec) AndAlso
                                                  goto_next()
                                       End Function,
                                       Function() As Boolean
-                                          assert_true(ec.end_result())
-                                          assert_false(sp.release(h))
+                                          assertion.is_true(ec.end_result())
+                                          assertion.is_false(sp.release(h))
                                           Return goto_begin()
                                       End Function)
         End Sub
@@ -140,9 +140,9 @@ Public Class dev_pool_single_test
                                           's = rnd_short_str()
                                       End If
                                       assert(Not cp Is Nothing)
-                                      If assert_true(cp.get(h)) AndAlso
-                                         assert_not_nothing(h) AndAlso
-                                         assert_not_nothing(h.get()) Then
+                                      If assertion.is_true(cp.get(h)) AndAlso
+                                         assertion.is_not_null(h) AndAlso
+                                         assertion.is_not_null(h.get()) Then
                                           ec = h.get().send(s)
                                           Return waitfor(ec) AndAlso
                                                  goto_next()
@@ -151,7 +151,7 @@ Public Class dev_pool_single_test
                                       End If
                                   End Function,
                                   Function() As Boolean
-                                      assert_true(ec.end_result())
+                                      assertion.is_true(ec.end_result())
                                       p = New pointer(Of String)()
                                       assert(Not h Is Nothing AndAlso Not h.get() Is Nothing)
                                       ec = h.get().receive(p)
@@ -159,11 +159,11 @@ Public Class dev_pool_single_test
                                              goto_next()
                                   End Function,
                                   Function() As Boolean
-                                      assert_true(ec.end_result())
-                                      assert_true(Not p.empty())
+                                      assertion.is_true(ec.end_result())
+                                      assertion.is_true(Not p.empty())
                                       ' Why cannot this pass with String.CompareOrdinal?
-                                      assert_true(String.Compare(+p, s) = 0)
-                                      assert_true(cp.release(h))
+                                      assertion.is_true(String.Compare(+p, s) = 0)
+                                      assertion.is_true(cp.release(h))
                                       Return goto_end()
                                   End Function)
         End Function

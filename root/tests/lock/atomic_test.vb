@@ -96,8 +96,8 @@ Public Class atomic_test
         Public Overrides Function finish() As Boolean
             'the case has been run
             If (+sc) > 0 OrElse (+dc) > 0 Then
-                assert_more_or_equal_and_less_or_equal(+sc, exp_sc_min, exp_sc_max, "same count of ", name)
-                assert_more_or_equal_and_less_or_equal(+dc, exp_dc_min, exp_dc_max, "difference count of ", name)
+                assertion.more_or_equal_and_less_or_equal(+sc, exp_sc_min, exp_sc_max, "same count of ", name)
+                assertion.more_or_equal_and_less_or_equal(+dc, exp_dc_min, exp_dc_max, "difference count of ", name)
             End If
             Return MyBase.finish()
         End Function

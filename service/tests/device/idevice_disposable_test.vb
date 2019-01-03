@@ -45,7 +45,7 @@ Public Class idevice_disposable_test
         d = New test_class()
         For i As Int32 = 1 To 100
             disposable.dispose(d)
-            assert_equal(d.close_count(), i)
+            assertion.equal(d.close_count(), i)
         Next
         Return True
     End Function

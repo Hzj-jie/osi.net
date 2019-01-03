@@ -11,25 +11,25 @@ Imports osi.root.utt.attributes
 Public NotInheritable Class type_string_serializer_test
     <test>
     Private Shared Sub base_test()
-        assert_equal(type_string_serializer.to_str_or_null(GetType(UInt32), CUInt(100)), "100")
-        assert_equal(type_string_serializer.from_str_or_null(GetType(UInt32), "100"), CUInt(100))
-        assert_equal(type_string_serializer.to_str_or_null(GetType(Int32), 100), "100")
-        assert_equal(type_string_serializer.from_str_or_null(GetType(Int32), "100"), 100)
-        assert_equal(type_string_serializer.to_str_or_null(GetType(Int32), -100), "-100")
-        assert_equal(type_string_serializer.from_str_or_null(GetType(Int32), "-100"), -100)
+        assertion.equal(type_string_serializer.to_str_or_null(GetType(UInt32), CUInt(100)), "100")
+        assertion.equal(type_string_serializer.from_str_or_null(GetType(UInt32), "100"), CUInt(100))
+        assertion.equal(type_string_serializer.to_str_or_null(GetType(Int32), 100), "100")
+        assertion.equal(type_string_serializer.from_str_or_null(GetType(Int32), "100"), 100)
+        assertion.equal(type_string_serializer.to_str_or_null(GetType(Int32), -100), "-100")
+        assertion.equal(type_string_serializer.from_str_or_null(GetType(Int32), "-100"), -100)
 
-        assert_equal(type_string_serializer.to_str_or_null(GetType(Boolean), True), "True")
-        assert_equal(type_string_serializer.to_str_or_null(GetType(Boolean), False), "False")
-        assert_equal(type_string_serializer.from_str_or_null(GetType(Boolean), "True"), True)
-        assert_equal(type_string_serializer.from_str_or_null(GetType(Boolean), "False"), False)
+        assertion.equal(type_string_serializer.to_str_or_null(GetType(Boolean), True), "True")
+        assertion.equal(type_string_serializer.to_str_or_null(GetType(Boolean), False), "False")
+        assertion.equal(type_string_serializer.from_str_or_null(GetType(Boolean), "True"), True)
+        assertion.equal(type_string_serializer.from_str_or_null(GetType(Boolean), "False"), False)
     End Sub
 
     <test>
     Private Shared Sub unimplemented_test()
         Dim implemented As Boolean = False
         implemented = True
-        assert_false(type_string_serializer.from_str(GetType(test_interface), implemented, "abc", Nothing))
-        assert_false(implemented)
+        assertion.is_false(type_string_serializer.from_str(GetType(test_interface), implemented, "abc", Nothing))
+        assertion.is_false(implemented)
     End Sub
 
     Private Interface test_interface

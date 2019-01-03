@@ -48,22 +48,22 @@ Public Class suspend_all_process_threads_test
                 queue_in_managed_threadpool(Sub()
                                                 exec(p, stopping)
                                             End Sub)
-                assert_true(timeslice_sleep_wait_when(Function()
-                                                          Return (+p) = 0
-                                                      End Function,
+                assertion.is_true(timeslice_sleep_wait_when(Function()
+                                                                Return (+p) = 0
+                                                            End Function,
                                                       seconds_to_milliseconds(1)))
-                assert_true(suspend_all_current_process_threads())
+                assertion.is_true(suspend_all_current_process_threads())
                 Dim c As UInt32 = 0
                 c = (+p)
-                assert_false(timeslice_sleep_wait_when(Function()
-                                                           Return (+p) = c
-                                                       End Function,
+                assertion.is_false(timeslice_sleep_wait_when(Function()
+                                                                 Return (+p) = c
+                                                             End Function,
                                                        seconds_to_milliseconds(10)))
-                assert_true(resume_all_current_process_threads())
+                assertion.is_true(resume_all_current_process_threads())
                 c = (+p)
-                assert_true(timeslice_sleep_wait_when(Function()
-                                                          Return (+p) = c
-                                                      End Function,
+                assertion.is_true(timeslice_sleep_wait_when(Function()
+                                                                Return (+p) = c
+                                                            End Function,
                                                       seconds_to_milliseconds(10)))
                 stopping.set(True)
                 Return True

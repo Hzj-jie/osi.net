@@ -23,7 +23,7 @@ Public Class threadpool_test
                                     c = New atomic_int()
                                 End Sub,
                                 Sub()
-                                    assert_equal(+c, size)
+                                    assertion.equal(+c, size)
                                 End Sub)
     End Sub
 

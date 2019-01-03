@@ -34,7 +34,7 @@ Partial Public Class dispenser_test
         Public Function receive(ByVal o As pointer(Of pair(Of Int32, Int32))) As event_comb _
                                Implements T_receiver(Of pair(Of Int32, Int32)).receive
             Return sync_async(Sub()
-                                  If assert_not_nothing(o) AndAlso assert_true(o.empty()) Then
+                                  If assertion.is_not_null(o) AndAlso assertion.is_true(o.empty()) Then
                                       Dim p As pair(Of Int32, Int32) = Nothing
                                       If q.pop(p) Then
                                           eva(o, p)

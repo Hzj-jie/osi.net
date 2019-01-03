@@ -25,15 +25,15 @@ Public Class udp_extension_test
 
     Private Shared Function match_endpoint_test() As Boolean
         For i As Int32 = 0 To array_size(match_cases) - 1
-            assert_true(New IPEndPoint(IPAddress.Parse(match_cases(i).first), 1000).match_endpoint(
+            assertion.is_true(New IPEndPoint(IPAddress.Parse(match_cases(i).first), 1000).match_endpoint(
                         New IPEndPoint(IPAddress.Parse(match_cases(i).second), 1000)))
-            assert_true(New IPEndPoint(IPAddress.Parse(match_cases(i).first), 1000).match_endpoint(
+            assertion.is_true(New IPEndPoint(IPAddress.Parse(match_cases(i).first), 1000).match_endpoint(
                         New IPEndPoint(IPAddress.Parse(match_cases(i).second), 0)))
         Next
         For i As Int32 = 0 To array_size(unmatch_cases) - 1
-            assert_false(New IPEndPoint(IPAddress.Parse(unmatch_cases(i).first), 1000).match_endpoint(
+            assertion.is_false(New IPEndPoint(IPAddress.Parse(unmatch_cases(i).first), 1000).match_endpoint(
                          New IPEndPoint(IPAddress.Parse(unmatch_cases(i).second), 1000)))
-            assert_false(New IPEndPoint(IPAddress.Parse(unmatch_cases(i).first), 1000).match_endpoint(
+            assertion.is_false(New IPEndPoint(IPAddress.Parse(unmatch_cases(i).first), 1000).match_endpoint(
                          New IPEndPoint(IPAddress.Parse(unmatch_cases(i).second), 0)))
         Next
         Return True

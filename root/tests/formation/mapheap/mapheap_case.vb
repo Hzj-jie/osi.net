@@ -87,14 +87,14 @@ Friend Class mapheap_case
         Dim k As String = Nothing
         Dim v As Int64 = 0
         rnd_key_value(k, v)
-        assert_true(mh.insert(k, v))
+        assertion.is_true(mh.insert(k, v))
         If validation() Then
             Dim it As map(Of String, Int64).iterator = Nothing
             it = m.find(k)
             If it <> m.end() Then
                 dec((+it).second)
             End If
-            assert_true(m.insert(k, v) <> m.end())
+            assertion.is_true(m.insert(k, v) <> m.end())
             c(v) += 1
         End If
     End Sub
@@ -107,16 +107,16 @@ Friend Class mapheap_case
             it = mh.find(k)
             Dim v As Int64 = 0
             If it = mh.end() Then
-                assert_true(m.find(k) = m.end())
+                assertion.is_true(m.find(k) = m.end())
                 v = key_value(k)
-                assert_true(mh.accumulate(k, v))
+                assertion.is_true(mh.accumulate(k, v))
                 m(k) = v
                 c(v) += 1
             Else
                 Dim ov As Int64 = 0
                 ov = (+it).first
                 v = next_value(ov)
-                assert_true(mh.accumulate(k, v - ov))
+                assertion.is_true(mh.accumulate(k, v - ov))
                 m(k) = v
                 dec(ov)
                 c(v) += 1
@@ -128,7 +128,7 @@ Friend Class mapheap_case
 
     Private Sub dec(ByVal v As Int64)
         c(v) -= 1
-        assert_more_or_equal(c(v), 0)
+        assertion.more_or_equal(c(v), 0)
         If c(v) = 0 Then
             assert(c.erase(v))
         End If
@@ -139,10 +139,10 @@ Friend Class mapheap_case
         Dim k As String = Nothing
         Dim v As Int64 = 0
         mh.pop_front(k, v)
-        assert_not_nothing(k)
+        assertion.is_not_null(k)
         If validation() Then
-            assert_true(is_key_value(k, v))
-            assert_true(c.find(v) <> c.end())
+            assertion.is_true(is_key_value(k, v))
+            assertion.is_true(c.find(v) <> c.end())
             Dim it As map(Of Int64, Int64).iterator = Nothing
             it = c.begin()
             Dim max As Int64 = min_int64
@@ -152,8 +152,8 @@ Friend Class mapheap_case
                 End If
                 it += 1
             End While
-            assert_equal(max, v)
-            assert_true(m.erase(k))
+            assertion.equal(max, v)
+            assertion.is_true(m.erase(k))
             dec(v)
         End If
     End Sub
@@ -164,7 +164,7 @@ Friend Class mapheap_case
         Dim it As mapheap(Of String, Int64).iterator = Nothing
         it = mh.find(k)
         If validation() Then
-            assert_equal(it = mh.end(), m.find(k) = m.end())
+            assertion.equal(it = mh.end(), m.find(k) = m.end())
         End If
     End Sub
 
@@ -175,11 +175,11 @@ Friend Class mapheap_case
         r = mh.erase(k)
         If validation() Then
             If r Then
-                assert_not_equal(m.find(k), m.end())
+                assertion.not_equal(m.find(k), m.end())
                 dec(m(k))
-                assert_equal(r, m.erase(k))
+                assertion.equal(r, m.erase(k))
             Else
-                assert_equal(m.find(k), m.end())
+                assertion.equal(m.find(k), m.end())
             End If
         End If
     End Sub
@@ -187,14 +187,14 @@ Friend Class mapheap_case
     Private Sub foreach(ByVal i As mapheap(Of String, Int64))
         If validation() Then
             assert(Not i Is Nothing)
-            assert_equal(m.size(), i.size())
+            assertion.equal(m.size(), i.size())
             Dim it As map(Of String, Int64).iterator = Nothing
             it = m.begin()
             While it <> m.end()
                 Dim it2 As mapheap(Of String, Int64).iterator = Nothing
                 it2 = mh.find((+it).first)
-                If assert_not_equal(it2, mh.end()) Then
-                    If Not assert_equal((+it2).first, (+it).second) Then
+                If assertion.not_equal(it2, mh.end()) Then
+                    If Not assertion.equal((+it2).first, (+it).second) Then
 
                     End If
                 End If
@@ -209,15 +209,15 @@ Friend Class mapheap_case
         If validation() Then
             m.clear()
             c.clear()
-            assert_equal(mh.size(), 0)
-            assert_true(mh.empty())
+            assertion.equal(mh.size(), 0)
+            assertion.is_true(mh.empty())
         End If
     End Sub
 
     Private Sub clone()
         Dim o As mapheap(Of String, Int64) = Nothing
         copy(o, mh)
-        assert_equal(object_compare(o, mh), object_compare_undetermined)
+        assertion.equal(object_compare(o, mh), object_compare_undetermined)
         foreach(o)
         foreach(mh)
     End Sub

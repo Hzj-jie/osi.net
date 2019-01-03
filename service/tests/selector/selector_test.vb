@@ -66,13 +66,13 @@ Public Class selector_test
             Dim i As Int32 = 0
             Dim p As test_class = Nothing
             i = rnd_int(min_key, max_key)
-            assert_true(s.select(i, p))
-            If assert_not_nothing(p) Then
-                assert_true(p.initialized())
-                assert_equal(+p, i)
+            assertion.is_true(s.select(i, p))
+            If assertion.is_not_null(p) Then
+                assertion.is_true(p.initialized())
+                assertion.equal(+p, i)
             End If
-            assert_less_or_equal(test_class.constructed(), CUInt(max_key - min_key))
-            assert_equal(test_class.destructed(), uint32_0)
+            assertion.less_or_equal(test_class.constructed(), CUInt(max_key - min_key))
+            assertion.equal(test_class.destructed(), uint32_0)
             Return True
         End Function
     End Class

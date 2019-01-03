@@ -50,16 +50,16 @@ Public Class callstack_test
     Private Shared Function [case](ByVal ParamArray ignores() As String) As Boolean
         Dim s As String = Nothing
         s = func1(ignores)
-        assert_equal(strindexof(s, "func2"), npos)
-        assert_equal(strindexof(s, "func3"), npos)
-        assert_equal(strindexof(s, "func4"), npos)
-        assert_equal(strindexof(s, "func5"), npos)
-        assert_equal(strindexof(s, "func6"), npos)
-        assert_equal(strindexof(s, "test_class1"), npos)
-        assert_equal(strindexof(s, "test_structure1"), npos)
-        assert_equal(strindexof(s, "test_class2"), npos)
-        assert_equal(strindexof(s, "test_structure2"), npos)
-        assert_not_equal(strindexof(s, "func1"), npos)
+        assertion.equal(strindexof(s, "func2"), npos)
+        assertion.equal(strindexof(s, "func3"), npos)
+        assertion.equal(strindexof(s, "func4"), npos)
+        assertion.equal(strindexof(s, "func5"), npos)
+        assertion.equal(strindexof(s, "func6"), npos)
+        assertion.equal(strindexof(s, "test_class1"), npos)
+        assertion.equal(strindexof(s, "test_structure1"), npos)
+        assertion.equal(strindexof(s, "test_class2"), npos)
+        assertion.equal(strindexof(s, "test_structure2"), npos)
+        assertion.not_equal(strindexof(s, "func1"), npos)
         Return True
     End Function
 

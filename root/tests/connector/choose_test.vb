@@ -23,32 +23,32 @@ Public Class choose_test
         s = New [set](Of String)()
         Dim cl As Int32 = 0
         cl = rnd_int(0, 5 + 1)
-        assert_true(choose(Sub(a() As Int32)
-                               assert_equal(CUInt(cl), array_size(a))
+        assertion.is_true(choose(Sub(a() As Int32)
+                               assertion.equal(CUInt(cl), array_size(a))
                                If cl > 1 Then
                                    For i As UInt32 = 0 To CUInt(array_size(a) - 2)
-                                       assert_less(a(i), a(i + 1))
+                                       assertion.less(a(i), a(i + 1))
                                    Next
                                End If
                                Dim t As String = Nothing
                                t = strcat(a)
-                               assert_true(s.find(t) = s.end())
+                               assertion.is_true(s.find(t) = s.end())
                                s.insert(t)
                            End Sub,
                            v,
                            cl))
-        assert_equal(CInt(s.size()), choose(cl, array_size(v)))
+        assertion.equal(CInt(s.size()), choose(cl, array_size(v)))
         Return True
     End Function
 
     Private Shared Function failure_case() As Boolean
         Dim v() As Int32 = Nothing
         v = init_array()
-        assert_false(choose(Sub(a() As Int32)
+        assertion.is_false(choose(Sub(a() As Int32)
                             End Sub,
                             v,
                             array_size(v) + 1))
-        assert_false(choose(Sub(a() As Int32)
+        assertion.is_false(choose(Sub(a() As Int32)
                             End Sub,
                             v,
                             -1))

@@ -18,9 +18,9 @@ Public Class calculator_test
             assert(Not cases(i) Is Nothing)
             Dim r As expression_result(Of Int32) = Nothing
             r = e.execute(cases(i).first)
-            assert_equal(r.has_error(), has_error, strcat(cases(i).first))
-            assert_equal(r.has_result(), has_result, strcat(cases(i).first))
-            assert_equal(r.str(), cases(i).second, strcat(cases(i).first))
+            assertion.equal(r.has_error(), has_error, strcat(cases(i).first))
+            assertion.equal(r.has_result(), has_result, strcat(cases(i).first))
+            assertion.equal(r.str(), cases(i).second, strcat(cases(i).first))
         Next
         Return True
     End Function
@@ -34,9 +34,9 @@ Public Class calculator_test
         For i As Int32 = 0 To array_size(cases) - 1
             Dim r As expression_result(Of Int32) = Nothing
             r = e.execute(cases(i, 0))
-            assert_equal(r.has_error(), has_error, cases(i, 0))
-            assert_equal(r.has_result(), has_result, cases(i, 0))
-            assert_equal(r.str(), cases(i, 1), cases(i, 0))
+            assertion.equal(r.has_error(), has_error, cases(i, 0))
+            assertion.equal(r.has_result(), has_result, cases(i, 0))
+            assertion.equal(r.str(), cases(i, 1), cases(i, 0))
         Next
         Return True
     End Function

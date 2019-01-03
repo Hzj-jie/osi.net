@@ -9,7 +9,7 @@ Public Class var_compare_test
     Private Shared Function run_case(ByVal left As String,
                                      ByVal right As String,
                                      ByVal exp As Int32) As Boolean
-        assert_compare(New var(left), New var(right), exp)
+        assertion.equal_to_compare(New var(left), New var(right), exp)
         Return True
     End Function
 

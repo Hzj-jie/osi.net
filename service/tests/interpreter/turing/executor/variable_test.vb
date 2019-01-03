@@ -27,23 +27,23 @@ Namespace turing.executor
                 assert(Not c2 Is Nothing)
                 Dim v As variable = Nothing
                 v = New variable(type, i)
-                assert_equal(v, New variable(type, i))
-                assert_not_equal(v, Nothing)
+                assertion.equal(v, New variable(type, i))
+                assertion.not_equal(v, Nothing)
                 Dim j As T = Nothing
                 If cast(Of T)(v.get_value(), j) Then
-                    assert_equal(j, i)
+                    assertion.equal(j, i)
                 End If
                 If Not v.get_value() Is Nothing Then
-                    If assert_true(TypeOf v.get_value() Is T) Then
-                        assert_equal(cast(Of T)(v.get_value()), i)
+                    If assertion.is_true(TypeOf v.get_value() Is T) Then
+                        assertion.equal(cast(Of T)(v.get_value()), i)
                     End If
                 End If
-                If assert_true(c1(v, j)) Then
-                    assert_equal(j, i)
-                    assert_equal(c2(v), i)
+                If assertion.is_true(c1(v, j)) Then
+                    assertion.equal(j, i)
+                    assertion.equal(c2(v), i)
                 End If
-                assert_equal(v.true(), Not v.false())
-                assert_equal(v.false(), Not v.true())
+                assertion.equal(v.true(), Not v.false())
+                assertion.equal(v.false(), Not v.true())
                 Return True
             End Function
 

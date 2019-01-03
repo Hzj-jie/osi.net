@@ -14,9 +14,9 @@ Namespace fullstack.executor
                                               ByVal min As Int32,
                                               ByVal max As Int32) As Boolean
             assert(Not d Is Nothing)
-            If assert_equal(d.increment(), exp_inc) Then
-                assert_true(d.last().is_int())
-                assert_more_and_less(d.last().int(), min, max)
+            If assertion.equal(d.increment(), exp_inc) Then
+                assertion.is_true(d.last().is_int())
+                assertion.more_and_less(d.last().int(), min, max)
             End If
             Return True
         End Function
@@ -29,7 +29,7 @@ Namespace fullstack.executor
             Try
                 f.execute(d)
             Catch ex As invalid_runtime_casting_exception
-                assert_true(False)
+                assertion.is_true(False)
             End Try
             If assert_return(d, exp_inc, min, max) Then
                 Return True

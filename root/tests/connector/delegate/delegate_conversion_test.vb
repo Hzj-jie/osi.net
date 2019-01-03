@@ -47,13 +47,13 @@ Public NotInheritable Class delegate_conversion_test
     End Sub
 
     Private Shared Sub success(Of IT, OT)()
-        assert_not_nothing([Delegate].CreateDelegate(GetType(Func(Of IT, OT)), method_info()))
+        assertion.is_not_null([Delegate].CreateDelegate(GetType(Func(Of IT, OT)), method_info()))
     End Sub
 
     Private Shared Sub fail(Of IT, OT)()
         Try
-            assert_nothing([Delegate].CreateDelegate(GetType(Func(Of IT, OT)), method_info()))
-            assert_not_reach()
+            assertion.is_null([Delegate].CreateDelegate(GetType(Func(Of IT, OT)), method_info()))
+            assertion.not_reach()
         Catch
             Return
         End Try

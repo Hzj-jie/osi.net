@@ -24,7 +24,7 @@ Public Class send_input_test_form
         s = Microsoft.VisualBasic.Interaction.InputBox("Input a scan code")
         Dim code As UInt16 = 0
         If UInt16.TryParse(s, code) Then
-            assert_equal(send_input.keyboard(send_input.keyboard_input.from_scan_code(code)), uint32_2)
+            assertion.equal(send_input.keyboard(send_input.keyboard_input.from_scan_code(code)), uint32_2)
         End If
     End Sub
 

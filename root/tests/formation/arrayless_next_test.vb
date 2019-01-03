@@ -19,7 +19,7 @@ Public Class arrayless_next_test
                                 End Function,
                                 size)
             current = Nothing
-            assert_false(a.next(p, v))
+            assertion.is_false(a.next(p, v))
         End Using
         Using code_block
             Dim a As arrayless(Of Object) = Nothing
@@ -32,11 +32,11 @@ Public Class arrayless_next_test
                                 End Function,
                                 size)
             For i As UInt32 = 0 To (size >> 1) - 1
-                assert_true(a.next(p, v))
-                assert_equal(p, (i << 1) + 1)
-                assert_not_nothing(v)
+                assertion.is_true(a.next(p, v))
+                assertion.equal(p, (i << 1) + 1)
+                assertion.is_not_null(v)
             Next
-            assert_false(a.next(p, v))
+            assertion.is_false(a.next(p, v))
         End Using
         Return True
     End Function
@@ -51,11 +51,11 @@ Public Class arrayless_next_test
         Dim v As T = Nothing
         Dim p As UInt32 = 0
         For i As UInt32 = 0 To size - 1
-            assert_true(a.[next](p, v))
-            assert_equal(p, i)
-            assert_equal(v, Nothing)
+            assertion.is_true(a.[next](p, v))
+            assertion.equal(p, i)
+            assertion.equal(v, Nothing)
         Next
-        assert_false(a.[next](p, v))
+        assertion.is_false(a.[next](p, v))
         Return True
     End Function
 

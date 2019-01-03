@@ -35,27 +35,27 @@ Public Class device_pool_checker_test
                                                       Return valid
                                                   End Function,
                                        checker:=Sub(x As Int32)
-                                                    assert_equal(x, j)
+                                                    assertion.equal(x, j)
                                                     called.increment()
                                                 End Sub))
             Next
-            assert_equal(p.free_count(), size)
-            assert_true(p.attach_checker(ms))
+            assertion.equal(p.free_count(), size)
+            assertion.is_true(p.attach_checker(ms))
             sleep(1.5 * ms)
-            assert_equal(+called, size << 1)
-            assert_true(p.clear_checker())
+            assertion.equal(+called, size << 1)
+            assertion.is_true(p.clear_checker())
             sleep(ms)
-            assert_equal(+called, size << 1)
+            assertion.equal(+called, size << 1)
 
             valid = False
             sleep(ms)
-            assert_equal(+called, size << 1)
-            assert_equal(p.free_count(), size)
-            assert_true(p.attach_checker(ms))
+            assertion.equal(+called, size << 1)
+            assertion.equal(p.free_count(), size)
+            assertion.is_true(p.attach_checker(ms))
             sleep(1.5 * ms)
-            assert_equal(+called, size << 1)
-            assert_equal(p.free_count(), uint32_0)
-            assert_true(p.clear_checker())
+            assertion.equal(+called, size << 1)
+            assertion.equal(p.free_count(), uint32_0)
+            assertion.is_true(p.clear_checker())
 
             For i As Int32 = 0 To CInt(size) - 1
                 e.inject(i.make_device(checker:=Sub(x As Int32)
@@ -63,12 +63,12 @@ Public Class device_pool_checker_test
                                                 End Sub))
             Next
             called.exchange(uint32_0)
-            assert_true(p.attach_checker(ms))
+            assertion.is_true(p.attach_checker(ms))
             sleep(1.5 * ms)
-            assert_equal(+called, size << 1)
+            assertion.equal(+called, size << 1)
             p.close()
             sleep(1.5 * ms)
-            assert_equal(+called, size << 1)
+            assertion.equal(+called, size << 1)
         End Using
 
         Return True

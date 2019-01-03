@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.formation
 
@@ -15,9 +19,8 @@ Public Module selfhealth
                                 If TypeOf x.case Is failure_case Then
                                     If found Then
                                         Return False
-                                    Else
-                                        found = True
                                     End If
+                                    found = True
                                 End If
                                 Return True
                             End Function) AndAlso found
@@ -38,10 +41,11 @@ Public Module selfhealth
             host.run(selectors)
             self_health = False
 
-            If (assert_equal(failure_count(), failure_case.expected_failure_count) AndAlso
+            ' TODO: Test expectation.
+            If (assertion.equal(assertion.failure_count(), failure_case.expected_failure_count) AndAlso
                 set_self_health(False)) OrElse
                envs.utt_no_assert Then
-                clear_failure()
+                assertion.clear_failure()
             Else
                 Return False
             End If

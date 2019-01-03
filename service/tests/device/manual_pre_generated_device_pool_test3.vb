@@ -39,21 +39,21 @@ Public Class manual_pre_generated_device_pool_test3
             If Not p.get(r) Then
                 Return True
             End If
-            assert_not_nothing(r)
+            assertion.is_not_null(r)
             If rnd_bool() Then
                 r.close()
-                assert_false(p.release(r))
+                assertion.is_false(p.release(r))
             Else
-                assert_true(p.release(r))
+                assertion.is_true(p.release(r))
             End If
             Return True
         End Function
 
         Public Overrides Function finish() As Boolean
-            assert_more(mock_dev(Of manual_pre_generated_device_pool_case3).closed_instance_count(),
+            assertion.more(mock_dev(Of manual_pre_generated_device_pool_case3).closed_instance_count(),
                         thread_count * size / 2 / 1.2)
             p.close()
-            assert_more(mock_dev(Of manual_pre_generated_device_pool_case3).closed_instance_count(),
+            assertion.more(mock_dev(Of manual_pre_generated_device_pool_case3).closed_instance_count(),
                         thread_count * size / 2 / 1.1)
             Return MyBase.finish()
         End Function

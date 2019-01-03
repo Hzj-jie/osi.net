@@ -20,7 +20,7 @@ Public NotInheritable Class lambda_behavior_test
             End Sub
         Dim g As Action = Nothing
         g = Sub()
-                assert_not_nothing(c)
+                assertion.is_not_null(c)
             End Sub
 
         f()
@@ -34,7 +34,7 @@ Public NotInheritable Class lambda_behavior_test
                               a = 100
                           End Sub
         Dim g As Action = Sub()
-                              assert_equal(a, 100)
+                              assertion.equal(a, 100)
                           End Sub
         f()
         g()
@@ -50,14 +50,14 @@ Public NotInheritable Class lambda_behavior_test
         Dim f2 As Func(Of Boolean) = Function() As Boolean
                                          Return a = 100
                                      End Function
-        assert_false(f1())
-        assert_true(f2())
-        assert_not_reference_equal(f1, f2)
+        assertion.is_false(f1())
+        assertion.is_true(f2())
+        assertion.not_reference_equal(f1, f2)
     End Sub
 
     <test>
     Private Shared Sub same_lambda_expression_should_create_different_objects_without_capturing()
-        assert_not_reference_equal(Function(ByVal x As Int32) As Boolean
+        assertion.not_reference_equal(Function(ByVal x As Int32) As Boolean
                                        Return x = 0
                                    End Function,
                                    Function(ByVal x As Int32) As Boolean

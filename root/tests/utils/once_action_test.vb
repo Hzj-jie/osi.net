@@ -41,7 +41,7 @@ Public NotInheritable Class once_action_test
         Dim i As UInt32 = 0
         i = rnd_uint(0, vs.size() - uint32_1)
         If Not vs(i) Then
-            assert_false(vs(i).run())
+            assertion.is_false(vs(i).run())
         End If
     End Sub
 
@@ -50,6 +50,6 @@ Public NotInheritable Class once_action_test
         For i As UInt32 = 0 To vs.size() - uint32_1
             vs(i).run()
         Next
-        assert_equal(CUInt(+c), vs.size())
+        assertion.equal(CUInt(+c), vs.size())
     End Sub
 End Class

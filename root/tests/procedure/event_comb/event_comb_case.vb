@@ -75,8 +75,8 @@ Friend Class event_comb_case
     Protected Overrides Function run_case() As Boolean
         Dim this As Int32 = 0
         this = trigger_times()
-        assert_true(async_sync(create_event_comb(), timeout_ms()))
-        assert_more(trigger_times(), this)
+        assertion.is_true(async_sync(create_event_comb(), timeout_ms()))
+        assertion.more(trigger_times(), this)
         Return True
     End Function
 End Class

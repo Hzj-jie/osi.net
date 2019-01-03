@@ -31,7 +31,7 @@ Public Class copy_constructor_test
     Private Shared Function test_class_case() As Boolean
         Dim x As test_class = Nothing
         x = copy_constructor(Of test_class).invoke()
-        assert_not_nothing(x)
+        assertion.is_not_null(x)
         Return True
     End Function
 
@@ -45,10 +45,10 @@ Public Class copy_constructor_test
             o = New Object()
             Dim x As test_class2 = Nothing
             x = copy_constructor(Of test_class2).invoke(s, i, o)
-            assert_not_nothing(x)
-            assert_equal(s, x.s)
-            assert_equal(i, x.i)
-            assert_equal(o, x.o)
+            assertion.is_not_null(x)
+            assertion.equal(s, x.s)
+            assertion.equal(i, x.i)
+            assertion.equal(o, x.o)
         Next
         Return True
     End Function

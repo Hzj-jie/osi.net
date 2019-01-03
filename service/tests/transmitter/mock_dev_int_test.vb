@@ -20,8 +20,8 @@ Public Class mock_dev_int_test
         For i As Int32 = 0 To array_size(v2) - 1
             d.receive_pump.emplace(v2(i))
         Next
-        assert_true(d.send_pump_equal(v1))
-        assert_true(d.receive_pump_equal(v2))
+        assertion.is_true(d.send_pump_equal(v1))
+        assertion.is_true(d.receive_pump_equal(v2))
         Return True
     End Function
 
@@ -30,7 +30,7 @@ Public Class mock_dev_int_test
         Dim d2 As mock_dev_int = Nothing
         d1 = New mock_dev_int()
         d2 = d1.the_other_end()
-        If assert_not_nothing(d2) Then
+        If assertion.is_not_null(d2) Then
             Dim v1() As Int32 = Nothing
             Dim v2() As Int32 = Nothing
             v1 = rnd_ints(rnd_int(1024, 4096))
@@ -41,8 +41,8 @@ Public Class mock_dev_int_test
             For i As Int32 = 0 To array_size(v2) - 1
                 d2.send_pump.emplace(v2(i))
             Next
-            assert_true(d1.receive_pump_equal(v2))
-            assert_true(d2.receive_pump_equal(v1))
+            assertion.is_true(d1.receive_pump_equal(v2))
+            assertion.is_true(d2.receive_pump_equal(v1))
         End If
         Return True
     End Function

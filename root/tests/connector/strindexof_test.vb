@@ -6,14 +6,14 @@ Public Class strindexof_test
     Inherits [case]
 
     Private Shared Function contains_any_test() As Boolean
-        assert_true("abc".contains_any("d", "e", "a"))
-        assert_true("abc".contains_any("d"c, "e"c, "a"c))
-        assert_true("abc".contains_any({"d"}, {"e", "a"}))
-        assert_true("abc".contains_any({"d"c}, {"e"c, "a"c}))
-        assert_false("abc".contains_any("d", "e", "f"))
-        assert_false("abc".contains_any("d"c, "e"c, "f"c))
-        assert_false("abc".contains_any({"d", "e"}, {"f"}))
-        assert_false("abc".contains_any({"d"c, "e"c}, {"f"c}))
+        assertion.is_true("abc".contains_any("d", "e", "a"))
+        assertion.is_true("abc".contains_any("d"c, "e"c, "a"c))
+        assertion.is_true("abc".contains_any({"d"}, {"e", "a"}))
+        assertion.is_true("abc".contains_any({"d"c}, {"e"c, "a"c}))
+        assertion.is_false("abc".contains_any("d", "e", "f"))
+        assertion.is_false("abc".contains_any("d"c, "e"c, "f"c))
+        assertion.is_false("abc".contains_any({"d", "e"}, {"f"}))
+        assertion.is_false("abc".contains_any({"d"c, "e"c}, {"f"c}))
         Return True
     End Function
 

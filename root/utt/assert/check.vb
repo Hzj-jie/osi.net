@@ -224,6 +224,21 @@ Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
         Return thrown(Of Exception)(d, msg)
     End Function
 
+    Public Shared Function now_in_time_range(ByVal l As Int64, ByVal u As Int64) As Boolean
+        assert(l <= u)
+        Dim n As Int64 = 0
+        n = DateTime.Now().milliseconds()
+        Return assertion.more_or_equal_and_less_or_equal(n, l, u)
+    End Function
+
+    Public Shared Sub set_time_range(ByRef exp_l As Int64, ByRef exp_u As Int64, ByVal low As Int64, ByVal up As Int64)
+        assert(low <= up)
+        Dim n As Int64 = 0
+        n = DateTime.Now().milliseconds()
+        exp_l = n + low
+        exp_u = n + up
+    End Sub
+
     Protected Sub New()
     End Sub
 End Class

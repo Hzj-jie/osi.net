@@ -19,14 +19,14 @@ Public Class async_getter_device_test
         r = New mock_dev(Of async_getter_device_test)()
         assert(d.get().not_initialized())
         d.close()
-        assert_true(d.closed())
-        assert_false(d.is_valid())
-        assert_false(r.closed())
+        assertion.is_true(d.closed())
+        assertion.is_false(d.is_valid())
+        assertion.is_false(r.closed())
         w.mark()
-        assert_true(d.get().wait_until_initialized(seconds_to_milliseconds(10)))
-        assert_true(timeslice_sleep_wait_until(Function() r.closed(), seconds_to_milliseconds(1)))
-        assert_true(d.closed())
-        assert_false(d.is_valid())
+        assertion.is_true(d.get().wait_until_initialized(seconds_to_milliseconds(10)))
+        assertion.is_true(timeslice_sleep_wait_until(Function() r.closed(), seconds_to_milliseconds(1)))
+        assertion.is_true(d.closed())
+        assertion.is_false(d.is_valid())
         Return True
     End Function
 
@@ -37,12 +37,12 @@ Public Class async_getter_device_test
         d = New async_getter_mock_dev_device(Of async_getter_device_test)(w)
         Dim r As mock_dev(Of async_getter_device_test) = Nothing
         assert(d.get().not_initialized())
-        assert_true(d.is_valid())
+        assertion.is_true(d.is_valid())
         assert(Not d.get().get(r))
         assert(r Is Nothing)
         w.mark()
-        If assert_true(d.get().wait_until_initialized(seconds_to_milliseconds(1))) Then  ' may not always success
-            assert_true(d.is_valid())
+        If assertion.is_true(d.get().wait_until_initialized(seconds_to_milliseconds(1))) Then  ' may not always success
+            assertion.is_true(d.is_valid())
             assert(d.get().get(r))
             assert(Not r Is Nothing)
         End If

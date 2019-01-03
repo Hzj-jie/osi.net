@@ -38,18 +38,18 @@ Namespace logic
             For i As Int32 = 0 To CInt(stack.size()) - 1
                 Dim offset As data_ref = Nothing
                 Dim type As String = Nothing
-                If assert_true(s.export(stack(CUInt(i)).first, offset)) AndAlso
-                   assert_true(offset.to_rel(stack.size(), offset)) AndAlso
-                   assert_more_or_equal(offset.offset(), uint32_0) AndAlso
-                   assert_less(offset.offset(), stack.size()) AndAlso
-                   assert_true(s.type(stack(CUInt(i)).first, type)) Then
+                If assertion.is_true(s.export(stack(CUInt(i)).first, offset)) AndAlso
+                   assertion.is_true(offset.to_rel(stack.size(), offset)) AndAlso
+                   assertion.more_or_equal(offset.offset(), uint32_0) AndAlso
+                   assertion.less(offset.offset(), stack.size()) AndAlso
+                   assertion.is_true(s.type(stack(CUInt(i)).first, type)) Then
                     If stack.size() - i - 1 > offset.offset() Then
-                        assert_equal(stack(stack.size() - CUInt(offset.offset()) - uint32_1).first,
+                        assertion.equal(stack(stack.size() - CUInt(offset.offset()) - uint32_1).first,
                                      stack(CUInt(i)).first)
-                        assert_equal(type, stack(stack.size() - CUInt(offset.offset()) - uint32_1).second)
+                        assertion.equal(type, stack(stack.size() - CUInt(offset.offset()) - uint32_1).second)
                     Else
-                        assert_equal(offset.offset(), stack.size() - i - uint32_1)
-                        assert_equal(type, stack(CUInt(i)).second)
+                        assertion.equal(offset.offset(), stack.size() - i - uint32_1)
+                        assertion.equal(type, stack(CUInt(i)).second)
                     End If
                 End If
             Next
@@ -61,10 +61,10 @@ Namespace logic
                 Dim type As String = Nothing
                 If s.export(name, offset) AndAlso
                    offset.to_rel(stack.size(), offset) AndAlso
-                   assert_less(offset.offset(), stack.size()) AndAlso
-                   assert_true(s.type(name, type)) Then
-                    assert_equal(stack(stack.size() - CUInt(offset.offset()) - uint32_1).first, name)
-                    assert_equal(stack(stack.size() - CUInt(offset.offset()) - uint32_1).second, type)
+                   assertion.less(offset.offset(), stack.size()) AndAlso
+                   assertion.is_true(s.type(name, type)) Then
+                    assertion.equal(stack(stack.size() - CUInt(offset.offset()) - uint32_1).first, name)
+                    assertion.equal(stack(stack.size() - CUInt(offset.offset()) - uint32_1).second, type)
                 End If
             Next
 
@@ -73,7 +73,7 @@ Namespace logic
                 new_scope = s.start_scope()
                 execute(new_scope, stack, depth + 1)
 #If 0 Then
-                assert_reference_equal(new_scope.end_scope(), s)
+                assertion.reference_equal(new_scope.end_scope(), s)
 #End If
             End If
             stack.resize(stack.size() - CUInt(c))

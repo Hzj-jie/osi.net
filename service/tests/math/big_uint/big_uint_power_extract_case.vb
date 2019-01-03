@@ -22,18 +22,18 @@ Friend Class big_uint_power_extract_case
         b.power(j)
         Dim r As big_uint = Nothing
         b.extract(j, r)
-        assert_not_nothing(r)
-        assert_true(r.is_zero())
-        assert_true(b.equal(New big_uint(i)))
+        assertion.is_not_null(r)
+        assertion.is_true(r.is_zero())
+        assertion.is_true(b.equal(New big_uint(i)))
 
         Dim t As UInt64 = 0
         t = rnd_uint64(2, i)
         b.power(j)
         b.add(t)
         b.extract(j, r)
-        assert_not_nothing(r)
-        assert_true(b.equal(New big_uint(i)))
-        assert_true(r.equal(New big_uint(t)))
+        assertion.is_not_null(r)
+        assertion.is_true(b.equal(New big_uint(i)))
+        assertion.is_true(r.equal(New big_uint(t)))
         Return True
     End Function
 

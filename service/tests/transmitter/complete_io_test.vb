@@ -48,8 +48,8 @@ Public MustInherit Class complete_io_test(Of T As flow)
         f = create_send_flow(send_size)
         Dim buff() As Byte = Nothing
         buff = next_bytes(send_size)
-        assert_true(async_sync(cast(Of flow)(f).send(buff)))
-        assert_true(send_consistent(f, buff))
+        assertion.is_true(async_sync(cast(Of flow)(f).send(buff)))
+        assertion.is_true(send_consistent(f, buff))
         Return True
     End Function
 
@@ -61,9 +61,9 @@ Public MustInherit Class complete_io_test(Of T As flow)
         f = create_receive_flow(buff)
         Dim buff2() As Byte = Nothing
         ReDim buff2(receive_size - 1)
-        assert_true(async_sync(cast(Of flow)(f).receive(buff2)))
-        assert_true(receive_consistent(f, buff2))
-        assert_equal(memcmp(buff, buff2), 0)
+        assertion.is_true(async_sync(cast(Of flow)(f).receive(buff2)))
+        assertion.is_true(receive_consistent(f, buff2))
+        assertion.equal(memcmp(buff, buff2), 0)
         Return True
     End Function
 

@@ -113,7 +113,7 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
     End Function
@@ -134,8 +134,8 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_true(+r)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.is_true(+r)
                                   Return goto_end()
                               End Function)
     End Function
@@ -152,7 +152,7 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
     End Function
@@ -169,7 +169,7 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
     End Function
@@ -188,8 +188,8 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
                                   End If
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_not_nothing(+r)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.is_not_null(+r)
                                   Return goto_end()
                               End Function)
     End Function
@@ -210,8 +210,8 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_true(+r)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.is_true(+r)
                                   Return goto_end()
                               End Function)
     End Function
@@ -228,7 +228,7 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
     End Function
@@ -243,8 +243,8 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_false(+r)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.is_false(+r)
                                   Return goto_end()
                               End Function)
     End Function
@@ -259,7 +259,7 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
     End Function
@@ -277,7 +277,7 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
                                   End If
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
     End Function
@@ -292,8 +292,8 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_more_or_equal(+r, 0)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.more_or_equal(+r, 0)
                                   Return goto_end()
                               End Function)
     End Function
@@ -308,8 +308,8 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_more_or_equal(+r, 0)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.more_or_equal(+r, 0)
                                   Return goto_end()
                               End Function)
     End Function
@@ -324,7 +324,7 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
     End Function
@@ -337,7 +337,7 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
     End Function
@@ -353,7 +353,7 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
 #Else
@@ -377,7 +377,7 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
     End Function
@@ -433,7 +433,7 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
                                   If round_count < 0 OrElse round < round_count Then
                                       If round > 0 Then
                                           assert(Not ec Is Nothing)
-                                          assert_true(ec.end_result())
+                                          assertion.is_true(ec.end_result())
                                       End If
                                       round += 1
                                       If round_count < 0 Then
@@ -466,7 +466,7 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
                               End Function,
                               Function() As Boolean
                                   end_report()
-                                  Return assert_true(ecs.end_result()) AndAlso
+                                  Return assertion.is_true(ecs.end_result()) AndAlso
                                          goto_end()
                               End Function)
     End Function

@@ -32,11 +32,11 @@ Public Class concurrency_event_test
         End Sub
 
         Public Overrides Function run() As Boolean
-            assert_true(e.attach(Sub()
+            assertion.is_true(e.attach(Sub()
                                      c.increment()
                                      i.increment()
-                                     assert_more_or_equal(+i, 1)
-                                     assert_less_or_equal(CUInt(+i), concurrency_count)
+                                     assertion.more_or_equal(+i, 1)
+                                     assertion.less_or_equal(CUInt(+i), concurrency_count)
                                      i.decrement()
                                  End Sub))
             Return True
@@ -49,8 +49,8 @@ Public Class concurrency_event_test
         End Function
 
         Public Overrides Function finish() As Boolean
-            assert_equal(i.get(), 0)
-            assert_equal(c.get(), repeat_count * thread_count)
+            assertion.equal(i.get(), 0)
+            assertion.equal(c.get(), repeat_count * thread_count)
             Return MyBase.finish()
         End Function
     End Class

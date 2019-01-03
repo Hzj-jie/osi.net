@@ -84,10 +84,10 @@ Public Class bytes_transformer_block_wrapper_test
                 assert(offset >= 0)
                 assert(count > 0)
                 assert(count + offset <= array_size(b))
-                assert_true(p.send_transformer().transform_forward(b, offset, count, o))
+                assertion.is_true(p.send_transformer().transform_forward(b, offset, count, o))
                 Dim o2() As Byte = Nothing
-                assert_true(p.receive_transformer().transform_backward(o, o2))
-                assert_equal(memcmp(o2, 0, b, offset, count),
+                assertion.is_true(p.receive_transformer().transform_backward(o, o2))
+                assertion.equal(memcmp(o2, 0, b, offset, count),
                              0,
                              "token = ",
                              token,
@@ -96,28 +96,28 @@ Public Class bytes_transformer_block_wrapper_test
                              ", encryptor = ",
                              encryptor)
 
-                assert_false(p.send_transformer().transform_forward(b, 1, array_size(b), o))
+                assertion.is_false(p.send_transformer().transform_forward(b, 1, array_size(b), o))
             Next
             Return True
         End Function
 
         Public Overrides Function run() As Boolean
             If String.IsNullOrEmpty(token) Then
-                assert_false(create_encrypt_bytes_transformer_block_wrapper(encryptor, token, v, block_dev, Nothing))
+                assertion.is_false(create_encrypt_bytes_transformer_block_wrapper(encryptor, token, v, block_dev, Nothing))
             Else
                 Dim p As bytes_transformer_block_wrapper = Nothing
-                If assert_true(create_encrypt_bytes_transformer_block_wrapper(encryptor,
+                If assertion.is_true(create_encrypt_bytes_transformer_block_wrapper(encryptor,
                                                                               token,
                                                                               v,
                                                                               block_dev,
                                                                               p)) AndAlso
-                   assert_true(create_zip_bytes_transformer_block_wrapper(zipper, v, p, p)) Then
+                   assertion.is_true(create_zip_bytes_transformer_block_wrapper(zipper, v, p, p)) Then
                     If Not run_case(p) Then
                         Return False
                     End If
                 End If
-                If assert_true(create_zip_bytes_transformer_block_wrapper(zipper, v, block_dev, p)) AndAlso
-                   assert_true(create_encrypt_bytes_transformer_block_wrapper(encryptor, token, v, p, p)) Then
+                If assertion.is_true(create_zip_bytes_transformer_block_wrapper(zipper, v, block_dev, p)) AndAlso
+                   assertion.is_true(create_encrypt_bytes_transformer_block_wrapper(encryptor, token, v, p, p)) Then
                     If Not run_case(p) Then
                         Return False
                     End If

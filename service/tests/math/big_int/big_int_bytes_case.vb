@@ -27,7 +27,7 @@ Friend Class big_int_bytes_case
         End If
         Dim b2 As big_int = Nothing
         b2 = New big_int(r)
-        assert_equal(b1, b2)
+        assertion.equal(b1, b2)
 
         b1 = big_int.random()
         Dim n As Boolean = False
@@ -35,7 +35,7 @@ Friend Class big_int_bytes_case
         If n Then
             b2.set_negative()
         End If
-        assert_equal(b1, b2)
+        assertion.equal(b1, b2)
         Return True
     End Function
 End Class

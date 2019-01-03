@@ -17,17 +17,17 @@ Namespace primitive
                 x = create()
                 assert(Not x Is Nothing)
                 Dim b() As Byte = Nothing
-                assert_true(x.export(b))
+                assertion.is_true(x.export(b))
                 y = create()
                 Dim p As UInt32 = 0
-                assert_true(y.import(b, p))
-                assert_equal(p, array_size(b))
-                assert_equal(x, y)
+                assertion.is_true(y.import(b, p))
+                assertion.equal(p, array_size(b))
+                assertion.equal(x, y)
                 Dim s As String = Nothing
-                assert_true(x.export(s))
+                assertion.is_true(x.export(s))
                 y = create()
-                assert_true(DirectCast(y, exportable).import(s))
-                assert_equal(x, y)
+                assertion.is_true(DirectCast(y, exportable).import(s))
+                assertion.equal(x, y)
             Next
             Return True
         End Function

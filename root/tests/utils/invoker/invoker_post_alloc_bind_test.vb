@@ -16,7 +16,7 @@ Public NotInheritable Class invoker_post_alloc_bind_test
         Public value As Int32 = 0
 
         Public Sub check()
-            assert_equal(value, 0)
+            assertion.equal(value, 0)
             value += 1
         End Sub
     End Class
@@ -31,7 +31,7 @@ Public NotInheritable Class invoker_post_alloc_bind_test
                 build()
         assert(i.post_binding())
         For j As UInt32 = 0 To 10
-            assert_equal(test_class.constructed(), j)
+            assertion.equal(test_class.constructed(), j)
             i.post_alloc_bind()()
         Next
     End Sub
@@ -40,7 +40,7 @@ Public NotInheritable Class invoker_post_alloc_bind_test
         Public value As Int32
 
         Public Sub check()
-            assert_equal(value, 0)
+            assertion.equal(value, 0)
             value += 1
         End Sub
     End Structure
@@ -75,7 +75,7 @@ Public NotInheritable Class invoker_post_alloc_bind_test
                 build()
         assert(i.post_binding())
         For j As Int32 = 0 To 10
-            assert_equal(i.post_alloc_bind()(j), j + 1)
+            assertion.equal(i.post_alloc_bind()(j), j + 1)
         Next
     End Sub
 
@@ -97,10 +97,10 @@ Public NotInheritable Class invoker_post_alloc_bind_test
                 with_name("exec").
                 build()
         assert(i.post_binding())
-        assert_true(i.post_alloc_bind(Nothing))
+        assertion.is_true(i.post_alloc_bind(Nothing))
 
         ' TODO: not testable
-        'assert_throw(Sub()
+        'assertion.thrown(Sub()
         '                 i.post_alloc_bind()()
         '             End Sub)
     End Sub
@@ -121,9 +121,9 @@ Public NotInheritable Class invoker_post_alloc_bind_test
                 build()
         assert(i.post_binding())
         i.post_alloc_bind()
-        assert_throw(Sub()
-                         i.post_alloc_bind()()
-                     End Sub)
+        assertion.thrown(Sub()
+                             i.post_alloc_bind()()
+                         End Sub)
     End Sub
 
     Private Interface test_int
@@ -139,9 +139,9 @@ Public NotInheritable Class invoker_post_alloc_bind_test
                 with_name("exec").
                 build()
         assert(i.post_binding())
-        assert_true(i.post_alloc_bind(Nothing))
+        assertion.is_true(i.post_alloc_bind(Nothing))
         ' TODO: not testable
-        'assert_throw(Sub()
+        'assertion.thrown(Sub()
         '                 i.post_alloc_bind()()
         '             End Sub)
     End Sub

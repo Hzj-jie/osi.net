@@ -69,12 +69,12 @@ Public Class unchecked_int_test
                 Dim that As unchecked_int8 = 0
                 this = i
                 that = j
-                assert_equal(+(this + that), i8_inc(i, j), i, " + ", j)
-                assert_equal(+(this + CSByte(j)), i8_inc(i, j), i, " + ", j)
-                assert_equal(+(CSByte(i) + that), i8_inc(i, j), i, " + ", j)
-                assert_equal(+(this - that), i8_dec(i, j), i, " - ", j)
-                assert_equal(+(this - CSByte(j)), i8_dec(i, j), i, " - ", j)
-                assert_equal(+(CSByte(i) - that), i8_dec(i, j), i, " - ", j)
+                assertion.equal(+(this + that), i8_inc(i, j), i, " + ", j)
+                assertion.equal(+(this + CSByte(j)), i8_inc(i, j), i, " + ", j)
+                assertion.equal(+(CSByte(i) + that), i8_inc(i, j), i, " + ", j)
+                assertion.equal(+(this - that), i8_dec(i, j), i, " - ", j)
+                assertion.equal(+(this - CSByte(j)), i8_dec(i, j), i, " - ", j)
+                assertion.equal(+(CSByte(i) - that), i8_dec(i, j), i, " - ", j)
             Next
         Next
 
@@ -84,12 +84,12 @@ Public Class unchecked_int_test
                 Dim that As unchecked_uint8 = 0
                 this = i
                 that = j
-                assert_equal(+(this + that), ui8_inc(i, j), i, " + ", j)
-                assert_equal(+(this + CByte(j)), ui8_inc(i, j), i, " + ", j)
-                assert_equal(+(CByte(i) + that), ui8_inc(i, j), i, " + ", j)
-                assert_equal(+(this - that), ui8_dec(i, j), i, " - ", j)
-                assert_equal(+(this - CByte(j)), ui8_dec(i, j), i, " - ", j)
-                assert_equal(+(CByte(i) - that), ui8_dec(i, j), i, " - ", j)
+                assertion.equal(+(this + that), ui8_inc(i, j), i, " + ", j)
+                assertion.equal(+(this + CByte(j)), ui8_inc(i, j), i, " + ", j)
+                assertion.equal(+(CByte(i) + that), ui8_inc(i, j), i, " + ", j)
+                assertion.equal(+(this - that), ui8_dec(i, j), i, " - ", j)
+                assertion.equal(+(this - CByte(j)), ui8_dec(i, j), i, " - ", j)
+                assertion.equal(+(CByte(i) - that), ui8_dec(i, j), i, " - ", j)
             Next
         Next
 

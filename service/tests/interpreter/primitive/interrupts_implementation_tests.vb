@@ -22,21 +22,21 @@ Namespace primitive
             Using out As TextWriter = New StringWriter()
                 io.redirect_output(out)
                 s = strcat(guid_str(), newline.incode())
-                assert_array_equal(f.stdout(str_bytes(s)), Nothing)
-                assert_equal(Convert.ToString(out), s)
+                assertion.array_equal(f.stdout(str_bytes(s)), Nothing)
+                assertion.equal(Convert.ToString(out), s)
                 io.redirect_output()
             End Using
             Using out As TextWriter = New StringWriter()
                 io.redirect_error(out)
                 s = strcat(guid_str(), newline.incode())
-                assert_array_equal(f.stderr(str_bytes(s)), Nothing)
-                assert_equal(Convert.ToString(out), s)
+                assertion.array_equal(f.stderr(str_bytes(s)), Nothing)
+                assertion.equal(Convert.ToString(out), s)
                 io.redirect_error()
             End Using
             s = guid_str()
             Using [in] As TextReader = New StringReader(s)
                 io.redirect_input([in])
-                assert_equal(s, bytes_str(f.stdin(Nothing)))
+                assertion.equal(s, bytes_str(f.stdin(Nothing)))
                 io.redirect_input()
             End Using
             Return True

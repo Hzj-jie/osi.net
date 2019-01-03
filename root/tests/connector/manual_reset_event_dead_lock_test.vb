@@ -47,18 +47,18 @@ Public Class manual_reset_event_dead_lock_test
                     For i As Int32 = min_int32 To max_int32 - 1
                         passed1.set(0)
                         assert(stage1.force_set())
-                        assert_true(lazy_sleep_wait_until(Function() +passed1 = thread_count - 1,
+                        assertion.is_true(lazy_sleep_wait_until(Function() +passed1 = thread_count - 1,
                                                           seconds_to_milliseconds(10)))
                         assert(stage1.force_reset())
-                        assert_equal(+passed1, thread_count - 1)
+                        assertion.equal(+passed1, thread_count - 1)
                         passed2.set(0)
                         assert(stage2.force_set())
-                        assert_equal(+passed1, thread_count - 1)
-                        assert_true(lazy_sleep_wait_until(Function() +passed2 = thread_count - 1,
+                        assertion.equal(+passed1, thread_count - 1)
+                        assertion.is_true(lazy_sleep_wait_until(Function() +passed2 = thread_count - 1,
                                                           seconds_to_milliseconds(10)))
                         assert(stage2.force_reset())
-                        assert_equal(+passed1, thread_count - 1)
-                        assert_equal(+passed2, thread_count - 1)
+                        assertion.equal(+passed1, thread_count - 1)
+                        assertion.equal(+passed2, thread_count - 1)
                     Next
                     Return True
                 Else

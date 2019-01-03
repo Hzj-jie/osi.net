@@ -37,8 +37,8 @@ Public MustInherit Class atomic_uint_test
     Protected Overrides Sub validate(ByVal ac As atom_case)
         assert(Not ac Is Nothing)
         assert(TypeOf ac Is atomic_uint_case)
-        assert_true(ac.direct_cast_to(Of atomic_uint_case)().result() >= 0)
-        assert_equal(CLng(ac.direct_cast_to(Of atomic_uint_case)().result()),
+        assertion.is_true(ac.direct_cast_to(Of atomic_uint_case)().result() >= 0)
+        assertion.equal(CLng(ac.direct_cast_to(Of atomic_uint_case)().result()),
                      round * thread_count + ac.direct_cast_to(Of atomic_uint_case)().initial_value())
     End Sub
 End Class

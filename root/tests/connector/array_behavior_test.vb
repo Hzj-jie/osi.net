@@ -14,22 +14,22 @@ Public Class array_behavior_test
         Dim b() As Int32 = Nothing
         copy(b, a)
         For i As Int32 = 0 To 4
-            assert_equal(b(i), i)
+            assertion.equal(b(i), i)
             b(i) = i + 1
         Next
         For i As Int32 = 0 To 4
-            assert_equal(a(i), i)
-            assert_equal(b(i), i + 1)
+            assertion.equal(a(i), i)
+            assertion.equal(b(i), i + 1)
         Next
 
         b = DirectCast(a.Clone(), Int32())
         For i As Int32 = 0 To 4
-            assert_equal(b(i), i)
+            assertion.equal(b(i), i)
             b(i) = i + 1
         Next
         For i As Int32 = 0 To 4
-            assert_equal(a(i), i)
-            assert_equal(b(i), i + 1)
+            assertion.equal(a(i), i)
+            assertion.equal(b(i), i + 1)
         Next
         Return True
     End Function
@@ -48,22 +48,22 @@ Public Class array_behavior_test
         Dim b() As Object = Nothing
         copy(b, a)
         For i As Int32 = 0 To 4
-            assert_reference_equal(a(i), base(i))
-            assert_reference_equal(a(i), b(i))
+            assertion.reference_equal(a(i), base(i))
+            assertion.reference_equal(a(i), b(i))
             b(i) = New Object()
-            assert_reference_equal(a(i), base(i))
-            assert_not_reference_equal(a(i), b(i))
-            assert_not_reference_equal(b(i), base(i))
+            assertion.reference_equal(a(i), base(i))
+            assertion.not_reference_equal(a(i), b(i))
+            assertion.not_reference_equal(b(i), base(i))
         Next
 
         b = DirectCast(a.Clone(), Object())
         For i As Int32 = 0 To 4
-            assert_reference_equal(a(i), base(i))
-            assert_reference_equal(a(i), b(i))
+            assertion.reference_equal(a(i), base(i))
+            assertion.reference_equal(a(i), b(i))
             b(i) = New Object()
-            assert_reference_equal(a(i), base(i))
-            assert_not_reference_equal(a(i), b(i))
-            assert_not_reference_equal(b(i), base(i))
+            assertion.reference_equal(a(i), base(i))
+            assertion.not_reference_equal(a(i), b(i))
+            assertion.not_reference_equal(b(i), base(i))
         Next
         Return True
     End Function

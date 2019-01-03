@@ -48,12 +48,12 @@ Public Class listeners_speakers_test
                                           AddHandler accepter.received,
                                                      Sub(received_data() As Byte, remote_host As IPEndPoint)
                                                          receive_data.emplace_back(received_data)
-                                                         assert_equal(remote_host.Address(), IPAddress.Loopback)
-                                                         assert_equal(remote_host.AddressFamily(),
+                                                         assertion.equal(remote_host.Address(), IPAddress.Loopback)
+                                                         assertion.equal(remote_host.AddressFamily(),
                                                                       Sockets.AddressFamily.InterNetwork)
-                                                         assert_equal(remote_host.Port(), speaker_port)
+                                                         assertion.equal(remote_host.Port(), speaker_port)
                                                      End Sub
-                                          If Not assert_true(listener.attach(accepter)) Then
+                                          If Not assertion.is_true(listener.attach(accepter)) Then
                                               Return False
                                           End If
                                       End If
@@ -67,11 +67,11 @@ Public Class listeners_speakers_test
                                                      End Function,
                                                      seconds_to_milliseconds(1))
                                   Else
-                                      assert_equal(receive_data.size(), send_data.size())
+                                      assertion.equal(receive_data.size(), send_data.size())
                                       For j As Int32 = 0 To receive_data.size() - 1
-                                          assert_array_equal(send_data(j), receive_data(j))
+                                          assertion.array_equal(send_data(j), receive_data(j))
                                       Next
-                                      Return assert_true(listener.detach(accepter)) AndAlso
+                                      Return assertion.is_true(listener.detach(accepter)) AndAlso
                                              goto_end()
                                   End If
                               End Function,
@@ -84,8 +84,8 @@ Public Class listeners_speakers_test
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  If assert_true(ec.end_result()) Then
-                                      assert_equal(+sent, array_size(send_data.back()))
+                                  If assertion.is_true(ec.end_result()) Then
+                                      assertion.equal(+sent, array_size(send_data.back()))
                                       Return goto_begin()
                                   Else
                                       Return False
@@ -98,8 +98,8 @@ Public Class listeners_speakers_test
         Dim speaker As speaker = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  If assert_true(retrieve_listener(listener)) AndAlso
-                                     assert_true(speakers.[New](powerpoint.creator.
+                                  If assertion.is_true(retrieve_listener(listener)) AndAlso
+                                     assertion.is_true(speakers.[New](powerpoint.creator.
                                                                     [New]().
                                                                     with_ipv4().
                                                                     with_local_port(speaker_port).
@@ -120,9 +120,9 @@ Public Class listeners_speakers_test
 
     Public Overrides Function finish() As Boolean
         Dim listener As listener = Nothing
-        If assert_true(retrieve_listener(listener)) Then
-            assert_true(listener.wait_for_stop(osi.service.selector.constants.default_sense_timeout_ms))
-            assert_true(listener.stopped())
+        If assertion.is_true(retrieve_listener(listener)) Then
+            assertion.is_true(listener.wait_for_stop(osi.service.selector.constants.default_sense_timeout_ms))
+            assertion.is_true(listener.stopped())
             ' Ensure dispenser has fully stopped. The dispenser.work() has been canceled,
             ' but the T_receiver.sense may not.
             sleep(osi.service.selector.constants.default_sense_timeout_ms)

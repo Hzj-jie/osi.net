@@ -159,25 +159,25 @@ Public Class configuration_test2
 
     Public Overrides Function run() As Boolean
         ' Test [build] section
-        assert_true(config()("build")(build).to(Of Boolean)())
+        assertion.is_true(config()("build")(build).to(Of Boolean)())
         For i As UInt32 = 0 To config()("build").keys().size() - uint32_1
             Dim key As String = Nothing
             key = config()("build").keys()(i)
-            assert_equal(config()("build")(key).to(Of Boolean)(), strsame(build, key))
+            assertion.equal(config()("build")(key).to(Of Boolean)(), strsame(build, key))
         Next
 
         ' Test [application_directory] section
         If strsame(service_name, "Debug") OrElse strsame(service_name, "Release") Then
-            assert_equal(config()("application_directory")("value"), service_name)
+            assertion.equal(config()("application_directory")("value"), service_name)
         Else
-            assert_equal(config()("application_directory")("value"), "Unknown")
+            assertion.equal(config()("application_directory")("value"), "Unknown")
         End If
 
         ' Test [environment] section
         If strsame(service_name, "Debug") OrElse strsame(service_name, "Release") Then
-            assert_equal(config()("environment")("value"), "dev")
+            assertion.equal(config()("environment")("value"), "dev")
         Else
-            assert_equal(config()("environment")("value"), "utt-run")
+            assertion.equal(config()("environment")("value"), "utt-run")
         End If
 
         ' Test [section] section
@@ -196,128 +196,128 @@ Public Class configuration_test2
                                     with_processor_usage(20)
         Dim v As vector(Of pair(Of String, String)) = Nothing
         v = variants.build()
-        assert_equal(config()("section", v)("welcome", v), "welcome")
+        assertion.equal(config()("section", v)("welcome", v), "welcome")
         v = variants.with_lang("zh").build()
-        assert_equal(config()("section", v)("welcome", v), "欢迎")
+        assertion.equal(config()("section", v)("welcome", v), "欢迎")
         v = variants.with_lang("du").build()
-        assert_equal(config()("section", v)("welcome", v), "welkom")
+        assertion.equal(config()("section", v)("welcome", v), "welkom")
         v = variants.with_lang("JA").build()
-        assert_equal(config()("section", v)("welcome", v), "yookoso")
+        assertion.equal(config()("section", v)("welcome", v), "yookoso")
         v = variants.with_lang("??").build()
-        assert_equal(config()("section", v)("welcome", v), "Welcome")
+        assertion.equal(config()("section", v)("welcome", v), "Welcome")
 
         v = variants.build()
-        assert_equal(config()("section", v)("title", v), "Lave Search")
+        assertion.equal(config()("section", v)("title", v), "Lave Search")
         v = variants.with_brand("ding search").build()
-        assert_equal(config()("section", v)("title", v), "Ding Search")
+        assertion.equal(config()("section", v)("title", v), "Ding Search")
         v = variants.with_brand("lave???").build()
-        assert_equal(config()("section", v)("title", v), "Lave Search")
+        assertion.equal(config()("section", v)("title", v), "Lave Search")
         v = variants.with_brand("??").build()
-        assert_equal(config()("section", v)("title", v), "No Brand Search")
+        assertion.equal(config()("section", v)("title", v), "No Brand Search")
 
         v = variants.build()
-        assert_equal(config()("section", v)("lucky", v).to(Of Boolean)(), False)
+        assertion.equal(config()("section", v)("lucky", v).to(Of Boolean)(), False)
         v = variants.with_time(1).build()
-        assert_equal(config()("section", v)("lucky", v).to(Of Boolean)(), True)
+        assertion.equal(config()("section", v)("lucky", v).to(Of Boolean)(), True)
         v = variants.with_time(10).build()
-        assert_equal(config()("section", v)("lucky", v), "unknown")
+        assertion.equal(config()("section", v)("lucky", v), "unknown")
 
         v = variants.build()
-        assert_equal(config()("section", v)("round", v).to(Of Int32)(), 1)
+        assertion.equal(config()("section", v)("round", v).to(Of Int32)(), 1)
         v = variants.with_percentage(0.2).build()
-        assert_equal(config()("section", v)("round", v).to(Of Int32)(), 0)
+        assertion.equal(config()("section", v)("round", v).to(Of Int32)(), 0)
         v = variants.with_percentage(10).build()
-        assert_equal(config()("section", v)("round", v).to(Of Int32)(), -1)
+        assertion.equal(config()("section", v)("round", v).to(Of Int32)(), -1)
 
         v = variants.build()
-        assert_equal(config()("section", v)("gender", v), "male")
+        assertion.equal(config()("section", v)("gender", v), "male")
         v = variants.with_name("lucy").build()
-        assert_equal(config()("section", v)("gender", v), "female")
+        assertion.equal(config()("section", v)("gender", v), "female")
         v = variants.with_name("lucy,").build()
-        assert_equal(config()("section", v)("gender", v), "other")
+        assertion.equal(config()("section", v)("gender", v), "other")
 
         v = variants.build()
-        assert_equal(config()("section", v)("domain", v), "macrosoft.com")
+        assertion.equal(config()("section", v)("domain", v), "macrosoft.com")
         v = variants.with_email("JackR@jmail.com").build()
-        assert_equal(config()("section", v)("domain", v), "joojle.com")
+        assertion.equal(config()("section", v)("domain", v), "joojle.com")
         v = variants.with_email("JackR@mymail.com").build()
-        assert_equal(config()("section", v)("domain", v), "example.com")
+        assertion.equal(config()("section", v)("domain", v), "example.com")
 
         v = variants.build()
-        assert_equal(config()("section", v)("top50", v).to(Of Boolean)(), True)
-        assert_equal(config()("section", v)("bottom50", v).to(Of Boolean)(), False)
+        assertion.equal(config()("section", v)("top50", v).to(Of Boolean)(), True)
+        assertion.equal(config()("section", v)("bottom50", v).to(Of Boolean)(), False)
         v = variants.with_user_name("aaa").build()
-        assert_equal(config()("section", v)("top50", v).to(Of Boolean)(), True)
-        assert_equal(config()("section", v)("bottom50", v).to(Of Boolean)(), False)
+        assertion.equal(config()("section", v)("top50", v).to(Of Boolean)(), True)
+        assertion.equal(config()("section", v)("bottom50", v).to(Of Boolean)(), False)
         v = variants.with_user_name("zzz").build()
-        assert_equal(config()("section", v)("top50", v).to(Of Boolean)(), False)
-        assert_equal(config()("section", v)("bottom50", v).to(Of Boolean)(), True)
+        assertion.equal(config()("section", v)("top50", v).to(Of Boolean)(), False)
+        assertion.equal(config()("section", v)("bottom50", v).to(Of Boolean)(), True)
         v = variants.with_user_name("mzzzzzzzzzzzzzzzzzzzz").build()
-        assert_equal(config()("section", v)("top50", v).to(Of Boolean)(), False)
-        assert_equal(config()("section", v)("bottom50", v).to(Of Boolean)(), False)
+        assertion.equal(config()("section", v)("top50", v).to(Of Boolean)(), False)
+        assertion.equal(config()("section", v)("bottom50", v).to(Of Boolean)(), False)
 
         v = variants.build()
-        assert_equal(config()("section", v)("priority", v).to(Of Int32)(), 2)
+        assertion.equal(config()("section", v)("priority", v).to(Of Int32)(), 2)
         v = variants.with_reverse_host("com.joojle.www").build()
-        assert_equal(config()("section", v)("priority", v).to(Of Int32)(), 1)
+        assertion.equal(config()("section", v)("priority", v).to(Of Int32)(), 1)
         v = variants.with_reverse_host("com.inlook.wap").build()
-        assert_equal(config()("section", v)("priority", v).to(Of Int32)(), 3)
+        assertion.equal(config()("section", v)("priority", v).to(Of Int32)(), 3)
         v = variants.with_reverse_host("com.unknown.3g").build()
-        assert_equal(config()("section", v)("priority", v).to(Of Int32)(), 99999)
+        assertion.equal(config()("section", v)("priority", v).to(Of Int32)(), 99999)
 
         v = variants.build()
-        assert_equal(config()("section", v)("search", v).to(Of Boolean)(), True)
+        assertion.equal(config()("section", v)("search", v).to(Of Boolean)(), True)
         v = variants.with_path("s?lang=en&q=foooooo").build()
-        assert_equal(config()("section", v)("search", v).to(Of Boolean)(), True)
+        assertion.equal(config()("section", v)("search", v).to(Of Boolean)(), True)
         v = variants.with_path("SEARCH?lang=en&q=foooooo").build()
-        assert_equal(config()("section", v)("search", v).to(Of Boolean)(), True)
+        assertion.equal(config()("section", v)("search", v).to(Of Boolean)(), True)
         v = variants.with_path("lookup?lang=en&q=foooooo").build()
-        assert_equal(config()("section", v)("search", v).to(Of Boolean)(), False)
+        assertion.equal(config()("section", v)("search", v).to(Of Boolean)(), False)
 
         v = variants.build()
-        assert_equal(config()("section", v)("encrypted", v).to(Of Boolean)(), False)
+        assertion.equal(config()("section", v)("encrypted", v).to(Of Boolean)(), False)
         v = variants.with_password("ThisIsAPassword").build()
-        assert_equal(config()("section", v)("encrypted", v).to(Of Boolean)(), True)
+        assertion.equal(config()("section", v)("encrypted", v).to(Of Boolean)(), True)
 
         v = variants.build()
-        assert_equal(config()("section", v)("restricted", v).to(Of Boolean)(), False)
+        assertion.equal(config()("section", v)("restricted", v).to(Of Boolean)(), False)
         v = variants.with_processor_usage(100).build()
-        assert_equal(config()("section", v)("restricted", v).to(Of Boolean)(), True)
+        assertion.equal(config()("section", v)("restricted", v).to(Of Boolean)(), True)
 
         v = variants.with_lang("en").
                      with_brand("Lave Search").
                      with_path("search?q=blabla").
                      with_reverse_host("com.lave.www").
                      build()
-        assert_equal(config()("section", v)("message", v), "Welcome to Use Lave Search (http://www.lave.com)")
+        assertion.equal(config()("section", v)("message", v), "Welcome to Use Lave Search (http://www.lave.com)")
         v = variants.with_path("lookup").build()
-        assert_equal(config()("section", v)("message", v), "Welcome to Use Lave (http://www.lave.com)")
+        assertion.equal(config()("section", v)("message", v), "Welcome to Use Lave (http://www.lave.com)")
         v = variants.with_reverse_host("com.ding.www").build()
-        assert_equal(config()("section", v)("message", v), "Welcome to Use Lave")
+        assertion.equal(config()("section", v)("message", v), "Welcome to Use Lave")
         v = variants.with_lang("zh").build()
-        assert_equal(config()("section", v)("message", v), "欢迎使用Lave")
+        assertion.equal(config()("section", v)("message", v), "欢迎使用Lave")
 
         v = variants.with_email("annoymous@annoymous.com").
                      with_path("download?file=a-very-small-file.txt").
                      with_reverse_host("com.annoymous.www").
                      build()
-        assert_equal(config()("section", v)("welcome", v), "Not Welcome")
-        assert_equal(config()("section", v)("title", v), "Not Welcome")
-        assert_equal(config()("section", v)("lucky", v).to(Of Boolean)(), False)
-        assert_equal(config()("section", v)("round", v).to(Of Int32)(), -1)
-        assert_equal(config()("section", v)("gender", v), "other")
-        assert_equal(config()("section", v)("domain", v), "annoymous.com")
-        assert_equal(config()("section", v)("top50", v).to(Of Boolean)(), False)
-        assert_equal(config()("section", v)("bottom50", v).to(Of Boolean)(), False)
-        assert_equal(config()("section", v)("priority", v).to(Of Int32)(), 99999999)
-        assert_equal(config()("section", v)("search", v).to(Of Boolean)(), False)
-        assert_equal(config()("section", v)("encrypted", v).to(Of Boolean)(), False)
-        assert_equal(config()("section", v)("restricted", v).to(Of Boolean)(), True)
-        assert_equal(config()("section", v)("message", v), "You Are Not Welcomed To Use Our Service")
-        assert_equal(config()("section", v)("message-head", v), "Yes?")
+        assertion.equal(config()("section", v)("welcome", v), "Not Welcome")
+        assertion.equal(config()("section", v)("title", v), "Not Welcome")
+        assertion.equal(config()("section", v)("lucky", v).to(Of Boolean)(), False)
+        assertion.equal(config()("section", v)("round", v).to(Of Int32)(), -1)
+        assertion.equal(config()("section", v)("gender", v), "other")
+        assertion.equal(config()("section", v)("domain", v), "annoymous.com")
+        assertion.equal(config()("section", v)("top50", v).to(Of Boolean)(), False)
+        assertion.equal(config()("section", v)("bottom50", v).to(Of Boolean)(), False)
+        assertion.equal(config()("section", v)("priority", v).to(Of Int32)(), 99999999)
+        assertion.equal(config()("section", v)("search", v).to(Of Boolean)(), False)
+        assertion.equal(config()("section", v)("encrypted", v).to(Of Boolean)(), False)
+        assertion.equal(config()("section", v)("restricted", v).to(Of Boolean)(), True)
+        assertion.equal(config()("section", v)("message", v), "You Are Not Welcomed To Use Our Service")
+        assertion.equal(config()("section", v)("message-head", v), "Yes?")
 
-        assert_equal(config()("section", v)("unknown-key", v), default_str)
-        assert_equal(config()("section", v)("unknown-key2", v), default_str)
+        assertion.equal(config()("section", v)("unknown-key", v), default_str)
+        assertion.equal(config()("section", v)("unknown-key2", v), default_str)
 
         Return True
     End Function

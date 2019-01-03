@@ -14,7 +14,7 @@ Public Class cast_test
 
     Public Shared Function failed_case(Of T, T2)(ByVal i As T) As Boolean
         Dim j As T2 = Nothing
-        assert_false(cast(Of T2)(i, j))
+        assertion.is_false(cast(Of T2)(i, j))
         Return True
     End Function
 
@@ -22,20 +22,20 @@ Public Class cast_test
         Dim i As String = Nothing
         Dim j As StringBuilder = Nothing
 
-        assert_true(cast(i, j))
-        assert_nothing(j)
-        assert_true(cast(j, i))
-        assert_nothing(i)
+        assertion.is_true(cast(i, j))
+        assertion.is_null(j)
+        assertion.is_true(cast(j, i))
+        assertion.is_null(i)
 
         i = "ABC"
-        assert_true(cast(i, j))
-        assert_not_nothing(j)
-        assert_equal(Convert.ToString(j), i)
+        assertion.is_true(cast(i, j))
+        assertion.is_not_null(j)
+        assertion.equal(Convert.ToString(j), i)
 
         j = New StringBuilder("DEF")
-        assert_true(cast(j, i))
-        assert_not_nothing(i)
-        assert_equal(i, Convert.ToString(j))
+        assertion.is_true(cast(j, i))
+        assertion.is_not_null(i)
+        assertion.equal(i, Convert.ToString(j))
 
         Return True
     End Function
@@ -44,20 +44,20 @@ Public Class cast_test
         Dim a() As Byte = Nothing
         a = rnd_bytes(rnd_uint(10, 20))
         Dim r As array_pointer(Of Byte) = Nothing
-        assert_true(cast(a, r))
-        assert_array_equal(+r, a)
+        assertion.is_true(cast(a, r))
+        assertion.array_equal(+r, a)
 
         Dim r2 As pointer(Of Byte) = Nothing
-        assert_true(cast(a(0), r2))
-        assert_equal(+r2, a(0))
+        assertion.is_true(cast(a(0), r2))
+        assertion.equal(+r2, a(0))
 
         Return True
     End Function
 
     Private Shared Function from_objects() As Boolean
-        assert_equal(cast(Of String)("abc"), "abc")
-        assert_equal(cast(Of Int32)(100), 100)
-        assert_equal(cast(Of Double)(100.0), 100)
+        assertion.equal(cast(Of String)("abc"), "abc")
+        assertion.equal(cast(Of Int32)(100), 100)
+        assertion.equal(cast(Of Double)(100.0), 100)
         Return True
     End Function
 

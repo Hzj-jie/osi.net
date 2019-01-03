@@ -26,7 +26,7 @@ Partial Public Class dispenser_test
         End Function
 
         Private Shadows Sub received(ByVal data As Int32, ByVal remote As Int32)
-            assert_equal(Me.remote, remote)
+            assertion.equal(Me.remote, remote)
             Me.q.emplace(data)
         End Sub
     End Class

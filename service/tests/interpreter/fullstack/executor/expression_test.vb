@@ -17,8 +17,8 @@ Namespace fullstack.executor
             e = New expression(New location(0, 0))
             Dim v2 As variable = Nothing
             v2 = e.execute(d)
-            assert_reference_equal(v, v2)
-            assert_equal(v, v2)
+            assertion.reference_equal(v, v2)
+            assertion.equal(v, v2)
             Return True
         End Function
 
@@ -31,11 +31,11 @@ Namespace fullstack.executor
             e = New expression(f, Nothing)
             Dim v As variable = Nothing
             v = e.execute(d)
-            assert_not_nothing(v)
-            assert_true(v.is_int())
+            assertion.is_not_null(v)
+            assertion.is_true(v.is_int())
             Dim i As Int32 = 0
-            If assert_true(v.int(i)) Then
-                assert_more_and_less(i, min_int32, max_int32)
+            If assertion.is_true(v.int(i)) Then
+                assertion.more_and_less(i, min_int32, max_int32)
             End If
             Return True
         End Function

@@ -72,7 +72,7 @@ Public Class islimlock_test(Of T As {islimlock, Structure})
                         +run_times,
                         ", trigger_times ",
                         i)
-            assert_equal(i, +run_times)
+            assertion.equal(i, +run_times)
             Return MyBase.finish()
         End Function
     End Class

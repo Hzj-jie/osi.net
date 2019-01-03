@@ -38,7 +38,7 @@ Partial Public Class token_test
         End Sub
 
         Public Overrides Function identity(ByVal c As mock_conn) As String
-            If assert_not_nothing(c) Then
+            If assertion.is_not_null(c) Then
                 Return c.id
             Else
                 Return Nothing
@@ -46,7 +46,7 @@ Partial Public Class token_test
         End Function
 
         Public Overrides Function identity(ByVal p As mock_ppt) As String
-            If assert_not_nothing(p) Then
+            If assertion.is_not_null(p) Then
                 Return p.id
             Else
                 Return Nothing
@@ -54,7 +54,7 @@ Partial Public Class token_test
         End Function
 
         Public Overrides Sub shutdown(ByVal c As mock_conn)
-            If assert_not_nothing(c) Then
+            If assertion.is_not_null(c) Then
                 c.shutdown()
                 ' f.reset(id)
                 ' Data before shutdown should be sent to other end to simulate TCP, so we cannot simply reset here.
@@ -62,7 +62,7 @@ Partial Public Class token_test
         End Sub
 
         Protected Overrides Function token_str(ByVal p As mock_ppt) As String
-            If assert_not_nothing(p) Then
+            If assertion.is_not_null(p) Then
                 ' ** Note, this is not a bug. **
                 ' We are using a same mock_ppt in both challenger and defender. But to simulate a failure case, we will
                 ' use a 'bad' token, which stores in the mock_conn instead of mock_ppt. So always return the token from
@@ -100,7 +100,7 @@ Partial Public Class token_test
         End Function
 
         Public Overrides Function signer(ByVal p As mock_ppt) As signer
-            assert_not_nothing(p)
+            assertion.is_not_null(p)
             Return s
         End Function
     End Class

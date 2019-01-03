@@ -25,7 +25,7 @@ Friend Class big_int_shift_case
             t = rnd_uint64(1, j)
             l.left_shift(t)
             r.left_shift(j).right_shift(j - t)
-            assert_true(l.equal(r))
+            assertion.is_true(l.equal(r))
         Next
         Return True
     End Function

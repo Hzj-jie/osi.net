@@ -55,7 +55,7 @@ Public Class count_reset_event_basic_test
             While e.wait(int64_0)
                 release_times.increment()
             End While
-            assert_equal(+release_times, +set_times)
+            assertion.equal(+release_times, +set_times)
             Return MyBase.finish()
         End Function
     End Class
@@ -91,7 +91,7 @@ Public Class count_reset_event_concurrently_release_test
                 For i As Int32 = 0 To CInt(multithreading_case_wrapper.running_thread_count()) - 2
                     e.set()
                 Next
-                assert_true(lazy_sleep_wait_when(Function() +pending > 0, seconds_to_milliseconds(1)))
+                assertion.is_true(lazy_sleep_wait_when(Function() +pending > 0, seconds_to_milliseconds(1)))
             Else
                 lazy_wait_when(Function() atomic.read(this_round) < round)
                 pending.increment()
@@ -111,9 +111,9 @@ Public Class count_reset_event_timed_wait_test
         clock = New mock_tick_clock(milliseconds_to_ticks(uint64_1))
         Using thread_static_implementation_of(Of tick_clock).scoped_register(clock)
             Using e As count_reset_event = New count_reset_event()
-                assert_false(e.wait(1))
+                assertion.is_false(e.wait(1))
                 e.set()
-                assert_true(e.wait(1))
+                assertion.is_true(e.wait(1))
             End Using
         End Using
         Return True

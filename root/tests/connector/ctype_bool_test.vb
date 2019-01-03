@@ -23,11 +23,11 @@ Public Class ctype_bool_test
     Public Overrides Function run() As Boolean
         Dim i As test_class = Nothing
         i = New test_class(1)
-        assert_true(i)
+        assertion.is_true(i)
         i = New test_class(2)
-        assert_false(i)
+        assertion.is_false(i)
         i = Nothing
-        assert_false(i)
+        assertion.is_false(i)
         Return True
     End Function
 End Class

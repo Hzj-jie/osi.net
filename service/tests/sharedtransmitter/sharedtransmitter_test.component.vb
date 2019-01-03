@@ -31,11 +31,11 @@ Partial Public Class sharedtransmitter_test
         End Function
 
         Public Sub New(ByVal address As Byte, ByVal local_port As Byte)
-            assert_true(is_valid_port(local_port))
+            assertion.is_true(is_valid_port(local_port))
             Me.address = address
             Me.local_port = local_port
             instances_lock.wait()
-            assert_nothing(instances(Me.address)(Me.local_port))
+            assertion.is_null(instances(Me.address)(Me.local_port))
             instances(Me.address)(Me.local_port) = Me
             instances_lock.release()
             _new(Me.pump)
@@ -43,7 +43,7 @@ Partial Public Class sharedtransmitter_test
         End Sub
 
         Public Sub send(ByVal data As Int32, ByVal address As Byte, ByVal port As Byte)
-            If assert_not_nothing(instances(address)(port)) Then
+            If assertion.is_not_null(instances(address)(port)) Then
                 instances(address)(port).receive(data, Me.address, Me.local_port)
             End If
         End Sub
@@ -55,7 +55,7 @@ Partial Public Class sharedtransmitter_test
         Public Sub dispose()
             ' sharedtransmitter (ref_instance) should guarantee to call this function exactly once per instance.
             instances_lock.wait()
-            assert_reference_equal(instances(Me.address)(Me.local_port), Me)
+            assertion.reference_equal(instances(Me.address)(Me.local_port), Me)
             instances(Me.address)(Me.local_port) = Nothing
             instances_lock.release()
         End Sub

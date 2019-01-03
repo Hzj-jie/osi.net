@@ -53,8 +53,8 @@ Public Class declare_nonexiting_api_behavior_test
         Catch ex As DllNotFoundException
             has_ex = True
         End Try
-        assert_false(r)
-        assert_true(has_ex)
+        assertion.is_false(r)
+        assertion.is_true(has_ex)
         Return True
     End Function
 
@@ -66,14 +66,14 @@ Public Class declare_nonexiting_api_behavior_test
         Catch ex As DllNotFoundException
             has_ex = True
         End Try
-        assert_false(r)
-        assert_true(has_ex)
+        assertion.is_false(r)
+        assertion.is_true(has_ex)
         Return True
     End Function
 
     Private Shared Function proxy_case() As Boolean
-        assert_false(container3.proxy(0))
-        assert_false(container4.proxy(0))
+        assertion.is_false(container3.proxy(0))
+        assertion.is_false(container4.proxy(0))
         Return True
     End Function
 

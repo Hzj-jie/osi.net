@@ -82,22 +82,22 @@ Public Class valuer_test
                                            ByVal bindingflags As BindingFlags) As Boolean
         Dim v As valuer(Of T) = Nothing
         v = new_valuer(Of T)(name, bindingflags)
-        If assert_true(v.valid()) Then
-            assert_true(v.try_set(value))
+        If assertion.is_true(v.valid()) Then
+            assertion.is_true(v.try_set(value))
             Dim w As T = Nothing
-            assert_true(v.try_get(w))
-            assert_equal(value, w)
+            assertion.is_true(v.try_get(w))
+            assertion.equal(value, w)
         End If
 
         If (bindingflags And BindingFlags.Instance) <> 0 Then
             v = new_valuer(Of T)(Nothing, name, bindingflags)
-            If assert_true(v.valid()) Then
+            If assertion.is_true(v.valid()) Then
                 Dim c As test_class = Nothing
                 c = New test_class()
-                assert_true(v.try_set(c, value))
+                assertion.is_true(v.try_set(c, value))
                 Dim w As T = Nothing
-                assert_true(v.try_get(c, w))
-                assert_equal(value, w)
+                assertion.is_true(v.try_get(c, w))
+                assertion.equal(value, w)
             End If
         End If
 
@@ -110,12 +110,12 @@ Public Class valuer_test
         c = New test_class()
         Dim v As valuer(Of T2) = Nothing
         v = new_valuer(Of T2)(c, name, bindingflags)
-        If assert_true(v.valid()) Then
-            assert_true(v.try_set(New T2()))
-            assert_true(new_valuer(Of T)(c, name, bindingflags).try_set(New T()))
+        If assertion.is_true(v.valid()) Then
+            assertion.is_true(v.try_set(New T2()))
+            assertion.is_true(new_valuer(Of T)(c, name, bindingflags).try_set(New T()))
             Dim w As T2 = Nothing
-            assert_false(v.try_get(w))
-            assert_true(w Is Nothing)
+            assertion.is_false(v.try_get(w))
+            assertion.is_true(w Is Nothing)
         End If
         Return True
     End Function
@@ -125,13 +125,13 @@ Public Class valuer_test
                                           ByVal bindingflags As BindingFlags) As Boolean
         Dim v As valuer(Of T2) = Nothing
         v = new_valuer(Of T2)(name, bindingflags)
-        If assert_true(v.valid()) Then
-            assert_false(new_valuer(Of T)(name, bindingflags).try_set(New T()))
-            assert_true(v.try_set(New T2()))
+        If assertion.is_true(v.valid()) Then
+            assertion.is_false(new_valuer(Of T)(name, bindingflags).try_set(New T()))
+            assertion.is_true(v.try_set(New T2()))
             Dim w As T = Nothing
             w = v.get_or_null()
-            assert_not_nothing(w)
-            assert_true(implicit_conversions.valuer_test_get_only_case_try_get(Of T, T2)(v, w))
+            assertion.is_not_null(w)
+            assertion.is_true(implicit_conversions.valuer_test_get_only_case_try_get(Of T, T2)(v, w))
         End If
         Return True
     End Function
@@ -139,7 +139,7 @@ Public Class valuer_test
     Private Shared Function fail_case(Of T)(ByVal name As String, ByVal bindingflags As BindingFlags) As Boolean
         Dim v As valuer(Of T) = Nothing
         v = new_valuer(Of T)(name, bindingflags)
-        assert_false(v.valid())
+        assertion.is_false(v.valid())
         Return True
     End Function
 End Class

@@ -19,7 +19,7 @@ Public Class uri_path_encoder_string_test
         Dim s2 As String = Nothing
         s2 = uri.path_encoder.encode(s)
         s2 = uri.path_encoder.decode(s2)
-        assert_equal(s, s2)
+        assertion.equal(s, s2)
         Return True
     End Function
 
@@ -28,7 +28,7 @@ Public Class uri_path_encoder_string_test
         s = "abc%FG%FG%FGabc"
         Dim s2 As String = Nothing
         s2 = uri.path_encoder.decode(s)
-        assert_equal(s, s2)
+        assertion.equal(s, s2)
         Return True
     End Function
 
@@ -40,7 +40,7 @@ Public Class uri_path_encoder_string_test
         s = uri.path_encoder.encode(s, Text.Encoding.Unicode())
         Dim s2 As String = Nothing
         s2 = uri.path_encoder.decode(s, New Text.UTF8Encoding(False, True))
-        assert_equal(s, s2)
+        assertion.equal(s, s2)
         Return True
     End Function
 
@@ -49,11 +49,11 @@ Public Class uri_path_encoder_string_test
         s = "abc%D"
         Dim s2 As String = Nothing
         s2 = uri.path_encoder.decode(s)
-        assert_equal(s, s2)
+        assertion.equal(s, s2)
 
         s = "abc%%"
         s2 = uri.path_encoder.decode(s)
-        assert_equal(s, s2)
+        assertion.equal(s, s2)
         Return True
     End Function
 
@@ -65,14 +65,14 @@ Public Class uri_path_encoder_string_test
         Dim s2 As String = Nothing
         s2 = uri.path_encoder.encode(s)
         s2 = uri.path_encoder.decode(s2)
-        assert_equal(s, s2)
+        assertion.equal(s, s2)
         Return True
     End Function
 
     Private Shared Function special_cases() As Boolean
-        assert_equal(uri.path_encoder.encode("//"), "%2F%2F")
-        assert_equal(uri.path_encoder.decode("%2F%2F"), "//")
-        assert_equal(uri.path_encoder.decode("%2f%2f"), "//")
+        assertion.equal(uri.path_encoder.encode("//"), "%2F%2F")
+        assertion.equal(uri.path_encoder.decode("%2F%2F"), "//")
+        assertion.equal(uri.path_encoder.decode("%2f%2f"), "//")
         Return True
     End Function
 

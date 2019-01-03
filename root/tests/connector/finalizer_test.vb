@@ -101,13 +101,13 @@ Public Class finalizer_test
         run_case(Function(ByRef f) New tc_array(f),
                  Sub(ByRef f As atomic_int)
                      assert(Not f Is Nothing)
-                     assert_more_or_equal(+f, 0)            'never fail
-                     assert_less_or_equal(+f, test_size)
+                     assertion.more_or_equal(+f, 0)            'never fail
+                     assertion.less_or_equal(+f, test_size)
                  End Sub)
         run_case(Function(ByRef f) New tc_array_keepalive(f),
                  Sub(ByRef f As atomic_int)
                      assert(Not f Is Nothing)
-                     assert_equal(+f, 0)
+                     assertion.equal(+f, 0)
                  End Sub)
 
         Return True

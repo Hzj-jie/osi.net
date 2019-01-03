@@ -22,17 +22,17 @@ Public Class ##TYPE##_synchronize_invoke_test
             Next
             Dim exec As Func(Of Object, Object, Object, Object) = Nothing
             exec = Function(ByVal a As Object, ByVal b As Object, ByVal c As Object) As Object
-                       assert_reference_equal(a, args(0))
-                       assert_reference_equal(b, args(1))
-                       assert_reference_equal(c, args(2))
+                       assertion.reference_equal(a, args(0))
+                       assertion.reference_equal(b, args(1))
+                       assertion.reference_equal(c, args(2))
                        Return result
                    End Function
-            assert_reference_equal(s.Invoke(exec, args), result)
+            assertion.reference_equal(s.Invoke(exec, args), result)
             Dim ar As IAsyncResult = Nothing
             ar = s.BeginInvoke(exec, args)
-            If assert_not_nothing(ar) Then
-                assert_false(ar.CompletedSynchronously())
-                assert_reference_equal(s.EndInvoke(ar), result)
+            If assertion.is_not_null(ar) Then
+                assertion.is_false(ar.CompletedSynchronously())
+                assertion.reference_equal(s.EndInvoke(ar), result)
             End If
         Next
         assert(t.stop())
@@ -55,20 +55,20 @@ Public Class ##TYPE##_synchronize_invoke_test
                               Next
                               Dim exec As Func(Of Object, Object, Object, Object) = Nothing
                               exec = Function(ByVal a As Object, ByVal b As Object, ByVal c As Object) As Object
-                                         assert_reference_equal(a, args(0))
-                                         assert_reference_equal(b, args(1))
-                                         assert_reference_equal(c, args(2))
+                                         assertion.reference_equal(a, args(0))
+                                         assertion.reference_equal(b, args(1))
+                                         assertion.reference_equal(c, args(2))
                                          Return result
                                      End Function
-                              assert_reference_equal(s.Invoke(exec, args), result)
+                              assertion.reference_equal(s.Invoke(exec, args), result)
                               Dim ar As IAsyncResult = Nothing
                               ar = s.BeginInvoke(exec, args)
-                              If assert_not_nothing(ar) Then
-                                  assert_true(ar.CompletedSynchronously())
-                                  assert_reference_equal(s.EndInvoke(ar), result)
+                              If assertion.is_not_null(ar) Then
+                                  assertion.is_true(ar.CompletedSynchronously())
+                                  assertion.reference_equal(s.EndInvoke(ar), result)
                               End If
                           Next
-                          assert_true(t.idle())
+                          assertion.is_true(t.idle())
                           t.stop()
                       End Sub))
         t.join()

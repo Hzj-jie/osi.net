@@ -29,19 +29,19 @@ Public Class reference_count_runner_test
             Dim stopped As Int32 = 0
             Dim i As Int32 = 0
             AddHandler r.after_start, Sub()
-                                          assert_equal(started, i)
+                                          assertion.equal(started, i)
                                           started += 1
                                       End Sub
             AddHandler r.after_stop, Sub()
-                                         assert_equal(stopped, i)
+                                         assertion.equal(stopped, i)
                                          stopped += 1
                                      End Sub
             For i = 0 To size - 1
-                assert_true(r.bind())
-                assert_true(r.release())
+                assertion.is_true(r.bind())
+                assertion.is_true(r.release())
             Next
-            assert_equal(started, size)
-            assert_equal(stopped, size)
+            assertion.equal(started, size)
+            assertion.equal(stopped, size)
             Return True
         End Function
     End Class
@@ -66,10 +66,10 @@ Public Class reference_count_runner_test
         Public Overrides Function run() As Boolean
             Dim r As RC = Nothing
             r = New RC()
-            assert_true(r.bind())
-            assert_true(RC.v)
+            assertion.is_true(r.bind())
+            assertion.is_true(RC.v)
             r = Nothing
-            assert_true(waitfor_gc_collect_when(Function() As Boolean
+            assertion.is_true(waitfor_gc_collect_when(Function() As Boolean
                                                     Return RC.v
                                                 End Function))
             Return True
@@ -87,33 +87,33 @@ Public Class reference_count_runner_test
             Private v As Int32
 
             Protected Overrides Sub start_process()
-                assert_more(binding_count(), uint32_0)
-                assert_false(started())
-                assert_false(stopped())
-                assert_true(starting())
-                assert_false(stopping())
-                assert_equal(v, 0)
+                assertion.more(binding_count(), uint32_0)
+                assertion.is_false(started())
+                assertion.is_false(stopped())
+                assertion.is_true(starting())
+                assertion.is_false(stopping())
+                assertion.equal(v, 0)
                 v += 1
                 Me.mark_started()
-                assert_true(started())
-                assert_false(stopped())
-                assert_false(starting())
-                assert_false(stopping())
+                assertion.is_true(started())
+                assertion.is_false(stopped())
+                assertion.is_false(starting())
+                assertion.is_false(stopping())
             End Sub
 
             Protected Overrides Sub stop_process()
-                assert_equal(binding_count(), uint32_0)
-                assert_false(stopped())
-                assert_false(started())
-                assert_false(starting())
-                assert_true(stopping())
-                assert_equal(v, 1)
+                assertion.equal(binding_count(), uint32_0)
+                assertion.is_false(stopped())
+                assertion.is_false(started())
+                assertion.is_false(starting())
+                assertion.is_true(stopping())
+                assertion.equal(v, 1)
                 v -= 1
                 Me.mark_stopped()
-                assert_false(started())
-                assert_true(stopped())
-                assert_false(starting())
-                assert_false(stopping())
+                assertion.is_false(started())
+                assertion.is_true(stopped())
+                assertion.is_false(starting())
+                assertion.is_false(stopping())
             End Sub
         End Class
 

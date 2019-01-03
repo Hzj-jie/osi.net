@@ -25,8 +25,8 @@ Public Class reference_count_runner_test2
                        End Sub)
         t.Start()
         For i As Int32 = 0 To 1000
-            assert_true(r.bind())
-            assert_true(r.release())
+            assertion.is_true(r.bind())
+            assertion.is_true(r.release())
         Next
         t.Abort()
         t.Join()

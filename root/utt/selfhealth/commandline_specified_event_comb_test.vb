@@ -17,7 +17,7 @@ Public Class commandline_specified_event_comb_test
 
         Public Overrides Function create() As event_comb
             Return New event_comb(Function() As Boolean
-                                      Return assert_true(False,
+                                      Return assertion.is_true(False,
                                                          "should never called only when ",
                                                          "commandline specific commandline_specified_event_comb_test")
                                   End Function)

@@ -38,26 +38,26 @@ Public Class fixed_stack_test
         Private Sub clear()
             q.clear()
             c = 0
-            assert_true(q.empty())
+            assertion.is_true(q.empty())
         End Sub
 
         Private Sub read()
             If c = 0 Then
-                assert_true(q.empty())
+                assertion.is_true(q.empty())
                 write()
-                assert_false(q.empty())
+                assertion.is_false(q.empty())
             End If
-            assert_more(c, 0)
-            assert_equal(c, q.back() + 1)
+            assertion.more(c, 0)
+            assertion.equal(c, q.back() + 1)
             q.pop()
             c -= 1
         End Sub
 
         Private Sub write()
             If c = size Then
-                assert_true(q.full())
+                assertion.is_true(q.full())
                 read()
-                assert_false(q.full())
+                assertion.is_false(q.full())
             End If
             q.push(c)
             c += 1

@@ -83,9 +83,9 @@ Public Class uint32_perf_test
         y = rnd_uint()
         For i As UInt32 = 0 To size - uint32_1
             x = y
-            assert_equal(x, y)
+            assertion.equal(x, y)
             x = 0
-            assert_equal(x, uint32_0)
+            assertion.equal(x, uint32_0)
         Next
     End Sub
 
@@ -95,9 +95,9 @@ Public Class uint32_perf_test
         y = rnd_uint(0, max_int32)
         For i As UInt32 = 0 To size - uint32_1
             x = CInt(y)
-            assert_equal(x, CInt(y))
+            assertion.equal(x, CInt(y))
             x = 0
-            assert_equal(x, 0)
+            assertion.equal(x, 0)
         Next
     End Sub
 
@@ -107,9 +107,9 @@ Public Class uint32_perf_test
         y = rnd_int()
         For i As UInt32 = 0 To size - uint32_1
             x = y
-            assert_equal(x, y)
+            assertion.equal(x, y)
             x = 0
-            assert_equal(x, 0)
+            assertion.equal(x, 0)
         Next
     End Sub
 
@@ -119,9 +119,9 @@ Public Class uint32_perf_test
         y = rnd_int(0, max_int32)
         For i As UInt32 = 0 To size - uint32_1
             x = CUInt(y)
-            assert_equal(x, CUInt(y))
+            assertion.equal(x, CUInt(y))
             x = 0
-            assert_equal(x, uint32_0)
+            assertion.equal(x, uint32_0)
         Next
     End Sub
 
@@ -129,9 +129,9 @@ Public Class uint32_perf_test
         Dim x As UInt32 = 0
         For i As UInt32 = 0 To size - uint32_1
             x += uint32_1
-            assert_equal(x, uint32_1)
+            assertion.equal(x, uint32_1)
             x -= uint32_1
-            assert_equal(x, uint32_0)
+            assertion.equal(x, uint32_0)
         Next
     End Sub
 
@@ -139,9 +139,9 @@ Public Class uint32_perf_test
         Dim x As UInt32 = 0
         For i As UInt32 = 0 To size - uint32_1
             x = CUInt(x + 1)
-            assert_equal(x, uint32_1)
+            assertion.equal(x, uint32_1)
             x = CUInt(x - 1)
-            assert_equal(x, uint32_0)
+            assertion.equal(x, uint32_0)
         Next
     End Sub
 
@@ -149,9 +149,9 @@ Public Class uint32_perf_test
         Dim x As Int32 = 0
         For i As UInt32 = 0 To size - uint32_1
             x += 1
-            assert_equal(x, 1)
+            assertion.equal(x, 1)
             x -= 1
-            assert_equal(x, 0)
+            assertion.equal(x, 0)
         Next
     End Sub
 
@@ -159,9 +159,9 @@ Public Class uint32_perf_test
         Dim x As Int32 = 0
         For i As UInt32 = 0 To size - uint32_1
             x = CInt(x + uint32_1)
-            assert_equal(x, 1)
+            assertion.equal(x, 1)
             x = CInt(x - uint32_1)
-            assert_equal(x, 0)
+            assertion.equal(x, 0)
         Next
     End Sub
 
@@ -177,9 +177,9 @@ Public Class uint32_perf_test
         For i As UInt32 = 0 To size - uint32_1
             Dim c As UInt32 = 0
             c = x * y
-            assert_equal(c, r)
+            assertion.equal(c, r)
             c \= y
-            assert_equal(c, x)
+            assertion.equal(c, x)
         Next
     End Sub
 
@@ -195,9 +195,9 @@ Public Class uint32_perf_test
         For i As UInt32 = 0 To size - uint32_1
             Dim c As Int32 = 0
             c = x * y
-            assert_equal(c, r)
+            assertion.equal(c, r)
             c \= y
-            assert_equal(c, x)
+            assertion.equal(c, x)
         Next
     End Sub
 

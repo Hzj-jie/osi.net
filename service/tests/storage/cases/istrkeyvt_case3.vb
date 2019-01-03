@@ -68,9 +68,9 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   If m.find(k) <> m.end() Then
-                                      assert_more_or_equal(Of Int64)(array_size(+v), m(k))
+                                      assertion.more_or_equal(Of Int64)(array_size(+v), m(k))
                                   End If
                                   Return goto_end()
                               End Function)
@@ -90,8 +90,8 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_true(+r)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.is_true(+r)
                                   m(k) += array_size(v)
                                   Return goto_end()
                               End Function)
@@ -109,9 +109,9 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   If m.erase(k) Then
-                                      assert_true(+p)
+                                      assertion.is_true(+p)
                                   End If
                                   Return goto_end()
                               End Function)
@@ -129,9 +129,9 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   If m.find(k) <> m.end() Then
-                                      assert_true(+p)
+                                      assertion.is_true(+p)
                                   End If
                                   Return goto_end()
                               End Function)
@@ -147,9 +147,9 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  If assert_not_nothing(+r) Then
-                                      assert_more_or_equal((+r).size(), m.size())
+                                  assertion.is_true(ec.end_result())
+                                  If assertion.is_not_null(+r) Then
+                                      assertion.more_or_equal((+r).size(), m.size())
                                       Dim m2 As [set](Of String) = Nothing
                                       m2 = New [set](Of String)()
                                       Dim i As UInt32 = 0
@@ -160,7 +160,7 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                                       Dim it As map(Of String, Int64).iterator = Nothing
                                       it = m.begin()
                                       While it <> m.end()
-                                          assert_true(m2.find((+it).first) <> m2.end())
+                                          assertion.is_true(m2.find((+it).first) <> m2.end())
                                           it += 1
                                       End While
                                   End If
@@ -184,8 +184,8 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_true(+r)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.is_true(+r)
                                   m(k) = array_size(v)
                                   Return goto_end()
                               End Function)
@@ -204,10 +204,10 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                               End Function,
                               Function() As Boolean
                                   If (+v) = npos Then
-                                      assert_true(m.find(k) = m.end())
+                                      assertion.is_true(m.find(k) = m.end())
                                   Else
                                       If m.find(k) <> m.end() Then
-                                          assert_more_or_equal(+v, m(k))
+                                          assertion.more_or_equal(+v, m(k))
                                       End If
                                   End If
                                   Return goto_end()
@@ -224,8 +224,8 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  'assert_false(+r)
+                                  assertion.is_true(ec.end_result())
+                                  'assertion.is_false(+r)
                                   Return goto_end()
                               End Function)
     End Function
@@ -240,9 +240,9 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   If (+r) Then
-                                      assert_true(m.empty())
+                                      assertion.is_true(m.empty())
                                   End If
                                   Return goto_end()
                               End Function)
@@ -261,7 +261,7 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                                   End If
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   m.clear()
                                   Return goto_end()
                               End Function)
@@ -277,8 +277,8 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_more_or_equal(+r, 0)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.more_or_equal(+r, 0)
                                   Return goto_end()
                               End Function)
     End Function
@@ -293,8 +293,8 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_more_or_equal(+r, 0)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.more_or_equal(+r, 0)
                                   Return goto_end()
                               End Function)
     End Function
@@ -309,8 +309,8 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_more_or_equal(+r, m.size())
+                                  assertion.is_true(ec.end_result())
+                                  assertion.more_or_equal(+r, m.size())
                                   Return goto_end()
                               End Function)
     End Function
@@ -323,7 +323,7 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
     End Function
@@ -339,7 +339,7 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Return goto_end()
                               End Function)
 #Else
@@ -363,7 +363,7 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   If (+r) Then
                                       If m.find(k) = m.end() OrElse
                                          m(k) > array_size(v) Then

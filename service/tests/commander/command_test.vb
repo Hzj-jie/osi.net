@@ -42,29 +42,29 @@ Public Class command_test
 
     Private Shared Function command_validation(ByVal c As command, ByVal constants As constants) As Boolean
         assert(Not constants Is Nothing)
-        If Not assert_not_nothing(c) Then
+        If Not assertion.is_not_null(c) Then
             Return False
         End If
-        If assert_not_nothing(c.action()) Then
-            assert_equal(c.action(Of String)(), constants.action)
+        If assertion.is_not_null(c.action()) Then
+            assertion.equal(c.action(Of String)(), constants.action)
         End If
-        If assert_not_nothing(c.parameter(constants.para1)) Then
-            assert_equal(c.parameter(Of String, Int64)(constants.para1), constants.value1)
+        If assertion.is_not_null(c.parameter(constants.para1)) Then
+            assertion.equal(c.parameter(Of String, Int64)(constants.para1), constants.value1)
         End If
-        assert_equal(c.parameter(Of String, Int64)(constants.para1), constants.value1)
-        If assert_not_nothing(c.parameter(constants.para2)) Then
-            assert_equal(c.parameter(Of String, Boolean)(constants.para2), constants.value2)
+        assertion.equal(c.parameter(Of String, Int64)(constants.para1), constants.value1)
+        If assertion.is_not_null(c.parameter(constants.para2)) Then
+            assertion.equal(c.parameter(Of String, Boolean)(constants.para2), constants.value2)
         End If
-        assert_equal(c.parameter(Of String, Boolean)(constants.para2), constants.value2)
-        If assert_not_nothing(c.parameter(constants.para3)) Then
-            assert_equal(c.parameter(Of String, String)(constants.para3), constants.value3)
+        assertion.equal(c.parameter(Of String, Boolean)(constants.para2), constants.value2)
+        If assertion.is_not_null(c.parameter(constants.para3)) Then
+            assertion.equal(c.parameter(Of String, String)(constants.para3), constants.value3)
         End If
-        assert_equal(c.parameter(Of String, String)(constants.para3), constants.value3)
-        assert_nothing(c.parameter(constants.para4))
-        If assert_not_nothing(c.parameter(constants.para5)) Then
-            assert_equal(c.parameter(Of Int32, Int32)(constants.para5), constants.value5)
+        assertion.equal(c.parameter(Of String, String)(constants.para3), constants.value3)
+        assertion.is_null(c.parameter(constants.para4))
+        If assertion.is_not_null(c.parameter(constants.para5)) Then
+            assertion.equal(c.parameter(Of Int32, Int32)(constants.para5), constants.value5)
         End If
-        assert_equal(c.parameter(Of Int32, Int32)(constants.para5), constants.value5)
+        assertion.equal(c.parameter(Of Int32, Int32)(constants.para5), constants.value5)
         Return True
     End Function
 
@@ -84,24 +84,24 @@ Public Class command_test
         End If
         Dim b() As Byte = Nothing
         b = bytes_serializer.to_bytes(c)
-        assert_more(array_size(b), uint32_0)
+        assertion.more(array_size(b), uint32_0)
         Dim r As command = Nothing
-        assert_true(bytes_serializer.from_bytes(b, r))
+        assertion.is_true(bytes_serializer.from_bytes(b, r))
         If Not command_validation(r, constants) Then
             Return False
         End If
 
         Dim s As String = Nothing
         s = uri_serializer.to_str(c)
-        assert_false(String.IsNullOrEmpty(s))
-        assert_true(uri_serializer.from_str(s, r))
+        assertion.is_false(String.IsNullOrEmpty(s))
+        assertion.is_true(uri_serializer.from_str(s, r))
         If Not command_validation(r, constants) Then
             Return False
         End If
 
         s = string_serializer.to_str(c)
-        assert_false(String.IsNullOrEmpty(s))
-        assert_true(string_serializer.from_str(s, r))
+        assertion.is_false(String.IsNullOrEmpty(s))
+        assertion.is_true(string_serializer.from_str(s, r))
         If Not command_validation(r, constants) Then
             Return False
         End If

@@ -39,12 +39,12 @@ Public Class async_sync_test
                                             Return goto_end()
                                         End Function))
         Next
-        assert_true(w.WaitOne(CInt(seconds_to_milliseconds(10))))
+        assertion.is_true(w.WaitOne(CInt(seconds_to_milliseconds(10))))
         Return True
     End Function
 
     Private Shared Function async_sync_with_huge_timeout() As Boolean
-        assert_true(async_sync(New event_comb(Function() As Boolean
+        assertion.is_true(async_sync(New event_comb(Function() As Boolean
                                                   Return goto_end()
                                               End Function),
                                max_int64))

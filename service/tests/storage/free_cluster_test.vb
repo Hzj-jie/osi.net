@@ -41,13 +41,13 @@ Public Class free_cluster_test
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   Dim it As map(Of Int64, Byte()).iterator = Nothing
                                   it = d.find(id)
                                   If it = d.end() Then
-                                      assert_nothing(+p)
+                                      assertion.is_null(+p)
                                   Else
-                                      assert_equal(memcmp((+it).second, +p), 0)
+                                      assertion.equal(memcmp((+it).second, +p), 0)
                                   End If
                                   Return goto_end()
                               End Function)
@@ -68,8 +68,8 @@ Public Class free_cluster_test
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_equal(+result, exp)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.equal(+result, exp)
                                   If +result Then
                                       If d.find(id) <> d.end() Then
                                           Dim b() As Byte = Nothing
@@ -96,8 +96,8 @@ Public Class free_cluster_test
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_true(d.find(+id) = d.end())
+                                  assertion.is_true(ec.end_result())
+                                  assertion.is_true(d.find(+id) = d.end())
                                   ec = apply_append(fc, d, +id, True)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -147,8 +147,8 @@ Public Class free_cluster_test
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_equal(+r, d.erase(id))
+                                  assertion.is_true(ec.end_result())
+                                  assertion.equal(+r, d.erase(id))
                                   Return goto_end()
                               End Function)
     End Function
@@ -165,8 +165,8 @@ Public Class free_cluster_test
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_equal(+r, d.find(id) <> d.end())
+                                  assertion.is_true(ec.end_result())
+                                  assertion.equal(+r, d.find(id) <> d.end())
                                   Return goto_end()
                               End Function)
     End Function
@@ -183,11 +183,11 @@ Public Class free_cluster_test
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
+                                  assertion.is_true(ec.end_result())
                                   If (+r) = npos Then
-                                      assert_true(d.find(id) = d.end())
-                                  ElseIf assert_true(d.find(id) <> d.end()) Then
-                                      assert_equal(array_size(d(id)), +r)
+                                      assertion.is_true(d.find(id) = d.end())
+                                  ElseIf assertion.is_true(d.find(id) <> d.end()) Then
+                                      assertion.equal(array_size(d(id)), +r)
                                   End If
                                   Return goto_end()
                               End Function)
@@ -218,7 +218,7 @@ Public Class free_cluster_test
         Dim ec As event_comb = Nothing
         Dim i As Int64 = 0
         Return New event_comb(Function() As Boolean
-                                  assert_true(ec Is Nothing OrElse ec.end_result())
+                                  assertion.is_true(ec Is Nothing OrElse ec.end_result())
                                   If i < round_count Then
                                       i += 1
                                       ec = rnd_case(fc, d)
@@ -249,8 +249,8 @@ Public Class free_cluster_test
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  If assert_true(ec.end_result()) AndAlso
-                                     assert_not_nothing(+fc) Then
+                                  If assertion.is_true(ec.end_result()) AndAlso
+                                     assertion.is_not_null(+fc) Then
                                       ec = cases(+fc, d)
                                       Return waitfor(ec) AndAlso
                                              If(round = 0, goto_end(), goto_prev())

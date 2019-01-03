@@ -53,7 +53,7 @@ Public Class bit_array_thread_safe_test
                         fc += 1
                     End If
                 Next
-                assert_less_or_equal(fc, write_thread_count)
+                assertion.less_or_equal(fc, write_thread_count)
                 If fc = 0 AndAlso current > all_true_before Then
                     all_true_before = current
                 End If
@@ -63,7 +63,7 @@ Public Class bit_array_thread_safe_test
 
         Public Overrides Function finish() As Boolean
             For i As Int32 = 0 To b.size() - 1
-                assert_true(b(i))
+                assertion.is_true(b(i))
             Next
             b.resize(0)
             Return MyBase.finish()

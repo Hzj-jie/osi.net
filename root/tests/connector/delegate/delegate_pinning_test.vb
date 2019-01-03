@@ -33,18 +33,18 @@ Public Class delegate_pinning_test
 
         repeat_gc_collect()
 
-        assert_true(p.alive())
+        assertion.is_true(p.alive())
         d()
-        assert_equal(c.count(), 1)
+        assertion.equal(c.count(), 1)
         GC.KeepAlive(c)
         c = Nothing
         repeat_gc_collect()
 
-        assert_true(p.alive())
+        assertion.is_true(p.alive())
         d()
         Dim c2 As test_class = Nothing
-        assert_true(p.get(c2))
-        assert_equal(c2.count(), 2)
+        assertion.is_true(p.get(c2))
+        assertion.equal(c2.count(), 2)
         c2 = Nothing
         GC.KeepAlive(d)
         repeat_gc_collect()
@@ -52,7 +52,7 @@ Public Class delegate_pinning_test
         d = Nothing
         repeat_gc_collect()
 
-        assert_false(p.alive())
+        assertion.is_false(p.alive())
         Return True
     End Function
 End Class

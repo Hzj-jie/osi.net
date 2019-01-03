@@ -52,24 +52,24 @@ Friend Class callback_case
                                                  nowadays.milliseconds() - start_ms >= check_pass_ms)
                                   End Function,
                                   Function() As Boolean
-                                      assert_more_or_equal(nowadays.milliseconds() - start_ms, check_pass_ms)
+                                      assertion.more_or_equal(nowadays.milliseconds() - start_ms, check_pass_ms)
                                       If strict_time_limited Then
-                                          assert_less(nowadays.milliseconds() - start_ms,
+                                          assertion.less(nowadays.milliseconds() - start_ms,
                                                       check_pass_ms + sixteen_timeslice_length_ms)
                                       End If
-                                      assert_more_or_equal(ticks_to_milliseconds(rtn.check_ticks()), start_ms)
+                                      assertion.more_or_equal(ticks_to_milliseconds(rtn.check_ticks()), start_ms)
                                       If strict_time_limited Then
-                                          assert_less(ticks_to_milliseconds(rtn.check_ticks()),
+                                          assertion.less(ticks_to_milliseconds(rtn.check_ticks()),
                                                       start_ms + two_timeslice_length_ms)
                                       End If
-                                      assert_less_or_equal(ticks_to_milliseconds(rtn.begin_ticks()), start_ms)
-                                      assert_more_or_equal(ticks_to_milliseconds(rtn.end_ticks()), start_ms)
+                                      assertion.less_or_equal(ticks_to_milliseconds(rtn.begin_ticks()), start_ms)
+                                      assertion.more_or_equal(ticks_to_milliseconds(rtn.end_ticks()), start_ms)
 
-                                      assert_more_or_equal(rtn.check_ticks(), rtn.begin_ticks())
-                                      assert_more_or_equal(rtn.end_ticks(), rtn.check_ticks())
+                                      assertion.more_or_equal(rtn.check_ticks(), rtn.begin_ticks())
+                                      assertion.more_or_equal(rtn.end_ticks(), rtn.check_ticks())
 
-                                      assert_true(rtn.begin_result().true_())
-                                      assert_true(rtn.check_result().true_())
+                                      assertion.is_true(rtn.begin_result().true_())
+                                      assertion.is_true(rtn.check_result().true_())
 
                                       If i = 1 Then
                                           wait()
@@ -112,8 +112,8 @@ Friend Class callback_case
     Protected Overrides Function run_case() As Boolean
         Dim this As Int32 = 0
         this = trigger_times()
-        assert_true(async_sync(create_callback_action(), timeout_ms()))
-        assert_more(trigger_times(), this)
+        assertion.is_true(async_sync(create_callback_action(), timeout_ms()))
+        assertion.more(trigger_times(), this)
         Return True
     End Function
 End Class

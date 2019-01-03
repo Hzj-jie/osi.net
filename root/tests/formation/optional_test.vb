@@ -12,13 +12,13 @@ Public Class optional_test
     Public Overrides Function run() As Boolean
         Dim p As [optional](Of Object) = Nothing
         p = [optional].[New](New Object())
-        assert_true(p)
-        assert_not_nothing(+p)
-        assert_not_nothing(-p)
+        assertion.is_true(p)
+        assertion.is_not_null(+p)
+        assertion.is_not_null(-p)
 
         p = [optional].[New](Of Object)()
-        assert_false(p)
-        assert_nothing(-p)
+        assertion.is_false(p)
+        assertion.is_null(-p)
 
         Return True
     End Function

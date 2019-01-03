@@ -88,14 +88,14 @@ Public Class performance_case_wrapper
         If run(min, max, ave) Then
             raise_error("finished performance case ", name, " with ", times(), " times, ",
                         "max used loops ", max, ", min used loops ", min, ", average used_loops ", ave)
-            assert_less_or_equal(min, max_loops(),
+            assertion.less_or_equal(min, max_loops(),
                                  "performance case ",
                                  name,
                                  " is out of maximum expected loops ",
                                  max_loops(),
                                  ", min used loops ",
                                  min)
-            assert_more_or_equal(max, min_loops(),
+            assertion.more_or_equal(max, min_loops(),
                                  "performance case ",
                                  name,
                                  " is less than minimum expected loops ",

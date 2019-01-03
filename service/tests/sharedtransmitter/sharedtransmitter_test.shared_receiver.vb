@@ -20,7 +20,7 @@ Partial Public Class sharedtransmitter_test
                 ByVal o As pointer(Of pair(Of Int32, const_pair(Of Byte, Byte)))) As event_comb
             Dim ec As event_comb = Nothing
             Return New event_comb(Function() As Boolean
-                                      If assert_true(referred()) Then
+                                      If assertion.is_true(referred()) Then
                                           ec = component().receiver.receive(o)
                                           Return waitfor(ec) AndAlso
                                              goto_next()
@@ -29,7 +29,7 @@ Partial Public Class sharedtransmitter_test
                                       End If
                                   End Function,
                                   Function() As Boolean
-                                      assert_true(ec.end_result())
+                                      assertion.is_true(ec.end_result())
                                       Return ec.end_result() AndAlso
                                              goto_end()
                                   End Function)
@@ -39,7 +39,7 @@ Partial Public Class sharedtransmitter_test
                                         ByVal timeout_ms As Int64) As event_comb
             Dim ec As event_comb = Nothing
             Return New event_comb(Function() As Boolean
-                                      If assert_true(referred()) Then
+                                      If assertion.is_true(referred()) Then
                                           ec = component().receiver.sense(pending, timeout_ms)
                                           Return waitfor(ec) AndAlso
                                              goto_next()
@@ -48,7 +48,7 @@ Partial Public Class sharedtransmitter_test
                                       End If
                                   End Function,
                                   Function() As Boolean
-                                      assert_true(ec.end_result())
+                                      assertion.is_true(ec.end_result())
                                       Return ec.end_result() AndAlso
                                              goto_end()
                                   End Function)

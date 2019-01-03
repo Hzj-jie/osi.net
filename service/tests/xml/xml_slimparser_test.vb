@@ -61,11 +61,11 @@ Public Class xml_slimparser_test
         For i As Int32 = 0 To v1.size() - 1
             s.Append(v1(i).first)
         Next
-        assert_true(slim_parse(Convert.ToString(s), v2))
-        If assert_equal(v1.size(), v2.size()) Then
+        assertion.is_true(slim_parse(Convert.ToString(s), v2))
+        If assertion.equal(v1.size(), v2.size()) Then
             For i As Int32 = 0 To v1.size() - 1
-                assert_equal(v1(i).second, v2(i).second)
-                assert_true(strsame(v1(i).first, v2(i).first))
+                assertion.equal(v1(i).second, v2(i).second)
+                assertion.is_true(strsame(v1(i).first, v2(i).first))
             Next
         End If
         Return True
@@ -74,36 +74,36 @@ Public Class xml_slimparser_test
     Public Overrides Function run() As Boolean
         Dim r As vector(Of pair(Of String, node_type)) = Nothing
         slim_parse(xml1, r)
-        If assert_equal(r.size(), CUInt(1)) Then
-            assert_true(strsame(r(0).first, "<?xml charset=""utf-8""?>"))
-            assert_true(r(0).second = node_type.declaration)
+        If assertion.equal(r.size(), CUInt(1)) Then
+            assertion.is_true(strsame(r(0).first, "<?xml charset=""utf-8""?>"))
+            assertion.is_true(r(0).second = node_type.declaration)
         End If
 
         slim_parse(xml2, r)
-        If assert_equal(r.size(), CUInt(8)) Then
-            assert_true(r(0).second = node_type.tag)
-            assert_true(strsame(r(0).first, "<some_tag key=""value"" key='value'>"))
+        If assertion.equal(r.size(), CUInt(8)) Then
+            assertion.is_true(r(0).second = node_type.tag)
+            assertion.is_true(strsame(r(0).first, "<some_tag key=""value"" key='value'>"))
 
-            assert_true(r(1).second = node_type.text)
-            assert_true(strsame(r(1).first, "some_text"))
+            assertion.is_true(r(1).second = node_type.text)
+            assertion.is_true(strsame(r(1).first, "some_text"))
 
-            assert_true(r(2).second = node_type.tag)
-            assert_true(strsame(r(2).first, "</some_tag>"))
+            assertion.is_true(r(2).second = node_type.tag)
+            assertion.is_true(strsame(r(2).first, "</some_tag>"))
 
-            assert_true(r(3).second = node_type.tag)
-            assert_true(strsame(r(3).first, "<some_tag2>"))
+            assertion.is_true(r(3).second = node_type.tag)
+            assertion.is_true(strsame(r(3).first, "<some_tag2>"))
 
-            assert_true(r(4).second = node_type.tag)
-            assert_true(strsame(r(4).first, "<some_tag3>"))
+            assertion.is_true(r(4).second = node_type.tag)
+            assertion.is_true(strsame(r(4).first, "<some_tag3>"))
 
-            assert_true(r(5).second = node_type.text)
-            assert_true(strsame(r(5).first, "some_text2"))
+            assertion.is_true(r(5).second = node_type.text)
+            assertion.is_true(strsame(r(5).first, "some_text2"))
 
-            assert_true(r(6).second = node_type.tag)
-            assert_true(strsame(r(6).first, "</some_tag3>"))
+            assertion.is_true(r(6).second = node_type.tag)
+            assertion.is_true(strsame(r(6).first, "</some_tag3>"))
 
-            assert_true(r(7).second = node_type.tag)
-            assert_true(strsame(r(7).first, "</some_tag2>"))
+            assertion.is_true(r(7).second = node_type.tag)
+            assertion.is_true(strsame(r(7).first, "</some_tag2>"))
         End If
 
         For i As Int32 = 0 To 1024 * If(isdebugbuild(), 1, 8) - 1

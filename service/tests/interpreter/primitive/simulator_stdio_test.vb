@@ -19,17 +19,17 @@ Namespace primitive
             Dim io As console_io = Nothing
             io = New console_io()
             s = New simulator(New interrupts(io))
-            assert_true(s.import(sim3.as_text()))
+            assertion.is_true(s.import(sim3.as_text()))
             Using out As TextWriter = New StringWriter(),
                   err As TextWriter = New StringWriter()
                 io.redirect_output(out)
                 io.redirect_error(err)
                 s.execute()
-                assert_false(s.halt())
-                assert_true(s.errors().empty())
-                assert_equal(Convert.ToString(out),
+                assertion.is_false(s.halt())
+                assertion.is_true(s.errors().empty())
+                assertion.equal(Convert.ToString(out),
                              "hello world" + character.newline + "hello world" + character.newline)
-                assert_equal(Convert.ToString(err),
+                assertion.equal(Convert.ToString(err),
                              "hello world" + character.newline + "hello world" + character.newline)
             End Using
             Return True
@@ -40,7 +40,7 @@ Namespace primitive
             Dim io As console_io = Nothing
             io = New console_io()
             s = New simulator(New interrupts(io))
-            assert_true(s.import(sim4.as_text()))
+            assertion.is_true(s.import(sim4.as_text()))
             Dim input As String = Nothing
             input = rnd_en_chars(rnd_int(100, 1000))
             Using out As TextWriter = New StringWriter(),
@@ -50,10 +50,10 @@ Namespace primitive
                 io.redirect_output(out)
                 io.redirect_error(err)
                 s.execute()
-                assert_false(s.halt())
-                assert_true(s.errors().empty())
-                assert_equal(Convert.ToString(out), strcat(input, input))
-                assert_equal(Convert.ToString(err), strcat(input, input))
+                assertion.is_false(s.halt())
+                assertion.is_true(s.errors().empty())
+                assertion.equal(Convert.ToString(out), strcat(input, input))
+                assertion.equal(Convert.ToString(err), strcat(input, input))
             End Using
             Return True
         End Function

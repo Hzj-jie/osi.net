@@ -48,11 +48,11 @@ Public NotInheritable Class delegate_info_test
     End Sub
 
     Private Shared Sub success(Of IT, OT)()
-        assert_true(delegate_info(Of Func(Of IT, OT)).match(method_info()))
+        assertion.is_true(delegate_info(Of Func(Of IT, OT)).match(method_info()))
     End Sub
 
     Private Shared Sub fail(Of IT, OT)()
-        assert_false(delegate_info(Of Func(Of IT, OT)).match(method_info()))
+        assertion.is_false(delegate_info(Of Func(Of IT, OT)).match(method_info()))
     End Sub
 
     Private Shared Function method_info() As MethodInfo

@@ -20,7 +20,7 @@ Public NotInheritable Class ref_instance_test2
                                        Return New cd_object(Of joint_type(Of ref_instance_test2, _0))()
                                    End Function)
             r.ref()
-            assert_equal(cd_object(Of joint_type(Of ref_instance_test2, _0)).constructed(), CUInt(i + 1))
+            assertion.equal(cd_object(Of joint_type(Of ref_instance_test2, _0)).constructed(), CUInt(i + 1))
             r = Nothing
             waitfor_gc_collect()
             If cd_object(Of joint_type(Of ref_instance_test2, _0)).disposed() > 0 Then
@@ -29,7 +29,7 @@ Public NotInheritable Class ref_instance_test2
         Next
         waitfor_gc_collect()
 
-        assert_more(cd_object(Of joint_type(Of ref_instance_test2, _0)).disposed(), uint32_0)
+        assertion.more(cd_object(Of joint_type(Of ref_instance_test2, _0)).disposed(), uint32_0)
     End Sub
 
     Private Sub New()

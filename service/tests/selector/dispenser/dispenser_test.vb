@@ -26,7 +26,7 @@ Partial Public Class dispenser_test
         ReDim accepters(accepter_count - 1)
         For i As Int32 = 0 To accepter_count - 1
             accepters(i) = New accepter(i)
-            assert_true(d.attach(accepters(i)))
+            assertion.is_true(d.attach(accepters(i)))
         Next
 
         For i As Int32 = 0 To data_size - 1
@@ -38,24 +38,24 @@ Partial Public Class dispenser_test
         For i As Int32 = 0 To accepter_count - 1
             Dim j As Int32 = 0
             j = i
-            assert_happening(Function() accepters(j).q.size() = data_size)
+            assertion.happening(Function() accepters(j).q.size() = data_size)
         Next
 
         For i As Int32 = 0 To accepter_count - 1
             For j As Int32 = 0 To data_size - 1
                 Dim k As Int32 = 0
-                assert_true(accepters(i).q.pop(k))
-                assert_equal(k, j)
+                assertion.is_true(accepters(i).q.pop(k))
+                assertion.equal(k, j)
             Next
         Next
 
         For i As Int32 = 0 To accepter_count - 1
-            assert_true(d.detach(accepters(i)))
+            assertion.is_true(d.detach(accepters(i)))
         Next
 
-        assert_true(d.expired())
-        assert_true(d.wait_for_stop(constants.default_sense_timeout_ms))
-        assert_true(d.stopped())
+        assertion.is_true(d.expired())
+        assertion.is_true(d.wait_for_stop(constants.default_sense_timeout_ms))
+        assertion.is_true(d.stopped())
         Return True
     End Function
 

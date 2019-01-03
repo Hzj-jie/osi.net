@@ -37,12 +37,12 @@ Public Class hash_distributor_test
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  If assert_true(ecs.end_result()) Then
+                                  If assertion.is_true(ecs.end_result()) Then
                                       Dim names() As String = Nothing
                                       ReDim names(strkeyvt_count - 1)
                                       For i As Int32 = 0 To strkeyvt_count - 1
                                           names(i) = istrkeyvt_name(i)
-                                          assert_true(manager.register(names(i), +(fs(i))))
+                                          assertion.is_true(manager.register(names(i), +(fs(i))))
                                       Next
                                       Return eva(p, New hash_distributor(names)) AndAlso
                                              goto_end()
@@ -55,7 +55,7 @@ Public Class hash_distributor_test
     Protected Overrides Function clean_up() As event_comb
         Return sync_async(Sub()
                               For i As Int32 = 0 To strkeyvt_count - 1
-                                  assert_true(manager.erase(istrkeyvt_name(i), [default](Of istrkeyvt).null))
+                                  assertion.is_true(manager.erase(istrkeyvt_name(i), [default](Of istrkeyvt).null))
                               Next
                           End Sub)
     End Function

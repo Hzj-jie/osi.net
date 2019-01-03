@@ -39,18 +39,18 @@ Public Class gc_behavior_test
         End Sub
 
         Protected Overrides Sub Finalize()
-            assert_equal(a, gc_behavior_test.a)
-            assert_not_nothing(b)
-            assert_equal(b, gc_behavior_test.b)
-            assert_not_nothing(c)
-            assert_not_nothing(d)
-            assert_equal(d, gc_behavior_test.d)
-            If assert_not_nothing(e) Then
+            assertion.equal(a, gc_behavior_test.a)
+            assertion.is_not_null(b)
+            assertion.equal(b, gc_behavior_test.b)
+            assertion.is_not_null(c)
+            assertion.is_not_null(d)
+            assertion.equal(d, gc_behavior_test.d)
+            If assertion.is_not_null(e) Then
                 e.increment()
             End If
 #If 0 Then
             ' There is way to make sure f has been finalized after this object.
-            assert_false(f.finialized)
+            assertion.is_false(f.finialized)
             GC.KeepAlive(f)
 #End If
             MyBase.Finalize()
@@ -81,7 +81,7 @@ Public Class gc_behavior_test
             x = Nothing
         Next
         repeat_gc_collect()
-        assert_equal(+a, CInt(r))
+        assertion.equal(+a, CInt(r))
         Return True
     End Function
 End Class

@@ -64,12 +64,12 @@ Friend Class qless2_case
     End Sub
 
     Private Sub read()
-        assert_more_or_equal(q.size(), uint32_0)
+        assertion.more_or_equal(q.size(), uint32_0)
         Dim j As Int32 = 0
         If q.pop(j) AndAlso validate() Then
-            If assert_less(j, i) AndAlso
-               assert_more_or_equal(j, 0) Then
-                assert_false(s(j), j)
+            If assertion.less(j, i) AndAlso
+               assertion.more_or_equal(j, 0) Then
+                assertion.is_false(s(j), j)
                 s(j) = True
             End If
         End If
@@ -98,7 +98,7 @@ Friend Class qless2_case
     End Function
 
     Public Overrides Function finish() As Boolean
-        assert_more_or_equal(q.size(), uint32_0)
+        assertion.more_or_equal(q.size(), uint32_0)
         If validate() Then
             While Not q.empty()
                 read()
@@ -106,10 +106,10 @@ Friend Class qless2_case
         Else
             q.clear()
         End If
-        assert_equal(q.size(), uint32_0)
+        assertion.equal(q.size(), uint32_0)
         If validate() Then
             For j As Int32 = 0 To i - 1
-                assert_true(s(j), j)
+                assertion.is_true(s(j), j)
             Next
         End If
         Erase s

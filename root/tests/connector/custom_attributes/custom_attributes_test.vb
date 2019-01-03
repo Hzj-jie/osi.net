@@ -36,21 +36,21 @@ Public NotInheritable Class custom_attributes_test
     <test>
     Private Shared Sub inherited_attribute_classes_should_be_retrieved()
         Dim o() As test1 = Nothing
-        assert_true(GetType(target).custom_attributes(o))
-        assert_equal(array_size_i(o), 2)
+        assertion.is_true(GetType(target).custom_attributes(o))
+        assertion.equal(array_size_i(o), 2)
 
-        assert_true(direct_cast(o(1), [default](Of test2).null))
+        assertion.is_true(direct_cast(o(1), [default](Of test2).null))
     End Sub
 
     <test>
     Private Shared Sub attributes_should_be_able_to_implement_interfaces()
         Dim o() As test_i = Nothing
-        assert_true(GetType(target).custom_attributes(o))
-        assert_equal(array_size_i(o), 3)
+        assertion.is_true(GetType(target).custom_attributes(o))
+        assertion.equal(array_size_i(o), 3)
 
-        assert_true(direct_cast(o(0), [default](Of test1).null))
-        assert_true(direct_cast(o(1), [default](Of test2).null))
-        assert_true(direct_cast(o(2), [default](Of test3).null))
+        assertion.is_true(direct_cast(o(0), [default](Of test1).null))
+        assertion.is_true(direct_cast(o(1), [default](Of test2).null))
+        assertion.is_true(direct_cast(o(2), [default](Of test3).null))
     End Sub
 
     Private Sub New()

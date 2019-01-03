@@ -15,13 +15,13 @@ Public Class scoped_environments_test
         Dim value As String = Nothing
         key = guid_str()
         value = guid_str()
-        assert_false(env_bool(key))
+        assertion.is_false(env_bool(key))
         Using New scoped_environments(key, value)
             Dim o As String = Nothing
-            assert_true(env_value(key, o))
-            assert_equal(o, value)
+            assertion.is_true(env_value(key, o))
+            assertion.equal(o, value)
         End Using
-        assert_false(env_bool(key))
+        assertion.is_false(env_bool(key))
         Return True
     End Function
 
@@ -33,17 +33,17 @@ Public Class scoped_environments_test
             kv(i, 1) = guid_str()
         Next
         For i As Int32 = 0 To array_size_i(kv) - 1
-            assert_false(env_bool(kv(i, 0)))
+            assertion.is_false(env_bool(kv(i, 0)))
         Next
         Using New scoped_environments(kv)
             For i As Int32 = 0 To array_size_i(kv) - 1
                 Dim o As String = Nothing
-                assert_true(env_value(kv(i, 0), o))
-                assert_equal(kv(i, 1), o)
+                assertion.is_true(env_value(kv(i, 0), o))
+                assertion.equal(kv(i, 1), o)
             Next
         End Using
         For i As Int32 = 0 To array_size_i(kv) - 1
-            assert_false(env_bool(kv(i, 0)))
+            assertion.is_false(env_bool(kv(i, 0)))
         Next
         Return True
     End Function
@@ -57,17 +57,17 @@ Public Class scoped_environments_test
             kv(i)(1) = guid_str()
         Next
         For i As Int32 = 0 To array_size_i(kv) - 1
-            assert_false(env_bool(kv(i)(0)))
+            assertion.is_false(env_bool(kv(i)(0)))
         Next
         Using New scoped_environments(kv)
             For i As Int32 = 0 To array_size_i(kv) - 1
                 Dim o As String = Nothing
-                assert_true(env_value(kv(i)(0), o))
-                assert_equal(kv(i)(1), o)
+                assertion.is_true(env_value(kv(i)(0), o))
+                assertion.equal(kv(i)(1), o)
             Next
         End Using
         For i As Int32 = 0 To array_size_i(kv) - 1
-            assert_false(env_bool(kv(i)(0)))
+            assertion.is_false(env_bool(kv(i)(0)))
         Next
         Return True
     End Function

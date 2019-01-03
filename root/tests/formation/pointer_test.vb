@@ -59,9 +59,9 @@ Public Class pointer_test
             For i As Int64 = 0 To count - 1
                 ps(i) = New pointer(Of test_class)(New test_class())
             Next
-            assert_equal(test_class.finalized_count(), 0)
+            assertion.equal(test_class.finalized_count(), 0)
             repeat_gc_collect()
-            assert_equal(test_class.finalized_count(), 0)
+            assertion.equal(test_class.finalized_count(), 0)
 
             Dim released As Int64 = 0
             released = rnd_int(0, count)
@@ -69,13 +69,13 @@ Public Class pointer_test
                 ps(i) = Nothing
             Next
             repeat_gc_collect()
-            assert_equal(test_class.finalized_count(), released)
+            assertion.equal(test_class.finalized_count(), released)
 
             For i As Int64 = 0 To count - 1
                 ps(i) = Nothing
             Next
             repeat_gc_collect()
-            assert_equal(test_class.finalized_count(), count)
+            assertion.equal(test_class.finalized_count(), count)
 
             Return True
         End Function
@@ -127,9 +127,9 @@ Public Class pointer_test
                                          ByVal s As String,
                                          ByVal exp As Int32) As Boolean
             assert(Not i Is Nothing)
-            assert_equal(i.CompareTo(New test_class2(s)), exp)
-            assert_equal(i.CompareTo(New pointer(Of test_class2)(New test_class2(s))), exp)
-            assert_equal(i.CompareTo(DirectCast(New pointer(Of test_class2)(New test_class2(s)), Object)), exp)
+            assertion.equal(i.CompareTo(New test_class2(s)), exp)
+            assertion.equal(i.CompareTo(New pointer(Of test_class2)(New test_class2(s))), exp)
+            assertion.equal(i.CompareTo(DirectCast(New pointer(Of test_class2)(New test_class2(s)), Object)), exp)
             Return True
         End Function
 
@@ -150,37 +150,37 @@ Public Class pointer_test
             t1 = New test_class()
             t2 = New test_class()
             p1 = New pointer(Of test_class)(t1)
-            assert_true(p1 = p1)
-            assert_false(p1 <> p1)
-            assert_true(p1 = t1)
-            assert_false(p1 <> t1)
-            assert_false(p1 = t2)
-            assert_true(p1 <> t2)
+            assertion.is_true(p1 = p1)
+            assertion.is_false(p1 <> p1)
+            assertion.is_true(p1 = t1)
+            assertion.is_false(p1 <> t1)
+            assertion.is_false(p1 = t2)
+            assertion.is_true(p1 <> t2)
             p2 = New pointer(Of test_class)(t2)
-            assert_false(p1 = p2)
-            assert_true(p1 <> p2)
-            assert_true(p2 = DirectCast(t2, Object))
-            assert_false(p2 <> DirectCast(t2, Object))
-            assert_false(p2 = DirectCast(p1, Object))
-            assert_true(p2 <> DirectCast(p1, Object))
+            assertion.is_false(p1 = p2)
+            assertion.is_true(p1 <> p2)
+            assertion.is_true(p2 = DirectCast(t2, Object))
+            assertion.is_false(p2 <> DirectCast(t2, Object))
+            assertion.is_false(p2 = DirectCast(p1, Object))
+            assertion.is_true(p2 <> DirectCast(p1, Object))
             Return True
         End Function
 
         Private Shared Function [overrides]() As Boolean
             Dim p1 As pointer(Of test_class) = Nothing
             p1 = New pointer(Of test_class)(New test_class())
-            assert_true(p1.Equals(p1))
-            assert_true(p1.Equals(+p1))
-            assert_true(p1.Equals(New pointer(Of test_class)(p1)))
-            assert_true(p1.Equals(+(New pointer(Of test_class)(p1))))
-            assert_false(p1.Equals(New test_class()))
-            assert_false(p1.Equals(New pointer(Of test_class)(New test_class())))
+            assertion.is_true(p1.Equals(p1))
+            assertion.is_true(p1.Equals(+p1))
+            assertion.is_true(p1.Equals(New pointer(Of test_class)(p1)))
+            assertion.is_true(p1.Equals(+(New pointer(Of test_class)(p1))))
+            assertion.is_false(p1.Equals(New test_class()))
+            assertion.is_false(p1.Equals(New pointer(Of test_class)(New test_class())))
 
             Const s As String = "ABCDEF"
             Dim p2 As pointer(Of String) = Nothing
             p2 = New pointer(Of String)(s)
-            assert_equal(p2.GetHashCode(), s.GetHashCode())
-            assert_equal(p2.ToString(), s.ToString())
+            assertion.equal(p2.GetHashCode(), s.GetHashCode())
+            assertion.equal(p2.ToString(), s.ToString())
 
             Return True
         End Function
@@ -190,29 +190,29 @@ Public Class pointer_test
             p = New pointer(Of test_class2)(New test_class2("abc"))
             Dim q As pointer(Of test_class2) = Nothing
             copy(q, p)
-            assert_equal(object_compare(p.get(), q.get()), 0)
-            assert_equal(object_compare(p, q), object_compare_undetermined)
+            assertion.equal(object_compare(p.get(), q.get()), 0)
+            assertion.equal(object_compare(p, q), object_compare_undetermined)
             Return True
         End Function
 
         Private Shared Function empty() As Boolean
             Dim p As pointer(Of UInt32) = Nothing
             p = New pointer(Of UInt32)()
-            assert_false(p.empty())
+            assertion.is_false(p.empty())
             p.set(100)
-            assert_false(p.empty())
+            assertion.is_false(p.empty())
             p.set(Nothing)
-            assert_false(p.empty())
+            assertion.is_false(p.empty())
 
             Dim p2 As pointer(Of String) = Nothing
             p2 = New pointer(Of String)()
-            assert_true(p2.empty())
+            assertion.is_true(p2.empty())
             p2.set("abc")
-            assert_false(p2.empty())
+            assertion.is_false(p2.empty())
             p2.set("")
-            assert_false(p2.empty())
+            assertion.is_false(p2.empty())
             p2.set(Nothing)
-            assert_true(p2.empty())
+            assertion.is_true(p2.empty())
 
             Return True
         End Function
@@ -222,17 +222,17 @@ Public Class pointer_test
             p = New pointer(Of String)()
             Dim str As String = Nothing
             str = guid_str()
-            assert_true(p < str)
-            assert_equal(+p, str)
+            assertion.is_true(p < str)
+            assertion.equal(+p, str)
 
             Dim p2 As pointer(Of Int32) = Nothing
             p2 = New pointer(Of Int32)()
             Dim i As Int32 = 0
             i = rnd_int()
-            assert_true(p2 < i)
-            assert_equal(+p2, i)
+            assertion.is_true(p2 < i)
+            assertion.equal(+p2, i)
 
-            assert_false(DirectCast(Nothing, pointer(Of Int32)) < 100)
+            assertion.is_false(DirectCast(Nothing, pointer(Of Int32)) < 100)
             Return True
         End Function
 

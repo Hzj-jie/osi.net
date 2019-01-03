@@ -19,13 +19,13 @@ Friend Class big_uint_predefined_case
             x = New big_uint(CUInt(i))
             r.add(x)
             Dim overflow As Boolean = False
-            If Not assert_equal(x.as_int32(overflow), i) Then
+            If Not assertion.equal(x.as_int32(overflow), i) Then
                 Return False
             End If
-            If Not assert_equal(r.as_uint64(overflow), exp, i) Then
+            If Not assertion.equal(r.as_uint64(overflow), exp, i) Then
                 Return False
             End If
-            assert_false(overflow)
+            assertion.is_false(overflow)
         Next
         Return True
     End Function
@@ -34,10 +34,10 @@ Friend Class big_uint_predefined_case
         Dim l As big_uint = Nothing
         l = New big_uint(10)
         l.factorial()
-        assert_equal(l, New big_uint(3628800))
+        assertion.equal(l, New big_uint(3628800))
         l = New big_uint(11)
         l.factorial()
-        assert_equal(l, New big_uint(39916800))
+        assertion.equal(l, New big_uint(39916800))
         Return True
     End Function
 

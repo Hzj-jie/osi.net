@@ -12,10 +12,10 @@ Namespace rlexer
 
         Private Shared Function create_case() As Boolean
             Dim g As string_matching_group = Nothing
-            assert_false(string_matching_group.create_as_multi_matches("", 0, 0, Nothing))
-            assert_false(string_matching_group.create_as_multi_matches("a,b,c", 5, 0, Nothing))
-            assert_false(string_matching_group.create_as_multi_matches("a,b,c", 5, 5, Nothing))
-            assert_true(string_matching_group.create_as_multi_matches("a,b,c", 0, 5, g))
+            assertion.is_false(string_matching_group.create_as_multi_matches("", 0, 0, Nothing))
+            assertion.is_false(string_matching_group.create_as_multi_matches("a,b,c", 5, 0, Nothing))
+            assertion.is_false(string_matching_group.create_as_multi_matches("a,b,c", 5, 5, Nothing))
+            assertion.is_true(string_matching_group.create_as_multi_matches("a,b,c", 0, 5, g))
             Return True
         End Function
 
@@ -27,9 +27,9 @@ Namespace rlexer
             Dim v As vector(Of UInt32) = Nothing
             For i As UInt32 = 0 To strlen(s) - uint32_1
                 v = g.match(s, i)
-                If assert_true(Not v.null_or_empty()) AndAlso
-                   assert_equal(v.size(), uint32_1) Then
-                    assert_equal(v(0), i + uint32_1)
+                If assertion.is_true(Not v.null_or_empty()) AndAlso
+                   assertion.equal(v.size(), uint32_1) Then
+                    assertion.equal(v(0), i + uint32_1)
                 End If
             Next
             Return True
@@ -40,10 +40,10 @@ Namespace rlexer
             g = New string_matching_group("a", "aa", "aaa", "aaab", "aaabc")
             Dim v As vector(Of UInt32) = Nothing
             v = g.match("aaabb", uint32_0)
-            If assert_true(Not v.null_or_empty()) AndAlso
-               assert_equal(v.size(), CUInt(4)) Then
+            If assertion.is_true(Not v.null_or_empty()) AndAlso
+               assertion.equal(v.size(), CUInt(4)) Then
                 For i As UInt32 = 0 To v.size() - uint32_1
-                    assert_equal(v(i), i + uint32_1)
+                    assertion.equal(v(i), i + uint32_1)
                 Next
             End If
             Return True
@@ -54,10 +54,10 @@ Namespace rlexer
             g = New string_matching_group("a", "")
             Dim v As vector(Of UInt32) = Nothing
             v = g.match("a", uint32_0)
-            If assert_true(Not v.null_or_empty()) AndAlso
-               assert_equal(v.size(), CUInt(2)) Then
-                assert_equal(v(0), uint32_1)
-                assert_equal(v(1), uint32_0)
+            If assertion.is_true(Not v.null_or_empty()) AndAlso
+               assertion.equal(v.size(), CUInt(2)) Then
+                assertion.equal(v(0), uint32_1)
+                assertion.equal(v(1), uint32_0)
             End If
             Return True
         End Function
@@ -72,9 +72,9 @@ Namespace rlexer
             For i As UInt32 = 0 To strlen(s) - uint32_1
                 Dim v As vector(Of UInt32) = Nothing
                 v = g.match(s, i)
-                If assert_true(Not v.null_or_empty()) AndAlso
-                   assert_equal(v.size(), uint32_1) Then
-                    assert_equal(v(0), i + uint32_1)
+                If assertion.is_true(Not v.null_or_empty()) AndAlso
+                   assertion.equal(v.size(), uint32_1) Then
+                    assertion.equal(v(0), i + uint32_1)
                 End If
             Next
             Return True
@@ -85,9 +85,9 @@ Namespace rlexer
             g = New string_matching_group("a")
             Dim v As vector(Of UInt32) = Nothing
             v = g.match("b", uint32_0)
-            assert_true(v.null_or_empty())
+            assertion.is_true(v.null_or_empty())
             v = g.match("ab", uint32_1)
-            assert_true(v.null_or_empty())
+            assertion.is_true(v.null_or_empty())
             Return True
         End Function
 

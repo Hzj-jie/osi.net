@@ -10,7 +10,7 @@ Public Class string_replace_behavior_test
         l = "abc"
         Dim r As String = Nothing
         r = l.Replace("a", "b")
-        assert_equal(object_compare(l, r), object_compare_undetermined)
+        assertion.equal(object_compare(l, r), object_compare_undetermined)
         Return True
     End Function
 
@@ -19,7 +19,7 @@ Public Class string_replace_behavior_test
         l = "abc"
         Dim r As String = Nothing
         r = l.Replace("d", "e")
-        assert_equal(object_compare(l, r), 0)
+        assertion.equal(object_compare(l, r), 0)
         Return True
     End Function
 

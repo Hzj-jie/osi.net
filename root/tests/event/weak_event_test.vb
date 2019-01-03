@@ -25,7 +25,7 @@ Public Class weak_event_test
         End Sub
 
         Public Shared Sub receive(ByVal e As event_receiver)
-            assert_not_nothing(e)
+            assertion.is_not_null(e)
             r.increment()
         End Sub
     End Class
@@ -43,9 +43,9 @@ Public Class weak_event_test
         For i As Int32 = 0 To count_per_round - 1
             e.raise()
         Next
-        assert_equal(event_receiver.received(), count_per_round)
-        assert_true(e.attached())
-        assert_equal(e.attached_count(), uint32_1)
+        assertion.equal(event_receiver.received(), count_per_round)
+        assertion.is_true(e.attached())
+        assertion.equal(e.attached_count(), uint32_1)
 
         event_receiver.clear()
         GC.KeepAlive(r)
@@ -54,9 +54,9 @@ Public Class weak_event_test
         For i As Int32 = 0 To count_per_round - 1
             e.raise()
         Next
-        assert_equal(event_receiver.received(), 0)
-        assert_false(e.attached())
-        assert_equal(e.attached_count(), uint32_0)
+        assertion.equal(event_receiver.received(), 0)
+        assertion.is_false(e.attached())
+        assertion.equal(e.attached_count(), uint32_0)
 
         Return True
     End Function
@@ -78,9 +78,9 @@ Public Class weak_event_test
         For i As Int32 = 0 To count_per_round - 1
             e.raise()
         Next
-        assert_equal(event_receiver.received(), count_per_round * c)
-        assert_true(e.attached())
-        assert_equal(e.attached_count(), c)
+        assertion.equal(event_receiver.received(), count_per_round * c)
+        assertion.is_true(e.attached())
+        assertion.equal(e.attached_count(), c)
         rs.gc_keepalive()
 
         event_receiver.clear()
@@ -97,9 +97,9 @@ Public Class weak_event_test
         For i As Int32 = 0 To count_per_round - 1
             e.raise()
         Next
-        assert_equal(event_receiver.received(), count_per_round * (c - detached))
-        assert_equal(e.attached(), detached < c)
-        assert_equal(e.attached_count(), c - detached)
+        assertion.equal(event_receiver.received(), count_per_round * (c - detached))
+        assertion.equal(e.attached(), detached < c)
+        assertion.equal(e.attached_count(), c - detached)
         rs.gc_keepalive()
 
         event_receiver.clear()
@@ -111,9 +111,9 @@ Public Class weak_event_test
         For i As Int32 = 0 To count_per_round - 1
             e.raise()
         Next
-        assert_equal(event_receiver.received(), 0)
-        assert_false(e.attached())
-        assert_equal(e.attached_count(), uint32_0)
+        assertion.equal(event_receiver.received(), 0)
+        assertion.is_false(e.attached())
+        assertion.equal(e.attached_count(), uint32_0)
 
         Return True
     End Function
@@ -135,9 +135,9 @@ Public Class weak_event_test
         For i As Int32 = 0 To count_per_round - 1
             e.raise()
         Next
-        assert_equal(event_receiver.received(), count_per_round * c)
-        assert_true(e.attached())
-        assert_equal(e.attached_count(), c)
+        assertion.equal(event_receiver.received(), count_per_round * c)
+        assertion.is_true(e.attached())
+        assertion.equal(e.attached_count(), c)
         GC.KeepAlive(r1)
         GC.KeepAlive(r2)
 
@@ -155,9 +155,9 @@ Public Class weak_event_test
         For i As Int32 = 0 To count_per_round - 1
             e.raise()
         Next
-        assert_equal(event_receiver.received(), (c - detached) * count_per_round)
-        assert_equal(e.attached(), detached < c)
-        assert_equal(e.attached_count(), c - detached)
+        assertion.equal(event_receiver.received(), (c - detached) * count_per_round)
+        assertion.equal(e.attached(), detached < c)
+        assertion.equal(e.attached_count(), c - detached)
         GC.KeepAlive(r1)
         GC.KeepAlive(r2)
 
@@ -168,9 +168,9 @@ Public Class weak_event_test
         For i As Int32 = 0 To count_per_round - 1
             e.raise()
         Next
-        assert_equal(event_receiver.received(), 0)
-        assert_false(e.attached())
-        assert_equal(e.attached_count(), uint32_0)
+        assertion.equal(event_receiver.received(), 0)
+        assertion.is_false(e.attached())
+        assertion.equal(e.attached_count(), uint32_0)
         Return True
     End Function
 

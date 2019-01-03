@@ -40,26 +40,26 @@ Public Class fixed_queue_test
         Private Sub clear()
             q.clear()
             f = l
-            assert_true(q.empty())
+            assertion.is_true(q.empty())
         End Sub
 
         Private Sub read()
             assert(f <= l)
             If f = l Then
-                assert_true(q.empty())
+                assertion.is_true(q.empty())
                 write()
-                assert_false(q.empty())
+                assertion.is_false(q.empty())
             End If
-            assert_less(f, l)
-            assert_equal(f, q.pop())
+            assertion.less(f, l)
+            assertion.equal(f, q.pop())
             f += 1
         End Sub
 
         Private Sub write()
             If l - f = size Then
-                assert_true(q.full())
+                assertion.is_true(q.full())
                 read()
-                assert_false(q.full())
+                assertion.is_false(q.full())
             End If
             q.push(l)
             l += 1

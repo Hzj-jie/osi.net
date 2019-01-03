@@ -34,7 +34,7 @@ Public Class fake_rnd_test
     Private Shared Function fake_rnd_uint_case() As Boolean
         Dim j As UInt32 = 0
         j = fake_rnd_uint()
-        assert_true(is_fake_rnd_uint(j))
+        assertion.is_true(is_fake_rnd_uint(j))
         Return True
     End Function
 
@@ -43,8 +43,8 @@ Public Class fake_rnd_test
         l = rnd_int(0, 128 + 1)
         Dim s As String = Nothing
         s = fake_rnd_en_chars(l)
-        assert_equal(strlen(s), l)
-        assert_true(is_fake_rnd_en_chars(s))
+        assertion.equal(strlen(s), l)
+        assertion.is_true(is_fake_rnd_en_chars(s))
         Return True
     End Function
 
@@ -53,8 +53,8 @@ Public Class fake_rnd_test
         l = rnd_int(0, 128 + 1)
         Dim b() As Byte = Nothing
         b = fake_next_bytes(l)
-        assert_equal(array_size(b), l)
-        assert_true(is_fake_next_bytes(b))
+        assertion.equal(array_size(b), l)
+        assertion.is_true(is_fake_next_bytes(b))
         Return True
     End Function
 
@@ -67,12 +67,12 @@ Public Class fake_rnd_test
         Dim r As UInt32 = 0
         r = fake_rnd_uint(min, max, seed)
         If min < max Then
-            assert_less(r, max)
-            assert_more_or_equal(r, min)
+            assertion.less(r, max)
+            assertion.more_or_equal(r, min)
         Else
-            assert_equal(r, min)
+            assertion.equal(r, min)
         End If
-        assert_true(is_fake_rnd_uint(r, min, max, seed))
+        assertion.is_true(is_fake_rnd_uint(r, min, max, seed))
         Return True
     End Function
 
@@ -85,12 +85,12 @@ Public Class fake_rnd_test
         Dim r() As Byte = Nothing
         r = fake_next_bytes(seed, min, max)
         If min < max Then
-            assert_less(array_size(r), max)
-            assert_more_or_equal(array_size(r), min)
+            assertion.less(array_size(r), max)
+            assertion.more_or_equal(array_size(r), min)
         Else
-            assert_equal(array_size(r), min)
+            assertion.equal(array_size(r), min)
         End If
-        assert_true(is_fake_next_bytes(seed, r, min, max))
+        assertion.is_true(is_fake_next_bytes(seed, r, min, max))
         Return True
     End Function
 
@@ -108,12 +108,12 @@ Public Class fake_rnd_test
         For i As Int32 = rnd_int(2, 16 + 1) - 1 To 0 Step -1
             Dim t() As Byte = Nothing
             t = fake_next_bytes(seed, min, max)
-            If assert_more(array_size(t), uint32_0) Then
+            If assertion.more(array_size(t), uint32_0) Then
                 ReDim Preserve r(array_size(r) + array_size(t) - 1)
                 memcpy(r, array_size(r) - array_size(t), t)
             End If
         Next
-        assert_true(is_fake_next_bytes_chained(seed, r, min, max))
+        assertion.is_true(is_fake_next_bytes_chained(seed, r, min, max))
         Return True
     End Function
 

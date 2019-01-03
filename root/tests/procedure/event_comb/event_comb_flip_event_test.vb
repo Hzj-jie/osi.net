@@ -22,19 +22,19 @@ Public NotInheritable Class event_comb_flip_event_test
                            End Function)
         Dim f As flip_events.manual_flip_event = Nothing
         f = e.repeat_when_high(flip_events.manual())
-        assert_false(lazy_sleep_wait_until(Function() As Boolean
+        assertion.is_false(lazy_sleep_wait_until(Function() As Boolean
                                                Return c > uint32_0
                                            End Function,
                                            100))
         f.raise_to_high()
-        assert_true(lazy_sleep_wait_until(Function() As Boolean
+        assertion.is_true(lazy_sleep_wait_until(Function() As Boolean
                                               Return c > uint32_0
                                           End Function,
                                           1000))
         f.raise_to_low()
         Dim now As UInt32 = 0
         now = c
-        assert_false(lazy_sleep_wait_until(Function() As Boolean
+        assertion.is_false(lazy_sleep_wait_until(Function() As Boolean
                                                Return c <> now
                                            End Function,
                                            100))
@@ -50,19 +50,19 @@ Public NotInheritable Class event_comb_flip_event_test
                            End Function)
         Dim f As flip_events.manual_flip_event = Nothing
         f = e.repeat_when_high(flip_events.manual())
-        assert_false(lazy_sleep_wait_until(Function() As Boolean
+        assertion.is_false(lazy_sleep_wait_until(Function() As Boolean
                                                Return c > uint32_0
                                            End Function,
                                            100))
         f.raise_to_high()
-        assert_true(lazy_sleep_wait_until(Function() As Boolean
+        assertion.is_true(lazy_sleep_wait_until(Function() As Boolean
                                               Return c > uint32_0
                                           End Function,
                                           1000))
         f.raise_to_low()
         Dim now As UInt32 = 0
         now = c
-        assert_false(lazy_sleep_wait_until(Function() As Boolean
+        assertion.is_false(lazy_sleep_wait_until(Function() As Boolean
                                                Return c <> now
                                            End Function,
                                            100))

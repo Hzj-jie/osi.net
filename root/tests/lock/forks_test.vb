@@ -30,22 +30,22 @@ Public Class forks_test
             i = rnd_int(min, max)
             assert(i > 0)
             If f.mark_as(i) Then
-                assert_equal(c, 0)
+                assertion.equal(c, 0)
                 c = i
-                assert_equal(c, i)
-                assert_false(f.free())
-                assert_equal(c, i)
-                assert_true(f.not_free())
-                assert_equal(c, i)
+                assertion.equal(c, i)
+                assertion.is_false(f.free())
+                assertion.equal(c, i)
+                assertion.is_true(f.not_free())
+                assertion.equal(c, i)
                 For j As Int32 = min To max - 1
-                    assert_equal(c, i)
+                    assertion.equal(c, i)
                     assert(j <> 0)
-                    assert_equal(c, i)
-                    assert_false(f.mark_as(j))
+                    assertion.equal(c, i)
+                    assertion.is_false(f.mark_as(j))
                 Next
-                assert_equal(c, i)
+                assertion.equal(c, i)
                 c = 0
-                assert_equal(c, 0)
+                assertion.equal(c, 0)
                 f.release()
             End If
             Return True

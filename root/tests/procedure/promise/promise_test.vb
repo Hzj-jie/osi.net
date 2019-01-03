@@ -28,12 +28,12 @@ Public Class promise_test
                                                       End Sub) Is Nothing)
                         End Sub)
         p.then(Sub(v As Object)
-                   assert_true(v.GetType().[is](Of Int32)())
-                   assert_equal(v, value)
+                   assertion.is_true(v.GetType().[is](Of Int32)())
+                   assertion.equal(v, value)
                    assert(mre.force_set())
                End Sub)
         mre.wait_close()
-        assert_more_or_equal(nowadays.milliseconds() - start_ms, 20)
+        assertion.more_or_equal(nowadays.milliseconds() - start_ms, 20)
         Return True
     End Function
 
@@ -52,9 +52,9 @@ Public Class promise_test
                                                       End Sub) Is Nothing)
                         End Sub)
         p.then(Function(v As Object) As Object
-                   assert_true(v.GetType().[is](Of Int32)())
-                   assert_equal(v, value1)
-                   assert_equal(ce.decrement(), uint32_1)
+                   assertion.is_true(v.GetType().[is](Of Int32)())
+                   assertion.equal(v, value1)
+                   assertion.equal(ce.decrement(), uint32_1)
                    Return New promise(Sub(ByVal resolve As Action(Of Object))
                                           assert(Not stopwatch.push(10,
                                                                     Sub()
@@ -63,12 +63,12 @@ Public Class promise_test
                                       End Sub)
                End Function).
           then(Sub(v As Object)
-                   assert_true(v.GetType().[is](Of Int32)())
-                   assert_equal(v, value2)
-                   assert_equal(ce.decrement(), uint32_0)
+                   assertion.is_true(v.GetType().[is](Of Int32)())
+                   assertion.equal(v, value2)
+                   assertion.equal(ce.decrement(), uint32_0)
                End Sub)
         assert(ce.wait())
-        assert_more_or_equal(nowadays.milliseconds() - start_ms, 20)
+        assertion.more_or_equal(nowadays.milliseconds() - start_ms, 20)
         Return True
     End Function
 
@@ -86,15 +86,15 @@ Public Class promise_test
                                                       End Sub) Is Nothing)
                         End Sub)
         p.then(Sub(ByVal result As Object)
-                   assert_true(False)
+                   assertion.is_true(False)
                End Sub,
                Sub(ByVal r As Object)
-                   assert_true(r.GetType().[is](Of Int32)())
-                   assert_equal(r, reason)
+                   assertion.is_true(r.GetType().[is](Of Int32)())
+                   assertion.equal(r, reason)
                    assert(mre.force_set())
                End Sub)
         assert(mre.wait())
-        assert_more_or_equal(nowadays.milliseconds() - start_ms, 20)
+        assertion.more_or_equal(nowadays.milliseconds() - start_ms, 20)
         Return True
     End Function
 
@@ -112,23 +112,23 @@ Public Class promise_test
                                                       End Sub) Is Nothing)
                         End Sub)
         p.then(Sub(ByVal result As Object)
-                   assert_true(False)
+                   assertion.is_true(False)
                End Sub,
                Sub(ByVal r As Object)
-                   assert_true(r.GetType().[is](Of Int32)())
-                   assert_equal(r, reason)
-                   assert_equal(ce.decrement(), uint32_1)
+                   assertion.is_true(r.GetType().[is](Of Int32)())
+                   assertion.equal(r, reason)
+                   assertion.equal(ce.decrement(), uint32_1)
                End Sub).
           then(Sub(ByVal result As Object)
-                   assert_true(False)
+                   assertion.is_true(False)
                End Sub,
                Sub(ByVal r As Object)
-                   assert_true(r.GetType().[is](Of Int32)())
-                   assert_equal(r, reason)
-                   assert_equal(ce.decrement(), uint32_0)
+                   assertion.is_true(r.GetType().[is](Of Int32)())
+                   assertion.equal(r, reason)
+                   assertion.equal(ce.decrement(), uint32_0)
                End Sub)
         assert(ce.wait())
-        assert_more_or_equal(nowadays.milliseconds() - start_ms, 20)
+        assertion.more_or_equal(nowadays.milliseconds() - start_ms, 20)
         Return True
     End Function
 
@@ -147,12 +147,12 @@ Public Class promise_test
                                                                End Sub))
                         End Function)
         p.then(Sub(ByVal result As Object)
-                   assert_true(result.GetType().[is](Of Int32)())
-                   assert_equal(result, value)
+                   assertion.is_true(result.GetType().[is](Of Int32)())
+                   assertion.equal(result, value)
                    assert(mre.force_set())
                End Sub)
         assert(mre.wait())
-        assert_more_or_equal(nowadays.milliseconds() - start_ms, 10)
+        assertion.more_or_equal(nowadays.milliseconds() - start_ms, 10)
         Return True
     End Function
 
@@ -164,11 +164,11 @@ Public Class promise_test
                             Return value
                         End Function)
         p.then(Sub(v As Object)
-                   assert_true(v.GetType().[is](Of Int32)())
-                   assert_equal(v, value)
+                   assertion.is_true(v.GetType().[is](Of Int32)())
+                   assertion.equal(v, value)
                    finished = True
                End Sub)
-        assert_true(finished)
+        assertion.is_true(finished)
         Return True
     End Function
 
@@ -187,12 +187,12 @@ Public Class promise_test
                                                End Sub)
                         End Function)
         p.then(Sub(v As Object)
-                   assert_true(v.GetType().[is](Of Int32)())
-                   assert_equal(v, value)
+                   assertion.is_true(v.GetType().[is](Of Int32)())
+                   assertion.equal(v, value)
                    assert(mre.force_set())
                End Sub)
         assert(mre.wait())
-        assert_more_or_equal(nowadays.milliseconds() - start_ms, 10)
+        assertion.more_or_equal(nowadays.milliseconds() - start_ms, 10)
         Return True
     End Function
 

@@ -17,7 +17,7 @@ Public NotInheritable Class resolver_test
         multiple_thread_resolver_object = New Object()
         multiple_thread_resolver = New thread_safe_resolver(Of Object)()
         multiple_thread_resolver.register(Function() As Object
-                                              assert_false(resolved)
+                                              assertion.is_false(resolved)
                                               resolved = True
                                               Return multiple_thread_resolver_object
                                           End Function)
@@ -33,23 +33,23 @@ Public NotInheritable Class resolver_test
         r.register(i)
 
         Dim o As Object = Nothing
-        assert_true(r.resolve(o))
-        assert_reference_equal(i, o)
+        assertion.is_true(r.resolve(o))
+        assertion.reference_equal(i, o)
 
         i = New Object()
-        assert_not_reference_equal(i, o)
+        assertion.not_reference_equal(i, o)
         r.register(i)
 
-        assert_true(r.resolve(o))
-        assert_reference_equal(i, o)
+        assertion.is_true(r.resolve(o))
+        assertion.reference_equal(i, o)
 
         i = New Object()
-        assert_not_reference_equal(i, o)
+        assertion.not_reference_equal(i, o)
         r.register(Function() As Object
                        Return i
                    End Function)
-        assert_true(r.resolve(o))
-        assert_reference_equal(i, o)
+        assertion.is_true(r.resolve(o))
+        assertion.reference_equal(i, o)
     End Sub
 
     <test>
@@ -57,7 +57,7 @@ Public NotInheritable Class resolver_test
         Dim r As resolver(Of Object) = Nothing
         r = New resolver(Of Object)()
 
-        assert_false(r.resolve(Nothing))
+        assertion.is_false(r.resolve(Nothing))
     End Sub
 
     <test>
@@ -69,14 +69,14 @@ Public NotInheritable Class resolver_test
         i = New Object()
         Dim resolved As Boolean = False
         r.register(Function() As Object
-                       assert_false(resolved)
+                       assertion.is_false(resolved)
                        resolved = True
                        Return i
                    End Function)
         For j As Int32 = 0 To 100
             Dim o As Object = Nothing
-            assert_true(r.resolve(o))
-            assert_reference_equal(i, o)
+            assertion.is_true(r.resolve(o))
+            assertion.reference_equal(i, o)
         Next
     End Sub
 
@@ -85,8 +85,8 @@ Public NotInheritable Class resolver_test
     <multi_threading(10)>
     Private Shared Sub resolve_in_multiple_threads()
         Dim o As Object = Nothing
-        assert_true(multiple_thread_resolver.resolve(o))
-        assert_reference_equal(o, multiple_thread_resolver_object)
+        assertion.is_true(multiple_thread_resolver.resolve(o))
+        assertion.reference_equal(o, multiple_thread_resolver_object)
     End Sub
 
     Private Sub New()

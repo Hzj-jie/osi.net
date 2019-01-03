@@ -52,14 +52,14 @@ Public Class process_io_test
             If from_err.in_use() Then
                 io.start_info().Arguments() += guid_str()
             End If
-            If assert_true(io.start()) Then
+            If assertion.is_true(io.start()) Then
                 For i As Int32 = 0 To output_times - 1
                     atomic.eva(last_input, rnd_en_chars(rnd_int(10, 100)))
-                    assert_true(io.input_received(last_input))
-                    assert_true(yield_wait(are, 10000))
+                    assertion.is_true(io.input_received(last_input))
+                    assertion.is_true(yield_wait(are, 10000))
                 Next
             End If
-            assert_true(io.quit())
+            assertion.is_true(io.quit())
         End Using
         Return True
     End Function
@@ -77,8 +77,8 @@ Public Class process_io_test
     End Function
 
     Private Sub assert_output(ByVal input As String)
-        If assert_false(String.IsNullOrEmpty(last_input), input) AndAlso
-           assert_equal(input, strcat(If(from_err.in_use(),
+        If assertion.is_false(String.IsNullOrEmpty(last_input), input) AndAlso
+           assertion.equal(input, strcat(If(from_err.in_use(),
                                          process_io.error_prefix,
                                          process_io.out_prefix),
                                       strleft(last_input, 1))) Then
@@ -96,7 +96,7 @@ Public Class process_io_test
 
     Public Overrides Function finish() As Boolean
         'both from_err and from_out
-        assert_equal(received_times, output_times << 1)
+        assertion.equal(received_times, output_times << 1)
         Return MyBase.finish()
     End Function
 End Class

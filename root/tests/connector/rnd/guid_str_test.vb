@@ -8,9 +8,9 @@ Friend Class guid_str_case
     Public Overrides Function run() As Boolean
         Dim s As String = Nothing
         s = guid_str()
-        If assert_equal(strlen(s), CUInt(32)) Then
+        If assertion.equal(strlen(s), CUInt(32)) Then
             For i As UInt32 = 0 To strlen(s) - 1
-                assert_true(s(i).hex())
+                assertion.is_true(s(i).hex())
             Next
         End If
         Return True

@@ -129,27 +129,27 @@ Public Class pather_test
             Dim r3 As String = Nothing
 
             r1 = New pointer(Of String)()
-            assert_true(p(cases(i).first, r1), cases(i).first)
-            assert_equal(+r1, cases(i).second.normalized, cases(i).first)
+            assertion.is_true(p(cases(i).first, r1), cases(i).first)
+            assertion.equal(+r1, cases(i).second.normalized, cases(i).first)
 
             r2 = New pointer(Of vector(Of String))()
-            assert_true(p(cases(i).first, r2), cases(i).first)
-            assert_equal(+r2, cases(i).second.splitted, cases(i).first)
+            assertion.is_true(p(cases(i).first, r2), cases(i).first)
+            assertion.equal(+r2, cases(i).second.splitted, cases(i).first)
 
             If cases(i).second.parent Is Nothing Then
-                assert_false(p.parent_path(cases(i).first, Nothing), cases(i).first)
+                assertion.is_false(p.parent_path(cases(i).first, Nothing), cases(i).first)
             Else
                 r3 = Nothing
-                assert_true(p.parent_path(cases(i).first, r3), cases(i).first)
-                assert_equal(r3, cases(i).second.parent, cases(i).first)
+                assertion.is_true(p.parent_path(cases(i).first, r3), cases(i).first)
+                assertion.equal(r3, cases(i).second.parent, cases(i).first)
             End If
 
             If cases(i).second.name Is Nothing Then
-                assert_false(p.last_level_name(cases(i).first, Nothing), cases(i).first)
+                assertion.is_false(p.last_level_name(cases(i).first, Nothing), cases(i).first)
             Else
                 r3 = Nothing
-                assert_true(p.last_level_name(cases(i).first, r3), cases(i).first)
-                assert_equal(r3, cases(i).second.name, cases(i).first)
+                assertion.is_true(p.last_level_name(cases(i).first, r3), cases(i).first)
+                assertion.equal(r3, cases(i).second.name, cases(i).first)
             End If
         Next
         Return True

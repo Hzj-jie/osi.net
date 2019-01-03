@@ -14,7 +14,7 @@ Namespace rlexer
             g = New unmatched_matching_group(New any_character_matching_group())
             Dim v As vector(Of UInt32) = Nothing
             v = g.match("abc")
-            assert_true(v.null_or_empty())
+            assertion.is_true(v.null_or_empty())
             Return True
         End Function
 
@@ -23,11 +23,11 @@ Namespace rlexer
             g = New unmatched_matching_group(New string_matching_group("abc"))
             Dim v As vector(Of UInt32) = Nothing
             v = g.match("abcd")
-            assert_true(v.null_or_empty())
+            assertion.is_true(v.null_or_empty())
             v = g.match("bcd")
-            If assert_false(v.null_or_empty()) AndAlso
-               assert_equal(v.size(), uint32_1) Then
-                assert_equal(v(0), uint32_0)
+            If assertion.is_false(v.null_or_empty()) AndAlso
+               assertion.equal(v.size(), uint32_1) Then
+                assertion.equal(v(0), uint32_0)
             End If
             Return True
         End Function

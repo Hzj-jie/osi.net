@@ -75,7 +75,7 @@ Friend Class heapless_case2
             While s > 0
                 Dim v As Int64 = 0
                 If q.pop(v) Then
-                    assert_equal(m.find(v), m.end(), v)
+                    assertion.equal(m.find(v), m.end(), v)
                     m.emplace(v)
                 End If
                 s -= 1

@@ -28,8 +28,8 @@ Public Class promise_event_comb_test
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(ec.end_result())
-                                  assert_more_or_equal(nowadays.milliseconds() - start_ms, 10)
+                                  assertion.is_true(ec.end_result())
+                                  assertion.more_or_equal(nowadays.milliseconds() - start_ms, 10)
                                   Return goto_end()
                               End Function)
     End Function

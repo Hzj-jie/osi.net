@@ -35,7 +35,7 @@ Public NotInheritable Class rwlock_test
                 max_rac = c
             End If
             Using l.scoped_read_lock()
-                assert_equal(k.GetHashCode(), v)
+                assertion.equal(k.GetHashCode(), v)
             End Using
             assert(rac.decrement() >= 0)
         End Sub
@@ -78,7 +78,7 @@ Public NotInheritable Class rwlock_test
                                         End Sub)
         Next
         zre.wait_and_dispose()
-        assert_more(t.max_concurrent_read(), uint32_1)
+        assertion.more(t.max_concurrent_read(), uint32_1)
     End Sub
 
     <test>
@@ -97,8 +97,8 @@ Public NotInheritable Class rwlock_test
                                         End Sub)
         Next
         zre.wait_and_dispose()
-        assert_more(t.max_concurrent_read(), uint32_1)
-        assert_more(t.max_concurrent_write(), uint32_1)
+        assertion.more(t.max_concurrent_read(), uint32_1)
+        assertion.more(t.max_concurrent_write(), uint32_1)
     End Sub
 
     Private Sub New()

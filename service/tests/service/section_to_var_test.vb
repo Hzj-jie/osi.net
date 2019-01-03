@@ -51,57 +51,57 @@ Public Class section_to_var_test
         c = configuration.default(config_writer.file)
         Dim ss As vector(Of section) = Nothing
         ss = c.sections("section")
-        If assert_not_nothing(ss) AndAlso
-           assert_equal(ss.size(), CUInt(3)) Then
+        If assertion.is_not_null(ss) AndAlso
+           assertion.equal(ss.size(), CUInt(3)) Then
             Dim v As var = Nothing
             v = New var(ss(0).values())
-            assert_true(v.other_values() Is Nothing OrElse v.other_values().empty())
-            assert_equal(v("key0"), "value0")
-            assert_equal(v("key1"), " value1")
-            assert_true(v.switch("A"))
-            assert_true(v.switch("B"))
-            assert_true(v.switch("C"))
-            assert_true(v.switch("DEF"))
-            assert_true(v.switch("GHI"))
-            assert_false(v.switch("D"))
-            assert_false(v.switch("E"))
-            assert_false(v.switch("F"))
-            assert_false(v.switch("G"))
-            assert_false(v.switch("H"))
-            assert_false(v.switch("I"))
+            assertion.is_true(v.other_values() Is Nothing OrElse v.other_values().empty())
+            assertion.equal(v("key0"), "value0")
+            assertion.equal(v("key1"), " value1")
+            assertion.is_true(v.switch("A"))
+            assertion.is_true(v.switch("B"))
+            assertion.is_true(v.switch("C"))
+            assertion.is_true(v.switch("DEF"))
+            assertion.is_true(v.switch("GHI"))
+            assertion.is_false(v.switch("D"))
+            assertion.is_false(v.switch("E"))
+            assertion.is_false(v.switch("F"))
+            assertion.is_false(v.switch("G"))
+            assertion.is_false(v.switch("H"))
+            assertion.is_false(v.switch("I"))
 
             v = New var(ss(1).values())
-            If assert_false(v.other_values().null_or_empty()) AndAlso
-               assert_equal(v.other_values().size(), uint32_1) Then
-                assert_equal(v.other_values()(0), "value4")
+            If assertion.is_false(v.other_values().null_or_empty()) AndAlso
+               assertion.equal(v.other_values().size(), uint32_1) Then
+                assertion.equal(v.other_values()(0), "value4")
             End If
-            assert_equal(v("key2"), "value2")
-            assert_equal(v("key3"), " value3")
-            assert_true(v.switch("a"))
-            assert_true(v.switch("b"))
-            assert_true(v.switch("c"))
-            assert_true(v.switch("def"))
-            assert_true(v.switch("ghi"))
-            assert_false(v.switch("d"))
-            assert_false(v.switch("e"))
-            assert_false(v.switch("f"))
-            assert_false(v.switch("g"))
-            assert_false(v.switch("h"))
-            assert_false(v.switch("i"))
+            assertion.equal(v("key2"), "value2")
+            assertion.equal(v("key3"), " value3")
+            assertion.is_true(v.switch("a"))
+            assertion.is_true(v.switch("b"))
+            assertion.is_true(v.switch("c"))
+            assertion.is_true(v.switch("def"))
+            assertion.is_true(v.switch("ghi"))
+            assertion.is_false(v.switch("d"))
+            assertion.is_false(v.switch("e"))
+            assertion.is_false(v.switch("f"))
+            assertion.is_false(v.switch("g"))
+            assertion.is_false(v.switch("h"))
+            assertion.is_false(v.switch("i"))
 
             v = New var(ss(2).values())
-            If assert_not_nothing(v.other_values()) AndAlso
-               assert_false(v.other_values().empty()) AndAlso
-               assert_equal(v.other_values().size(), CUInt(3)) Then
-                assert_equal(v.other_values()(0), "value1 value2")
-                assert_equal(v.other_values()(1), "value3 value4")
-                assert_equal(v.other_values()(2), "value5")
+            If assertion.is_not_null(v.other_values()) AndAlso
+               assertion.is_false(v.other_values().empty()) AndAlso
+               assertion.equal(v.other_values().size(), CUInt(3)) Then
+                assertion.equal(v.other_values()(0), "value1 value2")
+                assertion.equal(v.other_values()(1), "value3 value4")
+                assertion.equal(v.other_values()(2), "value5")
             End If
         End If
 
         configuration.default.unload(config_writer.file)
         sleep()
-        assert_true(do_(Function() As Boolean
+        assertion.is_true(do_(Function() As Boolean
                             File.Delete(config_writer.file)
                             Return True
                         End Function,

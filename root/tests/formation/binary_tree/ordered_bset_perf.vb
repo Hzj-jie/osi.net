@@ -22,17 +22,17 @@ Public Class ordered_bset_perf
             For i As Int32 = min To max - 1
                 Dim r As pair(Of bset(Of Int32).iterator, Boolean) = Nothing
                 r = s.insert(i)
-                If assert_not_nothing(r) Then
-                    assert_true(r.second)
+                If assertion.is_not_null(r) Then
+                    assertion.is_true(r.second)
                 End If
             Next
 
             For i As Int32 = min To max - 1
-                assert_not_equal(s.find(i), s.end())
+                assertion.not_equal(s.find(i), s.end())
             Next
 
             For i As Int32 = max - 1 To min Step -1
-                assert_not_equal(s.find(i), s.end())
+                assertion.not_equal(s.find(i), s.end())
             Next
 
             Return True

@@ -18,7 +18,7 @@ Public Class event_comb_waitfor_test
         assert(i <> target)
         Dim start_ms As Int64 = 0
         start_ms = nowadays.milliseconds()
-        assert_true(async_sync(New event_comb(Function() As Boolean
+        assertion.is_true(async_sync(New event_comb(Function() As Boolean
                                                   Return w(start_ms, wait_ms) AndAlso
                                                          goto_next()
                                               End Function,
@@ -27,8 +27,8 @@ Public Class event_comb_waitfor_test
                                                   Return goto_end()
                                               End Function),
                                wait_ms << 1))
-        assert_more_or_equal(nowadays.milliseconds() - start_ms, wait_ms)
-        assert_equal(i, target)
+        assertion.more_or_equal(nowadays.milliseconds() - start_ms, wait_ms)
+        assertion.equal(i, target)
         Return True
     End Function
 
@@ -45,11 +45,11 @@ Public Class event_comb_waitfor_test
         If Not waitfor_test(Function(x, y) waitfor(Function() nowadays.milliseconds() - x >= y, r, y)) Then
             Return False
         End If
-        assert_true(+r)
+        assertion.is_true(+r)
         If Not waitfor_test(Function(x, y) waitfor(Function() False, r, y)) Then
             Return False
         End If
-        assert_false(+r)
+        assertion.is_false(+r)
         Return True
     End Function
 
@@ -73,7 +73,7 @@ Public Class event_comb_waitfor_test
                                                    Return v
                                                End Function,
                                                r)) Then
-            assert_equal(+r, v)
+            assertion.equal(+r, v)
             Return True
         Else
             Return False
@@ -91,7 +91,7 @@ Public Class event_comb_waitfor_test
                                                End Function,
                                                r,
                                                y)) Then
-            assert_not_equal(+r, v)
+            assertion.not_equal(+r, v)
             Return True
         Else
             Return False
@@ -140,15 +140,15 @@ Public Class event_comb_waitfor_test
                             End Function)
         [step] = -1
         assert_begin(ec)
-        assert_true(timeslice_sleep_wait_until(Function() [step] = 0, seconds_to_milliseconds(1)))
-        assert_false(timeslice_sleep_wait_when(Function() [step] = 0, seconds_to_milliseconds(1)))
+        assertion.is_true(timeslice_sleep_wait_until(Function() [step] = 0, seconds_to_milliseconds(1)))
+        assertion.is_false(timeslice_sleep_wait_when(Function() [step] = 0, seconds_to_milliseconds(1)))
         se.mark()
-        assert_true(timeslice_sleep_wait_until(Function() [step] = 2, seconds_to_milliseconds(1)))
-        assert_false(timeslice_sleep_wait_when(Function() [step] = 2, seconds_to_milliseconds(1)))
+        assertion.is_true(timeslice_sleep_wait_until(Function() [step] = 2, seconds_to_milliseconds(1)))
+        assertion.is_false(timeslice_sleep_wait_when(Function() [step] = 2, seconds_to_milliseconds(1)))
         se3.mark()
-        assert_true(timeslice_sleep_wait_until(Function() [step] = 3, seconds_to_milliseconds(1)))
-        assert_false(timeslice_sleep_wait_when(Function() [step] = 3, seconds_to_milliseconds(1)))
-        assert_true(timeslice_sleep_wait_until(Function() ec.end(), seconds_to_milliseconds(1)))
+        assertion.is_true(timeslice_sleep_wait_until(Function() [step] = 3, seconds_to_milliseconds(1)))
+        assertion.is_false(timeslice_sleep_wait_when(Function() [step] = 3, seconds_to_milliseconds(1)))
+        assertion.is_true(timeslice_sleep_wait_until(Function() ec.end(), seconds_to_milliseconds(1)))
         Return True
     End Function
 

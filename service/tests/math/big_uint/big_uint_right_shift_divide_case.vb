@@ -33,7 +33,7 @@ Friend Class big_uint_right_shift_divide_case
             t = rnd_int(1, bit_count_in_byte * sizeof_int32)
             sr.right_shift(t)
             mr.divide(uint32_1 << t)
-            assert_true(sr.equal(mr))
+            assertion.is_true(sr.equal(mr))
         Next
         Return True
     End Function

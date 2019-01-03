@@ -53,8 +53,8 @@ Namespace syntaxer
                 assert(Not m Is Nothing)
                 Dim pos As UInt32 = 0
                 pos = m.start
-                assert_equal(m.m.match(m.v, pos), m.exp)
-                assert_equal(pos, m.end)
+                assertion.equal(m.m.match(m.v, pos), m.exp)
+                assertion.equal(pos, m.end)
             Next
             Return True
         End Function

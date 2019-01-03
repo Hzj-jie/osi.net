@@ -113,7 +113,7 @@ Public Class running_counter
                     ", trigger_times ",
                     trigger_times())
         If compare Then
-            assert_equal((+_run) * scale, +_trigger)
+            assertion.equal((+_run) * scale, +_trigger)
         End If
     End Sub
 End Class

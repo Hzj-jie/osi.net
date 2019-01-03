@@ -28,8 +28,8 @@ Public Class domain_unhandled_exception_test
             Dim throw_id As Int32 = 0
             AddHandler domain_unhandled_exception,
                        Sub(ex As Exception)
-                           assert_true(TypeOf ex Is an_exception)
-                           assert_equal(throw_id, current_thread_id())
+                           assertion.is_true(TypeOf ex Is an_exception)
+                           assertion.equal(throw_id, current_thread_id())
                            called = True
                        End Sub
             'make sure the following logic is running in another not delegate wrapped thread
@@ -40,8 +40,8 @@ Public Class domain_unhandled_exception_test
                                 Throw New an_exception()
                             End Sub)
             th.Start()
-            assert_true(timeslice_sleep_wait_until(Function() thrown, seconds_to_milliseconds(1)))
-            assert_true(timeslice_sleep_wait_until(Function() called, seconds_to_milliseconds(1)))
+            assertion.is_true(timeslice_sleep_wait_until(Function() thrown, seconds_to_milliseconds(1)))
+            assertion.is_true(timeslice_sleep_wait_until(Function() called, seconds_to_milliseconds(1)))
             Return True
         End Function
     End Class

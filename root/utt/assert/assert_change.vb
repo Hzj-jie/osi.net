@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Public Class assert_equal(Of T)
     Inherits assert_change(Of T)
 
@@ -7,7 +11,7 @@ Public Class assert_equal(Of T)
     End Sub
 
     Protected Overrides Sub assert_result(b As T, e As T, ByVal ParamArray msg() As Object)
-        assert_equal(b, e, msg)
+        assertion.equal(b, e, msg)
     End Sub
 End Class
 
@@ -19,7 +23,7 @@ Public Class assert_more(Of T)
     End Sub
 
     Protected Overrides Sub assert_result(b As T, e As T, ByVal ParamArray msg() As Object)
-        assert_more(b, e, msg)
+        assertion.more(b, e, msg)
     End Sub
 End Class
 
@@ -31,7 +35,7 @@ Public Class assert_less(Of T)
     End Sub
 
     Protected Overrides Sub assert_result(b As T, e As T, ByVal ParamArray msg() As Object)
-        assert_less(b, e, msg)
+        assertion.less(b, e, msg)
     End Sub
 End Class
 

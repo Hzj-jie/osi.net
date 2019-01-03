@@ -56,8 +56,8 @@ Namespace logic
         End Sub
 
         Protected Overrides Sub check_result(ByVal e As not_null(Of simulator))
-            assert_equal(Convert.ToString(+out), strcat(text, text))
-            assert_equal(Convert.ToString(+err), strcat(text, text))
+            assertion.equal(Convert.ToString(+out), strcat(text, text))
+            assertion.equal(Convert.ToString(+err), strcat(text, text))
         End Sub
 
         Protected Overrides Function interrupts() As interrupts

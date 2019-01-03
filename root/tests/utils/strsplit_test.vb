@@ -86,7 +86,7 @@ Public Class strsplit_test
     Private Shared Function run_case(ByVal c As case_t) As Boolean
         Dim v As vector(Of String) = Nothing
         assert(Not c Is Nothing)
-        assert_equal(c.return,
+        assertion.equal(c.return,
                      strsplit(c.str,
                               c.separators,
                               c.surround_strs,
@@ -94,7 +94,7 @@ Public Class strsplit_test
                               c.ignore_empty_entity,
                               c.ignore_surround_strs,
                               c.case_sensitive))
-        assert_array_equal(c.results, +v)
+        assertion.array_equal(c.results, +v)
         Return True
     End Function
 

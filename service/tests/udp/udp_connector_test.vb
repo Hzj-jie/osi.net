@@ -31,9 +31,9 @@ Public Class udp_connector_test
             Dim ec As event_comb = Nothing
             Return New event_comb(Function() As Boolean
                                       Dim d As idevice(Of async_getter(Of delegator)) = Nothing
-                                      If assert_true(c.create(d)) AndAlso
-                                         assert_not_nothing(d) AndAlso
-                                         assert_not_nothing(d.get()) Then
+                                      If assertion.is_true(c.create(d)) AndAlso
+                                         assertion.is_not_null(d) AndAlso
+                                         assertion.is_not_null(d.get()) Then
                                           r = New pointer(Of delegator)()
                                           ec = d.get().get(r)
                                           Return waitfor(ec) AndAlso
@@ -43,11 +43,11 @@ Public Class udp_connector_test
                                       End If
                                   End Function,
                                   Function() As Boolean
-                                      If assert_true(ec.end_result()) AndAlso
-                                         assert_false(r.empty()) Then
-                                          assert_true((+r).active())
-                                          assert_true((+r).fixed_sources())
-                                          assert_not_nothing((+r).p)
+                                      If assertion.is_true(ec.end_result()) AndAlso
+                                         assertion.is_false(r.empty()) Then
+                                          assertion.is_true((+r).active())
+                                          assertion.is_true((+r).fixed_sources())
+                                          assertion.is_not_null((+r).p)
                                       End If
                                       Return goto_end()
                                   End Function)

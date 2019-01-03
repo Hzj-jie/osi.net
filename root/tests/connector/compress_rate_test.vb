@@ -7,8 +7,8 @@ Public Class compress_less_1024_rate_test
     Inherits compress_rate_test
 
     Protected Overrides Sub compare(ByVal gzip_better As Int32, ByVal deflate_better As Int32)
-        assert_equal(gzip_better, 0)
-        assert_equal(deflate_better, iteration_count)
+        assertion.equal(gzip_better, 0)
+        assertion.equal(deflate_better, iteration_count)
     End Sub
 
     Public Sub New()
@@ -20,8 +20,8 @@ Public Class compress_1024_4096_rate_test
     Inherits compress_rate_test
 
     Protected Overrides Sub compare(ByVal gzip_better As Int32, ByVal deflate_better As Int32)
-        assert_equal(gzip_better, 0)
-        assert_equal(deflate_better, iteration_count)
+        assertion.equal(gzip_better, 0)
+        assertion.equal(deflate_better, iteration_count)
     End Sub
 
     Public Sub New()
@@ -33,8 +33,8 @@ Public Class compress_4096_65536_rate_test
     Inherits compress_rate_test
 
     Protected Overrides Sub compare(ByVal gzip_better As Int32, ByVal deflate_better As Int32)
-        assert_equal(gzip_better, 0)
-        assert_equal(deflate_better, iteration_count)
+        assertion.equal(gzip_better, 0)
+        assertion.equal(deflate_better, iteration_count)
     End Sub
 
     Public Sub New()
@@ -66,8 +66,8 @@ Public MustInherit Class compress_rate_test
             Dim gzipped() As Byte = Nothing
             Dim deflated() As Byte = Nothing
             raw = rnd_bytes(rnd_int(lower, upper + 1))
-            If assert_true(raw.gzip(gzipped)) AndAlso
-               assert_true(raw.deflate(deflated)) Then
+            If assertion.is_true(raw.gzip(gzipped)) AndAlso
+               assertion.is_true(raw.deflate(deflated)) Then
                 If array_size(gzipped) < array_size(deflated) Then
                     gzip_better += 1
                 ElseIf array_size(gzipped) > array_size(deflated) Then

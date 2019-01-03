@@ -37,14 +37,14 @@ Public NotInheritable Class module_handles_test
         <request_path("/" + async_question_path)>
         <request_method(constants.request_method.POST)>
         Private Function filtered_async_exec_question(ByVal ctx As server.context) As event_comb
-            assert_equal(value, 0)
+            assertion.equal(value, 0)
             value += 1
-            assert_not_nothing(ctx)
-            assert_equal(ctx.parse_method(), constants.request_method.POST)
+            assertion.is_not_null(ctx)
+            assertion.equal(ctx.parse_method(), constants.request_method.POST)
             Dim path As vector(Of String) = Nothing
             path = ctx.parse_path()
-            assert_false(path.empty())
-            assert_true(strsame(path(0), async_question_path, False))
+            assertion.is_false(path.empty())
+            assertion.is_true(strsame(path(0), async_question_path, False))
             Return ctx.respond(create_answer(async_question_path))
         End Function
     End Class
@@ -52,19 +52,19 @@ Public NotInheritable Class module_handles_test
     <request_path("/" + question_path)>
     <request_method(constants.request_method.GET)>
     Private Shared Function filtered_sync_exec_question(ByVal ctx As server.context) As event_comb
-        assert_not_nothing(ctx)
-        assert_equal(ctx.parse_method(), constants.request_method.GET)
+        assertion.is_not_null(ctx)
+        assertion.equal(ctx.parse_method(), constants.request_method.GET)
         Dim path As vector(Of String) = Nothing
         path = ctx.parse_path()
-        assert_false(path.empty())
-        assert_true(strsame(path(0), question_path, False))
+        assertion.is_false(path.empty())
+        assertion.is_true(strsame(path(0), question_path, False))
         ctx.set_status(Net.HttpStatusCode.OK, create_answer(question_path))
         Return Nothing
     End Function
 
     Private Shared Function sync_exec_question(ByVal ctx As server.context, ByRef ec As event_comb) As Boolean
-        assert_not_nothing(ctx)
-        assert_nothing(ec)
+        assertion.is_not_null(ctx)
+        assertion.is_null(ec)
         If ctx.parse_method() <> constants.request_method.POST Then
             Return False
         End If
@@ -80,8 +80,8 @@ Public NotInheritable Class module_handles_test
     End Function
 
     Private Shared Function async_exec_question(ByVal ctx As server.context, ByRef ec As event_comb) As Boolean
-        assert_not_nothing(ctx)
-        assert_nothing(ec)
+        assertion.is_not_null(ctx)
+        assertion.is_null(ec)
         If ctx.parse_method() <> constants.request_method.GET Then
             Return False
         End If
@@ -97,8 +97,8 @@ Public NotInheritable Class module_handles_test
     End Function
 
     Private Shared Function sync_exec_ask(ByVal ctx As server.context, ByRef ec As event_comb) As Boolean
-        assert_not_nothing(ctx)
-        assert_nothing(ec)
+        assertion.is_not_null(ctx)
+        assertion.is_null(ec)
         Dim path As vector(Of String) = Nothing
         path = ctx.parse_path()
         If Not path.empty() AndAlso strsame(path(0), ask_path, False) Then
@@ -110,8 +110,8 @@ Public NotInheritable Class module_handles_test
     End Function
 
     Private Shared Function async_exec_ask(ByVal ctx As server.context, ByRef ec As event_comb) As Boolean
-        assert_not_nothing(ctx)
-        assert_nothing(ec)
+        assertion.is_not_null(ctx)
+        assertion.is_null(ec)
         Dim path As vector(Of String) = Nothing
         path = ctx.parse_path()
         If Not path.empty() AndAlso strsame(path(0), async_ask_path, False) Then
@@ -123,13 +123,13 @@ Public NotInheritable Class module_handles_test
     End Function
 
     Private Function should_not_be_called(ByVal ctx As server.context, ByRef ec As event_comb) As Boolean
-        assert_not_reach()
+        assertion.not_reach()
         Return False
     End Function
 
     <request_path("")>
     Private Shared Function filtered_should_not_be_called(ByVal ctx As server.context) As event_comb
-        assert_not_reach()
+        assertion.not_reach()
         Return Nothing
     End Function
 
@@ -214,45 +214,45 @@ Public NotInheritable Class module_handles_test
         Dim m As module_handle = Nothing
         m = New module_handle(s)
 
-        assert_true(m.add("osi.tests.service.http.module_handles_test",
+        assertion.is_true(m.add("osi.tests.service.http.module_handles_test",
                           default_str,
                           binding_flags.static_private_method,
                           "sync_exec_question"))
-        assert_true(m.add("osi.tests.service.http.module_handles_test",
+        assertion.is_true(m.add("osi.tests.service.http.module_handles_test",
                           default_str,
                           binding_flags.static_private_method,
                           "async_exec_question"))
-        assert_true(m.add("osi.tests.service.http.module_handles_test",
+        assertion.is_true(m.add("osi.tests.service.http.module_handles_test",
                           default_str,
                           binding_flags.static_private_method,
                           "filtered_sync_exec_question"))
-        assert_true(m.add(New var(strcat("--type=osi.tests.service.http.",
+        assertion.is_true(m.add(New var(strcat("--type=osi.tests.service.http.",
                                                 "module_handles_test+instance_async_exec_question ",
                                          "--function=filtered_async_exec_question ",
                                          "--binding-flags=private,instance"))))
-        assert_true(m.add(New var(strcat("--type=osi.tests.service.http.module_handles_test ",
+        assertion.is_true(m.add(New var(strcat("--type=osi.tests.service.http.module_handles_test ",
                                          "--function=sync_exec_ask ",
                                          "--binding-flags=static,private"))))
-        assert_true(m.add(New var(strcat("--type=osi.tests.service.http.module_handles_test ",
+        assertion.is_true(m.add(New var(strcat("--type=osi.tests.service.http.module_handles_test ",
                                          "--function=async_exec_ask ",
                                          "--binding-flags=static|private"))))
-        assert_false(m.add(New var(strcat("--type=osi.tests.service.http.module_handles_test ",
+        assertion.is_false(m.add(New var(strcat("--type=osi.tests.service.http.module_handles_test ",
                                           "--function=aasync_exec_ask ",
                                           "--binding-flags=static|private"))))
-        assert_false(m.add(New var(strcat("--type=osi.tests.service.http.module_handles_test ",
+        assertion.is_false(m.add(New var(strcat("--type=osi.tests.service.http.module_handles_test ",
                                           "--function=should_not_be_called ",
                                           "--binding-flags=private"))))
-        assert_true(m.add(New var(strcat("--type=osi.tests.service.http.module_handles_test ",
+        assertion.is_true(m.add(New var(strcat("--type=osi.tests.service.http.module_handles_test ",
                                          "--function=filtered_should_not_be_called ",
                                          "--binding-flags=static|private"))))
 
-        assert_equal(m.module_count(), CUInt(7))
+        assertion.equal(m.module_count(), CUInt(7))
 
-        If Not assert_true(s.add_port(port)) Then
+        If Not assertion.is_true(s.add_port(port)) Then
             Return
         End If
 
-        If Not assert_true(s.start()) Then
+        If Not assertion.is_true(s.start()) Then
             Return
         End If
 
@@ -266,17 +266,17 @@ Public NotInheritable Class module_handles_test
                                              goto_end()
                                   End Function))
         s.stop(30)
-        assert_equal(s.connection_count(), 0)
-        assert_more_or_equal_and_less_or_equal(+response_count, (+request_count) * 0.999, (+request_count))
+        assertion.equal(s.connection_count(), 0)
+        assertion.more_or_equal_and_less_or_equal(+response_count, (+request_count) * 0.999, (+request_count))
         For i As UInt32 = 0 To m.module_count() - uint32_1
             Dim snapshot As counter.snapshot = Nothing
             snapshot = m.module_counter_snapshot(i)
-            assert_not_nothing(snapshot)
-            assert_not_nothing(snapshot.count)
+            assertion.is_not_null(snapshot)
+            assertion.is_not_null(snapshot.count)
             If strcontains(snapshot.name, "should_not_be_called") Then
-                assert_equal(+snapshot.count, 0, snapshot.name)
+                assertion.equal(+snapshot.count, 0, snapshot.name)
             Else
-                assert_more(+snapshot.count, 0, snapshot.name)
+                assertion.more(+snapshot.count, 0, snapshot.name)
             End If
         Next
     End Sub

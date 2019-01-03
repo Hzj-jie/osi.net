@@ -32,22 +32,22 @@ Public Class manual_pre_generated_device_pool_test2
 
         Public Overrides Function run() As Boolean
             Dim r As idevice(Of mock_dev(Of manual_pre_generated_device_pool_case2)) = Nothing
-            assert_true(e.go())
-            assert_more_or_equal(p.total_count(), uint32_1)
-            assert_true(p.get(r))
-            assert_not_nothing(r)
+            assertion.is_true(e.go())
+            assertion.more_or_equal(p.total_count(), uint32_1)
+            assertion.is_true(p.get(r))
+            assertion.is_not_null(r)
             If rnd_bool_trues(3) Then
-                assert_true(p.release(r))
+                assertion.is_true(p.release(r))
             Else
                 r.close()
-                assert_false(p.release(r))
+                assertion.is_false(p.release(r))
             End If
             Return True
         End Function
 
         Public Overrides Function finish() As Boolean
             p.close()
-            assert_equal(mock_dev(Of manual_pre_generated_device_pool_case2).closed_instance_count(),
+            assertion.equal(mock_dev(Of manual_pre_generated_device_pool_case2).closed_instance_count(),
                          thread_count * size)
             Return MyBase.finish()
         End Function

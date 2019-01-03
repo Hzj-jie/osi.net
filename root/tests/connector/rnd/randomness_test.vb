@@ -32,7 +32,7 @@ Public Class randomness_test
                 unset_count += 1
             End If
         Next
-        assert_less_or_equal(CDbl(unset_count) / (upper - lower), If(isreleasebuild(), 0.00025, 0.001))
+        assertion.less_or_equal(CDbl(unset_count) / (upper - lower), If(isreleasebuild(), 0.00025, 0.001))
         Return True
     End Function
 

@@ -26,15 +26,15 @@ Public Class process_io_manual_test
                 If rnd_bool() Then
                     io.start_info().Arguments() += guid_str()
                 End If
-                If assert_true(io.start()) Then
+                If assertion.is_true(io.start()) Then
                     Dim s As String = Nothing
                     s = Console.ReadLine()
                     While Not s Is Nothing
-                        assert_true(io.input_received(s))
+                        assertion.is_true(io.input_received(s))
                         s = Console.ReadLine()
                     End While
                 End If
-                assert_true(io.quit())
+                assertion.is_true(io.quit())
             End Using
             Return True
         End Function

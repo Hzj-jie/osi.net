@@ -41,18 +41,18 @@ Namespace rlexer
             assert(Not isemptyarray(cases))
             assert(Not r Is Nothing)
             Dim e As rule.exporter = Nothing
-            If assert_true(r.export(e)) AndAlso assert_not_nothing(e) Then
+            If assertion.is_true(r.export(e)) AndAlso assertion.is_not_null(e) Then
                 Dim l As lexer = Nothing
                 l = e.rlexer
-                If assert_not_nothing(l) Then
+                If assertion.is_not_null(l) Then
                     For i As UInt32 = 0 To array_size(cases) - uint32_1
                         assert(Not cases(i) Is Nothing)
                         Dim v As vector(Of typed_word) = Nothing
                         Dim o As vector(Of String) = Nothing
-                        If assert_true(l.match(cases(i).first, v)) AndAlso
+                        If assertion.is_true(l.match(cases(i).first, v)) AndAlso
                            e.types_to_strs(v, o) AndAlso
-                           assert_not_nothing(o) Then
-                            assert_array_equal(+o, cases(i).second)
+                           assertion.is_not_null(o) Then
+                            assertion.array_equal(+o, cases(i).second)
                         End If
                     Next
                 End If
@@ -63,12 +63,12 @@ Namespace rlexer
         Public Overrides Function run() As Boolean
             Dim r As rule = Nothing
             r = New rule()
-            assert_true(r.parse_file(rlexer_test_rule_files.rule1))
+            assertion.is_true(r.parse_file(rlexer_test_rule_files.rule1))
             If Not run_case(r) Then
                 Return False
             End If
             r = New rule()
-            assert_true(r.parse_file(rlexer_test_rule_files.rule3))
+            assertion.is_true(r.parse_file(rlexer_test_rule_files.rule3))
             If Not run_case(r) Then
                 Return False
             End If

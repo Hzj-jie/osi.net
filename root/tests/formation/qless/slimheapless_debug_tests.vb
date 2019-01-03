@@ -29,8 +29,8 @@ Public Class slimheapless_concurrently_push_test
         Public Overrides Function finish() As Boolean
             For i As Int32 = 0 To (+Me.i) - 1
                 Dim j As Int32 = 0
-                assert_true(q.pop(j))
-                assert_less_or_equal(j, +Me.i)
+                assertion.is_true(q.pop(j))
+                assertion.less_or_equal(j, +Me.i)
             Next
             Return MyBase.finish()
         End Function
@@ -72,8 +72,8 @@ Public Class slimheapless_concurrently_pop_test
         Public Overrides Function run() As Boolean
             If i.decrement() >= 0 Then
                 Dim j As Int32 = 0
-                assert_true(q.pop(j))
-                assert_less(j, size)
+                assertion.is_true(q.pop(j))
+                assertion.less(j, size)
             Else
                 i.increment()
             End If
@@ -83,8 +83,8 @@ Public Class slimheapless_concurrently_pop_test
         Public Overrides Function finish() As Boolean
             While i.decrement() >= 0
                 Dim j As Int32 = 0
-                assert_true(q.pop(j))
-                assert_less(j, size)
+                assertion.is_true(q.pop(j))
+                assertion.less(j, size)
             End While
             Return MyBase.finish()
         End Function

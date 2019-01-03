@@ -29,15 +29,15 @@ Public NotInheritable Class cancellation_controller_test
                   Sub()
                       timeout += uint32_1
                   End Sub)
-        assert_reference_equal(m, c.manual())
+        assertion.reference_equal(m, c.manual())
         c.manual().raise_to_low()
         r.unref()
-        assert_equal(manual, uint32_1)
-        assert_equal(ref_counted, uint32_0)
-        assert_equal(timeout, uint32_0)
-        assert_nothing(c.manual())
-        assert_nothing(c.ref_counted())
-        assert_nothing(c.timeout())
+        assertion.equal(manual, uint32_1)
+        assertion.equal(ref_counted, uint32_0)
+        assertion.equal(timeout, uint32_0)
+        assertion.is_null(c.manual())
+        assertion.is_null(c.ref_counted())
+        assertion.is_null(c.timeout())
     End Sub
 
     <test>
@@ -53,11 +53,11 @@ Public NotInheritable Class cancellation_controller_test
         c.manual(Sub()
                      c2 += uint32_1
                  End Sub)
-        assert_not_reference_equal(m, c.manual())
+        assertion.not_reference_equal(m, c.manual())
         m.raise_to_low()
         c.manual().raise_to_low()
-        assert_equal(c1, uint32_0)
-        assert_equal(c2, uint32_1)
+        assertion.equal(c1, uint32_0)
+        assertion.equal(c2, uint32_1)
     End Sub
 
     <test>
@@ -80,14 +80,14 @@ Public NotInheritable Class cancellation_controller_test
                       timeout += uint32_1
                   End Sub)
         c.cancel()
-        assert_nothing(c.manual())
-        assert_nothing(c.ref_counted())
-        assert_nothing(c.timeout())
+        assertion.is_null(c.manual())
+        assertion.is_null(c.ref_counted())
+        assertion.is_null(c.timeout())
         m.raise_to_low()
         r.unref()
-        assert_equal(manual, uint32_0)
-        assert_equal(ref_counted, uint32_0)
-        assert_equal(timeout, uint32_0)
+        assertion.equal(manual, uint32_0)
+        assertion.equal(ref_counted, uint32_0)
+        assertion.equal(timeout, uint32_0)
     End Sub
 
     <test>
@@ -100,11 +100,11 @@ Public NotInheritable Class cancellation_controller_test
         Dim m As flip_events.manual_flip_event = Nothing
         m = c.manual(o,
                      Sub(ByVal i As Object)
-                         assert_reference_equal(i, o)
+                         assertion.reference_equal(i, o)
                          r = True
                      End Sub)
         m.raise_to_low()
-        assert_true(r)
+        assertion.is_true(r)
     End Sub
 
     Private Sub New()

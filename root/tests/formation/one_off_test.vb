@@ -49,20 +49,20 @@ Public Class one_off_test
         For i As Int32 = 0 To thread_count - 1
             start_thread(AddressOf read_thread)
         Next
-        assert_true(timeslice_sleep_wait_until(Function() As Boolean
+        assertion.is_true(timeslice_sleep_wait_until(Function() As Boolean
                                                    Return (+read_thread_count) > 1
                                                End Function,
                                                seconds_to_milliseconds(10)))
         Const times As Int32 = 1024
         suc_times.exchange(0)
         If Not is_get Then
-            assert_true(x.set(New Object()))
+            assertion.is_true(x.set(New Object()))
         End If
         For i As Int32 = 0 To times - 1
             If is_get Then
-                assert_true(x.set(New Object()))
+                assertion.is_true(x.set(New Object()))
             Else
-                assert_true(x.get(Nothing))
+                assertion.is_true(x.get(Nothing))
             End If
             assert(are.Set())
             lazy_wait_when(Function() As Boolean
@@ -74,17 +74,17 @@ Public Class one_off_test
                            End Function)
             assert(are.Reset())
         Next
-        assert_true(timeslice_sleep_wait_until(Function() As Boolean
+        assertion.is_true(timeslice_sleep_wait_until(Function() As Boolean
                                                    Return ((+suc_times) = times)
                                                End Function,
                                                seconds_to_milliseconds(10)))
-        assert_equal(+suc_times, times)
+        assertion.equal(+suc_times, times)
         If Not is_get Then
-            assert_true(x.get(Nothing))
+            assertion.is_true(x.get(Nothing))
         End If
         running = False
         assert(are.Set())
-        assert_true(timeslice_sleep_wait_when(Function() As Boolean
+        assertion.is_true(timeslice_sleep_wait_when(Function() As Boolean
                                                   Return (+read_thread_count) > 0
                                               End Function,
                                               seconds_to_milliseconds(10)))

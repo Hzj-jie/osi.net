@@ -72,8 +72,8 @@ Public Class sign_strongness_test
             assert(Not isemptyarray(k))
             assert(Not isemptyarray(b))
             Dim r() As Byte = Nothing
-            assert_true(s.sign(k, b, r))
-            If Not assert_true(rs.insert(r).second,
+            assertion.is_true(s.sign(k, b, r))
+            If Not assertion.is_true(rs.insert(r).second,
                                lazier.[New](Function() strcat("signer ", s.GetType(), ", case ", Me.GetType()))) Then
                 Return False
             End If

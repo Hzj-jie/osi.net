@@ -9,8 +9,8 @@ Imports osi.root.utt
 Public Module _reference_types_cast
     Private Function cast_case_verify(Of T As {return_s, Class},
                                          T2 As {return_s, Class})(ByVal i As T, ByVal j As T2) As Boolean
-        If assert_not_nothing(j) Then
-            assert_equal(i.s, j.s)
+        If assertion.is_not_null(j) Then
+            assertion.equal(i.s, j.s)
         End If
         Return True
     End Function
@@ -18,26 +18,26 @@ Public Module _reference_types_cast
     Private Function cast_case_T_T2(Of T As {return_s, Class},
                                        T2 As {return_s, Class})(ByVal i As T) As Boolean
         Dim j As T2 = Nothing
-        assert_true(cast(i, j))
+        assertion.is_true(cast(i, j))
         Return cast_case_verify(i, j)
     End Function
 
     Private Function cast_as_T(Of T As {return_s, Class},
                                   T2 As {return_s, Class})(ByVal i As T) As Boolean
         Dim j As T2 = Nothing
-        assert_true(i.cast_to(j))
+        assertion.is_true(i.cast_to(j))
         Return cast_case_verify(i, j)
     End Function
 
     Private Function cast_case_T_object(Of T As {return_s, Class}, T2 As {return_s, Class})(ByVal i As T) As Boolean
         Dim j As T2 = Nothing
-        assert_true(cast(Of T2)(i, j))
+        assertion.is_true(cast(Of T2)(i, j))
         Return cast_case_verify(i, j)
     End Function
 
     Private Function cast_as_object(Of T As {return_s, Class}, T2 As {return_s, Class})(ByVal i As T) As Boolean
         Dim j As T2 = Nothing
-        assert_true(i.cast_to(Of T2)(j))
+        assertion.is_true(i.cast_to(Of T2)(j))
         Return cast_case_verify(i, j)
     End Function
 

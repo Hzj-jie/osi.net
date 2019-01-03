@@ -60,26 +60,26 @@ Public Class callback_timeout_test
             assert(Not cb Is Nothing)
             Using New auto_assert_timelimited_operation(timeout_ms,
                                                         (timeout_ms + four_timeslice_length_ms) * thread_count)
-                assert_false(async_sync(cb, timeout_ms))
+                assertion.is_false(async_sync(cb, timeout_ms))
             End Using
-            assert_true(timeslice_sleep_wait_until(Function() cb.finished(), minutes_to_milliseconds(1)))
+            assertion.is_true(timeslice_sleep_wait_until(Function() cb.finished(), minutes_to_milliseconds(1)))
 
-            assert_false(cb.begin_result().unknown_())
-            assert_true(cb.begin_result().true_())
+            assertion.is_false(cb.begin_result().unknown_())
+            assertion.is_true(cb.begin_result().true_())
 
-            assert_false(cb.end_result().unknown_())
-            assert_true(cb.end_result().true_())
+            assertion.is_false(cb.end_result().unknown_())
+            assertion.is_true(cb.end_result().true_())
 
-            assert_true(cb.check_result().false_())
-            assert_false(cb.check_result().true_())
-            assert_false(cb.check_result().unknown_())
+            assertion.is_true(cb.check_result().false_())
+            assertion.is_false(cb.check_result().true_())
+            assertion.is_false(cb.check_result().unknown_())
 
-            assert_more(+counter, this + 1)
+            assertion.more(+counter, this + 1)
             Return True
         End Function
 
         Public Overrides Function finish() As Boolean
-            assert_equal(+counter, (+run_times) << 1)
+            assertion.equal(+counter, (+run_times) << 1)
             Return MyBase.finish()
         End Function
     End Class

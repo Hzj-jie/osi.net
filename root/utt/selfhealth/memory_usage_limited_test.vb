@@ -13,7 +13,7 @@ Public Class memory_usage_limited_test
         Inherits [case]
 
         Public Overrides Function run() As Boolean
-            Return assert_true(False, "should never called.")
+            Return assertion.is_true(False, "should never called.")
         End Function
     End Class
 End Class

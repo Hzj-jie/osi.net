@@ -14,28 +14,28 @@ Public Class forward_bytes_transformer_test
         Dim o() As Byte = Nothing
         i = rnd_bytes()
 
-        assert_true(t.transform(i, o))
-        assert_reference_equal(i, o)
+        assertion.is_true(t.transform(i, o))
+        assertion.reference_equal(i, o)
 
-        assert_true(t.transform(i, 1, array_size(i) - 1, o))
-        assert_not_reference_equal(i, o)
-        assert_equal(array_size(o), array_size(i) - 1)
-        assert_equal(memcmp(i, 1, o, 0, array_size(o)), 0)
+        assertion.is_true(t.transform(i, 1, array_size(i) - 1, o))
+        assertion.not_reference_equal(i, o)
+        assertion.equal(array_size(o), array_size(i) - 1)
+        assertion.equal(memcmp(i, 1, o, 0, array_size(o)), 0)
 
-        assert_true(t.transform(i, array_size(i) - 1, o))
-        assert_not_reference_equal(i, o)
-        assert_equal(array_size(o), array_size(i) - 1)
-        assert_equal(memcmp(i, o, array_size(o)), 0)
+        assertion.is_true(t.transform(i, array_size(i) - 1, o))
+        assertion.not_reference_equal(i, o)
+        assertion.equal(array_size(o), array_size(i) - 1)
+        assertion.equal(memcmp(i, o, array_size(o)), 0)
 
-        assert_false(t.transform(Nothing, 0, 1, Nothing))
+        assertion.is_false(t.transform(Nothing, 0, 1, Nothing))
 
-        assert_true(t.transform(i, array_size(i), 0, o))
-        assert_not_nothing(o)
-        assert_equal(array_size(o), uint32_0)
+        assertion.is_true(t.transform(i, array_size(i), 0, o))
+        assertion.is_not_null(o)
+        assertion.equal(array_size(o), uint32_0)
 
-        assert_false(t.transform(i, array_size(i), 1, Nothing))
+        assertion.is_false(t.transform(i, array_size(i), 1, Nothing))
 
-        assert_false(t.transform(i, 0, array_size(i) + 1, Nothing))
+        assertion.is_false(t.transform(i, 0, array_size(i) + 1, Nothing))
 
         Return True
     End Function

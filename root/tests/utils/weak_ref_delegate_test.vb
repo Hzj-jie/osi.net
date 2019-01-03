@@ -15,10 +15,10 @@ Public NotInheritable Class weak_ref_delegate_test
         Dim o As Object = Nothing
         o = New Object()
         weak_ref_delegate.bind(o, Sub(ByVal i As Object)
-                                      assert_reference_equal(i, o)
+                                      assertion.reference_equal(i, o)
                                       r = True
                                   End Sub)()
-        assert_true(r)
+        assertion.is_true(r)
     End Sub
 
     <test>
@@ -28,12 +28,12 @@ Public NotInheritable Class weak_ref_delegate_test
         o = New Object()
         Dim j As Object = Nothing
         j = weak_ref_delegate.bind(o, Function(ByVal i As Object) As Object
-                                          assert_reference_equal(i, o)
+                                          assertion.reference_equal(i, o)
                                           r = True
                                           Return i
                                       End Function)()
-        assert_true(r)
-        assert_reference_equal(o, j)
+        assertion.is_true(r)
+        assertion.reference_equal(o, j)
     End Sub
 
     Private Sub New()

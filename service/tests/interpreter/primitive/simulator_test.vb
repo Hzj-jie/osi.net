@@ -22,10 +22,10 @@ Namespace primitive
             If sim Is Nothing Then
                 sim = New simulator()
             End If
-            assert_true(sim.import(s))
+            assertion.is_true(sim.import(s))
             sim.execute()
-            assert_false(sim.halt())
-            assert_true(sim.errors().empty())
+            assertion.is_false(sim.halt())
+            assertion.is_true(sim.errors().empty())
             Return True
         End Function
 
@@ -37,7 +37,7 @@ Namespace primitive
                 End If
                 Dim p As pointer(Of Byte()) = Nothing
                 p = sim.access_stack(data_ref.abs(0))
-                assert_array_equal(+p, cases(i).first)
+                assertion.array_equal(+p, cases(i).first)
             Next
             Return True
         End Function
@@ -47,11 +47,11 @@ Namespace primitive
             If Not execute(sim5.as_text(), sim) Then
                 Return False
             End If
-            assert_equal(sim.access_stack_as_bool(data_ref.abs(0)), False)
-            assert_equal(sim.access_stack_as_uint32(data_ref.abs(1)), CUInt(1326))
-            assert_equal(sim.access_stack_as_uint32(data_ref.abs(2)), CUInt(51))
-            assert_equal(sim.access_stack_as_uint32(data_ref.abs(3)), CUInt(1))
-            assert_equal(sim.access_stack_as_uint32(data_ref.abs(4)), CUInt(50))
+            assertion.equal(sim.access_stack_as_bool(data_ref.abs(0)), False)
+            assertion.equal(sim.access_stack_as_uint32(data_ref.abs(1)), CUInt(1326))
+            assertion.equal(sim.access_stack_as_uint32(data_ref.abs(2)), CUInt(51))
+            assertion.equal(sim.access_stack_as_uint32(data_ref.abs(3)), CUInt(1))
+            assertion.equal(sim.access_stack_as_uint32(data_ref.abs(4)), CUInt(50))
             Return True
         End Function
 

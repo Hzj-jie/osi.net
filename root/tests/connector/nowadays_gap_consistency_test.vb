@@ -38,11 +38,11 @@ Public Class nowadays_gap_consistency_test
             Dim diff As Int64 = 0
             diff = Abs(l2 - n2) + Abs(n2 - h2) + Abs(l2 - h2)
             failed += If(diff >= timeslice_length_ms * 3, 1, 0)
-            'assert_more_or_equal_and_less_or_equal(l2, n2 - timeslice_length_ms, n2 + timeslice_length_ms)
-            'assert_more_or_equal_and_less_or_equal(l2, h2 - timeslice_length_ms, h2 + timeslice_length_ms)
-            'assert_more_or_equal_and_less_or_equal(n2, h2 - timeslice_length_ms, h2 + timeslice_length_ms)
+            'assertion.more_or_equal_and_less_or_equal(l2, n2 - timeslice_length_ms, n2 + timeslice_length_ms)
+            'assertion.more_or_equal_and_less_or_equal(l2, h2 - timeslice_length_ms, h2 + timeslice_length_ms)
+            'assertion.more_or_equal_and_less_or_equal(n2, h2 - timeslice_length_ms, h2 + timeslice_length_ms)
         Next
-        assert_less_or_equal(failed, round * 0.1)
+        assertion.less_or_equal(failed, round * 0.1)
         Return True
     End Function
 End Class

@@ -31,9 +31,9 @@ Public Class isolate_case_wrapper_test
             i = isolated(ce)
         End If
         assert(Not i Is Nothing)
-        assert_true(i.prepare())
-        assert_true(i.run())
-        assert_equal(i.finish(), exp)
+        assertion.is_true(i.prepare())
+        assertion.is_true(i.run())
+        assertion.equal(i.finish(), exp)
         Return True
     End Function
 
@@ -80,7 +80,7 @@ Public Class isolate_case_wrapper_test
             Inherits [case]
 
             Public Overrides Function run() As Boolean
-                assert_true(False)
+                assertion.is_true(False)
                 Return True
             End Function
         End Class
@@ -130,7 +130,7 @@ Public Class isolate_case_wrapper_test
 
             Public Overrides Function create() As event_comb
                 Return New event_comb(Function() As Boolean
-                                          assert_true(False)
+                                          assertion.is_true(False)
                                           Return goto_end()
                                       End Function)
             End Function

@@ -55,15 +55,15 @@ Friend Class trie_case
             mr = (m.find(s) <> m.end())
             If mr Then
                 Dim b As Boolean = False
-                b = assert_true(it <> t.end(),
+                b = assertion.is_true(it <> t.end(),
                                "finding results of {",
                                s,
                                "} are inconsistant") AndAlso
-                    assert_true((+it).has_value,
+                    assertion.is_true((+it).has_value,
                                 "finding results of {",
                                 s,
                                 "} are inconsistant") AndAlso
-                    assert_equal((+it).value,
+                    assertion.equal((+it).value,
                                  m(s),
                                  New lazier(Of String)(Function() strcat("values of {",
                                                                          s,
@@ -73,7 +73,7 @@ Friend Class trie_case
                                                                          (+it).value,
                                                                          " in trie")))
             Else
-                assert_true(it = t.end() OrElse Not (+it).has_value)
+                assertion.is_true(it = t.end() OrElse Not (+it).has_value)
             End If
         End If
     End Sub
@@ -85,15 +85,15 @@ Friend Class trie_case
         i = random_value()
         Dim r As pair(Of stringtrie(Of Int32).iterator, Boolean) = Nothing
         r = t.emplace(s, i)
-        assert_not_nothing(r)
-        assert_not_nothing(r.first)
-        assert_not_equal(r.first, t.end())
+        assertion.is_not_null(r)
+        assertion.is_not_null(r.first)
+        assertion.not_equal(r.first, t.end())
         If validate() Then
             If r.second Then
-                assert_equal(m.find(s), m.end())
+                assertion.equal(m.find(s), m.end())
                 m(s) = i
             End If
-            assert_not_equal(t.find(s), t.end())
+            assertion.not_equal(t.find(s), t.end())
         End If
     End Sub
 
@@ -103,7 +103,7 @@ Friend Class trie_case
         Dim r As Boolean = False
         r = t.erase(s)
         If validate() Then
-            assert_equal(r, m.erase(s), "erase results of {", s, "} are inconsistant")
+            assertion.equal(r, m.erase(s), "erase results of {", s, "} are inconsistant")
         End If
     End Sub
 

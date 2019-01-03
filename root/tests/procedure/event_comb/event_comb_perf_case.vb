@@ -65,9 +65,9 @@ Friend Class event_comb_perf_case
                                 Return goto_end()
                             End Function)
         Using New thread_lazy()
-            assert_true(async_sync(ec))
+            assertion.is_true(async_sync(ec))
         End Using
-        assert_equal(+finished, size)
+        assertion.equal(+finished, size)
         Return True
     End Function
 End Class

@@ -23,8 +23,8 @@ Friend Class heap_case
                 s(i) = True
                 Dim j As Int64 = 0
                 j = h.push(i)
-                assert_less(j, h.size())
-                assert_more_or_equal(j, 0)
+                assertion.less(j, h.size())
+                assertion.more_or_equal(j, 0)
             End If
         Else
             h.push(i)
@@ -33,10 +33,10 @@ Friend Class heap_case
 
     Private Function pop(ByRef i As Int64) As Boolean
         If h.pop(i) Then
-            assert_less(i, size)
-            assert_more_or_equal(i, 0)
+            assertion.less(i, size)
+            assertion.more_or_equal(i, 0)
             If validate() Then
-                assert_true(s(i))
+                assertion.is_true(s(i))
                 s(i) = False
             End If
             Return True
@@ -49,15 +49,15 @@ Friend Class heap_case
         Dim i As Int64 = 0
         Dim j As Int64 = 0
         If pop(i) AndAlso pop(j) AndAlso validate() Then
-            assert_more(i, j)
+            assertion.more(i, j)
         End If
     End Sub
 
     Private Sub [erase]()
         If h.empty() Then
-            assert_false(h.erase(rnd_int(0, size)))
+            assertion.is_false(h.erase(rnd_int(0, size)))
         Else
-            assert_true(h.erase(rnd_int(0, h.size())))
+            assertion.is_true(h.erase(rnd_int(0, h.size())))
         End If
     End Sub
 

@@ -23,7 +23,7 @@ Public Class weak_ref_pointer_test
             p.set(New cd_object(Of weak_ref_pointer_test)())
             repeat_gc_collect()
         Next
-        assert_more(cd_object(Of weak_ref_pointer_test).destructed(), uint32_0)
+        assertion.more(cd_object(Of weak_ref_pointer_test).destructed(), uint32_0)
         Return True
     End Function
 

@@ -13,10 +13,10 @@ Public NotInheritable Class generic_type_behavior_test
 
     <test>
     Private Shared Sub generic_type_definition_case()
-        assert_true(GetType(inf(Of )).IsGenericType())
-        assert_true(GetType(inf(Of )).IsGenericTypeDefinition())
-        assert_true(GetType(inf(Of Int32)).IsGenericType())
-        assert_false(GetType(inf(Of Int32)).IsGenericTypeDefinition())
+        assertion.is_true(GetType(inf(Of )).IsGenericType())
+        assertion.is_true(GetType(inf(Of )).IsGenericTypeDefinition())
+        assertion.is_true(GetType(inf(Of Int32)).IsGenericType())
+        assertion.is_false(GetType(inf(Of Int32)).IsGenericTypeDefinition())
     End Sub
 
     Private Sub New()

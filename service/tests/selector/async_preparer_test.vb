@@ -48,14 +48,14 @@ Public Class async_preparer_test
                                              goto_next()
                                   End Function,
                                   Function() As Boolean
-                                      assert_true(ec.end_result())
-                                      assert_not_nothing(+s)
+                                      assertion.is_true(ec.end_result())
+                                      assertion.is_not_null(+s)
                                       lock.locked(Sub()
                                                       If f Is Nothing Then
                                                           f = +s
                                                       End If
                                                   End Sub)
-                                      assert_equal(+s, f)
+                                      assertion.equal(+s, f)
                                       Return goto_end()
                                   End Function)
         End Function

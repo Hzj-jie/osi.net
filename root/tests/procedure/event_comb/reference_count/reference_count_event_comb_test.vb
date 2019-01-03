@@ -98,10 +98,10 @@ Public Class reference_count_event_comb_test
         assert(Not c Is Nothing)
         If c.run() Then
             sleep()
-            assert_true(rc.rcec.expired())
-            assert_false(rc.rcec.running())
-            assert_equal(+(rc.c1), +(rc.c2.p))
-            assert_not_equal(+(rc.c1), 0)
+            assertion.is_true(rc.rcec.expired())
+            assertion.is_false(rc.rcec.running())
+            assertion.equal(+(rc.c1), +(rc.c2.p))
+            assertion.not_equal(+(rc.c1), 0)
             Return True
         Else
             Return False
@@ -119,14 +119,14 @@ Public Class reference_count_event_comb_test
         Dim last As Int32 = 0
         last = +(rc.c1)
         sleep()
-        assert_equal(+(rc.c1), last)
-        assert_equal(+(rc.c2.p), last)
+        assertion.equal(+(rc.c1), last)
+        assertion.equal(+(rc.c2.p), last)
 
         If Not run(rc, c) Then
             Return False
         End If
-        assert_not_equal(+(rc.c1), last)
-        assert_not_equal(+(rc.c2.p), last)
+        assertion.not_equal(+(rc.c1), last)
+        assertion.not_equal(+(rc.c2.p), last)
 
         Return True
     End Function
@@ -143,15 +143,15 @@ Public Class reference_count_event_comb_test
         Dim last As Int32 = 0
         last = +(rc.c1)
         sleep()
-        assert_equal(+(rc.c1), last)
-        assert_equal(+(rc.c2.p), last)
+        assertion.equal(+(rc.c1), last)
+        assertion.equal(+(rc.c2.p), last)
         If reference_count_event_comb.start_after_trigger() Then
-            assert_equal(+(rc.init_runs.p), repeat_count)
-            assert_equal(+(rc.final_runs.p), repeat_count)
+            assertion.equal(+(rc.init_runs.p), repeat_count)
+            assertion.equal(+(rc.final_runs.p), repeat_count)
         Else
-            assert_more_and_less_or_equal(+(rc.init_runs.p), 0, repeat_count)
-            assert_more_and_less_or_equal(+(rc.final_runs.p), 0, repeat_count)
-            assert_equal(+(rc.init_runs.p), +(rc.final_runs.p))
+            assertion.more_and_less_or_equal(+(rc.init_runs.p), 0, repeat_count)
+            assertion.more_and_less_or_equal(+(rc.final_runs.p), 0, repeat_count)
+            assertion.equal(+(rc.init_runs.p), +(rc.final_runs.p))
         End If
 
         Return True

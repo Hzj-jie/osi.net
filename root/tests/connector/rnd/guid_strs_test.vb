@@ -18,12 +18,12 @@ Public Class guid_strs_test
             c = rnd_uint(uint32_1, max_uint8)
             Dim s() As String = Nothing
             s = guid_strs(c)
-            If assert_equal(array_size(s), c) Then
+            If assertion.equal(array_size(s), c) Then
                 For i As UInt32 = uint32_0 To c - uint32_1
-                    assert_not_nothing(s(i))
+                    assertion.is_not_null(s(i))
                     If i > uint32_0 Then
                         For j As UInt32 = uint32_0 To i - uint32_1
-                            assert_not_equal(s(i), s(j))
+                            assertion.not_equal(s(i), s(j))
                         Next
                     End If
                 Next

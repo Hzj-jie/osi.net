@@ -34,15 +34,15 @@ Public Class event_disposer_test
             p = create(disposing)
         Next
         repeat_gc_collect()
-        assert_equal(cd_object(Of test_class).constructed(), size)
-        assert_equal(cd_object(Of test_class).destructed(), size - uint32_1)
-        assert_equal(CUInt(+disposing), size - uint32_1)
+        assertion.equal(cd_object(Of test_class).constructed(), size)
+        assertion.equal(cd_object(Of test_class).destructed(), size - uint32_1)
+        assertion.equal(CUInt(+disposing), size - uint32_1)
         p.Dispose()
         p = Nothing
         repeat_gc_collect()
-        assert_equal(cd_object(Of test_class).constructed(), size)
-        assert_equal(cd_object(Of test_class).destructed(), size)
-        assert_equal(CUInt(+disposing), size)
+        assertion.equal(cd_object(Of test_class).constructed(), size)
+        assertion.equal(cd_object(Of test_class).destructed(), size)
+        assertion.equal(CUInt(+disposing), size)
         Return True
     End Function
 
@@ -57,18 +57,18 @@ Public Class event_disposer_test
             p(i) = create(disposing)
         Next
         repeat_gc_collect()
-        assert_equal(+disposing, 0)
-        assert_equal(cd_object(Of test_class).constructed(), size)
-        assert_equal(cd_object(Of test_class).destructed(), uint32_0)
+        assertion.equal(+disposing, 0)
+        assertion.equal(cd_object(Of test_class).constructed(), size)
+        assertion.equal(cd_object(Of test_class).destructed(), uint32_0)
         For i As UInt32 = 0 To size - uint32_1
-            assert_not_nothing(+p(i))
+            assertion.is_not_null(+p(i))
             p(i).Dispose()
             p(i) = Nothing
         Next
         repeat_gc_collect()
-        assert_equal(CUInt(+disposing), size)
-        assert_equal(cd_object(Of test_class).constructed(), size)
-        assert_equal(cd_object(Of test_class).destructed(), size)
+        assertion.equal(CUInt(+disposing), size)
+        assertion.equal(cd_object(Of test_class).constructed(), size)
+        assertion.equal(cd_object(Of test_class).destructed(), size)
         Return True
     End Function
 

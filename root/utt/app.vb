@@ -17,7 +17,7 @@ Public Module _app
         global_init.execute()
         Dim start_ms As Int64 = 0
         start_ms = Now().milliseconds()
-        assert_true(using_default_ithreadpool())
+        assertion.is_true(using_default_ithreadpool())
         If envs.utt_no_assert Then
             error_writer_ignore_types(Of file_error_writer).ignore(errortype_char)
         End If
@@ -36,27 +36,32 @@ Public Module _app
         repeat_gc_collect()
         debugpause()
 
-        If Not assert_equal(counter.instance_count_counter(Of event_comb).count(), 0) Then
+        If Not assertion.equal(counter.instance_count_counter(Of event_comb).count(), 0) Then
             If event_comb_alloc_trace Then
                 raise_error(event_comb.dump_alloc_trace())
             End If
         End If
-        assert_equal(counter.instance_count_counter(Of promise).count(), 0)
+        assertion.equal(counter.instance_count_counter(Of promise).count(), 0)
         'counter.backend_writer
-        assert_less_or_equal(queue_runner.size(), 1)
-        assert_true(suppress.init_state())
-        assert_true(using_default_ithreadpool())
+        assertion.less_or_equal(queue_runner.size(), 1)
+        assertion.is_true(suppress.init_state())
+        assertion.is_true(using_default_ithreadpool())
         ' A .Net framework uses ~ 15 threads, and since ManagedThreadPool was involved in concurrent_runner, it may have
         ' some 4 threads. Unmanaged threads are not controllable, so add an extra 5.
-        assert_less_or_equal(current_process.Threads().Count(),
+        assertion.less_or_equal(current_process.Threads().Count(),
                              15 +
                              Environment.ProcessorCount() +
                              thread_pool().thread_count() +
                              queue_runner.thread_count +
                              5)
-        assert_less_or_equal(gc_total_memory(), 64 * 1024 * 1024)
-        If failure_count() > 0 Then
-            failed("failure count = ", failure_count())
+        assertion.less_or_equal(gc_total_memory(), 64 * 1024 * 1024)
+        If assertion.failure_count() > 0 OrElse expectation.failure_count() > 0 Then
+            If assertion.failure_count() > 0 Then
+                failed("failure count = ", assertion.failure_count())
+            End If
+            If expectation.failure_count() > 0 Then
+                failed("unsatisfied expectation count = ", expectation.failure_count())
+            End If
         Else
             raise_error("finish running all the selected cases, all succeeded")
         End If

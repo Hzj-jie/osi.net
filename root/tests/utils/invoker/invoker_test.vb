@@ -34,67 +34,67 @@ Public Class invoker_test
         Dim c As atomic_int = Nothing
         c = New atomic_int()
         Dim ds As invoker(Of Action(Of atomic_int)) = Nothing
-        assert_true(invoker.of(ds).
+        assertion.is_true(invoker.of(ds).
                         with_type(Of invoker_test).
                         with_binding_flags(binding_flags.static_private_method).
                         with_name("ss1").
                         build(ds))
-        assert_true(ds.static())
-        assert_true(ds.pre_binding())
-        assert_false(ds.post_binding())
-        If assert_true(ds.pre_bind(Nothing)) Then
+        assertion.is_true(ds.static())
+        assertion.is_true(ds.pre_binding())
+        assertion.is_false(ds.post_binding())
+        If assertion.is_true(ds.pre_bind(Nothing)) Then
             ds.pre_bind()(c)
         End If
-        assert_false(ds.post_bind(Me, Nothing))
+        assertion.is_false(ds.post_bind(Me, Nothing))
 
-        assert_true(invoker.of(ds).
+        assertion.is_true(invoker.of(ds).
                         with_object(Me).
                         with_binding_flags(binding_flags.instance_private_method).
                         with_name("s1").
                         build(ds))
-        assert_false(ds.static())
-        assert_true(ds.pre_binding())
-        assert_false(ds.post_binding())
-        If assert_true(ds.pre_bind(Nothing)) Then
+        assertion.is_false(ds.static())
+        assertion.is_true(ds.pre_binding())
+        assertion.is_false(ds.post_binding())
+        If assertion.is_true(ds.pre_bind(Nothing)) Then
             ds.pre_bind()(c)
         End If
-        assert_false(ds.post_bind(Me, Nothing))
+        assertion.is_false(ds.post_bind(Me, Nothing))
 
         Dim df As invoker(Of Func(Of atomic_int, Int32)) = Nothing
-        assert_true(invoker.of(df).
+        assertion.is_true(invoker.of(df).
                         with_type(Of invoker_test).
                         with_binding_flags(binding_flags.static_private_method).
                         with_name("sf1").
                         build(df))
-        assert_true(df.static())
-        assert_true(df.pre_binding())
-        assert_false(df.post_binding())
-        If assert_true(df.pre_bind(Nothing)) Then
-            assert_equal(df.pre_bind()(c), +c)
+        assertion.is_true(df.static())
+        assertion.is_true(df.pre_binding())
+        assertion.is_false(df.post_binding())
+        If assertion.is_true(df.pre_bind(Nothing)) Then
+            assertion.equal(df.pre_bind()(c), +c)
         End If
-        assert_false(df.post_bind(Me, Nothing))
+        assertion.is_false(df.post_bind(Me, Nothing))
 
-        assert_true(invoker.of(df).
+        assertion.is_true(invoker.of(df).
                         with_object(Me).
                         with_binding_flags(binding_flags.instance_private_method).
                         with_name("f1").
                         build(df))
-        assert_false(df.static())
-        assert_true(df.pre_binding())
-        assert_false(df.post_binding())
-        If assert_true(df.pre_bind(Nothing)) Then
-            assert_equal(df.pre_bind()(c), +c)
+        assertion.is_false(df.static())
+        assertion.is_true(df.pre_binding())
+        assertion.is_false(df.post_binding())
+        If assertion.is_true(df.pre_bind(Nothing)) Then
+            assertion.equal(df.pre_bind()(c), +c)
         End If
-        assert_false(df.post_bind(Me, Nothing))
+        assertion.is_false(df.post_bind(Me, Nothing))
 
-        assert_equal(+c, 4)
+        assertion.equal(+c, 4)
 
-        assert_false(invoker.of(df).
+        assertion.is_false(invoker.of(df).
                          with_object(Me).
                          with_binding_flags(binding_flags.instance_private_method).
                          with_name("not_exist").
                          build(df))
-        assert_nothing(df)
+        assertion.is_null(df)
 
         Return True
     End Function
@@ -103,41 +103,41 @@ Public Class invoker_test
         Dim c As atomic_int = Nothing
         c = New atomic_int()
         Dim ds As invoker(Of Action(Of atomic_int)) = Nothing
-        assert_true(invoker.of(ds).
+        assertion.is_true(invoker.of(ds).
                         with_type(Me.GetType()).
                         with_binding_flags(binding_flags.instance_private_method).
                         with_name("s1").
                         build(ds))
-        assert_false(ds.static())
-        assert_false(ds.pre_binding())
-        assert_true(ds.post_binding())
-        assert_false(ds.pre_bind(Nothing))
+        assertion.is_false(ds.static())
+        assertion.is_false(ds.pre_binding())
+        assertion.is_true(ds.post_binding())
+        assertion.is_false(ds.pre_bind(Nothing))
         If ds.post_bind(Me, Nothing) Then
             ds(Me)(c)
         End If
 
         Dim df As invoker(Of Func(Of atomic_int, Int32)) = Nothing
-        assert_true(invoker.of(df).
+        assertion.is_true(invoker.of(df).
                         with_type(Me.GetType()).
                         with_binding_flags(binding_flags.instance_private_method).
                         with_name("f1").
                         build(df))
-        assert_false(df.static())
-        assert_false(df.pre_binding())
-        assert_true(df.post_binding())
-        assert_false(df.pre_bind(Nothing))
+        assertion.is_false(df.static())
+        assertion.is_false(df.pre_binding())
+        assertion.is_true(df.post_binding())
+        assertion.is_false(df.pre_bind(Nothing))
         If df.post_bind(Me, Nothing) Then
-            assert_equal(df(Me)(c), +c)
+            assertion.equal(df(Me)(c), +c)
         End If
 
-        assert_equal(+c, 2)
+        assertion.equal(+c, 2)
 
-        assert_false(invoker.of(df).
+        assertion.is_false(invoker.of(df).
                          with_type(Me.GetType()).
                          with_binding_flags(binding_flags.instance_private_method).
                          with_name("not_exist").
                          build(df))
-        assert_nothing(df)
+        assertion.is_null(df)
 
         Return True
     End Function

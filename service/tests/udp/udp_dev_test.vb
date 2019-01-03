@@ -27,7 +27,7 @@ Public Class udp_dev_test
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  If assert_true(ec.end_result()) Then
+                                  If assertion.is_true(ec.end_result()) Then
                                       p = New pointer(Of Boolean)()
                                       ec = receiver.sense(p, seconds_to_milliseconds(1))
                                       Return waitfor(ec) AndAlso
@@ -37,7 +37,7 @@ Public Class udp_dev_test
                                   End If
                               End Function,
                               Function() As Boolean
-                                  If assert_true(ec.end_result()) AndAlso assert_true(+p) Then
+                                  If assertion.is_true(ec.end_result()) AndAlso assertion.is_true(+p) Then
                                       r = New pointer(Of Byte())()
                                       ec = receiver.receive(r)
                                       Return waitfor(ec, seconds_to_milliseconds(1)) AndAlso
@@ -47,8 +47,8 @@ Public Class udp_dev_test
                                   End If
                               End Function,
                               Function() As Boolean
-                                  If assert_true(ec.end_result()) AndAlso assert_not_nothing(+r) Then
-                                      assert_array_equal(+r, v)
+                                  If assertion.is_true(ec.end_result()) AndAlso assertion.is_not_null(+r) Then
+                                      assertion.array_equal(+r, v)
                                       Return goto_end()
                                   Else
                                       Return False
@@ -63,7 +63,7 @@ Public Class udp_dev_test
                                   If i < 50 Then
                                       If i > 0 Then
                                           assert(Not ec Is Nothing)
-                                          If Not assert_true(ec.end_result()) Then
+                                          If Not assertion.is_true(ec.end_result()) Then
                                               Return False
                                           End If
                                       End If
@@ -101,8 +101,8 @@ Public Class udp_dev_test
     Public Overrides Function finish() As Boolean
         p1.udp_dev_device().close()
         p2.udp_dev_device().close()
-        assert_true(listeners.[New](p1).wait_for_stop(seconds_to_milliseconds(1)))
-        assert_true(listeners.[New](p2).wait_for_stop(seconds_to_milliseconds(1)))
+        assertion.is_true(listeners.[New](p1).wait_for_stop(seconds_to_milliseconds(1)))
+        assertion.is_true(listeners.[New](p2).wait_for_stop(seconds_to_milliseconds(1)))
         ' Ensure dispenser has fully stopped. The dispenser.work() has been canceled, but the T_receiver.sense may not.
         sleep(osi.service.selector.constants.default_sense_timeout_ms)
         Return MyBase.finish()
@@ -119,7 +119,7 @@ Public Class udp_dev_test
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  If assert_true(ec.end_result()) AndAlso assert_false(u1.empty()) Then
+                                  If assertion.is_true(ec.end_result()) AndAlso assertion.is_false(u1.empty()) Then
                                       u2 = New pointer(Of udp_dev)()
                                       ec = p2.udp_dev_device().get().get(u2)
                                       Return waitfor(ec) AndAlso
@@ -129,7 +129,7 @@ Public Class udp_dev_test
                                   End If
                               End Function,
                               Function() As Boolean
-                                  If assert_true(ec.end_result()) AndAlso assert_false(u2.empty()) Then
+                                  If assertion.is_true(ec.end_result()) AndAlso assertion.is_false(u2.empty()) Then
                                       ec = send_and_receive(+u1, +u2)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -140,7 +140,7 @@ Public Class udp_dev_test
                               Function() As Boolean
                                   p1.udp_dev_device().close()
                                   p2.udp_dev_device().close()
-                                  Return assert_true(ec.end_result()) AndAlso
+                                  Return assertion.is_true(ec.end_result()) AndAlso
                                          goto_end()
                               End Function)
     End Function

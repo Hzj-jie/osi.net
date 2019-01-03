@@ -53,7 +53,7 @@ Public Class pipe_test2
 
         Private Function sync_push() As event_comb
             Return sync_async(Sub()
-                                  assert_true(p.sync_push(rnd_int()))
+                                  assertion.is_true(p.sync_push(rnd_int()))
                               End Sub)
         End Function
 
@@ -66,7 +66,7 @@ Public Class pipe_test2
                                              goto_next()
                                   End Function,
                                   Function() As Boolean
-                                      assert_true(ec.end_result())
+                                      assertion.is_true(ec.end_result())
                                       Return ec.end_result() AndAlso
                                              goto_end()
                                   End Function)

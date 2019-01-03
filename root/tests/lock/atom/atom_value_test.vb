@@ -39,6 +39,6 @@ Public Class atom_value_test
     Protected Overrides Sub validate(ByVal ac As atom_case)
         assert(Not ac Is Nothing)
         assert(TypeOf ac Is atom_value_case)
-        assert_equal(ac.direct_cast_to(Of atom_value_case)().result(), atom_value_case.increment * round * thread_count)
+        assertion.equal(ac.direct_cast_to(Of atom_value_case)().result(), atom_value_case.increment * round * thread_count)
     End Sub
 End Class

@@ -57,8 +57,8 @@ Partial Public Class sharedtransmitter_test
                                              goto_next()
                                   End Function,
                                   Function() As Boolean
-                                      If assert_true(ec.end_result()) Then
-                                          assert_equal((+p), first + c)
+                                      If assertion.is_true(ec.end_result()) Then
+                                          assertion.equal((+p), first + c)
                                           If self_increment Then
                                               If c = iteration_count - 1 Then
                                                   Return goto_end()
@@ -70,11 +70,11 @@ Partial Public Class sharedtransmitter_test
                                           Return waitfor(ec) AndAlso
                                                  goto_next()
                                       Else
-                                          Return assert_true(False)
+                                          Return assertion.is_true(False)
                                       End If
                                   End Function,
                                   Function() As Boolean
-                                      If assert_true(ec.end_result()) Then
+                                      If assertion.is_true(ec.end_result()) Then
                                           c += 1
                                           If c = iteration_count Then
                                               Return goto_end()
@@ -82,7 +82,7 @@ Partial Public Class sharedtransmitter_test
                                               Return goto_begin()
                                           End If
                                       Else
-                                          Return assert_true(False)
+                                          Return assertion.is_true(False)
                                       End If
                                   End Function)
         End Function
@@ -112,8 +112,8 @@ Partial Public Class sharedtransmitter_test
                                              goto_next()
                                   End Function,
                                   Function() As Boolean
-                                      Return assert_true(ec1.end_result()) AndAlso
-                                             assert_true(ec2.end_result()) AndAlso
+                                      Return assertion.is_true(ec1.end_result()) AndAlso
+                                             assertion.is_true(ec2.end_result()) AndAlso
                                              goto_end()
                                   End Function)
         End Function
@@ -133,18 +133,18 @@ Partial Public Class sharedtransmitter_test
             Dim ind As dispenser(Of Int32, const_pair(Of Byte, Byte)) = Nothing
             AddHandler ic.new_sharedtransmitter_exported,
                        Sub(ByVal sc As sharedtransmitter(Of Byte, Byte, component, Int32, parameter))
-                           assert_not_nothing(sc)
-                           assert_true(sc.is_valid())
+                           assertion.is_not_null(sc)
+                           assertion.is_true(sc.is_valid())
                            ins.emplace_back(sc)
                        End Sub
-            If Not assert_true(ic.[New](inp, inp.local_port, inc)) OrElse
-               Not assert_true(ic.[New](inp, inp.local_port, inc, ind)) Then
+            If Not assertion.is_true(ic.[New](inp, inp.local_port, inc)) OrElse
+               Not assertion.is_true(ic.[New](inp, inp.local_port, inc, ind)) Then
                 Return False
             End If
-            If Not assert_happening(AddressOf inc.referred) Then
+            If Not assertion.happening(AddressOf inc.referred) Then
                 Return False
             End If
-            If Not assert_equal((+inc).local_port, inp.local_port) Then
+            If Not assertion.equal((+inc).local_port, inp.local_port) Then
                 Return False
             End If
             functor.address += uint8_1
@@ -165,25 +165,25 @@ Partial Public Class sharedtransmitter_test
                          with_collection(oc).
                          with_functor(f).
                          create()
-                If Not assert_true(sc.is_valid()) Then
+                If Not assertion.is_true(sc.is_valid()) Then
                     Return False
                 End If
                 outs.emplace_back(sc)
-                If Not assert_true(async_sync(sc.sender.send(first))) Then
+                If Not assertion.is_true(async_sync(sc.sender.send(first))) Then
                     Return False
                 End If
-                If Not assert_happening(Function() ins.size() = CUInt(j - min_uint8 + 1)) Then
+                If Not assertion.happening(Function() ins.size() = CUInt(j - min_uint8 + 1)) Then
                     Return False
                 End If
                 ecs(i) = execute_send_receive(sc, ins(CUInt(i)), first)
             Next
-            If Not assert_equal(ins.size(), outs.size()) Then
+            If Not assertion.equal(ins.size(), outs.size()) Then
                 Return False
             End If
-            assert_true(async_sync(New event_comb(Function() As Boolean
-                                                      Return waitfor(ecs) AndAlso
+            assertion.is_true(async_sync(New event_comb(Function() As Boolean
+                                                            Return waitfor(ecs) AndAlso
                                                              goto_end()
-                                                  End Function,
+                                                        End Function,
                                                   Function() As Boolean
                                                       Return ecs.end_result() AndAlso
                                                              goto_end()
@@ -192,9 +192,9 @@ Partial Public Class sharedtransmitter_test
                 ins(i).dispose()
                 outs(i).dispose()
             Next
-            assert_equal(ind.binding_count(), uint32_1)
-            assert_true(ind.release())
-            assert_false(ind.binding())
+            assertion.equal(ind.binding_count(), uint32_1)
+            assertion.is_true(ind.release())
+            assertion.is_false(ind.binding())
             ' Ensure all dispensers are stopped.
             sleep(constants.default_sense_timeout_ms * 4)
             Return True

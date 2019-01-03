@@ -59,26 +59,26 @@ Public Class lifetime_binder_test
             create_bind(wr2, bind)
 
             repeat_gc_collect()
-            assert_equal(test_class.finalized_count(), 0)
-            assert_true(wr1.IsAlive())
-            assert_true(wr2.IsAlive())
-            assert_reference_equal(tc1, cast(Of test_class)(wr1.Target()))
-            assert_equal(cast(Of test_class)(wr1.Target()).s, refer_only)
-            assert_equal(tc1.s, refer_only)
-            assert_equal(cast(Of test_class)(wr2.Target()).s, bind)
+            assertion.equal(test_class.finalized_count(), 0)
+            assertion.is_true(wr1.IsAlive())
+            assertion.is_true(wr2.IsAlive())
+            assertion.reference_equal(tc1, cast(Of test_class)(wr1.Target()))
+            assertion.equal(cast(Of test_class)(wr1.Target()).s, refer_only)
+            assertion.equal(tc1.s, refer_only)
+            assertion.equal(cast(Of test_class)(wr2.Target()).s, bind)
 
             GC.KeepAlive(tc1)
             tc1 = Nothing
             repeat_gc_collect()
-            assert_equal(test_class.finalized_count(), 1)
-            assert_false(wr1.IsAlive())
-            assert_true(wr2.IsAlive())
-            assert_equal(cast(Of test_class)(wr2.Target()).s, bind)
+            assertion.equal(test_class.finalized_count(), 1)
+            assertion.is_false(wr1.IsAlive())
+            assertion.is_true(wr2.IsAlive())
+            assertion.equal(cast(Of test_class)(wr2.Target()).s, bind)
 
             lifetime_binder(Of test_class).instance.erase(direct_cast(Of test_class)(wr2.Target()))
             repeat_gc_collect()
-            assert_equal(test_class.finalized_count(), 2)
-            assert_false(wr2.IsAlive())
+            assertion.equal(test_class.finalized_count(), 2)
+            assertion.is_false(wr2.IsAlive())
 
             Return True
         End Function

@@ -60,15 +60,15 @@ Public Class date_behavior_test
     Private Shared Function try_parse_exact_case() As Boolean
         Dim t As Date = Nothing
         For i As Int32 = 0 To array_size(success_cases) - 1
-            assert_true(Date.TryParseExact(success_cases(i)._1(),
+            assertion.is_true(Date.TryParseExact(success_cases(i)._1(),
                                            success_cases(i)._2(),
                                            success_cases(i)._3(),
                                            DateTimeStyles.AdjustToUniversal,
                                            t))
-            assert_equal(t, success_cases(i)._4())
+            assertion.equal(t, success_cases(i)._4())
         Next
         For i As Int32 = 0 To array_size(failure_cases) - 1
-            assert_false(Date.TryParseExact(failure_cases(i)._1(),
+            assertion.is_false(Date.TryParseExact(failure_cases(i)._1(),
                                             failure_cases(i)._2(),
                                             failure_cases(i)._3(),
                                             DateTimeStyles.AdjustToUniversal,

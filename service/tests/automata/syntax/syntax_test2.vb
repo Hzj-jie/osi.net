@@ -170,10 +170,10 @@ Namespace syntaxer
                                             ByVal start As UInt32,
                                             ByVal [end] As UInt32) As Boolean
             assert(Not n Is Nothing)
-            Return assert_more(n.subnodes.size(), id) AndAlso
-                   assert_equal(n.subnodes(id).type, type) AndAlso
-                   assert_equal(n.subnodes(id).start, start) AndAlso
-                   assert_equal(n.subnodes(id).end, [end])
+            Return assertion.more(n.subnodes.size(), id) AndAlso
+                   assertion.equal(n.subnodes(id).type, type) AndAlso
+                   assertion.equal(n.subnodes(id).start, start) AndAlso
+                   assertion.equal(n.subnodes(id).end, [end])
         End Function
 
         Private Shared Function assert_node(ByVal n As typed_node,
@@ -215,8 +215,8 @@ Namespace syntaxer
                                        types.end_paragraph)
             p = 0
             n = New typed_node(v)
-            assert_true(s.match(v, p, n))
-            assert_equal(p, v.size())
+            assertion.is_true(s.match(v, p, n))
+            assertion.equal(p, v.size())
             If assert_node(n, 0, types.function, 0, 22) Then
                 n = n.subnodes(0)
                 If assert_node(n, 0, types.name, 0) AndAlso
@@ -277,8 +277,8 @@ Namespace syntaxer
                                        types.semi_colon,
                                        types.end_paragraph)
             p = 0
-            assert_false(s.match(v, p, Nothing))
-            assert_equal(p, CUInt(17))
+            assertion.is_false(s.match(v, p, Nothing))
+            assertion.equal(p, CUInt(17))
             Return True
         End Function
     End Class

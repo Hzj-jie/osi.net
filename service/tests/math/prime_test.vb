@@ -65,11 +65,11 @@ Public Class prime_test
 
     Private Shared Function test_known_primes(ByVal known_primes() As Int32) As Boolean
         For i As Int32 = 0 To array_size_i(known_primes) - 1
-            assert_true(is_prime(known_primes(i)))
+            assertion.is_true(is_prime(known_primes(i)))
         Next
         For i As Int32 = 0 To array_size_i(known_primes) - 2
             For j As Int32 = known_primes(i) + 1 To known_primes(i + 1) - 1
-                assert_false(is_prime(j))
+                assertion.is_false(is_prime(j))
             Next
         Next
         Return True
@@ -78,15 +78,15 @@ Public Class prime_test
     Private Shared Function test_rnd_prime() As Boolean
         For i As Int32 = 0 To 1024 * 1024 - 1
             Dim x As Int32 = rnd_int(2, max_int32)
-            assert_equal(is_prime(x), stupid_is_prime(x))
+            assertion.equal(is_prime(x), stupid_is_prime(x))
             Dim y As UInt32 = rnd_uint(2, max_uint32)
-            assert_equal(is_prime(y), stupid_is_prime(y))
+            assertion.equal(is_prime(y), stupid_is_prime(y))
         Next
         Return True
     End Function
 
     Public Overrides Function run() As Boolean
-        assert_equal(prime_count, 9592)
+        assertion.equal(prime_count, 9592)
         Return test_known_primes(known_primes1) AndAlso
                test_known_primes(known_primes2) AndAlso
                test_rnd_prime()

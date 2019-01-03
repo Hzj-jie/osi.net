@@ -22,7 +22,7 @@ Public Class async_lazier_valuetype_test
         p.wait_until_initialized()
         Dim r As Int32 = 0
         assert(p.get(r))
-        assert_equal(r, value)
+        assertion.equal(r, value)
         Return True
     End Function
 

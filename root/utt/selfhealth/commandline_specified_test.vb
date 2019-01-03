@@ -10,7 +10,7 @@ Public Class commandline_specified_test
         Inherits [case]
 
         Public Overrides Function run() As Boolean
-            Return assert_true(False,
+            Return assertion.is_true(False,
                                "should never called only when commandline specific commandline_specified_test")
         End Function
     End Class

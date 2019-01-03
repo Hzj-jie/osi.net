@@ -13,8 +13,8 @@ Public Class managed_threadpool_behavior_test
         finished = New count_down_event(size)
         For i As Int32 = 0 To size - 1
             queue_in_managed_threadpool(Sub()
-                                            assert_true(Thread.CurrentThread().IsThreadPoolThread())
-                                            assert_true(Thread.CurrentThread().IsBackground())
+                                            assertion.is_true(Thread.CurrentThread().IsThreadPoolThread())
+                                            assertion.is_true(Thread.CurrentThread().IsBackground())
                                             finished.set()
                                         End Sub)
         Next
@@ -28,7 +28,7 @@ Public Class managed_threadpool_behavior_test
         For i As Int32 = 0 To 1024 - 1
             assert(start_thread(Nothing,
                                 Sub()
-                                    assert_false(Thread.CurrentThread().IsBackground())
+                                    assertion.is_false(Thread.CurrentThread().IsBackground())
                                     assert(finished.force_set())
                                 End Sub))
             assert(finished.wait())

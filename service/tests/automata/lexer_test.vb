@@ -68,12 +68,12 @@ Public Class lexer_test
             Dim s As String = Nothing
             exp = generate_sentense(s)
             Dim r As vector(Of lexer.word) = Nothing
-            assert_true(l.parse(s, r))
-            If assert_not_nothing(r) Then
-                assert_equal(exp.size(), r.size())
+            assertion.is_true(l.parse(s, r))
+            If assertion.is_not_null(r) Then
+                assertion.equal(exp.size(), r.size())
                 For i As Int32 = 0 To min(exp.size(), r.size()) - 1
-                    assert_equal(exp(i).type, r(i).type)
-                    assert_equal(exp(i).text, r(i).text)
+                    assertion.equal(exp(i).type, r(i).type)
+                    assertion.equal(exp(i).text, r(i).text)
                 Next
             End If
             Return True
@@ -83,7 +83,7 @@ Public Class lexer_test
             Dim l As lexer = Nothing
             l = New lexer(False, False)
             For i As Int32 = 0 To array_size(words) - 1
-                assert_true(l.define(words(i), i + lexer.first_user_type))
+                assertion.is_true(l.define(words(i), i + lexer.first_user_type))
             Next
             For i As Int32 = 0 To 100 - 1
                 If Not run_case(l) Then
@@ -167,18 +167,18 @@ Public Class lexer_test
             Dim s As String = Nothing
             exp = generate_sentense(ws, s)
             Dim r As vector(Of lexer.word) = Nothing
-            assert_true(l.parse(s, r))
-            If assert_not_nothing(r) Then
-                assert_equal(exp.size(), r.size())
+            assertion.is_true(l.parse(s, r))
+            If assertion.is_not_null(r) Then
+                assertion.equal(exp.size(), r.size())
                 For i As Int32 = 0 To max(exp.size(), r.size()) - 1
                     If i >= exp.size() Then
-                        assert_true(False, r(i).type, ":", r(i).text)
+                        assertion.is_true(False, r(i).type, ":", r(i).text)
                         Exit For
                     ElseIf i >= r.size() Then
-                        assert_true(False, exp(i).type, ":", exp(i).text)
+                        assertion.is_true(False, exp(i).type, ":", exp(i).text)
                         Exit For
-                    ElseIf Not assert_equal(exp(i).type, r(i).type, exp(i).text, " - ", r(i).text) OrElse
-                           Not assert_equal(exp(i).text, r(i).text, exp(i).type, " - ", r(i).type) Then
+                    ElseIf Not assertion.equal(exp(i).type, r(i).type, exp(i).text, " - ", r(i).text) OrElse
+                           Not assertion.equal(exp(i).text, r(i).text, exp(i).type, " - ", r(i).type) Then
                         Exit For
                     End If
                 Next
@@ -192,7 +192,7 @@ Public Class lexer_test
             Dim ws() As pair(Of String, UInt32) = Nothing
             ws = words()
             assert(Not isemptyarray(ws))
-            assert_true(l.define(ws))
+            assertion.is_true(l.define(ws))
             For i As Int32 = 0 To 100 - 1
                 If Not run_case(ws, l) Then
                     Return False

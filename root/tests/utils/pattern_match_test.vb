@@ -68,7 +68,7 @@ Public Class pattern_match_test
         For i As UInt32 = 0 To fit_pattern_cases.size() - uint32_1
             Dim result As Byte = 0
             result = fit_pattern_cases(i).first.second.fit_pattern(fit_pattern_cases(i).first.first)
-            assert_equal(result,
+            assertion.equal(result,
                          fit_pattern_cases(i).second,
                          "pattern == ",
                          fit_pattern_cases(i).first.first,
@@ -86,7 +86,7 @@ Public Class pattern_match_test
         For i As UInt32 = 0 To match_pattern_cases.size() - uint32_1
             Dim result As Boolean = False
             result = match_pattern_cases(i).first.second.match_pattern(match_pattern_cases(i).first.first)
-            assert_equal(result,
+            assertion.equal(result,
                          match_pattern_cases(i).second,
                          "pattern == ",
                          match_pattern_cases(i).first.first,

@@ -68,15 +68,15 @@ Friend Class set_case
         If validate() Then
             If rnd_int(0, 2) = 0 Then
                 confirm_not_empty()
-                assert_equal(keys.size(), s.size())
+                assertion.equal(keys.size(), s.size())
                 Dim i As UInt32 = 0
                 i = rnd_uint(uint32_0, keys.size())
-                assert_true(s.erase(keys(i)), "s.erase(", keys(i), ") returns false.")
-                assert_equal(s.find(keys(i)), s.end(), "s.find(", keys(i), ") <> s.end()")
+                assertion.is_true(s.erase(keys(i)), "s.erase(", keys(i), ") returns false.")
+                assertion.equal(s.find(keys(i)), s.end(), "s.find(", keys(i), ") <> s.end()")
                 keys.erase(i)
-                assert_equal(keys.size(), s.size())
+                assertion.equal(keys.size(), s.size())
             Else
-                assert_false(s.erase(rnd_key()))
+                assertion.is_false(s.erase(rnd_key()))
             End If
         Else
             s.erase(rnd_key())
@@ -89,9 +89,9 @@ Friend Class set_case
                 confirm_not_empty()
                 Dim i As UInt32
                 i = rnd_uint(uint32_0, keys.size())
-                assert_not_equal(s.find(keys(i)), s.end(), "s.find(", keys(i), ") = s.end()")
+                assertion.not_equal(s.find(keys(i)), s.end(), "s.find(", keys(i), ") = s.end()")
             Else
-                assert_equal(s.find(rnd_key()), s.end())
+                assertion.equal(s.find(rnd_key()), s.end())
             End If
         Else
             s.find(rnd_key())
@@ -104,11 +104,11 @@ Friend Class set_case
 #If pair_return_insert Then
         Dim r As pair(Of [set](Of String).iterator, Boolean) = Nothing
         r = s.insert(k)
-        If assert_not_nothing(r) Then
-            assert_equal(r.second, s.find(k) <> s.end(), "s.insert(", k, ") <> s.find")
+        If assertion.is_not_null(r) Then
+            assertion.equal(r.second, s.find(k) <> s.end(), "s.insert(", k, ") <> s.find")
         End If
 #Else
-        assert_equal(s.insert(k), s.find(k), "s.insert(", k, ") <> s.find")
+        assertion.equal(s.insert(k), s.find(k), "s.insert(", k, ") <> s.find")
 #End If
         If validate() Then
             keys.push_back(k)
@@ -118,9 +118,9 @@ Friend Class set_case
     Private Sub clone()
         Dim s2 As [set](Of String) = Nothing
         copy(s2, s)
-        assert_equal(object_compare(s, s2), object_compare_undetermined, "cannot clone to a new instance.")
+        assertion.equal(object_compare(s, s2), object_compare_undetermined, "cannot clone to a new instance.")
         If validate() Then
-            assert_equal(s.size(), s2.size())
+            assertion.equal(s.size(), s2.size())
             Dim sz As Int64 = 0
             sz = s.size()
             Dim c As Int64 = 0
@@ -133,17 +133,17 @@ Friend Class set_case
                     c = 0
                     it = base.begin()
                     While it <> base.end()
-                        assert_not_equal(camp.find(+it), camp.end())
+                        assertion.not_equal(camp.find(+it), camp.end())
                         c += 1
                         it += 1
                     End While
-                    assert_equal(c, base.size())
-                    assert_equal(c, sz)
+                    assertion.equal(c, base.size())
+                    assertion.equal(c, sz)
                 End Sub
             cmp(s, s2)
             cmp(s2, s)
 
-            assert_equal(s.size(), s2.size())
+            assertion.equal(s.size(), s2.size())
         End If
     End Sub
 
@@ -153,16 +153,16 @@ Friend Class set_case
             Dim c As Int64 = 0
             it = s.begin()
             While it <> s.end()
-                assert_not_equal(keys.find(+it), npos)
+                assertion.not_equal(keys.find(+it), npos)
                 c += 1
                 it += 1
             End While
-            assert_equal(c, keys.size())
-            assert_equal(c, s.size())
+            assertion.equal(c, keys.size())
+            assertion.equal(c, s.size())
         End If
         s.clear()
-        assert_equal(CUInt(s.size()), uint32_0, "s.size()<>0 after clear.")
-        assert_true(s.empty())
+        assertion.equal(CUInt(s.size()), uint32_0, "s.size()<>0 after clear.")
+        assertion.is_true(s.empty())
         If validate() Then
             keys.clear()
         End If

@@ -10,13 +10,13 @@ Public Class thread_timing_test
     Private Shared Sub assert_process_priority(ByVal ppc As ProcessPriorityClass)
         'for mono
         Try
-            assert_true(ppc = Process.GetCurrentProcess().PriorityClass())
+            assertion.is_true(ppc = Process.GetCurrentProcess().PriorityClass())
         Catch
         End Try
     End Sub
 
     Private Shared Sub assert_thread_priority(ByVal tpc As ThreadPriority)
-        assert_true(tpc = Thread.CurrentThread().Priority())
+        assertion.is_true(tpc = Thread.CurrentThread().Priority())
     End Sub
 
     Public Overrides Function run() As Boolean

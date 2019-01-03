@@ -48,7 +48,7 @@ Public Class environment_transform_test
         Next
         Dim o As String = Nothing
         o = p.env_transform()
-        assert_equal(o, e, p, " -> ", o, ", exp ", e)
+        assertion.equal(o, e, p, " -> ", o, ", exp ", e)
         Return True
     End Function
 

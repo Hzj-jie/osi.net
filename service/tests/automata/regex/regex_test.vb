@@ -65,11 +65,11 @@ Namespace rlexer
             For i As UInt32 = 0 To array_size(cases) - uint32_1
                 assert(Not cases(i) Is Nothing)
                 Dim c As regex = Nothing
-                If assert_true(regex.create(macros.default.expand(cases(i).regex), c)) AndAlso
-                   assert_not_nothing(c) Then
+                If assertion.is_true(regex.create(macros.default.expand(cases(i).regex), c)) AndAlso
+                   assertion.is_not_null(c) Then
                     Dim j As UInt32 = 0
                     While j < array_size(cases(i).matches)
-                        assert_true(c.match_to_end(cases(i).matches(j)),
+                        assertion.is_true(c.match_to_end(cases(i).matches(j)),
                                     cases(i).regex,
                                     " does not match ",
                                     cases(i).matches(j))
@@ -77,7 +77,7 @@ Namespace rlexer
                     End While
                     j = 0
                     While j < array_size(cases(i).unmatches)
-                        assert_false(c.match_to_end(cases(i).unmatches(j)),
+                        assertion.is_false(c.match_to_end(cases(i).unmatches(j)),
                                      cases(i).regex,
                                      " matches ",
                                      cases(i).unmatches(j))

@@ -31,11 +31,11 @@ Public Class socket_overlapped_peek_behavior_test
         Try
             c.Connect(IPAddress.Loopback, port)
         Catch ex As Exception
-            assert_true(False, ex)
+            assertion.is_true(False, ex)
             Return
         End Try
         For i As Int32 = 0 To repeat_size - 1
-            assert_true(ready.WaitOne())
+            assertion.is_true(ready.WaitOne())
             sleep(rnd_int(1, 5))
             Dim b() As Byte = Nothing
             b = next_bytes(data_size)
@@ -57,7 +57,7 @@ Public Class socket_overlapped_peek_behavior_test
         Dim r As TcpClient = Nothing
         r = l.AcceptTcpClient()
         For i As Int32 = 0 To repeat_size - 1
-            assert_true(ready.Set())
+            assertion.is_true(ready.Set())
             Dim buffs As vector(Of Byte()) = Nothing
             buffs = New vector(Of Byte())()
             Dim whs As vector(Of WaitHandle) = Nothing
@@ -71,7 +71,7 @@ Public Class socket_overlapped_peek_behavior_test
                                                          data_size,
                                                          SocketFlags.Peek,
                                                          Sub(ar As IAsyncResult)
-                                                             assert_equal(r.Client().EndReceive(ar), data_size)
+                                                             assertion.equal(r.Client().EndReceive(ar), data_size)
                                                          End Sub,
                                                          Nothing).AsyncWaitHandle())
             Next
@@ -82,12 +82,12 @@ Public Class socket_overlapped_peek_behavior_test
                                     data_size,
                                     SocketFlags.None,
                                     Sub(ar As IAsyncResult)
-                                        assert_equal(r.Client().EndReceive(ar), data_size)
+                                        assertion.equal(r.Client().EndReceive(ar), data_size)
                                     End Sub,
                                     Nothing).AsyncWaitHandle().WaitOne()
 
             For j As Int32 = 0 To overlapped_size - 1
-                assert_array_equal(buffs(j), buff)
+                assertion.array_equal(buffs(j), buff)
             Next
         Next
         r.Close()

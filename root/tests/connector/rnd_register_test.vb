@@ -23,7 +23,7 @@ Public Class rnd_register_test
         rnd(Of Double)()
         rnd(Of String)()
 
-        assert_not_nothing(rnd(Of test_class)())
+        assertion.is_not_null(rnd(Of test_class)())
         Return True
     End Function
 End Class

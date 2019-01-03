@@ -15,10 +15,10 @@ Public Class zipgen_test
     End Sub
 
     Public Overrides Function run() As Boolean
-        If assert_equal(array_size(data), CUInt(1349206)) AndAlso
-           assert_equal(array_size(data), array_size(zipdata)) Then
+        If assertion.equal(array_size(data), CUInt(1349206)) AndAlso
+           assertion.equal(array_size(data), array_size(zipdata)) Then
             For i As UInt32 = 0 To array_size(data) - 1
-                assert_equal(data(i), zipdata(i))
+                assertion.equal(data(i), zipdata(i))
             Next
         End If
         Return True

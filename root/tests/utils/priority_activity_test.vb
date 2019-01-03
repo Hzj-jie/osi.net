@@ -44,8 +44,8 @@ Public Class priority_activity_test
                        Using p As shell_less_process = New shell_less_process()
                            p.start_info().FileName() = priority_activity_exe_full_path
                            p.start_info().Arguments() = s
-                           If assert_true(p.start()) Then
-                               assert_true(execute_in_managed_threadpool(
+                           If assertion.is_true(p.start()) Then
+                               assertion.is_true(execute_in_managed_threadpool(
                                                Sub()
                                                    While True
                                                        Dim l As String = Nothing
@@ -54,9 +54,9 @@ Public Class priority_activity_test
                                                            Exit While
                                                        End If
                                                    End While
-                                                   assert_equal((+p).PriorityClass(), ppc)
+                                                   assertion.equal((+p).PriorityClass(), ppc)
                                                    p.stdin().WriteLine()
-                                                   If Not assert_true(p.wait_for_exit(
+                                                   If Not assertion.is_true(p.wait_for_exit(
                                                               seconds_to_milliseconds(10))) Then
                                                        p.quit()
                                                    End If

@@ -19,9 +19,9 @@ Public Class chmod_test
                                      strcat(guid_str(),
                                             filesystem.extension_prefix,
                                             filesystem.extensions.executable_file))
-            If assert_true(chmod_test_exe.sync_export(file_name)) AndAlso
-               assert_true(File.Exists(file_name)) AndAlso
-               assert_true(chmod_exe(file_name)) Then
+            If assertion.is_true(chmod_test_exe.sync_export(file_name)) AndAlso
+               assertion.is_true(File.Exists(file_name)) AndAlso
+               assertion.is_true(chmod_exe(file_name)) Then
                 Dim p As shell_less_process = Nothing
                 p = New shell_less_process()
                 Dim s1 As String = Nothing
@@ -31,11 +31,11 @@ Public Class chmod_test
                 p.start_info().FileName() = file_name
                 p.start_info().Arguments() = strcat(s1, character.blank, s2)
                 Dim ex As Exception = Nothing
-                assert_true(p.start(ex))
-                assert_nothing(ex, If(ex Is Nothing, Nothing, ex.Message()))
+                assertion.is_true(p.start(ex))
+                assertion.is_null(ex, If(ex Is Nothing, Nothing, ex.Message()))
                 p.wait_for_exit()
                 ' the output contains an \r\n
-                assert_equal(p.stdout_str(),
+                assertion.equal(p.stdout_str(),
                              strcat(s1, newline.incode(), s2, newline.incode()))
                 p.dispose()
             End If

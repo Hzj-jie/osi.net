@@ -81,7 +81,7 @@ Public Class http_server_test
                                   End Function,
                                   Function() As Boolean
                                       If ec.end_result() AndAlso
-                                         assert_not_nothing(+resp) Then
+                                         assertion.is_not_null(+resp) Then
                                           ReDim buff(CInt((+resp).ContentLength() - 1))
                                           ec = (New stream_flow_adapter((+resp).GetResponseStream())). _
                                                    receive(buff,
@@ -94,20 +94,20 @@ Public Class http_server_test
                                       End If
                                   End Function,
                                   Function() As Boolean
-                                      If assert_true(ec.end_result()) Then
+                                      If assertion.is_true(ec.end_result()) Then
                                           Dim j As Int32 = 0
-                                          If assert_true(Int32.TryParse(enc.GetString(buff),
+                                          If assertion.is_true(Int32.TryParse(enc.GetString(buff),
                                                                         j)) Then
-                                              assert_less_or_equal(j, +request_times)
-                                              assert_less_or_equal(response_times.increment(), +request_times)
+                                              assertion.less_or_equal(j, +request_times)
+                                              assertion.less_or_equal(response_times.increment(), +request_times)
                                           End If
                                       End If
                                       If (+resp) Is Nothing Then
                                           w.Abort()
                                       Else
                                           Dim wr As HttpWebResponse = Nothing
-                                          assert_true(direct_cast(+resp, wr))
-                                          assert_not_nothing(Not wr Is Nothing)
+                                          assertion.is_true(direct_cast(+resp, wr))
+                                          assertion.is_not_null(Not wr Is Nothing)
                                           wr.GetResponseStream().Close()
                                           wr.GetResponseStream().Dispose()
                                           wr.Close()
@@ -124,8 +124,8 @@ Public Class http_server_test
             s = New server(New server.configuration() With {.ls = New link_status(seconds_to_milliseconds(15))})
             AddHandler http_listener_context_handle.[New](s).handle_context, AddressOf handle_context
             For j As Int32 = 0 To repeat - 1
-                If assert_true(s.add_port(port)) AndAlso
-                   assert_true(s.start()) Then
+                If assertion.is_true(s.add_port(port)) AndAlso
+                   assertion.is_true(s.start()) Then
                     Dim ecs() As event_comb = Nothing
                     ReDim ecs(parallel - 1)
                     For i As Int32 = 0 To parallel - 1
@@ -141,7 +141,7 @@ Public Class http_server_test
                                                    Return True
                                                End Function)
                     s.stop(30)
-                    assert_equal(s.connection_count(), 0)
+                    assertion.equal(s.connection_count(), 0)
                 End If
             Next
             Return True
@@ -168,8 +168,8 @@ Public Class http_server_test
 
         Public Overrides Function finish() As Boolean
             If started Then
-                assert_more_or_equal_and_less_or_equal(request_success_rate(), 0.9999, 1)
-                assert_more_or_equal_and_less_or_equal(response_success_rate(), 0.9999, 1)
+                assertion.more_or_equal_and_less_or_equal(request_success_rate(), 0.9999, 1)
+                assertion.more_or_equal_and_less_or_equal(response_success_rate(), 0.9999, 1)
             End If
             Return MyBase.finish()
         End Function

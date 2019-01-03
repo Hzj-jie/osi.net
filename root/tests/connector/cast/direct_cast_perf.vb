@@ -73,16 +73,16 @@ Public Class direct_cast_perf
         Inherits [case]
 
         Public Overrides Function run() As Boolean
-            assert_false(direct_cast(i1obj, i2obj2))
-            assert_true(direct_cast(i2obj, i1obj2))
-            assert_false(direct_cast(c1obj, c2obj2))
-            assert_true(direct_cast(c2obj, c1obj2))
-            assert_true(direct_cast(c3obj, i1obj2))
-            assert_true(direct_cast(i1obj, c3obj2))
-            assert_false(direct_cast(c3obj, c4obj2))
-            assert_true(direct_cast(c4obj, c3obj2))
-            assert_true(direct_cast(c4obj, i2obj2))
-            assert_true(direct_cast(i2obj, c4obj2))
+            assertion.is_false(direct_cast(i1obj, i2obj2))
+            assertion.is_true(direct_cast(i2obj, i1obj2))
+            assertion.is_false(direct_cast(c1obj, c2obj2))
+            assertion.is_true(direct_cast(c2obj, c1obj2))
+            assertion.is_true(direct_cast(c3obj, i1obj2))
+            assertion.is_true(direct_cast(i1obj, c3obj2))
+            assertion.is_false(direct_cast(c3obj, c4obj2))
+            assertion.is_true(direct_cast(c4obj, c3obj2))
+            assertion.is_true(direct_cast(c4obj, i2obj2))
+            assertion.is_true(direct_cast(i2obj, c4obj2))
 
             Return True
         End Function
@@ -94,62 +94,62 @@ Public Class direct_cast_perf
         Public Overrides Function run() As Boolean
             Try
                 i2obj2 = DirectCast(i1obj, i2)
-                assert_true(False)
+                assertion.is_true(False)
             Catch ex As Exception
             End Try
 
             Try
                 i1obj2 = DirectCast(i2obj, i1)
             Catch ex As Exception
-                assert_true(False)
+                assertion.is_true(False)
             End Try
 
             Try
                 c2obj2 = DirectCast(c1obj, c2)
-                assert_true(False)
+                assertion.is_true(False)
             Catch ex As Exception
             End Try
 
             Try
                 c1obj2 = DirectCast(c2obj, c1)
             Catch ex As Exception
-                assert_true(False)
+                assertion.is_true(False)
             End Try
 
             Try
                 i1obj2 = DirectCast(c3obj, i1)
             Catch ex As Exception
-                assert_true(False)
+                assertion.is_true(False)
             End Try
 
             Try
                 c3obj2 = DirectCast(i1obj, c3)
             Catch ex As Exception
-                assert_true(False)
+                assertion.is_true(False)
             End Try
 
             Try
                 c4obj2 = DirectCast(DirectCast(c3obj, Object), c4)
-                assert_true(False)
+                assertion.is_true(False)
             Catch ex As Exception
             End Try
 
             Try
                 c3obj2 = DirectCast(c4obj, c3)
             Catch ex As Exception
-                assert_true(False)
+                assertion.is_true(False)
             End Try
 
             Try
                 i2obj2 = DirectCast(c4obj, i2)
             Catch ex As Exception
-                assert_true(False)
+                assertion.is_true(False)
             End Try
 
             Try
                 c4obj2 = DirectCast(i2obj, c4)
             Catch ex As Exception
-                assert_true(False)
+                assertion.is_true(False)
             End Try
 
             Return True

@@ -41,7 +41,7 @@ Friend Class heapless_case4
         Public Overrides Function run() As Boolean
             If rnd_bool() OrElse s.get() > (multithreading_case_wrapper.running_thread_count() >> 1) Then
                 If s.decrement() >= 0 Then
-                    assert_true(q.pop(Nothing))
+                    assertion.is_true(q.pop(Nothing))
                 Else
                     s.increment()
                     q.emplace(rnd_int())
@@ -56,9 +56,9 @@ Friend Class heapless_case4
 
         Public Overrides Function finish() As Boolean
             While s.decrement() >= 0
-                assert_true(q.pop(Nothing))
+                assertion.is_true(q.pop(Nothing))
             End While
-            assert_false(q.pop(Nothing))
+            assertion.is_false(q.pop(Nothing))
             Return MyBase.finish()
         End Function
     End Class

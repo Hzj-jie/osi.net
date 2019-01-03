@@ -17,28 +17,28 @@ Public NotInheritable Class typeless_invoker_test
 
     Private Shared Sub run_case(ByVal type_name As String)
         Dim i As invoker(Of Func(Of Int32, Int32)) = Nothing
-        assert_true(typeless_invoker.of(i).
+        assertion.is_true(typeless_invoker.of(i).
                         with_type_name(type_name).
                         with_binding_flags(binding_flags.static_private_method).
                         with_name("f").
                         build(i))
-        assert_not_nothing(i)
+        assertion.is_not_null(i)
         For j As Int32 = -100 To 100
-            assert_equal(direct_cast(Of Int32)(i.invoke(Nothing, j)), j + 1)
+            assertion.equal(direct_cast(Of Int32)(i.invoke(Nothing, j)), j + 1)
         Next
     End Sub
 
     Private Shared Sub run_case(ByVal type_name As String, ByVal assembly_name As String)
         Dim i As invoker(Of Func(Of Int32, Int32)) = Nothing
-        assert_true(typeless_invoker.of(i).
+        assertion.is_true(typeless_invoker.of(i).
                         with_type_name(type_name).
                         with_assembly_name(assembly_name).
                         with_binding_flags(binding_flags.static_private_method).
                         with_name("f").
                         build(i))
-        assert_not_nothing(i)
+        assertion.is_not_null(i)
         For j As Int32 = -100 To 100
-            assert_equal(direct_cast(Of Int32)(i.invoke(Nothing, j)), j + 1)
+            assertion.equal(direct_cast(Of Int32)(i.invoke(Nothing, j)), j + 1)
         Next
     End Sub
 
@@ -57,21 +57,21 @@ Public NotInheritable Class typeless_invoker_test
         run_case(".typeless_invoker_test", GetType(typeless_invoker_test).Assembly().FullName())
 
         Dim i As invoker(Of Func(Of Int32, Int32)) = Nothing
-        assert_false(typeless_invoker.of(i).
+        assertion.is_false(typeless_invoker.of(i).
                          with_type_name("osi.tests.root.utils.typeless_invoker_test, osi.tests.root.utils").
                          with_binding_flags(binding_flags.static_public_method).
                          with_name("f").
                          build(i))
-        assert_false(typeless_invoker.of(i).
+        assertion.is_false(typeless_invoker.of(i).
                          with_type_name("osi.tests.root.utils.typeless_invoker_test, osi.tests.root.utils").
                          with_binding_flags(binding_flags.instance_private_method).
                          with_name("f").
                          build(i))
-        assert_false(typeless_invoker.of(i).
+        assertion.is_false(typeless_invoker.of(i).
                          with_type_name("osi.tests.root.utils.typeless_invoker_test, osi.tests.root.utils").
                          with_name("fg").
                          build(i))
-        assert_false(typeless_invoker.of(i).
+        assertion.is_false(typeless_invoker.of(i).
                          with_type_name("osi.tests.root.utils.typeless_invoker_test2, osi.tests.root.utils").
                          with_name("fg").
                          build(i))

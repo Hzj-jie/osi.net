@@ -39,8 +39,8 @@ Namespace primitive
             End If
             Dim d2 As data_block = Nothing
             d2 = New data_block()
-            assert_true(d2.import(s))
-            assert_equal(d1, d2)
+            assertion.is_true(d2.import(s))
+            assertion.equal(d1, d2)
             Return d2
         End Function
     End Class

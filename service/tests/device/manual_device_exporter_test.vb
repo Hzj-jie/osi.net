@@ -30,10 +30,10 @@ Public Class manual_device_exporter_test
             c = New atomic_int()
             b = New bit_array()
             AddHandler m.new_device_exported, Sub(d As idevice(Of Int32), ByRef export_result As Boolean)
-                                                  If assert_not_nothing(d) Then
+                                                  If assertion.is_not_null(d) Then
                                                       c.increment()
-                                                      assert_less_or_equal(+c, +i)
-                                                      assert_false(b(d.get()))
+                                                      assertion.less_or_equal(+c, +i)
+                                                      assertion.is_false(b(d.get()))
                                                       b(d.get()) = True
                                                   End If
                                                   export_result = True
@@ -50,12 +50,12 @@ Public Class manual_device_exporter_test
         End Function
 
         Public Overrides Function run() As Boolean
-            assert_true(m.inject((i.increment() - 1).make_device()))
+            assertion.is_true(m.inject((i.increment() - 1).make_device()))
             Return True
         End Function
 
         Public Overrides Function finish() As Boolean
-            assert_equal(+c, device_id_space)
+            assertion.equal(+c, device_id_space)
             assert(+i, device_id_space)
             b.clear()
             Return MyBase.finish()

@@ -14,10 +14,10 @@ Namespace rlexer
             g = New optional_matching_group(New string_matching_group("a", "b", "c"))
             Dim v As vector(Of UInt32) = Nothing
             v = g.match("abc")
-            If assert_true(Not v.null_or_empty()) AndAlso
-               assert_equal(v.size(), CUInt(2)) Then
-                assert_equal(v(0), uint32_1)
-                assert_equal(v(1), uint32_0)
+            If assertion.is_true(Not v.null_or_empty()) AndAlso
+               assertion.equal(v.size(), CUInt(2)) Then
+                assertion.equal(v(0), uint32_1)
+                assertion.equal(v(1), uint32_0)
             End If
             Return True
         End Function
@@ -27,10 +27,10 @@ Namespace rlexer
             g = New optional_matching_group(New string_matching_group("abc"))
             Dim v As vector(Of UInt32) = Nothing
             v = g.match("abc")
-            If assert_true(Not v.null_or_empty()) AndAlso
-               assert_equal(v.size(), CUInt(2)) Then
-                assert_equal(v(0), CUInt(3))
-                assert_equal(v(1), uint32_0)
+            If assertion.is_true(Not v.null_or_empty()) AndAlso
+               assertion.equal(v.size(), CUInt(2)) Then
+                assertion.equal(v(0), CUInt(3))
+                assertion.equal(v(1), uint32_0)
             End If
             Return True
         End Function
@@ -40,10 +40,10 @@ Namespace rlexer
             g = New optional_matching_group(New any_character_matching_group())
             Dim v As vector(Of UInt32) = Nothing
             v = g.match("abc")
-            If assert_true(Not v.null_or_empty()) AndAlso
-               assert_equal(v.size(), CUInt(2)) Then
-                assert_equal(v(0), uint32_1)
-                assert_equal(v(1), uint32_0)
+            If assertion.is_true(Not v.null_or_empty()) AndAlso
+               assertion.equal(v.size(), CUInt(2)) Then
+                assertion.equal(v(0), uint32_1)
+                assertion.equal(v(1), uint32_0)
             End If
             Return True
         End Function
@@ -53,9 +53,9 @@ Namespace rlexer
             g = New optional_matching_group(New string_matching_group("abc"))
             Dim v As vector(Of UInt32) = Nothing
             v = g.match("bcd")
-            If assert_true(Not v.null_or_empty()) AndAlso
-               assert_equal(v.size(), uint32_1) Then
-                assert_equal(v(0), uint32_0)
+            If assertion.is_true(Not v.null_or_empty()) AndAlso
+               assertion.equal(v.size(), uint32_1) Then
+                assertion.equal(v(0), uint32_0)
             End If
             Return True
         End Function
@@ -65,9 +65,9 @@ Namespace rlexer
             g = New optional_matching_group(New any_character_matching_group())
             Dim v As vector(Of UInt32) = Nothing
             v = g.match("")
-            If assert_true(Not v.null_or_empty()) AndAlso
-               assert_equal(v.size(), uint32_1) Then
-                assert_equal(v(0), uint32_0)
+            If assertion.is_true(Not v.null_or_empty()) AndAlso
+               assertion.equal(v.size(), uint32_1) Then
+                assertion.equal(v(0), uint32_0)
             End If
             Return True
         End Function

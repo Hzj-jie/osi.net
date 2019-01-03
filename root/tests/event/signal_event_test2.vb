@@ -39,7 +39,7 @@ Public Class signal_event_test2
 
             Public Sub run() Implements iaction.run
                 before()
-                assert_equal(called.increment(), 1)
+                assertion.equal(called.increment(), 1)
             End Sub
 
             Public Function valid() As Boolean Implements iaction.valid
@@ -63,11 +63,11 @@ Public Class signal_event_test2
         Private Function caller() As Boolean
             If v.mark_in_use() Then
                 'all the callbacks are finished
-                assert_false(se.marked())
+                assertion.is_false(se.marked())
                 se.mark()
             Else
                 'callbacks are involving
-                'assert_true(se.marked())   ' the se.unmark() may be called right before the v.release()
+                'assertion.is_true(se.marked())   ' the se.unmark() may be called right before the v.release()
             End If
             random_sleep()
             Return True
@@ -76,12 +76,12 @@ Public Class signal_event_test2
         Private Function callee() As Boolean
             Dim a As signal_event_test_action = Nothing
             a = New signal_event_test_action(Sub()
-                                                 assert_true(se.marked())
-                                                 assert_true(v.in_use())
+                                                 assertion.is_true(se.marked())
+                                                 assertion.is_true(v.in_use())
                                                  If Not se.attached() Then
                                                      'the last in the event queue
                                                      se.unmark()
-                                                     If assert_true(v.in_use()) Then
+                                                     If assertion.is_true(v.in_use()) Then
                                                          'avoid assert
                                                          v.release()
                                                      End If
@@ -90,7 +90,7 @@ Public Class signal_event_test2
             SyncLock e
                 e.emplace_back(a)
             End SyncLock
-            assert_true(se.attach(a))
+            assertion.is_true(se.attach(a))
             random_sleep()
             Return True
         End Function
@@ -112,18 +112,18 @@ Public Class signal_event_test2
         End Function
 
         Public Overrides Function finish() As Boolean
-            assert_true(caller())
-            assert_false(se.attached())
-            assert_true(callee() And caller() And caller())
-            assert_false(se.attached())
-            assert_true(v.in_use())
-            assert_true(se.marked())
-            assert_more(e.size(), uint32_0)
-            assert_equal(se.attached_count(), 0)
-            assert_false(se.attached())
+            assertion.is_true(caller())
+            assertion.is_false(se.attached())
+            assertion.is_true(callee() And caller() And caller())
+            assertion.is_false(se.attached())
+            assertion.is_true(v.in_use())
+            assertion.is_true(se.marked())
+            assertion.more(e.size(), uint32_0)
+            assertion.equal(se.attached_count(), 0)
+            assertion.is_false(se.attached())
             For i As Int32 = 0 To e.size() - 1
                 assert(Not e(i) Is Nothing)
-                assert_equal(e(i).called_times(), 1)
+                assertion.equal(e(i).called_times(), 1)
             Next
             Return MyBase.finish()
         End Function

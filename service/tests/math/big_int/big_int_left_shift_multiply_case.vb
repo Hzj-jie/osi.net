@@ -25,7 +25,7 @@ Friend Class big_int_left_shift_multiply_case
             t = rnd_int(1, bit_count_in_byte * sizeof_int32)
             sr.left_shift(t)
             mr.multiply(uint32_1 << t)
-            assert_true(sr.equal(mr))
+            assertion.is_true(sr.equal(mr))
         Next
         Return True
     End Function

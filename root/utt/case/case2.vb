@@ -117,8 +117,8 @@ Partial Public NotInheritable Class case2
         End Sub
 
         Public Sub assert_succeeded(ByVal cases As UInt32)
-            assert_equal(Me.cases, cases)
-            assert_equal(Me.succeeded, cases)
+            assertion.equal(Me.cases, cases)
+            assertion.equal(Me.succeeded, cases)
         End Sub
 
         Public Sub assert_succeeded()

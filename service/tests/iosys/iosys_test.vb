@@ -59,11 +59,11 @@ Public Class iosys_test
 
         Public Function receive(ByVal c As iosys_test_case) _
                                As event_comb Implements ireceiver(Of iosys_test_case).receive
-            If assert_not_nothing(c) Then
+            If assertion.is_not_null(c) Then
                 Dim lc As iosys_test_case = Nothing
-                While assert_true(q.pop(lc))
+                While assertion.is_true(q.pop(lc))
                     assert(Not lc Is Nothing)
-                    If assert_equal(c.value, lc.value) Then
+                    If assertion.equal(c.value, lc.value) Then
                         Exit While
                     End If
                 End While
@@ -72,18 +72,18 @@ Public Class iosys_test
         End Function
 
         Public Sub start(ByVal round As Int64, ByVal interval_ms As Int64)
-            assert_true(async_sync(New event_comb(Function() As Boolean
+            assertion.is_true(async_sync(New event_comb(Function() As Boolean
                                                       Return waitfor(Function() q.size() < flower_size,
                                                                      minutes_to_milliseconds(1)) AndAlso
                                                              goto_next()
                                                   End Function,
                                                   Function() As Boolean
-                                                      assert_less_or_equal(q.size(), flower_size)
+                                                      assertion.less_or_equal(q.size(), flower_size)
                                                       Dim c As iosys_test_case = Nothing
                                                       c = New iosys_test_case()
                                                       Dim f As Boolean = False
                                                       RaiseEvent deliver(c, f)
-                                                      assert_false(f)
+                                                      assertion.is_false(f)
                                                       q.emplace(c)
                                                       If round = 0 Then
                                                           Return goto_next()
@@ -97,7 +97,7 @@ Public Class iosys_test
                                                                      minutes_to_milliseconds(1)) AndAlso
                                                              goto_end()
                                                   End Function)))
-            assert_true(q.empty())
+            assertion.is_true(q.empty())
         End Sub
     End Class
 
@@ -129,15 +129,15 @@ Public Class iosys_test
     Public NotOverridable Overrides Function run() As Boolean
         Dim f As iosys(Of iosys_test_case) = Nothing
         Dim l As iosys(Of iosys_test_case) = Nothing
-        If assert_true(create_iosys(f, l)) Then
+        If assertion.is_true(create_iosys(f, l)) Then
             Dim ar As iosys_test_ar = Nothing
             ar = New iosys_test_ar()
-            If assert_true(f.listen(ar)) AndAlso
-               assert_true(l.notice(ar)) Then
+            If assertion.is_true(f.listen(ar)) AndAlso
+               assertion.is_true(l.notice(ar)) Then
                 ar.start(round, interval_ms)
             End If
         End If
-        assert_true(If(object_compare(f, l) = 0, f.stop(), f.stop() AndAlso l.stop()))
+        assertion.is_true(If(object_compare(f, l) = 0, f.stop(), f.stop() AndAlso l.stop()))
         'wait a second to let the iosys stop working
         sleep()
         Return True

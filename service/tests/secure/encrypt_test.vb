@@ -18,9 +18,9 @@ Public Class encrypt_test
 
         Private Shared Function run_case(ByVal parameter As String) As Boolean
             Dim e As encryptor = Nothing
-            If assert_true(osi.service.secure.create(parameter, e)) AndAlso
-               assert_not_nothing(e) AndAlso
-               assert_true(Not e.bypass() OrElse
+            If assertion.is_true(osi.service.secure.create(parameter, e)) AndAlso
+               assertion.is_not_null(e) AndAlso
+               assertion.is_true(Not e.bypass() OrElse
                            strsame(parameter, bypass_mode)) Then
                 Dim key() As Byte = Nothing
                 key = rnd_bytes(rnd_int(1, 256))
@@ -35,13 +35,13 @@ Public Class encrypt_test
                 assert(Not isemptyarray(ori))
                 Dim encrypted() As Byte = Nothing
                 Dim decrypted() As Byte = Nothing
-                If assert_true(e.encrypt(key, ori, encrypted)) AndAlso
-                   assert_true(e.decrypt(key, encrypted, decrypted)) Then
-                    assert_array_equal(ori, decrypted)
+                If assertion.is_true(e.encrypt(key, ori, encrypted)) AndAlso
+                   assertion.is_true(e.decrypt(key, encrypted, decrypted)) Then
+                    assertion.array_equal(ori, decrypted)
                     If e.bypass() OrElse e.bypass2() Then
-                        assert_array_equal(encrypted, ori)
+                        assertion.array_equal(encrypted, ori)
                     Else
-                        assert_array_not_equal(encrypted, ori)
+                        assertion.array_not_equal(encrypted, ori)
                     End If
                 End If
             End If

@@ -16,17 +16,17 @@ Public Class copy_test
         For i As Int32 = 0 To array_size_i(a) - 1
             a(i) = rnd_int(min_int32, max_int32)
         Next
-        assert_true(TypeOf a Is ICloneable)
+        assertion.is_true(TypeOf a Is ICloneable)
         Dim b() As Int32 = Nothing
         For i As Int32 = 0 To 128 - 1
-            assert_true(copy(b, a))
-            assert_equal(array_size(a), array_size(b))
-            assert_not_equal(object_compare(a, b), 0)
+            assertion.is_true(copy(b, a))
+            assertion.equal(array_size(a), array_size(b))
+            assertion.not_equal(object_compare(a, b), 0)
         Next
         For i As Int32 = 0 To array_size_i(a) - 1
-            assert_equal(a(i), b(i))
+            assertion.equal(a(i), b(i))
             a(i) += 1
-            assert_not_equal(a(i), b(i))
+            assertion.not_equal(a(i), b(i))
         Next
         Return True
     End Function
@@ -35,8 +35,8 @@ Public Class copy_test
         Dim a As Int32 = 0
         a = rnd_int(min_int32, max_int32)
         Dim b As Int32 = 0
-        assert_true(copy(b, a))
-        assert_equal(a, b)
+        assertion.is_true(copy(b, a))
+        assertion.equal(a, b)
         Return True
     End Function
 
@@ -48,14 +48,14 @@ Public Class copy_test
         Next
         Dim b() As Int32 = Nothing
         For i As Int32 = 0 To 128 - 1
-            assert_true(implicit_conversions.copy_test_copy_object_case(b, a))
-            assert_equal(array_size(a), array_size(b))
-            assert_not_equal(object_compare(a, b), 0)
+            assertion.is_true(implicit_conversions.copy_test_copy_object_case(b, a))
+            assertion.equal(array_size(a), array_size(b))
+            assertion.not_equal(object_compare(a, b), 0)
         Next
         For i As Int32 = 0 To array_size_i(a) - 1
-            assert_equal(a(i), b(i))
+            assertion.equal(a(i), b(i))
             a(i) += 1
-            assert_not_equal(a(i), b(i))
+            assertion.not_equal(a(i), b(i))
         Next
         Return True
     End Function
@@ -69,9 +69,9 @@ Public Class copy_test
             c = rnd_int(min_int32, max_int32)
         Loop Until c <> a
         b = c
-        assert_false(implicit_conversions.copy_test_copy_non_clone_object_case(b, a))
-        assert_not_equal(a, b)
-        assert_equal(b, c)
+        assertion.is_false(implicit_conversions.copy_test_copy_non_clone_object_case(b, a))
+        assertion.not_equal(a, b)
+        assertion.equal(b, c)
         Return True
     End Function
 
@@ -84,10 +84,10 @@ Public Class copy_test
         Next
 
         Dim b() As Object = Nothing
-        assert_true(copy(b, a))
-        assert_equal(array_size_i(b), size)
+        assertion.is_true(copy(b, a))
+        assertion.equal(array_size_i(b), size)
         For i As Int32 = 0 To size - 1
-            assert_reference_equal(a(i), b(i))
+            assertion.reference_equal(a(i), b(i))
         Next
         Return True
     End Function

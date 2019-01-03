@@ -24,33 +24,33 @@ Public Class disposable_test
     End Class
 
     Private Shared Function default_case() As Boolean
-        assert_not_nothing(disposable(Of Stream).D())
-        assert_not_nothing(disposable(Of MemoryStream).D())
-        assert_not_nothing(disposable(Of ManualResetEvent).D())
-        assert_not_nothing(disposable(Of AutoResetEvent).D())
-        assert_not_nothing(disposable(Of TcpClient).D())
-        assert_not_nothing(disposable(Of UdpClient).D())
-        assert_not_nothing(disposable(Of TextWriter).D())
-        assert_not_nothing(disposable(Of IDisposable).D())
+        assertion.is_not_null(disposable(Of Stream).D())
+        assertion.is_not_null(disposable(Of MemoryStream).D())
+        assertion.is_not_null(disposable(Of ManualResetEvent).D())
+        assertion.is_not_null(disposable(Of AutoResetEvent).D())
+        assertion.is_not_null(disposable(Of TcpClient).D())
+        assertion.is_not_null(disposable(Of UdpClient).D())
+        assertion.is_not_null(disposable(Of TextWriter).D())
+        assertion.is_not_null(disposable(Of IDisposable).D())
         Return True
     End Function
 
     Private Shared Function register_case() As Boolean
-        assert_not_nothing(disposable(Of test_text_writer).D())
+        assertion.is_not_null(disposable(Of test_text_writer).D())
         Dim c As Int32 = 0
         disposable.register(Sub(x As test_text_writer)
                                 c += 1
-                                If assert_not_nothing(x) Then
+                                If assertion.is_not_null(x) Then
                                     assert(close_writer(x))
                                 End If
                             End Sub)
         disposable.dispose(New test_text_writer())
-        assert_equal(c, 1)
+        assertion.equal(c, 1)
         disposable.dispose(New test_text_writer())
-        assert_equal(c, 2)
+        assertion.equal(c, 2)
         disposable(Of test_text_writer).unregister()
         disposable.dispose(New test_text_writer())
-        assert_equal(c, 2)
+        assertion.equal(c, 2)
         Return True
     End Function
 
@@ -67,7 +67,7 @@ Public Class disposable_test
         disposable.register(GetType(test_interface),
                             Sub(ByVal i As Object)
                                 Dim t As test_interface = Nothing
-                                assert_true(direct_cast(i, t))
+                                assertion.is_true(direct_cast(i, t))
                                 disposed.emplace_back(t)
                             End Sub)
         Dim a As test_class(Of Int32) = Nothing
@@ -80,10 +80,10 @@ Public Class disposable_test
         disposable.dispose(b)
         disposable.dispose(c)
 
-        If assert_equal(disposed.size(), CUInt(3)) Then
-            assert_equal(object_compare(a, disposed(0)), 0)
-            assert_equal(object_compare(b, disposed(1)), 0)
-            assert_equal(object_compare(c, disposed(2)), 0)
+        If assertion.equal(disposed.size(), CUInt(3)) Then
+            assertion.equal(object_compare(a, disposed(0)), 0)
+            assertion.equal(object_compare(b, disposed(1)), 0)
+            assertion.equal(object_compare(c, disposed(2)), 0)
         End If
         Return True
     End Function

@@ -36,22 +36,22 @@ Public Class implement_test
         Dim m As M = Nothing
         m = New M()
         Dim i3 As I3 = Nothing
-        assert_false(cast(m, i3))
-        assert_nothing(i3)
+        assertion.is_false(cast(m, i3))
+        assertion.is_null(i3)
         Dim m2 As M2 = Nothing
         m2 = New M2()
-        assert_true(cast(m2, i3))
-        assert_not_nothing(i3)
+        assertion.is_true(cast(m2, i3))
+        assertion.is_not_null(i3)
 
-        assert_true(m.GetType().GetInterface("I1") Is GetType(I1))
-        assert_true(m.GetType().GetInterface("I2") Is GetType(I2))
-        assert_false(m.GetType().GetInterface("I3") Is GetType(I3))
-        assert_nothing(m.GetType().GetInterface("I3"))
-        assert_equal(array_size(m.GetType().GetInterfaces()), CUInt(2))
-        assert_true(m2.GetType().GetInterface("I1") Is GetType(I1))
-        assert_true(m2.GetType().GetInterface("I2") Is GetType(I2))
-        assert_true(m2.GetType().GetInterface("I3") Is GetType(I3))
-        assert_equal(array_size(m2.GetType().GetInterfaces()), CUInt(3))
+        assertion.is_true(m.GetType().GetInterface("I1") Is GetType(I1))
+        assertion.is_true(m.GetType().GetInterface("I2") Is GetType(I2))
+        assertion.is_false(m.GetType().GetInterface("I3") Is GetType(I3))
+        assertion.is_null(m.GetType().GetInterface("I3"))
+        assertion.equal(array_size(m.GetType().GetInterfaces()), CUInt(2))
+        assertion.is_true(m2.GetType().GetInterface("I1") Is GetType(I1))
+        assertion.is_true(m2.GetType().GetInterface("I2") Is GetType(I2))
+        assertion.is_true(m2.GetType().GetInterface("I3") Is GetType(I3))
+        assertion.equal(array_size(m2.GetType().GetInterfaces()), CUInt(3))
         Return True
     End Function
 End Class

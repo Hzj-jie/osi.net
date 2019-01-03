@@ -48,7 +48,7 @@ Public Class object_unique_set_test
                             Exit For
                         End If
                     Next
-                    assert_less(CUInt(j), array_size(o))
+                    assertion.less(CUInt(j), array_size(o))
                 End If
             End If
             Return True

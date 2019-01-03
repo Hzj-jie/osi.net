@@ -17,32 +17,32 @@ Public Class manual_device_exporter_adapter_test
                                                         Return CDbl(k)
                                                     End Function)
         AddHandler j.new_device_exported, Sub(k As idevice(Of Double), ByRef export_result As Boolean)
-                                              assert_equal(k.get(), CDbl(c))
+                                              assertion.equal(k.get(), CDbl(c))
                                               export_result = True
                                               exported += 1
                                           End Sub
         AddHandler j.after_start, Sub()
-                                      assert_true(i.started())
+                                      assertion.is_true(i.started())
                                       started = True
                                   End Sub
         AddHandler j.after_stop, Sub()
-                                     assert_true(i.stopped())
+                                     assertion.is_true(i.stopped())
                                      stopped = True
                                  End Sub
-        assert_true(j.start())
-        assert_true(j.started())
-        assert_false(j.stopped())
-        assert_true(started)
+        assertion.is_true(j.start())
+        assertion.is_true(j.started())
+        assertion.is_false(j.stopped())
+        assertion.is_true(started)
 
         For c = 0 To 1000
-            assert_true(i.inject(c.make_device()))
-            assert_equal(exported, c + 1)
+            assertion.is_true(i.inject(c.make_device()))
+            assertion.equal(exported, c + 1)
         Next
 
-        assert_true(j.stop())
-        assert_true(j.stopped())
-        assert_false(j.started())
-        assert_true(stopped)
+        assertion.is_true(j.stop())
+        assertion.is_true(j.stopped())
+        assertion.is_false(j.started())
+        assertion.is_true(stopped)
 
         Return True
     End Function

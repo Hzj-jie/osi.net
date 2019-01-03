@@ -17,14 +17,14 @@ Partial Friend NotInheritable Class host
 
     Private Shared Sub assert_running_time()
         assert(commandline.has_specified_selections() OrElse
-               assert_less_or_equal(nowadays.milliseconds(), expected_end_ms))
+               assertion.less_or_equal(nowadays.milliseconds(), expected_end_ms))
     End Sub
 
     Public Shared Function execute_case(ByVal c As [case]) As Boolean
         assert(Not c Is Nothing)
-        Return (assert_true(do_(AddressOf c.prepare, False), "failed to prepare case ", c.full_name) AndAlso
-                assert_true(do_(AddressOf c.run, False), "failed to run case ", c.full_name)) And
-               assert_true(do_(AddressOf c.finish, False), "failed to finish case ", c.full_name)
+        Return (assertion.is_true(do_(AddressOf c.prepare, False), "failed to prepare case ", c.full_name) AndAlso
+                assertion.is_true(do_(AddressOf c.run, False), "failed to run case ", c.full_name)) And
+               assertion.is_true(do_(AddressOf c.finish, False), "failed to finish case ", c.full_name)
     End Function
 
     Private Shared Function execute_case(ByVal c As case_info) As Boolean

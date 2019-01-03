@@ -9,12 +9,12 @@ Public Class array_test
     Private Shared Function fixed_size_array() As Boolean
         Dim a As array(Of Int32, _100) = Nothing
         a = New array(Of Int32, _100)()
-        assert_equal(a.size(), CUInt(100))
+        assertion.equal(a.size(), CUInt(100))
         For i As Int32 = 0 To 100 - 1
             a(i) = i
         Next
         For i As Int32 = 0 To 100 - 1
-            assert_equal(a(i), i)
+            assertion.equal(a(i), i)
         Next
         Return True
     End Function
@@ -22,12 +22,12 @@ Public Class array_test
     Private Shared Function dynamic_size_array() As Boolean
         Dim a As array(Of Int32) = Nothing
         a = New array(Of Int32)(100)
-        assert_equal(a.size(), CUInt(100))
+        assertion.equal(a.size(), CUInt(100))
         For i As Int32 = 0 To 100 - 1
             a(i) = i
         Next
         For i As Int32 = 0 To 100 - 1
-            assert_equal(a(i), i)
+            assertion.equal(a(i), i)
         Next
         Return True
     End Function

@@ -20,8 +20,8 @@ Friend Class big_int_str_case
         Dim s As String = Nothing
         s = big_int.rnd_support_str(rnd_int(1, u), b)
         Dim r As big_int = Nothing
-        assert_true(big_int.parse(s, r, b))
-        assert_equal(r.str(b), s)
+        assertion.is_true(big_int.parse(s, r, b))
+        assertion.equal(r.str(b), s)
         Return True
     End Function
 
@@ -52,7 +52,7 @@ Friend Class big_int_str_case
         Next
         'make sure there is at least one unsupported character
         s.Append(big_int.rnd_unsupport_str_char(b))
-        assert_false(big_int.parse(Convert.ToString(s), Nothing, b))
+        assertion.is_false(big_int.parse(Convert.ToString(s), Nothing, b))
         Return True
     End Function
 

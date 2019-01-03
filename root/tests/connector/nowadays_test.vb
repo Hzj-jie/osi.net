@@ -25,7 +25,7 @@ Friend Class nowadays_case
     End Sub
 
     Public Overrides Function run() As Boolean
-        If Not assert_more_or_equal_and_less_or_equal(nowadays.low_res_milliseconds() -
+        If Not assertion.more_or_equal_and_less_or_equal(nowadays.low_res_milliseconds() -
                                                       nowadays.normal_res_milliseconds() -
                                                       nowadays.normal_res_milliseconds() +
                                                       nowadays.low_res_milliseconds(),
@@ -34,7 +34,7 @@ Friend Class nowadays_case
                                                       "nowadays.low_res_milliseconds()") Then
             low_res_ticks_retriever.force_revise()
         End If
-        If Not assert_more_or_equal_and_less_or_equal(nowadays.normal_res_milliseconds() -
+        If Not assertion.more_or_equal_and_less_or_equal(nowadays.normal_res_milliseconds() -
                                                       nowadays.high_res_milliseconds() -
                                                       nowadays.high_res_milliseconds() +
                                                       nowadays.normal_res_milliseconds(),
@@ -44,7 +44,7 @@ Friend Class nowadays_case
             high_res_ticks_retriever.force_revise()
         End If
         'low_res_ticks is faked as milliseconds_to_ticks(low_res_milliseconds)
-        If Not assert_more_or_equal_and_less_or_equal(nowadays.low_res_ticks() -
+        If Not assertion.more_or_equal_and_less_or_equal(nowadays.low_res_ticks() -
                                                       nowadays.normal_res_ticks() -
                                                       nowadays.normal_res_ticks() +
                                                       nowadays.low_res_ticks(),
@@ -53,7 +53,7 @@ Friend Class nowadays_case
                                                       "nowadays.low_res_ticks()") Then
             low_res_ticks_retriever.force_revise()
         End If
-        If Not assert_more_or_equal_and_less_or_equal(nowadays.normal_res_ticks() -
+        If Not assertion.more_or_equal_and_less_or_equal(nowadays.normal_res_ticks() -
                                                       nowadays.high_res_ticks() -
                                                       nowadays.high_res_ticks() +
                                                       nowadays.normal_res_ticks(),

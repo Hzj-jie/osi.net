@@ -41,27 +41,27 @@ Public Class sign_test
             Dim o2() As Byte = Nothing
             k = rnd_bytes(rnd_uint(100, 200))
             b = rnd_bytes(rnd_uint(2048, 4096))
-            assert_true(s.sign(k, b, o))
-            assert_true(s.sign(k, b, o2))
-            assert_array_equal(o, o2)
+            assertion.is_true(s.sign(k, b, o))
+            assertion.is_true(s.sign(k, b, o2))
+            assertion.array_equal(o, o2)
             Dim l As UInt32 = uint32_0
             Dim r As UInt32 = uint32_0
             l = rnd_uint(10, 100)
             r = rnd_uint(500, 1000)
-            assert_true(s.sign(k, b, l, r, o))
-            assert_true(s.sign(k, b, l, r, o2))
-            assert_array_equal(o, o2)
+            assertion.is_true(s.sign(k, b, l, r, o))
+            assertion.is_true(s.sign(k, b, l, r, o2))
+            assertion.array_equal(o, o2)
 
             For i As Int32 = 0 To 3
                 Dim b2() As Byte = Nothing
                 b2 = rnd_bytes(rnd_uint(2048, 4096))
-                assert_true(s.sign(k, b, o))
-                assert_true(s.sign(k, b2, o2))
+                assertion.is_true(s.sign(k, b, o))
+                assertion.is_true(s.sign(k, b2, o2))
                 If memcmp(o, o2) <> 0 Then
                     Return True
                 End If
             Next
-            assert_true(False)
+            assertion.is_true(False)
             Return True
         End Function
     End Class

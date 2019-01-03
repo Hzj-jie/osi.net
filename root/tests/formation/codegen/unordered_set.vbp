@@ -22,7 +22,7 @@ Public Class ##FILENAME##_case(Of T)
     End Sub
 
     Private Function random_select_key_from_h() As T
-        assert_false(h.empty())
+        assertion.is_false(h.empty())
         Dim it As ##FILENAME##(Of T).iterator = Nothing
         it = h.begin()
         Dim c As UInt32 = 0
@@ -31,7 +31,7 @@ Public Class ##FILENAME##_case(Of T)
             it += 1
             c -= uint32_1
         End While
-        assert_not_equal(it, h.end())
+        assertion.not_equal(it, h.end())
         Return +it
     End Function
 
@@ -39,13 +39,13 @@ Public Class ##FILENAME##_case(Of T)
         Dim n As T = Nothing
         n = rnd(Of T)()
         If If(insert, h.insert(n).second, h.emplace(n).second) Then
-            assert_equal(s.find(n), s.end())
+            assertion.equal(s.find(n), s.end())
             s.insert(n)
         Else
-            assert_not_equal(s.find(n), s.end())
+            assertion.not_equal(s.find(n), s.end())
         End If
-        assert_equal(h.size(), s.size())
-        assert_equal(h.empty(), s.empty())
+        assertion.equal(h.size(), s.size())
+        assertion.equal(h.empty(), s.empty())
     End Sub
 
     Private Sub insert()
@@ -60,33 +60,33 @@ Public Class ##FILENAME##_case(Of T)
         If rnd_bool() AndAlso Not s.empty() Then
             Dim k As T = Nothing
             k = random_select_key_from_h()
-            assert_true(s.erase(k))
-            assert_true(h.erase(k))
+            assertion.is_true(s.erase(k))
+            assertion.is_true(h.erase(k))
         Else
             Dim k As T = Nothing
             k = rnd(Of T)()
-            assert_equal(s.erase(k), h.erase(k))
+            assertion.equal(s.erase(k), h.erase(k))
         End If
     End Sub
 
     Private Sub find()
         If rnd_bool() Then
             If s.empty() Then
-                assert_true(h.empty())
-                assert_equal(h.find(rnd(Of T)()), h.end())
+                assertion.is_true(h.empty())
+                assertion.equal(h.find(rnd(Of T)()), h.end())
             Else
                 Dim k As T = Nothing
                 k = random_select_key_from_h()
-                assert_not_equal(h.find(k), h.end())
-                assert_not_equal(s.find(k), s.end())
+                assertion.not_equal(h.find(k), h.end())
+                assertion.not_equal(s.find(k), s.end())
             End If
         Else
             Dim k As T = Nothing
             k = rnd(Of T)()
             If s.find(k) = s.end() Then
-                assert_equal(h.find(k), h.end())
+                assertion.equal(h.find(k), h.end())
             Else
-                assert_not_equal(h.find(k), h.end())
+                assertion.not_equal(h.find(k), h.end())
             End If
         End If
     End Sub
@@ -94,18 +94,18 @@ Public Class ##FILENAME##_case(Of T)
     Private Sub clear()
         s.clear()
         h.clear()
-        assert_true(h.empty())
+        assertion.is_true(h.empty())
     End Sub
 
     Private Sub clone()
         Dim h2 As ##FILENAME##(Of T) = Nothing
         copy(h2, h)
 
-        assert_equal(h2.size(), s.size())
+        assertion.equal(h2.size(), s.size())
         Dim it As ##FILENAME##(Of T).iterator = Nothing
         it = h2.begin()
         While it <> h2.end()
-            assert_not_equal(s.find(+it), s.end())
+            assertion.not_equal(s.find(+it), s.end())
             it += 1
         End While
     End Sub

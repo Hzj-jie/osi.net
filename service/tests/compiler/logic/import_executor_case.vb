@@ -18,11 +18,11 @@ Namespace logic
             Dim es As vector(Of exportable) = Nothing
             es = New vector(Of exportable)()
             If functions Is Nothing Then
-                assert_true(importer.[New]().import(str, es))
+                assertion.is_true(importer.[New]().import(str, es))
             Else
-                assert_true(importer.[New](functions).import(str, es))
+                assertion.is_true(importer.[New](functions).import(str, es))
             End If
-            If Not assert_false(es.empty()) Then
+            If Not assertion.is_false(es.empty()) Then
                 es.emplace_back(New [stop]())
             End If
             Return +es

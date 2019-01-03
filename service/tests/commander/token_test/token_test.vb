@@ -76,17 +76,17 @@ Partial Public Class token_test
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(accept_ec.end_result())
+                                  assertion.is_true(accept_ec.end_result())
                                   'If with_empty_ppt Then
-                                  '    If assert_not_nothing(+selected_ppt) Then
-                                  '        assert_true(object_compare(+selected_ppt, ppt) OrElse
+                                  '    If assertion.is_not_null(+selected_ppt) Then
+                                  '        assertion.is_true(object_compare(+selected_ppt, ppt) OrElse
                                   '                    String.IsNullOrEmpty((+selected_ppt).token))
                                   '    End If
                                   'Else
                                   If exp_accepted Then
-                                      assert_reference_equal(+selected_ppt, ppt)
+                                      assertion.reference_equal(+selected_ppt, ppt)
                                   Else
-                                      assert_nothing(+selected_ppt)
+                                      assertion.is_null(+selected_ppt)
                                   End If
                                   Return goto_end()
                               End Function)
@@ -106,10 +106,10 @@ Partial Public Class token_test
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(challenge_ec.end_result())
-                                  assert_equal(+challenge_accepted, exp_accepted)
+                                  assertion.is_true(challenge_ec.end_result())
+                                  assertion.equal(+challenge_accepted, exp_accepted)
                                   If Not +challenge_accepted Then
-                                      assert_true(conn.closed())
+                                      assertion.is_true(conn.closed())
                                   End If
                                   Return goto_end()
                               End Function)
@@ -148,8 +148,8 @@ Partial Public Class token_test
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  assert_true(aec.end_result())
-                                  assert_true(dec.end_result())
+                                  assertion.is_true(aec.end_result())
+                                  assertion.is_true(dec.end_result())
                                   Return goto_begin()
                               End Function)
     End Function
@@ -185,7 +185,7 @@ Partial Public Class token_test
         For i As UInt32 = uint32_0 To concurrency_connection - uint32_1
             assert_begin(execute(i, with_empty_token, c))
         Next
-        assert_true(c.wait(minutes_to_milliseconds(10)))
+        assertion.is_true(c.wait(minutes_to_milliseconds(10)))
         Return True
     End Function
 

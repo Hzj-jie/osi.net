@@ -32,32 +32,32 @@ Public Class endian_test
 
     Public Overrides Function run() As Boolean
         For i As Int32 = 0 To array_size_i(int16_cases) - 1
-            assert_equal(endian.reverse(int16_cases(i).first), int16_cases(i).second)
-            assert_equal(endian.reverse(int16_cases(i).second), int16_cases(i).first)
+            assertion.equal(endian.reverse(int16_cases(i).first), int16_cases(i).second)
+            assertion.equal(endian.reverse(int16_cases(i).second), int16_cases(i).first)
 
-            assert_equal(endian.reverse(Of Int16)(int16_cases(i).first), int16_cases(i).second)
-            assert_equal(endian.reverse(Of Int16)(int16_cases(i).second), int16_cases(i).first)
+            assertion.equal(endian.reverse(Of Int16)(int16_cases(i).first), int16_cases(i).second)
+            assertion.equal(endian.reverse(Of Int16)(int16_cases(i).second), int16_cases(i).first)
         Next
         For i As Int32 = 0 To array_size_i(uint16_cases) - 1
-            assert_equal(endian.reverse(uint16_cases(i).first), uint16_cases(i).second)
-            assert_equal(endian.reverse(uint16_cases(i).second), uint16_cases(i).first)
+            assertion.equal(endian.reverse(uint16_cases(i).first), uint16_cases(i).second)
+            assertion.equal(endian.reverse(uint16_cases(i).second), uint16_cases(i).first)
 
-            assert_equal(endian.reverse(Of UInt16)(uint16_cases(i).first), uint16_cases(i).second)
-            assert_equal(endian.reverse(Of UInt16)(uint16_cases(i).second), uint16_cases(i).first)
+            assertion.equal(endian.reverse(Of UInt16)(uint16_cases(i).first), uint16_cases(i).second)
+            assertion.equal(endian.reverse(Of UInt16)(uint16_cases(i).second), uint16_cases(i).first)
         Next
         For i As Int32 = 0 To array_size_i(int64_cases) - 1
-            assert_equal(endian.reverse(int64_cases(i).first), int64_cases(i).second)
-            assert_equal(endian.reverse(int64_cases(i).second), int64_cases(i).first)
+            assertion.equal(endian.reverse(int64_cases(i).first), int64_cases(i).second)
+            assertion.equal(endian.reverse(int64_cases(i).second), int64_cases(i).first)
 
-            assert_equal(endian.reverse(Of Int64)(int64_cases(i).first), int64_cases(i).second)
-            assert_equal(endian.reverse(Of Int64)(int64_cases(i).second), int64_cases(i).first)
+            assertion.equal(endian.reverse(Of Int64)(int64_cases(i).first), int64_cases(i).second)
+            assertion.equal(endian.reverse(Of Int64)(int64_cases(i).second), int64_cases(i).first)
         Next
         For i As Int32 = 0 To array_size_i(uint64_cases) - 1
-            assert_equal(endian.reverse(uint64_cases(i).first), uint64_cases(i).second)
-            assert_equal(endian.reverse(uint64_cases(i).second), uint64_cases(i).first)
+            assertion.equal(endian.reverse(uint64_cases(i).first), uint64_cases(i).second)
+            assertion.equal(endian.reverse(uint64_cases(i).second), uint64_cases(i).first)
 
-            assert_equal(endian.reverse(Of UInt64)(uint64_cases(i).first), uint64_cases(i).second)
-            assert_equal(endian.reverse(Of UInt64)(uint64_cases(i).second), uint64_cases(i).first)
+            assertion.equal(endian.reverse(Of UInt64)(uint64_cases(i).first), uint64_cases(i).second)
+            assertion.equal(endian.reverse(Of UInt64)(uint64_cases(i).second), uint64_cases(i).first)
         Next
         Return True
     End Function

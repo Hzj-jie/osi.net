@@ -22,8 +22,8 @@ Friend Class accumulate_segment_tree_case
             Dim value As Int64 = 0
             stupid_find(s, p, has_value, value)
             Dim r As Int64 = 0
-            assert_equal(t.accumulate(p, r), has_value)
-            assert_equal(r, value)
+            assertion.equal(t.accumulate(p, r), has_value)
+            assertion.equal(r, value)
         Next
         Return True
     End Function
@@ -36,7 +36,7 @@ Friend Class accumulate_segment_tree_case
         Dim t As accumulate_segment_tree(Of Int64) = Nothing
         t = New accumulate_segment_tree(Of Int64)(min, max)
         For i As Int32 = 0 To s.size() - 1
-            assert_true(t.emplace(s(i).second.first, s(i).second.second, s(i).first))
+            assertion.is_true(t.emplace(s(i).second.first, s(i).second.second, s(i).first))
         Next
         Return Not verify OrElse
                single_find_case(t, s)

@@ -38,23 +38,23 @@ Public Class shell_less_process_test
                     implementation_of(Of ISynchronizeInvoke).from_instance(New slimqless2_runner_synchronize_invoke(t)))
         p.start_info().FileName() = shell_less_process_test_exe_full_path
         AddHandler p.receive_error, Sub()
-                                        assert_true(t.running_in_current_thread())
+                                        assertion.is_true(t.running_in_current_thread())
                                     End Sub
         AddHandler p.receive_output, Sub()
-                                         assert_true(t.running_in_current_thread())
+                                         assertion.is_true(t.running_in_current_thread())
                                      End Sub
         AddHandler p.process_exit, Sub()
-                                       assert_true(t.running_in_current_thread())
+                                       assertion.is_true(t.running_in_current_thread())
                                    End Sub
-        If assert_true(p.start()) Then
+        If assertion.is_true(p.start()) Then
             For i As Int32 = 0 To 100
                 p.stdin().WriteLine(Convert.ToString(i))
             Next
-            assert_true(p.queue_quit())
+            assertion.is_true(p.queue_quit())
             p.wait_for_exit()
             ' wait_for_exit() won't guarantee the process_exit() event has been raised, since it may run in another
             ' thread.
-            assert_true(lazy_sleep_wait_until(Function() p.exited(), second_milli))
+            assertion.is_true(lazy_sleep_wait_until(Function() p.exited(), second_milli))
         End If
         assert(t.stop())
         Return True

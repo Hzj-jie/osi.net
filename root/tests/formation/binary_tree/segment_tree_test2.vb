@@ -96,12 +96,12 @@ Friend Class segment_tree_case2
             Dim it As segment_tree(Of Int64).iterator = Nothing
             it = t.find(p)
             If has_value Then
-                If assert_not_nothing(it) Then
-                    assert_true((+it).has_value())
-                    assert_equal((+it).value(), value)
+                If assertion.is_not_null(it) Then
+                    assertion.is_true((+it).has_value())
+                    assertion.equal((+it).value(), value)
                 End If
             Else
-                assert_true(it.null_or_end() OrElse Not (+it).has_value())
+                assertion.is_true(it.null_or_end() OrElse Not (+it).has_value())
             End If
         Next
         Return True
@@ -115,14 +115,14 @@ Friend Class segment_tree_case2
             r = rnd_small_segment()
             Dim its As vector(Of pair(Of segment_tree(Of Int64).iterator, pair(Of Int64, Int64))) = Nothing
             its = t.find(r.first, r.second)
-            If assert_not_nothing(its) Then
+            If assertion.is_not_null(its) Then
                 Dim v1() As pair(Of Boolean, Int64) = Nothing
                 ReDim v1(r.second - r.first)
                 For j As Int32 = 0 To array_size(v1) - 1
                     v1(j) = emplace_make_pair(False, int64_0)
                 Next
                 For j As Int32 = 0 To its.size() - 1
-                    If assert_not_nothing(its(j)) Then
+                    If assertion.is_not_null(its(j)) Then
                         If Not its(j).first.is_end() AndAlso
                            (+its(j).first).has_value() Then
                             For k As Int64 = max(its(j).second.first, r.first) To min(its(j).second.second, r.second)
@@ -146,7 +146,7 @@ Friend Class segment_tree_case2
                     v2(j - r.first).second = v
                 Next
 
-                assert_array_equal(v1, v2)
+                assertion.array_equal(v1, v2)
             End If
         Next
         Return True
@@ -160,7 +160,7 @@ Friend Class segment_tree_case2
         Dim t As segment_tree(Of Int64) = Nothing
         t = New segment_tree(Of Int64)(min, max)
         For i As Int32 = 0 To s.size() - 1
-            assert_true(t.emplace(s(i).second.first, s(i).second.second, s(i).first))
+            assertion.is_true(t.emplace(s(i).second.first, s(i).second.second, s(i).first))
         Next
         Return Not verify OrElse
                (single_find_case(t, s) AndAlso

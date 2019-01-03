@@ -15,38 +15,38 @@ Public Class rnd_test
         Private Shared Function rnd_case() As Boolean
             Const i As Double = 10
             Const j As Double = 1000
-            assert_int(rnd(i, j, True))
+            assertion.is_int(rnd(i, j, True))
             'there is a chance to return an integer, 
             'but seems totally impossible to return two integers
-            assert_not_int(rnd(i, j, False) + rnd(-j, -i, False))
-            assert_less(rnd(i, j, True), j)
-            assert_more_or_equal(rnd(i, j, True), i)
-            assert_less(rnd(i, j, False), j)
-            assert_more_or_equal(rnd(i, j, False), i)
+            assertion.is_not_int(rnd(i, j, False) + rnd(-j, -i, False))
+            assertion.less(rnd(i, j, True), j)
+            assertion.more_or_equal(rnd(i, j, True), i)
+            assertion.less(rnd(i, j, False), j)
+            assertion.more_or_equal(rnd(i, j, False), i)
             Return True
         End Function
 
         Private Shared Function rnd_int_case() As Boolean
             Const i As Int32 = 10
             Const j As Int32 = 1000
-            assert_less(rnd_int(i, j), j)
-            assert_more_or_equal(rnd_int(i, j), i)
+            assertion.less(rnd_int(i, j), j)
+            assertion.more_or_equal(rnd_int(i, j), i)
             Return True
         End Function
 
         Private Shared Function rnd_uint_case() As Boolean
             Const i As UInt32 = 10
             Const j As UInt32 = 1000
-            assert_less(rnd_uint(i, j), j)
-            assert_more_or_equal(rnd_uint(i, j), i)
+            assertion.less(rnd_uint(i, j), j)
+            assertion.more_or_equal(rnd_uint(i, j), i)
             Return True
         End Function
 
         Private Shared Function rnd_double_case() As Boolean
             Const i As Double = 10
             Const j As Double = 1000
-            assert_less(rnd_double(i, j), j)
-            assert_more_or_equal(rnd_double(i, j), i)
+            assertion.less(rnd_double(i, j), j)
+            assertion.more_or_equal(rnd_double(i, j), i)
             Return True
         End Function
 

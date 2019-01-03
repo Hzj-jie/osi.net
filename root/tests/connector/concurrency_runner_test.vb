@@ -28,7 +28,7 @@ Public Class concurrency_runner_test
             Next
             concurrency_runner.execute(a)
             ' One thread may be stuck at the for loop in concurrency_runner.
-            assert_more_or_equal(max, Environment.ProcessorCount() - 1)
+            assertion.more_or_equal(max, Environment.ProcessorCount() - 1)
         End If
         Return True
     End Function
@@ -44,13 +44,13 @@ Public Class concurrency_runner_test
             Dim j As Int32 = 0
             j = i
             a(i) = Sub()
-                       assert_false(b(j))
+                       assertion.is_false(b(j))
                        b(j) = True
                    End Sub
         Next
         concurrency_runner.execute(a)
         For i As Int32 = 0 To size - 1
-            assert_true(b(i))
+            assertion.is_true(b(i))
         Next
         Return True
     End Function

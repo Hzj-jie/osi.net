@@ -72,12 +72,12 @@ Public Class xml_tagparser_test
         Dim attr As vector(Of pair(Of String, String)) = Nothing
         Dim self_close As Boolean = False
         Dim close_tag As Boolean = False
-        assert_equal(parse_tag(c.s, tag, attr, self_close, close_tag, True), c.return)
+        assertion.equal(parse_tag(c.s, tag, attr, self_close, close_tag, True), c.return)
         If c.return Then
-            assert_equal(tag, c.tag)
-            assert_vector_equal(attr, c.attr)
-            assert_equal(self_close, c.self_close)
-            assert_equal(close_tag, c.close_tag)
+            assertion.equal(tag, c.tag)
+            assertion.vector_equal(attr, c.attr)
+            assertion.equal(self_close, c.self_close)
+            assertion.equal(close_tag, c.close_tag)
         End If
         Return True
     End Function

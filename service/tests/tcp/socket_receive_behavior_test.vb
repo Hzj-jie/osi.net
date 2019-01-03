@@ -42,25 +42,25 @@ Public MustInherit Class socket_receive_behavior_test(Of IMPL)
         Try
             c.Connect(IPAddress.Loopback, port)
         Catch ex As Exception
-            assert_true(False, ex)
+            assertion.is_true(False, ex)
             Return
         End Try
         For i As Int32 = 0 To repeat_size - 1
             Dim last_received As Int32 = 0
             last_received = (+received)
-            assert_true(ready.WaitOne())
+            assertion.is_true(ready.WaitOne())
             If receive_before_send Then
-                assert_false(try_wait_when(Function() last_received = (+received), 4096))
-                assert_equal(last_received + 1, +received)
+                assertion.is_false(try_wait_when(Function() last_received = (+received), 4096))
+                assertion.equal(last_received + 1, +received)
             Else
-                assert_true(try_wait_when(Function() last_received = (+received), 32))
-                assert_equal(last_received, +received)
+                assertion.is_true(try_wait_when(Function() last_received = (+received), 32))
+                assertion.equal(last_received, +received)
             End If
             Dim b() As Byte = Nothing
             b = next_bytes(rnd_int(1, max_size + 1))
             c.GetStream().Write(b, 0, array_size(b))
-            assert_false(try_wait_when(Function() last_received = (+received), 4096))
-            assert_equal(last_received + 1, +received)
+            assertion.is_false(try_wait_when(Function() last_received = (+received), 4096))
+            assertion.equal(last_received + 1, +received)
         Next
         c.Close()
     End Sub
@@ -79,7 +79,7 @@ Public MustInherit Class socket_receive_behavior_test(Of IMPL)
         Dim r As TcpClient = Nothing
         r = l.AcceptTcpClient()
         For i As Int32 = 0 To repeat_size - 1
-            assert_true(ready.Set())
+            assertion.is_true(ready.Set())
             assert(receive_size <= max_size)
             Dim buff() As Byte = Nothing
             ReDim buff(max_size - 1)
@@ -89,9 +89,9 @@ Public MustInherit Class socket_receive_behavior_test(Of IMPL)
                                     receive_option,
                                     Sub(ar As IAsyncResult)
                                         Try
-                                            assert_equal(r.Client().EndReceive(ar), receive_size)
+                                            assertion.equal(r.Client().EndReceive(ar), receive_size)
                                         Catch ex As Exception
-                                            assert_true(False, ex)
+                                            assertion.is_true(False, ex)
                                         End Try
                                         received.increment()
                                     End Sub,
@@ -105,9 +105,9 @@ Public MustInherit Class socket_receive_behavior_test(Of IMPL)
                                         Try
                                             rr = r.Client().EndReceive(ar)
                                         Catch ex As Exception
-                                            assert_true(False, ex)
+                                            assertion.is_true(False, ex)
                                         End Try
-                                        assert_more_and_less_or_equal(rr, 0, max_size)
+                                        assertion.more_and_less_or_equal(rr, 0, max_size)
                                     End Sub,
                                     Nothing).AsyncWaitHandle().WaitOne()
         Next

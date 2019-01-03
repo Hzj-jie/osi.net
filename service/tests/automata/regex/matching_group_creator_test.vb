@@ -15,13 +15,13 @@ Namespace rlexer
 
         Private Shared Function case1() As Boolean
             Dim g As matching_group = Nothing
-            If assert_true(matching_group_creator.create("[a,b,c]*", g)) Then
+            If assertion.is_true(matching_group_creator.create("[a,b,c]*", g)) Then
                 Dim mg As any_matching_group = Nothing
-                If assert_true(cast(g, mg)) Then
+                If assertion.is_true(cast(g, mg)) Then
                     assert(Not mg Is Nothing)
                     Dim sg As string_matching_group = Nothing
-                    If assert_true(cast(+mg, sg)) Then
-                        assert_array_equal(+sg, {"a", "b", "c"})
+                    If assertion.is_true(cast(+mg, sg)) Then
+                        assertion.array_equal(+sg, {"a", "b", "c"})
                     End If
                 End If
             End If
@@ -29,18 +29,18 @@ Namespace rlexer
         End Function
 
         Private Shared Function case2() As Boolean
-            assert_false(matching_group_creator.create("[]", Nothing))
+            assertion.is_false(matching_group_creator.create("[]", Nothing))
             Return True
         End Function
 
         Private Shared Function case3() As Boolean
             Dim g As matching_group = Nothing
-            If assert_true(matching_group_creator.create("[*]*", g)) Then
+            If assertion.is_true(matching_group_creator.create("[*]*", g)) Then
                 Dim mg As any_matching_group = Nothing
-                If assert_true(cast(g, mg)) Then
+                If assertion.is_true(cast(g, mg)) Then
                     assert(Not mg Is Nothing)
                     Dim am As any_character_matching_group = Nothing
-                    assert_true(cast(+mg, am))
+                    assertion.is_true(cast(+mg, am))
                     assert(Not am Is Nothing)
                 End If
             End If
@@ -49,14 +49,14 @@ Namespace rlexer
 
         Private Shared Function case4() As Boolean
             Dim g As matching_group = Nothing
-            If assert_true(matching_group_creator.create("[*]--", g)) Then
+            If assertion.is_true(matching_group_creator.create("[*]--", g)) Then
                 Dim ug As unmatched_matching_group = Nothing
-                If assert_true(cast(g, ug)) Then
+                If assertion.is_true(cast(g, ug)) Then
                     assert(Not ug Is Nothing)
-                    If assert_true(cast(+ug, ug)) Then
+                    If assertion.is_true(cast(+ug, ug)) Then
                         assert(Not ug Is Nothing)
                         Dim am As any_character_matching_group = Nothing
-                        assert_true(cast(+ug, am))
+                        assertion.is_true(cast(+ug, am))
                         assert(Not am Is Nothing)
                     End If
                 End If
@@ -66,20 +66,20 @@ Namespace rlexer
 
         Private Shared Function failure_case() As Boolean
             For i As UInt32 = 0 To array_size(failure_cases) - uint32_1
-                assert_false(matching_group_creator.create(failure_cases(i), Nothing))
+                assertion.is_false(matching_group_creator.create(failure_cases(i), Nothing))
             Next
             Return True
         End Function
 
         Private Shared Function case5() As Boolean
             Dim g As matching_group = Nothing
-            If assert_true(matching_group_creator.create("[a,b,c]+", g)) Then
+            If assertion.is_true(matching_group_creator.create("[a,b,c]+", g)) Then
                 Dim mg As multi_matching_group = Nothing
-                If assert_true(cast(g, mg)) Then
+                If assertion.is_true(cast(g, mg)) Then
                     assert(Not mg Is Nothing)
                     Dim sg As string_matching_group = Nothing
-                    If assert_true(cast(+mg, sg)) Then
-                        assert_array_equal(+sg, {"a", "b", "c"})
+                    If assertion.is_true(cast(+mg, sg)) Then
+                        assertion.array_equal(+sg, {"a", "b", "c"})
                     End If
                 End If
             End If
@@ -88,12 +88,12 @@ Namespace rlexer
 
         Private Shared Function case6() As Boolean
             Dim g As matching_group = Nothing
-            If assert_true(matching_group_creator.create("[*]+", g)) Then
+            If assertion.is_true(matching_group_creator.create("[*]+", g)) Then
                 Dim mg As multi_matching_group = Nothing
-                If assert_true(cast(g, mg)) Then
+                If assertion.is_true(cast(g, mg)) Then
                     assert(Not mg Is Nothing)
                     Dim am As any_character_matching_group = Nothing
-                    assert_true(cast(+mg, am))
+                    assertion.is_true(cast(+mg, am))
                     assert(Not am Is Nothing)
                 End If
             End If

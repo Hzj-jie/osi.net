@@ -41,21 +41,21 @@ Partial Public Class sharedtransmitter_test
                         create()
             Dim p As pointer(Of Int32) = Nothing
             p = New pointer(Of Int32)()
-            assert_true(async_sync(s.receiver.receive(p)))
-            assert_equal(+p, 200)  ' The initial data
+            assertion.is_true(async_sync(s.receiver.receive(p)))
+            assertion.equal(+p, 200)  ' The initial data
             For i As Int32 = 0 To 1000
                 s.component().receive(i, 100, 100)
-                assert_true(async_sync(s.receiver.receive(p)))
-                assert_equal(+p, i)
+                assertion.is_true(async_sync(s.receiver.receive(p)))
+                assertion.equal(+p, i)
             Next
             s.component().receive(100, 101, 100)
-            assert_false(async_sync(s.receiver.sense(1000)))
+            assertion.is_false(async_sync(s.receiver.sense(1000)))
             s.component().receive(100, 100, 101)
-            assert_false(async_sync(s.receiver.sense(1000)))
+            assertion.is_false(async_sync(s.receiver.sense(1000)))
             s.dispose()
-            assert_false(valuer.get(Of ref_instance(Of component)) _
+            assertion.is_false(valuer.get(Of ref_instance(Of component)) _
                                    (s, binding_flags.instance_private, "component_ref").referred())
-            assert_false(valuer.get(Of dispenser(Of Int32, const_pair(Of Byte, Byte))) _
+            assertion.is_false(valuer.get(Of dispenser(Of Int32, const_pair(Of Byte, Byte))) _
                                    (s, binding_flags.instance_private, "dispenser").binding())
             Return True
         End Function

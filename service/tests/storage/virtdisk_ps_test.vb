@@ -41,17 +41,17 @@ Public Class virtdisk_ps_test
         End Sub
 
         Private Sub rnd_read_data(ByRef start As UInt64, ByRef len As UInt32)
-            assert_more(vd.size(), uint64_0)
+            assertion.more(vd.size(), uint64_0)
             start = rnd_uint64(0, vd.size())
             len = rnd_uint(1, min(CUInt(vd.size() - start), CUInt(1024 * 16)) + uint32_1)
         End Sub
 
         Private Sub verify_data(ByVal start As UInt64, ByVal len As UInt32, ByVal buff() As Byte)
             assert(len > 0)
-            assert_equal(array_size(buff), len)
-            assert_more_or_equal(vd.size(), start + len)
+            assertion.equal(array_size(buff), len)
+            assertion.more_or_equal(vd.size(), start + len)
             For i As Int32 = 0 To CInt(len) - 1
-                assert_true((buff(i) = expected(start + CUInt(i))) OrElse (buff(i) = 0))
+                assertion.is_true((buff(i) = expected(start + CUInt(i))) OrElse (buff(i) = 0))
             Next
         End Sub
 
@@ -67,7 +67,7 @@ Public Class virtdisk_ps_test
                                              goto_next()
                                   End Function,
                                   Function() As Boolean
-                                      assert_true(ec.end_result())
+                                      assertion.is_true(ec.end_result())
                                       rnd_read_data(start, len)
                                       ReDim buff(CInt(len) - 1)
                                       ec = vd.read(start, len, buff)
@@ -75,7 +75,7 @@ Public Class virtdisk_ps_test
                                              goto_next()
                                   End Function,
                                   Function() As Boolean
-                                      assert_true(ec.end_result())
+                                      assertion.is_true(ec.end_result())
                                       verify_data(start, len, buff)
                                       Return goto_end()
                                   End Function)

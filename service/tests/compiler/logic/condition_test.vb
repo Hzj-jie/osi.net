@@ -66,7 +66,7 @@ Namespace logic
         End Function
 
         Protected Overrides Sub check_result(ByVal e As not_null(Of simulator))
-            assert_equal(Convert.ToString(io.output()), strcat(value1, value2))
+            assertion.equal(Convert.ToString(io.output()), strcat(value1, value2))
         End Sub
     End Class
 End Namespace

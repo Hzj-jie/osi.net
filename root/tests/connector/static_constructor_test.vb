@@ -34,31 +34,31 @@ Public Class static_constructor_test
         Private Shared v As Boolean
 
         Shared Sub New()
-            assert_false(v)
+            assertion.is_false(v)
             v = True
         End Sub
     End Class
 
     Public Overrides Function run() As Boolean
         Dim c As C = Nothing
-        assert_equal(v, def)
+        assertion.equal(v, def)
         static_constructor(Of C).execute()
-        assert_equal(v, exp)
+        assertion.equal(v, exp)
         static_constructor(Of C).execute()
         c = New C()
-        assert_equal(v, exp)
+        assertion.equal(v, exp)
 
-        assert_not_nothing(static_constructor(Of C).retrieve())
+        assertion.is_not_null(static_constructor(Of C).retrieve())
         static_constructor(Of C).as_action()()
-        assert_equal(v, def)
-        assert_not_nothing(static_constructor.retrieve(GetType(C)))
+        assertion.equal(v, def)
+        assertion.is_not_null(static_constructor.retrieve(GetType(C)))
         static_constructor.as_action(GetType(C))()
-        assert_equal(v, exp)
+        assertion.equal(v, exp)
         static_constructor.execute(GetType(C))
-        assert_equal(v, def)
+        assertion.equal(v, def)
 
-        assert_nothing(static_constructor(Of D).retrieve())
-        assert_nothing(static_constructor(Of D).as_action())
+        assertion.is_null(static_constructor(Of D).retrieve())
+        assertion.is_null(static_constructor(Of D).as_action())
         static_constructor(Of D).execute()
 
         static_constructor(Of E).execute()

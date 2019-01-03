@@ -19,12 +19,12 @@ Public NotInheritable Class ref_map_test
         Using r As ref_ptr(Of Int32) = m.get(100, Function() As Int32
                                                       Return 100
                                                   End Function)
-            assert_true(r.referred())
-            assert_equal(+r, 100)
+            assertion.is_true(r.referred())
+            assertion.equal(+r, 100)
         End Using
         Using r As ref_ptr(Of Int32) = m.get(100)
-            assert_true(r.referred())
-            assert_equal(+r, 100)
+            assertion.is_true(r.referred())
+            assertion.equal(+r, 100)
         End Using
     End Sub
 
@@ -35,7 +35,7 @@ Public NotInheritable Class ref_map_test
         m.get(100, Function() As Int32
                        Return 100
                    End Function).unref()
-        assert_false(m.created(100))
+        assertion.is_false(m.created(100))
     End Sub
 
     <test>
@@ -48,14 +48,14 @@ Public NotInheritable Class ref_map_test
                        End Function)
         Dim r2 As ref_ptr(Of Int32) = Nothing
         r2 = m.get(100)
-        assert_reference_equal(r, r2)
-        assert_equal(r.ref_count(), uint32_2)
+        assertion.reference_equal(r, r2)
+        assertion.equal(r.ref_count(), uint32_2)
         r.unref()
-        assert_equal(r.ref_count(), uint32_1)
+        assertion.equal(r.ref_count(), uint32_1)
         r.unref()
-        assert_false(r.referred())
-        assert_false(r2.referred())
-        assert_false(m.created(100))
+        assertion.is_false(r.referred())
+        assertion.is_false(r2.referred())
+        assertion.is_false(m.created(100))
     End Sub
 
     <test>
@@ -70,13 +70,13 @@ Public NotInheritable Class ref_map_test
         r2 = m.get(100, Function() As cd_object(Of joint_type(Of ref_map_test, _0))
                             Return New cd_object(Of joint_type(Of ref_map_test, _0))()
                         End Function)
-        assert_reference_equal(+r, +r2)
-        assert_equal(cd_object(Of joint_type(Of ref_map_test, _0)).constructed(), uint32_1)
-        assert_equal(cd_object(Of joint_type(Of ref_map_test, _0)).disposed(), uint32_0)
+        assertion.reference_equal(+r, +r2)
+        assertion.equal(cd_object(Of joint_type(Of ref_map_test, _0)).constructed(), uint32_1)
+        assertion.equal(cd_object(Of joint_type(Of ref_map_test, _0)).disposed(), uint32_0)
         r.unref()
         r2.unref()
-        assert_equal(cd_object(Of joint_type(Of ref_map_test, _0)).constructed(), uint32_1)
-        assert_equal(cd_object(Of joint_type(Of ref_map_test, _0)).disposed(), uint32_1)
+        assertion.equal(cd_object(Of joint_type(Of ref_map_test, _0)).constructed(), uint32_1)
+        assertion.equal(cd_object(Of joint_type(Of ref_map_test, _0)).disposed(), uint32_1)
     End Sub
 
     <test>
@@ -91,15 +91,15 @@ Public NotInheritable Class ref_map_test
         r2 = m.get(2, Function() As cd_object(Of joint_type(Of ref_map_test, _1))
                           Return New cd_object(Of joint_type(Of ref_map_test, _1))()
                       End Function)
-        assert_not_reference_equal(+r, +r2)
-        assert_equal(cd_object(Of joint_type(Of ref_map_test, _1)).constructed(), uint32_2)
-        assert_equal(cd_object(Of joint_type(Of ref_map_test, _1)).disposed(), uint32_0)
+        assertion.not_reference_equal(+r, +r2)
+        assertion.equal(cd_object(Of joint_type(Of ref_map_test, _1)).constructed(), uint32_2)
+        assertion.equal(cd_object(Of joint_type(Of ref_map_test, _1)).disposed(), uint32_0)
         r.unref()
-        assert_equal(cd_object(Of joint_type(Of ref_map_test, _1)).constructed(), uint32_2)
-        assert_equal(cd_object(Of joint_type(Of ref_map_test, _1)).disposed(), uint32_1)
+        assertion.equal(cd_object(Of joint_type(Of ref_map_test, _1)).constructed(), uint32_2)
+        assertion.equal(cd_object(Of joint_type(Of ref_map_test, _1)).disposed(), uint32_1)
         r2.unref()
-        assert_equal(cd_object(Of joint_type(Of ref_map_test, _1)).constructed(), uint32_2)
-        assert_equal(cd_object(Of joint_type(Of ref_map_test, _1)).disposed(), uint32_2)
+        assertion.equal(cd_object(Of joint_type(Of ref_map_test, _1)).constructed(), uint32_2)
+        assertion.equal(cd_object(Of joint_type(Of ref_map_test, _1)).disposed(), uint32_2)
     End Sub
 
     <test>
@@ -128,8 +128,8 @@ Public NotInheritable Class ref_map_test
 
         <finish>
         Private Sub check_created_instances()
-            assert_equal(s.size(), m.created_size())
-            assert_equal(s.size(), cd_object(Of joint_type(Of ref_map_test, _2)).constructed())
+            assertion.equal(s.size(), m.created_size())
+            assertion.equal(s.size(), cd_object(Of joint_type(Of ref_map_test, _2)).constructed())
         End Sub
 
         Private Sub New()

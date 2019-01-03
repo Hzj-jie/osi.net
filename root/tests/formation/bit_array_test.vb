@@ -42,11 +42,11 @@ Public Class bit_array_test
             i = rnd_uint(0, size)
             Dim t As Boolean = False
             t = rnd_bool()
-            assert_equal(b(i), v(i))
+            assertion.equal(b(i), v(i))
             b(i) = t
             v(i) = t
-            assert_equal(b(i), v(i))
-            assert_equal(b(i), t)
+            assertion.equal(b(i), v(i))
+            assertion.equal(b(i), t)
             Return True
         End Function
 

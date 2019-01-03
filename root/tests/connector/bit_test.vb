@@ -24,13 +24,13 @@ Public Class bit_test
         Do
             Dim a As Int64 = 0
             buff = int64_bytes(max_int64)
-            assert_true(bytes_str(buff).bit_int64(a))
-            assert_equal(a, max_int64)
+            assertion.is_true(bytes_str(buff).bit_int64(a))
+            assertion.equal(a, max_int64)
 
             Dim b As UInt64 = 0
             buff = uint64_bytes(max_uint64)
-            assert_true(bytes_str(buff).bit_uint64(b))
-            assert_equal(b, max_uint64)
+            assertion.is_true(bytes_str(buff).bit_uint64(b))
+            assertion.equal(b, max_uint64)
         Loop While False
 
         For i As Int32 = 0 To 1024 * 32 - 1
@@ -38,110 +38,110 @@ Public Class bit_test
             Dim aa As SByte = 0
             a = rnd_int(min_int8, max_int8 + 1)
             buff = int8_bytes(a)
-            assert_true(bytes_str(buff).bit_int8(aa))
-            assert_equal(a, aa)
+            assertion.is_true(bytes_str(buff).bit_int8(aa))
+            assertion.equal(a, aa)
 
             Dim b As Byte = 0
             Dim bb As Byte = 0
             b = rnd_int(0, max_uint8 + 1)
             buff = uint8_bytes(b)
-            assert_true(bytes_str(buff).bit_uint8(bb))
-            assert_equal(b, bb)
+            assertion.is_true(bytes_str(buff).bit_uint8(bb))
+            assertion.equal(b, bb)
 
             Dim c As Int16 = 0
             Dim cc As Int16 = 0
             c = rnd_int(min_int16, max_int16 + 1)
             buff = int16_bytes(c)
-            assert_true(bytes_str(buff).bit_int16(cc))
-            assert_equal(c, cc)
+            assertion.is_true(bytes_str(buff).bit_int16(cc))
+            assertion.equal(c, cc)
 
             Dim d As UInt16 = 0
             Dim dd As UInt16 = 0
             d = rnd_int(0, max_uint16 + 1)
             buff = uint16_bytes(d)
-            assert_true(bytes_str(buff).bit_uint16(dd))
-            assert_equal(d, dd)
+            assertion.is_true(bytes_str(buff).bit_uint16(dd))
+            assertion.equal(d, dd)
 
             Dim e As Int32 = 0
             Dim ee As Int32 = 0
             e = rnd_int64(min_int32, CLng(max_int32) + 1)
             buff = int32_bytes(e)
-            assert_true(bytes_str(buff).bit_int32(ee))
-            assert_equal(e, ee)
+            assertion.is_true(bytes_str(buff).bit_int32(ee))
+            assertion.equal(e, ee)
 
             Dim f As UInt32 = 0
             Dim ff As UInt32 = 0
             f = rnd_int64(0, CLng(max_uint32) + 1)
             buff = uint32_bytes(f)
-            assert_true(bytes_str(buff).bit_uint32(ff))
-            assert_equal(f, ff)
+            assertion.is_true(bytes_str(buff).bit_uint32(ff))
+            assertion.equal(f, ff)
 
             Dim g As Int64 = 0
             Dim gg As Int64 = 0
             'maxInt64 is covered above
             g = rnd_int64(min_int64, max_int64)
             buff = int64_bytes(g)
-            assert_true(bytes_str(buff).bit_int64(gg))
-            assert_equal(g, gg)
+            assertion.is_true(bytes_str(buff).bit_int64(gg))
+            assertion.equal(g, gg)
 
             Dim h As UInt64 = 0
             Dim hh As UInt64 = 0
             'maxUInt64 is covered above
             h = rnd_uint64(0, max_uint64)
             buff = uint64_bytes(h)
-            assert_true(bytes_str(buff).bit_uint64(hh))
-            assert_equal(h, hh)
+            assertion.is_true(bytes_str(buff).bit_uint64(hh))
+            assertion.equal(h, hh)
         Next
 
-        assert_false("2".bit_int8(Nothing))
-        assert_false("2".bit_uint8(Nothing))
-        assert_false("2".bit_int16(Nothing))
-        assert_false("2".bit_uint16(Nothing))
-        assert_false("2".bit_int32(Nothing))
-        assert_false("2".bit_uint32(Nothing))
-        assert_false("2".bit_int64(Nothing))
-        assert_false("2".bit_uint64(Nothing))
+        assertion.is_false("2".bit_int8(Nothing))
+        assertion.is_false("2".bit_uint8(Nothing))
+        assertion.is_false("2".bit_int16(Nothing))
+        assertion.is_false("2".bit_uint16(Nothing))
+        assertion.is_false("2".bit_int32(Nothing))
+        assertion.is_false("2".bit_uint32(Nothing))
+        assertion.is_false("2".bit_int64(Nothing))
+        assertion.is_false("2".bit_uint64(Nothing))
 
-        assert_false("1111111".bit_int8(Nothing))
-        assert_false("11111112".bit_int8(Nothing))
-        assert_false("111111111".bit_int8(Nothing))
-        assert_false("1111111111111111".bit_int8(Nothing))
+        assertion.is_false("1111111".bit_int8(Nothing))
+        assertion.is_false("11111112".bit_int8(Nothing))
+        assertion.is_false("111111111".bit_int8(Nothing))
+        assertion.is_false("1111111111111111".bit_int8(Nothing))
 
-        assert_false("1111111".bit_uint8(Nothing))
-        assert_false("11111112".bit_uint8(Nothing))
-        assert_false("111111111".bit_uint8(Nothing))
-        assert_false("1111111111111111".bit_uint8(Nothing))
+        assertion.is_false("1111111".bit_uint8(Nothing))
+        assertion.is_false("11111112".bit_uint8(Nothing))
+        assertion.is_false("111111111".bit_uint8(Nothing))
+        assertion.is_false("1111111111111111".bit_uint8(Nothing))
 
-        assert_false("111111111111111".bit_int16(Nothing))
-        assert_false("1111111111111112".bit_int16(Nothing))
-        assert_false("11111111111111111".bit_int16(Nothing))
-        assert_false("11111111111111111111111111111111".bit_int16(Nothing))
+        assertion.is_false("111111111111111".bit_int16(Nothing))
+        assertion.is_false("1111111111111112".bit_int16(Nothing))
+        assertion.is_false("11111111111111111".bit_int16(Nothing))
+        assertion.is_false("11111111111111111111111111111111".bit_int16(Nothing))
 
-        assert_false("111111111111111".bit_uint16(Nothing))
-        assert_false("1111111111111112".bit_uint16(Nothing))
-        assert_false("11111111111111111".bit_uint16(Nothing))
-        assert_false("11111111111111111111111111111111".bit_uint16(Nothing))
+        assertion.is_false("111111111111111".bit_uint16(Nothing))
+        assertion.is_false("1111111111111112".bit_uint16(Nothing))
+        assertion.is_false("11111111111111111".bit_uint16(Nothing))
+        assertion.is_false("11111111111111111111111111111111".bit_uint16(Nothing))
 
-        assert_false("1111111111111111111111111111111".bit_int32(Nothing))
-        assert_false("11111111111111111111111111111112".bit_int32(Nothing))
-        assert_false("111111111111111111111111111111111".bit_int32(Nothing))
-        assert_false("1111111111111111111111111111111111111111111111111111111111111111".bit_int32(Nothing))
+        assertion.is_false("1111111111111111111111111111111".bit_int32(Nothing))
+        assertion.is_false("11111111111111111111111111111112".bit_int32(Nothing))
+        assertion.is_false("111111111111111111111111111111111".bit_int32(Nothing))
+        assertion.is_false("1111111111111111111111111111111111111111111111111111111111111111".bit_int32(Nothing))
 
-        assert_false("1111111111111111111111111111111".bit_uint32(Nothing))
-        assert_false("11111111111111111111111111111112".bit_uint32(Nothing))
-        assert_false("111111111111111111111111111111111".bit_uint32(Nothing))
-        assert_false("1111111111111111111111111111111111111111111111111111111111111111".bit_uint32(Nothing))
+        assertion.is_false("1111111111111111111111111111111".bit_uint32(Nothing))
+        assertion.is_false("11111111111111111111111111111112".bit_uint32(Nothing))
+        assertion.is_false("111111111111111111111111111111111".bit_uint32(Nothing))
+        assertion.is_false("1111111111111111111111111111111111111111111111111111111111111111".bit_uint32(Nothing))
 
-        assert_false("111111111111111111111111111111111111111111111111111111111111111".bit_int64(Nothing))
-        assert_false("1111111111111111111111111111111111111111111111111111111111111112".bit_int64(Nothing))
-        assert_false("11111111111111111111111111111111111111111111111111111111111111111".bit_int64(Nothing))
-        assert_false(strcat("1111111111111111111111111111111111111111111111111111111111111111",
+        assertion.is_false("111111111111111111111111111111111111111111111111111111111111111".bit_int64(Nothing))
+        assertion.is_false("1111111111111111111111111111111111111111111111111111111111111112".bit_int64(Nothing))
+        assertion.is_false("11111111111111111111111111111111111111111111111111111111111111111".bit_int64(Nothing))
+        assertion.is_false(strcat("1111111111111111111111111111111111111111111111111111111111111111",
                             "1111111111111111111111111111111111111111111111111111111111111111").bit_int64(Nothing))
 
-        assert_false("111111111111111111111111111111111111111111111111111111111111111".bit_uint64(Nothing))
-        assert_false("1111111111111111111111111111111111111111111111111111111111111112".bit_uint64(Nothing))
-        assert_false("11111111111111111111111111111111111111111111111111111111111111111".bit_uint64(Nothing))
-        assert_false(strcat("1111111111111111111111111111111111111111111111111111111111111111",
+        assertion.is_false("111111111111111111111111111111111111111111111111111111111111111".bit_uint64(Nothing))
+        assertion.is_false("1111111111111111111111111111111111111111111111111111111111111112".bit_uint64(Nothing))
+        assertion.is_false("11111111111111111111111111111111111111111111111111111111111111111".bit_uint64(Nothing))
+        assertion.is_false(strcat("1111111111111111111111111111111111111111111111111111111111111111",
                             "1111111111111111111111111111111111111111111111111111111111111111").bit_int64(Nothing))
         Return True
     End Function
@@ -162,31 +162,31 @@ Public Class bit_test
                 If i = 1 Then
                     Dim a As SByte = 0
                     Dim b As Byte = 0
-                    assert_true(s.bit_int8(a))
-                    assert_equal(a._1count(), c)
-                    assert_true(s.bit_uint8(b))
-                    assert_equal(b._1count(), c)
+                    assertion.is_true(s.bit_int8(a))
+                    assertion.equal(a._1count(), c)
+                    assertion.is_true(s.bit_uint8(b))
+                    assertion.equal(b._1count(), c)
                 ElseIf i = 2 Then
                     Dim a As Int16 = 0
                     Dim b As UInt16 = 0
-                    assert_true(s.bit_int16(a))
-                    assert_equal(a._1count(), c)
-                    assert_true(s.bit_uint16(b))
-                    assert_equal(b._1count(), c)
+                    assertion.is_true(s.bit_int16(a))
+                    assertion.equal(a._1count(), c)
+                    assertion.is_true(s.bit_uint16(b))
+                    assertion.equal(b._1count(), c)
                 ElseIf i = 4 Then
                     Dim a As Int32 = 0
                     Dim b As UInt32 = 0
-                    assert_true(s.bit_int32(a))
-                    assert_equal(a._1count(), c)
-                    assert_true(s.bit_uint32(b))
-                    assert_equal(b._1count(), c)
+                    assertion.is_true(s.bit_int32(a))
+                    assertion.equal(a._1count(), c)
+                    assertion.is_true(s.bit_uint32(b))
+                    assertion.equal(b._1count(), c)
                 ElseIf i = 8 Then
                     Dim a As Int64 = 0
                     Dim b As UInt64 = 0
-                    assert_true(s.bit_int64(a))
-                    assert_equal(a._1count(), c)
-                    assert_true(s.bit_uint64(b))
-                    assert_equal(b._1count(), c)
+                    assertion.is_true(s.bit_int64(a))
+                    assertion.equal(a._1count(), c)
+                    assertion.is_true(s.bit_uint64(b))
+                    assertion.equal(b._1count(), c)
                 End If
             Next
         Next
@@ -198,11 +198,11 @@ Public Class bit_test
         Dim i As Byte = 0
         For j As Int32 = 0 To bit_count_in_byte * sizeof_uint8 - 1
             i.setbit(j, True)
-            assert_true(i.getbit(j))
-            assert_equal(i._1count(), 1)
+            assertion.is_true(i.getbit(j))
+            assertion.equal(i._1count(), 1)
             i.setbit(j, False)
-            assert_false(i.getbit(j))
-            assert_equal(i._1count(), 0)
+            assertion.is_false(i.getbit(j))
+            assertion.equal(i._1count(), 0)
         Next
         Return True
     End Function
@@ -211,11 +211,11 @@ Public Class bit_test
         Dim i As SByte = 0
         For j As Int32 = 0 To bit_count_in_byte * sizeof_int8 - 1
             i.setbit(j, True)
-            assert_true(i.getbit(j))
-            assert_equal(i._1count(), 1)
+            assertion.is_true(i.getbit(j))
+            assertion.equal(i._1count(), 1)
             i.setbit(j, False)
-            assert_false(i.getbit(j))
-            assert_equal(i._1count(), 0)
+            assertion.is_false(i.getbit(j))
+            assertion.equal(i._1count(), 0)
         Next
         Return True
     End Function
@@ -224,11 +224,11 @@ Public Class bit_test
         Dim i As UInt16 = 0
         For j As Int32 = 0 To bit_count_in_byte * sizeof_uint16 - 1
             i.setbit(j, True)
-            assert_true(i.getbit(j))
-            assert_equal(i._1count(), 1)
+            assertion.is_true(i.getbit(j))
+            assertion.equal(i._1count(), 1)
             i.setbit(j, False)
-            assert_false(i.getbit(j))
-            assert_equal(i._1count(), 0)
+            assertion.is_false(i.getbit(j))
+            assertion.equal(i._1count(), 0)
         Next
         Return True
     End Function
@@ -237,11 +237,11 @@ Public Class bit_test
         Dim i As Int16 = 0
         For j As Int32 = 0 To bit_count_in_byte * sizeof_int16 - 1
             i.setbit(j, True)
-            assert_true(i.getbit(j))
-            assert_equal(i._1count(), 1)
+            assertion.is_true(i.getbit(j))
+            assertion.equal(i._1count(), 1)
             i.setbit(j, False)
-            assert_false(i.getbit(j))
-            assert_equal(i._1count(), 0)
+            assertion.is_false(i.getbit(j))
+            assertion.equal(i._1count(), 0)
         Next
         Return True
     End Function
@@ -250,11 +250,11 @@ Public Class bit_test
         Dim i As UInt32 = 0
         For j As Int32 = 0 To bit_count_in_byte * sizeof_uint32 - 1
             i.setbit(j, True)
-            assert_true(i.getbit(j))
-            assert_equal(i._1count(), 1)
+            assertion.is_true(i.getbit(j))
+            assertion.equal(i._1count(), 1)
             i.setbit(j, False)
-            assert_false(i.getbit(j))
-            assert_equal(i._1count(), 0)
+            assertion.is_false(i.getbit(j))
+            assertion.equal(i._1count(), 0)
         Next
         Return True
     End Function
@@ -263,11 +263,11 @@ Public Class bit_test
         Dim i As Int32 = 0
         For j As Int32 = 0 To bit_count_in_byte * sizeof_int32 - 1
             i.setbit(j, True)
-            assert_true(i.getbit(j))
-            assert_equal(i._1count(), 1)
+            assertion.is_true(i.getbit(j))
+            assertion.equal(i._1count(), 1)
             i.setbit(j, False)
-            assert_false(i.getbit(j))
-            assert_equal(i._1count(), 0)
+            assertion.is_false(i.getbit(j))
+            assertion.equal(i._1count(), 0)
         Next
         Return True
     End Function
@@ -276,11 +276,11 @@ Public Class bit_test
         Dim i As UInt64 = 0
         For j As Int32 = 0 To bit_count_in_byte * sizeof_uint64 - 1
             i.setbit(j, True)
-            assert_true(i.getbit(j))
-            assert_equal(i._1count(), 1)
+            assertion.is_true(i.getbit(j))
+            assertion.equal(i._1count(), 1)
             i.setbit(j, False)
-            assert_false(i.getbit(j))
-            assert_equal(i._1count(), 0)
+            assertion.is_false(i.getbit(j))
+            assertion.equal(i._1count(), 0)
         Next
         Return True
     End Function
@@ -289,11 +289,11 @@ Public Class bit_test
         Dim i As Int64 = 0
         For j As Int32 = 0 To bit_count_in_byte * sizeof_int64 - 1
             i.setbit(j, True)
-            assert_true(i.getbit(j))
-            assert_equal(i._1count(), 1)
+            assertion.is_true(i.getbit(j))
+            assertion.equal(i._1count(), 1)
             i.setbit(j, False)
-            assert_false(i.getbit(j))
-            assert_equal(i._1count(), 0)
+            assertion.is_false(i.getbit(j))
+            assertion.equal(i._1count(), 0)
         Next
         Return True
     End Function
@@ -313,11 +313,11 @@ Public Class bit_test
         Dim i As Byte = 0
         For j As Int32 = 0 To bit_count_in_byte * sizeof_uint8 - 1
             i.setrbit(j, True)
-            assert_true(i.getrbit(j))
-            assert_equal(i._1count(), 1)
+            assertion.is_true(i.getrbit(j))
+            assertion.equal(i._1count(), 1)
             i.setrbit(j, False)
-            assert_false(i.getrbit(j))
-            assert_equal(i._1count(), 0)
+            assertion.is_false(i.getrbit(j))
+            assertion.equal(i._1count(), 0)
         Next
         Return True
     End Function
@@ -326,11 +326,11 @@ Public Class bit_test
         Dim i As SByte = 0
         For j As Int32 = 0 To bit_count_in_byte * sizeof_int8 - 1
             i.setrbit(j, True)
-            assert_true(i.getrbit(j))
-            assert_equal(i._1count(), 1)
+            assertion.is_true(i.getrbit(j))
+            assertion.equal(i._1count(), 1)
             i.setrbit(j, False)
-            assert_false(i.getrbit(j))
-            assert_equal(i._1count(), 0)
+            assertion.is_false(i.getrbit(j))
+            assertion.equal(i._1count(), 0)
         Next
         Return True
     End Function
@@ -339,11 +339,11 @@ Public Class bit_test
         Dim i As UInt16 = 0
         For j As Int32 = 0 To bit_count_in_byte * sizeof_uint16 - 1
             i.setrbit(j, True)
-            assert_true(i.getrbit(j))
-            assert_equal(i._1count(), 1)
+            assertion.is_true(i.getrbit(j))
+            assertion.equal(i._1count(), 1)
             i.setrbit(j, False)
-            assert_false(i.getrbit(j))
-            assert_equal(i._1count(), 0)
+            assertion.is_false(i.getrbit(j))
+            assertion.equal(i._1count(), 0)
         Next
         Return True
     End Function
@@ -352,11 +352,11 @@ Public Class bit_test
         Dim i As Int16 = 0
         For j As Int32 = 0 To bit_count_in_byte * sizeof_int16 - 1
             i.setrbit(j, True)
-            assert_true(i.getrbit(j))
-            assert_equal(i._1count(), 1)
+            assertion.is_true(i.getrbit(j))
+            assertion.equal(i._1count(), 1)
             i.setrbit(j, False)
-            assert_false(i.getrbit(j))
-            assert_equal(i._1count(), 0)
+            assertion.is_false(i.getrbit(j))
+            assertion.equal(i._1count(), 0)
         Next
         Return True
     End Function
@@ -365,11 +365,11 @@ Public Class bit_test
         Dim i As UInt32 = 0
         For j As Int32 = 0 To bit_count_in_byte * sizeof_uint32 - 1
             i.setrbit(j, True)
-            assert_true(i.getrbit(j))
-            assert_equal(i._1count(), 1)
+            assertion.is_true(i.getrbit(j))
+            assertion.equal(i._1count(), 1)
             i.setrbit(j, False)
-            assert_false(i.getrbit(j))
-            assert_equal(i._1count(), 0)
+            assertion.is_false(i.getrbit(j))
+            assertion.equal(i._1count(), 0)
         Next
         Return True
     End Function
@@ -378,11 +378,11 @@ Public Class bit_test
         Dim i As Int32 = 0
         For j As Int32 = 0 To bit_count_in_byte * sizeof_int32 - 1
             i.setrbit(j, True)
-            assert_true(i.getrbit(j))
-            assert_equal(i._1count(), 1)
+            assertion.is_true(i.getrbit(j))
+            assertion.equal(i._1count(), 1)
             i.setrbit(j, False)
-            assert_false(i.getrbit(j))
-            assert_equal(i._1count(), 0)
+            assertion.is_false(i.getrbit(j))
+            assertion.equal(i._1count(), 0)
         Next
         Return True
     End Function
@@ -391,11 +391,11 @@ Public Class bit_test
         Dim i As UInt64 = 0
         For j As Int32 = 0 To bit_count_in_byte * sizeof_uint64 - 1
             i.setrbit(j, True)
-            assert_true(i.getrbit(j))
-            assert_equal(i._1count(), 1)
+            assertion.is_true(i.getrbit(j))
+            assertion.equal(i._1count(), 1)
             i.setrbit(j, False)
-            assert_false(i.getrbit(j))
-            assert_equal(i._1count(), 0)
+            assertion.is_false(i.getrbit(j))
+            assertion.equal(i._1count(), 0)
         Next
         Return True
     End Function
@@ -404,11 +404,11 @@ Public Class bit_test
         Dim i As Int64 = 0
         For j As Int32 = 0 To bit_count_in_byte * sizeof_int64 - 1
             i.setrbit(j, True)
-            assert_true(i.getrbit(j))
-            assert_equal(i._1count(), 1)
+            assertion.is_true(i.getrbit(j))
+            assertion.equal(i._1count(), 1)
             i.setrbit(j, False)
-            assert_false(i.getrbit(j))
-            assert_equal(i._1count(), 0)
+            assertion.is_false(i.getrbit(j))
+            assertion.equal(i._1count(), 0)
         Next
         Return True
     End Function

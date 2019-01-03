@@ -92,7 +92,7 @@ Friend Class qless_case5
                 read()
             End While
             For j As UInt32 = 0 To b.size() - uint32_1
-                assert_true(b(j))
+                assertion.is_true(b(j))
             Next
             Return MyBase.finish()
         End Function
