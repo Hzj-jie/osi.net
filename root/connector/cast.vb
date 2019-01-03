@@ -272,9 +272,29 @@ Public Module _cast
             Return cast(Of T, IT)(i, require_assert)
         End Function
 
+        Public Function from(Of IT)(ByVal i As IT, ByRef o As T) As Boolean
+            Return cast(i, o)
+        End Function
+
         Private Sub New()
         End Sub
     End Class
+
+    Public Structure cast_cache(Of T)
+        Private ReadOnly i As T
+
+        Public Sub New(ByVal i As T)
+            Me.i = i
+        End Sub
+
+        Public Function [to](Of OT)(ByRef o As OT) As Boolean
+            Return cast(i, o)
+        End Function
+
+        Public Function [to](Of OT)(Optional ByVal require_assert As Boolean = True) As OT
+            Return cast(Of OT, T)(i, require_assert)
+        End Function
+    End Structure
 
     Public Function cast(Of T, IT)(ByVal i As IT, ByRef o As T) As Boolean
         If c_nothing(i, o) Then
@@ -304,13 +324,17 @@ Public Module _cast
         Return cast_type_inferrer(Of T).instance
     End Function
 
+    Public Function cast(Of T)(ByVal i As T) As cast_cache(Of T)
+        Return New cast_cache(Of T)(i)
+    End Function
+
     Public Function cast(Of T)(ByVal i As Object, ByRef o As T) As Boolean
         If typed_once_action(Of cast_type_inferrer(Of T)).should_do() Then
             raise_error(error_type.performance,
                         "cast(Of ",
                         GetType(T).Name(),
-                        ")(i) seriously impacts performance. cast(Of T)().from(i) is preferred: ",
-                        backtrace())
+                        ")(i) seriously impacts performance. cast(Of T)().from(i) or cast(i).to(o) is preferred: ",
+                        backtrace("_cast.cast"))
         End If
         Return cast(Of T, Object)(i, o)
     End Function
