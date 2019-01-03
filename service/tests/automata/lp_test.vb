@@ -1,6 +1,10 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.service.automata
@@ -29,37 +33,37 @@ Partial Public Class lp_test
                        ByVal from As Int32,
                        ByVal [to] As Int32)
             Me.New(from,
-                   words(pos).type,
+                   CInt(words(CInt(pos)).type),
                    [to],
-                   cast(Of lexer.word)(words(pos)).text)
+                   cast(Of lexer.word)().from(words(CInt(pos))).text)
         End Sub
 
         Public Function assert_equal(ByVal from As Int32,
                                      ByVal [to] As Int32) As Boolean
-            Return root.utt.assertion.equal(from, Me.from) AndAlso
-                   root.utt.assertion.equal([to], Me.to)
+            Return assertion.equal(from, Me.from) AndAlso
+                   assertion.equal([to], Me.to)
         End Function
 
         Public Function assert_equal(ByVal from As Int32,
                                      ByVal [to] As Int32,
                                      ByVal key_word As String) As Boolean
-            Return assertion.equal(from, [to]) AndAlso
-                   root.utt.assertion.equal(key_word, Me.key_word)
+            Return assert_equal(from, [to]) AndAlso
+                   assertion.equal(key_word, Me.key_word)
         End Function
 
         Public Function assert_equal(ByVal from As Int32,
                                      ByVal varaible As Int32,
                                      ByVal [to] As Int32) As Boolean
-            Return assertion.equal(from, [to]) AndAlso
-                   root.utt.assertion.equal(varaible, Me.variable)
+            Return assert_equal(from, [to]) AndAlso
+                   assertion.equal(varaible, Me.variable)
         End Function
 
         Public Function assert_equal(ByVal from As Int32,
                                      ByVal variable As Int32,
                                      ByVal [to] As Int32,
                                      ByVal key_word As String) As Boolean
-            Return assertion.equal(from, [to], key_word) AndAlso
-                   root.utt.assertion.equal(key_word, Me.key_word)
+            Return assert_equal(from, [to], key_word) AndAlso
+                   assertion.equal(key_word, Me.key_word)
         End Function
     End Class
 
