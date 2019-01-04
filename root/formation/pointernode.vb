@@ -3,9 +3,11 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Diagnostics.CodeAnalysis
 Imports osi.root.connector
 Imports osi.root.constants
 
+<SuppressMessage("Microsoft.Design", "BC42333")>
 Public Class pointernode(Of T)
     Implements ICloneable, IComparable(Of pointernode(Of T)), IComparable(Of T), IComparable
 

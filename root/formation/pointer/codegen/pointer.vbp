@@ -2,24 +2,21 @@
 ##DEFAULT TYPE pointer
 ##DEFAULT INNER_TYPE T
 
+Imports System.Diagnostics.CodeAnalysis
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports osi.root.lock
 Imports osi.root.lock.slimlock
 Imports osi.root.connector
 
+' TODO: Remove
 Public Module _##TYPE##
     Public Function make_##TYPE##(Of T)(ByVal i As ##INNER_TYPE##) As ##TYPE##(Of T)
-        Return New ##TYPE##(Of T)(i)
+        Return ##TYPE##.of(i)
     End Function
 
     Public Function make_##TYPE##s(Of T)(ByVal ParamArray i As ##INNER_TYPE##()) As ##TYPE##(Of T)()
-        Dim r() As ##TYPE##(Of T) = Nothing
-        ReDim r(array_size_i(i) - 1)
-        For j As Int32 = 0 To array_size_i(i) - 1
-            r(j) = make_##TYPE##(i(j))
-        Next
-        Return r
+        Return ##TYPE##.of(i)
     End Function
 
     <Extension()> Public Function renew(Of T)(ByRef i As ##TYPE##(Of T)) As ##TYPE##(Of T)
@@ -32,6 +29,25 @@ Public Module _##TYPE##
     End Function
 End Module
 
+Public NotInheritable Class ##TYPE##
+    Public Shared Function [of](Of T)(ByVal i As ##INNER_TYPE##) As ##TYPE##(Of T)
+        Return New ##TYPE##(Of T)(i)
+    End Function
+
+    Public Shared Function [of](Of T)(ByVal ParamArray i As ##INNER_TYPE##()) As ##TYPE##(Of T)()
+        Dim r() As ##TYPE##(Of T) = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            r(j) = make_##TYPE##(i(j))
+        Next
+        Return r
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
+
+<SuppressMessage("Microsoft.Design", "BC42333")>
 Public Class ##TYPE##(Of T)
     Implements IComparable, IComparable(Of ##TYPE##(Of T)), IComparable(Of ##INNER_TYPE##),
                ICloneable, ICloneable(Of ##TYPE##(Of T))

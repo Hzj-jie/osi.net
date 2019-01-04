@@ -9,24 +9,21 @@ Option Strict On
 
 
 
+Imports System.Diagnostics.CodeAnalysis
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports osi.root.lock
 Imports osi.root.lock.slimlock
 Imports osi.root.connector
 
+' TODO: Remove
 Public Module _pointer
     Public Function make_pointer(Of T)(ByVal i As T) As pointer(Of T)
-        Return New pointer(Of T)(i)
+        Return pointer.of(i)
     End Function
 
     Public Function make_pointers(Of T)(ByVal ParamArray i As T()) As pointer(Of T)()
-        Dim r() As pointer(Of T) = Nothing
-        ReDim r(array_size_i(i) - 1)
-        For j As Int32 = 0 To array_size_i(i) - 1
-            r(j) = make_pointer(i(j))
-        Next
-        Return r
+        Return pointer.of(i)
     End Function
 
     <Extension()> Public Function renew(Of T)(ByRef i As pointer(Of T)) As pointer(Of T)
@@ -39,6 +36,25 @@ Public Module _pointer
     End Function
 End Module
 
+Public NotInheritable Class pointer
+    Public Shared Function [of](Of T)(ByVal i As T) As pointer(Of T)
+        Return New pointer(Of T)(i)
+    End Function
+
+    Public Shared Function [of](Of T)(ByVal ParamArray i As T()) As pointer(Of T)()
+        Dim r() As pointer(Of T) = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            r(j) = make_pointer(i(j))
+        Next
+        Return r
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
+
+<SuppressMessage("Microsoft.Design", "BC42333")>
 Public Class pointer(Of T)
     Implements IComparable, IComparable(Of pointer(Of T)), IComparable(Of T),
                ICloneable, ICloneable(Of pointer(Of T))

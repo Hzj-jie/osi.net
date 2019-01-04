@@ -25,11 +25,11 @@ Imports osi.root.connector
 
 Public NotInheritable Class fast_pair
     Public Shared Function [of](Of FT, ST)(ByVal first As FT, ByVal second As ST) As fast_pair(Of FT, ST)
-        Return make_fast_pair(first, second)
+        Return fast_pair(Of FT, ST).make_fast_pair(first, second)
     End Function
 
     Public Shared Function emplace_of(Of FT, ST)(ByVal first As FT, ByVal second As ST) As fast_pair(Of FT, ST)
-        Return emplace_make_fast_pair(first, second)
+        Return fast_pair(Of FT, ST).emplace_make_fast_pair(first, second)
     End Function
 
     Public Shared Function [of](Of FT, ST)(ByVal i as KeyValuePair(Of FT, ST)) As fast_pair(Of FT, ST)
@@ -206,41 +206,42 @@ Public Structure fast_pair(Of FT, ST)
 
 #If Not IS_CONST Then
     Public Function to_const_pair() As const_pair(Of FT, ST)
-        Return make_const_pair(first, second)
+        Return const_pair.of(first, second)
     End Function
 
     Public Function emplace_to_const_pair() As const_pair(Of FT, ST)
-        Return emplace_make_const_pair(first, second)
+        Return const_pair.emplace_of(first, second)
     End Function
 #End If
 #If Not IS_FIRST_CONST Then
     Public Function to_first_const_pair() As first_const_pair(Of FT, ST)
-        Return make_first_const_pair(first, second)
+        Return first_const_pair.of(first, second)
     End Function
 
     Public Function emplace_to_first_const_pair() As first_const_pair(Of FT, ST)
-        Return emplace_make_first_const_pair(first, second)
+        Return first_const_pair.emplace_of(first, second)
     End Function
 #End If
 #If IS_CONST OrElse IS_FIRST_CONST Then
     Public Function to_pair() As pair(Of FT, ST)
-        Return make_pair(first, second)
+        Return pair.of(first, second)
     End Function
 
     Public Function emplace_to_pair() As pair(Of FT, ST)
-        Return emplace_make_pair(first, second)
+        Return pair.emplace_of(first, second)
     End Function
 #End If
 #If Not IS_CONST AndAlso Not IS_FIRST_CONST AndAlso Not IS_CLASS Then
     Public Shared Widening Operator CType(ByVal this As fast_pair(Of FT, ST)) As pair(Of FT, ST)
-        Return emplace_make_pair(this.first, this.second)
+        Return pair.emplace_of(this.first, this.second)
     End Operator
 #End If
 End Structure
 
+' TODO: Remove
 Public Module _fast_pair
     Public Function make_fast_pair(Of FT, ST)(ByVal first As FT, ByVal second As ST) As fast_pair(Of FT, ST)
-        Return fast_pair(Of FT, ST).make_fast_pair(first, second)
+        Return fast_pair.of(first, second)
     End Function
 
     Public Function make_fast_pair(Of FT, ST)(ByVal first As FT) As fast_pair(Of FT, ST)
@@ -256,7 +257,7 @@ Public Module _fast_pair
     End Function
 
     Public Function emplace_make_fast_pair(Of FT, ST)(ByVal first As FT, ByVal second As ST) As fast_pair(Of FT, ST)
-        Return fast_pair(Of FT, ST).emplace_make_fast_pair(first, second)
+        Return fast_pair.emplace_of(first, second)
     End Function
 
     Public Function emplace_make_fast_pair(Of FT, ST)(ByVal first As FT) As fast_pair(Of FT, ST)

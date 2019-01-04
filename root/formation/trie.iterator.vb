@@ -81,13 +81,13 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
         End Function
 #Else
         Public Function is_end() As Boolean
-            If type_info(Of iterator).is_valuetype Then
-                Return p Is Nothing
-            Else
-                Return p Is Nothing AndAlso
-                       (Not isdebugmode() OrElse
-                        assert(object_compare(Me, [end]) = 0))
-            End If
+#If False Then
+            Return p Is Nothing
+#Else
+            Return p Is Nothing AndAlso
+                   (Not isdebugmode() OrElse
+                    assert(object_compare(Me, [end]) = 0))
+#End If
         End Function
 #End If
 

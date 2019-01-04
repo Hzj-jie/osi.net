@@ -15,24 +15,21 @@ Option Strict On
 
 
 
+Imports System.Diagnostics.CodeAnalysis
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports osi.root.lock
 Imports osi.root.lock.slimlock
 Imports osi.root.connector
 
+' TODO: Remove
 Public Module _array_pointer
     Public Function make_array_pointer(Of T)(ByVal i As T()) As array_pointer(Of T)
-        Return New array_pointer(Of T)(i)
+        Return array_pointer.of(i)
     End Function
 
     Public Function make_array_pointers(Of T)(ByVal ParamArray i As T()()) As array_pointer(Of T)()
-        Dim r() As array_pointer(Of T) = Nothing
-        ReDim r(array_size_i(i) - 1)
-        For j As Int32 = 0 To array_size_i(i) - 1
-            r(j) = make_array_pointer(i(j))
-        Next
-        Return r
+        Return array_pointer.of(i)
     End Function
 
     <Extension()> Public Function renew(Of T)(ByRef i As array_pointer(Of T)) As array_pointer(Of T)
@@ -45,6 +42,25 @@ Public Module _array_pointer
     End Function
 End Module
 
+Public NotInheritable Class array_pointer
+    Public Shared Function [of](Of T)(ByVal i As T()) As array_pointer(Of T)
+        Return New array_pointer(Of T)(i)
+    End Function
+
+    Public Shared Function [of](Of T)(ByVal ParamArray i As T()()) As array_pointer(Of T)()
+        Dim r() As array_pointer(Of T) = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            r(j) = make_array_pointer(i(j))
+        Next
+        Return r
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
+
+<SuppressMessage("Microsoft.Design", "BC42333")>
 Public Class array_pointer(Of T)
     Implements IComparable, IComparable(Of array_pointer(Of T)), IComparable(Of T()),
                ICloneable, ICloneable(Of array_pointer(Of T))

@@ -68,13 +68,13 @@ Partial Public Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As 
         End Function
 #Else
         Public Function is_end() As Boolean
-            If type_info(Of iterator).is_valuetype Then
-                Return p Is Nothing
-            Else
-                Return p Is Nothing AndAlso
-                       (Not isdebugmode() OrElse
-                        assert(object_compare(Me, [end]) = 0))
-            End If
+#If False Then
+            Return p Is Nothing
+#Else
+            Return p Is Nothing AndAlso
+                   (Not isdebugmode() OrElse
+                    assert(object_compare(Me, [end]) = 0))
+#End If
         End Function
 #End If
 

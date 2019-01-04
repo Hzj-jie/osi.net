@@ -15,24 +15,21 @@ Option Strict On
 
 
 
+Imports System.Diagnostics.CodeAnalysis
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports osi.root.lock
 Imports osi.root.lock.slimlock
 Imports osi.root.connector
 
+' TODO: Remove
 Public Module _weak_pointer
     Public Function make_weak_pointer(Of T)(ByVal i As T) As weak_pointer(Of T)
-        Return New weak_pointer(Of T)(i)
+        Return weak_pointer.of(i)
     End Function
 
     Public Function make_weak_pointers(Of T)(ByVal ParamArray i As T()) As weak_pointer(Of T)()
-        Dim r() As weak_pointer(Of T) = Nothing
-        ReDim r(array_size_i(i) - 1)
-        For j As Int32 = 0 To array_size_i(i) - 1
-            r(j) = make_weak_pointer(i(j))
-        Next
-        Return r
+        Return weak_pointer.of(i)
     End Function
 
     <Extension()> Public Function renew(Of T)(ByRef i As weak_pointer(Of T)) As weak_pointer(Of T)
@@ -45,6 +42,25 @@ Public Module _weak_pointer
     End Function
 End Module
 
+Public NotInheritable Class weak_pointer
+    Public Shared Function [of](Of T)(ByVal i As T) As weak_pointer(Of T)
+        Return New weak_pointer(Of T)(i)
+    End Function
+
+    Public Shared Function [of](Of T)(ByVal ParamArray i As T()) As weak_pointer(Of T)()
+        Dim r() As weak_pointer(Of T) = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            r(j) = make_weak_pointer(i(j))
+        Next
+        Return r
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
+
+<SuppressMessage("Microsoft.Design", "BC42333")>
 Public Class weak_pointer(Of T)
     Implements IComparable, IComparable(Of weak_pointer(Of T)), IComparable(Of T),
                ICloneable, ICloneable(Of weak_pointer(Of T))

@@ -1,4 +1,5 @@
 ﻿
+Imports System.Diagnostics.CodeAnalysis
 Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.lock
@@ -64,6 +65,7 @@ Public Class wait_handle_behavior_test
         Return True
     End Function
 
+    <SuppressMessage("", "BC40000")>
     Private Shared Function a_valid_handle_after_close(ByVal e As WaitHandle) As Boolean
         assert(Not e Is Nothing)
         assertion.is_not_null(e.SafeWaitHandle())
