@@ -45,21 +45,20 @@ Partial Public NotInheritable Class promise
 
     Public Function [then](ByVal on_resolve As Func(Of Object, Object), ByVal on_reject As Action(Of Object)) As promise
         assert(Not on_resolve Is Nothing)
-        If appended.mark_in_use() Then
-            Dim r As promise = Nothing
-            r = New promise()
-            t.then(Sub(ByVal result As Object)
-                       r._resolve(on_resolve(result))
-                   End Sub,
-                   Sub(ByVal reason As Object)
-                       If Not on_reject Is Nothing Then
-                           on_reject(reason)
-                       End If
-                       r._reject(reason)
-                   End Sub)
-            Return r
-        Else
+        If Not appended.mark_in_use() Then
             Return Nothing
         End If
+        Dim r As promise = Nothing
+        r = New promise()
+        t.then(Sub(ByVal result As Object)
+                   r._resolve(on_resolve(result))
+               End Sub,
+               Sub(ByVal reason As Object)
+                   If Not on_reject Is Nothing Then
+                       on_reject(reason)
+                   End If
+                   r._reject(reason)
+               End Sub)
+        Return r
     End Function
 End Class

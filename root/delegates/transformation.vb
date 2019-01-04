@@ -9,28 +9,25 @@ Public Module _transformation
     <Extension()> Public Function reverse(ByVal d As Func(Of Boolean)) As Func(Of Boolean)
         If d Is Nothing Then
             Return Function() True
-        Else
-            Return Function() Not d()
         End If
+        Return Function() Not d()
     End Function
 
     <Extension()> Public Function reverse(Of T)(ByVal d As _do(Of T, Boolean)) As _do(Of T, Boolean)
         If d Is Nothing Then
             Return Function(ByRef x) True
-        Else
-            Return Function(ByRef x As T) Not d(x)
         End If
+        Return Function(ByRef x As T) Not d(x)
     End Function
 
     Private Function v_d_b(ByVal d As Action, ByVal exp As Boolean) As Func(Of Boolean)
         If d Is Nothing Then
             Return Function() Not exp
-        Else
-            Return Function() As Boolean
-                       d()
-                       Return exp
-                   End Function
         End If
+        Return Function() As Boolean
+                   d()
+                   Return exp
+               End Function
     End Function
 
     <Extension()> Public Function true_(ByVal d As Action) As Func(Of Boolean)
@@ -60,20 +57,18 @@ Public Module _transformation
     <Extension()> Public Function type_erasure(Of T)(ByVal v As Action(Of Object)) As Action(Of T)
         If v Is Nothing Then
             Return Nothing
-        Else
-            Return Sub(ByVal x As T)
-                       v(x)
-                   End Sub
         End If
+        Return Sub(ByVal x As T)
+                   v(x)
+               End Sub
     End Function
 
     <Extension()> Public Function parameter_erasure(Of T)(ByVal i As Action) As Action(Of T)
         If i Is Nothing Then
             Return Nothing
-        Else
-            Return Sub(ByVal v As T)
-                       i()
-                   End Sub
         End If
+        Return Sub(ByVal v As T)
+                   i()
+               End Sub
     End Function
 End Module

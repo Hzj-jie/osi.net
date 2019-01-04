@@ -19,7 +19,7 @@ Partial Public NotInheritable Class promise
                                              If promise_trace Then
                                                  log_unhandled_exception(ex)
                                              End If
-                                             reject(Nothing)
+                                             reject(ex)
                                          End Try
                                      End Sub)
                            End Sub)
@@ -38,7 +38,7 @@ Partial Public NotInheritable Class promise
                                              If promise_trace Then
                                                  log_unhandled_exception(ex)
                                              End If
-                                             reject(Nothing)
+                                             reject(ex)
                                          End Try
                                      End Sub)
                            End Sub)

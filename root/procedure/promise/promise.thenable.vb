@@ -3,7 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.formation
 
@@ -39,44 +38,49 @@ Partial Public NotInheritable Class promise
             Dim p As promise = Nothing
             If Not result Is Nothing AndAlso direct_cast(result, p) Then
                 p.then(AddressOf resolve, AddressOf reject)
-            Else
-                SyncLock Me
-                    If status = status.pending Then
-                        status = status.fulfilled
-                        Me.result = result
-                        execute_next()
-                        trace_stop()
-                    End If
-                End SyncLock
+                Return
             End If
+            SyncLock Me
+                If status <> status.pending Then
+                    Return
+                End If
+                status = status.fulfilled
+                Me.result = result
+                execute_next()
+                trace_stop()
+            End SyncLock
         End Sub
 
-        <MethodImpl(MethodImplOptions.Synchronized)>
         Public Sub reject(ByVal reason As Object)
-            If status = status.pending Then
+            SyncLock Me
+                If status <> status.pending Then
+                    Return
+                End If
                 Me.reason = reason
                 status = status.rejected
                 execute_next()
                 trace_stop()
-            End If
+            End SyncLock
         End Sub
 
-        <MethodImpl(MethodImplOptions.Synchronized)>
         Public Sub [then](ByVal on_resolve As Action(Of Object), ByVal on_reject As Action(Of Object))
-            assert(Not on_resolve Is Nothing)
-            assert(Not on_reject Is Nothing)
-            assert(Me.next Is Nothing)
-            Me.next = emplace_make_const_pair(on_resolve, on_reject)
-            execute_next()
+            SyncLock Me
+                assert(Not on_resolve Is Nothing)
+                assert(Not on_reject Is Nothing)
+                assert(Me.next Is Nothing)
+                [next] = const_pair.emplace_of(on_resolve, on_reject)
+                execute_next()
+            End SyncLock
         End Sub
 
         Private Sub execute_next()
-            If Not [next] Is Nothing Then
-                If status = status.fulfilled Then
-                    [next].first(result)
-                ElseIf status = status.rejected Then
-                    [next].second(reason)
-                End If
+            If [next] Is Nothing Then
+                Return
+            End If
+            If status = status.fulfilled Then
+                [next].first(result)
+            ElseIf status = status.rejected Then
+                [next].second(reason)
             End If
         End Sub
     End Class
