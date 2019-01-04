@@ -1,4 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports System.Diagnostics.CodeAnalysis
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 
@@ -8,6 +13,16 @@ Public Module _to_string_shadower
     End Function
 End Module
 
+Public NotInheritable Class to_string_shadower
+    Public Shared Function [of](Of T)(ByVal i As T) As to_string_shadower(Of T)
+        Return New to_string_shadower(Of T)(i)
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
+
+<SuppressMessage("Microsoft.Design", "BC42333")>
 Public Class to_string_shadower(Of T)
     Implements IComparable(Of to_string_shadower(Of T)), IComparable, IComparable(Of T)
 
@@ -30,12 +45,11 @@ Public Class to_string_shadower(Of T)
                              Implements IComparable(Of to_string_shadower(Of T)).CompareTo
         Dim cmp As Int32 = 0
         cmp = object_compare(Me, other)
-        If cmp = object_compare_undetermined Then
-            assert(Not other Is Nothing)
-            Return compare(x, other.x)
-        Else
+        If cmp <> object_compare_undetermined Then
             Return cmp
         End If
+        assert(Not other Is Nothing)
+        Return compare(x, other.x)
     End Function
 
     Public Function CompareTo(ByVal other As T) As Int32 Implements IComparable(Of T).CompareTo
