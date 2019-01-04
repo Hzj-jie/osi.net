@@ -9,7 +9,7 @@ Imports osi.root.formation
 Imports osi.root.template
 Imports osi.root.utils
 
-Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
+Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
     Private Const default_assert_async_wait_time_ms As Int64 = 10 * second_milli
     Private Shared ReadOnly _is_true As __void(Of Boolean, Object())
 
@@ -64,46 +64,6 @@ Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
                                            ByVal j As T,
                                            ByVal ParamArray msg() As Object) As Boolean
         Return is_true(compare(i, j) <> 0, left_right_msg("not equal to", i, j, msg))
-    End Function
-
-    Public Shared Function array_equal(Of T)(ByVal i() As T,
-                                             ByVal j() As T,
-                                             ByVal ParamArray msg() As Object) As Boolean
-        If Not equal(array_size(i), array_size(j), msg) Then
-            Return False
-        End If
-        For k As Int32 = 0 To array_size_i(i) - 1
-            If Not equal(i(k), j(k), msg) Then
-                Return False
-            End If
-        Next
-        Return True
-    End Function
-
-    Public Shared Function array_not_equal(Of T)(ByVal i() As T,
-                                                 ByVal j() As T,
-                                                 ByVal ParamArray msg() As Object) As Boolean
-        If array_size(i) <> array_size(j) Then
-            Return True
-        End If
-        For k As Int32 = 0 To array_size_i(i) - 1
-            If compare(i(k), j(k)) <> 0 Then
-                Return True
-            End If
-        Next
-        Return is_true(False, msg)
-    End Function
-
-    Public Shared Function vector_equal(Of T)(ByVal i As vector(Of T),
-                                              ByVal j As vector(Of T),
-                                              ByVal ParamArray msg() As Object) As Boolean
-        Return array_equal(+i, +j, msg)
-    End Function
-
-    Public Shared Function vector_not_equal(Of T)(ByVal i As vector(Of T),
-                                                  ByVal j As vector(Of T),
-                                                  ByVal ParamArray msg() As Object) As Boolean
-        Return array_not_equal(+i, +j, msg)
     End Function
 
     Public Shared Function less(Of T)(ByVal i As T, ByVal j As T, ByVal ParamArray msg() As Object) As Boolean
