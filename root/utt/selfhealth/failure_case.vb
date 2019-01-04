@@ -66,13 +66,14 @@ Public Class failure_case
             report_self_health_failure(
                 18,
                 "assertion.now_in_time_range(Now().milliseconds() - 1001, Now().milliseconds() - 1000)")
-            Using New auto_assert_timelimited_operation(0, 1)
-                Dim ma As manual_assert_timelimited_operation = New manual_assert_timelimited_operation(0, 1)
+            Using assertion.timelimited_operation(0, 1)
+                Dim ma As IDisposable = Nothing
+                ma = assertion.timelimited_operation(0, 1)
                 measure_sleep(CInt(two_timeslice_length_ms))
-                ma.finish()
-                report_self_health_failure(19, "manual_assert_timelimited_operation")
+                ma.Dispose()
+                report_self_health_failure(19, "manually assertion.timelimited_operation.Dispose()")
             End Using
-            report_self_health_failure(20, "auto_assert_timelimited_operation")
+            report_self_health_failure(20, "automatically assertion.timelimited_operation.Dispose()")
 
             ' tirgger 2 failures, one from exec_case, one from assertion.is_true
             assertion.is_true(host.execute_case(New exec_failure_case_1.exec_failure_case()))
@@ -112,10 +113,10 @@ Public Class failure_case
         assertion.is_not_int(0.1)
         assertion.now_in_time_range(Now().milliseconds(), Now().milliseconds() + 1000)
         assertion.now_in_time_range(Now().milliseconds() - 1000, Now().milliseconds() + two_timeslice_length_ms)
-        Using New auto_assert_timelimited_operation(0, two_timeslice_length_ms)
-            Dim ma As manual_assert_timelimited_operation =
-                      New manual_assert_timelimited_operation(0, two_timeslice_length_ms)
-            ma.finish()
+        Using assertion.timelimited_operation(0, two_timeslice_length_ms)
+            Dim ma As IDisposable = Nothing
+            ma = assertion.timelimited_operation(0, two_timeslice_length_ms)
+            ma.Dispose()
         End Using
         assertion.happening_in(Function() True, CLng(1))
         assertion.not_happening_in(Function() False, CLng(1))

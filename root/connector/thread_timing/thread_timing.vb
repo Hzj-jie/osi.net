@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Diagnostics
 Imports System.Threading
 
@@ -153,40 +157,23 @@ Public Class priority
         End If
     End Sub
 
-#Region "IDisposable Support"
-    Private disposedValue As Boolean ' To detect redundant calls
-
-    ' IDisposable
-    Protected Overridable Sub Dispose(ByVal disposing As Boolean)
-        If Not Me.disposedValue Then
-            If disposing Then
-                If Not n.keep_process_priority() Then
-                    assert(Not p Is Nothing)
-                    If ppc <> n.target_process_priority() Then
-                        'for mono
-                        Try
-                            p.PriorityClass() = ppc
-                        Catch
-                        End Try
-                    End If
-                End If
-                If Not n.keep_thread_priority() Then
-                    assert(Not t Is Nothing)
-                    If otp <> n.target_thread_priority() Then
-                        t.Priority() = otp
-                    End If
-                End If
+    Public Sub Dispose() Implements IDisposable.Dispose
+        If Not n.keep_process_priority() Then
+            assert(Not p Is Nothing)
+            If ppc <> n.target_process_priority() Then
+                'for mono
+                Try
+                    p.PriorityClass() = ppc
+                Catch
+                End Try
             End If
         End If
-        Me.disposedValue = True
-    End Sub
-
-    ' This code added by Visual Basic to correctly implement the disposable pattern.
-    Public Sub Dispose() Implements IDisposable.Dispose
-        ' Do not change this code.  Put cleanup code in Dispose(ByVal disposing As Boolean) above.
-        Dispose(True)
+        If Not n.keep_thread_priority() Then
+            assert(Not t Is Nothing)
+            If otp <> n.target_thread_priority() Then
+                t.Priority() = otp
+            End If
+        End If
         GC.SuppressFinalize(Me)
     End Sub
-#End Region
-
 End Class

@@ -3,13 +3,13 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.lock
-Imports osi.root.connector
 
 Public Module _disposer
     Public Function scoped_action(ByVal start As Action,
-                                    ByVal [end] As Action) As disposer
+                                  ByVal [end] As Action) As disposer
         assert(Not start Is Nothing)
         assert(Not [end] Is Nothing)
         start()

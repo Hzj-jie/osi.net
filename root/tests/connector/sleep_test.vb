@@ -107,9 +107,10 @@ Public Class sleep_test
     Private Shared Function timeout(ByVal d As Func(Of Int64, Boolean)) As Boolean
         assert(Not d Is Nothing)
         Const timeout_ms As Int64 = second_milli
-        Using t As New auto_assert_timelimited_operation(timeout_ms, timeout_ms + four_timeslice_length_ms),
-              b As New boost()
-            assertion.is_false(d(timeout_ms))
+        Using New boost()
+            Using assertion.timelimited_operation(timeout_ms, timeout_ms + four_timeslice_length_ms)
+                assertion.is_false(d(timeout_ms))
+            End Using
         End Using
         Return True
     End Function

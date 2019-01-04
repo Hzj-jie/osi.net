@@ -8,9 +8,6 @@ Imports osi.root.utt.attributes
 
 <test>
 Public NotInheritable Class lambda_behavior_test
-    Private Sub New()
-    End Sub
-
     <test>
     Private Shared Sub should_capture_latest_value()
         Dim c As Object = Nothing
@@ -41,6 +38,19 @@ Public NotInheritable Class lambda_behavior_test
     End Sub
 
     <test>
+    Private Shared Sub should_capture_latest_value_type()
+        Dim a As Int32 = 0
+        Dim f As Func(Of Boolean) = Function() As Boolean
+                                        Return a = 0
+                                    End Function
+        assertion.is_true(f())
+        a = 100
+        assertion.is_false(f())
+        a = 0
+        assertion.is_true(f())
+    End Sub
+
+    <test>
     Private Shared Sub same_lambda_expression_should_create_different_objects_with_different_captured_parameters()
         Dim a As Int32 = 0
         Dim f1 As Func(Of Boolean) = Function() As Boolean
@@ -58,10 +68,13 @@ Public NotInheritable Class lambda_behavior_test
     <test>
     Private Shared Sub same_lambda_expression_should_create_different_objects_without_capturing()
         assertion.not_reference_equal(Function(ByVal x As Int32) As Boolean
-                                       Return x = 0
-                                   End Function,
-                                   Function(ByVal x As Int32) As Boolean
-                                       Return x = 0
-                                   End Function)
+                                          Return x = 0
+                                      End Function,
+                                      Function(ByVal x As Int32) As Boolean
+                                          Return x = 0
+                                      End Function)
+    End Sub
+
+    Private Sub New()
     End Sub
 End Class

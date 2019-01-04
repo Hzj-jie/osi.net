@@ -58,9 +58,11 @@ Public Class callback_timeout_test
             Dim cb As callback_action = Nothing
             cb = create_callback_action()
             assert(Not cb Is Nothing)
-            Using New auto_assert_timelimited_operation(timeout_ms,
-                                                        (timeout_ms + four_timeslice_length_ms) * thread_count)
-                assertion.is_false(async_sync(cb, timeout_ms))
+            Using New boost()
+                Using assertion.timelimited_operation(timeout_ms,
+                                                      (timeout_ms + four_timeslice_length_ms) * thread_count)
+                    assertion.is_false(async_sync(cb, timeout_ms))
+                End Using
             End Using
             assertion.is_true(timeslice_sleep_wait_until(Function() cb.finished(), minutes_to_milliseconds(1)))
 

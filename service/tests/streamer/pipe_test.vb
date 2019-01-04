@@ -61,7 +61,7 @@ Public Class pipe_test
                                         Return assertion.is_true(begin(q.pop(Nothing))) AndAlso
                                                goto_end()
                                     End Function))
-        Using New auto_assert_timelimited_operation(default_timeout_ms, default_timeout_ms * 2)
+        Using assertion.timelimited_operation(default_timeout_ms, default_timeout_ms * 2)
             assertion.is_true(async_sync(q.push(default_value)))
         End Using
         assertion.equal(q.size(), uint32_1)
@@ -77,7 +77,7 @@ Public Class pipe_test
                                         Return assertion.is_true(begin(q.push(default_value))) AndAlso
                                                goto_end()
                                     End Function))
-        Using New auto_assert_timelimited_operation(default_timeout_ms, default_timeout_ms * 2)
+        Using assertion.timelimited_operation(default_timeout_ms, default_timeout_ms * 2)
             assertion.is_true(async_sync(q.pop(Nothing)))
         End Using
         Return True

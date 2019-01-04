@@ -7,6 +7,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.template
+Imports osi.root.utils
 
 Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
     Private Const default_assert_async_wait_time_ms As Int64 = 10 * second_milli
@@ -224,20 +225,60 @@ Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
         Return thrown(Of Exception)(d, msg)
     End Function
 
-    Public Shared Function now_in_time_range(ByVal l As Int64, ByVal u As Int64) As Boolean
+    Public Shared Function now_in_time_range(ByVal l As Int64,
+                                             ByVal u As Int64,
+                                             ByVal ParamArray msg() As Object) As Boolean
         assert(l <= u)
         Dim n As Int64 = 0
         n = DateTime.Now().milliseconds()
-        Return assertion.more_or_equal_and_less_or_equal(n, l, u)
+        Return assertion.more_or_equal_and_less_or_equal(n, l, u, msg)
     End Function
 
-    Public Shared Sub set_time_range(ByRef exp_l As Int64, ByRef exp_u As Int64, ByVal low As Int64, ByVal up As Int64)
-        assert(low <= up)
+    Public Shared Sub set_time_range(ByRef exp_l As Int64,
+                                     ByRef exp_h As Int64,
+                                     ByVal low As Int64,
+                                     ByVal high As Int64)
+        assert(low <= high)
         Dim n As Int64 = 0
         n = DateTime.Now().milliseconds()
         exp_l = n + low
-        exp_u = n + up
+        exp_h = n + high
     End Sub
+
+    Public Shared Function timelimited_operation(ByVal low As Int64,
+                                                 ByVal high As Int64,
+                                                 ByVal ParamArray msg() As Object) As IDisposable
+        Dim exp_l As Int64
+        Dim exp_h As Int64
+        set_time_range(exp_l, exp_h, low, high)
+        Return defer(Sub()
+                         now_in_time_range(exp_l, exp_h, msg)
+                     End Sub)
+    End Function
+
+    Public Shared Function equal_after(Of T)(ByVal i As T,
+                                             ByVal j As T,
+                                             ByVal ParamArray msg() As Object) As IDisposable
+        Return defer(Sub()
+                         equal(i, j, msg)
+                     End Sub)
+    End Function
+
+    Public Shared Function more_after(Of T)(ByVal i As T,
+                                            ByVal j As T,
+                                            ByVal ParamArray msg() As Object) As IDisposable
+        Return defer(Sub()
+                         more(i, j, msg)
+                     End Sub)
+    End Function
+
+    Public Shared Function less_after(Of T)(ByVal i As T,
+                                            ByVal j As T,
+                                            ByVal ParamArray msg() As Object) As IDisposable
+        Return defer(Sub()
+                         less(i, j, msg)
+                     End Sub)
+    End Function
 
     Protected Sub New()
     End Sub

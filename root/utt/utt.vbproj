@@ -57,8 +57,6 @@
   <ItemGroup>
     <Compile Include="app.vb" />
     <Compile Include="assert\assertion.vb" />
-    <Compile Include="assert\assert_timelimited_operation.vb" />
-    <Compile Include="assert\assert_change.vb" />
     <Compile Include="assert\check.vb" />
     <Compile Include="assert\expectation.vb" />
     <Compile Include="case\case.vb" />
