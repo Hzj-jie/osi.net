@@ -14,6 +14,8 @@
 *.vsp
 *.sdf
 
+*.vbproj.user
+
 root/codegen/codegen.vcxproj.user
 root/envs/buildInfo.vb
 root/envs/tfver.vb
