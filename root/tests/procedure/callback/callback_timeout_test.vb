@@ -9,7 +9,7 @@ Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.utt
 
-Public Class callback_timeout_test
+Public NotInheritable Class callback_timeout_test
     Inherits case_wrapper
 
     Private Shared ReadOnly timeout_ms As Int64

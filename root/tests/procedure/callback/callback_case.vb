@@ -1,15 +1,18 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.DateTime
+Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.delegates
+Imports osi.root.envs
 Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.utt
-Imports osi.root.connector
-Imports osi.root.threadpool
-Imports osi.root.constants
-Imports osi.root.envs
-Imports osi.root.delegates
 
-Friend Class callback_case
+Friend NotInheritable Class callback_case
     Inherits count_case
 
     Private ReadOnly busy_wait_ms As Int32
@@ -55,12 +58,12 @@ Friend Class callback_case
                                       assertion.more_or_equal(nowadays.milliseconds() - start_ms, check_pass_ms)
                                       If strict_time_limited Then
                                           assertion.less(nowadays.milliseconds() - start_ms,
-                                                      check_pass_ms + sixteen_timeslice_length_ms)
+                                                         check_pass_ms + sixteen_timeslice_length_ms)
                                       End If
                                       assertion.more_or_equal(ticks_to_milliseconds(rtn.check_ticks()), start_ms)
                                       If strict_time_limited Then
                                           assertion.less(ticks_to_milliseconds(rtn.check_ticks()),
-                                                      start_ms + two_timeslice_length_ms)
+                                                         start_ms + two_timeslice_length_ms)
                                       End If
                                       assertion.less_or_equal(ticks_to_milliseconds(rtn.begin_ticks()), start_ms)
                                       assertion.more_or_equal(ticks_to_milliseconds(rtn.end_ticks()), start_ms)
@@ -81,32 +84,30 @@ Friend Class callback_case
     End Function
 
     Private Function timeout_ms() As Int64
-        If strict_time_limited Then
-            Dim normalize As _do(Of Int64, Int64) =
+        If Not strict_time_limited Then
+            Return max_int64
+        End If
+        Dim normalize As _do(Of Int64, Int64) =
                 Function(ByRef i As Int64) As Int64
                     If i < 0 Then
                         Return 0
-                    ElseIf i = 0 Then
-                        Return timeslice_length_ms
-                    Else
-                        Return Math.Ceiling(CDbl(i) / timeslice_length_ms) * timeslice_length_ms
                     End If
+                    If i = 0 Then
+                        Return timeslice_length_ms
+                    End If
+                    Return (1 + CLng(Math.Ceiling(i / timeslice_length_ms))) * timeslice_length_ms
                 End Function
-            Return normalize(busy_wait_ms) +
-                   normalize(sleep_wait_ms) +
-                   normalize(check_pass_ms) +
-                   sixteen_timeslice_length_ms
-        Else
-            Return max_int64
-        End If
+        Return normalize(busy_wait_ms) +
+               normalize(sleep_wait_ms) +
+               normalize(check_pass_ms) +
+               sixteen_timeslice_length_ms
     End Function
 
     Public Overrides Function reserved_processors() As Int16
         If strict_time_limited Then
-            Return Environment.ProcessorCount()
-        Else
-            Return 1
+            Return CShort(Environment.ProcessorCount())
         End If
+        Return 1
     End Function
 
     Protected Overrides Function run_case() As Boolean

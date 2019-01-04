@@ -72,7 +72,7 @@ Public NotInheritable Class dns_cache_test
                                       If single_time = npos Then
                                           single_time = nowadays.milliseconds() - n
                                       Else
-                                          assertion.less_or_equal(nowadays.milliseconds() - n, single_time)
+                                          expectation.less_or_equal(nowadays.milliseconds() - n, single_time)
                                       End If
                                       Return goto_end()
                                   End Function)
