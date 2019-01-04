@@ -9,7 +9,7 @@ Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.root.utt
 
-Public Class cast_test
+Public NotInheritable Class cast_test
     Inherits [case]
 
     Public Shared Function failed_case(Of T, T2)(ByVal i As T) As Boolean

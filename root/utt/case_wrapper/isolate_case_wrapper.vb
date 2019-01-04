@@ -4,15 +4,17 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.lock
 Imports osi.root.utils
 
 Public Class isolate_case_wrapper
     Inherits exec_case
 
     Private ReadOnly c As [case]
+    Private ReadOnly _assertion_failures As atomic_int
+    Private ReadOnly _unsatisfied_expectations As atomic_int
     Private case_started As Boolean
     Private case_finished As Boolean
-    Private assert_detected As Boolean
 
     Private Sub New(ByVal c As [case], ByVal timeout_ms As Int64)
         MyBase.New(envs.application_full_path,
@@ -24,6 +26,8 @@ Public Class isolate_case_wrapper
         ' On Windows 2003 with .Net 4.0 (?), the return value of osi.root.utt is 128. The reason is still unknown.
         Me.c = c
         assert(host.case_type_restriction.accepted_case_type(c.GetType()))
+        _assertion_failures = New atomic_int()
+        _unsatisfied_expectations = New atomic_int()
     End Sub
 
     Public Sub New(ByVal c As commandline_specified_case_wrapper, Optional ByVal timeout_ms As Int64 = -1)
@@ -35,14 +39,14 @@ Public Class isolate_case_wrapper
     End Function
 
     Public Overrides Function prepare() As Boolean
-        If MyBase.prepare() Then
-            case_started = False
-            case_finished = False
-            assert_detected = False
-            Return True
-        Else
+        If Not MyBase.prepare() Then
             Return False
         End If
+        case_started = False
+        case_finished = False
+        _assertion_failures.set(0)
+        _unsatisfied_expectations.set(0)
+        Return True
     End Function
 
     Private Sub received(ByVal s As String)
@@ -50,8 +54,10 @@ Public Class isolate_case_wrapper
             case_started = True
         ElseIf strcontains(s, strcat("finish running ", c.full_name)) Then
             case_finished = True
-        ElseIf strcontains(s, "assert failed, ") Then
-            assert_detected = True
+        ElseIf strcontains(s, "assertion failure, ") Then
+            _assertion_failures.increment()
+        ElseIf strcontains(s, "unsatisfied expectation, ") Then
+            _unsatisfied_expectations.increment()
         End If
     End Sub
 
@@ -66,7 +72,15 @@ Public Class isolate_case_wrapper
     Public Overrides Function finish() As Boolean
         Return assertion.is_true(case_started) AndAlso
                assertion.is_true(case_finished) AndAlso
-               Not assert_detected AndAlso
+               _assertion_failures.get() = 0 AndAlso
                MyBase.finish()
+    End Function
+
+    Public Function assertion_failures() As UInt32
+        Return CUInt(_assertion_failures.get())
+    End Function
+
+    Public Function unsatisfied_expectations() As UInt32
+        Return CUInt(_unsatisfied_expectations.get())
     End Function
 End Class

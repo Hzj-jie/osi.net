@@ -273,6 +273,11 @@ Public Module _cast
         End Function
 
         Public Function from(Of IT)(ByVal i As IT, ByRef o As T) As Boolean
+            Return into(i, o)
+        End Function
+
+        ' To avoid conflicting with cast(Of Boolean)().from("str", b).
+        Public Function into(Of IT)(ByVal i As IT, ByRef o As T) As Boolean
             Return cast(i, o)
         End Function
 
@@ -287,8 +292,13 @@ Public Module _cast
             Me.i = i
         End Sub
 
-        Public Function [to](Of OT)(ByRef o As OT) As Boolean
+        ' To avoid conflicting with cast_from("str").to(b).
+        Public Function into(Of OT)(ByRef o As OT) As Boolean
             Return cast(i, o)
+        End Function
+
+        Public Function [to](Of OT)(ByRef o As OT) As Boolean
+            Return into(o)
         End Function
 
         Public Function [to](Of OT)(Optional ByVal require_assert As Boolean = True) As OT
@@ -324,7 +334,8 @@ Public Module _cast
         Return cast_type_inferrer(Of T).instance
     End Function
 
-    Public Function cast(Of T)(ByVal i As T) As cast_cache(Of T)
+    ' To avoid conflicting with Dim r as T = cast(Of T)(a).
+    Public Function cast_from(Of T)(ByVal i As T) As cast_cache(Of T)
         Return New cast_cache(Of T)(i)
     End Function
 
@@ -333,7 +344,7 @@ Public Module _cast
             raise_error(error_type.performance,
                         "cast(Of ",
                         GetType(T).Name(),
-                        ")(i) seriously impacts performance. cast(Of T)().from(i) or cast(i).to(o) is preferred: ",
+                        ")(i) seriously impacts performance. cast(Of T)().from(i) or cast_from(i).to(o) is preferred: ",
                         backtrace("_cast.cast"))
         End If
         Return cast(Of T, Object)(i, o)

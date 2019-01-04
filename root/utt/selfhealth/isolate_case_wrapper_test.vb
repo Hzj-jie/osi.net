@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.procedure
 
-Public Class isolate_case_wrapper_test
+Public NotInheritable Class isolate_case_wrapper_test
     Inherits [case]
 
     Private Shared ReadOnly suc_cases() As [case]
@@ -53,7 +53,7 @@ Public Class isolate_case_wrapper_test
         Return True
     End Function
 
-    Public Class success_case
+    Public NotInheritable Class success_case
         Inherits commandline_specified_case_wrapper
 
         Public Sub New()
@@ -69,7 +69,7 @@ Public Class isolate_case_wrapper_test
         End Class
     End Class
 
-    Public Class failure_case
+    Public NotInheritable Class failure_case
         Inherits commandline_specified_case_wrapper
 
         Public Sub New()
@@ -86,7 +86,7 @@ Public Class isolate_case_wrapper_test
         End Class
     End Class
 
-    Public Class failure_case2
+    Public NotInheritable Class failure_case2
         Inherits commandline_specified_case_wrapper
 
         Public Sub New()
@@ -102,7 +102,7 @@ Public Class isolate_case_wrapper_test
         End Class
     End Class
 
-    Public Class success_event_comb_case
+    Public NotInheritable Class success_event_comb_case
         Inherits commandline_specified_case_wrapper
 
         Public Sub New()
@@ -118,7 +118,7 @@ Public Class isolate_case_wrapper_test
         End Class
     End Class
 
-    Public Class failure_event_comb_case
+    Public NotInheritable Class failure_event_comb_case
         Inherits commandline_specified_case_wrapper
 
         Public Sub New()
@@ -137,7 +137,7 @@ Public Class isolate_case_wrapper_test
         End Class
     End Class
 
-    Public Class failure_event_comb_case2
+    Public NotInheritable Class failure_event_comb_case2
         Inherits commandline_specified_case_wrapper
 
         Public Sub New()
