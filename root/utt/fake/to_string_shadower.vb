@@ -13,15 +13,6 @@ Public Module _to_string_shadower
     End Function
 End Module
 
-Public NotInheritable Class to_string_shadower
-    Public Shared Function [of](Of T)(ByVal i As T) As to_string_shadower(Of T)
-        Return New to_string_shadower(Of T)(i)
-    End Function
-
-    Private Sub New()
-    End Sub
-End Class
-
 <SuppressMessage("Microsoft.Design", "BC42333")>
 Public Class to_string_shadower(Of T)
     Implements IComparable(Of to_string_shadower(Of T)), IComparable, IComparable(Of T)

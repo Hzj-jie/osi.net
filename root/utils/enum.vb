@@ -6,6 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.formation
 
+' TODO: static class
 Public Module _enum_utils
     Public Function enum_to_string_pair(Of T)(ByRef o() As pair(Of T, String)) As Boolean
         Dim i As Int32 = 0

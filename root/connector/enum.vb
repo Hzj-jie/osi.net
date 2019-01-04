@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+' TODO: static class
 Public Module _enum
     Private Function traversal(Of T)(ByVal d As Func(Of T, String, Boolean),
                                      ByVal count As Func(Of Int32, Boolean)) As Boolean
