@@ -58,7 +58,7 @@ Public Class promise_share_test
         Dim finished As Boolean = False
         Dim p As promise = Nothing
         p = promise.race(New promise(Sub(ByVal resolve As Action(Of Object))
-                                         assert(Not stopwatch.push(100,
+                                         assert(Not stopwatch.push(10000,
                                                                    Sub()
                                                                        resolve(value1)
                                                                        ce.decrement()
