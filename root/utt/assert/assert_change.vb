@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+' TODO: Move into check
 Public Class assert_equal(Of T)
     Inherits assert_change(Of T)
 

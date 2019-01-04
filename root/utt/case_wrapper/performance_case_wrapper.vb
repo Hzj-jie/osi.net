@@ -1,9 +1,12 @@
 ﻿
-Imports osi.root.constants
-Imports osi.root.envs
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utils
+Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.root.utils
 
 Public Class performance_case_wrapper
     Inherits case_wrapper
@@ -55,7 +58,7 @@ Public Class performance_case_wrapper
         min = max_uint64
         max = min_uint64
         ave = 0
-        For i As Int64 = 0 To times() - 1
+        For i As Int64 = 0 To CLng(times() - uint64_1)
             Dim used_loops As pointer(Of Int64) = Nothing
             used_loops = New pointer(Of Int64)()
             Using New boost()
@@ -67,12 +70,12 @@ Public Class performance_case_wrapper
             End Using
 
             assert((+used_loops) >= 0)
-            ave += (+used_loops)
+            ave += CULng(+used_loops)
             If (+used_loops) < min Then
-                min = (+used_loops)
+                min = CULng(+used_loops)
             End If
             If (+used_loops) > max Then
-                max = (+used_loops)
+                max = CULng(+used_loops)
             End If
         Next
 
@@ -85,30 +88,38 @@ Public Class performance_case_wrapper
         If min_loops() = 0 AndAlso max_loops() = undetermined_max_loops Then
             utt_raise_error("performance case ", name, " did not set min loops and max loops, consider to add it.")
         End If
-        If run(min, max, ave) Then
-            raise_error("finished performance case ", name, " with ", times(), " times, ",
-                        "max used loops ", max, ", min used loops ", min, ", average used_loops ", ave)
-            assertion.less_or_equal(min, max_loops(),
-                                 "performance case ",
-                                 name,
-                                 " is out of maximum expected loops ",
-                                 max_loops(),
-                                 ", min used loops ",
-                                 min)
-            assertion.more_or_equal(max, min_loops(),
-                                 "performance case ",
-                                 name,
-                                 " is less than minimum expected loops ",
-                                 min_loops(),
-                                 ", max used loops ",
-                                 max)
-            Return True
-        Else
+        If Not run(min, max, ave) Then
             Return False
         End If
+        raise_error("finished performance case ",
+                    name,
+                    " with ",
+                    times(),
+                    " times, ",
+                    "max used loops ",
+                    max,
+                    ", min used loops ",
+                    min,
+                    ", average used_loops ",
+                    ave)
+        expectation.less_or_equal(min, max_loops(),
+                                  "performance case ",
+                                  name,
+                                  " is out of maximum expected loops ",
+                                  max_loops(),
+                                  ", min used loops ",
+                                  min)
+        expectation.more_or_equal(max, min_loops(),
+                                  "performance case ",
+                                  name,
+                                  " is less than minimum expected loops ",
+                                  min_loops(),
+                                  ", max used loops ",
+                                  max)
+        Return True
     End Function
 
     Public NotOverridable Overrides Function reserved_processors() As Int16
-        Return Environment.ProcessorCount()
+        Return CShort(Environment.ProcessorCount())
     End Function
 End Class

@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 
+' TODO: Move to check
 Public Structure auto_assert_timelimited_operation
     Implements IDisposable
 

@@ -91,27 +91,30 @@ Public Class performance_comparison_case_wrapper
                     Dim v As Double = 0
                     v = max_rate_upper_bound(i, j)
                     If v >= 0 Then
-                        assertion.less(perf_case(i).max_used_loops() / perf_case(j).max_used_loops(), v,
-                                    "comparing max_used_loops of case ",
-                                    i,
-                                    " with case ",
-                                    j)
+                        expectation.less(perf_case(i).max_used_loops() / perf_case(j).max_used_loops(),
+                                         v,
+                                         "comparing max_used_loops of case ",
+                                         i,
+                                         " with case ",
+                                         j)
                     End If
                     v = min_rate_upper_bound(i, j)
                     If v >= 0 Then
-                        assertion.less(perf_case(i).min_used_loops() / perf_case(j).min_used_loops(), v,
-                                    "comparing min_used_loops of case ",
-                                    i,
-                                    " with case ",
-                                    j)
+                        expectation.less(perf_case(i).min_used_loops() / perf_case(j).min_used_loops(),
+                                         v,
+                                         "comparing min_used_loops of case ",
+                                         i,
+                                         " with case ",
+                                         j)
                     End If
                     v = average_rate_upper_bound(i, j)
                     If v >= 0 Then
-                        assertion.less(perf_case(i).average_used_loops() / perf_case(j).average_used_loops(), v,
-                                    "comparing average_used_loops of case ",
-                                    i,
-                                    " with case ",
-                                    j)
+                        expectation.less(perf_case(i).average_used_loops() / perf_case(j).average_used_loops(),
+                                         v,
+                                         "comparing average_used_loops of case ",
+                                         i,
+                                         " with case ",
+                                         j)
                     End If
                 End If
             Next
