@@ -59,8 +59,8 @@ Public NotInheritable Class callback_timeout_test
             cb = create_callback_action()
             assert(Not cb Is Nothing)
             Using New boost()
-                Using assertion.timelimited_operation(timeout_ms,
-                                                      (timeout_ms + four_timeslice_length_ms) * thread_count)
+                Using expectation.timelimited_operation(timeout_ms,
+                                                        (timeout_ms + four_timeslice_length_ms) * thread_count)
                     assertion.is_false(async_sync(cb, timeout_ms))
                 End Using
             End Using
