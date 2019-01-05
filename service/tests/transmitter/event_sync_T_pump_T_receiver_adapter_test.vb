@@ -137,6 +137,7 @@ Public Class event_sync_T_pump_T_receiver_adapter_test
         End Function
 
         Public Overrides Function finish() As Boolean
+            assertion.is_true(timeslice_sleep_wait_until(Function() has.size() = +index, minutes_to_milliseconds(5)))
             assertion.is_true(timeslice_sleep_wait_until(Function() +received = +index, minutes_to_milliseconds(5)))
             assert(exp.stop())
             ' Ensure all the blocking receive procedures can finish.
@@ -145,12 +146,7 @@ Public Class event_sync_T_pump_T_receiver_adapter_test
             Next
             sleep(sense_timeout_ms * 2)
             For i As UInt32 = 0 To has.size() - uint32_1
-                Dim j As UInt32 = 0
-                j = i
-                assertion.is_true(timeslice_sleep_wait_until(Function() As Boolean
-                                                                 Return has(j)
-                                                             End Function,
-                                                             minutes_to_milliseconds(1)))
+                assertion.is_true(has(i))
             Next
             sp.clear()
             has.resize(0)
