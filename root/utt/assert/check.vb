@@ -5,7 +5,6 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.formation
 Imports osi.root.template
 Imports osi.root.utils
 
@@ -191,7 +190,7 @@ Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
         assert(l <= u)
         Dim n As Int64 = 0
         n = DateTime.Now().milliseconds()
-        Return assertion.more_or_equal_and_less_or_equal(n, l, u, msg)
+        Return more_or_equal_and_less_or_equal(n, l, u, msg)
     End Function
 
     Public Shared Sub set_time_range(ByRef exp_l As Int64,
