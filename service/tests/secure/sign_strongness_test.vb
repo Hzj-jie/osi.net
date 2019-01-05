@@ -56,12 +56,11 @@ Public Class sign_strongness_test
         End Function
 
         Public NotOverridable Overrides Function prepare() As Boolean
-            If MyBase.prepare() Then
-                rs.clear()
-                Return True
-            Else
+            If Not MyBase.prepare() Then
                 Return False
             End If
+            rs.clear()
+            Return True
         End Function
 
         Public NotOverridable Overrides Function run() As Boolean
@@ -73,11 +72,11 @@ Public Class sign_strongness_test
             assert(Not isemptyarray(b))
             Dim r() As Byte = Nothing
             assertion.is_true(s.sign(k, b, r))
-            If Not assertion.is_true(rs.insert(r).second,
-                               lazier.[New](Function() strcat("signer ", s.GetType(), ", case ", Me.GetType()))) Then
-                Return False
+            If assertion.is_true(rs.insert(r).second,
+                                 lazier.of(Function() strcat("signer ", s.GetType(), ", case ", Me.GetType()))) Then
+                Return True
             End If
-            Return True
+            Return False
         End Function
 
         Public NotOverridable Overrides Function finish() As Boolean
@@ -129,9 +128,8 @@ Public Class sign_strongness_test
         Protected Overrides Function data() As Byte()
             If expected_weak Then
                 Return MyBase.data()
-            Else
-                Return b
             End If
+            Return b
         End Function
     End Class
 End Class

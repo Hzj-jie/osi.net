@@ -69,19 +69,19 @@ Public NotInheritable Class binding_flags_test
         Dim bf As BindingFlags = Nothing
         Dim s As StringBuilder = Nothing
         s = New StringBuilder()
-        assert(enum_traversal(Of BindingFlags)(Sub(x As BindingFlags, y As String)
-                                                   If rnd_bool() Then
-                                                       bf = bf Or x
-                                                       s.Append(random_separator())
-                                                       If rnd_bool() Then
-                                                           s.Append(random_separator())
-                                                       End If
-                                                       s.Append(y)
-                                                       If rnd_bool() Then
-                                                           s.Append(random_separator())
-                                                       End If
-                                                   End If
-                                               End Sub))
+        assert(enum_def(Of BindingFlags).foreach(Sub(x As BindingFlags, y As String)
+                                                     If rnd_bool() Then
+                                                         bf = bf Or x
+                                                         s.Append(random_separator())
+                                                         If rnd_bool() Then
+                                                             s.Append(random_separator())
+                                                         End If
+                                                         s.Append(y)
+                                                         If rnd_bool() Then
+                                                             s.Append(random_separator())
+                                                         End If
+                                                     End If
+                                                 End Sub))
         Dim nbf As BindingFlags = Nothing
         assertion.is_true(nbf.from_str(Convert.ToString(s)))
         assertion.equal(nbf, bf)

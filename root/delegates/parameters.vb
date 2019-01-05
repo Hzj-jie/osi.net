@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 'placeholder
 Public Class parameters
     Public Shared ReadOnly null As parameters

@@ -81,7 +81,7 @@
     <Compile Include="counter\icounter_writer.vb" />
     <Compile Include="counter\file_counter_writer.vb" />
     <Compile Include="counter\self_maintained_counter\instance_count_counter.vb" />
-    <Compile Include="enum.vb" />
+    <Compile Include="enum_def_extension.vb" />
     <Compile Include="error_handle\application_info_logging.vb" />
     <Compile Include="error_handle\trace.vb" />
     <Compile Include="flip_events\flip_events.combiner.vb" />

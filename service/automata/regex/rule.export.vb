@@ -1,8 +1,11 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.utils
 
 Partial Class rlexer
     Partial Public Class rule
@@ -66,14 +69,14 @@ Partial Class rlexer
 
                     If i.type_choice Is Nothing Then
                         type_choice = match_choice.first_defined
-                    ElseIf Not enum_cast(Of match_choice)(i.type_choice, type_choice) Then
+                    ElseIf Not enum_def.cast(i.type_choice, type_choice) Then
                         raise_error(error_type.user, "failed to parse type_choice ", i.type_choice)
                         Return False
                     End If
 
                     If i.word_choice Is Nothing Then
                         word_choice = match_choice.greedy
-                    ElseIf Not enum_cast(Of match_choice)(i.word_choice, word_choice) Then
+                    ElseIf Not enum_def.cast(i.word_choice, word_choice) Then
                         raise_error(error_type.user, "failed to parse word_choice ", i.word_choice)
                         Return False
                     End If
@@ -81,15 +84,15 @@ Partial Class rlexer
                     rlexer = New rlexer(type_choice, word_choice)
 
                     If Not i.words.empty() Then
-                        ReDim words(i.words.size() - uint32_1)
+                        ReDim words(CInt(i.words.size() - uint32_1))
                         For j As UInt32 = 0 To i.words.size() - uint32_1
                             Dim s As String = Nothing
                             s = macros.expand(i.words(j).second)
-                            If Not regex.create(s, words(j)) Then
+                            If Not regex.create(s, words(CInt(j))) Then
                                 raise_error(error_type.user, "failed to parse regex ", s)
                                 Return False
                             End If
-                            assert(rlexer.define(words(j)))
+                            assert(rlexer.define(words(CInt(j))))
                             assert(Not String.IsNullOrEmpty(i.words(j).first))
                             str_type(i.words(j).first) = rlexer.regex_count() - uint32_1
                             type_str(rlexer.regex_count() - uint32_1) = i.words(j).first

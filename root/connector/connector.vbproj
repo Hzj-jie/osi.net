@@ -122,7 +122,6 @@
     <Compile Include="time\tick_clock.vb" />
     <Compile Include="time\tick_clock.implementations.vb" />
     <Compile Include="typed_once_action.vb" />
-    <Compile Include="type\enum_type_info.vb" />
     <Compile Include="type_functor\type_bytes_serializer.vb" />
     <Compile Include="type_functor\type_string_serializer.vb" />
     <Compile Include="type_resolver.static.vb" />
@@ -243,7 +242,7 @@
     <Compile Include="console_key_info_mapping.vb" />
     <Compile Include="control_c.vb" />
     <Compile Include="encoding.vb" />
-    <Compile Include="enum.vb" />
+    <Compile Include="type\enum_def.vb" />
     <Compile Include="event.vb" />
     <Compile Include="mono.vb" />
     <Compile Include="time\nowadays.vb" />

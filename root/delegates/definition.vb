@@ -1,5 +1,7 @@
 ﻿
-Imports System.Threading
+Option Explicit On
+Option Infer Off
+Option Strict On
 
 Public Module _definition
     Public Delegate Sub void(Of T)(ByRef i As T)

@@ -1,9 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.utt
-Imports osi.root.connector
 Imports osi.root.utils
+Imports osi.root.utt
 
 Public Class console_key_info_mapping_test
     Inherits [case]
@@ -14,28 +18,27 @@ Public Class console_key_info_mapping_test
                                    ByVal shift As Boolean) As Boolean
         Dim c As Char = Nothing
         Dim v As vector(Of keyinfo) = Nothing
-        If x.char(c, caps_lock, num_lock, shift) Then
-            assertion.not_equal(c, character.null)
-            assertion.is_true(c.keycode(v))
-            If assertion.is_true(Not v Is Nothing AndAlso Not v.empty()) Then
-                For i As Int32 = 0 To v.size() - 1
-                    If assertion.is_true(v(i).valid()) Then
-                        assertion.equal(v(i).c, c)
-                        If v(i).console_key() = x AndAlso
-                           v(i).caps_lock = caps_lock AndAlso
-                           v(i).num_lock = num_lock AndAlso
-                           v(i).shift = shift Then
-                            Return True
-                        End If
-                    End If
-                Next
-                Return False
-            Else
-                Return False
-            End If
-        Else
+        If Not x.char(c, caps_lock, num_lock, shift) Then
             Return True
         End If
+        assertion.not_equal(c, character.null)
+        assertion.is_true(c.keycode(v))
+        If Not assertion.is_true(Not v Is Nothing AndAlso Not v.empty()) Then
+            Return False
+        End If
+        For i As UInt32 = 0 To v.size() - uint32_1
+            If Not assertion.is_true(v(i).valid()) Then
+                Continue For
+            End If
+            assertion.equal(v(i).c, c)
+            If v(i).console_key() = x AndAlso
+               v(i).caps_lock = caps_lock AndAlso
+               v(i).num_lock = num_lock AndAlso
+               v(i).shift = shift Then
+                Return True
+            End If
+        Next
+        Return False
     End Function
 
     Private Shared Function verify(ByVal x As ConsoleKey) As Boolean
@@ -50,8 +53,8 @@ Public Class console_key_info_mapping_test
     End Function
 
     Public Overrides Function run() As Boolean
-        Return assert(enum_traversal(Of ConsoleKey)(Sub(x As ConsoleKey)
-                                                        assertion.is_true(verify(x))
-                                                    End Sub))
+        Return assert(enum_def(Of ConsoleKey).foreach(Sub(x As ConsoleKey)
+                                                          assertion.is_true(verify(x))
+                                                      End Sub))
     End Function
 End Class

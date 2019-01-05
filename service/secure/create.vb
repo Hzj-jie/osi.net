@@ -25,7 +25,7 @@ Public Module _create
                            ByVal parameters As var,
                            ByRef o As encryptor) As Boolean
         Dim mode As encrypt_mode = Nothing
-        If enum_cast(mode_str, mode) Then
+        If enum_def.cast(mode_str, mode) Then
             Select Case mode
                 Case encrypt_mode.bypass
                     Return bypass.create(parameters, o)

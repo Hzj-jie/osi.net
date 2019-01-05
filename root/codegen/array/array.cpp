@@ -43,19 +43,17 @@ const char* types[] = {"Decimal",
                         "        rl = array_size(second)\n" \
                         "        If ll <> rl Then\n" \
                         "            Return compare(ll, rl)\n" \
-                        "        Else\n" \
-                        "            Return memcmp(first, second, ll)\n" \
-                        "        End If\n"
+                        "        End If\n" \
+                        "        Return memcmp(first, second, ll)\n"
 #define TO_STRINGS_1 "        If isemptyarray(i) Then\n" \
                      "            Return Nothing\n" \
-                     "        Else\n" \
-                     "            Dim r() As String = Nothing\n" \
-                     "            ReDim r(array_size_i(i) - 1)\n" \
-                     "            For j As Int32 = 0 To array_size_i(i) - 1\n" \
-                     "                r(j) = Convert.ToString(i(j))\n" \
-                     "            Next\n" \
-                     "            Return r\n" \
-                     "        End If\n"
+                     "        End If\n" \
+                     "        Dim r() As String = Nothing\n" \
+                     "        ReDim r(array_size_i(i) - 1)\n" \
+                     "        For j As Int32 = 0 To array_size_i(i) - 1\n" \
+                     "            r(j) = Convert.ToString(i(j))\n" \
+                     "        Next\n" \
+                     "        Return r\n"
 #define TO_STRINGS_2 "        Dim r() As String = Nothing\n" \
                      "        ReDim r(array_size_i(j))\n" \
                      "        r(0) = Convert.ToString(i)\n" \
@@ -65,14 +63,12 @@ const char* types[] = {"Decimal",
                      "        Return r\n"
 #define START_WITH   "        If array_size(first) < array_size(second) Then\n" \
                      "            Return False\n" \
-                     "        Else\n" \
-                     "            Return memcmp(first, second, array_size(second)) = 0\n" \
-                     "        End If\n"
+                     "        End If\n" \
+                     "        Return memcmp(first, second, array_size(second)) = 0\n"
 #define END_WITH     "        If array_size(first) < array_size(second) Then\n" \
                      "            Return False\n" \
-                     "        Else\n" \
-                     "            Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0\n" \
-                     "        End If\n"
+                     "        End If\n" \
+                     "        Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0\n"
 
 int main(int argc, char* argv[])
 {
@@ -167,7 +163,7 @@ int main(int argc, char* argv[])
                     "    End Function\n\n",
                     types[i]);
             fprintf(fo,
-                    "    <Extension()> Public Function to_strings(ByVal i As %s, ByVal ParamArray j() As %s) As String()\n"
+                    "    <Extension()> Public Function with_strings(ByVal i As %s, ByVal ParamArray j() As %s) As String()\n"
                     TO_STRINGS_2
                     "    End Function\n\n",
                     types[i],
@@ -250,7 +246,7 @@ int main(int argc, char* argv[])
               TO_STRINGS_1
               "    End Function\n\n",
               fo);
-        fputs("    <Extension()> Public Function to_strings(Of T)(ByVal i As T, ByVal ParamArray j() As T) As String()\n"
+        fputs("    <Extension()> Public Function with_strings(Of T)(ByVal i As T, ByVal ParamArray j() As T) As String()\n"
               TO_STRINGS_2
               "    End Function\n\n",
               fo);
@@ -266,7 +262,7 @@ int main(int argc, char* argv[])
               TO_STRINGS_1
               "    End Function\n\n",
               fo);
-        fputs("    <Extension()> Public Function to_strings(ByVal i As Object, ByVal ParamArray j() As Object) As String()\n"
+        fputs("    <Extension()> Public Function with_strings(ByVal i As Object, ByVal ParamArray j() As Object) As String()\n"
               TO_STRINGS_2
               "    End Function\n\n",
               fo);

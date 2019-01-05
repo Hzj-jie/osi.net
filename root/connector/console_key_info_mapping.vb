@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
@@ -15,7 +19,7 @@ Public Module _console_key_info_mapping
     Public ReadOnly console_key_info_mapping_width As Int32
 
     Sub New()
-        console_key_info_mapping_height = array_size(console_key_info_mapping)
+        console_key_info_mapping_height = array_size_i(console_key_info_mapping)
         console_key_info_mapping_width = console_key_info_mapping.GetLength(1)
 
         Dim cmin As ConsoleKey = Nothing
@@ -24,7 +28,7 @@ Public Module _console_key_info_mapping
         Dim cmaxs As String = Nothing
         cmin = ConsoleKey.A
         cmax = ConsoleKey.A
-        assert(enum_traversal(Of ConsoleKey)(Sub(x As ConsoleKey, y As String)
+        assert(enum_def(Of ConsoleKey).foreach(Sub(x As ConsoleKey, y As String)
                                                    If x.as_int32() < cmin.as_int32() Then
                                                        cmin = x
                                                        cmins = y

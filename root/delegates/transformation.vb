@@ -22,10 +22,24 @@ Public Module _transformation
 
     Private Function v_d_b(ByVal d As Action, ByVal exp As Boolean) As Func(Of Boolean)
         If d Is Nothing Then
-            Return Function() Not exp
+            Return Function() As Boolean
+                       Return Not exp
+                   End Function
         End If
         Return Function() As Boolean
                    d()
+                   Return exp
+               End Function
+    End Function
+
+    Private Function v_d_b(Of T)(ByVal d As Action(Of T), ByVal exp As Boolean) As Func(Of T, Boolean)
+        If d Is Nothing Then
+            Return Function(ByVal i As T) As Boolean
+                       Return Not exp
+                   End Function
+        End If
+        Return Function(ByVal i As T) As Boolean
+                   d(i)
                    Return exp
                End Function
     End Function
@@ -34,7 +48,15 @@ Public Module _transformation
         Return v_d_b(d, True)
     End Function
 
+    <Extension()> Public Function true_(Of T)(ByVal d As Action(Of T)) As Func(Of T, Boolean)
+        Return v_d_b(d, True)
+    End Function
+
     <Extension()> Public Function false_(ByVal d As Action) As Func(Of Boolean)
+        Return v_d_b(d, False)
+    End Function
+
+    <Extension()> Public Function false_(Of T)(ByVal d As Action(Of T)) As Func(Of T, Boolean)
         Return v_d_b(d, False)
     End Function
 
@@ -70,5 +92,14 @@ Public Module _transformation
         Return Sub(ByVal v As T)
                    i()
                End Sub
+    End Function
+
+    <Extension()> Public Function parameter_erasure(Of T, RT)(ByVal i As Func(Of RT)) As Func(Of T, RT)
+        If i Is Nothing Then
+            Return Nothing
+        End If
+        Return Function(ByVal v As T) As RT
+                   Return i()
+               End Function
     End Function
 End Module

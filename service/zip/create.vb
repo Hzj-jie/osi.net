@@ -1,8 +1,10 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.formation
-Imports osi.root.utils
+Imports osi.root.constants
 Imports osi.service.argument
 Imports osi.service.device
 Imports osi.service.transmitter
@@ -22,7 +24,7 @@ Public Module _create
                            ByVal parameters As var,
                            ByRef o As zipper) As Boolean
         Dim mode As zip_mode = Nothing
-        If enum_cast(mode_str, mode) Then
+        If enum_def.cast(mode_str, mode) Then
             Select Case mode
                 Case zip_mode.bypass
                     Return bypass.create(parameters, o)
@@ -109,7 +111,12 @@ Public Module _create
                             v As var,
                             i As block,
                             ByRef o As block) As Boolean
-                       Return create_zip_bytes_transformer_block_wrapper(mode, v, i, o)
+                       Dim r As bytes_transformer_block_wrapper = Nothing
+                       If Not create_zip_bytes_transformer_block_wrapper(mode, v, i, r) Then
+                           Return False
+                       End If
+                       o = r
+                       Return True
                    End Function)))
         assert(wrapper.register(wrapper.parameter(
                    "unzipper",
@@ -117,7 +124,12 @@ Public Module _create
                             v As var,
                             i As block,
                             ByRef o As block) As Boolean
-                       Return create_unzip_bytes_transformer_block_wrapper(mode, v, i, o)
+                       Dim r As bytes_transformer_block_wrapper = Nothing
+                       If Not create_unzip_bytes_transformer_block_wrapper(mode, v, i, r) Then
+                           Return False
+                       End If
+                       o = r
+                       Return True
                    End Function)))
     End Sub
 End Module

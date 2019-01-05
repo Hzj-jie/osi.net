@@ -22,7 +22,7 @@ Public Class virtual_key_test
                 Dim code As UInt32 = 0
                 Dim s As String = Nothing
                 s = Console.ReadLine()
-                If Not enum_cast(Of virtual_key.map_type)(s, type) Then
+                If Not enum_def.cast(s, type) Then
                     Return True
                 End If
 

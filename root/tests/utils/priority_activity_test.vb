@@ -5,9 +5,9 @@ Option Strict On
 
 Imports System.Diagnostics
 Imports System.IO
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
-Imports osi.root.connector
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.root.utt
@@ -39,31 +39,31 @@ Public Class priority_activity_test
     End Sub
 
     Public Overrides Function run() As Boolean
-        assert(enum_traversal(Of ProcessPriorityClass)(
+        assert(enum_def(Of ProcessPriorityClass).foreach(
                    Sub(ppc As ProcessPriorityClass, s As String)
                        Using p As shell_less_process = New shell_less_process()
                            p.start_info().FileName() = priority_activity_exe_full_path
                            p.start_info().Arguments() = s
-                           If assertion.is_true(p.start()) Then
-                               assertion.is_true(execute_in_managed_threadpool(
-                                               Sub()
-                                                   While True
-                                                       Dim l As String = Nothing
-                                                       l = p.stdout().ReadLine()
-                                                       If strsame(l, "Finished global_init.execute(0)") Then
-                                                           Exit While
-                                                       End If
-                                                   End While
-                                                   assertion.equal((+p).PriorityClass(), ppc)
-                                                   p.stdin().WriteLine()
-                                                   If Not assertion.is_true(p.wait_for_exit(
-                                                              seconds_to_milliseconds(10))) Then
-                                                       p.quit()
-                                                   End If
-                                               End Sub,
-                                               seconds_to_milliseconds(10)))
+                           If Not assertion.is_true(p.start()) Then
+                               Return
                            End If
-                           p.dispose()
+                           assertion.is_true(execute_in_managed_threadpool(
+                                                 Sub()
+                                                     While True
+                                                         Dim l As String = Nothing
+                                                         l = p.stdout().ReadLine()
+                                                         If strsame(l, "Finished global_init.execute(0)") Then
+                                                             Exit While
+                                                         End If
+                                                     End While
+                                                     assertion.equal((+p).PriorityClass(), ppc)
+                                                     p.stdin().WriteLine()
+                                                     If Not assertion.is_true(p.wait_for_exit(
+                                                                seconds_to_milliseconds(10))) Then
+                                                         p.quit()
+                                                     End If
+                                                 End Sub,
+                                               seconds_to_milliseconds(10)))
                        End Using
                    End Sub))
         Return True

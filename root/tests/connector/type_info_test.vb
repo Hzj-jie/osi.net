@@ -87,7 +87,7 @@ Public NotInheritable Class type_info_test
     Private Shared Sub enum_case()
         assertion.is_true(type_info(Of e1).is_enum)
         assertion.is_false(type_info(Of Integer).is_enum)
-        assertion.is_true(enum_type_info(Of e1).underlying_type Is GetType(Int32))
-        assertion.is_true(enum_type_info(Of e2).underlying_type Is GetType(SByte))
+        assertion.is_true(enum_def(Of e1).underlying_type() Is GetType(Int32))
+        assertion.is_true(enum_def(Of e2).underlying_type() Is GetType(SByte))
     End Sub
 End Class

@@ -80,25 +80,23 @@ Public Module _array
         rl = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
-        Else
-            Return memcmp(first, second, ll)
         End If
+        Return memcmp(first, second, ll)
     End Function
 
     <Extension()> Public Function to_strings(ByVal i() As Decimal) As String()
         If isemptyarray(i) Then
             Return Nothing
-        Else
-            Dim r() As String = Nothing
-            ReDim r(array_size_i(i) - 1)
-            For j As Int32 = 0 To array_size_i(i) - 1
-                r(j) = Convert.ToString(i(j))
-            Next
-            Return r
         End If
+        Dim r() As String = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            r(j) = Convert.ToString(i(j))
+        Next
+        Return r
     End Function
 
-    <Extension()> Public Function to_strings(ByVal i As Decimal, ByVal ParamArray j() As Decimal) As String()
+    <Extension()> Public Function with_strings(ByVal i As Decimal, ByVal ParamArray j() As Decimal) As String()
         Dim r() As String = Nothing
         ReDim r(array_size_i(j))
         r(0) = Convert.ToString(i)
@@ -111,17 +109,15 @@ Public Module _array
     <Extension()> Public Function start_with(ByVal first() As Decimal, ByVal second() As Decimal) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, second, array_size(second)) = 0
         End If
+        Return memcmp(first, second, array_size(second)) = 0
     End Function
 
     <Extension()> Public Function end_with(ByVal first() As Decimal, ByVal second() As Decimal) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
         End If
+        Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
     Public Function array_size(ByVal i() As Int64) As UInt32
@@ -191,25 +187,23 @@ Public Module _array
         rl = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
-        Else
-            Return memcmp(first, second, ll)
         End If
+        Return memcmp(first, second, ll)
     End Function
 
     <Extension()> Public Function to_strings(ByVal i() As Int64) As String()
         If isemptyarray(i) Then
             Return Nothing
-        Else
-            Dim r() As String = Nothing
-            ReDim r(array_size_i(i) - 1)
-            For j As Int32 = 0 To array_size_i(i) - 1
-                r(j) = Convert.ToString(i(j))
-            Next
-            Return r
         End If
+        Dim r() As String = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            r(j) = Convert.ToString(i(j))
+        Next
+        Return r
     End Function
 
-    <Extension()> Public Function to_strings(ByVal i As Int64, ByVal ParamArray j() As Int64) As String()
+    <Extension()> Public Function with_strings(ByVal i As Int64, ByVal ParamArray j() As Int64) As String()
         Dim r() As String = Nothing
         ReDim r(array_size_i(j))
         r(0) = Convert.ToString(i)
@@ -222,17 +216,15 @@ Public Module _array
     <Extension()> Public Function start_with(ByVal first() As Int64, ByVal second() As Int64) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, second, array_size(second)) = 0
         End If
+        Return memcmp(first, second, array_size(second)) = 0
     End Function
 
     <Extension()> Public Function end_with(ByVal first() As Int64, ByVal second() As Int64) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
         End If
+        Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
     Public Function array_size(ByVal i() As Int32) As UInt32
@@ -302,25 +294,23 @@ Public Module _array
         rl = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
-        Else
-            Return memcmp(first, second, ll)
         End If
+        Return memcmp(first, second, ll)
     End Function
 
     <Extension()> Public Function to_strings(ByVal i() As Int32) As String()
         If isemptyarray(i) Then
             Return Nothing
-        Else
-            Dim r() As String = Nothing
-            ReDim r(array_size_i(i) - 1)
-            For j As Int32 = 0 To array_size_i(i) - 1
-                r(j) = Convert.ToString(i(j))
-            Next
-            Return r
         End If
+        Dim r() As String = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            r(j) = Convert.ToString(i(j))
+        Next
+        Return r
     End Function
 
-    <Extension()> Public Function to_strings(ByVal i As Int32, ByVal ParamArray j() As Int32) As String()
+    <Extension()> Public Function with_strings(ByVal i As Int32, ByVal ParamArray j() As Int32) As String()
         Dim r() As String = Nothing
         ReDim r(array_size_i(j))
         r(0) = Convert.ToString(i)
@@ -333,17 +323,15 @@ Public Module _array
     <Extension()> Public Function start_with(ByVal first() As Int32, ByVal second() As Int32) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, second, array_size(second)) = 0
         End If
+        Return memcmp(first, second, array_size(second)) = 0
     End Function
 
     <Extension()> Public Function end_with(ByVal first() As Int32, ByVal second() As Int32) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
         End If
+        Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
     Public Function array_size(ByVal i() As Int16) As UInt32
@@ -413,25 +401,23 @@ Public Module _array
         rl = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
-        Else
-            Return memcmp(first, second, ll)
         End If
+        Return memcmp(first, second, ll)
     End Function
 
     <Extension()> Public Function to_strings(ByVal i() As Int16) As String()
         If isemptyarray(i) Then
             Return Nothing
-        Else
-            Dim r() As String = Nothing
-            ReDim r(array_size_i(i) - 1)
-            For j As Int32 = 0 To array_size_i(i) - 1
-                r(j) = Convert.ToString(i(j))
-            Next
-            Return r
         End If
+        Dim r() As String = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            r(j) = Convert.ToString(i(j))
+        Next
+        Return r
     End Function
 
-    <Extension()> Public Function to_strings(ByVal i As Int16, ByVal ParamArray j() As Int16) As String()
+    <Extension()> Public Function with_strings(ByVal i As Int16, ByVal ParamArray j() As Int16) As String()
         Dim r() As String = Nothing
         ReDim r(array_size_i(j))
         r(0) = Convert.ToString(i)
@@ -444,17 +430,15 @@ Public Module _array
     <Extension()> Public Function start_with(ByVal first() As Int16, ByVal second() As Int16) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, second, array_size(second)) = 0
         End If
+        Return memcmp(first, second, array_size(second)) = 0
     End Function
 
     <Extension()> Public Function end_with(ByVal first() As Int16, ByVal second() As Int16) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
         End If
+        Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
     Public Function array_size(ByVal i() As SByte) As UInt32
@@ -524,25 +508,23 @@ Public Module _array
         rl = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
-        Else
-            Return memcmp(first, second, ll)
         End If
+        Return memcmp(first, second, ll)
     End Function
 
     <Extension()> Public Function to_strings(ByVal i() As SByte) As String()
         If isemptyarray(i) Then
             Return Nothing
-        Else
-            Dim r() As String = Nothing
-            ReDim r(array_size_i(i) - 1)
-            For j As Int32 = 0 To array_size_i(i) - 1
-                r(j) = Convert.ToString(i(j))
-            Next
-            Return r
         End If
+        Dim r() As String = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            r(j) = Convert.ToString(i(j))
+        Next
+        Return r
     End Function
 
-    <Extension()> Public Function to_strings(ByVal i As SByte, ByVal ParamArray j() As SByte) As String()
+    <Extension()> Public Function with_strings(ByVal i As SByte, ByVal ParamArray j() As SByte) As String()
         Dim r() As String = Nothing
         ReDim r(array_size_i(j))
         r(0) = Convert.ToString(i)
@@ -555,17 +537,15 @@ Public Module _array
     <Extension()> Public Function start_with(ByVal first() As SByte, ByVal second() As SByte) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, second, array_size(second)) = 0
         End If
+        Return memcmp(first, second, array_size(second)) = 0
     End Function
 
     <Extension()> Public Function end_with(ByVal first() As SByte, ByVal second() As SByte) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
         End If
+        Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
     Public Function array_size(ByVal i() As UInt64) As UInt32
@@ -635,25 +615,23 @@ Public Module _array
         rl = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
-        Else
-            Return memcmp(first, second, ll)
         End If
+        Return memcmp(first, second, ll)
     End Function
 
     <Extension()> Public Function to_strings(ByVal i() As UInt64) As String()
         If isemptyarray(i) Then
             Return Nothing
-        Else
-            Dim r() As String = Nothing
-            ReDim r(array_size_i(i) - 1)
-            For j As Int32 = 0 To array_size_i(i) - 1
-                r(j) = Convert.ToString(i(j))
-            Next
-            Return r
         End If
+        Dim r() As String = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            r(j) = Convert.ToString(i(j))
+        Next
+        Return r
     End Function
 
-    <Extension()> Public Function to_strings(ByVal i As UInt64, ByVal ParamArray j() As UInt64) As String()
+    <Extension()> Public Function with_strings(ByVal i As UInt64, ByVal ParamArray j() As UInt64) As String()
         Dim r() As String = Nothing
         ReDim r(array_size_i(j))
         r(0) = Convert.ToString(i)
@@ -666,17 +644,15 @@ Public Module _array
     <Extension()> Public Function start_with(ByVal first() As UInt64, ByVal second() As UInt64) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, second, array_size(second)) = 0
         End If
+        Return memcmp(first, second, array_size(second)) = 0
     End Function
 
     <Extension()> Public Function end_with(ByVal first() As UInt64, ByVal second() As UInt64) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
         End If
+        Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
     Public Function array_size(ByVal i() As UInt32) As UInt32
@@ -746,25 +722,23 @@ Public Module _array
         rl = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
-        Else
-            Return memcmp(first, second, ll)
         End If
+        Return memcmp(first, second, ll)
     End Function
 
     <Extension()> Public Function to_strings(ByVal i() As UInt32) As String()
         If isemptyarray(i) Then
             Return Nothing
-        Else
-            Dim r() As String = Nothing
-            ReDim r(array_size_i(i) - 1)
-            For j As Int32 = 0 To array_size_i(i) - 1
-                r(j) = Convert.ToString(i(j))
-            Next
-            Return r
         End If
+        Dim r() As String = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            r(j) = Convert.ToString(i(j))
+        Next
+        Return r
     End Function
 
-    <Extension()> Public Function to_strings(ByVal i As UInt32, ByVal ParamArray j() As UInt32) As String()
+    <Extension()> Public Function with_strings(ByVal i As UInt32, ByVal ParamArray j() As UInt32) As String()
         Dim r() As String = Nothing
         ReDim r(array_size_i(j))
         r(0) = Convert.ToString(i)
@@ -777,17 +751,15 @@ Public Module _array
     <Extension()> Public Function start_with(ByVal first() As UInt32, ByVal second() As UInt32) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, second, array_size(second)) = 0
         End If
+        Return memcmp(first, second, array_size(second)) = 0
     End Function
 
     <Extension()> Public Function end_with(ByVal first() As UInt32, ByVal second() As UInt32) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
         End If
+        Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
     Public Function array_size(ByVal i() As UInt16) As UInt32
@@ -857,25 +829,23 @@ Public Module _array
         rl = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
-        Else
-            Return memcmp(first, second, ll)
         End If
+        Return memcmp(first, second, ll)
     End Function
 
     <Extension()> Public Function to_strings(ByVal i() As UInt16) As String()
         If isemptyarray(i) Then
             Return Nothing
-        Else
-            Dim r() As String = Nothing
-            ReDim r(array_size_i(i) - 1)
-            For j As Int32 = 0 To array_size_i(i) - 1
-                r(j) = Convert.ToString(i(j))
-            Next
-            Return r
         End If
+        Dim r() As String = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            r(j) = Convert.ToString(i(j))
+        Next
+        Return r
     End Function
 
-    <Extension()> Public Function to_strings(ByVal i As UInt16, ByVal ParamArray j() As UInt16) As String()
+    <Extension()> Public Function with_strings(ByVal i As UInt16, ByVal ParamArray j() As UInt16) As String()
         Dim r() As String = Nothing
         ReDim r(array_size_i(j))
         r(0) = Convert.ToString(i)
@@ -888,17 +858,15 @@ Public Module _array
     <Extension()> Public Function start_with(ByVal first() As UInt16, ByVal second() As UInt16) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, second, array_size(second)) = 0
         End If
+        Return memcmp(first, second, array_size(second)) = 0
     End Function
 
     <Extension()> Public Function end_with(ByVal first() As UInt16, ByVal second() As UInt16) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
         End If
+        Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
     Public Function array_size(ByVal i() As Byte) As UInt32
@@ -968,25 +936,23 @@ Public Module _array
         rl = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
-        Else
-            Return memcmp(first, second, ll)
         End If
+        Return memcmp(first, second, ll)
     End Function
 
     <Extension()> Public Function to_strings(ByVal i() As Byte) As String()
         If isemptyarray(i) Then
             Return Nothing
-        Else
-            Dim r() As String = Nothing
-            ReDim r(array_size_i(i) - 1)
-            For j As Int32 = 0 To array_size_i(i) - 1
-                r(j) = Convert.ToString(i(j))
-            Next
-            Return r
         End If
+        Dim r() As String = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            r(j) = Convert.ToString(i(j))
+        Next
+        Return r
     End Function
 
-    <Extension()> Public Function to_strings(ByVal i As Byte, ByVal ParamArray j() As Byte) As String()
+    <Extension()> Public Function with_strings(ByVal i As Byte, ByVal ParamArray j() As Byte) As String()
         Dim r() As String = Nothing
         ReDim r(array_size_i(j))
         r(0) = Convert.ToString(i)
@@ -999,17 +965,15 @@ Public Module _array
     <Extension()> Public Function start_with(ByVal first() As Byte, ByVal second() As Byte) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, second, array_size(second)) = 0
         End If
+        Return memcmp(first, second, array_size(second)) = 0
     End Function
 
     <Extension()> Public Function end_with(ByVal first() As Byte, ByVal second() As Byte) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
         End If
+        Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
     Public Function array_size(ByVal i() As Single) As UInt32
@@ -1079,25 +1043,23 @@ Public Module _array
         rl = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
-        Else
-            Return memcmp(first, second, ll)
         End If
+        Return memcmp(first, second, ll)
     End Function
 
     <Extension()> Public Function to_strings(ByVal i() As Single) As String()
         If isemptyarray(i) Then
             Return Nothing
-        Else
-            Dim r() As String = Nothing
-            ReDim r(array_size_i(i) - 1)
-            For j As Int32 = 0 To array_size_i(i) - 1
-                r(j) = Convert.ToString(i(j))
-            Next
-            Return r
         End If
+        Dim r() As String = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            r(j) = Convert.ToString(i(j))
+        Next
+        Return r
     End Function
 
-    <Extension()> Public Function to_strings(ByVal i As Single, ByVal ParamArray j() As Single) As String()
+    <Extension()> Public Function with_strings(ByVal i As Single, ByVal ParamArray j() As Single) As String()
         Dim r() As String = Nothing
         ReDim r(array_size_i(j))
         r(0) = Convert.ToString(i)
@@ -1110,17 +1072,15 @@ Public Module _array
     <Extension()> Public Function start_with(ByVal first() As Single, ByVal second() As Single) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, second, array_size(second)) = 0
         End If
+        Return memcmp(first, second, array_size(second)) = 0
     End Function
 
     <Extension()> Public Function end_with(ByVal first() As Single, ByVal second() As Single) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
         End If
+        Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
     Public Function array_size(ByVal i() As Double) As UInt32
@@ -1190,25 +1150,23 @@ Public Module _array
         rl = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
-        Else
-            Return memcmp(first, second, ll)
         End If
+        Return memcmp(first, second, ll)
     End Function
 
     <Extension()> Public Function to_strings(ByVal i() As Double) As String()
         If isemptyarray(i) Then
             Return Nothing
-        Else
-            Dim r() As String = Nothing
-            ReDim r(array_size_i(i) - 1)
-            For j As Int32 = 0 To array_size_i(i) - 1
-                r(j) = Convert.ToString(i(j))
-            Next
-            Return r
         End If
+        Dim r() As String = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            r(j) = Convert.ToString(i(j))
+        Next
+        Return r
     End Function
 
-    <Extension()> Public Function to_strings(ByVal i As Double, ByVal ParamArray j() As Double) As String()
+    <Extension()> Public Function with_strings(ByVal i As Double, ByVal ParamArray j() As Double) As String()
         Dim r() As String = Nothing
         ReDim r(array_size_i(j))
         r(0) = Convert.ToString(i)
@@ -1221,17 +1179,15 @@ Public Module _array
     <Extension()> Public Function start_with(ByVal first() As Double, ByVal second() As Double) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, second, array_size(second)) = 0
         End If
+        Return memcmp(first, second, array_size(second)) = 0
     End Function
 
     <Extension()> Public Function end_with(ByVal first() As Double, ByVal second() As Double) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
         End If
+        Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
     Public Function array_size(ByVal i() As String) As UInt32
@@ -1301,25 +1257,23 @@ Public Module _array
         rl = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
-        Else
-            Return memcmp(first, second, ll)
         End If
+        Return memcmp(first, second, ll)
     End Function
 
     <Extension()> Public Function to_strings(ByVal i() As String) As String()
         If isemptyarray(i) Then
             Return Nothing
-        Else
-            Dim r() As String = Nothing
-            ReDim r(array_size_i(i) - 1)
-            For j As Int32 = 0 To array_size_i(i) - 1
-                r(j) = Convert.ToString(i(j))
-            Next
-            Return r
         End If
+        Dim r() As String = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            r(j) = Convert.ToString(i(j))
+        Next
+        Return r
     End Function
 
-    <Extension()> Public Function to_strings(ByVal i As String, ByVal ParamArray j() As String) As String()
+    <Extension()> Public Function with_strings(ByVal i As String, ByVal ParamArray j() As String) As String()
         Dim r() As String = Nothing
         ReDim r(array_size_i(j))
         r(0) = Convert.ToString(i)
@@ -1332,17 +1286,15 @@ Public Module _array
     <Extension()> Public Function start_with(ByVal first() As String, ByVal second() As String) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, second, array_size(second)) = 0
         End If
+        Return memcmp(first, second, array_size(second)) = 0
     End Function
 
     <Extension()> Public Function end_with(ByVal first() As String, ByVal second() As String) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
         End If
+        Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
 #End If
@@ -1414,25 +1366,23 @@ Public Module _array
         rl = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
-        Else
-            Return memcmp(first, second, ll)
         End If
+        Return memcmp(first, second, ll)
     End Function
 
     <Extension()> Public Function to_strings(Of T)(ByVal i() As T) As String()
         If isemptyarray(i) Then
             Return Nothing
-        Else
-            Dim r() As String = Nothing
-            ReDim r(array_size_i(i) - 1)
-            For j As Int32 = 0 To array_size_i(i) - 1
-                r(j) = Convert.ToString(i(j))
-            Next
-            Return r
         End If
+        Dim r() As String = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            r(j) = Convert.ToString(i(j))
+        Next
+        Return r
     End Function
 
-    <Extension()> Public Function to_strings(Of T)(ByVal i As T, ByVal ParamArray j() As T) As String()
+    <Extension()> Public Function with_strings(Of T)(ByVal i As T, ByVal ParamArray j() As T) As String()
         Dim r() As String = Nothing
         ReDim r(array_size_i(j))
         r(0) = Convert.ToString(i)
@@ -1445,33 +1395,30 @@ Public Module _array
     <Extension()> Public Function start_with(Of T)(ByVal first() As T, ByVal second() As T) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, second, array_size(second)) = 0
         End If
+        Return memcmp(first, second, array_size(second)) = 0
     End Function
 
     <Extension()> Public Function end_with(Of T)(ByVal first() As T, ByVal second() As T) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
         End If
+        Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
     <Extension()> Public Function to_strings(ByVal i() As Object) As String()
         If isemptyarray(i) Then
             Return Nothing
-        Else
-            Dim r() As String = Nothing
-            ReDim r(array_size_i(i) - 1)
-            For j As Int32 = 0 To array_size_i(i) - 1
-                r(j) = Convert.ToString(i(j))
-            Next
-            Return r
         End If
+        Dim r() As String = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            r(j) = Convert.ToString(i(j))
+        Next
+        Return r
     End Function
 
-    <Extension()> Public Function to_strings(ByVal i As Object, ByVal ParamArray j() As Object) As String()
+    <Extension()> Public Function with_strings(ByVal i As Object, ByVal ParamArray j() As Object) As String()
         Dim r() As String = Nothing
         ReDim r(array_size_i(j))
         r(0) = Convert.ToString(i)
@@ -1484,17 +1431,15 @@ Public Module _array
     <Extension()> Public Function start_with(ByVal first() As Object, ByVal second() As Object) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, second, array_size(second)) = 0
         End If
+        Return memcmp(first, second, array_size(second)) = 0
     End Function
 
     <Extension()> Public Function end_with(ByVal first() As Object, ByVal second() As Object) As Boolean
         If array_size(first) < array_size(second) Then
             Return False
-        Else
-            Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
         End If
+        Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
 End Module

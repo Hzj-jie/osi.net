@@ -1,6 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utils
 Imports osi.root.constants
 Imports osi.root.envs
 
@@ -28,11 +31,11 @@ Namespace constants
             Public Const num_lock As Int32 = 1005
 
             Sub New()
-                assert(Not enum_has(Of ConsoleKey, Int32)(alt) AndAlso
-                       Not enum_has(Of ConsoleKey, Int32)(shift) AndAlso
-                       Not enum_has(Of ConsoleKey, Int32)(ctrl) AndAlso
-                       Not enum_has(Of ConsoleKey, Int32)(caps_lock) AndAlso
-                       Not enum_has(Of ConsoleKey, Int32)(num_lock))
+                assert(Not enum_def(Of ConsoleKey).has(alt) AndAlso
+                       Not enum_def(Of ConsoleKey).has(shift) AndAlso
+                       Not enum_def(Of ConsoleKey).has(ctrl) AndAlso
+                       Not enum_def(Of ConsoleKey).has(caps_lock) AndAlso
+                       Not enum_def(Of ConsoleKey).has(num_lock))
             End Sub
         End Module
     End Namespace

@@ -15,12 +15,13 @@ Public Module _binding_flags
     Private ReadOnly m As map(Of String, BindingFlags)
 
     Sub New()
-        Dim ps() As pair(Of BindingFlags, String) = Nothing
-        ps = enum_to_string_pair(Of BindingFlags)()
         m = New map(Of String, BindingFlags)()
-        For i As Int32 = 0 To array_size_i(ps) - 1
-            assert(m.emplace(strtolower(ps(i).second), ps(i).first).second)
-        Next
+        Dim it As unordered_map(Of String, BindingFlags).iterator = Nothing
+        it = enum_def(Of BindingFlags).string_map().begin()
+        While it <> enum_def(Of BindingFlags).string_map().end()
+            assert(m.emplace((+it).first, (+it).second).second)
+            it += 1
+        End While
 
         assert(m.emplace("private", BindingFlags.NonPublic).second)
         assert(m.emplace("protected", BindingFlags.NonPublic).second)

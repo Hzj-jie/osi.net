@@ -1,10 +1,11 @@
 ﻿
-Imports System.IO
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.utils
-Imports configuration = osi.service.configuration
 
 Partial Public Class rlexer
     Partial Public Class rule
@@ -22,7 +23,9 @@ Partial Public Class rlexer
             words = New vector(Of pair(Of String, String))()
             type_choice = Nothing
             word_choice = Nothing
-            m(command_clear_define) = AddressOf clear_define
+            m(command_clear_define) = Function(ByVal i As String) As Boolean
+                                          Return clear_define()
+                                      End Function
             m(command_define) = AddressOf define
             m(command_mode) = AddressOf mode
             m(command_clear_word) = AddressOf clear_word
@@ -36,10 +39,9 @@ Partial Public Class rlexer
             If s.null_or_whitespace() OrElse f.null_or_whitespace() Then
                 raise_error(error_type.user, "word ", f, " has empty definition")
                 Return False
-            Else
-                words.emplace_back(emplace_make_pair(f, s))
-                Return True
             End If
+            words.emplace_back(emplace_make_pair(f, s))
+            Return True
         End Function
 
         Private Function clear_define() As Boolean
@@ -50,27 +52,29 @@ Partial Public Class rlexer
         Private Function define(ByVal s As String) As Boolean
             Dim k As String = Nothing
             Dim v As String = Nothing
-            If strsep(s, k, v, define_separator) Then
-                macros.emplace_back(emplace_make_pair(k, v))
-                Return True
-            Else
+            If Not strsep(s, k, v, define_separator) Then
                 Return False
             End If
+            macros.emplace_back(emplace_make_pair(k, v))
+            Return True
         End Function
 
         Private Function mode(ByVal s As String) As Boolean
             Dim k As String = Nothing
             Dim v As String = Nothing
-            If strsep(s, k, v, mode_separator) Then
-                If enum_cast(Of match_choice)(v, Nothing) Then
-                    If strsame(k, mode_type_choice) Then
-                        type_choice = v
-                        Return True
-                    ElseIf strsame(k, mode_word_choice) Then
-                        word_choice = v
-                        Return True
-                    End If
-                End If
+            If Not strsep(s, k, v, mode_separator) Then
+                Return False
+            End If
+            If Not enum_def(Of match_choice).has(v) Then
+                Return False
+            End If
+            If strsame(k, mode_type_choice) Then
+                type_choice = v
+                Return True
+            End If
+            If strsame(k, mode_word_choice) Then
+                word_choice = v
+                Return True
             End If
             Return False
         End Function

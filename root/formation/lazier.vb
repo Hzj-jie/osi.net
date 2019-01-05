@@ -4,11 +4,11 @@ Option Infer Off
 Option Strict On
 
 Public NotInheritable Class lazier
-    Public Shared Function [New](Of T)(ByVal d As Func(Of T)) As lazier(Of T)
+    Public Shared Function [of](Of T)(ByVal d As Func(Of T)) As lazier(Of T)
         Return New lazier(Of T)(d)
     End Function
 
-    Public Shared Function new_from_value(Of T)(ByVal v As T) As lazier(Of T)
+    Public Shared Function value_of(Of T)(ByVal v As T) As lazier(Of T)
         Return New lazier(Of T)(v)
     End Function
 
@@ -16,14 +16,10 @@ Public NotInheritable Class lazier
     End Sub
 End Class
 
-Public Structure lazier(Of T)
+Public NotInheritable Class lazier(Of T)
     Private Shared ReadOnly default_value As T = Nothing
     Private d As Func(Of T)
     Private v As T
-
-    Shared Sub New()
-        default_value = Nothing
-    End Sub
 
     Public Sub New(ByVal d As Func(Of T))
         Me.d = d
@@ -47,11 +43,14 @@ Public Structure lazier(Of T)
         Return New lazier(Of T)(this)
     End Operator
 
+    ' Using structure will cause this.d to be copied.
     Public Shared Operator +(ByVal this As lazier(Of T)) As T
-        If Not this.d Is Nothing Then
-            this.v = this.d()
+        Dim x As Func(Of T) = Nothing
+        x = this.d
+        If Not x Is Nothing Then
+            this.v = x()
             this.d = Nothing
         End If
         Return this.v
     End Operator
-End Structure
+End Class

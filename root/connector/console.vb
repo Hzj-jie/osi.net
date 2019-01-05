@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Drawing
 Imports System.Threading
 Imports osi.root.constants
@@ -70,7 +74,7 @@ Public Module _console
         If Console.BufferWidth() > 0 AndAlso
            strlen(s) Mod Console.BufferWidth() > 0 AndAlso
            strlen(s) Mod Console.BufferWidth() < (Console.BufferWidth() - 1) Then
-            s = New String(character.blank, Console.BufferWidth() - (strlen(s) Mod Console.BufferWidth()) - 1)
+            s = New String(character.blank, Console.BufferWidth() - (strlen_i(s) Mod Console.BufferWidth()) - 1)
             If err Then
                 write_console_error(s)
             Else
@@ -135,24 +139,22 @@ Public Module _console
         Dim min_d As Int32 = 0
         min_d = max_int32
         Dim min_c As ConsoleColor = Nothing
-        assert(enum_traversal(Of ConsoleColor)(Function(cc As ConsoleColor, n As String) As Boolean
-                                                   Dim c As Color = Nothing
-                                                   'no dark yellow in knowncolor enumeration
-                                                   c = Color.FromName(If(strsame(n, "DarkYellow", False),
-                                                                         "Orange",
-                                                                         n))
-                                                   Dim d As Int32 = 0
-                                                   d = (CShort(c.R) - r).power_2() +
-                                                       (CShort(c.G) - g).power_2() +
-                                                       (CShort(c.B) - b).power_2()
-                                                   If d = 0 OrElse
-                                                      d < min_d Then
-                                                       min_c = cc
-                                                       Return d <> 0
-                                                   Else
-                                                       Return True
-                                                   End If
-                                               End Function))
+        assert(enum_def(Of ConsoleColor).foreach(Function(ByVal cc As ConsoleColor, ByVal n As String) As Boolean
+                                                     Dim c As Color = Nothing
+                                                     'no dark yellow in knowncolor enumeration
+                                                     c = Color.FromName(
+                                                             If(strsame(n, "DarkYellow", False), "Orange", n))
+                                                     Dim d As Int32 = 0
+                                                     d = (CShort(c.R) - r).power_2() +
+                                                         (CShort(c.G) - g).power_2() +
+                                                         (CShort(c.B) - b).power_2()
+                                                     If d = 0 OrElse
+                                                        d < min_d Then
+                                                         min_c = cc
+                                                         Return d <> 0
+                                                     End If
+                                                     Return True
+                                                 End Function))
         Return min_c
     End Function
 End Module
