@@ -1,5 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.procedure
@@ -79,7 +84,7 @@ Public Class event_sync_T_pump_T_receiver_adapter_test
         End Sub
 
         Public Overrides Function reserved_processors() As Int16
-            Return Environment.ProcessorCount()
+            Return CShort(Environment.ProcessorCount())
         End Function
 
         Private Sub start()
@@ -98,34 +103,32 @@ Public Class event_sync_T_pump_T_receiver_adapter_test
                                                      ec = r.receive(p.renew())
                                                      Return waitfor(ec) AndAlso
                                                             goto_next()
-                                                 Else
-                                                     Return goto_begin()
                                                  End If
+                                                 Return goto_begin()
                                              End Function,
                                              Function() As Boolean
                                                  assertion.is_true(ec.end_result())
                                                  If +p >= 0 Then
                                                      received.increment()
-                                                     assertion.is_false(has(+p))
-                                                     has(+p) = True
+                                                     assertion.is_false(has(CUInt(+p)))
+                                                     has(CUInt(+p)) = True
                                                  End If
                                                  Return goto_begin()
                                              End Function))
         End Sub
 
         Public Overrides Function prepare() As Boolean
-            If MyBase.prepare() Then
-                sp.clear()
-                has.resize(thread_count * round)
-                index.set(0)
-                received.set(0)
-                For i As Int32 = 0 To receive_procedure_count - 1
-                    start()
-                Next
-                Return True
-            Else
+            If Not MyBase.prepare() Then
                 Return False
             End If
+            sp.clear()
+            has.resize(CUInt(thread_count * round))
+            index.set(0)
+            received.set(0)
+            For i As Int32 = 0 To receive_procedure_count - 1
+                start()
+            Next
+            Return True
         End Function
 
         Public Overrides Function run() As Boolean
@@ -141,8 +144,13 @@ Public Class event_sync_T_pump_T_receiver_adapter_test
                 sp.emplace(-1)
             Next
             sleep(sense_timeout_ms * 2)
-            For i As Int32 = 0 To has.size() - 1
-                assertion.is_true(has(i))
+            For i As UInt32 = 0 To has.size() - uint32_1
+                Dim j As UInt32 = 0
+                j = i
+                assertion.is_true(timeslice_sleep_wait_until(Function() As Boolean
+                                                                 Return has(j)
+                                                             End Function,
+                                                             minutes_to_milliseconds(1)))
             Next
             sp.clear()
             has.resize(0)
