@@ -3,13 +3,13 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.utt
-Imports osi.root.utils
-Imports osi.root.procedure
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.lock
+Imports osi.root.procedure
+Imports osi.root.utils
+Imports osi.root.utt
 Imports osi.service.streamer
 Imports osi.service.transmitter
 Imports osi.tests.service.transmitter
@@ -20,7 +20,7 @@ Public MustInherit Class flower_test
     Protected MustOverride Function create_flower(ByVal first As T_receiver(Of Int32),
                                                   ByVal last As T_sender(Of Int32)) As flower(Of Int32)
 
-    Private Sub execute(ByVal f As flower(Of Int32), ByVal ended As pointer(Of Boolean))
+    Private Shared Sub execute(ByVal f As flower(Of Int32), ByVal ended As pointer(Of Boolean))
         Dim ec As event_comb = Nothing
         assert_begin(New event_comb(Function() As Boolean
                                         ec = (+f)
@@ -33,6 +33,10 @@ Public MustInherit Class flower_test
                                                goto_end()
                                     End Function))
     End Sub
+
+    Public Overrides Function reserved_processors() As Int16
+        Return 2
+    End Function
 
     Public Overrides Function run() As Boolean
         Dim first As mock_dev_int = Nothing

@@ -1,10 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.event
 Imports osi.root.lock
 Imports osi.root.utt
 
-Public Class signal_event_wait_test
+Public NotInheritable Class signal_event_wait_test
     Inherits repeat_case_wrapper
 
     Private Const thread_count As UInt32 = 8
@@ -17,7 +21,7 @@ Public Class signal_event_wait_test
         Return 1
     End Function
 
-    Private Class signal_event_wait_case
+    Private NotInheritable Class signal_event_wait_case
         Inherits [case]
 
         Private ReadOnly e As signal_event
@@ -47,9 +51,8 @@ Public Class signal_event_wait_test
         Public Overrides Function run() As Boolean
             If multithreading_case_wrapper.thread_id() = 0 Then
                 Return sender()
-            Else
-                Return receiver()
             End If
+            Return receiver()
         End Function
     End Class
 End Class

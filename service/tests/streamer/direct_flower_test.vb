@@ -1,8 +1,12 @@
 ﻿
-Imports osi.service.transmitter
-Imports osi.service.streamer
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Public Class direct_flower_test
+Imports osi.service.streamer
+Imports osi.service.transmitter
+
+Public NotInheritable Class direct_flower_test
     Inherits flower_test
 
     Protected Overrides Function create_flower(ByVal first As T_receiver(Of Int32),
