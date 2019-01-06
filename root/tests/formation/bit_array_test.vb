@@ -1,9 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utt
 
-Public Class bit_array_test
+Public NotInheritable Class bit_array_test
     Inherits repeat_case_wrapper
 
     Public Sub New()
@@ -13,7 +17,7 @@ Public Class bit_array_test
     Private Class run_case
         Inherits [case]
 
-        Private Const size As UInt32 = 1024 * 8
+        Private Const size As UInt32 = 1024 * 8 + 3
         Private ReadOnly b As bit_array
         Private ReadOnly v As vector(Of Boolean)
 
@@ -23,13 +27,13 @@ Public Class bit_array_test
         End Sub
 
         Public Overrides Function prepare() As Boolean
-            If MyBase.prepare() Then
-                b.resize(size)
-                v.resize(size)
-                Return True
-            Else
+            If Not MyBase.prepare() Then
                 Return False
             End If
+            b.resize(size)
+            assertion.equal(b.size(), size)
+            v.resize(size)
+            Return True
         End Function
 
         Public Overrides Function run() As Boolean

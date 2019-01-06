@@ -7,6 +7,7 @@ Imports osi.root.connector
 Imports osi.root.lock
 Imports osi.root.utils
 
+' TODO: Remove, use event_comb.cancellation_control.
 Public Module _lifetime_event_comb
     Public Function lifetime_event_comb(ByVal stop_result As Boolean,
                                         ByVal control As expiration_controller,

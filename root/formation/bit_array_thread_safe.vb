@@ -21,9 +21,9 @@ Imports osi.root.constants
 Imports osi.root.connector
 
 #If True Then
-Public Class bit_array_thread_safe
+Public NotInheritable Class bit_array_thread_safe
 #Else
-Public Class bit_array
+Public NotInheritable Class bit_array
 #End If
     Private Shared ReadOnly bit_count_in_uint32 As Byte = CByte(bit_count_in_byte * sizeof_uint32)
 #If True Then
@@ -31,12 +31,14 @@ Public Class bit_array
 #Else
     Private b() As UInt32
 #End If
+    Private _size As UInt32
 
     Shared Sub New()
         assert(sizeof_uint32 = sizeof_int32)
     End Sub
 
     Public Sub New()
+        Me.New(0)
     End Sub
 
     Public Sub New(ByVal size As UInt32)
@@ -44,6 +46,7 @@ Public Class bit_array
     End Sub
 
     Public Sub resize(ByVal size As UInt32)
+        _size = size
         If size Mod bit_count_in_uint32 = 0 Then
             ReDim b(CInt(size \ bit_count_in_uint32) - 1)
         Else
@@ -52,7 +55,7 @@ Public Class bit_array
     End Sub
 
     Public Function size() As UInt32
-        Return array_size(b) * bit_count_in_uint32
+        Return _size
     End Function
 
     Public Sub clear()
@@ -60,9 +63,10 @@ Public Class bit_array
     End Sub
 
     Private Sub devide(ByVal i As UInt32, ByRef p As Byte, ByRef index As Int32)
+        assert(i < size())
         p = CByte(i Mod bit_count_in_uint32)
         index = CInt(i \ bit_count_in_uint32)
-        assert(index < size())
+        assert(index < array_size_i(b))
     End Sub
 
     Default Public Property data(ByVal i As UInt32) As Boolean
