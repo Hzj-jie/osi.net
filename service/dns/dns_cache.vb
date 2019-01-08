@@ -27,6 +27,16 @@ Partial Public NotInheritable Class dns_cache
         assert_begin(ip2h.clear())
     End Sub
 
+    Public Shared Function query_host_to_ip_cache(ByVal s As String,
+                                                  ByVal result As pointer(Of IPHostEntry)) As event_comb
+        Return h2ip.get(s, result)
+    End Function
+
+    Public Shared Function query_ip_to_host_cache(ByVal s As String,
+                                                  ByVal result As pointer(Of IPHostEntry)) As event_comb
+        Return ip2h.get(s, result)
+    End Function
+
     Private Shared Function operate(ByVal s As String,
                                     ByVal result As pointer(Of IPHostEntry),
                                     ByVal c As icache2(Of String, IPHostEntry),
