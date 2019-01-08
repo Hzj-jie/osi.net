@@ -27,6 +27,7 @@ Partial Public NotInheritable Class type_info(Of T)
     Public Shared ReadOnly is_nullable As Boolean
     ' => GetType(T) Is GetType(String)
     Public Shared ReadOnly is_string As Boolean
+    Public Shared ReadOnly is_integral As Boolean
     Public Shared ReadOnly is_number As Boolean
     Public Shared ReadOnly is_enum As Boolean
 
@@ -45,7 +46,7 @@ Partial Public NotInheritable Class type_info(Of T)
         is_nullable = GetType(T).is(GetType(Nullable(Of )))
         is_string = GetType(T) Is GetType(String)
         ' Check is_primitive to reduce cost.
-        is_number = is_primitive AndAlso (
+        is_integral = is_primitive AndAlso (
             GetType(T) Is GetType(Byte) OrElse
             GetType(T) Is GetType(SByte) OrElse
             GetType(T) Is GetType(UInt16) OrElse
@@ -53,10 +54,12 @@ Partial Public NotInheritable Class type_info(Of T)
             GetType(T) Is GetType(UInt32) OrElse
             GetType(T) Is GetType(Int32) OrElse
             GetType(T) Is GetType(UInt64) OrElse
-            GetType(T) Is GetType(Int64) OrElse
+            GetType(T) Is GetType(Int64))
+        is_number = is_integral OrElse (
+            is_primitive AndAlso (
             GetType(T) Is GetType(Single) OrElse
             GetType(T) Is GetType(Double) OrElse
-            GetType(T) Is GetType(Decimal))
+            GetType(T) Is GetType(Decimal)))
         is_enum = GetType(T).IsEnum()
     End Sub
 

@@ -26,10 +26,8 @@ Public Module _binding_flags
         assert(m.emplace("private", BindingFlags.NonPublic).second)
         assert(m.emplace("protected", BindingFlags.NonPublic).second)
 
-        string_serializer.register(Function(ByVal i As StringReader, ByRef o As BindingFlags) As Boolean
-                                       assert(Not i Is Nothing)
-                                       Return o.from_str(i.ReadToEnd())
-                                   End Function)
+        ' Trigger bytes_serializer registering.
+        enum_def(Of BindingFlags)()
         string_serializer.register(Function(ByVal i As StringReader, ByRef o As method_binding_flags) As Boolean
                                        assert(Not i Is Nothing)
                                        Dim bf As BindingFlags = Nothing

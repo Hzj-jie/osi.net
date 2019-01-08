@@ -15,6 +15,12 @@ Partial Public NotInheritable Class string_serializer
         string_serializer(Of T).register(from_str)
     End Sub
 
+    Public Shared Sub register(Of T)(ByVal to_str As Action(Of T, StringWriter),
+                                     ByVal from_str As _do_val_ref(Of StringReader, T, Boolean))
+        register(to_str)
+        register(from_str)
+    End Sub
+
     Public Shared Function from_str(Of T)(ByVal i As StringReader, ByRef o As T) As Boolean
         Return string_serializer(Of T).default.from_str(i, o)
     End Function

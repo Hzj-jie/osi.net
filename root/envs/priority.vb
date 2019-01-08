@@ -34,12 +34,12 @@ Public Module _priority
              env_value(set2, priority_int) OrElse
              env_value(set3, priority_int) OrElse
              env_value(set4, priority_int)) AndAlso
-            enum_def.cast(priority_int, priority_class)) OrElse
+            enum_def.from(priority_int, priority_class)) OrElse
            ((env_value(set1, priority_string) OrElse
              env_value(set2, priority_string) OrElse
              env_value(set3, priority_string) OrElse
              env_value(set4, priority_string)) AndAlso
-            enum_def.cast(priority_string, priority_class)) Then
+            enum_def.from(priority_string, priority_class)) Then
             has_priority_defined = True
             current_process.PriorityClass() = priority_class
         Else

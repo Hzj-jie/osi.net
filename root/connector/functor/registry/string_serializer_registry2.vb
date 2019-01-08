@@ -12,16 +12,16 @@ Friend NotInheritable Class string_serializer_registry2
         string_serializer.register(Sub(ByVal i As Boolean, ByVal o As StringWriter)
                                        assert(Not o Is Nothing)
                                        o.Write(i)
-                                   End Sub)
-        string_serializer.register(Function(ByVal i As StringReader, ByRef o As Boolean) As Boolean
+                                   End Sub,
+                                   Function(ByVal i As StringReader, ByRef o As Boolean) As Boolean
                                        assert(Not i Is Nothing)
                                        Return Boolean.TryParse(i.ReadToEnd(), o)
                                    End Function)
         string_serializer.register(Sub(ByVal i As String, ByVal o As StringWriter)
                                        assert(Not o Is Nothing)
                                        o.Write(i)
-                                   End Sub)
-        string_serializer.register(Function(ByVal i As StringReader, ByRef o As String) As Boolean
+                                   End Sub,
+                                   Function(ByVal i As StringReader, ByRef o As String) As Boolean
                                        assert(Not i Is Nothing)
                                        o = i.ReadToEnd()
                                        Return True

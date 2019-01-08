@@ -16,10 +16,10 @@ Public NotInheritable Class string_serializer_object(Of T, PROTECTOR)
         Me.s = s
     End Sub
 
-    Protected Overrides Function to_str() As Action(Of Object, StringWriter)
-        Return Sub(ByVal i As Object, ByVal o As StringWriter)
-                   assert(s.to_str(direct_cast(Of T)(i), o))
-               End Sub
+    Protected Overrides Function to_str() As Func(Of Object, StringWriter, Boolean)
+        Return Function(ByVal i As Object, ByVal o As StringWriter) As Boolean
+                   Return s.to_str(direct_cast(Of T)(i), o)
+               End Function
     End Function
 
     Protected Overrides Function from_str() As _do_val_ref(Of StringReader, Object, Boolean)

@@ -9,10 +9,25 @@ Imports osi.root.constants
 Imports osi.root.delegates
 
 Partial Public Class string_serializer(Of T, PROTECTOR)
+    Public Shared Sub register(ByVal to_str As Func(Of T, StringWriter, Boolean),
+                               ByVal from_str As _do_val_ref(Of StringReader, T, Boolean))
+        register(to_str)
+        register(from_str)
+    End Sub
+
     Public Shared Sub register(ByVal to_str As Action(Of T, StringWriter),
                                ByVal from_str As _do_val_ref(Of StringReader, T, Boolean))
         register(to_str)
         register(from_str)
+    End Sub
+
+    ' Usually to_str should not fail, so providing this shortcut.
+    Public Shared Sub register(ByVal to_str As Action(Of T, StringWriter))
+        assert(Not to_str Is Nothing)
+        register(Function(ByVal i As T, ByVal o As StringWriter) As Boolean
+                     to_str(i, o)
+                     Return True
+                 End Function)
     End Sub
 
     Public Function to_str(ByVal i As T, ByRef o As String) As Boolean

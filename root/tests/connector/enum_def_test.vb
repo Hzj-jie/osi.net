@@ -63,12 +63,27 @@ Public NotInheritable Class enum_def_test
         i = test_enum.a
         assertion.is_true(enum_def(Of test_enum).foreach(Sub(x As test_enum, y As String)
                                                              Dim o As test_enum = Nothing
-                                                             assertion.is_true(enum_def.cast(i, o))
+                                                             assertion.is_true(enum_def.from(i, o))
                                                              assertion.equal(o, x)
-                                                             assertion.is_true(enum_def.cast(y, o))
+                                                             assertion.is_true(enum_def.from(y, o))
                                                              assertion.equal(o, x)
                                                              i += 1
                                                          End Sub))
+        Return True
+    End Function
+
+    Private Shared Function cast_case2() As Boolean
+        assertion.is_true(enum_def(Of test_enum).foreach(
+            Sub(x As test_enum, y As String)
+                assertion.equal(enum_def(Of test_enum).from(enum_def(Of test_enum).to(Of SByte)(x)), x)
+                assertion.equal(enum_def(Of test_enum).from(enum_def(Of test_enum).to(Of Byte)(x)), x)
+                assertion.equal(enum_def(Of test_enum).from(enum_def(Of test_enum).to(Of Int16)(x)), x)
+                assertion.equal(enum_def(Of test_enum).from(enum_def(Of test_enum).to(Of UInt16)(x)), x)
+                assertion.equal(enum_def(Of test_enum).from(enum_def(Of test_enum).to(Of Int32)(x)), x)
+                assertion.equal(enum_def(Of test_enum).from(enum_def(Of test_enum).to(Of UInt32)(x)), x)
+                assertion.equal(enum_def(Of test_enum).from(enum_def(Of test_enum).to(Of Int64)(x)), x)
+                assertion.equal(enum_def(Of test_enum).from(enum_def(Of test_enum).to(Of UInt64)(x)), x)
+            End Sub))
         Return True
     End Function
 
@@ -80,10 +95,35 @@ Public NotInheritable Class enum_def_test
         Return True
     End Function
 
+    Private Shared Function bytes_case() As Boolean
+        assert(enum_def(Of test_enum).foreach(Sub(ByVal i As test_enum)
+                                                  Dim b() As Byte = Nothing
+                                                  b = bytes_serializer.to_bytes(i)
+                                                  Dim y As test_enum = Nothing
+                                                  assertion.is_true(bytes_serializer.from_bytes(b, y))
+                                                  assertion.equal(i, y)
+                                              End Sub))
+        Return True
+    End Function
+
+    Private Shared Function str_case() As Boolean
+        assert(enum_def(Of test_enum).foreach(Sub(ByVal i As test_enum)
+                                                  Dim s As String = Nothing
+                                                  assertion.is_true(string_serializer.to_str(i, s))
+                                                  Dim y As test_enum = Nothing
+                                                  assertion.is_true(string_serializer.from_str(s, y))
+                                                  assertion.equal(i, y)
+                                              End Sub))
+        Return True
+    End Function
+
     Public Overrides Function run() As Boolean
         Return traversal_case() AndAlso
                has_case() AndAlso
                cast_case() AndAlso
+               cast_case2() AndAlso
+               bytes_case() AndAlso
+               str_case() AndAlso
                to_string_case()
     End Function
 End Class

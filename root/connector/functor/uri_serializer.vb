@@ -54,15 +54,16 @@ Public Class uri_serializer(Of T)
     End Operator
 
     ' TODO: Test
-    Protected Overrides Function to_str() As Action(Of T, StringWriter)
-        Return Sub(ByVal i As T, ByVal o As StringWriter)
+    Protected Overrides Function to_str() As Func(Of T, StringWriter, Boolean)
+        Return Function(ByVal i As T, ByVal o As StringWriter) As Boolean
                    assert(Not i Is Nothing)
                    assert(Not o Is Nothing)
                    Dim b() As Byte = Nothing
                    b = bytes_serializer.to_bytes(i)
                    o.Write(constants.uri.path_separator)
                    o.Write(uri.path_encoder.encode(b))
-               End Sub
+                   Return True
+               End Function
     End Function
 
     Protected Overrides Function from_str() As _do_val_ref(Of StringReader, T, Boolean)

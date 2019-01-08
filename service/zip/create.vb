@@ -24,7 +24,7 @@ Public Module _create
                            ByVal parameters As var,
                            ByRef o As zipper) As Boolean
         Dim mode As zip_mode = Nothing
-        If enum_def.cast(mode_str, mode) Then
+        If enum_def.from(mode_str, mode) Then
             Select Case mode
                 Case zip_mode.bypass
                     Return bypass.create(parameters, o)

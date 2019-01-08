@@ -22,7 +22,7 @@ Public Module _socket
     Public Function io_control_code_to_str(ByVal control_code As Int32) As String
         Dim c As IOControlCode = Nothing
         Dim s As String = Nothing
-        If enum_def.cast(control_code, c) Then
+        If enum_def.from(control_code, c) Then
             s = Convert.ToString(c)
         Else
             s = Convert.ToString(control_code)

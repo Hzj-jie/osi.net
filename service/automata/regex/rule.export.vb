@@ -69,14 +69,14 @@ Partial Class rlexer
 
                     If i.type_choice Is Nothing Then
                         type_choice = match_choice.first_defined
-                    ElseIf Not enum_def.cast(i.type_choice, type_choice) Then
+                    ElseIf Not enum_def.from(i.type_choice, type_choice) Then
                         raise_error(error_type.user, "failed to parse type_choice ", i.type_choice)
                         Return False
                     End If
 
                     If i.word_choice Is Nothing Then
                         word_choice = match_choice.greedy
-                    ElseIf Not enum_def.cast(i.word_choice, word_choice) Then
+                    ElseIf Not enum_def.from(i.word_choice, word_choice) Then
                         raise_error(error_type.user, "failed to parse word_choice ", i.word_choice)
                         Return False
                     End If

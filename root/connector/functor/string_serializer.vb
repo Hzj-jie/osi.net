@@ -44,8 +44,8 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
         End If
     End Sub
 
-    Public Shared Sub register(ByVal to_str As Action(Of T, StringWriter))
-        global_resolver(Of Action(Of T, StringWriter), PROTECTOR).assert_first_register(to_str)
+    Public Shared Sub register(ByVal to_str As Func(Of T, StringWriter, Boolean))
+        global_resolver(Of Func(Of T, StringWriter, Boolean), PROTECTOR).assert_first_register(to_str)
         register_object()
     End Sub
 
@@ -54,8 +54,8 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
         register_object()
     End Sub
 
-    Protected Overridable Function to_str() As Action(Of T, StringWriter)
-        Return global_resolver(Of Action(Of T, StringWriter), PROTECTOR).resolve_or_null()
+    Protected Overridable Function to_str() As Func(Of T, StringWriter, Boolean)
+        Return global_resolver(Of Func(Of T, StringWriter, Boolean), PROTECTOR).resolve_or_null()
     End Function
 
     ' Write i into StringWriter
@@ -69,14 +69,13 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
             Return True
         End If
 
-        Dim f As Action(Of T, StringWriter) = Nothing
+        Dim f As Func(Of T, StringWriter, Boolean) = Nothing
         f = to_str()
         If Not f Is Nothing Then
-            f(i, o)
-            Return True
+            Return f(i, o)
         End If
 
-        Dim f2 As Action(Of T, StringWriter) = Nothing
+        Dim f2 As Func(Of T, StringWriter, Boolean) = Nothing
         f2 = uri_serializer(Of T).default.to_str()
         assert(object_compare(f, f2) <> 0)
         assert(Not f2 Is Nothing)

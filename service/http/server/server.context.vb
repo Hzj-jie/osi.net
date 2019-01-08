@@ -322,7 +322,7 @@ Partial Public NotInheritable Class server
                 s = context.Request().HttpMethod()
                 For i As Int32 = 0 To array_size_i(constants.request_method_str) - 1
                     If strsame(constants.request_method_str(i), s, False) Then
-                        m = enum_def(Of constants.request_method).cast(i)
+                        m = enum_def(Of constants.request_method).from(i)
                         Exit For
                     End If
                 Next
