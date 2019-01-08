@@ -99,14 +99,6 @@ Partial Public Class bytes_serializer(Of T)
         Return from_bytes(i, o, False)
     End Function
 
-    Public Shared Operator +(ByVal this As bytes_serializer(Of T)) As bytes_serializer(Of T)
-        If this Is Nothing Then
-            Return [default]
-        Else
-            Return this
-        End If
-    End Operator
-
     Protected Sub New()
     End Sub
 End Class

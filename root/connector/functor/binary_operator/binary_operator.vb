@@ -71,9 +71,8 @@ Public Class binary_operator(Of T, T2, RT)
     Public Shared Operator +(ByVal this As binary_operator(Of T, T2, RT)) As binary_operator(Of T, T2, RT)
         If this Is Nothing Then
             Return [default]
-        Else
-            Return this
         End If
+        Return this
     End Operator
 
     Private Interface add_protector

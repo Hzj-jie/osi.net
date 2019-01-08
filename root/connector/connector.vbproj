@@ -101,6 +101,10 @@
     <Compile Include="functor\string_serializer\string_serializer.object.vb" />
     <Compile Include="functor\string_serializer\string_serializer.vb" />
     <Compile Include="functor\string_serializer\uri_serializer.vb" />
+    <Compile Include="struct\struct.reflector.vb" />
+    <Compile Include="struct\struct.infer.vb" />
+    <Compile Include="struct\struct.variable.vb" />
+    <Compile Include="struct\struct.vb" />
     <Compile Include="ICloneable.vb" />
     <Compile Include="implementation_of\implementation_of.overrides.vb" />
     <Compile Include="implementation_of\implementation_of.vb" />

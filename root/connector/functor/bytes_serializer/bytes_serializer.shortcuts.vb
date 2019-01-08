@@ -116,6 +116,13 @@ Partial Public Class bytes_serializer(Of T)
         End While
         Return True
     End Function
+
+    Public Shared Operator +(ByVal this As bytes_serializer(Of T)) As bytes_serializer(Of T)
+        If this Is Nothing Then
+            Return [default]
+        End If
+        Return this
+    End Operator
 End Class
 
 Public Module _bytes_serializer_shortcuts
