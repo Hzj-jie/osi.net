@@ -104,7 +104,7 @@ Partial Public Class bytes_serializer(Of T)
                                    Return True
                                End Function,
                                Function(ByVal i As MemoryStream, ByRef o As T) As Boolean
-                                   o = alloc(Of T)()
+                                   o = container_operator(Of T, ELEMENT).default.new_or_clear(o)
                                    While True
                                        Dim c As ELEMENT = Nothing
                                        If Not bytes_serializer.consume_from(i, c) Then

@@ -6,6 +6,7 @@ Option Strict On
 Imports System.IO
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 
@@ -36,6 +37,17 @@ Public NotInheritable Class bytes_serializer_test
         b = bytes_serializer.to_bytes(uint64_0)
         Dim d As Decimal = 0
         assertion.is_false(bytes_serializer.from_bytes(b, d))
+    End Sub
+
+    <test>
+    Private Shared Sub from_empty_vector()
+        Dim b() As Byte = Nothing
+        b = bytes_serializer.to_bytes(New vector(Of String)())
+        assertion.is_not_null(b)
+        assertion.array_empty(b)
+        Dim v As vector(Of String) = Nothing
+        assertion.is_true(bytes_serializer.from_bytes(b, v))
+        assertion.vector_empty(v)
     End Sub
 
     Private Sub New()

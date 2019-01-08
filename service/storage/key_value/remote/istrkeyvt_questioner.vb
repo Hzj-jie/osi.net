@@ -1,12 +1,14 @@
 ﻿
-Imports osi.root.constants
-Imports osi.root.lock
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.root.procedure
+Imports osi.root.utils
 Imports osi.service.argument
-Imports osi.service.convertor
 Imports osi.service.commander
 Imports osi.service.device
 Imports osi.service.storage.constants.remote
@@ -26,10 +28,13 @@ Partial Public Class istrkeyvt_questioner
         Me.New(target_questioner.ctor(name, q))
     End Sub
 
-    Public Shared Function ctor(ByVal q As target_questioner,
-                                ByRef o As istrkeyvt_questioner) As Boolean
-        Return Not q Is Nothing AndAlso
-               eva(o, New istrkeyvt_questioner(q))
+    Public Shared Function ctor(ByVal q As target_questioner, ByRef o As istrkeyvt_questioner) As Boolean
+        Return Not q Is Nothing AndAlso eva(o, New istrkeyvt_questioner(q))
+    End Function
+
+    Public Shared Function ctor(ByVal q As target_questioner, ByRef o As istrkeyvt) As Boolean
+        Dim x As istrkeyvt_questioner = Nothing
+        Return ctor(q, x) AndAlso eva(o, x)
     End Function
 
     Public Shared Function ctor(ByVal name As String,
@@ -112,10 +117,9 @@ Partial Public Class istrkeyvt_questioner
                      If c Is Nothing Then
                          Return False
                      End If
-                     If c.has_parameter(Of parameter)(parameter.keys) Then
-                         Return c.parameter(Of parameter, vector(Of String))(parameter.keys, result)
-                     End If
-                     Return eva(result, New vector(Of String)())
+                     Return (c.has_parameter(parameter.keys) AndAlso
+                             c.parameter(parameter.keys, result)) OrElse
+                            eva(result, New vector(Of String)())
                  End Function)
     End Function
 
