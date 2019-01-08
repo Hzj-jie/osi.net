@@ -7,16 +7,13 @@ Imports System.Net
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.utt
 Imports osi.service.dns
 
 Public NotInheritable Class dns_cache_test
-    Inherits repeat_event_comb_case_wrapper
-
-    Public Sub New()
-        MyBase.New(New dns_cache_case(), 1000)
-    End Sub
+    Inherits [case]
 
     Public Overrides Function prepare() As Boolean
         If Not MyBase.prepare() Then
@@ -29,53 +26,42 @@ Public NotInheritable Class dns_cache_test
         Return (+p) >= connectivity.result_t.partial_dns_resolvable
     End Function
 
-    Public Overrides Function reserved_processors() As Int16
-        Return 2
+    Private Shared Function check_cache(ByVal f As Func(Of pointer(Of IPHostEntry), event_comb),
+                                        ByVal exp As IPHostEntry) As Boolean
+        assert(Not f Is Nothing)
+        Dim c As pointer(Of IPHostEntry) = Nothing
+        c.renew()
+        ' Inserting to cache is an asynchronous operation.
+        assertion.is_true(timeslice_sleep_wait_until(
+                Function() async_sync(f(c)),
+                minutes_to_milliseconds(1)))
+        assertion.is_false(c.empty())
+        assertion.equal(exp, +c)
+        Return True
     End Function
 
-    Private NotInheritable Class dns_cache_case
-        Inherits event_comb_case
+    Public Overrides Function run() As Boolean
+        For i As UInt32 = 0 To connectivity.golden_hosts.size() - uint32_1
+            Dim host As String = Nothing
+            host = connectivity.golden_hosts(i)
+            Dim he As pointer(Of IPHostEntry) = Nothing
+            he.renew()
+            If Not async_sync(dns_cache.resolve(host, he)) Then
+                Continue For
+            End If
 
-        Private single_time As Int64
-
-        Public Sub New()
-            single_time = npos
-        End Sub
-
-        Private Shared Function execute() As event_comb
-            Return event_comb.repeat(connectivity.golden_hosts.size(),
-                                     Function(ByVal i As UInt32) As event_comb
-                                         Dim ec As event_comb = Nothing
-                                         Return New event_comb(Function() As Boolean
-                                                                   ec = dns_cache.resolve(connectivity.golden_hosts(i),
-                                                                                          New pointer(Of IPHostEntry)())
-                                                                   Return waitfor(ec) AndAlso
-                                                                          goto_next()
-                                                               End Function,
-                                                              Function() As Boolean
-                                                                  Return ec.end_result() AndAlso
-                                                                         goto_end()
-                                                              End Function)
-                                     End Function)
-        End Function
-
-        Public Overrides Function create() As event_comb
-            Dim n As Int64 = 0
-            Dim ec As event_comb = Nothing
-            Return New event_comb(Function() As Boolean
-                                      n = nowadays.milliseconds()
-                                      ec = execute()
-                                      Return waitfor(ec) AndAlso
-                                             goto_next()
-                                  End Function,
-                                  Function() As Boolean
-                                      If single_time = npos Then
-                                          single_time = nowadays.milliseconds() - n
-                                      Else
-                                          expectation.less_or_equal(nowadays.milliseconds() - n, single_time)
-                                      End If
-                                      Return goto_end()
-                                  End Function)
-        End Function
-    End Class
+            assertion.is_true(check_cache(Function(c) dns_cache.query_host_to_ip_cache(host, c), +he))
+            For j As Int32 = 0 To array_size_i((+he).Aliases()) - 1
+                Dim a As String = Nothing
+                a = (+he).Aliases()(j)
+                assertion.is_true(check_cache(Function(c) dns_cache.query_host_to_ip_cache(a, c), +he))
+            Next
+            For j As Int32 = 0 To array_size_i((+he).AddressList()) - 1
+                Dim ip As String = Nothing
+                ip = Convert.ToString((+he).AddressList()(j))
+                assertion.is_true(check_cache(Function(c) dns_cache.query_ip_to_host_cache(ip, c), +he))
+            Next
+        Next
+        Return True
+    End Function
 End Class
