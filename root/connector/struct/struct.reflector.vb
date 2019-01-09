@@ -26,6 +26,26 @@ Partial Public Class struct(Of T)
                 assert(Not getter Is Nothing)
                 assert(Not setter Is Nothing)
             End Sub
+
+            Public Function variable_of(ByVal i As T, ByRef o As struct.variable) As Boolean
+                Try
+                    o = New struct.variable(type, name, getter(i))
+                    Return True
+                Catch ex As Exception
+                    log_unhandled_exception("definition.variable_of", ex)
+                    Return False
+                End Try
+            End Function
+
+            Public Function set_to(ByVal v As Object, ByVal o As T) As Boolean
+                Try
+                    setter(o, v)
+                    Return True
+                Catch ex As Exception
+                    log_unhandled_exception("definition.set_to", ex)
+                    Return False
+                End Try
+            End Function
         End Class
 
         Public Shared ReadOnly instance As reflector
@@ -42,12 +62,29 @@ Partial Public Class struct(Of T)
             instance = New reflector()
         End Sub
 
-        Public Overrides Function disassemble(ByVal i As T) As struct.variable()
-
+        Public Overrides Function disassemble(ByVal i As T, ByRef o() As struct.variable) As Boolean
+            If array_size(o) <> array_size(definitions) Then
+                ReDim o(array_size_i(definitions) - 1)
+            End If
+            For j As Int32 = 0 To array_size_i(definitions) - 1
+                If Not definitions(j).variable_of(i, o(j)) Then
+                    Return False
+                End If
+            Next
+            Return True
         End Function
 
         Public Overrides Function assemble(ByVal vs() As Object, ByRef o As T) As Boolean
-
+            If array_size(vs) <> array_size(definitions) Then
+                Return False
+            End If
+            o = alloc(Of T)()
+            For i As Int32 = 0 To array_size_i(definitions) - 1
+                If Not definitions(i).set_to(vs(i), o) Then
+                    Return False
+                End If
+            Next
+            Return True
         End Function
 
         Private Sub New()

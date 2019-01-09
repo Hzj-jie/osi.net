@@ -178,6 +178,7 @@
     <Compile Include="string_null_or_whitespace_perf_exe.vb" />
     <Compile Include="string_replace_behavior_test.vb" />
     <Compile Include="strrplc_test.vb" />
+    <Compile Include="struct\struct_reflector_test.vb" />
     <Compile Include="str_bool_test.vb" />
     <Compile Include="template\to_uint32_test.vb" />
     <Compile Include="thread_static_resolver_test.vb" />

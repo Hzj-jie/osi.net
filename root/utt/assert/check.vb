@@ -44,13 +44,13 @@ Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
     Public Shared Function reference_equal(Of T As Class)(ByVal i As T,
                                                           ByVal j As T,
                                                           ByVal ParamArray msg() As Object) As Boolean
-        Return is_true(object_compare(i, j) = 0, msg)
+        Return is_true(object_compare(i, j) = 0, left_right_msg("refernece equal to ", i, j, msg))
     End Function
 
     Public Shared Function not_reference_equal(Of T As Class)(ByVal i As T,
                                                               ByVal j As T,
                                                               ByVal ParamArray msg() As Object) As Boolean
-        Return is_true(object_compare(i, j) <> 0, msg)
+        Return is_true(object_compare(i, j) <> 0, left_right_msg("not reference equal to ", i, j, msg))
     End Function
 
     Public Shared Function equal(Of T)(ByVal i As T,

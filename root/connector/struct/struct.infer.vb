@@ -4,6 +4,10 @@ Option Infer Off
 Option Strict On
 
 Partial Public NotInheritable Class struct
+    Public Shared Function disassemble(Of T)(ByVal i As T, ByRef o() As variable) As Boolean
+        Return struct(Of T).default().disassemble(i, o)
+    End Function
+
     Public Shared Function disassemble(Of T)(ByVal i As T) As variable()
         Return struct(Of T).default().disassemble(i)
     End Function

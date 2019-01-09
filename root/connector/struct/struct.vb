@@ -8,8 +8,14 @@ Partial Public Class struct(Of T)
         Return reflector.instance
     End Function
 
-    Public Overridable Function disassemble(ByVal i As T) As struct.variable()
-        Return [default]().disassemble(i)
+    Public Overridable Function disassemble(ByVal i As T, ByRef o As struct.variable()) As Boolean
+        Return [default]().disassemble(i, o)
+    End Function
+
+    Public Function disassemble(ByVal i As T) As struct.variable()
+        Dim o() As struct.variable = Nothing
+        assert(disassemble(i, o))
+        Return o
     End Function
 
     Public Overridable Function assemble(ByVal vs() As Object, ByRef o As T) As Boolean
