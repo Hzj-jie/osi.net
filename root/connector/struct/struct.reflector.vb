@@ -12,8 +12,8 @@ Partial Public Class struct(Of T)
         Public NotInheritable Class definition
             Public ReadOnly type As Type
             Public ReadOnly name As String
-            Public ReadOnly getter As Func(Of T, Object)
-            Public ReadOnly setter As Action(Of T, Object)
+            Public ReadOnly getter As Func(Of Object, Object)
+            Public ReadOnly setter As Action(Of Object, Object)
 
             Public Sub New(ByVal fs As FieldInfo)
                 assert(Not fs Is Nothing)
@@ -27,7 +27,7 @@ Partial Public Class struct(Of T)
                 assert(Not setter Is Nothing)
             End Sub
 
-            Public Function variable_of(ByVal i As T, ByRef o As struct.variable) As Boolean
+            Public Function variable_of(ByVal i As Object, ByRef o As struct.variable) As Boolean
                 Try
                     o = New struct.variable(type, name, getter(i))
                     Return True
@@ -37,14 +37,38 @@ Partial Public Class struct(Of T)
                 End Try
             End Function
 
-            Public Function set_to(ByVal v As Object, ByVal o As T) As Boolean
-                Try
-                    setter(o, v)
-                    Return True
-                Catch ex As Exception
-                    log_unhandled_exception("definition.set_to", ex)
+            Private Shared Function set_to(Of RT)(ByVal vs() As Object,
+                                                  ByVal definitions() As definition,
+                                                  ByVal o As RT) As Boolean
+                assert(array_size(vs) = array_size(definitions))
+                assert(Not o Is Nothing)
+                For i As Int32 = 0 To array_size_i(definitions) - 1
+                    Try
+                        definitions(i).setter(o, vs(i))
+                    Catch ex As Exception
+                        log_unhandled_exception("definition.set_to", ex)
+                        Return False
+                    End Try
+                Next
+                Return True
+            End Function
+
+            Public Shared Function set_to(ByVal vs() As Object,
+                                          ByVal definitions() As definition,
+                                          ByVal o As T) As Boolean
+                Return set_to(Of T)(vs, definitions, o)
+            End Function
+
+            Public Shared Function value_type_set_to(ByVal vs() As Object,
+                                                     ByVal definitions() As definition,
+                                                     ByRef o As T) As Boolean
+                Dim x As ValueType = Nothing
+                x = direct_cast(Of ValueType)(o)
+                If Not set_to(Of ValueType)(vs, definitions, x) Then
                     Return False
-                End Try
+                End If
+                o = direct_cast(Of T)(x)
+                Return True
             End Function
         End Class
 
@@ -78,13 +102,12 @@ Partial Public Class struct(Of T)
             If array_size(vs) <> array_size(definitions) Then
                 Return False
             End If
+            If type_info(Of T).is_valuetype Then
+                ' Support struct types by using boxing.
+                Return definition.value_type_set_to(vs, definitions, o)
+            End If
             o = alloc(Of T)()
-            For i As Int32 = 0 To array_size_i(definitions) - 1
-                If Not definitions(i).set_to(vs(i), o) Then
-                    Return False
-                End If
-            Next
-            Return True
+            Return definition.set_to(vs, definitions, o)
         End Function
 
         Private Sub New()

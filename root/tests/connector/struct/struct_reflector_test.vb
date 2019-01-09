@@ -48,9 +48,30 @@ Public NotInheritable Class struct_reflector_test
         assertion.reference_equal(e.b, o.b)
     End Sub
 
+    Private Structure s
+        Public a As String
+        Public b As vector(Of Int32)
+        Public c As Boolean
+    End Structure
+
     <test>
     Private Shared Sub struct_case()
+        Dim e As s = Nothing
+        e = New s()
+        e.a = guid_str()
+        e.b = vector.emplace_of(rnd_int(), rnd_int(), rnd_int())
+        e.c = rnd_bool()
+        Dim vs() As struct.variable = Nothing
+        assertion.is_true(struct.disassemble(e, vs))
+        assertion.equal(array_size_i(vs), 3)
+        Dim o As s = Nothing
+        assertion.is_true(struct.assemble(vs, o))
+        assertion.equal(e.a, o.a)
+        assertion.equal(e.b, o.b)
+        assertion.equal(e.c, o.c)
 
+        assertion.reference_equal(e.a, o.a)
+        assertion.reference_equal(e.b, o.b)
     End Sub
 
     <test>
