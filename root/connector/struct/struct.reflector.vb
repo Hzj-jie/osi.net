@@ -10,19 +10,15 @@ Partial Public Class struct(Of T)
         Inherits struct(Of T)
 
         Public NotInheritable Class definition
-            Public ReadOnly type As Type
-            Public ReadOnly name As String
+            Inherits struct.definition
+
             Public ReadOnly getter As Func(Of Object, Object)
             Public ReadOnly setter As Action(Of Object, Object)
 
             Public Sub New(ByVal fs As FieldInfo)
-                assert(Not fs Is Nothing)
-                type = fs.FieldType()
-                name = fs.Name()
+                MyBase.New(assert_not_nothing_return(fs).FieldType(), assert_not_nothing_return(fs).Name())
                 getter = AddressOf fs.GetValue
                 setter = AddressOf fs.SetValue
-                assert(Not type Is Nothing)
-                assert(Not String.IsNullOrEmpty(name))
                 assert(Not getter Is Nothing)
                 assert(Not setter Is Nothing)
             End Sub
@@ -73,25 +69,29 @@ Partial Public Class struct(Of T)
         End Class
 
         Public Shared ReadOnly instance As reflector
-        Private Shared ReadOnly definitions() As definition
+        Private Shared ReadOnly defs() As definition
 
         ' Do not initialize until the default implementation is used.
         Shared Sub New()
             Dim fs() As FieldInfo = Nothing
             fs = GetType(T).GetFields()
-            ReDim definitions(array_size_i(fs) - 1)
+            ReDim defs(array_size_i(fs) - 1)
             For i As Int32 = 0 To array_size_i(fs) - 1
-                definitions(i) = New definition(fs(i))
+                defs(i) = New definition(fs(i))
             Next
             instance = New reflector()
         End Sub
 
+        Public Overrides Function definitions() As struct.definition()
+            Return defs
+        End Function
+
         Public Overrides Function disassemble(ByVal i As T, ByRef o() As struct.variable) As Boolean
-            If array_size(o) <> array_size(definitions) Then
-                ReDim o(array_size_i(definitions) - 1)
+            If array_size(o) <> array_size(defs) Then
+                ReDim o(array_size_i(defs) - 1)
             End If
-            For j As Int32 = 0 To array_size_i(definitions) - 1
-                If Not definitions(j).variable_of(i, o(j)) Then
+            For j As Int32 = 0 To array_size_i(defs) - 1
+                If Not defs(j).variable_of(i, o(j)) Then
                     Return False
                 End If
             Next
@@ -99,15 +99,15 @@ Partial Public Class struct(Of T)
         End Function
 
         Public Overrides Function assemble(ByVal vs() As Object, ByRef o As T) As Boolean
-            If array_size(vs) <> array_size(definitions) Then
+            If array_size(vs) <> array_size(defs) Then
                 Return False
             End If
             If type_info(Of T).is_valuetype Then
                 ' Support struct types by using boxing.
-                Return definition.value_type_set_to(vs, definitions, o)
+                Return definition.value_type_set_to(vs, defs, o)
             End If
             o = alloc(Of T)()
-            Return definition.set_to(vs, definitions, o)
+            Return definition.set_to(vs, defs, o)
         End Function
 
         Private Sub New()

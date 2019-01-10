@@ -8,6 +8,10 @@ Partial Public Class struct(Of T)
         Return reflector.instance
     End Function
 
+    Public Overridable Function definitions() As struct.definition()
+        Return [default]().definitions()
+    End Function
+
     Public Overridable Function disassemble(ByVal i As T, ByRef o As struct.variable()) As Boolean
         Return [default]().disassemble(i, o)
     End Function
