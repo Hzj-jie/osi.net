@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.lock
 
-Public Module _disposer
+Public Module _disposer_ext
     Public Function scoped_action(ByVal start As Action,
                                   ByVal [end] As Action) As disposer
         assert(Not start Is Nothing)
@@ -21,6 +21,7 @@ Public Module _disposer
         Return scoped_action(AddressOf i.inc, AddressOf i.dec)
     End Function
 
+    ' TODO: Remove and use connector.deferring.to
     Public Function defer(ByVal [end] As Action) As disposer
         assert(Not [end] Is Nothing)
         Return New disposer([end])

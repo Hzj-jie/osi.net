@@ -41,6 +41,7 @@ Public NotInheritable Class enum_definition(Of T)
         Return _width
     End Function
 
+    ' TODO: Return the count of enumerations iterated as int (npos for error).
     Public Function foreach(ByVal d As Func(Of T, String, Boolean)) As Boolean
         If d Is Nothing Then
             Return False

@@ -26,9 +26,8 @@ Public Class thread_static2(Of T)
         Dim r As T = Nothing
         If m.get(current_id(), r) Then
             Return r
-        Else
-            Return Nothing
         End If
+        Return Nothing
     End Function
 
     Public Sub [set](ByVal i As T)
@@ -42,8 +41,7 @@ Public Class thread_static2(Of T)
     Public Shared Operator +(ByVal this As thread_static2(Of T)) As T
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return this.get()
         End If
+        Return this.get()
     End Operator
 End Class

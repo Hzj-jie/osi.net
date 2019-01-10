@@ -40,19 +40,33 @@ Public Module _map
         End If
     End Function
 
-    <Extension()> Public Function insert(Of KEY_T, VALUE_T)(ByVal this As map(Of KEY_T, VALUE_T),
-                                                            ByVal that As map(Of KEY_T, VALUE_T)) As Boolean
+    Private Function insert(Of KEY_T, VALUE_T) _
+                           (ByVal this As map(Of KEY_T, VALUE_T),
+                            ByVal that As map(Of KEY_T, VALUE_T),
+                            ByVal f As Func(Of KEY_T,
+                                               VALUE_T,
+                                               pair(Of map(Of KEY_T, VALUE_T).iterator, Boolean))) As Boolean
+        assert(Not f Is Nothing)
         If this Is Nothing OrElse that Is Nothing Then
             Return False
-        Else
-            Dim it As map(Of KEY_T, VALUE_T).iterator = Nothing
-            it = that.begin()
-            While it <> that.end()
-                assert(this.insert((+it).first, (+it).second) <> this.end())
-                it += 1
-            End While
-            Return True
         End If
+        Dim it As map(Of KEY_T, VALUE_T).iterator = Nothing
+        it = that.begin()
+        While it <> that.end()
+            assert(f((+it).first, (+it).second).first <> this.end())
+            it += 1
+        End While
+        Return True
+    End Function
+
+    <Extension()> Public Function insert(Of KEY_T, VALUE_T)(ByVal this As map(Of KEY_T, VALUE_T),
+                                                            ByVal that As map(Of KEY_T, VALUE_T)) As Boolean
+        Return insert(this, that, AddressOf this.insert)
+    End Function
+
+    <Extension()> Public Function emplace(Of KEY_T, VALUE_T)(ByVal this As map(Of KEY_T, VALUE_T),
+                                                             ByVal that As map(Of KEY_T, VALUE_T)) As Boolean
+        Return insert(this, that, AddressOf this.emplace)
     End Function
 
     <Extension()> Public Sub renew(Of KEY_T, VALUE_T)(ByRef this As map(Of KEY_T, VALUE_T))

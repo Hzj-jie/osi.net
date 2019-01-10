@@ -1,20 +1,27 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.utils
 Imports osi.root.utt
 
 Public Module _value_types_cast
     Private Function cast_case(Of T, T2)(ByVal i As T) As Boolean
         Dim j As T2 = Nothing
         Dim k As T = Nothing
-        assertion.is_true(cast(Of T2)(i, j))
-        'if T / T2 are cross casting
-        If cast(Of T)(j, k) Then
-            assertion.equal(i, k)
-        ElseIf comparable(i, j) Then
-            assertion.equal(compare(i, j), 0)
-        Else
-            'the casting is success, but the compare has trouble, such as int has only CompareTo(int)
-        End If
+        Using scoped_atomic_bool(suppress.on("cast(Of T)(Object v)"))
+            assertion.is_true(cast(Of T2)(i, j))
+            'if T / T2 are cross casting
+            If cast(Of T)(j, k) Then
+                assertion.equal(i, k)
+            ElseIf comparable(i, j) Then
+                assertion.equal(compare(i, j), 0)
+            Else
+                'the casting is success, but the compare has trouble, such as int has only CompareTo(int)
+            End If
+        End Using
         Return True
     End Function
 

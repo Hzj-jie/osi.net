@@ -30,7 +30,7 @@ Public Module _object_extensions
     <Extension()> Public Function is_null(Of T)(ByVal i As T) As Boolean
 #If DEBUG Then
         If type_info(Of T).is_valuetype AndAlso
-           typed_once_action(Of joint_type(Of is_null_should_be_logged, T)).should_do() Then
+           typed_once_action(Of joint_type(Of is_null_should_be_logged, T)).first() Then
             raise_error(error_type.performance, "is_null(Of ", type_info(Of T).fullname, ") is not necessary.")
         End If
 #End If

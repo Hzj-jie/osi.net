@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.utils
 Imports osi.root.utt
 
 Public Module _reference_types_cast
@@ -31,7 +32,9 @@ Public Module _reference_types_cast
 
     Private Function cast_case_T_object(Of T As {return_s, Class}, T2 As {return_s, Class})(ByVal i As T) As Boolean
         Dim j As T2 = Nothing
-        assertion.is_true(cast(Of T2)(i, j))
+        Using scoped_atomic_bool(suppress.on("cast(Of T)(Object v)"))
+            assertion.is_true(cast(Of T2)(i, j))
+        End Using
         Return cast_case_verify(i, j)
     End Function
 

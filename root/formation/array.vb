@@ -4,11 +4,36 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.template
 
 Public NotInheritable Class array
+    ' TODO: Rename to [of].
     Public Shared Function [New](Of T)(ByVal v() As T) As array(Of T)
         Return New array(Of T)(v)
+    End Function
+
+    Public Shared Function [of](Of T)(ByVal v() As T) As array(Of T)
+        Return New array(Of T)(v)
+    End Function
+
+    Public Shared Function alloc_of(Of T)(ByVal f As Func(Of T), ByVal size As UInt32) As const_array(Of T)
+        assert(Not f Is Nothing)
+        assert(size > 0)
+        assert(size <= max_int32)
+        Dim r() As T = Nothing
+        ReDim r(CInt(size - uint32_1))
+        For i As Int32 = 0 To CInt(size) - 1
+            r(i) = f()
+        Next
+        Return [of](r)
+    End Function
+
+    Public Shared Function repeat_of(Of T)(ByVal v As T, ByVal size As UInt32) As const_array(Of T)
+        Return alloc_of(Function() As T
+                            Return v
+                        End Function,
+                        size)
     End Function
 
     Private Sub New()

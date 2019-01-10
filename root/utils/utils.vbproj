@@ -103,12 +103,12 @@
     <Compile Include="invoker\valuer.recursive.vb" />
     <Compile Include="invoker\valuer.vb" />
     <Compile Include="ipendpoint.vb" />
+    <Compile Include="lifetime_binder\disposer.vb" />
     <Compile Include="lifetime_binder\global_instance.vb" />
     <Compile Include="manual_gc.vb" />
     <Compile Include="global_init.vb" />
     <Compile Include="invoker\invoker.vb" />
     <Compile Include="lifetime_binder\application_lifetime.vb" />
-    <Compile Include="lifetime_binder\disposer.vb" />
     <Compile Include="mono\chmod.vb" />
     <Compile Include="once_action.vb" />
     <Compile Include="queue_runner\queue_runner_synchronize_invoke.vb" />

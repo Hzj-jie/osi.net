@@ -1,6 +1,7 @@
 ﻿
 Imports osi.root.constants
 
+' TODO: Change to extensions of Process.
 Public Module _exit
     Public Sub suicide(Optional ByVal ext_code As Int32 = npos)
         If on_mono() Then

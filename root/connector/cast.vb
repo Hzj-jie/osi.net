@@ -339,12 +339,13 @@ Public Module _cast
     End Function
 
     Public Function cast(Of T)(ByVal i As Object, ByRef o As T) As Boolean
-        If typed_once_action(Of cast_type_inferrer(Of T)).should_do() Then
+        If Not is_suppressed.by("cast(Of T)(Object v)") AndAlso
+           typed_once_action(Of cast_type_inferrer(Of T)).first() Then
             raise_error(error_type.performance,
-                        "cast(Of ",
-                        GetType(T).Name(),
-                        ")(i) seriously impacts performance. cast(Of T)().from(i) or cast_from(i).to(o) is preferred: ",
-                        backtrace("_cast"))
+                    "cast(Of ",
+                    GetType(T).Name(),
+                    ")(i) seriously impacts performance. cast(Of T)().from(i) or cast_from(i).to(o) is preferred: ",
+                    backtrace("_cast"))
         End If
         Return cast(Of T, Object)(i, o)
     End Function

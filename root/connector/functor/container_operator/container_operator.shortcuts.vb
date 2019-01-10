@@ -4,7 +4,7 @@ Option Infer Off
 Option Strict On
 
 Partial Public Class container_operator(Of CONTAINER, T)
-    Public Function new_or_clear(ByRef i As CONTAINER) As CONTAINER
+    Public Function renew(ByRef i As CONTAINER) As CONTAINER
         If i Is Nothing Then
             i = alloc(Of CONTAINER)()
         Else

@@ -44,6 +44,18 @@ Public Module _transformation
                End Function
     End Function
 
+    Private Function v_d_b(Of T1, T2)(ByVal d As Action(Of T1, T2), ByVal exp As Boolean) As Func(Of T1, T2, Boolean)
+        If d Is Nothing Then
+            Return Function(ByVal i As T1, ByVal j As T2) As Boolean
+                       Return Not exp
+                   End Function
+        End If
+        Return Function(ByVal i As T1, ByVal j As T2) As Boolean
+                   d(i, j)
+                   Return exp
+               End Function
+    End Function
+
     <Extension()> Public Function true_(ByVal d As Action) As Func(Of Boolean)
         Return v_d_b(d, True)
     End Function
@@ -52,11 +64,19 @@ Public Module _transformation
         Return v_d_b(d, True)
     End Function
 
+    <Extension()> Public Function true_(Of T1, T2)(ByVal d As Action(Of T1, T2)) As Func(Of T1, T2, Boolean)
+        Return v_d_b(d, True)
+    End Function
+
     <Extension()> Public Function false_(ByVal d As Action) As Func(Of Boolean)
         Return v_d_b(d, False)
     End Function
 
     <Extension()> Public Function false_(Of T)(ByVal d As Action(Of T)) As Func(Of T, Boolean)
+        Return v_d_b(d, False)
+    End Function
+
+    <Extension()> Public Function false_(Of T1, T2)(ByVal d As Action(Of T1, T2)) As Func(Of T1, T2, Boolean)
         Return v_d_b(d, False)
     End Function
 
