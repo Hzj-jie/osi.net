@@ -95,11 +95,11 @@ Public Module _fake_rnd
         If start > array_size(b) Then
             Return False
         End If
-        If start + len > array_size(b) Then
-            Return False
-        End If
         If len = max_uint32 Then
             len = array_size(b) - start
+        End If
+        If start + len > array_size(b) Then
+            Return False
         End If
         If len = 0 Then
             Return True

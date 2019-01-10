@@ -1,9 +1,12 @@
 ﻿
-Imports osi.root.constants
-Imports osi.root.connector
-Imports osi.root.utils
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Public Class fake_rnd_test
+Imports osi.root.connector
+Imports osi.root.constants
+
+Public NotInheritable Class fake_rnd_test
     Inherits [case]
 
     Private Shared Sub rnd_min_max(ByRef min As UInt32, ByRef max As UInt32)
@@ -14,7 +17,7 @@ Public Class fake_rnd_test
         ElseIf rnd_bool() Then
             max = min
         Else
-            max = min + 1
+            max = min + uint32_1
         End If
         If min > max Then
             swap(min, max)
@@ -40,7 +43,7 @@ Public Class fake_rnd_test
 
     Private Shared Function fake_rnd_en_chars_case() As Boolean
         Dim l As UInt32 = 0
-        l = rnd_int(0, 128 + 1)
+        l = rnd_uint(0, 128 + 1)
         Dim s As String = Nothing
         s = fake_rnd_en_chars(l)
         assertion.equal(strlen(s), l)
@@ -50,7 +53,7 @@ Public Class fake_rnd_test
 
     Private Shared Function fake_next_bytes_case() As Boolean
         Dim l As UInt32 = 0
-        l = rnd_int(0, 128 + 1)
+        l = rnd_uint(0, 128 + 1)
         Dim b() As Byte = Nothing
         b = fake_next_bytes(l)
         assertion.equal(array_size(b), l)
@@ -100,7 +103,7 @@ Public Class fake_rnd_test
         rnd_min_max(min, max, 1024)
         If min = 0 Then
             min = 1
-            max += 1
+            max += uint32_1
         End If
         Dim seed As String = Nothing
         seed = guid_str()
@@ -109,7 +112,7 @@ Public Class fake_rnd_test
             Dim t() As Byte = Nothing
             t = fake_next_bytes(seed, min, max)
             If assertion.more(array_size(t), uint32_0) Then
-                ReDim Preserve r(array_size(r) + array_size(t) - 1)
+                ReDim Preserve r(array_size_i(r) + array_size_i(t) - 1)
                 memcpy(r, array_size(r) - array_size(t), t)
             End If
         Next

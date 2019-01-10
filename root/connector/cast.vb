@@ -67,12 +67,11 @@ Public Module _cast
     End Function
 
     Private Function c_nothing(Of T, IT)(ByVal i As IT, ByRef o As T) As Boolean
-        If i Is Nothing Then
-            o = Nothing
-            Return True
-        Else
+        If Not i Is Nothing Then
             Return False
         End If
+        o = Nothing
+        Return True
     End Function
 
     Private Function change_type(Of T, IT)(ByVal i As IT, ByRef o As T) As Boolean
