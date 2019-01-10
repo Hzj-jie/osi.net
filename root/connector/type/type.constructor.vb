@@ -219,7 +219,7 @@ Public Module _constructor
     End Function
 
     <Extension()> Public Function allocate(Of RT)(ByVal t As Type) As RT
-        Return cast(Of RT)(allocate(t))
+        Return direct_cast(Of RT)(allocate(t))
     End Function
 
     Public Function allocate_instance_of(Of T)(ByVal obj As T) As T
