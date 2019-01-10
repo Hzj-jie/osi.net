@@ -7,8 +7,8 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 
-Partial Public Class case2
-    Private Class random_run_case
+Partial Public NotInheritable Class case2
+    Private NotInheritable Class random_run_case
         Inherits [case]
 
         Private ReadOnly r As random_run(Of Boolean)

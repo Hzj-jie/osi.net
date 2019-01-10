@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.utils
 
-Partial Public Class case2
+Partial Public NotInheritable Class case2
     Private Class [case]
         Inherits utt.case
 

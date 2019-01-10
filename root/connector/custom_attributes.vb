@@ -54,28 +54,26 @@ Public Module _custom_attributes
                                                            Optional ByVal inherit As Boolean = False) As Boolean
         If this Is Nothing Then
             Return False
-        Else
-            Dim objs() As Object = Nothing
-            Try
-                objs = this.GetCustomAttributes(GetType(AT), inherit)
-            Catch ex As Exception
-                raise_error("failed to get attributes of type ",
+        End If
+        Dim objs() As Object = Nothing
+        Try
+            objs = this.GetCustomAttributes(GetType(AT), inherit)
+        Catch ex As Exception
+            raise_error("failed to get attributes of type ",
                             this.full_name(),
                             ", ex ",
                             ex.Message())
-                Return False
-            End Try
+            Return False
+        End Try
 
-            If isemptyarray(objs) Then
-                Return False
-            Else
-                ReDim o(array_size_i(objs) - 1)
-                For i As Int32 = 0 To array_size_i(objs) - 1
-                    assert(cast(objs(i), o(i)))
-                Next
-                Return True
-            End If
+        If isemptyarray(objs) Then
+            Return False
         End If
+        ReDim o(array_size_i(objs) - 1)
+        For i As Int32 = 0 To array_size_i(objs) - 1
+            o(i) = direct_cast(Of AT)(objs(i))
+        Next
+        Return True
     End Function
 
     <Extension()> Public Function custom_attributes(Of AT)(ByVal this As MemberInfo,
