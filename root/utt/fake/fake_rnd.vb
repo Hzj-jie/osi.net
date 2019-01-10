@@ -1,15 +1,18 @@
 ﻿
-Imports osi.root.lock
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utils
+Imports osi.root.constants
+Imports osi.root.lock
 
 Public Module _fake_rnd
     Private ReadOnly str_prefix As String
     Private ReadOnly str_prefix_len As UInt32
     Private ReadOnly int_bit As UInt32
     Private ReadOnly bytes_prefix() As Byte
-    Private ReadOnly bytes_prefix_len As Int32
+    Private ReadOnly bytes_prefix_len As UInt32
     Private ReadOnly port As atomic_int
 
     Sub New()
@@ -43,13 +46,14 @@ Public Module _fake_rnd
     Public Function fake_rnd_en_chars(ByVal l As UInt32) As String
         If l = 0 Then
             Return Nothing
-        ElseIf l < str_prefix_len Then
-            Return strleft(str_prefix, l)
-        ElseIf l = str_prefix_len Then
-            Return str_prefix
-        Else
-            Return strcat(str_prefix, rnd_en_chars(l - str_prefix_len))
         End If
+        If l < str_prefix_len Then
+            Return strleft(str_prefix, l)
+        End If
+        If l = str_prefix_len Then
+            Return str_prefix
+        End If
+        Return strcat(str_prefix, rnd_en_chars(CInt(l - str_prefix_len)))
     End Function
 
     Public Function is_fake_rnd_en_chars(ByVal s As String) As Boolean
@@ -62,16 +66,16 @@ Public Module _fake_rnd
     Public Function fake_next_bytes(ByVal l As UInt32) As Byte()
         If l = 0 Then
             Return Nothing
-        ElseIf l < bytes_prefix_len Then
+        End If
+        If l < bytes_prefix_len Then
             Dim r() As Byte = Nothing
-            ReDim r(l - uint32_1)
+            ReDim r(CInt(l - uint32_1))
             memcpy(r, bytes_prefix, l)
             Return r
-        ElseIf l = bytes_prefix_len Then
-            Return copy(bytes_prefix)
-        Else
+        End If
+        If l > bytes_prefix_len Then
             Dim r() As Byte = Nothing
-            ReDim r(l - uint32_1)
+            ReDim r(CInt(l - uint32_1))
             assert(next_bytes(r))
             memcpy(r, bytes_prefix, bytes_prefix_len)
             If l < (bytes_prefix_len << 1) Then
@@ -81,6 +85,8 @@ Public Module _fake_rnd
             End If
             Return r
         End If
+        assert(l = bytes_prefix_len)
+        Return copy(bytes_prefix)
     End Function
 
     Public Function is_fake_next_bytes(ByVal b() As Byte,
@@ -88,37 +94,39 @@ Public Module _fake_rnd
                                        Optional ByVal len As UInt32 = max_uint32) As Boolean
         If start > array_size(b) Then
             Return False
-        Else
-            If len = max_uint32 Then
-                len = array_size(b) - start
-            ElseIf start + len > array_size(b) Then
-                Return False
-            End If
-            If len = 0 Then
-                Return True
-            ElseIf memcmp(b, start, bytes_prefix, uint32_0, min(len, bytes_prefix_len)) <> 0 Then
-                Return False
-            ElseIf len <= bytes_prefix_len Then
-                Return True
-            ElseIf len < (bytes_prefix_len << 1) Then
-                Return memcmp(b, bytes_prefix_len + start, bytes_prefix, uint32_0, len - bytes_prefix_len) = 0
-            Else
-                Return memcmp(b, start + len - bytes_prefix_len, bytes_prefix, uint32_0, bytes_prefix_len) = 0
-            End If
         End If
+        If start + len > array_size(b) Then
+            Return False
+        End If
+        If len = max_uint32 Then
+            len = array_size(b) - start
+        End If
+        If len = 0 Then
+            Return True
+        End If
+        If memcmp(b, start, bytes_prefix, uint32_0, min(len, bytes_prefix_len)) <> 0 Then
+            Return False
+        End If
+        If len <= bytes_prefix_len Then
+            Return True
+        End If
+        If len < (bytes_prefix_len << 1) Then
+            Return memcmp(b, bytes_prefix_len + start, bytes_prefix, uint32_0, len - bytes_prefix_len) = 0
+        End If
+        Return memcmp(b, start + len - bytes_prefix_len, bytes_prefix, uint32_0, bytes_prefix_len) = 0
     End Function
 
     'return a fake random uint in [min, max) with seed
     Public Function fake_rnd_uint(ByVal min As UInt32, ByVal max As UInt32, ByVal seed As UInt32) As UInt32
         If min > max Then
             Return max
-        ElseIf min = max OrElse min = max - 1 Then
-            Return min
-        Else
-            assert(max > 0)
-            max -= 1
-            Return min + (seed Mod (max - min))
         End If
+        If min = max OrElse min = max - 1 Then
+            Return min
+        End If
+        assert(max > 0)
+        max -= uint32_1
+        Return min + (seed Mod (max - min))
     End Function
 
     Public Function is_fake_rnd_uint(ByVal i As UInt32,
@@ -166,28 +174,28 @@ Public Module _fake_rnd
                                                      ByVal b() As Byte,
                                                      ByVal len_low As UInt32,
                                                      ByVal len_up As UInt32) As Boolean
-        Dim l As Int32 = 0
+        Dim l As UInt32 = 0
         l = array_size(b)
-        Dim sl As Int32 = 0
+        Dim sl As UInt32 = 0
         sl = fake_rnd_uint(len_low, len_up, signing(seed))
         If l = 0 Then
             Return sl = 0
-        ElseIf l Mod sl <> 0 Then
-            Return False
-        Else
-            For i As Int32 = 0 To l - 1 Step sl
-                If Not is_fake_next_bytes(b, i, sl) Then
-                    Return False
-                End If
-            Next
-            Return True
         End If
+        If l Mod sl <> 0 Then
+            Return False
+        End If
+        For i As UInt32 = 0 To l - uint32_1 Step sl
+            If Not is_fake_next_bytes(b, i, sl) Then
+                Return False
+            End If
+        Next
+        Return True
     End Function
 
     Public Function rnd_port() As UInt16
         Dim p As UInt16 = 0
         While True
-            p = cast(Of UInt16)(port.increment() - 1)
+            p = CUShort(port.increment() - 1)
             If local_port_available(p) Then
                 Return p
             End If
