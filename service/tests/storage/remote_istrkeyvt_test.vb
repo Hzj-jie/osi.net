@@ -1,21 +1,21 @@
 ﻿
-Imports System.IO
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net
 Imports osi.root.connector
-Imports osi.root.template
 Imports osi.root.constants
-Imports osi.root.utils
-Imports osi.root.formation
 Imports osi.root.procedure
-Imports osi.service.storage
 Imports osi.service.http
+Imports osi.service.storage
 Imports osi.root.utt
 Imports osi.service.commander
 Imports osi.service.device
 Imports http = osi.service.http
-Imports constants = osi.service.storage.constants
 Imports questioner = osi.service.commander.questioner
 
+' TODO: This test is flaky.
 Public Class remote_istrkeyvt_test
     Inherits istrkeyvt_case
 
