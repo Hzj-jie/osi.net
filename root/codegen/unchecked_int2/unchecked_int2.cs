@@ -123,6 +123,7 @@ public static class Program
             w(string.Format(c, "int"));
             w(string.Format(c, "uint"));
         }
+        Environment.Exit(0);
     }
 }
 
