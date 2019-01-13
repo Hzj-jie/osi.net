@@ -1,8 +1,10 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.root.utils
 
 Partial Public Class syntaxer
     Public Class matching_group
@@ -28,7 +30,7 @@ Partial Public Class syntaxer
             Else
                 Dim op As UInt32 = 0
                 op = p
-                For i As UInt32 = 0 To array_size(ms) - uint32_1
+                For i As Int32 = 0 To array_size_i(ms) - 1
                     assert(Not ms(i) Is Nothing)
                     p = op
                     If ms(i).match(v, p, parent) Then
@@ -40,19 +42,18 @@ Partial Public Class syntaxer
         End Function
 
         Public NotOverridable Overrides Function CompareTo(ByVal other As matching) As Int32
-            Return CompareTo(cast(Of matching_group)(other, False))
+            Return CompareTo(cast(Of matching_group).from(other, False))
         End Function
 
         Public Overloads Function CompareTo(ByVal other As matching_group) As Int32 _
                                            Implements IComparable(Of matching_group).CompareTo
             Dim c As Int32 = 0
             c = object_compare(Me, other)
-            If c = object_compare_undetermined Then
-                assert(Not other Is Nothing)
-                Return memcmp(Me.ms, other.ms)
-            Else
+            If c <> object_compare_undetermined Then
                 Return c
             End If
+            assert(Not other Is Nothing)
+            Return memcmp(Me.ms, other.ms)
         End Function
     End Class
 End Class

@@ -153,7 +153,7 @@ Public ##TYPE## ##FILENAME##(Of FT, ST)
     End Function
 
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
-        Return CompareTo(cast(Of ##FILENAME##(Of FT, ST))(obj, False))
+        Return CompareTo(cast(Of ##FILENAME##(Of FT, ST))().from(obj, False))
     End Function
 
     Public Shared Operator =(ByVal this As ##FILENAME##(Of FT, ST), ByVal that As ##FILENAME##(Of FT, ST)) As Boolean

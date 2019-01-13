@@ -1,6 +1,10 @@
 ﻿
-Imports osi.root.delegates
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.delegates
 Imports osi.root.formation
 
 Public Class weak_event_handler
@@ -32,7 +36,7 @@ Public Class weak_reference_handler(Of T, AT)
     End Sub
 
     Protected Sub New(ByVal v As T, ByVal a As AT)
-        Me.New(v, a, cast(Of [Delegate])(a))
+        Me.New(v, a, direct_cast(Of [Delegate])(a))
     End Sub
 
     Public Function valid() As Boolean Implements idelegate.valid
@@ -54,7 +58,7 @@ Public Class weak_event_handler(Of T)
     End Sub
 
     Public Sub New(ByVal v As T, ByVal a As Action)
-        MyBase.New(v, If(a Is Nothing, Nothing, Sub(x) a()), a)
+        MyBase.New(v, If(a Is Nothing, Nothing, Sub(ByVal x As T) a()), a)
     End Sub
 
     Public Sub run() Implements iaction.run
@@ -74,7 +78,7 @@ Public Class weak_event_handler(Of T1, T2)
     End Sub
 
     Public Sub New(ByVal v As T1, ByVal a As Action(Of T2))
-        MyBase.New(v, If(a Is Nothing, Nothing, Sub(x, y) a(y)), a)
+        MyBase.New(v, If(a Is Nothing, Nothing, Sub(ByVal x As T1, ByVal y As T2) a(y)), a)
     End Sub
 
     Public Sub run(ByVal v2 As T2) Implements iaction(Of T2).run
@@ -94,7 +98,7 @@ Public Class weak_event_handler(Of T1, T2, T3)
     End Sub
 
     Public Sub New(ByVal v As T1, ByVal a As Action(Of T2, T3))
-        MyBase.New(v, If(a Is Nothing, Nothing, Sub(x, y, z) a(y, z)), a)
+        MyBase.New(v, If(a Is Nothing, Nothing, Sub(ByVal x As T1, ByVal y As T2, ByVal z As T3) a(y, z)), a)
     End Sub
 
     Public Sub run(ByVal v2 As T2, ByVal v3 As T3) Implements iaction(Of T2, T3).run
@@ -114,7 +118,9 @@ Public Class weak_event_handler(Of T1, T2, T3, T4)
     End Sub
 
     Public Sub New(ByVal v As T1, ByVal a As Action(Of T2, T3, T4))
-        MyBase.New(v, If(a Is Nothing, Nothing, Sub(w, x, y, z) a(x, y, z)), a)
+        MyBase.New(v, If(a Is Nothing,
+                         Nothing,
+                         Sub(ByVal w As T1, ByVal x As T2, ByVal y As T3, ByVal z As T4) a(x, y, z)), a)
     End Sub
 
     Public Sub run(ByVal v2 As T2, ByVal v3 As T3, ByVal v4 As T4) Implements iaction(Of T2, T3, T4).run

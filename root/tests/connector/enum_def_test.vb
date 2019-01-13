@@ -25,8 +25,8 @@ Public NotInheritable Class enum_def_test
 
     Private Shared Function traversal_case() As Boolean
         assertion.equal(enum_def(Of test_enum).count_i(), test_enum.COUNT + 1)
-        assertion.is_true(enum_def(Of test_enum).foreach(Sub(x As test_enum, y As String)
-                                                             assertion.is_true(test_enum_str(cast(Of Int32)(x)) = y)
+        assertion.is_true(enum_def(Of test_enum).foreach(Sub(ByVal x As test_enum, ByVal y As String)
+                                                             assertion.equal(test_enum_str(cast(Of Int32).from(x)), y)
                                                          End Sub))
 
         assertion.is_false(type_info(Of String).is_enum)

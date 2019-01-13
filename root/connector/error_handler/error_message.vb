@@ -71,10 +71,11 @@ Public Class error_message
         Dim s As StringBuilder = Nothing
         s = New StringBuilder()
         For i As Int32 = 0 To m.Length() - 1
+            If m(i) Is Nothing Then
+                Continue For
+            End If
             Dim a() As Object = Nothing
-            'use TypeOf Is operator to avoid late bind
-            If TypeOf m(i) Is Object() AndAlso
-               cast(Of Object())(m(i), a) Then
+            If direct_cast(m(i), a) Then
                 assert(Not a Is Nothing)
                 If array_size(a) > 0 Then
                     s.Append(P(a))
@@ -83,7 +84,8 @@ Public Class error_message
                 s.Append(Convert.ToString(m(i))) _
                  .Append(character.comma) _
                  .Append(character.blank)
-            ElseIf Not m(i) Is Nothing Then
+            Else
+                assert(Not m(i) Is Nothing)
                 s.Append(Convert.ToString(m(i)))
             End If
         Next

@@ -171,7 +171,7 @@ Public Structure first_const_fast_pair(Of FT, ST)
     End Function
 
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
-        Return CompareTo(cast(Of first_const_fast_pair(Of FT, ST))(obj, False))
+        Return CompareTo(cast(Of first_const_fast_pair(Of FT, ST))().from(obj, False))
     End Function
 
     Public Shared Operator =(ByVal this As first_const_fast_pair(Of FT, ST), ByVal that As first_const_fast_pair(Of FT, ST)) As Boolean

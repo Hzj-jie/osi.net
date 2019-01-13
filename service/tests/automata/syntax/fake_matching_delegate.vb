@@ -1,9 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.service.automata
 Imports osi.service.automata.syntaxer
 
@@ -17,7 +20,7 @@ Namespace syntaxer
             assert(Not f Is Nothing)
             get_type = Function(this As matching_delegate) As UInt32
                            assert(Not this Is Nothing)
-                           Return cast(Of UInt32)(f.GetValue(this))
+                           Return direct_cast(Of UInt32)(f.GetValue(this))
                        End Function
         End Sub
 
@@ -43,18 +46,17 @@ Namespace syntaxer
         End Function
 
         Public NotOverridable Overrides Function CompareTo(ByVal other As matching) As Int32
-            Return CompareTo(cast(Of matching_delegate)(other, False))
+            Return CompareTo(cast(Of matching_delegate).from(other, False))
         End Function
 
         Public Overloads Function CompareTo(ByVal other As matching_delegate) As Int32 _
                                            Implements IComparable(Of matching_delegate).CompareTo
             Dim c As Int32 = 0
             c = object_compare(Me, other)
-            If c = object_compare_undetermined Then
-                Return compare(Me.type, other.type())
-            Else
+            If c <> object_compare_undetermined Then
                 Return c
             End If
+            Return compare(Me.type, other.type())
         End Function
     End Class
 End Namespace

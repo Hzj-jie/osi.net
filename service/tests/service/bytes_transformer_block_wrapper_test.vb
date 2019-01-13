@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
@@ -7,8 +11,8 @@ Imports osi.service.argument
 Imports osi.service.convertor
 Imports osi.service.device
 Imports osi.service.secure
-Imports osi.service.zip
 Imports osi.service.transmitter
+Imports osi.service.zip
 
 Public Class bytes_transformer_block_wrapper_test
     Inherits case_wrapper
@@ -18,8 +22,8 @@ Public Class bytes_transformer_block_wrapper_test
         Dim encryptors() As String = {"xor", "ring", "bypass"}
         Dim r As vector(Of [case]) = Nothing
         r = New vector(Of [case])()
-        For i As Int32 = 0 To array_size(zippers) - 1
-            For j As Int32 = 0 To array_size(encryptors) - 1
+        For i As Int32 = 0 To array_size_i(zippers) - 1
+            For j As Int32 = 0 To array_size_i(encryptors) - 1
                 r.emplace_back(New bytes_transformer_block_wrapper_case(guid_str(), zippers(i), encryptors(j)))
                 r.emplace_back(New bytes_transformer_block_wrapper_case(Nothing, zippers(i), encryptors(j)))
             Next
@@ -75,26 +79,26 @@ Public Class bytes_transformer_block_wrapper_test
         Private Function run_case(ByVal p As bytes_transformer_block_wrapper) As Boolean
             For i As Int32 = 0 To 128 - 1
                 Dim b() As Byte = Nothing
-                b = next_bytes(rnd_int(4096, 16384))
+                b = next_bytes(rnd_uint(4096, 16384))
                 Dim o() As Byte = Nothing
                 Dim offset As Int32 = 0
                 Dim count As Int32 = 0
                 offset = rnd_int(0, 5)
-                count = rnd_int(1, array_size(b) - offset + 1)
+                count = rnd_int(1, array_size_i(b) - offset + 1)
                 assert(offset >= 0)
                 assert(count > 0)
                 assert(count + offset <= array_size(b))
-                assertion.is_true(p.send_transformer().transform_forward(b, offset, count, o))
+                assertion.is_true(p.send_transformer().transform_forward(b, CUInt(offset), CUInt(count), o))
                 Dim o2() As Byte = Nothing
                 assertion.is_true(p.receive_transformer().transform_backward(o, o2))
-                assertion.equal(memcmp(o2, 0, b, offset, count),
-                             0,
-                             "token = ",
-                             token,
-                             ", zipper = ",
-                             zipper,
-                             ", encryptor = ",
-                             encryptor)
+                assertion.equal(memcmp(o2, 0, b, CUInt(offset), CUInt(count)),
+                                0,
+                                "token = ",
+                                token,
+                                ", zipper = ",
+                                zipper,
+                                ", encryptor = ",
+                                encryptor)
 
                 assertion.is_false(p.send_transformer().transform_forward(b, 1, array_size(b), o))
             Next

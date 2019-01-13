@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
@@ -26,13 +30,12 @@ Public Class bytes_transformer_block_wrapper
                                   ByRef o As bytes_transformer_block_wrapper) As Boolean
         If i Is Nothing Then
             Return False
-        Else
-            If Not cast(Of bytes_transformer_block_wrapper)(i, o) Then
-                o = New bytes_transformer_block_wrapper(i)
-            End If
-            assert(Not o Is Nothing)
-            Return o.chain(f, s)
         End If
+        If Not direct_cast(Of bytes_transformer_block_wrapper)(i, o) Then
+            o = New bytes_transformer_block_wrapper(i)
+        End If
+        assert(Not o Is Nothing)
+        Return o.chain(f, s)
     End Function
 
     Public Sub clear()
@@ -64,7 +67,7 @@ Public Class bytes_transformer_block_wrapper
     End Function
 
     Public Function chain(ByVal ParamArray v() As pair(Of bytes_transformer, bytes_transformer)) As Boolean
-        For i As Int32 = 0 To array_size(v) - 1
+        For i As Int32 = 0 To array_size_i(v) - 1
             If Not chain(v(i)) Then
                 Return False
             End If
