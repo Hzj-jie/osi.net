@@ -96,7 +96,7 @@ Namespace fullstack.executor
         End Function
 
         Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
-            Return CompareTo(cast(Of variable)(obj, False))
+            Return CompareTo(cast(Of variable).from(obj, False))
         End Function
 
         Public Function CompareTo(ByVal other As variable) As Int32 Implements IComparable(Of variable).CompareTo
@@ -206,7 +206,7 @@ Namespace fullstack.executor
         <Extension()> Public Function int(ByVal i As variable, ByRef o As def_int) As Boolean
             assert(Not i Is Nothing)
             Return i.is_int() AndAlso
-                   assert(cast(Of def_int)(i.value, o))
+                   assert(cast(Of def_int).from(i.value, o))
         End Function
 
         <Extension()> Public Function int(ByVal i As variable) As def_int
@@ -218,8 +218,8 @@ Namespace fullstack.executor
         <Extension()> Public Function bool(ByVal i As variable, ByRef o As def_bool) As Boolean
             assert(Not i Is Nothing)
             Return i.is_bool() AndAlso
-                   assert(cast_to(Of Boolean)(i.value, o))
-            'cast(Of def_bool)(i.value, o) will trigger require_assert overload
+                   assert(cast(Of def_bool).from(i.value, o))
+            'cast(i.value, o) will trigger require_assert overload
         End Function
 
         <Extension()> Public Function bool(ByVal i As variable) As def_bool
@@ -231,7 +231,7 @@ Namespace fullstack.executor
         <Extension()> Public Function float(ByVal i As variable, ByRef o As def_float) As Boolean
             assert(Not i Is Nothing)
             Return i.is_float() AndAlso
-                   assert(cast(Of def_float)(i.value, o))
+                   assert(cast(Of def_float).from(i.value, o))
         End Function
 
         <Extension()> Public Function float(ByVal i As variable) As def_float
@@ -243,7 +243,7 @@ Namespace fullstack.executor
         <Extension()> Public Function [char](ByVal i As variable, ByRef o As def_char) As Boolean
             assert(Not i Is Nothing)
             Return i.is_char() AndAlso
-                   assert(cast(Of def_char)(i.value, o))
+                   assert(cast(Of def_char).from(i.value, o))
         End Function
 
         <Extension()> Public Function [char](ByVal i As variable) As def_char
@@ -255,7 +255,7 @@ Namespace fullstack.executor
         <Extension()> Public Function [string](ByVal i As variable, ByRef o As def_string) As Boolean
             assert(Not i Is Nothing)
             Return i.is_string() AndAlso
-                   assert(cast(Of def_string)(i.value, o))
+                   assert(cast(Of def_string).from(i.value, o))
         End Function
 
         <Extension()> Public Function [string](ByVal i As variable) As String

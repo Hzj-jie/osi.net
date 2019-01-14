@@ -14,7 +14,7 @@ Public Class accumulatable(Of T, T2, RT)
         j = alloc(Of T2)()
         Try
             Dim k As RT = Nothing
-            accumulatable(Of T, T2, RT).v = cast(Of RT)(implicit_conversions.object_add(i, j), k)
+            accumulatable(Of T, T2, RT).v = cast(Of RT).from(implicit_conversions.object_add(i, j), k)
         Catch ex As Exception
             accumulatable(Of T, T2, RT).ex = ex
             accumulatable(Of T, T2, RT).v = False

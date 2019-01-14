@@ -1,7 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.delegates
-Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.interpreter.fullstack
 Imports osi.service.interpreter.fullstack.executor
@@ -28,12 +31,12 @@ Namespace fullstack.executor
                 assertion.equal(v, New variable(type, i))
                 assertion.not_equal(v, Nothing)
                 Dim j As T = Nothing
-                If cast(Of T)(v.value, j) Then
+                If cast(Of T).from(v.value, j) Then
                     assertion.equal(j, i)
                 End If
                 If Not v.value Is Nothing Then
                     If assertion.is_true(TypeOf v.value Is T) Then
-                        assertion.equal(cast(Of T)(v.value), i)
+                        assertion.equal(cast(Of T).from(v.value), i)
                     End If
                 End If
                 If assertion.is_true(c1(v, j)) Then
