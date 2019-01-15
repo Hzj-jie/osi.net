@@ -20,10 +20,10 @@ Friend NotInheritable Class env_vars
         utt_report_background_worker_status = env_bool(env_keys("utt", "report", "background", "worker", "status"))
         utt_report_memory_status = env_bool(env_keys("utt", "report", "memory", "status")) OrElse
                                    env_bool(env_keys("utt", "report", "memory"))
-        repeat_per_case = utt_round_per_case()
+        repeat_per_case = utt_repeat_per_case()
     End Sub
 
-    Private Shared Function utt_round_per_case() As UInt32
+    Private Shared Function utt_repeat_per_case() As UInt32
         Dim r As Int32 = 0
         If Not env_value(env_keys("utt", "repeat"), r) OrElse r <= 0 Then
             Return uint32_1

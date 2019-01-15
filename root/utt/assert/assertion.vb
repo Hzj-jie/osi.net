@@ -11,6 +11,11 @@ Imports osi.root.template
 Public NotInheritable Class assertion
     Inherits check(Of is_true_func)
 
+    Private Shared ReadOnly backtrace_ignores() As String = {
+        GetType(assertion).FullName(),
+        GetType(check(Of is_true_func)).FullName()
+    }
+
     Private Shared failure As Int64 = 0
 
     Public NotInheritable Class is_true_func
@@ -20,7 +25,12 @@ Public NotInheritable Class assertion
             If v Then
                 Return
             End If
-            utt_raise_error("assertion failure, ", msg, " @ ", backtrace("expect"), ", stacktrace ", callstack())
+            utt_raise_error("assertion failure, ",
+                            msg,
+                            " @ ",
+                            backtrace(backtrace_ignores),
+                            ", stacktrace ",
+                            callstack())
             If Not envs.utt_no_assert Then
                 Interlocked.Increment(failure)
                 assert(atomic.read(failure) < If(envs.mono, 10000, 1000), "too many assertion failures")
