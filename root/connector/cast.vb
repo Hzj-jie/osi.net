@@ -19,6 +19,7 @@ Public Module _cast
         Return cast(Of T, IT)(i)
     End Function
 
+    ' TODO: Remove
     <Extension()> Public Function cast_to(Of T)(ByVal this As Object, ByRef o As T) As Boolean
         Return cast(Of T)(this, o)
     End Function
@@ -27,6 +28,7 @@ Public Module _cast
         Return cast(Of T)(this)
     End Function
 
+    ' TODO: Remove
     <Extension()> Public Function direct_cast_to(Of T, IT)(ByVal i As IT, ByRef o As T) As Boolean
         Return direct_cast(Of T, IT)(i, o)
     End Function
@@ -338,6 +340,7 @@ Public Module _cast
         Return New cast_cache(Of T)(i)
     End Function
 
+    ' TODO: Remove
     Public Function cast(Of T)(ByVal i As Object, ByRef o As T) As Boolean
         If Not is_suppressed.by("cast(Of T)(Object v)") AndAlso
            typed_once_action(Of cast_type_inferrer(Of T)).first() Then
@@ -350,6 +353,7 @@ Public Module _cast
         Return cast(Of T, Object)(i, o)
     End Function
 
+    ' TODO: Remove
     Public Function direct_cast(Of T, IT)(ByVal i As IT, ByRef o As T) As Boolean
         Return c_nothing(i, o) OrElse
                _direct_cast(i, o)
