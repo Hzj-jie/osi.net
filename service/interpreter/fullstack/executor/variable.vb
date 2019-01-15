@@ -218,7 +218,7 @@ Namespace fullstack.executor
         <Extension()> Public Function bool(ByVal i As variable, ByRef o As def_bool) As Boolean
             assert(Not i Is Nothing)
             Return i.is_bool() AndAlso
-                   assert(cast(Of def_bool).from(i.value, o))
+                   assert(cast(Of def_bool).into(i.value, o))
             'cast(i.value, o) will trigger require_assert overload
         End Function
 
