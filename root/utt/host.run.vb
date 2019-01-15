@@ -29,7 +29,13 @@ Partial Friend NotInheritable Class host
 
     Private Shared Function execute_case(ByVal c As case_info) As Boolean
         assert(Not c Is Nothing)
-        Return execute_case(c.case)
+        assert(env_vars.repeat_per_case >= 1)
+        For i As UInt32 = 0 To env_vars.repeat_per_case - uint32_1
+            If Not execute_case(c.case) Then
+                Return False
+            End If
+        Next
+        Return True
     End Function
 
     Private Shared Sub run(ByVal c As case_info, ByVal finished As EventWaitHandle)
@@ -123,19 +129,20 @@ Partial Friend NotInheritable Class host
         assert_running_time()
         Dim rtn As Boolean = False
         For i As UInt32 = uint32_0 To cases.size() - uint32_1
-            If Not cases(i).finished Then
-                Dim c As case_info = Nothing
-                c = cases(i)
-                rtn = True
-                If (c.case.reserved_processors() >= 0 AndAlso
-                    c.case.reserved_processors() + using_threads <= utt_concurrency()) OrElse
-                   using_threads = 0 Then
-                    new_case_started = True
-                    Interlocked.Increment(running_cases)
-                    Interlocked.Add(using_threads, c.case.reserved_processors())
-                    start_thread(Nothing, Sub() run(c, finished))
-                    c.finished = True
-                End If
+            If cases(i).finished Then
+                Continue For
+            End If
+            Dim c As case_info = Nothing
+            c = cases(i)
+            rtn = True
+            If (c.case.reserved_processors() >= 0 AndAlso
+                c.case.reserved_processors() + using_threads <= utt_concurrency()) OrElse
+               using_threads = 0 Then
+                new_case_started = True
+                Interlocked.Increment(running_cases)
+                Interlocked.Add(using_threads, c.case.reserved_processors())
+                start_thread(Nothing, Sub() run(c, finished))
+                c.finished = True
             End If
         Next
 
@@ -166,7 +173,12 @@ Partial Friend NotInheritable Class host
     Public Shared Sub run()
         expected_end_ms = nowadays.milliseconds()
         expected_end_ms +=
-            CLng(minutes_to_milliseconds(36 * 60) / 20 / max(utt_concurrency(), 1) * envs.perf_run_ms * 4)
+            CLng(minutes_to_milliseconds(36 * 60) /
+                 20 /
+                 max(utt_concurrency(), 1) *
+                 envs.perf_run_ms *
+                 4 *
+                 env_vars.repeat_per_case)
         Dim finished As AutoResetEvent = Nothing
         finished = New AutoResetEvent(False)
         While go_through_all(finished)
