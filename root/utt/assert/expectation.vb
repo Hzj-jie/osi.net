@@ -11,11 +11,6 @@ Imports osi.root.template
 Public NotInheritable Class expectation
     Inherits check(Of is_true_func)
 
-    Private Shared ReadOnly backtrace_ignores() As String = {
-        GetType(expectation).FullName(),
-        GetType(check(Of is_true_func)).FullName()
-    }
-
     Private Shared failure As Int64 = 0
 
     Public NotInheritable Class is_true_func
@@ -28,7 +23,7 @@ Public NotInheritable Class expectation
             utt_raise_error("unsatisfied expectation, ",
                             msg,
                             " @ ",
-                            backtrace(backtrace_ignores),
+                            backtrace(Of expectation, check(Of is_true_func))(),
                             ", stacktrace ",
                             callstack())
             Interlocked.Increment(failure)

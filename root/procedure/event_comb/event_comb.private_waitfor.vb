@@ -16,20 +16,18 @@ Partial Public Class event_comb
     Private Function _waitfor(ByVal ec As event_comb, ByVal begin As Func(Of Boolean)) As Boolean
         assert(Not begin Is Nothing)
         assert_in_lock()
-        If ec Is Nothing OrElse
-           object_compare(Me, ec) = 0 Then
+        If ec Is Nothing OrElse object_compare(Me, ec) = 0 Then
             Return False
         End If
         Return ec.reenterable_locked(Function() As Boolean
-                                         If ec.not_started() AndAlso
-                                                ec.cb Is Nothing Then
-                                             inc_pends()
-                                             ec.cb = Me
-                                             Return begin()
-                                         Else
+                                         If ec.started() OrElse Not ec.cb Is Nothing Then
                                              Return False
                                          End If
-                                     End Function)
+                                         inc_pends()
+                                         ec.cb = Me
+                                         Return True
+                                     End Function) AndAlso
+               begin()
     End Function
 
     Private Function _waitfor(ByVal ec As event_comb, ByVal timeout_ms As Int64) As Boolean

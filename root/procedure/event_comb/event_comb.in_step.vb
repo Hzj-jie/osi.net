@@ -33,6 +33,10 @@ Partial Public Class event_comb
         Return in_step(not_started_step)
     End Function
 
+    Public Function started() As Boolean
+        Return Not not_started()
+    End Function
+
     Public Function working() As Boolean
         Return assert(valid_step([step])) AndAlso valid_working_step([step])
     End Function

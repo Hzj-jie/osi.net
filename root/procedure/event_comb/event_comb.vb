@@ -19,9 +19,6 @@ Partial Public Class event_comb
     Public Const end_step As Int32 = max_int32
     Public Const not_started_step As Int32 = -1
     Public Const first_step As Int32 = 0
-    Private Shared ReadOnly backtrace_ignores() As String = {
-        GetType(event_comb).FullName()
-    }
     Public ReadOnly cancellation_control As cancellation_controller
     Private ReadOnly ds() As Func(Of Boolean)
     Private ReadOnly _callstack As String
@@ -109,7 +106,7 @@ Partial Public Class event_comb
                           If event_comb_full_alloc_stack Then
                               Return connector.callstack()
                           End If
-                          Return backtrace(backtrace_ignores)
+                          Return backtrace(Of event_comb)()
                       End If
                       Return "##NOT_TRACE##"
                   End Function())

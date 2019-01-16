@@ -114,4 +114,24 @@ Public Module _callstack
 
         Return "##NO_MATCH##"
     End Function
+
+    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
+    Public Function backtrace(Of ignore)() As String
+        Return backtrace(template_array(Of ignore, String, type_info.full_name_func).vs)
+    End Function
+
+    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
+    Public Function backtrace(Of ignore1, ignore2)() As String
+        Return backtrace(template_array(Of ignore1, ignore2, String, type_info.full_name_func).vs)
+    End Function
+
+    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
+    Public Function backtrace(Of ignore1, ignore2, ignore3)() As String
+        Return backtrace(template_array(Of ignore1, ignore2, ignore3, String, type_info.full_name_func).vs)
+    End Function
+
+    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
+    Public Function backtrace(Of ignore1, ignore2, ignore3, ignore4)() As String
+        Return backtrace(template_array(Of ignore1, ignore2, ignore3, ignore4, String, type_info.full_name_func).vs)
+    End Function
 End Module

@@ -126,10 +126,12 @@
     <Compile Include="resolver\thread_static_resolver.vb" />
     <Compile Include="string_reader.vb" />
     <Compile Include="template\boolean.vb" />
+    <Compile Include="template\template_array.vb" />
     <Compile Include="template\equaler.vb" />
     <Compile Include="time\tick_clock.vb" />
     <Compile Include="time\tick_clock.implementations.vb" />
     <Compile Include="typed_once_action.vb" />
+    <Compile Include="type\type_info.typed_func.vb" />
     <Compile Include="type_functor\type_bytes_serializer.vb" />
     <Compile Include="type_functor\type_comparer.vb" />
     <Compile Include="type_functor\type_equaler.vb" />

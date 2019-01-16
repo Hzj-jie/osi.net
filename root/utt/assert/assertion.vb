@@ -11,11 +11,6 @@ Imports osi.root.template
 Public NotInheritable Class assertion
     Inherits check(Of is_true_func)
 
-    Private Shared ReadOnly backtrace_ignores() As String = {
-        GetType(assertion).FullName(),
-        GetType(check(Of is_true_func)).FullName()
-    }
-
     Private Shared failure As Int64 = 0
 
     Public NotInheritable Class is_true_func
@@ -28,7 +23,7 @@ Public NotInheritable Class assertion
             utt_raise_error("assertion failure, ",
                             msg,
                             " @ ",
-                            backtrace(backtrace_ignores),
+                            backtrace(Of assertion, check(Of is_true_func))(),
                             ", stacktrace ",
                             callstack())
             If Not envs.utt_no_assert Then

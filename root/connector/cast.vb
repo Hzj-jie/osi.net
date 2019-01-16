@@ -348,7 +348,7 @@ Public Module _cast
                     "cast(Of ",
                     GetType(T).Name(),
                     ")(i) seriously impacts performance. cast(Of T)().from(i) or cast_from(i).to(o) is preferred: ",
-                    backtrace("_cast"))
+                    backtrace(GetType(_cast).FullName()))
         End If
         Return cast(Of T, Object)(i, o)
     End Function
