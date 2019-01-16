@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.delegates
 
 Public MustInherit Class __do(Of T)
@@ -7,17 +11,15 @@ Public MustInherit Class __do(Of T)
     Public Shared Operator +(ByVal this As __do(Of T)) As T
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return this.at()
         End If
+        Return this.at()
     End Operator
 
     Public Shared Operator -(ByVal this As __do(Of T)) As Func(Of T)
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return AddressOf this.at
         End If
+        Return AddressOf this.at
     End Operator
 
     Public Shared Widening Operator CType(ByVal this As __do(Of T)) As T
@@ -37,17 +39,15 @@ Public MustInherit Class __do(Of T, RT)
     Public Shared Operator +(ByVal this As __do(Of T, RT), ByVal k As T) As RT
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return this(k)
         End If
+        Return this(k)
     End Operator
 
     Public Shared Operator -(ByVal this As __do(Of T, RT)) As _do(Of T, RT)
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return AddressOf this.at
         End If
+        Return AddressOf this.at
     End Operator
 End Class
 
@@ -63,9 +63,8 @@ Public MustInherit Class __do(Of T1, T2, RT)
     Public Shared Operator +(ByVal this As __do(Of T1, T2, RT)) As _do(Of T1, T2, RT)
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return AddressOf this.at
         End If
+        Return AddressOf this.at
     End Operator
 
     Public Shared Operator -(ByVal this As __do(Of T1, T2, RT)) As _do(Of T1, T2, RT)
@@ -85,9 +84,8 @@ Public MustInherit Class __do(Of T1, T2, T3, RT)
     Public Shared Operator +(ByVal this As __do(Of T1, T2, T3, RT)) As _do(Of T1, T2, T3, RT)
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return AddressOf this.at
         End If
+        Return AddressOf this.at
     End Operator
 
     Public Shared Operator -(ByVal this As __do(Of T1, T2, T3, RT)) As _do(Of T1, T2, T3, RT)
@@ -107,9 +105,8 @@ Public MustInherit Class __do(Of T1, T2, T3, T4, RT)
     Public Shared Operator +(ByVal this As __do(Of T1, T2, T3, T4, RT)) As _do(Of T1, T2, T3, T4, RT)
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return AddressOf this.at
         End If
+        Return AddressOf this.at
     End Operator
 
     Public Shared Operator -(ByVal this As __do(Of T1, T2, T3, T4, RT)) As _do(Of T1, T2, T3, T4, RT)
@@ -127,9 +124,8 @@ Public MustInherit Class __void
     Public Shared Operator +(ByVal this As __void) As Action
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return AddressOf this.at
         End If
+        Return AddressOf this.at
     End Operator
 End Class
 
@@ -150,17 +146,15 @@ Public MustInherit Class __void(Of T)
     Public Shared Operator +(ByVal this As __void(Of T), ByVal i As T) As Byte
         If this Is Nothing Then
             Return 0
-        Else
-            Return this(i)
         End If
+        Return this(i)
     End Operator
 
     Public Shared Operator -(ByVal this As __void(Of T)) As void(Of T)
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return AddressOf this.at
         End If
+        Return AddressOf this.at
     End Operator
 End Class
 
@@ -181,9 +175,8 @@ Public MustInherit Class __void(Of T1, T2)
     Public Shared Operator +(ByVal this As __void(Of T1, T2)) As void(Of T1, T2)
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return AddressOf this.at
         End If
+        Return AddressOf this.at
     End Operator
 
     Public Shared Operator -(ByVal this As __void(Of T1, T2)) As void(Of T1, T2)
@@ -208,9 +201,8 @@ Public MustInherit Class __void(Of T1, T2, T3)
     Public Shared Operator +(ByVal this As __void(Of T1, T2, T3)) As void(Of T1, T2, T3)
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return AddressOf this.at
         End If
+        Return AddressOf this.at
     End Operator
 
     Public Shared Operator -(ByVal this As __void(Of T1, T2, T3)) As void(Of T1, T2, T3)

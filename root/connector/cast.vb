@@ -3,7 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-' TODO: Move to type_info.
+' TODO: Maybe move to type_info.
 #Const cached_cast = True
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
@@ -11,10 +11,6 @@ Imports osi.root.constants
 Imports osi.root.delegates
 
 Public Module _cast
-    Private ReadOnly backtrace_ignores() As String = {
-        GetType(_cast).FullName()
-    }
-
     <Extension()> Public Function cast_to(Of T, IT)(ByVal i As IT, ByRef o As T) As Boolean
         Return cast(Of T, IT)(i, o)
     End Function
@@ -352,7 +348,7 @@ Public Module _cast
                     "cast(Of ",
                     GetType(T).Name(),
                     ")(i) seriously impacts performance. cast(Of T)().from(i) or cast_from(i).to(o) is preferred: ",
-                    backtrace(backtrace_ignores))
+                    backtrace("_cast"))
         End If
         Return cast(Of T, Object)(i, o)
     End Function
