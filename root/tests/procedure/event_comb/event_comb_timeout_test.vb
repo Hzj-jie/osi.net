@@ -108,6 +108,16 @@ Public Class event_comb_timeout_test
             Return True
         End Function
 
+        Public Overrides Function prepare() As Boolean
+            If Not MyBase.prepare() Then
+                Return False
+            End If
+            counter.set(0)
+            resumed.set(0)
+            run_times.set(0)
+            Return True
+        End Function
+
         Public Overrides Function run() As Boolean
             run_times.increment()
             Return async_sync_test() AndAlso
