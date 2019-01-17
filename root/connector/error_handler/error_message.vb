@@ -6,7 +6,7 @@ Option Strict On
 Imports System.Text
 Imports osi.root.constants
 
-Public Class error_message
+Public NotInheritable Class error_message
     Public Const error_type_count As Int64 = error_type.last - error_type.first + 1
     Public Const error_type_char As String = "_aceiswuptod_"
     Public Shared ReadOnly error_type_defination() As String = {"_",
@@ -35,7 +35,7 @@ Public Class error_message
         End If
     End Sub
 
-    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)> _
+    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
     Public Shared Function P(ByVal err_type As error_type,
                              ByVal err_type_char As Char,
                              ByVal errmsg As String,
@@ -70,26 +70,60 @@ Public Class error_message
         End If
         Dim s As StringBuilder = Nothing
         s = New StringBuilder()
-        For i As Int32 = 0 To m.Length() - 1
-            If m(i) Is Nothing Then
-                Continue For
-            End If
-            Dim a() As Object = Nothing
-            If direct_cast(m(i), a) Then
-                assert(Not a Is Nothing)
-                If array_size(a) > 0 Then
-                    s.Append(P(a))
-                End If
-            ElseIf TypeOf m(i) Is error_type Then
-                s.Append(Convert.ToString(m(i))) _
-                 .Append(character.comma) _
-                 .Append(character.blank)
-            Else
-                assert(Not m(i) Is Nothing)
-                s.Append(Convert.ToString(m(i)))
-            End If
-        Next
+        process_obj_array(m, s)
         Return Convert.ToString(s)
+    End Function
+
+    Private Shared Sub process_obj_array(ByVal m() As Object, ByVal s As StringBuilder)
+        For i As Int32 = 0 To array_size_i(m) - 1
+            process_obj(m(i), s)
+        Next
+    End Sub
+
+    Private Shared Sub process_obj(ByVal i As Object, ByVal s As StringBuilder)
+        If i Is Nothing Then
+            Return
+        End If
+        If process_as_obj_array(i, s) Then
+            Return
+        End If
+        If process_as_error_type(i, s) Then
+            Return
+        End If
+        If process_as_func_obj(i, s) Then
+            Return
+        End If
+        s.Append(Convert.ToString(i))
+    End Sub
+
+    Private Shared Function process_as_obj_array(ByVal i As Object, ByVal s As StringBuilder) As Boolean
+        Dim a() As Object = Nothing
+        If Not direct_cast(i, a) Then
+            Return False
+        End If
+        assert(Not a Is Nothing)
+        process_obj_array(a, s)
+        Return True
+    End Function
+
+    Private Shared Function process_as_error_type(ByVal i As Object, ByVal s As StringBuilder) As Boolean
+        If Not TypeOf i Is error_type Then
+            Return False
+        End If
+        s.Append(Convert.ToString(i)) _
+         .Append(character.comma) _
+         .Append(character.blank)
+        Return True
+    End Function
+
+    Private Shared Function process_as_func_obj(ByVal i As Object, ByVal s As StringBuilder) As Boolean
+        Dim f As Func(Of Object) = Nothing
+        If Not direct_cast(i, f) Then
+            Return False
+        End If
+        assert(Not f Is Nothing)
+        process_obj(f(), s)
+        Return True
     End Function
 
     Private Sub New()

@@ -9,12 +9,11 @@ Imports osi.root.constants
 Partial Public Class event_comb
     Private Function _goto(ByVal [step] As Int32) As Boolean
         assert_in_lock()
-        If debug_assert(valid_step([step])) Then
-            Me.step = [step]
-            Return True
-        Else
+        If Not debug_assert_valid_step([step]) Then
             Return False
         End If
+        Me.step = [step]
+        Return True
     End Function
 
     Private Sub assert_goto(ByVal [step] As Int32)
@@ -52,10 +51,12 @@ Partial Public Class event_comb
     End Sub
 
     Private Function _goto_prev() As Boolean
+        assert_in_lock()
         Return _goto([step] - 1)
     End Function
 
     Private Function _goto_next() As Boolean
+        assert_in_lock()
         Return _goto([step] + 1)
     End Function
 

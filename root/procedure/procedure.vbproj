@@ -68,6 +68,7 @@
     <Compile Include="callback\callback_manager.vb" />
     <Compile Include="event_comb\event_comb.goto.vb" />
     <Compile Include="event_comb\event_comb.lifetime.vb" />
+    <Compile Include="event_comb\event_comb.lock.vb" />
     <Compile Include="event_comb\event_comb.predefined.vb" />
     <Compile Include="event_comb\event_comb.private_waitfor.vb" />
     <Compile Include="event_comb\event_comb.alloc_trace.vb" />

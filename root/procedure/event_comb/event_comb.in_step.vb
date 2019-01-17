@@ -15,8 +15,18 @@ Partial Public Class event_comb
         Return valid_working_step(i) OrElse i = end_step OrElse i = not_started_step
     End Function
 
+    Private Function assert_step_is_valid() As Boolean
+        assert_in_lock()
+        Return assert(valid_step([step]), "event ", callstack(), ":", [step])
+    End Function
+
+    Private Function debug_assert_valid_step(ByVal i As Int32) As Boolean
+        Return debug_assert(valid_working_step(i) OrElse i = end_step OrElse i = not_started_step)
+    End Function
+
     Private Function in_step(ByVal exp As Int32) As Boolean
-        Return assert(valid_step([step]), "event ", callstack(), ":", [step]) AndAlso ([step] = exp)
+        assert_in_lock()
+        Return assert_step_is_valid() AndAlso ([step] = exp)
     End Function
 
     'the step is in end_step, but may still have pendings
@@ -29,8 +39,14 @@ Partial Public Class event_comb
         Return in_end_step() AndAlso not_pending()
     End Function
 
+    Private Function debug_locked_callback_resume_ready() As Boolean
+        Return debug_reenterable_locked(AddressOf callback_resume_ready)
+    End Function
+
     Public Function not_started() As Boolean
-        Return in_step(not_started_step)
+        Return debug_reenterable_locked(Function() As Boolean
+                                            Return in_step(not_started_step)
+                                        End Function)
     End Function
 
     Public Function started() As Boolean
@@ -38,12 +54,15 @@ Partial Public Class event_comb
     End Function
 
     Public Function working() As Boolean
-        Return assert(valid_step([step])) AndAlso valid_working_step([step])
+        Return debug_reenterable_locked(Function() As Boolean
+                                            Return assert_step_is_valid() AndAlso
+                                                   valid_working_step([step])
+                                        End Function)
     End Function
 
     'no pendings, but the resume process has not been started
     Public Function ending() As Boolean
-        Return callback_resume_ready() AndAlso Not [end]()
+        Return debug_locked_callback_resume_ready() AndAlso Not [end]()
     End Function
 
     'no pendings, the resume process has been finished,
@@ -53,7 +72,7 @@ Partial Public Class event_comb
     'but for the event_comb waiting for this event_comb, it's surely safe.
     Public Function [end]() As Boolean
         Return end_ticks() <> npos AndAlso
-               assert(callback_resume_ready()) AndAlso
-               assert(end_result_raw().notunknown())
+               assert(end_result_raw().notunknown()) AndAlso
+               assert(debug_locked_callback_resume_ready())
     End Function
 End Class

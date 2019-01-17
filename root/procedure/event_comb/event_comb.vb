@@ -3,12 +3,10 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports System.DateTime
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.formation
-Imports osi.root.lock
 #If DEBUG Then
 Imports lock_t = osi.root.lock.monitorlock
 #Else
@@ -47,31 +45,6 @@ Partial Public Class event_comb
         End If
     End Sub
 
-    Protected Sub reenterable_locked(ByVal d As Action)
-        assert(Not d Is Nothing)
-        If lock_trace AndAlso event_comb_trace Then
-            Dim n As Int64 = 0
-            n = Now().milliseconds()
-            _l.reenterable_locked(d)
-            If Now().milliseconds() - n > half_timeslice_length_ms Then
-                raise_error(error_type.performance,
-                            callstack(), ":", [step],
-                            " is using ", Now().milliseconds() - n, "ms to wait for another thread to finish")
-            End If
-        Else
-            _l.reenterable_locked(d)
-        End If
-    End Sub
-
-    Private Function reenterable_locked(ByVal f As Func(Of Boolean)) As Boolean
-        assert(Not f Is Nothing)
-        Dim r As Boolean = False
-        reenterable_locked(Sub()
-                               r = f()
-                           End Sub)
-        Return r
-    End Function
-
     Private Sub New(ByVal d() As Func(Of Boolean), ByVal callstack As String)
         assert(Not callstack Is Nothing)
         _l = New lock_t(Me)
@@ -83,16 +56,12 @@ Partial Public Class event_comb
         _end_result = ternary.unknown
         cb = Nothing
         'following functions are all assert_in_lock protected
-#If DEBUG Then
-        reenterable_locked(Sub()
-#End If
-                               assert_goto_not_started()
-                               clear_pends()
-                               begin_ticks() = npos
-                               end_ticks() = npos
-#If DEBUG Then
-                           End Sub)
-#End If
+        debug_reenterable_locked(Sub()
+                                     assert_goto_not_started()
+                                     clear_pends()
+                                     begin_ticks() = npos
+                                     end_ticks() = npos
+                                 End Sub)
     End Sub
 
 #If DEBUG Then
@@ -142,12 +111,6 @@ Partial Public Class event_comb
         If Not v Is Nothing Then
             AddHandler suspending, v
         End If
-    End Sub
-
-    Private Sub assert_in_lock()
-#If DEBUG Then
-        assert(_l.held_in_thread())
-#End If
     End Sub
 
     Protected Sub inc_pends()

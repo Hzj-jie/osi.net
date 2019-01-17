@@ -5,7 +5,7 @@ Option Strict On
 
 Imports osi.root.constants
 
-Public Class error_event
+Public NotInheritable Class error_event
     ' additional_jump is not accurate.
     Public Shared Event R1(ByVal err_type As error_type,
                            ByVal err_type_char As Char,
@@ -118,5 +118,8 @@ Public Class error_event
                 RaiseEvent R6(err_type, err_type_char, full_msg)
             End SyncLock
         End If
+    End Sub
+
+    Private Sub New()
     End Sub
 End Class
