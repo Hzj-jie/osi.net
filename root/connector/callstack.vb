@@ -82,6 +82,21 @@ Public Module _callstack
 #End If
     End Function
 
+    Private Function should_ignore(ByVal m As MethodBase, ByVal ignore As String) As Boolean
+        Return strcontains(m.Module().Name(), ignore, False) OrElse
+               strcontains(m.DeclaringType().FullName(), ignore, False) OrElse
+               strcontains(m.Name(), ignore, False)
+    End Function
+
+    Private Function should_ignore(ByVal m As MethodBase, ByVal ignores() As String) As Boolean
+        For i As Int32 = 0 To array_size_i(ignores) - 1
+            If should_ignore(m, ignores(i)) Then
+                Return True
+            End If
+        Next
+        Return False
+    End Function
+
     <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
     Public Function backtrace(ByVal ParamArray ignores() As String) As String
         Dim i As Int32 = 0
@@ -99,17 +114,11 @@ Public Module _callstack
             If m Is Nothing Then
                 Exit While
             End If
-            Dim j As Int32 = 0
-            For j = 0 To array_size_i(ignores) - 1
-                If strcontains(m.Module().Name(), ignores(j), False) OrElse
-                   strcontains(m.DeclaringType().FullName(), ignores(j), False) OrElse
-                   strcontains(m.Name(), ignores(j), False) Then
-                    Exit For
-                End If
-            Next
-            If j = array_size(ignores) Then
-                Return build_stack_trace(s)
+            If should_ignore(m, GetType(_callstack).FullName()) OrElse
+               should_ignore(m, ignores) Then
+                Continue While
             End If
+            Return build_stack_trace(s)
         End While
 
         Return "##NO_MATCH##"
