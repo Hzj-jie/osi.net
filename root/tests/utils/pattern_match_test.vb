@@ -8,7 +8,7 @@ Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.root.utt
 
-Public Class pattern_match_test
+Public NotInheritable Class pattern_match_test
     Inherits [case]
 
     Private Const fit_true As Byte = pattern_match.fit_true
@@ -51,6 +51,8 @@ Public Class pattern_match_test
         fit_pattern_case("-abc", "abc", fit_false)
         fit_pattern_case("-*ab", "bbbbbab", fit_false)
         fit_pattern_case("-***", "lajdsljaldsjf", fit_false)
+
+        fit_pattern_case("osi.tests.root.lock.atomic_test", "osi.tests.root.lock.*lock*", fit_undetermind)
 
         match_pattern_cases = New vector(Of pair(Of pair(Of String, String), Boolean))()
         match_pattern_case("", "", True)

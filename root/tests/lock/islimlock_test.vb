@@ -56,11 +56,19 @@ Public Class islimlock_test(Of T As {islimlock, Structure})
         Public NotOverridable Overrides Function run() As Boolean
             run_times.increment()
             before_wait(l)
-            l.wait()
-            after_wait(l)
-            i += 1
-            before_release(l)
-            l.release()
+            If rnd_bool() Then
+                l.wait()
+                after_wait(l)
+                i += 1
+                before_release(l)
+                l.release()
+            Else
+                l.locked(Sub()
+                             after_wait(l)
+                             i += 1
+                             before_release(l)
+                         End Sub)
+            End If
             after_release(l)
             Return True
         End Function

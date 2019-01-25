@@ -48,7 +48,6 @@ Public NotInheritable Class create_if_nothing_test
                 ' This operation does not require atomic, the s should be either default_s or i.s
                 If s = default_s Then
                     atomic.eva(s, i.s)
-                    s = i.s
                 End If
                 assertion.equal(s, i.s)
                 assertion.equal(Interlocked.Increment(create_suc), 1)

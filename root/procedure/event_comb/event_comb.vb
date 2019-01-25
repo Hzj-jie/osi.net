@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+#Const USE_LOCK_T = False
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
@@ -28,7 +29,9 @@ Partial Public Class event_comb
     Private pends As UInt32
     Private _begin_ticks As Int64
     Private _end_ticks As Int64
+#If USE_LOCK_T Then
     Private _l As lock_t
+#End If
 
     Public Shared Property current() As event_comb
         Get
@@ -47,7 +50,9 @@ Partial Public Class event_comb
 
     Private Sub New(ByVal d() As Func(Of Boolean), ByVal callstack As String)
         assert(Not callstack Is Nothing)
+#If USE_LOCK_T Then
         _l = New lock_t(Me)
+#End If
         ds = d
         ds_len = array_size(ds)
         assert(ds_len > 0)
