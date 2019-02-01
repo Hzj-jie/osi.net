@@ -8,9 +8,15 @@ Imports System.DateTime
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
+#If USE_LOCK_T Then
 Imports osi.root.lock
+#End If
 
 Partial Public Class event_comb
+#If Not USE_LOCK_T AndAlso DEBUG Then
+    Private lock_thread_id As Int32 = npos
+#End If
+
     Private Sub debug_reenterable_locked(ByVal f As Action)
 #If Not USE_LOCK_T OrElse DEBUG Then
         reenterable_locked(f)
@@ -30,12 +36,20 @@ Partial Public Class event_comb
     Private Sub assert_in_lock()
 #If USE_LOCK_T AndAlso DEBUG Then
         assert(_l.held_in_thread())
+#ElseIf DEBUG Then
+        assert(lock_thread_id = current_thread_id())
 #End If
     End Sub
 
     Private Sub _reenterable_locked(ByVal d As Action)
 #If USE_LOCK_T Then
         _l.reenterable_locked(d)
+#ElseIf DEBUG Then
+        SyncLock Me
+            lock_thread_id = current_thread_id()
+            d()
+            lock_thread_id = npos
+        End SyncLock
 #Else
         SyncLock Me
             d()

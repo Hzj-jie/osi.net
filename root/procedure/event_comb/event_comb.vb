@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 #Const USE_LOCK_T = False
+#Const LOCK_ME = False
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
@@ -50,8 +51,10 @@ Partial Public Class event_comb
 
     Private Sub New(ByVal d() As Func(Of Boolean), ByVal callstack As String)
         assert(Not callstack Is Nothing)
-#If USE_LOCK_T Then
+#If USE_LOCK_T AndAlso LOCK_ME Then
         _l = New lock_t(Me)
+#ElseIf USE_LOCK_T Then
+        _l = New lock_t()
 #End If
         ds = d
         ds_len = array_size(ds)
