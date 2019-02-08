@@ -161,7 +161,7 @@ Partial Public Class event_comb
         End Set
     End Property
 
-    Private Sub _do()
+    Private Sub __do()
         assert_in_lock()
         assert(not_pending())
 
@@ -219,6 +219,20 @@ Partial Public Class event_comb
         ElseIf event_comb_trace Then
             raise_error("event ", callstack(), ":<step>", [step], " is now pending")
         End If
+    End Sub
+
+#If DEBUG Then
+    Private in_do As Boolean = False
+#End If
+    Private Sub _do()
+#If DEBUG Then
+        assert(Not in_do)
+        in_do = True
+        __do()
+        in_do = False
+#Else
+        __do()
+#End If
     End Sub
 
     Private Shared Sub [resume](ByVal cb As event_comb)

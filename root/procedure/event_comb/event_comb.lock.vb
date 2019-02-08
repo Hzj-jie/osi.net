@@ -46,9 +46,16 @@ Partial Public Class event_comb
         _l.reenterable_locked(d)
 #ElseIf DEBUG Then
         SyncLock Me
-            lock_thread_id = current_thread_id()
-            d()
-            lock_thread_id = npos
+            If lock_thread_id = npos Then
+                lock_thread_id = current_thread_id()
+                assert(lock_thread_id <> npos)
+                d()
+                assert(lock_thread_id = current_thread_id())
+                lock_thread_id = npos
+            Else
+                assert(lock_thread_id = current_thread_id())
+                d()
+            End If
         End SyncLock
 #Else
         SyncLock Me
