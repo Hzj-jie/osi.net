@@ -64,6 +64,7 @@ Partial Public Class event_comb
 #End If
     End Sub
 
+    ' TODO: Remove reenterable_locked, use locked. Also remove the queue_job() in event_comb.lifetime: trigger_timeout.
     Private Sub reenterable_locked(ByVal d As Action)
         assert(Not d Is Nothing)
         If lock_trace AndAlso event_comb_trace Then

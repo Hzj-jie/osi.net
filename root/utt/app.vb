@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.DateTime
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.constants.utt
 Imports osi.root.envs
 Imports osi.root.procedure
@@ -43,7 +44,7 @@ Public Module _app
         End If
         assertion.equal(counter.instance_count_counter(Of promise).count(), 0)
         'counter.backend_writer
-        assertion.less_or_equal(queue_runner.size(), 1)
+        assertion.less_or_equal(queue_runner.size(), uint32_1)
         assertion.is_true(suppress.init_state())
         assertion.is_true(using_default_ithreadpool())
         ' A .Net framework uses ~ 15 threads, and since ManagedThreadPool was involved in concurrent_runner, it may have

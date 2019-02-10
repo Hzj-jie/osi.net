@@ -100,25 +100,24 @@ Partial Public NotInheritable Class queue_runner
         Return current_thread
     End Function
 
-    Public Shared Function push(ByVal d As Func(Of Boolean)) As Boolean
+    Private Shared Function push(ByVal p As Action(Of Func(Of Boolean)), ByVal d As Func(Of Boolean)) As Boolean
+        assert(Not p Is Nothing)
         If d Is Nothing Then
             Return False
-        Else
-            check_push(d)
-            Return True
         End If
+        p(d)
+        Return True
+    End Function
+
+    Public Shared Function push(ByVal d As Func(Of Boolean)) As Boolean
+        Return push(AddressOf check_push, d)
     End Function
 
     Public Shared Function push_only(ByVal d As Func(Of Boolean)) As Boolean
-        If d Is Nothing Then
-            Return False
-        Else
-            q.emplace(d)
-            Return True
-        End If
+        Return push(AddressOf q.emplace, d)
     End Function
 
-    Public Shared Function size() As Int64
+    Public Shared Function size() As UInt32
         Return q.size()
     End Function
 

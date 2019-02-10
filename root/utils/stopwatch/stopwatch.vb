@@ -13,21 +13,45 @@ Partial Public Class stopwatch
         DELAY = counter.register_average_and_last_average("STOPWATCH_DELAY_MS")
     End Sub
 
-    Public Shared Function push(ByVal e As [event]) As Boolean
+    Private Shared Function push(ByVal p As Func(Of Func(Of Boolean), Boolean), ByVal e As [event]) As Boolean
+        assert(Not p Is Nothing)
         If e Is Nothing OrElse e.canceled() Then
             Return False
         End If
-        Return queue_runner.push(AddressOf e.do)
+        Return p(AddressOf e.do)
     End Function
 
-    Public Shared Function push(ByVal waitms As UInt32, ByVal d As Action) As [event]
+    Public Shared Function push(ByVal e As [event]) As Boolean
+        Return push(AddressOf queue_runner.push, e)
+    End Function
+
+    Public Shared Function push_only(ByVal e As [event]) As Boolean
+        Return push(AddressOf queue_runner.push_only, e)
+    End Function
+
+    Private Shared Function push(ByVal p As Func(Of [event], Boolean),
+                                 ByVal waitms As UInt32,
+                                 ByVal d As Action) As [event]
+        assert(Not p Is Nothing)
         If d Is Nothing Then
             Return Nothing
         End If
         Dim rtn As [event] = Nothing
         rtn = New [event](waitms, d)
-        assert(push(rtn))
+        assert(p(rtn))
         Return rtn
+    End Function
+
+    Public Shared Function push(ByVal waitms As UInt32, ByVal d As Action) As [event]
+        Return push(Function(ByVal e As [event]) As Boolean
+                        Return push(e)
+                    End Function, waitms, d)
+    End Function
+
+    Public Shared Function push_only(ByVal waitms As UInt32, ByVal d As Action) As [event]
+        Return push(Function(ByVal e As [event]) As Boolean
+                        Return push_only(e)
+                    End Function, waitms, d)
     End Function
 
     'the waitms is not consistant with other timeout settings,

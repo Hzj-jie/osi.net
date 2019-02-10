@@ -7,6 +7,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.event
+Imports osi.root.threadpool
 Imports osi.root.utils
 
 Partial Public Class event_comb
@@ -78,7 +79,10 @@ Partial Public Class event_comb
 
         Private Shared Sub trigger_timeout(ByVal e As event_comb)
             assert(Not e Is Nothing)
-            e.timeout()
+            ' flip_events.timeout may immediately execute the callback, which breaks event_comb, as it uses
+            ' reenterable_locked(). Eventually reenterable_locked() should be avoided, but before that, this is a short
+            ' term fix.
+            thread_pool().queue_job(AddressOf e.timeout)
         End Sub
     End Class
 End Class
