@@ -67,10 +67,11 @@
     <Compile Include="callback\callback_manager.checkqueue.vb" />
     <Compile Include="callback\callback_manager.vb" />
     <Compile Include="event_comb\event_comb.goto.vb" />
+    <Compile Include="event_comb\event_comb.in_step.private.vb" />
     <Compile Include="event_comb\event_comb.lifetime.vb" />
     <Compile Include="event_comb\event_comb.lock.vb" />
     <Compile Include="event_comb\event_comb.predefined.vb" />
-    <Compile Include="event_comb\event_comb.private_waitfor.vb" />
+    <Compile Include="event_comb\event_comb.waitfor.private.vb" />
     <Compile Include="event_comb\event_comb.alloc_trace.vb" />
     <Compile Include="event_comb\event_comb.promise.vb" />
     <Compile Include="event_comb\event_comb.flip_event.vb" />

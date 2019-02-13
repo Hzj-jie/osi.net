@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 #Const USE_LOCK_T = False
-#Const LOCK_ME = False
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
@@ -51,10 +50,8 @@ Partial Public Class event_comb
 
     Private Sub New(ByVal d() As Func(Of Boolean), ByVal callstack As String)
         assert(Not callstack Is Nothing)
-#If USE_LOCK_T AndAlso LOCK_ME Then
+#If USE_LOCK_T Then
         _l = New lock_t(Me)
-#ElseIf USE_LOCK_T Then
-        _l = New lock_t()
 #End If
         ds = d
         ds_len = array_size(ds)
@@ -161,7 +158,7 @@ Partial Public Class event_comb
         End Set
     End Property
 
-    Private Sub __do()
+    Private Sub _do()
         assert_in_lock()
         assert(not_pending())
 
@@ -207,7 +204,7 @@ Partial Public Class event_comb
             assert(Not [end]())
         End While
 
-        assert(ending() = callback_resume_ready()) 'really means Not [end]()
+        assert(ending() = _callback_resume_ready()) 'really means Not [end]()
         If ending() Then
             If event_comb_trace Then
                 raise_error("event ", callstack(), " finished in step ", [step])
@@ -219,20 +216,6 @@ Partial Public Class event_comb
         ElseIf event_comb_trace Then
             raise_error("event ", callstack(), ":<step>", [step], " is now pending")
         End If
-    End Sub
-
-#If DEBUG Then
-    Private in_do As Boolean = False
-#End If
-    Private Sub _do()
-#If DEBUG Then
-        assert(Not in_do)
-        in_do = True
-        __do()
-        in_do = False
-#Else
-        __do()
-#End If
     End Sub
 
     Private Shared Sub [resume](ByVal cb As event_comb)

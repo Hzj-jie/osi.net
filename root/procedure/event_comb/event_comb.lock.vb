@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 #Const USE_LOCK_T = False
+#Const DISALLOW_REENTERABLE_LOCK = False
 Imports System.DateTime
 Imports osi.root.connector
 Imports osi.root.constants
@@ -41,7 +42,18 @@ Partial Public Class event_comb
 #End If
     End Sub
 
+    Private Sub assert_not_in_lock()
+#If USE_LOCK_T AndAlso DEBUG Then
+        assert(Not _l.held())
+#ElseIf DEBUG Then
+        assert(lock_thread_id = npos)
+#End If
+    End Sub
+
     Private Sub _reenterable_locked(ByVal d As Action)
+#If DISALLOW_REENTERABLE_LOCK Then
+        assert_not_in_lock()
+#End If
 #If USE_LOCK_T Then
         _l.reenterable_locked(d)
 #ElseIf DEBUG Then
