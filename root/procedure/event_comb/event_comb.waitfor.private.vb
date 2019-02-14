@@ -20,7 +20,7 @@ Partial Public Class event_comb
             Return False
         End If
         Return ec.reenterable_locked(Function() As Boolean
-                                         If ec.started() OrElse Not ec.cb Is Nothing Then
+                                         If ec._started() OrElse Not ec.cb Is Nothing Then
                                              Return False
                                          End If
                                          inc_pends()
