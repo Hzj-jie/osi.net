@@ -14,7 +14,7 @@ Imports osi.root.lock
 #End If
 
 Partial Public Class event_comb
-#If Not USE_LOCK_T AndAlso DEBUG Then
+#If Not USE_LOCK_T Then
     Private lock_thread_id As Int32 = npos
 #End If
 
