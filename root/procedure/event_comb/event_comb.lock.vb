@@ -3,7 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-#Const DISALLOW_REENTERABLE_LOCK = True
 #Const USE_LOCK_T = False
 #Const DISALLOW_REENTERABLE_LOCK = False
 Imports System.DateTime
