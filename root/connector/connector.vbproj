@@ -76,6 +76,7 @@
     <Compile Include="functor\bytes_serializer\bytes_serializer.overridable.vb" />
     <Compile Include="functor\bytes_serializer\bytes_serializer.variant.vb" />
     <Compile Include="functor\caster.vb" />
+    <Compile Include="functor\comparer.object.vb" />
     <Compile Include="functor\container_operator\container_operator.shortcuts.vb" />
     <Compile Include="functor\delayed_init.vb" />
     <Compile Include="functor\equaler.vb" />

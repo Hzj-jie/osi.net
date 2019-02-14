@@ -35,7 +35,7 @@ Partial Public Class bytes_serializer(Of T)
                 Shared Sub New()
                     type_resolver(Of bytes_serializer(Of Object)).default.assert_first_register(
                         GetType(T),
-                        New bytes_serializer_object(Of T)([default]))
+                        New bytes_serializer_object([default]))
                 End Sub
 
                 Public Shared Sub init()

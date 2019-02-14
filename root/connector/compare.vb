@@ -252,22 +252,45 @@ Public Module _compare
     End Function
 
     Private Function runtime_this_compare(Of T)(ByVal this As Object, ByVal that As T, ByRef o As Int32) As Boolean
-        Return runtime_this_to_t2(this, that, o) OrElse
+        assert(Not this Is Nothing)
+        assert(Not that Is Nothing)
+        Return type_comparer.compare(this.GetType(), GetType(T), this, that, o) OrElse
+               runtime_this_to_t2(this, that, o) OrElse
                runtime_this_to_object(this, that, o)
     End Function
 
     Private Function runtime_that_compare(Of T)(ByVal this As T, ByVal that As Object, ByRef o As Int32) As Boolean
-        Return runtime_that_to_t(this, that, o) OrElse
+        assert(Not this Is Nothing)
+        assert(Not that Is Nothing)
+        Return type_comparer.compare(GetType(T), that.GetType(), this, that, o) OrElse
+               runtime_that_to_t(this, that, o) OrElse
                runtime_that_to_object(this, that, o)
     End Function
 
     Private Function runtime_object_compare(ByVal this As Object, ByVal that As Object, ByRef o As Int32) As Boolean
-        Return runtime_this_to_object(this, that, o) OrElse
+        assert(Not this Is Nothing)
+        assert(Not that Is Nothing)
+        Return type_comparer.compare(this.GetType(), that.GetType(), this, that, o) OrElse
+               runtime_this_to_object(this, that, o) OrElse
                runtime_that_to_object(this, that, o)
     End Function
 
+    Public Function runtime_compare(ByVal this As Object, ByVal that As Object) As Int32
+        Dim o As Int32 = 0
+        o = object_compare(this, that)
+        If o <> object_compare_undetermined Then
+            Return o
+        End If
+        assert(runtime_this_to_object(this, that, o) OrElse
+               runtime_that_to_object(this, that, o))
+        Return o
+    End Function
+
     Private Function runtime_compare(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
-        Return runtime_this_to_t2(this, that, o) OrElse
+        assert(Not this Is Nothing)
+        assert(Not that Is Nothing)
+        Return type_comparer.compare(GetType(T), GetType(T2), this, that, o) OrElse
+               runtime_this_to_t2(this, that, o) OrElse
                runtime_that_to_t(this, that, o) OrElse
                runtime_this_to_object(this, that, o) OrElse
                runtime_that_to_object(this, that, o)

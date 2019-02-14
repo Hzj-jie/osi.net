@@ -3,6 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.constants
+
 Public NotInheritable Class comparer
     Public Shared Sub register(Of T, T2)(ByVal c As Func(Of T, T2, Int32))
         comparer(Of T, T2).register(c)
@@ -30,6 +32,9 @@ Public NotInheritable Class comparer(Of T, T2)
 
     Private Shared Sub register(Of IT, IT2)(ByVal c As Func(Of IT, IT2, Int32))
         global_resolver(Of Func(Of IT, IT2, Int32), comparer(Of IT, IT2)).assert_first_register(c)
+        type_resolver(Of Func(Of Object, Object, Int32)).default.assert_first_register(
+            GetType(joint_type(Of IT, IT2, comparer)),
+            comparer_object(c))
     End Sub
 
     Public Shared Sub unregister()
