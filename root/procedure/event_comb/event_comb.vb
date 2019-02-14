@@ -4,10 +4,12 @@ Option Infer Off
 Option Strict On
 
 #Const USE_LOCK_T = False
+#Const DISALLOW_REENTERABLE_LOCK = True
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.formation
+Imports osi.root.threadpool
 #If DEBUG Then
 Imports lock_t = osi.root.lock.monitorlock
 #Else
@@ -143,6 +145,7 @@ Partial Public Class event_comb
             Return _begin_ticks
         End Get
         Private Set(ByVal value As Int64)
+            assert_in_lock()
             assert(_begin_ticks = npos OrElse value = npos)
             _begin_ticks = value
         End Set
@@ -153,6 +156,7 @@ Partial Public Class event_comb
             Return _end_ticks
         End Get
         Private Set(ByVal value As Int64)
+            assert_in_lock()
             assert(_end_ticks = npos OrElse value = npos)
             _end_ticks = value
         End Set
@@ -162,12 +166,12 @@ Partial Public Class event_comb
         assert_in_lock()
         assert(not_pending())
 
-        If [end]() Then
+        If _end() Then
             'the timeout has been called before the queued item in thread pool
             Return
         End If
 
-        If not_started() Then
+        If _not_started() Then
             If ds_len = uint32_0 Then
                 assert_goto_end()
             Else
@@ -181,7 +185,7 @@ Partial Public Class event_comb
         End If
 
         Dim laststep As Int32 = 0
-        While working() AndAlso not_pending()
+        While _working() AndAlso not_pending()
             Dim rtn As Boolean = False
             laststep = [step]
             current() = Me
@@ -201,34 +205,43 @@ Partial Public Class event_comb
             If in_end_step() Then
                 _end_result = rtn
             End If
-            assert(Not [end]())
+            assert(Not _end())
         End While
 
-        assert(ending() = _callback_resume_ready()) 'really means Not [end]()
-        If ending() Then
+        assert(_ending() = _callback_resume_ready()) 'really means Not [end]()
+        If _ending() Then
             If event_comb_trace Then
                 raise_error("event ", callstack(), " finished in step ", [step])
             End If
             end_ticks() = nowadays.ticks()
             cancellation_control.cancel()
             [resume](cb)
-            assert([end]())
+            assert(_end())
         ElseIf event_comb_trace Then
             raise_error("event ", callstack(), ":<step>", [step], " is now pending")
         End If
     End Sub
 
     Private Shared Sub [resume](ByVal cb As event_comb)
-        If Not cb Is Nothing Then
-            cb.reenterable_locked(Sub()
-                                      If cb.pending() Then
-                                          cb.dec_pends()
-                                          If cb.not_pending() Then
-                                              cb._do()
-                                          End If
-                                      End If
-                                  End Sub)
+        If cb Is Nothing Then
+            Return
         End If
+#If DISALLOW_REENTERABLE_LOCK Then
+        thread_pool().queue_job(AddressOf cb.resume)
+#Else
+        cb.resume()
+#End If
+    End Sub
+
+    Private Sub [resume]()
+        reenterable_locked(Sub()
+                               If pending() Then
+                                   dec_pends()
+                                   If not_pending() Then
+                                       _do()
+                                   End If
+                               End If
+                           End Sub)
     End Sub
 
     Friend Sub [do]()
@@ -247,7 +260,7 @@ Partial Public Class event_comb
 
     Private Sub suspend(ByVal action As String)
         reenterable_locked(Sub()
-                               If [end]() Then
+                               If _end() Then
                                    Return
                                End If
                                If event_comb_trace Then
@@ -258,7 +271,7 @@ Partial Public Class event_comb
                                mark_as_failed()
                                clear_pends()
                                _do()
-                               assert([end]())
+                               assert(_end())
                            End Sub)
     End Sub
 End Class

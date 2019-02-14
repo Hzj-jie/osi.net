@@ -4,7 +4,7 @@ Option Infer Off
 Option Strict On
 
 #Const USE_LOCK_T = False
-#Const DISALLOW_REENTERABLE_LOCK = False
+#Const DISALLOW_REENTERABLE_LOCK = True
 Imports System.DateTime
 Imports osi.root.connector
 Imports osi.root.constants
@@ -35,29 +35,39 @@ Partial Public Class event_comb
     End Function
 
     Private Sub assert_in_lock()
-#If USE_LOCK_T AndAlso DEBUG Then
-        assert(_l.held_in_thread())
-#ElseIf DEBUG Then
-        assert(lock_thread_id = current_thread_id())
+#If Not DEBUG Then
+        Return
+#End If
+#If USE_LOCK_T Then
+        assert(_l.held_in_thread(), callstack())
+#Else
+        assert(lock_thread_id = current_thread_id(), callstack())
 #End If
     End Sub
 
     Private Sub assert_not_in_lock()
-#If USE_LOCK_T AndAlso DEBUG Then
-        assert(Not _l.held())
-#ElseIf DEBUG Then
-        assert(lock_thread_id = npos)
+#If Not DISALLOW_REENTERABLE_LOCK Then
+        Return
+#End If
+#If Not DEBUG Then
+        Return
+#End If
+#If USE_LOCK_T Then
+        assert(Not _l.held(), callstack())
+#Else
+        assert(lock_thread_id = npos, callstack())
 #End If
     End Sub
 
     Private Sub _reenterable_locked(ByVal d As Action)
-#If DISALLOW_REENTERABLE_LOCK Then
-        assert_not_in_lock()
-#End If
 #If USE_LOCK_T Then
-        _l.reenterable_locked(d)
+        _l.reenterable_locked(Sub()
+                                  assert_not_in_lock()
+                                  d()
+                              End Sub)
 #ElseIf DEBUG Then
         SyncLock Me
+            assert_not_in_lock()
             If lock_thread_id = npos Then
                 lock_thread_id = current_thread_id()
                 assert(lock_thread_id <> npos)
@@ -71,6 +81,7 @@ Partial Public Class event_comb
         End SyncLock
 #Else
         SyncLock Me
+            assert_not_in_lock()
             d()
         End SyncLock
 #End If

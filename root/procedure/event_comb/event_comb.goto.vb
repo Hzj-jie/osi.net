@@ -21,7 +21,7 @@ Partial Public Class event_comb
     End Sub
 
     Private Function _goto_end() As Boolean
-        If working() Then
+        If _working() Then
             trace_finish()
         End If
         Return _goto(end_step)
@@ -40,7 +40,7 @@ Partial Public Class event_comb
     End Sub
 
     Private Function _goto_begin() As Boolean
-        If not_started() Then
+        If _not_started() Then
             trace_start()
         End If
         Return _goto(first_step)
