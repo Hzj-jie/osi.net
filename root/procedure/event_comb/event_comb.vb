@@ -207,7 +207,7 @@ Partial Public Class event_comb
             assert(Not [end]())
         End While
 
-        assert(ending() = callback_resume_ready()) 'really means Not [end]()
+        assert(ending() = _callback_resume_ready()) 'really means Not [end]()
         If ending() Then
             If event_comb_trace Then
                 raise_error("event ", callstack(), " finished in step ", [step])
