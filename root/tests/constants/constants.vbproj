@@ -90,6 +90,10 @@
       <Project>{f251286b-8ee9-4292-b117-1630d5f93b37}</Project>
       <Name>constants</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\template\template.vbproj">
+      <Project>{8ef461f7-2f05-42a3-b65b-8e644f992582}</Project>
+      <Name>template</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\utt\utt.vbproj">
       <Project>{c56c84b9-f739-4baf-8795-fc7caa6cc549}</Project>
       <Name>utt</Name>
