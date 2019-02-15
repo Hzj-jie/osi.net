@@ -3,6 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.constants
+
 Public NotInheritable Class equaler
     Public Shared Sub register(Of T, T2)(ByVal f As Func(Of T, T2, Boolean))
         equaler(Of T, T2).register(f)
@@ -30,10 +32,22 @@ Public NotInheritable Class equaler(Of T, T2)
 
     Private Shared Sub register(Of IT, IT2)(ByVal f As Func(Of IT, IT2, Boolean))
         global_resolver(Of Func(Of IT, IT2, Boolean), equaler(Of IT, IT2)).assert_first_register(f)
+        type_resolver(Of Func(Of Object, Object, Boolean)).default.assert_first_register(
+            GetType(joint_type(Of IT, IT2, equaler)),
+            equaler_object(f))
     End Sub
 
     Public Shared Sub unregister()
-        global_resolver(Of Func(Of T, T2, Boolean), equaler(Of T, T2)).assert_unregister()
+        unregister(Of T, T2)()
+        If Not type_info(Of T, type_info_operators.is, T2).v Then
+            unregister(Of T2, T)()
+        End If
+    End Sub
+
+    Private Shared Sub unregister(Of IT, IT2)()
+        global_resolver(Of Func(Of IT, IT2, Boolean), equaler(Of IT, IT2)).assert_unregister()
+        type_resolver(Of Func(Of Object, Object, Boolean)).default.
+            assert_unregister(GetType(joint_type(Of IT, IT2, equaler)))
     End Sub
 
     Public Shared Function defined() As Boolean

@@ -45,6 +45,12 @@ Public NotInheritable Class type_comparer
         Return runtime_compare(x, y)
     End Function
 
+    Public Shared Function infer_compare(ByVal x As Object, ByVal y As Object) As Int32
+        assert(Not x Is Nothing)
+        assert(Not y Is Nothing)
+        Return compare(x.GetType(), y.GetType(), x, y)
+    End Function
+
     Private Shared Function typed(ByVal i As Type, ByVal j As Type) As Type
         Return joint_type.of(i, j, GetType(comparer))
     End Function

@@ -187,6 +187,7 @@
     <Compile Include="type_behavior_test.vb" />
     <Compile Include="type_functor\type_bytes_serializer_test.vb" />
     <Compile Include="type_functor\type_comparer_test.vb" />
+    <Compile Include="type_functor\type_equaler_test.vb" />
     <Compile Include="type_info_perf.vb" />
     <Compile Include="type_info_test.vb" />
     <Compile Include="type_initializer_behavior_test.vb" />

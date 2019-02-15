@@ -38,7 +38,16 @@ Public NotInheritable Class comparer(Of T, T2)
     End Sub
 
     Public Shared Sub unregister()
-        global_resolver(Of Func(Of T, T2, Int32), comparer(Of T, T2)).assert_unregister()
+        unregister(Of T, T2)()
+        If Not type_info(Of T, type_info_operators.is, T2).v Then
+            unregister(Of T2, T)()
+        End If
+    End Sub
+
+    Private Shared Sub unregister(Of IT, IT2)()
+        global_resolver(Of Func(Of IT, IT2, Int32), comparer(Of IT, IT2)).assert_unregister()
+        type_resolver(Of Func(Of Object, Object, Int32)).default.
+            assert_unregister(GetType(joint_type(Of IT, IT2, comparer)))
     End Sub
 
     Public Shared Function defined() As Boolean

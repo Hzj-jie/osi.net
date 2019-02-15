@@ -16,7 +16,14 @@ Public NotInheritable Class type_comparer_test
         Dim y As Int32 = 0
         x = rnd_int()
         y = rnd_int()
+
         assertion.equal(compare(x, y), type_comparer.compare(GetType(Int32), GetType(Int32), x, y))
+        assertion.equal(type_comparer.compare(GetType(Int32), GetType(Int32), x, x), 0)
+        assertion.equal(type_comparer.compare(GetType(Int32), GetType(Int32), y, y), 0)
+
+        assertion.equal(compare(x, y), type_comparer.infer_compare(x, y))
+        assertion.equal(type_comparer.infer_compare(x, x), 0)
+        assertion.equal(type_comparer.infer_compare(y, y), 0)
     End Sub
 
     <test>
@@ -26,7 +33,14 @@ Public NotInheritable Class type_comparer_test
         Dim y As String = Nothing
         x = rnd_utf8_chars(rnd_int(10, 1000))
         y = rnd_utf8_chars(rnd_int(10, 1000))
+
         assertion.equal(compare(x, y), type_comparer.compare(GetType(String), GetType(String), x, y))
+        assertion.equal(type_comparer.compare(GetType(String), GetType(String), x, x), 0)
+        assertion.equal(type_comparer.compare(GetType(String), GetType(String), y, y), 0)
+
+        assertion.equal(compare(x, y), type_comparer.infer_compare(x, y))
+        assertion.equal(type_comparer.infer_compare(x, x), 0)
+        assertion.equal(type_comparer.infer_compare(y, y), 0)
     End Sub
 
     Private Sub New()
