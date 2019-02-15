@@ -104,12 +104,55 @@ Public Module _equal
                runtime_that_to_t(this, that, o)
     End Function
 
-    Private Function do_equal(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
-        Dim o As Boolean = False
+    Private Function object_equal(ByVal this As Object, ByVal that As Object, ByRef o As Boolean) As Boolean
         Dim cmp As Int32 = 0
         cmp = object_compare(this, that)
         If cmp <> object_compare_undetermined Then
-            Return (cmp = 0)
+            o = (cmp = 0)
+            Return True
+        End If
+        Return False
+    End Function
+
+    Private Function compare_equal(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Boolean) As Boolean
+        Dim cmp As Int32 = 0
+        If non_null_compare(this, that, cmp) Then
+            o = (cmp = 0)
+            Return True
+        End If
+        Return False
+    End Function
+
+    Private Function runtime_compare_equal(ByVal this As Object, ByVal that As Object, ByRef o As Boolean) As Boolean
+        Dim cmp As Int32 = 0
+        If not_null_runtime_compare(this, that, cmp) Then
+            o = (cmp = 0)
+            Return True
+        End If
+        Return False
+    End Function
+
+    Public Function runtime_equal(ByVal this As Object, ByVal that As Object) As Boolean
+        Dim o As Boolean = False
+        If object_equal(this, that, o) Then
+            Return o
+        End If
+        If runtime_this_to_t2(this, that, o) Then
+            Return o
+        End If
+        If runtime_that_to_t(this, that, o) Then
+            Return o
+        End If
+        If runtime_compare_equal(this, that, o) Then
+            Return o
+        End If
+        Return Object.Equals(this, that)
+    End Function
+
+    Private Function do_equal(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
+        Dim o As Boolean = False
+        If object_equal(this, that, o) Then
+            Return o
         End If
         If equaler(Of T, T2).defined() Then
             Return equaler.equal(this, that)
@@ -117,8 +160,8 @@ Public Module _equal
         If equal_cache(Of T, T2).equal(this, that, o) Then
             Return o
         End If
-        If non_null_compare(this, that, cmp) Then
-            Return (cmp = 0)
+        If compare_equal(this, that, o) Then
+            Return o
         End If
 
         ' This typically means reference-equality (for classes) or value-equality (for structures).

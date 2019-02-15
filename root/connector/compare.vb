@@ -281,9 +281,13 @@ Public Module _compare
         If o <> object_compare_undetermined Then
             Return o
         End If
-        assert(runtime_this_to_object(this, that, o) OrElse
-               runtime_that_to_object(this, that, o))
+        assert(not_null_runtime_compare(this, that, o))
         Return o
+    End Function
+
+    Public Function not_null_runtime_compare(ByVal this As Object, ByVal that As Object, ByRef o As Int32) As Boolean
+        Return runtime_this_to_object(this, that, o) OrElse
+               runtime_that_to_object(this, that, o)
     End Function
 
     Private Function runtime_compare(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
