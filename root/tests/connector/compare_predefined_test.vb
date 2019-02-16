@@ -69,12 +69,27 @@ Public Class compare_predefined_test
         Return True
     End Function
 
+    Private Shared Function array_compare() As Boolean
+        Dim x() As Int32 = {1, 2, 3}
+        Dim y() As Int32 = {4, 5, 6}
+        Dim r As Int32 = 0
+        ' TODO: Make this test passs, support array in compare().
+        ' assertion.is_true(compare(x, y, r))
+        ' assertion.less(r, 0)
+        assertion.is_true(compare(x, x, r))
+        assertion.equal(r, 0)
+        assertion.is_true(compare(y, y, r))
+        assertion.equal(r, 0)
+        Return True
+    End Function
+
     Public Overrides Function run() As Boolean
         Using scoped_atomic_bool(suppress.compare_error)
             Return value_type_with_null() AndAlso
                    value_type_object_compare() AndAlso
                    value_with_reference_compare() AndAlso
-                   nullable_compare()
+                   nullable_compare() AndAlso
+                   array_compare()
         End Using
     End Function
 End Class
