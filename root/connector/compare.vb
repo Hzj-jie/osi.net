@@ -137,26 +137,25 @@ Public Module _compare
         Public Shared Function compare(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
             If c Is Nothing Then
                 Return False
-            Else
-#If DEBUG Then
-                Dim msg As String = Nothing
-                msg = strcat("Comparing ",
-                             type_info(Of T).fullName,
-                             " with ",
-                             type_info(Of T2).fullName,
-                             " needs to be specifically handled.")
-                Dim o2 As Int32 = 0
-                Dim r As Boolean = False
-                r = c(this, that, o)
-                If Not r Then
-                    assert(r = runtime_compare(this, that, o2), msg)
-                    assert(o = o2, msg)
-                End If
-                Return r
-#Else
-                Return c(this, that, o)
-#End If
             End If
+#If DEBUG Then
+            Dim msg As String = Nothing
+            msg = strcat("Comparing ",
+                     type_info(Of T).fullname,
+                     " with ",
+                     type_info(Of T2).fullname,
+                     " needs to be specifically handled.")
+            Dim o2 As Int32 = 0
+            Dim r As Boolean = False
+            r = c(this, that, o)
+            If Not r Then
+                assert(r = runtime_compare(this, that, o2), msg)
+                assert(o = o2, msg)
+            End If
+            Return r
+#Else
+            Return c(this, that, o)
+#End If
         End Function
 
         Public Shared Function comparable() As Boolean

@@ -314,11 +314,11 @@ Public Class compare_test
             Dim j As Int32 = 0
             i = rnd_int(min_int32, max_int32)
             j = rnd_int(min_int32, max_int32)
-            Return not_comparable_case(Of Object, Object)(i, Convert.ToInt64(j)) AndAlso
+            Return compare_case(Of Object, Object)(i, Convert.ToInt64(j), i.CompareTo(j)) AndAlso
                    compare_case(Of Object, Object)(i, j, i.CompareTo(j)) AndAlso
-                   not_comparable_case(Of Object, Object)(Convert.ToInt64(i), j) AndAlso
+                   compare_case(Of Object, Object)(Convert.ToInt64(i), j, i.CompareTo(j)) AndAlso
  _
-                   not_comparable_case(Of Int32, Object)(i, Convert.ToInt64(j)) AndAlso
+                   not_comparable_case(Of Int32, Object)(i, Convert.ToInt64(j)) AndAlso  ' TODO: Make these two workable
                    compare_case(Of Int32, Object)(i, j, i.CompareTo(j)) AndAlso
                    not_comparable_case(Of Int64, Object)(Convert.ToInt64(i), j) AndAlso
  _
