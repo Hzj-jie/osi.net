@@ -12,7 +12,7 @@ Imports osi.root.lock.slimlock
 
 Public Structure lock(Of T As {Structure, islimlock})
     Implements ilock
-    Private ownerTID As Int32
+    Private owner_tid As Int32
     Private l As T
 
     Shared Sub New()
@@ -23,11 +23,11 @@ Public Structure lock(Of T As {Structure, islimlock})
     End Sub
 
     Public Function held_in_thread() As Boolean Implements ilock.held_in_thread
-        Return ownerTID = current_thread_id()
+        Return owner_tid = current_thread_id()
     End Function
 
     Public Function held() As Boolean Implements ilock.held
-        Return ownerTID <> INVALID_THREAD_ID
+        Return owner_tid <> INVALID_THREAD_ID
     End Function
 
     Private Sub debug_wait()
@@ -53,13 +53,13 @@ Public Structure lock(Of T As {Structure, islimlock})
         Catch ex As ThreadAbortException
             raise_error(error_type.warning, "thread abort")
         End Try
-        assert(ownerTID = INVALID_THREAD_ID)
-        ownerTID = current_thread_id()
+        assert(owner_tid = INVALID_THREAD_ID)
+        owner_tid = current_thread_id()
     End Sub
 
     Public Sub release() Implements ilock.release
-        assert(can_cross_thread() OrElse ownerTID = current_thread_id())
-        ownerTID = INVALID_THREAD_ID
+        assert(can_cross_thread() OrElse owner_tid = current_thread_id())
+        owner_tid = INVALID_THREAD_ID
         l.release()
     End Sub
 

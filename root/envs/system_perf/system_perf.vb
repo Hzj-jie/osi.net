@@ -36,12 +36,16 @@ Public Module _system_perf
     End Function
 
     Sub New()
+        assert(error_writer_ignore_types(Of colorful_console_error_writer).valued(error_type.warning))
         Using New boost()
             perf_run_ms = perf_run()
         End Using
         loops_per_ms = ratio \ perf_run_ms
         If env_bool(env_keys("report", "system", "perf")) Then
-            raise_error("perf_run_ms = ",
+            ' system_perf will be initialized before file_error_writer, so ensure it won't be ignored by
+            ' colorful_console_error_writer.
+            raise_error(error_type.warning,
+                        "perf_run_ms = ",
                           perf_run_ms,
                           ", loops_per_ms = ",
                           loops_per_ms)
