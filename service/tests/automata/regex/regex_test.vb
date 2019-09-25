@@ -59,10 +59,9 @@ Namespace rlexer
                                     {"""asdf", "lajfdl""", "asldfj", """asldfal""falsfjl"}),
                      New regex_case("return[\w,\d,_]-",
                                     {"return"},
-                                    {"returna", "return_", "return1", "retuRn"})}
-            ' TODO: Make these test cases work.
-            ' New regex_case("[\D]+", {"abc", "def"}, {"123", "ab3", ""}),
-            ' New regex_case("[\W]+", {"**(", "123"}, {"**a", "12c", ""})}
+                                    {"returna", "return_", "return1", "retuRn"}),
+                     New regex_case("\D+", {"abc", "def"}, {"123", "ab3"}), ' , ""}), TODO: Make empty string case work.
+                     New regex_case("\W+", {"**(", "123"}, {"**a", "12c"})} ' , ""})}
         End Sub
 
         Public Overrides Function run() As Boolean
