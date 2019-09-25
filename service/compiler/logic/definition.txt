@@ -37,6 +37,7 @@ subtract	string	string	string
 # execute multiply command against two variables and store the result in the first variable:
 #  multiply target source1 source2
 multiply	string	string	string
+
 # execute power command against two variables and store the result in the first variable:
 #  power target source1 source2
 power	string	string	string
@@ -127,6 +128,8 @@ divide	string	string	string	string
 extract	string	string	string	string
 
 # exit a function without return value:
+# to avoid increasing the complexity in this level, the language contains no "syntax" concept, but only fixed rules. so
+# the "*" is used as a placeholder to make the parsing logic same as return string string.
 #  return f *
 return	string	*
 
