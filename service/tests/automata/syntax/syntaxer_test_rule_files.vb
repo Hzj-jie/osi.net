@@ -3,6 +3,7 @@ Imports System.IO
 Imports osi.root.connector
 Imports osi.root.procedure
 Imports osi.root.utils
+Imports osi.service.resource
 
 Namespace syntaxer
     Public Class syntaxer_test_rule_files
@@ -11,12 +12,9 @@ Namespace syntaxer
         Public Shared ReadOnly syntaxer As String
 
         Shared Sub New()
-            rlexer = Path.Combine(temp_folder, guid_str())
-            rlexer2 = Path.Combine(temp_folder, guid_str())
-            syntaxer = Path.Combine(temp_folder, guid_str())
-            assert(rlexer_rule.sync_export(rlexer))
-            assert(rlexer_rule2.sync_export(rlexer2))
-            assert(syntaxer_rule.sync_export(syntaxer))
+            rlexer = rlexer_rule.as_text()
+            rlexer2 = rlexer_rule2.as_text()
+            syntaxer = syntaxer_rule.as_text()
         End Sub
     End Class
 End Namespace

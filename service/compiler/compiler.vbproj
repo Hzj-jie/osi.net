@@ -148,7 +148,9 @@
     <Content Include="logic\definition.txt" />
     <Content Include="logic\design.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="cstyle\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="compiler.dep" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

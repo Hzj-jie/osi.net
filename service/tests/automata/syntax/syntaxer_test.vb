@@ -358,16 +358,16 @@ Namespace syntaxer
         Private Shared Function run_case(ByVal rrf As String, ByVal srf As String) As Boolean
             Dim rr As rrule = Nothing
             rr = New rrule()
-            If assertion.is_true(rr.parse_file(rrf)) Then
+            If assertion.is_true(rr.parse_content(rrf)) Then
                 Dim re As rrule.exporter = Nothing
                 If assertion.is_true(rr.export(re)) AndAlso assertion.is_not_null(re) Then
                     Dim sr As srule = Nothing
                     sr = New srule(re.str_type_mapping())
-                    If assertion.is_true(sr.parse_file(srf)) Then
+                    If assertion.is_true(sr.parse_content(srf)) Then
                         Dim se As srule.exporter = Nothing
                         se = sr.export()
                         Dim rlp As rlp = Nothing
-                        If assertion.is_true(rlp.create_from_file(rrf, srf, rlp)) Then
+                        If assertion.is_true(rlp.create(re, se, rlp)) Then
                             Return case1(re.rlexer, se.syntaxer, rlp) AndAlso
                                    case2(re.rlexer, se.syntaxer, rlp) AndAlso
                                    case3(re.rlexer, se.syntaxer, rlp) AndAlso

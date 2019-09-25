@@ -7,7 +7,6 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utt
-Imports osi.service.convertor
 Imports osi.service.interpreter.primitive
 Imports osi.service.math
 Imports osi.service.resource
