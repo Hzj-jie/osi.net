@@ -27,7 +27,7 @@ Data reference
 Data is always in stack, there are two ways to refer a data,
 1. Relative, offset to current stack top, say, rel1 means the one below stack top
 2. Absolute, position in stack, say, abs1 means the one above stack bottom
-Uses 64 bit signed int to represent a data reference, the last bit of a relative reference is 1, the first bit of an
+Uses 64 bit signed int to represent a data reference, the first bit of a relative reference is 1, the first bit of an
 absolute reference is 0. Then the left 63 bits are the real offset, which could be positive or negative, i.e. right
 shift by 1.
 

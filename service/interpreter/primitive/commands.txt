@@ -15,7 +15,7 @@ jumpif	data_ref	data_ref	#jump to instruction @A, if (*B bool) is true
 cpco	data_ref	#(*A) = CO
 cpdbz	data_ref	#(*A) = DBZ
 cpin	data_ref	#(*A) = IN
-stop	#finish execution, and leave the executor in a stop but not error status.
+stop	#finish execution, and leave the executor in a stop but not error state.
 equal	data_ref	data_ref	data_ref	#(*A) = ((*B big_uint) == (*C big_uint))
 less	data_ref	data_ref	data_ref	#(*A) = ((*B big_uint) < (*C big_uint))
 app	data_ref	data_ref	#(*A) += (*B)
