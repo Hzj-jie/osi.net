@@ -55,6 +55,7 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="cstyle\cstyle_rules.vb" />
     <Compile Include="dotnet\source_executor.builder.build.vb" />
     <Compile Include="dotnet\source_executor.builder.vb" />
     <Compile Include="dotnet\source_executor.vb" />
@@ -128,6 +129,7 @@
   <ItemGroup>
     <None Include="compiler.dep" />
     <None Include="compiler.props" />
+    <None Include="cstyle\codegen\run.cmd" />
     <None Include="logic\codegen\run.cmd" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -143,14 +145,14 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="cstyle\codegen\rlexer_rule.txt" />
+    <Content Include="cstyle\codegen\syntaxer_rule.txt" />
     <Content Include="logic\codegen\definition_parser.cs" />
     <Content Include="logic\codegen\definition_parser.exe" />
     <Content Include="logic\definition.txt" />
     <Content Include="logic\design.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="cstyle\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="compiler.dep" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,8 +1,9 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.automata
 Imports osi.service.automata.rlexer
@@ -59,30 +60,29 @@ Namespace rlexer
                      New regex_case("return[\w,\d,_]-",
                                     {"return"},
                                     {"returna", "return_", "return1", "retuRn"})}
+            ' TODO: Make these test cases work.
+            ' New regex_case("[\D]+", {"abc", "def"}, {"123", "ab3", ""}),
+            ' New regex_case("[\W]+", {"**(", "123"}, {"**a", "12c", ""})}
         End Sub
 
         Public Overrides Function run() As Boolean
-            For i As UInt32 = 0 To array_size(cases) - uint32_1
+            For i As Int32 = 0 To array_size_i(cases) - 1
                 assert(Not cases(i) Is Nothing)
                 Dim c As regex = Nothing
                 If assertion.is_true(regex.create(macros.default.expand(cases(i).regex), c)) AndAlso
                    assertion.is_not_null(c) Then
-                    Dim j As UInt32 = 0
-                    While j < array_size(cases(i).matches)
+                    For j As Int32 = 0 To array_size_i(cases(i).matches) - 1
                         assertion.is_true(c.match_to_end(cases(i).matches(j)),
                                     cases(i).regex,
                                     " does not match ",
                                     cases(i).matches(j))
-                        j += 1
-                    End While
-                    j = 0
-                    While j < array_size(cases(i).unmatches)
+                    Next
+                    For j As Int32 = 0 To array_size_i(cases(i).unmatches) - 1
                         assertion.is_false(c.match_to_end(cases(i).unmatches(j)),
                                      cases(i).regex,
                                      " matches ",
                                      cases(i).unmatches(j))
-                        j += 1
-                    End While
+                    Next
                 End If
             Next
             Return True

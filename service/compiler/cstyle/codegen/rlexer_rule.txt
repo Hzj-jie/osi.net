@@ -1,0 +1,36 @@
+
+DEFINE name-usable \w,\d,_
+
+KW-if if[\name-usable]-
+KW-else else[\name-usable]-
+KW-for for[\name-usable]-
+KW-while while[\name-usable]-
+KW-do do[\name-usable]-
+KW-loop loop[\name-usable]-
+KW-return return[\name-usable]-
+KW-break break[\name-usable]-
+
+blank [\b]+
+bool [true,false]
+
+less-or-equal <=
+great-or-equal >=
+equal ==
+less-than <
+great-than >
+assignment =
+comma ,
+colon :
+question-mark ?
+start-paragraph {
+end-paragraph }
+start-bracket (
+end-bracket )
+start-square-bracket \[
+end-square-bracket ]
+semi-colon ;
+
+string "["]!*"
+float [+,-]?[\d]+.[\d]+
+integer [+,-]?[\d]+
+name [\d]-[\name-usable]+
