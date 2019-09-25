@@ -1,8 +1,11 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.utils
 
 Partial Public Class rlexer
     Public Class reverse_matching_group
@@ -15,7 +18,7 @@ Partial Public Class rlexer
             Dim sg As string_matching_group = Nothing
             If cast(g, sg) AndAlso assert(Not sg Is Nothing) Then
                 Me.consumes = sg.max_length
-            ElseIf cast(g, DirectCast(Nothing, any_character_matching_group)) Then
+            ElseIf cast(g, [default](Of any_character_matching_group).null) Then
                 Me.consumes = uint32_1
             Else
                 Me.consumes = uint32_0
@@ -25,17 +28,15 @@ Partial Public Class rlexer
         Public Overrides Function match(ByVal i As String, ByVal pos As UInt32) As vector(Of UInt32)
             Dim r As vector(Of UInt32) = Nothing
             r = MyBase.match(i, pos)
-            If r.null_or_empty() Then
-                r.renew()
-                If pos + consumes >= strlen(i) Then
-                    r.emplace_back(strlen(i))
-                Else
-                    r.emplace_back(pos + consumes)
-                End If
-                Return r
-            Else
+            If Not r.null_or_empty() Then
                 Return Nothing
             End If
+            If pos + consumes > strlen(i) Then
+                Return Nothing
+            End If
+            r.renew()
+            r.emplace_back(pos + consumes)
+            Return r
         End Function
     End Class
 End Class

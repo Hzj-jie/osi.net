@@ -43,8 +43,8 @@ Namespace rlexer
                                     {"adef", "bdef", "cdef", "def"},
                                     {"ddef", "aadef"}),
                      New regex_case("abc[de,f]!",
-                                    {"abcdf", "abc", "abcx", "abcd", "abcxx"},
-                                    {"abcde", "abcf", "abcdef", "abcxxx"}),
+                                    {"abcdf", "abcxx"},
+                                    {"abcde", "abc", "abcf", "abcx", "abcd", "abcdef", "abcxxx"}),
                      New regex_case("[if]-[*]*",
                                     {"else", "ii"},
                                     {"if"}),
@@ -60,8 +60,8 @@ Namespace rlexer
                      New regex_case("return[\w,\d,_]-",
                                     {"return"},
                                     {"returna", "return_", "return1", "retuRn"}),
-                     New regex_case("\D+", {"abc", "def"}, {"123", "ab3"}), ' , ""}), TODO: Make empty string case work.
-                     New regex_case("\W+", {"**(", "123"}, {"**a", "12c"})} ' , ""})}
+                     New regex_case("\D+", {"abc", "def"}, {"123", "ab3", ""}),
+                     New regex_case("\W+", {"**(", "123"}, {"**a", "12c", ""})}
         End Sub
 
         Public Overrides Function run() As Boolean
