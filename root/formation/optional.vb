@@ -11,7 +11,7 @@ Public NotInheritable Class [optional]
     End Function
 
     Public Shared Function [New](Of T)() As [optional](Of T)
-        Return New [optional](Of T)()
+        Return empty(Of T)()
     End Function
 
     Public Shared Function [of](Of T)(ByVal v As T) As [optional](Of T)
@@ -19,14 +19,29 @@ Public NotInheritable Class [optional]
     End Function
 
     Public Shared Function [of](Of T)() As [optional](Of T)
-        Return [New](Of T)()
+        Return empty(Of T)()
+    End Function
+
+    Public Shared Function [empty](Of T)() As [optional](Of T)
+        Return empty_cache(Of T).v
     End Function
 
     Private Sub New()
     End Sub
+
+    Private NotInheritable Class empty_cache(Of T)
+        Public Shared ReadOnly v As [optional](Of T)
+
+        Shared Sub New()
+            v = [optional].of(Of T)()
+        End Sub
+
+        Private Sub New()
+        End Sub
+    End Class
 End Class
 
-Public Class [optional](Of T)
+Public NotInheritable Class [optional](Of T)
     Private ReadOnly b As Boolean
     Private ReadOnly v As T
 
