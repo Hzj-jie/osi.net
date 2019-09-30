@@ -66,7 +66,23 @@ It can be suffixed by ? - 0 or 1, * - 0 or more, + 1 or more.
 Sample rules:
 void -> void
 "a bc\"" -> "[*,\"|"]*" - * is a macro representing any character.
--1.9 -> [-]?[\d]*.[\d]+ - \d is a macro representing all digits.
+-1.9 -> [+,-]?[\d]*.[\d]+ - \d is a macro representing all digits.
 function_a [\w,_]+ - \w is a macro representing any English character.
 
 Reserved characters [],|, these characters can be escaped by using c-style.
+
+Processing steps:
+1. Preprocess
+  1.1 INCLUDE, include files
+  1.2 DEFINE, define macros
+  1.3 Expand macros
+2. Parse
+  - A group - starting from [ and ending with ], may contain a | as the separator of match and unmatch rules.
+    - Several special match rules:
+	  - \d: Digits
+	  - \D: Non-digits
+	  - \w: English characters
+	  - \W: Non-English characters
+	  - \b: Blanks
+	  - \B: Non-blanks
+  - A raw string - a language sugar of [string]
