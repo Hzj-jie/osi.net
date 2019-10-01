@@ -79,11 +79,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="nlexer\digit_matcher.vb" />
+    <Compile Include="nlexer\en_char_matcher.vb" />
     <Compile Include="nlexer\group.vb" />
     <Compile Include="nlexer\group_matcher.vb" />
     <Compile Include="nlexer\matcher.vb" />
+    <Compile Include="nlexer\matcher_creator.vb" />
     <Compile Include="nlexer\reverse_matcher.vb" />
     <Compile Include="nlexer\rule.vb" />
+    <Compile Include="nlexer\single_char_matcher.vb" />
+    <Compile Include="nlexer\space_matcher.vb" />
     <Compile Include="nlexer\string_matcher.vb" />
     <Compile Include="parser.vb" />
     <Compile Include="regex\any_matching_group.vb" />

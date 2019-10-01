@@ -1,19 +1,21 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports osi.root.constants
 
 Public Module _substring
     <Extension()> Public Function strleft(ByVal str As String, ByVal length As UInt32) As String
-        If length > 0 Then
-            If strlen(str) > length Then
-                Return str.Substring(0, CInt(length))
-            Else
-                Return str
-            End If
-        Else
+        If length <= 0 Then
             Return Nothing
         End If
+        If strlen(str) > length Then
+            Return str.Substring(0, CInt(length))
+        End If
+        Return str
     End Function
 
     <Extension()> Public Function strright(ByVal str As String, ByVal length As UInt32) As String
@@ -21,11 +23,11 @@ Public Module _substring
         len = strlen(str)
         If length = 0 Then
             Return Nothing
-        ElseIf length >= len Then
+            End If
+        If length >= len Then
             Return str
-        Else
-            Return str.Substring(len - length)
         End If
+        Return str.Substring(CInt(len - length))
     End Function
 
     <Extension()> Public Function strmid(ByVal s As String,
@@ -33,21 +35,20 @@ Public Module _substring
                                          Optional ByVal len As UInt32 = max_uint32) As String
         If s Is Nothing OrElse s.Length() < start Then
             Return Nothing
-        ElseIf len = uint32_0 Then
+        End If
+        If len = uint32_0 Then
             Return empty_string
-        ElseIf start = uint32_0 Then
+        End If
+        If start = uint32_0 Then
             If len = max_uint32 OrElse len >= s.Length() Then
                 Return s
-            Else
-                Return s.Substring(0, CInt(len))
             End If
-        Else
-            If len = max_uint32 OrElse len + start >= s.Length() Then
-                Return s.Substring(CInt(start))
-            Else
-                Return s.Substring(CInt(start), CInt(len))
-            End If
+            Return s.Substring(0, CInt(len))
         End If
+        If len = max_uint32 OrElse len + start >= s.Length() Then
+            Return s.Substring(CInt(start))
+        End If
+        Return s.Substring(CInt(start), CInt(len))
     End Function
 
     <Extension()> Public Function strmid(ByVal s As StringBuilder,
@@ -55,12 +56,17 @@ Public Module _substring
                                          Optional ByVal len As UInt32 = max_uint32) As String
         If s Is Nothing OrElse s.Length() < start Then
             Return Nothing
-        ElseIf len = 0 Then
-            Return empty_string
-        ElseIf len = max_uint32 OrElse len + start >= s.Length() Then
-            Return s.ToString(start, s.Length() - CInt(start))
-        Else
-            Return s.ToString(start, len)
         End If
+        If len = 0 Then
+            Return empty_string
+        End If
+        If len = max_uint32 OrElse len + start >= s.Length() Then
+            Return s.ToString(CInt(start), s.Length() - CInt(start))
+        End If
+        Return s.ToString(CInt(start), CInt(len))
+    End Function
+
+    <Extension()> Public Function chat_at(ByVal s As String, ByVal pos As UInt32) As Char
+        Return s(CInt(pos))
     End Function
 End Module

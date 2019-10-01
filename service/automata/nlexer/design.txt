@@ -83,6 +83,6 @@ Processing steps:
 	  - \D: Non-digits
 	  - \w: English characters
 	  - \W: Non-English characters
-	  - \b: Blanks
-	  - \B: Non-blanks
+	  - \b: Spaces
+	  - \B: Non-spaces
   - A raw string - a language sugar of [string]
