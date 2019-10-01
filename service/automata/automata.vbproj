@@ -80,8 +80,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="nlexer\group.vb" />
+    <Compile Include="nlexer\group_matcher.vb" />
     <Compile Include="nlexer\matcher.vb" />
+    <Compile Include="nlexer\reverse_matcher.vb" />
     <Compile Include="nlexer\rule.vb" />
+    <Compile Include="nlexer\string_matcher.vb" />
     <Compile Include="parser.vb" />
     <Compile Include="regex\any_matching_group.vb" />
     <Compile Include="regex\matching_group_creator.vb" />
