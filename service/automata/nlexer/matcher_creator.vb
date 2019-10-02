@@ -24,6 +24,10 @@ Partial Public NotInheritable Class nlexer
 
         End Function
 
+        Public Shared Function [from](ByVal i As String) As matcher
+
+        End Function
+
         Private Sub New()
         End Sub
     End Class

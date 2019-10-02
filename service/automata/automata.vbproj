@@ -79,6 +79,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="nlexer\characters.vb" />
     <Compile Include="nlexer\digit_matcher.vb" />
     <Compile Include="nlexer\en_char_matcher.vb" />
     <Compile Include="nlexer\group.vb" />
