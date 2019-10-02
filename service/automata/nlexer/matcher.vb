@@ -14,6 +14,15 @@ Partial Public NotInheritable Class nlexer
     Public NotInheritable Class never_matcher
         Implements matcher
 
+        Public Shared ReadOnly instance As never_matcher
+
+        Shared Sub New()
+            instance = New never_matcher()
+        End Sub
+
+        Private Sub New()
+        End Sub
+
         Public Function match(ByVal i As String, ByVal pos As UInt32) As [optional](Of UInt32) Implements matcher.match
             Return [optional].of(Of UInt32)()
         End Function
