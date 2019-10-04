@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 
 Partial Public NotInheritable Class nlexer
-    Public NotInheritable Class matcher_creator
+    Public NotInheritable Class matchers
         Private Shared ReadOnly matchers As vector(Of pair(Of String, Func(Of matcher)))
 
         Shared Sub New()
@@ -22,7 +22,7 @@ Partial Public NotInheritable Class nlexer
             matchers.emplace_back(emplace_make_pair(s, f))
         End Sub
 
-        Public Shared Function [new](ByVal i As String) As matcher
+        Private Shared Function [new](ByVal i As String) As matcher
             For j As UInt32 = 0 To matchers.size() - uint32_1
                 If strsame(i, matchers(j).first) Then
                     Return matchers(j).second()
@@ -42,7 +42,8 @@ Partial Public NotInheritable Class nlexer
             Return r
         End Function
 
-        Public Shared Function [from](ByVal i As String) As matcher
+        ' Process a,b,c
+        Public Shared Function [of](ByVal i As String) As matcher
             Dim vs As vector(Of String) = Nothing
             vs = vector.emplace_of(i.Split(characters.matcher_separator))
             If vs.empty() Then

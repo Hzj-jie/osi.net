@@ -86,6 +86,7 @@
     <Compile Include="nlexer\group_matcher.vb" />
     <Compile Include="nlexer\matcher.vb" />
     <Compile Include="nlexer\matcher_creator.vb" />
+    <Compile Include="nlexer\nlexer.vb" />
     <Compile Include="nlexer\reverse_matcher.vb" />
     <Compile Include="nlexer\rule.vb" />
     <Compile Include="nlexer\single_char_matcher.vb" />

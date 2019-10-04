@@ -21,7 +21,7 @@ Partial Public NotInheritable Class nlexer
         End Sub
 
         Public Shared Sub register()
-            matcher_creator.register("*", Function() As matcher
+            matchers.register("*", Function() As matcher
                                               Return instance
                                           End Function)
         End Sub

@@ -30,5 +30,10 @@ Partial Public NotInheritable Class nlexer
             End If
             Return mr
         End Function
+
+        ' Process a,b,c|d,e,f
+        Public Shared Function [of](ByVal s As String) As group
+
+        End Function
     End Class
 End Class

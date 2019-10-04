@@ -21,10 +21,10 @@ Partial Public NotInheritable Class nlexer
         End Sub
 
         Public Shared Sub register()
-            matcher_creator.register("\d", Function() As matcher
+            matchers.register("\d", Function() As matcher
                                                Return instance
                                            End Function)
-            matcher_creator.register("\D", Function() As matcher
+            matchers.register("\D", Function() As matcher
                                                Return reverse
                                            End Function)
         End Sub

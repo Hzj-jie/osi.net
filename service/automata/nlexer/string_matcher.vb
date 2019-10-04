@@ -15,7 +15,7 @@ Partial Public NotInheritable Class nlexer
         Private ReadOnly l As UInt32
 
         Public Sub New(ByVal s As String)
-            Me.s = c_unescape(s)
+            Me.s = unescape(s)
             l = strlen(Me.s)
         End Sub
 

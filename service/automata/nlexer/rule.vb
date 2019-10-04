@@ -32,5 +32,10 @@ Partial Public NotInheritable Class nlexer
             Next
             Return [optional].of(pos)
         End Function
+
+        ' Process abc[d,e|f]+
+        Public Shared Function [of](ByVal s As String) As rule
+
+        End Function
     End Class
 End Class

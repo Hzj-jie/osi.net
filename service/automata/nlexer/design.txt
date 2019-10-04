@@ -69,7 +69,7 @@ void -> void
 -1.9 -> [+,-]?[\d]*.[\d]+ - \d is a macro representing all digits.
 function_a [\w,_]+ - \w is a macro representing any English character.
 
-Reserved characters [],|, these characters can be escaped by using c-style.
+Reserved characters [],|?*+\, these characters can be escaped by using c-style.
 
 Processing steps:
 1. Preprocess
