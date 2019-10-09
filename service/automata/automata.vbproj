@@ -82,10 +82,11 @@
     <Compile Include="nlexer\characters.vb" />
     <Compile Include="nlexer\digit_matcher.vb" />
     <Compile Include="nlexer\en_char_matcher.vb" />
+    <Compile Include="nlexer\escape.vb" />
     <Compile Include="nlexer\group.vb" />
     <Compile Include="nlexer\group_matcher.vb" />
     <Compile Include="nlexer\matcher.vb" />
-    <Compile Include="nlexer\matcher_creator.vb" />
+    <Compile Include="nlexer\matchers.vb" />
     <Compile Include="nlexer\nlexer.vb" />
     <Compile Include="nlexer\reverse_matcher.vb" />
     <Compile Include="nlexer\rule.vb" />
