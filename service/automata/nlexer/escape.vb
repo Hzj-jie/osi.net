@@ -8,29 +8,35 @@ Imports osi.root.constants
 Imports osi.root.formation
 
 Partial Public NotInheritable Class nlexer
-    Private Shared ReadOnly escapes() As pair(Of String, String) = {
-        make_escape(characters.matcher_separator),
-        make_escape(characters.group_separator),
-        make_escape(characters.group_start),
-        make_escape(characters.group_end),
-        make_escape(characters.optional_suffix),
-        make_escape(characters._0_or_more_suffix),
-        make_escape(characters._1_or_more_suffix),
-        make_escape(character.right_slash)
-    }
+    Private NotInheritable Class escapes
+        Public Shared ReadOnly v As vector(Of pair(Of String, String))
 
-    Private Shared Function make_escape(ByVal c As Char) As pair(Of String, String)
-        Return pair.emplace_of(character.right_slash + c, character.right_slash + "x" + Convert.ToByte(c).hex())
-    End Function
+        Private Shared Function escape_of(ByVal c As Char) As pair(Of String, String)
+            Return pair.emplace_of(character.right_slash + c, character.right_slash + "x" + Convert.ToByte(c).hex())
+        End Function
+
+        Shared Sub New()
+            v = New vector(Of pair(Of String, String))()
+            For Each c As Char In characters.all
+                v.emplace_back(escape_of(c))
+            Next
+            v.emplace_back(escape_of(character.right_slash))
+        End Sub
+
+        Private Sub New()
+        End Sub
+    End Class
 
     Public Shared Function escape(ByVal s As String) As String
         assert(Not s Is Nothing)
         If s.null_or_whitespace() Then
             Return s
         End If
-        For i As Int32 = 0 To array_size_i(escapes) - 1
-            s = s.Replace(escapes(i).first, escapes(i).second)
-        Next
+        Dim i As UInt32 = 0
+        While i < escapes.v.size()
+            s = s.Replace(escapes.v(i).first, escapes.v(i).second)
+            i += uint32_1
+        End While
         Return s
     End Function
 
@@ -39,9 +45,11 @@ Partial Public NotInheritable Class nlexer
         If s.null_or_whitespace() Then
             Return s
         End If
-        For i As Int32 = 0 To array_size_i(escapes) - 1
-            s = s.Replace(escapes(i).second, escapes(i).first)
-        Next
+        Dim i As UInt32 = 0
+        While i < escapes.v.size()
+            s = s.Replace(escapes.v(i).second, escapes.v(i).first)
+            i += uint32_1
+        End While
         Return s
     End Function
 End Class

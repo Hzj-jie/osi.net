@@ -15,6 +15,16 @@ Partial Public NotInheritable Class nlexer
         Public Const _0_or_more_suffix As Char = character.asterisk
         Public Const _1_or_more_suffix As Char = character.plus_sign
 
+        Public Shared ReadOnly all() As Char = {
+            matcher_separator,
+            group_separator,
+            group_start,
+            group_end,
+            optional_suffix,
+            _0_or_more_suffix,
+            _1_or_more_suffix
+        }
+
         Private Sub New()
         End Sub
     End Class
