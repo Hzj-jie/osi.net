@@ -9,22 +9,22 @@ Imports osi.root.formation
 
 Partial Public NotInheritable Class nlexer
     Public NotInheritable Class rule
-        Private ReadOnly gs As vector(Of group)
+        Private ReadOnly ms As vector(Of matcher)
 
-        Public Sub New(ByVal gs As vector(Of group))
-            assert(Not gs Is Nothing)
-            assert(Not gs.empty())
-            Me.gs = gs
+        Public Sub New(ByVal ms As vector(Of matcher))
+            assert(Not ms Is Nothing)
+            assert(Not ms.empty())
+            Me.ms = ms
         End Sub
 
-        Public Sub New(ByVal ParamArray gs() As group)
+        Public Sub New(ByVal ParamArray gs() As matcher)
             Me.New(vector.of(gs))
         End Sub
 
         Public Function match(ByVal i As String, ByVal pos As UInt32) As [optional](Of UInt32)
-            For j As UInt32 = 0 To gs.size() - uint32_1
+            For j As UInt32 = 0 To ms.size() - uint32_1
                 Dim r As [optional](Of UInt32) = Nothing
-                r = gs(j).match(i, pos)
+                r = ms(j).match(i, pos)
                 If Not r Then
                     Return [optional].of(Of UInt32)()
                 End If

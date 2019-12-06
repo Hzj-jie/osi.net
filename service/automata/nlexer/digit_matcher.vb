@@ -20,13 +20,13 @@ Partial Public NotInheritable Class nlexer
         Private Sub New()
         End Sub
 
-        Public Shared Sub register()
+        Public Shared Shadows Sub register()
             matchers.register("\d", Function() As matcher
-                                               Return instance
-                                           End Function)
+                                        Return instance
+                                    End Function)
             matchers.register("\D", Function() As matcher
-                                               Return reverse
-                                           End Function)
+                                        Return reverse
+                                    End Function)
         End Sub
 
         Protected Overrides Function check(ByVal c As Char) As Boolean
