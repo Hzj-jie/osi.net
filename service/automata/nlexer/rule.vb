@@ -34,8 +34,14 @@ Partial Public NotInheritable Class nlexer
         End Function
 
         ' Process abc[d,e|f]+
-        Public Shared Function [of](ByVal s As String, ByRef i As UInt32) As rule
+        Public Shared Function [of](ByVal s As String, ByRef i As UInt32, ByRef o As rule) As Boolean
+            Dim ms As vector(Of matcher) = Nothing
+            ms = New vector(Of matcher)()
+        End Function
 
+        Public Shared Function [of](ByVal s As String, ByRef o As rule) As Boolean
+            Dim i As UInt32 = 0
+            Return [of](s, i, o) AndAlso i = strlen(s)
         End Function
     End Class
 End Class

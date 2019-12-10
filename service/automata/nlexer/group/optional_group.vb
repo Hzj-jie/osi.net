@@ -10,9 +10,9 @@ Partial Public NotInheritable Class nlexer
     Public NotInheritable Class optional_group
         Implements matcher
 
-        Private ReadOnly g As group
+        Private ReadOnly g As matcher
 
-        Public Sub New(ByVal g As group)
+        Public Sub New(ByVal g As matcher)
             assert(Not g Is Nothing)
             Me.g = g
         End Sub
@@ -25,5 +25,12 @@ Partial Public NotInheritable Class nlexer
             End If
             Return [optional].of(pos)
         End Function
+
+        Public Shared Sub register()
+            groups.register(characters.optional_suffix,
+                            Function(ByVal i As matcher) As matcher
+                                Return New optional_group(i)
+                            End Function)
+        End Sub
     End Class
 End Class

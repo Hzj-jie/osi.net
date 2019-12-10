@@ -10,9 +10,9 @@ Partial Public NotInheritable Class nlexer
     Public NotInheritable Class _1_or_more_group
         Implements matcher
 
-        Private ReadOnly g As group
+        Private ReadOnly g As matcher
 
-        Public Sub New(ByVal g As group)
+        Public Sub New(ByVal g As matcher)
             assert(Not g Is Nothing)
             Me.g = g
         End Sub
@@ -31,5 +31,12 @@ Partial Public NotInheritable Class nlexer
             End While
             Return r
         End Function
+
+        Public Shared Sub register()
+            groups.register(characters._1_or_more_suffix,
+                            Function(ByVal i As matcher) As matcher
+                                Return New _1_or_more_group(i)
+                            End Function)
+        End Sub
     End Class
 End Class

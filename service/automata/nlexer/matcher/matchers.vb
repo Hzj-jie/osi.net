@@ -9,26 +9,29 @@ Imports osi.root.formation
 
 Partial Public NotInheritable Class nlexer
     Public NotInheritable Class matchers
-        Private Shared ReadOnly matchers As vector(Of pair(Of String, Func(Of matcher)))
+        Private Shared ReadOnly m As map(Of String, Func(Of matcher))
 
         Shared Sub New()
-            matchers = New vector(Of pair(Of String, Func(Of matcher)))()
+            m = New map(Of String, Func(Of matcher))()
             digit_matcher.register()
             en_char_matcher.register()
             space_matcher.register()
         End Sub
 
         Public Shared Sub register(ByVal s As String, ByVal f As Func(Of matcher))
-            matchers.emplace_back(emplace_make_pair(s, f))
+            assert(Not s Is Nothing)
+            assert(Not f Is Nothing)
+            assert(m.find(s) = m.end())
+            m.emplace(s, f)
         End Sub
 
         Private Shared Function [new](ByVal i As String) As matcher
-            For j As UInt32 = 0 To matchers.size() - uint32_1
-                If strsame(i, matchers(j).first) Then
-                    Return matchers(j).second()
-                End If
-            Next
-            Return New string_matcher(i)
+            Dim it As map(Of String, Func(Of matcher)).iterator = Nothing
+            it = m.find(i)
+            If it = m.end() Then
+                Return New string_matcher(i)
+            End If
+            Return (+it).second()
         End Function
 
         Private Shared Function new_all(ByVal vs As vector(Of String)) As vector(Of matcher)
