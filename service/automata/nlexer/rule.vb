@@ -34,7 +34,7 @@ Partial Public NotInheritable Class nlexer
         End Function
 
         ' Process abc[d,e|f]+
-        Public Shared Function [of](ByVal s As String) As rule
+        Public Shared Function [of](ByVal s As String, ByRef i As UInt32) As rule
 
         End Function
     End Class

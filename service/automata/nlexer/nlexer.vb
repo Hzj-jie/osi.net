@@ -33,7 +33,7 @@ Partial Public NotInheritable Class nlexer
         Return [optional].of(Of UInt32)()
     End Function
 
-    Public Shared Function create(ByVal i As String, ByRef o As nlexer) As Boolean
+    Public Shared Function [of](ByVal i As String, ByRef o As nlexer) As Boolean
 
     End Function
 End Class
