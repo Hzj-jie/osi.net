@@ -12,7 +12,7 @@ Partial Public NotInheritable Class nlexer
         Public Shared ReadOnly v As vector(Of pair(Of String, String))
 
         Private Shared Function escape_of(ByVal c As Char) As pair(Of String, String)
-            Return pair.emplace_of(character.right_slash + c, character.right_slash + "x" + Convert.ToByte(c).hex())
+            Return pair.emplace_of(character.right_slash + c, c.c_hex_escape())
         End Function
 
         Shared Sub New()
@@ -20,7 +20,6 @@ Partial Public NotInheritable Class nlexer
             For Each c As Char In characters.all
                 v.emplace_back(escape_of(c))
             Next
-            v.emplace_back(escape_of(character.right_slash))
         End Sub
 
         Private Sub New()
@@ -42,14 +41,6 @@ Partial Public NotInheritable Class nlexer
 
     Public Shared Function unescape(ByVal s As String) As String
         assert(Not s Is Nothing)
-        If s.null_or_whitespace() Then
-            Return s
-        End If
-        Dim i As UInt32 = 0
-        While i < escapes.v.size()
-            s = s.Replace(escapes.v(i).second, escapes.v(i).first)
-            i += uint32_1
-        End While
-        Return s
+        Return s.c_unescape()
     End Function
 End Class

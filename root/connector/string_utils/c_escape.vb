@@ -10,6 +10,13 @@ Imports osi.root.constants
 Public Module _c_escape
     Private Const escape_char As Char = character.right_slash
 
+    <Extension()> Public Function c_hex_escape(ByVal c As Char) As String
+        If c.extended_ascii() Then
+            Return escape_char + character.x + Convert.ToByte(c).hex()
+        End If
+        Return escape_char + character.u + c.hex_str()
+    End Function
+
     <Extension()> Public Function c_escape(ByVal s As String,
                                            ByVal str_start As UInt32,
                                            ByVal str_len As UInt32) As String

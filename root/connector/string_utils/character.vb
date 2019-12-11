@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
@@ -26,16 +30,15 @@ Public Module _character
     End Function
 
     <Extension()> Public Function hex_value(ByVal c As Char, ByRef v As Byte) As Boolean
-        If hex(c) Then
-            v = If(digit(c),
-                   Convert.ToInt32(c) - Convert.ToInt32(character._0),
-                   If(lowalpha(c),
-                      Convert.ToInt32(c) - Convert.ToInt32(character.a),
-                      Convert.ToInt32(c) - Convert.ToInt32(character._A)) + 10)
-            Return True
-        Else
+        If Not hex(c) Then
             Return False
         End If
+        v = CByte(If(digit(c),
+                     Convert.ToInt32(c) - Convert.ToInt32(character._0),
+                     If(lowalpha(c),
+                        Convert.ToInt32(c) - Convert.ToInt32(character.a),
+                        Convert.ToInt32(c) - Convert.ToInt32(character._A)) + 10))
+        Return True
     End Function
 
     <Extension()> Public Function hex_value(ByVal c As Char) As Byte
@@ -60,6 +63,22 @@ Public Module _character
 
     <Extension()> Public Function visible(ByVal c As Char) As Boolean
         Return Not Char.IsControl(c)
+    End Function
+
+    <Extension()> Public Function _7_bit(ByVal c As Char) As Boolean
+        Return c.ascii()
+    End Function
+
+    <Extension()> Public Function ascii(ByVal c As Char) As Boolean
+        Return extended_ascii(c) AndAlso Convert.ToByte(c) <= character.ascii_upper_bound
+    End Function
+
+    <Extension()> Public Function _8_bit(ByVal c As Char) As Boolean
+        Return c.extended_ascii()
+    End Function
+
+    <Extension()> Public Function extended_ascii(ByVal c As Char) As Boolean
+        Return c.big_endian_bytes()(0) = 0
     End Function
 
     Public Function uint16_char(ByVal i As UInt16) As Char

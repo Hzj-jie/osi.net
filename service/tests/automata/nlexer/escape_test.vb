@@ -3,16 +3,25 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.utt
 Imports osi.root.utt.attributes
-Imports osi.service.automata
+Imports nl = osi.service.automata.nlexer
 
 Namespace nlexer
     <test>
     Public NotInheritable Class escape_test
         <test>
-        <repeat(500, 50000)>
+        <repeat(50000, 500000)>
         Private Shared Sub run()
-
+            Dim s As String = Nothing
+            s = rnd_utf8_chars(1000)
+            For Each c As Char In nl.characters.all
+                s = s.Replace(c, character.right_slash + c)
+            Next
+            assertion.equal(s, nl.unescape(nl.escape(s)))
+            assertion.is_false(nl.escape(s).contains_any(nl.characters.all))
         End Sub
 
         Private Sub New()
