@@ -25,26 +25,50 @@ Partial Public NotInheritable Class nlexer
         End Sub
 
         ' Process [a,b,c|d,e,f]*
-        Public Shared Function [of](ByVal s As String) As matcher
-            assert(Not s Is Nothing)
-            If s(0) <> characters.group_start Then
-                Return group.of(s)
+        Private Shared Function of_group(ByVal s As String, ByRef i As UInt32, ByRef o As matcher) As Boolean
+            assert(s(CInt(i)) = characters.group_start)
+            Dim group_end As Int32 = 0
+            group_end = s.IndexOf(characters.group_end, CInt(i))
+            If group_end = npos Then
+                Return False
             End If
-            Dim e As Int32 = 0
-            e = s.IndexOf(characters.group_end)
-            assert(e >= 1)
-            Dim g As matcher = Nothing
-            g = group.of(s.Substring(1, e - 1))
-            e += 1
-            While e < s.Length()
+            o = group.of(s.Substring(CInt(i) + 1, group_end - 1))
+            group_end += 1
+            While group_end < s.Length()
                 Dim it As map(Of Char, Func(Of matcher, matcher)).iterator = Nothing
-                it = m.find(s(e))
+                it = m.find(s(group_end))
+                If it = m.end() Then
+                    Exit While
+                End If
                 assert(it <> m.end())
-                g = (+it).second(g)
-                e += 1
+                o = (+it).second(o)
+                group_end += 1
             End While
-            assert(Not g Is Nothing)
-            Return g
+            assert(Not o Is Nothing)
+            i = CUInt(group_end)
+            Return True
+        End Function
+
+        ' Process abc
+        Private Shared Function of_raw_string(ByVal s As String, ByRef i As UInt32) As matcher
+            assert(s(CInt(i)) <> characters.group_start)
+            Dim next_group_start As Int32 = 0
+            next_group_start = s.IndexOf(characters.group_start, CInt(i))
+            If next_group_start = npos Then
+                i = strlen(s)
+                Return group.of(s.Substring(CInt(i)))
+            End If
+            i = CUInt(next_group_start)
+            Return group.of(s.Substring(CInt(i), next_group_start - CInt(i)))
+        End Function
+
+        Public Shared Function [of](ByVal s As String, ByRef i As UInt32, ByRef o As matcher) As Boolean
+            assert(strlen(s) > i)
+            If s(CInt(i)) = characters.group_start Then
+                Return of_group(s, i, o)
+            End If
+            o = of_raw_string(s, i)
+            Return True
         End Function
 
         Public Shared Function end_of_groups(ByVal s As String, ByVal i As UInt32) As UInt32
