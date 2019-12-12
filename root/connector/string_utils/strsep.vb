@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
@@ -14,16 +18,15 @@ Public Module _strsep
         i = indexof(input, sep, case_sensitive)
         If i = npos Then
             Return False
-        Else
-            Dim f1 As String = Nothing
-            Dim s1 As String = Nothing
-            f1 = strleft(input, i)
-            s1 = strmid(input, i + strlen(sep))
-            'no matter whether f is input or s is input, it's safe
-            f = f1
-            s = s1
-            Return True
         End If
+        Dim f1 As String = Nothing
+        Dim s1 As String = Nothing
+        f1 = strleft(input, CUInt(i))
+        s1 = strmid(input, CUInt(i) + strlen(sep))
+        'no matter whether f is input or s is input, it's safe
+        f = f1
+        s = s1
+        Return True
     End Function
 
     <Extension()> Public Function strsep(ByVal input As String,

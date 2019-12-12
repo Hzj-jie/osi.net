@@ -20,12 +20,14 @@ Namespace nlexer
 
             Dim o As [optional](Of UInt32) = Nothing
             o = r.match("abc")
-            assertion.is_true(o)
-            assertion.equal(+o, uint32_3)
+            If assertion.is_true(o) Then
+                assertion.equal(+o, uint32_3)
+            End If
 
             o = r.match("abcd")
-            assertion.is_true(o)
-            assertion.equal(+o, uint32_3)
+            If assertion.is_true(o) Then
+                assertion.equal(+o, uint32_3)
+            End If
 
             o = r.match("abcd", uint32_1)
             assertion.is_false(o)
@@ -34,8 +36,9 @@ Namespace nlexer
             assertion.is_false(o)
 
             o = r.match("babcd", uint32_1)
-            assertion.is_true(o)
-            assertion.equal(+o, CUInt(4))
+            If assertion.is_true(o) Then
+                assertion.equal(+o, CUInt(4))
+            End If
         End Sub
 
         <test>
@@ -45,12 +48,14 @@ Namespace nlexer
 
             Dim o As [optional](Of UInt32) = Nothing
             o = r.match("abcbcd")
-            assertion.is_true(o)
-            assertion.equal(+o, CUInt(6))
+            If assertion.is_true(o) Then
+                assertion.equal(+o, CUInt(6))
+            End If
 
             o = r.match("abcbcde")
-            assertion.is_true(o)
-            assertion.equal(+o, CUInt(6))
+            If assertion.is_true(o) Then
+                assertion.equal(+o, CUInt(6))
+            End If
 
             o = r.match("abcbcde", uint32_1)
             assertion.is_false(o)
@@ -59,8 +64,9 @@ Namespace nlexer
             assertion.is_false(o)
 
             o = r.match("babcbcde", uint32_1)
-            assertion.is_true(o)
-            assertion.equal(+o, CUInt(7))
+            If assertion.is_true(o) Then
+                assertion.equal(+o, CUInt(7))
+            End If
         End Sub
 
         <test>
@@ -70,20 +76,46 @@ Namespace nlexer
 
             Dim o As [optional](Of UInt32) = Nothing
             o = r.match("a")
-            assertion.is_true(o)
-            assertion.equal(+o, uint32_1)
+            If assertion.is_true(o) Then
+                assertion.equal(+o, uint32_1)
+            End If
 
             o = r.match("abc")
-            assertion.is_true(o)
-            assertion.equal(+o, uint32_1)
+            If assertion.is_true(o) Then
+                assertion.equal(+o, uint32_1)
+            End If
 
             o = r.match("bc")
-            assertion.is_true(o)
-            assertion.equal(+o, uint32_2)
+            If assertion.is_true(o) Then
+                assertion.equal(+o, uint32_2)
+            End If
 
             o = r.match("def")
-            assertion.is_true(o)
-            assertion.equal(+o, uint32_3)
+            If assertion.is_true(o) Then
+                assertion.equal(+o, uint32_3)
+            End If
+
+            o = r.match("baba")
+            assertion.is_false(o)
+        End Sub
+
+        <test>
+        Private Shared Sub no_negative_matches()
+            Dim r As rule = Nothing
+            assertion.is_true(rule.of("[a,bc,def|]", r))
+
+            Dim o As [optional](Of UInt32) = Nothing
+            o = r.match("a")
+            assertion.is_false(o)
+
+            o = r.match("abc")
+            assertion.is_false(o)
+
+            o = r.match("bc")
+            assertion.is_false(o)
+
+            o = r.match("def")
+            assertion.is_false(o)
 
             o = r.match("baba")
             assertion.is_false(o)
@@ -96,24 +128,44 @@ Namespace nlexer
 
             Dim o As [optional](Of UInt32) = Nothing
             o = r.match("abcd")
-            assertion.is_true(o)
-            assertion.equal(+o, CUInt(4))
+            If assertion.is_true(o) Then
+                assertion.equal(+o, CUInt(4))
+            End If
 
             o = r.match("abc")
-            assertion.is_true(o)
-            assertion.equal(+o, uint32_3)
+            If assertion.is_true(o) Then
+                assertion.equal(+o, uint32_3)
+            End If
 
             o = r.match("ab")
-            assertion.is_true(o)
-            assertion.equal(+o, uint32_2)
+            If assertion.is_true(o) Then
+                assertion.equal(+o, uint32_2)
+            End If
 
             o = r.match("a")
-            assertion.is_true(o)
-            assertion.equal(+o, uint32_1)
+            If assertion.is_true(o) Then
+                assertion.equal(+o, uint32_1)
+            End If
 
             o = r.match("abce")
-            assertion.is_true(o)
-            assertion.equal(+o, uint32_3)
+            If assertion.is_true(o) Then
+                assertion.equal(+o, uint32_3)
+            End If
+        End Sub
+
+        <test>
+        Private Shared Sub negative_matches()
+            Dim r As rule = Nothing
+            assertion.is_true(rule.of("[|a]", r))
+
+            Dim o As [optional](Of UInt32) = Nothing
+            o = r.match("a")
+            assertion.is_false(o)
+
+            o = r.match("b")
+            If assertion.is_true(o) Then
+                assertion.equal(+o, uint32_0)
+            End If
         End Sub
 
         Private Sub New()

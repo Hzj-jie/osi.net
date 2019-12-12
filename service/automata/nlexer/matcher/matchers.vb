@@ -47,6 +47,7 @@ Partial Public NotInheritable Class nlexer
 
         ' Process a,b,c
         Public Shared Function [of](ByVal i As String) As matcher
+            assert(Not i Is Nothing)
             Dim vs As vector(Of String) = Nothing
             vs = vector.emplace_of(i.Split(characters.matcher_separator))
             If vs.empty() Then

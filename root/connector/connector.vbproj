@@ -105,6 +105,7 @@
     <Compile Include="functor\string_serializer\string_serializer.object.vb" />
     <Compile Include="functor\string_serializer\string_serializer.vb" />
     <Compile Include="functor\string_serializer\uri_serializer.vb" />
+    <Compile Include="string_utils\null_str.vb" />
     <Compile Include="struct\struct.definition.vb" />
     <Compile Include="struct\struct.reflector.vb" />
     <Compile Include="struct\struct.infer.vb" />

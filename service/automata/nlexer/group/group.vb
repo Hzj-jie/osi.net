@@ -38,7 +38,7 @@ Partial Public NotInheritable Class nlexer
             Dim f As String = Nothing
             Dim s As String = Nothing
             If strsep(i, f, s, characters.group_separator) Then
-                Return New [group](matchers.of(f), matchers.of(s))
+                Return New [group](matchers.of(f.or_empty_str()), matchers.of(s.or_empty_str()))
             End If
             Return New [group](matchers.of(i), never_matcher.instance)
         End Function

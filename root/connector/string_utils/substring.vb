@@ -23,7 +23,7 @@ Public Module _substring
         len = strlen(str)
         If length = 0 Then
             Return Nothing
-            End If
+        End If
         If length >= len Then
             Return str
         End If
