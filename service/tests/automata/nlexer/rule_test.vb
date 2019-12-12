@@ -63,6 +63,59 @@ Namespace nlexer
             assertion.equal(+o, CUInt(7))
         End Sub
 
+        <test>
+        Private Shared Sub multiple_positive_matches()
+            Dim r As rule = Nothing
+            assertion.is_true(rule.of("[a,bc,def]", r))
+
+            Dim o As [optional](Of UInt32) = Nothing
+            o = r.match("a")
+            assertion.is_true(o)
+            assertion.equal(+o, uint32_1)
+
+            o = r.match("abc")
+            assertion.is_true(o)
+            assertion.equal(+o, uint32_1)
+
+            o = r.match("bc")
+            assertion.is_true(o)
+            assertion.equal(+o, uint32_2)
+
+            o = r.match("def")
+            assertion.is_true(o)
+            assertion.equal(+o, uint32_3)
+
+            o = r.match("baba")
+            assertion.is_false(o)
+        End Sub
+
+        <test>
+        Private Shared Sub longest_positive_matches()
+            Dim r As rule = Nothing
+            assertion.is_true(rule.of("[abcd,abc,ab,a]", r))
+
+            Dim o As [optional](Of UInt32) = Nothing
+            o = r.match("abcd")
+            assertion.is_true(o)
+            assertion.equal(+o, CUInt(4))
+
+            o = r.match("abc")
+            assertion.is_true(o)
+            assertion.equal(+o, uint32_3)
+
+            o = r.match("ab")
+            assertion.is_true(o)
+            assertion.equal(+o, uint32_2)
+
+            o = r.match("a")
+            assertion.is_true(o)
+            assertion.equal(+o, uint32_1)
+
+            o = r.match("abce")
+            assertion.is_true(o)
+            assertion.equal(+o, uint32_3)
+        End Sub
+
         Private Sub New()
         End Sub
     End Class
