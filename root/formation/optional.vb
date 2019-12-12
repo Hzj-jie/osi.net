@@ -33,7 +33,7 @@ Public NotInheritable Class [optional]
         Public Shared ReadOnly v As [optional](Of T)
 
         Shared Sub New()
-            v = [optional].of(Of T)()
+            v = New [optional](Of T)()
         End Sub
 
         Private Sub New()

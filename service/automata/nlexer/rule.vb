@@ -9,6 +9,8 @@ Imports osi.root.formation
 
 Partial Public NotInheritable Class nlexer
     Public NotInheritable Class rule
+        Implements matcher
+
         Private ReadOnly ms As vector(Of matcher)
 
         Public Sub New(ByVal ms As vector(Of matcher))
@@ -21,10 +23,11 @@ Partial Public NotInheritable Class nlexer
             Me.New(vector.of(gs))
         End Sub
 
-        Public Function match(ByVal i As String, ByVal pos As UInt32) As [optional](Of UInt32)
+        Public Function match(ByVal i As String, ByVal pos As UInt32) As [optional](Of UInt32) Implements matcher.match
             For j As UInt32 = 0 To ms.size() - uint32_1
                 Dim r As [optional](Of UInt32) = Nothing
                 r = ms(j).match(i, pos)
+                assert(Not r Is Nothing)
                 If Not r Then
                     Return [optional].of(Of UInt32)()
                 End If

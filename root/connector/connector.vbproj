@@ -70,6 +70,7 @@
     <Compile Include="disposable.vb" />
     <Compile Include="endian.vb" />
     <Compile Include="equal.vb" />
+    <Compile Include="error_handler\throws.vb" />
     <Compile Include="functor\bytes_serializer\bytes_serializer.endian.vb" />
     <Compile Include="functor\bytes_serializer\bytes_serializer.fixed.vb" />
     <Compile Include="functor\bytes_serializer\bytes_serializer.object.vb" />

@@ -74,6 +74,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="nlexer\escape_test.vb" />
+    <Compile Include="nlexer\rule_test.vb" />
     <Compile Include="regex\any_character_matching_group_test.vb" />
     <Compile Include="regex\any_matching_group_test.vb" />
     <Compile Include="regex\macros_test.vb" />

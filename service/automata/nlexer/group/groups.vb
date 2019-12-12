@@ -32,7 +32,7 @@ Partial Public NotInheritable Class nlexer
             If group_end = npos Then
                 Return False
             End If
-            o = group.of(s.Substring(CInt(i) + 1, group_end - 1))
+            o = group.of(s.Substring(CInt(i) + 1, group_end - CInt(i) - 1))
             group_end += 1
             While group_end < s.Length()
                 Dim it As map(Of Char, Func(Of matcher, matcher)).iterator = Nothing
@@ -52,14 +52,16 @@ Partial Public NotInheritable Class nlexer
         ' Process abc
         Private Shared Function of_raw_string(ByVal s As String, ByRef i As UInt32) As matcher
             assert(s(CInt(i)) <> characters.group_start)
+            Dim start As UInt32 = 0
+            start = i
             Dim next_group_start As Int32 = 0
             next_group_start = s.IndexOf(characters.group_start, CInt(i))
             If next_group_start = npos Then
                 i = strlen(s)
-                Return group.of(s.Substring(CInt(i)))
+                Return group.of(s.Substring(CInt(start)))
             End If
             i = CUInt(next_group_start)
-            Return group.of(s.Substring(CInt(i), next_group_start - CInt(i)))
+            Return group.of(s.Substring(CInt(start), next_group_start - CInt(start)))
         End Function
 
         Public Shared Function [of](ByVal s As String, ByRef i As UInt32, ByRef o As matcher) As Boolean
