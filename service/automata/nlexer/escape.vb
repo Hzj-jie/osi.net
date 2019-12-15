@@ -41,6 +41,14 @@ Partial Public NotInheritable Class nlexer
 
     Public Shared Function unescape(ByVal s As String) As String
         assert(Not s Is Nothing)
-        Return s.c_unescape()
+        If s.null_or_whitespace() Then
+            Return s
+        End If
+        Dim i As UInt32 = 0
+        While i < escapes.v.size()
+            s = s.Replace(escapes.v(i).second, escapes.v(i).first)
+            i += uint32_1
+        End While
+        Return s
     End Function
 End Class
