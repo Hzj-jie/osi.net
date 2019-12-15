@@ -22,7 +22,7 @@ Partial Public NotInheritable Class nlexer
             r = [optional].of(pos)
             While True
                 Dim n As [optional](Of UInt32) = Nothing
-                n = g.match(i, pos)
+                n = g.match(i, +r)
                 If n Then
                     r = n
                 Else

@@ -3,8 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
-Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.automata
@@ -18,27 +16,11 @@ Namespace nlexer
             Dim r As rule = Nothing
             assertion.is_true(rule.of("abc", r))
 
-            Dim o As [optional](Of UInt32) = Nothing
-            o = r.match("abc")
-            If assertion.is_true(o) Then
-                assertion.equal(+o, uint32_3)
-            End If
-
-            o = r.match("abcd")
-            If assertion.is_true(o) Then
-                assertion.equal(+o, uint32_3)
-            End If
-
-            o = r.match("abcd", uint32_1)
-            assertion.is_false(o)
-
-            o = r.match("babcd")
-            assertion.is_false(o)
-
-            o = r.match("babcd", uint32_1)
-            If assertion.is_true(o) Then
-                assertion.equal(+o, CUInt(4))
-            End If
+            assertions.of(r.match("abc")).has_value(3)
+            assertions.of(r.match("abcd")).has_value(3)
+            assertions.of(r.match("abcd", 1)).is_empty()
+            assertions.of(r.match("babcd")).is_empty()
+            assertions.of(r.match("babcd", 1)).has_value(4)
         End Sub
 
         <test>
@@ -46,27 +28,11 @@ Namespace nlexer
             Dim r As rule = Nothing
             assertion.is_true(rule.of("[abc][bcd]", r))
 
-            Dim o As [optional](Of UInt32) = Nothing
-            o = r.match("abcbcd")
-            If assertion.is_true(o) Then
-                assertion.equal(+o, CUInt(6))
-            End If
-
-            o = r.match("abcbcde")
-            If assertion.is_true(o) Then
-                assertion.equal(+o, CUInt(6))
-            End If
-
-            o = r.match("abcbcde", uint32_1)
-            assertion.is_false(o)
-
-            o = r.match("babcbcd")
-            assertion.is_false(o)
-
-            o = r.match("babcbcde", uint32_1)
-            If assertion.is_true(o) Then
-                assertion.equal(+o, CUInt(7))
-            End If
+            assertions.of(r.match("abcbcd")).has_value(6)
+            assertions.of(r.match("abcbcde")).has_value(6)
+            assertions.of(r.match("abcbcde", 1)).is_empty()
+            assertions.of(r.match("babcbcd")).is_empty()
+            assertions.of(r.match("babcbcde", 1)).has_value(7)
         End Sub
 
         <test>
@@ -74,29 +40,11 @@ Namespace nlexer
             Dim r As rule = Nothing
             assertion.is_true(rule.of("[a,bc,def]", r))
 
-            Dim o As [optional](Of UInt32) = Nothing
-            o = r.match("a")
-            If assertion.is_true(o) Then
-                assertion.equal(+o, uint32_1)
-            End If
-
-            o = r.match("abc")
-            If assertion.is_true(o) Then
-                assertion.equal(+o, uint32_1)
-            End If
-
-            o = r.match("bc")
-            If assertion.is_true(o) Then
-                assertion.equal(+o, uint32_2)
-            End If
-
-            o = r.match("def")
-            If assertion.is_true(o) Then
-                assertion.equal(+o, uint32_3)
-            End If
-
-            o = r.match("baba")
-            assertion.is_false(o)
+            assertions.of(r.match("a")).has_value(1)
+            assertions.of(r.match("abc")).has_value(1)
+            assertions.of(r.match("bc")).has_value(2)
+            assertions.of(r.match("def")).has_value(3)
+            assertions.of(r.match("baba")).is_empty()
         End Sub
 
         <test>
@@ -104,21 +52,11 @@ Namespace nlexer
             Dim r As rule = Nothing
             assertion.is_true(rule.of("[a,bc,def|]", r))
 
-            Dim o As [optional](Of UInt32) = Nothing
-            o = r.match("a")
-            assertion.is_false(o)
-
-            o = r.match("abc")
-            assertion.is_false(o)
-
-            o = r.match("bc")
-            assertion.is_false(o)
-
-            o = r.match("def")
-            assertion.is_false(o)
-
-            o = r.match("baba")
-            assertion.is_false(o)
+            assertions.of(r.match("a")).is_empty()
+            assertions.of(r.match("abc")).is_empty()
+            assertions.of(r.match("bc")).is_empty()
+            assertions.of(r.match("def")).is_empty()
+            assertions.of(r.match("baba")).is_empty()
         End Sub
 
         <test>
@@ -126,31 +64,11 @@ Namespace nlexer
             Dim r As rule = Nothing
             assertion.is_true(rule.of("[abcd,abc,ab,a]", r))
 
-            Dim o As [optional](Of UInt32) = Nothing
-            o = r.match("abcd")
-            If assertion.is_true(o) Then
-                assertion.equal(+o, CUInt(4))
-            End If
-
-            o = r.match("abc")
-            If assertion.is_true(o) Then
-                assertion.equal(+o, uint32_3)
-            End If
-
-            o = r.match("ab")
-            If assertion.is_true(o) Then
-                assertion.equal(+o, uint32_2)
-            End If
-
-            o = r.match("a")
-            If assertion.is_true(o) Then
-                assertion.equal(+o, uint32_1)
-            End If
-
-            o = r.match("abce")
-            If assertion.is_true(o) Then
-                assertion.equal(+o, uint32_3)
-            End If
+            assertions.of(r.match("abcd")).has_value(4)
+            assertions.of(r.match("abc")).has_value(3)
+            assertions.of(r.match("ab")).has_value(2)
+            assertions.of(r.match("a")).has_value(1)
+            assertions.of(r.match("abce")).has_value(3)
         End Sub
 
         <test>
@@ -158,14 +76,19 @@ Namespace nlexer
             Dim r As rule = Nothing
             assertion.is_true(rule.of("[|a]", r))
 
-            Dim o As [optional](Of UInt32) = Nothing
-            o = r.match("a")
-            assertion.is_false(o)
+            assertions.of(r.match("a")).is_empty()
+            assertions.of(r.match("b")).has_value(0)
+        End Sub
 
-            o = r.match("b")
-            If assertion.is_true(o) Then
-                assertion.equal(+o, uint32_0)
-            End If
+        <test>
+        Private Shared Sub multiple_negative_matches()
+            Dim r As rule = Nothing
+            assertion.is_true(rule.of("[|a,b,c]", r))
+
+            assertions.of(r.match("a")).is_empty()
+            assertions.of(r.match("b")).is_empty()
+            assertions.of(r.match("b")).is_empty()
+            assertions.of(r.match("d")).has_value(0)
         End Sub
 
         Private Sub New()

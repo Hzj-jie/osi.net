@@ -34,16 +34,14 @@ Partial Public NotInheritable Class nlexer
             End If
             o = group.of(s.Substring(CInt(i) + 1, group_end - CInt(i) - 1))
             group_end += 1
-            While group_end < s.Length()
+            If (group_end < s.Length()) Then
                 Dim it As map(Of Char, Func(Of matcher, matcher)).iterator = Nothing
                 it = m.find(s(group_end))
-                If it = m.end() Then
-                    Exit While
+                If it <> m.end() Then
+                    o = (+it).second(o)
+                    group_end += 1
                 End If
-                assert(it <> m.end())
-                o = (+it).second(o)
-                group_end += 1
-            End While
+            End If
             assert(Not o Is Nothing)
             i = CUInt(group_end)
             Return True
