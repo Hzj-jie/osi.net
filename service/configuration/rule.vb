@@ -40,37 +40,41 @@ Public MustInherit Class rule
         End If
 
         For i As Int32 = 0 To array_size_i(ls) - 1
-            If Not ls(i).null_or_whitespace() Then
-                ls(i) = ls(i).Trim()
-                If Not ls(i).strstartwith(comment_start) Then
-                    Dim f As String = Nothing
-                    Dim s As String = Nothing
-                    If Not strsep(ls(i), f, s, command_separator) Then
-                        f = ls(i)
-                    End If
+            If ls(i).null_or_whitespace() Then
+                Continue For
+            End If
 
-                    assert(Not String.IsNullOrEmpty(f))
-                    Dim x As Func(Of String, Boolean) = Nothing
-                    If strsame(f, command_include) Then
-                        x = AddressOf include
-                    Else
-                        assert(Not command_mapping() Is Nothing)
-                        Dim it As map(Of String, Func(Of String, Boolean)).iterator = Nothing
-                        it = command_mapping().find(f)
-                        If it = command_mapping().end() Then
-                            x = Function(y As String) As Boolean
-                                    Return [default](y, f)
-                                End Function
-                        Else
-                            x = (+it).second
-                        End If
-                    End If
-                    assert(Not x Is Nothing)
-                    If Not x(s) Then
-                        raise_error(error_type.user, "failed to execute command ", ls(i))
-                        Return False
-                    End If
+            ls(i) = ls(i).Trim()
+            If ls(i).strstartwith(comment_start) Then
+                Continue For
+            End If
+
+            Dim f As String = Nothing
+            Dim s As String = Nothing
+            If Not strsep(ls(i), f, s, command_separator) Then
+                f = ls(i)
+            End If
+
+            assert(Not String.IsNullOrEmpty(f))
+            Dim x As Func(Of String, Boolean) = Nothing
+            If strsame(f, command_include) Then
+                x = AddressOf include
+            Else
+                assert(Not command_mapping() Is Nothing)
+                Dim it As map(Of String, Func(Of String, Boolean)).iterator = Nothing
+                it = command_mapping().find(f)
+                If it = command_mapping().end() Then
+                    x = Function(y As String) As Boolean
+                            Return [default](y, f)
+                        End Function
+                Else
+                    x = (+it).second
                 End If
+            End If
+            assert(Not x Is Nothing)
+            If Not x(s) Then
+                raise_error(error_type.user, "failed to execute command ", ls(i))
+                Return False
             End If
         Next
 
@@ -97,12 +101,12 @@ Public MustInherit Class rule
     End Function
 
     Public Function parse_content(ByVal content As String) As Boolean
+        Static newline_strs() As String = {newline.incode(), character.newline}
         Static empty_surround_strs() As pair(Of String, String) = Nothing
         Dim vs As vector(Of String) = Nothing
-        If content.strsplit({newline.incode(), character.newline}, empty_surround_strs, vs, True, True) Then
+        If content.strsplit(newline_strs, empty_surround_strs, vs, True, True) Then
             Return parse(+vs)
-        Else
-            Return False
         End If
+        Return False
     End Function
 End Class
