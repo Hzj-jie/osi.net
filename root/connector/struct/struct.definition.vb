@@ -3,7 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Partial Public Class struct
+Partial Public NotInheritable Class struct
     Public Class definition
         Public ReadOnly type As Type
         Public ReadOnly name As String

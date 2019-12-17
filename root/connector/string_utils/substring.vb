@@ -66,7 +66,7 @@ Public Module _substring
         Return s.ToString(CInt(start), CInt(len))
     End Function
 
-    <Extension()> Public Function chat_at(ByVal s As String, ByVal pos As UInt32) As Char
+    <Extension()> Public Function char_at(ByVal s As String, ByVal pos As UInt32) As Char
         Return s(CInt(pos))
     End Function
 End Module

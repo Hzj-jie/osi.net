@@ -15,6 +15,7 @@ Partial Public NotInheritable Class nlexer
             m = New map(Of String, Func(Of matcher))()
             digit_matcher.register()
             en_char_matcher.register()
+            single_char_matcher.register()
             space_matcher.register()
         End Sub
 

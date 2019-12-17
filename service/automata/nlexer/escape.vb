@@ -12,7 +12,7 @@ Partial Public NotInheritable Class nlexer
         Public Shared ReadOnly v As vector(Of pair(Of String, String))
 
         Private Shared Function escape_of(ByVal c As Char) As pair(Of String, String)
-            Return pair.emplace_of(character.right_slash + c, c.c_hex_escape())
+            Return pair.emplace_of(characters.escape_char + c, characters.escape_char + c.c_hex_escape())
         End Function
 
         Shared Sub New()
@@ -46,7 +46,7 @@ Partial Public NotInheritable Class nlexer
         End If
         Dim i As UInt32 = 0
         While i < escapes.v.size()
-            s = s.Replace(escapes.v(i).second, escapes.v(i).first)
+            s = s.Replace(escapes.v(i).second, strmid(escapes.v(i).first, strlen(characters.escape_char)))
             i += uint32_1
         End While
         Return s

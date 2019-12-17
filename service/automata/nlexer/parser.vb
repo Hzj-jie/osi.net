@@ -26,15 +26,19 @@ Partial Public NotInheritable Class nlexer
 
         Protected Overrides Function [default](ByVal s As String, ByVal f As String) As Boolean
             If s.null_or_whitespace() OrElse f.null_or_whitespace() Then
-                raise_error(error_type.user, "word ", s, " and ", f, " pair has empty definition")
+                raise_error(error_type.user, "word ", f, " and ", s, " pair has empty definition")
                 Return False
             End If
             Dim r As rule = Nothing
-            If Not rule.of(s, r) Then
+            If Not rule.of(escape(s), r) Then
                 raise_error(error_type.user, "failed to parse rule " + s)
             End If
             rules.emplace_back(emplace_make_pair(f, r))
             Return True
+        End Function
+
+        Public Function export() As nlexer
+            Return New nlexer(rules)
         End Function
     End Class
 End Class

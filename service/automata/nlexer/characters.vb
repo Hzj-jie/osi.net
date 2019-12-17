@@ -14,6 +14,7 @@ Partial Public NotInheritable Class nlexer
         Public Const optional_suffix As Char = character.question_mark
         Public Const _0_or_more_suffix As Char = character.asterisk
         Public Const _1_or_more_suffix As Char = character.plus_sign
+        Public Const escape_char As Char = character.right_slash
 
         Public Shared ReadOnly all() As Char = {
             matcher_separator,

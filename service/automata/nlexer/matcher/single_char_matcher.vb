@@ -22,8 +22,8 @@ Partial Public NotInheritable Class nlexer
 
         Public Shared Sub register()
             matchers.register("*", Function() As matcher
-                                              Return instance
-                                          End Function)
+                                       Return instance
+                                   End Function)
         End Sub
 
         Protected Overridable Function check(ByVal c As Char) As Boolean
@@ -31,7 +31,7 @@ Partial Public NotInheritable Class nlexer
         End Function
 
         Public Function match(ByVal i As String, ByVal pos As UInt32) As [optional](Of UInt32) Implements matcher.match
-            If strlen(i) > pos AndAlso check(i.chat_at(pos)) Then
+            If strlen(i) > pos AndAlso check(i.char_at(pos)) Then
                 Return [optional].of(pos + uint32_1)
             End If
             Return [optional].of(Of UInt32)()
