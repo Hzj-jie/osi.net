@@ -58,6 +58,14 @@ Public NotInheritable Class [optional](Of T)
         Me.New(True, v)
     End Sub
 
+    Public Function map(Of R)(ByVal f As Func(Of T, R)) As [optional](Of R)
+        assert(Not f Is Nothing)
+        If Not Me Then
+            Return [optional].empty(Of R)()
+        End If
+        Return [optional].of(f(+Me))
+    End Function
+
     Public Shared Widening Operator CType(ByVal this As [optional](Of T)) As Boolean
         Return Not this Is Nothing AndAlso this.b
     End Operator
@@ -74,8 +82,7 @@ Public NotInheritable Class [optional](Of T)
     Public Shared Operator -(ByVal this As [optional](Of T)) As T
         If this Then
             Return this.v
-        Else
-            Return Nothing
         End If
+        Return Nothing
     End Operator
 End Class

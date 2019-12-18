@@ -3,6 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Text
+
 Partial Public Class struct(Of T)
     Public Shared Function [default]() As struct(Of T)
         Return reflector.instance
@@ -14,6 +16,15 @@ Partial Public Class struct(Of T)
 
     Public Overridable Function disassemble(ByVal i As T, ByRef o As struct.variable()) As Boolean
         Return [default]().disassemble(i, o)
+    End Function
+
+    Public Overridable Function to_str(ByVal i As T, ByRef o As String) As Boolean
+        Dim v() As struct.variable = Nothing
+        If Not disassemble(i, v) Then
+            Return False
+        End If
+        o = strcat("{", v.strjoin(","), "}")
+        Return True
     End Function
 
     Public Function disassemble(ByVal i As T) As struct.variable()

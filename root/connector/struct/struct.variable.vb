@@ -21,5 +21,9 @@ Partial Public NotInheritable Class struct
             assert(GetType(VT) Is type)
             Return direct_cast(Of VT)(value)
         End Function
+
+        Public Overrides Function ToString() As String
+            Return strcat("[", type, "] ", name, ": ", value)
+        End Function
     End Class
 End Class

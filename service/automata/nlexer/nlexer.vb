@@ -33,7 +33,9 @@ Partial Public NotInheritable Class nlexer
         Return [optional].of(Of result)()
     End Function
 
-    Public Function match(ByVal i As String, ByRef o As vector(Of result)) As Boolean
+    Public Function match(ByVal i As String,
+                          ByRef o As vector(Of result),
+                          ByVal ParamArray ignore_types() As String) As Boolean
         o.renew()
         Dim pos As UInt32 = 0
         While pos < strlen(i)
@@ -43,10 +45,24 @@ Partial Public NotInheritable Class nlexer
                 raise_error(error_type.user, no_match_str(i, pos))
                 Return False
             End If
-            o.emplace_back(+r)
+            If Not ignore_types.has((+r).name) Then
+                o.emplace_back(+r)
+            End If
             pos = (+r).end
         End While
         Return True
+    End Function
+
+    Public Function result_of(ByVal start As UInt32, ByVal [end] As UInt32, ByVal name As String) As result
+        Dim j As UInt32 = 0
+        While j < rs.size()
+            If strsame(name, rs(j).first) Then
+                Return New result(start, [end], name, j)
+            End If
+            j += uint32_1
+        End While
+        assert(False)
+        Return Nothing
     End Function
 
     Private Shared Function no_match_str(ByVal i As String, ByVal pos As UInt32) As String
@@ -57,8 +73,14 @@ Partial Public NotInheritable Class nlexer
     End Function
 
     Public Function match(ByVal ParamArray s() As String) As [optional](Of vector(Of result))
+        Static empty_array() As String = {}
+        Return match(s, empty_array)
+    End Function
+
+    Public Function match(ByVal s() As String,
+                          ByVal ParamArray ignore_types() As String) As [optional](Of vector(Of result))
         Dim v As vector(Of result) = Nothing
-        If match(s.strjoin(character.newline), v) Then
+        If match(s.strjoin(character.newline), v, ignore_types) Then
             Return [optional].of(v)
         End If
         Return [optional].empty(Of vector(Of result))()

@@ -28,6 +28,10 @@ Partial Public NotInheritable Class struct
         Return struct(Of T).default().assemble(vs)
     End Function
 
+    Public Shared Function to_str(Of T)(ByVal i As T, ByRef o As String) As Boolean
+        Return struct(Of T).default().to_str(i, o)
+    End Function
+
     Private Sub New()
     End Sub
 End Class

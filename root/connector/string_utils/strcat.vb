@@ -173,6 +173,11 @@ Public Module _strcat
         Return strjoin(sep, vs)
     End Function
 
+    <Extension()> Public Function strjoin(Of T)(ByVal vs() As T,
+                                                ByVal sep As String) As String
+        Return strjoin(sep, vs)
+    End Function
+
     Public Function strjoin(ByVal sep As String,
                             ByVal vs() As String,
                             ByVal start As Int32,
