@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+Imports osi.root.constants
 
 Public Module _map
     <Extension()> Public Function null_or_empty(Of KT, VT)(ByVal this As map(Of KT, VT)) As Boolean
@@ -103,6 +104,31 @@ Public NotInheritable Class map
     Public Shared Function emplace_of(Of KEY_T, VALUE_T) _
                                      (ByVal ParamArray vs() As pair(Of KEY_T, VALUE_T)) As map(Of KEY_T, VALUE_T)
         Return create(vs, False)
+    End Function
+
+    Private Shared Function create_index(Of KEY_T)(ByVal vs() As KEY_T,
+                                                   ByVal require_copy As Boolean) As map(Of KEY_T, UInt32)
+        Dim r As map(Of KEY_T, UInt32) = Nothing
+        r = New map(Of KEY_T, UInt32)()
+        Dim i As UInt32 = 0
+        While i < array_size(vs)
+            Dim v As KEY_T = Nothing
+            v = vs(CInt(i))
+            If require_copy Then
+                v = copy(v)
+            End If
+            r.emplace(v, i)
+            i += uint32_1
+        End While
+        Return r
+    End Function
+
+    Public Shared Function index(Of KEY_T)(ByVal ParamArray vs() As KEY_T) As map(Of KEY_T, UInt32)
+        Return create_index(vs, True)
+    End Function
+
+    Public Shared Function emplace_index(Of KEY_T)(ByVal ParamArray vs() As KEY_T) As map(Of KEY_T, UInt32)
+        Return create_index(vs, False)
     End Function
 
     Private Sub New()

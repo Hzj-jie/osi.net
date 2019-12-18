@@ -66,6 +66,10 @@ Public NotInheritable Class [optional](Of T)
         Return [optional].of(f(+Me))
     End Function
 
+    Public Function empty() As Boolean
+        Return Not Me
+    End Function
+
     Public Shared Widening Operator CType(ByVal this As [optional](Of T)) As Boolean
         Return Not this Is Nothing AndAlso this.b
     End Operator

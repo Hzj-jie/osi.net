@@ -162,6 +162,7 @@
     <Compile Include="rate_timeout_test.vb" />
     <Compile Include="resolver_test.vb" />
     <Compile Include="rnd\guid_strs_test.vb" />
+    <Compile Include="rnd\shuffle_test.vb" />
     <Compile Include="rnd_register_test.vb" />
     <Compile Include="send_input_test\send_input_test2.vb" />
     <Compile Include="send_input_test\send_input_test_form.Designer.vb">

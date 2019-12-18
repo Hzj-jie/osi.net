@@ -21,6 +21,15 @@ Namespace nlexer
             assertions.of(r.match("""a bc\""""")).has_value(8)
         End Sub
 
+        <test>
+        Private Shared Sub longest_match()
+            Dim r As rule = Nothing
+            assertion.is_true(rule.of("""[*,\""|""]*""", r))
+
+            assertions.of(r.match("""abc""")).has_value(5)
+            assertions.of(r.match("""a bc\""""")).has_value(8)
+        End Sub
+
         Private Sub New()
         End Sub
     End Class

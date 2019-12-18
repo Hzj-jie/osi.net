@@ -35,6 +35,14 @@ Partial Public NotInheritable Class nlexer
             assert(struct.to_str(Me, o))
             Return o
         End Function
+
+        Public Shared Function typed_words(ByVal str As String, ByVal v As vector(Of result)) As vector(Of typed_word)
+            assert(Not str.null_or_empty())
+            assert(Not v Is Nothing)
+            Return v.map(Function(ByVal r As result) As typed_word
+                             Return New typed_word(str, r.start, r.end, r.rule_index)
+                         End Function)
+        End Function
     End Class
 
     Public NotInheritable Class str_result
@@ -61,16 +69,11 @@ Partial Public NotInheritable Class nlexer
         Public Shared Function [of](ByVal raw As String, ByVal v As vector(Of result)) As vector(Of str_result)
             assert(Not raw.null_or_empty())
             assert(Not v Is Nothing)
-            Dim r As vector(Of str_result) = Nothing
-            r = New vector(Of str_result)(v.size())
-            Dim i As UInt32 = 0
-            While i < v.size()
-                assert(v(i).end <= strlen(raw))
-                assert(v(i).end > v(i).start)
-                r.emplace_back(New str_result(strmid(raw, v(i).start, v(i).end - v(i).start), v(i).name))
-                i += uint32_1
-            End While
-            Return r
+            Return v.map(Function(ByVal r As result) As str_result
+                             assert(r.end <= strlen(raw))
+                             assert(r.end > r.start)
+                             Return New str_result(strmid(raw, r.start, r.end - r.start), r.name)
+                         End Function)
         End Function
 
         Public Shared Function map_from_str(ByVal raw As String) As Func(Of vector(Of result), vector(Of str_result))

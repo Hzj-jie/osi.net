@@ -1,7 +1,10 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utils
+Imports osi.root.constants
 
 Public Class typed_word
     Public Const unknown_type As UInt32 = max_uint32

@@ -1,5 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.DateTime
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
@@ -100,8 +105,9 @@ Public Module _rnd
     Private Function r() As Random
         If _r_holder.r Is Nothing Then
             Const offset As Int32 = 6
-            _r_holder.r = New Random((Threading.Thread.CurrentThread().ManagedThreadId() And ((1 << offset) - 1)) +
-                                     ((Now().milliseconds() << offset) And max_int32))
+            _r_holder.r = New Random(CInt(
+                (Threading.Thread.CurrentThread().ManagedThreadId() And ((1 << offset) - 1)) +
+                ((Now().milliseconds() << offset) And max_int32)))
         End If
         Return _r_holder.r
     End Function
@@ -109,21 +115,21 @@ Public Module _rnd
     Private Function i(ByVal d As Int64) As Int32
         If d > max_int32 Then
             Return max_int32
-        ElseIf d < min_int32 Then
-            Return min_int32
-        Else
-            Return d
         End If
+        If d < min_int32 Then
+            Return min_int32
+        End If
+        Return CInt(d)
     End Function
 
     Private Function i(ByVal d As Double) As Int32
         If d > max_int32 Then
             Return max_int32
-        ElseIf d < min_int32 Then
-            Return min_int32
-        Else
-            Return d
         End If
+        If d < min_int32 Then
+            Return min_int32
+        End If
+        Return CInt(d)
     End Function
 
     Private Function ri(ByVal r As Random, ByVal min As Int32, ByVal max As Int32) As Int32
@@ -152,27 +158,27 @@ Public Module _rnd
     End Function
 
     Public Function rnd_int16(ByVal r As Random) As Int16
-        Return rnd_int(r, min_int16, max_int16)
+        Return CShort(rnd_int(r, min_int16, max_int16))
     End Function
 
     Public Function rnd_int16() As Int16
-        Return rnd_int(min_int16, max_int16)
+        Return CShort(rnd_int(min_int16, max_int16))
     End Function
 
     Public Function rnd_uint16(ByVal r As Random) As UInt16
-        Return rnd_int(r, min_uint16, max_uint16)
+        Return CUShort(rnd_int(r, min_uint16, max_uint16))
     End Function
 
     Public Function rnd_uint16() As UInt16
-        Return rnd_int(min_uint16, max_uint16)
+        Return CUShort(rnd_int(min_uint16, max_uint16))
     End Function
 
     Public Function rnd_int8() As SByte
-        Return rnd_int(min_int8, max_int8)
+        Return CSByte(rnd_int(min_int8, max_int8))
     End Function
 
     Public Function rnd_uint8() As Byte
-        Return rnd_int(min_uint8, max_uint8)
+        Return CByte(rnd_int(min_uint8, max_uint8))
     End Function
 
     Public Function rnd_bool(ByVal r As Random) As Boolean
@@ -227,7 +233,7 @@ Public Module _rnd
     End Function
 
     Public Function rnd_int64(ByVal min As Int64, ByVal max As Int64) As Int64
-        Return Math.Truncate(next_double() * (CDbl(max) - min)) + min
+        Return CLng(Math.Truncate(next_double() * (CDbl(max) - min)) + min)
     End Function
 
     Public Function rnd_int64() As Int64
@@ -235,7 +241,7 @@ Public Module _rnd
     End Function
 
     Public Function rnd_uint(ByVal min As UInt32, ByVal max As UInt32) As UInt32
-        Return Math.Truncate(next_double() * (CDbl(max) - min)) + min
+        Return CUInt(Math.Truncate(next_double() * (CDbl(max) - min)) + min)
     End Function
 
     Public Function rnd_uint() As UInt32
@@ -256,7 +262,7 @@ Public Module _rnd
     End Function
 
     Public Function rnd_uint64(ByVal min As UInt64, ByVal max As UInt64) As UInt64
-        Return Math.Truncate(next_double() * (CDbl(max) - min)) + min
+        Return CULng(Math.Truncate(next_double() * (CDbl(max) - min)) + min)
     End Function
 
     Public Function rnd_uint64() As UInt64
@@ -285,12 +291,11 @@ Public Module _rnd
     Public Function next_bytes(ByVal r As Random, ByVal count As UInt32) As Byte()
         If count = 0 Then
             Return Nothing
-        Else
-            Dim b() As Byte = Nothing
-            ReDim b(count - uint32_1)
-            assert(next_bytes(r, b))
-            Return b
         End If
+        Dim b() As Byte = Nothing
+        ReDim b(CInt(count) - 1)
+        assert(next_bytes(r, b))
+        Return b
     End Function
 
     Public Function next_bytes(ByVal buff() As Byte) As Boolean
@@ -449,18 +454,18 @@ Public Module _rnd
     End Function
 
     Public Function rnd_byte() As Byte
-        Return rnd(0, max_int8 + 1, True)
+        Return CByte(rnd(0, max_int8 + 1, True))
     End Function
 
     Public Function rnd_bytes(Optional ByVal size As UInt32 = 1024) As Byte()
         Dim rtn() As Byte = Nothing
-        ReDim rtn(size - 1)
+        ReDim rtn(CInt(size) - 1)
         assert(next_bytes(rtn))
         Return rtn
     End Function
 
     Public Function rnd_alpha() As Byte
-        Return rnd(192, max_uint8 + 1, True)
+        Return CByte(rnd(192, max_uint8 + 1, True))
     End Function
 
     Public Function guid_str() As String
@@ -470,25 +475,24 @@ Public Module _rnd
     Public Function guid_strs(ByVal count As UInt32) As String()
         If count = 0 Then
             Return Nothing
-        Else
-            Dim r() As String = Nothing
-            ReDim r(count - uint32_1)
-            For i As UInt32 = uint32_0 To count - uint32_1
-                r(i) = guid_str()
-                If i > uint32_0 Then
-                    Dim j As UInt32 = uint32_0
-                    For j = uint32_0 To i - uint32_1
-                        If r(i) = r(j) Then
-                            Exit For
-                        End If
-                    Next
-                    If j < i Then
-                        i -= uint32_1
-                    End If
-                End If
-            Next
-            Return r
         End If
+        Dim r() As String = Nothing
+        ReDim r(CInt(count) - 1)
+        For i As Int32 = 0 To CInt(count) - 1
+            r(i) = guid_str()
+            If i > 0 Then
+                Dim j As Int32 = 0
+                For j = 0 To i - 1
+                    If r(i) = r(j) Then
+                        Exit For
+                    End If
+                Next
+                If j < i Then
+                    i -= 1
+                End If
+            End If
+        Next
+        Return r
     End Function
 
     Public Function rnd_ascii_display_char(ByVal r As Random,
@@ -525,12 +529,11 @@ Public Module _rnd
         assert(Not r Is Nothing)
         If v Is Nothing Then
             Return False
-        Else
-            For i As Int32 = 0 To array_size(v) - 1
-                v(i) = rnd_int(r)
-            Next
-            Return True
         End If
+        For i As Int32 = 0 To array_size_i(v) - 1
+            v(i) = rnd_int(r)
+        Next
+        Return True
     End Function
 
     Public Function rnd_ints(ByVal v() As Int32) As Boolean
@@ -540,12 +543,11 @@ Public Module _rnd
     Public Function rnd_ints(ByVal r As Random, ByVal count As Int32) As Int32()
         If count <= 0 Then
             Return Nothing
-        Else
-            Dim b() As Int32 = Nothing
-            ReDim b(count - 1)
-            assert(rnd_ints(r, b))
-            Return b
         End If
+        Dim b() As Int32 = Nothing
+        ReDim b(count - 1)
+        assert(rnd_ints(r, b))
+        Return b
     End Function
 
     Public Function rnd_ints(ByVal count As Int32) As Int32()
@@ -554,5 +556,31 @@ Public Module _rnd
 
     Public Function rnd(Of T)() As T
         Return rnd_register(Of T).rnd()
+    End Function
+
+    <Extension()> Public Function inplace_shuffle(Of T)(ByVal v() As T, ByVal r As Random) As T()
+        If isemptyarray(v) Then
+            Return v
+        End If
+        For i As Int32 = 0 To array_size_i(v) - 1
+            Dim j As Int32 = 0
+            j = rnd_int(r, 0, array_size_i(v))
+            If j <> i Then
+                swap(v(i), v(j))
+            End If
+        Next
+        Return v
+    End Function
+
+    <Extension()> Public Function inplace_shuffle(Of T)(ByVal v() As T) As T()
+        Return inplace_shuffle(v, r())
+    End Function
+
+    <Extension()> Public Function shuffle(Of T)(ByVal v() As T, ByVal r As Random) As T()
+        Return inplace_shuffle(copy(v), r)
+    End Function
+
+    <Extension()> Public Function shuffle(Of T)(ByVal v() As T) As T()
+        Return shuffle(v, r())
     End Function
 End Module

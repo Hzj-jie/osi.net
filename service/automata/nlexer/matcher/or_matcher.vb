@@ -21,15 +21,17 @@ Partial Public NotInheritable Class nlexer
 
         Public Function match(ByVal i As String, ByVal pos As UInt32) As [optional](Of UInt32) Implements matcher.match
             Dim j As UInt32 = 0
+            Dim max As [optional](Of UInt32) = Nothing
+            max = [optional].empty(Of UInt32)()
             While j < m.size()
                 Dim r As [optional](Of UInt32) = Nothing
                 r = m(j).match(i, pos)
-                If r Then
-                    Return r
+                If (Not r.empty()) AndAlso ((Not max) OrElse (+max) < (+r)) Then
+                    max = r
                 End If
                 j += uint32_1
             End While
-            Return [optional].of(Of UInt32)()
+            Return max
         End Function
     End Class
 End Class

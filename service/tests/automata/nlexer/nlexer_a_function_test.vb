@@ -3,6 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.root.utt.attributes
@@ -156,6 +158,65 @@ Namespace nlexer
         Private Shared Sub str_results()
             Dim r As [optional](Of nl) = Nothing
             r = nl.of(rules)
+            If Not assertions.of(r).has_value() Then
+                Return
+            End If
+            Dim v As [optional](Of vector(Of nl.str_result)) = Nothing
+            v = (+r).match(program, "space").map(nl.str_result.map_from_str(program))
+            assertions.of(v).has_value(vector.of(
+                New nl.str_result("void", "name"),
+                New nl.str_result("function_a", "name"),
+                New nl.str_result("(", "left-bracket"),
+                New nl.str_result("type1", "name"),
+                New nl.str_result("param1", "name"),
+                New nl.str_result(",", "comma"),
+                New nl.str_result("type2", "name"),
+                New nl.str_result("param2", "name"),
+                New nl.str_result(")", "right-bracket"),
+                New nl.str_result("{", "left-brace"),
+                New nl.str_result("string", "name"),
+                New nl.str_result("s", "name"),
+                New nl.str_result("=", "assignment"),
+                New nl.str_result("""a bc\""""", "raw-string"),
+                New nl.str_result(";", "semi-colon"),
+                New nl.str_result("double", "name"),
+                New nl.str_result("x", "name"),
+                New nl.str_result("=", "assignment"),
+                New nl.str_result("-1.9", "float"),
+                New nl.str_result(";", "semi-colon"),
+                New nl.str_result("int", "name"),
+                New nl.str_result("y", "name"),
+                New nl.str_result("=", "assignment"),
+                New nl.str_result("+100", "int"),
+                New nl.str_result(";", "semi-colon"),
+                New nl.str_result("return", "return"),
+                New nl.str_result("param1", "name"),
+                New nl.str_result("+", "add"),
+                New nl.str_result("param2", "name"),
+                New nl.str_result("+", "add"),
+                New nl.str_result("s", "name"),
+                New nl.str_result(";", "semi-colon"),
+                New nl.str_result("}", "right-brace")
+            ))
+        End Sub
+
+        Private Shared Function shuffled_rules() As String()
+            Dim r() As String = Nothing
+            r = rules.shuffle()
+            Dim i As Int32 = 0
+            i = r.index_of(rules(0))
+            assert(i <> npos)
+            If i <> 0 Then
+                swap(r(0), r(i))
+            End If
+            Return r
+        End Function
+
+        <repeat(100)>
+        <test>
+        Private Shared Sub longest_match_str_results()
+            Dim r As [optional](Of nl) = Nothing
+            r = nl.of(shuffled_rules())
             If Not assertions.of(r).has_value() Then
                 Return
             End If

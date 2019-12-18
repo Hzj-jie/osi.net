@@ -53,6 +53,13 @@ Public Module _array_ext
         Return Not isemptyarray(i) AndAlso Array.IndexOf(i, j) >= 0
     End Function
 
+    <Extension()> Public Function index_of(Of T)(ByVal i() As T, ByVal j As T) As Int32
+        If isemptyarray(i) Then
+            Return npos
+        End If
+        Return Array.IndexOf(i, j)
+    End Function
+
     Public Sub memcpy(Of T)(ByVal dest() As T,
                             ByVal deststart As UInt32,
                             ByVal src() As T,

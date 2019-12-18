@@ -6,6 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.service.automata.syntaxer
 
 Partial Public NotInheritable Class nlexer
     Private ReadOnly rs As vector(Of pair(Of String, rule))
@@ -22,15 +23,17 @@ Partial Public NotInheritable Class nlexer
 
     Public Function match(ByVal i As String, ByVal pos As UInt32) As [optional](Of result)
         Dim j As UInt32 = 0
+        Dim max As [optional](Of result) = Nothing
+        max = [optional].empty(Of result)()
         While j < rs.size()
             Dim r As [optional](Of UInt32) = Nothing
             r = rs(j).second.match(i, pos)
-            If r Then
-                Return [optional].of(New result(pos, +r, rs(j).first, j))
+            If (Not r.empty()) AndAlso ((Not max) OrElse (+max).end < (+r)) Then
+                max = [optional].of(New result(pos, +r, rs(j).first, j))
             End If
             j += uint32_1
         End While
-        Return [optional].of(Of result)()
+        Return max
     End Function
 
     Public Function match(ByVal i As String,
@@ -127,5 +130,12 @@ Partial Public NotInheritable Class nlexer
             Return [optional].of(o)
         End If
         Return [optional].empty(Of nlexer)()
+    End Function
+
+    Public Function syntax_collection() As syntax_collection
+        Return New syntax_collection(map.emplace_index(+rs.map(Function(ByVal i As pair(Of String, rule)) As String
+                                                                   assert(Not i Is Nothing)
+                                                                   Return i.first
+                                                               End Function)))
     End Function
 End Class

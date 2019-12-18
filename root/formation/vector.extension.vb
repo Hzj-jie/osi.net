@@ -191,6 +191,10 @@ Public Module vector_extension
     <Extension()> Public Function str(Of T)(ByVal v As vector(Of T)) As String
         Return ToString(v, Nothing)
     End Function
+
+    <Extension()> Public Function map(Of T, R)(ByVal v As vector(Of T), ByVal f As Func(Of T, R)) As vector(Of R)
+        Return vector.map(v, f)
+    End Function
 End Module
 
 Public NotInheritable Class vector
@@ -211,6 +215,19 @@ Public NotInheritable Class vector
 
     Public Shared Function emplace_of(Of T)(ByVal ParamArray vs() As T) As vector(Of T)
         Return create(vs, False)
+    End Function
+
+    Public Shared Function map(Of T, R)(ByVal i As vector(Of T), ByVal f As Func(Of T, R)) As vector(Of R)
+        throws.not_null(i)
+        assert(Not f Is Nothing)
+        Dim o As vector(Of R) = Nothing
+        o = New vector(Of R)(i.size())
+        Dim j As UInt32 = 0
+        While j < i.size()
+            o.emplace_back(f(i(j)))
+            j += uint32_1
+        End While
+        Return o
     End Function
 
     Private Sub New()
