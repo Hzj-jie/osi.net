@@ -16,13 +16,14 @@ Namespace nlexer
         <repeat(50000, 500000)>
         Private Shared Sub run()
             Dim s As String = Nothing
+            Dim unescaped As String = Nothing
             s = rnd_ascii_display_chars(1000)
             s = nl.unescape(s)
+            unescaped = s
             For Each c As Char In nl.characters.all
-                s = s.Replace(nl.characters.escape_char + c, c)
                 s = s.Replace(c, nl.characters.escape_char + c)
             Next
-            assertion.equal(s, nl.unescape(nl.escape(s)))
+            assertion.equal(unescaped, nl.unescape(nl.escape(s)))
             assertion.is_false(nl.escape(s).contains_any(nl.characters.all))
         End Sub
 
