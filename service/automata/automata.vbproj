@@ -99,6 +99,7 @@
     <Compile Include="nlexer\matcher\space_matcher.vb" />
     <Compile Include="nlexer\matcher\string_matcher.vb" />
     <Compile Include="nlexer\group\optional_group.vb" />
+    <Compile Include="nlp.vb" />
     <Compile Include="parser.vb" />
     <Compile Include="regex\any_matching_group.vb" />
     <Compile Include="regex\matching_group_creator.vb" />

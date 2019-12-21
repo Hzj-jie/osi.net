@@ -56,6 +56,17 @@ Partial Public NotInheritable Class nlexer
         Return True
     End Function
 
+    Public Function match(ByVal i As String,
+                          ByRef o As vector(Of typed_word),
+                          ByVal ParamArray ignore_types() As String) As Boolean
+        Dim r As vector(Of nlexer.result) = Nothing
+        If Not match(i, r, ignore_types) Then
+            Return False
+        End If
+        o = nlexer.result.typed_words(i, r)
+        Return True
+    End Function
+
     Public Function result_of(ByVal start As UInt32, ByVal [end] As UInt32, ByVal name As String) As result
         Dim j As UInt32 = 0
         While j < rs.size()
@@ -132,7 +143,7 @@ Partial Public NotInheritable Class nlexer
         Return [optional].empty(Of nlexer)()
     End Function
 
-    Public Function syntax_collection() As syntax_collection
+    Public Function str_type_mapping() As syntax_collection
         Return New syntax_collection(map.emplace_index(+rs.map(Function(ByVal i As pair(Of String, rule)) As String
                                                                    assert(Not i Is Nothing)
                                                                    Return i.first
