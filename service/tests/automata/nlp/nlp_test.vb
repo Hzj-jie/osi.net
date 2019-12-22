@@ -28,6 +28,15 @@ Public NotInheritable Class nlp_test
                                           End Function)
     End Function
 
+    <test>
+    Private Shared Sub escape_str()
+        Dim r As nlp = Nothing
+        assertion.is_true(nlp.of(nlp_test_rules.nlexer_rule.as_text(),
+                                 nlp_test_rules.syntaxer_rule.as_text(),
+                                 r))
+        assertion.is_true(r.parse("string main() { return ""\""""; }"))
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
