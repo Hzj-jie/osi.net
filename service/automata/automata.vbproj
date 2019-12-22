@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="adfa.vb" />
     <Compile Include="dfa.vb" />
+    <Compile Include="lang_parser.vb" />
     <Compile Include="lexer.vb" />
     <Compile Include="lp\lp.constants.vb" />
     <Compile Include="lp\lp.execute.vb" />

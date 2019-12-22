@@ -1,8 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.formation
 Imports osi.root.connector
 
-Public Class rlp
+Public NotInheritable Class rlp
+    Implements lang_parser
+
     Private ReadOnly r As rlexer.rule.exporter
     Private ReadOnly s As syntaxer.rule.exporter
 
@@ -15,9 +21,13 @@ Public Class rlp
 
     Public Function parse(ByVal txt As String,
                           Optional ByRef words As vector(Of typed_word) = Nothing,
-                          Optional ByRef root As typed_node = Nothing) As Boolean
+                          Optional ByRef root As typed_node = Nothing) As Boolean Implements lang_parser.parse
         Return r.rlexer.match(txt, words) AndAlso
                s.syntaxer.match(words, root)
+    End Function
+
+    Public Function type_id(ByVal name As String, ByRef o As UInt32) As Boolean Implements lang_parser.type_id
+        Return s.syntaxer.type_id(name, o)
     End Function
 
     Public Shared Function create(ByVal r As rlexer.rule.exporter,

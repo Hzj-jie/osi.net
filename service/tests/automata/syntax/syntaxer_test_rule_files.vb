@@ -1,8 +1,8 @@
 ﻿
-Imports System.IO
-Imports osi.root.connector
-Imports osi.root.procedure
-Imports osi.root.utils
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.service.resource
 
 Namespace syntaxer
@@ -12,9 +12,9 @@ Namespace syntaxer
         Public Shared ReadOnly syntaxer As String
 
         Shared Sub New()
-            rlexer = rlexer_rule.as_text()
-            rlexer2 = rlexer_rule2.as_text()
-            syntaxer = syntaxer_rule.as_text()
+            rlexer = syntaxer_test_rules.rlexer_rule.as_text()
+            rlexer2 = syntaxer_test_rules.rlexer_rule2.as_text()
+            syntaxer = syntaxer_test_rules.syntaxer_rule.as_text()
         End Sub
     End Class
 End Namespace

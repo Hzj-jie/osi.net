@@ -8,6 +8,8 @@ Imports osi.root.delegates
 Imports osi.root.formation
 
 Public NotInheritable Class nlp
+    Implements lang_parser
+
     Private ReadOnly n As nlexer
     Private ReadOnly s As syntaxer
 
@@ -20,9 +22,13 @@ Public NotInheritable Class nlp
 
     Public Function parse(ByVal txt As String,
                           Optional ByRef words As vector(Of typed_word) = Nothing,
-                          Optional ByRef root As typed_node = Nothing) As Boolean
+                          Optional ByRef root As typed_node = Nothing) As Boolean Implements lang_parser.parse
         Return n.match(txt, words) AndAlso
                s.match(words, root)
+    End Function
+
+    Public Function type_id(ByVal name As String, ByRef o As UInt32) As Boolean Implements lang_parser.type_id
+        Return s.type_id(name, o)
     End Function
 
     Public Shared Function [of](ByVal n As nlexer, ByVal s As syntaxer, ByRef o As nlp) As Boolean

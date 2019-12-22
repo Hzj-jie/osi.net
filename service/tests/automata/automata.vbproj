@@ -55,6 +55,8 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="lang_parser\lang_parser_test.vb" />
+    <Compile Include="lang_parser\lang_parser_test_cases.vb" />
     <Compile Include="lexer_test.vb" />
     <Compile Include="lp_test.transition.vb" />
     <Compile Include="lp_test.vb" />
@@ -78,6 +80,8 @@
     <Compile Include="nlexer\rule_c_str_test.vb" />
     <Compile Include="nlexer\rule_suffix_test.vb" />
     <Compile Include="nlexer\rule_test.vb" />
+    <Compile Include="nlp\nlp_test.vb" />
+    <Compile Include="nlp\nlp_test_rules.vb" />
     <Compile Include="regex\any_character_matching_group_test.vb" />
     <Compile Include="regex\any_matching_group_test.vb" />
     <Compile Include="regex\macros_test.vb" />
@@ -103,7 +107,6 @@
     <Compile Include="syntax\optional_matching_group_test.vb" />
     <Compile Include="syntax\single_matching_test.vb" />
     <Compile Include="syntax\syntaxer_test.vb" />
-    <Compile Include="syntax\syntaxer_test_cases.vb" />
     <Compile Include="syntax\syntaxer_test_rules.vb" />
     <Compile Include="syntax\syntax_create_test.vb" />
     <Compile Include="syntax\syntax_test.vb" />
@@ -119,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="lp_test.syntax.vb" />
+    <None Include="lang_parser\codegen\run.cmd" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -128,6 +132,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="nlp\codegen\run.cmd" />
     <None Include="regex\codegen\run.cmd" />
     <None Include="syntax\codegen\run.cmd" />
   </ItemGroup>
@@ -135,11 +140,13 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="nlp\codegen\nlexer_rule.txt" />
+    <Content Include="nlp\codegen\syntaxer_rule.txt" />
     <Content Include="regex\codegen\rlexer_test_rule1.txt" />
     <Content Include="regex\codegen\rlexer_test_rule2.txt" />
     <Content Include="regex\codegen\rlexer_test_rule3.txt" />
-    <Content Include="syntax\codegen\case0.txt" />
-    <Content Include="syntax\codegen\case1.txt" />
+    <Content Include="lang_parser\codegen\case0.txt" />
+    <Content Include="lang_parser\codegen\case1.txt" />
     <Content Include="syntax\codegen\rlexer_rule2.txt" />
     <Content Include="syntax\codegen\rlexer_rule.txt" />
     <Content Include="syntax\codegen\syntaxer_rule.txt" />
