@@ -55,6 +55,7 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="cstyle\cstyle.vb" />
     <Compile Include="cstyle\cstyle_rules.vb" />
     <Compile Include="dotnet\source_executor.builder.build.vb" />
     <Compile Include="dotnet\source_executor.builder.vb" />
@@ -145,6 +146,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="cstyle\codegen\nlexer_rule.txt" />
     <Content Include="cstyle\codegen\rlexer_rule.txt" />
     <Content Include="cstyle\codegen\syntaxer_rule.txt" />
     <Content Include="logic\codegen\definition_parser.cs" />
