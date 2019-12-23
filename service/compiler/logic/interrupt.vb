@@ -39,7 +39,7 @@ Namespace logic
             assert(Not scope Is Nothing)
             assert(Not o Is Nothing)
             Dim function_id As UInt32 = 0
-            If Not functions.find_interrupt(function_name, function_id) Then
+            If Not functions.of(function_name, function_id) Then
                 errors.interrupt_undefined(function_name)
                 Return False
             End If

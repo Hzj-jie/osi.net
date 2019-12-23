@@ -108,7 +108,9 @@
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="cstyle\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="dotnet\codegen\from_source1.cs" />
     <Content Include="logic\codegen\case1.txt" />

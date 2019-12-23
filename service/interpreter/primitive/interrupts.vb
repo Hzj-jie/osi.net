@@ -60,21 +60,19 @@ Namespace primitive
             If i >= v.size() Then
                 executor_stop_error.throw(executor.error_type.undefined_interrupt)
                 Return Nothing
-            Else
-                assert(Not v(i) Is Nothing)
-                Return v(i)(j)
             End If
+            assert(Not v(i) Is Nothing)
+            Return v(i)(j)
         End Function
 
-        Public Function find_interrupt(ByVal name As String, ByRef o As UInt32) As Boolean
+        Public Function [of](ByVal name As String, ByRef o As UInt32) As Boolean
             Dim it As map(Of String, UInt32).iterator = Nothing
             it = m.find(name)
             If it = m.end() Then
                 Return False
-            Else
-                o = (+it).second
-                Return True
             End If
+            o = (+it).second
+            Return True
         End Function
     End Class
 End Namespace

@@ -15,12 +15,6 @@ integer [+,-]?[\d]+
 float [+,-]?[\d]*.[\d]+
 string "[\",*|"]*"
 
-less-or-equal <=
-great-or-equal >=
-equal ==
-less-than <
-great-than >
-assignment =
 comma \,
 colon :
 question-mark ?
@@ -31,6 +25,28 @@ end-bracket )
 start-square-bracket \[
 end-square-bracket \]
 semi-colon ;
+
+less-or-equal <=
+great-or-equal >=
+equal ==
+less-than <
+great-than >
+
+assignment =
+
+add \+
+minus -
+multiply \*
+divide /
+mod %
+power ^
+bit-and &
+bit-or |
+and &&
+or ||
+not !
+self-add ++
+self-minus --
 
 name [\w,_][\w,\d,_]*
 
