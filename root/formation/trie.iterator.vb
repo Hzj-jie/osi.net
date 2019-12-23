@@ -69,7 +69,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
 #Else
         Private Sub New(ByVal that As node)
 #End If
-#If Not False Then
+#If Not True Then
             assert(Not that Is Nothing)
 #End If
             p = that
@@ -81,7 +81,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
         End Function
 #Else
         Public Function is_end() As Boolean
-#If False Then
+#If True Then
             Return p Is Nothing
 #Else
             Return p Is Nothing AndAlso
