@@ -1,15 +1,20 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.utils
 
 Partial Public Class syntaxer
     Public Class syntax_collection
         Implements IComparable, IComparable(Of syntax_collection)
 
         Private ReadOnly token_str_type As map(Of String, UInt32)
+        Private ReadOnly str_token_type As map(Of UInt32, String)
         Private ReadOnly syntax_str_type As map(Of String, UInt32)
+        Private ReadOnly str_syntax_type As map(Of UInt32, String)
         Private ReadOnly v As vector(Of syntax)
         Private next_type As UInt32
 
@@ -30,14 +35,17 @@ Partial Public Class syntaxer
             next_type = 0
             If Not isemptyarray(token_str_types) Then
                 For i As UInt32 = 0 To array_size(token_str_types) - uint32_1
-                    assert(define(token_str_type, token_str_types(i)))
+                    assert(define(token_str_type, token_str_types(CInt(i))))
                 Next
             End If
             If Not isemptyarray(syntax_str_types) Then
                 For i As UInt32 = 0 To array_size(syntax_str_types) - uint32_1
-                    assert(define(syntax_str_type, syntax_str_types(i)))
+                    assert(define(syntax_str_type, syntax_str_types(CInt(i))))
                 Next
             End If
+
+            str_token_type = token_str_type.emplace_reverse()
+            str_syntax_type = syntax_str_type.emplace_reverse()
         End Sub
 
         Public Sub New(ByVal token_str_type As map(Of String, UInt32))
@@ -45,6 +53,9 @@ Partial Public Class syntaxer
             assert(Not token_str_type Is Nothing)
             copy(Me.token_str_type, token_str_type)
             next_type = find_next_type()
+
+            str_token_type = token_str_type.emplace_reverse()
+            str_syntax_type = syntax_str_type.emplace_reverse()
         End Sub
 
         Private Function find_next_type() As UInt32
@@ -64,6 +75,7 @@ Partial Public Class syntaxer
 
         Public Sub clear()
             syntax_str_type.clear()
+            str_syntax_type.clear()
             v.clear()
             next_type = find_next_type()
         End Sub
@@ -72,25 +84,28 @@ Partial Public Class syntaxer
                                 ByVal name As String,
                                 Optional ByRef o As UInt32 = Nothing) As Boolean
             assert(Not m Is Nothing)
-            If characters.valid_type_str(name) Then
-                Dim it As map(Of String, UInt32).iterator = Nothing
-                it = m.find(name)
-                If it = m.end() Then
-                    o = next_type
-                    m(name) = o
-                    next_type += 1
-                Else
-                    o = (+it).second
-                End If
-                Return True
-            Else
+            If Not characters.valid_type_str(name) Then
                 Return False
             End If
+            Dim it As map(Of String, UInt32).iterator = Nothing
+            it = m.find(name)
+            If it = m.end() Then
+                o = next_type
+                m.emplace(name, o)
+                next_type += uint32_1
+            Else
+                o = (+it).second
+            End If
+            Return True
         End Function
 
         Public Function define(ByVal name As String, ByRef o As UInt32) As Boolean
             assert(Not token_type(name, uint32_0))
-            Return define(syntax_str_type, name, o)
+            If Not define(syntax_str_type, name, o) Then
+                Return False
+            End If
+            assert(str_syntax_type.emplace(o, name).second)
+            Return True
         End Function
 
         Public Function define(ByVal name As String) As UInt32
@@ -103,18 +118,30 @@ Partial Public Class syntaxer
                                          ByVal name As String,
                                          ByRef o As UInt32) As Boolean
             assert(Not m Is Nothing)
-            If characters.valid_type_str(name) Then
-                Dim it As map(Of String, UInt32).iterator = Nothing
-                it = m.find(name)
-                If it = m.end() Then
-                    Return False
-                Else
-                    o = (+it).second
-                    Return True
-                End If
-            Else
+            If Not characters.valid_type_str(name) Then
                 Return False
             End If
+            Dim it As map(Of String, UInt32).iterator = Nothing
+            it = m.find(name)
+            If it = m.end() Then
+                Return False
+            End If
+            o = (+it).second
+            Return True
+        End Function
+
+        Private Shared Function type_str(ByVal m As map(Of UInt32, String),
+                                         ByVal id As UInt32,
+                                         ByRef o As String) As Boolean
+            assert(Not m Is Nothing)
+            Dim it As map(Of UInt32, String).iterator = Nothing
+            it = m.find(id)
+            If it = m.end() Then
+                Return False
+            End If
+            o = (+it).second
+            assert(characters.valid_type_str(o))
+            Return True
         End Function
 
         Public Function token_type(ByVal name As String, ByRef o As UInt32) As Boolean
@@ -123,6 +150,14 @@ Partial Public Class syntaxer
 
         Public Function syntax_type(ByVal name As String, ByRef o As UInt32) As Boolean
             Return str_type(syntax_str_type, name, o)
+        End Function
+
+        Public Function type_token(ByVal id As UInt32, ByRef o As String) As Boolean
+            Return type_str(str_token_type, id, o)
+        End Function
+
+        Public Function type_syntax(ByVal id As UInt32, ByRef o As String) As Boolean
+            Return type_str(str_syntax_type, id, o)
         End Function
 
         Public Function type_id(ByVal name As String, ByRef o As UInt32) As Boolean
@@ -135,27 +170,36 @@ Partial Public Class syntaxer
             Return o
         End Function
 
+        Public Function type_name(ByVal id As UInt32, ByRef o As String) As Boolean
+            Return type_token(id, o) OrElse type_syntax(id, o)
+        End Function
+
+        Public Function type_name(ByVal id As UInt32) As String
+            Dim o As String = Nothing
+            assert(type_name(id, o))
+            Return o
+        End Function
+
         Public Function [set](ByVal s As syntax) As Boolean
             If s Is Nothing Then
                 Return False
-            ElseIf v.size() <= s.type Then
+            End If
+            If v.size() <= s.type Then
                 v.resize(s.type + uint32_1)
             End If
             If v(s.type) Is Nothing Then
                 v(s.type) = s
                 Return True
-            Else
-                Return False
             End If
+            Return False
         End Function
 
         Public Function [get](ByVal type As UInt32, ByRef o As syntax) As Boolean
             If type < v.size() AndAlso Not v(type) Is Nothing Then
                 o = v(type)
                 Return True
-            Else
-                Return False
             End If
+            Return False
         End Function
 
         Public Function complete() As Boolean
@@ -193,9 +237,8 @@ Partial Public Class syntaxer
             c = object_compare(Me, other)
             If c = object_compare_undetermined Then
                 Return compare(Me.v, other.v)
-            Else
-                Return c
             End If
+            Return c
         End Function
     End Class
 End Class

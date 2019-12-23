@@ -30,6 +30,10 @@ Public NotInheritable Class rlp
         Return s.syntaxer.type_id(name, o)
     End Function
 
+    Public Function type_name(ByVal id As UInt32, ByRef o As String) As Boolean Implements lang_parser.type_name
+        Return s.syntaxer.type_name(id, o)
+    End Function
+
     Public Shared Function create(ByVal r As rlexer.rule.exporter,
                                   ByVal s As syntaxer.rule.exporter,
                                   ByRef o As rlp) As Boolean

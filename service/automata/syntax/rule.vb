@@ -1,10 +1,12 @@
 ﻿
-Imports System.IO
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.connector
 Imports osi.root.utils
-Imports configuration = osi.service.configuration
 
 Partial Public Class syntaxer
     Partial Public Class rule
@@ -23,9 +25,9 @@ Partial Public Class syntaxer
         Public Sub New(ByVal collection As syntax_collection)
             assert(Not collection Is Nothing)
             m = New map(Of String, Func(Of String, Boolean))()
-            m(command_clear) = AddressOf clear
-            m(command_ignore_types) = AddressOf ignore_types
-            m(command_root_types) = AddressOf root_types
+            m.emplace(command_clear, AddressOf clear)
+            m.emplace(command_ignore_types, AddressOf ignore_types)
+            m.emplace(command_root_types, AddressOf root_types)
             ignores = New [set](Of UInt32)()
             roots = New vector(Of UInt32)()
             Me.collection = collection

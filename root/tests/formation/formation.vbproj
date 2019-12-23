@@ -58,6 +58,7 @@
     <Compile Include="binary_tree\bmap_test.vb" />
     <Compile Include="binary_tree\bset_test.vb" />
     <Compile Include="binary_tree\map_compare_test.vb" />
+    <Compile Include="binary_tree\map_reverse_test.vb" />
     <Compile Include="binary_tree\map_test3.vb" />
     <Compile Include="binary_tree\set_test2.vb" />
     <Compile Include="bit_array_thread_safe_test2.vb" />

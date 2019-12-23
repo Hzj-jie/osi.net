@@ -1,10 +1,14 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utils
 
-Partial Public Class syntaxer
+Partial Public NotInheritable Class syntaxer
     Public MustInherit Class matching
         Implements IComparable, IComparable(Of matching)
 
@@ -23,12 +27,11 @@ Partial Public Class syntaxer
                                               ByVal [end] As UInt32) As typed_node
             If parent Is Nothing Then
                 Return Nothing
-            Else
-                Dim r As typed_node = Nothing
-                r = New typed_node(v, type, start, [end])
-                parent.subnodes.emplace_back(r)
-                Return r
             End If
+            Dim r As typed_node = Nothing
+            r = New typed_node(v, type, start, [end])
+            parent.subnodes.emplace_back(r)
+            Return r
         End Function
 
         Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
@@ -63,12 +66,12 @@ Partial Public Class syntaxer
                                       ByVal m2 As UInt32,
                                       ByVal ParamArray ms() As UInt32) As matching
             Dim m() As UInt32 = Nothing
-            ReDim m(uint32_2 + array_size(ms) - uint32_1)
+            ReDim m(2 + array_size_i(ms) - 1)
             m(0) = m1
             m(1) = m2
             If Not isemptyarray(ms) Then
-                For i As UInt32 = 0 To array_size(ms) - uint32_1
-                    m(i + uint32_2) = ms(i)
+                For i As Int32 = 0 To array_size_i(ms) - 1
+                    m(i + 2) = ms(i)
                 Next
             End If
             Return create(m)
@@ -78,14 +81,13 @@ Partial Public Class syntaxer
             assert(Not c Is Nothing)
             If isemptyarray(ms) Then
                 Return Nothing
-            Else
-                Dim m() As matching = Nothing
-                ReDim m(array_size(ms) - uint32_1)
-                For i As UInt32 = 0 To array_size(ms) - uint32_1
-                    m(i) = c(ms(i))
-                Next
-                Return m
             End If
+            Dim m() As matching = Nothing
+            ReDim m(array_size_i(ms) - 1)
+            For i As Int32 = 0 To array_size_i(ms) - 1
+                m(i) = c(ms(i))
+            Next
+            Return m
         End Function
 
         Public Shared Function create_matchings(ByVal ParamArray ms() As UInt32) As matching()
@@ -118,7 +120,7 @@ Partial Public Class syntaxer
         End Function
 
         Private Shared Sub consume_space_chars(ByVal i As String, ByRef pos As UInt32)
-            While pos < strlen(i) AndAlso characters.matching_separators.Contains(i(pos))
+            While pos < strlen(i) AndAlso characters.matching_separators.Contains(i(CInt(pos)))
                 pos += uint32_1
             End While
         End Sub
@@ -129,63 +131,60 @@ Partial Public Class syntaxer
                                                            ByRef o As matching) As Boolean
             If strlen(i) <= pos Then
                 Return False
-            Else
-                assert(Not characters.matching_separators.Contains(i(pos)))
-                If i(pos) = characters.matching_group_start Then
-                    Dim e As Int32 = 0
-                    e = strindexof(i, characters.matching_group_end, pos, uint32_1)
-                    If e = npos Then
-                        Return False
-                    Else
-                        Dim ss As vector(Of String) = Nothing
-                        If strsplit(strmid(i, pos + uint32_1, e - pos - uint32_1),
-                                    characters.matching_group_separators,
-                                    default_strings,
-                                    ss,
-                                    False,
-                                    True) AndAlso
-                           Not ss.null_or_empty() Then
-                            Dim ms() As matching = Nothing
-                            ReDim ms(ss.size() - uint32_1)
-                            For j As UInt32 = 0 To ss.size() - uint32_1
-                                If Not create_matching(ss(j), collection, ms(j)) Then
-                                    Return False
-                                End If
-                            Next
-                            o = New matching_group(ms)
-                            pos = e + 1
-                            While pos < strlen(i)
-                                If i(pos) = characters.optional_matching Then
-                                    o = New optional_matching_group(o)
-                                    pos += uint32_1
-                                ElseIf i(pos) = characters.any_matching Then
-                                    o = New any_matching_group(o)
-                                    pos += uint32_1
-                                ElseIf i(pos) = characters.multi_matching Then
-                                    o = New multi_matching_group(o)
-                                    pos += uint32_1
-                                Else
-                                    Exit While
-                                End If
-                            End While
-                            Return True
-                        Else
+            End If
+            assert(Not characters.matching_separators.Contains(i(CInt(pos))))
+            If i(CInt(pos)) = characters.matching_group_start Then
+                Dim e As Int32 = 0
+                e = strindexof(i, characters.matching_group_end, pos, uint32_1)
+                If e = npos Then
+                    Return False
+                End If
+                Dim ss As vector(Of String) = Nothing
+                If strsplit(strmid(i, pos + uint32_1, CUInt(e) - pos - uint32_1),
+                            characters.matching_group_separators,
+                            default_strings,
+                            ss,
+                            False,
+                            True) AndAlso
+                   Not ss.null_or_empty() Then
+                    Dim ms() As matching = Nothing
+                    ReDim ms(CInt(ss.size() - uint32_1))
+                    For j As UInt32 = 0 To ss.size() - uint32_1
+                        If Not create_matching(ss(j), collection, ms(CInt(j))) Then
                             Return False
                         End If
-                    End If
+                    Next
+                    o = New matching_group(ms)
+                    pos = CUInt(e + 1)
+                    While pos < strlen(i)
+                        If i(CInt(pos)) = characters.optional_matching Then
+                            o = New optional_matching_group(o)
+                            pos += uint32_1
+                        ElseIf i(CInt(pos)) = characters.any_matching Then
+                            o = New any_matching_group(o)
+                            pos += uint32_1
+                        ElseIf i(CInt(pos)) = characters.multi_matching Then
+                            o = New multi_matching_group(o)
+                            pos += uint32_1
+                        Else
+                            Exit While
+                        End If
+                    End While
+                    Return True
                 Else
-                    Dim e As Int32 = 0
-                    e = i.IndexOfAny(characters.matching_separators_array, pos)
-                    If e = npos Then
-                        e = i.Length()
-                    End If
-                    If create_matching(strmid(i, pos, e - pos), collection, o) Then
-                        pos = e
-                        Return True
-                    Else
-                        Return False
-                    End If
+                    Return False
                 End If
+            Else
+                Dim e As Int32 = 0
+                e = i.IndexOfAny(characters.matching_separators_array, CInt(pos))
+                If e = npos Then
+                    e = i.Length()
+                End If
+                If create_matching(strmid(i, pos, CUInt(e) - pos), collection, o) Then
+                    pos = CUInt(e)
+                    Return True
+                End If
+                Return False
             End If
         End Function
 
@@ -197,9 +196,8 @@ Partial Public Class syntaxer
             If create_without_space_chars(i, collection, pos, o) Then
                 consume_space_chars(i, pos)
                 Return True
-            Else
-                Return False
             End If
+            Return False
         End Function
     End Class
 End Class

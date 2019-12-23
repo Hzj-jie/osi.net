@@ -77,6 +77,59 @@ Public Module _map
             this.clear()
         End If
     End Sub
+
+    Private Function reverse(Of KEY_T, VALUE_T)(ByVal i As map(Of KEY_T, VALUE_T),
+                                                ByRef o As map(Of VALUE_T, KEY_T),
+                                                ByVal copy_required As Boolean) As Boolean
+        If i Is Nothing Then
+            o = Nothing
+            Return True
+        End If
+
+        o.renew()
+        Dim it As map(Of KEY_T, VALUE_T).iterator = Nothing
+        it = i.begin()
+        While it <> i.end()
+            Dim k As KEY_T = Nothing
+            Dim v As VALUE_T = Nothing
+            k = (+it).first
+            v = (+it).second
+            If copy_required Then
+                k = copy(k)
+                v = copy(v)
+            End If
+            If o.find(v) <> o.end() Then
+                Return False
+            End If
+            o.emplace(v, k)
+            it += 1
+        End While
+        Return True
+    End Function
+
+    <Extension()> Public Function emplace_reverse(Of KEY_T, VALUE_T)(ByVal i As map(Of KEY_T, VALUE_T),
+                                                                     ByRef o As map(Of VALUE_T, KEY_T)) As Boolean
+        Return reverse(i, o, False)
+    End Function
+
+    <Extension()> Public Function emplace_reverse(Of KEY_T, VALUE_T) _
+                                                 (ByVal i As map(Of KEY_T, VALUE_T)) As map(Of VALUE_T, KEY_T)
+        Dim o As map(Of VALUE_T, KEY_T) = Nothing
+        assert(emplace_reverse(i, o))
+        Return o
+    End Function
+
+    <Extension()> Public Function reverse(Of KEY_T, VALUE_T)(ByVal i As map(Of KEY_T, VALUE_T),
+                                                             ByRef o As map(Of VALUE_T, KEY_T)) As Boolean
+        Return reverse(i, o, True)
+    End Function
+
+    <Extension()> Public Function reverse(Of KEY_T, VALUE_T) _
+                                         (ByVal i As map(Of KEY_T, VALUE_T)) As map(Of VALUE_T, KEY_T)
+        Dim o As map(Of VALUE_T, KEY_T) = Nothing
+        assert(reverse(i, o))
+        Return o
+    End Function
 End Module
 
 Public NotInheritable Class map

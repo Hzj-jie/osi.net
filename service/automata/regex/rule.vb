@@ -23,12 +23,12 @@ Partial Public Class rlexer
             words = New vector(Of pair(Of String, String))()
             type_choice = Nothing
             word_choice = Nothing
-            m(command_clear_define) = Function(ByVal i As String) As Boolean
-                                          Return clear_define()
-                                      End Function
-            m(command_define) = AddressOf define
-            m(command_mode) = AddressOf mode
-            m(command_clear_word) = AddressOf clear_word
+            m.emplace(command_clear_define, Function(ByVal i As String) As Boolean
+                                                Return clear_define()
+                                            End Function)
+            m.emplace(command_define, AddressOf define)
+            m.emplace(command_mode, AddressOf mode)
+            m.emplace(command_clear_word, AddressOf clear_word)
         End Sub
 
         Protected Overrides Function command_mapping() As map(Of String, Func(Of String, Boolean))

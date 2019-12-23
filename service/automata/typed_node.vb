@@ -1,11 +1,14 @@
 ﻿
-Imports System.Text
-Imports osi.root.constants
-Imports osi.root.connector
-Imports osi.root.formation
-Imports osi.root.utils
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Public Class typed_node
+Imports System.Text
+Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.formation
+
+Public NotInheritable Class typed_node
     Public Const ROOT_TYPE As UInt32 = uint32_0
     Public ReadOnly type As UInt32
     Public ReadOnly start As UInt32
@@ -30,7 +33,8 @@ Public Class typed_node
     End Sub
 
     ' create a root node
-    Public Sub New(ByVal ref As vector(Of typed_word), ByVal ParamArray subnodes() As typed_node)
+    Public Sub New(ByVal ref As vector(Of typed_word),
+                   ByVal ParamArray subnodes() As typed_node)
         Me.New(ref, ROOT_TYPE, uint32_0, assert_not_nothing_return(ref).size(), subnodes)
     End Sub
 
@@ -54,7 +58,7 @@ Public Class typed_node
                 s.Append(", ")
             End If
             s.Append(subnodes(i).str())
-            i += 1
+            i += uint32_1
         End While
         Return Convert.ToString(s)
     End Function

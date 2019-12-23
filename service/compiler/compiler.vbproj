@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="cstyle\cstyle.vb" />
     <Compile Include="cstyle\cstyle_rules.vb" />
+    <Compile Include="cstyle\logic\builder.vb" />
     <Compile Include="dotnet\source_executor.builder.build.vb" />
     <Compile Include="dotnet\source_executor.builder.vb" />
     <Compile Include="dotnet\source_executor.vb" />
@@ -154,9 +155,7 @@
     <Content Include="logic\definition.txt" />
     <Content Include="logic\design.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="cstyle\logic\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="compiler.dep" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

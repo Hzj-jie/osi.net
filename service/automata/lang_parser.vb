@@ -11,4 +11,5 @@ Public Interface lang_parser
                    Optional ByRef root As typed_node = Nothing) As Boolean
 
     Function type_id(ByVal name As String, ByRef o As UInt32) As Boolean
+    Function type_name(ByVal i As UInt32, ByRef name As String) As Boolean
 End Interface
