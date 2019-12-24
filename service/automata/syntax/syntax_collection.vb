@@ -104,7 +104,7 @@ Partial Public Class syntaxer
             If Not define(syntax_str_type, name, o) Then
                 Return False
             End If
-            assert(str_syntax_type.emplace(o, name).second)
+            str_syntax_type.emplace(o, name)
             Return True
         End Function
 
