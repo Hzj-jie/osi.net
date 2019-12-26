@@ -75,6 +75,7 @@
     <Compile Include="template_parameter.vb" />
     <Compile Include="to_uint32.vb" />
     <Compile Include="typed_func.vb" />
+    <Compile Include="annotated_ref.vb" />
     <Compile Include="_equaler.vb" />
   </ItemGroup>
   <ItemGroup>

@@ -30,6 +30,10 @@ Public NotInheritable Class typed_node
         Me.end = [end]
         Me.subnodes = New vector(Of typed_node)()
         Me.subnodes.emplace_back(subnodes)
+
+        If leaf() Then
+            assert(word_count() = 1)
+        End If
     End Sub
 
     ' create a root node
@@ -38,15 +42,31 @@ Public NotInheritable Class typed_node
         Me.New(ref, ROOT_TYPE, uint32_0, assert_not_nothing_return(ref).size(), subnodes)
     End Sub
 
-    Default Public ReadOnly Property node(ByVal id As UInt32) As typed_node
-        Get
-            assert(subnodes.available_index(id))
-            Return subnodes(id)
-        End Get
-    End Property
+    Public Function child(ByVal id As UInt32) As typed_node
+        assert(subnodes.available_index(id))
+        Return subnodes(id)
+    End Function
 
-    Public Function empty() As Boolean
+    Public Function child_count() As UInt32
+        Return subnodes.size()
+    End Function
+
+    Public Function leaf() As Boolean
         Return subnodes.empty()
+    End Function
+
+    Public Function word(ByVal id As UInt32) As typed_word
+        assert(id < word_count())
+        Return ref(start + id)
+    End Function
+
+    Public Function word() As typed_word
+        assert(word_count() = 1)
+        Return word(0)
+    End Function
+
+    Public Function word_count() As UInt32
+        Return [end] - start
     End Function
 
     Private Function nodes_str() As String

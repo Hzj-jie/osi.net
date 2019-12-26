@@ -7,7 +7,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 
-Public Class instance_stack(Of T)
+Public NotInheritable Class instance_stack(Of T)
     'the implementation of threadstatic valuetype object is not consistent between mono and .net
     'while .net has boxing by default
 #If use_thread_static Then
@@ -22,58 +22,67 @@ Public Class instance_stack(Of T)
 
     Public Shared Property current() As T
         Get
-#If use_thread_static Then
+            Dim s As stack(Of T) = Nothing
+            s = thread_stack()
 #If DEBUG Then
-            assert(Not (+c) Is Nothing)
+            assert(Not s Is Nothing)
 #End If
-            Return (+c).back()
-#Else
-#If DEBUG Then
-            assert(Not c Is Nothing)
-#End If
-            Return c.back()
-#End If
+            Return s.back()
         End Get
         Set(ByVal value As T)
-            Dim s As stack(Of T) = Nothing
-#If use_thread_static Then
-            s = (+c)
-#Else
-            s = c
-#End If
-            If s Is Nothing Then
-                s = New stack(Of T)()
-#If use_thread_static Then
-                c.set(s)
-#Else
-                c = s
-#End If
-            End If
             If value Is Nothing Then
-                s.pop()
+                pop()
             Else
-                s.emplace(value)
+                push(value)
             End If
         End Set
     End Property
 
-    Public Shared Function empty() As Boolean
+    Private Shared Function thread_stack() As stack(Of T)
         Dim s As stack(Of T) = Nothing
 #If use_thread_static Then
         s = (+c)
 #Else
         s = c
 #End If
+        Return s
+    End Function
+
+    Private Shared Function thread_stack_or_new() As stack(Of T)
+        Dim s As stack(Of T) = Nothing
+        s = thread_stack()
+        If s Is Nothing Then
+            s = New stack(Of T)()
+#If use_thread_static Then
+            c.set(s)
+#Else
+            c = s
+#End If
+        End If
+        Return s
+    End Function
+
+    Public Shared Sub push(ByVal v As T)
+        assert(Not v Is Nothing)
+        thread_stack_or_new().emplace(v)
+    End Sub
+
+    Public Shared Sub pop()
+        Dim s As stack(Of T) = Nothing
+        s = thread_stack()
+        assert(Not s Is Nothing)
+        s.pop()
+    End Sub
+
+    Public Shared Function empty() As Boolean
+        Dim s As stack(Of T) = Nothing
+        s = thread_stack()
         Return s Is Nothing OrElse s.empty()
     End Function
 
     Public Shared Function size() As UInt32
         Dim s As stack(Of T) = Nothing
-#If use_thread_static Then
-        s = (+c)
-#Else
-        s = c
-#End If
+        s = thread_stack()
         Return If(s Is Nothing, uint32_0, s.size())
     End Function
 End Class

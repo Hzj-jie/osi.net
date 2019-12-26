@@ -15,26 +15,25 @@ Namespace logic
             assert(Not o Is Nothing)
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If strsame(v(p), "(") Then
-                p += uint32_1
-                While p < v.size()
-                    If strsame(v(p), ")") Then
-                        p += uint32_1
-                        Return True
-                    End If
-
-                    If p = v.size() - uint32_1 Then
-                        Return False
-                    End If
-
-                    o.emplace_back(emplace_make_pair(v(p), v(p + uint32_1)))
-                    p += uint32_2
-                End While
-                errors.typed_parameters_is_not_closed()
-                Return False
-            Else
+            If Not strsame(v(p), "(") Then
                 Return False
             End If
+            p += uint32_1
+            While p < v.size()
+                If strsame(v(p), ")") Then
+                    p += uint32_1
+                    Return True
+                End If
+
+                If p = v.size() - uint32_1 Then
+                    Return False
+                End If
+
+                o.emplace_back(emplace_make_pair(v(p), v(p + uint32_1)))
+                p += uint32_2
+            End While
+            errors.typed_parameters_is_not_closed()
+            Return False
         End Function
 
         Private Shared Function parse_parameters(ByVal o As vector(Of String),
@@ -43,22 +42,21 @@ Namespace logic
             assert(Not o Is Nothing)
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If strsame(v(p), "(") Then
-                p += uint32_1
-                While p < v.size()
-                    If strsame(v(p), ")") Then
-                        p += uint32_1
-                        Return True
-                    End If
-
-                    o.emplace_back(v(p))
-                    p += uint32_1
-                End While
-                errors.parameters_is_not_closed()
-                Return False
-            Else
+            If Not strsame(v(p), "(") Then
                 Return False
             End If
+            p += uint32_1
+            While p < v.size()
+                If strsame(v(p), ")") Then
+                    p += uint32_1
+                    Return True
+                End If
+
+                o.emplace_back(v(p))
+                p += uint32_1
+            End While
+            errors.parameters_is_not_closed()
+            Return False
         End Function
 
         Private Function parse_paragraph(ByRef o As paragraph,
@@ -66,27 +64,26 @@ Namespace logic
                                          ByRef p As UInt32) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If strsame(v(p), "{") Then
-                o = New paragraph()
-                p += uint32_1
-                While p < v.size()
-                    If strsame(v(p), "}") Then
-                        p += uint32_1
-                        Return True
-                    End If
-
-                    Dim e As exportable = Nothing
-                    If Not parse(v, p, e) Then
-                        Return False
-                    End If
-
-                    o.push(e)
-                End While
-                errors.paragraph_is_not_closed()
-                Return False
-            Else
+            If Not strsame(v(p), "{") Then
                 Return False
             End If
+            o = New paragraph()
+            p += uint32_1
+            While p < v.size()
+                If strsame(v(p), "}") Then
+                    p += uint32_1
+                    Return True
+                End If
+
+                Dim e As exportable = Nothing
+                If Not parse(v, p, e) Then
+                    Return False
+                End If
+
+                o.push(e)
+            End While
+            errors.paragraph_is_not_closed()
+            Return False
         End Function
     End Class
 End Namespace

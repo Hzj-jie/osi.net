@@ -74,7 +74,7 @@ Public Class lang_parser_test
            assertion.equal(n.subnodes.size(), array_size(t.subnodes)) Then
             Dim i As UInt32 = 0
             While i < array_size(t.subnodes)
-                If Not assert_node(n(i), t(i)) Then
+                If Not assert_node(n.child(i), t(i)) Then
                     Return False
                 End If
                 i += uint32_1

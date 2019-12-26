@@ -58,6 +58,9 @@
     <Compile Include="cstyle\cstyle.vb" />
     <Compile Include="cstyle\cstyle_rules.vb" />
     <Compile Include="cstyle\logic\builder.vb" />
+    <Compile Include="cstyle\logic\function.vb" />
+    <Compile Include="cstyle\logic\name.vb" />
+    <Compile Include="cstyle\logic\writer.vb" />
     <Compile Include="dotnet\source_executor.builder.build.vb" />
     <Compile Include="dotnet\source_executor.builder.vb" />
     <Compile Include="dotnet\source_executor.vb" />
