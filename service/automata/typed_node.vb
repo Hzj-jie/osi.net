@@ -8,6 +8,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 
+' TODO: Implement typed_node.builder to ensure the immutability of typed_node.
 Public NotInheritable Class typed_node
     Public Const ROOT_TYPE As UInt32 = uint32_0
     Public ReadOnly type As UInt32
@@ -31,9 +32,11 @@ Public NotInheritable Class typed_node
         Me.subnodes = New vector(Of typed_node)()
         Me.subnodes.emplace_back(subnodes)
 
+#If NOT_IMPLEMENTED Then
         If leaf() Then
             assert(word_count() = 1)
         End If
+#End If
     End Sub
 
     ' create a root node
