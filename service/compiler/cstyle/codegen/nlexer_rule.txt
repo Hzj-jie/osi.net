@@ -1,12 +1,12 @@
 ﻿
-KW-if if
-KW-else else
-KW-for for
-KW-while while
-KW-do do
-KW-loop loop
-KW-return return
-KW-break break
+kw-if if
+kw-else else
+kw-for for
+kw-while while
+kw-do do
+kw-loop loop
+kw-return return
+kw-break break
 
 blank [\b]+
 

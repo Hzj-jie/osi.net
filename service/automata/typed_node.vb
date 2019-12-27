@@ -50,6 +50,11 @@ Public NotInheritable Class typed_node
         Return subnodes(id)
     End Function
 
+    Public Function child() As typed_node
+        assert(child_count() = 1)
+        Return child(0)
+    End Function
+
     Public Function child_count() As UInt32
         Return subnodes.size()
     End Function

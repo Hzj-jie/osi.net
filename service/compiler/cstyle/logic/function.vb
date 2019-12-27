@@ -18,6 +18,11 @@ Public NotInheritable Class [function]
         MyBase.New(b, lp)
     End Sub
 
+    Public Shared Sub register(ByVal b As builders)
+        assert(Not b Is Nothing)
+        b.register(Of [function])()
+    End Sub
+
     Public NotInheritable Class function_ref
         Private ReadOnly n As typed_node
 

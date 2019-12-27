@@ -9,7 +9,7 @@ param name name
 
 paragraph [sentence, multi-sentence-paragraph]
 sentence [sentence-with-semi-colon, sentence-without-semi-colon, semi-colon]
-sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, function-call, KW-break] semi-colon
+sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, function-call, kw-break] semi-colon
 sentence-without-semi-colon [condition, while, for-loop]
 
 multi-sentence-paragraph start-paragraph [sentence]* end-paragraph
@@ -18,12 +18,12 @@ value-declaration name name
 value-definition name name assignment value
 value-clause left-value assignment value
 
-condition KW-if start-bracket value end-bracket paragraph [else-condition]?
-else-condition KW-else paragraph
+condition kw-if start-bracket value end-bracket paragraph [else-condition]?
+else-condition kw-else paragraph
 
-while KW-while start-bracket value end-bracket paragraph
+while kw-while start-bracket value end-bracket paragraph
 
-for-loop KW-for start-bracket [value-declaration]? semi-colon [value]? semi-colon [value-clause]? end-bracket paragraph
+for-loop kw-for start-bracket [value-declaration]? semi-colon [value]? semi-colon [value-clause]? end-bracket paragraph
 
 value [value-with-bracket, value-without-bracket]
 value-with-bracket start-bracket value end-bracket
@@ -41,4 +41,4 @@ function-call name start-bracket [value-list]? end-bracket
 value-list [value-with-comma]* value
 value-with-comma value comma
 
-return-clause KW-return [value]?
+return-clause kw-return [value]?

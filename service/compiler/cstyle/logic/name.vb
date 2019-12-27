@@ -16,6 +16,11 @@ Public NotInheritable Class name
         MyBase.New(b, lp)
     End Sub
 
+    Public Shared Sub register(ByVal b As builders)
+        assert(Not b Is Nothing)
+        b.register(Of name)()
+    End Sub
+
     Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements builder.build
         assert(Not n Is Nothing)
         assert(Not o Is Nothing)

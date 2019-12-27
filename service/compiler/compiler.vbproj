@@ -59,11 +59,15 @@
     <Compile Include="cstyle\cstyle_rules.vb" />
     <Compile Include="cstyle\logic\builder.vb" />
     <Compile Include="cstyle\logic\function.vb" />
+    <Compile Include="cstyle\logic\multi_sentence_paragraph.vb" />
     <Compile Include="cstyle\logic\name.vb" />
     <Compile Include="cstyle\logic\param.vb" />
     <Compile Include="cstyle\logic\paramlist.vb" />
     <Compile Include="cstyle\logic\param_with_comma.vb" />
-    <Compile Include="cstyle\logic\writer.vb" />
+    <Compile Include="cstyle\logic\sentence.vb" />
+    <Compile Include="cstyle\logic\sentence_without_semi_colon.vb" />
+    <Compile Include="cstyle\logic\sentence_with_semi_colon.vb" />
+    <Compile Include="cstyle\logic\value_declaration.vb" />
     <Compile Include="dotnet\source_executor.builder.build.vb" />
     <Compile Include="dotnet\source_executor.builder.vb" />
     <Compile Include="dotnet\source_executor.vb" />

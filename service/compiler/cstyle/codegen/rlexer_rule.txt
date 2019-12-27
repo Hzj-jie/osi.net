@@ -1,14 +1,14 @@
 
 DEFINE name-usable \w,\d,_
 
-KW-if if[\name-usable]-
-KW-else else[\name-usable]-
-KW-for for[\name-usable]-
-KW-while while[\name-usable]-
-KW-do do[\name-usable]-
-KW-loop loop[\name-usable]-
-KW-return return[\name-usable]-
-KW-break break[\name-usable]-
+kw-if if[\name-usable]-
+kw-else else[\name-usable]-
+kw-for for[\name-usable]-
+kw-while while[\name-usable]-
+kw-do do[\name-usable]-
+kw-loop loop[\name-usable]-
+kw-return return[\name-usable]-
+kw-break break[\name-usable]-
 
 blank [\b]+
 bool [true,false]
