@@ -2,6 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\root\root.props" Condition="'$(RootProps)'==''" />
   <Import Project="$(ServicePath)\automata\automata.props" Condition="'$(AutomataProps)'==''" />
+  <Import Project="$(ServicePath)\constructor\constructor.props" Condition="'$(ConstructorProps)'==''" />
   <Import Project="$(ServicePath)\interpreter\interpreter.props" Condition="'$(InterpreterProps)'==''" />
 </Project>
 

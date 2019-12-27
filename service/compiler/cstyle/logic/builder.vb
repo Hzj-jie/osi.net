@@ -6,6 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.automata
+Imports osi.service.constructor
 
 Public Interface builder
     Function build(ByVal n As typed_node, ByVal o As writer) As Boolean
@@ -48,6 +49,13 @@ Public NotInheritable Class builders
     Public Sub register(ByVal s As String, ByVal f As Func(Of builders, lang_parser, builder))
         assert(Not f Is Nothing)
         register(s, f(Me, lp))
+    End Sub
+
+    Public Sub register(Of T As builder)()
+        register(GetType(T).Name().Replace("_"c, "-"c),
+                 Function(ByVal b As builders, ByVal lp As lang_parser) As builder
+                     Return inject_constructor(Of builder).of_derived(Of T).invoke(b, lp)
+                 End Function)
     End Sub
 
     Public Function builder_of(ByVal n As typed_node) As builder

@@ -60,6 +60,9 @@
     <Compile Include="cstyle\logic\builder.vb" />
     <Compile Include="cstyle\logic\function.vb" />
     <Compile Include="cstyle\logic\name.vb" />
+    <Compile Include="cstyle\logic\param.vb" />
+    <Compile Include="cstyle\logic\paramlist.vb" />
+    <Compile Include="cstyle\logic\param_with_comma.vb" />
     <Compile Include="cstyle\logic\writer.vb" />
     <Compile Include="dotnet\source_executor.builder.build.vb" />
     <Compile Include="dotnet\source_executor.builder.vb" />

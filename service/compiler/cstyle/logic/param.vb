@@ -3,11 +3,10 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.connector
 Imports osi.service.automata
 Imports osi.service.constructor
 
-Public NotInheritable Class name
+Public NotInheritable Class param
     Inherits builder_wrapper
     Implements builder
 
@@ -17,9 +16,12 @@ Public NotInheritable Class name
     End Sub
 
     Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements builder.build
-        assert(Not n Is Nothing)
-        assert(Not o Is Nothing)
-        o.append(n.word().str())
+        If Not b.of(n.child(1)).build(o) Then
+            o.err("@param name ", n.child(1))
+        End If
+        If Not b.of(n.child(0)).build(o) Then
+            o.err("@param type ", n.child(0))
+        End If
         Return True
     End Function
 End Class

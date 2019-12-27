@@ -7,11 +7,13 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.automata
+Imports osi.service.constructor
 
 Public NotInheritable Class [function]
     Inherits builder_wrapper
     Implements builder
 
+    <inject_constructor>
     Public Sub New(ByVal b As builders, ByVal lp As lang_parser)
         MyBase.New(b, lp)
     End Sub
