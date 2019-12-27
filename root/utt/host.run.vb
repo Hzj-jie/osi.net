@@ -170,15 +170,23 @@ Partial Friend NotInheritable Class host
         End While
     End Sub
 
+    Private Shared Function expected_running_time_ms() As UInt32
+        Dim base_ms As Double = 0
+        base_ms = minutes_to_milliseconds(36 * 60)
+        base_ms *= envs.perf_run_ms
+        base_ms *= 4
+        base_ms *= env_vars.repeat_per_case
+        base_ms /= 20
+        base_ms /= max(utt_concurrency(), 1)
+        If envs.virtual_machine Then
+            base_ms *= 2
+        End If
+        Return CUInt(base_ms)
+    End Function
+
     Public Shared Sub run()
         expected_end_ms = nowadays.milliseconds()
-        expected_end_ms +=
-            CLng(minutes_to_milliseconds(36 * 60) /
-                 20 /
-                 max(utt_concurrency(), 1) *
-                 envs.perf_run_ms *
-                 4 *
-                 env_vars.repeat_per_case)
+        expected_end_ms += expected_running_time_ms()
         Dim finished As AutoResetEvent = Nothing
         finished = New AutoResetEvent(False)
         While go_through_all(finished)
