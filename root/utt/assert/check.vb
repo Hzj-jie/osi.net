@@ -5,6 +5,8 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
+Imports osi.root.lock
 Imports osi.root.template
 Imports osi.root.utils
 
@@ -237,6 +239,28 @@ Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
         Return defer(Sub()
                          less(i, j, msg)
                      End Sub)
+    End Function
+
+    Public Shared Function wait_until(ByVal f As Func(Of Boolean), ByVal ms As UInt32) As Boolean
+        assert(Not f Is Nothing)
+        Return is_true(timeslice_sleep_wait_until(f, ms))
+    End Function
+
+    Public Shared Function wait_until(ByVal f As Func(Of Boolean), ByVal ms As Double) As Boolean
+        assert(Not f Is Nothing)
+        assert(ms >= 0)
+        assert(ms <= max_uint32)
+        Return wait_until(f, CUInt(ms))
+    End Function
+
+    Public Shared Function wait_when(ByVal f As Func(Of Boolean), ByVal ms As UInt32) As Boolean
+        assert(Not f Is Nothing)
+        Return wait_until(f.reverse(), ms)
+    End Function
+
+    Public Shared Function wait_when(ByVal f As Func(Of Boolean), ByVal ms As Double) As Boolean
+        assert(Not f Is Nothing)
+        Return wait_until(f.reverse(), ms)
     End Function
 
     Protected Sub New()

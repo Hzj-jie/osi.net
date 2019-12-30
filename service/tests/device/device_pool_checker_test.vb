@@ -3,8 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.lock
 Imports osi.root.utt
 Imports osi.service.device
@@ -17,7 +17,7 @@ Public Class device_pool_checker_test
     End Function
 
     Public Overrides Function run() As Boolean
-        Const ms As Int64 = 256
+        Const ms As Int64 = 2000
         Const size As UInt32 = 1024
         Using New process_realtime()
             Dim e As imanual_device_exporter(Of Int32) = Nothing
@@ -41,20 +41,34 @@ Public Class device_pool_checker_test
             Next
             assertion.equal(p.free_count(), size)
             assertion.is_true(p.attach_checker(ms))
-            sleep(1.5 * ms)
-            assertion.equal(+called, size << 1)
+            assertion.wait_until(Function() As Boolean
+                                     Return (+called) = (size << 1)
+                                 End Function,
+                                 1.5 * ms)
             assertion.is_true(p.clear_checker())
-            sleep(ms)
-            assertion.equal(+called, size << 1)
+            assertion.wait_until(Function() As Boolean
+                                     Return (+called) = (size << 1)
+                                 End Function,
+                                 ms)
 
             valid = False
-            sleep(ms)
-            assertion.equal(+called, size << 1)
-            assertion.equal(p.free_count(), size)
+            assertion.wait_until(Function() As Boolean
+                                     Return (+called) = (size << 1)
+                                 End Function,
+                                 ms)
+            assertion.wait_until(Function() As Boolean
+                                     Return p.free_count() = size
+                                 End Function,
+                                 ms)
             assertion.is_true(p.attach_checker(ms))
-            sleep(1.5 * ms)
-            assertion.equal(+called, size << 1)
-            assertion.equal(p.free_count(), uint32_0)
+            assertion.wait_until(Function() As Boolean
+                                     Return (+called) = (size << 1)
+                                 End Function,
+                                 1.5 * ms)
+            assertion.wait_until(Function() As Boolean
+                                     Return p.free_count() = uint32_0
+                                 End Function,
+                                 1.5 * ms)
             assertion.is_true(p.clear_checker())
 
             For i As Int32 = 0 To CInt(size) - 1
@@ -64,11 +78,15 @@ Public Class device_pool_checker_test
             Next
             called.exchange(uint32_0)
             assertion.is_true(p.attach_checker(ms))
-            sleep(1.5 * ms)
-            assertion.equal(+called, size << 1)
+            assertion.wait_until(Function() As Boolean
+                                     Return (+called) = (size << 1)
+                                 End Function,
+                                 ms)
             p.close()
-            sleep(1.5 * ms)
-            assertion.equal(+called, size << 1)
+            assertion.wait_until(Function() As Boolean
+                                     Return (+called) = (size << 1)
+                                 End Function,
+                                 ms)
         End Using
 
         Return True

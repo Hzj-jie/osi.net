@@ -110,16 +110,14 @@ Public Module _sleep
         start_ms = Now().milliseconds()
         Dim timeouted As Boolean = False
         sleep_wait_when(Function(ByRef x) As Boolean
-                            If d(x) Then
-                                If Now().milliseconds() - start_ms >= timeout_ms Then
-                                    timeouted = True
-                                    Return False
-                                Else
-                                    Return True
-                                End If
-                            Else
+                            If Not d(x) Then
                                 Return False
                             End If
+                            If Now().milliseconds() - start_ms >= timeout_ms Then
+                                timeouted = True
+                                Return False
+                            End If
+                            Return True
                         End Function,
                         i,
                         ms)
