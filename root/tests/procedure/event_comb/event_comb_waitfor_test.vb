@@ -1,32 +1,36 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.event
+Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.utt
-Imports osi.root.formation
 
-Public Class event_comb_waitfor_test
+Public NotInheritable Class event_comb_waitfor_test
     Inherits [case]
 
     Private Shared Function waitfor_test(ByVal w As Func(Of Int64, Int64, Boolean)) As Boolean
         assert(Not w Is Nothing)
         Dim i As Int32 = 0
         Const target As Int32 = -1
-        Const wait_ms As Int64 = 1000
+        Const wait_ms As Int64 = 10000
         assert(i <> target)
         Dim start_ms As Int64 = 0
         start_ms = nowadays.milliseconds()
         assertion.is_true(async_sync(New event_comb(Function() As Boolean
-                                                  Return w(start_ms, wait_ms) AndAlso
+                                                        Return w(start_ms, wait_ms) AndAlso
                                                          goto_next()
-                                              End Function,
-                                              Function() As Boolean
-                                                  i = target
-                                                  Return goto_end()
-                                              End Function),
-                               wait_ms << 1))
+                                                    End Function,
+                                                    Function() As Boolean
+                                                        i = target
+                                                        Return goto_end()
+                                                    End Function),
+                                     wait_ms << 1))
         assertion.more_or_equal(nowadays.milliseconds() - start_ms, wait_ms)
         assertion.equal(i, target)
         Return True
