@@ -55,6 +55,7 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="cstyle\cstyle_test.vb" />
     <Compile Include="dotnet\dotnet_test_data.vb" />
     <Compile Include="dotnet\source_executor_test.vb" />
     <Compile Include="logic\caller_test.vb" />
@@ -108,9 +109,7 @@
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="cstyle\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="dotnet\codegen\from_source1.cs" />
     <Content Include="logic\codegen\case1.txt" />

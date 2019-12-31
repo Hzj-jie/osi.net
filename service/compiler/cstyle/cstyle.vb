@@ -8,9 +8,13 @@ Imports osi.service.automata
 Imports osi.service.resource
 
 Public NotInheritable Class cstyle
+    Public Shared ReadOnly nlexer_rule As String
+    Public Shared ReadOnly syntaxer_rule As String
     Public Shared ReadOnly nlp As nlp
 
     Shared Sub New()
-        assert(nlp.of(cstyle_rules.nlexer_rule.as_text(), cstyle_rules.syntaxer_rule.as_text(), nlp))
+        nlexer_rule = cstyle_rules.nlexer_rule.as_text()
+        syntaxer_rule = cstyle_rules.syntaxer_rule.as_text()
+        assert(nlp.of(nlexer_rule, syntaxer_rule, nlp))
     End Sub
 End Class

@@ -2,6 +2,8 @@
 IGNORE_TYPES blank
 ROOT_TYPES function
 
+# No struct support.
+
 function name name start-bracket [paramlist]? end-bracket multi-sentence-paragraph
 paramlist [param-with-comma]* param
 param-with-comma param comma
@@ -16,7 +18,9 @@ multi-sentence-paragraph start-paragraph [sentence]* end-paragraph
 
 value-declaration name name
 value-definition name name assignment value
-value-clause left-value assignment value
+# Note, function-call = value is just a syntax sugar of return-instance-of-function-call.operator=(value), so do not
+# treat it specifically in the c-style level. As c-style does not allow instance at all.
+value-clause name assignment value
 
 condition kw-if start-bracket value end-bracket paragraph [else-condition]?
 else-condition kw-else paragraph
@@ -27,9 +31,7 @@ for-loop kw-for start-bracket [value-declaration]? semi-colon [value]? semi-colo
 
 value [value-with-bracket, value-without-bracket]
 value-with-bracket start-bracket value end-bracket
-value-without-bracket [left-value, right-value]
-left-value [function-call, name]
-right-value [left-value, comparasion, value-with-operation, integer, float, bool, string]
+value-without-bracket [name, function-call, comparasion, value-with-operation, integer, float, bool, string]
 value-with-operation [single-operation-value, binary-operation-value]
 single-operation-value [pre-operation-value, post-operation-value]
 pre-operation-value [not, self-add, self-minus] value
