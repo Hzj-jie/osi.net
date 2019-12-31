@@ -38,7 +38,9 @@ Partial Public Class dispenser_test
         For i As Int32 = 0 To accepter_count - 1
             Dim j As Int32 = 0
             j = i
-            assertion.happening(Function() accepters(j).q.size() = data_size)
+            If Not assertion.happening(Function() accepters(j).q.size() = data_size) Then
+                Return False
+            End If
         Next
 
         For i As Int32 = 0 To accepter_count - 1
