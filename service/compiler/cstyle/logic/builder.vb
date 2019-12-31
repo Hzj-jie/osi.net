@@ -30,6 +30,10 @@ Public MustInherit Class builder_wrapper
         assert(lp.type_name(n.type, r))
         Return r
     End Function
+
+    Protected Function builder_of(Of T As builder)() As T
+        Return direct_cast(Of T)(b.builder_of(builders.builder_name(Of T)()))
+    End Function
 End Class
 
 Public NotInheritable Class writer
@@ -64,6 +68,10 @@ Public NotInheritable Class builders
         m = New map(Of String, builder)()
     End Sub
 
+    Public Shared Function builder_name(Of T As builder)() As String
+        Return GetType(T).Name().Replace("_"c, "-"c)
+    End Function
+
     Public Sub register(ByVal s As String, ByVal b As builder)
         assert(Not s.null_or_whitespace())
         assert(Not b Is Nothing)
@@ -76,20 +84,24 @@ Public NotInheritable Class builders
     End Sub
 
     Public Sub register(Of T As builder)()
-        register(GetType(T).Name().Replace("_"c, "-"c),
+        register(builder_name(Of T)(),
                  Function(ByVal b As builders, ByVal lp As lang_parser) As builder
                      Return inject_constructor(Of builder).of_derived(Of T).invoke(b, lp)
                  End Function)
     End Sub
 
+    Public Function builder_of(ByVal name As String) As builder
+        Dim it As map(Of String, builder).iterator = Nothing
+        it = m.find(name)
+        assert(it <> m.end())
+        Return (+it).second
+    End Function
+
     Public Function builder_of(ByVal n As typed_node) As builder
         assert(Not n Is Nothing)
         Dim type_name As String = Nothing
         assert(lp.type_name(n.type, type_name))
-        Dim it As map(Of String, builder).iterator = Nothing
-        it = m.find(type_name)
-        assert(it <> m.end())
-        Return (+it).second
+        Return builder_of(type_name)
     End Function
 
     Public NotInheritable Class builder_proxy

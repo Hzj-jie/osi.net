@@ -8,7 +8,7 @@ Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.service.selector
 
-Partial Public Class dispenser_test
+Partial Public NotInheritable Class dispenser_test
     Inherits [case]
 
     Public Overrides Function reserved_processors() As Int16

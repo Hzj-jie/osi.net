@@ -10,7 +10,7 @@ Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.transmitter
 
-Partial Public Class dispenser_test
+Partial Public NotInheritable Class dispenser_test
     Private Class receiver
         Implements T_receiver(Of pair(Of Int32, Int32))
 

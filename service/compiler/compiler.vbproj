@@ -68,7 +68,10 @@
     <Compile Include="cstyle\logic\sentence.vb" />
     <Compile Include="cstyle\logic\sentence_without_semi_colon.vb" />
     <Compile Include="cstyle\logic\sentence_with_semi_colon.vb" />
+    <Compile Include="cstyle\logic\value.vb" />
+    <Compile Include="cstyle\logic\value_clause.vb" />
     <Compile Include="cstyle\logic\value_declaration.vb" />
+    <Compile Include="cstyle\logic\value_definition.vb" />
     <Compile Include="dotnet\source_executor.builder.build.vb" />
     <Compile Include="dotnet\source_executor.builder.vb" />
     <Compile Include="dotnet\source_executor.vb" />
