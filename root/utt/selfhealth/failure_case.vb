@@ -91,8 +91,8 @@ Public Class failure_case
             report_self_health_failure(27,
                                        "assertion.is_true(host.execute_case(New exec_failure_case_2.exec_failure_case()))")
 #End If
-            assertion.happening_in(Function() False, CLng(1))
-            assertion.not_happening_in(Function() True, CLng(1))
+            assertion.happening_in(Function() False, 1)
+            assertion.not_happening_in(Function() True, 1)
         End If
 
         assertion.is_true(True)
@@ -118,8 +118,8 @@ Public Class failure_case
             ma = assertion.timelimited_operation(0, two_timeslice_length_ms)
             ma.Dispose()
         End Using
-        assertion.happening_in(Function() True, CLng(1))
-        assertion.not_happening_in(Function() False, CLng(1))
+        assertion.happening_in(Function() True, 1)
+        assertion.not_happening_in(Function() False, 1)
 
         Return Not self_health_stage()
     End Function

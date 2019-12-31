@@ -41,34 +41,28 @@ Public Class device_pool_checker_test
             Next
             assertion.equal(p.free_count(), size)
             assertion.is_true(p.attach_checker(ms))
-            assertion.wait_until(Function() As Boolean
-                                     Return (+called) = (size << 1)
-                                 End Function,
-                                 1.5 * ms)
+            assertion.happening(Function() As Boolean
+                                    Return (+called) = (size << 1)
+                                End Function)
             assertion.is_true(p.clear_checker())
-            assertion.wait_until(Function() As Boolean
-                                     Return (+called) = (size << 1)
-                                 End Function,
-                                 ms)
+            assertion.happening(Function() As Boolean
+                                    Return (+called) = (size << 1)
+                                End Function)
 
             valid = False
-            assertion.wait_until(Function() As Boolean
-                                     Return (+called) = (size << 1)
-                                 End Function,
-                                 ms)
-            assertion.wait_until(Function() As Boolean
-                                     Return p.free_count() = size
-                                 End Function,
-                                 ms)
+            assertion.happening(Function() As Boolean
+                                    Return (+called) = (size << 1)
+                                End Function)
+            assertion.happening(Function() As Boolean
+                                    Return p.free_count() = size
+                                End Function)
             assertion.is_true(p.attach_checker(ms))
-            assertion.wait_until(Function() As Boolean
-                                     Return (+called) = (size << 1)
-                                 End Function,
-                                 1.5 * ms)
-            assertion.wait_until(Function() As Boolean
-                                     Return p.free_count() = uint32_0
-                                 End Function,
-                                 1.5 * ms)
+            assertion.happening(Function() As Boolean
+                                    Return (+called) = (size << 1)
+                                End Function)
+            assertion.happening(Function() As Boolean
+                                    Return p.free_count() = uint32_0
+                                End Function)
             assertion.is_true(p.clear_checker())
 
             For i As Int32 = 0 To CInt(size) - 1
@@ -78,15 +72,13 @@ Public Class device_pool_checker_test
             Next
             called.exchange(uint32_0)
             assertion.is_true(p.attach_checker(ms))
-            assertion.wait_until(Function() As Boolean
-                                     Return (+called) = (size << 1)
-                                 End Function,
-                                 ms)
+            assertion.happening(Function() As Boolean
+                                    Return (+called) = (size << 1)
+                                End Function)
             p.close()
-            assertion.wait_until(Function() As Boolean
-                                     Return (+called) = (size << 1)
-                                 End Function,
-                                 ms)
+            assertion.happening(Function() As Boolean
+                                    Return (+called) = (size << 1)
+                                End Function)
         End Using
 
         Return True
