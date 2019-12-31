@@ -40,15 +40,14 @@ Namespace logic
         End Function
 
         Public Function define(ByVal name As String, ByVal type As String) As Boolean
-            assert(Not String.IsNullOrEmpty(name))
-            assert(Not String.IsNullOrEmpty(type))
-            If offsets.find(name) = offsets.end() Then
-                offsets(name) = size() + uint64_1
-                types(name) = type
-                Return True
-            Else
+            assert(Not name.null_or_whitespace())
+            assert(Not type.null_or_whitespace())
+            If offsets.find(name) <> offsets.end() Then
                 Return False
             End If
+            offsets(name) = size() + uint64_1
+            types(name) = type
+            Return True
         End Function
 
         Public Function is_root() As Boolean
@@ -67,12 +66,11 @@ Namespace logic
         ' Find @name in @m, and return the offset to the "end" / "top" of current scope.
         Private Function find(ByVal name As String, ByRef offset As UInt64) As Boolean
             Dim o As UInt64 = 0
-            If offsets.find(name, o) Then
-                offset = size() - o
-                Return True
-            Else
+            If Not offsets.find(name, o) Then
                 Return False
             End If
+            offset = size() - o
+            Return True
         End Function
 
         Public Function type(ByVal name As String, ByRef o As String) As Boolean

@@ -41,6 +41,15 @@ Public NotInheritable Class value
         current_target(n.word().str())
     End Sub
 
+    Public Function value_target(ByVal n As typed_node) As String
+        assert(Not n Is Nothing)
+        assert(strsame(type_name(n), "value"))
+        Dim r As String = Nothing
+        r = strcat("raw_value_@", n.word_start(), "-", n.word_end())
+        current_target(r)
+        Return r
+    End Function
+
     Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements builder.build
         assert(Not n Is Nothing)
         assert(Not o Is Nothing)

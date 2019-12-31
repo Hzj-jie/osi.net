@@ -77,6 +77,14 @@ Public NotInheritable Class typed_node
         Return [end] - start
     End Function
 
+    Public Function word_start() As UInt32
+        Return word(0).start
+    End Function
+
+    Public Function word_end() As UInt32
+        Return word(word_count() - uint32_1).end
+    End Function
+
     Private Function nodes_str() As String
         Dim s As StringBuilder = Nothing
         s = New StringBuilder()

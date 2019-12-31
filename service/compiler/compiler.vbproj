@@ -58,6 +58,8 @@
     <Compile Include="cstyle\cstyle.vb" />
     <Compile Include="cstyle\cstyle_rules.vb" />
     <Compile Include="cstyle\logic\builder.vb" />
+    <Compile Include="cstyle\logic\condition.vb" />
+    <Compile Include="cstyle\logic\else_condition.vb" />
     <Compile Include="cstyle\logic\function.vb" />
     <Compile Include="cstyle\logic\multi_sentence_paragraph.vb" />
     <Compile Include="cstyle\logic\name.vb" />
