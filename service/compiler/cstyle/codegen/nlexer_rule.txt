@@ -45,8 +45,8 @@ bit-or |
 and &&
 or ||
 not !
-self-add ++
-self-minus --
+self-inc ++
+self-dec --
 
 name [\w,_][\w,\d,_]*
 
