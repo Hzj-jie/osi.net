@@ -10,15 +10,15 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class cstyle
     Public NotInheritable Class [while]
-        Inherits builder_wrapper
-        Implements builder
+        Inherits logic_gen_wrapper
+        Implements logic_gen
 
         <inject_constructor>
-        Public Sub New(ByVal b As builders, ByVal lp As lang_parser)
+        Public Sub New(ByVal b As logic_gens, ByVal lp As lang_parser)
             MyBase.New(b, lp)
         End Sub
 
-        Public Shared Sub register(ByVal b As builders)
+        Public Shared Sub register(ByVal b As logic_gens)
             assert(Not b Is Nothing)
             b.register(Of [while])()
         End Sub
@@ -31,26 +31,27 @@ Partial Public NotInheritable Class cstyle
             Return True
         End Function
 
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements builder.build
+        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 5)
-            Using value_target As value.target = builder_of(Of value).with_value_target(n.child(2))
-                o.append("define", value_target.value_name, "bool")
+            Using value_target As value.target = logic_gen_of(Of value).with_value_target(n.child(2))
+                builders.of_define(value_target.value_name, types.bool)
                 If Not while_value(n, o) Then
                     Return False
                 End If
-                o.append("while_then", value_target.value_name, "{")
-                If Not b.[of](n.child(4)).build(o) Then
-                    o.err("@while paragraph ", n.child(4))
-                    Return False
-                End If
-                If Not while_value(n, o) Then
-                    Return False
-                End If
-                o.append("}")
+                Return builders.of_while_then(value_target.value_name,
+                                              Function() As Boolean
+                                                  If Not b.[of](n.child(4)).build(o) Then
+                                                      o.err("@while paragraph ", n.child(4))
+                                                      Return False
+                                                  End If
+                                                  If Not while_value(n, o) Then
+                                                      Return False
+                                                  End If
+                                                  Return True
+                                              End Function).to(o)
             End Using
-            Return True
         End Function
     End Class
 End Class

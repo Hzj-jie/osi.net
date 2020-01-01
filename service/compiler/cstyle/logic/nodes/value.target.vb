@@ -10,8 +10,8 @@ Imports osi.service.automata
 
 Partial Public NotInheritable Class cstyle
     Partial Public NotInheritable Class value
-        Inherits builder_wrapper
-        Implements builder
+        Inherits logic_gen_wrapper
+        Implements logic_gen
 
         Public Shared Function current_target() As String
             Return instance_stack(Of annotated_ref(Of value, String)).current().v

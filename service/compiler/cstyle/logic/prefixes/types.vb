@@ -3,9 +3,11 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.compiler.logic
+Imports logic_builder = osi.service.compiler.logic.builders
 
 Partial Public NotInheritable Class cstyle
     Public NotInheritable Class types
@@ -36,7 +38,8 @@ Partial Public NotInheritable Class cstyle
         Public Sub export(ByVal o As writer) Implements prefix.export
             Dim i As UInt32 = 0
             While i < v.size()
-                o.append("type", v(i).first, v(i).second)
+                assert(v(i).second >= 0)
+                logic_builder.of_type(v(i).first, CUInt(v(i).second)).to(o)
                 i += uint32_1
             End While
         End Sub

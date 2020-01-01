@@ -12,15 +12,15 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class cstyle
     Public NotInheritable Class [function]
-        Inherits builder_wrapper
-        Implements builder
+        Inherits logic_gen_wrapper
+        Implements logic_gen
 
         <inject_constructor>
-        Public Sub New(ByVal b As builders, ByVal lp As lang_parser)
+        Public Sub New(ByVal b As logic_gens, ByVal lp As lang_parser)
             MyBase.New(b, lp)
         End Sub
 
-        Public Shared Sub register(ByVal b As builders)
+        Public Shared Sub register(ByVal b As logic_gens)
             assert(Not b Is Nothing)
             b.register(Of [function])()
         End Sub
@@ -46,7 +46,7 @@ Partial Public NotInheritable Class cstyle
             Return New function_ref(instance_stack(Of annotated_ref(Of [function], typed_node)).current().v)
         End Function
 
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements builder.build
+        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             instance_stack(Of annotated_ref(Of [function], typed_node)).push(annotated_ref(Of [function]).with(n))

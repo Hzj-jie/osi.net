@@ -10,15 +10,15 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class cstyle
     Public NotInheritable Class for_loop
-        Inherits builder_wrapper
-        Implements builder
+        Inherits logic_gen_wrapper
+        Implements logic_gen
 
         <inject_constructor>
-        Public Sub New(ByVal b As builders, ByVal lp As lang_parser)
+        Public Sub New(ByVal b As logic_gens, ByVal lp As lang_parser)
             MyBase.New(b, lp)
         End Sub
 
-        Public Shared Sub register(ByVal b As builders)
+        Public Shared Sub register(ByVal b As logic_gens)
             assert(Not b Is Nothing)
             b.register(Of for_loop)()
         End Sub
@@ -56,7 +56,7 @@ Partial Public NotInheritable Class cstyle
             Return False
         End Function
 
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements builder.build
+        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             Dim ref As ref = Nothing
             ref = New ref(lp, n)
             assert(Not o Is Nothing)
@@ -66,28 +66,29 @@ Partial Public NotInheritable Class cstyle
                     Return False
                 End If
             End If
-            Using value_target As value.target = builder_of(Of value).with_value_target(ref.condition)
-                o.append("define", value_target.value_name, "bool")
+            Using value_target As value.target = logic_gen_of(Of value).with_value_target(ref.condition)
+                builders.of_define(value_target.value_name, types.bool).to(o)
                 If Not condition_value(ref, o) Then
                     Return False
                 End If
-                o.append("while_then", value_target.value_name, "{")
-                If Not b.[of](ref.paragraph).build(o) Then
-                    o.err("@for-loop paragraph ", ref.paragraph)
-                    Return False
-                End If
-                If Not ref.clause Is Nothing Then
-                    If Not b.of(ref.clause).build(o) Then
-                        o.err("@for-loop value-clause", ref.clause)
-                        Return False
-                    End If
-                End If
-                If Not condition_value(ref, o) Then
-                    Return False
-                End If
-                o.append("}")
+                Return builders.of_while_then(value_target.value_name,
+                                              Function() As Boolean
+                                                  If Not b.[of](ref.paragraph).build(o) Then
+                                                      o.err("@for-loop paragraph ", ref.paragraph)
+                                                      Return False
+                                                  End If
+                                                  If Not ref.clause Is Nothing Then
+                                                      If Not b.of(ref.clause).build(o) Then
+                                                          o.err("@for-loop value-clause", ref.clause)
+                                                          Return False
+                                                      End If
+                                                  End If
+                                                  If Not condition_value(ref, o) Then
+                                                      Return False
+                                                  End If
+                                                  Return True
+                                              End Function).to(o)
             End Using
-            Return True
         End Function
     End Class
 End Class

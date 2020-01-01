@@ -10,25 +10,25 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class cstyle
     Partial Public NotInheritable Class binary_operation_value
-        Inherits builder_wrapper
-        Implements builder
+        Inherits logic_gen_wrapper
+        Implements logic_gen
 
         <inject_constructor>
-        Public Sub New(ByVal b As builders, ByVal lp As lang_parser)
+        Public Sub New(ByVal b As logic_gens, ByVal lp As lang_parser)
             MyBase.New(b, lp)
         End Sub
 
-        Public Shared Sub register(ByVal b As builders)
+        Public Shared Sub register(ByVal b As logic_gens)
             assert(Not b Is Nothing)
             b.register(Of binary_operation_value)()
         End Sub
 
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements builder.build
+        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 3)
             Dim left As value.target = Nothing
-            left = builder_of(Of value).with_value_target(n.child(0))
+            left = logic_gen_of(Of value).with_value_target(n.child(0))
             Using left
                 If Not b.of(n.child(0)).build(o) Then
                     o.err("@binary-operation-value value [0] ", n.child(0))
@@ -36,7 +36,7 @@ Partial Public NotInheritable Class cstyle
                 End If
             End Using
             Dim right As value.target = Nothing
-            right = builder_of(Of value).with_value_target(n.child(2))
+            right = logic_gen_of(Of value).with_value_target(n.child(2))
             Using right
                 If Not b.of(n.child(2)).build(o) Then
                     o.err("@binary-operation-value value [1] ", n.child(2))

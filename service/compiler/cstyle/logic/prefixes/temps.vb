@@ -32,7 +32,7 @@ Partial Public NotInheritable Class cstyle
         Public Sub export(ByVal o As writer) Implements prefix.export
             Dim i As UInt32 = 0
             While i < v.size()
-                o.append("define", v(i).first, v(i).second)
+                builders.of_define(v(i).first, v(i).second).to(o)
                 i += uint32_1
             End While
         End Sub

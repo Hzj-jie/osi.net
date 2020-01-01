@@ -10,45 +10,50 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class cstyle
     Public NotInheritable Class condition
-        Inherits builder_wrapper
-        Implements builder
+        Inherits logic_gen_wrapper
+        Implements logic_gen
 
         <inject_constructor>
-        Public Sub New(ByVal b As builders, ByVal lp As lang_parser)
+        Public Sub New(ByVal b As logic_gens, ByVal lp As lang_parser)
             MyBase.New(b, lp)
         End Sub
 
-        Public Shared Sub register(ByVal b As builders)
+        Public Shared Sub register(ByVal b As logic_gens)
             assert(Not b Is Nothing)
             b.register(Of condition)()
         End Sub
 
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements builder.build
+        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
-            Using value_target As value.target = builder_of(Of value).with_value_target(n.child(2))
-                o.append("define", value_target.value_name, "bool")
+            Using value_target As value.target = logic_gen_of(Of value).with_value_target(n.child(2))
+                builders.of_define(value_target.value_name, "bool").to(o)
                 If Not b.[of](n.child(2)).build(o) Then
                     o.err("@condition value ", n.child(2))
                     Return False
                 End If
-                o.append("if", value_target.value_name, "{")
-                If Not b.[of](n.child(4)).build(o) Then
-                    o.err("@condition paragraph ", n.child(4))
-                    Return False
+                Dim satisfied_paragraph As Func(Of Boolean) = Nothing
+                satisfied_paragraph = Function() As Boolean
+                                          If Not b.[of](n.child(4)).build(o) Then
+                                              o.err("@condition paragraph ", n.child(4))
+                                              Return False
+                                          End If
+                                          Return True
+                                      End Function
+                If n.child_count() = 5 Then
+                    Return builders.of_if(value_target.value_name, satisfied_paragraph).to(o)
                 End If
-                o.append("}")
-                If n.child_count() = 6 Then
-                    o.append("else", "{")
-                    If Not b.[of](n.child(5)).build(o) Then
-                        o.err("@condition else-condition ", n.child(5))
-                        Return False
-                    End If
-                    o.append("}")
-                End If
+                Dim unsatisfied_paragraph As Func(Of Boolean) = Nothing
+                unsatisfied_paragraph = Function() As Boolean
+                                            If Not b.[of](n.child(5)).build(o) Then
+                                                o.err("@condition else-condition ", n.child(5))
+                                                Return False
+                                            End If
+                                            Return True
+                                        End Function
+                Return builders.of_if(value_target.value_name, satisfied_paragraph, unsatisfied_paragraph).to(o)
             End Using
-            Return True
         End Function
     End Class
 End Class

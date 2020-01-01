@@ -10,20 +10,20 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class cstyle
     Public NotInheritable Class value_definition
-        Inherits builder_wrapper
-        Implements builder
+        Inherits logic_gen_wrapper
+        Implements logic_gen
 
         <inject_constructor>
-        Public Sub New(ByVal b As builders, ByVal lp As lang_parser)
+        Public Sub New(ByVal b As logic_gens, ByVal lp As lang_parser)
             MyBase.New(b, lp)
         End Sub
 
-        Public Shared Sub register(ByVal b As builders)
+        Public Shared Sub register(ByVal b As logic_gens)
             assert(Not b Is Nothing)
             b.register(Of value_definition)()
         End Sub
 
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements builder.build
+        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             o.append("define")
@@ -36,7 +36,7 @@ Partial Public NotInheritable Class cstyle
                 o.err("@value-definition type ", n.child(0))
                 Return False
             End If
-            Using builder_of(Of value).with_current_target(n.child(1))
+            Using logic_gen_of(Of value).with_current_target(n.child(1))
                 If Not b.of(n.child(3)).build(o) Then
                     o.err("@value-definition value ", n.child(3))
                     Return False

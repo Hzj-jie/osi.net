@@ -57,7 +57,7 @@
   <ItemGroup>
     <Compile Include="cstyle\cstyle.vb" />
     <Compile Include="cstyle\cstyle_rules.vb" />
-    <Compile Include="cstyle\logic\builder.vb" />
+    <Compile Include="cstyle\logic\logic_gen.vb" />
     <Compile Include="cstyle\logic\nodes\add.vb" />
     <Compile Include="cstyle\logic\nodes\binary_operation_value.target.vb" />
     <Compile Include="cstyle\logic\nodes\binary_operation_value.vb" />
@@ -94,9 +94,8 @@
     <Compile Include="cstyle\logic\nodes\value_with_bracket.vb" />
     <Compile Include="cstyle\logic\nodes\value_with_operation.vb" />
     <Compile Include="cstyle\logic\nodes\while.vb" />
-    <Compile Include="logic\builder\append_slice_builder.vb" />
+    <Compile Include="logic\builder\builder.implementation.vb" />
     <Compile Include="logic\builder\builder.vb" />
-    <Compile Include="logic\builder\type_builder.vb" />
     <Compile Include="logic\builder\writer.vb" />
     <Compile Include="dotnet\source_executor.builder.build.vb" />
     <Compile Include="dotnet\source_executor.builder.vb" />
@@ -193,8 +192,10 @@
     <Content Include="cstyle\codegen\nlexer_rule.txt" />
     <Content Include="cstyle\codegen\rlexer_rule.txt" />
     <Content Include="cstyle\codegen\syntaxer_rule.txt" />
-    <Content Include="logic\codegen\definition_parser.cs" />
-    <Content Include="logic\codegen\definition_parser.exe" />
+    <Content Include="logic\codegen\builder_gen.cs" />
+    <Content Include="logic\codegen\builder_gen.exe" />
+    <Content Include="logic\codegen\importer_gen.cs" />
+    <Content Include="logic\codegen\importer_gen.exe" />
     <Content Include="logic\definition.txt" />
     <Content Include="logic\design.txt" />
   </ItemGroup>

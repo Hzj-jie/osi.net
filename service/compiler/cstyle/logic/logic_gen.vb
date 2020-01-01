@@ -10,15 +10,15 @@ Imports osi.service.compiler.logic
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class cstyle
-    Public Interface builder
+    Public Interface logic_gen
         Function build(ByVal n As typed_node, ByVal o As writer) As Boolean
     End Interface
 
-    Public MustInherit Class builder_wrapper
-        Protected ReadOnly b As builders
+    Public MustInherit Class logic_gen_wrapper
+        Protected ReadOnly b As logic_gens
         Protected ReadOnly lp As lang_parser
 
-        Protected Sub New(ByVal b As builders, ByVal lp As lang_parser)
+        Protected Sub New(ByVal b As logic_gens, ByVal lp As lang_parser)
             assert(Not b Is Nothing)
             assert(Not lp Is Nothing)
             Me.b = b
@@ -31,62 +31,62 @@ Partial Public NotInheritable Class cstyle
             Return r
         End Function
 
-        Protected Function builder_of(Of T As builder)() As T
-            Return direct_cast(Of T)(b.builder_of(builders.builder_name(Of T)()))
+        Protected Function logic_gen_of(Of T As logic_gen)() As T
+            Return direct_cast(Of T)(b.logic_gen_of(logic_gens.logic_gen_name(Of T)()))
         End Function
     End Class
 
-    Public NotInheritable Class builders
-        Private ReadOnly m As map(Of String, builder)
+    Public NotInheritable Class logic_gens
+        Private ReadOnly m As map(Of String, logic_gen)
         Private ReadOnly lp As lang_parser
 
         Public Sub New(ByVal lp As lang_parser)
             assert(Not lp Is Nothing)
             Me.lp = lp
-            m = New map(Of String, builder)()
+            m = New map(Of String, logic_gen)()
         End Sub
 
-        Public Shared Function builder_name(Of T As builder)() As String
+        Public Shared Function logic_gen_name(Of T As logic_gen)() As String
             Return GetType(T).Name().Replace("_"c, "-"c)
         End Function
 
-        Public Sub register(ByVal s As String, ByVal b As builder)
+        Public Sub register(ByVal s As String, ByVal b As logic_gen)
             assert(Not s.null_or_whitespace())
             assert(Not b Is Nothing)
             m.emplace(s, b)
         End Sub
 
-        Public Sub register(ByVal s As String, ByVal f As Func(Of builders, lang_parser, builder))
+        Public Sub register(ByVal s As String, ByVal f As Func(Of logic_gens, lang_parser, logic_gen))
             assert(Not f Is Nothing)
             register(s, f(Me, lp))
         End Sub
 
-        Public Sub register(Of T As builder)()
-            register(builder_name(Of T)(),
-                 Function(ByVal b As builders, ByVal lp As lang_parser) As builder
-                     Return inject_constructor(Of builder).of_derived(Of T).invoke(b, lp)
-                 End Function)
+        Public Sub register(Of T As logic_gen)()
+            register(logic_gen_name(Of T)(),
+                     Function(ByVal b As logic_gens, ByVal lp As lang_parser) As logic_gen
+                         Return inject_constructor(Of logic_gen).of_derived(Of T).invoke(b, lp)
+                     End Function)
         End Sub
 
-        Public Function builder_of(ByVal name As String) As builder
-            Dim it As map(Of String, builder).iterator = Nothing
+        Public Function logic_gen_of(ByVal name As String) As logic_gen
+            Dim it As map(Of String, logic_gen).iterator = Nothing
             it = m.find(name)
             assert(it <> m.end())
             Return (+it).second
         End Function
 
-        Public Function builder_of(ByVal n As typed_node) As builder
+        Public Function logic_gen_of(ByVal n As typed_node) As logic_gen
             assert(Not n Is Nothing)
             Dim type_name As String = Nothing
             assert(lp.type_name(n.type, type_name))
-            Return builder_of(type_name)
+            Return logic_gen_of(type_name)
         End Function
 
-        Public NotInheritable Class builder_proxy
-            Private ReadOnly b As builder
+        Public NotInheritable Class logic_gen_proxy
+            Private ReadOnly b As logic_gen
             Private ReadOnly n As typed_node
 
-            Public Sub New(ByVal b As builder, ByVal n As typed_node)
+            Public Sub New(ByVal b As logic_gen, ByVal n As typed_node)
                 assert(Not b Is Nothing)
                 assert(Not n Is Nothing)
                 Me.b = b
@@ -98,8 +98,8 @@ Partial Public NotInheritable Class cstyle
             End Function
         End Class
 
-        Public Function [of](ByVal n As typed_node) As builder_proxy
-            Return New builder_proxy(builder_of(n), n)
+        Public Function [of](ByVal n As typed_node) As logic_gen_proxy
+            Return New logic_gen_proxy(logic_gen_of(n), n)
         End Function
     End Class
 End Class

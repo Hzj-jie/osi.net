@@ -7,8 +7,8 @@ Imports osi.root.connector
 
 Partial Public NotInheritable Class cstyle
     Partial Public NotInheritable Class binary_operation_value
-        Inherits builder_wrapper
-        Implements builder
+        Inherits logic_gen_wrapper
+        Implements logic_gen
 
         Private Shared current_left As value.target
         Private Shared current_right As value.target
