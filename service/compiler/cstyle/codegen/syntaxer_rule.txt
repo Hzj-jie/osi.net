@@ -31,13 +31,12 @@ for-loop kw-for start-bracket [value-declaration]? semi-colon [value]? semi-colo
 
 value [value-with-bracket, value-without-bracket]
 value-with-bracket start-bracket value end-bracket
-value-without-bracket [name, function-call, comparasion, value-with-operation, integer, float, bool, string]
-value-with-operation [single-operation-value, binary-operation-value]
-single-operation-value [pre-operation-value, post-operation-value]
-pre-operation-value [not, self-add, self-minus] value
-post-operation-value value [self-add, self-minus]
-binary-operation-value value [add, minus, multiply, divide, mod, power, bit-and, bit-or, and, or] value
-comparasion value [less-than, great-than, less-or-equal, great-or-equal, equal] value
+value-without-bracket [name, function-call, value-with-operation, integer, float, bool, string]
+value-with-operation [unary-operation-value, binary-operation-value]
+unary-operation-value [pre-operation-value, post-operation-value]
+pre-operation-value [not, self-inc, self-dec] value
+post-operation-value value [self-inc, self-dec]
+binary-operation-value value [add, minus, multiply, divide, mod, power, bit-and, bit-or, and, or, less-than, great-than, less-or-equal, great-or-equal, equal] value
 
 function-call name start-bracket [value-list]? end-bracket
 value-list [value-with-comma]* value
