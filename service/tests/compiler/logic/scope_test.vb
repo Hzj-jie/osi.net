@@ -3,12 +3,12 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utt
-Imports osi.service.interpreter.primitive
 Imports osi.service.compiler.logic
+Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public Class scope_test
