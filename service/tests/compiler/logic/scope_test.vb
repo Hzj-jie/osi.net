@@ -15,7 +15,15 @@ Namespace logic
         Inherits [case]
 
         Private Shared Function rnd_name() As String
-            Return rnd_chars(rnd_int(1, 10))
+            While True
+                Dim s As String = Nothing
+                s = rnd_chars(rnd_int(1, 10))
+                If Not s.str_empty_or_whitespaces() Then
+                    Return s
+                End If
+            End While
+            assert(False)
+            Return Nothing
         End Function
 
         Private Shared Sub execute(ByVal s As scope,
