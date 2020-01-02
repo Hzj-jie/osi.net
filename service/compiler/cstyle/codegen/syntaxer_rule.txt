@@ -36,10 +36,13 @@ value-with-operation [unary-operation-value, binary-operation-value]
 unary-operation-value [pre-operation-value, post-operation-value]
 pre-operation-value [not, self-inc, self-dec] value
 post-operation-value value [self-inc, self-dec]
-binary-operation-value value [add, minus, multiply, divide, mod, power, bit-and, bit-or, and, or, less-than, great-than, less-or-equal, great-or-equal, equal] value
+binary-operation-value value [add, minus, multiply, divide, mod, power, bit-and, bit-or, and, or, less-than, greater-than, less-or-equal, greater-or-equal, equal] value
 
 function-call name start-bracket [value-list]? end-bracket
 value-list [value-with-comma]* value
 value-with-comma value comma
 
 return-clause kw-return [value]?
+
+# Embed a logic statement directly, like logic "int stdout a_string"
+logic kw-logic string

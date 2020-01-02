@@ -27,9 +27,9 @@ Partial Public NotInheritable Class cstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             builders.of_divide(value.current_target(),
-                              temps.bigint,
-                              binary_operation_value.current_left_target(),
-                              binary_operation_value.current_right_target()).to(o)
+                               temps.biguint,
+                               binary_operation_value.current_left_target(),
+                               binary_operation_value.current_right_target()).to(o)
             Return True
         End Function
     End Class

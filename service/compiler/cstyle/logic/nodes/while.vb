@@ -35,8 +35,7 @@ Partial Public NotInheritable Class cstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 5)
-            Using value_target As value.target = logic_gen_of(Of value).with_value_target(n.child(2))
-                builders.of_define(value_target.value_name, types.bool)
+            Using value_target As value.target = logic_gen_of(Of value).with_value_target(n.child(2), types.bool, o)
                 If Not while_value(n, o) Then
                     Return False
                 End If

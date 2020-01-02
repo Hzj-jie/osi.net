@@ -66,8 +66,7 @@ Partial Public NotInheritable Class cstyle
                     Return False
                 End If
             End If
-            Using value_target As value.target = logic_gen_of(Of value).with_value_target(ref.condition)
-                builders.of_define(value_target.value_name, types.bool).to(o)
+            Using value_target As value.target = logic_gen_of(Of value).with_value_target(ref.condition, types.bool, o)
                 If Not condition_value(ref, o) Then
                     Return False
                 End If

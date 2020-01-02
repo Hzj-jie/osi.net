@@ -7,6 +7,7 @@ kw-do do
 kw-loop loop
 kw-return return
 kw-break break
+kw-logic logic
 
 blank [\b]+
 
@@ -27,10 +28,10 @@ end-square-bracket \]
 semi-colon ;
 
 less-or-equal <=
-great-or-equal >=
+greater-or-equal >=
 equal ==
 less-than <
-great-than >
+greater-than >
 
 assignment =
 

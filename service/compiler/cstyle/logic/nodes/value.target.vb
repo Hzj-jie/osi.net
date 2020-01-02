@@ -7,6 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.automata
+Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class cstyle
     Partial Public NotInheritable Class value
@@ -57,8 +58,18 @@ Partial Public NotInheritable Class cstyle
             End Sub
         End Class
 
-        Public Function with_value_target(ByVal n As typed_node) As target
-            Return New target(set_value_target(n))
+        Public Function with_value_target(ByVal n As typed_node, ByVal o As writer) As target
+            Return with_value_target(n, types.biguint, o)
+        End Function
+
+        ' TODO: Check return type of value.
+        Public Function with_value_target(ByVal n As typed_node, ByVal type As String, ByVal o As writer) As target
+            assert(Not type.null_or_whitespace())
+            assert(Not o Is Nothing)
+            Dim value_name As String = Nothing
+            value_name = set_value_target(n)
+            builders.of_define(value_name, type).to(o)
+            Return New target(value_name)
         End Function
 
         Private Function set_value_target(ByVal n As typed_node) As String

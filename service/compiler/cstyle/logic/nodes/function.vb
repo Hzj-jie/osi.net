@@ -30,15 +30,16 @@ Partial Public NotInheritable Class cstyle
 
             Public Sub New(ByVal n As typed_node)
                 assert(Not n Is Nothing)
+                assert(n.child_count() = 5 OrElse n.child_count() = 6)
                 Me.n = n
             End Sub
 
-            Public Shared Function [of](ByVal n As typed_node) As function_ref
-                Return New function_ref(n)
-            End Function
-
             Public Function allow_return_value() As Boolean
                 Return Not strsame(n.word(0).str(), "void")
+            End Function
+
+            Public Function name() As String
+                Return n.word(1).str()
             End Function
         End Class
 

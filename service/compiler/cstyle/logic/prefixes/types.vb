@@ -14,6 +14,7 @@ Partial Public NotInheritable Class cstyle
         Implements prefix
 
         Public Const bigint As String = "bigint"
+        Public Const biguint As String = "biguint"
         Public Const uint As String = "uint"
         Public Const int As String = "int"
         Public Const bool As String = "bool"
@@ -23,11 +24,12 @@ Partial Public NotInheritable Class cstyle
 
         Shared Sub New()
             v = vector.of(
-                emplace_make_pair(bigint, 0),
                 emplace_make_pair(uint, 4),
                 emplace_make_pair(int, 4),
                 emplace_make_pair(bool, 1),
-                emplace_make_pair([byte], 1)
+                emplace_make_pair([byte], 1),
+                emplace_make_pair(bigint, 0),
+                emplace_make_pair(biguint, 0)
             )
         End Sub
 

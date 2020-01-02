@@ -12,12 +12,14 @@ Partial Public NotInheritable Class cstyle
         Implements prefix
 
         Public Shared ReadOnly bigint As String = unique_name("bigint")
+        Public Shared ReadOnly biguint As String = unique_name("biguint")
 
         Private Shared ReadOnly v As vector(Of pair(Of String, String))
 
         Shared Sub New()
             v = vector.of(
-                emplace_make_pair(bigint, "bigint")
+                emplace_make_pair(bigint, types.bigint),
+                emplace_make_pair(biguint, types.biguint)
             )
         End Sub
 

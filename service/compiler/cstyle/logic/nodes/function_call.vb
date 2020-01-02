@@ -9,7 +9,7 @@ Imports osi.service.compiler.logic
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class cstyle
-    Public NotInheritable Class [mod]
+    Public NotInheritable Class function_call
         Inherits logic_gen_wrapper
         Implements logic_gen
 
@@ -20,17 +20,17 @@ Partial Public NotInheritable Class cstyle
 
         Public Shared Sub register(ByVal b As logic_gens)
             assert(Not b Is Nothing)
-            b.register(Of [mod])()
+            b.register(Of function_call)()
         End Sub
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            builders.of_divide(temps.biguint,
-                               value.current_target(),
-                               binary_operation_value.current_left_target(),
-                               binary_operation_value.current_right_target()).to(o)
-            Return True
+            'builders.of_caller(n.child(0).word().str(),
+            '                   value.current_target(),
+            '                   binary_operation_value.current_left_target(),
+            '                   binary_operation_value.current_right_target()).to(o)
+            'Return True
         End Function
     End Class
 End Class

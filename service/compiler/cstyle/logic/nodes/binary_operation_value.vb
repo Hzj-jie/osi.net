@@ -28,7 +28,7 @@ Partial Public NotInheritable Class cstyle
             assert(Not o Is Nothing)
             assert(n.child_count() = 3)
             Dim left As value.target = Nothing
-            left = logic_gen_of(Of value).with_value_target(n.child(0))
+            left = logic_gen_of(Of value).with_value_target(n.child(0), o)
             Using left
                 If Not b.of(n.child(0)).build(o) Then
                     o.err("@binary-operation-value value [0] ", n.child(0))
@@ -36,7 +36,7 @@ Partial Public NotInheritable Class cstyle
                 End If
             End Using
             Dim right As value.target = Nothing
-            right = logic_gen_of(Of value).with_value_target(n.child(2))
+            right = logic_gen_of(Of value).with_value_target(n.child(2), o)
             Using right
                 If Not b.of(n.child(2)).build(o) Then
                     o.err("@binary-operation-value value [1] ", n.child(2))
