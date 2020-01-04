@@ -26,6 +26,10 @@ Partial Public NotInheritable Class cstyle
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
+            assert(n.child_count() > 3)
+            If n.child_count() = 4 Then
+
+            End If
             'builders.of_caller(n.child(0).word().str(),
             '                   value.current_target(),
             '                   binary_operation_value.current_left_target(),

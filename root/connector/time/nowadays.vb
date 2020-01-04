@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.DateTime
 Imports osi.root.constants
 
@@ -9,7 +13,7 @@ Imports osi.root.constants
 ' http://stackoverflow.com/questions/1008345/system-diagnostics-stopwatch-returns-negative-numbers-in-elapsed-properties
 ' TODO: low_res & high_res or at least their tests are not stable on one core machine.
 <global_init(global_init_level.foundamental)>
-Public Class nowadays
+Public NotInheritable Class nowadays
     Private Shared Sub init()
         high_res_ticks()
         normal_res_ticks()

@@ -1,9 +1,12 @@
 ﻿
-Imports osi.root.procedure
-Imports osi.root.utt
-Imports osi.root.connector
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Public Class callback_test
+Imports osi.root.connector
+Imports osi.root.utt
+
+Public NotInheritable Class callback_test
     Inherits multithreading_case_wrapper
 
     Private Shared ReadOnly thread_count As Int32
@@ -17,7 +20,7 @@ Public Class callback_test
     End Sub
 End Class
 
-Public Class callback_single_test
+Public NotInheritable Class callback_single_test
     Inherits repeat_case_wrapper
 
     Private Const busy_wait_ms As Int32 = 1
@@ -36,7 +39,7 @@ Public Class callback_single_test
     End Sub
 
     Public Overrides Function reserved_processors() As Int16
-        Return If(strict_time_limited, Environment.ProcessorCount(), 1)
+        Return CShort(If(strict_time_limited, Environment.ProcessorCount(), 1))
     End Function
 
     Public Sub New()
