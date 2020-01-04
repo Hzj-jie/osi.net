@@ -9,6 +9,8 @@ Imports osi.root.constants
 Imports osi.root.formation
 
 ' TODO: Implement typed_node.builder to ensure the immutability of typed_node.
+' TODO: Add parent node
+' TODO: Add type-str
 Public NotInheritable Class typed_node
     Public Const ROOT_TYPE As UInt32 = uint32_0
     Public ReadOnly type As UInt32

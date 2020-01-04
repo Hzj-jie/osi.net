@@ -25,10 +25,12 @@ Partial Public NotInheritable Class cstyle
             b.register(Of value_with_comma)()
         End Sub
 
-        Public Function build_value(ByVal n As typed_node, ByVal o As writer, ByRef r As value.target) As Boolean
+        Public Function build_value(ByVal n As typed_node, ByVal o As writer, ByRef r As String) As Boolean
             assert(Not o Is Nothing)
-            r = logic_gen_of(Of value).with_value_target(n, o)
-            Using r
+            Dim ref As write_scoped(Of String).ref = Nothing
+            ref = logic_gen_of(Of value).with_value_target(n, o)
+            r = +ref
+            Using ref
                 If Not b.of(n).build(o) Then
                     o.err("@value-with-comma value ", n)
                     Return False

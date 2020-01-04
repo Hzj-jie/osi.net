@@ -48,12 +48,7 @@ Partial Public NotInheritable Class cstyle
         End Class
 
         Private Function condition_value(ByVal n As ref, ByVal o As writer) As Boolean
-            If n.condition Is Nothing OrElse
-           b.of(n.condition).build(o) Then
-                Return True
-            End If
-            o.err("@for-loop value ", n.condition)
-            Return False
+            Return n.condition Is Nothing OrElse logic_gen_of(Of value).build(n.condition, o, "for-loop")
         End Function
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
@@ -66,11 +61,12 @@ Partial Public NotInheritable Class cstyle
                     Return False
                 End If
             End If
-            Using value_target As value.target = logic_gen_of(Of value).with_value_target(ref.condition, types.bool, o)
+            Using value_target As write_scoped(Of String).ref =
+                logic_gen_of(Of value).with_value_target(ref.condition, types.bool, o)
                 If Not condition_value(ref, o) Then
                     Return False
                 End If
-                Return builders.of_while_then(value_target.value_name,
+                Return builders.of_while_then(+value_target,
                                               Function() As Boolean
                                                   If Not b.[of](ref.paragraph).build(o) Then
                                                       o.err("@for-loop paragraph ", ref.paragraph)

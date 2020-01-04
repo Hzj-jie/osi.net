@@ -27,9 +27,9 @@ Partial Public NotInheritable Class cstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
-            Using value_target As value.target = logic_gen_of(Of value).with_value_target(n.child(2), types.bool, o)
-                If Not b.[of](n.child(2)).build(o) Then
-                    o.err("@condition value ", n.child(2))
+            Using value_target As write_scoped(Of String).ref =
+                logic_gen_of(Of value).with_value_target(n.child(2), types.bool, o)
+                If Not logic_gen_of(Of value).build(n.child(2), o, "condition") Then
                     Return False
                 End If
                 Dim satisfied_paragraph As Func(Of Boolean) = Nothing
@@ -41,7 +41,7 @@ Partial Public NotInheritable Class cstyle
                                           Return True
                                       End Function
                 If n.child_count() = 5 Then
-                    Return builders.of_if(value_target.value_name, satisfied_paragraph).to(o)
+                    Return builders.of_if(+value_target, satisfied_paragraph).to(o)
                 End If
                 Dim unsatisfied_paragraph As Func(Of Boolean) = Nothing
                 unsatisfied_paragraph = Function() As Boolean
@@ -51,7 +51,7 @@ Partial Public NotInheritable Class cstyle
                                             End If
                                             Return True
                                         End Function
-                Return builders.of_if(value_target.value_name, satisfied_paragraph, unsatisfied_paragraph).to(o)
+                Return builders.of_if(+value_target, satisfied_paragraph, unsatisfied_paragraph).to(o)
             End Using
         End Function
     End Class

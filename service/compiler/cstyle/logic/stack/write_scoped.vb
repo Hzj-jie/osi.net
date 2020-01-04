@@ -17,7 +17,7 @@ Public NotInheritable Class write_scoped(Of T)
         Implements IDisposable
 
         Private ReadOnly r As write_scoped(Of T)
-        Public ReadOnly v As T
+        Private ReadOnly v As T
 
         Public Sub New(ByVal r As write_scoped(Of T))
             assert(Not r Is Nothing)
@@ -29,6 +29,11 @@ Public NotInheritable Class write_scoped(Of T)
         Public Sub Dispose() Implements IDisposable.Dispose
             r.s.pop()
         End Sub
+
+        Public Shared Operator +(ByVal this As ref) As T
+            assert(Not this Is Nothing)
+            Return this.v
+        End Operator
     End Class
 
     Public Function push(ByVal v As T) As ref

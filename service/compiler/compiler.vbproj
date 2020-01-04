@@ -79,6 +79,7 @@
     <Compile Include="cstyle\logic\nodes\post_operation_value.vb" />
     <Compile Include="cstyle\logic\nodes\power.vb" />
     <Compile Include="cstyle\logic\nodes\self_dec.vb" />
+    <Compile Include="cstyle\logic\nodes\value_list.target.vb" />
     <Compile Include="cstyle\logic\nodes\value_list.vb" />
     <Compile Include="cstyle\logic\nodes\value_with_comma.vb" />
     <Compile Include="cstyle\logic\prefixes\constants.vb" />
