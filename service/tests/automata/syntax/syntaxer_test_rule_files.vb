@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.service.resource
 
 Namespace syntaxer
-    Public Class syntaxer_test_rule_files
+    Public NotInheritable Class syntaxer_test_rule_files
         Public Shared ReadOnly rlexer As String
         Public Shared ReadOnly rlexer2 As String
         Public Shared ReadOnly syntaxer As String

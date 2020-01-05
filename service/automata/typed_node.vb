@@ -13,24 +13,32 @@ Imports osi.root.formation
 ' TODO: Add type-str
 Public NotInheritable Class typed_node
     Public Const ROOT_TYPE As UInt32 = uint32_0
+    Public Const ROOT_TYPE_STR As String = "ROOT"
     Public ReadOnly type As UInt32
+    Public ReadOnly type_str As String
     Public ReadOnly start As UInt32
     Public ReadOnly [end] As UInt32 'exclusive
+    Public ReadOnly parent As typed_node
     Public ReadOnly subnodes As vector(Of typed_node)
     Public ReadOnly ref As vector(Of typed_word)
 
     Public Sub New(ByVal ref As vector(Of typed_word),
                    ByVal type As UInt32,
+                   ByVal type_str As String,
                    ByVal start As UInt32,
                    ByVal [end] As UInt32,
+                   ByVal parent As typed_node,
                    ByVal ParamArray subnodes() As typed_node)
         assert(Not ref Is Nothing)
         assert(start <= [end])  ' start == end means empty-matching
         assert([end] <= ref.size())
+        assert(Not type_str.null_or_whitespace())
         Me.ref = ref
         Me.type = type
+        Me.type_str = type_str
         Me.start = start
         Me.end = [end]
+        Me.parent = parent
         Me.subnodes = New vector(Of typed_node)()
         Me.subnodes.emplace_back(subnodes)
 
@@ -41,11 +49,11 @@ Public NotInheritable Class typed_node
 #End If
     End Sub
 
-    ' create a root node
-    Public Sub New(ByVal ref As vector(Of typed_word),
-                   ByVal ParamArray subnodes() As typed_node)
-        Me.New(ref, ROOT_TYPE, uint32_0, assert_not_nothing_return(ref).size(), subnodes)
-    End Sub
+    Public Shared Function of_root(ByVal ref As vector(Of typed_word),
+                                   ByVal ParamArray subnodes() As typed_node) As typed_node
+        assert(Not ref Is Nothing)
+        Return New typed_node(ref, ROOT_TYPE, ROOT_TYPE_STR, uint32_0, ref.size(), Nothing, subnodes)
+    End Function
 
     Public NotInheritable Class child_named_map
         Private ReadOnly m As map(Of String, vector(Of typed_node))
@@ -99,6 +107,10 @@ Public NotInheritable Class typed_node
 
     Public Function named_children(ByVal lp As lang_parser) As child_named_map
         Return New child_named_map(lp, Me)
+    End Function
+
+    Public Function root() As Boolean
+        Return parent Is Nothing
     End Function
 
     Public Function child(ByVal id As UInt32) As typed_node

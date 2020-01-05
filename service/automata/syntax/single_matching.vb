@@ -7,14 +7,15 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 
-Partial Public Class syntaxer
-    Public Class single_matching
+Partial Public NotInheritable Class syntaxer
+    Public NotInheritable Class single_matching
         Inherits matching
         Implements IComparable(Of single_matching)
 
         Private ReadOnly m As UInt32
 
-        Public Sub New(ByVal m As UInt32)
+        Public Sub New(ByVal c As syntax_collection, ByVal m As UInt32)
+            MyBase.New(c)
             Me.m = m
         End Sub
 
@@ -33,7 +34,7 @@ Partial Public Class syntaxer
             Return True
         End Function
 
-        Public NotOverridable Overrides Function CompareTo(ByVal other As matching) As Int32
+        Public Overrides Function CompareTo(ByVal other As matching) As Int32
             Return CompareTo(cast(Of single_matching)().from(other, False))
         End Function
 

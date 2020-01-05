@@ -119,8 +119,8 @@ Partial Friend NotInheritable Class host
     End Sub
 
     Private Shared Function utt_concurrency() As Int32
-        Return If(envs.utt_concurrency <> npos,
-                  envs.utt_concurrency,
+        Return If(envs.utt.concurrency <> npos,
+                  envs.utt.concurrency,
                   Environment.ProcessorCount())
     End Function
 

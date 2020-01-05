@@ -1,11 +1,14 @@
 ﻿
-Imports osi.root.constants
-Imports osi.root.connector
-Imports osi.root.formation
-Imports osi.root.utils
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Partial Public Class syntaxer
-    Public Class syntax
+Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.formation
+
+Partial Public NotInheritable Class syntaxer
+    Public NotInheritable Class syntax
         Inherits matching
         Implements IComparable(Of syntax)
 
@@ -19,7 +22,11 @@ Partial Public Class syntaxer
             default_ignore_types = Nothing
         End Sub
 
-        Public Sub New(ByVal type As UInt32, ByVal ignore_types As [set](Of UInt32), ByVal ParamArray ms() As matching)
+        Public Sub New(ByVal c As syntax_collection,
+                       ByVal type As UInt32,
+                       ByVal ignore_types As [set](Of UInt32),
+                       ByVal ParamArray ms() As matching)
+            MyBase.New(c)
             Me.type = type
             Me.ignore_types = ignore_types
             assert(Not isemptyarray(ms))
@@ -42,7 +49,7 @@ Partial Public Class syntaxer
                     Return False
                 End If
             End While
-            o = New syntax(type, ignore_types, +ms)
+            o = New syntax(collection, type, ignore_types, +ms)
             Return collection.set(o)
         End Function
 
@@ -56,8 +63,10 @@ Partial Public Class syntaxer
                    create(i, ignore_types, s, collection, o)
         End Function
 
-        Public Sub New(ByVal ignore_types As [set](Of UInt32), ByVal ParamArray ms() As matching)
-            Me.New(default_type, ignore_types, ms)
+        Public Sub New(ByVal c As syntax_collection,
+                       ByVal ignore_types As [set](Of UInt32),
+                       ByVal ParamArray ms() As matching)
+            Me.New(c, default_type, ignore_types, ms)
         End Sub
 
         Public Shared Function create(ByVal ignore_types As [set](Of UInt32),
@@ -67,8 +76,8 @@ Partial Public Class syntaxer
             Return create(default_type, ignore_types, s, collection, o)
         End Function
 
-        Public Sub New(ByVal type As UInt32, ByVal ParamArray ms() As matching)
-            Me.New(type, default_ignore_types, ms)
+        Public Sub New(ByVal c As syntax_collection, ByVal type As UInt32, ByVal ParamArray ms() As matching)
+            Me.New(c, type, default_ignore_types, ms)
         End Sub
 
         Public Shared Function create(ByVal type As UInt32,
@@ -78,8 +87,8 @@ Partial Public Class syntaxer
             Return create(type, default_ignore_types, s, collection, o)
         End Function
 
-        Public Sub New(ByVal ParamArray ms() As matching)
-            Me.New(default_type, ms)
+        Public Sub New(ByVal c As syntax_collection, ByVal ParamArray ms() As matching)
+            Me.New(c, default_type, ms)
         End Sub
 
         Public Shared Function create(ByVal s As String,
@@ -88,36 +97,52 @@ Partial Public Class syntaxer
             Return create(default_type, s, collection, o)
         End Function
 
-        Public Sub New(ByVal type As UInt32, ByVal ignore_types As [set](Of UInt32), ByVal ParamArray ms()() As UInt32)
-            Me.New(type, ignore_types, matching_creator.create_matchings(ms))
+        Public Sub New(ByVal c As syntax_collection,
+                       ByVal type As UInt32,
+                       ByVal ignore_types As [set](Of UInt32),
+                       ByVal ParamArray ms()() As UInt32)
+            Me.New(c, type, ignore_types, matching_creator.create_matchings(c, ms))
         End Sub
 
-        Public Sub New(ByVal ignore_types As [set](Of UInt32), ByVal ParamArray ms()() As UInt32)
-            Me.New(default_type, ignore_types, ms)
+        Public Sub New(ByVal c As syntax_collection,
+                       ByVal ignore_types As [set](Of UInt32),
+                       ByVal ParamArray ms()() As UInt32)
+            Me.New(c, default_type, ignore_types, ms)
         End Sub
 
-        Public Sub New(ByVal type As UInt32, ByVal ParamArray ms()() As UInt32)
-            Me.New(type, default_ignore_types, ms)
+        Public Sub New(ByVal c As syntax_collection,
+                       ByVal type As UInt32,
+                       ByVal ParamArray ms()() As UInt32)
+            Me.New(c, type, default_ignore_types, ms)
         End Sub
 
-        Public Sub New(ByVal ParamArray ms()() As UInt32)
-            Me.New(default_type, ms)
+        Public Sub New(ByVal c As syntax_collection,
+                       ByVal ParamArray ms()() As UInt32)
+            Me.New(c, default_type, ms)
         End Sub
 
-        Public Sub New(ByVal type As UInt32, ByVal ignore_types As [set](Of UInt32), ByVal ParamArray ms() As UInt32)
-            Me.New(type, ignore_types, matching_creator.create_matchings(ms))
+        Public Sub New(ByVal c As syntax_collection,
+                       ByVal type As UInt32,
+                       ByVal ignore_types As [set](Of UInt32),
+                       ByVal ParamArray ms() As UInt32)
+            Me.New(c, type, ignore_types, matching_creator.create_matchings(c, ms))
         End Sub
 
-        Public Sub New(ByVal ignore_types As [set](Of UInt32), ByVal ParamArray ms() As UInt32)
-            Me.New(default_type, ignore_types, ms)
+        Public Sub New(ByVal c As syntax_collection,
+                       ByVal ignore_types As [set](Of UInt32),
+                       ByVal ParamArray ms() As UInt32)
+            Me.New(c, default_type, ignore_types, ms)
         End Sub
 
-        Public Sub New(ByVal type As UInt32, ByVal ParamArray ms() As UInt32)
-            Me.New(type, default_ignore_types, ms)
+        Public Sub New(ByVal c As syntax_collection,
+                       ByVal type As UInt32,
+                       ByVal ParamArray ms() As UInt32)
+            Me.New(c, type, default_ignore_types, ms)
         End Sub
 
-        Public Sub New(ByVal ParamArray ms() As UInt32)
-            Me.New(default_type, ms)
+        Public Sub New(ByVal c As syntax_collection,
+                       ByVal ParamArray ms() As UInt32)
+            Me.New(c, default_type, ms)
         End Sub
 
         Private Sub jump_over_ignore_types(ByVal v As vector(Of typed_word), ByRef p As UInt32)
@@ -125,7 +150,7 @@ Partial Public Class syntaxer
                 While v.size() > p
                     assert(Not v(p) Is Nothing)
                     If ignore_types.find(v(p).type) <> ignore_types.end() Then
-                        p += 1
+                        p += uint32_1
                     Else
                         Exit While
                     End If
@@ -138,59 +163,55 @@ Partial Public Class syntaxer
                                         ByVal parent As typed_node) As Boolean
             If v Is Nothing OrElse v.size() <= p Then
                 Return False
-            Else
-                Dim op As UInt32 = 0
-                op = p
-                For round As UInt32 = 0 To If(parent Is Nothing, 0, 1)
-                    If round = 1 Then
-                        assert(Not parent Is Nothing)
-                        parent = add_subnode(v, parent, type, op, p)
-                    End If
-                    p = op
-                    For i As UInt32 = 0 To array_size(ms) - uint32_1
-                        jump_over_ignore_types(v, p)
-                        If round = 0 Then
-                            If Not ms(i).match(v, p) Then
-                                Return False
-                            End If
-                        Else
-                            assert(ms(i).match(v, p, parent))
-                        End If
-                    Next
-                Next
-                jump_over_ignore_types(v, p)
-                Return True
             End If
+            Dim op As UInt32 = 0
+            op = p
+            For round As UInt32 = 0 To CUInt(If(parent Is Nothing, 0, 1))
+                If round = 1 Then
+                    assert(Not parent Is Nothing)
+                    parent = add_subnode(v, parent, type, op, p)
+                End If
+                p = op
+                For i As Int32 = 0 To array_size_i(ms) - 1
+                    jump_over_ignore_types(v, p)
+                    If round = 0 Then
+                        If Not ms(i).match(v, p) Then
+                            Return False
+                        End If
+                    Else
+                        assert(ms(i).match(v, p, parent))
+                    End If
+                Next
+            Next
+            jump_over_ignore_types(v, p)
+            Return True
         End Function
 
         Public Shared Operator +(ByVal this As syntax) As matching()
             Return If(this Is Nothing, Nothing, this.ms)
         End Operator
 
-        Public NotOverridable Overrides Function CompareTo(ByVal other As matching) As Int32
-            Return CompareTo(cast(Of syntax)(other, False))
+        Public Overrides Function CompareTo(ByVal other As matching) As Int32
+            Return CompareTo(cast(Of syntax)().from(other, False))
         End Function
 
         Public Overloads Function CompareTo(ByVal other As syntax) As Int32 _
                                            Implements IComparable(Of syntax).CompareTo
             Dim c As Int32 = 0
             c = object_compare(Me, other)
-            If c = object_compare_undetermined Then
-                assert(Not other Is Nothing)
-                c = compare(Me.type, other.type)
-                If c = 0 Then
-                    c = memcmp(Me.ms, other.ms)
-                    If c = 0 Then
-                        Return compare(Me.ignore_types, other.ignore_types)
-                    Else
-                        Return c
-                    End If
-                Else
-                    Return c
-                End If
-            Else
+            If c <> object_compare_undetermined Then
                 Return c
             End If
+            assert(Not other Is Nothing)
+            c = compare(Me.type, other.type)
+            If c <> 0 Then
+                Return c
+            End If
+            c = memcmp(Me.ms, other.ms)
+            If c <> 0 Then
+                Return c
+            End If
+            Return compare(Me.ignore_types, other.ignore_types)
         End Function
     End Class
 End Class

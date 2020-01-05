@@ -44,7 +44,7 @@ Partial Public NotInheritable Class syntaxer
             End If
         End While
         If assert(p = v.size() AndAlso Not ms.empty()) Then
-            root = New typed_node(v)
+            root = typed_node.of_root(v)
             p = 0
             For i As UInt32 = 0 To ms.size() - uint32_1
                 Dim s As syntax = Nothing

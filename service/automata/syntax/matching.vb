@@ -7,10 +7,18 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utils
+Imports envs = osi.root.envs
 
 Partial Public NotInheritable Class syntaxer
     Public MustInherit Class matching
         Implements IComparable, IComparable(Of matching)
+
+        Protected ReadOnly c As syntax_collection
+
+        Protected Sub New(ByVal c As syntax_collection)
+            assert(Not c Is Nothing)
+            Me.c = c
+        End Sub
 
         Public MustOverride Function match(ByVal v As vector(Of typed_word),
                                            ByRef p As UInt32,
@@ -20,16 +28,25 @@ Partial Public NotInheritable Class syntaxer
             Return match(v, p, Nothing)
         End Function
 
-        Protected Shared Function add_subnode(ByVal v As vector(Of typed_word),
-                                              ByVal parent As typed_node,
-                                              ByVal type As UInt32,
-                                              ByVal start As UInt32,
-                                              ByVal [end] As UInt32) As typed_node
+        Protected Function add_subnode(ByVal v As vector(Of typed_word),
+                                       ByVal parent As typed_node,
+                                       ByVal type As UInt32,
+                                       ByVal start As UInt32,
+                                       ByVal [end] As UInt32) As typed_node
             If parent Is Nothing Then
                 Return Nothing
             End If
+            Dim type_str As String = Nothing
+            If envs.utt.is_current Then
+                ' TODO: Fix the tests to avoid undefined type.
+                If Not c.type_name(type, type_str) Then
+                    type_str = strcat("UNDEFINED_TYPE-", type)
+                End If
+            Else
+                type_str = c.type_name(type)
+            End If
             Dim r As typed_node = Nothing
-            r = New typed_node(v, type, start, [end])
+            r = New typed_node(v, type, type_str, start, [end], parent)
             parent.subnodes.emplace_back(r)
             Return r
         End Function
@@ -42,27 +59,27 @@ Partial Public NotInheritable Class syntaxer
                                               Implements IComparable(Of matching).CompareTo
     End Class
 
-    Public Class matching_creator
+    Public NotInheritable Class matching_creator
         Private Sub New()
         End Sub
 
-        Public Shared Function create() As matching
-            Return New empty_matching()
+        Public Shared Function create(ByVal c As syntax_collection) As matching
+            Return New empty_matching(c)
         End Function
 
-        Public Shared Function create(ByVal m As UInt32) As matching
-            Return New single_matching(m)
+        Public Shared Function create(ByVal c As syntax_collection, ByVal m As UInt32) As matching
+            Return New single_matching(c, m)
         End Function
 
-        Public Shared Function create(ByVal ms() As UInt32) As matching
+        Public Shared Function create(ByVal c As syntax_collection, ByVal ms() As UInt32) As matching
             If isemptyarray(ms) Then
-                Return create()
-            Else
-                Return New matching_group(create_matchings(ms))
+                Return create(c)
             End If
+            Return New matching_group(c, create_matchings(c, ms))
         End Function
 
-        Public Shared Function create(ByVal m1 As UInt32,
+        Public Shared Function create(ByVal c As syntax_collection,
+                                      ByVal m1 As UInt32,
                                       ByVal m2 As UInt32,
                                       ByVal ParamArray ms() As UInt32) As matching
             Dim m() As UInt32 = Nothing
@@ -74,28 +91,32 @@ Partial Public NotInheritable Class syntaxer
                     m(i + 2) = ms(i)
                 Next
             End If
-            Return create(m)
+            Return create(c, m)
         End Function
 
-        Private Shared Function create_matchings(Of T)(ByVal ms() As T, ByVal c As Func(Of T, matching)) As matching()
-            assert(Not c Is Nothing)
+        Private Shared Function create_matchings(Of T)(ByVal c As syntax_collection,
+                                                       ByVal ms() As T,
+                                                       ByVal ctor As Func(Of syntax_collection, T, matching)) As matching()
+            assert(Not ctor Is Nothing)
             If isemptyarray(ms) Then
                 Return Nothing
             End If
             Dim m() As matching = Nothing
             ReDim m(array_size_i(ms) - 1)
             For i As Int32 = 0 To array_size_i(ms) - 1
-                m(i) = c(ms(i))
+                m(i) = ctor(c, ms(i))
             Next
             Return m
         End Function
 
-        Public Shared Function create_matchings(ByVal ParamArray ms() As UInt32) As matching()
-            Return create_matchings(ms, AddressOf create)
+        Public Shared Function create_matchings(ByVal c As syntax_collection,
+                                                ByVal ParamArray ms() As UInt32) As matching()
+            Return create_matchings(c, ms, AddressOf create)
         End Function
 
-        Public Shared Function create_matchings(ByVal ParamArray ms()() As UInt32) As matching()
-            Return create_matchings(ms, AddressOf create)
+        Public Shared Function create_matchings(ByVal c As syntax_collection,
+                                                ByVal ParamArray ms()() As UInt32) As matching()
+            Return create_matchings(c, ms, AddressOf create)
         End Function
 
         Private Shared Function create_matching(ByVal s As String,
@@ -110,7 +131,7 @@ Partial Public NotInheritable Class syntaxer
             End If
             Dim i As UInt32 = 0
             If collection.token_type(s, i) Then
-                o = matching_creator.create(i)
+                o = matching_creator.create(collection, i)
             Else
                 i = collection.define(s)
                 o = New matching_delegate(collection, i)
@@ -154,26 +175,25 @@ Partial Public NotInheritable Class syntaxer
                             Return False
                         End If
                     Next
-                    o = New matching_group(ms)
+                    o = New matching_group(collection, ms)
                     pos = CUInt(e + 1)
                     While pos < strlen(i)
                         If i(CInt(pos)) = characters.optional_matching Then
-                            o = New optional_matching_group(o)
+                            o = New optional_matching_group(collection, o)
                             pos += uint32_1
                         ElseIf i(CInt(pos)) = characters.any_matching Then
-                            o = New any_matching_group(o)
+                            o = New any_matching_group(collection, o)
                             pos += uint32_1
                         ElseIf i(CInt(pos)) = characters.multi_matching Then
-                            o = New multi_matching_group(o)
+                            o = New multi_matching_group(collection, o)
                             pos += uint32_1
                         Else
                             Exit While
                         End If
                     End While
                     Return True
-                Else
-                    Return False
                 End If
+                Return False
             Else
                 Dim e As Int32 = 0
                 e = i.IndexOfAny(characters.matching_separators_array, CInt(pos))

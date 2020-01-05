@@ -7,8 +7,8 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 
-Partial Public Class syntaxer
-    Public Class syntax_collection
+Partial Public NotInheritable Class syntaxer
+    Public NotInheritable Class syntax_collection
         Implements IComparable, IComparable(Of syntax_collection)
 
         Private ReadOnly token_str_type As map(Of String, UInt32)

@@ -1,8 +1,11 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.automata
 Imports osi.service.automata.syntaxer
@@ -41,13 +44,19 @@ Namespace syntaxer
             End Sub
         End Class
 
+        Protected ReadOnly c As syntax_collection
+
+        Protected Sub New()
+            c = New syntax_collection()
+        End Sub
+
         Protected MustOverride Function create() As matching_case()
 
         Public Overrides Function run() As Boolean
             Dim ms() As matching_case = Nothing
             ms = create()
             assert(Not isemptyarray(ms))
-            For i As UInt32 = 0 To array_size(ms) - uint32_1
+            For i As Int32 = 0 To array_size_i(ms) - 1
                 Dim m As matching_case = Nothing
                 m = ms(i)
                 assert(Not m Is Nothing)

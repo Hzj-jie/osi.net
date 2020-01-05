@@ -1,20 +1,29 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 
-Public Module _utt
-    Public ReadOnly utt_concurrency As Int32
-    Public ReadOnly utt_file_pattern As String
+Public NotInheritable Class utt
+    Public Shared ReadOnly concurrency As Int32
+    Public Shared ReadOnly file_pattern As String
+    Public Shared ReadOnly is_current As Boolean
 
-    Sub New()
-        If Not env_value(env_keys("utt", "concurrency"), utt_concurrency) OrElse
-           utt_concurrency < 0 OrElse
-           utt_concurrency > Environment.ProcessorCount() Then
-            utt_concurrency = npos
+    Shared Sub New()
+        If Not env_value(env_keys("utt", "concurrency"), concurrency) OrElse
+           concurrency < 0 OrElse
+           concurrency > Environment.ProcessorCount() Then
+            concurrency = npos
         End If
-        If Not env_value(env_keys("utt", "file", "pattern"), utt_file_pattern) OrElse
-           utt_file_pattern.null_or_whitespace() Then
-            utt_file_pattern = "osi.*.dll"
+        If Not env_value(env_keys("utt", "file", "pattern"), file_pattern) OrElse
+           file_pattern.null_or_whitespace() Then
+            file_pattern = "osi.*.dll"
         End If
+        is_current = strsame(application_name, "osi.root.utt")
     End Sub
-End Module
+
+    Private Sub New()
+    End Sub
+End Class

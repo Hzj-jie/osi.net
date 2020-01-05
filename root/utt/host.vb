@@ -84,14 +84,14 @@ Partial Friend NotInheritable Class host
     Public Shared ReadOnly cases As vector(Of case_info) = Nothing
 
     Shared Sub New()
-        assert((envs.utt_concurrency >= 0 AndAlso envs.utt_concurrency <= Environment.ProcessorCount()) OrElse
-               envs.utt_concurrency = npos)
+        assert((envs.utt.concurrency >= 0 AndAlso envs.utt.concurrency <= Environment.ProcessorCount()) OrElse
+               envs.utt.concurrency = npos)
 
         assert(Not strstartwith(extensions.dynamic_link_library, extension_prefix, False))
         cases = New vector(Of case_info)()
-        AppDomain.CurrentDomain().load_all(Environment.CurrentDirectory(), utt_file_pattern)
+        AppDomain.CurrentDomain().load_all(Environment.CurrentDirectory(), envs.utt.file_pattern)
         If Not Environment.CurrentDirectory().path_same(application_directory) Then
-            AppDomain.CurrentDomain().load_all(application_directory, utt_file_pattern)
+            AppDomain.CurrentDomain().load_all(application_directory, envs.utt.file_pattern)
         End If
         ' for newly loaded types
         global_init.execute()

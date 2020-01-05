@@ -8,8 +8,8 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utils
 
-Partial Public Class syntaxer
-    Partial Public Class rule
+Partial Public NotInheritable Class syntaxer
+    Partial Public NotInheritable Class rule
         Inherits configuration.rule
 
         Public Const command_clear As String = "CLEAR"

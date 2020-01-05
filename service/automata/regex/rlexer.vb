@@ -1,8 +1,13 @@
 ﻿
-Imports osi.root.formation
-Imports osi.root.connector
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Partial Public Class rlexer
+Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.formation
+
+Partial Public NotInheritable Class rlexer
     Private ReadOnly rs As vector(Of regex)
     Private ReadOnly type_choice As match_choice
     Private ReadOnly word_choice As match_choice
@@ -11,6 +16,7 @@ Partial Public Class rlexer
                    ByVal type_choice As match_choice,
                    ByVal word_choice As match_choice)
         assert(Not rs Is Nothing)
+        assert(rs.find(Nothing) = npos)
         Me.rs = rs
         Me.type_choice = type_choice
         Me.word_choice = word_choice
@@ -38,8 +44,7 @@ Partial Public Class rlexer
             o = e.rlexer
             assert(Not o Is Nothing)
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 End Class

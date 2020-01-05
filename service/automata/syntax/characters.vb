@@ -1,9 +1,13 @@
 ﻿
-Imports osi.root.constants
-Imports osi.root.connector
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Partial Public Class syntaxer
-    Public Class characters
+Imports osi.root.connector
+Imports osi.root.constants
+
+Partial Public NotInheritable Class syntaxer
+    Public NotInheritable Class characters
         Public Const matching_group_start As Char = character.left_mid_bracket
         Public Const matching_group_end As Char = character.right_mid_bracket
         Public Const optional_matching As Char = character.question_mark
@@ -25,5 +29,8 @@ Partial Public Class syntaxer
             Return Not s.null_or_whitespace() AndAlso
                    Not s.contains_any(reserved_characters)
         End Function
+
+        Private Sub New()
+        End Sub
     End Class
 End Class

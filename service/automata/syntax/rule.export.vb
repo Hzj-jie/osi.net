@@ -1,9 +1,13 @@
 ﻿
-Imports osi.root.formation
-Imports osi.root.connector
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Partial Public Class syntaxer
-    Partial Public Class rule
+Imports osi.root.connector
+Imports osi.root.formation
+
+Partial Public NotInheritable Class syntaxer
+    Partial Public NotInheritable Class rule
         Public Function export() As exporter
             Return New exporter(Me)
         End Function

@@ -1,26 +1,29 @@
 ﻿
-Imports osi.root.formation
-Imports osi.root.connector
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Partial Public Class syntaxer
-    Public Class optional_matching_group
+Imports osi.root.formation
+
+Partial Public NotInheritable Class syntaxer
+    Public NotInheritable Class optional_matching_group
         Inherits matching_wrapper
         Implements IComparable(Of optional_matching_group)
 
-        Public Sub New(ByVal m As matching)
-            MyBase.New(m)
+        Public Sub New(ByVal c As syntax_collection, ByVal m As matching)
+            MyBase.New(c, m)
         End Sub
 
-        Public Sub New(ByVal m As UInt32)
-            MyBase.New(m)
+        Public Sub New(ByVal c As syntax_collection, ByVal m As UInt32)
+            MyBase.New(c, m)
         End Sub
 
-        Public Sub New(ByVal ms() As UInt32)
-            MyBase.New(ms)
+        Public Sub New(ByVal c As syntax_collection, ByVal ms() As UInt32)
+            MyBase.New(c, ms)
         End Sub
 
-        Public Sub New(ByVal m1 As UInt32, ByVal m2 As UInt32, ByVal ParamArray ms() As UInt32)
-            MyBase.New(m1, m2, ms)
+        Public Sub New(ByVal c As syntax_collection, ByVal m1 As UInt32, ByVal m2 As UInt32, ByVal ParamArray ms() As UInt32)
+            MyBase.New(c, m1, m2, ms)
         End Sub
 
         Public Overrides Function match(ByVal v As vector(Of typed_word),

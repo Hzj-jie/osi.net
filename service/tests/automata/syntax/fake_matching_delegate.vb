@@ -29,13 +29,14 @@ Namespace syntaxer
         End Function
     End Module
 
-    Public Class fake_matching_delegate
+    Public NotInheritable Class fake_matching_delegate
         Inherits matching
         Implements IComparable(Of matching_delegate)
 
         Private ReadOnly type As UInt32
 
-        Public Sub New(ByVal type As UInt32)
+        Public Sub New(ByVal c As syntax_collection, ByVal type As UInt32)
+            MyBase.New(c)
             Me.type = type
         End Sub
 
@@ -45,7 +46,7 @@ Namespace syntaxer
             Return assert(False)
         End Function
 
-        Public NotOverridable Overrides Function CompareTo(ByVal other As matching) As Int32
+        Public Overrides Function CompareTo(ByVal other As matching) As Int32
             Return CompareTo(cast(Of matching_delegate).from(other, False))
         End Function
 

@@ -6,20 +6,21 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.formation
 
-Partial Public Class syntaxer
-    Public Class matching_group
+Partial Public NotInheritable Class syntaxer
+    Public NotInheritable Class matching_group
         Inherits matching
         Implements IComparable(Of matching_group)
 
         Private ReadOnly ms() As matching
 
-        Public Sub New(ByVal ParamArray ms() As matching)
+        Public Sub New(ByVal c As syntax_collection, ByVal ParamArray ms() As matching)
+            MyBase.New(c)
             assert(Not isemptyarray(ms))
             Me.ms = ms
         End Sub
 
-        Public Sub New(ByVal ParamArray ms() As UInt32)
-            Me.New(matching_creator.create_matchings(ms))
+        Public Sub New(ByVal c As syntax_collection, ByVal ParamArray ms() As UInt32)
+            Me.New(c, matching_creator.create_matchings(c, ms))
         End Sub
 
         Public Overrides Function match(ByVal v As vector(Of typed_word),
@@ -41,7 +42,7 @@ Partial Public Class syntaxer
             End If
         End Function
 
-        Public NotOverridable Overrides Function CompareTo(ByVal other As matching) As Int32
+        Public Overrides Function CompareTo(ByVal other As matching) As Int32
             Return CompareTo(cast(Of matching_group).from(other, False))
         End Function
 
