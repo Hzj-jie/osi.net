@@ -59,5 +59,9 @@ Namespace logic
         Public Sub err(ByVal ParamArray s() As Object)
             e.emplace_back(strcat(s))
         End Sub
+
+        Public Function dump() As String
+            Return Convert.ToString(s)
+        End Function
     End Class
 End Namespace

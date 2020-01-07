@@ -41,6 +41,27 @@ Namespace logic
             Return True
         End Function
 
+        Public Shared Function parse(ByVal input As String, ByVal o As writer) As Boolean
+            assert(Not input.null_or_whitespace())
+            assert(Not o Is Nothing)
+            Dim r As typed_node = Nothing
+            If Not nlp().parse(input, root:=r) Then
+                Return False
+            End If
+            assert(Not r Is Nothing)
+            Return build(r, o)
+        End Function
+
+        Public Shared Function parse(ByVal input As String, ByRef o As String) As Boolean
+            Dim w As writer = Nothing
+            w = New writer()
+            If Not parse(input, w) Then
+                Return False
+            End If
+            o = w.dump()
+            Return True
+        End Function
+
         Private Shared Sub init_prefixes()
             Dim v As vector(Of Action(Of prefixes)) = Nothing
             v = +alloc(Of _prefixes)()
@@ -64,5 +85,4 @@ Namespace logic
         Protected Sub New()
         End Sub
     End Class
-
 End Namespace
