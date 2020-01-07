@@ -55,7 +55,7 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="cstyle\cstyle_test.vb" />
+    <Compile Include="bstyle\bstyle_test.vb" />
     <Compile Include="dotnet\dotnet_test_data.vb" />
     <Compile Include="dotnet\source_executor_test.vb" />
     <Compile Include="logic\caller_test.vb" />
