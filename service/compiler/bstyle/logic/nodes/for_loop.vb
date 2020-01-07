@@ -55,11 +55,8 @@ Partial Public NotInheritable Class bstyle
             Dim ref As ref = Nothing
             ref = New ref(n)
             assert(Not o Is Nothing)
-            If Not ref.declaration Is Nothing Then
-                If Not l.of(ref.declaration).build(o) Then
-                    o.err("@for-loop value-declaration", ref.declaration)
-                    Return False
-                End If
+            If Not ref.declaration Is Nothing AndAlso Not l.of(ref.declaration).build(o) Then
+                Return False
             End If
             Using value_target As write_scoped(Of String).ref =
                 logic_gen_of(Of value).with_value_target(ref.condition, types.bool, o)
@@ -68,20 +65,10 @@ Partial Public NotInheritable Class bstyle
                 End If
                 Return builders.of_while_then(+value_target,
                                               Function() As Boolean
-                                                  If Not l.[of](ref.paragraph).build(o) Then
-                                                      o.err("@for-loop paragraph ", ref.paragraph)
-                                                      Return False
-                                                  End If
-                                                  If Not ref.clause Is Nothing Then
-                                                      If Not l.of(ref.clause).build(o) Then
-                                                          o.err("@for-loop value-clause", ref.clause)
-                                                          Return False
-                                                      End If
-                                                  End If
-                                                  If Not condition_value(ref, o) Then
-                                                      Return False
-                                                  End If
-                                                  Return True
+                                                  Return l.of(ref.paragraph).build(o) AndAlso
+                                                         (ref.clause Is Nothing OrElse
+                                                          l.of(ref.clause).build(o)) AndAlso
+                                                         condition_value(ref, o)
                                               End Function).to(o)
             End Using
         End Function

@@ -26,11 +26,9 @@ Partial Public NotInheritable Class bstyle
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(n.child_count() = 2)
             If Not l.of(n.child(1)).build(o) Then
-                o.err("@param name ", n.child(1))
                 Return False
             End If
             If Not l.of(n.child(0)).build(o) Then
-                o.err("@param type ", n.child(0))
                 Return False
             End If
             Return True

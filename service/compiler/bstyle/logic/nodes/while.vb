@@ -38,14 +38,7 @@ Partial Public NotInheritable Class bstyle
                 End If
                 Return builders.of_while_then(+value_target,
                                               Function() As Boolean
-                                                  If Not l.[of](n.child(4)).build(o) Then
-                                                      o.err("@while paragraph ", n.child(4))
-                                                      Return False
-                                                  End If
-                                                  If Not while_value(n, o) Then
-                                                      Return False
-                                                  End If
-                                                  Return True
+                                                  Return l.of(n.child(4)).build(o) AndAlso while_value(n, o)
                                               End Function).to(o)
             End Using
         End Function

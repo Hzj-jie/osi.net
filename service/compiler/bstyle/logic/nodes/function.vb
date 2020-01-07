@@ -4,8 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.formation
-Imports osi.root.template
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
@@ -14,6 +12,12 @@ Partial Public NotInheritable Class bstyle
     Public NotInheritable Class [function]
         Inherits logic_gen_wrapper
         Implements logic_gen
+
+        Private Shared ReadOnly s As write_scoped(Of ref)
+
+        Shared Sub New()
+            s = New write_scoped(Of ref)()
+        End Sub
 
         <inject_constructor>
         Public Sub New(ByVal b As logic_gens)
@@ -25,7 +29,7 @@ Partial Public NotInheritable Class bstyle
             b.register(Of [function])()
         End Sub
 
-        Public NotInheritable Class function_ref
+        Public NotInheritable Class ref
             Private ReadOnly n As typed_node
 
             Public Sub New(ByVal n As typed_node)
@@ -43,35 +47,28 @@ Partial Public NotInheritable Class bstyle
             End Function
         End Class
 
-        Public Shared Function current() As function_ref
-            Return New function_ref(instance_stack(Of annotated_ref(Of [function], typed_node)).current().v)
-        End Function
-
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            instance_stack(Of annotated_ref(Of [function], typed_node)).push(annotated_ref(Of [function]).with(n))
-            o.append("callee")
-            If Not l.of(n.child(1)).build(o) Then
-                o.err("@function name ", n.child(1))
-                Return False
-            End If
-            Dim has_paramlist As Boolean = False
-            has_paramlist = strsame(n.child(3).type_name, "paramlist")
-            If has_paramlist Then
-                If Not l.of(n.child(3)).build(o) Then
-                    o.err("@function paramlist ", n.child(3))
+            Using s.push(New ref(n))
+                o.append("callee")
+                If Not l.of(n.child(1)).build(o) Then
                     Return False
                 End If
-            End If
-            Dim gi As UInt32 = 0
-            gi = CUInt(If(has_paramlist, 5, 4))
-            If Not l.of(n.child(gi)).build(o) Then
-                o.err("@function multi-sentence-paragraph ", n.child(gi))
-                Return False
-            End If
-            instance_stack(Of annotated_ref(Of [function], typed_node)).pop()
-            Return True
+                Dim has_paramlist As Boolean = False
+                has_paramlist = strsame(n.child(3).type_name, "paramlist")
+                If has_paramlist Then
+                    If Not l.of(n.child(3)).build(o) Then
+                        Return False
+                    End If
+                End If
+                Dim gi As UInt32 = 0
+                gi = CUInt(If(has_paramlist, 5, 4))
+                If Not l.of(n.child(gi)).build(o) Then
+                    Return False
+                End If
+                Return True
+            End Using
         End Function
     End Class
 End Class

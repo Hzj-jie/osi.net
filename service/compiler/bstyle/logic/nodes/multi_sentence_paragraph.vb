@@ -31,7 +31,6 @@ Partial Public NotInheritable Class bstyle
             Dim i As UInt32 = 1
             While i < n.child_count() - 1
                 If Not l.of(n.child(i)).build(o) Then
-                    o.err("@multi_sentence_paragraph sentence ", i, " - ", n.child(i))
                     Return False
                 End If
                 i += uint32_1

@@ -26,11 +26,7 @@ Partial Public NotInheritable Class bstyle
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            If Not l.of(n.child()).build(o) Then
-                o.err("@sentence-with-semi-colon ", n.child())
-                Return False
-            End If
-            Return True
+            Return l.of(n.child()).build(o)
         End Function
     End Class
 End Class
