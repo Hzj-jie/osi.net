@@ -24,7 +24,7 @@ Partial Public NotInheritable Class bstyle
         End Sub
 
         Private Function while_value(ByVal n As typed_node, ByVal o As writer) As Boolean
-            Return logic_gen_of(Of value).build(n.child(2), o, "while")
+            Return l.of(n.child(2)).build(o)
         End Function
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
@@ -38,7 +38,7 @@ Partial Public NotInheritable Class bstyle
                 End If
                 Return builders.of_while_then(+value_target,
                                               Function() As Boolean
-                                                  If Not b.[of](n.child(4)).build(o) Then
+                                                  If Not l.[of](n.child(4)).build(o) Then
                                                       o.err("@while paragraph ", n.child(4))
                                                       Return False
                                                   End If

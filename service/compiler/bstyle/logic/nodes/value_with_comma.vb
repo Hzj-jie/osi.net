@@ -25,23 +25,21 @@ Partial Public NotInheritable Class bstyle
 
         Public Function build_value(ByVal n As typed_node, ByVal o As writer, ByRef r As String) As Boolean
             assert(Not o Is Nothing)
-            Dim ref As write_scoped(Of String).ref = Nothing
-            ref = logic_gen_of(Of value).with_value_target(n, o)
-            r = +ref
-            Using ref
-                If Not b.of(n).build(o) Then
-                    o.err("@value-with-comma value ", n)
-                    Return False
-                End If
-                Return True
+            Using ref As write_scoped(Of String).ref = logic_gen_of(Of value).with_value_target(n, o)
+                r = +ref
+                Return l.of(n).build(o)
             End Using
         End Function
 
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
+        Public Function build(ByVal n As typed_node, ByVal o As writer, ByRef r As String) As Boolean
             assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
             assert(n.child_count() = 2)
-            Return build_value(n.child(0), o, Nothing)
+            Return build_value(n.child(0), o, r)
+        End Function
+
+        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
+            assert(False)
+            Return build(n, o, Nothing)
         End Function
     End Class
 End Class

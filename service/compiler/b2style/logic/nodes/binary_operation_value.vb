@@ -31,7 +31,7 @@ Partial Public NotInheritable Class b2style
             Dim left As write_scoped(Of String).ref = Nothing
             left = logic_gen_of(Of value).with_value_target(n.child(0), o)
             Using left
-                If Not b.of(n.child(0)).build(o) Then
+                If Not l.of(n.child(0)).build(o) Then
                     o.err("@binary-operation-value value [0] ", n.child(0))
                     Return False
                 End If
@@ -39,13 +39,13 @@ Partial Public NotInheritable Class b2style
             Dim right As write_scoped(Of String).ref = Nothing
             right = logic_gen_of(Of value).with_value_target(n.child(2), o)
             Using right
-                If Not b.of(n.child(2)).build(o) Then
+                If Not l.of(n.child(2)).build(o) Then
                     o.err("@binary-operation-value value [1] ", n.child(2))
                     Return False
                 End If
             End Using
             Using with_current_targets(+left, +right)
-                If Not b.of(n.child(1)).build(o) Then
+                If Not l.of(n.child(1)).build(o) Then
                     o.err("@binary-operation-value operator ", n.child(1))
                     Return False
                 End If

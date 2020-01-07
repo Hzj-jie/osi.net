@@ -28,11 +28,11 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             o.append("define")
             assert(n.child_count() = 2)
-            If Not b.of(n.child(1)).build(o) Then
+            If Not l.of(n.child(1)).build(o) Then
                 o.err("@value-declaration name ", n.child(1))
                 Return False
             End If
-            If Not b.of(n.child(0)).build(o) Then
+            If Not l.of(n.child(0)).build(o) Then
                 o.err("@value-declaration type ", n.child(0))
                 Return False
             End If

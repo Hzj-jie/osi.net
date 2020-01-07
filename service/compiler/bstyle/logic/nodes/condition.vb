@@ -29,27 +29,19 @@ Partial Public NotInheritable Class bstyle
             assert(n.child_count() >= 5)
             Using value_target As write_scoped(Of String).ref =
                 logic_gen_of(Of value).with_value_target(n.child(2), types.bool, o)
-                If Not logic_gen_of(Of value).build(n.child(2), o, "condition") Then
+                If Not l.of(n.child(2)).build(o) Then
                     Return False
                 End If
                 Dim satisfied_paragraph As Func(Of Boolean) = Nothing
                 satisfied_paragraph = Function() As Boolean
-                                          If Not b.[of](n.child(4)).build(o) Then
-                                              o.err("@condition paragraph ", n.child(4))
-                                              Return False
-                                          End If
-                                          Return True
+                                          Return l.[of](n.child(4)).build(o)
                                       End Function
                 If n.child_count() = 5 Then
                     Return builders.of_if(+value_target, satisfied_paragraph).to(o)
                 End If
                 Dim unsatisfied_paragraph As Func(Of Boolean) = Nothing
                 unsatisfied_paragraph = Function() As Boolean
-                                            If Not b.[of](n.child(5)).build(o) Then
-                                                o.err("@condition else-condition ", n.child(5))
-                                                Return False
-                                            End If
-                                            Return True
+                                            Return l.[of](n.child(5)).build(o)
                                         End Function
                 Return builders.of_if(+value_target, satisfied_paragraph, unsatisfied_paragraph).to(o)
             End Using

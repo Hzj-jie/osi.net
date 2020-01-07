@@ -52,21 +52,21 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             instance_stack(Of annotated_ref(Of [function], typed_node)).push(annotated_ref(Of [function]).with(n))
             o.append("callee")
-            If Not b.of(n.child(1)).build(o) Then
+            If Not l.of(n.child(1)).build(o) Then
                 o.err("@function name ", n.child(1))
                 Return False
             End If
             Dim has_paramlist As Boolean = False
             has_paramlist = strsame(n.child(3).type_name, "paramlist")
             If has_paramlist Then
-                If Not b.of(n.child(3)).build(o) Then
+                If Not l.of(n.child(3)).build(o) Then
                     o.err("@function paramlist ", n.child(3))
                     Return False
                 End If
             End If
             Dim gi As UInt32 = 0
             gi = CUInt(If(has_paramlist, 5, 4))
-            If Not b.of(n.child(gi)).build(o) Then
+            If Not l.of(n.child(gi)).build(o) Then
                 o.err("@function multi-sentence-paragraph ", n.child(gi))
                 Return False
             End If

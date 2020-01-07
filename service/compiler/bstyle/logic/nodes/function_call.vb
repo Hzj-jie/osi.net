@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
@@ -27,14 +28,17 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() > 3)
-            If n.child_count() = 4 Then
-
+            If n.child_count() = 3 Then
+                builders.of_caller(n.child(0).word().str(), value.current_target(), vector.of(Of String)()).to(o)
+                Return True
             End If
-            'builders.of_caller(n.child(0).word().str(),
-            '                   value.current_target(),
-            '                   binary_operation_value.current_left_target(),
-            '                   binary_operation_value.current_right_target()).to(o)
-            'Return True
+            If Not l.of(n.child(2)).build(o) Then
+                Return False
+            End If
+            Using targets As read_scoped(Of vector(Of String)).ref = value_list.current_targets()
+                builders.of_caller(n.child(0).word().str(), value.current_target(), +targets).to(o)
+                Return True
+            End Using
         End Function
     End Class
 End Class

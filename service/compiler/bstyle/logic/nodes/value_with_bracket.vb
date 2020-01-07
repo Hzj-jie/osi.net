@@ -27,7 +27,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 3)
-            If Not b.of(n.child(1)).build(o) Then
+            If Not l.of(n.child(1)).build(o) Then
                 o.err("@value_with_bracket ", n.child())
                 Return False
             End If

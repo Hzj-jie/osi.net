@@ -14,15 +14,15 @@ Public Interface logic_gen
 End Interface
 
 Public MustInherit Class logic_gen_wrapper
-    Protected ReadOnly b As logic_gens
+    Protected ReadOnly l As logic_gens
 
-    Protected Sub New(ByVal b As logic_gens)
-        assert(Not b Is Nothing)
-        Me.b = b
+    Protected Sub New(ByVal l As logic_gens)
+        assert(Not l Is Nothing)
+        Me.l = l
     End Sub
 
     Protected Function logic_gen_of(Of T As logic_gen)() As T
-        Return direct_cast(Of T)(b.logic_gen_of(logic_gens.logic_gen_name(Of T)()))
+        Return direct_cast(Of T)(l.logic_gen_of(logic_gens.logic_gen_name(Of T)()))
     End Function
 End Class
 

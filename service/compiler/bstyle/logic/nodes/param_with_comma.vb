@@ -25,7 +25,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(n.child_count() = 2)
-            Return b.of(n.child(0)).build(o)
+            Return l.of(n.child(0)).build(o)
         End Function
     End Class
 End Class

@@ -48,7 +48,7 @@ Partial Public NotInheritable Class bstyle
         End Class
 
         Private Function condition_value(ByVal n As ref, ByVal o As writer) As Boolean
-            Return n.condition Is Nothing OrElse logic_gen_of(Of value).build(n.condition, o, "for-loop")
+            Return n.condition Is Nothing OrElse l.of(n.condition).build(o)
         End Function
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
@@ -56,7 +56,7 @@ Partial Public NotInheritable Class bstyle
             ref = New ref(n)
             assert(Not o Is Nothing)
             If Not ref.declaration Is Nothing Then
-                If Not b.of(ref.declaration).build(o) Then
+                If Not l.of(ref.declaration).build(o) Then
                     o.err("@for-loop value-declaration", ref.declaration)
                     Return False
                 End If
@@ -68,12 +68,12 @@ Partial Public NotInheritable Class bstyle
                 End If
                 Return builders.of_while_then(+value_target,
                                               Function() As Boolean
-                                                  If Not b.[of](ref.paragraph).build(o) Then
+                                                  If Not l.[of](ref.paragraph).build(o) Then
                                                       o.err("@for-loop paragraph ", ref.paragraph)
                                                       Return False
                                                   End If
                                                   If Not ref.clause Is Nothing Then
-                                                      If Not b.of(ref.clause).build(o) Then
+                                                      If Not l.of(ref.clause).build(o) Then
                                                           o.err("@for-loop value-clause", ref.clause)
                                                           Return False
                                                       End If

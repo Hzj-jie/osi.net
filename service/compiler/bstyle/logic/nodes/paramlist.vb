@@ -29,7 +29,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             Dim i As UInt32 = 0
             While i < n.child_count()
-                If Not b.of(n.child(i)).build(o) Then
+                If Not l.of(n.child(i)).build(o) Then
                     o.err("@paramlist child ", i, " - ", n.child(i))
                     Return False
                 End If

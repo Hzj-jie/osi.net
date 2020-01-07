@@ -27,11 +27,11 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 2)
-            If Not b.of(n.child(0)).build(o) Then
+            If Not l.of(n.child(0)).build(o) Then
                 o.err("@post_operation_value value ", n.child(1))
                 Return False
             End If
-            If Not b.of(n.child(1)).build(o) Then
+            If Not l.of(n.child(1)).build(o) Then
                 o.err("@post_operation_value operator ", n.child(0))
                 Return False
             End If

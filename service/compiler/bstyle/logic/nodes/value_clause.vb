@@ -27,12 +27,12 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 3)
-            If Not b.of(n.child(0)).build(o) Then
+            If Not l.of(n.child(0)).build(o) Then
                 o.err("@value-clause name ", n.child(0))
                 Return False
             End If
             Using logic_gen_of(Of value).with_current_target(n.child(0))
-                If Not b.of(n.child(2)).build(o) Then
+                If Not l.of(n.child(2)).build(o) Then
                     o.err("@value-clause value ", n.child(2))
                     Return False
                 End If
