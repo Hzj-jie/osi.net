@@ -10,7 +10,7 @@ Imports osi.root.formation
 ' TODO: Implement typed_node.builder to ensure the immutability of typed_node.
 Partial Public NotInheritable Class typed_node
     Public Const ROOT_TYPE As UInt32 = uint32_0
-    Public Const ROOT_TYPE_STR As String = "ROOT"
+    Public Const ROOT_TYPE_NAME As String = "ROOT"
     Public ReadOnly type As UInt32
     Public ReadOnly type_name As String
     Public ReadOnly start As UInt32
@@ -49,7 +49,7 @@ Partial Public NotInheritable Class typed_node
     Public Shared Function of_root(ByVal ref As vector(Of typed_word),
                                    ByVal ParamArray subnodes() As typed_node) As typed_node
         assert(Not ref Is Nothing)
-        Return New typed_node(ref, ROOT_TYPE, ROOT_TYPE_STR, uint32_0, ref.size(), Nothing, subnodes)
+        Return New typed_node(ref, ROOT_TYPE, ROOT_TYPE_NAME, uint32_0, ref.size(), Nothing, subnodes)
     End Function
 
     Public Function root() As Boolean
