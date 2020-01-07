@@ -25,12 +25,6 @@ Partial Public NotInheritable Class cstyle
             Me.lp = lp
         End Sub
 
-        Protected Function type_name(ByVal n As typed_node) As String
-            Dim r As String = Nothing
-            assert(lp.type_name(n.type, r))
-            Return r
-        End Function
-
         Protected Function logic_gen_of(Of T As logic_gen)() As T
             Return direct_cast(Of T)(b.logic_gen_of(logic_gens.logic_gen_name(Of T)()))
         End Function
@@ -77,9 +71,7 @@ Partial Public NotInheritable Class cstyle
 
         Public Function logic_gen_of(ByVal n As typed_node) As logic_gen
             assert(Not n Is Nothing)
-            Dim type_name As String = Nothing
-            assert(lp.type_name(n.type, type_name))
-            Return logic_gen_of(type_name)
+            Return logic_gen_of(n.type_name)
         End Function
 
         Public NotInheritable Class logic_gen_proxy

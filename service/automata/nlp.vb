@@ -27,14 +27,6 @@ Public NotInheritable Class nlp
                s.match(words, root)
     End Function
 
-    Public Function type_id(ByVal name As String, ByRef o As UInt32) As Boolean Implements lang_parser.type_id
-        Return s.type_id(name, o)
-    End Function
-
-    Public Function type_name(ByVal id As UInt32, ByRef o As String) As Boolean Implements lang_parser.type_name
-        Return s.type_name(id, o)
-    End Function
-
     Public Shared Function [of](ByVal n As nlexer, ByVal s As syntaxer, ByRef o As nlp) As Boolean
         If n Is Nothing OrElse s Is Nothing Then
             Return False

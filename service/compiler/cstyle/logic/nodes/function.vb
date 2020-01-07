@@ -57,7 +57,7 @@ Partial Public NotInheritable Class cstyle
                 Return False
             End If
             Dim has_paramlist As Boolean = False
-            has_paramlist = strsame(lp.type_name(n.child(3)), "paramlist")
+            has_paramlist = strsame(n.child(3).type_name, "paramlist")
             If has_paramlist Then
                 If Not b.of(n.child(3)).build(o) Then
                     o.err("@function paramlist ", n.child(3))

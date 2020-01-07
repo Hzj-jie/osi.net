@@ -64,9 +64,7 @@ Public Class lang_parser_test
                 Return False
             End If
         Else
-            Dim o As UInt32 = 0
-            If Not assertion.is_true(lp.type_id(t.this, o)) OrElse
-                    Not assertion.equal(n.type, o) Then
+            If Not assertion.equal(t.this, n.type_name) Then
                 Return False
             End If
         End If

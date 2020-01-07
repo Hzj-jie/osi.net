@@ -29,7 +29,7 @@ Partial Public NotInheritable Class cstyle
 
         Public Function with_current_target(ByVal n As typed_node) As IDisposable
             assert(Not n Is Nothing)
-            assert(strsame(type_name(n), "name"))
+            assert(strsame(n.type_name, "name"))
             Return ws.push(n.word().str())
         End Function
 
@@ -42,7 +42,7 @@ Partial Public NotInheritable Class cstyle
                                           ByVal type As String,
                                           ByVal o As writer) As write_scoped(Of String).ref
             assert(Not n Is Nothing)
-            assert(strsame(type_name(n), "value"))
+            assert(strsame(n.type_name, "value"))
             assert(Not type.null_or_whitespace())
             assert(Not o Is Nothing)
             Dim value_name As String = Nothing

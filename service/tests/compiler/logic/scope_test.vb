@@ -35,12 +35,12 @@ Namespace logic
             c = rnd_int(0, 100)
             For i As Int32 = 0 To c - 1
                 Dim name As String = Nothing
-                name = rnd_name()
                 Dim type As String = Nothing
-                type = rnd_name()
-                If s.define(name, type) Then
-                    stack.emplace_back(emplace_make_pair(name, type))
-                End If
+                Do
+                    name = rnd_name()
+                    type = rnd_name()
+                Loop Until s.define(name, type)
+                stack.emplace_back(emplace_make_pair(name, type))
             Next
 
             For i As Int32 = 0 To CInt(stack.size()) - 1

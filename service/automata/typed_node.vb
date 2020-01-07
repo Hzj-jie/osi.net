@@ -15,7 +15,7 @@ Public NotInheritable Class typed_node
     Public Const ROOT_TYPE As UInt32 = uint32_0
     Public Const ROOT_TYPE_STR As String = "ROOT"
     Public ReadOnly type As UInt32
-    Public ReadOnly type_str As String
+    Public ReadOnly type_name As String
     Public ReadOnly start As UInt32
     Public ReadOnly [end] As UInt32 'exclusive
     Public ReadOnly parent As typed_node
@@ -24,7 +24,7 @@ Public NotInheritable Class typed_node
 
     Public Sub New(ByVal ref As vector(Of typed_word),
                    ByVal type As UInt32,
-                   ByVal type_str As String,
+                   ByVal type_name As String,
                    ByVal start As UInt32,
                    ByVal [end] As UInt32,
                    ByVal parent As typed_node,
@@ -32,10 +32,10 @@ Public NotInheritable Class typed_node
         assert(Not ref Is Nothing)
         assert(start <= [end])  ' start == end means empty-matching
         assert([end] <= ref.size())
-        assert(Not type_str.null_or_whitespace())
+        assert(Not type_name.null_or_whitespace())
         Me.ref = ref
         Me.type = type
-        Me.type_str = type_str
+        Me.type_name = type_name
         Me.start = start
         Me.end = [end]
         Me.parent = parent
@@ -64,7 +64,7 @@ Public NotInheritable Class typed_node
             m = New map(Of String, vector(Of typed_node))()
             Dim i As UInt32 = 0
             While i < n.child_count()
-                m(lp.type_name(n.child(i))).emplace_back(n.child(i))
+                m(n.child(i).type_name).emplace_back(n.child(i))
                 i += uint32_1
             End While
         End Sub
@@ -169,6 +169,11 @@ Public NotInheritable Class typed_node
 
     Public Function str() As String
         Return strcat("[", type, "<", start, ",", [end], "> {", newline.incode(), nodes_str(), newline.incode(), "}]")
+    End Function
+
+    ' TODO: Implementation
+    Public Function stack_trace() As String
+
     End Function
 
     Public Overrides Function ToString() As String
