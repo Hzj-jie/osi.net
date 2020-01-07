@@ -8,8 +8,8 @@ Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
 
-Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class self_inc
+Partial Public NotInheritable Class b2style
+    Public NotInheritable Class post_operation_value
         Inherits logic_gen_wrapper
         Implements logic_gen
 
@@ -20,13 +20,21 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Sub register(ByVal b As logic_gens)
             assert(Not b Is Nothing)
-            b.register(Of self_inc)()
+            b.register(Of post_operation_value)()
         End Sub
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            builders.of_add(value.current_target(), value.current_target(), constants.int_1).to(o)
+            assert(n.child_count() = 2)
+            If Not b.of(n.child(0)).build(o) Then
+                o.err("@post_operation_value value ", n.child(1))
+                Return False
+            End If
+            If Not b.of(n.child(1)).build(o) Then
+                o.err("@post_operation_value operator ", n.child(0))
+                Return False
+            End If
             Return True
         End Function
     End Class

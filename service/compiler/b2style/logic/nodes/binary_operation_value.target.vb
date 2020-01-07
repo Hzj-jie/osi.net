@@ -5,7 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 
-Partial Public NotInheritable Class bstyle
+Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class binary_operation_value
         Inherits logic_gen_wrapper
         Implements logic_gen

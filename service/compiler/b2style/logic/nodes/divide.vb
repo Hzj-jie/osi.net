@@ -7,9 +7,11 @@ Imports osi.root.connector
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
+Imports temps = osi.service.compiler.bstyle.temps
+Imports value = osi.service.compiler.bstyle.value
 
-Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class value_with_operation
+Partial Public NotInheritable Class b2style
+    Public NotInheritable Class divide
         Inherits logic_gen_wrapper
         Implements logic_gen
 
@@ -20,16 +22,16 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Sub register(ByVal b As logic_gens)
             assert(Not b Is Nothing)
-            b.register(Of value_with_operation)()
+            b.register(Of divide)()
         End Sub
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            If Not b.of(n.child()).build(o) Then
-                o.err("@value_with_operation ", n.child())
-                Return False
-            End If
+            builders.of_divide(value.current_target(),
+                               temps.biguint,
+                               binary_operation_value.current_left_target(),
+                               binary_operation_value.current_right_target()).to(o)
             Return True
         End Function
     End Class

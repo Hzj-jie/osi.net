@@ -7,9 +7,10 @@ Imports osi.root.connector
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
+Imports value = osi.service.compiler.bstyle.value
 
-Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class less_or_equal
+Partial Public NotInheritable Class b2style
+    Public NotInheritable Class multiply
         Inherits logic_gen_wrapper
         Implements logic_gen
 
@@ -20,15 +21,15 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Sub register(ByVal b As logic_gens)
             assert(Not b Is Nothing)
-            b.register(Of less_or_equal)()
+            b.register(Of multiply)()
         End Sub
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            builders.of_less_or_equal(value.current_target(),
-                                      binary_operation_value.current_left_target(),
-                                      binary_operation_value.current_right_target()).to(o)
+            builders.of_multiply(value.current_target(),
+                                 binary_operation_value.current_left_target(),
+                                 binary_operation_value.current_right_target())
             Return True
         End Function
     End Class

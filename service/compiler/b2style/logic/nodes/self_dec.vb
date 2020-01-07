@@ -7,8 +7,10 @@ Imports osi.root.connector
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
+Imports constants = osi.service.compiler.bstyle.constants
+Imports value = osi.service.compiler.bstyle.value
 
-Partial Public NotInheritable Class bstyle
+Partial Public NotInheritable Class b2style
     Public NotInheritable Class self_dec
         Inherits logic_gen_wrapper
         Implements logic_gen

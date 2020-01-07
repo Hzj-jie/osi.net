@@ -8,8 +8,8 @@ Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
 
-Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class greater_or_equal
+Partial Public NotInheritable Class b2style
+    Public NotInheritable Class unary_operation_value
         Inherits logic_gen_wrapper
         Implements logic_gen
 
@@ -20,15 +20,16 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Sub register(ByVal b As logic_gens)
             assert(Not b Is Nothing)
-            b.register(Of greater_or_equal)()
+            b.register(Of unary_operation_value)()
         End Sub
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            builders.of_more_or_equal(value.current_target(),
-                                      binary_operation_value.current_left_target(),
-                                      binary_operation_value.current_right_target()).to(o)
+            If Not b.of(n.child()).build(o) Then
+                o.err("@unary_operation_value ", n.child())
+                Return False
+            End If
             Return True
         End Function
     End Class

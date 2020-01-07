@@ -7,9 +7,10 @@ Imports osi.root.connector
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
+Imports value = osi.service.compiler.bstyle.value
 
-Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class [and]
+Partial Public NotInheritable Class b2style
+    Public NotInheritable Class bit_and
         Inherits logic_gen_wrapper
         Implements logic_gen
 
@@ -20,7 +21,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Sub register(ByVal b As logic_gens)
             assert(Not b Is Nothing)
-            b.register(Of [and])()
+            b.register(Of bit_and)()
         End Sub
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
