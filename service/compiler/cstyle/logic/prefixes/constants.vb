@@ -42,8 +42,9 @@ Partial Public NotInheritable Class cstyle
             End Sub
         End Class
 
-        Public Shared Sub register()
-            prefixes.register(New constants())
+        Public Shared Sub register(ByVal p As prefixes)
+            assert(Not p Is Nothing)
+            p.register(New constants())
         End Sub
 
         Public Sub export(ByVal o As writer) Implements prefix.export

@@ -14,8 +14,8 @@ Partial Public NotInheritable Class cstyle
         Implements logic_gen
 
         <inject_constructor>
-        Public Sub New(ByVal b As logic_gens, ByVal lp As lang_parser)
-            MyBase.New(b, lp)
+        Public Sub New(ByVal b As logic_gens)
+            MyBase.New(b)
         End Sub
 
         Public Shared Sub register(ByVal b As logic_gens)
@@ -27,8 +27,8 @@ Partial Public NotInheritable Class cstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             builders.of_add(value.current_target(),
-                           binary_operation_value.current_left_target(),
-                           binary_operation_value.current_right_target()).to(o)
+                            binary_operation_value.current_left_target(),
+                            binary_operation_value.current_right_target()).to(o)
             Return True
         End Function
     End Class

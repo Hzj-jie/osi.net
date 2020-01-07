@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.compiler.logic
@@ -27,8 +28,9 @@ Partial Public NotInheritable Class cstyle
             Return "@@prefixes@temps@" + name
         End Function
 
-        Public Shared Sub register()
-            prefixes.register(New temps())
+        Public Shared Sub register(ByVal p As prefixes)
+            assert(Not p Is Nothing)
+            p.register(New temps())
         End Sub
 
         Public Sub export(ByVal o As writer) Implements prefix.export

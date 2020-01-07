@@ -14,8 +14,8 @@ Partial Public NotInheritable Class cstyle
         Implements logic_gen
 
         <inject_constructor>
-        Public Sub New(ByVal b As logic_gens, ByVal lp As lang_parser)
-            MyBase.New(b, lp)
+        Public Sub New(ByVal b As logic_gens)
+            MyBase.New(b)
         End Sub
 
         Public Shared Sub register(ByVal b As logic_gens)
@@ -29,11 +29,11 @@ Partial Public NotInheritable Class cstyle
             Public ReadOnly clause As typed_node
             Public ReadOnly paragraph As typed_node
 
-            Public Sub New(ByVal lp As lang_parser, ByVal n As typed_node)
+            Public Sub New(ByVal n As typed_node)
                 assert(Not n Is Nothing)
                 assert(n.child_count() > 6)
                 Dim m As typed_node.child_named_map = Nothing
-                m = n.named_children(lp)
+                m = n.named_children()
                 If Not m.node("value-declaration", declaration) Then
                     declaration = Nothing
                 End If
@@ -53,7 +53,7 @@ Partial Public NotInheritable Class cstyle
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             Dim ref As ref = Nothing
-            ref = New ref(lp, n)
+            ref = New ref(n)
             assert(Not o Is Nothing)
             If Not ref.declaration Is Nothing Then
                 If Not b.of(ref.declaration).build(o) Then

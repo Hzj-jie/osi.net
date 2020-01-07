@@ -57,7 +57,7 @@
   <ItemGroup>
     <Compile Include="cstyle\cstyle.vb" />
     <Compile Include="cstyle\cstyle_rules.vb" />
-    <Compile Include="cstyle\logic\logic_gen.vb" />
+    <Compile Include="logic\logic_gen\logic_gen.vb" />
     <Compile Include="cstyle\logic\nodes\add.vb" />
     <Compile Include="cstyle\logic\nodes\and.vb" />
     <Compile Include="cstyle\logic\nodes\binary_operation_value.target.vb" />
@@ -83,7 +83,7 @@
     <Compile Include="cstyle\logic\nodes\value_list.vb" />
     <Compile Include="cstyle\logic\nodes\value_with_comma.vb" />
     <Compile Include="cstyle\logic\prefixes\constants.vb" />
-    <Compile Include="cstyle\logic\prefixes.vb" />
+    <Compile Include="logic\logic_gen\prefixes.vb" />
     <Compile Include="cstyle\logic\prefixes\types.vb" />
     <Compile Include="cstyle\logic\nodes\else_condition.vb" />
     <Compile Include="cstyle\logic\nodes\function.vb" />
@@ -108,8 +108,8 @@
     <Compile Include="cstyle\logic\nodes\value_with_bracket.vb" />
     <Compile Include="cstyle\logic\nodes\value_with_operation.vb" />
     <Compile Include="cstyle\logic\nodes\while.vb" />
-    <Compile Include="cstyle\logic\stack\read_scoped.vb" />
-    <Compile Include="cstyle\logic\stack\write_scoped.vb" />
+    <Compile Include="logic\logic_gen\stack\read_scoped.vb" />
+    <Compile Include="logic\logic_gen\stack\write_scoped.vb" />
     <Compile Include="logic\builder\builders.implementation.vb" />
     <Compile Include="logic\builder\builder.vb" />
     <Compile Include="logic\builder\writer.vb" />

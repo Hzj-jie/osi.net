@@ -14,8 +14,8 @@ Partial Public NotInheritable Class cstyle
         Implements logic_gen
 
         <inject_constructor>
-        Public Sub New(ByVal b As logic_gens, ByVal lp As lang_parser)
-            MyBase.New(b, lp)
+        Public Sub New(ByVal b As logic_gens)
+            MyBase.New(b)
         End Sub
 
         Public Shared Sub register(ByVal b As logic_gens)
