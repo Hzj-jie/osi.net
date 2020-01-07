@@ -1,0 +1,53 @@
+﻿
+kw-if if
+kw-else else
+kw-for for
+kw-while while
+kw-do do
+kw-loop loop
+kw-return return
+kw-break break
+kw-logic logic
+
+blank [\b]+
+
+bool [true,false]
+integer [+,-]?[\d]+
+float [+,-]?[\d]*.[\d]+
+string "[\",*|"]*"
+
+comma \,
+colon :
+question-mark ?
+start-paragraph {
+end-paragraph }
+start-bracket (
+end-bracket )
+start-square-bracket \[
+end-square-bracket \]
+semi-colon ;
+
+less-or-equal <=
+greater-or-equal >=
+equal ==
+less-than <
+greater-than >
+
+assignment =
+
+add \+
+minus -
+multiply \*
+divide /
+mod %
+power ^
+bit-and &
+bit-or |
+and &&
+or ||
+not !
+self-inc ++
+self-dec --
+
+name [\w,_][\w,\d,_]*
+

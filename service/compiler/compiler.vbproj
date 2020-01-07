@@ -55,6 +55,8 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="b2style\b2style.vb" />
+    <Compile Include="b2style\b2style_rules.vb" />
     <Compile Include="bstyle\bstyle.vb" />
     <Compile Include="bstyle\bstyle_rules.vb" />
     <Compile Include="logic\logic_gen\logic_gen.vb" />
@@ -175,6 +177,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="rule_wrapper.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -185,6 +188,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="b2style\codegen\run.cmd" />
     <None Include="compiler.dep" />
     <None Include="compiler.props" />
     <None Include="bstyle\codegen\run.cmd" />
@@ -205,8 +209,10 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="b2style\codegen\nlexer_rule.txt" />
+    <Content Include="b2style\codegen\rlexer_rule.txt" />
+    <Content Include="b2style\codegen\syntaxer_rule.txt" />
     <Content Include="bstyle\codegen\nlexer_rule.txt" />
-    <Content Include="bstyle\codegen\rlexer_rule.txt" />
     <Content Include="bstyle\codegen\syntaxer_rule.txt" />
     <Content Include="logic\codegen\builder_gen.cs" />
     <Content Include="logic\codegen\builder_gen.exe" />

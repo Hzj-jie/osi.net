@@ -55,6 +55,7 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="b2style\b2style_test.vb" />
     <Compile Include="bstyle\bstyle_test.vb" />
     <Compile Include="dotnet\dotnet_test_data.vb" />
     <Compile Include="dotnet\source_executor_test.vb" />

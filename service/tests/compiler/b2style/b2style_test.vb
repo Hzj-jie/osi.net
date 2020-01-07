@@ -9,10 +9,10 @@ Imports osi.service.automata
 Imports osi.service.compiler
 
 <test>
-Public NotInheritable Class bstyle_test
+Public NotInheritable Class b2style_test
     <test>
     Private Shared Sub nlp_parsable()
-        assertion.is_true(nlp.of(bstyle.nlexer_rule, bstyle.syntaxer_rule, Nothing))
+        assertion.is_true(nlp.of(b2style.nlexer_rule, b2style.syntaxer_rule, Nothing))
     End Sub
 
     Private Sub New()
