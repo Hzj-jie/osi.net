@@ -63,5 +63,27 @@ Namespace logic
         Public Function dump() As String
             Return Convert.ToString(s)
         End Function
+
+        Public Function dump(ByVal importer As importer, ByVal v As vector(Of exportable)) As Boolean
+            assert(Not importer Is Nothing)
+            assert(Not v Is Nothing)
+            If Not importer.import(dump(), v) Then
+                Return False
+            End If
+            If v.empty() Then
+                Return False
+            End If
+            ' No harmful to always append a stop at the end.
+            v.emplace_back(New [stop]())
+            Return True
+        End Function
+
+        Public Function dump(ByVal functions As interrupts, ByVal v As vector(Of exportable)) As Boolean
+            Return dump(importer.[New](functions), v)
+        End Function
+
+        Public Function dump(ByVal v As vector(Of exportable)) As Boolean
+            Return dump(importer.[New](), v)
+        End Function
     End Class
 End Namespace

@@ -8,6 +8,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.automata
+Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
@@ -61,6 +62,43 @@ Namespace logic
             o = w.dump()
             Return True
         End Function
+
+        Public Shared Function with_functions(ByVal functions As interrupts) As parse_wrapper
+            Return New parse_wrapper(functions)
+        End Function
+
+        Public NotInheritable Class parse_wrapper
+            Private ReadOnly functions As interrupts
+
+            Public Sub New(ByVal functions As interrupts)
+                assert(Not functions Is Nothing)
+                Me.functions = functions
+            End Sub
+
+            Public Function parse(ByVal input As String, ByRef e As executor) As Boolean
+                e = New simulator(functions)
+                If parse(input, direct_cast(Of interpreter.primitive.exportable)(e)) Then
+                    Return True
+                End If
+                e = Nothing
+                Return False
+            End Function
+
+            Public Function parse(ByVal input As String, ByVal e As interpreter.primitive.exportable) As Boolean
+                assert(Not e Is Nothing)
+                Dim o As writer = Nothing
+                o = New writer()
+                If Not logic_rule_wrapper(Of _nlexer_rule, _syntaxer_rule, _prefixes, _logic_gens).parse(input, o) Then
+                    Return False
+                End If
+                Dim es As vector(Of exportable) = Nothing
+                es = New vector(Of exportable)()
+                If Not o.dump(functions, es) Then
+                    Return False
+                End If
+                Return e.import(+es)
+            End Function
+        End Class
 
         Private Shared Sub init_prefixes()
             Dim v As vector(Of Action(Of prefixes)) = Nothing

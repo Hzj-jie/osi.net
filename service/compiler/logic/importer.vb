@@ -102,14 +102,19 @@ Namespace logic
             Return import_proxy(s, AddressOf import, e)
         End Function
 
-        Public Function import(ByVal s As String) As executor
-            Dim o As simulator = Nothing
+        Public Function import(ByVal s As String, ByRef o As executor) As Boolean
             o = New simulator(functions)
-            If import(s, o) Then
-                Return o
-            Else
-                Return Nothing
+            If import(s, direct_cast(Of interpreter.primitive.exportable)(o)) Then
+                Return True
             End If
+            o = Nothing
+            Return False
+        End Function
+
+        Public Function import(ByVal s As String) As executor
+            Dim o As executor = Nothing
+            assert(import(s, o))
+            Return o
         End Function
     End Class
 End Namespace

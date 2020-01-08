@@ -76,9 +76,9 @@ Namespace logic
 
         Private Shared Function import_empty() As Boolean
             Dim e As executor = Nothing
-            e = importer.[New]().import("")
+            assertion.is_false(importer.[New]().import("", e))
             assertion.is_null(e)
-            e = importer.[New]().import(Nothing)
+            assertion.is_false(importer.[New]().import(Nothing, e))
             assertion.is_null(e)
             Return True
         End Function
@@ -86,7 +86,7 @@ Namespace logic
         Private Shared Function importable() As Boolean
             For i As UInt32 = 0 To array_size(importable_cases) - uint32_1
                 Dim e As executor = Nothing
-                e = importer.[New]().import(importable_cases(CInt(i)))
+                assertion.is_true(importer.[New]().import(importable_cases(CInt(i)), e))
                 assertion.is_not_null(e)
             Next
             Return True
@@ -95,7 +95,7 @@ Namespace logic
         Private Shared Function not_importable() As Boolean
             For i As UInt32 = 0 To array_size(not_importable_cases) - uint32_1
                 Dim e As executor = Nothing
-                e = importer.[New]().import(not_importable_cases(CInt(i)))
+                assertion.is_false(importer.[New]().import(not_importable_cases(CInt(i)), e))
                 assertion.is_null(e)
             Next
             Return True
@@ -104,22 +104,23 @@ Namespace logic
         Private Shared Function execute_cases() As Boolean
             For i As UInt32 = 0 To array_size(cases) - uint32_1
                 Dim e As executor = Nothing
-                e = importer.[New]().import(cases(CInt(i)).first)
-                If assertion.is_not_null(e) Then
-                    e.execute()
-                    assertion.is_false(e.halt())
-                    assertion.equal(e.errors().size(), uint32_0)
-                    For j As UInt32 = 0 To array_size(cases(CInt(i)).second) - uint32_1
-                        Dim x() As Byte = Nothing
-                        Try
-                            x = +e.access_stack(data_ref.abs(j))
-                        Catch ex As executor_stop_error
-                            assertion.is_true(False, ex)
-                            Continue For
-                        End Try
-                        assertion.array_equal(x, cases(CInt(i)).second(CInt(j)))
-                    Next
+                If Not assertion.is_true(importer.[New]().import(cases(CInt(i)).first, e)) OrElse
+                   Not assertion.is_not_null(e) Then
+                    Return False
                 End If
+                e.execute()
+                assertion.is_false(e.halt())
+                assertion.equal(e.errors().size(), uint32_0)
+                For j As UInt32 = 0 To array_size(cases(CInt(i)).second) - uint32_1
+                    Dim x() As Byte = Nothing
+                    Try
+                        x = +e.access_stack(data_ref.abs(j))
+                    Catch ex As executor_stop_error
+                        assertion.is_true(False, ex)
+                        Continue For
+                    End Try
+                    assertion.array_equal(x, cases(CInt(i)).second(CInt(j)))
+                Next
             Next
             Return True
         End Function

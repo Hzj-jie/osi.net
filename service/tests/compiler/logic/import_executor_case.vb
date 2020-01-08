@@ -15,15 +15,15 @@ Namespace logic
 
         Private Shared Function build_case(ByVal str As String,
                                            Optional ByVal functions As interrupts = Nothing) As exportable()
+            Dim o As writer = Nothing
+            o = New writer()
+            o.append(str)
             Dim es As vector(Of exportable) = Nothing
             es = New vector(Of exportable)()
             If functions Is Nothing Then
-                assertion.is_true(importer.[New]().import(str, es))
+                assertion.is_true(o.dump(es))
             Else
-                assertion.is_true(importer.[New](functions).import(str, es))
-            End If
-            If Not assertion.is_false(es.empty()) Then
-                es.emplace_back(New [stop]())
+                assertion.is_true(o.dump(functions, es))
             End If
             Return +es
         End Function
