@@ -59,6 +59,12 @@
     <Compile Include="b2style\b2style_rules.vb" />
     <Compile Include="bstyle\bstyle.vb" />
     <Compile Include="bstyle\bstyle_rules.vb" />
+    <Compile Include="bstyle\logic\nodes\bool.vb" />
+    <Compile Include="bstyle\logic\nodes\float.vb" />
+    <Compile Include="bstyle\logic\nodes\integer.vb" />
+    <Compile Include="bstyle\logic\nodes\logic.vb" />
+    <Compile Include="bstyle\logic\nodes\string.vb" />
+    <Compile Include="bstyle\logic\suffixes\main.vb" />
     <Compile Include="logic\logic_gen\logic_gen.vb" />
     <Compile Include="b2style\logic\nodes\add.vb" />
     <Compile Include="b2style\logic\nodes\and.vb" />
@@ -85,7 +91,7 @@
     <Compile Include="bstyle\logic\nodes\value_list.vb" />
     <Compile Include="bstyle\logic\nodes\value_with_comma.vb" />
     <Compile Include="bstyle\logic\prefixes\constants.vb" />
-    <Compile Include="logic\logic_gen\prefixes.vb" />
+    <Compile Include="logic\logic_gen\statements.vb" />
     <Compile Include="bstyle\logic\prefixes\types.vb" />
     <Compile Include="bstyle\logic\nodes\else_condition.vb" />
     <Compile Include="bstyle\logic\nodes\function.vb" />
@@ -97,7 +103,6 @@
     <Compile Include="bstyle\logic\nodes\param_with_comma.vb" />
     <Compile Include="b2style\logic\nodes\pre_operation_value.vb" />
     <Compile Include="b2style\logic\nodes\self_inc.vb" />
-    <Compile Include="bstyle\logic\nodes\semi_colon.vb" />
     <Compile Include="bstyle\logic\nodes\sentence.vb" />
     <Compile Include="bstyle\logic\nodes\sentence_without_semi_colon.vb" />
     <Compile Include="bstyle\logic\nodes\sentence_with_semi_colon.vb" />

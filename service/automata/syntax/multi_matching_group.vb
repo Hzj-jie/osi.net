@@ -31,15 +31,15 @@ Partial Public NotInheritable Class syntaxer
                                         ByVal parent As typed_node) As Boolean
             Dim op As UInt32 = 0
             op = p
-            If MyBase.match(v, p, parent) Then
-                op = p
-                While MyBase.match(v, p, parent)
-                    op = p
-                End While
-                p = op
-                Return True
+            If Not MyBase.match(v, p, parent) Then
+                Return False
             End If
-            Return False
+            op = p
+            While MyBase.match(v, p, parent)
+                op = p
+            End While
+            p = op
+            Return True
         End Function
 
         Public Overloads Function CompareTo(ByVal other As multi_matching_group) As Int32 _

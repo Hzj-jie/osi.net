@@ -11,7 +11,7 @@ Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class constants
-        Implements prefix
+        Implements statement
 
         Public Shared ReadOnly int_1 As String = unique_name("int_1")
 
@@ -42,12 +42,12 @@ Partial Public NotInheritable Class bstyle
             End Sub
         End Class
 
-        Public Shared Sub register(ByVal p As prefixes)
+        Public Shared Sub register(ByVal p As statements)
             assert(Not p Is Nothing)
             p.register(New constants())
         End Sub
 
-        Public Sub export(ByVal o As writer) Implements prefix.export
+        Public Sub export(ByVal o As writer) Implements statement.export
             Dim i As UInt32 = 0
             While i < v.size()
                 builders.of_define(v(i).name, v(i).type).to(o)

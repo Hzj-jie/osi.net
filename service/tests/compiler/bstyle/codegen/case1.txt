@@ -1,0 +1,9 @@
+﻿
+void print(string i) {
+  string temp;
+  logic "interrupt stdout i temp";
+}
+
+void main() {
+  void v = print("Hello World");
+}

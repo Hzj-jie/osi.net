@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="b2style\b2style_test.vb" />
     <Compile Include="bstyle\bstyle_test.vb" />
+    <Compile Include="bstyle\bstyle_test_data.vb" />
     <Compile Include="dotnet\dotnet_test_data.vb" />
     <Compile Include="dotnet\source_executor_test.vb" />
     <Compile Include="logic\caller_test.vb" />
@@ -95,6 +96,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="bstyle\codegen\run.cmd" />
     <None Include="dotnet\codegen\run.cmd" />
     <None Include="logic\codegen\run.cmd" />
     <None Include="My Project\Application.myapp">
@@ -112,10 +114,12 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="bstyle\codegen\case1.txt" />
     <Content Include="dotnet\codegen\from_source1.cs" />
     <Content Include="logic\codegen\case1.txt" />
     <Content Include="logic\codegen\case2.txt" />
     <Content Include="logic\codegen\case3.txt" />
+    <Content Include="logic\codegen\case4.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\..\..\root\root.utt.props" Condition="'$(RootUttProps)'==''" />

@@ -8,14 +8,14 @@ param-with-comma param comma
 param name name
 
 paragraph [sentence, multi-sentence-paragraph]
-sentence [sentence-with-semi-colon, sentence-without-semi-colon, semi-colon]
-sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, function-call, kw-break] semi-colon
+sentence [sentence-with-semi-colon, sentence-without-semi-colon]
+sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, function-call, kw-break, logic]? semi-colon
 sentence-without-semi-colon [condition, while, for-loop]
 
 multi-sentence-paragraph start-paragraph [sentence]* end-paragraph
 
-value-declaration name name
 value-definition name name assignment value
+value-declaration name name
 value-clause name assignment value
 
 condition kw-if start-bracket value end-bracket paragraph [else-condition]?

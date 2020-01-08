@@ -32,12 +32,14 @@ Partial Public NotInheritable Class bstyle
             Dim v As vector(Of String) = Nothing
             v = New vector(Of String)()
             Dim r As String = Nothing
-            For i As UInt32 = 0 To n.child_count() - uint32_2
+            Dim i As UInt32 = 0
+            While i < n.child_count() - uint32_1
                 If Not logic_gen_of(Of value_with_comma).build(n.child(i), o, r) Then
                     v.emplace_back(r)
                     Return False
                 End If
-            Next
+                i += uint32_1
+            End While
             If Not logic_gen_of(Of value_with_comma).build_value(n.child(n.child_count() - uint32_1), o, r) Then
                 v.emplace_back(r)
                 Return False

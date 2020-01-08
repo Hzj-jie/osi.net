@@ -3,13 +3,22 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
-Imports osi.root.formation
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.envs
+Imports osi.root.formation
 
 Partial Public NotInheritable Class syntaxer
+    Public Shared ReadOnly debug_log As Boolean
+
     Private ReadOnly collection As syntax_collection
     Private ReadOnly root_types As vector(Of UInt32)
+
+    Shared Sub New()
+        debug_log = env_bool(env_keys("syntaxer", "debug")) OrElse
+                    env_bool(env_keys("syntaxer", "debugging")) OrElse
+                    env_bool(env_keys("syntaxer", "debug", "log"))
+    End Sub
 
     Public Sub New(ByVal collection As syntax_collection, ByVal root_types As vector(Of UInt32))
         assert(Not collection Is Nothing)

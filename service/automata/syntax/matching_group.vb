@@ -3,7 +3,9 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Text
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 
 Partial Public NotInheritable Class syntaxer
@@ -28,18 +30,20 @@ Partial Public NotInheritable Class syntaxer
                                         ByVal parent As typed_node) As Boolean
             If v Is Nothing OrElse v.size() <= p Then
                 Return False
-            Else
-                Dim op As UInt32 = 0
-                op = p
-                For i As Int32 = 0 To array_size_i(ms) - 1
-                    assert(Not ms(i) Is Nothing)
-                    p = op
-                    If ms(i).match(v, p, parent) Then
-                        Return True
-                    End If
-                Next
-                Return False
             End If
+            Dim op As UInt32 = 0
+            op = p
+            For i As Int32 = 0 To array_size_i(ms) - 1
+                assert(Not ms(i) Is Nothing)
+                p = op
+                If ms(i).match(v, p, parent) Then
+                    Return True
+                End If
+            Next
+            If syntaxer.debug_log Then
+                raise_error(error_type.user, "Failed to match token ", v(op), " when matching group ", Me)
+            End If
+            Return False
         End Function
 
         Public Overrides Function CompareTo(ByVal other As matching) As Int32
@@ -55,6 +59,16 @@ Partial Public NotInheritable Class syntaxer
             End If
             assert(Not other Is Nothing)
             Return memcmp(Me.ms, other.ms)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Dim r As StringBuilder = Nothing
+            r = New StringBuilder("matching_group [")
+            For i As Int32 = 0 To array_size_i(ms) - 1
+                assert(Not ms(i) Is Nothing)
+                r.Append(ms(i)).Append(",")
+            Next
+            Return Convert.ToString(r.Append("]"))
         End Function
     End Class
 End Class

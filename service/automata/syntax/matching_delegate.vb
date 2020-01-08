@@ -21,9 +21,7 @@ Partial Public NotInheritable Class syntaxer
         Public Overrides Function match(ByVal v As vector(Of typed_word),
                                         ByRef p As UInt32,
                                         ByVal parent As typed_node) As Boolean
-            Dim s As syntax = Nothing
-            assert(c.get(type, s) AndAlso Not s Is Nothing)
-            Return s.match(v, p, parent)
+            Return syntax().match(v, p, parent)
         End Function
 
         Public Overrides Function CompareTo(ByVal other As matching) As Int32
@@ -43,6 +41,16 @@ Partial Public NotInheritable Class syntaxer
                 Return c
             End If
             Return compare(Me.type, other.type)
+        End Function
+
+        Private Function syntax() As syntax
+            Dim s As syntax = Nothing
+            assert(c.get(type, s) AndAlso Not s Is Nothing)
+            Return s
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return syntax().ToString()
         End Function
     End Class
 End Class

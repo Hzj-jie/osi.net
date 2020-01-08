@@ -36,19 +36,23 @@ Partial Public NotInheritable Class syntaxer
             If parent Is Nothing Then
                 Return Nothing
             End If
-            Dim type_str As String = Nothing
-            If envs.utt.is_current Then
-                ' TODO: Fix the tests to avoid undefined type.
-                If Not c.type_name(type, type_str) Then
-                    type_str = strcat("UNDEFINED_TYPE-", type)
-                End If
-            Else
-                type_str = c.type_name(type)
-            End If
             Dim r As typed_node = Nothing
-            r = New typed_node(v, type, type_str, start, [end], parent)
+            r = New typed_node(v, type, type_name(type), start, [end], parent)
             parent.subnodes.emplace_back(r)
             Return r
+        End Function
+
+        Protected Function type_name(ByVal type As UInt32) As String
+            If Not envs.utt.is_current Then
+                Return c.type_name(type)
+            End If
+
+            Dim type_str As String = Nothing
+            ' TODO: Fix the tests to avoid undefined type.
+            If Not c.type_name(type, type_str) Then
+                Return strcat("UNDEFINED_TYPE-", type)
+            End If
+            Return type_str
         End Function
 
         Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo

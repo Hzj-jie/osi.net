@@ -12,11 +12,11 @@ Imports osi.service.math
 Imports osi.service.resource
 
 Namespace logic
-    Public Class import_executor_test1
+    Public NotInheritable Class import_executor_test1
         Inherits import_executor_case
 
         Public Sub New()
-            MyBase.New(case1.as_text())
+            MyBase.New(_import_executor_cases.case1.as_text())
         End Sub
 
         Protected Overrides Sub check_result(ByVal e As not_null(Of simulator))
@@ -35,7 +35,7 @@ Namespace logic
         End Sub
     End Class
 
-    Public Class import_executor_test2
+    Public NotInheritable Class import_executor_test2
         Inherits import_executor_case
 
         Public Sub New()
@@ -68,7 +68,7 @@ Namespace logic
         End Sub
     End Class
 
-    Public Class import_executor_test3
+    Public NotInheritable Class import_executor_test3
         Inherits import_executor_case
 
         Public Sub New()
@@ -98,6 +98,26 @@ Namespace logic
                 Next
             End If
             MyBase.check_result(e)
+        End Sub
+    End Class
+
+    Public NotInheritable Class import_executor_test4
+        Inherits import_executor_case
+
+        Private Shared ReadOnly io As console_io.test_wrapper
+
+        Shared Sub New()
+            io = New console_io.test_wrapper()
+        End Sub
+
+        Public Sub New()
+            MyBase.New(case4.as_text(), New interrupts(+io))
+        End Sub
+
+        Protected Overrides Sub check_result(ByVal e As not_null(Of simulator))
+            MyBase.check_result(e)
+            assertion.equal(io.output(), "hello world")
+            assertion.equal(io.error(), "hello world")
         End Sub
     End Class
 End Namespace

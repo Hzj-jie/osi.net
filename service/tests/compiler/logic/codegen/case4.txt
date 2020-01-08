@@ -1,0 +1,12 @@
+﻿
+type string 0
+define temp_string string
+
+callee main ( ) {
+  define result string
+  copy_const result Ehello\x20world
+  interrupt stdout result temp_string
+  interrupt stderr result temp_string
+}
+
+caller main ( )

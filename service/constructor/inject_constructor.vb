@@ -37,60 +37,6 @@ Public NotInheritable Class inject_constructor(Of T)
         assert(Not f Is Nothing)
     End Sub
 
-    Public NotInheritable Class derived_proxy(Of IMPL_T As T)
-        Public Shared ReadOnly instance As derived_proxy(Of IMPL_T)
-
-        Shared Sub New()
-            instance = New derived_proxy(Of IMPL_T)()
-        End Sub
-
-        Public Function invoke(ByRef o As T, ByVal ParamArray args() As Object) As Boolean
-            Dim x As IMPL_T = Nothing
-            If Not inject_constructor.invoke(x, args) Then
-                Return False
-            End If
-            o = x
-            Return True
-        End Function
-
-        Public Function invoke(ByVal ParamArray args() As Object) As T
-            Return inject_constructor(Of IMPL_T).invoke(args)
-        End Function
-
-        Public Function invoke(ByRef o As T, ByVal ParamArray args() As String) As Boolean
-            Dim x As IMPL_T = Nothing
-            If Not inject_constructor.invoke(x, args) Then
-                Return False
-            End If
-            o = x
-            Return True
-        End Function
-
-        Public Function invoke(ByVal ParamArray args() As String) As T
-            Return inject_constructor(Of IMPL_T).invoke(args)
-        End Function
-
-        Public Function invoke(ByVal v As var, ByRef o As T) As Boolean
-            Dim x As IMPL_T = Nothing
-            If Not inject_constructor.invoke(v, x) Then
-                Return False
-            End If
-            o = x
-            Return True
-        End Function
-
-        Public Function invoke(ByVal i As var) As T
-            Return inject_constructor(Of IMPL_T).invoke(i)
-        End Function
-
-        Private Sub New()
-        End Sub
-    End Class
-
-    Public Shared Function of_derived(Of IMPL_T As T)() As derived_proxy(Of IMPL_T)
-        Return derived_proxy(Of IMPL_T).instance
-    End Function
-
     Public Shared Function invoke(ByRef o As T, ByVal ParamArray args() As Object) As Boolean
         Try
             o = f(args)

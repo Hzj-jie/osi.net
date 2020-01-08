@@ -48,5 +48,9 @@ Partial Public NotInheritable Class syntaxer
             assert(Not other Is Nothing)
             Return compare(Me.m, other.m)
         End Function
+
+        Public Overrides Function ToString() As String
+            Return strcat("single_matching ", type_name(m))
+        End Function
     End Class
 End Class

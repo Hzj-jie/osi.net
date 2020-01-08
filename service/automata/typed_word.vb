@@ -42,6 +42,10 @@ Public Class typed_word
         Return strmid(ref, start, len)
     End Function
 
+    Public Function debug_str() As String
+        Return strcat("[", type, "]: ", str())
+    End Function
+
     Public NotOverridable Overrides Function ToString() As String
         Return str()
     End Function

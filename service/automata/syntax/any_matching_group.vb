@@ -22,7 +22,10 @@ Partial Public NotInheritable Class syntaxer
             MyBase.New(c, ms)
         End Sub
 
-        Public Sub New(ByVal c As syntax_collection, ByVal m1 As UInt32, ByVal m2 As UInt32, ByVal ParamArray ms() As UInt32)
+        Public Sub New(ByVal c As syntax_collection,
+                       ByVal m1 As UInt32,
+                       ByVal m2 As UInt32,
+                       ByVal ParamArray ms() As UInt32)
             MyBase.New(c, m1, m2, ms)
         End Sub
 

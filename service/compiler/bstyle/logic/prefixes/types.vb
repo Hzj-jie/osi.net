@@ -11,7 +11,7 @@ Imports logic_builder = osi.service.compiler.logic.builders
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class types
-        Implements prefix
+        Implements statement
 
         Public Const bigint As String = "bigint"
         Public Const biguint As String = "biguint"
@@ -19,6 +19,9 @@ Partial Public NotInheritable Class bstyle
         Public Const int As String = "int"
         Public Const bool As String = "bool"
         Public Const [byte] As String = "byte"
+        Public Const [string] As String = "string"
+        Public Const float As String = "float"
+        Public Const void As String = "void"
 
         Private Shared ReadOnly v As vector(Of pair(Of String, Int32))
 
@@ -29,16 +32,19 @@ Partial Public NotInheritable Class bstyle
                 emplace_make_pair(bool, 1),
                 emplace_make_pair([byte], 1),
                 emplace_make_pair(bigint, 0),
-                emplace_make_pair(biguint, 0)
+                emplace_make_pair(biguint, 0),
+                emplace_make_pair([string], 0),
+                emplace_make_pair(float, 8),
+                emplace_make_pair(void, 0)
             )
         End Sub
 
-        Public Shared Sub register(ByVal p As prefixes)
+        Public Shared Sub register(ByVal p As statements)
             assert(Not p Is Nothing)
             p.register(New types())
         End Sub
 
-        Public Sub export(ByVal o As writer) Implements prefix.export
+        Public Sub export(ByVal o As writer) Implements statement.export
             Dim i As UInt32 = 0
             While i < v.size()
                 assert(v(i).second >= 0)

@@ -13,6 +13,8 @@ Namespace logic
     Public Class import_executor_case
         Inherits executor_case
 
+        Private ReadOnly functions As interrupts
+
         Private Shared Function build_case(ByVal str As String,
                                            Optional ByVal functions As interrupts = Nothing) As exportable()
             Dim o As writer = Nothing
@@ -28,12 +30,21 @@ Namespace logic
             Return +es
         End Function
 
+        Private Sub New(ByVal es() As exportable, ByVal functions As interrupts)
+            MyBase.New(es)
+            Me.functions = functions
+        End Sub
+
         Protected Sub New(ByVal str As String, ByVal functions As interrupts)
-            MyBase.New(build_case(str, functions))
+            Me.New(build_case(str, functions), functions)
         End Sub
 
         Protected Sub New(ByVal str As String)
-            MyBase.New(build_case(str))
+            Me.New(build_case(str), Nothing)
         End Sub
+
+        Protected NotOverridable Overrides Function interrupts() As interrupts
+            Return functions
+        End Function
     End Class
 End Namespace

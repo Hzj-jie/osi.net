@@ -4,12 +4,14 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
+Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class sentence_with_semi_colon
+    Public NotInheritable Class [string]
         Inherits logic_gen_wrapper
         Implements logic_gen
 
@@ -20,13 +22,15 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Sub register(ByVal b As logic_gens)
             assert(Not b Is Nothing)
-            b.register(Of sentence_with_semi_colon)()
+            b.register(Of [string])()
         End Sub
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            Return l.of(n.child(0)).build(o)
+            assert(n.leaf())
+            builders.of_copy_const(value.current_target(), New data_block(n.str())).to(o)
+            Return True
         End Function
     End Class
 End Class

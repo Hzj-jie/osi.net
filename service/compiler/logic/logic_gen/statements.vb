@@ -8,18 +8,18 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.compiler.logic
 
-Public Interface prefix
+Public Interface statement
     Sub export(ByVal o As writer)
 End Interface
 
-Public NotInheritable Class prefixes
-    Private ReadOnly v As vector(Of prefix)
+Public NotInheritable Class statements
+    Private ReadOnly v As vector(Of statement)
 
     Public Sub New()
-        v = New vector(Of prefix)()
+        v = New vector(Of statement)()
     End Sub
 
-    Public Sub register(ByVal p As prefix)
+    Public Sub register(ByVal p As statement)
         v.emplace_back(p)
     End Sub
 

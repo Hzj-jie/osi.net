@@ -4,12 +4,14 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
+Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class semi_colon
+    Public NotInheritable Class bool
         Inherits logic_gen_wrapper
         Implements logic_gen
 
@@ -20,10 +22,19 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Sub register(ByVal b As logic_gens)
             assert(Not b Is Nothing)
-            b.register(Of semi_colon)()
+            b.register(Of bool)()
         End Sub
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
+            assert(Not n Is Nothing)
+            assert(Not o Is Nothing)
+            assert(n.leaf())
+            Dim i As Boolean = False
+            If Not str_bool(n.str(), i) Then
+                raise_error(error_type.user, "Cannot parse data to bool ", n.debug_str())
+                Return False
+            End If
+            builders.of_copy_const(value.current_target(), New data_block(i)).to(o)
             Return True
         End Function
     End Class

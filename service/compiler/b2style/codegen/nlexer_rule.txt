@@ -42,7 +42,7 @@ divide /
 mod %
 power ^
 bit-and &
-bit-or |
+bit-or \|
 and &&
 or ||
 not !

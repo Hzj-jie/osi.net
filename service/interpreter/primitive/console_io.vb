@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.IO
 Imports osi.root.connector
+Imports osi.root.formation
 
 Namespace primitive
     Public NotInheritable Class console_io
@@ -40,5 +41,43 @@ Namespace primitive
         Public Sub redirect_error(Optional ByVal i As TextWriter = Nothing)
             err = i
         End Sub
+
+        Public NotInheritable Class test_wrapper
+            Private ReadOnly out As disposer(Of StringWriter)
+            Private ReadOnly err As disposer(Of StringWriter)
+            Private ReadOnly [in] As disposer(Of StringReader)
+            Private ReadOnly c As console_io
+
+            Public Sub New()
+                Me.New(Nothing)
+            End Sub
+
+            Public Sub New(ByVal input As String)
+                out = make_disposer(New StringWriter())
+                err = make_disposer(New StringWriter())
+                If Not input Is Nothing Then
+                    [in] = make_disposer(New StringReader(input))
+                End If
+                c = New console_io()
+                c.redirect_output(+out)
+                c.redirect_error(+err)
+                If Not [in] Is Nothing Then
+                    c.redirect_input(+[in])
+                End If
+            End Sub
+
+            Public Shared Operator +(ByVal this As test_wrapper) As console_io
+                assert(Not this Is Nothing)
+                Return this.c
+            End Operator
+
+            Public Function output() As String
+                Return Convert.ToString(+out)
+            End Function
+
+            Public Function [error]() As String
+                Return Convert.ToString(+err)
+            End Function
+        End Class
     End Class
 End Namespace

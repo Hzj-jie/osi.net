@@ -51,7 +51,7 @@ Public NotInheritable Class logic_gens
     Public Sub register(Of T As logic_gen)()
         register(logic_gen_name(Of T)(),
                  Function(ByVal b As logic_gens) As logic_gen
-                     Return inject_constructor(Of logic_gen).of_derived(Of T).invoke(b)
+                     Return inject_constructor(Of T).invoke(b)
                  End Function)
     End Sub
 

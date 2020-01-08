@@ -13,18 +13,22 @@ Imports osi.service.interpreter.primitive
 Namespace logic
     Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
                                        _syntaxer_rule As __do(Of Byte()),
-                                       _prefixes As __do(Of vector(Of Action(Of prefixes))),
+                                       _prefixes As __do(Of vector(Of Action(Of statements))),
+                                       _suffixes As __do(Of vector(Of Action(Of statements))),
                                        _logic_gens As __do(Of vector(Of Action(Of logic_gens))))
         Inherits rule_wrapper(Of _nlexer_rule, _syntaxer_rule)
 
         Private Shared ReadOnly l As logic_gens
-        Private Shared ReadOnly p As prefixes
+        Private Shared ReadOnly p As statements
+        Private Shared ReadOnly s As statements
 
         Shared Sub New()
             l = New logic_gens()
-            p = New prefixes()
-            init_prefixes()
+            p = New statements()
+            s = New statements()
             init_logic_gens()
+            init_prefixes()
+            init_suffixes()
         End Sub
 
         Public Shared Function build(ByVal root As typed_node, ByVal o As writer) As Boolean
@@ -35,10 +39,12 @@ Namespace logic
             If root.leaf() Then
                 Return False
             End If
+            p.export(o)
             assert(root.child_count() > 0)
             For i As UInt32 = 0 To root.child_count() - uint32_1
                 l.of(root.child(i)).build(o)
             Next
+            s.export(o)
             Return True
         End Function
 
@@ -88,7 +94,8 @@ Namespace logic
                 assert(Not e Is Nothing)
                 Dim o As writer = Nothing
                 o = New writer()
-                If Not logic_rule_wrapper(Of _nlexer_rule, _syntaxer_rule, _prefixes, _logic_gens).parse(input, o) Then
+                If Not logic_rule_wrapper(Of _nlexer_rule, _syntaxer_rule, _prefixes, _suffixes, _logic_gens).
+                    parse(input, o) Then
                     Return False
                 End If
                 Dim es As vector(Of exportable) = Nothing
@@ -100,16 +107,6 @@ Namespace logic
             End Function
         End Class
 
-        Private Shared Sub init_prefixes()
-            Dim v As vector(Of Action(Of prefixes)) = Nothing
-            v = +alloc(Of _prefixes)()
-            Dim i As UInt32 = 0
-            While i < v.size()
-                v(i)(p)
-                i += uint32_1
-            End While
-        End Sub
-
         Private Shared Sub init_logic_gens()
             Dim v As vector(Of Action(Of logic_gens)) = Nothing
             v = +alloc(Of _logic_gens)()
@@ -118,6 +115,24 @@ Namespace logic
                 v(i)(l)
                 i += uint32_1
             End While
+        End Sub
+
+        Private Shared Sub init_statements(Of T As __do(Of vector(Of Action(Of statements))))(ByRef p As statements)
+            Dim v As vector(Of Action(Of statements)) = Nothing
+            v = +alloc(Of T)()
+            Dim i As UInt32 = 0
+            While i < v.size()
+                v(i)(p)
+                i += uint32_1
+            End While
+        End Sub
+
+        Private Shared Sub init_prefixes()
+            init_statements(Of _prefixes)(p)
+        End Sub
+
+        Private Shared Sub init_suffixes()
+            init_statements(Of _suffixes)(s)
         End Sub
 
         Protected Sub New()

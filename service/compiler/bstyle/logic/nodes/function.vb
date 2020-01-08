@@ -39,7 +39,7 @@ Partial Public NotInheritable Class bstyle
             End Sub
 
             Public Function allow_return_value() As Boolean
-                Return Not strsame(n.word(0).str(), "void")
+                Return Not strsame(n.word(0).str(), types.void)
             End Function
 
             Public Function name() As String

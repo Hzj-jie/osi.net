@@ -10,7 +10,7 @@ Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class temps
-        Implements prefix
+        Implements statement
 
         Public Shared ReadOnly bigint As String = unique_name("bigint")
         Public Shared ReadOnly biguint As String = unique_name("biguint")
@@ -28,12 +28,12 @@ Partial Public NotInheritable Class bstyle
             Return "@@prefixes@temps@" + name
         End Function
 
-        Public Shared Sub register(ByVal p As prefixes)
+        Public Shared Sub register(ByVal p As statements)
             assert(Not p Is Nothing)
             p.register(New temps())
         End Sub
 
-        Public Sub export(ByVal o As writer) Implements prefix.export
+        Public Sub export(ByVal o As writer) Implements statement.export
             Dim i As UInt32 = 0
             While i < v.size()
                 builders.of_define(v(i).first, v(i).second).to(o)
