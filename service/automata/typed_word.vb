@@ -43,7 +43,7 @@ Public Class typed_word
     End Function
 
     Public Function debug_str() As String
-        Return strcat("[", type, "]: ", str())
+        Return strcat("[", type, "]: ", str(), "@", start, "-", [end])
     End Function
 
     Public NotOverridable Overrides Function ToString() As String
