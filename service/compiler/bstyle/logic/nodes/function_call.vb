@@ -27,7 +27,7 @@ Partial Public NotInheritable Class bstyle
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            assert(n.child_count() > 3)
+            assert(n.child_count() >= 3)
             Using r As read_scoped(Of String).ref = value.write_target()
                 If n.child_count() = 3 Then
                     builders.of_caller(n.child(0).word().str(), +r, vector.of(Of String)()).to(o)

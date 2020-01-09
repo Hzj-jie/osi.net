@@ -40,13 +40,17 @@ Partial Public NotInheritable Class bstyle
             End Sub
 
             Public Function allow_return_value() As Boolean
-                Return Not strsame(n.word(0).str(), types.void)
+                Return Not strsame(n.child(0).word().str(), types.void)
             End Function
 
             Public Function name() As String
-                Return n.word(1).str()
+                Return n.child(1).word().str()
             End Function
         End Class
+
+        Public Shared Function target() As ref
+            Return s.current()
+        End Function
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)

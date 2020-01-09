@@ -27,6 +27,7 @@ public static class Program {
     wl("Option Strict On");
     wl();
     wl("Imports osi.root.connector");
+    wl("Imports osi.root.constants");
     wl("Imports osi.root.formation");
     wl("Imports osi.service.interpreter.primitive");
     wl();
@@ -132,6 +133,7 @@ public static class Program {
           wl("                o.append(" + append_parameters[i] + ")");
         }
       }
+      wl("                o.append(newline.incode())");
       if (has_paragraph) {
         wl("                Return True");
         wl("            End Function");

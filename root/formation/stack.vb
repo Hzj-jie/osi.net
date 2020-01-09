@@ -67,9 +67,12 @@ Public NotInheritable Class stack(Of T)
         cmp = object_compare(Me, other)
         If cmp <> 0 Then
             Return cmp
-        Else
-            assert(Not other Is Nothing)
-            Return d.CompareTo(other.d)
         End If
+        assert(Not other Is Nothing)
+        Return d.CompareTo(other.d)
+    End Function
+
+    Public Overrides Function ToString() As String
+        Return Convert.ToString(d)
     End Function
 End Class

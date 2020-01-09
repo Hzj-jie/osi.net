@@ -39,7 +39,7 @@ Namespace logic
         Inherits import_executor_case
 
         Public Sub New()
-            MyBase.New(case2.as_text())
+            MyBase.New(_import_executor_cases.case2.as_text())
         End Sub
 
         Protected Overrides Sub check_result(ByVal e As not_null(Of simulator))

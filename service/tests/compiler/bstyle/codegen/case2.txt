@@ -1,0 +1,41 @@
+﻿
+bool equal(int i, int j) {
+  bool result;
+  logic "equal result i j";
+  return result;
+}
+
+bool is_even(int i) {
+  int quotient;
+  int remainder;
+  int v = 2;
+  logic "divide quotient remainder i v";
+  return equal(remainder, 0);
+}
+
+void print(bool i) {
+  string temp;
+  logic "interrupt stdout i temp";
+}
+
+int current_ms() {
+  int result;
+  int temp;
+  logic "interrupt current_ms temp result";
+  return result;
+}
+
+int self_decrease(int x) {
+  int temp = 1;
+  logic "subtract x x temp";
+  return x;
+}
+
+void main() {
+  int x;
+  x = current_ms();
+  if (is_event(x)) {
+    x = self_decrease(x);
+  }
+  print(is_event(x));
+}

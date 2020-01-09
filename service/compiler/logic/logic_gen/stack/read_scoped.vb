@@ -9,9 +9,11 @@ Imports osi.root.formation
 
 Public NotInheritable Class read_scoped(Of T)
     Private ReadOnly s As stack(Of T)
+    Private pending_dispose As UInt32
 
     Public Sub New()
         s = New stack(Of T)()
+        pending_dispose = 0
     End Sub
 
     Public Sub push(ByVal v As T)
@@ -21,27 +23,21 @@ Public NotInheritable Class read_scoped(Of T)
     Public NotInheritable Class ref
         Implements IDisposable
 
-        Private Shared c As UInt32 = 0
         Private ReadOnly r As read_scoped(Of T)
         Private ReadOnly v As T
 
         Public Sub New(ByVal r As read_scoped(Of T))
-            c += uint32_1
             assert(Not r Is Nothing)
             assert(Not r.s.empty())
             Me.r = r
             Me.v = r.s.back()
+            r.pending_dispose += uint32_1
         End Sub
 
         Public Sub Dispose() Implements IDisposable.Dispose
-            assert(c > uint32_0)
-            c -= uint32_1
+            r.pending_dispose -= uint32_1
             r.s.pop()
         End Sub
-
-        Public Shared Function pending_dispose() As UInt32
-            Return c
-        End Function
 
         Public Shared Operator +(ByVal this As ref) As T
             assert(Not this Is Nothing)
@@ -50,7 +46,7 @@ Public NotInheritable Class read_scoped(Of T)
     End Class
 
     Public Function pop() As ref
-        assert(size() > ref.pending_dispose)
+        assert(size() > pending_dispose)
         Return New ref(Me)
     End Function
 

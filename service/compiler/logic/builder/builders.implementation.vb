@@ -7,6 +7,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
@@ -32,6 +33,7 @@ Namespace logic
                 o.append("type")
                 o.append(string_1)
                 o.append(uint_2)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -55,6 +57,7 @@ Namespace logic
                 o.append("append_slice")
                 o.append(string_1)
                 o.append(string_2)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -82,6 +85,7 @@ Namespace logic
                 o.append(string_1)
                 o.append(string_2)
                 o.append(string_3)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -113,6 +117,7 @@ Namespace logic
                 o.append(string_2)
                 o.append(string_3)
                 o.append(string_4)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -132,6 +137,7 @@ Namespace logic
             Public Sub [to](ByVal o As writer)
                 o.append("clear")
                 o.append(string_1)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -159,6 +165,7 @@ Namespace logic
                 o.append(string_1)
                 o.append(string_2)
                 o.append(string_3)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -186,6 +193,7 @@ Namespace logic
                 o.append(string_1)
                 o.append(string_2)
                 o.append(string_3)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -213,6 +221,7 @@ Namespace logic
                 o.append(string_1)
                 o.append(string_2)
                 o.append(string_3)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -240,6 +249,7 @@ Namespace logic
                 o.append(string_1)
                 o.append(string_2)
                 o.append(string_3)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -267,6 +277,7 @@ Namespace logic
                 o.append(string_1)
                 o.append(string_2)
                 o.append(string_3)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -294,6 +305,7 @@ Namespace logic
                 o.append(string_1)
                 o.append(string_2)
                 o.append(string_3)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -325,6 +337,7 @@ Namespace logic
                 o.append("{")
                 o.append(paragraph_3)
                 o.append("}")
+                o.append(newline.incode())
                 Return True
             End Function
         End Class
@@ -355,6 +368,7 @@ Namespace logic
                 o.append("(")
                 o.append(parameters_3)
                 o.append(")")
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -380,6 +394,7 @@ Namespace logic
                 o.append("(")
                 o.append(parameters_2)
                 o.append(")")
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -407,6 +422,7 @@ Namespace logic
                 o.append(string_1)
                 o.append(string_2)
                 o.append(string_3)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -434,6 +450,7 @@ Namespace logic
                 o.append(string_1)
                 o.append(string_2)
                 o.append(string_3)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -461,6 +478,7 @@ Namespace logic
                 o.append(string_1)
                 o.append(string_2)
                 o.append(string_3)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -488,6 +506,7 @@ Namespace logic
                 o.append(string_1)
                 o.append(string_2)
                 o.append(string_3)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -515,6 +534,7 @@ Namespace logic
                 o.append(string_1)
                 o.append(string_2)
                 o.append(string_3)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -547,6 +567,7 @@ Namespace logic
                 o.append("{")
                 o.append(paragraph_4)
                 o.append("}")
+                o.append(newline.incode())
                 Return True
             End Function
         End Class
@@ -573,6 +594,7 @@ Namespace logic
                 o.append("{")
                 o.append(paragraph_2)
                 o.append("}")
+                o.append(newline.incode())
                 Return True
             End Function
         End Class
@@ -597,6 +619,7 @@ Namespace logic
                 o.append("copy")
                 o.append(string_1)
                 o.append(string_2)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -620,6 +643,7 @@ Namespace logic
                 o.append("copy_const")
                 o.append(string_1)
                 o.append(data_block_2)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -643,6 +667,7 @@ Namespace logic
                 o.append("define")
                 o.append(string_1)
                 o.append(string_2)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -668,6 +693,7 @@ Namespace logic
                 o.append("{")
                 o.append(paragraph_2)
                 o.append("}")
+                o.append(newline.incode())
                 Return True
             End Function
         End Class
@@ -694,6 +720,7 @@ Namespace logic
                 o.append("{")
                 o.append(paragraph_2)
                 o.append("}")
+                o.append(newline.incode())
                 Return True
             End Function
         End Class
@@ -722,6 +749,7 @@ Namespace logic
                 o.append(string_1)
                 o.append(string_2)
                 o.append(string_3)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -745,6 +773,7 @@ Namespace logic
                 o.append("move")
                 o.append(string_1)
                 o.append(string_2)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -776,6 +805,7 @@ Namespace logic
                 o.append(string_2)
                 o.append(string_3)
                 o.append(string_4)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -807,6 +837,7 @@ Namespace logic
                 o.append(string_2)
                 o.append(string_3)
                 o.append(string_4)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -827,6 +858,7 @@ Namespace logic
                 o.append("return")
                 o.append(string_1)
                 o.append("*")
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -850,6 +882,7 @@ Namespace logic
                 o.append("return")
                 o.append(string_1)
                 o.append(string_2)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -873,6 +906,7 @@ Namespace logic
                 o.append("append")
                 o.append(string_1)
                 o.append(string_2)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -896,6 +930,7 @@ Namespace logic
                 o.append("not")
                 o.append(string_1)
                 o.append(string_2)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -919,6 +954,7 @@ Namespace logic
                 o.append("sizeof")
                 o.append(string_1)
                 o.append(string_2)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -942,6 +978,7 @@ Namespace logic
                 o.append("empty")
                 o.append(string_1)
                 o.append(string_2)
+                o.append(newline.incode())
             End Sub
         End Class
 
@@ -967,6 +1004,7 @@ Namespace logic
                 o.append("{")
                 o.append(paragraph_2)
                 o.append("}")
+                o.append(newline.incode())
                 Return True
             End Function
         End Class
@@ -979,6 +1017,7 @@ Namespace logic
 
             Public Sub [to](ByVal o As writer)
                 o.append("stop")
+                o.append(newline.incode())
             End Sub
         End Class
     End Class

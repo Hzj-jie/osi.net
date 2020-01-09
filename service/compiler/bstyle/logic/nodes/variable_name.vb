@@ -26,8 +26,7 @@ Partial Public NotInheritable Class bstyle
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            assert(n.child_count() = 0)
-            assert(n.child().leaf())
+            assert(n.child_count() = 1)
             Using r As read_scoped(Of String).ref = value.write_target()
                 builders.of_copy(+r, n.child().word().str()).to(o)
             End Using
