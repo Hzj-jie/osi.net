@@ -319,7 +319,9 @@ Namespace logic
             Public Function [to](ByVal o As writer) As Boolean
                 o.append("callee")
                 o.append(string_1)
+                o.append("(")
                 o.append(typed_parameters_2)
+                o.append(")")
                 o.append("{")
                 o.append(paragraph_3)
                 o.append("}")

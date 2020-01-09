@@ -4,5 +4,5 @@ importer_gen.exe < ..\definition.txt > importer.definition.vb
 move /Y importer.definition.vb ..\
 
 csc builder_gen.cs
-builder_gen.exe < ..\definition.txt > builder.implementation.vb
-move /Y builder.implementation.vb ..\builder\
+builder_gen.exe < ..\definition.txt > builders.implementation.vb
+move /Y builders.implementation.vb ..\builder\
