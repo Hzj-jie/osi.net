@@ -65,6 +65,7 @@ Public NotInheritable Class bstyle
                 AddressOf param.register,
                 AddressOf param_with_comma.register,
                 AddressOf paramlist.register,
+                AddressOf [return].register,
                 AddressOf sentence.register,
                 AddressOf sentence_with_semi_colon.register,
                 AddressOf sentence_without_semi_colon.register,

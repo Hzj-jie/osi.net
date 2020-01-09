@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
@@ -12,6 +13,12 @@ Partial Public NotInheritable Class bstyle
     Public NotInheritable Class param
         Inherits logic_gen_wrapper
         Implements logic_gen
+
+        Private Shared ReadOnly rs As read_scoped(Of pair(Of String, String))
+
+        Shared Sub New()
+            rs = New read_scoped(Of pair(Of String, String))()
+        End Sub
 
         <inject_constructor>
         Public Sub New(ByVal b As logic_gens)
@@ -23,14 +30,16 @@ Partial Public NotInheritable Class bstyle
             b.register(Of param)()
         End Sub
 
+        Public Shared Function current_target() As read_scoped(Of pair(Of String, String)).ref
+            Return rs.pop()
+        End Function
+
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
+            assert(Not n Is Nothing)
             assert(n.child_count() = 2)
-            If Not l.of(n.child(1)).build(o) Then
-                Return False
-            End If
-            If Not l.of(n.child(0)).build(o) Then
-                Return False
-            End If
+            rs.push(emplace_make_pair(n.child(1).word().str(), n.child(0).word().str()))
+            ' No parameter nesting expected, use read_scoped to reduce the cost of maintaining the state only.
+            assert(rs.size() = 1)
             Return True
         End Function
     End Class

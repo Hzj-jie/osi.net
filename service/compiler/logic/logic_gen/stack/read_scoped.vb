@@ -43,4 +43,8 @@ Public NotInheritable Class read_scoped(Of T)
     Public Function pop() As ref
         Return New ref(Me)
     End Function
+
+    Public Function size() As UInt32
+        Return s.size()
+    End Function
 End Class

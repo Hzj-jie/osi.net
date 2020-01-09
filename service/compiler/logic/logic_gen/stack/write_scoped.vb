@@ -45,4 +45,8 @@ Public NotInheritable Class write_scoped(Of T)
         assert(Not s.empty())
         Return s.back()
     End Function
+
+    Public Function size() As UInt32
+        Return s.size()
+    End Function
 End Class

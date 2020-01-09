@@ -64,6 +64,7 @@
     <Compile Include="bstyle\logic\nodes\float.vb" />
     <Compile Include="bstyle\logic\nodes\integer.vb" />
     <Compile Include="bstyle\logic\nodes\logic.vb" />
+    <Compile Include="bstyle\logic\nodes\return.vb" />
     <Compile Include="bstyle\logic\nodes\string.vb" />
     <Compile Include="bstyle\logic\suffixes\main.vb" />
     <Compile Include="logic\logic_gen\logic_gen.vb" />
