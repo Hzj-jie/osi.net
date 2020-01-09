@@ -180,13 +180,16 @@ Public NotInheritable Class vector(Of T)
                                ByVal start As UInt32,
                                ByVal n As UInt32,
                                ByVal need_copy As Boolean) As Boolean
+        If n = max_uint32 Then
+            n = array_size(vs) - start
+        End If
+        If n = 0 Then
+            Return True
+        End If
         If array_size(vs) <= start Then
             Return False
-        ElseIf n = max_uint32 Then
-            n = array_size(vs) - start
-        ElseIf n = 0 Then
-            Return True
-        ElseIf start + n > array_size(vs) Then
+        End If
+        If start + n > array_size(vs) Then
             Return False
         End If
 

@@ -55,6 +55,38 @@ Partial Public NotInheritable Class syntaxer
             Return type_str
         End Function
 
+        Protected Sub log_matching(ByVal v As vector(Of typed_word),
+                                   ByVal start As UInt32,
+                                   ByVal [end] As UInt32,
+                                   ByVal matcher As Object)
+            If syntaxer.detailed_debug_log Then
+                Dim e As String = Nothing
+                If [end] = v.size() Then
+                    e = "[end]"
+                Else
+                    e = Convert.ToString(v([end]))
+                End If
+                raise_error(error_type.information, "Match token ", v(start), " to ", e, " with ", matcher)
+            End If
+        End Sub
+
+        Protected Sub log_unmatched(ByVal v As vector(Of typed_word),
+                                    ByVal start As UInt32,
+                                    ByVal matcher As Object)
+            If syntaxer.debug_log Then
+                raise_error(error_type.user, "Failed to match token ", v(start), " when matching with ", matcher)
+            End If
+        End Sub
+
+        Protected Sub log_end_of_tokens(ByVal v As vector(Of typed_word),
+                                        ByVal start As UInt32,
+                                        ByVal matcher As Object)
+            assert(start >= v.size())
+            If syntaxer.debug_log Then
+                raise_error(error_type.user, "End of tokens ", v.back(), "@", start, " when matching with ", matcher)
+            End If
+        End Sub
+
         Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
             Return CompareTo(cast(Of matching)(obj, False))
         End Function

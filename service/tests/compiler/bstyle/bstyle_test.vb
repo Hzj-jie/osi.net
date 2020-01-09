@@ -17,7 +17,7 @@ Public NotInheritable Class bstyle_test
         assertion.is_true(nlp.of(bstyle.nlexer_rule, bstyle.syntaxer_rule, Nothing))
     End Sub
 
-    'TODO: Does not work
+    ' TODO: Does not work
     '<test>
     Private Shared Sub case1()
         Dim io As console_io.test_wrapper = Nothing

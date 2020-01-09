@@ -27,11 +27,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 4)
-            o.append("define")
-            If Not l.of(n.child(1)).build(o) OrElse
-               Not l.of(n.child(0)).build(o) Then
-                Return False
-            End If
+            builders.of_define(n.child(1).str(), n.child(0).str()).to(o)
             Using logic_gen_of(Of value).with_current_target(n.child(1))
                 Return l.of(n.child(3)).build(o)
             End Using

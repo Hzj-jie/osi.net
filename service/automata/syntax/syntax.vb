@@ -162,9 +162,7 @@ Partial Public NotInheritable Class syntaxer
                                         ByRef p As UInt32,
                                         ByVal parent As typed_node) As Boolean
             If v Is Nothing OrElse v.size() <= p Then
-                If syntaxer.debug_log Then
-                    raise_error(error_type.user, "End of tokens ", p)
-                End If
+                log_end_of_tokens(v, p, Me)
                 Return False
             End If
             Dim op As UInt32 = 0
@@ -179,9 +177,7 @@ Partial Public NotInheritable Class syntaxer
                     jump_over_ignore_types(v, p)
                     If round = 0 Then
                         If Not ms(i).match(v, p) Then
-                            If syntaxer.debug_log Then
-                                raise_error(error_type.user, "Unexpected token ", v(op), " when parsing ", ms(i))
-                            End If
+                            log_unmatched(v, op, ms(i))
                             Return False
                         End If
                     Else
@@ -190,6 +186,7 @@ Partial Public NotInheritable Class syntaxer
                 Next
             Next
             jump_over_ignore_types(v, p)
+            log_matching(v, op, p, Me)
             Return True
         End Function
 

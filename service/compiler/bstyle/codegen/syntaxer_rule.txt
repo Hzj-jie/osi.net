@@ -1,6 +1,8 @@
 
 IGNORE_TYPES blank
-ROOT_TYPES function
+ROOT_TYPES file
+
+file [function]+
 
 function name name start-bracket [paramlist]? end-bracket multi-sentence-paragraph
 paramlist [param-with-comma]* param
@@ -27,7 +29,7 @@ for-loop kw-for start-bracket [value-declaration]? semi-colon [value]? semi-colo
 
 value [value-with-bracket, value-without-bracket]
 value-with-bracket start-bracket value end-bracket
-value-without-bracket [name, function-call, integer, float, bool, string]
+value-without-bracket [function-call, name, integer, float, bool, string]
 
 function-call name start-bracket [value-list]? end-bracket
 value-list [value-with-comma]* value

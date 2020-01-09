@@ -60,6 +60,7 @@
     <Compile Include="bstyle\bstyle.vb" />
     <Compile Include="bstyle\bstyle_rules.vb" />
     <Compile Include="bstyle\logic\nodes\bool.vb" />
+    <Compile Include="bstyle\logic\nodes\file.vb" />
     <Compile Include="bstyle\logic\nodes\float.vb" />
     <Compile Include="bstyle\logic\nodes\integer.vb" />
     <Compile Include="bstyle\logic\nodes\logic.vb" />

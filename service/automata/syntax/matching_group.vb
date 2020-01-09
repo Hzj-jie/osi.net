@@ -37,12 +37,11 @@ Partial Public NotInheritable Class syntaxer
                 assert(Not ms(i) Is Nothing)
                 p = op
                 If ms(i).match(v, p, parent) Then
+                    log_matching(v, op, p, strcat(ms(i), "@", i))
                     Return True
                 End If
             Next
-            If syntaxer.debug_log Then
-                raise_error(error_type.user, "Failed to match token ", v(op), " when matching group ", Me)
-            End If
+            log_unmatched(v, op, Me)
             Return False
         End Function
 

@@ -9,15 +9,20 @@ Imports osi.root.envs
 Imports osi.root.formation
 
 Partial Public NotInheritable Class syntaxer
+    Public Shared ReadOnly detailed_debug_log As Boolean
     Public Shared ReadOnly debug_log As Boolean
 
     Private ReadOnly collection As syntax_collection
     Private ReadOnly root_types As vector(Of UInt32)
 
     Shared Sub New()
+        detailed_debug_log = env_bool(env_keys("syntaxer", "detailed", "debug")) OrElse
+                             env_bool(env_keys("syntaxer", "detailed", "debugging")) OrElse
+                             env_bool(env_keys("syntaxer", "detailed", "debug", "log"))
         debug_log = env_bool(env_keys("syntaxer", "debug")) OrElse
                     env_bool(env_keys("syntaxer", "debugging")) OrElse
-                    env_bool(env_keys("syntaxer", "debug", "log"))
+                    env_bool(env_keys("syntaxer", "debug", "log")) OrElse
+                    detailed_debug_log
     End Sub
 
     Public Sub New(ByVal collection As syntax_collection, ByVal root_types As vector(Of UInt32))

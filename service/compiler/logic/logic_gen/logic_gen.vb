@@ -58,7 +58,7 @@ Public NotInheritable Class logic_gens
     Public Function logic_gen_of(ByVal name As String) As logic_gen
         Dim it As map(Of String, logic_gen).iterator = Nothing
         it = m.find(name)
-        assert(it <> m.end())
+        assert(it <> m.end(), "Cannot find logic_gen of ", name)
         Return (+it).second
     End Function
 

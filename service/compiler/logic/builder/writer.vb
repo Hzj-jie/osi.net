@@ -61,7 +61,12 @@ Namespace logic
         End Sub
 
         Public Function dump() As String
-            Return Convert.ToString(s)
+            Dim r As String = Nothing
+            r = Convert.ToString(s)
+            If builders.debug_dump Then
+                raise_error(error_type.user, "Debug dump of logic ", r)
+            End If
+            Return r
         End Function
 
         Public Function dump(ByVal importer As importer, ByVal v As vector(Of exportable)) As Boolean
