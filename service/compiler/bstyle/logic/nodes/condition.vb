@@ -27,8 +27,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
-            Using value_target As write_scoped(Of String).ref =
-                logic_gen_of(Of value).with_value_target(n.child(2), types.bool, o)
+            Using read_target As read_scoped(Of String).ref = value.read_target()
                 If Not l.of(n.child(2)).build(o) Then
                     Return False
                 End If
@@ -37,13 +36,13 @@ Partial Public NotInheritable Class bstyle
                                           Return l.[of](n.child(4)).build(o)
                                       End Function
                 If n.child_count() = 5 Then
-                    Return builders.of_if(+value_target, satisfied_paragraph).to(o)
+                    Return builders.of_if(+read_target, satisfied_paragraph).to(o)
                 End If
                 Dim unsatisfied_paragraph As Func(Of Boolean) = Nothing
                 unsatisfied_paragraph = Function() As Boolean
                                             Return l.[of](n.child(5)).build(o)
                                         End Function
-                Return builders.of_if(+value_target, satisfied_paragraph, unsatisfied_paragraph).to(o)
+                Return builders.of_if(+read_target, satisfied_paragraph, unsatisfied_paragraph).to(o)
             End Using
         End Function
     End Class

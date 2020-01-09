@@ -13,7 +13,7 @@ Friend Module _bstyle_test_data
     Public ReadOnly case1() As Byte
 
     Sub New()
-        case1 = Convert.FromBase64String(strcat_hint(CUInt(184), _
-        "77u/DQp2b2lkIHByaW50KHN0cmluZyBpKSB7DQogIHN0cmluZyB0ZW1wOw0KICBsb2dpYyAiaW50ZXJydXB0IHN0ZG91dCBpIHRlbXAiOw0KfQ0KDQp2b2lkIG1haW4oKSB7DQogIHZvaWQgdiA9IHByaW50KCJIZWxsbyBXb3JsZCIpOw0KfQ=="))
+        case1 = Convert.FromBase64String(strcat_hint(CUInt(172), _
+        "77u/DQp2b2lkIHByaW50KHN0cmluZyBpKSB7DQogIHN0cmluZyB0ZW1wOw0KICBsb2dpYyAiaW50ZXJydXB0IHN0ZG91dCBpIHRlbXAiOw0KfQ0KDQp2b2lkIG1haW4oKSB7DQogIHByaW50KCJIZWxsbyBXb3JsZCIpOw0KfQ=="))
     End Sub
 End Module

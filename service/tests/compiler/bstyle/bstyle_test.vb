@@ -17,13 +17,15 @@ Public NotInheritable Class bstyle_test
         assertion.is_true(nlp.of(bstyle.nlexer_rule, bstyle.syntaxer_rule, Nothing))
     End Sub
 
-    ' TODO: Does not work
-    '<test>
+    <test>
     Private Shared Sub case1()
         Dim io As console_io.test_wrapper = Nothing
         io = New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(bstyle.with_functions(New interrupts(+io)).parse(_bstyle_test_data.case1.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), "Hello World")
     End Sub
 
     Private Sub New()

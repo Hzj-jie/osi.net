@@ -58,12 +58,11 @@ Partial Public NotInheritable Class bstyle
             If Not ref.declaration Is Nothing AndAlso Not l.of(ref.declaration).build(o) Then
                 Return False
             End If
-            Using value_target As write_scoped(Of String).ref =
-                logic_gen_of(Of value).with_value_target(ref.condition, types.bool, o)
+            Using read_target As read_scoped(Of String).ref = value.read_target()
                 If Not condition_value(ref, o) Then
                     Return False
                 End If
-                Return builders.of_while_then(+value_target,
+                Return builders.of_while_then(+read_target,
                                               Function() As Boolean
                                                   Return l.of(ref.paragraph).build(o) AndAlso
                                                          (ref.clause Is Nothing OrElse

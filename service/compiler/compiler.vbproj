@@ -62,6 +62,7 @@
     <Compile Include="bstyle\logic\nodes\bool.vb" />
     <Compile Include="bstyle\logic\nodes\file.vb" />
     <Compile Include="bstyle\logic\nodes\float.vb" />
+    <Compile Include="bstyle\logic\nodes\ignore_result_function_call.vb" />
     <Compile Include="bstyle\logic\nodes\integer.vb" />
     <Compile Include="bstyle\logic\nodes\logic.vb" />
     <Compile Include="bstyle\logic\nodes\return.vb" />
@@ -98,7 +99,7 @@
     <Compile Include="bstyle\logic\nodes\else_condition.vb" />
     <Compile Include="bstyle\logic\nodes\function.vb" />
     <Compile Include="bstyle\logic\nodes\multi_sentence_paragraph.vb" />
-    <Compile Include="bstyle\logic\nodes\name.vb" />
+    <Compile Include="bstyle\logic\nodes\variable_name.vb" />
     <Compile Include="b2style\logic\nodes\not.vb" />
     <Compile Include="bstyle\logic\nodes\param.vb" />
     <Compile Include="bstyle\logic\nodes\paramlist.vb" />
@@ -120,7 +121,7 @@
     <Compile Include="logic\logic_gen\stack\read_scoped.vb" />
     <Compile Include="logic\logic_gen\stack\write_scoped.vb" />
     <Compile Include="logic\builder\builders.implementation.vb" />
-    <Compile Include="logic\builder\builder.vb" />
+    <Compile Include="logic\builder\builders.vb" />
     <Compile Include="logic\builder\writer.vb" />
     <Compile Include="dotnet\source_executor.builder.build.vb" />
     <Compile Include="dotnet\source_executor.builder.vb" />

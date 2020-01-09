@@ -12,43 +12,35 @@ Partial Public NotInheritable Class bstyle
         Inherits logic_gen_wrapper
         Implements logic_gen
 
-        Private Shared ReadOnly ws As write_scoped(Of String)
+        Private Shared ReadOnly read_targets As read_scoped(Of String)
+        Private Shared ReadOnly write_targets As read_scoped(Of String)
 
         Shared Sub New()
-            ws = New write_scoped(Of String)()
+            read_targets = New read_scoped(Of String)()
+            write_targets = New read_scoped(Of String)()
         End Sub
 
-        Public Shared Function current_target() As String
-            Return ws.current()
+        Public Shared Function read_target() As read_scoped(Of String).ref
+            assert(read_targets.size() > 0)
+            Return read_targets.pop()
         End Function
 
-        Public Shared Function with_current_target(ByVal v As String) As IDisposable
-            assert(Not v.null_or_whitespace())
-            Return ws.push(v)
-        End Function
-
-        Public Function with_current_target(ByVal n As typed_node) As IDisposable
-            assert(Not n Is Nothing)
-            assert(strsame(n.type_name, "name"))
-            Return ws.push(n.word().str())
-        End Function
-
-        Public Function with_value_target(ByVal n As typed_node, ByVal o As writer) As write_scoped(Of String).ref
-            Return with_value_target(n, types.biguint, o)
+        Public Shared Function write_target() As read_scoped(Of String).ref
+            assert(write_targets.size() > 0)
+            Dim r As read_scoped(Of String).ref = Nothing
+            r = write_targets.pop()
+            read_targets.push(+r)
+            Return r
         End Function
 
         ' TODO: Check return type of value.
-        Public Function with_value_target(ByVal n As typed_node,
-                                          ByVal type As String,
-                                          ByVal o As writer) As write_scoped(Of String).ref
+        Public Shared Sub with_temp_target(ByVal n As typed_node, ByVal o As writer)
             assert(Not n Is Nothing)
-            assert(strsame(n.type_name, "value"))
-            assert(Not type.null_or_whitespace())
             assert(Not o Is Nothing)
             Dim value_name As String = Nothing
             value_name = strcat("raw_value_@", n.word_start(), "-", n.word_end())
-            builders.of_define(value_name, type).to(o)
-            Return ws.push(value_name)
-        End Function
+            builders.of_define(value_name, types.string).to(o)
+            write_targets.push(value_name)
+        End Sub
     End Class
 End Class

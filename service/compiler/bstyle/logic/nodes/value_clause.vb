@@ -27,12 +27,14 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 3)
-            If Not l.of(n.child(0)).build(o) Then
+            assert(n.child(0).leaf())
+            If Not l.of(n.child(2)).build(o) Then
                 Return False
             End If
-            Using logic_gen_of(Of value).with_current_target(n.child(0))
-                Return l.of(n.child(2)).build(o)
+            Using r As read_scoped(Of String).ref = value.read_target()
+                builders.of_move(n.child(0).word().str(), +r).to(o)
             End Using
+            Return True
         End Function
     End Class
 End Class

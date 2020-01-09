@@ -5,5 +5,5 @@ void print(string i) {
 }
 
 void main() {
-  void v = print("Hello World");
+  print("Hello World");
 }

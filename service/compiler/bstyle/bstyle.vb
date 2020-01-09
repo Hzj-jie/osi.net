@@ -58,10 +58,11 @@ Public NotInheritable Class bstyle
                 AddressOf float.register,
                 AddressOf [function].register,
                 AddressOf function_call.register,
+                AddressOf ignore_result_function_call.register,
                 AddressOf [integer].register,
                 AddressOf logic.register,
                 AddressOf multi_sentence_paragraph.register,
-                AddressOf name.register,
+                AddressOf variable_name.register,
                 AddressOf param.register,
                 AddressOf param_with_comma.register,
                 AddressOf paramlist.register,
@@ -78,6 +79,7 @@ Public NotInheritable Class bstyle
                 AddressOf value_with_bracket.register,
                 AddressOf value_with_comma.register,
                 AddressOf value_without_bracket.register,
+                AddressOf variable_name.register,
                 AddressOf [while].register)
         End Function
     End Class

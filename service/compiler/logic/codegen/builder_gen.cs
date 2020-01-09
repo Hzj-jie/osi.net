@@ -78,13 +78,13 @@ public static class Program {
           passed_parameters.Add(ss[i] + "_" + i.ToString());
           if (ss[i] == "paragraph") {
             append_parameters.Add("\"{\"");
-          } else if (ss[i] == "typed_parameters") {
+          } else if (ss[i] == "parameters" || ss[i] == "typed_parameters") {
             append_parameters.Add("\"(\"");
           }
           append_parameters.Add(ss[i] + "_" + i.ToString());
           if (ss[i] == "paragraph") {
             append_parameters.Add("\"}\"");
-          } else if (ss[i] == "typed_parameters") {
+          } else if (ss[i] == "parameters" || ss[i] == "typed_parameters") {
             append_parameters.Add("\")\"");
           }
         } else {

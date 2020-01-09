@@ -31,19 +31,16 @@ Partial Public NotInheritable Class bstyle
             assert(n.child_count() > 0)
             Dim v As vector(Of String) = Nothing
             v = New vector(Of String)()
-            Dim r As String = Nothing
             Dim i As UInt32 = 0
-            While i < n.child_count() - uint32_1
-                If Not logic_gen_of(Of value_with_comma).build(n.child(i), o, r) Then
-                    v.emplace_back(r)
+            While i < n.child_count()
+                If Not l.of(n.child(i)).build(o) Then
                     Return False
                 End If
+                Using r As read_scoped(Of String).ref = value.read_target()
+                    v.emplace_back(+r)
+                End Using
                 i += uint32_1
             End While
-            If Not logic_gen_of(Of value_with_comma).build_value(n.child(n.child_count() - uint32_1), o, r) Then
-                v.emplace_back(r)
-                Return False
-            End If
             with_current_targets(v)
             Return True
         End Function

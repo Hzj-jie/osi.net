@@ -352,7 +352,9 @@ Namespace logic
                 o.append("caller")
                 o.append(string_1)
                 o.append(string_2)
+                o.append("(")
                 o.append(parameters_3)
+                o.append(")")
             End Sub
         End Class
 
@@ -375,7 +377,9 @@ Namespace logic
             Public Sub [to](ByVal o As writer)
                 o.append("caller")
                 o.append(string_1)
+                o.append("(")
                 o.append(parameters_2)
+                o.append(")")
             End Sub
         End Class
 

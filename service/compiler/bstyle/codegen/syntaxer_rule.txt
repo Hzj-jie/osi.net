@@ -11,7 +11,7 @@ param name name
 
 paragraph [sentence, multi-sentence-paragraph]
 sentence [sentence-with-semi-colon, sentence-without-semi-colon]
-sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, function-call, kw-break, logic]? semi-colon
+sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, ignore-result-function-call, kw-break, logic]? semi-colon
 sentence-without-semi-colon [condition, while, for-loop]
 
 multi-sentence-paragraph start-paragraph [sentence]* end-paragraph
@@ -29,7 +29,11 @@ for-loop kw-for start-bracket [value-declaration]? semi-colon [value]? semi-colo
 
 value [value-with-bracket, value-without-bracket]
 value-with-bracket start-bracket value end-bracket
-value-without-bracket [function-call, name, integer, float, bool, string]
+value-without-bracket [function-call, variable-name, integer, float, bool, string]
+
+variable-name name
+
+ignore-result-function-call function-call
 
 function-call name start-bracket [value-list]? end-bracket
 value-list [value-with-comma]* value

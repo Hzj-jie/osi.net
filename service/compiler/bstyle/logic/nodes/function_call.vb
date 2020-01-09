@@ -28,16 +28,18 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() > 3)
-            If n.child_count() = 3 Then
-                builders.of_caller(n.child(0).word().str(), value.current_target(), vector.of(Of String)()).to(o)
-                Return True
-            End If
-            If Not l.of(n.child(2)).build(o) Then
-                Return False
-            End If
-            Using targets As read_scoped(Of vector(Of String)).ref = value_list.current_targets()
-                builders.of_caller(n.child(0).word().str(), value.current_target(), +targets).to(o)
-                Return True
+            Using r As read_scoped(Of String).ref = value.write_target()
+                If n.child_count() = 3 Then
+                    builders.of_caller(n.child(0).word().str(), +r, vector.of(Of String)()).to(o)
+                    Return True
+                End If
+                If Not l.of(n.child(2)).build(o) Then
+                    Return False
+                End If
+                Using targets As read_scoped(Of vector(Of String)).ref = value_list.current_targets()
+                    builders.of_caller(n.child(0).word().str(), +r, +targets).to(o)
+                    Return True
+                End Using
             End Using
         End Function
     End Class

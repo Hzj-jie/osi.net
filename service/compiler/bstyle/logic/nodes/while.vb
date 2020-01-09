@@ -31,8 +31,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 5)
-            Using value_target As write_scoped(Of String).ref =
-                logic_gen_of(Of value).with_value_target(n.child(2), types.bool, o)
+            Using value_target As read_scoped(Of String).ref = value.read_target()
                 If Not while_value(n, o) Then
                     Return False
                 End If

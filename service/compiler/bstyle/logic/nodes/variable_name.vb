@@ -9,7 +9,7 @@ Imports osi.service.compiler.logic
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class name
+    Public NotInheritable Class variable_name
         Inherits logic_gen_wrapper
         Implements logic_gen
 
@@ -20,13 +20,17 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Sub register(ByVal b As logic_gens)
             assert(Not b Is Nothing)
-            b.register(Of name)()
+            b.register(Of variable_name)()
         End Sub
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            o.append(n.word().str())
+            assert(n.child_count() = 0)
+            assert(n.child().leaf())
+            Using r As read_scoped(Of String).ref = value.write_target()
+                builders.of_copy(+r, n.child().word().str()).to(o)
+            End Using
             Return True
         End Function
     End Class

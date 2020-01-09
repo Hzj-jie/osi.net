@@ -23,23 +23,10 @@ Partial Public NotInheritable Class bstyle
             b.register(Of value_with_comma)()
         End Sub
 
-        Public Function build_value(ByVal n As typed_node, ByVal o As writer, ByRef r As String) As Boolean
-            assert(Not o Is Nothing)
-            Using ref As write_scoped(Of String).ref = logic_gen_of(Of value).with_value_target(n, o)
-                r = +ref
-                Return l.of(n).build(o)
-            End Using
-        End Function
-
-        Public Function build(ByVal n As typed_node, ByVal o As writer, ByRef r As String) As Boolean
+        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(n.child_count() = 2)
-            Return build_value(n.child(0), o, r)
-        End Function
-
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
-            assert(False)
-            Return build(n, o, Nothing)
+            Return l.of(n.child(0)).build(o)
         End Function
     End Class
 End Class

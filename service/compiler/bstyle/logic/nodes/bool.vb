@@ -30,11 +30,13 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             assert(n.leaf())
             Dim i As Boolean = False
-            If Not str_bool(n.str(), i) Then
+            If Not str_bool(n.word().str(), i) Then
                 raise_error(error_type.user, "Cannot parse data to bool ", n.debug_str())
                 Return False
             End If
-            builders.of_copy_const(value.current_target(), New data_block(i)).to(o)
+            Using r As read_scoped(Of String).ref = value.write_target()
+                builders.of_copy_const(+r, New data_block(i)).to(o)
+            End Using
             Return True
         End Function
     End Class

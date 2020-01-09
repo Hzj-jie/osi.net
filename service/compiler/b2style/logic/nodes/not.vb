@@ -27,8 +27,8 @@ Partial Public NotInheritable Class b2style
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            builders.of_not(value.current_target(), value.current_target()).to(o)
-            Return True
+            'builders.of_not(value.current_target(), value.current_target()).to(o)
+            'Return True
         End Function
     End Class
 End Class
