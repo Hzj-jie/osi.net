@@ -370,15 +370,18 @@ Namespace logic
             Dim p1 As String = Nothing
             p1 = v(p)
             p += uint32_1
-            Dim p2 As vector(Of pair(Of String, String)) = Nothing
-            p2 = New vector(Of pair(Of String, String))()
-            If Not parse_typed_parameters(p2, v, p) Then
+            Dim p2 As String = Nothing
+            p2 = v(p)
+            p += uint32_1
+            Dim p3 As vector(Of pair(Of String, String)) = Nothing
+            p3 = New vector(Of pair(Of String, String))()
+            If Not parse_typed_parameters(p3, v, p) Then
                 Return False
             End If
             p -= uint32_1
             p += uint32_1
-            Dim p3 As paragraph = Nothing
-            If Not parse_paragraph(p3, v, p) Then
+            Dim p4 As paragraph = Nothing
+            If Not parse_paragraph(p4, v, p) Then
                 Return False
             End If
             p -= uint32_1
@@ -386,7 +389,8 @@ Namespace logic
             o = new_callee(
                 p1,
                 p2,
-                p3
+                p3,
+                p4
             )
             If isdebugmode() Then
                 o = New exportable_source_wrapper(v, start, p, o)

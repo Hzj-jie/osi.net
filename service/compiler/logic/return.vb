@@ -36,7 +36,11 @@ Namespace logic
                 If Not return_value_of.retrieve(scope, name, r) Then
                     Return False
                 End If
-                o.emplace_back(instruction_builder.str(command.mov, r, var))
+                Dim c As String = Nothing
+                If Not r.move_from(var, c) Then
+                    Return False
+                End If
+                o.emplace_back(c)
             End If
             o.emplace_back(instruction_builder.str(command.rest))
             Return True

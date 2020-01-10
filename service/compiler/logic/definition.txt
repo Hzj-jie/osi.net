@@ -51,8 +51,8 @@ and	string	string	string
 or	string	string	string
 
 # define a callee / function with name, parameters and body:
-#  callee f (a uint) { return f a; }
-callee	string	typed_parameters	paragraph
+#  callee f int (a uint) { return f a; }
+callee	string	string	typed_parameters	paragraph
 
 # execute a function with parameters and store its return value:
 #  caller f return-value (p1, p2)

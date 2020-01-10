@@ -60,9 +60,9 @@ Namespace logic
                 End If
                 For i As Int32 = 0 To array_size_i(parameters) - 1
                     If Not define.export(strcat("@parameter_", i, "_of_", name, "_place_holder"),
-                                     types.variable_type,
-                                     sw.scope(),
-                                     o) Then
+                                         types.variable_type,
+                                         sw.scope(),
+                                         o) Then
                         Return False
                     End If
                 Next

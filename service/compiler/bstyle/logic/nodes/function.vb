@@ -67,6 +67,7 @@ Partial Public NotInheritable Class bstyle
                 End If
                 Using params As read_scoped(Of vector(Of pair(Of String, String))).ref = paramlist.current_target()
                     builders.of_callee(n.child(1).word().str(),
+                                       n.child(0).word().str(),
                                        +params,
                                        Function() As Boolean
                                            Dim gi As UInt32 = 0

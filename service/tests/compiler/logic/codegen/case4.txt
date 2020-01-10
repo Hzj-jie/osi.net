@@ -1,9 +1,8 @@
 ﻿
-type string 0
-define temp_string string
+define temp_string type*
 
-callee main ( ) {
-  define result string
+callee main type0 ( ) {
+  define result type*
   copy_const result Ehello\x20world
   interrupt stdout result temp_string
   interrupt stderr result temp_string

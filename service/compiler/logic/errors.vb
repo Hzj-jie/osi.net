@@ -47,7 +47,17 @@ Namespace logic
                         target.name,
                         " [",
                         target.type,
-                        "] have different size, unassignable.")
+                        "] have different sizes, unassignable.")
+        End Sub
+
+        Public Shared Sub unassignable_zero_type(ByVal target As variable)
+            assert(Not target Is Nothing)
+            raise_error(error_type.user,
+                        "target ",
+                        target.name,
+                        " [",
+                        target.type,
+                        "] is zero-size, unassignable.")
         End Sub
 
         Public Shared Sub unassignable_array(ByVal target As variable, ByVal size As UInt32)

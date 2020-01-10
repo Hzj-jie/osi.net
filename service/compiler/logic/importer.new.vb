@@ -59,9 +59,10 @@ Namespace logic
         End Function
 
         Private Function new_callee(ByVal p1 As String,
-                                    ByVal p2 As vector(Of pair(Of String, String)),
-                                    ByVal p3 As paragraph) As callee
-            Return New callee(anchors, p1, unique_ptr.[New](+p2), unique_ptr.[New](p3))
+                                    ByVal p2 As String,
+                                    ByVal p3 As vector(Of pair(Of String, String)),
+                                    ByVal p4 As paragraph) As callee
+            Return New callee(anchors, p1, p2, unique_ptr.[New](+p3), unique_ptr.[New](p4))
         End Function
 
         Private Function new_caller(ByVal p1 As String, ByVal p2 As String, ByVal p3 As vector(Of String)) As caller

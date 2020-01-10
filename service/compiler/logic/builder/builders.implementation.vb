@@ -309,33 +309,37 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_callee(ByVal string_1 As String, ByVal typed_parameters_2 As vector(Of pair(Of String, String)), ByVal paragraph_3 As Func(Of Boolean)) As callee_builder_12
-            Return New callee_builder_12(string_1, typed_parameters_2, paragraph_3)
+        Public Shared Function of_callee(ByVal string_1 As String, ByVal string_2 As String, ByVal typed_parameters_3 As vector(Of pair(Of String, String)), ByVal paragraph_4 As Func(Of Boolean)) As callee_builder_12
+            Return New callee_builder_12(string_1, string_2, typed_parameters_3, paragraph_4)
         End Function
 
         Public NotInheritable Class callee_builder_12
 
             Private ReadOnly string_1 As String
-            Private ReadOnly typed_parameters_2 As vector(Of pair(Of String, String))
-            Private ReadOnly paragraph_3 As Func(Of Boolean)
+            Private ReadOnly string_2 As String
+            Private ReadOnly typed_parameters_3 As vector(Of pair(Of String, String))
+            Private ReadOnly paragraph_4 As Func(Of Boolean)
 
-            Public Sub New(ByVal string_1 As String, ByVal typed_parameters_2 As vector(Of pair(Of String, String)), ByVal paragraph_3 As Func(Of Boolean))
+            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal typed_parameters_3 As vector(Of pair(Of String, String)), ByVal paragraph_4 As Func(Of Boolean))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
-                assert(Not typed_parameters_2 Is Nothing)
-                Me.typed_parameters_2 = typed_parameters_2
-                assert(Not paragraph_3 Is Nothing)
-                Me.paragraph_3 = paragraph_3
+                assert(Not string_2.null_or_whitespace())
+                Me.string_2 = string_2
+                assert(Not typed_parameters_3 Is Nothing)
+                Me.typed_parameters_3 = typed_parameters_3
+                assert(Not paragraph_4 Is Nothing)
+                Me.paragraph_4 = paragraph_4
             End Sub
 
             Public Function [to](ByVal o As writer) As Boolean
                 o.append("callee")
                 o.append(string_1)
+                o.append(string_2)
                 o.append("(")
-                o.append(typed_parameters_2)
+                o.append(typed_parameters_3)
                 o.append(")")
                 o.append("{")
-                o.append(paragraph_3)
+                o.append(paragraph_4)
                 o.append("}")
                 o.append(newline.incode())
                 Return True

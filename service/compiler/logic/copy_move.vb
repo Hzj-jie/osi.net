@@ -32,14 +32,14 @@ Namespace logic
             assert(Not o Is Nothing)
             Dim t As variable = Nothing
             Dim s As variable = Nothing
+            Dim c As String = Nothing
             If variable.[New](scope, types, target, t) AndAlso
                variable.[New](scope, types, source, s) AndAlso
-               t.is_assignable_from(s) Then
-                o.emplace_back(instruction_builder.str(instruction(), t, s))
+               t.copy_or_move_from(s, instruction(), c) Then
+                o.emplace_back(c)
                 Return True
-            Else
-                Return False
             End If
+            Return False
         End Function
     End Class
 End Namespace

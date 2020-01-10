@@ -17,6 +17,7 @@ Namespace logic
         Public Sub New()
             MyBase.New(New callee(anchors,
                                   "add",
+                                  "type*",
                                   unique_ptr.[New](New paragraph(
                                       New define("result", types.variable_type),
                                       New add(types.empty, "result", "parameter1", "parameter2"),

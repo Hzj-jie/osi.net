@@ -8,31 +8,35 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public Class callee
+    Public NotInheritable Class callee
         Implements exportable
 
         Private ReadOnly anchors As anchors
         Private ReadOnly name As String
+        Private ReadOnly type As String
         Private ReadOnly parameters() As pair(Of String, String)
         Private ReadOnly paragraph As paragraph
 
         Public Sub New(ByVal anchors As anchors,
                        ByVal name As String,
+                       ByVal type As String,
                        ByVal parameters As unique_ptr(Of pair(Of String, String)()),
                        ByVal paragraph As unique_ptr(Of paragraph))
             assert(Not anchors Is Nothing)
             assert(Not String.IsNullOrEmpty(name))
             Me.anchors = anchors
             Me.name = name
+            Me.type = type
             Me.parameters = parameters.release_or_null()
             Me.paragraph = paragraph.release_or_null()
         End Sub
 
         Public Sub New(ByVal anchors As anchors,
                        ByVal name As String,
+                       ByVal type As String,
                        ByVal paragraph As unique_ptr(Of paragraph),
                        ByVal ParamArray parameters() As pair(Of String, String))
-            Me.New(anchors, name, unique_ptr.[New](parameters), paragraph)
+            Me.New(anchors, name, type, unique_ptr.[New](parameters), paragraph)
         End Sub
 
         Public Function export(ByVal scope As scope,
@@ -48,7 +52,7 @@ Namespace logic
             End If
             scope = scope.start_scope()
             ' caller should setup the stack.
-            If Not return_value_of.define(scope, name) Then
+            If Not return_value_of.define(scope, name, type) Then
                 Return False
             End If
             For i As Int32 = 0 To array_size_i(parameters) - 1

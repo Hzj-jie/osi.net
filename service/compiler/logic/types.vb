@@ -10,10 +10,12 @@ Imports osi.root.formation
 Namespace logic
     ' Defines primitive types, i.e. basic data types a language can handle, such as byte, int, byte array, etc. So the
     ' types instance won't be impacted by the source code or in another word, user input, of a language.
-    Public Class types
+    Public NotInheritable Class types
         Public Shared ReadOnly empty As types
-        Public Const variable_type As String = "*"
+        Public Const variable_type As String = "type*"
+        Public Const zero_type As String = "type0"
         Private Const variable_size As UInt32 = max_uint32
+        Private Const zero_size As UInt32 = uint32_0
         Private ReadOnly sizes As map(Of String, UInt32)
 
         Shared Sub New()
@@ -22,34 +24,36 @@ Namespace logic
 
         Public Sub New()
             sizes = New map(Of String, UInt32)()
-            define_variable_size(variable_type)
+            assert_define(variable_type, variable_size)
+            assert_define(zero_type, zero_size)
         End Sub
 
         Public Function define(ByVal type As String, ByVal size As UInt32) As Boolean
             assert(object_compare(Me, empty) <> 0)
-            assert(Not String.IsNullOrEmpty(type))
+            assert(Not type.null_or_whitespace())
+            If size = variable_size AndAlso Not strsame(type, variable_type) Then
+                Return False
+            End If
+            If size = zero_size AndAlso Not strsame(type, zero_type) Then
+                Return False
+            End If
             If sizes.find(type) <> sizes.end() Then
                 Return False
-            Else
-                sizes(type) = size
-                Return True
             End If
+            sizes(type) = size
+            Return True
         End Function
 
         Public Sub assert_define(ByVal type As String, ByVal size As UInt32)
             assert(define(type, size))
         End Sub
 
-        Public Function define_variable_size(ByVal type As String) As Boolean
-            Return define(type, variable_size)
-        End Function
-
-        Public Sub assert_define_variable_size(ByVal type As String)
-            assert(define_variable_size(type))
-        End Sub
-
         Public Shared Function is_variable_size(ByVal size As UInt32) As Boolean
             Return size = variable_size
+        End Function
+
+        Public Shared Function is_zero_size(ByVal size As UInt32) As Boolean
+            Return size = uint32_0
         End Function
 
         Public Shared Function is_size_or_variable(ByVal size As UInt32, ByVal exp_size As UInt32) As Boolean

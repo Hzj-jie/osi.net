@@ -8,8 +8,8 @@ Imports osi.root.connector
 Namespace logic
     ' Shared between callee and return.
     Public NotInheritable Class return_value_of
-        Public Shared Function define(ByVal scope As scope, ByVal name As String) As Boolean
-            Return scope_define(scope, variable_name(name), types.variable_type)
+        Public Shared Function define(ByVal scope As scope, ByVal name As String, ByVal type As String) As Boolean
+            Return scope_define(scope, variable_name(name), type)
         End Function
 
         Public Shared Function retrieve(ByVal scope As scope,
