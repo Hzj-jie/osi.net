@@ -66,11 +66,11 @@ Namespace logic
         End Function
 
         Private Function new_caller(ByVal p1 As String, ByVal p2 As String, ByVal p3 As vector(Of String)) As caller
-            Return New caller(anchors, p1, p2, +p3)
+            Return New caller(anchors, types, p1, p2, +p3)
         End Function
 
         Private Function new_caller(ByVal p1 As String, ByVal p2 As vector(Of String)) As caller
-            Return New caller(anchors, p1, +p2)
+            Return New caller(anchors, types, p1, +p2)
         End Function
 
         Private Function new_less(ByVal p1 As String, ByVal p2 As String, ByVal p3 As String) As less

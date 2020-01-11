@@ -1,11 +1,15 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.service.compiler.logic
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public Class caller_test
+    Public NotInheritable Class caller_test
         Inherits executor_case
 
         Private Shared ReadOnly anchors As anchors
@@ -21,7 +25,7 @@ Namespace logic
                                   unique_ptr.[New](New paragraph(
                                       New define("result", types.variable_type),
                                       New add(types.empty, "result", "parameter1", "parameter2"),
-                                      New [return](anchors, "add", "result")
+                                      New [return](anchors, types.empty, "add", "result")
                                   )),
                                   emplace_make_pair("parameter1", types.variable_type),
                                   emplace_make_pair("parameter2", types.variable_type),
@@ -33,7 +37,7 @@ Namespace logic
                        New copy_const(types.empty, "parameter1", unique_ptr.[New](New data_block(100))),
                        New copy_const(types.empty, "parameter2", unique_ptr.[New](New data_block(200))),
                        New copy_const(types.empty, "parameter3", unique_ptr.[New](New data_block(10000))),
-                       New caller(anchors, "add", "result", "parameter1", "parameter2", "parameter3"))
+                       New caller(anchors, types.empty, "add", "result", "parameter1", "parameter2", "parameter3"))
         End Sub
 
         Public Overrides Function prepare() As Boolean
