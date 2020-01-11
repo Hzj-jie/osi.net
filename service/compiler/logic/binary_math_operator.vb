@@ -19,12 +19,11 @@ Namespace logic
 
         Protected Overrides Function result_restrict(ByVal result As variable) As Boolean
             assert(Not result Is Nothing)
-            If types.is_variable_size(result.size) Then
+            If result.is_variable_size() Then
                 Return True
-            Else
-                errors.unassignable_variable_size(result)
-                Return False
             End If
+            errors.unassignable_variable_size(result)
+            Return False
         End Function
     End Class
 End Namespace

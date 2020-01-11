@@ -3,27 +3,25 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public NotInheritable Class variable
-        Private Const unknown_size As UInt32 = max_uint32 - uint32_1
         Public ReadOnly name As String
         Public ReadOnly type As String
         Public ReadOnly ref As String
-        Public ReadOnly size As UInt32
+        Public ReadOnly size As [optional](of UInt32)
 
-        Shared Sub New()
-            assert(Not types.is_variable_size(unknown_size))
-            assert(Not types.is_zero_size(unknown_size))
-        End Sub
-
-        Private Sub New(ByVal name As String, ByVal type As String, ByVal ref As String, ByVal size As UInt32)
-            assert(Not String.IsNullOrEmpty(name))
-            assert(Not String.IsNullOrEmpty(type))
-            assert(Not String.IsNullOrEmpty(ref))
+        Private Sub New(ByVal name As String,
+                        ByVal type As String,
+                        ByVal ref As String,
+                        ByVal size As [optional](Of UInt32))
+            assert(Not name.null_or_whitespace())
+            assert(Not type.null_or_whitespace())
+            assert(Not ref.null_or_whitespace())
+            assert(Not size Is Nothing)
             Me.name = name
             Me.type = type
             Me.ref = ref
@@ -43,15 +41,16 @@ Namespace logic
                 Return False
             End If
 
-            Dim size As UInt32 = 0
             If types Is Nothing Then
-                size = unknown_size
-            ElseIf Not types.retrieve(type, size) Then
+                o = New variable(name, type, ref, [optional].empty(Of UInt32)())
+                Return True
+            End If
+            Dim size As UInt32 = 0
+            If Not types.retrieve(type, size) Then
                 errors.type_undefined(type, name)
                 Return False
             End If
-
-            o = New variable(name, type, ref, size)
+            o = New variable(name, type, ref, [optional].of(size))
             Return True
         End Function
 
@@ -63,7 +62,8 @@ Namespace logic
         End Function
 
         Private Function is_zero_size() As Boolean
-            If types.is_zero_size(size) Then
+            assert(size)
+            If types.is_zero_size(+size) Then
                 errors.unassignable_zero_type(Me)
                 Return True
             End If
@@ -71,12 +71,12 @@ Namespace logic
         End Function
 
         Private Function is_assignable_from(ByVal source As variable) As Boolean
-            assert(size <> unknown_size)
+            assert(size)
             assert(Not source Is Nothing)
             If is_zero_size() Then
                 Return False
             End If
-            If types.is_size_or_variable(size, source.size) Then
+            If types.is_size_or_variable(+size, +(source.size)) Then
                 Return True
             End If
             errors.unassignable(Me, source)
@@ -84,11 +84,11 @@ Namespace logic
         End Function
 
         Public Function is_assignable_from(ByVal exp_size As UInt32) As Boolean
-            assert(size <> unknown_size)
+            assert(size)
             If is_zero_size() Then
                 Return False
             End If
-            If types.is_size_or_variable(size, exp_size) Then
+            If types.is_size_or_variable(+size, exp_size) Then
                 Return True
             End If
             errors.unassignable_array(Me, exp_size)
@@ -96,11 +96,11 @@ Namespace logic
         End Function
 
         Public Function is_assignable_from_uint32() As Boolean
-            assert(size <> unknown_size)
+            assert(size)
             If is_zero_size() Then
                 Return False
             End If
-            If types.is_size_or_variable(size, sizeof_uint32) Then
+            If types.is_size_or_variable(+size, sizeof_uint32) Then
                 Return True
             End If
             errors.unassignable_from_uint32(Me)
@@ -108,11 +108,11 @@ Namespace logic
         End Function
 
         Public Function is_assignable_to_uint32() As Boolean
-            assert(size <> unknown_size)
+            assert(size)
             If is_zero_size() Then
                 Return False
             End If
-            If size <= sizeof_uint32 OrElse types.is_variable_size(size) Then
+            If (+size) <= sizeof_uint32 OrElse types.is_variable_size(+size) Then
                 Return True
             End If
             errors.unassignable_to_uint32(Me)
@@ -120,11 +120,11 @@ Namespace logic
         End Function
 
         Public Function is_assignable_from_bool() As Boolean
-            assert(size <> unknown_size)
+            assert(size)
             If is_zero_size() Then
                 Return False
             End If
-            If types.is_size_or_variable(size, sizeof_bool_implementation) Then
+            If types.is_size_or_variable(+size, sizeof_bool_implementation) Then
                 Return True
             End If
             errors.unassignable_from_bool(Me)
@@ -132,11 +132,11 @@ Namespace logic
         End Function
 
         Public Function is_variable_size() As Boolean
-            assert(size <> unknown_size)
+            assert(size)
             If is_zero_size() Then
                 Return False
             End If
-            If types.is_variable_size(size) Then
+            If types.is_variable_size(+size) Then
                 Return True
             End If
             errors.unassignable_variable_size(Me)

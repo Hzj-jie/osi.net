@@ -37,6 +37,7 @@ Namespace logic
             If Not return_value_of.retrieve(scope, name, r) Then
                 Return False
             End If
+            assert(r.size)
             If return_value Then
                 Dim var As variable = Nothing
                 If Not variable.[New](scope, types, +return_value, var) Then
@@ -48,7 +49,7 @@ Namespace logic
                 End If
                 o.emplace_back(c)
             Else
-                If Not r.is_zero_size() Then
+                If Not types.is_zero_size(+(r.size)) Then
                     errors.no_return_value_provided(r)
                     Return False
                 End If
