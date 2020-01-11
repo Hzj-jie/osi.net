@@ -10,12 +10,23 @@ Public NotInheritable Class [optional]
         Return New [optional](Of T)(v)
     End Function
 
+    Public Shared Function new_or_empty(Of T)(ByVal v As T) As [optional](Of T)
+        If v Is Nothing Then
+            Return [empty](Of T)()
+        End If
+        Return [New](Of T)(v)
+    End Function
+
     Public Shared Function [New](Of T)() As [optional](Of T)
         Return empty(Of T)()
     End Function
 
     Public Shared Function [of](Of T)(ByVal v As T) As [optional](Of T)
         Return [New](v)
+    End Function
+
+    Public Shared Function of_nullable(Of T)(ByVal v As T) As [optional](Of T)
+        Return new_or_empty(v)
     End Function
 
     Public Shared Function [of](Of T)() As [optional](Of T)
@@ -48,6 +59,7 @@ Public NotInheritable Class [optional](Of T)
     Private Sub New(ByVal b As Boolean, ByVal v As T)
         Me.b = b
         Me.v = v
+        assert(Not b OrElse Not v Is Nothing)
     End Sub
 
     Public Sub New()
