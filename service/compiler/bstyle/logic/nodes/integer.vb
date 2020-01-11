@@ -31,7 +31,7 @@ Partial Public NotInheritable Class bstyle
             assert(n.leaf())
             Dim i As Int32 = 0
             If Not Int32.TryParse(n.word().str(), i) Then
-                raise_error(error_type.user, "Cannot parse data to int ", n.debug_str())
+                raise_error(error_type.user, "Cannot parse data to int ", n.trace_back_str())
                 Return False
             End If
             Using r As read_scoped(Of String).ref = value.write_target()
