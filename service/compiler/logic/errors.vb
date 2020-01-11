@@ -60,6 +60,16 @@ Namespace logic
                         "] is zero-size, unassignable.")
         End Sub
 
+        Public Shared Sub no_return_value_provided(ByVal target As variable)
+            assert(Not target Is Nothing)
+            raise_error(error_type.user,
+                        "target ",
+                        target.name,
+                        " [",
+                        target.type,
+                        "] as return value is expected but not provided.")
+        End Sub
+
         Public Shared Sub unassignable_array(ByVal target As variable, ByVal size As UInt32)
             assert(Not target Is Nothing)
             raise_error(error_type.user,

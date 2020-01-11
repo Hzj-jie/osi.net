@@ -55,6 +55,7 @@ Namespace logic
             Return True
         End Function
 
+        ' TODO: Remove
         ' Create a variable without retrieving @size from types. Consumers who use this constructor should not use
         ' is_assignable or similar functions.
         Public Shared Function [New](ByVal scope As scope, ByVal name As String, ByRef o As variable) As Boolean

@@ -3,37 +3,43 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public Class [return]
+    Public NotInheritable Class [return]
         Implements exportable
 
         Private ReadOnly anchors As anchors
+        Private ReadOnly types As types
         Private ReadOnly name As String
-        Private ReadOnly return_value As String
+        Private ReadOnly return_value As [optional](Of String)
 
-        Public Sub New(ByVal anchors As anchors, ByVal name As String, Optional ByVal return_value As String = Nothing)
+        Public Sub New(ByVal anchors As anchors,
+                       ByVal types As types,
+                       ByVal name As String,
+                       Optional ByVal return_value As String = Nothing)
             assert(Not anchors Is Nothing)
-            assert(Not String.IsNullOrEmpty(name))
+            assert(Not types Is Nothing)
+            assert(name.null_or_whitespace())
+            assert(return_value Is Nothing OrElse Not return_value.null_or_whitespace())
             Me.anchors = anchors
+            Me.types = types
             Me.name = name
-            Me.return_value = return_value
+            Me.return_value = [optional].of_nullable(return_value)
         End Sub
 
         Public Function export(ByVal scope As scope,
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
-            If Not String.IsNullOrEmpty(return_value) Then
+            Dim r As variable = Nothing
+            If Not return_value_of.retrieve(scope, name, r) Then
+                Return False
+            End If
+            If return_value Then
                 Dim var As variable = Nothing
-                If Not variable.[New](scope, return_value, var) Then
-                    Return False
-                End If
-                Dim r As variable = Nothing
-                If Not return_value_of.retrieve(scope, name, r) Then
+                If Not variable.[New](scope, types, +return_value, var) Then
                     Return False
                 End If
                 Dim c As String = Nothing
@@ -41,6 +47,11 @@ Namespace logic
                     Return False
                 End If
                 o.emplace_back(c)
+            Else
+                If Not r.is_zero_size() Then
+                    errors.no_return_value_provided(r)
+                    Return False
+                End If
             End If
             o.emplace_back(instruction_builder.str(command.rest))
             Return True

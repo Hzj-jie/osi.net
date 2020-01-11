@@ -149,11 +149,11 @@ Namespace logic
         End Function
 
         Private Function new_return(ByVal p1 As String, ByVal p2 As String) As [return]
-            Return New [return](anchors, p1, p2)
+            Return New [return](anchors, types, p1, p2)
         End Function
 
         Private Function new_return(ByVal p1 As String, ByVal p2 As place_holder) As [return]
-            Return New [return](anchors, p1)
+            Return New [return](anchors, types, p1)
         End Function
 
         Private Function new_append(ByVal p1 As String, ByVal p2 As String) As append
