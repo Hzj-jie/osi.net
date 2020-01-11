@@ -8,8 +8,12 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 Partial Public NotInheritable Class typed_node
-    Private Function nodes_str(ByVal s As StringBuilder) As StringBuilder
+    Private Sub nodes_str(ByVal s As StringBuilder)
         assert(Not s Is Nothing)
+        If subnodes.empty() Then
+            Return
+        End If
+        s.Append("{")
         Dim i As UInt32 = 0
         While i < subnodes.size()
             If i > 0 Then
@@ -18,21 +22,22 @@ Partial Public NotInheritable Class typed_node
             subnodes(i).str(s)
             i += uint32_1
         End While
-        Return s
-    End Function
+        s.Append("}")
+    End Sub
 
     Private Function str(ByVal s As StringBuilder) As StringBuilder
         assert(Not s Is Nothing)
         s.Append("[").
           Append(type).
+          Append(":").
+          Append(type_name).
           Append("<").
           Append(start).
           Append(",").
           Append([end]).
-          Append("> {").
-          Append(newline.incode())
+          Append(">")
         nodes_str(s)
-        s.Append(newline.incode()).Append("}]")
+        s.Append("]")
         Return s
     End Function
 
@@ -43,24 +48,24 @@ Partial Public NotInheritable Class typed_node
     Private Function self_debug_str(ByVal s As StringBuilder) As StringBuilder
         assert(Not s Is Nothing)
         s.Append("@").Append(type_name).Append(": ")
-        For i As UInt32 = 0 To min(child_count(), uint32_3) - uint32_1
-            s.Append(word(i).str()).Append(" ")
+        For i As Int32 = 0 To min(CInt(child_count()), 3) - 1
+            s.Append(word(CUInt(i)).str()).Append(" ")
         Next
         s.Append(newline.incode())
         Return s
     End Function
 
-    Private Function debug_str(ByVal s As StringBuilder) As StringBuilder
+    Private Function trace_back_str(ByVal s As StringBuilder) As StringBuilder
         assert(Not s Is Nothing)
         self_debug_str(s)
         If Not root() Then
-            parent.debug_str(s)
+            parent.trace_back_str(s)
         End If
         Return s
     End Function
 
-    Public Function debug_str() As String
-        Return Convert.ToString(debug_str(New StringBuilder()))
+    Public Function trace_back_str() As String
+        Return Convert.ToString(trace_back_str(New StringBuilder()))
     End Function
 
     Public Overrides Function ToString() As String

@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.delegates
@@ -34,6 +35,20 @@ Public Class lang_parser_test
                 Return subnodes(CInt(i))
             End Get
         End Property
+
+        Public Overrides Function ToString() As String
+            Dim r As StringBuilder = Nothing
+            r = New StringBuilder()
+            r.Append(this)
+            If Not isemptyarray(subnodes) Then
+                r.Append("{")
+                For i As Int32 = 0 To array_size_i(subnodes) - 1
+                    r.Append(subnodes(i))
+                Next
+                r.Append("}")
+            End If
+            Return Convert.ToString(r)
+        End Function
     End Class
 
     Private ReadOnly lp As lang_parser
@@ -69,7 +84,7 @@ Public Class lang_parser_test
             End If
         End If
         If assert(Not n.subnodes Is Nothing) AndAlso
-           assertion.equal(n.subnodes.size(), array_size(t.subnodes)) Then
+           assertion.equal(n.subnodes.size(), array_size(t.subnodes), n.subnodes, " v.s. ", t.subnodes) Then
             Dim i As UInt32 = 0
             While i < array_size(t.subnodes)
                 If Not assert_node(n.child(i), t(i)) Then

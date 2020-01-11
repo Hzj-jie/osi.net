@@ -31,7 +31,7 @@ Partial Public NotInheritable Class bstyle
             assert(n.leaf())
             Dim i As Boolean = False
             If Not str_bool(n.word().str(), i) Then
-                raise_error(error_type.user, "Cannot parse data to bool ", n.debug_str())
+                raise_error(error_type.user, "Cannot parse data to bool ", n.trace_back_str())
                 Return False
             End If
             Using r As read_scoped(Of String).ref = value.write_target()

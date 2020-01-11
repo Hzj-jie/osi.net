@@ -31,12 +31,12 @@ Partial Public NotInheritable Class bstyle
             c = [function].target()
             If c.allow_return_value() Then
                 If n.child_count() <> 2 Then
-                    o.err("Expect return value ", n.child().debug_str())
+                    o.err("Expect return value ", n.child().trace_back_str())
                     Return False
                 End If
             Else
                 If n.child_count() <> 1 Then
-                    o.err("Unexpected return value ", n.child(1).debug_str())
+                    o.err("Unexpected return value ", n.child(1).trace_back_str())
                     Return False
                 End If
             End If

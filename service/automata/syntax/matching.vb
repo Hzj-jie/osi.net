@@ -25,7 +25,16 @@ Partial Public NotInheritable Class syntaxer
                                            ByVal parent As typed_node) As Boolean
 
         Public Function match(ByVal v As vector(Of typed_word), ByRef p As UInt32) As Boolean
+            assert(Not v Is Nothing)
             Return match(v, p, Nothing)
+        End Function
+
+        Public Function find_match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of UInt32)
+            assert(Not v Is Nothing)
+            If match(v, p) Then
+                Return [optional].of(p)
+            End If
+            Return [optional].empty(Of UInt32)()
         End Function
 
         Protected Function add_subnode(ByVal v As vector(Of typed_word),

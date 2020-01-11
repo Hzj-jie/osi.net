@@ -25,24 +25,38 @@ Partial Public NotInheritable Class syntaxer
             Me.New(c, matching_creator.create_matchings(c, ms))
         End Sub
 
+        Private Function best_match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of Int32)
+            Dim max As [optional](Of UInt32) = Nothing
+            Dim max_id As [optional](Of Int32) = Nothing
+            For i As Int32 = 0 To array_size_i(ms) - 1
+                assert(Not ms(i) Is Nothing)
+                Dim r As [optional](Of UInt32) = Nothing
+                r = ms(i).find_match(v, p)
+                If (Not r.empty()) AndAlso ((Not max) OrElse (+max) < (+r)) Then
+                    max = r
+                    max_id = [optional].of(i)
+                End If
+            Next
+            Return max_id
+        End Function
+
         Public Overrides Function match(ByVal v As vector(Of typed_word),
                                         ByRef p As UInt32,
                                         ByVal parent As typed_node) As Boolean
             If v Is Nothing OrElse v.size() <= p Then
                 Return False
             End If
+            Dim i As [optional](Of Int32) = Nothing
+            i = best_match(v, p)
+            If Not i Then
+                log_unmatched(v, p, Me)
+                Return False
+            End If
             Dim op As UInt32 = 0
             op = p
-            For i As Int32 = 0 To array_size_i(ms) - 1
-                assert(Not ms(i) Is Nothing)
-                p = op
-                If ms(i).match(v, p, parent) Then
-                    log_matching(v, op, p, strcat(ms(i), "@", i))
-                    Return True
-                End If
-            Next
-            log_unmatched(v, op, Me)
-            Return False
+            assert(ms(+i).match(v, p, parent))
+            log_matching(v, op, p, strcat(ms(+i), "@", +i))
+            Return True
         End Function
 
         Public Overrides Function CompareTo(ByVal other As matching) As Int32
