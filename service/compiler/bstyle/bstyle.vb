@@ -53,7 +53,6 @@ Public NotInheritable Class bstyle
                 AddressOf bool.register,
                 AddressOf condition.register,
                 AddressOf else_condition.register,
-                AddressOf file.register,
                 AddressOf for_loop.register,
                 AddressOf float.register,
                 AddressOf [function].register,

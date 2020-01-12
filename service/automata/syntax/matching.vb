@@ -24,14 +24,9 @@ Partial Public NotInheritable Class syntaxer
                                            ByRef p As UInt32,
                                            ByVal parent As typed_node) As Boolean
 
-        Public Function match(ByVal v As vector(Of typed_word), ByRef p As UInt32) As Boolean
-            assert(Not v Is Nothing)
-            Return match(v, p, Nothing)
-        End Function
-
         Public Function find_match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of UInt32)
             assert(Not v Is Nothing)
-            If match(v, p) Then
+            If match(v, p, Nothing) Then
                 Return [optional].of(p)
             End If
             Return [optional].empty(Of UInt32)()
@@ -83,7 +78,13 @@ Partial Public NotInheritable Class syntaxer
                                     ByVal start As UInt32,
                                     ByVal matcher As Object)
             If syntaxer.debug_log Then
-                raise_error(error_type.user, "Failed to match token ", v(start), " when matching with ", matcher)
+                Dim start_word As String = Nothing
+                If v.size() <= start Then
+                    start_word = "end-of-typed-word"
+                Else
+                    start_word = Convert.ToString(v(start))
+                End If
+                raise_error(error_type.user, "Failed to match token ", start_word, " when matching with ", matcher)
             End If
         End Sub
 

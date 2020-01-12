@@ -202,6 +202,24 @@ Partial Public NotInheritable Class syntaxer
             Return False
         End Function
 
+        Public Function [get](ByVal types() As UInt32, ByRef o As vector(Of syntax)) As Boolean
+            o.renew()
+            For i As Int32 = 0 To array_size_i(types) - 1
+                Dim s As syntax = Nothing
+                If Not [get](types(i), s) Then
+                    Return False
+                End If
+                o.emplace_back(s)
+            Next
+            Return True
+        End Function
+
+        Public Function [get](ByVal types() As UInt32) As vector(Of syntax)
+            Dim o As vector(Of syntax) = Nothing
+            assert([get](types, o))
+            Return o
+        End Function
+
         Public Function complete() As Boolean
             Dim it As map(Of String, UInt32).iterator = Nothing
             it = syntax_str_type.begin()

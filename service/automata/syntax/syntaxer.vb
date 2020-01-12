@@ -14,6 +14,7 @@ Partial Public NotInheritable Class syntaxer
 
     Private ReadOnly collection As syntax_collection
     Private ReadOnly root_types As vector(Of UInt32)
+    Private ReadOnly mg As matching_group
 
     Shared Sub New()
         detailed_debug_log = env_bool(env_keys("syntaxer", "detailed", "debug")) OrElse
@@ -31,6 +32,7 @@ Partial Public NotInheritable Class syntaxer
         assert(Not root_types.null_or_empty())
         Me.collection = collection
         Me.root_types = root_types
+        Me.mg = New matching_group(collection, arrays.type_erasure(Of matching, syntax)(+collection.get(+root_types)))
     End Sub
 
     Public Function match(ByVal v As vector(Of typed_word), ByRef root As typed_node) As Boolean
@@ -42,47 +44,30 @@ Partial Public NotInheritable Class syntaxer
         ms = New vector(Of UInt32)()
         Dim p As UInt32 = 0
         While p < v.size()
-            Dim op As UInt32 = 0
-            op = p
-            For i As UInt32 = 0 To root_types.size() - uint32_1
-                Dim s As syntax = Nothing
-                assert(collection.get(root_types(i), s))
-                If s.match(v, p) Then
-                    ms.emplace_back(root_types(i))
-                    Exit For
-                End If
-                p = op
-            Next
-            If p = op Then
+            Dim m As [optional](Of matching_group.best_match_result) = Nothing
+            m = mg.best_match(v, p)
+            If Not m Then
+                Console.WriteLine("HERE")
                 Return False
             End If
+            assert(Not (+m) Is Nothing)
+            If p = (+m).pos Then
+                Console.WriteLine("HERE 2")
+                Return False
+            End If
+            assert((+m).pos <= v.size())
+            ms.emplace_back(root_types((+m).id))
+            p = (+m).pos
         End While
-        If assert(p = v.size() AndAlso Not ms.empty()) Then
-            root = typed_node.of_root(v)
-            p = 0
-            For i As UInt32 = 0 To ms.size() - uint32_1
-                Dim s As syntax = Nothing
-                assert(collection.get(ms(i), s))
-                assert(s.match(v, p, root))
-            Next
-            Return assert(p = v.size())
-        End If
-        Return False
-    End Function
-
-    Public Function type_id(ByVal name As String, ByRef o As UInt32) As Boolean
-        Return collection.type_id(name, o)
-    End Function
-
-    Public Function type_id(ByVal name As String) As UInt32
-        Return collection.type_id(name)
-    End Function
-
-    Public Function type_name(ByVal id As UInt32, ByRef o As String) As Boolean
-        Return collection.type_name(id, o)
-    End Function
-
-    Public Function type_name(ByVal id As UInt32) As String
-        Return collection.type_name(id)
+        assert(p = v.size())
+        assert(Not ms.empty())
+        root = typed_node.of_root(v)
+        p = 0
+        For i As UInt32 = 0 To ms.size() - uint32_1
+            Dim s As syntax = Nothing
+            assert(collection.get(ms(i), s))
+            assert(s.match(v, p, root))
+        Next
+        Return assert(p = v.size())
     End Function
 End Class

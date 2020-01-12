@@ -5,7 +5,6 @@ Option Strict On
 
 Imports System.Text
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.formation
 
 Partial Public NotInheritable Class syntaxer
@@ -25,19 +24,45 @@ Partial Public NotInheritable Class syntaxer
             Me.New(c, matching_creator.create_matchings(c, ms))
         End Sub
 
-        Private Function best_match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of Int32)
+        Public NotInheritable Class best_match_result
+            Public ReadOnly id As UInt32
+            Public ReadOnly pos As UInt32
+
+            Public Sub New(ByVal id As UInt32, ByVal pos As UInt32)
+                Me.id = id
+                Me.pos = pos
+            End Sub
+        End Class
+
+        Public Function best_match(ByVal v As vector(Of typed_word),
+                                   ByVal p As UInt32) As [optional](Of best_match_result)
             Dim max As [optional](Of UInt32) = Nothing
-            Dim max_id As [optional](Of Int32) = Nothing
+            max = [optional].empty(Of UInt32)()
+            Dim max_id As [optional](Of UInt32) = Nothing
+            max_id = [optional].empty(Of UInt32)()
             For i As Int32 = 0 To array_size_i(ms) - 1
                 assert(Not ms(i) Is Nothing)
                 Dim r As [optional](Of UInt32) = Nothing
                 r = ms(i).find_match(v, p)
                 If (Not r.empty()) AndAlso ((Not max) OrElse (+max) < (+r)) Then
                     max = r
-                    max_id = [optional].of(i)
+                    max_id = [optional].of(CUInt(i))
                 End If
             Next
-            Return max_id
+            If Not max Then
+                assert(Not max_id)
+                Return [optional].empty(Of best_match_result)()
+            End If
+            assert(max)
+            assert(max_id)
+            Return [optional].of(New best_match_result(+max_id, +max))
+        End Function
+
+        Private Function best_match_id(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of UInt32)
+            Return best_match(v, p).map(Function(ByVal i As best_match_result) As UInt32
+                                            assert(Not i Is Nothing)
+                                            Return i.id
+                                        End Function)
         End Function
 
         Public Overrides Function match(ByVal v As vector(Of typed_word),
@@ -46,16 +71,16 @@ Partial Public NotInheritable Class syntaxer
             If v Is Nothing OrElse v.size() <= p Then
                 Return False
             End If
-            Dim i As [optional](Of Int32) = Nothing
-            i = best_match(v, p)
+            Dim i As [optional](Of UInt32) = Nothing
+            i = best_match_id(v, p)
             If Not i Then
                 log_unmatched(v, p, Me)
                 Return False
             End If
             Dim op As UInt32 = 0
             op = p
-            assert(ms(+i).match(v, p, parent))
-            log_matching(v, op, p, strcat(ms(+i), "@", +i))
+            assert(ms(CInt(+i)).match(v, p, parent))
+            log_matching(v, op, p, strcat(ms(CInt(+i)), "@", +i))
             Return True
         End Function
 
