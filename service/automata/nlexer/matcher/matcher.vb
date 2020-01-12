@@ -33,7 +33,7 @@ Partial Public NotInheritable Class nlexer
         End Sub
 
         Public Function match(ByVal i As String, ByVal pos As UInt32) As [optional](Of UInt32) Implements matcher.match
-            Return [optional].of(Of UInt32)()
+            Return [optional].empty(Of UInt32)()
         End Function
     End Class
 End Class

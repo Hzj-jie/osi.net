@@ -29,7 +29,7 @@ Partial Public NotInheritable Class nlexer
                 r = ms(j).match(i, pos)
                 assert(Not r Is Nothing)
                 If Not r Then
-                    Return [optional].of(Of UInt32)()
+                    Return [optional].empty(Of UInt32)()
                 End If
                 pos = +r
             Next
