@@ -17,20 +17,12 @@ Public NotInheritable Class [optional]
         Return [New](Of T)(v)
     End Function
 
-    Public Shared Function [New](Of T)() As [optional](Of T)
-        Return empty(Of T)()
-    End Function
-
     Public Shared Function [of](Of T)(ByVal v As T) As [optional](Of T)
         Return [New](v)
     End Function
 
     Public Shared Function of_nullable(Of T)(ByVal v As T) As [optional](Of T)
         Return new_or_empty(v)
-    End Function
-
-    Public Shared Function [of](Of T)() As [optional](Of T)
-        Return empty(Of T)()
     End Function
 
     Public Shared Function [empty](Of T)() As [optional](Of T)

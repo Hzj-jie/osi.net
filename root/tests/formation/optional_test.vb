@@ -16,7 +16,7 @@ Public Class optional_test
         assertion.is_not_null(+p)
         assertion.is_not_null(-p)
 
-        p = [optional].[New](Of Object)()
+        p = [optional].empty(Of Object)()
         assertion.is_false(p)
         assertion.is_null(-p)
 

@@ -19,7 +19,7 @@ Partial Public NotInheritable Class nlexer
 
         Public Function match(ByVal i As String, ByVal pos As UInt32) As [optional](Of UInt32) Implements matcher.match
             Dim r As [optional](Of UInt32) = Nothing
-            r = [optional].of(Of UInt32)()
+            r = [optional].empty(Of UInt32)()
             While True
                 Dim n As [optional](Of UInt32) = Nothing
                 n = g.match(i, If(r, +r, pos))

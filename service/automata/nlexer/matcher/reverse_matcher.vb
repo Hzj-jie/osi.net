@@ -19,7 +19,7 @@ Partial Public NotInheritable Class nlexer
 
         Public Function match(ByVal i As String, ByVal pos As UInt32) As [optional](Of UInt32) Implements matcher.match
             If m.match(i, pos) Then
-                Return [optional].of(Of UInt32)()
+                Return [optional].empty(Of UInt32)()
             End If
             Return [optional].of(pos)
         End Function

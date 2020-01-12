@@ -34,7 +34,7 @@ Partial Public NotInheritable Class nlexer
             If strlen(i) > pos AndAlso check(i.char_at(pos)) Then
                 Return [optional].of(pos + uint32_1)
             End If
-            Return [optional].of(Of UInt32)()
+            Return [optional].empty(Of UInt32)()
         End Function
     End Class
 End Class

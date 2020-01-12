@@ -25,10 +25,10 @@ Partial Public NotInheritable Class nlexer
             mr = m.match(i, pos)
             assert(Not mr Is Nothing)
             If Not mr Then
-                Return [optional].of(Of UInt32)()
+                Return [optional].empty(Of UInt32)()
             End If
             If u.match(i, pos) Then
-                Return [optional].of(Of UInt32)()
+                Return [optional].empty(Of UInt32)()
             End If
             Return mr
         End Function
