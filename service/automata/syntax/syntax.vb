@@ -145,48 +145,71 @@ Partial Public NotInheritable Class syntaxer
             Me.New(c, default_type, ms)
         End Sub
 
+        Private Function ignore_type(ByVal w As typed_word) As Boolean
+            assert(Not w Is Nothing)
+            Return ignore_types.find(w.type) <> ignore_types.end()
+        End Function
+
         Private Sub jump_over_ignore_types(ByVal v As vector(Of typed_word), ByRef p As UInt32)
-            If Not ignore_types.null_or_empty() Then
-                While v.size() > p
-                    assert(Not v(p) Is Nothing)
-                    If ignore_types.find(v(p).type) <> ignore_types.end() Then
-                        p += uint32_1
-                    Else
-                        Exit While
-                    End If
-                End While
+            If ignore_types.null_or_empty() Then
+                Return
             End If
+            While v.size() > p
+                assert(Not v(p) Is Nothing)
+                If ignore_type(v(p)) Then
+                    p += uint32_1
+                Else
+                    Exit While
+                End If
+            End While
         End Sub
+
+        Private Function jump_back_ignore_types(ByVal v As vector(Of typed_word), ByVal p As UInt32) As UInt32
+            If ignore_types.null_or_empty() Then
+                Return p
+            End If
+            While True
+                assert(p > 0)
+                p -= uint32_1
+                If Not ignore_type(v(p)) Then
+                    Exit While
+                End If
+            End While
+            Return p
+        End Function
 
         Public Overrides Function match(ByVal v As vector(Of typed_word),
                                         ByRef p As UInt32,
                                         ByVal parent As typed_node) As Boolean
+            Dim best_match As [optional](Of UInt32) = Nothing
+            If Not parent Is Nothing Then
+                best_match = find_match(v, p)
+                If Not best_match Then
+                    Return False
+                End If
+            End If
             If v Is Nothing OrElse v.size() <= p Then
                 log_end_of_tokens(v, p, Me)
                 Return False
             End If
             Dim op As UInt32 = 0
             op = p
-            For round As UInt32 = 0 To CUInt(If(parent Is Nothing, 0, 1))
-                If round = 1 Then
-                    assert(Not parent Is Nothing)
-                    parent = add_subnode(v, parent, type, op, p)
+            If Not parent Is Nothing Then
+                assert(best_match)
+                parent = add_subnode(v, parent, type, p, jump_back_ignore_types(v, +best_match) + uint32_1)
+            End If
+            For i As Int32 = 0 To array_size_i(ms) - 1
+                jump_over_ignore_types(v, p)
+                If Not ms(i).match(v, p, parent) Then
+                    assert(parent Is Nothing)
+                    log_unmatched(v, p, ms(i))
+                    Return False
                 End If
-                p = op
-                For i As Int32 = 0 To array_size_i(ms) - 1
-                    jump_over_ignore_types(v, p)
-                    If round = 0 Then
-                        If Not ms(i).match(v, p) Then
-                            log_unmatched(v, op, ms(i))
-                            Return False
-                        End If
-                    Else
-                        assert(ms(i).match(v, p, parent))
-                    End If
-                Next
             Next
             jump_over_ignore_types(v, p)
-            log_matching(v, op, p, Me)
+            If Not parent Is Nothing Then
+                log_matching(v, op, p, Me)
+            End If
             Return True
         End Function
 

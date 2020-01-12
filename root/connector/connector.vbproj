@@ -58,6 +58,7 @@
     <Compile Include="alloc.vb" />
     <Compile Include="array.ext.vb" />
     <Compile Include="array.vb" />
+    <Compile Include="arrays.vb" />
     <Compile Include="assert.vb" />
     <Compile Include="bit.vb" />
     <Compile Include="bytes\byte.vb" />
