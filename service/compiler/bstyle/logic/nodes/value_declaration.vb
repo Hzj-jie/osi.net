@@ -27,7 +27,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 2)
-            builders.of_define(n.child(1).word().str(), n.child(0).word().str()).to(o)
+            l.define_variable(n.child(1).word().str(), n.child(0).word().str(), o)
             Return True
         End Function
     End Class

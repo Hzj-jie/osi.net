@@ -16,6 +16,7 @@ Partial Public NotInheritable Class bstyle
         Public Shared ReadOnly int_1 As String = unique_name("int_1")
 
         Private Shared ReadOnly v As vector(Of def)
+        Private ReadOnly l As logic_gens
 
         Shared Sub New()
             v = vector.of(
@@ -42,21 +43,23 @@ Partial Public NotInheritable Class bstyle
             End Sub
         End Class
 
-        Public Shared Sub register(ByVal p As statements)
+        Public Shared Sub register(ByVal p As statements, ByVal l As logic_gens)
             assert(Not p Is Nothing)
-            p.register(New constants())
+            p.register(New constants(l))
         End Sub
 
         Public Sub export(ByVal o As writer) Implements statement.export
             Dim i As UInt32 = 0
             While i < v.size()
-                builders.of_define(v(i).name, v(i).type).to(o)
+                l.define_variable(v(i).name, v(i).type, o)
                 builders.of_copy_const(v(i).name, v(i).value).to(o)
                 i += uint32_1
             End While
         End Sub
 
-        Private Sub New()
+        Private Sub New(ByVal l As logic_gens)
+            assert(Not l Is Nothing)
+            Me.l = l
         End Sub
     End Class
 End Class

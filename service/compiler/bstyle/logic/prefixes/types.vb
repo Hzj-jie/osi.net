@@ -24,6 +24,9 @@ Partial Public NotInheritable Class bstyle
         Public Const void As String = "void"
 
         Private Shared ReadOnly v As vector(Of pair(Of String, Int32))
+        Private Shared ReadOnly type_0_s As vector(Of String)
+        Private Shared ReadOnly type_asterisk_s As vector(Of String)
+        Private ReadOnly l As logic_gens
 
         Shared Sub New()
             v = vector.of(
@@ -31,17 +34,15 @@ Partial Public NotInheritable Class bstyle
                 emplace_make_pair(int, 4),
                 emplace_make_pair(bool, 1),
                 emplace_make_pair([byte], 1),
-                emplace_make_pair(bigint, 0),
-                emplace_make_pair(biguint, 0),
-                emplace_make_pair([string], 0),
-                emplace_make_pair(float, 8),
-                emplace_make_pair(void, 0)
+                emplace_make_pair(float, 8)
             )
+            type_0_s = vector.of(void)
+            type_asterisk_s = vector.of(bigint, biguint, [string])
         End Sub
 
-        Public Shared Sub register(ByVal p As statements)
+        Public Shared Sub register(ByVal p As statements, ByVal l As logic_gens)
             assert(Not p Is Nothing)
-            p.register(New types())
+            p.register(New types(l))
         End Sub
 
         Public Sub export(ByVal o As writer) Implements statement.export
@@ -53,7 +54,9 @@ Partial Public NotInheritable Class bstyle
             End While
         End Sub
 
-        Private Sub New()
+        Private Sub New(ByVal l As logic_gens)
+            assert(Not l Is Nothing)
+            Me.l = l
         End Sub
     End Class
 End Class

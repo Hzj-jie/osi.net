@@ -16,16 +16,14 @@ Public Module _map
                                       (ByVal this As map(Of KT, VT), ByVal key As KT, ByRef o As VT) As Boolean
         If this Is Nothing Then
             Return False
-        Else
-            Dim it As map(Of KT, VT).iterator = Nothing
-            it = this.find(key)
-            If it = this.end() Then
-                Return False
-            Else
-                o = (+it).second
-                Return True
-            End If
         End If
+        Dim it As map(Of KT, VT).iterator = Nothing
+        it = this.find(key)
+        If it = this.end() Then
+            Return False
+        End If
+        o = (+it).second
+        Return True
     End Function
 
     <Extension()> Public Function find_or_default(Of KT, VT) _
@@ -35,10 +33,20 @@ Public Module _map
                                                   Optional ByVal default_value As VT = Nothing) As Boolean
         If find(this, key, o) Then
             Return True
-        Else
-            o = default_value
-            Return False
         End If
+        o = default_value
+        Return False
+    End Function
+
+    <Extension()> Public Function find_or(Of KT, VT) _
+                                         (ByVal this As map(Of KT, VT),
+                                          ByVal key As KT,
+                                          ByVal default_value As VT) As VT
+        Dim o As VT = Nothing
+        If find(this, key, o) Then
+            Return o
+        End If
+        Return default_value
     End Function
 
     Private Function insert(Of KEY_T, VALUE_T) _

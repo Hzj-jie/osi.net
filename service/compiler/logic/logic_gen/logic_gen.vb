@@ -28,9 +28,11 @@ End Class
 
 Public NotInheritable Class logic_gens
     Private ReadOnly m As map(Of String, logic_gen)
+    Private ReadOnly ta As type_alias
 
     Public Sub New()
         m = New map(Of String, logic_gen)()
+        ta = New type_alias()
     End Sub
 
     Public Shared Function logic_gen_name(Of T As logic_gen)() As String
@@ -53,6 +55,15 @@ Public NotInheritable Class logic_gens
                  Function(ByVal b As logic_gens) As logic_gen
                      Return inject_constructor(Of T).invoke(b)
                  End Function)
+    End Sub
+
+    Public Sub define_type_alias(ByVal [alias] As String, ByVal canonical As String)
+        ta.define([alias], canonical)
+    End Sub
+
+    Public Sub define_variable(ByVal name As String, ByVal type As String, ByVal o As writer)
+        assert(Not o Is Nothing)
+        builders.of_define(name, ta(type)).to(o)
     End Sub
 
     Public Function logic_gen_of(ByVal name As String) As logic_gen

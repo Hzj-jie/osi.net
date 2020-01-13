@@ -26,10 +26,10 @@ Public NotInheritable Class bstyle
     End Class
 
     Public NotInheritable Class prefixes_t
-        Inherits __do(Of vector(Of Action(Of statements)))
+        Inherits __do(Of vector(Of Action(Of statements, logic_gens)))
 
-        Protected Overrides Function at() As vector(Of Action(Of statements))
-            Return vector.of(Of Action(Of statements))(
+        Protected Overrides Function at() As vector(Of Action(Of statements, logic_gens))
+            Return vector.of(Of Action(Of statements, logic_gens))(
                 AddressOf types.register,
                 AddressOf constants.register,
                 AddressOf temps.register)
@@ -37,10 +37,10 @@ Public NotInheritable Class bstyle
     End Class
 
     Public NotInheritable Class suffixes_t
-        Inherits __do(Of vector(Of Action(Of statements)))
+        Inherits __do(Of vector(Of Action(Of statements, logic_gens)))
 
-        Protected Overrides Function at() As vector(Of Action(Of statements))
-            Return vector.of(Of Action(Of statements))(
+        Protected Overrides Function at() As vector(Of Action(Of statements, logic_gens))
+            Return vector.of(Of Action(Of statements, logic_gens))(
                 AddressOf main.register)
         End Function
     End Class

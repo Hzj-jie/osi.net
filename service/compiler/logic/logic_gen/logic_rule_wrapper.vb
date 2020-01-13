@@ -13,8 +13,8 @@ Imports osi.service.interpreter.primitive
 Namespace logic
     Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
                                        _syntaxer_rule As __do(Of Byte()),
-                                       _prefixes As __do(Of vector(Of Action(Of statements))),
-                                       _suffixes As __do(Of vector(Of Action(Of statements))),
+                                       _prefixes As __do(Of vector(Of Action(Of statements, logic_gens))),
+                                       _suffixes As __do(Of vector(Of Action(Of statements, logic_gens))),
                                        _logic_gens As __do(Of vector(Of Action(Of logic_gens))))
         Inherits rule_wrapper(Of _nlexer_rule, _syntaxer_rule)
 
@@ -117,12 +117,13 @@ Namespace logic
             End While
         End Sub
 
-        Private Shared Sub init_statements(Of T As __do(Of vector(Of Action(Of statements))))(ByRef p As statements)
-            Dim v As vector(Of Action(Of statements)) = Nothing
+        Private Shared Sub init_statements(Of T As __do(Of vector(Of Action(Of statements, logic_gens)))) _
+                                          (ByVal p As statements)
+            Dim v As vector(Of Action(Of statements, logic_gens)) = Nothing
             v = +alloc(Of T)()
             Dim i As UInt32 = 0
             While i < v.size()
-                v(i)(p)
+                v(i)(p, l)
                 i += uint32_1
             End While
         End Sub

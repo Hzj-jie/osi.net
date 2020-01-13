@@ -11,7 +11,7 @@ Partial Public NotInheritable Class bstyle
     Public NotInheritable Class main
         Implements statement
 
-        Public Shared Sub register(ByVal p As statements)
+        Public Shared Sub register(ByVal p As statements, ByVal l As logic_gens)
             assert(Not p Is Nothing)
             p.register(New main())
         End Sub

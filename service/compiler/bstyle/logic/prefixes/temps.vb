@@ -16,6 +16,7 @@ Partial Public NotInheritable Class bstyle
         Public Shared ReadOnly biguint As String = unique_name("biguint")
 
         Private Shared ReadOnly v As vector(Of pair(Of String, String))
+        Private ReadOnly l As logic_gens
 
         Shared Sub New()
             v = vector.of(
@@ -28,20 +29,22 @@ Partial Public NotInheritable Class bstyle
             Return "@@prefixes@temps@" + name
         End Function
 
-        Public Shared Sub register(ByVal p As statements)
+        Public Shared Sub register(ByVal p As statements, ByVal l As logic_gens)
             assert(Not p Is Nothing)
-            p.register(New temps())
+            p.register(New temps(l))
         End Sub
 
         Public Sub export(ByVal o As writer) Implements statement.export
             Dim i As UInt32 = 0
             While i < v.size()
-                builders.of_define(v(i).first, v(i).second).to(o)
+                l.define_variable(v(i).first, v(i).second, o)
                 i += uint32_1
             End While
         End Sub
 
-        Private Sub New()
+        Private Sub New(ByVal l As logic_gens)
+            assert(Not l Is Nothing)
+            Me.l = l
         End Sub
     End Class
 End Class
