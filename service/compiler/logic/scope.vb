@@ -9,7 +9,7 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public Class scope
+    Public NotInheritable Class scope
         Private ReadOnly parent As scope
         Private ReadOnly offsets As map(Of String, UInt64)
         Private ReadOnly types As map(Of String, String)
@@ -43,6 +43,7 @@ Namespace logic
             assert(Not name.null_or_whitespace())
             assert(Not type.null_or_whitespace())
             If offsets.find(name) <> offsets.end() Then
+                errors.redefine(name, type, Me.type(name))
                 Return False
             End If
             offsets(name) = size() + uint64_1

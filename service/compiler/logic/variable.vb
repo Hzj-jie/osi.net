@@ -160,10 +160,14 @@ Namespace logic
             Return copy_or_move_from(i, command.mov, o)
         End Function
 
+        Public Function ref() As String
+            Dim r As String = Nothing
+            assert(scope.export(name, r))
+            Return r
+        End Function
+
         Public Overrides Function ToString() As String
-            Dim ref As String = Nothing
-            assert(scope.export(name, ref))
-            Return ref
+            Return ref()
         End Function
     End Class
 End Namespace

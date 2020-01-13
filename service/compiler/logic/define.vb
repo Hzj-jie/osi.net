@@ -9,7 +9,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     ' Define a variable with @name.
-    Public Class define
+    Public NotInheritable Class define
         Implements exportable
 
         Private ReadOnly name As String
@@ -35,12 +35,11 @@ Namespace logic
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not scope Is Nothing)
             assert(Not o Is Nothing)
-            If scope_define(scope, name, type) Then
+            If scope.define(name, type) Then
                 o.emplace_back(command_str(command.push))
                 Return True
-            Else
-                Return False
             End If
+            Return False
         End Function
     End Class
 End Namespace

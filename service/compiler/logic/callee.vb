@@ -50,13 +50,14 @@ Namespace logic
                 errors.anchor_redefined(name, anchors(name))
                 Return False
             End If
+            ' No need to use scope_wrapper, as the pops are after the rest instruction and have no effect.
             scope = scope.start_scope()
             ' caller should setup the stack.
             If Not return_value_of.define(scope, name, type) Then
                 Return False
             End If
             For i As Int32 = 0 To array_size_i(parameters) - 1
-                If Not scope_define(scope, parameters(i).first, parameters(i).second) Then
+                If Not scope.define(parameters(i).first, parameters(i).second) Then
                     Return False
                 End If
             Next

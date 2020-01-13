@@ -9,7 +9,7 @@ Namespace logic
     ' Shared between callee and return.
     Public NotInheritable Class return_value_of
         Public Shared Function define(ByVal scope As scope, ByVal name As String, ByVal type As String) As Boolean
-            Return scope_define(scope, variable_name(name), type)
+            Return scope.define(variable_name(name), type)
         End Function
 
         Public Shared Function retrieve(ByVal scope As scope,
