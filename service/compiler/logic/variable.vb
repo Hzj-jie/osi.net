@@ -9,22 +9,22 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public NotInheritable Class variable
+        Public ReadOnly scope As scope
         Public ReadOnly name As String
         Public ReadOnly type As String
-        Public ReadOnly ref As String
-        Public ReadOnly size As [optional](of UInt32)
+        Public ReadOnly size As [optional](Of UInt32)
 
-        Private Sub New(ByVal name As String,
+        Private Sub New(ByVal scope As scope,
+                        ByVal name As String,
                         ByVal type As String,
-                        ByVal ref As String,
                         ByVal size As [optional](Of UInt32))
+            assert(Not scope Is Nothing)
             assert(Not name.null_or_whitespace())
             assert(Not type.null_or_whitespace())
-            assert(Not ref.null_or_whitespace())
             assert(Not size Is Nothing)
+            Me.scope = scope
             Me.name = name
             Me.type = type
-            Me.ref = ref
             Me.size = size
         End Sub
 
@@ -42,7 +42,7 @@ Namespace logic
             End If
 
             If types Is Nothing Then
-                o = New variable(name, type, ref, [optional].empty(Of UInt32)())
+                o = New variable(scope, name, type, [optional].empty(Of UInt32)())
                 Return True
             End If
             Dim size As UInt32 = 0
@@ -50,7 +50,7 @@ Namespace logic
                 errors.type_undefined(type, name)
                 Return False
             End If
-            o = New variable(name, type, ref, [optional].of(size))
+            o = New variable(scope, name, type, [optional].of(size))
             Return True
         End Function
 
@@ -161,6 +161,8 @@ Namespace logic
         End Function
 
         Public Overrides Function ToString() As String
+            Dim ref As String = Nothing
+            assert(scope.export(name, ref))
             Return ref
         End Function
     End Class

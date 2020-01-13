@@ -33,7 +33,7 @@ copy_const 1 i1
 define length uint
 sizeof length source
 
-define i uint
+define i type*
 copy i length
 define not-finished bool
 more not-finished i 0

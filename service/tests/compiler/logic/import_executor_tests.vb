@@ -22,11 +22,11 @@ Namespace logic
         Protected Overrides Sub check_result(ByVal e As not_null(Of simulator))
             assertion.equal((+e).stack_size(), CUInt(8))
             assertion.array_equal(+((+e).access_stack(data_ref.abs(0))),
-                               str_bytes(strcat("hello world", character.newline)))
+                                  str_bytes(strcat("hello world", character.newline)))
             assertion.array_equal(+((+e).access_stack(data_ref.abs(1))),
-                               str_bytes(strcat(character.newline, "dlrow olleh")))
+                                  str_bytes(strcat(character.newline, "dlrow olleh")))
             assertion.array_equal(+((+e).access_stack(data_ref.abs(2))),
-                               str_bytes(strcat(character.newline, "dlrow olleh")))
+                                  str_bytes(strcat(character.newline, "dlrow olleh")))
             assertion.array_equal(+((+e).access_stack(data_ref.abs(3))), uint32_bytes(0))
             assertion.array_equal(+((+e).access_stack(data_ref.abs(4))), (New big_uint(1)).as_bytes())
             assertion.array_equal(+((+e).access_stack(data_ref.abs(5))), uint32_bytes(12))

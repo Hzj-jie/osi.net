@@ -13,9 +13,10 @@ Namespace logic
         End Function
 
         Public Shared Function retrieve(ByVal scope As scope,
+                                        ByVal types As types,
                                         ByVal name As String,
                                         ByRef o As variable) As Boolean
-            Return variable.[New](scope, variable_name(name), o)
+            Return variable.[New](scope, types, variable_name(name), o)
         End Function
 
         Private Shared Function variable_name(ByVal name As String) As String

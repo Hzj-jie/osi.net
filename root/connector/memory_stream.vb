@@ -73,6 +73,10 @@ Public Module _memory_stream
             Return False
         End If
 
+        If count = 0 Then
+            Return True
+        End If
+
         Try
             this.Write(b, CInt(offset), CInt(count))
         Catch

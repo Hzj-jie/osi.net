@@ -47,7 +47,7 @@ Namespace logic
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not scope Is Nothing)
             assert(Not o Is Nothing)
-            Using sw As scope_wrapper = scope_wrapper.[New](scope, o)
+            Using sw As scope_wrapper = New scope_wrapper(scope, o)
                 For i As UInt32 = 0 To s.size() - uint32_1
                     assert(Not s(i) Is Nothing)
                     If Not s(i).export(sw.scope(), o) Then

@@ -34,7 +34,7 @@ Namespace logic
 
         Shared Sub New()
             importable_cases = {
-                make_case("define v *"),
+                make_case("define v type*"),
                 make_case("type int 4",
                           "define v int",
                           "define s int",
@@ -42,8 +42,8 @@ Namespace logic
             }
 
             not_importable_cases = {
-                make_case("define v *",
-                          "define v *"),
+                make_case("define v type*",
+                          "define v type*"),
                 make_case("unknown"),
                 make_case("define v unknown_type",
                           "add v v v")
@@ -55,14 +55,14 @@ Namespace logic
                            (New big_uint(1000)).as_bytes(),
                            (New big_uint(500500)).as_bytes(),
                            bool_bytes(False)},
-                          "type int 0",
+                          "type int 4",
                           "type bool 1",
                           "define upper_bound int",
                           "copy_const upper_bound i1000",
                           "define 1 int",
                           "copy_const 1 i1",
-                          "define i int",
-                          "define result int",
+                          "define i type*",
+                          "define result type*",
                           "copy_const i i0",
                           "define continue bool",
                           "less continue i upper_bound",

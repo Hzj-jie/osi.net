@@ -24,9 +24,11 @@ Namespace logic
                        ByVal result As String,
                        ByVal parameters As unique_ptr(Of String()))
             assert(Not anchors Is Nothing)
+            assert(Not types Is Nothing)
             assert(Not name.null_or_whitespace())
             assert(result Is Nothing OrElse Not result.null_or_whitespace())
             Me.anchors = anchors
+            Me.types = types
             Me.name = name
             Me.result = [optional].of_nullable(result)
             Me.parameters = parameters.release_or_null()
@@ -58,17 +60,14 @@ Namespace logic
             Me.New(anchors, types, name, Nothing, unique_ptr.[New](parameters))
         End Sub
 
-        ' Forward return-value from scope to scope_wrapper.
-        Private Function define_return_value(ByVal scope As scope,
-                                             ByVal sw As scope_wrapper,
-                                             ByVal o As vector(Of String)) As Boolean
-            assert(Not scope Is Nothing)
+        ' Forward return-value to scope_wrapper.
+        Private Function define_return_value(ByVal sw As scope_wrapper, ByVal o As vector(Of String)) As Boolean
             assert(Not sw Is Nothing)
             assert(Not o Is Nothing)
             Dim result_type As String = Nothing
             If result Then
                 Dim var As variable = Nothing
-                If Not variable.[New](scope, types, +result, var) Then
+                If Not variable.[New](sw.scope(), types, +result, var) Then
                     Return False
                 End If
                 result_type = var.type
@@ -81,16 +80,13 @@ Namespace logic
             Return True
         End Function
 
-        ' Forward parameters from scope to scope_wrapper.
-        Private Function define_parameters(ByVal scope As scope,
-                                           ByVal sw As scope_wrapper,
-                                           ByVal o As vector(Of String)) As Boolean
-            assert(Not scope Is Nothing)
+        ' Forward parameters to scope_wrapper.
+        Private Function define_parameters(ByVal sw As scope_wrapper, ByVal o As vector(Of String)) As Boolean
             assert(Not sw Is Nothing)
             assert(Not o Is Nothing)
             For i As Int32 = 0 To array_size_i(parameters) - 1
                 Dim var As variable = Nothing
-                If Not variable.[New](scope, types, parameters(i), var) Then
+                If Not variable.[New](sw.scope(), types, parameters(i), var) Then
                     Return False
                 End If
 
@@ -101,25 +97,21 @@ Namespace logic
                     Return False
                 End If
 
-                o.emplace_back(instruction_builder.str(command.cp,
-                                                       data_ref.rel(array_size_i(parameters) - i - 1),
-                                                       var))
+                o.emplace_back(instruction_builder.str(command.cp, data_ref.rel(0), var))
             Next
             Return True
         End Function
 
-        ' Forward return-value from scope_wrapper back to scope.
-        Private Function forward_to_result(ByVal scope As scope,
-                                           ByVal sw As scope_wrapper,
+        ' Forward return-value from scope_wrapper.
+        Private Function forward_to_result(ByVal sw As scope_wrapper,
                                            ByVal o As vector(Of String)) As Boolean
-            assert(Not scope Is Nothing)
             assert(Not sw Is Nothing)
             assert(Not o Is Nothing)
             If Not result Then
                 Return True
             End If
             Dim result_var As variable = Nothing
-            assert(variable.[New](scope, types, +result, result_var))
+            assert(variable.[New](sw.scope(), types, +result, result_var))
             Dim return_value_var As variable = Nothing
             assert(variable.[New](sw.scope(), types, return_value_place_holder_name, return_value_var))
             Dim s As String = Nothing
@@ -136,10 +128,10 @@ Namespace logic
             assert(Not o Is Nothing)
             ' rel(array_size(parameters)) is for return value.
             Using sw As scope_wrapper = New scope_wrapper(scope, o)
-                If Not define_parameters(scope, sw, o) Then
+                If Not define_return_value(sw, o) Then
                     Return False
                 End If
-                If Not define_return_value(scope, sw, o) Then
+                If Not define_parameters(sw, o) Then
                     Return False
                 End If
                 o.emplace_back(instruction_builder.str(command.stst))
@@ -150,7 +142,7 @@ Namespace logic
                     Return False
                 End If
                 o.emplace_back(instruction_builder.str(command.jump, data_ref.abs(pos)))
-                If Not forward_to_result(scope, sw, o) Then
+                If Not forward_to_result(sw, o) Then
                     Return False
                 End If
             End Using

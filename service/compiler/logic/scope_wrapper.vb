@@ -22,10 +22,6 @@ Namespace logic
             Me.new_scope = scope.start_scope()
         End Sub
 
-        Public Shared Function [New](ByVal scope As scope, ByVal o As vector(Of String)) As scope_wrapper
-            Return New scope_wrapper(scope, o)
-        End Function
-
         Public Function scope() As scope
             Return new_scope
         End Function
