@@ -26,7 +26,7 @@ Partial Public NotInheritable Class bstyle
         Private Shared ReadOnly v As vector(Of pair(Of String, Int32))
         Private Shared ReadOnly type_0_s As vector(Of String)
         Private Shared ReadOnly type_asterisk_s As vector(Of String)
-        Private ReadOnly l As logic_gens
+        Private ReadOnly ta As type_alias
 
         Shared Sub New()
             v = vector.of(
@@ -40,9 +40,10 @@ Partial Public NotInheritable Class bstyle
             type_asterisk_s = vector.of(bigint, biguint, [string])
         End Sub
 
-        Public Shared Sub register(ByVal p As statements, ByVal l As logic_gens)
+        Public Shared Sub register(ByVal p As statements, ByVal l As logic_rule_wrapper)
             assert(Not p Is Nothing)
-            p.register(New types(l))
+            assert(Not l Is Nothing)
+            p.register(New types(l.type_alias))
         End Sub
 
         Public Sub export(ByVal o As writer) Implements statement.export
@@ -52,11 +53,21 @@ Partial Public NotInheritable Class bstyle
                 logic_builder.of_type(v(i).first, CUInt(v(i).second)).to(o)
                 i += uint32_1
             End While
+            i = 0
+            While i < type_0_s.size()
+                assert(ta.define(type_0_s(i), "type0"))
+                i += uint32_1
+            End While
+            i = 0
+            While i < type_asterisk_s.size()
+                assert(ta.define(type_asterisk_s(i), "type*"))
+                i += uint32_1
+            End While
         End Sub
 
-        Private Sub New(ByVal l As logic_gens)
-            assert(Not l Is Nothing)
-            Me.l = l
+        Private Sub New(ByVal ta As type_alias)
+            assert(Not ta Is Nothing)
+            Me.ta = ta
         End Sub
     End Class
 End Class

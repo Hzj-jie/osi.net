@@ -26,61 +26,61 @@ Public NotInheritable Class bstyle
     End Class
 
     Public NotInheritable Class prefixes_t
-        Inherits __do(Of vector(Of Action(Of statements, logic_gens)))
+        Inherits __do(Of vector(Of Action(Of statements, compiler.logic.logic_rule_wrapper)))
 
-        Protected Overrides Function at() As vector(Of Action(Of statements, logic_gens))
-            Return vector.of(Of Action(Of statements, logic_gens))(
-                AddressOf types.register,
-                AddressOf constants.register,
-                AddressOf temps.register)
+        Protected Overrides Function at() As vector(Of Action(Of statements, compiler.logic.logic_rule_wrapper))
+            Return vector.of(
+                       registerer(AddressOf types.register),
+                       registerer(AddressOf constants.register),
+                       registerer(AddressOf temps.register))
         End Function
     End Class
 
     Public NotInheritable Class suffixes_t
-        Inherits __do(Of vector(Of Action(Of statements, logic_gens)))
+        Inherits __do(Of vector(Of Action(Of statements, compiler.logic.logic_rule_wrapper)))
 
-        Protected Overrides Function at() As vector(Of Action(Of statements, logic_gens))
-            Return vector.of(Of Action(Of statements, logic_gens))(
-                AddressOf main.register)
+        Protected Overrides Function at() As vector(Of Action(Of statements, compiler.logic.logic_rule_wrapper))
+            Return vector.of(
+                       ignore_parameters(AddressOf main.register))
         End Function
     End Class
 
     Public NotInheritable Class logic_gens_t
-        Inherits __do(Of vector(Of Action(Of logic_gens)))
+        Inherits __do(Of vector(Of Action(Of logic_gens, compiler.logic.logic_rule_wrapper)))
 
-        Protected Overrides Function at() As vector(Of Action(Of logic_gens))
-            Return vector.of(Of Action(Of logic_gens))(
-                AddressOf bool.register,
-                AddressOf condition.register,
-                AddressOf else_condition.register,
-                AddressOf for_loop.register,
-                AddressOf float.register,
-                AddressOf [function].register,
-                AddressOf function_call.register,
-                AddressOf ignore_result_function_call.register,
-                AddressOf [integer].register,
-                AddressOf logic.register,
-                AddressOf multi_sentence_paragraph.register,
-                AddressOf variable_name.register,
-                AddressOf paragraph.register,
-                AddressOf param.register,
-                AddressOf param_with_comma.register,
-                AddressOf paramlist.register,
-                AddressOf return_clause.register,
-                AddressOf sentence.register,
-                AddressOf sentence_with_semi_colon.register,
-                AddressOf sentence_without_semi_colon.register,
-                AddressOf [string].register,
-                AddressOf value.register,
-                AddressOf value_clause.register,
-                AddressOf value_declaration.register,
-                AddressOf value_definition.register,
-                AddressOf value_list.register,
-                AddressOf value_with_bracket.register,
-                AddressOf value_with_comma.register,
-                AddressOf value_without_bracket.register,
-                AddressOf variable_name.register,
-                AddressOf [while].register)
+        Protected Overrides Function at() As vector(Of Action(Of logic_gens, compiler.logic.logic_rule_wrapper))
+            Return vector.of(
+                ignore_parameters(AddressOf bool.register),
+                ignore_parameters(AddressOf condition.register),
+                ignore_parameters(AddressOf else_condition.register),
+                ignore_parameters(AddressOf for_loop.register),
+                ignore_parameters(AddressOf float.register),
+                ignore_parameters(AddressOf [function].register),
+                ignore_parameters(AddressOf function_call.register),
+                registerer(AddressOf ignore_result_function_call.register),
+                ignore_parameters(AddressOf [integer].register),
+                ignore_parameters(AddressOf logic.register),
+                ignore_parameters(AddressOf multi_sentence_paragraph.register),
+                ignore_parameters(AddressOf variable_name.register),
+                ignore_parameters(AddressOf paragraph.register),
+                ignore_parameters(AddressOf param.register),
+                ignore_parameters(AddressOf param_with_comma.register),
+                ignore_parameters(AddressOf paramlist.register),
+                ignore_parameters(AddressOf return_clause.register),
+                ignore_parameters(AddressOf sentence.register),
+                ignore_parameters(AddressOf sentence_with_semi_colon.register),
+                ignore_parameters(AddressOf sentence_without_semi_colon.register),
+                ignore_parameters(AddressOf [string].register),
+                registerer(AddressOf value.register),
+                ignore_parameters(AddressOf value_clause.register),
+                registerer(AddressOf value_declaration.register),
+                registerer(AddressOf value_definition.register),
+                ignore_parameters(AddressOf value_list.register),
+                ignore_parameters(AddressOf value_with_bracket.register),
+                ignore_parameters(AddressOf value_with_comma.register),
+                ignore_parameters(AddressOf value_without_bracket.register),
+                ignore_parameters(AddressOf variable_name.register),
+                ignore_parameters(AddressOf [while].register))
         End Function
     End Class
 

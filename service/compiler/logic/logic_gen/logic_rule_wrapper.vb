@@ -11,18 +11,28 @@ Imports osi.service.automata
 Imports osi.service.interpreter.primitive
 
 Namespace logic
+    Public NotInheritable Class logic_rule_wrapper
+        Public ReadOnly type_alias As type_alias
+
+        Public Sub New()
+            type_alias = New type_alias()
+        End Sub
+    End Class
+
     Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
                                        _syntaxer_rule As __do(Of Byte()),
-                                       _prefixes As __do(Of vector(Of Action(Of statements, logic_gens))),
-                                       _suffixes As __do(Of vector(Of Action(Of statements, logic_gens))),
-                                       _logic_gens As __do(Of vector(Of Action(Of logic_gens))))
+                                       _prefixes As __do(Of vector(Of Action(Of statements, logic_rule_wrapper))),
+                                       _suffixes As __do(Of vector(Of Action(Of statements, logic_rule_wrapper))),
+                                       _logic_gens As __do(Of vector(Of Action(Of logic_gens, logic_rule_wrapper))))
         Inherits rule_wrapper(Of _nlexer_rule, _syntaxer_rule)
 
+        Private Shared ReadOnly w As logic_rule_wrapper
         Private Shared ReadOnly l As logic_gens
         Private Shared ReadOnly p As statements
         Private Shared ReadOnly s As statements
 
         Shared Sub New()
+            w = New logic_rule_wrapper()
             l = New logic_gens()
             p = New statements()
             s = New statements()
@@ -30,6 +40,37 @@ Namespace logic
             init_prefixes()
             init_suffixes()
         End Sub
+
+        ' Used by vector.of
+        Protected Shared Function registerer(ByVal i As Action(Of statements, logic_rule_wrapper)) _
+                                      As Action(Of statements, logic_rule_wrapper)
+            assert(Not i Is Nothing)
+            Return i
+        End Function
+
+        ' Used by vector.of
+        Protected Shared Function registerer(ByVal i As Action(Of logic_gens, logic_rule_wrapper)) _
+                                      As Action(Of logic_gens, logic_rule_wrapper)
+            assert(Not i Is Nothing)
+            Return i
+        End Function
+
+        Private Shared Function ignore_parameters(Of T)(ByVal i As Action(Of T)) As Action(Of T, logic_rule_wrapper)
+            assert(Not i Is Nothing)
+            Return Sub(ByVal x As T, ByVal y As logic_rule_wrapper)
+                       i(x)
+                   End Sub
+        End Function
+
+        Protected Shared Function ignore_parameters(ByVal i As Action(Of statements)) _
+                                      As Action(Of statements, logic_rule_wrapper)
+            Return ignore_parameters(Of statements)(i)
+        End Function
+
+        Protected Shared Function ignore_parameters(ByVal i As Action(Of logic_gens)) _
+                                      As Action(Of logic_gens, logic_rule_wrapper)
+            Return ignore_parameters(Of logic_gens)(i)
+        End Function
 
         Public Shared Function build(ByVal root As typed_node, ByVal o As writer) As Boolean
             assert(Not root Is Nothing)
@@ -108,22 +149,22 @@ Namespace logic
         End Class
 
         Private Shared Sub init_logic_gens()
-            Dim v As vector(Of Action(Of logic_gens)) = Nothing
+            Dim v As vector(Of Action(Of logic_gens, logic_rule_wrapper)) = Nothing
             v = +alloc(Of _logic_gens)()
             Dim i As UInt32 = 0
             While i < v.size()
-                v(i)(l)
+                v(i)(l, w)
                 i += uint32_1
             End While
         End Sub
 
-        Private Shared Sub init_statements(Of T As __do(Of vector(Of Action(Of statements, logic_gens)))) _
+        Private Shared Sub init_statements(Of T As __do(Of vector(Of Action(Of statements, logic_rule_wrapper)))) _
                                           (ByVal p As statements)
-            Dim v As vector(Of Action(Of statements, logic_gens)) = Nothing
+            Dim v As vector(Of Action(Of statements, logic_rule_wrapper)) = Nothing
             v = +alloc(Of T)()
             Dim i As UInt32 = 0
             While i < v.size()
-                v(i)(p, l)
+                v(i)(p, w)
                 i += uint32_1
             End While
         End Sub

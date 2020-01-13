@@ -34,12 +34,13 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         ' TODO: Check return type of value.
-        Public Shared Sub with_temp_target(ByVal l As logic_gens, ByVal n As typed_node, ByVal o As writer)
+        Public Shared Sub with_temp_target(ByVal ta As type_alias, ByVal n As typed_node, ByVal o As writer)
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             Dim value_name As String = Nothing
             value_name = strcat("raw_value_@", n.word_start(), "-", n.word_end())
-            l.define_variable(value_name, types.string, o)
+            ' TODO: Use a proper type
+            builders.of_define(ta, value_name, types.string).to(o)
             write_targets.push(value_name)
         End Sub
     End Class
