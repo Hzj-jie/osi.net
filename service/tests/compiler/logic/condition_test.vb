@@ -12,7 +12,7 @@ Imports osi.service.compiler.logic
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public Class condition_test
+    Public NotInheritable Class condition_test
         Inherits executor_case
 
         Private Shared ReadOnly value1 As String
@@ -28,12 +28,12 @@ Namespace logic
 
         Public Sub New()
             MyBase.New(
-                New define("a-bool", types.variable_type),
-                New define("value1", types.variable_type),
+                New define(anchors.empty, "a-bool", types.variable_type),
+                New define(anchors.empty, "value1", types.variable_type),
                 New copy_const(types.empty, "value1", unique_ptr.[New](New data_block(value1))),
-                New define("value2", types.variable_type),
+                New define(anchors.empty, "value2", types.variable_type),
                 New copy_const(types.empty, "value2", unique_ptr.[New](New data_block(value2))),
-                New define("value", types.variable_type),
+                New define(anchors.empty, "value", types.variable_type),
                 New copy_const(types.empty, "a-bool", unique_ptr.[New](New data_block(True))),
                 create_condition(),
                 New copy_const(types.empty, "a-bool", unique_ptr.[New](New data_block(False))),

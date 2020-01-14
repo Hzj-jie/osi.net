@@ -24,22 +24,49 @@ Partial Public NotInheritable Class bstyle
             b.register(Of function_call)()
         End Sub
 
+        Private Function build(ByVal n As typed_node,
+                               ByVal o As writer,
+                               ByVal build_caller As Action(Of String, vector(Of String))) As Boolean
+            assert(Not n Is Nothing)
+            assert(Not o Is Nothing)
+            assert(Not build_caller Is Nothing)
+            assert(n.child_count() >= 3)
+            Dim callee_name As String = Nothing
+            callee_name = n.child(0).word().str()
+            If n.child_count() = 3 Then
+                build_caller(callee_name, vector.of(Of String)())
+                Return True
+            End If
+            If Not l.of(n.child(2)).build(o) Then
+                Return False
+            End If
+            Using targets As read_scoped(Of vector(Of String)).ref = value_list.current_targets()
+                build_caller(callee_name, +targets)
+                Return True
+            End Using
+        End Function
+
+        Public Function without_return(ByVal n As typed_node, ByVal o As writer) As Boolean
+            Return build(n,
+                         o,
+                         Sub(ByVal callee_name As String, ByVal parameters As vector(Of String))
+                             builders.of_caller(callee_name, parameters).to(o)
+                         End Sub)
+        End Function
+
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 3)
-            Using r As read_scoped(Of String).ref = value.write_target()
-                If n.child_count() = 3 Then
-                    builders.of_caller(n.child(0).word().str(), +r, vector.of(Of String)()).to(o)
-                    Return True
-                End If
-                If Not l.of(n.child(2)).build(o) Then
-                    Return False
-                End If
-                Using targets As read_scoped(Of vector(Of String)).ref = value_list.current_targets()
-                    builders.of_caller(n.child(0).word().str(), +r, +targets).to(o)
-                    Return True
-                End Using
+            Using r As read_scoped(Of value.write_target_ref).ref = value.write_target()
+                With +r
+                    Return build(n,
+                                 o,
+                                 Sub(ByVal callee_name As String, ByVal parameters As vector(Of String))
+                                     .set_type(define.return_type_of + callee_name)
+                                     builders.of_caller(callee_name, .name, parameters).to(o)
+                                 End Sub)
+                End With
             End Using
         End Function
     End Class

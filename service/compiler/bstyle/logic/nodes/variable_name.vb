@@ -27,8 +27,13 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 1)
-            Using r As read_scoped(Of String).ref = value.write_target()
-                builders.of_copy(+r, n.child().word().str()).to(o)
+            Using r As read_scoped(Of value.write_target_ref).ref = value.write_target()
+                Dim variable_name As String = Nothing
+                variable_name = n.child().word().str()
+                With +r
+                    .set_type(define.type_of + variable_name)
+                    builders.of_copy(.name, variable_name).to(o)
+                End With
             End Using
             Return True
         End Function

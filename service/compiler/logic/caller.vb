@@ -74,7 +74,7 @@ Namespace logic
             Else
                 result_type = types.variable_type
             End If
-            If Not define.export(return_value_place_holder_name, result_type, sw.scope(), o) Then
+            If Not define.export(anchors, return_value_place_holder_name, result_type, sw.scope(), o) Then
                 Return False
             End If
             Return True
@@ -90,7 +90,8 @@ Namespace logic
                     Return False
                 End If
 
-                If Not define.export(strcat("@parameter_", i, "_of_", name, "_place_holder"),
+                If Not define.export(anchors,
+                                     strcat("@parameter_", i, "_of_", name, "_place_holder"),
                                      var.type,
                                      sw.scope(),
                                      o) Then

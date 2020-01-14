@@ -15,19 +15,23 @@ Partial Public NotInheritable Class bstyle
         Implements logic_gen
 
         Private Shared ReadOnly s As write_scoped(Of ref)
+        Private ReadOnly ta As type_alias
 
         Shared Sub New()
             s = New write_scoped(Of ref)()
         End Sub
 
         <inject_constructor>
-        Public Sub New(ByVal b As logic_gens)
+        Public Sub New(ByVal b As logic_gens, ByVal ta As type_alias)
             MyBase.New(b)
+            assert(Not ta Is Nothing)
+            Me.ta = ta
         End Sub
 
-        Public Shared Sub register(ByVal b As logic_gens)
+        Public Shared Sub register(ByVal b As logic_gens, ByVal l As logic_rule_wrapper)
             assert(Not b Is Nothing)
-            b.register(Of [function])()
+            assert(Not l Is Nothing)
+            b.register(New [function](b, l.type_alias))
         End Sub
 
         Public NotInheritable Class ref
@@ -66,7 +70,8 @@ Partial Public NotInheritable Class bstyle
                     logic_gen_of(Of paramlist)().empty_paramlist()
                 End If
                 Using params As read_scoped(Of vector(Of pair(Of String, String))).ref = paramlist.current_target()
-                    builders.of_callee(n.child(1).word().str(),
+                    builders.of_callee(ta,
+                                       n.child(1).word().str(),
                                        n.child(0).word().str(),
                                        +params,
                                        Function() As Boolean

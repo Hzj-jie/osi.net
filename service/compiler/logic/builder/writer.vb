@@ -19,12 +19,13 @@ Namespace logic
             e = New vector(Of String)()
         End Sub
 
-        Public Sub append(ByVal s As String)
+        Public Sub append(ByVal s As ValueType)
             v.emplace_back(s)
         End Sub
 
-        Public Sub append(ByVal i As UInt32)
-            v.emplace_back(i)
+        Public Sub append(ByVal s As Object)
+            assert(Not s Is Nothing)
+            v.emplace_back(s)
         End Sub
 
         Public Sub append(ByVal v As vector(Of String))
@@ -45,11 +46,6 @@ Namespace logic
             assert(Not a Is Nothing)
             Return a()
         End Function
-
-        Public Sub append(ByVal d As data_block)
-            assert(Not d Is Nothing)
-            v.emplace_back(d)
-        End Sub
 
         Public Sub err(ByVal ParamArray s() As Object)
             e.emplace_back(strcat(s))

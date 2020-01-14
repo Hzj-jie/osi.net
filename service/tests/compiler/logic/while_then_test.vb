@@ -1,20 +1,24 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.service.compiler.logic
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public Class while_then_test
+    Public NotInheritable Class while_then_test
         Inherits executor_case
 
         Public Sub New()
             MyBase.New(
-                New define("state", types.variable_type),
-                New define("result", types.variable_type),
-                New define("i", types.variable_type),
-                New define("1", types.variable_type),
-                New define("50", types.variable_type),
+                New define(anchors.empty, "state", types.variable_type),
+                New define(anchors.empty, "result", types.variable_type),
+                New define(anchors.empty, "i", types.variable_type),
+                New define(anchors.empty, "1", types.variable_type),
+                New define(anchors.empty, "50", types.variable_type),
                 New copy_const(types.empty, "state", unique_ptr.[New](New data_block(True))),
                 New copy_const(types.empty, "1", unique_ptr.[New](New data_block(1))),
                 New copy_const(types.empty, "50", unique_ptr.[New](New data_block(50))),

@@ -34,8 +34,11 @@ Partial Public NotInheritable Class bstyle
                 raise_error(error_type.user, "Cannot parse data to int ", n.trace_back_str())
                 Return False
             End If
-            Using r As read_scoped(Of String).ref = value.write_target()
-                builders.of_copy_const(+r, New data_block(i)).to(o)
+            Using r As read_scoped(Of value.write_target_ref).ref = value.write_target()
+                With +r
+                    builders.of_copy_const(.name, New data_block(i)).to(o)
+                    .set_type(types.int)
+                End With
             End Using
             Return True
         End Function

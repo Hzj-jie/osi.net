@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.template
 Imports osi.root.utt
@@ -8,23 +12,23 @@ Imports osi.service.compiler.logic
 Imports osi.service.math
 
 Namespace logic
-    Public Class while_then_perf_500000
+    Public NotInheritable Class while_then_perf_500000
         Inherits while_then_perf(Of _500000)
     End Class
 
-    Public Class while_then_perf_1000000
+    Public NotInheritable Class while_then_perf_1000000
         Inherits while_then_perf(Of _1000000)
     End Class
 
-    Public Class while_then_perf_5000000
+    Public NotInheritable Class while_then_perf_5000000
         Inherits while_then_perf(Of _5000000)
     End Class
 
-    Public Class while_then_perf_10000000
+    Public NotInheritable Class while_then_perf_10000000
         Inherits while_then_perf(Of _10000000)
     End Class
 
-    Public Class while_then_perf_50000000
+    Public NotInheritable Class while_then_perf_50000000
         Inherits while_then_perf(Of _50000000)
     End Class
 
@@ -49,16 +53,16 @@ Namespace logic
                 MyBase.New(New while_then_case(), New internal_case())
             End Sub
 
-            Private Class while_then_case
+            Private NotInheritable Class while_then_case
                 Inherits executor_case
 
                 Public Sub New()
                     MyBase.New(
-                        New define("state", types.variable_type),
-                        New define("result", types.variable_type),
-                        New define("i", types.variable_type),
-                        New define("1", types.variable_type),
-                        New define("UPPER_BOUND", types.variable_type),
+                        New define(anchors.empty, "state", types.variable_type),
+                        New define(anchors.empty, "result", types.variable_type),
+                        New define(anchors.empty, "i", types.variable_type),
+                        New define(anchors.empty, "1", types.variable_type),
+                        New define(anchors.empty, "UPPER_BOUND", types.variable_type),
                         New copy_const(types.empty, "state", unique_ptr.[New](New data_block(True))),
                         New copy_const(types.empty, "1", unique_ptr.[New](New data_block(1))),
                         New copy_const(types.empty, "UPPER_BOUND", unique_ptr.[New](New data_block(upper_bound))),
@@ -80,7 +84,7 @@ Namespace logic
                 End Sub
             End Class
 
-            Private Class internal_case
+            Private NotInheritable Class internal_case
                 Inherits [case]
 
                 Public Overrides Function run() As Boolean
@@ -98,25 +102,25 @@ Namespace logic
         End Class
     End Class
 
-    Public Class while_then_perf
+    Public NotInheritable Class while_then_perf
         Inherits performance_case_wrapper
 
         Public Sub New()
             MyBase.New(New while_then_case())
         End Sub
 
-        Private Class while_then_case
+        Private NotInheritable Class while_then_case
             Inherits executor_case
 
             Private Const upper_bound As Int32 = 10000000
 
             Public Sub New()
                 MyBase.New({
-                New define("state", types.variable_type),
-                New define("result", types.variable_type),
-                New define("i", types.variable_type),
-                New define("1", types.variable_type),
-                New define("UPPER_BOUND", types.variable_type),
+                New define(anchors.empty, "state", types.variable_type),
+                New define(anchors.empty, "result", types.variable_type),
+                New define(anchors.empty, "i", types.variable_type),
+                New define(anchors.empty, "1", types.variable_type),
+                New define(anchors.empty, "UPPER_BOUND", types.variable_type),
                 New copy_const(types.empty, "state", unique_ptr.[New](New data_block(True))),
                 New copy_const(types.empty, "1", unique_ptr.[New](New data_block(1))),
                 New copy_const(types.empty, "UPPER_BOUND", unique_ptr.[New](New data_block(upper_bound))),

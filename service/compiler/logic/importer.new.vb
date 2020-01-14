@@ -113,7 +113,7 @@ Namespace logic
         End Function
 
         Private Function new_define(ByVal p1 As String, ByVal p2 As String) As define
-            Return New define(p1, p2)
+            Return New define(anchors, p1, p2)
         End Function
 
         Private Function new_do_until(ByVal p1 As String, ByVal p2 As paragraph) As do_until

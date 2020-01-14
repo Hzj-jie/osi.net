@@ -46,7 +46,7 @@ Namespace logic
             Dim pos As UInt32 = 0
             pos = o.size()
             o.emplace_back(String.Empty)
-            If Not anchors.define(name, o) Then
+            If Not anchors.define(name, o, type) Then
                 errors.anchor_redefined(name, anchors(name))
                 Return False
             End If

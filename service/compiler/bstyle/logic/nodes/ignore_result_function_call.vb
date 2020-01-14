@@ -29,7 +29,7 @@ Partial Public NotInheritable Class bstyle
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            Return logic_gen_of(Of value).build(n, o)
+            Return logic_gen_of(Of function_call).without_return(n.child(), o)
         End Function
     End Class
 End Class
