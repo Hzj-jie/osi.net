@@ -247,7 +247,7 @@ Public NotInheritable Class vector(Of T)
     End Function
 
     Public Overrides Function ToString() As String
-        Return Me.ToString(character.tab)
+        Return str(character.tab)
     End Function
 
     Public Shared Operator +(ByVal this As vector(Of T)) As T()

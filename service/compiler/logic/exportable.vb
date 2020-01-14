@@ -36,7 +36,7 @@ Namespace logic
                 End If
             Next
             Dim r As String = Nothing
-            r = o.ToString(character.newline)
+            r = o.str(character.newline)
             If debug_dump Then
                 raise_error(error_type.user, "Debug dump of primitive ", r)
             End If

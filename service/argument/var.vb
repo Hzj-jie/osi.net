@@ -95,7 +95,7 @@ Partial Public Class var
                         o = v(0)
                     End If
                 Else
-                    o = v.ToString(separator)
+                    o = v.str(separator)
                 End If
             End If
             Return True

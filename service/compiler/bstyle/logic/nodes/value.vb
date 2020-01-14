@@ -28,6 +28,9 @@ Partial Public NotInheritable Class bstyle
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
+            assert(strsame(n.type_name, "value") OrElse
+                   (strsame(n.type_name, "ignore-result-function-call") AndAlso
+                    strsame(n.child().type_name, "function-call")))
             with_temp_target(ta, n, o)
             Return l.of(n.child()).build(o)
         End Function

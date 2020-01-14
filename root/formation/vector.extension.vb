@@ -166,7 +166,10 @@ Public Module vector_extension
         Return npos
     End Function
 
-    <Extension()> Public Function ToString(Of T)(ByVal v As vector(Of T), ByVal separator As String) As String
+    <Extension()> Public Function str(Of T)(ByVal v As vector(Of T),
+                                            ByVal f As Func(Of T, String),
+                                            ByVal separator As String) As String
+        assert(Not f Is Nothing)
         If v Is Nothing Then
             Return Nothing
         End If
@@ -179,17 +182,17 @@ Public Module vector_extension
             If i > 0 Then
                 r.Append(separator)
             End If
-            r.Append(v(i))
+            r.Append(f(v(i)))
         Next
         Return Convert.ToString(r)
     End Function
 
     <Extension()> Public Function str(Of T)(ByVal v As vector(Of T), ByVal separator As String) As String
-        Return ToString(v, separator)
+        Return str(v, AddressOf Convert.ToString, separator)
     End Function
 
     <Extension()> Public Function str(Of T)(ByVal v As vector(Of T)) As String
-        Return ToString(v, Nothing)
+        Return str(v, Nothing)
     End Function
 
     <Extension()> Public Function map(Of T, R)(ByVal v As vector(Of T), ByVal f As Func(Of T, R)) As vector(Of R)

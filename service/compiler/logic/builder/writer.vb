@@ -11,39 +11,34 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public NotInheritable Class writer
-        Private ReadOnly s As StringBuilder
+        Private ReadOnly v As vector(Of Object)
         Private ReadOnly e As vector(Of String)
 
         Public Sub New()
-            s = New StringBuilder()
+            v = New vector(Of Object)()
             e = New vector(Of String)()
         End Sub
 
         Public Sub append(ByVal s As String)
-            Me.s.Append(s).Append(character.blank)
+            v.emplace_back(s)
         End Sub
 
         Public Sub append(ByVal i As UInt32)
-            append(Convert.ToString(i))
+            v.emplace_back(i)
         End Sub
 
         Public Sub append(ByVal v As vector(Of String))
             assert(Not v Is Nothing)
-            Dim i As UInt32 = 0
-            While i < v.size()
-                append(v(i))
-                i += uint32_1
-            End While
+            append(v.str(character.blank))
         End Sub
 
         Public Sub append(ByVal v As vector(Of pair(Of String, String)))
             assert(Not v Is Nothing)
-            Dim i As UInt32 = 0
-            While i < v.size()
-                append(v(i).first)
-                append(v(i).second)
-                i += uint32_1
-            End While
+            append(v.str(Function(ByVal x As pair(Of String, String)) As String
+                             assert(Not x Is Nothing)
+                             Return strcat(x.first, character.blank, x.second)
+                         End Function,
+                         character.blank))
         End Sub
 
         Public Function append(ByVal a As Func(Of Boolean)) As Boolean
@@ -53,16 +48,17 @@ Namespace logic
 
         Public Sub append(ByVal d As data_block)
             assert(Not d Is Nothing)
-            append(Convert.ToString(d))
+            v.emplace_back(d)
         End Sub
 
         Public Sub err(ByVal ParamArray s() As Object)
             e.emplace_back(strcat(s))
+            e.emplace_back(newline.incode())
         End Sub
 
         Public Function dump() As String
             Dim r As String = Nothing
-            r = Convert.ToString(s)
+            r = v.str(character.blank)
             If builders.debug_dump Then
                 raise_error(error_type.user, "Debug dump of logic ", r)
             End If

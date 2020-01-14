@@ -24,7 +24,7 @@ Namespace logic
             Dim v As vector(Of String) = Nothing
             v = New vector(Of String)()
             assert(v.emplace_back(lines))
-            Return v.ToString(newline.incode())
+            Return v.str(newline.incode())
         End Function
 
         Private Shared Function make_case(ByVal result()() As Byte,

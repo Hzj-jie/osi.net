@@ -34,7 +34,7 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         ' TODO: Check return type of value.
-        Public Shared Sub with_temp_target(ByVal ta As type_alias, ByVal n As typed_node, ByVal o As writer)
+        Private Shared Sub with_temp_target(ByVal ta As type_alias, ByVal n As typed_node, ByVal o As writer)
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             Dim value_name As String = Nothing
