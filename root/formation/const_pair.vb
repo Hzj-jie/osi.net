@@ -26,19 +26,19 @@ Imports osi.root.connector
 
 Public NotInheritable Class const_pair
     Public Shared Function [of](Of FT, ST)(ByVal first As FT, ByVal second As ST) As const_pair(Of FT, ST)
-        Return const_pair(Of FT, ST).make_const_pair(first, second)
+        Return const_pair(Of FT, ST).of(first, second)
     End Function
 
     Public Shared Function emplace_of(Of FT, ST)(ByVal first As FT, ByVal second As ST) As const_pair(Of FT, ST)
-        Return const_pair(Of FT, ST).emplace_make_const_pair(first, second)
+        Return const_pair(Of FT, ST).emplace_of(first, second)
     End Function
 
     Public Shared Function [of](Of FT, ST)(ByVal i as KeyValuePair(Of FT, ST)) As const_pair(Of FT, ST)
-        Return const_pair(Of FT, ST).from_key_value_pair(i)
+        Return const_pair(Of FT, ST).of(i)
     End Function
 
     Public Shared Function emplace_of(Of FT, ST)(ByVal i as KeyValuePair(Of FT, ST)) As const_pair(Of FT, ST)
-        Return const_pair(Of FT, ST).emplace_from_key_value_pair(i)
+        Return const_pair(Of FT, ST).emplace_of(i)
     End Function
 
     Private Sub New()
@@ -76,9 +76,8 @@ Public Class const_pair(Of FT, ST)
                                                bytes_serializer.consume_from(i, s) Then
                                                 o = New const_pair(Of FT, ST)(f, s)
                                                 Return True
-                                            Else
-                                                Return False
                                             End If
+                                            Return False
                                         End Function)
     End Sub
 
@@ -92,44 +91,44 @@ Public Class const_pair(Of FT, ST)
     End Sub
 #End If
 
-    Public Shared Function make_const_pair(ByVal first As FT, ByVal second As ST) As const_pair(Of FT, ST)
+    Public Shared Function [of](ByVal first As FT, ByVal second As ST) As const_pair(Of FT, ST)
         Return New const_pair(Of FT, ST)(copy_no_error(first), copy_no_error(second))
     End Function
 
-    Public Shared Function make_const_pair(ByVal first As FT) As const_pair(Of FT, ST)
-        Return make_const_pair(first, Nothing)
+    Public Shared Function [of](ByVal first As FT) As const_pair(Of FT, ST)
+        Return [of](first, Nothing)
     End Function
 
-    Public Shared Function make_const_pair(ByVal second As ST) As const_pair(Of FT, ST)
-        Return make_const_pair(Nothing, second)
+    Public Shared Function [of](ByVal second As ST) As const_pair(Of FT, ST)
+        Return [of](Nothing, second)
     End Function
 
-    Public Shared Function make_const_pair() As const_pair(Of FT, ST)
-        Return make_const_pair(Nothing, Nothing)
+    Public Shared Function [of]() As const_pair(Of FT, ST)
+        Return [of](Nothing, Nothing)
     End Function
 
-    Public Shared Function emplace_make_const_pair(ByVal first As FT, ByVal second As ST) As const_pair(Of FT, ST)
+    Public Shared Function emplace_of(ByVal first As FT, ByVal second As ST) As const_pair(Of FT, ST)
         Return New const_pair(Of FT, ST)(first, second)
     End Function
 
-    Public Shared Function emplace_make_const_pair(ByVal first As FT) As const_pair(Of FT, ST)
-        Return emplace_make_const_pair(first, Nothing)
+    Public Shared Function emplace_of(ByVal first As FT) As const_pair(Of FT, ST)
+        Return emplace_of(first, Nothing)
     End Function
 
-    Public Shared Function emplace_make_const_pair(ByVal second As ST) As const_pair(Of FT, ST)
-        Return emplace_make_const_pair(Nothing, second)
+    Public Shared Function emplace_of(ByVal second As ST) As const_pair(Of FT, ST)
+        Return emplace_of(Nothing, second)
     End Function
 
-    Public Shared Function emplace_make_const_pair() As const_pair(Of FT, ST)
-        Return emplace_make_const_pair(Nothing, Nothing)
+    Public Shared Function emplace_of() As const_pair(Of FT, ST)
+        Return emplace_of(Nothing, Nothing)
     End Function
 
-    Public Shared Function from_key_value_pair(ByVal i As KeyValuePair(Of FT, ST)) As const_pair(Of FT, ST)
-        Return make_const_pair(i.Key(), i.Value())
+    Public Shared Function [of](ByVal i As KeyValuePair(Of FT, ST)) As const_pair(Of FT, ST)
+        Return [of](i.Key(), i.Value())
     End Function
 
-    Public Shared Function emplace_from_key_value_pair(ByVal i As KeyValuePair(Of FT, ST)) As const_pair(Of FT, ST)
-        Return emplace_make_const_pair(i.Key(), i.Value())
+    Public Shared Function emplace_of(ByVal i As KeyValuePair(Of FT, ST)) As const_pair(Of FT, ST)
+        Return emplace_of(i.Key(), i.Value())
     End Function
 
 #If Not IS_CONST AndAlso Not IS_FIRST_CONST Then
@@ -160,9 +159,8 @@ Public Class const_pair(Of FT, ST)
         c = compare(first, other.first)
         If c = 0 Then
             Return compare(second, other.second)
-        Else
-            Return c
         End If
+        Return c
     End Function
 
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
@@ -239,40 +237,7 @@ Public Class const_pair(Of FT, ST)
 #End If
 End Class
 
-' TODO: Remove
 Public Module _const_pair
-    Public Function make_const_pair(Of FT, ST)(ByVal first As FT, ByVal second As ST) As const_pair(Of FT, ST)
-        Return const_pair.of(first, second)
-    End Function
-
-    Public Function make_const_pair(Of FT, ST)(ByVal first As FT) As const_pair(Of FT, ST)
-        Return const_pair(Of FT, ST).make_const_pair(first)
-    End Function
-
-    Public Function make_const_pair(Of FT, ST)(ByVal second As ST) As const_pair(Of FT, ST)
-        Return const_pair(Of FT, ST).make_const_pair(second)
-    End Function
-
-    Public Function make_const_pair(Of FT, ST)() As const_pair(Of FT, ST)
-        Return const_pair(Of FT, ST).make_const_pair()
-    End Function
-
-    Public Function emplace_make_const_pair(Of FT, ST)(ByVal first As FT, ByVal second As ST) As const_pair(Of FT, ST)
-        Return const_pair.emplace_of(first, second)
-    End Function
-
-    Public Function emplace_make_const_pair(Of FT, ST)(ByVal first As FT) As const_pair(Of FT, ST)
-        Return const_pair(Of FT, ST).emplace_make_const_pair(first)
-    End Function
-
-    Public Function emplace_make_const_pair(Of FT, ST)(ByVal second As ST) As const_pair(Of FT, ST)
-        Return const_pair(Of FT, ST).emplace_make_const_pair(second)
-    End Function
-
-    Public Function emplace_make_const_pair(Of FT, ST)() As const_pair(Of FT, ST)
-        Return const_pair(Of FT, ST).emplace_make_const_pair()
-    End Function
-
     <Extension()> Public Function first_or_null(Of FT, ST)(ByVal i As const_pair(Of FT, ST)) As FT
 #If IS_CLASS Then
         Return If(i Is Nothing, Nothing, i.first)
@@ -292,35 +257,33 @@ Public Module _const_pair
     <Extension()> Public Function to_array(Of T)(ByVal i() As const_pair(Of T, T)) As T(,)
         If isemptyarray(i) Then
             Return Nothing
-        Else
-            Dim r(,) As T = Nothing
-            ReDim r(CInt(array_size(i) - uint32_1), 2 - 1)
-            For j As Int32 = 0 To CInt(array_size(i) - uint32_1)
-#If IS_CLASS Then
-                If i(j) Is Nothing Then
-                    Continue For
-                End If
-#End If
-                r(j, 0) = i(j).first
-                r(j, 1) = i(j).second
-            Next
-            Return r
         End If
+        Dim r(,) As T = Nothing
+        ReDim r(CInt(array_size(i) - uint32_1), 2 - 1)
+        For j As Int32 = 0 To CInt(array_size(i) - uint32_1)
+#If IS_CLASS Then
+            If i(j) Is Nothing Then
+                Continue For
+            End If
+#End If
+            r(j, 0) = i(j).first
+            r(j, 1) = i(j).second
+        Next
+        Return r
     End Function
 
     <Extension()> Public Function to_two_dimensional_array(Of T)(ByVal i() As const_pair(Of T, T)) As T()()
         If isemptyarray(i) Then
             Return Nothing
-        Else
-            Dim r()() As T = Nothing
-            ReDim r(CInt(array_size(i) - uint32_1))
-            For j As Int32 = 0 To CInt(array_size(i) - uint32_1)
-                ReDim r(j)(2 - 1)
-                r(j)(0) = i(j).first
-                r(j)(1) = i(j).second
-            Next
-            Return r
         End If
+        Dim r()() As T = Nothing
+        ReDim r(CInt(array_size(i) - uint32_1))
+        For j As Int32 = 0 To CInt(array_size(i) - uint32_1)
+            ReDim r(j)(2 - 1)
+            r(j)(0) = i(j).first
+            r(j)(1) = i(j).second
+        Next
+        Return r
     End Function
 End Module
 'finish pair.vbp --------

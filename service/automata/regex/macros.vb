@@ -35,7 +35,7 @@ Partial Public Class rlexer
         Public Sub define(ByVal macro As String, ByVal expanded As String)
             assert(Not String.IsNullOrEmpty(macro))
             assert(Not String.IsNullOrEmpty(expanded))
-            vs.emplace_back(emplace_make_pair(characters.macro_escape + macro, expanded))
+            vs.emplace_back(pair.emplace_of(characters.macro_escape + macro, expanded))
         End Sub
 
         Public Sub define(ByVal pairs()() As String)
@@ -92,7 +92,7 @@ Partial Public Class rlexer
             If Not vs.empty() Then
                 For i As UInt32 = 0 To vs.size() - uint32_1
                     assert(vs(i).first(0) = characters.macro_escape)
-                    r.emplace_back(emplace_make_pair(strmid(vs(i).first, uint32_1), vs(i).second))
+                    r.emplace_back(pair.emplace_of(strmid(vs(i).first, uint32_1), vs(i).second))
                 Next
             End If
             Return r

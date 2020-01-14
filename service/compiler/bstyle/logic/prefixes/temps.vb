@@ -20,8 +20,8 @@ Partial Public NotInheritable Class bstyle
 
         Shared Sub New()
             v = vector.of(
-                emplace_make_pair(bigint, types.bigint),
-                emplace_make_pair(biguint, types.biguint)
+                pair.emplace_of(bigint, types.bigint),
+                pair.emplace_of(biguint, types.biguint)
             )
         End Sub
 

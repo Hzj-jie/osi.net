@@ -85,7 +85,7 @@ Public Module _component_generation
             Dim it As map(Of String, String).iterator = Nothing
             it = attributes.begin()
             While it <> attributes.end()
-                v.emplace_back(make_pair((+it).first, (+it).second))
+                v.emplace_back(pair.of((+it).first, (+it).second))
                 it += 1
             End While
         End If

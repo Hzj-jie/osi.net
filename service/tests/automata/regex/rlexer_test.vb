@@ -34,7 +34,7 @@ Namespace rlexer
 
         Private Shared Function make_case(ByVal doc As String,
                                           ByVal ParamArray types() As String) As pair(Of String, String())
-            Return make_pair(doc, types)
+            Return pair.of(doc, types)
         End Function
 
         Private Shared Function run_case(ByVal r As rule) As Boolean

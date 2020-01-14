@@ -38,7 +38,7 @@ Public Class poll_read_select
                                       Else
                                           timeout_ms = nowadays.milliseconds() + timeout_ms
                                       End If
-                                      ec = instance.queue_proxy(emplace_make_pair(i, timeout_ms))
+                                      ec = instance.queue_proxy(pair.emplace_of(i, timeout_ms))
                                       Return waitfor(ec) AndAlso
                                              goto_next()
                                   End If

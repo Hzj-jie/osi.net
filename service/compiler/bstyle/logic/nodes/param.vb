@@ -37,7 +37,7 @@ Partial Public NotInheritable Class bstyle
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(n.child_count() = 2)
-            rs.push(emplace_make_pair(n.child(1).word().str(), n.child(0).word().str()))
+            rs.push(pair.emplace_of(n.child(1).word().str(), n.child(0).word().str()))
             ' No parameter nesting expected, use read_scoped to reduce the cost of maintaining the state only.
             assert(rs.size() = 1)
             Return True

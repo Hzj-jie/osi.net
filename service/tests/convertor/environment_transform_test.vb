@@ -17,7 +17,7 @@ Public Class environment_transform_test
     Sub New()
         ReDim kv(16 - 1)
         For i As Int32 = 0 To array_size_i(kv) - 1
-            kv(i) = emplace_make_pair(guid_str(), guid_str())
+            kv(i) = pair.emplace_of(guid_str(), guid_str())
         Next
     End Sub
 

@@ -13,13 +13,13 @@ Public Class udp_extension_test
 
     Shared Sub New()
         match_cases = {
-            emplace_make_pair("10.0.0.1", "10.0.0.255"),
-            emplace_make_pair("10.0.0.1", "10.255.255.255")
+            pair.emplace_of("10.0.0.1", "10.0.0.255"),
+            pair.emplace_of("10.0.0.1", "10.255.255.255")
         }
 
         unmatch_cases = {
-            emplace_make_pair("10.0.0.1", "10.0.0.254"),
-            emplace_make_pair("10.0.0.1", "10.0.1.255")
+            pair.emplace_of("10.0.0.1", "10.0.0.254"),
+            pair.emplace_of("10.0.0.1", "10.0.1.255")
         }
     End Sub
 

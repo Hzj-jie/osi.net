@@ -102,7 +102,7 @@ Public Module _slimparser
                     j = l
                 End If
                 If i < j Then
-                    result.emplace_back(make_pair(strmid(text, i, j - i), node_type.text))
+                    result.emplace_back(pair.of(strmid(text, i, j - i), node_type.text))
                 End If
                 i = j
                 assert(i <= l)
@@ -141,7 +141,7 @@ Public Module _slimparser
                         j += adv
                     End If
                     assert(i < j)
-                    result.emplace_back(make_pair(strmid(text, i, j - i), t))
+                    result.emplace_back(pair.of(strmid(text, i, j - i), t))
                     i = j
                 End If
             End While

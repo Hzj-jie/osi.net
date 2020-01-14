@@ -213,10 +213,10 @@ Public Module _headers_extension
                si = constants.headers.values.range.not_presented Then
                 Return Nothing
             End If
-            rs.push_back(make_pair(fi, si))
+            rs.push_back(pair.of(fi, si))
         Next
 
-        Return make_pair(unit, rs)
+        Return pair.of(unit, rs)
     End Function
 
     ' Returns false if request body is not www-form-urlencoded or the encoder is not supported by the system.

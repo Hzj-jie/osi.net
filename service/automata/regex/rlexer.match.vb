@@ -33,7 +33,7 @@ Partial Public NotInheritable Class rlexer
                     Dim new_pos As UInt32 = 0
                     If rs(k).longest_match(i, j, new_pos) Then
                         If new_pos <= [end] Then
-                            matches.emplace_back(emplace_make_pair(k, new_pos))
+                            matches.emplace_back(pair.emplace_of(k, new_pos))
                             If new_pos = [end] Then
                                 Exit For
                             End If
@@ -44,7 +44,7 @@ Partial Public NotInheritable Class rlexer
                     If rs(k).match(i, j, v) AndAlso assert(Not v.null_or_empty()) Then
                         For l As UInt32 = 0 To v.size() - uint32_1
                             If v(l) <= [end] Then
-                                matches.emplace_back(emplace_make_pair(k, v(l)))
+                                matches.emplace_back(pair.emplace_of(k, v(l)))
                                 If word_choice = match_choice.first_defined OrElse v(l) = [end] Then
                                     Exit For
                                 End If

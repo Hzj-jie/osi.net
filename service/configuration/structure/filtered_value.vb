@@ -31,7 +31,7 @@ Public Class filtered_value(Of T)
         m.foreach(Sub(ByRef key As String,
                       ByRef value As T,
                       ByRef vf As vector(Of pair(Of String, String)))
-                      Me.m(key).emplace_back(emplace_make_pair(value, New filter_set(fs, vf)))
+                      Me.m(key).emplace_back(pair.emplace_of(value, New filter_set(fs, vf)))
                   End Sub)
     End Sub
 
@@ -128,7 +128,7 @@ Public Class filtered_value(Of T)
                                    ByRef v As vector(Of pair(Of T, filter_set)))
                                    Dim t As T = Nothing
                                    If [get](v, t, variants) Then
-                                       r.emplace_back(emplace_make_pair(k, t))
+                                       r.emplace_back(pair.emplace_of(k, t))
                                    End If
                                End Sub)
         Return r

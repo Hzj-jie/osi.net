@@ -265,8 +265,8 @@ Public Class segment_tree(Of T As IComparable(Of T), is_acc As _boolean)
         assert(Not r Is Nothing)
         If n.value().has_value() OrElse
            n.is_leaf() Then
-            r.emplace_back(emplace_make_pair(New iterator(n),
-                                             emplace_make_pair(n.range_min(), n.range_max())))
+            r.emplace_back(pair.emplace_of(New iterator(n),
+                                           pair.emplace_of(n.range_min(), n.range_max())))
         Else
             assert(n.has_left_child())
             assert(n.has_right_child())

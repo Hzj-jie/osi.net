@@ -319,7 +319,7 @@ Partial Public Class powerpoint
 
     Public Function remote_endpoint(ByRef o As const_pair(Of String, UInt16)) As Boolean
         If remote_defined() Then
-            o = emplace_make_const_pair(host_or_ip, remote_port)
+            o = const_pair.emplace_of(host_or_ip, remote_port)
             Return True
         Else
             Return False

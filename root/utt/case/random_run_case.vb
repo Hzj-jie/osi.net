@@ -55,7 +55,7 @@ Public Class random_run(Of RT)
         assert(percentage >= 0 AndAlso percentage <= 1)
         assert(Not d Is Nothing)
         If percentage > 0 Then
-            insert_calls(make_pair(percentage, d))
+            insert_calls(pair.of(percentage, d))
         End If
     End Sub
 

@@ -47,7 +47,7 @@ Friend Class math_expression
                                                          {"1--2", error_defination.operand_mismatch}}
 
     Public Shared ReadOnly failure_cases2() As pair(Of String(), String) = {
-                                make_pair({"-1", "/_", "2"}, error_defination.imaginary_number)}
+                                pair.of({"-1", "/_", "2"}, error_defination.imaginary_number)}
 
     'expression can handle - correctly, but 1 2 + will trigger parse_error instead of operand_mismatch
     Public Shared ReadOnly failure_cases3(,) As String = {{"1 2+", error_defination.parse_error},

@@ -161,7 +161,7 @@ Partial Public Class sharedtransmitter_test
                 sc = sharedtransmitter(Of Byte, Byte, component, Int32, parameter).creator.
                          [New]().
                          with_parameter(outp).
-                         with_remote(make_const_pair((+inc).address, inp.local_port)).
+                         with_remote(const_pair.of((+inc).address, inp.local_port)).
                          with_collection(oc).
                          with_functor(f).
                          create()

@@ -51,7 +51,7 @@ Public Class mapheap_cache_test
             Dim k As String = Nothing
             Dim v() As Byte = Nothing
             rnd_key_value(k, v)
-            r.push_back(make_pair(k, v))
+            r.push_back(pair.of(k, v))
         Next
         Return r
     End Function

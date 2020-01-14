@@ -37,7 +37,7 @@ Public Class pool(Of T As Class)
         assert(p(i) Is Nothing)
         n = create()
         assert(Not n Is Nothing)
-        p.emplace(i, emplace_make_pair(n, True))
+        p.emplace(i, pair.emplace_of(n, True))
     End Sub
 
     Public Function unlocked_get(ByRef o As T, ByRef index As Int32) As Boolean

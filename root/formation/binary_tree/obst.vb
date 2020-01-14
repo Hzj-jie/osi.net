@@ -38,12 +38,11 @@ Public Class obst(Of T)
     Public Shared Shadows Function move(ByVal v As obst(Of T)) As obst(Of T)
         If v Is Nothing Then
             Return Nothing
-        Else
-            Dim r As obst(Of T) = Nothing
-            r = New obst(Of T)()
-            move_to(v, r)
-            Return r
         End If
+        Dim r As obst(Of T) = Nothing
+        r = New obst(Of T)()
+        move_to(v, r)
+        Return r
     End Function
 
     Protected Shared Shadows Sub move_to(ByVal from As obst(Of T), ByVal [to] As obst(Of T))
@@ -101,42 +100,41 @@ Public Class obst(Of T)
         If empty() Then
             root = create_node(v)
             s = 1
-            Return emplace_make_pair(New iterator(root), True)
-        Else
-            Dim n As node = Nothing
-            n = If(it.null_or_end(), root, it.node())
-            While True
-                assert(Not n Is Nothing)
-                Dim c As Int32 = 0
-                c = n.compare(v)
-                If c < 0 Then
-                    If n.has_right_child() Then
-                        n = n.right_child()
-                    Else
-                        s += uint32_1
-                        Dim r As node = Nothing
-                        r = create_node(v)
-                        n.replace_right(r)
-                        Return emplace_make_pair(New iterator(r), True)
-                    End If
-                ElseIf c > 0 Then
-                    If n.has_left_child() Then
-                        n = n.left_child()
-                    Else
-                        s += uint32_1
-                        Dim r As node = Nothing
-                        r = create_node(v)
-                        n.replace_left(r)
-                        Return emplace_make_pair(New iterator(r), True)
-                    End If
-                Else
-                    assert(c = 0)
-                    Return emplace_make_pair(New iterator(n), False)
-                End If
-            End While
-            assert(False)
-            Return Nothing
+            Return pair.emplace_of(New iterator(root), True)
         End If
+        Dim n As node = Nothing
+        n = If(it.null_or_end(), root, it.node())
+        While True
+            assert(Not n Is Nothing)
+            Dim c As Int32 = 0
+            c = n.compare(v)
+            If c = 0 Then
+                Return pair.emplace_of(New iterator(n), False)
+            End If
+            If c < 0 Then
+                If n.has_right_child() Then
+                    n = n.right_child()
+                Else
+                    s += uint32_1
+                    Dim r As node = Nothing
+                    r = create_node(v)
+                    n.replace_right(r)
+                    Return pair.emplace_of(New iterator(r), True)
+                End If
+            ElseIf c > 0 Then
+                If n.has_left_child() Then
+                    n = n.left_child()
+                Else
+                    s += uint32_1
+                    Dim r As node = Nothing
+                    r = create_node(v)
+                    n.replace_left(r)
+                    Return pair.emplace_of(New iterator(r), True)
+                End If
+            End If
+        End While
+        assert(False)
+        Return Nothing
     End Function
 
     Public Function emplace(ByVal v As T) As pair(Of iterator, Boolean)

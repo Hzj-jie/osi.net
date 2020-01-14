@@ -33,7 +33,7 @@ Partial Public Class big_uint
         Dim r As big_uint = Nothing
         q = New big_uint(this)
         q.divide(that, r)
-        Return emplace_make_pair(q, r)
+        Return pair.emplace_of(q, r)
     End Operator
 
     Public Shared Operator \(ByVal this As big_uint, ByVal that As UInt32) As big_uint
@@ -47,7 +47,7 @@ Partial Public Class big_uint
         Dim r As UInt32 = 0
         q = New big_uint(this)
         q.divide(that, r)
-        Return emplace_make_pair(q, r)
+        Return pair.emplace_of(q, r)
     End Operator
 
     Public Shared Operator \(ByVal this As big_uint, ByVal that As UInt16) As big_uint

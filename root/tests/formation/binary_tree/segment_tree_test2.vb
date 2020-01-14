@@ -39,13 +39,13 @@ Friend Class segment_tree_case2
         If j > max Then
             max = j
         End If
-        Return If(i <= j, emplace_make_pair(i, j), emplace_make_pair(j, i))
+        Return If(i <= j, pair.emplace_of(i, j), pair.emplace_of(j, i))
     End Function
 
     Private Shared Function rnd_small_segment() As pair(Of Int64, Int64)
         Dim i As Int64 = 0
         i = rnd_position()
-        Return emplace_make_pair(i, i + rnd_uint8())
+        Return pair.emplace_of(i, i + rnd_uint8())
     End Function
 
     Protected Function prepare_segments(ByRef min As Int64,
@@ -56,7 +56,7 @@ Friend Class segment_tree_case2
         r = New vector(Of pair(Of Int64, pair(Of Int64, Int64)))()
         For i As Int32 = 0 To rnd_int(10 * If(isreleasebuild(), 200, 1),
                                       20 * If(isreleasebuild(), 200, 1)) - 1
-            r.emplace_back(emplace_make_pair(If(isreleasebuild(),
+            r.emplace_back(pair.emplace_of(If(isreleasebuild(),
                                                 If(emp, rnd_int64(), rnd_int()),
                                                 rnd_int8()),
                                              rnd_segment(min, max)))
@@ -119,7 +119,7 @@ Friend Class segment_tree_case2
                 Dim v1() As pair(Of Boolean, Int64) = Nothing
                 ReDim v1(r.second - r.first)
                 For j As Int32 = 0 To array_size(v1) - 1
-                    v1(j) = emplace_make_pair(False, int64_0)
+                    v1(j) = pair.emplace_of(False, int64_0)
                 Next
                 For j As Int32 = 0 To its.size() - 1
                     If assertion.is_not_null(its(j)) Then
@@ -136,7 +136,7 @@ Friend Class segment_tree_case2
                 Dim v2() As pair(Of Boolean, Int64) = Nothing
                 ReDim v2(r.second - r.first)
                 For j As Int32 = 0 To array_size(v2) - 1
-                    v2(j) = emplace_make_pair(False, int64_0)
+                    v2(j) = pair.emplace_of(False, int64_0)
                 Next
                 For j As Int64 = r.first To r.second
                     Dim hv As Boolean = False

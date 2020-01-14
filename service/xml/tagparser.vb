@@ -8,9 +8,9 @@ Public Module _tagparser
 
     Sub New()
         ReDim attribute_surrounding(1)
-        attribute_surrounding = {emplace_make_pair(constants.value_leading_str,
+        attribute_surrounding = {pair.emplace_of(constants.value_leading_str,
                                                    constants.value_final_str),
-                                 emplace_make_pair(constants.value_leading_2_str,
+                                 pair.emplace_of(constants.value_leading_2_str,
                                                    constants.value_final_2_str)}
     End Sub
 
@@ -115,7 +115,7 @@ Public Module _tagparser
                                                                constants.value_final_2_len)
                                                 End If
                                             End If
-                                            attributes.emplace_back(emplace_make_pair(f, s))
+                                            attributes.emplace_back(pair.emplace_of(f, s))
                                         End If
                                     Else
                                         Return False

@@ -267,7 +267,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
     Public Function insert(ByVal k() As KEY_T) As pair(Of iterator, Boolean)
         Dim w As iterator = Nothing
         w = find(k, True, False)
-        Return emplace_make_pair(w, Not w.get().has_value)
+        Return pair.emplace_of(w, Not w.get().has_value)
     End Function
 
     Public Function insert(ByVal k() As KEY_T, ByVal v As VALUE_T) As pair(Of iterator, Boolean)

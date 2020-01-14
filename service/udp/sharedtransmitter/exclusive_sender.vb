@@ -23,6 +23,6 @@ Public NotInheritable Class exclusive_sender
     End Sub
 
     Public Overrides Function send(ByVal i() As Byte) As event_comb
-        Return d.send(emplace_make_pair(i, remote))
+        Return d.send(pair.emplace_of(i, remote))
     End Function
 End Class

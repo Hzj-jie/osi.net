@@ -19,11 +19,11 @@ Public NotInheritable Class pattern_match_test
     Private Shared ReadOnly match_pattern_cases As vector(Of pair(Of pair(Of String, String), Boolean))
 
     Private Shared Sub fit_pattern_case(ByVal pattern As String, ByVal str As String, ByVal result As Byte)
-        fit_pattern_cases.emplace_back(emplace_make_pair(emplace_make_pair(pattern, str), result))
+        fit_pattern_cases.emplace_back(pair.emplace_of(pair.emplace_of(pattern, str), result))
     End Sub
 
     Private Shared Sub match_pattern_case(ByVal pattern As String, ByVal str As String, ByVal result As Boolean)
-        match_pattern_cases.emplace_back(emplace_make_pair(emplace_make_pair(pattern, str), result))
+        match_pattern_cases.emplace_back(pair.emplace_of(pair.emplace_of(pattern, str), result))
     End Sub
 
     Shared Sub New()

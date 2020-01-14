@@ -19,7 +19,7 @@ Public Module _ipendpoint
             Return Nothing
         Else
             assert(this.Port() >= min_uint16 AndAlso this.Port() <= max_uint16)
-            Return emplace_make_pair(this.Address(), CUShort(this.Port()))
+            Return pair.emplace_of(this.Address(), CUShort(this.Port()))
         End If
     End Function
 
@@ -39,7 +39,7 @@ Public Module _ipendpoint
         If r Is Nothing Then
             Return Nothing
         Else
-            Return emplace_make_pair(Convert.ToString(r.first), r.second)
+            Return pair.emplace_of(Convert.ToString(r.first), r.second)
         End If
     End Function
 

@@ -15,7 +15,7 @@ Namespace primitive
             make_case(int32_bytes(100), sim2.as_text())}
 
         Private Shared Function make_case(ByVal b() As Byte, ByVal str As String) As pair(Of Byte(), String)
-            Return emplace_make_pair(b, str)
+            Return pair.emplace_of(b, str)
         End Function
 
         Private Shared Function execute(ByVal s As String, Optional ByRef sim As simulator = Nothing) As Boolean

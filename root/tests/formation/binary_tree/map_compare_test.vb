@@ -37,7 +37,7 @@ Public Class map_compare_test
         End Function
 
         Private Shared Function create_pair() As pair(Of String, String)
-            Return emplace_make_pair(guid_str(), guid_str())
+            Return pair.emplace_of(guid_str(), guid_str())
         End Function
 
         Private Shared Function create_vector() As vector(Of pair(Of String, String))

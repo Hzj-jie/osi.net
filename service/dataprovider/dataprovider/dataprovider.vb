@@ -153,6 +153,6 @@ Public Class dataprovider(Of T)
     End Function
 
     Protected Shared Function parameter(ByVal name As String, ByVal value As Object) As pair(Of String, Object)
-        Return emplace_make_pair(name, value)
+        Return pair.emplace_of(name, value)
     End Function
 End Class

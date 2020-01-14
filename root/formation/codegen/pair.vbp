@@ -13,19 +13,19 @@ Imports osi.root.connector
 
 Public NotInheritable Class ##FILENAME##
     Public Shared Function [of](Of FT, ST)(ByVal first As FT, ByVal second As ST) As ##FILENAME##(Of FT, ST)
-        Return ##FILENAME##(Of FT, ST).make_##FILENAME##(first, second)
+        Return ##FILENAME##(Of FT, ST).of(first, second)
     End Function
 
     Public Shared Function emplace_of(Of FT, ST)(ByVal first As FT, ByVal second As ST) As ##FILENAME##(Of FT, ST)
-        Return ##FILENAME##(Of FT, ST).emplace_make_##FILENAME##(first, second)
+        Return ##FILENAME##(Of FT, ST).emplace_of(first, second)
     End Function
 
     Public Shared Function [of](Of FT, ST)(ByVal i as KeyValuePair(Of FT, ST)) As ##FILENAME##(Of FT, ST)
-        Return ##FILENAME##(Of FT, ST).from_key_value_pair(i)
+        Return ##FILENAME##(Of FT, ST).of(i)
     End Function
 
     Public Shared Function emplace_of(Of FT, ST)(ByVal i as KeyValuePair(Of FT, ST)) As ##FILENAME##(Of FT, ST)
-        Return ##FILENAME##(Of FT, ST).emplace_from_key_value_pair(i)
+        Return ##FILENAME##(Of FT, ST).emplace_of(i)
     End Function
 
     Private Sub New()
@@ -63,9 +63,8 @@ Public ##TYPE## ##FILENAME##(Of FT, ST)
                                                bytes_serializer.consume_from(i, s) Then
                                                 o = New ##FILENAME##(Of FT, ST)(f, s)
                                                 Return True
-                                            Else
-                                                Return False
                                             End If
+                                            Return False
                                         End Function)
     End Sub
 
@@ -79,44 +78,44 @@ Public ##TYPE## ##FILENAME##(Of FT, ST)
     End Sub
 #End If
 
-    Public Shared Function make_##FILENAME##(ByVal first As FT, ByVal second As ST) As ##FILENAME##(Of FT, ST)
+    Public Shared Function [of](ByVal first As FT, ByVal second As ST) As ##FILENAME##(Of FT, ST)
         Return New ##FILENAME##(Of FT, ST)(copy_no_error(first), copy_no_error(second))
     End Function
 
-    Public Shared Function make_##FILENAME##(ByVal first As FT) As ##FILENAME##(Of FT, ST)
-        Return make_##FILENAME##(first, Nothing)
+    Public Shared Function [of](ByVal first As FT) As ##FILENAME##(Of FT, ST)
+        Return [of](first, Nothing)
     End Function
 
-    Public Shared Function make_##FILENAME##(ByVal second As ST) As ##FILENAME##(Of FT, ST)
-        Return make_##FILENAME##(Nothing, second)
+    Public Shared Function [of](ByVal second As ST) As ##FILENAME##(Of FT, ST)
+        Return [of](Nothing, second)
     End Function
 
-    Public Shared Function make_##FILENAME##() As ##FILENAME##(Of FT, ST)
-        Return make_##FILENAME##(Nothing, Nothing)
+    Public Shared Function [of]() As ##FILENAME##(Of FT, ST)
+        Return [of](Nothing, Nothing)
     End Function
 
-    Public Shared Function emplace_make_##FILENAME##(ByVal first As FT, ByVal second As ST) As ##FILENAME##(Of FT, ST)
+    Public Shared Function emplace_of(ByVal first As FT, ByVal second As ST) As ##FILENAME##(Of FT, ST)
         Return New ##FILENAME##(Of FT, ST)(first, second)
     End Function
 
-    Public Shared Function emplace_make_##FILENAME##(ByVal first As FT) As ##FILENAME##(Of FT, ST)
-        Return emplace_make_##FILENAME##(first, Nothing)
+    Public Shared Function emplace_of(ByVal first As FT) As ##FILENAME##(Of FT, ST)
+        Return emplace_of(first, Nothing)
     End Function
 
-    Public Shared Function emplace_make_##FILENAME##(ByVal second As ST) As ##FILENAME##(Of FT, ST)
-        Return emplace_make_##FILENAME##(Nothing, second)
+    Public Shared Function emplace_of(ByVal second As ST) As ##FILENAME##(Of FT, ST)
+        Return emplace_of(Nothing, second)
     End Function
 
-    Public Shared Function emplace_make_##FILENAME##() As ##FILENAME##(Of FT, ST)
-        Return emplace_make_##FILENAME##(Nothing, Nothing)
+    Public Shared Function emplace_of() As ##FILENAME##(Of FT, ST)
+        Return emplace_of(Nothing, Nothing)
     End Function
 
-    Public Shared Function from_key_value_pair(ByVal i As KeyValuePair(Of FT, ST)) As ##FILENAME##(Of FT, ST)
-        Return make_##FILENAME##(i.Key(), i.Value())
+    Public Shared Function [of](ByVal i As KeyValuePair(Of FT, ST)) As ##FILENAME##(Of FT, ST)
+        Return [of](i.Key(), i.Value())
     End Function
 
-    Public Shared Function emplace_from_key_value_pair(ByVal i As KeyValuePair(Of FT, ST)) As ##FILENAME##(Of FT, ST)
-        Return emplace_make_##FILENAME##(i.Key(), i.Value())
+    Public Shared Function emplace_of(ByVal i As KeyValuePair(Of FT, ST)) As ##FILENAME##(Of FT, ST)
+        Return emplace_of(i.Key(), i.Value())
     End Function
 
 #If Not IS_CONST AndAlso Not IS_FIRST_CONST Then
@@ -147,9 +146,8 @@ Public ##TYPE## ##FILENAME##(Of FT, ST)
         c = compare(first, other.first)
         If c = 0 Then
             Return compare(second, other.second)
-        Else
-            Return c
         End If
+        Return c
     End Function
 
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
@@ -226,40 +224,7 @@ Public ##TYPE## ##FILENAME##(Of FT, ST)
 #End If
 End ##TYPE##
 
-' TODO: Remove
 Public Module _##FILENAME##
-    Public Function make_##FILENAME##(Of FT, ST)(ByVal first As FT, ByVal second As ST) As ##FILENAME##(Of FT, ST)
-        Return ##FILENAME##.of(first, second)
-    End Function
-
-    Public Function make_##FILENAME##(Of FT, ST)(ByVal first As FT) As ##FILENAME##(Of FT, ST)
-        Return ##FILENAME##(Of FT, ST).make_##FILENAME##(first)
-    End Function
-
-    Public Function make_##FILENAME##(Of FT, ST)(ByVal second As ST) As ##FILENAME##(Of FT, ST)
-        Return ##FILENAME##(Of FT, ST).make_##FILENAME##(second)
-    End Function
-
-    Public Function make_##FILENAME##(Of FT, ST)() As ##FILENAME##(Of FT, ST)
-        Return ##FILENAME##(Of FT, ST).make_##FILENAME##()
-    End Function
-
-    Public Function emplace_make_##FILENAME##(Of FT, ST)(ByVal first As FT, ByVal second As ST) As ##FILENAME##(Of FT, ST)
-        Return ##FILENAME##.emplace_of(first, second)
-    End Function
-
-    Public Function emplace_make_##FILENAME##(Of FT, ST)(ByVal first As FT) As ##FILENAME##(Of FT, ST)
-        Return ##FILENAME##(Of FT, ST).emplace_make_##FILENAME##(first)
-    End Function
-
-    Public Function emplace_make_##FILENAME##(Of FT, ST)(ByVal second As ST) As ##FILENAME##(Of FT, ST)
-        Return ##FILENAME##(Of FT, ST).emplace_make_##FILENAME##(second)
-    End Function
-
-    Public Function emplace_make_##FILENAME##(Of FT, ST)() As ##FILENAME##(Of FT, ST)
-        Return ##FILENAME##(Of FT, ST).emplace_make_##FILENAME##()
-    End Function
-
     <Extension()> Public Function first_or_null(Of FT, ST)(ByVal i As ##FILENAME##(Of FT, ST)) As FT
 #If IS_CLASS Then
         Return If(i Is Nothing, Nothing, i.first)
@@ -279,34 +244,32 @@ Public Module _##FILENAME##
     <Extension()> Public Function to_array(Of T)(ByVal i() As ##FILENAME##(Of T, T)) As T(,)
         If isemptyarray(i) Then
             Return Nothing
-        Else
-            Dim r(,) As T = Nothing
-            ReDim r(CInt(array_size(i) - uint32_1), 2 - 1)
-            For j As Int32 = 0 To CInt(array_size(i) - uint32_1)
-#If IS_CLASS Then
-                If i(j) Is Nothing Then
-                    Continue For
-                End If
-#End If
-                r(j, 0) = i(j).first
-                r(j, 1) = i(j).second
-            Next
-            Return r
         End If
+        Dim r(,) As T = Nothing
+        ReDim r(CInt(array_size(i) - uint32_1), 2 - 1)
+        For j As Int32 = 0 To CInt(array_size(i) - uint32_1)
+#If IS_CLASS Then
+            If i(j) Is Nothing Then
+                Continue For
+            End If
+#End If
+            r(j, 0) = i(j).first
+            r(j, 1) = i(j).second
+        Next
+        Return r
     End Function
 
     <Extension()> Public Function to_two_dimensional_array(Of T)(ByVal i() As ##FILENAME##(Of T, T)) As T()()
         If isemptyarray(i) Then
             Return Nothing
-        Else
-            Dim r()() As T = Nothing
-            ReDim r(CInt(array_size(i) - uint32_1))
-            For j As Int32 = 0 To CInt(array_size(i) - uint32_1)
-                ReDim r(j)(2 - 1)
-                r(j)(0) = i(j).first
-                r(j)(1) = i(j).second
-            Next
-            Return r
         End If
+        Dim r()() As T = Nothing
+        ReDim r(CInt(array_size(i) - uint32_1))
+        For j As Int32 = 0 To CInt(array_size(i) - uint32_1)
+            ReDim r(j)(2 - 1)
+            r(j)(0) = i(j).first
+            r(j)(1) = i(j).second
+        Next
+        Return r
     End Function
 End Module

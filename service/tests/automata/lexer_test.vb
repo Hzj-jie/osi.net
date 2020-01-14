@@ -122,7 +122,7 @@ Public Class lexer_test
             Dim r() As pair(Of String, UInt32) = Nothing
             ReDim r(rnd_int(10, 100))
             For i As Int32 = 0 To array_size(r) - 1
-                r(i) = make_pair(accepted_string(r, i, False),
+                r(i) = pair.of(accepted_string(r, i, False),
                                  rnd_uint(0, 100) + lexer.first_user_type)
             Next
             Return r

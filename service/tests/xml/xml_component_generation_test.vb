@@ -9,13 +9,13 @@ Public Class xml_component_generation_test
 
     Public Overrides Function run() As Boolean
         assertion.is_true(strsame(create_start_tag("tag",
-                                             emplace_make_pair("key", "value"),
-                                             emplace_make_pair("key2", "value2")),
+                                             pair.emplace_of("key", "value"),
+                                             pair.emplace_of("key2", "value2")),
                             "<tag key=""value"" key2=""value2"">"))
         assertion.is_true(strsame(create_start_tag("tag",
                                              True,
-                                             emplace_make_pair("key", "value"),
-                                             emplace_make_pair("key2", "value2")),
+                                             pair.emplace_of("key", "value"),
+                                             pair.emplace_of("key2", "value2")),
                             "<tag key=""value"" key2=""value2""/>"))
         assertion.is_true(strsame(create_end_tag("tag"), "</tag>"))
         assertion.is_true(strsame(create_text("<a b c>"), "&lt;a b c&gt;"))

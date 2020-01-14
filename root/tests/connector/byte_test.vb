@@ -8,7 +8,7 @@ Public Class byte_test
     Inherits [case]
 
     Private Shared Function make_hex_str_case(ByVal b() As Byte, ByVal s As String) As pair(Of Byte(), String)
-        Return emplace_make_pair(b, s)
+        Return pair.emplace_of(b, s)
     End Function
 
     Private Shared ReadOnly hex_str_cases() As pair(Of Byte(), String) = {

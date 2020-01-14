@@ -47,7 +47,7 @@ Friend Class config_streamreader_dataloader
         If strsep(f, f, v, c.filter_key_value_separator, False) AndAlso
            Not String.IsNullOrEmpty(f) AndAlso
            Not String.IsNullOrEmpty(v) Then
-            r.push_back(make_pair(f, v))
+            r.push_back(pair.of(f, v))
             Return True
         Else
             Return False

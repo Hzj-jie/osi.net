@@ -67,7 +67,7 @@ Public Class async_getter_adapter(Of T)
         assert(Not c Is Nothing)
         Dim p As pointer(Of IT) = Nothing
         Dim ec As event_comb = Nothing
-        Return emplace_make_pair(Of async_getter(Of T), type_attribute)(
+        Return pair.emplace_of(Of async_getter(Of T), type_attribute)(
                    New async_thread_unsafe_lazier(Of T)(
                        Function(r As pointer(Of T)) As event_comb
                            Return New event_comb(Function() As Boolean
@@ -101,12 +101,12 @@ Public Class async_getter_adapter(Of T)
 
     Protected Shared Function convert(Of OT As T)(ByVal i As async_getter(Of OT)) _
                                                  As pair(Of async_getter(Of T), type_attribute)
-        Return emplace_make_pair(Of async_getter(Of T), type_attribute)(
+        Return pair.emplace_of(Of async_getter(Of T), type_attribute)(
                    New async_getter_downgrader(Of T, OT)(i), find_type_attribute(Of OT)(i))
     End Function
 
     Protected Shared Function convert(ByVal i As async_getter(Of T)) As pair(Of async_getter(Of T), type_attribute)
-        Return emplace_make_pair(Of async_getter(Of T), type_attribute)(i, type_attribute.of(i))
+        Return pair.emplace_of(Of async_getter(Of T), type_attribute)(i, type_attribute.of(i))
     End Function
 
     Public Function _do(ByVal d As Func(Of T, event_comb)) As event_comb

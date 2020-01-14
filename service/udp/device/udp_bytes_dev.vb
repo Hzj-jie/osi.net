@@ -74,7 +74,7 @@ Public Class udp_bytes_dev
                                   Return ec.end_result() AndAlso
                                          assert(Not buff.empty()) AndAlso
                                          assert(Not remote.empty()) AndAlso
-                                         eva(o, emplace_make_pair(+buff, (+remote).to_string_const_pair())) AndAlso
+                                         eva(o, pair.emplace_of(+buff, (+remote).to_string_const_pair())) AndAlso
                                          goto_end()
                               End Function)
     End Function

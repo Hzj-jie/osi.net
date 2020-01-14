@@ -18,11 +18,11 @@ Public Module _prime_divisors
                 assert(prime(j) <= i)
 #End If
                 If prime(j) = i Then
-                    r.emplace_back(make_pair(i, 1))
+                    r.emplace_back(pair.of(i, 1))
                     i = 1
                 ElseIf i Mod prime(j) = 0 Then
                     Dim p As pair(Of Int32, Int32) = Nothing
-                    p = make_pair(prime(j), 0)
+                    p = pair.of(prime(j), 0)
                     While i Mod prime(j) = 0
                         p.second += 1
                         i \= prime(j)
@@ -37,7 +37,7 @@ Public Module _prime_divisors
 #If DEBUG Then
                 assert(is_prime(i))
 #End If
-                r.emplace_back(make_pair(i, 1))
+                r.emplace_back(pair.of(i, 1))
             End If
             Return r
         End If

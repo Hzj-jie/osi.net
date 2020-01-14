@@ -35,7 +35,7 @@ Public Class pather_test
         Dim r As vector(Of String) = Nothing
         r = New vector(Of String)()
         r.emplace_back(v)
-        cases.emplace_back(emplace_make_pair(path, New case_result(r, normalized, parent, name)))
+        cases.emplace_back(pair.emplace_of(path, New case_result(r, normalized, parent, name)))
     End Sub
 
     Shared Sub New()

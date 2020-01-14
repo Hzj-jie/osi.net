@@ -58,7 +58,7 @@ Public Module _variants
         If r Is Nothing OrElse String.IsNullOrEmpty(key) OrElse String.IsNullOrEmpty(value) Then
             Return False
         Else
-            r.emplace_back(make_pair(key, value))
+            r.emplace_back(pair.of(key, value))
             Return True
         End If
     End Function

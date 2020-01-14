@@ -29,7 +29,7 @@ Namespace logic
 
         Private Shared Function make_case(ByVal result()() As Byte,
                                           ByVal ParamArray lines() As String) As pair(Of String, Byte()())
-            Return emplace_make_pair(make_case(lines), result)
+            Return pair.emplace_of(make_case(lines), result)
         End Function
 
         Shared Sub New()

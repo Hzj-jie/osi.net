@@ -203,7 +203,7 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                   assertion.is_true(ec.end_result())
                                   assertion.is_true(+r)
                                   If d.find(k) = d.end() Then
-                                      d(k) = make_pair(v, t)
+                                      d(k) = pair.of(v, t)
                                   Else
                                       Dim v2() As Byte = Nothing
                                       Dim ov() As Byte = Nothing
@@ -211,7 +211,7 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                       ReDim v2(array_size(ov) + array_size(v) - 1)
                                       memcpy(v2, ov)
                                       memcpy(v2, array_size(ov), v)
-                                      d(k) = make_pair(v2, t)
+                                      d(k) = pair.of(v2, t)
                                   End If
                                   Return goto_end()
                               End Function)
@@ -296,7 +296,7 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                               Function() As Boolean
                                   assertion.is_true(ec.end_result())
                                   assertion.is_true(+r)
-                                  d(k) = make_pair(v, t)
+                                  d(k) = pair.of(v, t)
                                   Return goto_end()
                               End Function)
     End Function
@@ -484,7 +484,7 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                   assertion.is_true(ec.end_result())
                                   assertion.equal(+r, d.find(k) = d.end())
                                   If +r Then
-                                      d(k) = make_pair(v, t)
+                                      d(k) = pair.of(v, t)
                                   End If
                                   Return goto_end()
                               End Function)

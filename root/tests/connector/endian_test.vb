@@ -11,23 +11,23 @@ Public Class endian_test
     Inherits [case]
 
     Private Shared ReadOnly int16_cases() As pair(Of Int16, Int16) = {
-        make_pair(Of Int16, Int16)(&HABCDS, &HCDABS),
-        make_pair(Of Int16, Int16)(&H1234S, &H3412S)
+        pair.of(Of Int16, Int16)(&HABCDS, &HCDABS),
+        pair.of(Of Int16, Int16)(&H1234S, &H3412S)
     }
 
     Private Shared ReadOnly uint16_cases() As pair(Of UInt16, UInt16) = {
-        make_pair(Of UInt16, UInt16)(&HABCDUS, &HCDABUS),
-        make_pair(Of UInt16, UInt16)(&H1234US, &H3412US)
+        pair.of(Of UInt16, UInt16)(&HABCDUS, &HCDABUS),
+        pair.of(Of UInt16, UInt16)(&H1234US, &H3412US)
     }
 
     Private Shared ReadOnly int64_cases() As pair(Of Int64, Int64) = {
-        make_pair(Of Int64, Int64)(&H1234567890ABCDEFL, &HEFCDAB9078563412L),
-        make_pair(Of Int64, Int64)(&H6789234510BCDEFAL, &HFADEBC1045238967L)
+        pair.of(Of Int64, Int64)(&H1234567890ABCDEFL, &HEFCDAB9078563412L),
+        pair.of(Of Int64, Int64)(&H6789234510BCDEFAL, &HFADEBC1045238967L)
     }
 
     Private Shared ReadOnly uint64_cases() As pair(Of UInt64, UInt64) = {
-        make_pair(Of UInt64, UInt64)(&H1234567890ABCDEFUL, &HEFCDAB9078563412UL),
-        make_pair(Of UInt64, UInt64)(&H6789234510BCDEFAUL, &HFADEBC1045238967UL)
+        pair.of(Of UInt64, UInt64)(&H1234567890ABCDEFUL, &HEFCDAB9078563412UL),
+        pair.of(Of UInt64, UInt64)(&H6789234510BCDEFAUL, &HFADEBC1045238967UL)
     }
 
     Public Overrides Function run() As Boolean

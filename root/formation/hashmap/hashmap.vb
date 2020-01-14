@@ -93,7 +93,7 @@ Partial Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
         index = key_index(k)
         Dim p As pair(Of map(Of KEY_T, VALUE_T).iterator, Boolean) = Nothing
         p = data(index).emplace(k, v)
-        Return emplace_make_pair(New iterator(Me, index, p.first), p.second)
+        Return pair.emplace_of(New iterator(Me, index, p.first), p.second)
     End Function
 
     Public Function insert(ByVal other As hashmap(Of KEY_T, VALUE_T, _KEY_TO_INDEX)) As Boolean

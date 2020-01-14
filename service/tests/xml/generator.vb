@@ -45,7 +45,7 @@ Friend Module _generator
         attrs.renew()
         self_close = rnd_bool()
         For i As Int32 = 0 To rnd_int(0, 5) - 1
-            attrs.emplace_back(emplace_make_pair(rnd.key(), rnd.value()))
+            attrs.emplace_back(pair.emplace_of(rnd.key(), rnd.value()))
         Next
         Dim r As String = Nothing
         r = create_start_tag(tag, self_close, attrs)

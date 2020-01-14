@@ -117,7 +117,7 @@ Public NotInheritable Class smap(Of KEY_T, VALUE_T)
 
     Public Overloads Function emplace(ByVal key As KEY_T,
                                       ByVal value As VALUE_T) As pair(Of iterator, Boolean)
-        Return MyBase.emplace(emplace_make_first_const_pair(key, value))
+        Return MyBase.emplace(first_const_pair.emplace_of(key, value))
     End Function
 
     Public Overloads Function insert(ByVal key As KEY_T,
@@ -134,7 +134,7 @@ Public NotInheritable Class smap(Of KEY_T, VALUE_T)
     End Function
 
     Public Shadows Function find(ByVal key As KEY_T) As iterator
-        Return MyBase.find(emplace_make_first_const_pair(Of KEY_T, VALUE_T)(key))
+        Return MyBase.find(first_const_pair(Of KEY_T, VALUE_T).emplace_of(key))
     End Function
 
     Default Public Property at(ByVal key As KEY_T) As VALUE_T

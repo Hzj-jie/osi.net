@@ -40,7 +40,7 @@ Namespace logic
                     name = rnd_name()
                     type = rnd_name()
                 Loop Until s.define(name, type)
-                stack.emplace_back(emplace_make_pair(name, type))
+                stack.emplace_back(pair.emplace_of(name, type))
             Next
 
             For i As Int32 = 0 To CInt(stack.size()) - 1

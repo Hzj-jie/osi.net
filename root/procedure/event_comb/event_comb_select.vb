@@ -53,7 +53,7 @@ Public Class event_comb_select(Of T)
                                        v()
                                        rcec.release()
                                    End Sub
-                              q.emplace(emplace_make_pair(copy_no_error(i), v2))
+                              q.emplace(pair.emplace_of(copy_no_error(i), v2))
                           End Sub)
     End Function
 

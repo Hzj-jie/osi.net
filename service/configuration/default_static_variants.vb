@@ -12,7 +12,7 @@ Friend Module _default_static_variants
     Private ReadOnly default_static_variants As vector(Of pair(Of String, String))
 
     Private Sub push(Of T)(ByVal n As String, ByVal v As T)
-        default_static_variants.push_back(make_pair(n, Convert.ToString(v)))
+        default_static_variants.push_back(pair.of(n, Convert.ToString(v)))
     End Sub
 
     Public Function combine_static_variants(ByVal variants As vector(Of pair(Of String, String))) _

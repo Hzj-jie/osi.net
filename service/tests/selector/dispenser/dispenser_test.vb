@@ -31,7 +31,7 @@ Partial Public NotInheritable Class dispenser_test
 
         For i As Int32 = 0 To data_size - 1
             For j As Int32 = 0 To accepter_count
-                q.emplace(emplace_make_pair(i, j))
+                q.emplace(pair.emplace_of(i, j))
             Next
         Next
 

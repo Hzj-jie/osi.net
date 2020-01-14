@@ -46,7 +46,7 @@ Public Class xml_slimparser_test
             Case Else
                 assert(False)
         End Select
-        r.emplace_back(make_pair(s, t))
+        r.emplace_back(pair.of(s, t))
     End Sub
 
     Private Shared Function auto_test() As Boolean

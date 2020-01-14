@@ -64,7 +64,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
                                 sections.back().second.emplace_back(s)
                             End If
                         Else
-                            sections.emplace_back(make_pair(parse_section_name(inputs(i)),
+                            sections.emplace_back(pair.of(parse_section_name(inputs(i)),
                                                             New vector(Of String)()))
                         End If
                     End If
@@ -128,7 +128,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
                     Else
                         Dim action As String = Nothing
                         action = If(array_size(ss) = 3, Nothing, ss(3))
-                        statuses(ss(0))(ss(1)) = make_pair(ss(2), action)
+                        statuses(ss(0))(ss(1)) = pair.of(ss(2), action)
                     End If
                 Next
                 Return True

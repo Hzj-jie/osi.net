@@ -113,7 +113,7 @@ Partial Public Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As 
         Dim heap_pos As map(Of MAP_KEY, Int64).iterator = Nothing
         heap_pos = _map.find(key)
         If heap_pos = _map.end() Then
-            Return _heap.insert(emplace_make_pair(value, key)) <> npos
+            Return _heap.insert(pair.emplace_of(value, key)) <> npos
         Else
             Dim heap_node As pair(Of HEAP_KEY, MAP_KEY) = Nothing
             heap_node = _heap((+heap_pos).second)

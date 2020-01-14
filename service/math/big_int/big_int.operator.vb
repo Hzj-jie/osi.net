@@ -31,7 +31,7 @@ Partial Public Class big_int
         Dim r As big_int = Nothing
         q = New big_int(this)
         q.divide(that, r)
-        Return emplace_make_pair(q, r)
+        Return pair.emplace_of(q, r)
     End Operator
 
     Public Shared Operator Mod(ByVal this As big_int, ByVal that As big_int) As big_int

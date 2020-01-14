@@ -26,7 +26,7 @@ Public Class istrkeyvt_container
                 If container(Of istrkeyvt).create(names(i), c) Then
                     assert(Not c Is Nothing)
                     assert(c.device_pool() Is Nothing AndAlso c.device() Is Nothing AndAlso Not c.instance() Is Nothing)
-                    ts.emplace_back(emplace_make_pair(+c, names(i)))
+                    ts.emplace_back(pair.emplace_of(+c, names(i)))
                     c.release()
                 Else
                     Return False

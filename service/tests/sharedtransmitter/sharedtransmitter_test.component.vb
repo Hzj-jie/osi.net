@@ -49,7 +49,7 @@ Partial Public Class sharedtransmitter_test
         End Sub
 
         Public Sub receive(ByVal data As Int32, ByVal address As Byte, ByVal port As Byte)
-            pump.emplace(emplace_make_pair(data, emplace_make_const_pair(address, port)))
+            pump.emplace(pair.emplace_of(data, const_pair.emplace_of(address, port)))
         End Sub
 
         Public Sub dispose()

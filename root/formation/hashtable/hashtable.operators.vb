@@ -26,7 +26,7 @@ Partial Public Class hashtable(Of T,
         Dim column As UInt32 = 0
         Dim r As Boolean = False
         r = emplace(value, row, column)
-        Return emplace_make_fast_pair(iterator_at(row, column), r)
+        Return fast_pair.emplace_of(iterator_at(row, column), r)
     End Function
 
     Public Function insert(ByVal value As T) As fast_pair(Of iterator, Boolean)

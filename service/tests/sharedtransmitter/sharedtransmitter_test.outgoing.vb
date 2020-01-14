@@ -34,7 +34,7 @@ Partial Public Class sharedtransmitter_test
             s = sharedtransmitter(Of Byte, Byte, component, Int32, parameter).creator.[New]().
                         with_parameter(param).
                         with_local_port(param.local_port).
-                        with_remote(emplace_make_const_pair(Of Byte, Byte)(100, 100)).
+                        with_remote(const_pair.emplace_of(Of Byte, Byte)(100, 100)).
                         with_data(200).
                         with_collection(c).
                         with_functor(Of functor)().

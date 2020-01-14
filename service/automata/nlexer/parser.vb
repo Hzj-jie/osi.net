@@ -33,7 +33,7 @@ Partial Public NotInheritable Class nlexer
             If Not rule.of(escape(s), r) Then
                 raise_error(error_type.user, "failed to parse rule " + s)
             End If
-            rules.emplace_back(emplace_make_pair(f, r))
+            rules.emplace_back(pair.emplace_of(f, r))
             Return True
         End Function
 

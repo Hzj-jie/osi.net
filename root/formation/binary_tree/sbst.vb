@@ -53,7 +53,7 @@ Public Class sbst(Of T)
     Private Function splay(ByVal r As pair(Of iterator, Boolean)) As pair(Of iterator, Boolean)
         assert(Not r Is Nothing)
         splay(r.first.node())
-        Return emplace_make_pair(New iterator(root), r.second)
+        Return pair.emplace_of(New iterator(root), r.second)
     End Function
 
     Public Shadows Function emplace_hint(ByVal it As iterator, ByVal v As T) As pair(Of iterator, Boolean)

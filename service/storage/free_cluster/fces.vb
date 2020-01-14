@@ -116,7 +116,7 @@ Partial Public Class fces
                         index.file_name(),
                         ", over-written")
         End If
-        m(make_array_pointer(key)) = make_pair(iid, cid)
+        m(make_array_pointer(key)) = pair.of(iid, cid)
     End Sub
 
     Private Function find_cluster_id(ByVal key() As Byte,

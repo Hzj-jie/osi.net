@@ -81,7 +81,7 @@ Partial Public Class listener
                                   End Function,
                                   Function() As Boolean
                                       If ec.end_result() AndAlso Not result.empty() AndAlso Not source.empty() Then
-                                          Return eva(o, emplace_make_pair(+result, +source)) AndAlso
+                                          Return eva(o, pair.emplace_of(+result, +source)) AndAlso
                                                  goto_end()
                                       Else
                                           Return False

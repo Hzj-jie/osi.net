@@ -26,7 +26,7 @@ Partial Public Class hashset(Of T,
         Dim column As [set](Of T).iterator = Nothing
         Dim r As Boolean = False
         r = emplace(value, row, column)
-        Return emplace_make_pair(iterator_at(row, column), r)
+        Return pair.emplace_of(iterator_at(row, column), r)
     End Function
 
     Public Function insert(ByVal value As T) As pair(Of iterator, Boolean)

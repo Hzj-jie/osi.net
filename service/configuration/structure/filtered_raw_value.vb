@@ -17,7 +17,7 @@ Friend Class filtered_raw_value(Of T)
     Public Sub insert(ByVal name As String,
                       ByVal value As T,
                       ByVal filters As vector(Of pair(Of String, String)))
-        m(name).emplace_back(emplace_make_pair(value, filters))
+        m(name).emplace_back(pair.emplace_of(value, filters))
     End Sub
 
     Public Sub foreach(ByVal d As void(Of String, T, vector(Of pair(Of String, String))))

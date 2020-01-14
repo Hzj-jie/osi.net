@@ -30,11 +30,11 @@ Partial Public NotInheritable Class bstyle
 
         Shared Sub New()
             v = vector.of(
-                emplace_make_pair(uint, 4),
-                emplace_make_pair(int, 4),
-                emplace_make_pair(bool, 1),
-                emplace_make_pair([byte], 1),
-                emplace_make_pair(float, 8)
+                pair.emplace_of(uint, 4),
+                pair.emplace_of(int, 4),
+                pair.emplace_of(bool, 1),
+                pair.emplace_of([byte], 1),
+                pair.emplace_of(float, 8)
             )
             type_0_s = vector.of(void)
             type_asterisk_s = vector.of(bigint, biguint, [string])

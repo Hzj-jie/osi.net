@@ -29,7 +29,7 @@ Namespace logic
                     Return False
                 End If
 
-                o.emplace_back(emplace_make_pair(v(p), v(p + uint32_1)))
+                o.emplace_back(pair.emplace_of(v(p), v(p + uint32_1)))
                 p += uint32_2
             End While
             errors.typed_parameters_is_not_closed()

@@ -43,7 +43,7 @@ Public Class strsplit_test
         predefined_cases = New vector(Of case_t)()
         predefined_cases.emplace_back(New case_t("a b ""c d"" ",
                                                  {" "},
-                                                 {emplace_make_pair("""", """")},
+                                                 {pair.emplace_of("""", """")},
                                                  True,
                                                  True,
                                                  True,
@@ -51,7 +51,7 @@ Public Class strsplit_test
                                                  {"a", "b", "c d"}))
         predefined_cases.emplace_back(New case_t("a b ""c d"" ",
                                                  {" "},
-                                                 {emplace_make_pair("""", """")},
+                                                 {pair.emplace_of("""", """")},
                                                  True,
                                                  False,
                                                  True,
@@ -59,7 +59,7 @@ Public Class strsplit_test
                                                  {"a", "b", """c d"""}))
         predefined_cases.emplace_back(New case_t(" a b c d  ",
                                                  {" "},
-                                                 {emplace_make_pair("""", """")},
+                                                 {pair.emplace_of("""", """")},
                                                  False,
                                                  True,
                                                  True,
@@ -67,7 +67,7 @@ Public Class strsplit_test
                                                  {"", "a", "b", "c", "d", "", ""}))
         predefined_cases.emplace_back(New case_t("a b ""c d",
                                                  {" "},
-                                                 {emplace_make_pair("""", """")},
+                                                 {pair.emplace_of("""", """")},
                                                  False,
                                                  False,
                                                  True,
@@ -244,11 +244,11 @@ Public Class strsplit_test
             sps(i) = Convert.ToString(space_chars(i))
         Next
         Return run_random_cases(sps,
-                                {emplace_make_pair(Convert.ToString(character.quote),
+                                {pair.emplace_of(Convert.ToString(character.quote),
                                                    Convert.ToString(character.quote)),
-                                 emplace_make_pair(Convert.ToString(character.single_quotation),
+                                 pair.emplace_of(Convert.ToString(character.single_quotation),
                                                    Convert.ToString(character.single_quotation)),
-                                 emplace_make_pair(Convert.ToString(character.backquote),
+                                 pair.emplace_of(Convert.ToString(character.backquote),
                                                    Convert.ToString(character.backquote))})
     End Function
 

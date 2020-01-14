@@ -26,7 +26,7 @@ Partial Public Class hasharray(Of T,
         Dim row As UInt32 = 0
         Dim r As Boolean = False
         r = emplace(value, column, row)
-        Return emplace_make_fast_pair(iterator_at(column, row), r)
+        Return fast_pair.emplace_of(iterator_at(column, row), r)
     End Function
 
     Public Function insert(ByVal value As T) As fast_pair(Of iterator, Boolean)

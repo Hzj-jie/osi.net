@@ -41,7 +41,7 @@ Friend Class segment_tree_case
         Dim v2 As vector(Of pair(Of Int64, pair(Of Int64, Int64))) = Nothing
         v2 = New vector(Of pair(Of Int64, pair(Of Int64, Int64)))()
         For i As Int32 = 0 To v.size() - 1 Step 2
-            v2.emplace_back(emplace_make_pair(rnd_int64(), emplace_make_pair(v(i), v(i + 1))))
+            v2.emplace_back(pair.emplace_of(rnd_int64(), pair.emplace_of(v(i), v(i + 1))))
         Next
         Return v2
     End Function

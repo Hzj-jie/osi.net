@@ -12,15 +12,15 @@ Public Class map_test2
 
     Private Shared ReadOnly first_round() As pair(Of String, String) =
         {
-            emplace_make_pair("herald", "http-post"),
-            emplace_make_pair("host", "localhost"),
-            emplace_make_pair("port", "11001"),
-            emplace_make_pair("target", "fces")
+            pair.emplace_of("herald", "http-post"),
+            pair.emplace_of("host", "localhost"),
+            pair.emplace_of("port", "11001"),
+            pair.emplace_of("target", "fces")
         }
 
     Private Shared ReadOnly second_round() As pair(Of String, String) =
         {
-            emplace_make_pair("herald", "http-post")
+            pair.emplace_of("herald", "http-post")
         }
 
     Public Overrides Function run() As Boolean

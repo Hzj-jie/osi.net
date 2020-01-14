@@ -19,11 +19,11 @@ Public NotInheritable Class strsplitter
         For i As Int32 = 0 To strlen_i(space_chars) - 1
             default_separators(i) = Convert.ToString(space_chars(i))
         Next
-        default_surround_strs = {emplace_make_pair(Convert.ToString(character.quote),
+        default_surround_strs = {pair.emplace_of(Convert.ToString(character.quote),
                                                    Convert.ToString(character.quote)),
-                                 emplace_make_pair(Convert.ToString(character.single_quotation),
+                                 pair.emplace_of(Convert.ToString(character.single_quotation),
                                                    Convert.ToString(character.single_quotation)),
-                                 emplace_make_pair(Convert.ToString(character.backquote),
+                                 pair.emplace_of(Convert.ToString(character.backquote),
                                                    Convert.ToString(character.backquote))}
     End Sub
 
@@ -165,7 +165,7 @@ Public NotInheritable Class strsplitter
         Dim p() As pair(Of String, String) = Nothing
         ReDim p(array_size_i(surround_strs) - 1)
         For i As Int32 = 0 To array_size_i(surround_strs) - 1
-            p(i) = emplace_make_pair(surround_strs(i), surround_strs(i))
+            p(i) = pair.emplace_of(surround_strs(i), surround_strs(i))
         Next
         Return split(s,
                      separators,

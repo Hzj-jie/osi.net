@@ -40,7 +40,7 @@ Partial Public Class rlexer
                 raise_error(error_type.user, "word ", f, " has empty definition")
                 Return False
             End If
-            words.emplace_back(emplace_make_pair(f, s))
+            words.emplace_back(pair.emplace_of(f, s))
             Return True
         End Function
 
@@ -55,7 +55,7 @@ Partial Public Class rlexer
             If Not strsep(s, k, v, define_separator) Then
                 Return False
             End If
-            macros.emplace_back(emplace_make_pair(k, v))
+            macros.emplace_back(pair.emplace_of(k, v))
             Return True
         End Function
 

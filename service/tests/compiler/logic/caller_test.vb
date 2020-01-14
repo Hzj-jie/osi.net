@@ -27,9 +27,9 @@ Namespace logic
                                       New add(types.empty, "result", "parameter1", "parameter2"),
                                       New [return](anchors, types.empty, "add", "result")
                                   )),
-                                  emplace_make_pair("parameter1", types.variable_type),
-                                  emplace_make_pair("parameter2", types.variable_type),
-                                  emplace_make_pair("parameter3", types.variable_type)),
+                                  pair.emplace_of("parameter1", types.variable_type),
+                                  pair.emplace_of("parameter2", types.variable_type),
+                                  pair.emplace_of("parameter3", types.variable_type)),
                        New define("parameter1", types.variable_type),
                        New define("parameter2", types.variable_type),
                        New define("parameter3", types.variable_type),

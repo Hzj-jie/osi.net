@@ -30,7 +30,7 @@ Public Class ikeyvalue2_ikeyvt2(Of SEEK_RESULT)
 
     Private Shared Function merge_seek_result(ByVal dr As SEEK_RESULT,
                                               ByVal tr As SEEK_RESULT) As pair(Of SEEK_RESULT, SEEK_RESULT)
-        Return make_pair(dr, tr)
+        Return pair.of(dr, tr)
     End Function
 
     Public Function append_existing(key As pair(Of SEEK_RESULT, SEEK_RESULT),
