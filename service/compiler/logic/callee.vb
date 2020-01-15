@@ -59,6 +59,8 @@ Namespace logic
                 Return False
             End If
             ' No need to use scope_wrapper, as the pops are after the rest instruction and have no effect.
+            ' Meanwhile return-value and parameters are defined within the scope, but are not pushed, so they should not
+            ' be popped.
             scope = scope.start_scope()
             ' caller should setup the stack.
             ' Note, variables are using reverse order to match the stack, and here the logic "define" but not "push" to
