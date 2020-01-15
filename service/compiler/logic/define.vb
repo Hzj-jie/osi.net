@@ -41,7 +41,7 @@ Namespace logic
             Dim t As String = Nothing
             If type.StartsWith(return_type_of) Then
                 t = type.Substring(return_type_of.Length())
-                If Not anchors.type_of(t, r) Then
+                If Not anchors.return_type_of(t, r) Then
                     errors.anchor_undefined(t)
                     Return False
                 End If

@@ -11,9 +11,19 @@ Imports osi.service.interpreter.primitive
 Namespace logic
     Public NotInheritable Class scope
         Private ReadOnly parent As scope
-        Private ReadOnly offsets As map(Of String, UInt64)
-        Private ReadOnly types As map(Of String, String)
+        Private ReadOnly m As map(Of String, variable_ref)
         Private child As scope
+
+        Private NotInheritable Class variable_ref
+            Public ReadOnly offset As UInt64
+            Public ReadOnly type As String
+
+            Public Sub New(ByVal offset As UInt64, ByVal type As String)
+                assert(Not type.null_or_whitespace())
+                Me.offset = offset
+                Me.type = type
+            End Sub
+        End Class
 
         Public Sub New()
             Me.New(Nothing)
@@ -21,8 +31,7 @@ Namespace logic
 
         Public Sub New(ByVal parent As scope)
             Me.parent = parent
-            Me.offsets = New map(Of String, UInt64)()
-            Me.types = New map(Of String, String)()
+            Me.m = New map(Of String, variable_ref)()
             Me.child = Nothing
         End Sub
 
@@ -42,12 +51,11 @@ Namespace logic
         Public Function define(ByVal name As String, ByVal type As String) As Boolean
             assert(Not name.null_or_whitespace())
             assert(Not type.null_or_whitespace())
-            If offsets.find(name) <> offsets.end() Then
+            If m.find(name) <> m.end() Then
                 errors.redefine(name, type, Me.type(name))
                 Return False
             End If
-            offsets(name) = size() + uint64_1
-            types(name) = type
+            m.emplace(name, New variable_ref(size() + uint64_1, type))
             Return True
         End Function
 
@@ -60,17 +68,16 @@ Namespace logic
         End Function
 
         Public Function size() As UInt32
-            assert(offsets.size() = types.size())
-            Return offsets.size()
+            Return m.size()
         End Function
 
         ' Find @name in @m, and return the offset to the "end" / "top" of current scope.
         Private Function find(ByVal name As String, ByRef offset As UInt64) As Boolean
-            Dim o As UInt64 = 0
-            If Not offsets.find(name, o) Then
+            Dim o As variable_ref = Nothing
+            If Not m.find(name, o) Then
                 Return False
             End If
-            offset = size() - o
+            offset = size() - o.offset
             Return True
         End Function
 
@@ -78,7 +85,9 @@ Namespace logic
             Dim s As scope = Nothing
             s = Me
             While Not s Is Nothing
-                If s.types.find(name, o) Then
+                Dim r As variable_ref = Nothing
+                If s.m.find(name, r) Then
+                    o = r.type
                     Return True
                 End If
                 s = s.parent
@@ -102,9 +111,8 @@ Namespace logic
                     If s.is_root() Then
                         ' To allow a callee to access global variables.
                         Return data_ref.abs(CLng(s.size() - offset - 1), o)
-                    Else
-                        Return data_ref.rel(CLng(offset + size), o)
                     End If
+                    Return data_ref.rel(CLng(offset + size), o)
                 End If
                 size += s.size()
                 s = s.parent

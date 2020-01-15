@@ -10,8 +10,8 @@ param-with-comma param comma
 param name name
 
 paragraph [sentence, multi-sentence-paragraph]
-sentence [sentence-with-semi-colon, sentence-without-semi-colon, semi-colon]
-sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, function-call, kw-break] semi-colon
+sentence [sentence-with-semi-colon, sentence-without-semi-colon]
+sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, ignore-return-function-call, kw-break, logic]? semi-colon
 sentence-without-semi-colon [condition, while, for-loop]
 
 multi-sentence-paragraph start-paragraph [sentence]* end-paragraph
@@ -35,6 +35,10 @@ unary-operation-value [pre-operation-value, post-operation-value]
 pre-operation-value [not, self-inc, self-dec] value
 post-operation-value value [self-inc, self-dec]
 binary-operation-value value [add, minus, multiply, divide, mod, power, bit-and, bit-or, and, or, less-than, greater-than, less-or-equal, greater-or-equal, equal] value
+
+variable-name name
+
+ignore-return-function-call function-call
 
 function-call name start-bracket [value-list]? end-bracket
 value-list [value-with-comma]* value

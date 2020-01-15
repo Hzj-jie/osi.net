@@ -33,7 +33,7 @@ Namespace logic
                                      ByVal name As String,
                                      ByRef o As variable) As Boolean
             assert(Not scope Is Nothing)
-            assert(Not String.IsNullOrEmpty(name))
+            assert(Not name.null_or_whitespace())
             Dim type As String = Nothing
             Dim ref As String = Nothing
             If Not scope.export(name, ref) OrElse Not assert(scope.type(name, type)) Then

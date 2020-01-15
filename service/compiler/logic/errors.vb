@@ -119,6 +119,14 @@ Namespace logic
             raise_error(error_type.user, "Right bracket is not found, paragraph is not closed.")
         End Sub
 
+        Public Shared Sub mismatch_callee_parameters(ByVal callee_name As String, ByVal parameters() As String)
+            raise_error(error_type.user,
+                        "Parameters [",
+                        parameters,
+                        "] does not match the parameters of callee ",
+                        callee_name)
+        End Sub
+
         Private Sub New()
         End Sub
     End Class

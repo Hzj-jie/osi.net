@@ -84,21 +84,41 @@ Namespace logic
         Private Function define_parameters(ByVal sw As scope_wrapper, ByVal o As vector(Of String)) As Boolean
             assert(Not sw Is Nothing)
             assert(Not o Is Nothing)
+            Dim callee_params As const_array(Of String) = Nothing
+            If Not anchors.parameter_types_of(name, callee_params) Then
+                errors.anchor_undefined(name)
+                Return False
+            End If
+            If array_size(parameters) <> callee_params.size() Then
+                errors.mismatch_callee_parameters(name, parameters)
+                Return False
+            End If
             For i As Int32 = 0 To array_size_i(parameters) - 1
-                Dim var As variable = Nothing
-                If Not variable.[New](sw.scope(), types, parameters(i), var) Then
-                    Return False
-                End If
-
+                Dim parameter_name_place_holder As String = Nothing
+                parameter_name_place_holder = strcat("@parameter_", i, "_of_", name, "_place_holder")
                 If Not define.export(anchors,
-                                     strcat("@parameter_", i, "_of_", name, "_place_holder"),
-                                     var.type,
+                                     parameter_name_place_holder,
+                                     callee_params(CUInt(i)),
                                      sw.scope(),
                                      o) Then
                     Return False
                 End If
 
-                o.emplace_back(instruction_builder.str(command.cp, data_ref.rel(0), var))
+                Dim target As variable = Nothing
+                If Not variable.[New](sw.scope(), types, parameter_name_place_holder, target) Then
+                    Return False
+                End If
+
+                Dim var As variable = Nothing
+                If Not variable.[New](sw.scope(), types, parameters(i), var) Then
+                    Return False
+                End If
+
+                Dim ins As String = Nothing
+                If Not target.copy_from(var, ins) Then
+                    Return False
+                End If
+                o.emplace_back(ins)
             Next
             Return True
         End Function

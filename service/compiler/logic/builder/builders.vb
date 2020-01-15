@@ -53,7 +53,13 @@ Namespace logic
                                          ByVal parameters As vector(Of pair(Of String, String)),
                                          ByVal paragraph As Func(Of Boolean)) As callee_builder_12
             assert(Not ta Is Nothing)
-            Return of_callee(name, ta(type), parameters, paragraph)
+            Return of_callee(name,
+                             ta(type),
+                             parameters.map(Function(ByVal i As pair(Of String, String)) As pair(Of String, String)
+                                                assert(Not i Is Nothing)
+                                                Return pair.emplace_of(i.first, ta(i.second))
+                                            End Function),
+                             paragraph)
         End Function
 
         Private Sub New()

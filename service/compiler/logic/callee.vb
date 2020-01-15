@@ -39,6 +39,15 @@ Namespace logic
             Me.New(anchors, name, type, unique_ptr.[New](parameters), paragraph)
         End Sub
 
+        Private Function parameter_types() As String()
+            Dim r() As String = Nothing
+            ReDim r(array_size_i(parameters) - 1)
+            For i As Int32 = 0 To array_size_i(parameters) - 1
+                r(i) = parameters(i).second
+            Next
+            Return r
+        End Function
+
         Public Function export(ByVal scope As scope,
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not scope Is Nothing)
@@ -46,8 +55,7 @@ Namespace logic
             Dim pos As UInt32 = 0
             pos = o.size()
             o.emplace_back(String.Empty)
-            If Not anchors.define(name, o, type) Then
-                errors.anchor_redefined(name, anchors(name))
+            If Not anchors.define(name, o, type, parameter_types) Then
                 Return False
             End If
             ' No need to use scope_wrapper, as the pops are after the rest instruction and have no effect.

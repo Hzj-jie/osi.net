@@ -19,7 +19,7 @@ Namespace logic
 
         Protected Overrides Function result_restrict(ByVal result As variable) As Boolean
             assert(Not result Is Nothing)
-            Return result.is_variable_size()
+            Return True
         End Function
     End Class
 End Namespace
