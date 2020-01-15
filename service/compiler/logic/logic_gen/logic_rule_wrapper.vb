@@ -9,6 +9,36 @@ Imports osi.service.compiler.logic
 Imports osi.service.interpreter.primitive
 Imports exportable = osi.service.compiler.logic.exportable
 
+Public Interface logic_gen
+    Inherits code_gen(Of writer)
+End Interface
+
+Public MustInherit Class logic_gen_wrapper
+    Inherits code_gen_wrapper(Of writer)
+
+    Protected Sub New(ByVal l As logic_gens)
+        MyBase.New(l)
+    End Sub
+
+    Protected Function logic_gen_of(Of T As logic_gen)() As T
+        Return code_gen_of(Of T)()
+    End Function
+End Class
+
+Public NotInheritable Class logic_gens
+    Inherits code_gens(Of writer)
+End Class
+
+Namespace logic
+    Public Interface statement
+        Inherits statement(Of writer)
+    End Interface
+
+    Public NotInheritable Class statements
+        Inherits statements(Of writer)
+    End Class
+End Namespace
+
 Public NotInheritable Class logic_rule_wrapper
     Public ReadOnly type_alias As type_alias
 
