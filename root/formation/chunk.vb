@@ -44,10 +44,23 @@ Public NotInheritable Class chunk
         Return from_bytes(New piece(b))
     End Function
 
+    Public Shared Function from_bytes(ByVal b() As Byte, ByRef o() As Byte) As Boolean
+        Return from_bytes(New piece(b), o)
+    End Function
+
     Public Shared Function from_bytes(ByVal v As piece) As Byte()
+        Dim o() As Byte = Nothing
+        assert(from_bytes(v, o))
+        Return o
+    End Function
+
+    Public Shared Function from_bytes(ByVal v As piece, ByRef o() As Byte) As Boolean
         Using r As MemoryStream = New MemoryStream()
-            assert(append_to(v, r))
-            Return r.ToArray()
+            If Not append_to(v, r) Then
+                Return False
+            End If
+            o = r.ToArray()
+            Return True
         End Using
     End Function
 
@@ -217,6 +230,9 @@ Public NotInheritable Class chunks
     End Function
 
     Public Function import(ByVal b() As Byte) As Boolean
+        If b Is Nothing Then
+            Return False
+        End If
         Using ms As MemoryStream = memory_stream.of(b)
             Return import(ms)
         End Using

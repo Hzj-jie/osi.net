@@ -8,7 +8,6 @@ Option Strict On
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.service.convertor
 Imports osi.service.math
 
 Namespace primitive
@@ -361,7 +360,11 @@ Namespace primitive
                 assert(Not imi Is Nothing)
                 Dim p0 As pointer(Of Byte()) = Nothing
                 p0 = Me.p0(imi)
-                p0.set(array_concat(+p0, chunk.from_bytes(+p1(imi))))
+                Dim b() As Byte = Nothing
+                If Not chunk.from_bytes(+p1(imi), b) Then
+                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
+                End If
+                p0.set(array_concat(+p0, b))
             End Sub
         End Class
 

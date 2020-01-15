@@ -65,14 +65,9 @@ Namespace logic
             assert(Not scope Is Nothing)
             assert(Not o Is Nothing)
             Dim result_type As String = Nothing
-            If result Then
-                Dim var As variable = Nothing
-                If Not variable.[New](scope, types, +result, var) Then
-                    Return False
-                End If
-                result_type = var.type
-            Else
-                result_type = types.variable_type
+            If Not anchors.return_type_of(name, result_type) Then
+                errors.anchor_undefined(name)
+                Return False
             End If
             If Not define.export(anchors, return_value_place_holder_name, result_type, scope, o) Then
                 Return False
