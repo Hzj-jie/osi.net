@@ -93,7 +93,7 @@
     <Compile Include="nlexer\matcher\matchers.vb" />
     <Compile Include="nlexer\nlexer.vb" />
     <Compile Include="nlexer\matcher\reverse_matcher.vb" />
-    <Compile Include="nlexer\parser.vb" />
+    <Compile Include="nlexer\rule_file.vb" />
     <Compile Include="nlexer\result.vb" />
     <Compile Include="nlexer\rule.vb" />
     <Compile Include="nlexer\matcher\single_char_matcher.vb" />

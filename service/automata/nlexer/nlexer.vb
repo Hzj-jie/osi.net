@@ -100,10 +100,10 @@ Partial Public NotInheritable Class nlexer
         Return [optional].empty(Of vector(Of result))()
     End Function
 
-    Public Shared Function [of](ByVal parse As Func(Of parser, Boolean), ByRef o As nlexer) As Boolean
+    Public Shared Function [of](ByVal parse As Func(Of rule_file, Boolean), ByRef o As nlexer) As Boolean
         assert(Not parse Is Nothing)
-        Dim p As parser = Nothing
-        p = New parser()
+        Dim p As rule_file = Nothing
+        p = New rule_file()
         If parse(p) Then
             o = p.export()
             Return True
@@ -112,7 +112,7 @@ Partial Public NotInheritable Class nlexer
     End Function
 
     Public Shared Function [of](ByVal i As String, ByRef o As nlexer) As Boolean
-        Return [of](Function(ByVal p As parser) As Boolean
+        Return [of](Function(ByVal p As rule_file) As Boolean
                         assert(Not p Is Nothing)
                         Return p.parse_content(i)
                     End Function,
@@ -120,7 +120,7 @@ Partial Public NotInheritable Class nlexer
     End Function
 
     Public Shared Function [of](ByVal ls() As String, ByRef o As nlexer) As Boolean
-        Return [of](Function(ByVal p As parser) As Boolean
+        Return [of](Function(ByVal p As rule_file) As Boolean
                         assert(Not p Is Nothing)
                         Return p.parse(ls)
                     End Function,
@@ -128,7 +128,7 @@ Partial Public NotInheritable Class nlexer
     End Function
 
     Public Shared Function of_file(ByVal file As String, ByRef o As nlexer) As Boolean
-        Return [of](Function(ByVal p As parser) As Boolean
+        Return [of](Function(ByVal p As rule_file) As Boolean
                         assert(Not p Is Nothing)
                         Return p.parse_file(file)
                     End Function,

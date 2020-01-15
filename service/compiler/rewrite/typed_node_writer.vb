@@ -9,7 +9,9 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
 
-Partial Public NotInheritable Class rewrite
+Partial Public NotInheritable Class rewriters
+    Inherits code_gens(Of typed_node_writer)
+
     Public NotInheritable Class typed_node_writer
         Private ReadOnly v As vector(Of Object)
 
