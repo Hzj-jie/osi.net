@@ -61,28 +61,28 @@ Namespace logic
         End Sub
 
         ' Forward return-value to scope_wrapper.
-        Private Function define_return_value(ByVal sw As scope_wrapper, ByVal o As vector(Of String)) As Boolean
-            assert(Not sw Is Nothing)
+        Private Function define_return_value(ByVal scope As scope, ByVal o As vector(Of String)) As Boolean
+            assert(Not scope Is Nothing)
             assert(Not o Is Nothing)
             Dim result_type As String = Nothing
             If result Then
                 Dim var As variable = Nothing
-                If Not variable.[New](sw.scope(), types, +result, var) Then
+                If Not variable.[New](scope, types, +result, var) Then
                     Return False
                 End If
                 result_type = var.type
             Else
                 result_type = types.variable_type
             End If
-            If Not define.export(anchors, return_value_place_holder_name, result_type, sw.scope(), o) Then
+            If Not define.export(anchors, return_value_place_holder_name, result_type, scope, o) Then
                 Return False
             End If
             Return True
         End Function
 
         ' Forward parameters to scope_wrapper.
-        Private Function define_parameters(ByVal sw As scope_wrapper, ByVal o As vector(Of String)) As Boolean
-            assert(Not sw Is Nothing)
+        Private Function define_parameters(ByVal scope As scope, ByVal o As vector(Of String)) As Boolean
+            assert(Not scope Is Nothing)
             assert(Not o Is Nothing)
             Dim callee_params As const_array(Of String) = Nothing
             If Not anchors.parameter_types_of(name, callee_params) Then
@@ -99,18 +99,18 @@ Namespace logic
                 If Not define.export(anchors,
                                      parameter_name_place_holder,
                                      callee_params(CUInt(i)),
-                                     sw.scope(),
+                                     scope,
                                      o) Then
                     Return False
                 End If
 
                 Dim target As variable = Nothing
-                If Not variable.[New](sw.scope(), types, parameter_name_place_holder, target) Then
+                If Not variable.[New](scope, types, parameter_name_place_holder, target) Then
                     Return False
                 End If
 
                 Dim var As variable = Nothing
-                If Not variable.[New](sw.scope(), types, parameters(i), var) Then
+                If Not variable.[New](scope, types, parameters(i), var) Then
                     Return False
                 End If
 
@@ -124,17 +124,17 @@ Namespace logic
         End Function
 
         ' Forward return-value from scope_wrapper.
-        Private Function forward_to_result(ByVal sw As scope_wrapper,
+        Private Function forward_to_result(ByVal scope As scope,
                                            ByVal o As vector(Of String)) As Boolean
-            assert(Not sw Is Nothing)
+            assert(Not scope Is Nothing)
             assert(Not o Is Nothing)
             If Not result Then
                 Return True
             End If
             Dim result_var As variable = Nothing
-            assert(variable.[New](sw.scope(), types, +result, result_var))
+            assert(variable.[New](scope, types, +result, result_var))
             Dim return_value_var As variable = Nothing
-            assert(variable.[New](sw.scope(), types, return_value_place_holder_name, return_value_var))
+            assert(variable.[New](scope, types, return_value_place_holder_name, return_value_var))
             Dim s As String = Nothing
             If Not result_var.move_from(return_value_var, s) Then
                 Return False
@@ -149,10 +149,10 @@ Namespace logic
             assert(Not o Is Nothing)
             ' rel(array_size(parameters)) is for return value.
             Using sw As scope_wrapper = New scope_wrapper(scope, o)
-                If Not define_return_value(sw, o) Then
+                If Not define_return_value(sw.scope(), o) Then
                     Return False
                 End If
-                If Not define_parameters(sw, o) Then
+                If Not define_parameters(sw.scope(), o) Then
                     Return False
                 End If
                 o.emplace_back(instruction_builder.str(command.stst))
@@ -163,7 +163,7 @@ Namespace logic
                     Return False
                 End If
                 o.emplace_back(instruction_builder.str(command.jump, data_ref.abs(pos)))
-                If Not forward_to_result(sw, o) Then
+                If Not forward_to_result(sw.scope(), o) Then
                     Return False
                 End If
             End Using
