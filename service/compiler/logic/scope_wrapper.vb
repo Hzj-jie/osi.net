@@ -9,7 +9,7 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public Class scope_wrapper
+    Public NotInheritable Class scope_wrapper
         Implements IDisposable
 
         Private ReadOnly new_scope As scope
