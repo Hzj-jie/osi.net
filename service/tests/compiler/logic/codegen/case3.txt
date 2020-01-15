@@ -38,7 +38,7 @@ while_then continue {
   divide result rnd rnd 3
 
   define choose bool
-  equal choose rnd 0
+  equal choose result 0
   if choose {
     caller method1 ( i )
   }
