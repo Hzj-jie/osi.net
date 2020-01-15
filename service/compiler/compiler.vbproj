@@ -186,6 +186,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="rewrite\rewrite.vb" />
+    <Compile Include="rewrite\code_gen.vb" />
+    <Compile Include="rewrite\statements.vb" />
+    <Compile Include="rewrite\typed_node_writer.vb" />
     <Compile Include="rule_wrapper.vb" />
   </ItemGroup>
   <ItemGroup>

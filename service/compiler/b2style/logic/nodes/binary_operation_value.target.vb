@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class binary_operation_value

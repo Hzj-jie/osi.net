@@ -3,7 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
@@ -19,27 +18,42 @@ Namespace logic
             e = New vector(Of String)()
         End Sub
 
-        Public Sub append(ByVal s As ValueType)
+        Public Sub append(ByVal s As UInt32)
             v.emplace_back(s)
         End Sub
 
-        Public Sub append(ByVal s As Object)
+        Public Sub append(ByVal s As String)
+            ' Allow appending newline characters.
+            assert(Not s.null_or_empty())
+            v.emplace_back(s)
+        End Sub
+
+        Public Sub append(ByVal s As bstyle.value.type_ref)
+            assert(Not s Is Nothing)
+            v.emplace_back(s)
+        End Sub
+
+        Public Sub append(ByVal s As data_block)
             assert(Not s Is Nothing)
             v.emplace_back(s)
         End Sub
 
         Public Sub append(ByVal v As vector(Of String))
             assert(Not v Is Nothing)
-            append(v.str(character.blank))
+            If Not v.empty() Then
+                append(v.str(character.blank))
+            End If
         End Sub
 
         Public Sub append(ByVal v As vector(Of pair(Of String, String)))
             assert(Not v Is Nothing)
-            append(v.str(Function(ByVal x As pair(Of String, String)) As String
-                             assert(Not x Is Nothing)
-                             Return strcat(x.first, character.blank, x.second)
-                         End Function,
+            If Not v.empty() Then
+                append(v.str(Function(ByVal x As pair(Of String, String)) As String
+                                 assert(Not x Is Nothing)
+                                 Return strcat(x.first, character.blank, x.second)
+                             End Function,
                          character.blank))
+            End If
         End Sub
 
         Public Function append(ByVal a As Func(Of Boolean)) As Boolean

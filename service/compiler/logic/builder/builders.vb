@@ -23,15 +23,16 @@ Namespace logic
             Return of_define(name, ta(type))
         End Function
 
-        Public Shared Function of_define(ByVal name As String, ByVal type As Object) As define_builder_24_1
+        Public Shared Function of_define(ByVal name As String,
+                                         ByVal type As bstyle.value.type_ref) As define_builder_24_1
             Return New define_builder_24_1(name, type)
         End Function
 
         Public NotInheritable Class define_builder_24_1
             Private ReadOnly name As String
-            Private ReadOnly type As Object
+            Private ReadOnly type As bstyle.value.type_ref
 
-            Public Sub New(ByVal name As String, ByVal type As Object)
+            Public Sub New(ByVal name As String, ByVal type As bstyle.value.type_ref)
                 assert(Not name.null_or_whitespace())
                 assert(Not type Is Nothing)
                 Me.name = name

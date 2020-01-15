@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.formation
+Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class value_list
