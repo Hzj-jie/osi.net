@@ -9,7 +9,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public NotInheritable Class variable
-        Public ReadOnly scope As scope
+        Private ReadOnly scope As scope
         Public ReadOnly name As String
         Public ReadOnly type As String
         Public ReadOnly size As [optional](Of UInt32)
