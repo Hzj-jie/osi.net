@@ -61,13 +61,13 @@ Namespace logic
             ' No need to use scope_wrapper, as the pops are after the rest instruction and have no effect.
             scope = scope.start_scope()
             ' caller should setup the stack.
-            If Not return_value_of.define(scope, name, parameters, type) Then
+            ' Note, variables are using reverse order to match the stack, and here the logic "define" but not "push" to
+            ' use variables from the caller side.
+            If Not return_value_of.define(scope, name, type) Then
                 Return False
             End If
             For i As Int32 = 0 To array_size_i(parameters) - 1
-                If Not scope.define(parameters(i).first,
-                                    CUInt(array_size_i(parameters) - i - 1),
-                                    parameters(i).second) Then
+                If Not scope.define(parameters(i).first, parameters(i).second) Then
                     Return False
                 End If
             Next

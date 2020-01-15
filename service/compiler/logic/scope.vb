@@ -49,17 +49,13 @@ Namespace logic
         End Function
 
         Public Function define(ByVal name As String, ByVal type As String) As Boolean
-            Return define(name, size() + uint32_1, type)
-        End Function
-
-        Public Function define(ByVal name As String, ByVal offset As UInt64, ByVal type As String) As Boolean
             assert(Not name.null_or_whitespace())
             assert(Not type.null_or_whitespace())
             If m.find(name) <> m.end() Then
                 errors.redefine(name, type, Me.type(name))
                 Return False
             End If
-            m.emplace(name, New variable_ref(offset, type))
+            m.emplace(name, New variable_ref(size() + uint32_1, type))
             Return True
         End Function
 

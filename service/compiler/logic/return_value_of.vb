@@ -11,9 +11,8 @@ Namespace logic
     Public NotInheritable Class return_value_of
         Public Shared Function define(ByVal scope As scope,
                                       ByVal name As String,
-                                      ByVal parameters() As pair(Of String, String),
                                       ByVal type As String) As Boolean
-            Return scope.define(variable_name(name), array_size(parameters), type)
+            Return scope.define(variable_name(name), type)
         End Function
 
         Public Shared Function retrieve(ByVal scope As scope,
