@@ -8,6 +8,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata.syntaxer
 
+' TODO: Merge with matching_group
 Partial Public NotInheritable Class nlexer
     Private ReadOnly rs As vector(Of pair(Of String, rule))
 
@@ -28,7 +29,7 @@ Partial Public NotInheritable Class nlexer
         While j < rs.size()
             Dim r As [optional](Of UInt32) = Nothing
             r = rs(j).second.match(i, pos)
-            If (Not r.empty()) AndAlso ((Not max) OrElse (+max).end < (+r)) Then
+            If (Not r.empty()) AndAlso (+r > pos) AndAlso ((Not max) OrElse (+max).end < (+r)) Then
                 max = [optional].of(New result(pos, +r, rs(j).first, j))
             End If
             j += uint32_1

@@ -28,8 +28,7 @@ Public NotInheritable Class bstyle_test
         assertion.equal(io.output(), "Hello World")
     End Sub
 
-    ' TODO: Does not work
-    '<test>
+    <test>
     Private Shared Sub case2()
         Dim io As console_io.test_wrapper = Nothing
         io = New console_io.test_wrapper()
@@ -37,7 +36,7 @@ Public NotInheritable Class bstyle_test
         assertion.is_true(bstyle.with_functions(New interrupts(+io)).parse(_bstyle_test_data.case2.as_text(), e))
         assertion.is_not_null(e)
         e.execute()
-        assertion.equal(io.output(), "Hello World")
+        assertion.equal(io.output(), "False")
     End Sub
 
     Private Sub New()

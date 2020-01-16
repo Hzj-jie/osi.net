@@ -8,6 +8,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Partial Public NotInheritable Class syntaxer
+    ' TODO: Merge with nlexer
     Public NotInheritable Class matching_group
         Inherits matching
         Implements IComparable(Of matching_group)
@@ -44,7 +45,7 @@ Partial Public NotInheritable Class syntaxer
                 assert(Not ms(i) Is Nothing)
                 Dim r As [optional](Of UInt32) = Nothing
                 r = ms(i).find_match(v, p)
-                If (Not r.empty()) AndAlso ((Not max) OrElse (+max) < (+r)) Then
+                If (Not r.empty()) AndAlso (+r > p) AndAlso ((Not max) OrElse (+max) < (+r)) Then
                     max = r
                     max_id = [optional].of(CUInt(i))
                 End If

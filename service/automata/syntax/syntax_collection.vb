@@ -56,6 +56,15 @@ Partial Public NotInheritable Class syntaxer
 
             str_token_type = token_str_type.emplace_reverse()
             str_syntax_type = syntax_str_type.emplace_reverse()
+
+            If syntaxer.dump_rules Then
+                Dim it As map(Of String, UInt32).iterator = Nothing
+                it = token_str_type.begin()
+                While it <> token_str_type.end()
+                    raise_error(error_type.user, "Define token type ", (+it).first, ": ", (+it).second)
+                    it += 1
+                End While
+            End If
         End Sub
 
         Private Function find_next_type() As UInt32
@@ -105,6 +114,9 @@ Partial Public NotInheritable Class syntaxer
                 Return False
             End If
             str_syntax_type.emplace(o, name)
+            If syntaxer.dump_rules Then
+                raise_error(error_type.user, "Define syntax type ", name, ": ", o)
+            End If
             Return True
         End Function
 

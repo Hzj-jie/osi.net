@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.interpreter.primitive
@@ -39,14 +40,14 @@ Public Class rewriter_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
 
     Public MustInherit Shadows Class parse_wrapper
         Inherits code_gen_rule_wrapper(Of typed_node_writer,
-                                      rewriter_rule_wrapper,
-                                      rewriters,
-                                      statements,
-                                      _nlexer_rule,
-                                      _syntaxer_rule,
-                                      _prefixes,
-                                      _suffixes,
-                                      _rewriter_gens).parse_wrapper
+                                          rewriter_rule_wrapper,
+                                          rewriters,
+                                          statements,
+                                          _nlexer_rule,
+                                          _syntaxer_rule,
+                                          _prefixes,
+                                          _suffixes,
+                                          _rewriter_gens).parse_wrapper
         Public Sub New(ByVal functions As interrupts)
             MyBase.New(functions)
         End Sub
@@ -62,6 +63,14 @@ Public Class rewriter_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
 
         Protected MustOverride Function logic_parse(ByVal s As String, ByRef e() As exportable) As Boolean
     End Class
+
+    Protected Shared Function default_registerer(ByVal node_name As String) _
+                                  As Action(Of rewriters, rewriter_rule_wrapper)
+        assert(Not node_name.null_or_whitespace())
+        Return ignore_parameters(Sub(ByVal i As rewriters)
+                                     [default].register(i, node_name)
+                                 End Sub)
+    End Function
 
     Protected Sub New()
     End Sub

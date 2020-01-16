@@ -33,8 +33,10 @@ value-without-bracket [function-call, variable-name, value-with-operation, integ
 value-with-operation [unary-operation-value, binary-operation-value]
 unary-operation-value [pre-operation-value, post-operation-value]
 pre-operation-value [not, self-inc, self-dec] value
-post-operation-value value [self-inc, self-dec]
-binary-operation-value value [add, minus, multiply, divide, mod, power, bit-and, bit-or, and, or, less-than, greater-than, less-or-equal, greater-or-equal, equal] value
+# Should support post-operation-value value [self-inc, self-dec]
+post-operation-value [function-call, variable-name] [self-inc, self-dec]
+# Should support binary-operation-value value [add, minus, multiply, divide, mod, power, bit-and, bit-or, and, or, less-than, greater-than, less-or-equal, greater-or-equal, equal] value
+binary-operation-value [function-call, variable-name] [add, minus, multiply, divide, mod, power, bit-and, bit-or, and, or, less-than, greater-than, less-or-equal, greater-or-equal, equal] value
 
 variable-name name
 

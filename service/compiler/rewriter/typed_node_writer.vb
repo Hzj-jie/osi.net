@@ -36,8 +36,10 @@ Partial Public NotInheritable Class rewriters
         End Function
 
         Public Function append(ByVal s As String) As typed_node_writer
-            assert(Not s.null_or_empty())
-            v.emplace_back(s)
+            assert(Not s Is Nothing)
+            If Not s.empty_or_whitespace() Then
+                v.emplace_back(s)
+            End If
             Return Me
         End Function
 

@@ -57,6 +57,8 @@
   <ItemGroup>
     <Compile Include="b2style\b2style.vb" />
     <Compile Include="b2style\b2style_rules.vb" />
+    <Compile Include="b2style\rewriter\b2style_statements.vb" />
+    <Compile Include="b2style\rewriter\statements.vb" />
     <Compile Include="bstyle\bstyle.vb" />
     <Compile Include="bstyle\bstyle_rules.vb" />
     <Compile Include="bstyle\logic\nodes\bool.vb" />
@@ -204,6 +206,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="b2style\codegen\run.cmd" />
+    <None Include="b2style\rewriter\codegen\run.cmd" />
     <None Include="compiler.dep" />
     <None Include="compiler.props" />
     <None Include="bstyle\codegen\run.cmd" />
@@ -227,6 +230,8 @@
     <Content Include="b2style\codegen\nlexer_rule.txt" />
     <Content Include="b2style\codegen\rlexer_rule.txt" />
     <Content Include="b2style\codegen\syntaxer_rule.txt" />
+    <Content Include="b2style\rewriter\codegen\prefix.txt" />
+    <Content Include="b2style\rewriter\codegen\suffix.txt" />
     <Content Include="bstyle\codegen\nlexer_rule.txt" />
     <Content Include="bstyle\codegen\syntaxer_rule.txt" />
     <Content Include="logic\codegen\builder_gen.cs" />
@@ -236,7 +241,9 @@
     <Content Include="logic\definition.txt" />
     <Content Include="logic\design.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="b2style\rewriter\nodes\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="compiler.dep" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

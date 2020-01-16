@@ -9,13 +9,14 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 Public Module vector_extension
-    <Extension()> Public Sub renew(Of T)(ByRef v As vector(Of T))
+    <Extension()> Public Function renew(Of T)(ByRef v As vector(Of T)) As vector(Of T)
         If v Is Nothing Then
             v = New vector(Of T)()
         Else
             v.clear()
         End If
-    End Sub
+        Return v
+    End Function
 
     <Extension()> Public Function null_or_empty(Of T)(ByVal i As vector(Of T)) As Boolean
         Return i Is Nothing OrElse i.empty()

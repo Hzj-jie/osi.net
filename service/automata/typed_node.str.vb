@@ -48,7 +48,7 @@ Partial Public NotInheritable Class typed_node
     Private Function self_debug_str(ByVal s As StringBuilder) As StringBuilder
         assert(Not s Is Nothing)
         s.Append("@").Append(type_name).Append(": ")
-        For i As Int32 = 0 To min(CInt(child_count()), 3) - 1
+        For i As Int32 = 0 To min(CInt(word_count()), 3) - 1
             s.Append(word(CUInt(i)).str()).Append(" ")
         Next
         s.Append(newline.incode())

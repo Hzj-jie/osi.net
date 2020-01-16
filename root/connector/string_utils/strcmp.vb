@@ -157,12 +157,17 @@ Public Module _strcmp
         Return strsame(s1, uint32_0, s2, uint32_0, strlen(s2), case_sensitive)
     End Function
 
-    <Extension()> Public Function str_empty_or_whitespaces(ByVal s As String) As Boolean
+    <Extension()> Public Function null_or_empty_or_whitespace(ByVal s As String) As Boolean
         For i As Int32 = 0 To strlen_i(s) - 1
             If Not s(i).space() Then
                 Return False
             End If
         Next
         Return True
+    End Function
+
+    <Extension()> Public Function empty_or_whitespace(ByVal s As String) As Boolean
+        assert(Not s Is Nothing)
+        Return null_or_empty_or_whitespace(s)
     End Function
 End Module

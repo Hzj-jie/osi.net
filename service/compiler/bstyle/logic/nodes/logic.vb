@@ -29,6 +29,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             assert(n.child_count() = 2)
             o.append(n.child(1).word().str().Trim(character.quote))
+            o.append(newline.incode())
             Return True
         End Function
     End Class

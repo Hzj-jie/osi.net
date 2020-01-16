@@ -32,6 +32,7 @@ Partial Public NotInheritable Class nlexer
             Dim r As rule = Nothing
             If Not rule.of(escape(s), r) Then
                 raise_error(error_type.user, "failed to parse rule " + s)
+                Return False
             End If
             rules.emplace_back(pair.emplace_of(f, r))
             Return True

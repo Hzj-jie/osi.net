@@ -18,7 +18,7 @@ Namespace logic
             While True
                 Dim s As String = Nothing
                 s = rnd_chars(rnd_int(1, 10))
-                If Not s.str_empty_or_whitespaces() Then
+                If Not s.empty_or_whitespace() Then
                     Return s
                 End If
             End While

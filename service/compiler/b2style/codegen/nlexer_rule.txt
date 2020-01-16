@@ -14,7 +14,7 @@ power ^
 bit-and &
 bit-or \|
 and &&
-or ||
+or \|\|
 not !
 self-inc ++
 self-dec --

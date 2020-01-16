@@ -14,6 +14,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared ReadOnly bigint As String = unique_name("bigint")
         Public Shared ReadOnly biguint As String = unique_name("biguint")
+        Public Shared ReadOnly [string] As String = unique_name("string")
 
         Private Shared ReadOnly v As vector(Of pair(Of String, String))
         Private ReadOnly ta As type_alias
@@ -21,7 +22,8 @@ Partial Public NotInheritable Class bstyle
         Shared Sub New()
             v = vector.of(
                 pair.emplace_of(bigint, types.bigint),
-                pair.emplace_of(biguint, types.biguint)
+                pair.emplace_of(biguint, types.biguint),
+                pair.emplace_of([string], types.string)
             )
         End Sub
 

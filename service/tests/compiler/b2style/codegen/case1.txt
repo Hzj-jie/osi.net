@@ -1,0 +1,4 @@
+﻿
+void main() {
+  std_out("Hello World");
+}

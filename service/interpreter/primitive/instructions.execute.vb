@@ -10,6 +10,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.math
 
+' TODO: Should use big_int to replace big_uint.
 Namespace primitive
     Namespace instructions
         Partial Public NotInheritable Class [push]

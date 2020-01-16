@@ -78,13 +78,15 @@ Public Module _map
         Return insert(this, that, AddressOf this.emplace)
     End Function
 
-    <Extension()> Public Sub renew(Of KEY_T, VALUE_T)(ByRef this As map(Of KEY_T, VALUE_T))
+    <Extension()> Public Function renew(Of KEY_T, VALUE_T) _
+                                       (ByRef this As map(Of KEY_T, VALUE_T)) As map(Of KEY_T, VALUE_T)
         If this Is Nothing Then
             this = New map(Of KEY_T, VALUE_T)()
         Else
             this.clear()
         End If
-    End Sub
+        Return this
+    End Function
 
     Private Function reverse(Of KEY_T, VALUE_T)(ByVal i As map(Of KEY_T, VALUE_T),
                                                 ByRef o As map(Of VALUE_T, KEY_T),

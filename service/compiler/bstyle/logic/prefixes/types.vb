@@ -26,7 +26,6 @@ Partial Public NotInheritable Class bstyle
         Private Shared ReadOnly v As vector(Of pair(Of String, Int32))
         Private Shared ReadOnly type_0_s As vector(Of String)
         Private Shared ReadOnly type_asterisk_s As vector(Of String)
-        Private ReadOnly ta As type_alias
 
         Shared Sub New()
             v = vector.of(
@@ -53,7 +52,11 @@ Partial Public NotInheritable Class bstyle
                 logic_builder.of_type(v(i).first, CUInt(v(i).second)).to(o)
                 i += uint32_1
             End While
-            i = 0
+        End Sub
+
+        Private Sub New(ByVal ta As type_alias)
+            assert(Not ta Is Nothing)
+            Dim i As UInt32 = 0
             While i < type_0_s.size()
                 assert(ta.define(type_0_s(i), "type0"))
                 i += uint32_1
@@ -63,11 +66,6 @@ Partial Public NotInheritable Class bstyle
                 assert(ta.define(type_asterisk_s(i), "type*"))
                 i += uint32_1
             End While
-        End Sub
-
-        Private Sub New(ByVal ta As type_alias)
-            assert(Not ta Is Nothing)
-            Me.ta = ta
         End Sub
     End Class
 End Class

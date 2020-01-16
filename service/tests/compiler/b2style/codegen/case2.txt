@@ -1,0 +1,13 @@
+﻿
+bool is_even(int i) {
+  return equal(mod(i, 2), 0);
+}
+
+void main() {
+  int x;
+  x = current_ms();
+  if (is_even(x)) {
+    x = self_dec(x);
+  }
+  bool_std_out(is_even(x));
+}

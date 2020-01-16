@@ -1,0 +1,94 @@
+﻿
+void std_out(string i) {
+  logic "interrupt stdout i @@prefixes@temps@string";
+}
+
+void std_err(string i) {
+  logic "interrupt stderr i @@prefixes@temps@string";
+}
+
+void bool_std_out(bool i) {
+  string _true = "True";
+  string _false = "False";
+  if (i) {
+    std_out(_true);
+  } else {
+    std_out(_false);
+  }
+}
+
+void bool_std_err(bool i) {
+  string _true = "True";
+  string _false = "False";
+  if (i) {
+    std_err(_true);
+  } else {
+    std_err(_false);
+  }
+}
+
+string str_concat(string i, string j) {
+  logic "append_slice i j";
+  return i;
+}
+
+int dec(int i, int j) {
+  logic "subtract i i j";
+  return i;
+}
+
+bool equal(int i, int j) {
+  bool result;
+  logic "equal result i j";
+  return result;
+}
+
+bool more(int i, int j) {
+  bool result;
+  logic "more result i j";
+  return result;
+}
+
+bool less(int i, int j) {
+  bool result;
+  logic "less result i j";
+  return result;
+}
+
+int fit_in_int(int x) {
+  int len;
+  logic "sizeof len x";
+  if (more(len, 4)) {
+    logic "subtract len len @@prefixes@constants@size_of_int";
+    logic "cut x x len";
+  }
+  return x;
+}
+
+int self_inc(int x) {
+  logic "add x x @@prefixes@constants@int_1";
+  return fit_in_int(x);
+}
+
+int self_dec(int x) {
+  logic "subtract x x @@prefixes@constants@int_1";
+  return fit_in_int(x);
+}
+
+int current_ms() {
+  int result;
+  logic "interrupt current_ms @@prefixes@temps@string result";
+  return result;
+}
+
+int div(int i, int j) {
+  int result;
+  logic "divide result @@prefixes@temps@string i j";
+  return fit_in_int(result);
+}
+
+int mod(int i, int j) {
+  int result;
+  logic "divide @@prefixes@temps@string result i j";
+  return fit_in_int(result);
+}

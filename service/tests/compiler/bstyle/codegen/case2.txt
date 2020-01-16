@@ -15,7 +15,13 @@ bool is_even(int i) {
 
 void print(bool i) {
   string temp;
-  logic "interrupt stdout i temp";
+  string _true = "True";
+  string _false = "False";
+  if (i) {
+	logic "interrupt stdout _true temp";
+  } else {
+	logic "interrupt stdout _false temp";
+  }
 }
 
 int current_ms() {
@@ -34,8 +40,8 @@ int self_decrease(int x) {
 void main() {
   int x;
   x = current_ms();
-  if (is_event(x)) {
+  if (is_even(x)) {
     x = self_decrease(x);
   }
-  print(is_event(x));
+  print(is_even(x));
 }
