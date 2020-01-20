@@ -24,7 +24,8 @@ Namespace logic
 
         Protected Overrides Function result_restrict(ByVal result As variable) As Boolean
             assert(Not result Is Nothing)
-            Return result.is_variable_size()
+            ' TODO: Should be Return result.is_variable_size()?
+            Return True
         End Function
     End Class
 
@@ -74,7 +75,8 @@ Namespace logic
 
         Protected Overrides Function result_restrict(ByVal result As variable) As Boolean
             assert(Not result Is Nothing)
-            Return result.is_variable_size()
+            ' TODO: Should be Return result.is_variable_size()?
+            Return True
         End Function
 
         Protected Overrides Function parameter1_restrict(ByVal p1 As variable) As Boolean

@@ -13,6 +13,7 @@ Partial Public NotInheritable Class bstyle
     Public NotInheritable Class constants
         Implements statement
 
+        Public Shared ReadOnly int_0 As String = unique_name("int_0")
         Public Shared ReadOnly int_1 As String = unique_name("int_1")
         Public Shared ReadOnly size_of_uint As String = unique_name("size_of_uint")
         Public Shared ReadOnly size_of_int As String = unique_name("size_of_int")
@@ -25,6 +26,7 @@ Partial Public NotInheritable Class bstyle
 
         Shared Sub New()
             v = vector.of(
+                New def("int", int_0, New data_block(0)),
                 New def("int", int_1, New data_block(1)),
                 New def("int", size_of_uint, New data_block(4)),
                 New def("int", size_of_int, New data_block(4)),

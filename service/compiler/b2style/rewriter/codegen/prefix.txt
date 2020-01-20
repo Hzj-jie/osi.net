@@ -55,17 +55,13 @@ bool less(int i, int j) {
   return result;
 }
 
-int _fit_in_int(int x) {
+int fit_in_int(int x) {
   int len;
   logic "sizeof len x";
   if (more(len, 4)) {
     logic "subtract len len @@prefixes@constants@size_of_int";
-    logic "cut x x len";
+    logic "cut_slice x x @@prefixes@constants@int_0 len";
   }
-  return x;
-}
-
-int fit_in_int(int x) {
   return x;
 }
 
