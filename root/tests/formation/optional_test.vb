@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.formation
 Imports osi.root.utt
 
-Public Class optional_test
+Public NotInheritable Class optional_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean

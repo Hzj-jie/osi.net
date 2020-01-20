@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 
@@ -14,10 +15,12 @@ Partial Public NotInheritable Class bstyle
 
         Private Shared ReadOnly read_targets As read_scoped(Of String)
         Private Shared ReadOnly write_targets As read_scoped(Of write_target_ref)
+        Private Shared ReadOnly defined_temp_targets As thread_static(Of [set](Of String))
 
         Shared Sub New()
             read_targets = New read_scoped(Of String)()
             write_targets = New read_scoped(Of write_target_ref)()
+            defined_temp_targets = New thread_static(Of [set](Of String))()
         End Sub
 
         Public Shared Function read_target() As read_scoped(Of String).ref
@@ -64,7 +67,6 @@ Partial Public NotInheritable Class bstyle
             End Function
         End Class
 
-        ' TODO: Check return type of value.
         Private Shared Sub with_temp_target(ByVal ta As type_alias, ByVal n As typed_node, ByVal o As writer)
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
@@ -72,7 +74,10 @@ Partial Public NotInheritable Class bstyle
             value_name = strcat("raw_value_@", n.word_start(), "-", n.word_end())
             Dim type As type_ref = Nothing
             type = New type_ref(ta)
-            builders.of_define(value_name, type).to(o)
+            If defined_temp_targets.or_new().find(value_name) = defined_temp_targets.get().end() Then
+                builders.of_define(value_name, type).to(o)
+                defined_temp_targets.get().emplace(value_name)
+            End If
             write_targets.push(New write_target_ref(value_name, type))
         End Sub
     End Class

@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.Text
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 
 Partial Public NotInheritable Class syntaxer
@@ -27,62 +28,51 @@ Partial Public NotInheritable Class syntaxer
 
         Public NotInheritable Class best_match_result
             Public ReadOnly id As UInt32
-            Public ReadOnly pos As UInt32
+            Public ReadOnly result As result
 
-            Public Sub New(ByVal id As UInt32, ByVal pos As UInt32)
+            Public Sub New(ByVal id As UInt32, ByVal result As result)
+                assert(Not result Is Nothing)
                 Me.id = id
-                Me.pos = pos
+                Me.result = result
             End Sub
         End Class
 
         Public Function best_match(ByVal v As vector(Of typed_word),
                                    ByVal p As UInt32) As [optional](Of best_match_result)
-            Dim max As [optional](Of UInt32) = Nothing
-            max = [optional].empty(Of UInt32)()
-            Dim max_id As [optional](Of UInt32) = Nothing
-            max_id = [optional].empty(Of UInt32)()
+            Dim max As [optional](Of result) = Nothing
+            max = [optional].empty(Of result)()
+            Dim max_id As Int32 = 0
+            max_id = npos
             For i As Int32 = 0 To array_size_i(ms) - 1
                 assert(Not ms(i) Is Nothing)
-                Dim r As [optional](Of UInt32) = Nothing
-                r = ms(i).find_match(v, p)
-                If (Not r.empty()) AndAlso (+r > p) AndAlso ((Not max) OrElse (+max) < (+r)) Then
+                Dim r As [optional](Of result) = Nothing
+                r = ms(i).match(v, p)
+                If (Not r.empty()) AndAlso ((Not max) OrElse (+max).pos < (+r).pos) Then
                     max = r
-                    max_id = [optional].of(CUInt(i))
+                    max_id = i
                 End If
             Next
             If Not max Then
-                assert(Not max_id)
+                assert(max_id = npos)
                 Return [optional].empty(Of best_match_result)()
             End If
             assert(max)
-            assert(max_id)
-            Return [optional].of(New best_match_result(+max_id, +max))
+            assert(max_id >= 0 AndAlso max_id < array_size_i(ms))
+            Return [optional].of(New best_match_result(CUInt(max_id), +max))
         End Function
 
-        Private Function best_match_id(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of UInt32)
-            Return best_match(v, p).map(Function(ByVal i As best_match_result) As UInt32
-                                            assert(Not i Is Nothing)
-                                            Return i.id
-                                        End Function)
-        End Function
-
-        Public Overrides Function match(ByVal v As vector(Of typed_word),
-                                        ByRef p As UInt32,
-                                        ByVal parent As typed_node) As Boolean
+        Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of result)
             If v Is Nothing OrElse v.size() <= p Then
-                Return False
+                Return [optional].empty(Of result)
             End If
-            Dim i As [optional](Of UInt32) = Nothing
-            i = best_match_id(v, p)
-            If Not i Then
+            Dim r As [optional](Of best_match_result) = Nothing
+            r = best_match(v, p)
+            If Not r Then
                 log_unmatched(v, p, Me)
-                Return False
+                Return [optional].empty(Of result)()
             End If
-            Dim op As UInt32 = 0
-            op = p
-            assert(ms(CInt(+i)).match(v, p, parent))
-            log_matching(v, op, p, strcat(ms(CInt(+i)), "@", +i))
-            Return True
+            log_matching(v, p, (+r).result.pos, strcat(ms(CInt((+r).id)), "@", (+r).id))
+            Return [optional].of((+r).result)
         End Function
 
         Public Overrides Function CompareTo(ByVal other As matching) As Int32

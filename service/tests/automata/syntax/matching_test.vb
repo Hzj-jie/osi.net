@@ -60,10 +60,12 @@ Namespace syntaxer
                 Dim m As matching_case = Nothing
                 m = ms(i)
                 assert(Not m Is Nothing)
-                Dim pos As UInt32 = 0
-                pos = m.start
-                assertion.equal(m.m.match(m.v, pos, Nothing), m.exp)
-                assertion.equal(pos, m.end)
+                Dim r As [optional](Of matching.result) = Nothing
+                r = m.m.match(m.v, m.start)
+                assertion.equal(r, m.exp)
+                If r Then
+                    assertion.equal((+r).pos, m.end)
+                End If
             Next
             Return True
         End Function

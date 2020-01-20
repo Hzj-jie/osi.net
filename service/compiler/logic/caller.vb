@@ -127,7 +127,10 @@ Namespace logic
                 Return True
             End If
             Dim result_var As variable = Nothing
-            assert(variable.[New](scope, types, +result, result_var))
+            If Not variable.[New](scope, types, +result, result_var) Then
+                errors.variable_undefined(+result)
+                Return False
+            End If
             Dim return_value_var As variable = Nothing
             assert(variable.[New](scope, types, return_value_place_holder_name, return_value_var))
             Dim s As String = Nothing

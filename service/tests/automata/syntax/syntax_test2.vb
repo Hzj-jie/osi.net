@@ -217,10 +217,6 @@ Namespace syntaxer
             Dim s As syntax = Nothing
             s = build_syntax()
             Dim v As vector(Of typed_word) = Nothing
-            v = New vector(Of typed_word)()
-            Dim n As typed_node = Nothing
-            Dim p As UInt32 = 0
-
             v = fake_typed_word.create(types.name,
                                        types.blank,
                                        types.blank,
@@ -243,10 +239,13 @@ Namespace syntaxer
                                        types.name,
                                        types.semi_colon,
                                        types.end_paragraph)
-            p = 0
+            Dim r As [optional](Of matching.result) = Nothing
+            r = s.match(v, 0)
+            assertion.is_true(r)
+            assertion.equal((+r).pos, v.size())
+            Dim n As typed_node = Nothing
             n = typed_node.of_root(v)
-            assertion.is_true(s.match(v, p, n))
-            assertion.equal(p, v.size())
+            n.attach((+r).nodes)
             If assert_node(n, 0, types.function, 0, 22) Then
                 n = n.subnodes(0)
                 If assert_node(n, 0, types.name, 0) AndAlso
@@ -306,9 +305,7 @@ Namespace syntaxer
                                        types.name,
                                        types.semi_colon,
                                        types.end_paragraph)
-            p = 0
-            assertion.is_false(s.match(v, p, Nothing))
-            assertion.equal(p, CUInt(17))
+            assertion.is_false(s.match(v, 0))
             Return True
         End Function
     End Class

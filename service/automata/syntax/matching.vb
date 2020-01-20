@@ -20,30 +20,37 @@ Partial Public NotInheritable Class syntaxer
             Me.c = c
         End Sub
 
-        Public MustOverride Function match(ByVal v As vector(Of typed_word),
-                                           ByRef p As UInt32,
-                                           ByVal parent As typed_node) As Boolean
+        Public NotInheritable Class result
+            Public ReadOnly pos As UInt32
+            Public ReadOnly nodes As vector(Of typed_node)
 
-        Public Function find_match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of UInt32)
-            assert(Not v Is Nothing)
-            If match(v, p, Nothing) Then
-                Return [optional].of(p)
-            End If
-            Return [optional].empty(Of UInt32)()
-        End Function
+            Public Sub New(ByVal pos As UInt32, ByVal nodes As vector(Of typed_node))
+                assert(Not nodes Is Nothing)
+                Me.pos = pos
+                Me.nodes = nodes
+            End Sub
 
-        Protected Function add_subnode(ByVal v As vector(Of typed_word),
-                                       ByVal parent As typed_node,
+            Public Sub New(ByVal pos As UInt32, ByVal node As typed_node)
+                Me.New(pos, vector.of(node))
+            End Sub
+
+            Public Sub New(ByVal pos As UInt32)
+                Me.New(pos, New vector(Of typed_node)())
+            End Sub
+
+            Public Function node() As typed_node
+                assert(nodes.size() = uint32_1)
+                Return nodes(0)
+            End Function
+        End Class
+
+        Public MustOverride Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of result)
+
+        Protected Function create_node(ByVal v As vector(Of typed_word),
                                        ByVal type As UInt32,
                                        ByVal start As UInt32,
                                        ByVal [end] As UInt32) As typed_node
-            If parent Is Nothing Then
-                Return Nothing
-            End If
-            Dim r As typed_node = Nothing
-            r = New typed_node(v, type, type_name(type), start, [end], parent)
-            parent.subnodes.emplace_back(r)
-            Return r
+            Return New typed_node(v, type, type_name(type), start, [end])
         End Function
 
         Protected Function type_name(ByVal type As UInt32) As String
@@ -63,7 +70,7 @@ Partial Public NotInheritable Class syntaxer
                                    ByVal start As UInt32,
                                    ByVal [end] As UInt32,
                                    ByVal matcher As Object)
-            If syntaxer.detailed_debug_log Then
+            If syntaxer.debug_log Then
                 Dim e As String = Nothing
                 If [end] = v.size() Then
                     e = "[end]"
@@ -77,7 +84,7 @@ Partial Public NotInheritable Class syntaxer
         Protected Sub log_unmatched(ByVal v As vector(Of typed_word),
                                     ByVal start As UInt32,
                                     ByVal matcher As Object)
-            If syntaxer.debug_log Then
+            If syntaxer.detailed_debug_log Then
                 Dim start_word As String = Nothing
                 If v.size() <= start Then
                     start_word = "end-of-typed-word"

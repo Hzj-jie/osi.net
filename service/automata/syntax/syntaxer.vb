@@ -57,38 +57,44 @@ Partial Public NotInheritable Class syntaxer
         Return Convert.ToString(r)
     End Function
 
-    Public Function match(ByVal v As vector(Of typed_word), ByRef root As typed_node) As Boolean
+    Public Function match(ByVal v As vector(Of typed_word)) As [optional](Of typed_node)
         assert(Not root_types.null_or_empty())
         If v.null_or_empty() Then
-            Return True
+            Return [optional].empty(Of typed_node)()
         End If
-        Dim ms As vector(Of UInt32) = Nothing
-        ms = New vector(Of UInt32)()
+        Dim root As typed_node = Nothing
+        root = typed_node.of_root(v)
         Dim p As UInt32 = 0
         While p < v.size()
             Dim m As [optional](Of matching_group.best_match_result) = Nothing
             m = mg.best_match(v, p)
             If Not m Then
                 raise_error(error_type.user, "Cannot match token ", v(p).str(), " @ ", p, " - ", debug_str(v, p))
-                Return False
+                Return [optional].empty(Of typed_node)()
             End If
             assert(Not (+m) Is Nothing)
-            If p = (+m).pos Then
-                Return False
+            Dim r As matching.result = Nothing
+            r = (+m).result
+            assert(Not r Is Nothing)
+            If p = r.pos Then
+                Return [optional].empty(Of typed_node)()
             End If
-            assert((+m).pos <= v.size())
-            ms.emplace_back(root_types((+m).id))
-            p = (+m).pos
+            assert(r.pos <= v.size())
+            root.attach(r.nodes)
+            p = r.pos
         End While
         assert(p = v.size())
-        assert(Not ms.empty())
-        root = typed_node.of_root(v)
-        p = 0
-        For i As UInt32 = 0 To ms.size() - uint32_1
-            Dim s As syntax = Nothing
-            assert(collection.get(ms(i), s))
-            assert(s.match(v, p, root))
-        Next
-        Return assert(p = v.size())
+        assert(Not root.leaf())
+        Return [optional].of(root)
+    End Function
+
+    Public Function match(ByVal v As vector(Of typed_word), ByRef root As typed_node) As Boolean
+        Dim r As [optional](Of typed_node) = Nothing
+        r = match(v)
+        If r Then
+            root = (+r)
+            Return True
+        End If
+        Return False
     End Function
 End Class

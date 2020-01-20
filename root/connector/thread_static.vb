@@ -1,10 +1,15 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
+Imports osi.root.delegates
 
 'For mono debug purpose, the perf is a little bit worse than .net framework TheadStatic attribute.
 ' Mono cannot work well with thread-static primary types. But this class uses a set function to make sure even for
 ' primary types, using this class in Mono is safe.
-Public Class thread_static(Of T)
+Public NotInheritable Class thread_static(Of T)
     Private ReadOnly slot() As T
 
     Public Sub New(ByVal size As Int32)
@@ -26,12 +31,11 @@ Public Class thread_static(Of T)
 
     Public Function [get](ByRef o As T) As Boolean
         Dim tid As UInt32 = 0
-        If current_slot_id(tid) Then
-            o = slot(tid)
-            Return True
-        Else
+        If Not current_slot_id(tid) Then
             Return False
         End If
+        o = slot(CInt(tid))
+        Return True
     End Function
 
     Public Function [get]() As T
@@ -42,12 +46,70 @@ Public Class thread_static(Of T)
 
     Public Function [set](ByVal i As T) As Boolean
         Dim tid As UInt32 = 0
-        If current_slot_id(tid) Then
-            slot(tid) = i
-            Return True
-        Else
+        If Not current_slot_id(tid) Then
             Return False
         End If
+        slot(CInt(tid)) = i
+        Return True
+    End Function
+
+    Public Function or_set(ByVal i As T, ByVal validate As Func(Of T, Boolean), ByRef o As T) As Boolean
+        assert(Not i Is Nothing)
+        Return or_set(func_t.of(i), validate, o)
+    End Function
+
+    Public Function or_set(ByVal i As T, ByRef o As T) As Boolean
+        Return or_set(i, predicates.is_not_null(Of T)(), o)
+    End Function
+
+    Public Function or_set(ByVal i As T, ByVal validate As Func(Of T, Boolean)) As T
+        Dim o As T = Nothing
+        assert(or_set(i, validate, o))
+        Return o
+    End Function
+
+    Public Function or_set(ByVal i As T) As T
+        Return or_set(i, predicates.is_not_null(Of T)())
+    End Function
+
+    Public Function or_set(ByVal i As Func(Of T), validate As Func(Of T, Boolean), ByRef o As T) As Boolean
+        assert(Not i Is Nothing)
+        Dim tid As UInt32 = 0
+        If Not current_slot_id(tid) Then
+            Return False
+        End If
+        If Not validate(slot(CInt(tid))) Then
+            slot(CInt(tid)) = i()
+        End If
+        o = slot(CInt(tid))
+        Return True
+    End Function
+
+    Public Function or_set(ByVal i As Func(Of T), ByRef o As T) As Boolean
+        Return or_set(i, predicates.is_not_null(Of T)(), o)
+    End Function
+
+    Public Function or_set(ByVal i As Func(Of T), ByVal validate As Func(Of T, Boolean)) As T
+        Dim o As T = Nothing
+        assert(or_set(i, validate, o))
+        Return o
+    End Function
+
+    Public Function or_set(ByVal i As Func(Of T)) As T
+        Return or_set(i, predicates.is_not_null(Of T)())
+    End Function
+
+    Public Function or_new(ByRef o As T) As Boolean
+        Return or_set(Function() As T
+                          Return alloc(Of T)()
+                      End Function,
+                      o)
+    End Function
+
+    Public Function or_new() As T
+        Return or_set(Function() As T
+                          Return alloc(Of T)()
+                      End Function)
     End Function
 
     Public Property at() As T
@@ -66,8 +128,7 @@ Public Class thread_static(Of T)
     Public Shared Operator +(ByVal this As thread_static(Of T)) As T
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return this.get()
         End If
+        Return this.get()
     End Operator
 End Class

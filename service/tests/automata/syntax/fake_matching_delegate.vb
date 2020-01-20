@@ -40,10 +40,9 @@ Namespace syntaxer
             Me.type = type
         End Sub
 
-        Public Overrides Function match(ByVal v As vector(Of typed_word),
-                                        ByRef p As UInt32,
-                                        ByVal parent As typed_node) As Boolean
-            Return assert(False)
+        Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of result)
+            assert(False)
+            Return [optional].empty(Of result)()
         End Function
 
         Public Overrides Function CompareTo(ByVal other As matching) As Int32

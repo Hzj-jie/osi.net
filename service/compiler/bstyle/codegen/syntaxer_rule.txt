@@ -23,7 +23,7 @@ else-condition kw-else paragraph
 
 while kw-while start-bracket value end-bracket paragraph
 
-for-loop kw-for start-bracket [value-declaration]? semi-colon [value]? semi-colon [value-clause]? end-bracket paragraph
+for-loop kw-for start-bracket [value-declaration, value-definition]? semi-colon [value]? semi-colon [value-clause]? end-bracket paragraph
 
 value [value-with-bracket, value-without-bracket]
 value-with-bracket start-bracket value end-bracket

@@ -25,6 +25,7 @@ Partial Public NotInheritable Class bstyle
 
         Private NotInheritable Class ref
             Public ReadOnly declaration As typed_node
+            Public ReadOnly definition As typed_node
             Public ReadOnly condition As typed_node
             Public ReadOnly clause As typed_node
             Public ReadOnly paragraph As typed_node
@@ -36,6 +37,9 @@ Partial Public NotInheritable Class bstyle
                 m = n.named_children()
                 If Not m.node("value-declaration", declaration) Then
                     declaration = Nothing
+                End If
+                If Not m.node("value-definition", definition) Then
+                    definition = Nothing
                 End If
                 If Not m.node("value", condition) Then
                     condition = Nothing
@@ -58,10 +62,13 @@ Partial Public NotInheritable Class bstyle
             If Not ref.declaration Is Nothing AndAlso Not l.of(ref.declaration).build(o) Then
                 Return False
             End If
+            If Not ref.definition Is Nothing AndAlso Not l.of(ref.definition).build(o) Then
+                Return False
+            End If
+            If Not condition_value(ref, o) Then
+                Return False
+            End If
             Using read_target As read_scoped(Of String).ref = value.read_target()
-                If Not condition_value(ref, o) Then
-                    Return False
-                End If
                 Return builders.of_while_then(+read_target,
                                               Function() As Boolean
                                                   Return l.of(ref.paragraph).build(o) AndAlso

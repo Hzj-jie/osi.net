@@ -15,17 +15,15 @@ Partial Public NotInheritable Class typed_node
     Public ReadOnly type_name As String
     Public ReadOnly start As UInt32
     Public ReadOnly [end] As UInt32 'exclusive
-    Public ReadOnly parent As typed_node
     Public ReadOnly subnodes As vector(Of typed_node)
-    Public ReadOnly ref As vector(Of typed_word)
+    Private ReadOnly ref As vector(Of typed_word)
+    Private parent As typed_node
 
     Public Sub New(ByVal ref As vector(Of typed_word),
                    ByVal type As UInt32,
                    ByVal type_name As String,
                    ByVal start As UInt32,
-                   ByVal [end] As UInt32,
-                   ByVal parent As typed_node,
-                   ByVal ParamArray subnodes() As typed_node)
+                   ByVal [end] As UInt32)
         assert(Not ref Is Nothing)
         assert(start <= [end])  ' start == end means empty-matching
         assert([end] <= ref.size())
@@ -35,9 +33,7 @@ Partial Public NotInheritable Class typed_node
         Me.type_name = type_name
         Me.start = start
         Me.end = [end]
-        Me.parent = parent
         Me.subnodes = New vector(Of typed_node)()
-        Me.subnodes.emplace_back(subnodes)
 
 #If NOT_IMPLEMENTED Then
         If leaf() Then
@@ -46,11 +42,28 @@ Partial Public NotInheritable Class typed_node
 #End If
     End Sub
 
-    Public Shared Function of_root(ByVal ref As vector(Of typed_word),
-                                   ByVal ParamArray subnodes() As typed_node) As typed_node
+    Public Shared Function of_root(ByVal ref As vector(Of typed_word)) As typed_node
         assert(Not ref Is Nothing)
-        Return New typed_node(ref, ROOT_TYPE, ROOT_TYPE_NAME, uint32_0, ref.size(), Nothing, subnodes)
+        Return New typed_node(ref, ROOT_TYPE, ROOT_TYPE_NAME, uint32_0, ref.size())
     End Function
+
+    Public Sub attach_to(ByVal parent As typed_node)
+        assert(Not parent Is Nothing)
+        assert(Me.parent Is Nothing)
+        Me.parent = parent
+        parent.subnodes.emplace_back(Me)
+    End Sub
+
+    Public Sub attach(ByVal nodes As vector(Of typed_node))
+        assert(Not nodes Is Nothing)
+        If nodes.empty() Then
+            Return
+        End If
+        For i As UInt32 = 0 To nodes.size() - uint32_1
+            assert(Not nodes(i) Is Nothing)
+            nodes(i).attach_to(Me)
+        Next
+    End Sub
 
     Public Function root() As Boolean
         Return parent Is Nothing

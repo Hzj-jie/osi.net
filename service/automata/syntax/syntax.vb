@@ -164,53 +164,33 @@ Partial Public NotInheritable Class syntaxer
             End While
         End Sub
 
-        Private Function jump_back_ignore_types(ByVal v As vector(Of typed_word), ByVal p As UInt32) As UInt32
-            If ignore_types.null_or_empty() Then
-                Return p
-            End If
-            While True
-                assert(p > 0)
-                p -= uint32_1
-                If Not ignore_type(v(p)) Then
-                    Exit While
-                End If
-            End While
-            Return p
-        End Function
-
-        Public Overrides Function match(ByVal v As vector(Of typed_word),
-                                        ByRef p As UInt32,
-                                        ByVal parent As typed_node) As Boolean
-            Dim best_match As [optional](Of UInt32) = Nothing
-            If Not parent Is Nothing Then
-                best_match = find_match(v, p)
-                If Not best_match Then
-                    Return False
-                End If
-            End If
+        Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of result)
             If v Is Nothing OrElse v.size() <= p Then
                 log_end_of_tokens(v, p, Me)
-                Return False
+                Return [optional].empty(Of result)()
             End If
+
+            Dim nodes As vector(Of typed_node) = Nothing
+            nodes = New vector(Of typed_node)()
             Dim op As UInt32 = 0
             op = p
-            If Not parent Is Nothing Then
-                assert(best_match)
-                parent = add_subnode(v, parent, type, p, jump_back_ignore_types(v, +best_match) + uint32_1)
-            End If
             For i As Int32 = 0 To array_size_i(ms) - 1
                 jump_over_ignore_types(v, p)
-                If Not ms(i).match(v, p, parent) Then
-                    assert(parent Is Nothing)
+                Dim r As [optional](Of result) = Nothing
+                r = ms(i).match(v, p)
+                If Not r Then
                     log_unmatched(v, p, ms(i))
-                    Return False
+                    Return r
                 End If
+                p = (+r).pos
+                nodes.emplace_back((+r).nodes)
             Next
+            Dim root As typed_node = Nothing
+            root = create_node(v, type, op, p)
+            root.attach(nodes)
             jump_over_ignore_types(v, p)
-            If Not parent Is Nothing Then
-                log_matching(v, op, p, Me)
-            End If
-            Return True
+            log_matching(v, op, p, Me)
+            Return [optional].of(New result(p, root))
         End Function
 
         Public Shared Operator +(ByVal this As syntax) As matching()

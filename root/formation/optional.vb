@@ -70,6 +70,22 @@ Public NotInheritable Class [optional](Of T)
         Return [optional].of(f(+Me))
     End Function
 
+    Public Function or_else(ByVal r As T) As T
+        assert(Not r Is Nothing)
+        If empty() Then
+            Return r
+        End If
+        Return +Me
+    End Function
+
+    Public Function or_else(ByVal f As Func(Of T)) As T
+        assert(Not f Is Nothing)
+        If empty() Then
+            Return f()
+        End If
+        Return +Me
+    End Function
+
     Public Function empty() As Boolean
         Return Not Me
     End Function

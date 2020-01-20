@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="default.vb" />
     <Compile Include="definition.vb" />
+    <Compile Include="func_t.vb" />
     <Compile Include="interface.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -71,6 +72,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="parameters.vb" />
+    <Compile Include="predicates.vb" />
     <Compile Include="stream_api.vb" />
     <Compile Include="transformation.vb" />
   </ItemGroup>

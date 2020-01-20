@@ -19,19 +19,15 @@ Partial Public NotInheritable Class syntaxer
             Me.m = m
         End Sub
 
-        Public Overrides Function match(ByVal v As vector(Of typed_word),
-                                        ByRef p As UInt32,
-                                        ByVal parent As typed_node) As Boolean
+        Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of result)
             If v Is Nothing OrElse v.size() <= p Then
-                Return False
+                Return [optional].empty(Of result)()
             End If
             assert(Not v(p) Is Nothing)
             If v(p).type <> m Then
-                Return False
+                Return [optional].empty(Of result)()
             End If
-            add_subnode(v, parent, v(p).type, p, p + uint32_1)
-            p += uint32_1
-            Return True
+            Return [optional].of(New result(p + uint32_1, create_node(v, v(p).type, p, p + uint32_1)))
         End Function
 
         Public Overrides Function CompareTo(ByVal other As matching) As Int32

@@ -16,8 +16,8 @@ Friend Module b2style_statements
     Public ReadOnly suffix() As Byte
 
     Sub New()
-        prefix = Convert.FromBase64String(strcat_hint(CUInt(620), _
-        "H4sIAAAAAAAEALWUTW7CMBCF90jcYZQVSN1U6g5Vyqon6D4K9gQZOXFqOyhqxcm66JF6hc44v4RAQWoFyCF+882M5yXfn1/LxcEoCc7LxFR+5bxVxQ7UGj6WCwBtdkpApAqP1lalZx3JQEEclxYzVaOLPeali5vIaLNcHJeLEZUCb6HS1a3UrTE66QrmPz24zZN4WyE8Q/RKK8cOO1mqXdh64YtmT2Ww6gjQn0SArIPgCMhRU0FgtYrZ+rj1f6mPwVfrC4KZ+to0tCTCFCIdBv7QlbA/HVJalljIxGklkAa0b0qy6CtbgOrmQqMEiWLFK6F4mXBctfU2FWydi5RwVvhWpXoOFHYtukr7zQgc9O39M3QvH/i5sXgHnuV30DU6dwed5bfRGZYpn6iCvj6kqFs2X2ssxlyn3tFkfBfqwUShdbr3AE/r3k/T+XAM/0aPIlnF+bTw9DgSNzEZl9Bg+3hBb4WaPhQadZbrW6nHXTjUDBAnPXRukzJQZpOTPnk8OaLRgdTrsxydIesLTvyLRKKyFkmeu9VoGueDHt51Q8Slt10b/osZpDrMGW0+PYmV7H18Ke/UgaOum8iT1nMj7y7gesc3F/ADiycZhrgGAAA="))
+        prefix = Convert.FromBase64String(strcat_hint(CUInt(624), _
+        "H4sIAAAAAAAEALWUTW7CMBCF90jcYcQKpG4qdYcqseoJureCPUFGJk5tB0WtOFkXPVKv0Bnnl5BQkFoBcojffDOTefH359d8drRagQ9K2CIsfXA624Fewcd8BmDsTktY6Cygc0UeWEcy0LDZ5A5TXaLfBDzkflNFLtbz2Wk+61Ep8BYqXd1K3VprRFMw/2nBdR4RXIHwDItXWjm220kT4+PWC19UezqFZUOA9klEyCoKToAcNRREVq0YrY9b/5f6GHy1vigYqa9OQ4uQNpNJN/CHpoT9+ZCSPMdMCW+0RBrQvirJYShcBrqZC40SFMolr4TiZcDxxTa4RLJ1JinxWeFbkZgxUNx16AsT1j1w1Nf3L9CtvOMfrMM78Cy/g27Q+zvoLL+NzjCR6iB0Rt8Qc5Q1nK8NZn2w1+9oU74LZeei2Dvde4CnVWuo4YA4hn+9d5G84kOSBXofiStsyiVU2DZe0rFQ0odCF43n2l7KfhsTXYxJPRrOJc+EjTOViglH6yS9eDx7nL2s5eoiR2PecsK1f5FIFs4hyQ9+2RvcpSm6c7GLmDoZ6/BfjKP0ccyU4+lJrFXr+am8Q7f2uq4iz1o/WHV3Adc7vrmAHx5awzHkBgAA"))
 
         assert(prefix.ungzip(prefix))
         suffix = Convert.FromBase64String(strcat_hint(CUInt(32), _

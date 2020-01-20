@@ -16,7 +16,7 @@ Friend Module _b2style_test_data
     Sub New()
         case1 = Convert.FromBase64String(strcat_hint(CUInt(64), _
         "77u/DQp2b2lkIG1haW4oKSB7DQogIHN0ZF9vdXQoIkhlbGxvIFdvcmxkIik7DQp9"))
-        case2 = Convert.FromBase64String(strcat_hint(CUInt(256), _
-        "77u/DQpib29sIGlzX2V2ZW4oaW50IGkpIHsNCiAgcmV0dXJuIGVxdWFsKG1vZChpLCAyKSwgMCk7DQp9DQoNCnZvaWQgbWFpbigpIHsNCiAgaW50IHg7DQogIHggPSBjdXJyZW50X21zKCk7DQogIGlmIChpc19ldmVuKHgpKSB7DQogICAgeCA9IHNlbGZfZGVjKHgpOw0KICB9DQogIGJvb2xfc3RkX291dChpc19ldmVuKHgpKTsNCn0NCg=="))
+        case2 = Convert.FromBase64String(strcat_hint(CUInt(348), _
+        "77u/DQpib29sIGlzX2V2ZW4oaW50IGkpIHsNCiAgcmV0dXJuIGVxdWFsKG1vZChpLCAyKSwgMCk7DQp9DQoNCnZvaWQgbWFpbigpIHsNCiAgZm9yIChpbnQgaSA9IDA7IGxlc3MoaSwgMTAwKTsgaSA9IHNlbGZfaW5jKGkpKSB7DQogICAgaW50IHg7DQogICAgeCA9IGN1cnJlbnRfbXMoKTsNCiAgICBpZiAoaXNfZXZlbih4KSkgew0KICAgICAgeCA9IHNlbGZfZGVjKHgpOw0KICAgIH0NCiAgICBib29sX3N0ZF9vdXQoaXNfZXZlbih4KSk7DQogIH0NCn0NCg=="))
     End Sub
 End Module

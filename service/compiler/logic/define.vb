@@ -60,7 +60,7 @@ Namespace logic
             ElseIf type.StartsWith(type_of) Then
                 t = type.Substring(type_of.Length())
                 If Not scope.type(t, r) Then
-                    errors.anchor_undefined(t)
+                    errors.variable_undefined(t)
                     Return False
                 End If
             Else

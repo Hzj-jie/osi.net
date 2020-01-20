@@ -34,10 +34,8 @@ Partial Public NotInheritable Class syntaxer
             Me.New(c, matching_creator.create(c, m1, m2, ms))
         End Sub
 
-        Public Overrides Function match(ByVal v As vector(Of typed_word),
-                                        ByRef p As UInt32,
-                                        ByVal parent As typed_node) As Boolean
-            Return m.match(v, p, parent)
+        Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of result)
+            Return m.match(v, p)
         End Function
 
         Public Shared Operator +(ByVal this As matching_wrapper) As matching

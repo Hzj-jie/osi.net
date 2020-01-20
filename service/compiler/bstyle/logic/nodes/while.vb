@@ -31,10 +31,10 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 5)
+            If Not while_value(n, o) Then
+                Return False
+            End If
             Using value_target As read_scoped(Of String).ref = value.read_target()
-                If Not while_value(n, o) Then
-                    Return False
-                End If
                 Return builders.of_while_then(+value_target,
                                               Function() As Boolean
                                                   Return l.of(n.child(4)).build(o) AndAlso while_value(n, o)

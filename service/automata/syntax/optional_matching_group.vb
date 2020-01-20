@@ -26,15 +26,13 @@ Partial Public NotInheritable Class syntaxer
             MyBase.New(c, m1, m2, ms)
         End Sub
 
-        Public Overrides Function match(ByVal v As vector(Of typed_word),
-                                        ByRef p As UInt32,
-                                        ByVal parent As typed_node) As Boolean
-            Dim op As UInt32 = 0
-            op = p
-            If Not MyBase.match(v, p, parent) Then
-                p = op
+        Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of result)
+            Dim r As [optional](Of result) = Nothing
+            r = MyBase.match(v, p)
+            If r Then
+                Return r
             End If
-            Return True
+            Return [optional].of(New result(p))
         End Function
 
         Public Overloads Function CompareTo(ByVal other As optional_matching_group) As Int32 _

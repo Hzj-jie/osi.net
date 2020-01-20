@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.automata
@@ -36,7 +37,7 @@ Public NotInheritable Class bstyle_test
         assertion.is_true(bstyle.with_functions(New interrupts(+io)).parse(_bstyle_test_data.case2.as_text(), e))
         assertion.is_not_null(e)
         e.execute()
-        assertion.equal(io.output(), "False")
+        assertion.equal(io.output(), strncat("", "False", 100))
     End Sub
 
     Private Sub New()

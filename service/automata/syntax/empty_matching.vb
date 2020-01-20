@@ -15,10 +15,11 @@ Partial Public NotInheritable Class syntaxer
             MyBase.New(c)
         End Sub
 
-        Public Overrides Function match(ByVal v As vector(Of typed_word),
-                                        ByRef p As UInt32,
-                                        ByVal parent As typed_node) As Boolean
-            Return Not v Is Nothing AndAlso v.size() > p
+        Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of result)
+            If Not v Is Nothing AndAlso v.size() > p Then
+                Return [optional].of(New result(p))
+            End If
+            Return [optional].empty(Of result)()
         End Function
 
         Public Overrides Function CompareTo(ByVal other As matching) As Int32

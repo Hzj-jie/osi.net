@@ -118,8 +118,8 @@
     <Compile Include="bstyle\logic\nodes\value_with_bracket.vb" />
     <Compile Include="b2style\logic\nodes\value_with_operation.vb" />
     <Compile Include="bstyle\logic\nodes\while.vb" />
-    <Compile Include="logic\logic_gen\stack\read_scoped.vb" />
-    <Compile Include="logic\logic_gen\stack\write_scoped.vb" />
+    <Compile Include="logic\logic_gen\scoped\read_scoped.vb" />
+    <Compile Include="logic\logic_gen\scoped\write_scoped.vb" />
     <Compile Include="logic\builder\builders.implementation.vb" />
     <Compile Include="logic\builder\builders.vb" />
     <Compile Include="logic\builder\writer.vb" />
