@@ -95,6 +95,10 @@ Namespace logic
             raise_error(error_type.user, "Type ", type, " referred by target ", target, " is undefined.")
         End Sub
 
+        Public Shared Sub anchor_undefined(ByVal name As String, ByVal origin As String)
+            raise_error(error_type.user, "Anchor ", name, " derived from ", origin, " is not defined.")
+        End Sub
+
         Public Shared Sub anchor_undefined(ByVal name As String)
             raise_error(error_type.user, "Anchor ", name, " is not defined.")
         End Sub
@@ -125,6 +129,14 @@ Namespace logic
                         parameters,
                         "] does not match the parameters of callee ",
                         callee_name)
+        End Sub
+
+        Public Shared Sub unexpected_macro(ByVal n As String)
+            raise_error(error_type.user, "Unexpected format of macro ", n)
+        End Sub
+
+        Public Shared Sub unknown_macro(ByVal n As String, ByVal s As String)
+            raise_error(error_type.user, "Unknown macro ", n, " against ", s)
         End Sub
 
         Private Sub New()

@@ -12,19 +12,23 @@ Namespace logic
         Implements exportable
 
         Private ReadOnly anchors As anchors
+        Private ReadOnly types As types
         Private ReadOnly name As String
         Private ReadOnly type As String
         Private ReadOnly parameters() As pair(Of String, String)
         Private ReadOnly paragraph As paragraph
 
         Public Sub New(ByVal anchors As anchors,
+                       ByVal types As types,
                        ByVal name As String,
                        ByVal type As String,
                        ByVal parameters As unique_ptr(Of pair(Of String, String)()),
                        ByVal paragraph As unique_ptr(Of paragraph))
             assert(Not anchors Is Nothing)
+            assert(Not types Is Nothing)
             assert(Not String.IsNullOrEmpty(name))
             Me.anchors = anchors
+            Me.types = types
             Me.name = name
             Me.type = type
             Me.parameters = parameters.release_or_null()
@@ -32,11 +36,12 @@ Namespace logic
         End Sub
 
         Public Sub New(ByVal anchors As anchors,
+                       ByVal types As types,
                        ByVal name As String,
                        ByVal type As String,
                        ByVal paragraph As unique_ptr(Of paragraph),
                        ByVal ParamArray parameters() As pair(Of String, String))
-            Me.New(anchors, name, type, unique_ptr.[New](parameters), paragraph)
+            Me.New(anchors, types, name, type, unique_ptr.[New](parameters), paragraph)
         End Sub
 
         Private Function parameter_types() As String()
@@ -55,7 +60,11 @@ Namespace logic
             Dim pos As UInt32 = 0
             pos = o.size()
             o.emplace_back(String.Empty)
-            If Not anchors.define(name, o, type, parameter_types) Then
+            Dim real_name As String = Nothing
+            If Not macros.decode(anchors, scope, types, name, real_name) Then
+                Return False
+            End If
+            If Not anchors.define(real_name, o, type, parameter_types) Then
                 Return False
             End If
             ' No need to use scope_wrapper, as the pops are after the rest instruction and have no effect.
@@ -65,7 +74,7 @@ Namespace logic
             ' caller should setup the stack.
             ' Note, variables are using reverse order to match the stack, and here the logic "define" but not "push" to
             ' use variables from the caller side.
-            If Not return_value_of.define(scope, name, type) Then
+            If Not return_value_of.define(scope, real_name, type) Then
                 Return False
             End If
             For i As Int32 = 0 To array_size_i(parameters) - 1

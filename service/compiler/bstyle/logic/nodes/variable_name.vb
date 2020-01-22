@@ -31,7 +31,7 @@ Partial Public NotInheritable Class bstyle
                 Dim variable_name As String = Nothing
                 variable_name = n.child().word().str()
                 With +r
-                    .set_type(define.type_of + variable_name)
+                    .set_type(macros.type_of(variable_name))
                     builders.of_copy(.name, variable_name).to(o)
                 End With
             End Using

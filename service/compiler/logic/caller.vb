@@ -69,7 +69,7 @@ Namespace logic
                 errors.anchor_undefined(name)
                 Return False
             End If
-            If Not define.export(anchors, return_value_place_holder_name, result_type, scope, o) Then
+            If Not define.export(anchors, types, return_value_place_holder_name, result_type, scope, o) Then
                 Return False
             End If
             Return True
@@ -92,6 +92,7 @@ Namespace logic
                 Dim parameter_name_place_holder As String = Nothing
                 parameter_name_place_holder = strcat("@parameter_", i, "_of_", name, "_place_holder")
                 If Not define.export(anchors,
+                                     types,
                                      parameter_name_place_holder,
                                      callee_params(CUInt(i)),
                                      scope,
@@ -155,9 +156,13 @@ Namespace logic
                 End If
                 o.emplace_back(instruction_builder.str(command.stst))
 
+                Dim real_name As String = Nothing
+                If Not macros.decode(anchors, sw.scope(), types, name, real_name) Then
+                    Return False
+                End If
                 Dim pos As UInt32 = 0
-                If Not anchors.retrieve(name, pos) Then
-                    errors.anchor_undefined(name)
+                If Not anchors.retrieve(real_name, pos) Then
+                    errors.anchor_undefined(real_name, name)
                     Return False
                 End If
                 o.emplace_back(instruction_builder.str(command.jump, data_ref.abs(pos)))

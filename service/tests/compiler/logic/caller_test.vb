@@ -20,20 +20,21 @@ Namespace logic
 
         Public Sub New()
             MyBase.New(New callee(anchors,
+                                  types.empty,
                                   "add",
                                   "type*",
                                   unique_ptr.[New](New paragraph(
-                                      New define(anchors, "result", types.variable_type),
+                                      New define(anchors, types.empty, "result", types.variable_type),
                                       New add(types.empty, "result", "parameter1", "parameter2"),
                                       New [return](anchors, types.empty, "add", "result")
                                   )),
                                   pair.emplace_of("parameter1", types.variable_type),
                                   pair.emplace_of("parameter2", types.variable_type),
                                   pair.emplace_of("parameter3", types.variable_type)),
-                       New define(anchors, "parameter1", types.variable_type),
-                       New define(anchors, "parameter2", types.variable_type),
-                       New define(anchors, "parameter3", types.variable_type),
-                       New define(anchors, "result", types.variable_type),
+                       New define(anchors, types.empty, "parameter1", types.variable_type),
+                       New define(anchors, types.empty, "parameter2", types.variable_type),
+                       New define(anchors, types.empty, "parameter3", types.variable_type),
+                       New define(anchors, types.empty, "result", types.variable_type),
                        New copy_const(types.empty, "parameter1", unique_ptr.[New](New data_block(100))),
                        New copy_const(types.empty, "parameter2", unique_ptr.[New](New data_block(200))),
                        New copy_const(types.empty, "parameter3", unique_ptr.[New](New data_block(10000))),

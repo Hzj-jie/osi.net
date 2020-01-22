@@ -136,6 +136,7 @@
     <Compile Include="logic\importer.vb" />
     <Compile Include="logic\logic_gen\logic_rule_wrapper.vb" />
     <Compile Include="logic\logic_gen\type_alias.vb" />
+    <Compile Include="logic\macros.vb" />
     <Compile Include="logic\pair_result_binary_operator.vb" />
     <Compile Include="logic\pair_result_binary_operators.vb" />
     <Compile Include="logic\paragraph.vb" />

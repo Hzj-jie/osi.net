@@ -14,8 +14,8 @@ Friend Module _b2style_test_data
     Public ReadOnly case2() As Byte
 
     Sub New()
-        case1 = Convert.FromBase64String(strcat_hint(CUInt(64), _
-        "77u/DQp2b2lkIG1haW4oKSB7DQogIHN0ZF9vdXQoIkhlbGxvIFdvcmxkIik7DQp9"))
+        case1 = Convert.FromBase64String(strcat_hint(CUInt(76), _
+        "77u/DQp2b2lkIG1haW4oKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoIkhlbGxvIFdvcmxkIik7DQp9"))
         case2 = Convert.FromBase64String(strcat_hint(CUInt(368), _
         "77u/DQpib29sIGlzX2V2ZW4oaW50IGkpIHsNCiAgcmV0dXJuIGIyc3R5bGU6OmVxdWFsKGIyc3R5bGU6Om1vZChpLCAyKSwgMCk7DQp9DQoNCnZvaWQgbWFpbigpIHsNCiAgZm9yIChpbnQgaSA9IDA7IGkgPCAxMDA7IGkgPSBpKyspIHsNCiAgICBpbnQgeDsNCiAgICB4ID0gYjJzdHlsZTo6Y3VycmVudF9tcygpOw0KICAgIGlmIChpc19ldmVuKHgpKSB7DQogICAgICB4ID0geC0tOw0KICAgIH0NCiAgICBiMnN0eWxlOjpib29sX3N0ZF9vdXQoaXNfZXZlbih4KSk7DQogIH0NCn0NCg=="))
     End Sub

@@ -63,7 +63,7 @@ Partial Public NotInheritable Class bstyle
                     Return build(n,
                                  o,
                                  Sub(ByVal callee_name As String, ByVal parameters As vector(Of String))
-                                     .set_type(define.return_type_of + callee_name)
+                                     .set_type(macros.return_type_of(callee_name))
                                      builders.of_caller(callee_name, .name, parameters).to(o)
                                  End Sub)
                 End With

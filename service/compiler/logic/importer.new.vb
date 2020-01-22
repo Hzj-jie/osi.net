@@ -62,7 +62,7 @@ Namespace logic
                                     ByVal p2 As String,
                                     ByVal p3 As vector(Of pair(Of String, String)),
                                     ByVal p4 As paragraph) As callee
-            Return New callee(anchors, p1, p2, unique_ptr.[New](+p3), unique_ptr.[New](p4))
+            Return New callee(anchors, types, p1, p2, unique_ptr.[New](+p3), unique_ptr.[New](p4))
         End Function
 
         Private Function new_caller(ByVal p1 As String, ByVal p2 As String, ByVal p3 As vector(Of String)) As caller
@@ -113,7 +113,7 @@ Namespace logic
         End Function
 
         Private Function new_define(ByVal p1 As String, ByVal p2 As String) As define
-            Return New define(anchors, p1, p2)
+            Return New define(anchors, types, p1, p2)
         End Function
 
         Private Function new_do_until(ByVal p1 As String, ByVal p2 As paragraph) As do_until

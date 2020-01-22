@@ -50,7 +50,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
             End If
             sections.renew()
             For i As UInt32 = 0 To inputs.size() - uint32_1
-                If Not inputs(i).null_or_empty_or_whitespace() AndAlso
+                If Not inputs(i).null_or_whitespace() AndAlso
                        Not inputs(i).strstartwith(comment_start) Then
                     If inputs(i).strstartwith(value_start) OrElse
                            inputs(i).strstartwith(value_start2) Then

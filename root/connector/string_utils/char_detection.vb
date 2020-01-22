@@ -26,4 +26,11 @@ Public Module _char_detection
             Return True
         End If
     End Function
+
+    <Extension()> Public Function empty_or_whitespace(ByVal s As String) As Boolean
+#If Not NO_REFERENCE Then
+        assert(Not s Is Nothing)
+#End If
+        Return null_or_whitespace(s)
+    End Function
 End Module

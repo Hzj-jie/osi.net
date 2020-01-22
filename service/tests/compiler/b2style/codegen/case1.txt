@@ -1,4 +1,4 @@
 ﻿
 void main() {
-  std_out("Hello World");
+  b2style::std_out("Hello World");
 }
