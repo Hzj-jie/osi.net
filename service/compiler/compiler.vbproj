@@ -61,6 +61,9 @@
     <Compile Include="b2style\rewriter\nodes\binary_operation_value.vb" />
     <Compile Include="b2style\rewriter\nodes\name.vb" />
     <Compile Include="b2style\rewriter\nodes\kw_namespace.vb" />
+    <Compile Include="b2style\rewriter\nodes\operations.vb" />
+    <Compile Include="b2style\rewriter\nodes\post_operation_value.vb" />
+    <Compile Include="b2style\rewriter\nodes\pre_operation_value.vb" />
     <Compile Include="b2style\rewriter\statements.vb" />
     <Compile Include="bstyle\bstyle.vb" />
     <Compile Include="bstyle\bstyle_rules.vb" />

@@ -9,7 +9,7 @@ Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
-    Public NotInheritable Class binary_operation_value
+    Public NotInheritable Class post_operation_value
         Inherits rewriter_wrapper
         Implements rewriter
 
@@ -20,19 +20,15 @@ Partial Public NotInheritable Class b2style
 
         Public Shared Sub register(ByVal b As rewriters)
             assert(Not b Is Nothing)
-            b.register(Of binary_operation_value)()
+            b.register(Of post_operation_value)()
         End Sub
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
-            assert(n.child_count() = 3)
+            assert(n.child_count() = 2)
             o.append(operations.function_name(n.child(1)))
             o.append("(")
             If Not l.of(n.child(0)).build(o) Then
-                Return False
-            End If
-            o.append(",")
-            If Not l.of(n.child(2)).build(o) Then
                 Return False
             End If
             o.append(")")
