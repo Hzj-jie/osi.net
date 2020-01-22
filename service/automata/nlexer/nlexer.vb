@@ -5,21 +5,38 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.service.automata.syntaxer
 
 ' TODO: Merge with matching_group
 Partial Public NotInheritable Class nlexer
+    Private Shared ReadOnly debug_log As Boolean
+    Private Shared ReadOnly dump_rules As Boolean
     Private ReadOnly rs As vector(Of pair(Of String, rule))
+
+    Shared Sub New()
+        dump_rules = env_bool(env_keys("nlexer", "rules", "debug")) OrElse
+                     env_bool(env_keys("nlexer", "debug", "rules")) OrElse
+                     env_bool(env_keys("nlexer", "dump", "rules"))
+        debug_log = env_bool(env_keys("nlexer", "debug", "log")) OrElse
+                    env_bool(env_keys("nlexer", "debugging", "log"))
+    End Sub
 
     Public Sub New(ByVal ParamArray rs() As pair(Of String, rule))
         Me.New(vector.of(rs))
     End Sub
 
     Private Sub New(ByVal rs As vector(Of pair(Of String, rule)))
-        assert(Not rs Is Nothing)
-        assert(Not rs.empty())
+        assert(Not rs.null_or_empty())
         Me.rs = rs
+        If dump_rules Then
+            Dim i As UInt32 = 0
+            While i < rs.size()
+                raise_error(error_type.user, "Rule ", rs(i).first, ": ", rs(i).second)
+                i += uint32_1
+            End While
+        End If
     End Sub
 
     Public Function match(ByVal i As String, ByVal pos As UInt32) As [optional](Of result)
@@ -29,7 +46,37 @@ Partial Public NotInheritable Class nlexer
         While j < rs.size()
             Dim r As [optional](Of UInt32) = Nothing
             r = rs(j).second.match(i, pos)
+            If debug_log AndAlso (Not Not r) Then
+                raise_error(error_type.user,
+                            "nlexer rule matches from ",
+                            pos,
+                            " to ",
+                            +r,
+                            " with type ",
+                            rs(j).first)
+            End If
             If (Not r.empty()) AndAlso (+r > pos) AndAlso ((Not max) OrElse (+max).end < (+r)) Then
+                If debug_log Then
+                    If max Then
+                        raise_error(error_type.user,
+                                    "nlexer replaces type ",
+                                    (+max).name,
+                                    " from ",
+                                    pos,
+                                    " to ",
+                                    +r,
+                                    " with type ",
+                                    rs(j).first)
+                    Else
+                        raise_error(error_type.user,
+                                    "nlexer uses the match from ",
+                                    pos,
+                                    " to ",
+                                    +r,
+                                    " with type ",
+                                    rs(j).first)
+                    End If
+                End If
                 max = [optional].of(New result(pos, +r, rs(j).first, j))
             End If
             j += uint32_1

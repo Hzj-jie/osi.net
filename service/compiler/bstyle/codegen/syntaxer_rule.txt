@@ -1,11 +1,13 @@
 
 IGNORE_TYPES blank
-ROOT_TYPES function
+ROOT_TYPES function, value-definition-with-semi-colon
 
 function name name start-bracket [paramlist]? end-bracket multi-sentence-paragraph
 paramlist [param-with-comma]* param
 param-with-comma param comma
 param name name
+
+value-definition-with-semi-colon value-definition semi-colon
 
 paragraph [sentence, multi-sentence-paragraph]
 sentence [sentence-with-semi-colon, sentence-without-semi-colon]

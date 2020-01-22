@@ -114,7 +114,7 @@ Partial Public NotInheritable Class syntaxer
                 Return False
             End If
             str_syntax_type.emplace(o, name)
-            If syntaxer.dump_rules Then
+            If syntaxer.dump_rules AndAlso o = next_type - uint32_1 Then
                 raise_error(error_type.user, "Define syntax type ", name, ": ", o)
             End If
             Return True

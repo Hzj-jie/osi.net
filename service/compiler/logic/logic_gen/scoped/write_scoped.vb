@@ -47,6 +47,13 @@ Namespace logic
             Return s.get().back()
         End Function
 
+        Public Function current_or(ByVal fallback As T) As T
+            If s.or_new().empty() Then
+                Return fallback
+            End If
+            Return s.get().back()
+        End Function
+
         Public Function size() As UInt32
             Return s.or_new().size()
         End Function

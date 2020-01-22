@@ -1,94 +1,141 @@
-﻿
-void std_out(string i) {
+﻿void b2style__std_out(string i) {
   logic "interrupt stdout i @@prefixes@temps@string";
 }
 
-void std_err(string i) {
+void b2style__std_err(string i) {
   logic "interrupt stderr i @@prefixes@temps@string";
 }
 
-void bool_std_out(bool i) {
+void b2style__bool_std_out(bool i) {
   string _true = "True";
   string _false = "False";
   if (i) {
-    std_out(_true);
+    b2style__std_out(_true);
   } else {
-    std_out(_false);
+    b2style__std_out(_false);
   }
 }
 
-void bool_std_err(bool i) {
+void b2style__bool_std_err(bool i) {
   string _true = "True";
   string _false = "False";
   if (i) {
-    std_err(_true);
+    b2style__std_err(_true);
   } else {
-    std_err(_false);
+    b2style__std_err(_false);
   }
 }
 
-string str_concat(string i, string j) {
+int b2style__current_ms() {
+  int result;
+  logic "interrupt current_ms @@prefixes@temps@string result";
+  return result;
+}
+
+string b2style__str_concat(string i, string j) {
   logic "append_slice i j";
   return i;
 }
 
-int dec(int i, int j) {
-  logic "subtract i i j";
+bool b2style__and(bool i, bool j) {
+  logic "and i i j";
   return i;
 }
 
-bool equal(int i, int j) {
+bool b2style__or(bool i, bool j) {
+  logic "or i i j";
+  return i;
+}
+
+bool b2style__not(bool i) {
+  logic "not i i";
+  return i;
+}
+
+bool b2style__equal(int i, int j) {
   bool result;
   logic "equal result i j";
   return result;
 }
 
-bool more(int i, int j) {
+bool b2style__greater_than(int i, int j) {
   bool result;
   logic "more result i j";
   return result;
 }
 
-bool less(int i, int j) {
+bool b2style__less_than(int i, int j) {
   bool result;
   logic "less result i j";
   return result;
 }
 
-int fit_in_int(int x) {
+bool b2style__less_or_equal(int i, int j) {
+  return b2style__or(b2style__less_than(i, j), b2style__equal(i, j));
+}
+
+bool b2style__greater_or_equal(int i, int j) {
+  return b2style__or(b2style__greater_than(i, j), b2style__equal(i, j));
+}
+
+int b2style__fit_in_int(int x) {
   int len;
   logic "sizeof len x";
-  if (more(len, 4)) {
+  if (b2style__greater_than(len, 4)) {
     logic "subtract len len @@prefixes@constants@size_of_int";
     logic "cut_slice x x @@prefixes@constants@int_0 len";
   }
   return x;
 }
 
-int self_inc(int x) {
-  logic "add x x @@prefixes@constants@int_1";
-  return fit_in_int(x);
+int b2style__add(int i, int j) {
+  logic "add i i j";
+  return b2style__fit_in_int(i);
 }
 
-int self_dec(int x) {
-  logic "subtract x x @@prefixes@constants@int_1";
-  return fit_in_int(x);
+int b2style__minus(int i, int j) {
+  logic "subtract i i j";
+  return b2style__fit_in_int(i);
 }
 
-int current_ms() {
-  int result;
-  logic "interrupt current_ms @@prefixes@temps@string result";
-  return result;
+int b2style__multiply(int i, int j) {
+  logic "multiply i i j";
+  return b2style__fit_in_int(i);
 }
 
-int div(int i, int j) {
+int b2style__divide(int i, int j) {
   int result;
   logic "divide result @@prefixes@temps@string i j";
-  return fit_in_int(result);
+  return b2style__fit_in_int(result);
 }
 
-int mod(int i, int j) {
+int b2style__mod(int i, int j) {
   int result;
   logic "divide @@prefixes@temps@string result i j";
-  return fit_in_int(result);
+  return b2style__fit_in_int(result);
+}
+
+int b2style__power(int i, int j) {
+  logic "power i i j";
+  return b2style__fit_in_int(i);
+}
+
+int b2style__bit_and(int i, int j) {
+  logic "and i i j";
+  return i;
+}
+
+int b2style__bit_or(int i, int j) {
+  logic "or i i j";
+  return i;
+}
+
+int b2style__self_inc(int x) {
+  logic "add x x @@prefixes@constants@int_1";
+  return b2style__fit_in_int(x);
+}
+
+int b2style__self_dec(int x) {
+  logic "subtract x x @@prefixes@constants@int_1";
+  return b2style__fit_in_int(x);
 }

@@ -16,8 +16,8 @@ Friend Module b2style_statements
     Public ReadOnly suffix() As Byte
 
     Sub New()
-        prefix = Convert.FromBase64String(strcat_hint(CUInt(624), _
-        "H4sIAAAAAAAEALWUS27CMBCG90jcYcQKJBat1B2qxKon6D4K9gQZmTj1A0WtOFkXPVKv0BnnDYGC1AqQQ/zPNzOeP/n+/JpODkZJcF4mJvi581blW1AL+JhOALTZKgEzlXu0NhSedSQDBet1YTFTJbq1x33h1lXkbDWdHKeTHpUCb6HS1a3UjTE6aQrmPy24zpN4GxCeYfZKK8d2O1mqXdx64YtqT2UwbwjQnkSELKLgCMhRp4LIqhWj9XHr/1Ifg6/WFwUj9dVpaEmEyUXaDXzZlLAbDiktCsxl4rQSSAPaVSVZ9MHmoJq50ChBopjzSiheTjgubLxNBVvnIiWeFb6FVI+B4q5FF7Rf9cBRX98/Q7fyjr83Fu/As/wOukbn7qCz/DY6wzLlE5XT18cUZc3ma415n+vUO5qM70LZmSi2TveW8LRo/XQ6H47hX+9RJKs4n+aeHkfiJibjEipsGy+Cr01S0mc0mIKSB2bPGk+2vZb9Nh1qziAGTTZ2lPJ6gsfBGfZOrFyc5WgcW16w6l8kEsFaJPnezXvjOndC9zLsIi69DuvwX9wi1WHMiePpSaxka/RLeU8t2uu6ihy0vjfy7gKud3xzAT99UeKU2QYAAA=="))
+        prefix = Convert.FromBase64String(strcat_hint(CUInt(812), _
+        "H4sIAAAAAAAEALVVy47TMBTdV+o/WF21UhaA2I2QuuIL2FtpfFM8cu3gx5ABzZex4JP4Ba6d98TxpC2orZza955zcl/+8+v3k+KMnD4Y+yyAUmMZVc7ujdVcngk/kJ/bDSFCnXlBdlxa0NpVlqAdmhFOjsdKQ8lrMEcLl8ocG8/dw3bzst1sN3N4RFgDj09Xw5+UEv0r+D89Q0tIrXZAPpHdF1w9yHBS5sKEo8/+oTnjJdl3CGQepIB2CJYvBLz7omVAb03T0n14/q90z7BOerCMSMdEDYaF0xqkpRezb/n8sQbjhH2IZnfwWMpv6968igbrtBwQg4TWbiRX00LJIh9qN+sC9Dgts7yqQDJqBC8AS+xxwsI7gpCDHj6XrM1KRsL6GlMyhFoJpnQSS+n1UFK9KvQWA/c9yBoI+OZysfc5Qz1+6eQEs3keg327P5M5TdKU6KwhxxKg9msur+C7KA230Akw5lou73Mzl9LLsWwxJiUQEZqhQzZLjd89pGN6K/c0JyvoJ61fcku5xK8NvPWo/wXIcWAN/wGq9LukHgZUXAYaZeTjoR9eHYQ7WZ0XATr8RrMDO9/YXFqcH0hEVek1NTy9f+Fs2/M1fqLO6ETfeexdN+766NXRAOSMxSLeDQUWGwrR6MXje+HSmQRBH5L7WLCseSWeE0SdyX1EjD9xBjGa+I3R2Hf9uHRVrBHUQCy8vormMCkpfW3dLalS30En0hHO78vFCS38pZao3vSVNkNTKcXpO22CZUD49i0mI2XUUcnuff9mPOp4PAIrgyhr32b/iPovUutGIHYLAAA="))
 
         assert(prefix.ungzip(prefix))
         suffix = Convert.FromBase64String(strcat_hint(CUInt(32), _

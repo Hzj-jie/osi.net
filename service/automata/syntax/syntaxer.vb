@@ -41,7 +41,7 @@ Partial Public NotInheritable Class syntaxer
         Me.mg = New matching_group(collection, arrays.type_erasure(Of matching, syntax)(+collection.get(+root_types)))
     End Sub
 
-    Private Shared Function debug_str(ByVal v As vector(Of typed_word), ByVal p As UInt32) As String
+    Private Function debug_str(ByVal v As vector(Of typed_word), ByVal p As UInt32) As String
         Dim start As UInt32 = 0
         start = CUInt(max(0, p - 3))
         Dim [end] As UInt32 = 0
@@ -51,7 +51,12 @@ Partial Public NotInheritable Class syntaxer
         Dim i As UInt32 = 0
         i = start
         While i < [end]
-            r.Append(v(i).str()).Append(character.blank)
+            r.Append(v(i).str()).
+              Append(":[").
+              Append(collection.type_name(v(i).type)).
+              Append("]").
+              Append(v(i).len).
+              Append(character.blank)
             i += uint32_1
         End While
         Return Convert.ToString(r)

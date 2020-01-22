@@ -50,7 +50,7 @@ Public NotInheritable Class b2style
 
         Protected Overrides Function at() As vector(Of Action(Of rewriters, rewriter_rule_wrapper))
             Return vector.of(
-                       default_registerer("lexx-or-equal"),
+                       default_registerer("less-or-equal"),
                        default_registerer("greater-or-equal"),
                        default_registerer("equal"),
                        default_registerer("less-than"),
@@ -93,13 +93,15 @@ Public NotInheritable Class b2style
                        default_registerer("end-square-bracket"),
                        default_registerer("semi-colon"),
                        default_registerer("assignment"),
-                       default_registerer("name"),
+                       ignore_parameters(AddressOf name.register),
  _
                        default_registerer("function"),
                        default_registerer("paramlist"),
                        default_registerer("multi-sentence-paragraph"),
                        default_registerer("param-with-comma"),
                        default_registerer("param"),
+                       default_registerer("value-definition-with-semi-colon"),
+                       ignore_parameters(AddressOf kw_namespace.register),
                        default_registerer("paragraph"),
                        default_registerer("sentence"),
                        default_registerer("sentence-with-semi-colon"),
@@ -118,7 +120,7 @@ Public NotInheritable Class b2style
                        default_registerer("value-with-bracket"),
                        default_registerer("value-without-bracket"),
                        default_registerer("unary-operation-value"),
-                       default_registerer("binary-operation-value"),
+                       ignore_parameters(AddressOf binary_operation_value.register),
                        default_registerer("pre-operation-value"),
                        default_registerer("post-operation-value"),
                        default_registerer("variable-name"),

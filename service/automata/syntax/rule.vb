@@ -17,6 +17,7 @@ Partial Public NotInheritable Class syntaxer
         Public Const command_root_types As String = "ROOT_TYPES"
         Public Const ignore_types_separator As Char = character.comma
         Public Shared ReadOnly ignore_types_separators() As String = {Convert.ToString(character.comma)}
+        Private Shared ReadOnly empty_surround_strs() As String = Nothing
         Private ReadOnly m As map(Of String, Func(Of String, Boolean))
         Private ReadOnly ignores As [set](Of UInt32)
         Private ReadOnly roots As vector(Of UInt32)
@@ -53,47 +54,59 @@ Partial Public NotInheritable Class syntaxer
             Return collection.complete()
         End Function
 
-        Private Function ignore_types(ByVal s As String) As Boolean
-            Static empty_surround_strs() As String = Nothing
-            ignores.clear()
+        Private Shared Function split_types(ByVal s As String) As vector(Of String)
             Dim v As vector(Of String) = Nothing
             If strsplit(s, ignore_types_separators, empty_surround_strs, v, True, False) AndAlso
                Not v.null_or_empty() Then
                 For i As UInt32 = 0 To v.size() - uint32_1
-                    Dim j As UInt32 = 0
-                    If collection.token_type(v(i), j) Then
-                        Dim p As pair(Of [set](Of UInt32).iterator, Boolean) = Nothing
-                        p = ignores.emplace(j)
-                        assert(Not p Is Nothing)
-                        If Not p.second Then
-                            raise_error(error_type.user, "failed to add type ", j)
-                            Return False
-                        End If
-                    Else
-                        raise_error(error_type.user, "cannot find token type ", v(i), " for ignore types.")
+                    v(i) = v(i).Trim()
+                Next
+                Return v
+            End If
+            Return Nothing
+        End Function
+
+        Private Function ignore_types(ByVal s As String) As Boolean
+            ignores.clear()
+            Dim v As vector(Of String) = Nothing
+            v = split_types(s)
+            If v Is Nothing Then
+                Return True
+            End If
+            For i As UInt32 = 0 To v.size() - uint32_1
+                Dim j As UInt32 = 0
+                If collection.token_type(v(i), j) Then
+                    Dim p As pair(Of [set](Of UInt32).iterator, Boolean) = Nothing
+                    p = ignores.emplace(j)
+                    assert(Not p Is Nothing)
+                    If Not p.second Then
+                        raise_error(error_type.user, "failed to add type ", j)
                         Return False
                     End If
-                Next
-            End If
+                Else
+                    raise_error(error_type.user, "cannot find token type ", v(i), " for ignore types.")
+                    Return False
+                End If
+            Next
             Return True
         End Function
 
         Private Function root_types(ByVal s As String) As Boolean
-            Static empty_surround_strs() As String = Nothing
             roots.clear()
             Dim v As vector(Of String) = Nothing
-            If strsplit(s, ignore_types_separators, empty_surround_strs, v, True, False) AndAlso
-               Not v.null_or_empty() Then
-                For i As UInt32 = 0 To v.size() - uint32_1
-                    Dim j As UInt32 = 0
-                    If collection.define(v(i), j) Then
-                        roots.emplace_back(j)
-                    Else
-                        raise_error(error_type.user, "cannot define syntax type ", v(i), " for root types.")
-                        Return False
-                    End If
-                Next
+            v = split_types(s)
+            If v Is Nothing Then
+                Return True
             End If
+            For i As UInt32 = 0 To v.size() - uint32_1
+                Dim j As UInt32 = 0
+                If collection.define(v(i), j) Then
+                    roots.emplace_back(j)
+                Else
+                    raise_error(error_type.user, "cannot define syntax type ", v(i), " for root types.")
+                    Return False
+                End If
+            Next
             Return True
         End Function
 

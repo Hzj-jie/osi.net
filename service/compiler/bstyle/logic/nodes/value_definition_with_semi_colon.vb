@@ -8,8 +8,8 @@ Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
 
-Partial Public NotInheritable Class b2style
-    Public NotInheritable Class value_with_operation
+Partial Public NotInheritable Class bstyle
+    Public NotInheritable Class value_definition_with_semi_colon
         Inherits logic_gen_wrapper
         Implements logic_gen
 
@@ -20,17 +20,14 @@ Partial Public NotInheritable Class b2style
 
         Public Shared Sub register(ByVal b As logic_gens)
             assert(Not b Is Nothing)
-            b.register(Of value_with_operation)()
+            b.register(Of value_definition_with_semi_colon)()
         End Sub
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            If Not l.of(n.child()).build(o) Then
-                o.err("@value_with_operation ", n.child())
-                Return False
-            End If
-            Return True
+            assert(n.child_count() = 2)
+            Return l.of(n.child(0)).build(o)
         End Function
     End Class
 End Class

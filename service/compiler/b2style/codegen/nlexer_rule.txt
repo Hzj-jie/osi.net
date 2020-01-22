@@ -1,24 +1,4 @@
 ﻿
-less-or-equal <=
-greater-or-equal >=
-equal ==
-less-than <
-greater-than >
-
-add \+
-minus -
-multiply \*
-divide /
-mod %
-power ^
-bit-and &
-bit-or \|
-and &&
-or \|\|
-not !
-self-inc ++
-self-dec --
-
 # This file will be converted into resource, so #INCLUDE does not work.
 # Following definitions are copied from bstyle/codegen/nlexer_rule.txt.
 kw-if if
@@ -51,4 +31,28 @@ semi-colon ;
 
 assignment =
 
-name [\w,_][\w,\d,_]*
+# Different rules
+
+less-or-equal <=
+greater-or-equal >=
+equal ==
+less-than <
+greater-than >
+
+add \+
+minus -
+multiply \*
+divide /
+mod %
+power ^
+bit-and &
+bit-or \|
+and &&
+or \|\|
+not !
+self-inc ++
+self-dec --
+
+kw-namespace namespace
+
+name [\w,_,::][\w,\d,_,::]*

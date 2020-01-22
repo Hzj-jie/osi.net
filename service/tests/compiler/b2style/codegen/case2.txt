@@ -1,15 +1,15 @@
 ﻿
 bool is_even(int i) {
-  return equal(mod(i, 2), 0);
+  return b2style::equal(b2style::mod(i, 2), 0);
 }
 
 void main() {
-  for (int i = 0; less(i, 100); i = self_inc(i)) {
+  for (int i = 0; b2style::less_than(i, 100); i = b2style::self_inc(i)) {
     int x;
-    x = current_ms();
+    x = b2style::current_ms();
     if (is_even(x)) {
-      x = self_dec(x);
+      x = b2style::self_dec(x);
     }
-    bool_std_out(is_even(x));
+    b2style::bool_std_out(is_even(x));
   }
 }

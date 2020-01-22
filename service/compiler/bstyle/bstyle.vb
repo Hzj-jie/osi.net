@@ -76,6 +76,7 @@ Public NotInheritable Class bstyle
                 ignore_parameters(AddressOf value_clause.register),
                 registerer(AddressOf value_declaration.register),
                 registerer(AddressOf value_definition.register),
+                ignore_parameters(AddressOf value_definition_with_semi_colon.register),
                 ignore_parameters(AddressOf value_list.register),
                 ignore_parameters(AddressOf value_with_bracket.register),
                 ignore_parameters(AddressOf value_with_comma.register),
