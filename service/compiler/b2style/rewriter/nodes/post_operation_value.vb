@@ -13,9 +13,12 @@ Partial Public NotInheritable Class b2style
         Inherits rewriter_wrapper
         Implements rewriter
 
+        Private ReadOnly operations As operations
+
         <inject_constructor>
         Public Sub New(ByVal i As rewriters)
             MyBase.New(i)
+            Me.operations = New operations(i)
         End Sub
 
         Public Shared Sub register(ByVal b As rewriters)

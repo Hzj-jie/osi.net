@@ -18,6 +18,7 @@ Partial Public NotInheritable Class bstyle
         <inject_constructor>
         Public Sub New(ByVal b As logic_gens)
             MyBase.New(b)
+            Me.rs = New read_scoped(Of vector(Of String))()
         End Sub
 
         Public Shared Sub register(ByVal b As logic_gens)
@@ -36,7 +37,7 @@ Partial Public NotInheritable Class bstyle
                 If Not l.of(n.child(i)).build(o) Then
                     Return False
                 End If
-                Using r As read_scoped(Of String).ref = value.read_target()
+                Using r As read_scoped(Of String).ref = code_gen_of(Of value)().read_target()
                     v.emplace_back(+r)
                 End Using
                 i += uint32_1

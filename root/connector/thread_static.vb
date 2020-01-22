@@ -58,18 +58,10 @@ Public NotInheritable Class thread_static(Of T)
         Return or_set(func_t.of(i), validate, o)
     End Function
 
-    Public Function or_set(ByVal i As T, ByRef o As T) As Boolean
-        Return or_set(i, predicates.is_not_null(Of T)(), o)
-    End Function
-
     Public Function or_set(ByVal i As T, ByVal validate As Func(Of T, Boolean)) As T
         Dim o As T = Nothing
         assert(or_set(i, validate, o))
         Return o
-    End Function
-
-    Public Function or_set(ByVal i As T) As T
-        Return or_set(i, predicates.is_not_null(Of T)())
     End Function
 
     Public Function or_set(ByVal i As Func(Of T), validate As Func(Of T, Boolean), ByRef o As T) As Boolean
@@ -85,31 +77,10 @@ Public NotInheritable Class thread_static(Of T)
         Return True
     End Function
 
-    Public Function or_set(ByVal i As Func(Of T), ByRef o As T) As Boolean
-        Return or_set(i, predicates.is_not_null(Of T)(), o)
-    End Function
-
     Public Function or_set(ByVal i As Func(Of T), ByVal validate As Func(Of T, Boolean)) As T
         Dim o As T = Nothing
         assert(or_set(i, validate, o))
         Return o
-    End Function
-
-    Public Function or_set(ByVal i As Func(Of T)) As T
-        Return or_set(i, predicates.is_not_null(Of T)())
-    End Function
-
-    Public Function or_new(ByRef o As T) As Boolean
-        Return or_set(Function() As T
-                          Return alloc(Of T)()
-                      End Function,
-                      o)
-    End Function
-
-    Public Function or_new() As T
-        Return or_set(Function() As T
-                          Return alloc(Of T)()
-                      End Function)
     End Function
 
     Public Property at() As T

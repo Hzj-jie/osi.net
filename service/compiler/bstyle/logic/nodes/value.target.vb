@@ -13,22 +13,16 @@ Partial Public NotInheritable Class bstyle
         Inherits logic_gen_wrapper
         Implements logic_gen
 
-        Private Shared ReadOnly read_targets As read_scoped(Of String)
-        Private Shared ReadOnly write_targets As read_scoped(Of write_target_ref)
-        Private Shared ReadOnly defined_temp_targets As thread_static(Of [set](Of String))
+        Private ReadOnly read_targets As read_scoped(Of String)
+        Private ReadOnly write_targets As read_scoped(Of write_target_ref)
+        Private ReadOnly defined_temp_targets As [set](Of String)
 
-        Shared Sub New()
-            read_targets = New read_scoped(Of String)()
-            write_targets = New read_scoped(Of write_target_ref)()
-            defined_temp_targets = New thread_static(Of [set](Of String))()
-        End Sub
-
-        Public Shared Function read_target() As read_scoped(Of String).ref
+        Public Function read_target() As read_scoped(Of String).ref
             assert(read_targets.size() > 0)
             Return read_targets.pop()
         End Function
 
-        Public Shared Function write_target() As read_scoped(Of write_target_ref).ref
+        Public Function write_target() As read_scoped(Of write_target_ref).ref
             assert(write_targets.size() > 0)
             Dim r As read_scoped(Of write_target_ref).ref = Nothing
             r = write_targets.pop()
@@ -67,16 +61,16 @@ Partial Public NotInheritable Class bstyle
             End Function
         End Class
 
-        Private Shared Sub with_temp_target(ByVal ta As type_alias, ByVal n As typed_node, ByVal o As writer)
+        Private Sub with_temp_target(ByVal ta As type_alias, ByVal n As typed_node, ByVal o As writer)
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             Dim value_name As String = Nothing
             value_name = strcat("raw_value_@", n.word_start(), "-", n.word_end())
             Dim type As type_ref = Nothing
             type = New type_ref(ta)
-            If defined_temp_targets.or_new().find(value_name) = defined_temp_targets.get().end() Then
+            If defined_temp_targets.find(value_name) = defined_temp_targets.end() Then
                 builders.of_define(value_name, type).to(o)
-                defined_temp_targets.get().emplace(value_name)
+                defined_temp_targets.emplace(value_name)
             End If
             write_targets.push(New write_target_ref(value_name, type))
         End Sub

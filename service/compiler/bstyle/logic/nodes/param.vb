@@ -14,15 +14,12 @@ Partial Public NotInheritable Class bstyle
         Inherits logic_gen_wrapper
         Implements logic_gen
 
-        Private Shared ReadOnly rs As read_scoped(Of pair(Of String, String))
-
-        Shared Sub New()
-            rs = New read_scoped(Of pair(Of String, String))()
-        End Sub
+        Private ReadOnly rs As read_scoped(Of pair(Of String, String))
 
         <inject_constructor>
         Public Sub New(ByVal b As logic_gens)
             MyBase.New(b)
+            Me.rs = New read_scoped(Of pair(Of String, String))()
         End Sub
 
         Public Shared Sub register(ByVal b As logic_gens)
@@ -30,7 +27,7 @@ Partial Public NotInheritable Class bstyle
             b.register(Of param)()
         End Sub
 
-        Public Shared Function current_target() As read_scoped(Of pair(Of String, String)).ref
+        Public Function current_target() As read_scoped(Of pair(Of String, String)).ref
             Return rs.pop()
         End Function
 

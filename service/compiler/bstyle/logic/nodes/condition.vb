@@ -30,7 +30,7 @@ Partial Public NotInheritable Class bstyle
             If Not l.of(n.child(2)).build(o) Then
                 Return False
             End If
-            Using read_target As read_scoped(Of String).ref = value.read_target()
+            Using read_target As read_scoped(Of String).ref = code_gen_of(Of value)().read_target()
                 Dim satisfied_paragraph As Func(Of Boolean) = Nothing
                 satisfied_paragraph = Function() As Boolean
                                           Return l.[of](n.child(4)).build(o)

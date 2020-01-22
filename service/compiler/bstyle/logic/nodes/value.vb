@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 
@@ -17,6 +18,9 @@ Partial Public NotInheritable Class bstyle
         Public Sub New(ByVal b As logic_gens, ByVal ta As type_alias)
             MyBase.New(b)
             Me.ta = ta
+            Me.read_targets = New read_scoped(Of String)()
+            Me.write_targets = New read_scoped(Of write_target_ref)()
+            Me.defined_temp_targets = New [set](Of String)()
         End Sub
 
         Public Shared Sub register(ByVal b As logic_gens, ByVal l As logic_rule_wrapper)

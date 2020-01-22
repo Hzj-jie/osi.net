@@ -11,17 +11,13 @@ Partial Public NotInheritable Class bstyle
         Inherits logic_gen_wrapper
         Implements logic_gen
 
-        Private Shared ReadOnly rs As read_scoped(Of vector(Of String))
+        Private ReadOnly rs As read_scoped(Of vector(Of String))
 
-        Shared Sub New()
-            rs = New read_scoped(Of vector(Of String))()
-        End Sub
-
-        Private Shared Sub with_current_targets(ByVal v As vector(Of String))
+        Private Sub with_current_targets(ByVal v As vector(Of String))
             rs.push(v)
         End Sub
 
-        Public Shared Function current_targets() As read_scoped(Of vector(Of String)).ref
+        Public Function current_targets() As read_scoped(Of vector(Of String)).ref
             Return rs.pop()
         End Function
     End Class

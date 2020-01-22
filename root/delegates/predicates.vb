@@ -4,25 +4,25 @@ Option Infer Off
 Option Strict On
 
 Public NotInheritable Class predicates
-    Public Shared Function is_null(Of T)() As Func(Of T, Boolean)
+    Public Shared Function is_null(Of T As Class)() As Func(Of T, Boolean)
         Return Function(ByVal i As T) As Boolean
                    Return i Is Nothing
                End Function
     End Function
 
-    Public Shared Function is_not_null(Of T)() As Func(Of T, Boolean)
+    Public Shared Function is_not_null(Of T As Class)() As Func(Of T, Boolean)
         Return Function(ByVal i As T) As Boolean
                    Return Not i Is Nothing
                End Function
     End Function
 
-    Public Shared Function is_null(Of T)(ByVal i As T) As Func(Of Boolean)
+    Public Shared Function is_null(Of T As Class)(ByVal i As T) As Func(Of Boolean)
         Return Function() As Boolean
                    Return i Is Nothing
                End Function
     End Function
 
-    Public Shared Function is_not_null(Of T)(ByVal i As T) As Func(Of Boolean)
+    Public Shared Function is_not_null(Of T As Class)(ByVal i As T) As Func(Of Boolean)
         Return Function() As Boolean
                    Return Not i Is Nothing
                End Function

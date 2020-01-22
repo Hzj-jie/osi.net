@@ -21,21 +21,6 @@ Public Class code_gen_rule_wrapper(Of WRITER,
                                       _code_gens As __do(Of vector(Of Action(Of CODE_GENS_IMPL, PARAMETERS))))
     Inherits rule_wrapper(Of _nlexer_rule, _syntaxer_rule)
 
-    Private Shared ReadOnly w As PARAMETERS
-    Private Shared ReadOnly l As CODE_GENS_IMPL
-    Private Shared ReadOnly p As STATEMENTS_IMPL
-    Private Shared ReadOnly s As STATEMENTS_IMPL
-
-    Shared Sub New()
-        w = alloc(Of PARAMETERS)()
-        l = alloc(Of CODE_GENS_IMPL)()
-        p = alloc(Of STATEMENTS_IMPL)()
-        s = alloc(Of STATEMENTS_IMPL)()
-        init_code_gens()
-        init_prefixes()
-        init_suffixes()
-    End Sub
-
     ' Used by vector.of
     Protected Shared Function registerer(ByVal i As Action(Of STATEMENTS_IMPL, PARAMETERS)) _
                                   As Action(Of STATEMENTS_IMPL, PARAMETERS)
@@ -67,21 +52,80 @@ Public Class code_gen_rule_wrapper(Of WRITER,
         Return ignore_parameters(Of CODE_GENS_IMPL)(i)
     End Function
 
+    Protected Shared Function ignore_parameters(ByVal i As Action) As Action(Of PARAMETERS)
+        assert(Not i Is Nothing)
+        Return Sub(ByVal x As PARAMETERS)
+                   i()
+               End Sub
+    End Function
+
+    Private NotInheritable Class builder
+        Private ReadOnly w As PARAMETERS
+        Private ReadOnly l As CODE_GENS_IMPL
+        Private ReadOnly p As STATEMENTS_IMPL
+        Private ReadOnly s As STATEMENTS_IMPL
+
+        Public Sub New()
+            w = alloc(Of PARAMETERS)()
+            l = alloc(Of CODE_GENS_IMPL)()
+            p = alloc(Of STATEMENTS_IMPL)()
+            s = alloc(Of STATEMENTS_IMPL)()
+            init_code_gens()
+            init_prefixes()
+            init_suffixes()
+        End Sub
+
+        Public Function build(ByVal root As typed_node, ByVal o As WRITER) As Boolean
+            assert(Not root Is Nothing)
+            assert(Not o Is Nothing)
+            assert(root.type = typed_node.ROOT_TYPE)
+            assert(strsame(root.type_name, typed_node.ROOT_TYPE_NAME))
+            If root.leaf() Then
+                Return False
+            End If
+            p.export(o)
+            assert(root.child_count() > 0)
+            Dim i As UInt32 = 0
+            While i < root.child_count()
+                l.of(root.child(i)).build(o)
+                i += uint32_1
+            End While
+            s.export(o)
+            Return True
+        End Function
+
+        Private Sub init_code_gens()
+            Dim v As vector(Of Action(Of CODE_GENS_IMPL, PARAMETERS)) = Nothing
+            v = +alloc(Of _code_gens)()
+            Dim i As UInt32 = 0
+            While i < v.size()
+                v(i)(l, w)
+                i += uint32_1
+            End While
+        End Sub
+
+        Private Sub init_statements(Of T As __do(Of vector(Of Action(Of STATEMENTS_IMPL, PARAMETERS)))) _
+                                   (ByVal p As STATEMENTS_IMPL)
+            Dim v As vector(Of Action(Of STATEMENTS_IMPL, PARAMETERS)) = Nothing
+            v = +alloc(Of T)()
+            Dim i As UInt32 = 0
+            While i < v.size()
+                v(i)(p, w)
+                i += uint32_1
+            End While
+        End Sub
+
+        Private Sub init_prefixes()
+            init_statements(Of _prefixes)(p)
+        End Sub
+
+        Private Sub init_suffixes()
+            init_statements(Of _suffixes)(s)
+        End Sub
+    End Class
+
     Public Shared Function build(ByVal root As typed_node, ByVal o As WRITER) As Boolean
-        assert(Not root Is Nothing)
-        assert(Not o Is Nothing)
-        assert(root.type = typed_node.ROOT_TYPE)
-        assert(strsame(root.type_name, typed_node.ROOT_TYPE_NAME))
-        If root.leaf() Then
-            Return False
-        End If
-        p.export(o)
-        assert(root.child_count() > 0)
-        For i As UInt32 = 0 To root.child_count() - uint32_1
-            l.of(root.child(i)).build(o)
-        Next
-        s.export(o)
-        Return True
+        Return New builder().build(root, o)
     End Function
 
     Public Shared Function parse(ByVal input As String, ByVal o As WRITER) As Boolean
@@ -124,8 +168,7 @@ Public Class code_gen_rule_wrapper(Of WRITER,
                                             _syntaxer_rule,
                                             _prefixes,
                                             _suffixes,
-                                            _code_gens).
-                parse(input, o) Then
+                                            _code_gens).parse(input, o) Then
                 Return False
             End If
             Return import(e, o)
@@ -133,35 +176,6 @@ Public Class code_gen_rule_wrapper(Of WRITER,
 
         Protected MustOverride Function import(ByVal e As exportable, ByVal o As WRITER) As Boolean
     End Class
-
-    Private Shared Sub init_code_gens()
-        Dim v As vector(Of Action(Of CODE_GENS_IMPL, PARAMETERS)) = Nothing
-        v = +alloc(Of _code_gens)()
-        Dim i As UInt32 = 0
-        While i < v.size()
-            v(i)(l, w)
-            i += uint32_1
-        End While
-    End Sub
-
-    Private Shared Sub init_statements(Of T As __do(Of vector(Of Action(Of STATEMENTS_IMPL, PARAMETERS)))) _
-                                      (ByVal p As STATEMENTS_IMPL)
-        Dim v As vector(Of Action(Of STATEMENTS_IMPL, PARAMETERS)) = Nothing
-        v = +alloc(Of T)()
-        Dim i As UInt32 = 0
-        While i < v.size()
-            v(i)(p, w)
-            i += uint32_1
-        End While
-    End Sub
-
-    Private Shared Sub init_prefixes()
-        init_statements(Of _prefixes)(p)
-    End Sub
-
-    Private Shared Sub init_suffixes()
-        init_statements(Of _suffixes)(s)
-    End Sub
 
     Protected Sub New()
     End Sub

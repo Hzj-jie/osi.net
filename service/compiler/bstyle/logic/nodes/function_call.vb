@@ -40,7 +40,7 @@ Partial Public NotInheritable Class bstyle
             If Not l.of(n.child(2)).build(o) Then
                 Return False
             End If
-            Using targets As read_scoped(Of vector(Of String)).ref = value_list.current_targets()
+            Using targets As read_scoped(Of vector(Of String)).ref = code_gen_of(Of value_list)().current_targets()
                 build_caller(callee_name, +targets)
                 Return True
             End Using
@@ -58,7 +58,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 3)
-            Using r As read_scoped(Of value.write_target_ref).ref = value.write_target()
+            Using r As read_scoped(Of value.write_target_ref).ref = code_gen_of(Of value)().write_target()
                 Return build(n,
                              o,
                              Sub(ByVal callee_name As String, ByVal parameters As vector(Of String))

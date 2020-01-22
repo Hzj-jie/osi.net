@@ -8,10 +8,17 @@ Imports osi.service.automata
 
 Partial Public NotInheritable Class b2style
     Public NotInheritable Class operations
-        Public Shared Function function_name(ByVal n As typed_node) As String
+        Private ReadOnly l As rewriters
+
+        Public Sub New(ByVal l As rewriters)
+            assert(Not l Is Nothing)
+            Me.l = l
+        End Sub
+
+        Public Function function_name(ByVal n As typed_node) As String
             assert(Not n Is Nothing)
             assert(Not n.type_name.null_or_whitespace())
-            Return kw_namespace.bstyle_format(strcat("::b2style::", n.type_name.Replace("-"c, "_"c)))
+            Return l.code_gen_of(Of kw_namespace)().bstyle_format(strcat("::b2style::", n.type_name.Replace("-"c, "_"c)))
         End Function
 
         Private Sub New()

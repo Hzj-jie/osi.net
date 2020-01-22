@@ -34,7 +34,7 @@ Partial Public NotInheritable Class bstyle
             If Not while_value(n, o) Then
                 Return False
             End If
-            Using value_target As read_scoped(Of String).ref = value.read_target()
+            Using value_target As read_scoped(Of String).ref = code_gen_of(Of value)().read_target()
                 Return builders.of_while_then(+value_target,
                                               Function() As Boolean
                                                   Return l.of(n.child(4)).build(o) AndAlso while_value(n, o)

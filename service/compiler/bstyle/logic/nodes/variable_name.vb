@@ -27,7 +27,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 1)
-            Using r As read_scoped(Of value.write_target_ref).ref = value.write_target()
+            Using r As read_scoped(Of value.write_target_ref).ref = code_gen_of(Of value)().write_target()
                 Dim variable_name As String = Nothing
                 variable_name = n.child().word().str()
                 With +r

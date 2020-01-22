@@ -134,6 +134,7 @@
     <Compile Include="template\boolean.vb" />
     <Compile Include="template\template_array.vb" />
     <Compile Include="template\equaler.vb" />
+    <Compile Include="thread_static_ref.vb" />
     <Compile Include="time\tick_clock.vb" />
     <Compile Include="time\tick_clock.implementations.vb" />
     <Compile Include="typed_once_action.vb" />
