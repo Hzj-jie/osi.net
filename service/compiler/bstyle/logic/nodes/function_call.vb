@@ -59,14 +59,14 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             assert(n.child_count() >= 3)
             Using r As read_scoped(Of value.write_target_ref).ref = value.write_target()
-                With +r
-                    Return build(n,
-                                 o,
-                                 Sub(ByVal callee_name As String, ByVal parameters As vector(Of String))
+                Return build(n,
+                             o,
+                             Sub(ByVal callee_name As String, ByVal parameters As vector(Of String))
+                                 With +r
                                      .set_type(macros.return_type_of(callee_name))
                                      builders.of_caller(callee_name, .name, parameters).to(o)
-                                 End Sub)
-                End With
+                                 End With
+                             End Sub)
             End Using
         End Function
     End Class
