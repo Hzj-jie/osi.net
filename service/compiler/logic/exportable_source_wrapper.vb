@@ -9,7 +9,7 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public Class exportable_source_wrapper
+    Public NotInheritable Class exportable_source_wrapper
         Implements exportable
 
         Private ReadOnly v As vector(Of String)

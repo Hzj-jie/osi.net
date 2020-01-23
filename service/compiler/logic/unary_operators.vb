@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public Class append
+    Public NotInheritable Class append
         Inherits unary_operator
 
         Public Sub New(ByVal types As types, ByVal result As String, ByVal parameter As String)
@@ -28,7 +28,7 @@ Namespace logic
         End Function
     End Class
 
-    Public Class [not]
+    Public NotInheritable Class [not]
         Inherits unary_operator
 
         Public Sub New(ByVal types As types, ByVal result As String, ByVal parameter As String)
@@ -49,7 +49,7 @@ Namespace logic
         End Function
     End Class
 
-    Public Class sizeof
+    Public NotInheritable Class sizeof
         Inherits unary_operator
 
         Public Sub New(ByVal types As types, ByVal result As String, ByVal parameter As String)
@@ -70,7 +70,7 @@ Namespace logic
         End Function
     End Class
 
-    Public Class empty
+    Public NotInheritable Class empty
         Inherits unary_operator
 
         Public Sub New(ByVal types As types, ByVal result As String, ByVal parameter As String)

@@ -8,7 +8,7 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public Class [stop]
+    Public NotInheritable Class [stop]
         Implements exportable
 
         Public Function export(ByVal scope As scope,

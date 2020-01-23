@@ -9,7 +9,7 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public Class condition
+    Public NotInheritable Class condition
         Implements exportable
 
         Private ReadOnly v As String

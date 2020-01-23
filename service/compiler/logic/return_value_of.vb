@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.formation
 
 Namespace logic
     ' Shared between callee and return.
@@ -23,7 +22,7 @@ Namespace logic
         End Function
 
         Private Shared Function variable_name(ByVal name As String) As String
-            Return strcat("@return_value_of_", name)
+            Return strcat("@return_value_of_", name, "_place_holder")
         End Function
 
         Private Sub New()

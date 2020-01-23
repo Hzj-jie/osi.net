@@ -8,7 +8,7 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public Class interrupt
+    Public NotInheritable Class interrupt
         Implements exportable
 
         Private ReadOnly types As types

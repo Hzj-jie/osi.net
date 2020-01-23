@@ -8,7 +8,7 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public Class less
+    Public NotInheritable Class less
         Inherits compare
 
         Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
@@ -20,7 +20,7 @@ Namespace logic
         End Function
     End Class
 
-    Public Class more
+    Public NotInheritable Class more
         Inherits compare
 
         Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
@@ -32,7 +32,7 @@ Namespace logic
         End Function
     End Class
 
-    Public Class equal
+    Public NotInheritable Class equal
         Inherits compare
 
         Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
@@ -85,7 +85,7 @@ Namespace logic
         End Function
     End Class
 
-    Public Class more_or_equal
+    Public NotInheritable Class more_or_equal
         Inherits less_or_equal
 
         Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)

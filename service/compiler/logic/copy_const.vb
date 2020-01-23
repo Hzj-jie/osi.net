@@ -3,14 +3,13 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
     ' Copy (instead of moving) a @data to @target
-    Public Class copy_const
+    Public NotInheritable Class copy_const
         Implements exportable
 
         Private ReadOnly types As types

@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public Class append_slice
+    Public NotInheritable Class append_slice
         Inherits unary_operator
 
         Public Sub New(ByVal types As types, ByVal result As String, ByVal parameter As String)
@@ -29,7 +29,7 @@ Namespace logic
         End Function
     End Class
 
-    Public Class cut
+    Public NotInheritable Class cut
         Inherits binary_operator
 
         Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
@@ -58,7 +58,7 @@ Namespace logic
         End Function
     End Class
 
-    Public Class cut_slice
+    Public NotInheritable Class cut_slice
         Inherits ternary_operator
 
         Public Sub New(ByVal types As types,
@@ -94,7 +94,7 @@ Namespace logic
         End Function
     End Class
 
-    Public Class clear
+    Public NotInheritable Class clear
         Inherits unary_subroutine
 
         Public Sub New(ByVal types As types, ByVal parameter As String)

@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Namespace logic
-    Public Class type
+    Public NotInheritable Class type
         Implements exportable
 
         Private ReadOnly types As types

@@ -8,7 +8,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Namespace logic
-    Public Class paragraph
+    Public NotInheritable Class paragraph
         Implements exportable
 
         Private ReadOnly s As vector(Of exportable)
