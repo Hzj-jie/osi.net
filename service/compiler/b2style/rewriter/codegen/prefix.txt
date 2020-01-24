@@ -38,13 +38,14 @@ string b2style__str_concat(string i, string j) {
 }
 
 bool b2style__and(bool i, bool j) {
-  logic "and i i j";
-  return i;
+  if (i) return j;
+  return false;
 }
 
 bool b2style__or(bool i, bool j) {
-  logic "or i i j";
-  return i;
+  if (i) return true;
+  if (j) return true;
+  return false;
 }
 
 bool b2style__not(bool i) {
