@@ -29,12 +29,8 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.leaf())
-            Using r As read_scoped(Of value.write_target_ref).ref = code_gen_of(Of value)().write_target()
-                With +r
-                    builders.of_copy_const(.name, New data_block(n.word().str().Trim(character.quote))).to(o)
-                    .set_type(types.string)
-                End With
-            End Using
+            builders.of_copy_const(code_gen_of(Of value)().with_temp_target(types.string, n, o),
+                                   New data_block(n.word().str().Trim(character.quote))).to(o)
             Return True
         End Function
     End Class

@@ -15,21 +15,18 @@ Partial Public NotInheritable Class bstyle
 
         Private ReadOnly s As write_scoped(Of ref)
         Private ReadOnly ta As type_alias
-        Private ReadOnly overload As overload
 
-        Public Sub New(ByVal b As logic_gens, ByVal ta As type_alias, ByVal overload As overload)
+        Public Sub New(ByVal b As logic_gens, ByVal ta As type_alias)
             MyBase.New(b)
             assert(Not ta Is Nothing)
-            assert(Not overload Is Nothing)
             Me.s = New write_scoped(Of ref)()
             Me.ta = ta
-            Me.overload = overload
         End Sub
 
         Public Shared Sub register(ByVal b As logic_gens, ByVal l As logic_rule_wrapper)
             assert(Not b Is Nothing)
             assert(Not l Is Nothing)
-            b.register(New [function](b, l.type_alias, l.overload))
+            b.register(New [function](b, l.type_alias))
         End Sub
 
         Public NotInheritable Class ref
@@ -76,14 +73,6 @@ Partial Public NotInheritable Class bstyle
             End If
             Using params As read_scoped(Of vector(Of pair(Of String, String))).ref =
                       code_gen_of(Of paramlist)().current_target()
-                If Not function_name.define_overload(overload,
-                                                     ta,
-                                                     n.child(1).word().str(),
-                                                     n.child(0).word().str(),
-                                                     +params) Then
-                    Return False
-                End If
-
                 function_name.of_callee(ta,
                                         n.child(1).word().str(),
                                         n.child(0).word().str(),

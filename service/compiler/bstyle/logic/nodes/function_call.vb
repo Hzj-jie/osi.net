@@ -58,16 +58,15 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 3)
-            Using r As read_scoped(Of value.write_target_ref).ref = code_gen_of(Of value)().write_target()
-                Return build(n,
-                             o,
-                             Sub(ByVal callee_name As String, ByVal parameters As vector(Of String))
-                                 With +r
-                                     .set_type(macros.return_type_of(callee_name))
-                                     function_name.of_caller(callee_name, .name, parameters).to(o)
-                                 End With
-                             End Sub)
-            End Using
+            Return build(n,
+                         o,
+                         Sub(ByVal callee_name As String, ByVal parameters As vector(Of String))
+                             Dim name As String = Nothing
+                             name = function_name.of_function_call(callee_name, parameters)
+                             Dim value_name As String = Nothing
+                             value_name = code_gen_of(Of value)().with_temp_target(macros.return_type_of(name), n, o)
+                             builders.of_caller(name, value_name, parameters).to(o)
+                         End Sub)
         End Function
     End Class
 End Class

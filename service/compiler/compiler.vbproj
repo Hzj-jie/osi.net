@@ -77,7 +77,6 @@
     <Compile Include="bstyle\logic\nodes\return_clause.vb" />
     <Compile Include="bstyle\logic\nodes\string.vb" />
     <Compile Include="bstyle\logic\nodes\value_definition_with_semi_colon.vb" />
-    <Compile Include="bstyle\logic\prefixes\overload.vb" />
     <Compile Include="bstyle\logic\suffixes\main.vb" />
     <Compile Include="bstyle\logic\nodes\condition.vb" />
     <Compile Include="bstyle\logic\nodes\function_call.vb" />
