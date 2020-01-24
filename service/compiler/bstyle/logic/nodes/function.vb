@@ -7,7 +7,6 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
-Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class [function]
@@ -16,27 +15,37 @@ Partial Public NotInheritable Class bstyle
 
         Private ReadOnly s As write_scoped(Of ref)
         Private ReadOnly ta As type_alias
+        Private ReadOnly overload As overload
 
-        <inject_constructor>
-        Public Sub New(ByVal b As logic_gens, ByVal ta As type_alias)
+        Public Sub New(ByVal b As logic_gens, ByVal ta As type_alias, ByVal overload As overload)
             MyBase.New(b)
             assert(Not ta Is Nothing)
-            Me.ta = ta
+            assert(Not overload Is Nothing)
             Me.s = New write_scoped(Of ref)()
+            Me.ta = ta
+            Me.overload = overload
         End Sub
 
         Public Shared Sub register(ByVal b As logic_gens, ByVal l As logic_rule_wrapper)
             assert(Not b Is Nothing)
             assert(Not l Is Nothing)
-            b.register(New [function](b, l.type_alias))
+            b.register(New [function](b, l.type_alias, l.overload))
         End Sub
 
         Public NotInheritable Class ref
+            Private ReadOnly ta As type_alias
+            Private ReadOnly params As vector(Of pair(Of String, String))
             Private ReadOnly n As typed_node
 
-            Public Sub New(ByVal n As typed_node)
+            Public Sub New(ByVal ta As type_alias,
+                           ByVal params As vector(Of pair(Of String, String)),
+                           ByVal n As typed_node)
+                assert(Not ta Is Nothing)
+                assert(Not params Is Nothing)
                 assert(Not n Is Nothing)
                 assert(n.child_count() = 5 OrElse n.child_count() = 6)
+                Me.ta = ta
+                Me.params = params
                 Me.n = n
             End Sub
 
@@ -45,7 +54,7 @@ Partial Public NotInheritable Class bstyle
             End Function
 
             Public Function name() As String
-                Return n.child(1).word().str()
+                Return function_name.of_function(ta, n.child(1).word().str(), params)
             End Function
         End Class
 
@@ -56,28 +65,36 @@ Partial Public NotInheritable Class bstyle
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            Using s.push(New ref(n))
-                Dim has_paramlist As Boolean = False
-                has_paramlist = strsame(n.child(3).type_name, "paramlist")
-                If has_paramlist Then
-                    If Not l.of(n.child(3)).build(o) Then
-                        Return False
-                    End If
-                Else
-                    logic_gen_of(Of paramlist)().empty_paramlist()
+            Dim has_paramlist As Boolean = False
+            has_paramlist = strsame(n.child(3).type_name, "paramlist")
+            If has_paramlist Then
+                If Not l.of(n.child(3)).build(o) Then
+                    Return False
                 End If
-                Using params As read_scoped(Of vector(Of pair(Of String, String))).ref =
-                          code_gen_of(Of paramlist)().current_target()
-                    builders.of_callee(ta,
-                                       n.child(1).word().str(),
-                                       n.child(0).word().str(),
-                                       +params,
-                                       Function() As Boolean
-                                           Dim gi As UInt32 = 0
-                                           gi = CUInt(If(has_paramlist, 5, 4))
-                                           Return l.of(n.child(gi)).build(o)
-                                       End Function).to(o)
-                End Using
+            Else
+                logic_gen_of(Of paramlist)().empty_paramlist()
+            End If
+            Using params As read_scoped(Of vector(Of pair(Of String, String))).ref =
+                      code_gen_of(Of paramlist)().current_target()
+                If Not function_name.define_overload(overload,
+                                                     ta,
+                                                     n.child(1).word().str(),
+                                                     n.child(0).word().str(),
+                                                     +params) Then
+                    Return False
+                End If
+
+                function_name.of_callee(ta,
+                                        n.child(1).word().str(),
+                                        n.child(0).word().str(),
+                                        +params,
+                                        Function() As Boolean
+                                            Using s.push(New ref(ta, +params, n))
+                                                Dim gi As UInt32 = 0
+                                                gi = CUInt(If(has_paramlist, 5, 4))
+                                                Return l.of(n.child(gi)).build(o)
+                                            End Using
+                                        End Function).to(o)
                 Return True
             End Using
         End Function

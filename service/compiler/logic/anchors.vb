@@ -7,10 +7,39 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Namespace logic
+    Public NotInheritable Class anchor
+        Private ReadOnly anchors As anchors
+        Public ReadOnly name As String
+
+        Public Sub New(ByVal anchors As anchors, ByVal name As String)
+            assert(Not anchors Is Nothing)
+            assert(Not name.null_or_whitespace())
+            Me.anchors = anchors
+            Me.name = name
+        End Sub
+
+        Public Function retrieve(ByRef pos As UInt32) As Boolean
+            Return anchors.retrieve(name, pos)
+        End Function
+
+        Public Function return_type_of(ByRef o As String) As Boolean
+            Return anchors.return_type_of(name, o)
+        End Function
+
+        Public Function parameter_types_of(ByRef o As const_array(Of String)) As Boolean
+            Return anchors.parameter_types_of(name, o)
+        End Function
+
+        Public Shared Operator +(ByVal this As anchor) As UInt32
+            assert(Not this Is Nothing)
+            Return this.anchors(this.name)
+        End Operator
+    End Class
+
     Public NotInheritable Class anchors
         Public Shared ReadOnly empty As anchors
 
-        Public NotInheritable Class callee_ref
+        Private NotInheritable Class callee_ref
             Public ReadOnly begin As UInt32
             Public ReadOnly return_type As String
             Public ReadOnly parameters As const_array(Of String)
@@ -52,7 +81,7 @@ Namespace logic
                 m.emplace(name, New callee_ref(o.size(), return_type, parameters))
                 Return True
             End If
-            errors.anchor_redefined(name, Me(name))
+            errors.anchor_redefined(name, o.size(), Me(name))
             Return False
         End Function
 
@@ -102,5 +131,9 @@ Namespace logic
                 Return o
             End Get
         End Property
+
+        Public Function [of](ByVal name As String) As anchor
+            Return New anchor(Me, name)
+        End Function
     End Class
 End Namespace

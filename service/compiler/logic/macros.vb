@@ -15,6 +15,7 @@ Namespace logic
         Private Const return_type_of_name As String = "return_type_of"
         Private Const type_of_name As String = "type_of"
         Private Const size_of_name As String = "size_of"
+        Private Const size_of_type_of_name As String = "size_of_type"
         Private Shared ReadOnly m As map(Of String, decoder)
 
         Private Delegate Function decoder(ByVal a As anchors,
@@ -27,7 +28,8 @@ Namespace logic
             m = map.of(
                     pair.emplace_of(return_type_of_name, d(AddressOf return_type)),
                     pair.emplace_of(type_of_name, d(AddressOf type)),
-                    pair.emplace_of(size_of_name, d(AddressOf size))
+                    pair.emplace_of(size_of_name, d(AddressOf size)),
+                    pair.emplace_of(size_of_type_of_name, d(AddressOf type_size))
                 )
         End Sub
 
@@ -42,19 +44,37 @@ Namespace logic
                                       ByVal n As String,
                                       ByRef o As String) As Boolean
             assert(Not n.null_or_whitespace())
-            If Not n.StartsWith(prefix) Then
-                o = n
-                Return True
-            End If
-            If Not n.EndsWith(suffix) Then
-                errors.unexpected_macro(n)
-                Return False
-            End If
-            If n.TrimStart(prefix).TrimEnd(suffix).null_or_whitespace() Then
-                errors.unexpected_macro(n)
-                Return False
-            End If
+            o = n
+            Dim begin As Int32 = 0
+            Dim [end] As Int32 = 0
+            begin = o.LastIndexOf(prefix)
+            While begin <> npos
+                [end] = o.IndexOf(suffix, begin)
+                If [end] = npos OrElse [end] = begin + 1 Then
+                    errors.unexpected_macro(n)
+                    Return False
+                End If
+                [end] += 1
+                Dim replacement As String = Nothing
+                If Not decode_one(a, s, t, o.Substring(begin, [end] - begin), replacement) Then
+                    Return False
+                End If
+                o = strcat(o.Substring(0, begin), replacement, o.Substring([end]))
+                begin = o.LastIndexOf(prefix)
+            End While
+            Return True
+        End Function
+
+        Private Shared Function decode_one(ByVal a As anchors,
+                                           ByVal s As scope,
+                                           ByVal t As types,
+                                           ByVal n As String,
+                                           ByRef o As String) As Boolean
+            assert(Not n.null_or_whitespace())
+            assert(n.StartsWith(prefix) AndAlso n.EndsWith(suffix))
+            assert(n.Length() > strlen(prefix) + strlen(suffix))
             n = n.TrimStart(prefix).TrimEnd(suffix)
+            assert(Not n.null_or_whitespace())
             Dim i As Int32 = 0
             i = n.IndexOf(separator)
             If i = npos Then
@@ -131,17 +151,33 @@ Namespace logic
                 errors.variable_undefined(n)
                 Return False
             End If
+            Return type_size(a, s, t, copy_no_error(o), o)
+        End Function
+
+        Public Shared Function size_of(ByVal s As String) As String
+            Return encode(size_of_name, s)
+        End Function
+
+        Private Shared Function type_size(ByVal a As anchors,
+                                          ByVal s As scope,
+                                          ByVal t As types,
+                                          ByVal n As String,
+                                          ByRef o As String) As Boolean
+            assert(Not a Is Nothing)
+            assert(Not s Is Nothing)
+            assert(Not t Is Nothing)
+            assert(Not n.null_or_whitespace())
             Dim i As UInt32 = 0
-            If Not t.retrieve(o, i) Then
-                errors.type_undefined(o, n)
+            If Not t.retrieve(n, i) Then
+                errors.type_undefined(n)
                 Return False
             End If
             o = Convert.ToString(i)
             Return True
         End Function
 
-        Public Shared Function size_of(ByVal s As String) As String
-            Return encode(size_of_name, s)
+        Public Shared Function size_of_type_of(ByVal s As String) As String
+            Return encode(size_of_type_of_name, s)
         End Function
 
         Private Shared Function encode(ByVal s As String, ByVal n As String) As String

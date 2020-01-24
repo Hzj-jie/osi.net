@@ -47,6 +47,8 @@ Partial Public NotInheritable Class bstyle
         End Class
 
         Public NotInheritable Class type_ref
+            Inherits builders.type_ref
+
             Private ReadOnly ta As type_alias
             Public type As String
 

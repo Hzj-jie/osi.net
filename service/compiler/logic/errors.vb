@@ -95,6 +95,10 @@ Namespace logic
             raise_error(error_type.user, "Type ", type, " referred by target ", target, " is undefined.")
         End Sub
 
+        Public Shared Sub type_undefined(ByVal type As String)
+            raise_error(error_type.user, "Type ", type, " is undefined.")
+        End Sub
+
         Public Shared Sub anchor_undefined(ByVal name As String, ByVal origin As String)
             raise_error(error_type.user, "Anchor ", name, " derived from ", origin, " is not defined.")
         End Sub
@@ -103,8 +107,14 @@ Namespace logic
             raise_error(error_type.user, "Anchor ", name, " is not defined.")
         End Sub
 
-        Public Shared Sub anchor_redefined(ByVal name As String, ByVal last_pos As UInt32)
-            raise_error(error_type.user, "Anchor ", name, " redefined, last position is ", last_pos)
+        Public Shared Sub anchor_redefined(ByVal name As String, ByVal current_pos As UInt32, ByVal last_pos As UInt32)
+            raise_error(error_type.user,
+                        "Anchor ",
+                        name,
+                        " redefined at ",
+                        current_pos,
+                        ", last position is ",
+                        last_pos)
         End Sub
 
         Public Shared Sub unexpected_token(ByVal s As String)

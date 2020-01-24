@@ -33,7 +33,8 @@ Public NotInheritable Class bstyle
             Return vector.of(
                        registerer(AddressOf types.register),
                        registerer(AddressOf constants.register),
-                       registerer(AddressOf temps.register))
+                       registerer(AddressOf temps.register),
+                       registerer(AddressOf overload.register))
         End Function
     End Class
 

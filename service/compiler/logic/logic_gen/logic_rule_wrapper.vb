@@ -41,9 +41,11 @@ End Namespace
 
 Public NotInheritable Class logic_rule_wrapper
     Public ReadOnly type_alias As type_alias
+    Public ReadOnly overload As bstyle.overload
 
     Public Sub New()
         type_alias = New type_alias()
+        overload = New bstyle.overload()
     End Sub
 End Class
 

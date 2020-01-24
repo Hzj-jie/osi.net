@@ -48,12 +48,14 @@ Namespace logic
             assert(Not scope Is Nothing)
             assert(Not o Is Nothing)
             Using sw As scope_wrapper = New scope_wrapper(scope, o)
-                For i As UInt32 = 0 To s.size() - uint32_1
+                Dim i As UInt32 = 0
+                While i < s.size()
                     assert(Not s(i) Is Nothing)
                     If Not s(i).export(sw.scope(), o) Then
                         Return False
                     End If
-                Next
+                    i += uint32_1
+                End While
             End Using
             Return True
         End Function

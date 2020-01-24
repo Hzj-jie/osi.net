@@ -72,9 +72,9 @@ Namespace logic
             ' be popped.
             scope = scope.start_scope()
             ' caller should setup the stack.
-            ' Note, variables are using reverse order to match the stack, and here the logic "define" but not "push" to
-            ' use variables from the caller side.
-            If Not return_value_of.define(scope, real_name, type) Then
+            ' Note, variables are using reverse order to match the stack, and here the logic "define" without "push"ing
+            ' to use variables from the caller side.
+            If Not return_value_of.define(scope, name, type) Then
                 Return False
             End If
             For i As Int32 = 0 To array_size_i(parameters) - 1

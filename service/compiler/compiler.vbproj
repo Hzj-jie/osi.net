@@ -69,6 +69,7 @@
     <Compile Include="bstyle\bstyle_rules.vb" />
     <Compile Include="bstyle\logic\nodes\bool.vb" />
     <Compile Include="bstyle\logic\nodes\float.vb" />
+    <Compile Include="bstyle\logic\nodes\function_name.vb" />
     <Compile Include="bstyle\logic\nodes\ignore_result_function_call.vb" />
     <Compile Include="bstyle\logic\nodes\integer.vb" />
     <Compile Include="bstyle\logic\nodes\logic.vb" />
@@ -76,6 +77,7 @@
     <Compile Include="bstyle\logic\nodes\return_clause.vb" />
     <Compile Include="bstyle\logic\nodes\string.vb" />
     <Compile Include="bstyle\logic\nodes\value_definition_with_semi_colon.vb" />
+    <Compile Include="bstyle\logic\prefixes\overload.vb" />
     <Compile Include="bstyle\logic\suffixes\main.vb" />
     <Compile Include="bstyle\logic\nodes\condition.vb" />
     <Compile Include="bstyle\logic\nodes\function_call.vb" />

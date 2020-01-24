@@ -50,7 +50,7 @@ Partial Public NotInheritable Class bstyle
             Return build(n,
                          o,
                          Sub(ByVal callee_name As String, ByVal parameters As vector(Of String))
-                             builders.of_caller(callee_name, parameters).to(o)
+                             function_name.of_caller(callee_name, parameters).to(o)
                          End Sub)
         End Function
 
@@ -64,7 +64,7 @@ Partial Public NotInheritable Class bstyle
                              Sub(ByVal callee_name As String, ByVal parameters As vector(Of String))
                                  With +r
                                      .set_type(macros.return_type_of(callee_name))
-                                     builders.of_caller(callee_name, .name, parameters).to(o)
+                                     function_name.of_caller(callee_name, .name, parameters).to(o)
                                  End With
                              End Sub)
             End Using

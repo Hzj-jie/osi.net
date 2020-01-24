@@ -61,12 +61,14 @@ Namespace logic
         End Sub
 
         ' Forward return-value to scope_wrapper.
-        Private Function define_return_value(ByVal scope As scope, ByVal o As vector(Of String)) As Boolean
+        Private Function define_return_value(ByVal anchor As anchor,
+                                             ByVal scope As scope,
+                                             ByVal o As vector(Of String)) As Boolean
             assert(Not scope Is Nothing)
             assert(Not o Is Nothing)
             Dim result_type As String = Nothing
-            If Not anchors.return_type_of(name, result_type) Then
-                errors.anchor_undefined(name)
+            If Not anchor.return_type_of(result_type) Then
+                errors.anchor_undefined(anchor.name)
                 Return False
             End If
             If Not define.export(anchors, types, return_value_place_holder_name, result_type, scope, o) Then
@@ -76,16 +78,18 @@ Namespace logic
         End Function
 
         ' Forward parameters to scope_wrapper.
-        Private Function define_parameters(ByVal scope As scope, ByVal o As vector(Of String)) As Boolean
+        Private Function define_parameters(ByVal anchor As anchor,
+                                           ByVal scope As scope,
+                                           ByVal o As vector(Of String)) As Boolean
             assert(Not scope Is Nothing)
             assert(Not o Is Nothing)
             Dim callee_params As const_array(Of String) = Nothing
-            If Not anchors.parameter_types_of(name, callee_params) Then
-                errors.anchor_undefined(name)
+            If Not anchor.parameter_types_of(callee_params) Then
+                errors.anchor_undefined(anchor.name)
                 Return False
             End If
             If array_size(parameters) <> callee_params.size() Then
-                errors.mismatch_callee_parameters(name, parameters)
+                errors.mismatch_callee_parameters(anchor.name, parameters)
                 Return False
             End If
             For i As Int32 = 0 To array_size_i(parameters) - 1
@@ -148,18 +152,21 @@ Namespace logic
             assert(Not o Is Nothing)
             ' rel(array_size(parameters)) is for return value.
             Using sw As scope_wrapper = New scope_wrapper(scope, o)
-                If Not define_return_value(sw.scope(), o) Then
-                    Return False
-                End If
-                If Not define_parameters(sw.scope(), o) Then
-                    Return False
-                End If
-                o.emplace_back(instruction_builder.str(command.stst))
-
                 Dim real_name As String = Nothing
                 If Not macros.decode(anchors, sw.scope(), types, name, real_name) Then
                     Return False
                 End If
+                Dim anchor As anchor = Nothing
+                anchor = anchors.of(real_name)
+
+                If Not define_return_value(anchor, sw.scope(), o) Then
+                    Return False
+                End If
+                If Not define_parameters(anchor, sw.scope(), o) Then
+                    Return False
+                End If
+                o.emplace_back(instruction_builder.str(command.stst))
+
                 Dim pos As UInt32 = 0
                 If Not anchors.retrieve(real_name, pos) Then
                     errors.anchor_undefined(real_name, name)

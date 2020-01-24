@@ -23,16 +23,20 @@ Namespace logic
             Return of_define(name, ta(type))
         End Function
 
-        Public Shared Function of_define(ByVal name As String,
-                                         ByVal type As bstyle.value.type_ref) As define_builder_24_1
+        ' Provide a way to delay the type-definition.
+        Public MustInherit Class type_ref
+            Inherits writer.delayed
+        End Class
+
+        Public Shared Function of_define(ByVal name As String, ByVal type As type_ref) As define_builder_24_1
             Return New define_builder_24_1(name, type)
         End Function
 
         Public NotInheritable Class define_builder_24_1
             Private ReadOnly name As String
-            Private ReadOnly type As bstyle.value.type_ref
+            Private ReadOnly type As type_ref
 
-            Public Sub New(ByVal name As String, ByVal type As bstyle.value.type_ref)
+            Public Sub New(ByVal name As String, ByVal type As type_ref)
                 assert(Not name.null_or_whitespace())
                 assert(Not type Is Nothing)
                 Me.name = name
