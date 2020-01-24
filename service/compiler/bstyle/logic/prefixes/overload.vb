@@ -3,8 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports System.Text
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.compiler.logic
 
@@ -20,6 +20,13 @@ Partial Public NotInheritable Class bstyle
             Dim it As map(Of String, String).iterator = Nothing
             it = m.find(name)
             If it <> m.end() AndAlso Not strsame((+it).second, return_type) Then
+                raise_error(error_type.user,
+                            "Return type of ",
+                            name,
+                            " has been redefined to ",
+                            return_type,
+                            ", original type is ",
+                            (+it).second)
                 Return False
             End If
             If it = m.end() Then

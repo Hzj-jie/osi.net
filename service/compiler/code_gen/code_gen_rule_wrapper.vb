@@ -87,7 +87,9 @@ Public Class code_gen_rule_wrapper(Of WRITER,
             assert(root.child_count() > 0)
             Dim i As UInt32 = 0
             While i < root.child_count()
-                l.of(root.child(i)).build(o)
+                If Not l.of(root.child(i)).build(o) Then
+                    Return False
+                End If
                 i += uint32_1
             End While
             s.export(o)
