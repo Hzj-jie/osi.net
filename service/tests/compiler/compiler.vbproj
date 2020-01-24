@@ -120,7 +120,8 @@
     <Content Include="b2style\codegen\case2.txt" />
     <Content Include="bstyle\codegen\case1.txt" />
     <Content Include="bstyle\codegen\case2.txt" />
-    <Content Include="bstyle\codegen\case3.txt" />
+    <Content Include="bstyle\codegen\global_variable.txt" />
+    <Content Include="bstyle\codegen\overload_function.txt" />
     <Content Include="dotnet\codegen\from_source1.cs" />
     <Content Include="logic\codegen\case1.txt" />
     <Content Include="logic\codegen\case2.txt" />

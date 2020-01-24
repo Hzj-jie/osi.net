@@ -17,6 +17,7 @@ Partial Public NotInheritable Class bstyle
         Public Const biguint As String = "biguint"
         Public Const uint As String = "uint"
         Public Const int As String = "int"
+        Public Const [long] As String = "long"
         Public Const bool As String = "bool"
         Public Const [byte] As String = "byte"
         Public Const [string] As String = "string"
@@ -31,6 +32,7 @@ Partial Public NotInheritable Class bstyle
             v = vector.of(
                 pair.emplace_of(uint, 4),
                 pair.emplace_of(int, 4),
+                pair.emplace_of([long], 8),
                 pair.emplace_of(bool, 1),
                 pair.emplace_of([byte], 1),
                 pair.emplace_of(float, 8)

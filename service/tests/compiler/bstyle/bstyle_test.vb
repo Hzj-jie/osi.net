@@ -41,14 +41,27 @@ Public NotInheritable Class bstyle_test
     End Sub
 
     <test>
-    Private Shared Sub case3()
+    Private Shared Sub global_variable()
         Dim io As console_io.test_wrapper = Nothing
         io = New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(bstyle.with_functions(New interrupts(+io)).parse(_bstyle_test_data.case3.as_text(), e))
+        assertion.is_true(bstyle.with_functions(New interrupts(+io)).
+                              parse(_bstyle_test_data.global_variable.as_text(), e))
         assertion.is_not_null(e)
         e.execute()
         assertion.equal(io.output(), "TrueFalse")
+    End Sub
+
+    <test>
+    Private Shared Sub overload_function()
+        Dim io As console_io.test_wrapper = Nothing
+        io = New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(bstyle.with_functions(New interrupts(+io)).
+                              parse(_bstyle_test_data.overload_function.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), "TrueFalseFalseTrue")
     End Sub
 
     Private Sub New()

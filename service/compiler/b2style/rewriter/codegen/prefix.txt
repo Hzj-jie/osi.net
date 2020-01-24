@@ -48,8 +48,8 @@ bool b2style__or(bool i, bool j) {
 }
 
 bool b2style__not(bool i) {
-  logic "not i i";
-  return i;
+  if (i) return false;
+  return true;
 }
 
 bool b2style__equal(int i, int j) {

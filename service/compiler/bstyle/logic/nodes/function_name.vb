@@ -32,7 +32,7 @@ Partial Public NotInheritable Class bstyle
             Dim real_name As String = Nothing
             real_name = of_function(ta, raw_name, parameters)
             If Not strsame(raw_name, real_name) Then
-                Return overload.define(raw_name, return_type)
+                Return overload.define(raw_name, ta(return_type))
             End If
             Return True
         End Function

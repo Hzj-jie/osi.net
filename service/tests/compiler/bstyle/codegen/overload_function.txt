@@ -1,0 +1,49 @@
+﻿
+bigint to_bigint(int i) {
+  return i;
+}
+
+bigint to_bigint(long i) {
+  return i;
+}
+
+long to_long(int i) {
+  return i;
+}
+
+bool equal(bigint i, bigint j) {
+  bool result;
+  logic "equal result i j";
+  return result;
+}
+
+bool not(bool i) {
+  if (i) return false;
+  return true;
+}
+
+bool equal(int i, int j) {
+  return equal(to_bigint(i), to_bigint(j));
+}
+
+bool equal(long i, long j) {
+  return not(equal(to_bigint(i), to_bigint(j)));
+}
+
+void print(bool i) {
+  string temp;
+  string _true = "True";
+  string _false = "False";
+  if (i) {
+	logic "interrupt stdout _true temp";
+  } else {
+	logic "interrupt stdout _false temp";
+  }
+}
+
+void main() {
+  print(equal(100, 100));
+  print(equal(100, 200));
+  print(equal(to_long(100), to_long(100)));
+  print(equal(to_long(100), to_long(200)));
+}

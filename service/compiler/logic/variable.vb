@@ -79,6 +79,10 @@ Namespace logic
             If types.is_size_or_variable(+size, +(source.size)) Then
                 Return True
             End If
+            ' TODO: Should this be allowed?
+            If (+size) >= +(source.size) Then
+                Return True
+            End If
             errors.unassignable(Me, source)
             Return False
         End Function
