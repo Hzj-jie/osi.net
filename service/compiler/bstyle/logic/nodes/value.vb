@@ -19,7 +19,6 @@ Partial Public NotInheritable Class bstyle
             MyBase.New(b)
             Me.ta = ta
             Me.read_targets = New read_scoped(Of String)()
-            Me.write_targets = New read_scoped(Of write_target_ref)()
             Me.defined_temp_targets = New [set](Of String)()
         End Sub
 
@@ -35,7 +34,6 @@ Partial Public NotInheritable Class bstyle
             assert(strsame(n.type_name, "value") OrElse
                    (strsame(n.type_name, "ignore-result-function-call") AndAlso
                     strsame(n.child().type_name, "function-call")))
-            with_temp_target(ta, n, o)
             Return l.of(n.child()).build(o)
         End Function
     End Class

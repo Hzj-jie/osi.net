@@ -23,20 +23,6 @@ Partial Public NotInheritable Class bstyle
                                         End Function))
         End Function
 
-        Public Shared Function define_overload(ByVal overload As overload,
-                                               ByVal ta As type_alias,
-                                               ByVal raw_name As String,
-                                               ByVal return_type As String,
-                                               ByVal parameters As vector(Of pair(Of String, String))) As Boolean
-            assert(Not overload Is Nothing)
-            Dim real_name As String = Nothing
-            real_name = of_function(ta, raw_name, parameters)
-            If Not strsame(raw_name, real_name) Then
-                Return overload.define(raw_name, ta(return_type))
-            End If
-            Return True
-        End Function
-
         Public Shared Function of_callee(ByVal ta As type_alias,
                                          ByVal raw_name As String,
                                          ByVal return_type As String,
@@ -49,20 +35,12 @@ Partial Public NotInheritable Class bstyle
                                       paragraph)
         End Function
 
-        Private Shared Function of_function_call(ByVal raw_name As String,
-                                                 ByVal parameters As vector(Of String)) As String
+        Public Shared Function of_function_call(ByVal raw_name As String,
+                                                ByVal parameters As vector(Of String)) As String
             Return build(raw_name,
                          parameters.map(Function(ByVal i As String) As String
                                             Return macros.type_of(i)
                                         End Function))
-        End Function
-
-        Public Shared Function of_caller(ByVal raw_name As String,
-                                         ByVal return_type As String,
-                                         ByVal parameters As vector(Of String)) As builders.caller_builder_13
-            Return builders.of_caller(of_function_call(raw_name, parameters),
-                                      return_type,
-                                      parameters)
         End Function
 
         Public Shared Function of_caller(ByVal raw_name As String,

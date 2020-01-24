@@ -28,16 +28,6 @@ Namespace logic
             v.emplace_back(s)
         End Sub
 
-        ' Provide a way to delay the construction of the commands.
-        Public MustInherit Class delayed
-            Public MustOverride Overrides Function ToString() As String
-        End Class
-
-        Public Sub append(ByVal s As delayed)
-            assert(Not s Is Nothing)
-            v.emplace_back(s)
-        End Sub
-
         Public Sub append(ByVal s As data_block)
             assert(Not s Is Nothing)
             v.emplace_back(s)
