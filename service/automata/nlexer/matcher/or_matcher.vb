@@ -8,6 +8,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 
 Partial Public NotInheritable Class nlexer
+    ' TODO: Merge with matching_group
     Public NotInheritable Class or_matcher
         Implements matcher
 
@@ -26,7 +27,7 @@ Partial Public NotInheritable Class nlexer
             While j < m.size()
                 Dim r As [optional](Of UInt32) = Nothing
                 r = m(j).match(i, pos)
-                If (Not r.empty()) AndAlso ((Not max) OrElse (+max) < (+r)) Then
+                If (Not r.empty()) AndAlso (+r > pos) AndAlso ((Not max) OrElse (+max) < (+r)) Then
                     max = r
                 End If
                 j += uint32_1
