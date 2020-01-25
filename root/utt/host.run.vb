@@ -179,7 +179,7 @@ Partial Friend NotInheritable Class host
         base_ms /= 20
         base_ms /= max(utt_concurrency(), 1)
         If envs.virtual_machine Then
-            base_ms *= 2
+            base_ms *= 4
         End If
         Return CUInt(base_ms)
     End Function
