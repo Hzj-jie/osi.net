@@ -170,7 +170,7 @@ Partial Friend NotInheritable Class host
         End While
     End Sub
 
-    Private Shared Function expected_running_time_ms() As UInt32
+    Private Shared Function expected_running_time_ms() As Int64
         Dim base_ms As Double = 0
         base_ms = minutes_to_milliseconds(36 * 60)
         base_ms *= envs.perf_run_ms
@@ -181,7 +181,7 @@ Partial Friend NotInheritable Class host
         If envs.virtual_machine Then
             base_ms *= 4
         End If
-        Return CUInt(base_ms)
+        Return CLng(base_ms)
     End Function
 
     Public Shared Sub run()
