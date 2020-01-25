@@ -81,7 +81,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="nlexer\characters.vb" />
-    <Compile Include="nlexer\digit_matcher.vb" />
+    <Compile Include="nlexer\matcher\digit_matcher.vb" />
     <Compile Include="nlexer\group\_0_or_more_group.vb" />
     <Compile Include="nlexer\group\_1_or_more_group.vb" />
     <Compile Include="nlexer\matcher\en_char_matcher.vb" />
