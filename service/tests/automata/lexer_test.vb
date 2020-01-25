@@ -1,21 +1,24 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Text
-Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.utt
+Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.utils
+Imports osi.root.utt
 Imports osi.service.automata
 
-Public Class lexer_test
+Public NotInheritable Class lexer_test
     Inherits chained_case_wrapper
 
     Public Sub New()
-        MyBase.New(repeat(New lexer_basic_case(), 16),
-                   repeat(New lexer_random_case(), 16))
+        MyBase.New(repeat(New lexer_basic_case(), CULng(16)),
+                   repeat(New lexer_random_case(), CULng(16)))
     End Sub
 
-    Private Class lexer_basic_case
+    Private NotInheritable Class lexer_basic_case
         Inherits [case]
 
         Private Shared ReadOnly words() As String
@@ -46,14 +49,14 @@ Public Class lexer_test
             Dim last_is_unknown As Boolean = False
             For i As Int32 = 0 To rnd_int(1000, 10000) - 1
                 Dim j As UInt32 = 0
-                j = rnd_int(0, array_size(words) + If(last_is_unknown, 0, array_size(unknown_words)))
+                j = CUInt(rnd_int(0, array_size_i(words) + If(last_is_unknown, 0, array_size_i(unknown_words))))
                 If j < array_size(words) Then
-                    s.Append(words(j))
-                    r.emplace_back(New lexer.word(words(j), j + lexer.first_user_type))
+                    s.Append(words(CInt(j)))
+                    r.emplace_back(New lexer.word(words(CInt(j)), j + lexer.first_user_type))
                     last_is_unknown = False
                 Else
-                    s.Append(unknown_words(j - array_size(words)))
-                    r.emplace_back(lexer.word.unknown_word(unknown_words(j - array_size(words))))
+                    s.Append(unknown_words(CInt(j - array_size(words))))
+                    r.emplace_back(lexer.word.unknown_word(unknown_words(CInt(j - array_size(words)))))
                     last_is_unknown = True
                 End If
             Next
@@ -71,7 +74,7 @@ Public Class lexer_test
             assertion.is_true(l.parse(s, r))
             If assertion.is_not_null(r) Then
                 assertion.equal(exp.size(), r.size())
-                For i As Int32 = 0 To min(exp.size(), r.size()) - 1
+                For i As UInt32 = 0 To min(exp.size(), r.size()) - uint32_1
                     assertion.equal(exp(i).type, r(i).type)
                     assertion.equal(exp(i).text, r(i).text)
                 Next
@@ -82,8 +85,8 @@ Public Class lexer_test
         Public Overrides Function run() As Boolean
             Dim l As lexer = Nothing
             l = New lexer(False, False)
-            For i As Int32 = 0 To array_size(words) - 1
-                assertion.is_true(l.define(words(i), i + lexer.first_user_type))
+            For i As Int32 = 0 To array_size_i(words) - 1
+                assertion.is_true(l.define(words(i), CUInt(i) + lexer.first_user_type))
             Next
             For i As Int32 = 0 To 100 - 1
                 If Not run_case(l) Then
@@ -94,7 +97,7 @@ Public Class lexer_test
         End Function
     End Class
 
-    Private Class lexer_random_case
+    Private NotInheritable Class lexer_random_case
         Inherits [case]
 
         Private Shared Function accepted_string(ByVal ws() As pair(Of String, UInt32),
@@ -121,7 +124,7 @@ Public Class lexer_test
         Private Shared Function words() As pair(Of String, UInt32)()
             Dim r() As pair(Of String, UInt32) = Nothing
             ReDim r(rnd_int(10, 100))
-            For i As Int32 = 0 To array_size(r) - 1
+            For i As Int32 = 0 To array_size_i(r) - 1
                 r(i) = pair.of(accepted_string(r, i, False),
                                  rnd_uint(0, 100) + lexer.first_user_type)
             Next
@@ -129,7 +132,7 @@ Public Class lexer_test
         End Function
 
         Private Shared Function generate_unknown_word(ByVal ws() As pair(Of String, UInt32)) As String
-            Return accepted_string(ws, array_size(ws), True)
+            Return accepted_string(ws, array_size_i(ws), True)
         End Function
 
         Private Shared Function generate_sentense(ByVal ws() As pair(Of String, UInt32),
@@ -142,10 +145,10 @@ Public Class lexer_test
             Dim last_is_unknown As Boolean = False
             For i As Int32 = 0 To rnd_int(1000, 10000) - 1
                 Dim j As UInt32 = 0
-                j = rnd_int(0, array_size(ws) * If(last_is_unknown, 1, 1.25))
+                j = CUInt(rnd_int(0, CInt(array_size(ws) * If(last_is_unknown, 1, 1.25))))
                 If j < array_size(ws) Then
-                    s.Append(ws(j).first)
-                    r.emplace_back(New lexer.word(ws(j).first, ws(j).second))
+                    s.Append(ws(CInt(j)).first)
+                    r.emplace_back(New lexer.word(ws(CInt(j)).first, ws(CInt(j)).second))
                     last_is_unknown = False
                 Else
                     Dim u As String = Nothing
@@ -170,7 +173,7 @@ Public Class lexer_test
             assertion.is_true(l.parse(s, r))
             If assertion.is_not_null(r) Then
                 assertion.equal(exp.size(), r.size())
-                For i As Int32 = 0 To max(exp.size(), r.size()) - 1
+                For i As UInt32 = 0 To max(exp.size(), r.size()) - uint32_1
                     If i >= exp.size() Then
                         assertion.is_true(False, r(i).type, ":", r(i).text)
                         Exit For
@@ -193,7 +196,7 @@ Public Class lexer_test
             ws = words()
             assert(Not isemptyarray(ws))
             assertion.is_true(l.define(ws))
-            For i As Int32 = 0 To 100 - 1
+            For i As Int32 = 0 To 10 - 1
                 If Not run_case(ws, l) Then
                     Return False
                 End If

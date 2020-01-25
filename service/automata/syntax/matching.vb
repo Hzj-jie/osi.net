@@ -147,9 +147,10 @@ Partial Public NotInheritable Class syntaxer
             Return create(c, m)
         End Function
 
-        Private Shared Function create_matchings(Of T)(ByVal c As syntax_collection,
-                                                       ByVal ms() As T,
-                                                       ByVal ctor As Func(Of syntax_collection, T, matching)) As matching()
+        Private Shared Function create_matchings(Of T) _
+                                                (ByVal c As syntax_collection,
+                                                 ByVal ms() As T,
+                                                 ByVal ctor As Func(Of syntax_collection, T, matching)) As matching()
             assert(Not ctor Is Nothing)
             If isemptyarray(ms) Then
                 Return Nothing
@@ -207,58 +208,56 @@ Partial Public NotInheritable Class syntaxer
                 Return False
             End If
             assert(Not characters.matching_separators.Contains(i(CInt(pos))))
+            Dim e As Int32 = 0
             If i(CInt(pos)) = characters.matching_group_start Then
-                Dim e As Int32 = 0
                 e = strindexof(i, characters.matching_group_end, pos, uint32_1)
                 If e = npos Then
                     Return False
                 End If
                 Dim ss As vector(Of String) = Nothing
-                If strsplit(strmid(i, pos + uint32_1, CUInt(e) - pos - uint32_1),
-                            characters.matching_group_separators,
-                            default_strings,
-                            ss,
-                            False,
-                            True) AndAlso
-                   Not ss.null_or_empty() Then
-                    Dim ms() As matching = Nothing
-                    ReDim ms(CInt(ss.size() - uint32_1))
-                    For j As UInt32 = 0 To ss.size() - uint32_1
-                        If Not create_matching(ss(j), collection, ms(CInt(j))) Then
-                            Return False
-                        End If
-                    Next
-                    o = New matching_group(collection, ms)
-                    pos = CUInt(e + 1)
-                    While pos < strlen(i)
-                        If i(CInt(pos)) = characters.optional_matching Then
-                            o = New optional_matching_group(collection, o)
-                            pos += uint32_1
-                        ElseIf i(CInt(pos)) = characters.any_matching Then
-                            o = New any_matching_group(collection, o)
-                            pos += uint32_1
-                        ElseIf i(CInt(pos)) = characters.multi_matching Then
-                            o = New multi_matching_group(collection, o)
-                            pos += uint32_1
-                        Else
-                            Exit While
-                        End If
-                    End While
-                    Return True
+                If Not strsplit(strmid(i, pos + uint32_1, CUInt(e) - pos - uint32_1),
+                                characters.matching_group_separators,
+                                default_strings,
+                                ss,
+                                False,
+                                True) OrElse
+                   ss.null_or_empty() Then
+                    Return False
                 End If
-                Return False
-            Else
-                Dim e As Int32 = 0
-                e = i.IndexOfAny(characters.matching_separators_array, CInt(pos))
-                If e = npos Then
-                    e = i.Length()
-                End If
-                If create_matching(strmid(i, pos, CUInt(e) - pos), collection, o) Then
-                    pos = CUInt(e)
-                    Return True
-                End If
+                Dim ms() As matching = Nothing
+                ReDim ms(CInt(ss.size() - uint32_1))
+                For j As UInt32 = 0 To ss.size() - uint32_1
+                    If Not create_matching(ss(j), collection, ms(CInt(j))) Then
+                        Return False
+                    End If
+                Next
+                o = New matching_group(collection, ms)
+                pos = CUInt(e + 1)
+                While pos < strlen(i)
+                    If i(CInt(pos)) = characters.optional_matching Then
+                        o = New optional_matching_group(collection, o)
+                        pos += uint32_1
+                    ElseIf i(CInt(pos)) = characters.any_matching Then
+                        o = New any_matching_group(collection, o)
+                        pos += uint32_1
+                    ElseIf i(CInt(pos)) = characters.multi_matching Then
+                        o = New multi_matching_group(collection, o)
+                        pos += uint32_1
+                    Else
+                        Exit While
+                    End If
+                End While
+                Return True
+            End If
+            e = i.IndexOfAny(characters.matching_separators_array, CInt(pos))
+            If e = npos Then
+                e = i.Length()
+            End If
+            If Not create_matching(strmid(i, pos, CUInt(e) - pos), collection, o) Then
                 Return False
             End If
+            pos = CUInt(e)
+            Return True
         End Function
 
         Public Shared Function create(ByVal i As String,
