@@ -40,6 +40,18 @@ Public NotInheritable Class b2style_test
         assertion.equal(io.output(), strncat("", "False", 100))
     End Sub
 
+    <test>
+    Private Shared Sub bool_and_bool()
+        Dim io As console_io.test_wrapper = Nothing
+        io = New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                          parse(_b2style_test_data.bool_and_bool.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), "TrueFalseFalseFalseTrueTrueTrueFalse")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

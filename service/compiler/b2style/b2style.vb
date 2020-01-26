@@ -118,6 +118,7 @@ Public NotInheritable Class b2style
                        default_registerer("value"),
                        default_registerer("else-condition"),
                        default_registerer("value-with-bracket"),
+                       default_registerer("raw-value"),
                        default_registerer("value-without-bracket"),
                        default_registerer("value-with-operation"),
                        default_registerer("unary-operation-value"),
