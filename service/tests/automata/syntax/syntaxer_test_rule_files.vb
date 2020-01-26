@@ -10,11 +10,13 @@ Namespace syntaxer
         Public Shared ReadOnly rlexer As String
         Public Shared ReadOnly rlexer2 As String
         Public Shared ReadOnly syntaxer As String
+        Public Shared ReadOnly cycle_dependency_syntaxer As String
 
         Shared Sub New()
             rlexer = syntaxer_test_rules.rlexer_rule.as_text()
             rlexer2 = syntaxer_test_rules.rlexer_rule2.as_text()
             syntaxer = syntaxer_test_rules.syntaxer_rule.as_text()
+            cycle_dependency_syntaxer = syntaxer_test_rules.cycle_dependency_syntaxer_rule.as_text()
         End Sub
     End Class
 End Namespace

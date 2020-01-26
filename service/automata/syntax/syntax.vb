@@ -170,27 +170,30 @@ Partial Public NotInheritable Class syntaxer
                 Return [optional].empty(Of result)()
             End If
 
-            Dim nodes As vector(Of typed_node) = Nothing
-            nodes = New vector(Of typed_node)()
-            Dim op As UInt32 = 0
-            op = p
-            For i As Int32 = 0 To array_size_i(ms) - 1
-                jump_over_ignore_types(v, p)
-                Dim r As [optional](Of result) = Nothing
-                r = ms(i).match(v, p)
-                If Not r Then
-                    log_unmatched(v, p, ms(i))
-                    Return r
-                End If
-                p = (+r).pos
-                nodes.emplace_back((+r).nodes)
-            Next
-            Dim root As typed_node = Nothing
-            root = create_node(v, type, op, p)
-            root.attach(nodes)
-            jump_over_ignore_types(v, p)
-            log_matching(v, op, p, Me)
-            Return [optional].of(New result(p, root))
+            Return disallow_cycle_dependency(type,
+                                             Function() As [optional](Of result)
+                                                 Dim nodes As vector(Of typed_node) = Nothing
+                                                 nodes = New vector(Of typed_node)()
+                                                 Dim op As UInt32 = 0
+                                                 op = p
+                                                 For i As Int32 = 0 To array_size_i(ms) - 1
+                                                     jump_over_ignore_types(v, p)
+                                                     Dim r As [optional](Of result) = Nothing
+                                                     r = ms(i).match(v, p)
+                                                     If Not r Then
+                                                         log_unmatched(v, p, ms(i))
+                                                         Return r
+                                                     End If
+                                                     p = (+r).pos
+                                                     nodes.emplace_back((+r).nodes)
+                                                 Next
+                                                 Dim root As typed_node = Nothing
+                                                 root = create_node(v, type, op, p)
+                                                 root.attach(nodes)
+                                                 jump_over_ignore_types(v, p)
+                                                 log_matching(v, op, p, Me)
+                                                 Return [optional].of(New result(p, root))
+                                             End Function)
         End Function
 
         Public Shared Operator +(ByVal this As syntax) As matching()

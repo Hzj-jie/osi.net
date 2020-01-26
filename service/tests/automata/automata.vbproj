@@ -99,6 +99,7 @@
     <Compile Include="regex\string_matching_group_test.vb" />
     <Compile Include="regex\unmatched_matching_group_test.vb" />
     <Compile Include="syntax\any_matching_group_test.vb" />
+    <Compile Include="syntax\disallow_cycle_dependency.vb" />
     <Compile Include="syntax\fake_matching_delegate.vb" />
     <Compile Include="syntax\fake_typed_word.vb" />
     <Compile Include="syntax\matching_group_test.vb" />
@@ -147,6 +148,7 @@
     <Content Include="regex\codegen\rlexer_test_rule3.txt" />
     <Content Include="lang_parser\codegen\case0.txt" />
     <Content Include="lang_parser\codegen\case1.txt" />
+    <Content Include="syntax\codegen\cycle_dependency_syntaxer_rule.txt" />
     <Content Include="syntax\codegen\rlexer_rule2.txt" />
     <Content Include="syntax\codegen\rlexer_rule.txt" />
     <Content Include="syntax\codegen\syntaxer_rule.txt" />

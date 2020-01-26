@@ -1,0 +1,6 @@
+﻿
+ROOT_TYPES value
+
+value [pre-operation-value, post-operation-value, variable-name]
+pre-operation-value self-inc value
+post-operation-value value self-inc

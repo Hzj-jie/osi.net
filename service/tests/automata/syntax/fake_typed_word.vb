@@ -9,6 +9,7 @@ Imports osi.root.formation
 Imports osi.service.automata
 
 Namespace syntaxer
+    ' TODO: Maybe remove.
     Public NotInheritable Class fake_typed_word
         Inherits typed_word
 

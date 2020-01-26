@@ -13,6 +13,7 @@ Partial Public NotInheritable Class syntaxer
     Public MustInherit Class matching
         Implements IComparable, IComparable(Of matching)
 
+        <ThreadStatic> Private Shared s As [set](Of UInt32)
         Protected ReadOnly c As syntax_collection
 
         Protected Sub New(ByVal c As syntax_collection)
@@ -51,6 +52,25 @@ Partial Public NotInheritable Class syntaxer
                                        ByVal start As UInt32,
                                        ByVal [end] As UInt32) As typed_node
             Return New typed_node(v, type, type_name(type), start, [end])
+        End Function
+
+        Protected Function disallow_cycle_dependency(ByVal type As UInt32,
+                                                     ByVal f As Func(Of [optional](Of result))) As [optional](Of result)
+            assert(Not f Is Nothing)
+            If s Is Nothing Then
+                s = New [set](Of UInt32)()
+            End If
+            If s.find(type) <> s.end() Then
+                raise_error(error_type.user, "Cycle dependency found at ", type_name(type))
+                Return [optional].empty(Of result)()
+            End If
+            s.emplace(type)
+
+            Using deferring.to(Sub()
+                                   assert(s.erase(type))
+                               End Sub)
+                Return f()
+            End Using
         End Function
 
         Protected Function type_name(ByVal type As UInt32) As String

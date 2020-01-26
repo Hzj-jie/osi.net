@@ -12,7 +12,6 @@ Partial Public NotInheritable Class syntaxer
         Inherits matching
         Implements IComparable(Of single_matching)
 
-        <ThreadStatic> Private Shared s As [set](Of UInt32)
         Private ReadOnly m As UInt32
 
         Public Sub New(ByVal c As syntax_collection, ByVal m As UInt32)
@@ -21,26 +20,14 @@ Partial Public NotInheritable Class syntaxer
         End Sub
 
         Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of result)
-            If s Is Nothing Then
-                s = New [set](Of UInt32)()
-            End If
-            If s.find(m) <> s.end() Then
-                raise_error(error_type.user, "Cycle dependency found at ", type_name(m))
+            If v Is Nothing OrElse v.size() <= p Then
                 Return [optional].empty(Of result)()
             End If
-            s.emplace(m)
-            Using deferring.to(Sub()
-                                   assert(s.erase(m))
-                               End Sub)
-                If v Is Nothing OrElse v.size() <= p Then
-                    Return [optional].empty(Of result)()
-                End If
-                assert(Not v(p) Is Nothing)
-                If v(p).type <> m Then
-                    Return [optional].empty(Of result)()
-                End If
-                Return [optional].of(New result(p + uint32_1, create_node(v, v(p).type, p, p + uint32_1)))
-            End Using
+            assert(Not v(p) Is Nothing)
+            If v(p).type <> m Then
+                Return [optional].empty(Of result)()
+            End If
+            Return [optional].of(New result(p + uint32_1, create_node(v, v(p).type, p, p + uint32_1)))
         End Function
 
         Public Overrides Function CompareTo(ByVal other As matching) As Int32
