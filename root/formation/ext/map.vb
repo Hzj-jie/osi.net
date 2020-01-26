@@ -49,6 +49,15 @@ Public Module _map
         Return default_value
     End Function
 
+    <Extension()> Public Function find_opt(Of KT, VT)(ByVal this As map(Of KT, VT),
+                                                      ByVal key As KT) As [optional](Of VT)
+        Dim o As VT = Nothing
+        If find(this, key, o) Then
+            Return [optional].of_nullable(o)
+        End If
+        Return [optional].empty(Of VT)()
+    End Function
+
     Private Function insert(Of KEY_T, VALUE_T) _
                            (ByVal this As map(Of KEY_T, VALUE_T),
                             ByVal that As map(Of KEY_T, VALUE_T),

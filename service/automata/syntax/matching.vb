@@ -13,7 +13,7 @@ Partial Public NotInheritable Class syntaxer
     Public MustInherit Class matching
         Implements IComparable, IComparable(Of matching)
 
-        <ThreadStatic> Private Shared s As [set](Of UInt32)
+        <ThreadStatic> Private Shared s As map(Of UInt32, UInt32)
         Protected ReadOnly c As syntax_collection
 
         Protected Sub New(ByVal c As syntax_collection)
@@ -55,19 +55,30 @@ Partial Public NotInheritable Class syntaxer
         End Function
 
         Protected Function disallow_cycle_dependency(ByVal type As UInt32,
+                                                     ByVal pos As UInt32,
                                                      ByVal f As Func(Of [optional](Of result))) As [optional](Of result)
             assert(Not f Is Nothing)
             If s Is Nothing Then
-                s = New [set](Of UInt32)()
+                s = New map(Of UInt32, UInt32)()
             End If
-            If s.find(type) <> s.end() Then
-                raise_error(error_type.user, "Cycle dependency found at ", type_name(type))
-                Return [optional].empty(Of result)()
+            Dim previous As [optional](Of UInt32) = Nothing
+            previous = s.find_opt(type)
+            If previous Then
+                assert((+previous) <= pos)
+                If (+previous) = pos Then
+                    raise_error(error_type.user, "Cycle dependency found at ", type_name(type))
+                    Return [optional].empty(Of result)()
+                End If
             End If
-            s.emplace(type)
+            s(type) = pos
 
             Using deferring.to(Sub()
-                                   assert(s.erase(type))
+                                   assert(s(type) = pos)
+                                   If previous Then
+                                       s(type) = (+previous)
+                                   Else
+                                       assert(s.erase(type))
+                                   End If
                                End Sub)
                 Return f()
             End Using

@@ -171,6 +171,7 @@ Partial Public NotInheritable Class syntaxer
             End If
 
             Return disallow_cycle_dependency(type,
+                                             p,
                                              Function() As [optional](Of result)
                                                  Dim nodes As vector(Of typed_node) = Nothing
                                                  nodes = New vector(Of typed_node)()
