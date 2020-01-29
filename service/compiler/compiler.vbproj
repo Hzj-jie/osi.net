@@ -175,7 +175,6 @@
     <Compile Include="rewriter\rewriters.vb" />
     <Compile Include="code_gen\code_gen.vb" />
     <Compile Include="code_gen\statements.vb" />
-    <Compile Include="rewriter\rewriter.vb" />
     <Compile Include="code_gen\code_gen_rule_wrapper.vb" />
     <Compile Include="rewriter\rewriter_rule_wrapper.vb" />
     <Compile Include="rewriter\typed_node_writer.vb" />
