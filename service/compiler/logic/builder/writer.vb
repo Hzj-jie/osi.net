@@ -11,11 +11,9 @@ Imports osi.service.interpreter.primitive
 Namespace logic
     Public NotInheritable Class writer
         Private ReadOnly v As vector(Of Object)
-        Private ReadOnly e As vector(Of String)
 
         Public Sub New()
             v = New vector(Of Object)()
-            e = New vector(Of String)()
         End Sub
 
         Public Sub append(ByVal s As UInt32)
@@ -55,11 +53,6 @@ Namespace logic
             assert(Not a Is Nothing)
             Return a()
         End Function
-
-        Public Sub err(ByVal ParamArray s() As Object)
-            e.emplace_back(strcat(s))
-            e.emplace_back(newline.incode())
-        End Sub
 
         Public Function dump() As String
             Dim r As String = Nothing

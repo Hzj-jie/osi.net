@@ -21,17 +21,15 @@ Partial Public NotInheritable Class rewriters
 
         Public Function append(ByVal n As typed_node) As typed_node_writer
             assert(Not n Is Nothing)
-            v.emplace_back(New func_to_string(Function() As String
-                                                  Dim s As StringBuilder = Nothing
-                                                  s = New StringBuilder()
-                                                  Dim i As UInt32 = 0
-                                                  While i < n.word_count()
-                                                      s.Append(n.word(i))
-                                                      s.Append(character.blank)
-                                                      i += uint32_1
-                                                  End While
-                                                  Return Convert.ToString(s)
-                                              End Function))
+            Dim s As StringBuilder = Nothing
+            s = New StringBuilder()
+            Dim i As UInt32 = 0
+            While i < n.word_count()
+                s.Append(n.word(i))
+                s.Append(character.blank)
+                i += uint32_1
+            End While
+            v.emplace_back(s)
             Return Me
         End Function
 

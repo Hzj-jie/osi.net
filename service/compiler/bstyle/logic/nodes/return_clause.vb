@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
@@ -31,12 +32,12 @@ Partial Public NotInheritable Class bstyle
             c = code_gen_of(Of [function])().target()
             If c.allow_return_value() Then
                 If n.child_count() <> 2 Then
-                    o.err("Expect return value ", n.child().trace_back_str())
+                    raise_error(error_type.user, "Expect return value ", n.child().trace_back_str())
                     Return False
                 End If
             Else
                 If n.child_count() <> 1 Then
-                    o.err("Unexpected return value ", n.child(1).trace_back_str())
+                    raise_error(error_type.user, "Unexpected return value ", n.child(1).trace_back_str())
                     Return False
                 End If
             End If
