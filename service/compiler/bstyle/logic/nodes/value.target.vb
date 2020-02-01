@@ -30,13 +30,8 @@ Partial Public NotInheritable Class bstyle
                 builders.of_define(value_name, ta(type)).to(o)
                 defined_temp_targets.emplace(value_name)
             End If
-            forward_target(value_name)
+            read_targets.push(value_name)
             Return value_name
         End Function
-
-        Public Sub forward_target(ByVal value_name As String)
-            assert(Not value_name.null_or_whitespace())
-            read_targets.push(value_name)
-        End Sub
     End Class
 End Class

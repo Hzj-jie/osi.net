@@ -27,7 +27,9 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 1)
-            code_gen_of(Of value)().forward_target(n.child().word().str())
+            Dim value_name As String = Nothing
+            value_name = code_gen_of(Of value)().with_temp_target(macros.type_of(n.child().word().str()), n, o)
+            builders.of_copy(value_name, n.child().word().str()).to(o)
             Return True
         End Function
     End Class
