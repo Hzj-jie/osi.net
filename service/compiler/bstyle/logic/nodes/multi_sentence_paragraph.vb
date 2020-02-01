@@ -29,7 +29,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             assert(n.child_count() >= 2)
             Dim i As UInt32 = 1
-            While i < n.child_count() - 1
+            While i < n.child_count() - uint32_1
                 If Not l.of(n.child(i)).build(o) Then
                     Return False
                 End If
