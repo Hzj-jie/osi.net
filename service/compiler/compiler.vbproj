@@ -80,7 +80,6 @@
     <Compile Include="bstyle\logic\suffixes\main.vb" />
     <Compile Include="bstyle\logic\nodes\condition.vb" />
     <Compile Include="bstyle\logic\nodes\function_call.vb" />
-    <Compile Include="bstyle\logic\nodes\value_list.target.vb" />
     <Compile Include="bstyle\logic\nodes\value_list.vb" />
     <Compile Include="bstyle\logic\nodes\value_with_comma.vb" />
     <Compile Include="bstyle\logic\prefixes\constants.vb" />

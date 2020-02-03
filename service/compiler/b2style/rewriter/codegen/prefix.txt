@@ -26,6 +26,14 @@ void b2style__bool_std_err(bool i) {
   }
 }
 
+void b2style__std_out(bool i) {
+  b2style__bool_std_out(i);
+}
+
+void b2style__std_err(bool i) {
+  b2style__bool_std_err(i);
+}
+
 int b2style__current_ms() {
   int result;
   logic "interrupt current_ms @@prefixes@temps@string result";

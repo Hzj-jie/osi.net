@@ -15,6 +15,8 @@ Partial Public NotInheritable Class bstyle
         Inherits logic_gen_wrapper
         Implements logic_gen
 
+        Private ReadOnly rs As read_scoped(Of vector(Of String))
+
         <inject_constructor>
         Public Sub New(ByVal b As logic_gens)
             MyBase.New(b)
@@ -42,8 +44,12 @@ Partial Public NotInheritable Class bstyle
                 End Using
                 i += uint32_1
             End While
-            with_current_targets(v)
+            rs.push(v)
             Return True
+        End Function
+
+        Public Function current_targets() As read_scoped(Of vector(Of String)).ref
+            Return rs.pop()
         End Function
     End Class
 End Class
