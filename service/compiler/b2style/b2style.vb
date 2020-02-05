@@ -137,6 +137,10 @@ Public NotInheritable Class b2style
         Return New parse_wrapper(functions)
     End Function
 
+    Public Shared Function with_default_functions() As parse_wrapper
+        Return with_functions(interrupts.default)
+    End Function
+
     Public NotInheritable Shadows Class parse_wrapper
         Inherits rewriter_rule_wrapper(Of nlexer_rule_t,
                                           syntaxer_rule_t,

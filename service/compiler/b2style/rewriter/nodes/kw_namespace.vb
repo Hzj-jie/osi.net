@@ -30,7 +30,7 @@ Partial Public NotInheritable Class b2style
             b.register(Of kw_namespace)()
         End Sub
 
-        Public Function format(ByVal i As String) As String
+        Private Function format(ByVal i As String) As String
             assert(Not i.null_or_whitespace())
             If i.StartsWith(namespace_separator) Then
                 Return i
