@@ -15,12 +15,12 @@ Partial Public NotInheritable Class bstyle
         Inherits logic_gen_wrapper
         Implements logic_gen
 
-        Private ReadOnly rs As read_scoped(Of vector(Of pair(Of String, String)))
+        Private ReadOnly rs As read_scoped(Of vector(Of builders.parameter))
 
         <inject_constructor>
         Public Sub New(ByVal b As logic_gens)
             MyBase.New(b)
-            Me.rs = New read_scoped(Of vector(Of pair(Of String, String)))()
+            Me.rs = New read_scoped(Of vector(Of builders.parameter))()
         End Sub
 
         Public Shared Sub register(ByVal b As logic_gens)
@@ -30,14 +30,14 @@ Partial Public NotInheritable Class bstyle
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
-            Dim v As vector(Of pair(Of String, String)) = Nothing
-            v = New vector(Of pair(Of String, String))()
+            Dim v As vector(Of builders.parameter) = Nothing
+            v = New vector(Of builders.parameter)()
             Dim i As UInt32 = 0
             While i < n.child_count()
                 If Not l.of(n.child(i)).build(o) Then
                     Return False
                 End If
-                Using c As read_scoped(Of pair(Of String, String)).ref = code_gen_of(Of param)().current_target()
+                Using c As read_scoped(Of builders.parameter).ref = code_gen_of(Of param)().current_target()
                     v.emplace_back(+c)
                 End Using
                 i += uint32_1
@@ -46,17 +46,17 @@ Partial Public NotInheritable Class bstyle
             Return True
         End Function
 
-        Private Sub push(ByVal v As vector(Of pair(Of String, String)))
+        Private Sub push(ByVal v As vector(Of builders.parameter))
             rs.push(v)
             ' No nesting paramlist is expected.
             assert(rs.size() = 1)
         End Sub
 
         Public Sub empty_paramlist()
-            push(vector.of(Of pair(Of String, String))())
+            push(vector.of(Of builders.parameter)())
         End Sub
 
-        Public Function current_target() As read_scoped(Of vector(Of pair(Of String, String))).ref
+        Public Function current_target() As read_scoped(Of vector(Of builders.parameter)).ref
             Return rs.pop()
         End Function
     End Class

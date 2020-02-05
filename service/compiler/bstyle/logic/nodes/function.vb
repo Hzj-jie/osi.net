@@ -31,11 +31,11 @@ Partial Public NotInheritable Class bstyle
 
         Public NotInheritable Class ref
             Private ReadOnly ta As type_alias
-            Private ReadOnly params As vector(Of pair(Of String, String))
+            Private ReadOnly params As vector(Of builders.parameter)
             Private ReadOnly n As typed_node
 
             Public Sub New(ByVal ta As type_alias,
-                           ByVal params As vector(Of pair(Of String, String)),
+                           ByVal params As vector(Of builders.parameter),
                            ByVal n As typed_node)
                 assert(Not ta Is Nothing)
                 assert(Not params Is Nothing)
@@ -71,7 +71,7 @@ Partial Public NotInheritable Class bstyle
             Else
                 logic_gen_of(Of paramlist)().empty_paramlist()
             End If
-            Using params As read_scoped(Of vector(Of pair(Of String, String))).ref =
+            Using params As read_scoped(Of vector(Of builders.parameter)).ref =
                       code_gen_of(Of paramlist)().current_target()
                 function_name.of_callee(ta,
                                         n.child(1).word().str(),

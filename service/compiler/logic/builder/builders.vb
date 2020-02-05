@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.formation
 
@@ -23,17 +22,29 @@ Namespace logic
             Return of_define(name, ta(type))
         End Function
 
+        Public NotInheritable Class parameter
+            Public ReadOnly type As String
+            Public ReadOnly name As String
+
+            Public Sub New(ByVal type As String, ByVal name As String)
+                assert(Not type.null_or_whitespace())
+                assert(Not name.null_or_whitespace())
+                Me.type = type
+                Me.name = name
+            End Sub
+        End Class
+
         Public Shared Function of_callee(ByVal ta As type_alias,
                                          ByVal name As String,
                                          ByVal type As String,
-                                         ByVal parameters As vector(Of pair(Of String, String)),
+                                         ByVal parameters As vector(Of parameter),
                                          ByVal paragraph As Func(Of Boolean)) As callee_builder_12
             assert(Not ta Is Nothing)
             Return of_callee(name,
                              ta(type),
-                             parameters.map(Function(ByVal i As pair(Of String, String)) As pair(Of String, String)
+                             parameters.map(Function(ByVal i As parameter) As pair(Of String, String)
                                                 assert(Not i Is Nothing)
-                                                Return pair.emplace_of(i.first, ta(i.second))
+                                                Return pair.emplace_of(i.name, ta(i.type))
                                             End Function),
                              paragraph)
         End Function

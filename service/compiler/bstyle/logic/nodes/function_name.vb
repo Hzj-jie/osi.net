@@ -14,19 +14,19 @@ Partial Public NotInheritable Class bstyle
     Public NotInheritable Class function_name
         Public Shared Function of_function(ByVal ta As type_alias,
                                            ByVal raw_name As String,
-                                           ByVal parameters As vector(Of pair(Of String, String))) As String
+                                           ByVal parameters As vector(Of builders.parameter)) As String
             assert(Not ta Is Nothing)
             Return build(raw_name,
-                         parameters.map(Function(ByVal i As pair(Of String, String)) As String
+                         parameters.map(Function(ByVal i As builders.parameter) As String
                                             assert(Not i Is Nothing)
-                                            Return ta(i.second)
+                                            Return ta(i.type)
                                         End Function))
         End Function
 
         Public Shared Function of_callee(ByVal ta As type_alias,
                                          ByVal raw_name As String,
                                          ByVal return_type As String,
-                                         ByVal parameters As vector(Of pair(Of String, String)),
+                                         ByVal parameters As vector(Of builders.parameter),
                                          ByVal paragraph As Func(Of Boolean)) As builders.callee_builder_12
             Return builders.of_callee(ta,
                                       of_function(ta, raw_name, parameters),
