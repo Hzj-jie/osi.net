@@ -21,7 +21,6 @@ Partial Public NotInheritable Class bstyle
         Public Const [string] As String = "string"
         Public Const float As String = "float"
         Public Const void As String = "void"
-        Public Const [char] As String = "char"
 
         Private Shared ReadOnly v As vector(Of pair(Of String, Int32))
         Private Shared ReadOnly type_0_s As vector(Of String)
@@ -33,8 +32,7 @@ Partial Public NotInheritable Class bstyle
                 pair.emplace_of([long], 8),
                 pair.emplace_of(bool, 1),
                 pair.emplace_of([byte], 1),
-                pair.emplace_of(float, 8),
-                pair.emplace_of([char], 2)
+                pair.emplace_of(float, 8)
             )
             type_0_s = vector.of(void)
             type_asterisk_s = vector.of(bigint, [string])

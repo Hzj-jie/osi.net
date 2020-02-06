@@ -1,0 +1,6 @@
+﻿
+void main() {
+  int i = 100;
+  i += 1;
+  b2style::int_std_out(i);
+}

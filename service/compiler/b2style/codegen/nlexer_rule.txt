@@ -50,8 +50,19 @@ bit-or \|
 and &&
 or \|\|
 not !
-self-inc ++
+self-inc \+\+
 self-dec --
+
+self-add \+=
+self-minus -=
+self-multiply \*=
+self-divide /=
+self-mod %=
+self-power ^=
+self-bit-and &=
+self-bit-or \|=
+self-and &&=
+self-or \|\|=
 
 kw-namespace namespace
 

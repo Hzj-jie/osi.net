@@ -64,6 +64,7 @@
     <Compile Include="b2style\rewriter\nodes\operations.vb" />
     <Compile Include="b2style\rewriter\nodes\post_operation_value.vb" />
     <Compile Include="b2style\rewriter\nodes\pre_operation_value.vb" />
+    <Compile Include="b2style\rewriter\nodes\self_value_clause.vb" />
     <Compile Include="b2style\rewriter\statements.vb" />
     <Compile Include="bstyle\bstyle.vb" />
     <Compile Include="bstyle\bstyle_rules.vb" />

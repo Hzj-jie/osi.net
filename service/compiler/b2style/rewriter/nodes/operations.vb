@@ -8,6 +8,7 @@ Imports osi.service.automata
 
 Partial Public NotInheritable Class b2style
     Public NotInheritable Class operations
+        Private Const self_prefix As String = "self-"
         Private ReadOnly l As rewriters
 
         Public Sub New(ByVal l As rewriters)
@@ -15,10 +16,22 @@ Partial Public NotInheritable Class b2style
             Me.l = l
         End Sub
 
+        Private Function function_name(ByVal type_name As String) As String
+            assert(Not type_name.null_or_whitespace())
+            Return l.code_gen_of(Of kw_namespace)().bstyle_format(strcat("::b2style::", type_name.Replace("-"c, "_"c)))
+        End Function
+
         Public Function function_name(ByVal n As typed_node) As String
             assert(Not n Is Nothing)
-            assert(Not n.type_name.null_or_whitespace())
-            Return l.code_gen_of(Of kw_namespace)().bstyle_format(strcat("::b2style::", n.type_name.Replace("-"c, "_"c)))
+            Return function_name(n.type_name)
+        End Function
+
+        Public Function self_function_name(ByVal n As typed_node) As String
+            assert(Not n Is Nothing)
+            Dim type_name As String = Nothing
+            type_name = n.type_name
+            assert(type_name.StartsWith(self_prefix))
+            Return function_name(strmid(type_name, strlen(self_prefix)))
         End Function
 
         Private Sub New()

@@ -15,7 +15,7 @@ namespace kw-namespace name start-paragraph [function, value-definition-with-sem
 
 paragraph [sentence, multi-sentence-paragraph]
 sentence [sentence-with-semi-colon, sentence-without-semi-colon]
-sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, ignore-return-function-call, kw-break, logic]? semi-colon
+sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, ignore-return-function-call, kw-break, logic, self-value-clause]? semi-colon
 sentence-without-semi-colon [condition, while, for-loop]
 
 multi-sentence-paragraph start-paragraph [sentence]* end-paragraph
@@ -23,6 +23,7 @@ multi-sentence-paragraph start-paragraph [sentence]* end-paragraph
 value-declaration name name
 value-definition name name assignment value
 value-clause name assignment value
+self-value-clause name [self-add, self-minus, self-multiply, self-divide, self-mod, self-power, self-bit-and, self-bit-or, self-and, self-or] value
 
 condition kw-if start-bracket value end-bracket paragraph [else-condition]?
 else-condition kw-else paragraph

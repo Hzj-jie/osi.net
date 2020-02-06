@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="b2style\codegen\_1_to_100.txt" />
     <Content Include="b2style\codegen\case1.txt" />
     <Content Include="b2style\codegen\case2.txt" />
     <Content Include="b2style\codegen\bool_and_bool.txt" />

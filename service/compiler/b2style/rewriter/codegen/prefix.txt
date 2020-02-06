@@ -149,28 +149,8 @@ bool b2style__greater_or_equal(int i, int j) {
   return b2style__or(b2style__greater_than(i, j), b2style__equal(i, j));
 }
 
-long b2style__old_fit_in_long(long x) {
-  int len;
-  logic "sizeof len x";
-  if (b2style__greater_than(len, 8)) {
-    logic "subtract len len @@prefixes@constants@size_of_long";
-    logic "cut_slice x x @@prefixes@constants@int_0 len";
-  }
-  return x;
-}
-
 long b2style__fit_in_long(long x) {
   logic "cut_slice x x @@prefixes@constants@int_0 @@prefixes@constants@size_of_long";
-  return x;
-}
-
-int b2style__old_fit_in_int(int x) {
-  int len;
-  logic "sizeof len x";
-  if (b2style__greater_than(len, 4)) {
-    logic "subtract len len @@prefixes@constants@size_of_int";
-    logic "cut_slice x x @@prefixes@constants@int_0 len";
-  }
   return x;
 }
 
@@ -179,32 +159,9 @@ int b2style__fit_in_int(int x) {
   return x;
 }
 
-byte b2style__old_fit_in_byte(byte x) {
-  int len;
-  logic "sizeof len x";
-  if (b2style__greater_than(len, 1)) {
-    logic "subtract len len @@prefixes@constants@size_of_byte";
-    logic "cut_slice x x @@prefixes@constants@int_0 len";
-  }
-  return x;
-}
-
 byte b2style__fit_in_byte(byte x) {
   logic "cut_slice x x @@prefixes@constants@int_0 @@prefixes@constants@size_of_byte";
   return x;
-}
-
-byte b2style__old_to_byte(int x) {
-  byte y;
-  int len;
-  logic "sizeof len x";
-  if (b2style__greater_than(len, 1)) {
-    logic "subtract len len @@prefixes@constants@size_of_byte";
-    logic "cut_slice y x @@prefixes@constants@int_0 len";
-  } else {
-    logic "cut_slice y x @@prefixes@constants@int_0 @@prefixes@constants@int_1";
-  }
-  return y;
 }
 
 byte b2style__to_byte(int x) {
