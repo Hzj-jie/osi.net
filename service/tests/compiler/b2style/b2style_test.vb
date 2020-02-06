@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.automata
@@ -50,6 +51,30 @@ Public NotInheritable Class b2style_test
         assertion.is_not_null(e)
         e.execute()
         assertion.equal(io.output(), "TrueFalseFalseFalseTrueTrueTrueFalse")
+    End Sub
+
+    <test>
+    Private Shared Sub str_unescape()
+        Dim io As console_io.test_wrapper = Nothing
+        io = New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                          parse(_b2style_test_data.str_unescape.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), strcat("abc", character.tab, "def", character.newline))
+    End Sub
+
+    <test>
+    Private Shared Sub _1_to_100()
+        Dim io As console_io.test_wrapper = Nothing
+        io = New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                          parse(_b2style_test_data._1_to_100.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), strcat("5050", character.newline))
     End Sub
 
     Private Sub New()

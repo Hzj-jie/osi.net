@@ -30,7 +30,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             assert(n.leaf())
             builders.of_copy_const(code_gen_of(Of value)().with_temp_target(types.string, n, o),
-                                   New data_block(n.word().str().Trim(character.quote))).to(o)
+                                   New data_block(n.word().str().Trim(character.quote).c_unescape())).to(o)
             Return True
         End Function
     End Class

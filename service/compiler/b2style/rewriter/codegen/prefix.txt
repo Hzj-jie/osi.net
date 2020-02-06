@@ -41,8 +41,18 @@ int b2style__current_ms() {
 }
 
 string b2style__str_concat(string i, string j) {
-  logic "append_slice i j";
+  logic "append i j";
   return i;
+}
+
+string b2style__str_concat(string i, byte j) {
+  logic "append i j";
+  return i;
+}
+
+string b2style__to_str(byte i) {
+  string s;
+  return b2style__str_concat(s, i);
 }
 
 bool b2style__and(bool i, bool j) {
@@ -139,7 +149,7 @@ bool b2style__greater_or_equal(int i, int j) {
   return b2style__or(b2style__greater_than(i, j), b2style__equal(i, j));
 }
 
-long b2style__fit_in_long(long x) {
+long b2style__old_fit_in_long(long x) {
   int len;
   logic "sizeof len x";
   if (b2style__greater_than(len, 8)) {
@@ -149,7 +159,12 @@ long b2style__fit_in_long(long x) {
   return x;
 }
 
-int b2style__fit_in_int(int x) {
+long b2style__fit_in_long(long x) {
+  logic "cut_slice x x @@prefixes@constants@int_0 @@prefixes@constants@size_of_long";
+  return x;
+}
+
+int b2style__old_fit_in_int(int x) {
   int len;
   logic "sizeof len x";
   if (b2style__greater_than(len, 4)) {
@@ -157,6 +172,45 @@ int b2style__fit_in_int(int x) {
     logic "cut_slice x x @@prefixes@constants@int_0 len";
   }
   return x;
+}
+
+int b2style__fit_in_int(int x) {
+  logic "cut_slice x x @@prefixes@constants@int_0 @@prefixes@constants@size_of_int";
+  return x;
+}
+
+byte b2style__old_fit_in_byte(byte x) {
+  int len;
+  logic "sizeof len x";
+  if (b2style__greater_than(len, 1)) {
+    logic "subtract len len @@prefixes@constants@size_of_byte";
+    logic "cut_slice x x @@prefixes@constants@int_0 len";
+  }
+  return x;
+}
+
+byte b2style__fit_in_byte(byte x) {
+  logic "cut_slice x x @@prefixes@constants@int_0 @@prefixes@constants@size_of_byte";
+  return x;
+}
+
+byte b2style__old_to_byte(int x) {
+  byte y;
+  int len;
+  logic "sizeof len x";
+  if (b2style__greater_than(len, 1)) {
+    logic "subtract len len @@prefixes@constants@size_of_byte";
+    logic "cut_slice y x @@prefixes@constants@int_0 len";
+  } else {
+    logic "cut_slice y x @@prefixes@constants@int_0 @@prefixes@constants@int_1";
+  }
+  return y;
+}
+
+byte b2style__to_byte(int x) {
+  byte y;
+  logic "cut_slice y x @@prefixes@constants@int_0 @@prefixes@constants@size_of_byte";
+  return y;
 }
 
 bigint b2style__add(bigint i, bigint j) {
@@ -172,6 +226,11 @@ long b2style__add(long i, long j) {
 int b2style__add(int i, int j) {
   logic "add i i j";
   return b2style__fit_in_int(i);
+}
+
+byte b2style__add(byte i, byte j) {
+  logic "add i i j";
+  return b2style__fit_in_byte(i);
 }
 
 bigint b2style__minus(bigint i, bigint j) {
@@ -315,3 +374,29 @@ int b2style__self_dec(int x) {
   return b2style__fit_in_int(x);
 }
 
+string b2style__int_to_str(int i) {
+  string s;
+  while (b2style__greater_than(i, 0)) {
+    int b = b2style__mod(i, 10);
+	i = b2style__divide(i, 10);
+	b = b2style__add(b, 48);
+	s = b2style__str_concat(b2style__to_str(b2style__to_byte(b)), s);
+  }
+  return s;
+}
+
+void b2style__int_std_out(int i) {
+  b2style__std_out(b2style__int_to_str(i));
+}
+
+void b2style__int_std_err(int i) {
+  b2style__std_err(b2style__int_to_str(i));
+}
+
+void b2style__std_out(int i) {
+  b2style__int_std_out(i);
+}
+
+void b2style__std_err(int i) {
+  b2style__int_std_err(i);
+}

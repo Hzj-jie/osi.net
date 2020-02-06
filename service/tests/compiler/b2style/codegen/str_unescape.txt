@@ -1,0 +1,4 @@
+﻿
+void main() {
+  b2style::std_out("abc\tdef\n");
+}

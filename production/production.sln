@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "test_http_server", "test_http_server\test_http_server.vbproj", "{674CF483-3BD9-412E-BD9C-4316938EC99B}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "http_proxy", "http_proxy\http_proxy.vbproj", "{1760BA4D-F717-4CB5-ADFB-04C076605467}"
@@ -21,43 +23,9 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "big_int_calculator", "big_i
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "remote_console", "remote_console\remote_console.vbproj", "{D565B0A8-E74C-4886-8247-361B94A51651}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "b2style", "b2style\b2style.vbproj", "{841A7283-D2AC-4855-B47A-7A6CFEC0789B}"
+EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 11
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs02
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = test_http_server\\test_http_server.vbproj
-		SccProjectName1 = test_http_server
-		SccLocalPath1 = test_http_server
-		SccProjectUniqueName2 = http_proxy\\http_proxy.vbproj
-		SccProjectName2 = http_proxy
-		SccLocalPath2 = http_proxy
-		SccProjectUniqueName3 = fake_http_request\\fake_http_request.vbproj
-		SccProjectName3 = fake_http_request
-		SccLocalPath3 = fake_http_request
-		SccProjectUniqueName4 = tcp_bridge\\tcp_bridge.vbproj
-		SccProjectName4 = tcp_bridge
-		SccLocalPath4 = tcp_bridge
-		SccProjectUniqueName5 = tcp_pair\\tcp_pair.vbproj
-		SccProjectName5 = tcp_pair
-		SccLocalPath5 = tcp_pair
-		SccProjectUniqueName6 = sider\\sider.vbproj
-		SccProjectName6 = sider
-		SccLocalPath6 = sider
-		SccProjectUniqueName7 = utt_diff\\utt_diff.vbproj
-		SccProjectName7 = utt_diff
-		SccLocalPath7 = utt_diff
-		SccProjectUniqueName8 = big_uint_calculator\\big_uint_calculator.vbproj
-		SccProjectName8 = big_uint_calculator
-		SccLocalPath8 = big_uint_calculator
-		SccProjectUniqueName9 = big_int_calculator\\big_int_calculator.vbproj
-		SccProjectName9 = big_int_calculator
-		SccLocalPath9 = big_int_calculator
-		SccProjectUniqueName10 = remote_console\\remote_console.vbproj
-		SccProjectName10 = remote_console
-		SccLocalPath10 = remote_console
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -103,8 +71,67 @@ Global
 		{D565B0A8-E74C-4886-8247-361B94A51651}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D565B0A8-E74C-4886-8247-361B94A51651}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D565B0A8-E74C-4886-8247-361B94A51651}.Release|Any CPU.Build.0 = Release|Any CPU
+		{841A7283-D2AC-4855-B47A-7A6CFEC0789B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{841A7283-D2AC-4855-B47A-7A6CFEC0789B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{841A7283-D2AC-4855-B47A-7A6CFEC0789B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{841A7283-D2AC-4855-B47A-7A6CFEC0789B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 10
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs02
+		SccProjectUniqueName0 = test_http_server\\test_http_server.vbproj
+		SccProjectName0 = test_http_server
+		SccAuxPath0 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath0 = test_http_server
+		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName1 = http_proxy\\http_proxy.vbproj
+		SccProjectName1 = http_proxy
+		SccAuxPath1 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath1 = http_proxy
+		SccProvider1 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName2 = fake_http_request\\fake_http_request.vbproj
+		SccProjectName2 = fake_http_request
+		SccAuxPath2 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath2 = fake_http_request
+		SccProvider2 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName3 = tcp_bridge\\tcp_bridge.vbproj
+		SccProjectName3 = tcp_bridge
+		SccAuxPath3 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath3 = tcp_bridge
+		SccProvider3 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName4 = tcp_pair\\tcp_pair.vbproj
+		SccProjectName4 = tcp_pair
+		SccAuxPath4 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath4 = tcp_pair
+		SccProvider4 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName5 = sider\\sider.vbproj
+		SccProjectName5 = sider
+		SccAuxPath5 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath5 = sider
+		SccProvider5 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName6 = utt_diff\\utt_diff.vbproj
+		SccProjectName6 = utt_diff
+		SccAuxPath6 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath6 = utt_diff
+		SccProvider6 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName7 = big_uint_calculator\\big_uint_calculator.vbproj
+		SccProjectName7 = big_uint_calculator
+		SccAuxPath7 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath7 = big_uint_calculator
+		SccProvider7 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName8 = big_int_calculator\\big_int_calculator.vbproj
+		SccProjectName8 = big_int_calculator
+		SccAuxPath8 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath8 = big_int_calculator
+		SccProvider8 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName9 = remote_console\\remote_console.vbproj
+		SccProjectName9 = remote_console
+		SccAuxPath9 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath9 = remote_console
+		SccProvider9 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 	EndGlobalSection
 EndGlobal
