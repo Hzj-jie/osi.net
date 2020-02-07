@@ -68,6 +68,7 @@
     <Compile Include="b2style\rewriter\statements.vb" />
     <Compile Include="bstyle\bstyle.vb" />
     <Compile Include="bstyle\bstyle_rules.vb" />
+    <Compile Include="bstyle\logic\nodes\biguint.vb" />
     <Compile Include="bstyle\logic\nodes\bool.vb" />
     <Compile Include="bstyle\logic\nodes\float.vb" />
     <Compile Include="bstyle\logic\nodes\function_name.vb" />

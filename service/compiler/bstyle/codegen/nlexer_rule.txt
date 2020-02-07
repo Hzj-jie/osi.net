@@ -13,6 +13,7 @@ blank [\b]+
 
 bool [true,false]
 integer [+,-]?[\d]+
+biguint [\d]+[l,L]
 float [+,-]?[\d]*.[\d]+
 string "[\",*|"]*"
 

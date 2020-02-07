@@ -71,11 +71,11 @@ bool b2style__not(bool i) {
   return true;
 }
 
-bigint b2style__to_bigint(int i) {
+biguint b2style__to_biguint(int i) {
   return i;
 }
 
-bigint b2style__to_bigint(long i) {
+biguint b2style__to_biguint(long i) {
   return i;
 }
 
@@ -83,49 +83,63 @@ long b2style__to_long(int i) {
   return i;
 }
 
-bool b2style__equal(bigint i, bigint j) {
+bool b2style__equal(biguint i, biguint j) {
   bool result;
   logic "equal result i j";
   return result;
 }
 
+bool b2style__not_equal(biguint i, biguint j) {
+  bool result;
+  logic "equal result i j";
+  return b2style__not(result);
+}
+
 bool b2style__equal(long i, long j) {
-  return b2style__equal(b2style__to_bigint(i), b2style__to_bigint(j));
+  return b2style__equal(b2style__to_biguint(i), b2style__to_biguint(j));
+}
+
+bool b2style__not_equal(long i, long j) {
+  return b2style__not_equal(b2style__to_biguint(i), b2style__to_biguint(j));
 }
 
 bool b2style__equal(int i, int j) {
-  return b2style__equal(b2style__to_bigint(i), b2style__to_bigint(j));
+  return b2style__equal(b2style__to_biguint(i), b2style__to_biguint(j));
 }
 
-bool b2style__greater_than(bigint i, bigint j) {
+bool b2style__not_equal(int i, int j) {
+  return b2style__not_equal(b2style__to_biguint(i), b2style__to_biguint(j));
+}
+
+bool b2style__greater_than(biguint i, biguint j) {
   bool result;
   logic "more result i j";
   return result;
 }
 
 bool b2style__greater_than(long i, long j) {
-  return b2style__greater_than(b2style__to_bigint(i), b2style__to_bigint(j));
+  return b2style__greater_than(b2style__to_biguint(i), b2style__to_biguint(j));
 }
 
 bool b2style__greater_than(int i, int j) {
-  return b2style__greater_than(b2style__to_bigint(i), b2style__to_bigint(j));
+  return b2style__greater_than(b2style__to_biguint(i), b2style__to_biguint(j));
 }
 
-bool b2style__less_than(bigint i, bigint j) {
+bool b2style__less_than(biguint i, biguint j) {
   bool result;
   logic "less result i j";
   return result;
 }
 
 bool b2style__less_than(long i, long j) {
-  return b2style__less_than(b2style__to_bigint(i), b2style__to_bigint(j));
+  return b2style__less_than(b2style__to_biguint(i), b2style__to_biguint(j));
 }
 
 bool b2style__less_than(int i, int j) {
-  return b2style__less_than(b2style__to_bigint(i), b2style__to_bigint(j));
+  return b2style__less_than(b2style__to_biguint(i), b2style__to_biguint(j));
 }
 
-bool b2style__less_or_equal(bigint i, bigint j) {
+bool b2style__less_or_equal(biguint i, biguint j) {
   return b2style__or(b2style__less_than(i, j), b2style__equal(i, j));
 }
 
@@ -137,7 +151,7 @@ bool b2style__less_or_equal(int i, int j) {
   return b2style__or(b2style__less_than(i, j), b2style__equal(i, j));
 }
 
-bool b2style__greater_or_equal(bigint i, bigint j) {
+bool b2style__greater_or_equal(biguint i, biguint j) {
   return b2style__or(b2style__greater_than(i, j), b2style__equal(i, j));
 }
 
@@ -164,13 +178,19 @@ byte b2style__fit_in_byte(byte x) {
   return x;
 }
 
+int b2style__to_int(biguint x) {
+  byte y;
+  logic "cut_slice y x @@prefixes@constants@int_0 @@prefixes@constants@size_of_int";
+  return y;
+}
+
 byte b2style__to_byte(int x) {
   byte y;
   logic "cut_slice y x @@prefixes@constants@int_0 @@prefixes@constants@size_of_byte";
   return y;
 }
 
-bigint b2style__add(bigint i, bigint j) {
+biguint b2style__add(biguint i, biguint j) {
   logic "add i i j";
   return i;
 }
@@ -190,7 +210,7 @@ byte b2style__add(byte i, byte j) {
   return b2style__fit_in_byte(i);
 }
 
-bigint b2style__minus(bigint i, bigint j) {
+biguint b2style__minus(biguint i, biguint j) {
   logic "subtract i i j";
   return i;
 }
@@ -205,7 +225,7 @@ int b2style__minus(int i, int j) {
   return b2style__fit_in_int(i);
 }
 
-bigint b2style__multiply(bigint i, bigint j) {
+biguint b2style__multiply(biguint i, biguint j) {
   logic "multiply i i j";
   return i;
 }
@@ -220,8 +240,8 @@ int b2style__multiply(int i, int j) {
   return b2style__fit_in_int(i);
 }
 
-bigint b2style__divide(bigint i, bigint j) {
-  bigint result;
+biguint b2style__divide(biguint i, biguint j) {
+  biguint result;
   logic "divide result @@prefixes@temps@string i j";
   return result;
 }
@@ -238,8 +258,8 @@ int b2style__divide(int i, int j) {
   return b2style__fit_in_int(result);
 }
 
-bigint b2style__mod(bigint i, bigint j) {
-  bigint result;
+biguint b2style__mod(biguint i, biguint j) {
+  biguint result;
   logic "divide @@prefixes@temps@string result i j";
   return result;
 }
@@ -256,7 +276,7 @@ int b2style__mod(int i, int j) {
   return b2style__fit_in_int(result);
 }
 
-bigint b2style__power(bigint i, bigint j) {
+biguint b2style__power(biguint i, biguint j) {
   logic "power i i j";
   return i;
 }
@@ -271,7 +291,7 @@ int b2style__power(int i, int j) {
   return b2style__fit_in_int(i);
 }
 
-bigint b2style__bit_and(bigint i, bigint j) {
+biguint b2style__bit_and(biguint i, biguint j) {
   logic "and i i j";
   return i;
 }
@@ -286,7 +306,7 @@ int b2style__bit_and(int i, int j) {
   return i;
 }
 
-bigint b2style__bit_or(bigint i, bigint j) {
+biguint b2style__bit_or(biguint i, biguint j) {
   logic "or i i j";
   return i;
 }
@@ -301,7 +321,7 @@ int b2style__bit_or(int i, int j) {
   return i;
 }
 
-bigint b2style__self_inc(bigint x) {
+biguint b2style__self_inc(biguint x) {
   logic "add x x @@prefixes@constants@int_1";
   return x;
 }
@@ -316,7 +336,7 @@ int b2style__self_inc(int x) {
   return b2style__fit_in_int(x);
 }
 
-bigint b2style__self_dec(bigint x) {
+biguint b2style__self_dec(biguint x) {
   logic "subtract x x @@prefixes@constants@int_1";
   return x;
 }
@@ -331,15 +351,37 @@ int b2style__self_dec(int x) {
   return b2style__fit_in_int(x);
 }
 
-string b2style__int_to_str(int i) {
+string b2style__biguint_to_str(biguint i) {
+  if (b2style__equal(i, 0L)) {
+    return "0";
+  }
   string s;
-  while (b2style__greater_than(i, 0)) {
-    int b = b2style__mod(i, 10);
-	i = b2style__divide(i, 10);
+  while (b2style__greater_than(i, 0L)) {
+    int b = b2style__to_int(b2style__mod(i, 10L));
+	i = b2style__divide(i, 10L);
 	b = b2style__add(b, 48);
 	s = b2style__str_concat(b2style__to_str(b2style__to_byte(b)), s);
   }
   return s;
+}
+
+string b2style__int_to_str(int i) {
+  if (b2style__greater_than(i, 2147483647)) {
+    i = b2style__minus(i, 2147483647);
+	i = b2style__minus(2147483647, i);
+	i = b2style__add(i, 2);
+	string s = "-";
+	return b2style__str_concat(s, b2style__biguint_to_str(b2style__to_biguint(i)));
+  }
+  return b2style__biguint_to_str(b2style__to_biguint(i));
+}
+
+void b2style__biguint_std_out(biguint i) {
+  b2style__std_out(b2style__biguint_to_str(i));
+}
+
+void b2style__biguint_std_err(biguint i) {
+  b2style__std_err(b2style__biguint_to_str(i));
 }
 
 void b2style__int_std_out(int i) {

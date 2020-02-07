@@ -33,9 +33,8 @@ Namespace logic
                t.is_assignable_from(data.value_bytes_size()) Then
                 o.emplace_back(instruction_builder.str(command.cpc, t, data))
                 Return True
-            Else
-                Return False
             End If
+            Return False
         End Function
     End Class
 End Namespace

@@ -1,0 +1,9 @@
+﻿
+void main() {
+  biguint i = 4294967296L;
+  biguint j = 4294967296l;
+  biguint k = 1L;
+  b2style::biguint_std_out(i);
+  b2style::biguint_std_out(j);
+  b2style::biguint_std_out(k);
+}

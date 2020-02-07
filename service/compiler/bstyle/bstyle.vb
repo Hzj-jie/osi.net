@@ -60,6 +60,7 @@ Public NotInheritable Class bstyle
                 ignore_parameters(AddressOf function_call.register),
                 registerer(AddressOf ignore_result_function_call.register),
                 ignore_parameters(AddressOf [integer].register),
+                ignore_parameters(AddressOf biguint.register),
                 ignore_parameters(AddressOf logic.register),
                 ignore_parameters(AddressOf multi_sentence_paragraph.register),
                 ignore_parameters(AddressOf variable_name.register),

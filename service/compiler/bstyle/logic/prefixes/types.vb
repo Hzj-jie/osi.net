@@ -13,7 +13,7 @@ Partial Public NotInheritable Class bstyle
     Public NotInheritable Class types
         Implements statement
 
-        Public Const bigint As String = "bigint"
+        Public Const biguint As String = "biguint"
         Public Const int As String = "int"
         Public Const [long] As String = "long"
         Public Const bool As String = "bool"
@@ -35,7 +35,7 @@ Partial Public NotInheritable Class bstyle
                 pair.emplace_of(float, 8)
             )
             type_0_s = vector.of(void)
-            type_asterisk_s = vector.of(bigint, [string])
+            type_asterisk_s = vector.of(biguint, [string])
         End Sub
 
         Public Shared Sub register(ByVal p As statements, ByVal l As logic_rule_wrapper)

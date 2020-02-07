@@ -1,9 +1,9 @@
 ﻿
-bigint to_bigint(int i) {
+biguint to_biguint(int i) {
   return i;
 }
 
-bigint to_bigint(long i) {
+biguint to_biguint(long i) {
   return i;
 }
 
@@ -11,7 +11,7 @@ long to_long(int i) {
   return i;
 }
 
-bool equal(bigint i, bigint j) {
+bool equal(biguint i, biguint j) {
   bool result;
   logic "equal result i j";
   return result;
@@ -23,11 +23,11 @@ bool not(bool i) {
 }
 
 bool equal(int i, int j) {
-  return equal(to_bigint(i), to_bigint(j));
+  return equal(to_biguint(i), to_biguint(j));
 }
 
 bool equal(long i, long j) {
-  return not(equal(to_bigint(i), to_bigint(j)));
+  return not(equal(to_biguint(i), to_biguint(j)));
 }
 
 void print(bool i) {

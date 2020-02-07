@@ -1,0 +1,6 @@
+﻿
+void main() {
+  b2style::int_std_out(-1);
+  b2style::int_std_out(-2);
+  b2style::int_std_out(-3);
+}

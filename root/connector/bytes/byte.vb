@@ -8,9 +8,12 @@ Imports System.Text
 Imports osi.root.constants
 
 Public Module _byte
+    Private ReadOnly empty_bytes() As Byte
+
     Sub New()
         assert(strlen(upper_dbc_hex_digits) = hex_digits_char_count)
         assert(hex_digits_char_count = 16)
+        ReDim empty_bytes(-1)
     End Sub
 
     Private Function to_hex(ByVal i As Byte) As Char
@@ -32,10 +35,9 @@ Public Module _byte
            Not i(start).hex() OrElse
            Not i(start + 1).hex() Then
             Return False
-        Else
-            o = (i(start).hex_value() << 4) + i(start + 1).hex_value()
-            Return True
         End If
+        o = (i(start).hex_value() << 4) + i(start + 1).hex_value()
+        Return True
     End Function
 
     <Extension()> Public Function hex_byte(ByVal i As String, ByRef o As Byte) As Boolean
@@ -58,16 +60,18 @@ Public Module _byte
     <Extension()> Public Function hex_str(ByVal i() As Byte,
                                           ByVal start As Int32,
                                           ByVal len As Int32) As String
-        If len <= 0 OrElse start < 0 OrElse array_size(i) < start + len Then
+        If len < 0 OrElse start < 0 OrElse array_size(i) < start + len Then
             Return Nothing
-        Else
-            Dim r As StringBuilder = Nothing
-            r = New StringBuilder(len * expected_hex_byte_length - 1)
-            For j As Int32 = start To start + len - 1
-                r.Append(i(j).hex())
-            Next
-            Return Convert.ToString(r)
         End If
+        If len = 0 Then
+            Return empty_string
+        End If
+        Dim r As StringBuilder = Nothing
+        r = New StringBuilder(len * expected_hex_byte_length - 1)
+        For j As Int32 = start To start + len - 1
+            r.Append(i(j).hex())
+        Next
+        Return Convert.ToString(r)
     End Function
 
     <Extension()> Public Function hex_str(ByVal i() As Byte,
@@ -103,25 +107,29 @@ Public Module _byte
                                             ByVal buff_len As Int32) As Boolean
         If str_start < 0 OrElse str_len < 0 Then
             Return False
-        ElseIf buff_start < 0 OrElse buff_len < 0 Then
+        End If
+        If buff_start < 0 OrElse buff_len < 0 Then
             Return False
-        ElseIf str_len = 0 Then
-            Return True
-        ElseIf strlen(s) < str_start + str_len OrElse
-               array_size(buff) < buff_start + buff_len Then
-            Return False
-        ElseIf str_len Mod expected_hex_byte_length <> 0 Then
-            Return False
-        ElseIf buff_len < (str_len \ expected_hex_byte_length) Then
-            Return False
-        Else
-            For i As Int32 = str_start To str_start + str_len - 1 Step expected_hex_byte_length
-                If Not s.hex_byte(i, buff(buff_start + ((i - str_start) \ expected_hex_byte_length))) Then
-                    Return False
-                End If
-            Next
+        End If
+        If str_len = 0 Then
             Return True
         End If
+        If strlen(s) < str_start + str_len OrElse
+               array_size(buff) < buff_start + buff_len Then
+            Return False
+        End If
+        If str_len Mod expected_hex_byte_length <> 0 Then
+            Return False
+        End If
+        If buff_len < (str_len \ expected_hex_byte_length) Then
+            Return False
+        End If
+        For i As Int32 = str_start To str_start + str_len - 1 Step expected_hex_byte_length
+            If Not s.hex_byte(i, buff(buff_start + ((i - str_start) \ expected_hex_byte_length))) Then
+                Return False
+            End If
+        Next
+        Return True
     End Function
 
     <Extension()> Public Function hex_bytes(ByVal s As String,
@@ -190,13 +198,14 @@ Public Module _byte
                                                 ByVal len As Int32) As Int32
         If start < 0 OrElse len < 0 Then
             Return npos
-        ElseIf strlen(s) < start + len Then
-            Return npos
-        ElseIf len Mod expected_hex_byte_length <> 0 Then
-            Return npos
-        Else
-            Return len \ expected_hex_byte_length
         End If
+        If strlen(s) < start + len Then
+            Return npos
+        End If
+        If len Mod expected_hex_byte_length <> 0 Then
+            Return npos
+        End If
+        Return len \ expected_hex_byte_length
     End Function
 
     <Extension()> Public Function hex_bytes_len(ByVal s As String,
@@ -213,13 +222,15 @@ Public Module _byte
                                                  ByVal len As Int32) As Byte()
         Dim l As Int32 = 0
         l = hex_bytes_len(s, start, len)
-        If l <= 0 Then
+        If l < 0 Then
             Return Nothing
-        Else
-            Dim r() As Byte = Nothing
-            ReDim r(l - 1)
-            Return r
         End If
+        If l = 0 Then
+            Return empty_bytes
+        End If
+        Dim r() As Byte = Nothing
+        ReDim r(l - 1)
+        Return r
     End Function
 
     <Extension()> Public Function hex_bytes_buff(ByVal s As String,

@@ -15,6 +15,7 @@ blank [\b]+
 
 bool [true,false]
 integer [+,-]?[\d]+
+biguint [\d]+[l,L]
 float [+,-]?[\d]*.[\d]+
 string "[\",*|"]*"
 
@@ -36,6 +37,7 @@ assignment =
 less-or-equal <=
 greater-or-equal >=
 equal ==
+not-equal !=
 less-than <
 greater-than >
 

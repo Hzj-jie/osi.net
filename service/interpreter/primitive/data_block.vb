@@ -1,6 +1,10 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 
 Namespace primitive
@@ -21,8 +25,8 @@ Namespace primitive
 
         Public Shared Function random(Optional ByRef type As Char = Nothing,
                                       Optional ByVal safe_str_double As Boolean = True) As data_block
-            Dim i As Int32 = 0
-            i = rnd_uint() Mod 6
+            Dim i As UInt32 = 0
+            i = rnd_uint() Mod CUInt(6)
             Select Case i
                 Case 0
                     type = prefix.int
@@ -223,7 +227,7 @@ Namespace primitive
 
         Public Function export(ByRef b() As Byte) As Boolean Implements exportable.export
             assert(Not buff Is Nothing)
-            ReDim b(bytes_size() - uint32_1)
+            ReDim b(CInt(bytes_size() - uint32_1))
             Dim p As UInt32 = 0
             assert(uint32_bytes(array_size(buff), b, p))
             assert(p = sizeof_uint32)
@@ -238,64 +242,60 @@ Namespace primitive
         Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import
             Dim l As UInt32 = 0
             If bytes_uint32(i, l, p) AndAlso array_size(i) >= p + l Then
-                ReDim buff(l - uint32_1)
+                ReDim buff(CInt(l - uint32_1))
                 memcpy(buff, uint32_0, i, p, l)
                 p += l
                 Return True
-            Else
-                Return False
             End If
+            Return False
         End Function
 
         Public Function import(ByVal s As vector(Of String), ByRef p As UInt32) As Boolean Implements exportable.import
             If s.null_or_empty() OrElse s.size() <= p Then
                 Return False
-            Else
-                Select Case s(p)(0)
-                    Case prefix.array
-                        Dim ss As String = strmid(s(p), uint32_1)
-                        buff = ss.hex_bytes_buff()
-                        If Not ss.hex_bytes(buff) Then
-                            Return False
-                        End If
-                    Case prefix.boolean
-                        buff = bool_bytes(strmid(s(p), uint32_1).true())
-                    Case prefix.double
-                        Dim d As Double = 0
-                        If Double.TryParse(strmid(s(p), uint32_1), d) Then
-                            buff = double_bytes(d)
-                        Else
-                            Return False
-                        End If
-                    Case prefix.int
-                        Dim i As Int32 = 0
-                        If Int32.TryParse(strmid(s(p), uint32_1), i) Then
-                            buff = int32_bytes(i)
-                        Else
-                            Return False
-                        End If
-                    Case prefix.long
-                        Dim l As Int64 = 0
-                        If Int64.TryParse(strmid(s(p), uint32_1), l) Then
-                            buff = int64_bytes(l)
-                        Else
-                            Return False
-                        End If
-                    Case prefix.c_escaped_string
-                        Dim ss As String = Nothing
-                        If strmid(s(p), uint32_1).c_unescape(ss) Then
-                            buff = str_bytes(ss)
-                        Else
-                            Return False
-                        End If
-                    Case prefix.string
-                        buff = str_bytes(strmid(s(p), uint32_1))
-                    Case Else
-                        Return False
-                End Select
-                p += 1
-                Return True
             End If
+            Dim raw As String = Nothing
+            raw = strmid(s(p), uint32_1)
+            Select Case s(p)(0)
+                Case prefix.array
+                    buff = raw.hex_bytes_buff()
+                    If Not raw.hex_bytes(buff) Then
+                        Return False
+                    End If
+                Case prefix.boolean
+                    buff = bool_bytes(raw.true())
+                Case prefix.double
+                    Dim d As Double = 0
+                    If Not Double.TryParse(raw, d) Then
+                        Return False
+                    End If
+                    buff = double_bytes(d)
+                Case prefix.int
+                    Dim i As Int32 = 0
+                    If Not Int32.TryParse(raw, i) Then
+                        Return False
+                    End If
+                    buff = int32_bytes(i)
+                Case prefix.long
+                    Dim l As Int64 = 0
+                    If Not Int64.TryParse(raw, l) Then
+                        Return False
+                    End If
+                    buff = int64_bytes(l)
+                Case prefix.c_escaped_string
+                    Dim ss As String = Nothing
+                    If Not raw.c_unescape(ss) Then
+                        Return False
+                    End If
+                    buff = str_bytes(ss)
+                Case prefix.string
+                    buff = str_bytes(raw)
+                Case Else
+                    Return False
+            End Select
+            assert(Not buff Is Nothing)
+            p += uint32_1
+            Return True
         End Function
 
         Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
@@ -308,9 +308,8 @@ Namespace primitive
             If c = object_compare_undetermined Then
                 assert(Not other Is Nothing)
                 Return memcmp(buff, other.buff)
-            Else
-                Return c
             End If
+            Return c
         End Function
 
         Public NotOverridable Overrides Function ToString() As String
