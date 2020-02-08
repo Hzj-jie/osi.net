@@ -3,7 +3,9 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Net
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
@@ -36,6 +38,14 @@ Public NotInheritable Class connectivity
                                           "www.baidu.com",
                                           "www.yahoo.com",
                                           "www.wikipedia.org"})
+
+        ServicePointManager.Expect100Continue() = True
+        ServicePointManager.SecurityProtocol() =
+            SecurityProtocolType.Tls Or
+            direct_cast(Of SecurityProtocolType)(768) Or    ' tls11
+            direct_cast(Of SecurityProtocolType)(3072) Or   ' tls12
+            direct_cast(Of SecurityProtocolType)(12288) Or  ' tls13
+            SecurityProtocolType.Ssl3
     End Sub
 
     Public Shared Function check_if_needed(ByVal result As pointer(Of result_t),
@@ -47,10 +57,9 @@ Public NotInheritable Class connectivity
                                       ec = check(result)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
-                                  Else
-                                      Return eva(result, last_check_result()) AndAlso
-                                             goto_end()
                                   End If
+                                  Return eva(result, last_check_result()) AndAlso
+                                             goto_end()
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso
@@ -67,13 +76,12 @@ Public NotInheritable Class connectivity
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  If ec.end_result() Then
-                                      l_result = +result
-                                      l_ms = nowadays.milliseconds()
-                                      Return goto_end()
-                                  Else
+                                  If Not ec.end_result() Then
                                       Return False
                                   End If
+                                  l_result = +result
+                                  l_ms = nowadays.milliseconds()
+                                  Return goto_end()
                               End Function)
     End Function
 
@@ -160,17 +168,20 @@ Public NotInheritable Class connectivity
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  If ec.end_result() Then
-                                      dns_resolve_result.set(True)
-                                      ec = Net.WebRequest.Create(strcat("http://", host)).get_response(
-                                               New pointer(Of Net.WebResponse)())
-                                      Return waitfor(ec) AndAlso
-                                             goto_next()
-                                  Else
+                                  If Not ec.end_result() Then
+                                      raise_error(error_type.warning, "Failed to resolve DNS of ", host)
                                       Return goto_end()
                                   End If
+                                  dns_resolve_result.set(True)
+                                  ec = Net.WebRequest.Create(strcat("http://", host)).get_response(
+                                           New pointer(Of Net.WebResponse)())
+                                  Return waitfor(ec) AndAlso
+                                         goto_next()
                               End Function,
                               Function() As Boolean
+                                  If Not ec.end_result() Then
+                                      raise_error(error_type.warning, "Failed to request http host of ", host)
+                                  End If
                                   Return eva(access_result, ec.end_result()) AndAlso
                                          goto_end()
                               End Function)

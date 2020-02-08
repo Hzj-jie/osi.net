@@ -1,10 +1,11 @@
 ﻿
-Imports System.IO
-Imports osi.service.storage
-Imports osi.root.procedure
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.formation
-Imports osi.root.connector
-Imports osi.root.template
+Imports osi.root.procedure
+Imports osi.service.storage
 
 Public Class fces_test
     Inherits istrkeyvt_case

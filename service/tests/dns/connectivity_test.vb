@@ -1,11 +1,15 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utt
 Imports osi.service.dns
 
-Public Class connectivity_test
+Public NotInheritable Class connectivity_test
     Inherits event_comb_case
 
     Private Shared ReadOnly bad_hosts() As String
@@ -15,7 +19,7 @@ Public Class connectivity_test
     End Sub
 
     Public Overrides Function create() As event_comb
-        Dim r As pointer(Of connectivity.result_T) = Nothing
+        Dim r As pointer(Of connectivity.result_t) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   r.renew()

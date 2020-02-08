@@ -1,12 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
 Imports osi.root.connector
-Imports osi.root.template
-Imports osi.root.constants
-Imports osi.root.utils
-Imports osi.root.procedure
-Imports osi.root.utt
 Imports osi.root.formation
+Imports osi.root.procedure
+Imports osi.root.utils
 Imports osi.service.storage
 
 'MustInherit for utt
@@ -14,13 +15,22 @@ Public MustInherit Class temp_drive_istrkeyvt_case
     Inherits istrkeyvt_case
 
     Private Const data_dir_base As String = "T:\"
+    Private Shared ReadOnly temp_dir As String
     Protected ReadOnly data_dir As String
     Private ReadOnly valid As Boolean
 
+    Shared Sub New()
+        temp_dir = Path.Combine(data_dir_base, "temp")
+        void_(Sub()
+                  Directory.Delete(temp_dir, True)
+                  Directory.CreateDirectory(temp_dir)
+              End Sub)
+    End Sub
+
     Protected Sub New(ByVal i As iistrkeyvt_case)
         MyBase.New(i)
-        data_dir = Path.Combine(Path.Combine(data_dir_base, "temp"), guid_str())
-        valid = IO.Directory.Exists(data_dir_base)
+        data_dir = Path.Combine(temp_dir, guid_str())
+        valid = Directory.Exists(data_dir_base)
     End Sub
 
     Protected Sub New()

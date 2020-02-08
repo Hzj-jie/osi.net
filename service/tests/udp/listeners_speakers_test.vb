@@ -1,13 +1,18 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utt
 Imports osi.service.udp
 
 ' Randomly select a speaker and a listener, and send data from speaker to listener.
-Public Class listeners_speakers_test
+Public NotInheritable Class listeners_speakers_test
     Inherits event_comb_case
 
     Private ReadOnly listener_port As UInt16
@@ -65,12 +70,14 @@ Public Class listeners_speakers_test
                                       Return waitfor(Function() As Boolean
                                                          Return receive_data.size() = send_data.size()
                                                      End Function,
-                                                     seconds_to_milliseconds(1))
+                                                     seconds_to_milliseconds(100))
                                   Else
                                       assertion.equal(receive_data.size(), send_data.size())
-                                      For j As Int32 = 0 To receive_data.size() - 1
+                                      Dim j As UInt32 = 0
+                                      While j < receive_data.size()
                                           assertion.array_equal(send_data(j), receive_data(j))
-                                      Next
+                                          j += uint32_1
+                                      End While
                                       Return assertion.is_true(listener.detach(accepter)) AndAlso
                                              goto_end()
                                   End If

@@ -1,12 +1,17 @@
 ﻿
+
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.DateTime
 Imports osi.root.connector
-Imports osi.root.procedure
-Imports osi.root.utt
-Imports osi.root.formation
-Imports osi.root.utils
-Imports osi.root.template
 Imports osi.root.constants
+Imports osi.root.formation
+Imports osi.root.procedure
+Imports osi.root.template
+Imports osi.root.utils
+Imports osi.root.utt
 Imports osi.service.storage
 
 Public Interface iistrkeyvt_case
@@ -208,7 +213,7 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                       Dim v2() As Byte = Nothing
                                       Dim ov() As Byte = Nothing
                                       ov = d(k).first
-                                      ReDim v2(array_size(ov) + array_size(v) - 1)
+                                      ReDim v2(array_size_i(ov) + array_size_i(v) - 1)
                                       memcpy(v2, ov)
                                       memcpy(v2, array_size(ov), v)
                                       d(k) = pair.of(v2, t)
@@ -269,7 +274,7 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                   assertion.is_true(ec.end_result())
                                   If assertion.is_not_null(+r) Then
                                       assertion.equal((+r).size(), d.size())
-                                      For i As Int32 = 0 To (+r).size() - 1
+                                      For i As UInt32 = 0 To (+r).size() - uint32_1
                                           assertion.is_true(d.find((+r)(i)) <> d.end())
                                       Next
                                   End If

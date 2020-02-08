@@ -53,13 +53,12 @@ Public MustInherit Class convector_test
             assert(v2(i) <> max_int32)
             dev2.receive_pump.emplace(v2(i))
         Next
-        sleep_seconds(5)
         dev1.receive_pump.emplace(max_int32)
         dev2.receive_pump.emplace(max_int32)
-        assertion.is_true(timeslice_sleep_wait_until(Function() c.stopped(), minutes_to_milliseconds(1)))
+        assertion.is_true(timeslice_sleep_wait_until(Function() c.stopped(), minutes_to_milliseconds(10)))
         assertion.is_true(dev1.send_pump_equal(v2))
         assertion.is_true(dev2.send_pump_equal(v1))
-        assertion.is_true(timeslice_sleep_wait_until(Function() +ended, minutes_to_milliseconds(1)))
+        assertion.is_true(timeslice_sleep_wait_until(Function() +ended, minutes_to_milliseconds(10)))
         Return True
     End Function
 End Class
