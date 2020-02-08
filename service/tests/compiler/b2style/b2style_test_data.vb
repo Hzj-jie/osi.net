@@ -29,8 +29,8 @@ Friend Module _b2style_test_data
         "77u/DQp2b2lkIG1haW4oKSB7DQogIGIyc3R5bGU6OmJvb2xfc3RkX291dCh0cnVlICYmIHRydWUpOw0KICBiMnN0eWxlOjpib29sX3N0ZF9vdXQodHJ1ZSAmJiBmYWxzZSk7DQogIGIyc3R5bGU6OmJvb2xfc3RkX291dChmYWxzZSAmJiB0cnVlKTsNCiAgYjJzdHlsZTo6Ym9vbF9zdGRfb3V0KGZhbHNlICYmIGZhbHNlKTsNCiAgYjJzdHlsZTo6Ym9vbF9zdGRfb3V0KHRydWUgfHwgdHJ1ZSk7DQogIGIyc3R5bGU6OmJvb2xfc3RkX291dCh0cnVlIHx8IGZhbHNlKTsNCiAgYjJzdHlsZTo6Ym9vbF9zdGRfb3V0KGZhbHNlIHx8IHRydWUpOw0KICBiMnN0eWxlOjpib29sX3N0ZF9vdXQoZmFsc2UgfHwgZmFsc2UpOw0KfQ0K"))
         str_unescape = Convert.FromBase64String(strcat_hint(CUInt(76), _
         "77u/DQp2b2lkIG1haW4oKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoImFiY1x0ZGVmXG4iKTsNCn0="))
-        _1_to_100 = Convert.FromBase64String(strcat_hint(CUInt(204), _
-        "77u/dm9pZCBtYWluKCkgew0KICBpbnQgeCA9IDA7DQogIGZvciAoaW50IGkgPSAwOyBpIDwgMTAwOyBpID0gaSsrKSB7DQogICAgeCA9IHggKyBpICsgMTsNCiAgfQ0KICBiMnN0eWxlOjppbnRfc3RkX291dCh4KTsNCiAgYjJzdHlsZTo6c3RkX291dCgiXG4iKTsNCn0="))
+        _1_to_100 = Convert.FromBase64String(strcat_hint(CUInt(208), _
+        "77u/DQp2b2lkIG1haW4oKSB7DQogIGludCB4ID0gMDsNCiAgZm9yIChpbnQgaSA9IDA7IGkgPCAxMDA7IGkgPSBpKyspIHsNCiAgICB4ID0geCArIGkgKyAxOw0KICB9DQogIGIyc3R5bGU6OmludF9zdGRfb3V0KHgpOw0KICBiMnN0eWxlOjpzdGRfb3V0KCJcbiIpOw0KfQ=="))
         self_add = Convert.FromBase64String(strcat_hint(CUInt(104), _
         "77u/DQp2b2lkIG1haW4oKSB7DQogIGludCBpID0gMTAwOw0KICBpICs9IDE7DQogIGIyc3R5bGU6OmludF9zdGRfb3V0KGkpOw0KfQ=="))
         biguint = Convert.FromBase64String(strcat_hint(CUInt(256), _
@@ -38,6 +38,6 @@ Friend Module _b2style_test_data
         negative_int = Convert.FromBase64String(strcat_hint(CUInt(144), _
         "77u/DQp2b2lkIG1haW4oKSB7DQogIGIyc3R5bGU6OmludF9zdGRfb3V0KC0xKTsNCiAgYjJzdHlsZTo6aW50X3N0ZF9vdXQoLTIpOw0KICBiMnN0eWxlOjppbnRfc3RkX291dCgtMyk7DQp9"))
         another_1_to_100 = Convert.FromBase64String(strcat_hint(CUInt(196), _
-        "77u/dm9pZCBtYWluKCkgew0KICBpbnQgeCA9IDA7DQogIGZvciAoaW50IGkgPSAxOyBpIDw9IDEwMDsgaSArPSAxKSB7DQogICAgeCArPSBpOw0KICB9DQogIGIyc3R5bGU6OmludF9zdGRfb3V0KHgpOw0KICBiMnN0eWxlOjpzdGRfb3V0KCJcbiIpOw0KfQ=="))
+        "77u/DQp2b2lkIG1haW4oKSB7DQogIGludCB4ID0gMDsNCiAgZm9yIChpbnQgaSA9IDE7IGkgPD0gMTAwOyBpICs9IDEpIHsNCiAgICB4ICs9IGk7DQogIH0NCiAgYjJzdHlsZTo6aW50X3N0ZF9vdXQoeCk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoIlxuIik7DQp9"))
     End Sub
 End Module
