@@ -32,7 +32,7 @@ Partial Public NotInheritable Class bstyle
                 pair.emplace_of([long], 8),
                 pair.emplace_of(bool, 1),
                 pair.emplace_of([byte], 1),
-                pair.emplace_of(float, 8)
+                pair.emplace_of(float, 16)
             )
             type_0_s = vector.of(void)
             type_asterisk_s = vector.of(biguint, [string])

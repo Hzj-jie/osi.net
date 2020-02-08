@@ -29,6 +29,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.leaf())
+            ' TODO: May use Decimal.
             Dim i As Double = 0
             If Not Double.TryParse(n.word().str(), i) Then
                 raise_error(error_type.user, "Cannot parse data to float ", n.trace_back_str())

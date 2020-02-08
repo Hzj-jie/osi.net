@@ -32,7 +32,7 @@ Partial Public NotInheritable Class bstyle
                 New def(types.int, size_of_long, New data_block(8)),
                 New def(types.int, size_of_bool, New data_block(1)),
                 New def(types.int, size_of_byte, New data_block(1)),
-                New def(types.int, size_of_float, New data_block(8))
+                New def(types.int, size_of_float, New data_block(16))
             )
         End Sub
 
