@@ -17,11 +17,11 @@ Public Module b2stylec
         Dim text_output As TextWriter = Nothing
         Dim binary_output As Stream = Nothing
         If isemptyarray(args) Then
-            source = System.Console.In().ReadToEnd()
-            text_output = System.Console.Out()
+            source = Console.In().ReadToEnd()
+            text_output = Console.Out()
         ElseIf array_size(args) = 1 Then
             source = File.ReadAllText(args(0))
-            text_output = System.Console.Out()
+            text_output = Console.Out()
         Else
             source = File.ReadAllText(args(0))
             binary_output = New FileStream(args(1), FileMode.Create)

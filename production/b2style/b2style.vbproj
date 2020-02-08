@@ -87,6 +87,9 @@
   <ItemGroup>
     <Content Include="1-to-100.cc" />
   </ItemGroup>
+  <ItemGroup>
+    <Import Include="System" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\..\root\root.production.props" />
   <Import Project="$(ServicePath)\compiler\compiler.props" />

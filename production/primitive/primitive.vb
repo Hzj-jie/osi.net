@@ -15,7 +15,7 @@ Public Module primitive
         Dim s As simulator = Nothing
         s = New simulator()
         If isemptyarray(args) Then
-            assert(s.import(System.Console.In().ReadToEnd()))
+            assert(s.import(Console.In().ReadToEnd()))
         Else
             assert(s.import(File.ReadAllBytes(args(0))) OrElse
                    s.import(File.ReadAllText(args(0))))

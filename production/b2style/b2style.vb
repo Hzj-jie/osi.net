@@ -16,9 +16,9 @@ Public Module b2style
         c = compiler.with_default_functions()
         Dim e As executor = Nothing
         If isemptyarray(args) Then
-            assert(c.parse(System.Console.In().ReadToEnd(), e))
+            assert(c.parse(Console.In().ReadToEnd(), e))
         Else
-            assert(c.parse(System.IO.File.ReadAllText(args(0)), e))
+            assert(c.parse(IO.File.ReadAllText(args(0)), e))
         End If
         e.execute()
     End Sub
