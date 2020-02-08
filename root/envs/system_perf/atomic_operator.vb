@@ -1,8 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
 Imports osi.root.constants.system_perf
 
-Public Class atomic_operator
+Public NotInheritable Class atomic_operator
     Public Shared Sub run()
         For i As Int32 = 0 To atomic_operator_size - 1
             Dim a As Int64
@@ -13,5 +17,8 @@ Public Class atomic_operator
             Interlocked.Add(a, 1)
             Interlocked.Read(a)
         Next
+    End Sub
+
+    Private Sub New()
     End Sub
 End Class

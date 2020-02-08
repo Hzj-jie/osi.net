@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 #If 0 Then
 Imports osi.root.constants.system_perf
 
@@ -14,6 +18,9 @@ Public Class thread_static_operator
             End If
             a = 0
         Next
+    End Sub
+
+    Private Sub New()
     End Sub
 End Class
 #End If

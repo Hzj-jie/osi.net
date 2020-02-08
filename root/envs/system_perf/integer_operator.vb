@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants.system_perf
 
-Public Class integer_operator
+Public NotInheritable Class integer_operator
     Private Shared Sub int8_run()
         Const inc As Byte = 7
         Dim j As Byte = 0
@@ -43,5 +47,8 @@ Public Class integer_operator
         For i As Int32 = 0 To integer_operator_size - 1
             j += 7
         Next
+    End Sub
+
+    Private Sub New()
     End Sub
 End Class

@@ -1,8 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.constants.system_perf
 
-Public Class memory_access
+Public NotInheritable Class memory_access
     Private Shared r As Int32 = 0
 
     Public Shared Sub run()
@@ -21,5 +25,8 @@ Public Class memory_access
             Dim x As memory_access = Nothing
             x = New memory_access()
         Next
+    End Sub
+
+    Private Sub New()
     End Sub
 End Class

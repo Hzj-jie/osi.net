@@ -5,13 +5,14 @@ Option Strict On
 
 Imports System.IO
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.utils
 Imports compiler = osi.service.compiler.b2style
 Imports executor = osi.service.interpreter.primitive.executor
 
 Public Module b2stylec
     Public Sub main(ByVal args() As String)
-        global_init.execute()
+        global_init.execute(global_init_level.functor)
         Dim source As String = Nothing
         Dim text_output As TextWriter = Nothing
         Dim binary_output As Stream = Nothing

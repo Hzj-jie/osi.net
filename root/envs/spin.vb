@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.connector
 
@@ -18,7 +22,7 @@ Public Module _spin
             If Environment.ProcessorCount() < base Then
                 r /= Math.Pow(ratio, (base / Environment.ProcessorCount()) - 1)
             End If
-            Return If(r > max_int32 OrElse r <= 0, default_loops_per_yield, r)
+            Return If(r > max_int32 OrElse r <= 0, default_loops_per_yield, CInt(r))
         End If
     End Function
 
@@ -26,7 +30,7 @@ Public Module _spin
         If single_cpu Then
             suggest_try_wait_length_ms = 0
         Else
-            suggest_try_wait_length_ms = sixteenth_timeslice_length_ms
+            suggest_try_wait_length_ms = CInt(sixteenth_timeslice_length_ms)
         End If
         loops_per_yield = decide_loops_per_yield()
 

@@ -1,11 +1,15 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.constants.system_perf
 
 Public Module _system_perf
-    Public ReadOnly perf_run_ms As Int64 = 0
-    Public ReadOnly loops_per_ms As Int64 = 0
+    Public ReadOnly perf_run_ms As Int64
+    Public ReadOnly loops_per_ms As Int64
 
     Private Function perf_run_single() As Int64
         Dim startticks As Int64 = 0

@@ -1,10 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.constants.system_perf
 
 'test integer number, stack pushing and small memory allocation perf
-Public Class fibonacci
-    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)> _
+Public NotInheritable Class fibonacci
+    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
     Private Shared Function fibonacci(ByVal i As Int32) As Double
         assert(i < fibonacci_size)
         assert(i >= 0)
@@ -17,5 +21,8 @@ Public Class fibonacci
 
     Public Shared Sub run()
         fibonacci(fibonacci_size - 1)
+    End Sub
+
+    Private Sub New()
     End Sub
 End Class
