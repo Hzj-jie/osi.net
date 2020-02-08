@@ -25,6 +25,10 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "remote_console", "remote_co
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "b2style", "b2style\b2style.vbproj", "{841A7283-D2AC-4855-B47A-7A6CFEC0789B}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "primitive", "primitive\primitive.vbproj", "{C7DAF7DE-89F7-4D8F-A7DE-5BD75EAB5E35}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "b2stylec", "b2stylec\b2stylec.vbproj", "{463676E3-F83B-41AD-8928-1B0F18E72A15}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +79,14 @@ Global
 		{841A7283-D2AC-4855-B47A-7A6CFEC0789B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{841A7283-D2AC-4855-B47A-7A6CFEC0789B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{841A7283-D2AC-4855-B47A-7A6CFEC0789B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7DAF7DE-89F7-4D8F-A7DE-5BD75EAB5E35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7DAF7DE-89F7-4D8F-A7DE-5BD75EAB5E35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7DAF7DE-89F7-4D8F-A7DE-5BD75EAB5E35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7DAF7DE-89F7-4D8F-A7DE-5BD75EAB5E35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{463676E3-F83B-41AD-8928-1B0F18E72A15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{463676E3-F83B-41AD-8928-1B0F18E72A15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{463676E3-F83B-41AD-8928-1B0F18E72A15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{463676E3-F83B-41AD-8928-1B0F18E72A15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

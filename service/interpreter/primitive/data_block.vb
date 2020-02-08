@@ -242,7 +242,7 @@ Namespace primitive
         Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import
             Dim l As UInt32 = 0
             If bytes_uint32(i, l, p) AndAlso array_size(i) >= p + l Then
-                ReDim buff(CInt(l - uint32_1))
+                ReDim buff(CInt(l) - 1)
                 memcpy(buff, uint32_0, i, p, l)
                 p += l
                 Return True

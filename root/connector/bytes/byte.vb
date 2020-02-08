@@ -115,7 +115,7 @@ Public Module _byte
             Return True
         End If
         If strlen(s) < str_start + str_len OrElse
-               array_size(buff) < buff_start + buff_len Then
+           array_size(buff) < buff_start + buff_len Then
             Return False
         End If
         If str_len Mod expected_hex_byte_length <> 0 Then
