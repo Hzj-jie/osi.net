@@ -1,0 +1,8 @@
+﻿void main() {
+  int x = 0;
+  for (int i = 1; i <= 100; i += 1) {
+    x += i;
+  }
+  b2style::int_std_out(x);
+  b2style::std_out("\n");
+}

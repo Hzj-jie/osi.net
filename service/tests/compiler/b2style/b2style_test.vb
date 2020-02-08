@@ -110,6 +110,18 @@ Public NotInheritable Class b2style_test
         assertion.equal(io.output(), strcat("-1-2-3"))
     End Sub
 
+    <test>
+    Private Shared Sub another_1_to_100()
+        Dim io As console_io.test_wrapper = Nothing
+        io = New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                          parse(_b2style_test_data.another_1_to_100.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), strcat("5050", character.newline))
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

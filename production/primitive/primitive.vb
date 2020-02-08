@@ -12,14 +12,16 @@ Imports osi.service.interpreter.primitive
 Public Module primitive
     Public Sub main(ByVal args() As String)
         global_init.execute(global_init_level.functor)
-        Dim s As simulator = Nothing
-        s = New simulator()
-        If isemptyarray(args) Then
-            assert(s.import(Console.In().ReadToEnd()))
-        Else
-            assert(s.import(File.ReadAllBytes(args(0))) OrElse
+        For i As Int32 = 1 To 10000
+            Dim s As simulator = Nothing
+            s = New simulator()
+            If isemptyarray(args) Then
+                assert(s.import(Console.In().ReadToEnd()))
+            Else
+                assert(s.import(File.ReadAllBytes(args(0))) OrElse
                    s.import(File.ReadAllText(args(0))))
-        End If
-        s.execute()
+            End If
+            s.execute()
+        Next
     End Sub
 End Module
