@@ -185,7 +185,7 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                   Else
                                       assertion.equal(memcmp((+v), d(k).first), 0)
                                       If low_res_timestamp Then
-                                          assertion.equal((+t) >> 26, d(k).second >> 26)
+                                          assertion.less_or_equal(Math.Abs(((+t) >> 26) - (d(k).second >> 26)), 1)
                                       Else
                                           assertion.equal((+t), d(k).second)
                                       End If
