@@ -56,7 +56,7 @@ Partial Public Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As 
 #Else
         Private Sub New(ByVal that As pair(Of HEAP_KEY, MAP_KEY))
 #End If
-#If Not False Then
+#If Not True Then
             assert(Not that Is Nothing)
 #End If
             p = that
@@ -68,7 +68,7 @@ Partial Public Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As 
         End Function
 #Else
         Public Function is_end() As Boolean
-#If False Then
+#If True Then
             Return p Is Nothing
 #Else
             Return p Is Nothing AndAlso

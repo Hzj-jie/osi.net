@@ -78,7 +78,7 @@ Public MustInherit Class temp_drive_istrkeyvt_case
                                   If valid Then
                                       Return waitfor(Sub()
                                                          raise_error("clean up temp data_dir ", data_dir)
-                                                         IO.Directory.Delete(data_dir, True)
+                                                         Directory.Delete(data_dir, True)
                                                      End Sub) AndAlso
                                              ec.end_result() AndAlso
                                              goto_end()

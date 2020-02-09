@@ -1,12 +1,14 @@
 ﻿
-Imports System.DateTime
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.procedure
-Imports osi.root.utt
-Imports osi.root.formation
-Imports osi.root.utils
-Imports osi.root.template
 Imports osi.root.constants
+Imports osi.root.formation
+Imports osi.root.procedure
+Imports osi.root.template
+Imports osi.root.utt
 Imports osi.service.storage
 
 Public Class default_istrkeyvt_case2
@@ -153,9 +155,11 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                               Function() As Boolean
                                   assertion.is_true(ec.end_result())
                                   If assertion.is_not_null(+r) Then
-                                      For i As Int32 = 0 To (+r).size() - 1
+                                      Dim i As UInt32 = 0
+                                      While i < (+r).size()
                                           assertion.is_true(is_rand_key((+r)(i)))
-                                      Next
+                                          i += uint32_1
+                                      End While
                                   End If
                                   Return goto_end()
                               End Function)

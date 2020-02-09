@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.procedure
@@ -117,20 +121,19 @@ Public Module _localfile
     End Function
 
     Public Function file_size(ByVal f As String) As Int64
-        If IO.File.Exists(f) Then
-            Try
-                Return (New IO.FileInfo(f)).Length()
-            Catch ex As Exception
-                raise_error(error_type.warning,
-                            "failed to get size information of ",
-                            f,
-                            ", ex ",
-                            ex.Message())
-                Return npos
-            End Try
-        Else
+        If Not IO.File.Exists(f) Then
             Return npos
         End If
+        Try
+            Return (New IO.FileInfo(f)).Length()
+        Catch ex As Exception
+            raise_error(error_type.warning,
+                        "failed to get size information of ",
+                        f,
+                        ", ex ",
+                        ex.Message())
+            Return npos
+        End Try
     End Function
 
     Public Function file_size(ByVal f As String, ByVal r As pointer(Of Int64)) As event_comb
@@ -198,7 +201,7 @@ Public Module _localfile
                                       Return eva(result, r) AndAlso
                                              goto_end()
                                   Else
-                                      ReDim r(exp - 1)
+                                      ReDim r(CInt(exp) - 1)
                                       rc = New pointer(Of UInt32)()
                                       ec = fs.receive(r, uint32_0, exp, rc)
                                       Return waitfor(ec) AndAlso
@@ -278,7 +281,7 @@ Public Module _localfile
                                   Return waitfor(Sub()
                                                      Dim fs() As String = Nothing
                                                      fs = list_files(path)
-                                                     For i As Int32 = 0 To array_size(fs) - 1
+                                                     For i As Int32 = 0 To array_size_i(fs) - 1
                                                          Dim s As Int64 = 0
                                                          s = file_size(fs(i))
                                                          If s > 0 Then

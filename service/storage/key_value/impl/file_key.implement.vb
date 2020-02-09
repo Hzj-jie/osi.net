@@ -103,20 +103,19 @@ Partial Public Class file_key
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  If ec.end_result() Then
-                                      Dim v As vector(Of Byte()) = Nothing
-                                      v = New vector(Of Byte())()
-                                      For i As Int32 = 0 To array_size_i(+r) - 1
-                                          Dim k() As Byte = Nothing
-                                          If key((+r)(i), k) Then
-                                              v.emplace_back(k)
-                                          End If
-                                      Next
-                                      Return eva(result, v) AndAlso
-                                             goto_end()
-                                  Else
+                                  If Not ec.end_result() Then
                                       Return False
                                   End If
+                                  Dim v As vector(Of Byte()) = Nothing
+                                  v = New vector(Of Byte())()
+                                  For i As Int32 = 0 To array_size_i(+r) - 1
+                                      Dim k() As Byte = Nothing
+                                      If key((+r)(i), k) Then
+                                          v.emplace_back(k)
+                                      End If
+                                  Next
+                                  Return eva(result, v) AndAlso
+                                         goto_end()
                               End Function)
     End Function
 
@@ -142,15 +141,14 @@ Partial Public Class file_key
         Dim f As String = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  If file_full_path(key, f) Then
-                                      assert(Not String.IsNullOrEmpty(f))
-                                      ec = file_exists(f, result)
-                                      Return waitfor(ec) AndAlso
-                                             goto_next()
-                                  Else
+                                  If Not file_full_path(key, f) Then
                                       'should never happen
                                       Return False
                                   End If
+                                  assert(Not String.IsNullOrEmpty(f))
+                                  ec = file_exists(f, result)
+                                  Return waitfor(ec) AndAlso
+                                         goto_next()
                               End Function,
                               Function() As Boolean
                                   Return eva(r, f) AndAlso
@@ -178,15 +176,14 @@ Partial Public Class file_key
         Dim f As String = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  If file_full_path(key, f) Then
-                                      assert(Not String.IsNullOrEmpty(f))
-                                      ec = write_file(f, value, result, False)
-                                      Return waitfor(ec) AndAlso
-                                             goto_next()
-                                  Else
+                                  If Not file_full_path(key, f) Then
                                       'should never happen
                                       Return False
                                   End If
+                                  assert(Not String.IsNullOrEmpty(f))
+                                  ec = write_file(f, value, result, False)
+                                  Return waitfor(ec) AndAlso
+                                         goto_next()
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso
@@ -201,15 +198,14 @@ Partial Public Class file_key
         Dim f As String = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  If file_full_path(key, f) Then
-                                      assert(Not String.IsNullOrEmpty(f))
-                                      ec = set_timestamp(f, ts, result)
-                                      Return waitfor(ec) AndAlso
-                                             goto_next()
-                                  Else
+                                  If Not file_full_path(key, f) Then
                                       'should never happen
                                       Return False
                                   End If
+                                  assert(Not String.IsNullOrEmpty(f))
+                                  ec = set_timestamp(f, ts, result)
+                                  Return waitfor(ec) AndAlso
+                                         goto_next()
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso

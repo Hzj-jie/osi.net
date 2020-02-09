@@ -1,5 +1,4 @@
 ﻿
-
 Option Explicit On
 Option Infer Off
 Option Strict On
@@ -72,12 +71,11 @@ Public MustInherit Class istrkeyvt_case
                                       ec = create_istrkeyvt(keyvt)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
-                                  Else
-                                      raise_error(error_type.warning,
-                                                  name,
-                                                  " precondition does not fulfill, ignore")
-                                      Return goto_end()
                                   End If
+                                  raise_error(error_type.warning,
+                                              name,
+                                              " precondition does not fulfill, ignore")
+                                  Return goto_end()
                               End Function,
                               Function() As Boolean
                                   If assertion.is_true(ec.end_result()) AndAlso
@@ -85,45 +83,40 @@ Public MustInherit Class istrkeyvt_case
                                       ec = (+keyvt).retire()
                                       Return waitfor(ec) AndAlso
                                              goto_next()
-                                  Else
-                                      Return False
                                   End If
+                                  Return False
                               End Function,
                               Function() As Boolean
                                   If assertion.is_true(ec.end_result()) Then
                                       ec = i.create(+keyvt)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
-                                  Else
-                                      Return False
                                   End If
+                                  Return False
                               End Function,
                               Function() As Boolean
                                   If assertion.is_true(ec.end_result()) Then
                                       ec = (+keyvt).retire()
                                       Return waitfor(ec) AndAlso
                                              goto_next()
-                                  Else
-                                      Return False
                                   End If
+                                  Return False
                               End Function,
                               Function() As Boolean
                                   If assertion.is_true(ec.end_result()) Then
                                       ec = (+keyvt).stop()
                                       Return waitfor(ec) AndAlso
                                              goto_next()
-                                  Else
-                                      Return False
                                   End If
+                                  Return False
                               End Function,
                               Function() As Boolean
                                   If assertion.is_true(ec.end_result()) Then
                                       ec = clean_up(+keyvt)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
-                                  Else
-                                      Return False
                                   End If
+                                  Return False
                               End Function,
                               Function() As Boolean
                                   Return assertion.is_true(ec.end_result()) AndAlso
@@ -132,25 +125,34 @@ Public MustInherit Class istrkeyvt_case
     End Function
 End Class
 
-Public Class default_istrkeyvt_case
-    Inherits istrkeyvt_case(Of _2, _2, _8, _1024, _max_int16)
+Public Class default_istrkeyvt_case(Of _LOW_RES_TIMESTAMP As _boolean)
+    Inherits istrkeyvt_case(Of _2, _2, _8, _1024, _max_int16, _false)
+End Class
+
+Public NotInheritable Class default_istrkeyvt_case
+    Inherits default_istrkeyvt_case(Of _false)
 End Class
 
 Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                _KEY_LENGTH_UP As _int64,
                                _BYTES_LENGTH_LOW As _int64,
                                _BYTES_LENGTH_UP As _int64,
-                               _ROUND_BASE As _int64)
+                               _ROUND_BASE As _int64,
+                               _LOW_RES_TIMESTAMP As _boolean)
     Implements iistrkeyvt_case
 
-    Private Shared ReadOnly rand_data As istrkeyvt_random_data(Of _KEY_LENGTH_LOW, 
-                                                                  _KEY_LENGTH_UP, 
-                                                                  _BYTES_LENGTH_LOW, 
+    Private Shared ReadOnly rand_data As istrkeyvt_random_data(Of _KEY_LENGTH_LOW,
+                                                                  _KEY_LENGTH_UP,
+                                                                  _BYTES_LENGTH_LOW,
                                                                   _BYTES_LENGTH_UP)
     Private Shared ReadOnly round_count As Int64
+    ' Some systems, like vmware, does not support high-res file timestamp. So the timestamp provided by implementations,
+    ' say, file_key, is low-res. The assertion needs to be updated to avoid unnecessary failures.
+    Private Shared ReadOnly low_res_timestamp As Boolean
 
     Shared Sub New()
         round_count = +(alloc(Of _ROUND_BASE)()) * If(isdebugbuild(), 1, 8)
+        low_res_timestamp = +(alloc(Of _LOW_RES_TIMESTAMP)())
     End Sub
 
     Private Shared Function rand_key() As String
@@ -182,7 +184,11 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                       assertion.equal(+t, npos)
                                   Else
                                       assertion.equal(memcmp((+v), d(k).first), 0)
-                                      assertion.equal((+t), d(k).second)
+                                      If low_res_timestamp Then
+                                          assertion.equal((+t) >> 26, d(k).second >> 26)
+                                      Else
+                                          assertion.equal((+t), d(k).second)
+                                      End If
                                   End If
                                   Return goto_end()
                               End Function)
@@ -208,7 +214,7 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                   assertion.is_true(ec.end_result())
                                   assertion.is_true(+r)
                                   If d.find(k) = d.end() Then
-                                      d(k) = pair.of(v, t)
+                                      d(k) = pair.emplace_of(v, t)
                                   Else
                                       Dim v2() As Byte = Nothing
                                       Dim ov() As Byte = Nothing
@@ -216,7 +222,7 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                       ReDim v2(array_size_i(ov) + array_size_i(v) - 1)
                                       memcpy(v2, ov)
                                       memcpy(v2, array_size(ov), v)
-                                      d(k) = pair.of(v2, t)
+                                      d(k) = pair.emplace_of(v2, t)
                                   End If
                                   Return goto_end()
                               End Function)
@@ -274,9 +280,11 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                   assertion.is_true(ec.end_result())
                                   If assertion.is_not_null(+r) Then
                                       assertion.equal((+r).size(), d.size())
-                                      For i As UInt32 = 0 To (+r).size() - uint32_1
+                                      Dim i As UInt32 = 0
+                                      While i < (+r).size()
                                           assertion.is_true(d.find((+r)(i)) <> d.end())
-                                      Next
+                                          i += uint32_1
+                                      End While
                                   End If
                                   Return goto_end()
                               End Function)
@@ -371,11 +379,10 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
         Return New event_comb(Function() As Boolean
                                   If rnd_double(0, 1) >= p Then
                                       Return goto_end()
-                                  Else
-                                      ec = keyvt.retire()
-                                      Return waitfor(ec) AndAlso
-                                             goto_next()
                                   End If
+                                  ec = keyvt.retire()
+                                  Return waitfor(ec) AndAlso
+                                         goto_next()
                               End Function,
                               Function() As Boolean
                                   assertion.is_true(ec.end_result())
@@ -545,17 +552,16 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
         Dim round As Int64 = 0
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  If round < round_count Then
-                                      If round > 0 Then
-                                          assert(Not ec Is Nothing)
-                                          assertion.is_true(ec.end_result())
-                                      End If
-                                      round += 1
-                                      ec = rnd_case(keyvt, d)
-                                      Return waitfor(ec)
-                                  Else
+                                  If round >= round_count Then
                                       Return goto_end()
                                   End If
+                                  If round > 0 Then
+                                      assert(Not ec Is Nothing)
+                                      assertion.is_true(ec.end_result())
+                                  End If
+                                  round += 1
+                                  ec = rnd_case(keyvt, d)
+                                  Return waitfor(ec)
                               End Function)
     End Function
 

@@ -9,7 +9,7 @@ Imports osi.root.procedure
 Imports osi.root.utt
 Imports osi.service.storage
 
-Public Class fces_ondisk_test
+Public NotInheritable Class fces_ondisk_test
     Inherits temp_drive_istrkeyvt_case
 
     Public Sub New(ByVal i As iistrkeyvt_case)
@@ -25,7 +25,7 @@ Public Class fces_ondisk_test
     End Function
 End Class
 
-Public Class fces_ondisk_specified_test
+Public NotInheritable Class fces_ondisk_specified_test
     Inherits commandline_specified_case_wrapper
 
     Public Sub New()
