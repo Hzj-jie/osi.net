@@ -1,5 +1,9 @@
 ﻿
-Partial Public Class big_int
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Partial Public NotInheritable Class big_int
     Public Function even() As Boolean
         Return d.even()
     End Function

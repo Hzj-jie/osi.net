@@ -1,10 +1,13 @@
 ﻿
-#Const BITWISE_DIVIDE = True
-Imports osi.root.constants
-Imports osi.root.connector
-Imports osi.root.utils
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Partial Public Class big_uint
+#Const BITWISE_DIVIDE = True
+Imports osi.root.connector
+Imports osi.root.constants
+
+Partial Public NotInheritable Class big_uint
     'support move constructor
     Private Sub New(ByVal i As adaptive_array_uint32)
         Me.New()
@@ -18,31 +21,32 @@ Partial Public Class big_uint
         t = -c
         t += v(p)
         t -= d
-        v(p) = t And max_uint32
-        c = If(t < 0, 1, 0)
+        v(p) = CUInt(t And max_uint32)
+        c = If(t < 0, uint32_1, uint32_0)
     End Sub
 
     Private Sub [sub](ByVal that As big_uint, ByRef c As UInt32)
         c = 0
-        If Not that Is Nothing AndAlso Not that.is_zero() Then
-            If that.v.size() > v.size() Then
-                v.resize(that.v.size())
-            End If
-            assert(v.size() > 0 AndAlso that.v.size() > 0)
-            Dim i As UInt32 = 0
-            For i = 0 To that.v.size() - uint32_1
-                [sub](that.v(i), c, i)
-            Next
-            If c > 0 Then
-                For i = i To v.size() - uint32_1
-                    [sub](0, c, i)
-                    If c = 0 Then
-                        Exit For
-                    End If
-                Next
-            End If
-            remove_extra_blank()
+        If that Is Nothing OrElse that.is_zero() Then
+            Return
         End If
+        If that.v.size() > v.size() Then
+            v.resize(that.v.size())
+        End If
+        assert(v.size() > 0 AndAlso that.v.size() > 0)
+        Dim i As UInt32 = 0
+        For i = 0 To that.v.size() - uint32_1
+            [sub](that.v(i), c, i)
+        Next
+        If c > 0 Then
+            For i = i To v.size() - uint32_1
+                [sub](0, c, i)
+                If c = 0 Then
+                    Exit For
+                End If
+            Next
+        End If
+        remove_extra_blank()
     End Sub
 
     'add d to the pos as p with carry-over as c
@@ -55,15 +59,15 @@ Partial Public Class big_uint
         t = c
         t += v(p)
         t += d
-        v(p) = t And max_uint32
-        c = (t >> bit_count_in_uint32)
+        v(p) = CUInt(t And max_uint32)
+        c = assert_which.of(t >> bit_count_in_uint32).can_cast_to_uint32()
     End Sub
 
     Private Function remove_extra_blank() As UInt32
         Dim r As UInt32 = 0
         While Not v.empty() AndAlso v.back() = 0
             v.pop_back()
-            r += 1
+            r += uint32_1
         End While
         Return r
     End Function
@@ -88,8 +92,8 @@ Partial Public Class big_uint
                             Dim t As UInt64 = 0
                             t = this.v(i)
                             t *= that.v(j)
-                            add(t And max_uint32, c, i + j)
-                            c += (t >> bit_count_in_uint32)
+                            add(CUInt(t And max_uint32), c, i + j)
+                            c += assert_which.of(t >> bit_count_in_uint32).can_cast_to_uint32()
                         Next
                         If c > 0 Then
                             add(0, c, i + that.v.size())
@@ -198,7 +202,7 @@ Partial Public Class big_uint
                             t = t Or v(i)
 
 #If 1 Then
-                            remainder = t Mod that
+                            remainder = CUInt(t Mod that)
                             t \= that
 #Else
                         Dim x As UInt64 = 0
@@ -206,8 +210,7 @@ Partial Public Class big_uint
                         remainder = (t Mod that)
                         t = x
 #End If
-                            assert(t <= max_uint32)
-                            v(i) = t
+                            v(i) = assert_which.of(t).can_cast_to_uint32()
                         End If
                         If i = 0 Then
                             Exit While

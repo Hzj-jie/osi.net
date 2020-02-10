@@ -38,11 +38,10 @@ Friend NotInheritable Class commandline
     Public Shared Function specified(ByVal c As [case]) As Boolean
         If c Is Nothing Then
             Return False
-        Else
-            Return specified(c.full_name) OrElse
-                   specified(c.assembly_qualified_name) OrElse
-                   specified(c.name)
         End If
+        Return specified(c.full_name) OrElse
+               specified(c.assembly_qualified_name) OrElse
+               specified(c.name)
     End Function
 
     Private Sub New()

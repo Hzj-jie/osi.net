@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 
-Partial Public Class big_uint
+Partial Public NotInheritable Class big_uint
     Implements ICloneable, ICloneable(Of big_uint), IComparable(Of big_uint)
 
     Public Function CloneT() As big_uint Implements ICloneable(Of big_uint).Clone

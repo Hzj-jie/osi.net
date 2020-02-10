@@ -1,9 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.utils
 
-Partial Public Class big_uint
+Partial Public NotInheritable Class big_uint
     Private Enum bit_wise_operator
         [and]
         [or]
@@ -22,34 +25,34 @@ Partial Public Class big_uint
     Private Shared ReadOnly digit_count_per_parse() As Byte
 
     Shared Sub New()
-        byte_count_in_uint32 = sizeof_uint32 \ sizeof_int8
+        byte_count_in_uint32 = CByte(sizeof_uint32 \ sizeof_int8)
         bit_count_in_uint32 = bit_count_in_byte * byte_count_in_uint32
         assert(bit_count_in_uint32.power_of_2())
         bit_count_in_uint32_mask = 1
         bit_count_in_uint32_shift = 0
         While bit_count_in_uint32_mask < bit_count_in_uint32
-            bit_count_in_uint32_shift += 1
+            bit_count_in_uint32_shift += CByte(1)
             bit_count_in_uint32_mask <<= 1
         End While
         assert(bit_count_in_uint32_mask = bit_count_in_uint32)
-        bit_count_in_uint32_mask -= 1
+        bit_count_in_uint32_mask -= CByte(1)
 
         digits = (dbc_digits + upper_english_characters + lower_english_characters).c_str()
-        support_str_base = array_size(digits)
+        support_str_base = CByte(array_size(digits))
         ReDim digit_count_per_parse(support_str_base)
-        For i As Int32 = 0 To support_str_base
+        For i As Byte = 0 To support_str_base
             If support_base(i) Then
                 assert(i > 0)
-                digit_count_per_parse(i) = System.Math.Floor(bit_count_in_uint32 /
-                                                             (System.Math.Log(i) / System.Math.Log(2)))
+                digit_count_per_parse(i) = CByte(System.Math.Floor(bit_count_in_uint32 /
+                                                                   (System.Math.Log(i) / System.Math.Log(2))))
             End If
         Next
         digit_0 = digits(0)
 
         ReDim chars(Convert.ToInt32(Char.MaxValue) - Convert.ToInt32(Char.MinValue))
         memset(chars, npos)
-        For i As Int32 = 0 To array_size(digits) - 1
-            chars(Convert.ToInt32(digits(i))) = i
+        For i As Int32 = 0 To array_size_i(digits) - 1
+            chars(Convert.ToInt32(digits(i))) = CShort(i)
         Next
     End Sub
 End Class

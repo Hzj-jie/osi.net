@@ -17,7 +17,7 @@ Public Class error_message_test
         a(2) = s4
 
         Dim s As String = Nothing
-        s = error_message.P(a)
+        s = error_message.p(a)
         assertion.equal(s, strcat(s1, s2, s3, s4))
         Return True
     End Function

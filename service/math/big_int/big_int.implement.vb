@@ -1,5 +1,9 @@
 ﻿
-Partial Public Class big_int
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Partial Public NotInheritable Class big_int
     Implements ICloneable, IComparable(Of big_int), IComparable(Of big_uint)
 
     Public Function Clone() As Object Implements ICloneable.Clone

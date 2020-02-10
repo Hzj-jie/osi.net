@@ -36,7 +36,7 @@ Public NotInheritable Class error_message
     End Sub
 
     <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
-    Public Shared Function P(ByVal err_type As error_type,
+    Public Shared Function p(ByVal err_type As error_type,
                              ByVal err_type_char As Char,
                              ByVal errmsg As String,
                              ByVal additional_jump As Int32) As String
@@ -62,7 +62,7 @@ Public NotInheritable Class error_message
         Return errmsg
     End Function
 
-    Public Shared Function P(ByVal m() As Object) As String
+    Public Shared Function p(ByVal m() As Object) As String
         assert(Not m Is Nothing)
         ' shortcut
         If m.Length() = 1 AndAlso TypeOf m(0) Is String Then

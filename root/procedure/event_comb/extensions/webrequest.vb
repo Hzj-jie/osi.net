@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
 Imports System.Net
 Imports System.Runtime.CompilerServices
@@ -43,19 +47,17 @@ Public Module _webrequest
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  If ec.end_result() AndAlso
-                                     Not (+p) Is Nothing Then
-                                      Dim h As HttpWebResponse = Nothing
-                                      If cast(Of HttpWebResponse)(+p, h) Then
-                                          Return eva(r, h) AndAlso
-                                                 goto_end()
-                                      Else
-                                          p.get().Close()
-                                          Return False
-                                      End If
-                                  Else
+                                  If Not ec.end_result() OrElse
+                                      (+p) Is Nothing Then
                                       Return False
                                   End If
+                                  Dim h As HttpWebResponse = Nothing
+                                  If direct_cast(Of HttpWebResponse)(+p, h) Then
+                                      Return eva(r, h) AndAlso
+                                             goto_end()
+                                  End If
+                                  p.get().Close()
+                                  Return False
                               End Function)
     End Function
 

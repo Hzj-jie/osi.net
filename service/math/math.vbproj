@@ -129,6 +129,7 @@
     <Compile Include="prime_divisors.vb" />
     <Compile Include="relative_prime.vb" />
     <Compile Include="unchecked\operators.vb" />
+    <Compile Include="unchecked\shift.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -160,6 +161,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="expression\expression.syntax.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="pure_udec\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="math.dep" />

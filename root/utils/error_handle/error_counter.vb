@@ -15,7 +15,7 @@ Friend Class error_counter
         SYSTEM_ERROR_COUNTER = counter.register_counter("SYSTEM_ERROR_COUNTER")
         OTHER_ERROR_COUNTER = counter.register_counter("OTHER_ERROR_COUNTER")
 
-        AddHandler error_event.R5,
+        AddHandler error_event.r5,
                    Sub(err_type As error_type)
                        If err_type = error_type.critical Then
                            counter.increase(CRITICAL_ERROR_COUNTER)

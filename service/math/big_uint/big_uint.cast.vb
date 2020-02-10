@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 
-Partial Public Class big_uint
+Partial Public NotInheritable Class big_uint
     Public Shared Widening Operator CType(ByVal this As UInt32) As big_uint
         Return New big_uint(this)
     End Operator

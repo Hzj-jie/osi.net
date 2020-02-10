@@ -43,7 +43,7 @@ Public Module _console
     End Sub
 
     Public Sub write_console(ByVal ParamArray s() As Object)
-        write_console(error_message.P(s))
+        write_console(error_message.p(s))
     End Sub
 
     Private Sub rewrite(ByVal s As String, ByVal err As Boolean)
@@ -98,7 +98,7 @@ Public Module _console
     End Sub
 
     Public Sub rewrite_console(ByVal ParamArray s() As Object)
-        rewrite_console(error_message.P(s))
+        rewrite_console(error_message.p(s))
     End Sub
 
     Public Sub write_console_error(ByVal s As String)
@@ -108,7 +108,7 @@ Public Module _console
     End Sub
 
     Public Sub write_console_error(ByVal ParamArray s() As Object)
-        write_console_error(error_message.P(s))
+        write_console_error(error_message.p(s))
     End Sub
 
     Public Sub rewrite_console_error(ByVal s As String)
@@ -116,7 +116,7 @@ Public Module _console
     End Sub
 
     Public Sub rewrite_console_error(ByVal ParamArray s() As Object)
-        rewrite_console_error(error_message.P(s))
+        rewrite_console_error(error_message.p(s))
     End Sub
 
     Public Sub write_console_line(ByVal s As String)
@@ -124,7 +124,7 @@ Public Module _console
     End Sub
 
     Public Sub write_console_line(ByVal ParamArray s() As Object)
-        write_console_line(error_message.P(s))
+        write_console_line(error_message.p(s))
     End Sub
 
     Public Sub write_console_error_line(ByVal s As String)
@@ -132,7 +132,7 @@ Public Module _console
     End Sub
 
     Public Sub write_console_error_line(ByVal ParamArray s() As Object)
-        write_console_error_line(error_message.P(s))
+        write_console_error_line(error_message.p(s))
     End Sub
 
     Public Function closest_console_color(ByVal r As Byte, ByVal g As Byte, ByVal b As Byte) As ConsoleColor

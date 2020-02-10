@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 
-Partial Public Class big_uint
+Partial Public NotInheritable Class big_uint
     Public Function add(ByVal that As big_uint) As big_uint
         If Not that Is Nothing AndAlso Not that.is_zero() Then
             If is_zero() Then

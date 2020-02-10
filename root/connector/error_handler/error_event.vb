@@ -7,20 +7,20 @@ Imports osi.root.constants
 
 Public NotInheritable Class error_event
     ' additional_jump is not accurate.
-    Public Shared Event R1(ByVal err_type As error_type,
+    Public Shared Event r1(ByVal err_type As error_type,
                            ByVal err_type_char As Char,
                            ByVal msg() As Object,
                            ByVal additional_jump As Int32)
     ' additional_jump is not accurate.
-    Public Shared Event R2(ByVal err_type As error_type,
+    Public Shared Event r2(ByVal err_type As error_type,
                            ByVal err_type_char As Char,
                            ByVal msg As String,
                            ByVal additional_jump As Int32)
-    Public Shared Event R3(ByVal err_type As error_type, ByVal msg As String)
-    Public Shared Event R4(ByVal msg As String)
-    Public Shared Event R5(ByVal err_type As error_type)
-    Public Shared Event R6(ByVal err_type As error_type, ByVal err_type_char As Char, ByVal msg As String)
-    Public Shared Event A1()
+    Public Shared Event r3(ByVal err_type As error_type, ByVal msg As String)
+    Public Shared Event r4(ByVal msg As String)
+    Public Shared Event r5(ByVal err_type As error_type)
+    Public Shared Event r6(ByVal err_type As error_type, ByVal err_type_char As Char, ByVal msg As String)
+    Public Shared Event a1()
 
     Private Shared ReadOnly r1lock As Object
     Private Shared ReadOnly r2lock As Object
@@ -38,13 +38,13 @@ Public NotInheritable Class error_event
         r6lock = New Object()
     End Sub
 
-    Public Shared Sub A()
+    Public Shared Sub a()
         static_constructor(Of colorful_console_error_writer).execute()
-        RaiseEvent A1()
+        RaiseEvent a1()
     End Sub
 
     <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
-    Public Shared Sub R(ByVal err_type As error_type,
+    Public Shared Sub r(ByVal err_type As error_type,
                         ByVal err_type_char As Char,
                         ByVal msg() As Object,
                         ByVal additional_jump As Int32)
@@ -55,12 +55,12 @@ Public NotInheritable Class error_event
         Dim r4a As Boolean = False
         Dim r5a As Boolean = False
         Dim r6a As Boolean = False
-        r1a = event_attached(R1Event)
-        r2a = event_attached(R2Event)
-        r3a = event_attached(R3Event)
-        r4a = event_attached(R4Event)
-        r5a = event_attached(R5Event)
-        r6a = event_attached(R6Event)
+        r1a = event_attached(r1Event)
+        r2a = event_attached(r2Event)
+        r3a = event_attached(r3Event)
+        r4a = event_attached(r4Event)
+        r5a = event_attached(r5Event)
+        r6a = event_attached(r6Event)
         ' colorful_console_error_writer should have been initialized.
         If Not (r1a OrElse r2a OrElse r3a OrElse r4a OrElse r5a OrElse r6a) Then
             assert_break()
@@ -70,25 +70,25 @@ Public NotInheritable Class error_event
 
         Dim merged_msg As String = Nothing
         If r2a OrElse r3a OrElse r4a OrElse r6a Then
-            merged_msg = error_message.P(msg)
+            merged_msg = error_message.p(msg)
         End If
         Dim full_msg As String = Nothing
         If r3a OrElse r4a OrElse r6a Then
             If merged_msg Is Nothing Then
                 assert_break()
             End If
-            full_msg = error_message.P(err_type, err_type_char, merged_msg, additional_jump + 1)
+            full_msg = error_message.p(err_type, err_type_char, merged_msg, additional_jump + 1)
         End If
 
         SyncLock r1lock
-            RaiseEvent R1(err_type, err_type_char, msg, additional_jump + 1)
+            RaiseEvent r1(err_type, err_type_char, msg, additional_jump + 1)
         End SyncLock
         If r2a Then
             If merged_msg Is Nothing Then
                 assert_break()
             End If
             SyncLock r2lock
-                RaiseEvent R2(err_type, err_type_char, merged_msg, additional_jump + 1)
+                RaiseEvent r2(err_type, err_type_char, merged_msg, additional_jump + 1)
             End SyncLock
         End If
         If r3a Then
@@ -96,7 +96,7 @@ Public NotInheritable Class error_event
                 assert_break()
             End If
             SyncLock r3lock
-                RaiseEvent R3(err_type, full_msg)
+                RaiseEvent r3(err_type, full_msg)
             End SyncLock
         End If
         If r4a Then
@@ -104,18 +104,18 @@ Public NotInheritable Class error_event
                 assert_break()
             End If
             SyncLock r4lock
-                RaiseEvent R4(full_msg)
+                RaiseEvent r4(full_msg)
             End SyncLock
         End If
         SyncLock r5lock
-            RaiseEvent R5(err_type)
+            RaiseEvent r5(err_type)
         End SyncLock
         If r6a Then
             If full_msg Is Nothing Then
                 assert_break()
             End If
             SyncLock r6lock
-                RaiseEvent R6(err_type, err_type_char, full_msg)
+                RaiseEvent r6(err_type, err_type_char, full_msg)
             End SyncLock
         End If
     End Sub

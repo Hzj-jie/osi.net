@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 
-Partial Public Class big_uint
+Partial Public NotInheritable Class big_uint
     Public Sub work_on(ByVal v() As UInt32)
         Me.v.replace_by(v)
         remove_extra_blank()
@@ -12,9 +16,8 @@ Partial Public Class big_uint
         If v.uint32_array(o) Then
             work_on(o)
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 
     Public Function release() As UInt32()

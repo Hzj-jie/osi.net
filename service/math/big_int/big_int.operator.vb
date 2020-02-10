@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.formation
 
-Partial Public Class big_int
+Partial Public NotInheritable Class big_int
     Public Shared Operator +(ByVal this As big_int, ByVal that As big_int) As big_int
         Dim r As big_int = Nothing
         r = New big_int(this)

@@ -1,9 +1,13 @@
 ﻿
-Imports System.Text
-Imports osi.root.constants
-Imports osi.root.connector
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Partial Public Class big_uint
+Imports System.Text
+Imports osi.root.connector
+Imports osi.root.constants
+
+Partial Public NotInheritable Class big_uint
     Public Shared Function rnd_support_str(ByVal length As UInt32,
                                            Optional ByVal base As Byte = default_str_base) As String
         assert_support_base(base)
@@ -13,7 +17,7 @@ Partial Public Class big_uint
             Dim r As StringBuilder = Nothing
             r = New StringBuilder(CInt(length))
             For i As UInt32 = 0 To length - uint32_1
-                r.Append(number_to_char(rnd_int(If(i = 0, 1, 0), base)))
+                r.Append(number_to_char(assert_which.of(rnd_int(If(i = 0, byte_1, byte_0), base)).can_cast_to_byte()))
             Next
             Return Convert.ToString(r)
         End If
@@ -21,7 +25,7 @@ Partial Public Class big_uint
 
     Public Shared Function rnd_support_base() As Byte
         Dim r As Byte = 0
-        r = rnd_int(2, big_uint.support_str_base + 1)
+        r = assert_which.of(rnd_int(2, big_uint.support_str_base + 1)).can_cast_to_byte()
         assert_support_base(r)
         Return r
     End Function

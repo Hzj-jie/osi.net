@@ -1,32 +1,33 @@
 ﻿
-Imports osi.root.constants
-Imports osi.root.connector
-Imports osi.root.utils
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Partial Public Class big_uint
+Imports osi.root.connector
+Imports osi.root.constants
+
+Partial Public NotInheritable Class big_uint
     Public Function left_shift(ByVal size As Int32) As big_uint
         If size < 0 Then
             Return right_shift(CULng(-size))
-        Else
-            Return left_shift(CULng(size))
         End If
+        Return left_shift(CULng(size))
     End Function
 
     Public Function left_shift(ByVal size As UInt64) As big_uint
         If size > 0 AndAlso Not is_zero() Then
             Dim till As UInt32 = 0
-            left_shift_slot((size >> bit_count_in_uint32_shift), till)
-            Dim ls As Int32 = 0
-            ls = (size And bit_count_in_uint32_mask)
+            left_shift_slot(assert_which.of(size >> bit_count_in_uint32_shift).can_cast_to_uint32(), till)
+            Dim ls As UInt32 = 0
+            ls = assert_which.of(size And bit_count_in_uint32_mask).can_cast_to_uint32()
             Dim i As UInt32 = 0
             i = v.size() - uint32_1
             While True
                 Dim t As UInt64 = 0
-                t = v(i)
-                t <<= ls
+                t = shift.left(v(i), ls)
                 Dim c As UInt32 = 0
-                v(i) = t And max_uint32
-                c = (t >> bit_count_in_uint32)
+                v(i) = CUInt(t And max_uint32)
+                c = assert_which.of(t >> bit_count_in_uint32).can_cast_to_uint32()
                 If c > 0 Then
                     If i = v.size() - uint32_1 Then
                         v.push_back(0)
@@ -85,16 +86,15 @@ Partial Public Class big_uint
                 set_zero()
             Else
                 assert(Not is_zero())
-                right_shift_slot(size >> bit_count_in_uint32_shift)
-                Dim ls As Int32 = 0
-                ls = (size And bit_count_in_uint32_mask)
+                right_shift_slot(assert_which.of(size >> bit_count_in_uint32_shift).can_cast_to_uint32())
+                Dim ls As UInt32 = 0
+                ls = assert_which.of(size And bit_count_in_uint32_mask).can_cast_to_uint32()
                 For i As UInt32 = 0 To v.size() - uint32_1
                     Dim t As UInt64 = 0
-                    t = v(i)
-                    t <<= (bit_count_in_uint32 - ls)
+                    t = shift.left(v(i), bit_count_in_uint32 - ls)
                     Dim c As UInt32 = 0
-                    c = t And max_uint32
-                    v(i) = (t >> bit_count_in_uint32)
+                    c = CUInt(t And max_uint32)
+                    v(i) = assert_which.of(t >> bit_count_in_uint32).can_cast_to_uint32()
                     If i > 0 AndAlso c > 0 Then
                         assert((v(i - uint32_1) And c) = 0)
                         v(i - uint32_1) = v(i - uint32_1) Or c

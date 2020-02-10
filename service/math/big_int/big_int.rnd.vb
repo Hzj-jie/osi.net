@@ -1,15 +1,18 @@
 ﻿
-Imports osi.root.constants
-Imports osi.root.connector
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Partial Public Class big_int
+Imports osi.root.connector
+Imports osi.root.constants
+
+Partial Public NotInheritable Class big_int
     Public Shared Function rnd_support_str(ByVal length As UInt32,
                                            Optional ByVal base As Byte = default_str_base) As String
         If length <= 1 OrElse rnd_bool() Then
             Return big_uint.rnd_support_str(length, base)
-        Else
-            Return negative_signal_mask + big_uint.rnd_support_str(length - uint32_1, base)
         End If
+        Return negative_signal_mask + big_uint.rnd_support_str(length - uint32_1, base)
     End Function
 
     Public Shared Function rnd_support_base() As Byte

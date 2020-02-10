@@ -1,18 +1,22 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 
-Partial Public Class big_int
+Partial Public NotInheritable Class big_int
     Public Function str(Optional ByVal base As Byte = default_str_base,
                         Optional ByVal require_positive_signal_mask As Boolean = False) As String
         Dim r As String = Nothing
         r = d.str(base)
         If negative() Then
             Return negative_signal_mask + r
-        ElseIf require_positive_signal_mask Then
-            Return positive_signal_mask + r
-        Else
-            Return r
         End If
+        If require_positive_signal_mask Then
+            Return positive_signal_mask + r
+        End If
+        Return r
     End Function
 
     Public Shared Function parse(ByVal s As String,
@@ -36,8 +40,7 @@ Partial Public Class big_int
             r = share(d)
             r.set_signal(signal)
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 End Class

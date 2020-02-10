@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 
-Partial Public Class big_int
+Partial Public NotInheritable Class big_int
     Public Shared Function zero() As big_int
         Return New big_int()
     End Function

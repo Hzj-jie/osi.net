@@ -59,7 +59,7 @@
     <Compile Include="array.ext.vb" />
     <Compile Include="array.vb" />
     <Compile Include="arrays.vb" />
-    <Compile Include="assert.vb" />
+    <Compile Include="error_handler\assert.vb" />
     <Compile Include="bit.vb" />
     <Compile Include="bytes\byte.vb" />
     <Compile Include="bytes\bytes_dependent_types.vb" />
@@ -71,6 +71,12 @@
     <Compile Include="disposable.vb" />
     <Compile Include="endian.vb" />
     <Compile Include="equal.vb" />
+    <Compile Include="error_handler\assert_which.double.vb" />
+    <Compile Include="error_handler\assert_which.int32.vb" />
+    <Compile Include="error_handler\assert_which.object.vb" />
+    <Compile Include="error_handler\assert_which.uint32.vb" />
+    <Compile Include="error_handler\assert_which.uint64.vb" />
+    <Compile Include="error_handler\assert_which.vb" />
     <Compile Include="error_handler\throws.vb" />
     <Compile Include="functor\bytes_serializer\bytes_serializer.endian.vb" />
     <Compile Include="functor\bytes_serializer\bytes_serializer.fixed.vb" />

@@ -1,9 +1,12 @@
 ﻿
-Imports osi.root.constants
-Imports osi.root.connector
-Imports osi.root.utils
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Partial Public Class big_int
+Imports osi.root.connector
+Imports osi.root.constants
+
+Partial Public NotInheritable Class big_int
     Public Function less(ByVal that As big_uint) As Boolean
         Return compare(that) < 0
     End Function

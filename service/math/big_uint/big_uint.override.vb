@@ -1,26 +1,33 @@
 ﻿
-Imports osi.root.connector
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Partial Public Class big_uint
-    Public NotOverridable Overrides Function Equals(ByVal obj As Object) As Boolean
+Imports osi.root.connector
+Imports osi.root.constants
+
+Partial Public NotInheritable Class big_uint
+    Public Overrides Function Equals(ByVal obj As Object) As Boolean
         Return equal(cast(Of big_uint)(obj))
     End Function
 
-    Public NotOverridable Overrides Function GetHashCode() As Int32
+    Public Overrides Function GetHashCode() As Int32
         If is_zero() Then
             Return 0
-        ElseIf is_one() Then
-            Return 1
-        Else
-            Dim h As Int32 = 0
-            For i As Int32 = 0 To v.size() - 1
-                h = h Xor v(i).GetHashCode()
-            Next
-            Return h
         End If
+        If is_one() Then
+            Return 1
+        End If
+        Dim h As Int32 = 0
+        Dim i As UInt32 = 0
+        While i < v.size()
+            h = h Xor v(i).GetHashCode()
+            i += uint32_1
+        End While
+        Return h
     End Function
 
-    Public NotOverridable Overrides Function ToString() As String
+    Public Overrides Function ToString() As String
         Return str()
     End Function
 End Class

@@ -3,9 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
-
-Partial Public Class big_int
+Partial Public NotInheritable Class big_int
     Public Shared Widening Operator CType(ByVal this As Int32) As big_int
         Return New big_int(this)
     End Operator

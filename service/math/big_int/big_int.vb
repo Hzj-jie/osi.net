@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 
 Partial Public NotInheritable Class big_int
@@ -48,23 +52,21 @@ Partial Public NotInheritable Class big_int
     Public Shared Function move(ByVal i As big_int) As big_int
         If i Is Nothing Then
             Return Nothing
-        Else
-            Dim s As Boolean = False
-            s = i.signal()
-            Dim r As big_int = Nothing
-            r = New big_int(big_uint.move(i.d), s)
-            i.confirm_signal()
-            Return r
         End If
+        Dim s As Boolean = False
+        s = i.signal()
+        Dim r As big_int = Nothing
+        r = New big_int(big_uint.move(i.d), s)
+        i.confirm_signal()
+        Return r
     End Function
 
     Public Shared Function swap(ByVal this As big_int, ByVal that As big_int) As Boolean
         If this Is Nothing OrElse that Is Nothing Then
             Return False
-        Else
-            root.connector.swap(this.s, that.s)
-            Return assert(big_uint.swap(this.d, that.d))
         End If
+        root.connector.swap(this.s, that.s)
+        Return assert(big_uint.swap(this.d, that.d))
     End Function
 
     Public Sub replace_by(ByVal i As Int32)
@@ -98,20 +100,18 @@ Partial Public NotInheritable Class big_int
     Public Function replace_by(ByVal i As big_int) As Boolean
         If i Is Nothing Then
             Return False
-        Else
-            assert(d.replace_by(i.d))
-            set_signal(i.signal())
-            Return True
         End If
+        assert(d.replace_by(i.d))
+        set_signal(i.signal())
+        Return True
     End Function
 
     Public Function replace_by(ByVal i As big_uint) As Boolean
         If d.replace_by(i) Then
             set_positive()
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 
     Public Sub replace_by(ByVal i As Boolean)
@@ -124,9 +124,8 @@ Partial Public NotInheritable Class big_int
         If d.replace_by(a) Then
             set_positive()
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 
     Public Function signal() As Boolean

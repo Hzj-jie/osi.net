@@ -1,9 +1,12 @@
 ﻿
-Imports osi.root.constants
-Imports osi.root.connector
-Imports osi.root.utils
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Partial Public Class big_int
+Imports osi.root.connector
+Imports osi.root.constants
+
+Partial Public NotInheritable Class big_int
     Private Const default_str_base As Byte = 10
     Private Const positive_signal_mask As Char = character.plus_sign
     Private Const negative_signal_mask As Char = character.minus_sign

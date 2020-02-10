@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 
-Partial Public Class big_uint
+Partial Public NotInheritable Class big_uint
     Public Shared Function support_base(ByVal b As Byte) As Boolean
         Return b > 1 AndAlso b <= support_str_base
     End Function

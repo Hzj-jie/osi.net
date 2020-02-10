@@ -9,7 +9,7 @@ Public Class colorful_console_error_writer
     Shared Sub New()
         error_writer_ignore_types(Of colorful_console_error_writer).ignore(
             error_type.performance, error_type.information, error_type.deprecated)
-        AddHandler error_event.R3,
+        AddHandler error_event.r3,
                    Sub(err_type As error_type, s As String)
                        If error_writer_ignore_types(Of colorful_console_error_writer).valued(err_type) Then
 #If PocketPC OrElse Smartphone Then

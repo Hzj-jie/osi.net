@@ -1,8 +1,11 @@
 ﻿
-Imports osi.root.connector
-Imports osi.root.utils
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Partial Public Class big_int
+Imports osi.root.connector
+
+Partial Public NotInheritable Class big_int
     Public Function left_shift(ByVal size As Int32) As big_int
         d.left_shift(size)
         Return Me
