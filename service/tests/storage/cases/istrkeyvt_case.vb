@@ -126,7 +126,7 @@ Public MustInherit Class istrkeyvt_case
 End Class
 
 Public Class default_istrkeyvt_case(Of _LOW_RES_TIMESTAMP As _boolean)
-    Inherits istrkeyvt_case(Of _2, _2, _8, _1024, _max_int16, _false)
+    Inherits istrkeyvt_case(Of _2, _2, _8, _1024, _max_int16, _LOW_RES_TIMESTAMP)
 End Class
 
 Public NotInheritable Class default_istrkeyvt_case
