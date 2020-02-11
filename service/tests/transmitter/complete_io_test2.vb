@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.procedure
 Imports osi.root.utt
 Imports osi.service.transmitter
@@ -54,15 +58,15 @@ Public MustInherit Class complete_io_test2(Of T As flow)
         Dim b1() As Byte = Nothing
         b1 = next_bytes(rnd_uint(8192 * 256, 8192 * 512))
         Dim b2() As Byte = Nothing
-        ReDim b2(array_size(b1) - uint32_1)
+        ReDim b2(array_size_i(b1) - 1)
         Dim finished As ManualResetEvent = Nothing
         finished = New ManualResetEvent(False)
         assertion.is_true(start_receive(create_receive_flow(), b2, finished))
         Dim s As flow = Nothing
         s = create_send_flow()
         assert(Not s Is Nothing)
-        assertion.is_true(async_sync(s.send(b1), seconds_to_milliseconds(10)))
-        assertion.is_true(finished.WaitOne(seconds_to_milliseconds(10)))
+        assertion.is_true(async_sync(s.send(b1), minutes_to_milliseconds(1)))
+        assertion.is_true(finished.WaitOne(CInt(minutes_to_milliseconds(1))))
         finished.Close()
         assertion.equal(memcmp(b1, b2), 0)
         Return True
