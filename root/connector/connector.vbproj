@@ -71,6 +71,7 @@
     <Compile Include="disposable.vb" />
     <Compile Include="endian.vb" />
     <Compile Include="equal.vb" />
+    <Compile Include="error_handler\assert_which.decimal.vb" />
     <Compile Include="error_handler\assert_which.double.vb" />
     <Compile Include="error_handler\assert_which.int32.vb" />
     <Compile Include="error_handler\assert_which.object.vb" />

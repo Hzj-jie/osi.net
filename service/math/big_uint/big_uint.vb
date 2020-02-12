@@ -35,6 +35,21 @@ Partial Public NotInheritable Class big_uint
         replace_by(i)
     End Sub
 
+    Public Sub New(ByVal i As Single)
+        Me.New()
+        assert(replace_by(i))
+    End Sub
+
+    Public Sub New(ByVal i As Double)
+        Me.New()
+        assert(replace_by(i))
+    End Sub
+
+    Public Sub New(ByVal i As Decimal)
+        Me.New()
+        assert(replace_by(i))
+    End Sub
+
     Public Shared Function move(ByVal i As big_uint) As big_uint
         If i Is Nothing Then
             Return Nothing
@@ -74,13 +89,14 @@ Partial Public NotInheritable Class big_uint
 
     Public Sub replace_by(ByVal i As UInt64)
         set_zero()
+        If i = 0 Then
+            Return
+        End If
+        v.push_back(CUInt(i And max_uint32))
+        i >>= bit_count_in_uint32
+        assert(i <= max_uint32)
         If i > 0 Then
-            v.push_back(CUInt(i And max_uint32))
-            i >>= bit_count_in_uint32
-            assert(i <= max_uint32)
-            If i > 0 Then
-                v.push_back(CUInt(i))
-            End If
+            v.push_back(CUInt(i))
         End If
     End Sub
 
@@ -149,15 +165,45 @@ Partial Public NotInheritable Class big_uint
         Return True
     End Function
 
-    Public Sub replace_by(ByVal d As Double)
+    Public Function replace_by(ByVal d As Single) As Boolean
+        Return replace_by(CDbl(d))
+    End Function
+
+    Public Function replace_by(ByVal d As Double) As Boolean
+        If d < 0 Then
+            Return False
+        End If
+        If d = 0 Then
+            set_zero()
+            Return True
+        End If
         Dim v As vector(Of UInt32) = Nothing
         v = New vector(Of UInt32)()
         While d >= 1
-            v.emplace_back(assert_which.of(d Mod max_uint32).can_cast_to_uint32())
+            v.emplace_back(assert_which.of(d Mod max_uint32).can_truncate_to_uint32())
             d /= max_uint32
         End While
         assert(replace_by_big_endian(+v))
-    End Sub
+        Return True
+    End Function
+
+    Public Function replace_by(ByVal d As Decimal) As Boolean
+        If d < 0 Then
+            Return False
+        End If
+        If d = 0 Then
+            set_zero()
+            Return True
+        End If
+        Dim v As vector(Of UInt32) = Nothing
+        v = New vector(Of UInt32)()
+        While d >= 1
+            v.emplace_back(assert_which.of(d Mod max_uint32).can_truncate_to_uint32())
+            d /= max_uint32
+        End While
+        assert(replace_by_big_endian(+v))
+        Return True
+    End Function
 
     Public Sub set_zero()
         v.clear()

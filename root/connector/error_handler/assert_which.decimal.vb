@@ -6,10 +6,10 @@ Option Strict On
 Imports osi.root.constants
 
 Partial Public NotInheritable Class assert_which
-    Public Structure double_assertion
-        Private ReadOnly i As Double
+    Public Structure decimal_assertion
+        Private ReadOnly i As Decimal
 
-        Public Sub New(ByVal i As Double)
+        Public Sub New(ByVal i As Decimal)
             Me.i = i
         End Sub
 

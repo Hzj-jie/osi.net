@@ -7,7 +7,11 @@ Public Module _math
     <Extension()> Public Function is_integral(ByVal i As Double) As Boolean
         Return i = Math.Truncate(i)
     End Function
-    
+
+    <Extension()> Public Function is_integral(ByVal i As Decimal) As Boolean
+        Return i = Math.Truncate(i)
+    End Function
+
     <Extension()> Public Function is_int(ByVal i As Double) As Boolean
         Return i.is_integral() AndAlso
                i >= min_int32 AndAlso

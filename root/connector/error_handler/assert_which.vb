@@ -8,6 +8,10 @@ Partial Public NotInheritable Class assert_which
         Return New double_assertion(i)
     End Function
 
+    Public Shared Function [of](ByVal i As Decimal) As decimal_assertion
+        Return New decimal_assertion(i)
+    End Function
+
     Public Shared Function [of](ByVal i As Int32) As int32_assertion
         Return New int32_assertion(i)
     End Function
