@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 
 'TODO: consider to add a temporary value for uint32 / uint64 to big_uint convert to save object create time
 Partial Public NotInheritable Class big_uint
@@ -93,10 +94,10 @@ Partial Public NotInheritable Class big_uint
     End Sub
 
     Public Function replace_by(ByVal a() As Byte) As Boolean
-        set_zero()
         If isemptyarray(a) Then
             Return False
         End If
+        set_zero()
         v.reserve((array_size(a) + uint32_3) \ byte_count_in_uint32)
         Dim start As UInt32 = 0
         Dim [end] As UInt32 = 0
@@ -125,6 +126,38 @@ Partial Public NotInheritable Class big_uint
         remove_extra_blank()
         Return True
     End Function
+
+    Public Function replace_by_big_endian(ByVal d() As UInt32) As Boolean
+        If isemptyarray(d) Then
+            Return False
+        End If
+        set_zero()
+        For i As Int32 = 0 To array_size_i(d) - 1
+            v.push_back(d(i))
+        Next
+        Return True
+    End Function
+
+    Public Function replace_by_little_endian(ByVal d() As UInt32) As Boolean
+        If isemptyarray(d) Then
+            Return False
+        End If
+        set_zero()
+        For i As Int32 = array_size_i(d) - 1 To 0 Step -1
+            v.push_back(d(i))
+        Next
+        Return True
+    End Function
+
+    Public Sub replace_by(ByVal d As Double)
+        Dim v As vector(Of UInt32) = Nothing
+        v = New vector(Of UInt32)()
+        While d >= 1
+            v.emplace_back(assert_which.of(d Mod max_uint32).can_cast_to_uint32())
+            d /= max_uint32
+        End While
+        assert(replace_by_big_endian(+v))
+    End Sub
 
     Public Sub set_zero()
         v.clear()
