@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utt
 
-Friend Class mapheap_case
+Friend NotInheritable Class mapheap_case
     Inherits random_run_case
 
     Private ReadOnly mh As mapheap(Of String, Int64)
@@ -64,9 +64,8 @@ Friend Class mapheap_case
         Do
             If i = v Then
                 Return True
-            Else
-                i = next_value(i)
             End If
+            i = next_value(i)
         Loop Until i = b
         Return False
     End Function
@@ -88,41 +87,41 @@ Friend Class mapheap_case
         Dim v As Int64 = 0
         rnd_key_value(k, v)
         assertion.is_true(mh.insert(k, v))
-        If validation() Then
-            Dim it As map(Of String, Int64).iterator = Nothing
-            it = m.find(k)
-            If it <> m.end() Then
-                dec((+it).second)
-            End If
-            assertion.is_true(m.insert(k, v) <> m.end())
-            c(v) += 1
+        If Not validation() Then
+            Return
         End If
+        Dim it As map(Of String, Int64).iterator = Nothing
+        it = m.find(k)
+        If it <> m.end() Then
+            dec((+it).second)
+        End If
+        assertion.is_true(m.insert(k, v) <> m.end())
+        c(v) += 1
     End Sub
 
     Private Sub accumulate()
         Dim k As String = Nothing
         k = rnd_key()
-        If validation() Then
-            Dim it As mapheap(Of String, Int64).iterator = Nothing
-            it = mh.find(k)
-            Dim v As Int64 = 0
-            If it = mh.end() Then
-                assertion.is_true(m.find(k) = m.end())
-                v = key_value(k)
-                assertion.is_true(mh.accumulate(k, v))
-                m(k) = v
-                c(v) += 1
-            Else
-                Dim ov As Int64 = 0
-                ov = (+it).first
-                v = next_value(ov)
-                assertion.is_true(mh.accumulate(k, v - ov))
-                m(k) = v
-                dec(ov)
-                c(v) += 1
-            End If
-        Else
+        If Not validation() Then
             mh.accumulate(k, 1)
+        End If
+        Dim it As mapheap(Of String, Int64).iterator = Nothing
+        it = mh.find(k)
+        Dim v As Int64 = 0
+        If it = mh.end() Then
+            assertion.is_true(m.find(k) = m.end())
+            v = key_value(k)
+            assertion.is_true(mh.accumulate(k, v))
+            m(k) = v
+            c(v) += 1
+        Else
+            Dim ov As Int64 = 0
+            ov = (+it).first
+            v = next_value(ov)
+            assertion.is_true(mh.accumulate(k, v - ov))
+            m(k) = v
+            dec(ov)
+            c(v) += 1
         End If
     End Sub
 
@@ -140,22 +139,23 @@ Friend Class mapheap_case
         Dim v As Int64 = 0
         mh.pop_front(k, v)
         assertion.is_not_null(k)
-        If validation() Then
-            assertion.is_true(is_key_value(k, v))
-            assertion.is_true(c.find(v) <> c.end())
-            Dim it As map(Of Int64, Int64).iterator = Nothing
-            it = c.begin()
-            Dim max As Int64 = min_int64
-            While it <> c.end()
-                If (+it).first > max Then
-                    max = (+it).first
-                End If
-                it += 1
-            End While
-            assertion.equal(max, v)
-            assertion.is_true(m.erase(k))
-            dec(v)
+        If Not validation() Then
+            Return
         End If
+        assertion.is_true(is_key_value(k, v))
+        assertion.is_true(c.find(v) <> c.end())
+        Dim it As map(Of Int64, Int64).iterator = Nothing
+        it = c.begin()
+        Dim max As Int64 = min_int64
+        While it <> c.end()
+            If (+it).first > max Then
+                max = (+it).first
+            End If
+            it += 1
+        End While
+        assertion.equal(max, v)
+        assertion.is_true(m.erase(k))
+        dec(v)
     End Sub
 
     Private Sub find()
@@ -173,45 +173,45 @@ Friend Class mapheap_case
         k = rnd_key()
         Dim r As Boolean = False
         r = mh.erase(k)
-        If validation() Then
-            If r Then
-                assertion.not_equal(m.find(k), m.end())
-                dec(m(k))
-                assertion.equal(r, m.erase(k))
-            Else
-                assertion.equal(m.find(k), m.end())
-            End If
+        If Not validation() Then
+            Return
+        End If
+        If r Then
+            assertion.not_equal(m.find(k), m.end())
+            dec(m(k))
+            assertion.equal(r, m.erase(k))
+        Else
+            assertion.equal(m.find(k), m.end())
         End If
     End Sub
 
     Private Sub foreach(ByVal i As mapheap(Of String, Int64))
-        If validation() Then
-            assert(Not i Is Nothing)
-            assertion.equal(m.size(), i.size())
-            Dim it As map(Of String, Int64).iterator = Nothing
-            it = m.begin()
-            While it <> m.end()
-                Dim it2 As mapheap(Of String, Int64).iterator = Nothing
-                it2 = mh.find((+it).first)
-                If assertion.not_equal(it2, mh.end()) Then
-                    If Not assertion.equal((+it2).first, (+it).second) Then
-
-                    End If
-                End If
-                it += 1
-            End While
+        If Not validation() Then
+            Return
         End If
+        assert(Not i Is Nothing)
+        assertion.equal(m.size(), i.size())
+        Dim it As map(Of String, Int64).iterator = Nothing
+        it = m.begin()
+        While it <> m.end()
+            Dim it2 As mapheap(Of String, Int64).iterator = Nothing
+            it2 = mh.find((+it).first)
+            assertion.not_equal(it2, mh.end())
+            assertion.equal((+it2).first, (+it).second)
+            it += 1
+        End While
     End Sub
 
     Private Sub clear()
         foreach(mh)
         mh.clear()
-        If validation() Then
-            m.clear()
-            c.clear()
-            assertion.equal(mh.size(), 0)
-            assertion.is_true(mh.empty())
+        If Not validation() Then
+            Return
         End If
+        m.clear()
+        c.clear()
+        assertion.equal(mh.size(), 0)
+        assertion.is_true(mh.empty())
     End Sub
 
     Private Sub clone()

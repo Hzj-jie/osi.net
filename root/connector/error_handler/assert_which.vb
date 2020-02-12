@@ -24,6 +24,10 @@ Partial Public NotInheritable Class assert_which
         Return New object_assertion(i)
     End Function
 
+    Public Shared Function [of](Of T)(ByVal i As T) As T_assertion(Of T)
+        Return New T_assertion(Of T)(i)
+    End Function
+
     Private Sub New()
     End Sub
 End Class

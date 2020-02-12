@@ -74,6 +74,7 @@
     <Compile Include="error_handler\assert_which.double.vb" />
     <Compile Include="error_handler\assert_which.int32.vb" />
     <Compile Include="error_handler\assert_which.object.vb" />
+    <Compile Include="error_handler\assert_which.T.vb" />
     <Compile Include="error_handler\assert_which.uint32.vb" />
     <Compile Include="error_handler\assert_which.uint64.vb" />
     <Compile Include="error_handler\assert_which.vb" />

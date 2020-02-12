@@ -22,22 +22,21 @@ Public Class binary_operator(Of T, T2, RT)
     End Sub
 
     Public Shared Function log_addable() As Boolean
-        If Not global_resolver(Of Func(Of T, T2, RT), add_protector).registered() AndAlso
-           Not accumulatable(Of T, T2, RT).v Then
-            assert(Not accumulatable(Of T, T2, RT).ex Is Nothing)
-            raise_error(error_type.warning,
-                        "cannot add a T (",
-                        GetType(T).full_name(),
-                        ") to T2 (",
-                        GetType(T2).full_name(),
-                        ") and return RT (",
-                        GetType(RT).full_name(),
-                        "), ex ",
-                        accumulatable(Of T, T2, RT).ex.details())
-            Return False
-        Else
+        If global_resolver(Of Func(Of T, T2, RT), add_protector).registered() OrElse
+           accumulatable(Of T, T2, RT).v Then
             Return True
         End If
+        assert(Not accumulatable(Of T, T2, RT).ex Is Nothing)
+        raise_error(error_type.warning,
+                    "cannot add a T (",
+                    GetType(T).full_name(),
+                    ") to T2 (",
+                    GetType(T2).full_name(),
+                    ") and return RT (",
+                    GetType(RT).full_name(),
+                    "), ex ",
+                    accumulatable(Of T, T2, RT).ex.details())
+        Return False
     End Function
 
     Protected Overridable Function add() As Func(Of T, T2, RT)
@@ -50,10 +49,9 @@ Public Class binary_operator(Of T, T2, RT)
         f = add()
         If Not f Is Nothing Then
             Return f(i, j)
-        Else
-            assert(accumulatable(Of T, T2, RT).v)
-            Return cast(Of RT)(implicit_conversions.object_add(i, j))
         End If
+        assert(accumulatable(Of T, T2, RT).v)
+        Return cast(Of RT)(implicit_conversions.object_add(i, j))
     End Function
 
     Protected Overridable Function minus() As Func(Of T, T2, RT)
