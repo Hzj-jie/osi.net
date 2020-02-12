@@ -8,31 +8,32 @@ Imports osi.root.constants
 
 Partial Public NotInheritable Class big_uint
     Public Function add(ByVal that As big_uint) As big_uint
-        If Not that Is Nothing AndAlso Not that.is_zero() Then
-            If is_zero() Then
-                assert(replace_by(that))
-            Else
-                assert(v.size() > 0 AndAlso that.v.size() > 0)
-                If that.v.size() > v.size() Then
-                    v.resize(that.v.size())
-                End If
-                Dim c As UInt32 = 0
-                Dim i As UInt32 = 0
-                For i = 0 To that.v.size() - uint32_1
-                    add(that.v(i), c, i)
-                    assert(c = 0 OrElse c = 1)
-                Next
-                For i = i To v.size() - uint32_1
-                    add(0, c, i)
-                    assert(c = 0 OrElse c = 1)
-                    If c = 0 Then
-                        Exit For
-                    End If
-                Next
-                If c > 0 Then
-                    v.push_back(c)
-                End If
+        If that Is Nothing OrElse that.is_zero() Then
+            Return Me
+        End If
+        If is_zero() Then
+            assert(replace_by(that))
+            Return Me
+        End If
+        assert(v.size() > 0 AndAlso that.v.size() > 0)
+        If that.v.size() > v.size() Then
+            v.resize(that.v.size())
+        End If
+        Dim c As UInt32 = 0
+        Dim i As UInt32 = 0
+        For i = 0 To that.v.size() - uint32_1
+            add(that.v(i), c, i)
+            assert(c = 0 OrElse c = 1)
+        Next
+        For i = i To v.size() - uint32_1
+            add(0, c, i)
+            assert(c = 0 OrElse c = 1)
+            If c = 0 Then
+                Exit For
             End If
+        Next
+        If c > 0 Then
+            v.push_back(c)
         End If
         Return Me
     End Function

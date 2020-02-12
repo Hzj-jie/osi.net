@@ -163,7 +163,7 @@
     <Content Include="expression\expression.syntax.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="pure_udec\" />
+    <Folder Include="upure_dec\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="math.dep" />
