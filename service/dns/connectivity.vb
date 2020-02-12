@@ -40,12 +40,17 @@ Public NotInheritable Class connectivity
                                           "www.wikipedia.org"})
 
         ServicePointManager.Expect100Continue() = True
-        ServicePointManager.SecurityProtocol() =
-            SecurityProtocolType.Tls Or
-            direct_cast(Of SecurityProtocolType)(768) Or    ' tls11
-            direct_cast(Of SecurityProtocolType)(3072) Or   ' tls12
-            direct_cast(Of SecurityProtocolType)(12288) Or  ' tls13
-            SecurityProtocolType.Ssl3
+        For Each i As SecurityProtocolType In {SecurityProtocolType.Tls,
+                                               SecurityProtocolType.Ssl3,
+                                               direct_cast(Of SecurityProtocolType)(768),     ' tls11
+                                               direct_cast(Of SecurityProtocolType)(3072),    ' tls12
+                                               direct_cast(Of SecurityProtocolType)(12288)}   ' tls13
+            Try
+                ServicePointManager.SecurityProtocol() = ServicePointManager.SecurityProtocol() Or i
+            Catch ex As NotSupportedException
+                raise_error(error_type.warning, "Unsupported security protocol ", i, ", ex ", ex)
+            End Try
+        Next
     End Sub
 
     Public Shared Function check_if_needed(ByVal result As pointer(Of result_t),
