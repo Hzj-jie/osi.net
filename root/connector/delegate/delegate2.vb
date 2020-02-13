@@ -85,4 +85,10 @@ Public Module _delegate2
 
         Return "#CANNOT_GET_INVOKE_IDENTITY#"
     End Function
+
+    Public Sub void_(ByVal ParamArray d() As Action)
+        For i As Int32 = 0 To array_size_i(d) - 1
+            void_(d(i))
+        Next
+    End Sub
 End Module

@@ -23,6 +23,8 @@ Public MustInherit Class temp_drive_istrkeyvt_case
         temp_dir = Path.Combine(data_dir_base, "temp")
         void_(Sub()
                   Directory.Delete(temp_dir, True)
+              End Sub,
+              Sub()
                   Directory.CreateDirectory(temp_dir)
               End Sub)
     End Sub
