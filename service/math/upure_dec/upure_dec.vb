@@ -41,11 +41,9 @@ Partial Public NotInheritable Class upure_dec
     Public Sub replace_by(ByVal v As Double)
         assert(v < 1)
         assert(v > 0)
-        Dim two As big_uint = Nothing
-        two = New big_uint(uint32_2)
         d.set_one()
         While v.is_not_integral()
-            d.multiply(two)
+            d.left_shift(uint32_1)
             v *= 2
         End While
         assert(n.replace_by(v))
@@ -58,11 +56,9 @@ Partial Public NotInheritable Class upure_dec
     Public Sub replace_by(ByVal v As Decimal)
         assert(v < 1)
         assert(v > 0)
-        Dim two As big_uint = Nothing
-        two = New big_uint(uint32_2)
         d.set_one()
         While v.is_not_integral()
-            d.multiply(two)
+            d.left_shift(uint32_1)
             v *= 2
         End While
         assert(n.replace_by(v))
