@@ -165,41 +165,50 @@ Partial Public NotInheritable Class big_uint
         Return True
     End Function
 
+    Private Function replace_by_negative_or_zero(ByVal d As Double) As ternary
+        If d < 0 Then
+            Return ternary.false
+        End If
+        If d = 0 Then
+            set_zero()
+            Return ternary.true
+        End If
+        Return ternary.unknown
+    End Function
+
     Public Function replace_by(ByVal d As Single) As Boolean
         Return replace_by(CDbl(d))
     End Function
 
     Public Function replace_by(ByVal d As Double) As Boolean
-        If d < 0 Then
-            Return False
-        End If
-        If d = 0 Then
-            set_zero()
-            Return True
+        Dim t As ternary = Nothing
+        t = replace_by_negative_or_zero(d)
+        If t.notunknown() Then
+            Return t.true_()
         End If
         Dim v As vector(Of UInt32) = Nothing
         v = New vector(Of UInt32)()
         While d >= 1
-            v.emplace_back(assert_which.of(d Mod max_uint32).can_truncate_to_uint32())
-            d /= max_uint32
+            v.emplace_back(assert_which.of(d Mod max_uint32_plus_1).can_truncate_to_uint32())
+            d /= max_uint32_plus_1
+            d = System.Math.Truncate(d)
         End While
         assert(replace_by_big_endian(+v))
         Return True
     End Function
 
     Public Function replace_by(ByVal d As Decimal) As Boolean
-        If d < 0 Then
-            Return False
-        End If
-        If d = 0 Then
-            set_zero()
-            Return True
+        Dim t As ternary = Nothing
+        t = replace_by_negative_or_zero(d)
+        If t.notunknown() Then
+            Return t.true_()
         End If
         Dim v As vector(Of UInt32) = Nothing
         v = New vector(Of UInt32)()
         While d >= 1
-            v.emplace_back(assert_which.of(d Mod max_uint32).can_truncate_to_uint32())
-            d /= max_uint32
+            v.emplace_back(assert_which.of(d Mod max_uint32_plus_1).can_truncate_to_uint32())
+            d /= max_uint32_plus_1
+            d = System.Math.Truncate(d)
         End While
         assert(replace_by_big_endian(+v))
         Return True
@@ -232,5 +241,9 @@ Partial Public NotInheritable Class big_uint
 
     Public Function [false]() As Boolean
         Return is_zero()
+    End Function
+
+    Public Function uint32_size() As UInt32
+        Return v.size()
     End Function
 End Class

@@ -23,14 +23,14 @@ Public NotInheritable Class big_uint_from_double_test
     Private Shared Sub max_uint64_plus_1()
         Dim b As big_uint = Nothing
         b = New big_uint(CDbl(max_uint64) + 1)
-        assertion.equal(b.ToString(), "18446744082299486209")
+        assertion.equal(b.ToString(), "18446744073709551616")
     End Sub
 
     <test>
     Private Shared Sub over_ulong()
         Dim b As big_uint = Nothing
         b = New big_uint(1.0E+20)
-        assertion.equal(b.ToString(), "100000000049052868146")
+        assertion.equal(b.ToString(), "100000000000000000000")
     End Sub
 
     <test>
@@ -45,17 +45,17 @@ Public NotInheritable Class big_uint_from_double_test
         Dim b As big_uint = Nothing
         b = New big_uint(Double.MaxValue)
         assertion.equal(b.ToString(), strcat(
-                        "179769314825617350057869404685903988209575435695108370126632428513497287241600446167459493384",
-                        "781744741289090610649653963845182886256606719088914126374964289066839631537282861618570846051",
-                        "746655938852396502351841913761412994518679398318328663176626671207397867083993719165972677371",
-                        "351025953628601751508514502656"))
+                        "179769313486231570814527423731704356798070567525844996598917476803157260780028538760589558632",
+                        "766878171540458953514382464234321326889464182768467546703537516986049910576551282076245490090",
+                        "389328944075868508455133942304583236903222948165808559332123348274797826204144723168738177180",
+                        "919299881250404026184124858368"))
     End Sub
 
     <test>
     Private Shared Sub max_decimal()
         Dim b As big_uint = Nothing
         b = New big_uint(Decimal.MaxValue)
-        assertion.equal(b.ToString(), "79228162569604569827557507072")
+        assertion.equal(b.ToString(), "79228162514264337597838917631")
     End Sub
 
     Private Sub New()

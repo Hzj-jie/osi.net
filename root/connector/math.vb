@@ -22,6 +22,10 @@ Public Module _math
         Return Not is_integral(i)
     End Function
 
+    <Extension()> Public Function is_not_integral(ByVal i As Decimal) As Boolean
+        Return Not is_integral(i)
+    End Function
+
     <Extension()> Public Function is_not_int(ByVal i As Double) As Boolean
         Return Not is_int(i)
     End Function

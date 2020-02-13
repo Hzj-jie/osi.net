@@ -14,6 +14,7 @@ Partial Public NotInheritable Class big_uint
     End Enum
 
     Private Const default_str_base As Byte = 10
+    Private Const max_uint32_plus_1 As Int64 = max_uint32 + 1
     Private Shared ReadOnly support_str_base As Byte
     Private Shared ReadOnly byte_count_in_uint32 As Byte
     Private Shared ReadOnly bit_count_in_uint32 As Byte
