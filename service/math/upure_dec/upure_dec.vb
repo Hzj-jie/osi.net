@@ -31,9 +31,11 @@ Partial Public NotInheritable Class upure_dec
     End Sub
 
     <copy_constructor>
-    Protected Sub New(ByVal n As big_uint, ByVal d As big_uint)
+    Public Sub New(ByVal n As big_uint, ByVal d As big_uint)
         assert(Not n Is Nothing)
         assert(Not d Is Nothing)
+        assert(n.less(d))
+        assert(Not n.is_zero())
         Me.n = n
         Me.d = d
     End Sub

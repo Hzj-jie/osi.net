@@ -8,13 +8,13 @@ Imports osi.root.utt.attributes
 Imports osi.service.math
 
 <test>
-Public NotInheritable Class upure_dec_str_test
+Public NotInheritable Class upure_dec_binary_str_test
     <test>
     Private Shared Sub _0_5()
         Dim u As upure_dec = Nothing
         u = New upure_dec(0.5)
 
-        assertion.equal(u.str(), "0.5")
+        assertion.equal(u.str(2), "0.1")
     End Sub
 
     <test>
@@ -22,8 +22,7 @@ Public NotInheritable Class upure_dec_str_test
         Dim u As upure_dec = Nothing
         u = New upure_dec(0.999999999)
 
-        '                         0.999999999
-        assertion.equal(u.str(), "0.99999999900000002828193")
+        assertion.equal(u.str(2), "0.11111111111111111111111111111011101101000111110100001")
     End Sub
 
     <test>
@@ -31,8 +30,8 @@ Public NotInheritable Class upure_dec_str_test
         Dim u As upure_dec = Nothing
         u = New upure_dec(0.00000000001)
 
-        '                         0.00000000001
-        assertion.equal(u.str(), "0.0000000000099999999999999993949696928193981")
+        assertion.equal(u.str(2),
+                        "0.00000000000000000000000000000000000010101111111010111111111100001011110010110010010010101")
     End Sub
 
     <test>
@@ -40,8 +39,7 @@ Public NotInheritable Class upure_dec_str_test
         Dim u As upure_dec = Nothing
         u = New upure_dec(System.Math.E - 2)
 
-        '                         0.71828182845905
-        assertion.equal(u.str(), "0.718281828459045090795598")
+        assertion.equal(u.str(2), "0.101101111110000101010001011000101000101011101101001")
     End Sub
 
     <test>
@@ -49,8 +47,7 @@ Public NotInheritable Class upure_dec_str_test
         Dim u As upure_dec = Nothing
         u = New upure_dec(System.Math.PI - 3)
 
-        '                         0.14159265358979
-        assertion.equal(u.str(), "0.1415926535897931159979634")
+        assertion.equal(u.str(2), "0.001001000011111101101010100010001000010110100011")
     End Sub
 
     Private Sub New()
