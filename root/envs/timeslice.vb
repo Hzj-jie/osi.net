@@ -1,27 +1,30 @@
 ﻿
-Imports System.Threading
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 
 Public Module _timeslice
-    Public ReadOnly timeslice_length_ticks As Int64 = 0
-    Public ReadOnly timeslice_length_ms As Int64 = 0
-    Public ReadOnly half_timeslice_length_ticks As Int64 = 0
-    Public ReadOnly half_timeslice_length_ms As Int64 = 0
-    Public ReadOnly quarter_timeslice_length_ticks As Int64 = 0
-    Public ReadOnly quarter_timeslice_length_ms As Int64 = 0
-    Public ReadOnly eighth_timeslice_length_ticks As Int64 = 0
-    Public ReadOnly eighth_timeslice_length_ms As Int64 = 0
-    Public ReadOnly sixteenth_timeslice_length_ticks As Int64 = 0
-    Public ReadOnly sixteenth_timeslice_length_ms As Int64 = 0
-    Public ReadOnly two_timeslice_length_ticks As Int64 = 0
-    Public ReadOnly two_timeslice_length_ms As Int64 = 0
-    Public ReadOnly four_timeslice_length_ticks As Int64 = 0
-    Public ReadOnly four_timeslice_length_ms As Int64 = 0
-    Public ReadOnly eight_timeslice_length_ticks As Int64 = 0
-    Public ReadOnly eight_timeslice_length_ms As Int64 = 0
-    Public ReadOnly sixteen_timeslice_length_ticks As Int64 = 0
-    Public ReadOnly sixteen_timeslice_length_ms As Int64 = 0
+    Public ReadOnly timeslice_length_ticks As Int64
+    Public ReadOnly timeslice_length_ms As Int64
+    Public ReadOnly half_timeslice_length_ticks As Int64
+    Public ReadOnly half_timeslice_length_ms As Int64
+    Public ReadOnly quarter_timeslice_length_ticks As Int64
+    Public ReadOnly quarter_timeslice_length_ms As Int64
+    Public ReadOnly eighth_timeslice_length_ticks As Int64
+    Public ReadOnly eighth_timeslice_length_ms As Int64
+    Public ReadOnly sixteenth_timeslice_length_ticks As Int64
+    Public ReadOnly sixteenth_timeslice_length_ms As Int64
+    Public ReadOnly two_timeslice_length_ticks As Int64
+    Public ReadOnly two_timeslice_length_ms As Int64
+    Public ReadOnly four_timeslice_length_ticks As Int64
+    Public ReadOnly four_timeslice_length_ms As Int64
+    Public ReadOnly eight_timeslice_length_ticks As Int64
+    Public ReadOnly eight_timeslice_length_ms As Int64
+    Public ReadOnly sixteen_timeslice_length_ticks As Int64
+    Public ReadOnly sixteen_timeslice_length_ms As Int64
 
     Private Function to_ms(ByVal ticks As Int64) As Int64
         Return max(ticks_to_milliseconds(ticks), 1)
@@ -38,7 +41,7 @@ Public Module _timeslice
     End Function
 
     Private Function decide_timeslice_length_ticks_sleep_ticks(ByVal thisRound As Int64) As Int64
-        Return thisRound * 15 / 16
+        Return thisRound * 15 \ 16
     End Function
 
     Private Function decide_timeslice_length_ticks() As Int64
