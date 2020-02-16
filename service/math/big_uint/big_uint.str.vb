@@ -92,10 +92,7 @@ Partial Public NotInheritable Class big_uint
                     d >>= ss
                     If d = 0 Then
                         If t.v.size() > 1 Then
-                            While i < dc - uint32_1
-                                r.Append(digit_0)
-                                i += uint32_1
-                            End While
+                            r.Append(digit_0, CInt(dc - i - uint32_1))
                         End If
                         Exit For
                     End If
@@ -104,8 +101,7 @@ Partial Public NotInheritable Class big_uint
             End While
         Else
             Dim bu As UInt32 = 0
-            bu = base
-            bu = assert_which.of(bu ^ dc).can_cast_to_uint32()
+            bu = assert_which.of(base ^ dc).can_cast_to_uint32()
             While Not t.is_zero()
                 Dim rm As UInt32 = 0
                 t.assert_divide(bu, rm)
@@ -114,10 +110,7 @@ Partial Public NotInheritable Class big_uint
                     rm \= base
                     If rm = 0 Then
                         If Not t.is_zero() Then
-                            While i < dc - uint32_1
-                                r.Append(digit_0)
-                                i += uint32_1
-                            End While
+                            r.Append(digit_0, CInt(dc - i - uint32_1))
                         End If
                         Exit For
                     End If

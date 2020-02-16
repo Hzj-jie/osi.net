@@ -74,76 +74,78 @@ Partial Public NotInheritable Class big_uint
 
     'store the result of this * that in me
     Private Sub multiply(ByVal this As big_uint, ByVal that As big_uint)
-        If Not this Is Nothing AndAlso Not that Is Nothing Then
-            If this.is_zero() OrElse that.is_zero() Then
-                set_zero()
-            ElseIf this.is_one() Then
-                assert(replace_by(that))
-            ElseIf that.is_one() Then
-                assert(replace_by(this))
-            Else
-                set_zero()
-                v.resize(this.v.size() + that.v.size())
-                assert(this.v.size() > 0 AndAlso that.v.size() > 0)
-                Dim c As UInt32 = 0
-                For i As UInt32 = 0 To this.v.size() - uint32_1
-                    If this.v(i) <> 0 Then
-                        For j As UInt32 = 0 To that.v.size() - uint32_1
-                            Dim t As UInt64 = 0
-                            t = this.v(i)
-                            t *= that.v(j)
-                            add(CUInt(t And max_uint32), c, i + j)
-                            c += assert_which.of(t >> bit_count_in_uint32).can_cast_to_uint32()
-                        Next
-                        If c > 0 Then
-                            add(0, c, i + that.v.size())
+        If this Is Nothing OrElse that Is Nothing Then
+            Return
+        End If
+        If this.is_zero() OrElse that.is_zero() Then
+            set_zero()
+        ElseIf this.is_one() Then
+            assert(replace_by(that))
+        ElseIf that.is_one() Then
+            assert(replace_by(this))
+        Else
+            set_zero()
+            v.resize(this.v.size() + that.v.size())
+            assert(this.v.size() > 0 AndAlso that.v.size() > 0)
+            Dim c As UInt32 = 0
+            For i As UInt32 = 0 To this.v.size() - uint32_1
+                If this.v(i) <> 0 Then
+                    For j As UInt32 = 0 To that.v.size() - uint32_1
+                        Dim t As UInt64 = 0
+                        t = this.v(i)
+                        t *= that.v(j)
+                        add(CUInt(t And max_uint32), c, i + j)
+                        c += assert_which.of(t >> bit_count_in_uint32).can_cast_to_uint32()
+                    Next
+                    If c > 0 Then
+                        add(0, c, i + that.v.size())
 #If DEBUG Then
-                            assert(c = 0)
+                        assert(c = 0)
 #End If
-                        End If
                     End If
-                Next
-                assert(remove_extra_blank() <= 1)
-            End If
+                End If
+            Next
+            assert(remove_extra_blank() <= 1)
         End If
     End Sub
 
     'store the result of yroot(me, that) in me, and the remainder will be the me - (me ^ (yroot(me, that)))
     Private Sub extract(ByVal that As big_uint, ByRef remainder As big_uint, ByRef divide_zero_error As Boolean)
-        If Not that Is Nothing Then
-            If that.is_zero() Then
-                If is_one() Then
-                    divide_zero_error = False
-                    remainder = zero()
-                Else
-                    divide_zero_error = True
-                End If
-            Else
+        If that Is Nothing Then
+            Return
+        End If
+        If that.is_zero() Then
+            If is_one() Then
                 divide_zero_error = False
-                If that.is_one() Then
-                    remainder = New big_uint()
+                remainder = zero()
+            Else
+                divide_zero_error = True
+            End If
+        Else
+            divide_zero_error = False
+            If that.is_one() Then
+                remainder = New big_uint()
+            Else
+                Dim r As big_uint = Nothing
+                r = New big_uint(bit_count())
+                r.divide(that, remainder)
+                Dim l As UInt64 = 0
+                If remainder.is_zero() Then
+                    l = r.as_uint64()
                 Else
-                    Dim r As big_uint = Nothing
-                    r = New big_uint(bit_count())
-                    r.divide(that, remainder)
-                    Dim l As UInt64 = 0
-                    If remainder.is_zero() Then
-                        l = r.as_uint64()
-                    Else
-                        l = r.as_uint64() + uint64_1
-                    End If
-                    r.set_zero()
-                    r.set_bit_count(l)
-                    For i As UInt64 = 0 To l - uint64_1
-                        r.setrbit(l - i - uint64_1, True)
-                        If r ^ that > Me Then
-                            r.setrbit(l - i - uint64_1, False)
-                        End If
-                        assert(Not isdebugmode() OrElse (r ^ that <= Me))
-                    Next
-                    remainder = New big_uint(Me - r ^ that)
-                    assert(replace_by(r))
+                    l = r.as_uint64() + uint64_1
                 End If
+                r.set_zero()
+                r.set_bit_count(l)
+                For i As UInt64 = 0 To l - uint64_1
+                    r.setrbit(l - i - uint64_1, True)
+                    If r ^ that > Me Then
+                        r.setrbit(l - i - uint64_1, False)
+                    End If
+                    assert(Not isdebugmode() OrElse (r ^ that <= Me))
+                Next
+                remainder = New big_uint(Me - r ^ that)
+                assert(replace_by(r))
             End If
         End If
     End Sub

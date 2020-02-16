@@ -1,17 +1,20 @@
 ﻿
-Imports osi.root.utt
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.utt
 Imports osi.service.math
 
-Public Class big_int_input_perf
+Public NotInheritable Class big_int_input_perf
     Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New big_int_input_case())
     End Sub
 
-    Private Class big_int_input_case
+    Private NotInheritable Class big_int_input_case
         Inherits [case]
 
         Private Sub invalid_input()
