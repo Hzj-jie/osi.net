@@ -130,6 +130,10 @@
     <Compile Include="relative_prime.vb" />
     <Compile Include="unchecked\operators.vb" />
     <Compile Include="unchecked\shift.vb" />
+    <Compile Include="upure_dec\upure_dec.calculation.vb" />
+    <Compile Include="upure_dec\upure_dec.compare.vb" />
+    <Compile Include="upure_dec\upure_dec.implementation.vb" />
+    <Compile Include="upure_dec\upure_dec.private.vb" />
     <Compile Include="upure_dec\upure_dec.str.vb" />
     <Compile Include="upure_dec\upure_dec.vb" />
   </ItemGroup>

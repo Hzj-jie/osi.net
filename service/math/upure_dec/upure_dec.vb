@@ -32,17 +32,14 @@ Partial Public NotInheritable Class upure_dec
 
     <copy_constructor>
     Public Sub New(ByVal n As big_uint, ByVal d As big_uint)
-        assert(Not n Is Nothing)
-        assert(Not d Is Nothing)
-        assert(n.less(d))
-        assert(Not n.is_zero())
+        assert_n_d(n, d)
         Me.n = n
         Me.d = d
     End Sub
 
     Public Sub replace_by(ByVal v As Double)
         assert(v < 1)
-        assert(v > 0)
+        assert(v >= 0)
         d.set_one()
         While v.is_not_integral()
             d.left_shift(uint32_1)
@@ -57,13 +54,31 @@ Partial Public NotInheritable Class upure_dec
 
     Public Sub replace_by(ByVal v As Decimal)
         assert(v < 1)
-        assert(v > 0)
+        assert(v >= 0)
         d.set_one()
         While v.is_not_integral()
             d.left_shift(uint32_1)
             v *= 2
         End While
         assert(n.replace_by(v))
+    End Sub
+
+    Private Shared Sub assert_n_d(ByVal n As big_uint, ByVal d As big_uint)
+        assert(Not n Is Nothing)
+        assert(Not d Is Nothing)
+        assert(n.less(d))
+        assert(Not n.is_zero())
+    End Sub
+
+    Public Sub replace_by(ByVal n As big_uint, ByVal d As big_uint)
+        assert_n_d(n, d)
+        assert(Me.n.replace_by(n))
+        assert(Me.d.replace_by(d))
+    End Sub
+
+    Public Sub replace_by(ByVal n As upure_dec)
+        assert(Not n Is Nothing)
+        replace_by(n.n, n.d)
     End Sub
 
     Public Shared Function move(ByVal i As upure_dec) As upure_dec
@@ -79,5 +94,9 @@ Partial Public NotInheritable Class upure_dec
         End If
         Return assert(big_uint.swap(this.n, that.n)) AndAlso
                assert(big_uint.swap(this.d, that.d))
+    End Function
+
+    Public Function is_zero() As Boolean
+        Return n.is_zero()
     End Function
 End Class
