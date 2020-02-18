@@ -99,6 +99,7 @@
     <Compile Include="calculator\ioutputter.vb" />
     <Compile Include="calculator\iparser.vb" />
     <Compile Include="calculator\uint_binary_calculator.vb" />
+    <Compile Include="divrem.vb" />
     <Compile Include="exceptions.vb" />
     <Compile Include="expression\basic_expression.vb" />
     <Compile Include="expression\basic_expression_predefined.vb" />

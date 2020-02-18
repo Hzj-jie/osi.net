@@ -16,6 +16,10 @@ Partial Public NotInheritable Class assert_which
         Return New int32_assertion(i)
     End Function
 
+    Public Shared Function [of](ByVal i As Int64) As int64_assertion
+        Return New int64_assertion(i)
+    End Function
+
     Public Shared Function [of](ByVal i As UInt32) As uint32_assertion
         Return New uint32_assertion(i)
     End Function

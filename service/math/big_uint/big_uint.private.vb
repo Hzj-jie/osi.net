@@ -114,20 +114,20 @@ Partial Public NotInheritable Class big_uint
     End Sub
 
     'store the result of yroot(me, that) in me, and the remainder will be the me - (me ^ (yroot(me, that)))
-    Private Sub extract(ByVal that As big_uint, ByRef remainder As big_uint, ByRef divide_zero_error As Boolean)
+    Private Sub extract(ByVal that As big_uint, ByRef remainder As big_uint, ByRef divide_by_zero As Boolean)
         If that Is Nothing Then
             Return
         End If
         If that.is_zero() Then
             If is_one() Then
-                divide_zero_error = False
+                divide_by_zero = False
                 remainder = zero()
             Else
-                divide_zero_error = True
+                divide_by_zero = True
             End If
             Return
         End If
-        divide_zero_error = False
+        divide_by_zero = False
         If that.is_one() Then
             remainder = New big_uint()
             Return
@@ -155,12 +155,12 @@ Partial Public NotInheritable Class big_uint
     End Sub
 
     'store the result of me / that in me, and remainder will be the remainder
-    Private Sub divide(ByVal that As UInt32, ByRef remainder As UInt32, ByRef divide_zero_error As Boolean)
+    Private Sub divide(ByVal that As UInt32, ByRef remainder As UInt32, ByRef divide_by_zero As Boolean)
         If that = 0 Then
-            divide_zero_error = True
+            divide_by_zero = True
             Return
         End If
-        divide_zero_error = False
+        divide_by_zero = False
         remainder = 0
         If is_zero() OrElse that = 1 Then
             Return
@@ -183,13 +183,11 @@ Partial Public NotInheritable Class big_uint
 
 #If DEBUG Then
                 Dim t As UInt64 = 0
-                t = r \ that
-                r = r Mod that
+                t = r.div_rem(that, r)
                 assert(t <= max_uint32)
                 v(i) = t
 #Else
-                v(i) = CUInt(r \ that)
-                r = r Mod that
+                v(i) = CUInt(r.div_rem(that, r))
 #End If
             End If
             If i = 0 Then
@@ -209,16 +207,7 @@ Partial Public NotInheritable Class big_uint
                 t = remainder
                 t <<= bit_count_in_uint32
                 t = t Or v(i)
-
-#If 1 Then
-                remainder = CUInt(t Mod that)
-                t \= that
-#Else
-                Dim x As UInt64 = 0
-                x = (t \ that)
-                remainder = (t Mod that)
-                t = x
-#End If
+                t = t.div_rem(that, remainder)
                 v(i) = assert_which.of(t).can_cast_to_uint32()
             End If
             If i = 0 Then
@@ -232,13 +221,13 @@ Partial Public NotInheritable Class big_uint
     End Sub
 
     'store the result of me / that in me, and remainder will be the remainder
-    Private Sub divide(ByVal that As big_uint, ByRef remainder As big_uint, ByRef divide_zero_error As Boolean)
+    Private Sub divide(ByVal that As big_uint, ByRef remainder As big_uint, ByRef divide_by_zero As Boolean)
         If that Is Nothing Then
             Return
         End If
         If that.fit_uint32() Then
             Dim r As UInt32 = 0
-            divide(that.as_uint32(), r, divide_zero_error)
+            divide(that.as_uint32(), r, divide_by_zero)
             remainder = New big_uint(r)
             Return
         End If

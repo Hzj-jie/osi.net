@@ -81,6 +81,11 @@ Partial Public NotInheritable Class upure_dec
         replace_by(n.n, n.d)
     End Sub
 
+    Public Sub set_zero()
+        n.set_zero()
+        d.set_one()
+    End Sub
+
     Public Shared Function move(ByVal i As upure_dec) As upure_dec
         If i Is Nothing Then
             Return Nothing

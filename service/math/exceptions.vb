@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Public Class ImaginaryNumberException
     Inherits Exception
 
@@ -33,3 +37,20 @@ Public Module _exceptions
         Return New ImaginaryNumberException()
     End Function
 End Module
+
+Public NotInheritable Class throws
+    Public Shared Sub divide_by_zero()
+        Throw _exceptions.divide_by_zero()
+    End Sub
+
+    Public Shared Sub overflow()
+        Throw _exceptions.overflow()
+    End Sub
+
+    Public Shared Sub imaginary_number()
+        Throw _exceptions.imaginary_number()
+    End Sub
+
+    Private Sub New()
+    End Sub
+End Class

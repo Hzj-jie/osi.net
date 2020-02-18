@@ -11,6 +11,10 @@ Public NotInheritable Class throws
         Return i
     End Function
 
+    Public Shared Sub not_implemented()
+        Throw New NotImplementedException()
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
