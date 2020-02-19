@@ -1,10 +1,10 @@
 ﻿
-##DEFAULT TEST_SIZE 1073741824
+##DEFAULT TEST_SIZE 1073741824L
 ##DEFAULT RND rnd_int()
 Imports osi.root.connector
 Imports osi.root.utt
 
-Public Class ##CLASS_TYPE##_perf
+Public NotInheritable Class ##CLASS_TYPE##_perf
     Inherits performance_case_wrapper
 
     Public Sub New()

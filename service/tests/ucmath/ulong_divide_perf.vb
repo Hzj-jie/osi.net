@@ -23,7 +23,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.utt
 
-Public Class ulong_divide_perf
+Public NotInheritable Class ulong_divide_perf
     Inherits performance_case_wrapper
 
     Public Sub New()
@@ -47,7 +47,7 @@ Public Class ulong_divide_perf
         End Sub
 
         Public Overrides Function run() As Boolean
-            For i As Int64 = 0 To 1073741824 - 1
+            For i As Int64 = 0 To 1073741824L - 1
                 Dim r As UInt64 = 0
                 r = r1 \ r2
             Next

@@ -3,11 +3,13 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+#Const USE_DIV_REM = False
+
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+#If USE_DIV_REM Then
 Imports osi.root.constants
-
-#Const USE_DIV_REM = False
+#End If
 
 Public Module _div_rem
     ' max_uint64 / max_uint32 = max_uint32 + 2, so the result needs to be UInt64.

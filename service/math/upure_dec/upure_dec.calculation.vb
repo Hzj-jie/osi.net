@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 
 Partial Public NotInheritable Class upure_dec
     Public Function add(ByVal that As upure_dec, ByRef overflow As Boolean) As upure_dec
@@ -178,8 +179,41 @@ Partial Public NotInheritable Class upure_dec
         Return Me
     End Function
 
+    Public Function extract(ByVal that As big_uint, ByRef overflow As Boolean) As upure_dec
+        If that Is Nothing OrElse that.is_zero() Then
+            overflow = True
+            set_zero()
+            Return Me
+        End If
+        overflow = False
+        If that.is_one() Then
+            Return Me
+        End If
+        Dim n As big_uint = Nothing
+        n = ((Me.n ^ (that - uint32_1)) * (Me.d ^ (that + uint32_1))).assert_extract(that)
+        Dim d As big_uint = Nothing
+        d = Me.n * Me.d
+        replace_by(n, d)
+        reduct_of_fraction()
+        Return Me
+    End Function
+
     Public Function extract(ByVal that As big_uint) As upure_dec
-        root.connector.throws.not_implemented()
+        Dim overflow As Boolean = False
+        Dim r As upure_dec = Nothing
+        r = extract(that, overflow)
+        If overflow Then
+            throws.overflow()
+        End If
+        Return r
+    End Function
+
+    Public Function assert_extract(ByVal that As big_uint) As upure_dec
+        Dim overflow As Boolean = False
+        Dim r As upure_dec = Nothing
+        r = extract(that, overflow)
+        assert(Not overflow)
+        Return r
     End Function
 
     Public Function power(ByVal that As upure_dec, ByRef overflow As Boolean) As upure_dec
@@ -190,7 +224,7 @@ Partial Public NotInheritable Class upure_dec
             Return Me
         End If
 
-        Return power(that.n).extract(that.d)
+        Return power(that.n).assert_extract(that.d)
     End Function
 
     Public Function extract(ByVal that As upure_dec, ByRef divide_by_zero As Boolean) As upure_dec
@@ -200,6 +234,6 @@ Partial Public NotInheritable Class upure_dec
             Return Me
         End If
 
-        Return power(that.d).extract(that.n)
+        Return power(that.d).assert_extract(that.n)
     End Function
 End Class
