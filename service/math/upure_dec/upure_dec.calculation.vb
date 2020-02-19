@@ -190,7 +190,7 @@ Partial Public NotInheritable Class upure_dec
             Return Me
         End If
         Dim n As big_uint = Nothing
-        n = ((Me.n ^ (that - uint32_1)) * (Me.d ^ (that + uint32_1))).assert_extract(that)
+        n = ((Me.n ^ (that + uint32_1)) * (Me.d ^ (that - uint32_1))).assert_extract(that)
         Dim d As big_uint = Nothing
         d = Me.n * Me.d
         replace_by(n, d)

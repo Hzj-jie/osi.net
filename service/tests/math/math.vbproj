@@ -107,6 +107,7 @@
     <Compile Include="prime_test.vb" />
     <Compile Include="relatively_prime_test.vb" />
     <Compile Include="upure_dec\upure_dec_binary_str_test.vb" />
+    <Compile Include="upure_dec\upure_dec_extract_test.vb" />
     <Compile Include="upure_dec\upure_dec_str_test.vb" />
   </ItemGroup>
   <ItemGroup>

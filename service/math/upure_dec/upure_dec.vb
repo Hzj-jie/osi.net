@@ -6,6 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 
+' A pure decimal in the range of [0, 1).
 Partial Public NotInheritable Class upure_dec
     Private ReadOnly n As big_uint
     Private ReadOnly d As big_uint
@@ -67,7 +68,6 @@ Partial Public NotInheritable Class upure_dec
         assert(Not n Is Nothing)
         assert(Not d Is Nothing)
         assert(n.less(d))
-        assert(Not n.is_zero())
     End Sub
 
     Public Sub replace_by(ByVal n As big_uint, ByVal d As big_uint)

@@ -34,7 +34,7 @@ Public Module _div_rem
         End If
 #End If
 
-        ' * and - pair is more efficient than \.
+        ' * and - pair is more efficient than Mod.
         Dim r As UInt64 = 0
         r = this \ that
         remainder = assert_which.of(this - that * r).can_cast_to_uint32()
