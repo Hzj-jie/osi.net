@@ -23,7 +23,7 @@ Public NotInheritable Class upure_dec_str_test
         u = New upure_dec(0.999999999)
 
         '                         0.999999999
-        assertion.equal(u.str(), "0.99999999900000002828193")
+        assertion.equal(u.str(), "0.999999998999999917259629")
     End Sub
 
     <test>
@@ -32,7 +32,7 @@ Public NotInheritable Class upure_dec_str_test
         u = New upure_dec(0.00000000001)
 
         '                         0.00000000001
-        assertion.equal(u.str(), "0.0000000000099999999999999993949696928193981")
+        assertion.equal(u.str(), "0.00000000001000000082740370999090373")
     End Sub
 
     <test>
@@ -41,7 +41,7 @@ Public NotInheritable Class upure_dec_str_test
         u = New upure_dec(System.Math.E - 2)
 
         '                         0.71828182845905
-        assertion.equal(u.str(), "0.718281828459045090795598")
+        assertion.equal(u.str(), "0.718281828459044646706388")
     End Sub
 
     <test>

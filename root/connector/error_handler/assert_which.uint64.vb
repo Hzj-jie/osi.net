@@ -14,7 +14,7 @@ Partial Public NotInheritable Class assert_which
         End Sub
 
         Public Function can_cast_to_uint32() As UInt32
-            assert(i <= max_uint32)
+            assert(i <= max_uint32, i)
             Return CUInt(i)
         End Function
 

@@ -22,7 +22,7 @@ Public NotInheritable Class upure_dec_binary_str_test
         Dim u As upure_dec = Nothing
         u = New upure_dec(0.999999999)
 
-        assertion.equal(u.str(2), "0.11111111111111111111111111111011101101000111110100001")
+        assertion.equal(u.str(2), "0.111111111111111111111111111110111011010001111101")
     End Sub
 
     <test>
@@ -30,8 +30,7 @@ Public NotInheritable Class upure_dec_binary_str_test
         Dim u As upure_dec = Nothing
         u = New upure_dec(0.00000000001)
 
-        assertion.equal(u.str(2),
-                        "0.00000000000000000000000000000000000010101111111010111111111100001011110010110010010010101")
+        assertion.equal(u.str(2), "0.00000000000000000000000000000000000010101111111011")
     End Sub
 
     <test>
@@ -39,7 +38,7 @@ Public NotInheritable Class upure_dec_binary_str_test
         Dim u As upure_dec = Nothing
         u = New upure_dec(System.Math.E - 2)
 
-        assertion.equal(u.str(2), "0.101101111110000101010001011000101000101011101101001")
+        assertion.equal(u.str(2), "0.101101111110000101010001011000101000101011101101")
     End Sub
 
     <test>

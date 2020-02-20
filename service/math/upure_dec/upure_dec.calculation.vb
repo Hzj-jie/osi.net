@@ -180,6 +180,13 @@ Partial Public NotInheritable Class upure_dec
     End Function
 
     Public Function extract(ByVal that As big_uint, ByRef overflow As Boolean) As upure_dec
+        Return extract(that, constants.extract_power_base, overflow)
+    End Function
+
+    Public Function extract(ByVal that As big_uint,
+                            ByVal extract_power_base As UInt32,
+                            ByRef overflow As Boolean) As upure_dec
+        assert(extract_power_base > 0)
         If that Is Nothing OrElse that.is_zero() Then
             overflow = True
             set_zero()
@@ -189,19 +196,28 @@ Partial Public NotInheritable Class upure_dec
         If that.is_one() Then
             Return Me
         End If
+        Dim p As big_uint = Nothing
+        p = Me.n * that * extract_power_base \ Me.d
+        If p.is_zero_or_one() Then
+            p = New big_uint(CUInt(2))
+        End If
         Dim n As big_uint = Nothing
-        n = ((Me.n ^ (that + uint32_1)) * (Me.d ^ (that - uint32_1))).assert_extract(that)
+        n = ((Me.n ^ (that * p + uint32_1)) * (Me.d ^ (that * p - uint32_1))).assert_extract(that)
         Dim d As big_uint = Nothing
-        d = Me.n * Me.d
+        d = ((Me.n * Me.d) ^ p)
         replace_by(n, d)
         reduct_of_fraction()
         Return Me
     End Function
 
     Public Function extract(ByVal that As big_uint) As upure_dec
+        Return extract(that, constants.extract_power_base)
+    End Function
+
+    Public Function extract(ByVal that As big_uint, ByVal extract_power_base As UInt32) As upure_dec
         Dim overflow As Boolean = False
         Dim r As upure_dec = Nothing
-        r = extract(that, overflow)
+        r = extract(that, extract_power_base, overflow)
         If overflow Then
             throws.overflow()
         End If
@@ -209,9 +225,13 @@ Partial Public NotInheritable Class upure_dec
     End Function
 
     Public Function assert_extract(ByVal that As big_uint) As upure_dec
+        Return assert_extract(that, constants.extract_power_base)
+    End Function
+
+    Public Function assert_extract(ByVal that As big_uint, ByVal extract_power_base As UInt32) As upure_dec
         Dim overflow As Boolean = False
         Dim r As upure_dec = Nothing
-        r = extract(that, overflow)
+        r = extract(that, extract_power_base, overflow)
         assert(Not overflow)
         Return r
     End Function

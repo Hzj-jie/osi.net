@@ -133,6 +133,7 @@
     <Compile Include="unchecked\shift.vb" />
     <Compile Include="upure_dec\upure_dec.calculation.vb" />
     <Compile Include="upure_dec\upure_dec.compare.vb" />
+    <Compile Include="upure_dec\upure_dec.constants.vb" />
     <Compile Include="upure_dec\upure_dec.implementation.vb" />
     <Compile Include="upure_dec\upure_dec.private.vb" />
     <Compile Include="upure_dec\upure_dec.str.vb" />

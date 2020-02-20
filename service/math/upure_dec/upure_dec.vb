@@ -16,14 +16,29 @@ Partial Public NotInheritable Class upure_dec
         d = New big_uint()
     End Sub
 
+    Public Sub New(ByVal d As Double, ByVal max_shift As UInt32)
+        Me.New()
+        replace_by(d, max_shift)
+    End Sub
+
     Public Sub New(ByVal d As Double)
         Me.New()
         replace_by(d)
     End Sub
 
+    Public Sub New(ByVal d As Single, ByVal max_shift As UInt32)
+        Me.New()
+        replace_by(d, max_shift)
+    End Sub
+
     Public Sub New(ByVal d As Single)
         Me.New()
         replace_by(d)
+    End Sub
+
+    Public Sub New(ByVal d As Decimal, ByVal max_shift As UInt32)
+        Me.New()
+        replace_by(d, max_shift)
     End Sub
 
     Public Sub New(ByVal d As Decimal)
@@ -38,30 +53,45 @@ Partial Public NotInheritable Class upure_dec
         Me.d = d
     End Sub
 
-    Public Sub replace_by(ByVal v As Double)
+    Public Sub replace_by(ByVal v As Double, ByVal max_shift As UInt32)
         assert(v < 1)
         assert(v >= 0)
+        assert(max_shift > 0)
         d.set_one()
-        While v.is_not_integral()
+        While v.is_not_integral() AndAlso max_shift > 0
             d.left_shift(uint32_1)
             v *= 2
+            max_shift -= uint32_1
         End While
         assert(n.replace_by(v))
+    End Sub
+
+    Public Sub replace_by(ByVal v As Double)
+        replace_by(v, constants.replace_by_dec_max_shift)
+    End Sub
+
+    Public Sub replace_by(ByVal d As Single, ByVal max_shift As UInt32)
+        replace_by(CDbl(d), max_shift)
     End Sub
 
     Public Sub replace_by(ByVal d As Single)
         replace_by(CDbl(d))
     End Sub
 
-    Public Sub replace_by(ByVal v As Decimal)
+    Public Sub replace_by(ByVal v As Decimal, ByVal max_shift As UInt32)
         assert(v < 1)
         assert(v >= 0)
         d.set_one()
-        While v.is_not_integral()
+        While v.is_not_integral() AndAlso max_shift > 0
             d.left_shift(uint32_1)
             v *= 2
+            max_shift -= uint32_1
         End While
         assert(n.replace_by(v))
+    End Sub
+
+    Public Sub replace_by(ByVal v As Decimal)
+        replace_by(v, constants.replace_by_dec_max_shift)
     End Sub
 
     Private Shared Sub assert_n_d(ByVal n As big_uint, ByVal d As big_uint)
