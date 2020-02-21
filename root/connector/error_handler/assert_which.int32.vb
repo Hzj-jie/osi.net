@@ -14,37 +14,24 @@ Partial Public NotInheritable Class assert_which
         End Sub
 
         Public Function can_cast_to_uint32() As UInt32
-            assert(i >= 0)
-            Return CUInt(i)
+            Try
+                Return CUInt(i)
+            Catch ex As OverflowException
+                assert(i >= 0, ex)
+                assert(False, ex)
+                Return 0
+            End Try
         End Function
 
         Public Function can_cast_to_byte() As Byte
-            assert(i >= 0)
-            assert(i <= max_uint8)
-            Return CByte(i)
-        End Function
-    End Structure
-
-    Public Structure debug_int32_assertion
-        Private ReadOnly i As Int32
-
-        Public Sub New(ByVal i As Int32)
-            Me.i = i
-        End Sub
-
-        Public Function can_cast_to_uint32() As UInt32
-#If DEBUG Then
-            assert(i >= 0)
-#End If
-            Return CUInt(i)
-        End Function
-
-        Public Function can_cast_to_byte() As Byte
-#If DEBUG Then
-            assert(i >= 0)
-            assert(i <= max_uint8)
-#End If
-            Return CByte(i)
+            Try
+                Return CByte(i)
+            Catch ex As OverflowException
+                assert(i >= 0, ex)
+                assert(i <= max_uint8, ex)
+                assert(False, ex)
+                Return 0
+            End Try
         End Function
     End Structure
 End Class

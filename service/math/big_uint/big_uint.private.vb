@@ -60,7 +60,7 @@ Partial Public NotInheritable Class big_uint
         t += v(p)
         t += d
         v(p) = CUInt(t And max_uint32)
-        c = assert_which.of_debug(t >> bit_count_in_uint32).can_cast_to_uint32()
+        c = assert_which.of(t >> bit_count_in_uint32).can_cast_to_uint32()
     End Sub
 
     Private Function remove_extra_blank() As UInt32
@@ -100,7 +100,7 @@ Partial Public NotInheritable Class big_uint
                     t = this.v(i)
                     t *= that.v(j)
                     add(CUInt(t And max_uint32), c, i + j)
-                    c += assert_which.of_debug(t >> bit_count_in_uint32).can_cast_to_uint32()
+                    c += assert_which.of(t >> bit_count_in_uint32).can_cast_to_uint32()
                 Next
                 If c > 0 Then
                     add(0, c, i + that.v.size())
@@ -208,7 +208,7 @@ Partial Public NotInheritable Class big_uint
                 t <<= bit_count_in_uint32
                 t = t Or v(i)
                 t = t.div_rem(that, remainder)
-                v(i) = assert_which.of_debug(t).can_cast_to_uint32()
+                v(i) = assert_which.of(t).can_cast_to_uint32()
             End If
             If i = 0 Then
                 Exit While

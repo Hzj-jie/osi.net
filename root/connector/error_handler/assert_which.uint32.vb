@@ -14,13 +14,23 @@ Partial Public NotInheritable Class assert_which
         End Sub
 
         Public Function can_cast_to_int32() As Int32
-            assert(i <= max_int32)
-            Return CInt(i)
+            Try
+                Return CInt(i)
+            Catch ex As OverflowException
+                assert(i <= max_int32, ex)
+                assert(False, ex)
+                Return 0
+            End Try
         End Function
 
         Public Function can_cast_to_byte() As Byte
-            assert(i <= max_uint8)
-            Return CByte(i)
+            Try
+                Return CByte(i)
+            Catch ex As OverflowException
+                assert(i <= max_uint8, ex)
+                assert(False, ex)
+                Return 0
+            End Try
         End Function
     End Structure
 End Class

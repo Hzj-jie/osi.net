@@ -88,7 +88,7 @@ Partial Public NotInheritable Class big_uint
                 Dim d As UInt32 = 0
                 d = t.v(0)
                 For i As UInt32 = 0 To dc - uint32_1
-                    r.Append(number_to_char(assert_which.of_debug(d And m).can_cast_to_byte()))
+                    r.Append(number_to_char(assert_which.of(d And m).can_cast_to_byte()))
                     d >>= ss
                     If d = 0 Then
                         If t.v.size() > 1 Then
@@ -101,12 +101,12 @@ Partial Public NotInheritable Class big_uint
             End While
         Else
             Dim bu As UInt32 = 0
-            bu = assert_which.of_debug(base ^ dc).can_cast_to_uint32()
+            bu = assert_which.of(base ^ dc).can_cast_to_uint32()
             While Not t.is_zero()
                 Dim rm As UInt32 = 0
                 t.assert_divide(bu, rm)
                 For i As UInt32 = 0 To dc - uint32_1
-                    r.Append(number_to_char(assert_which.of_debug(rm Mod base).can_cast_to_byte()))
+                    r.Append(number_to_char(assert_which.of(rm Mod base).can_cast_to_byte()))
                     rm \= base
                     If rm = 0 Then
                         If Not t.is_zero() Then
@@ -166,13 +166,13 @@ Partial Public NotInheritable Class big_uint
                 If j = dc Then
                     r.left_shift(shift_t)
                 Else
-                    r.left_shift(shift_base(base, assert_which.of_debug(j).can_cast_to_byte()))
+                    r.left_shift(shift_base(base, assert_which.of(j).can_cast_to_byte()))
                 End If
             Else
                 If j = dc Then
                     r.multiply(multiply_t)
                 Else
-                    r.multiply(multiply_base(base, assert_which.of_debug(j).can_cast_to_byte()))
+                    r.multiply(multiply_base(base, assert_which.of(j).can_cast_to_byte()))
                 End If
             End If
             r.add(u)
