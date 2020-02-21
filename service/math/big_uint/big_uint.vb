@@ -130,7 +130,7 @@ Partial Public NotInheritable Class big_uint
         Dim x As UInt32 = 0
         Dim j As UInt32 = 0
         For i As Int32 = CInt(start) To CInt([end]) Step [step]
-            x += (CUInt(a(i)) << assert_which.of(j << bit_shift_in_byte).can_cast_to_int32())
+            x += (CUInt(a(i)) << assert_which.of_debug(j << bit_shift_in_byte).can_cast_to_int32())
             j += uint32_1
             If j = byte_count_in_uint32 Then
                 v.push_back(x)
@@ -189,7 +189,7 @@ Partial Public NotInheritable Class big_uint
         Dim v As vector(Of UInt32) = Nothing
         v = New vector(Of UInt32)()
         While d >= 1
-            v.emplace_back(assert_which.of(d Mod max_uint32_plus_1).can_truncate_to_uint32())
+            v.emplace_back(assert_which.of_debug(d Mod max_uint32_plus_1).can_truncate_to_uint32())
             d /= max_uint32_plus_1
             d = System.Math.Truncate(d)
         End While
@@ -206,7 +206,7 @@ Partial Public NotInheritable Class big_uint
         Dim v As vector(Of UInt32) = Nothing
         v = New vector(Of UInt32)()
         While d >= 1
-            v.emplace_back(assert_which.of(d Mod max_uint32_plus_1).can_truncate_to_uint32())
+            v.emplace_back(assert_which.of_debug(d Mod max_uint32_plus_1).can_truncate_to_uint32())
             d /= max_uint32_plus_1
             d = System.Math.Truncate(d)
         End While

@@ -10,7 +10,7 @@ Partial Public NotInheritable Class big_uint
     Private Sub set_bit_count(ByVal s As UInt64)
         set_zero()
         Dim l As UInt32 = 0
-        l = assert_which.of(s >> bit_count_in_uint32_shift).can_cast_to_uint32()
+        l = assert_which.of_debug(s >> bit_count_in_uint32_shift).can_cast_to_uint32()
         If (s And bit_count_in_uint32_mask) > 0 Then
             l += uint32_1
         End If
@@ -38,8 +38,8 @@ Partial Public NotInheritable Class big_uint
         If require_assert Then
             assert(Not overflow)
         End If
-        v_index = assert_which.of(pos >> bit_count_in_uint32_shift).can_cast_to_uint32()
-        b_rindex = assert_which.of(pos And bit_count_in_uint32_mask).can_cast_to_byte()
+        v_index = assert_which.of_debug(pos >> bit_count_in_uint32_shift).can_cast_to_uint32()
+        b_rindex = assert_which.of_debug(pos And bit_count_in_uint32_mask).can_cast_to_byte()
         If fill AndAlso overflow Then
             If v_index >= v.size() Then
                 v.resize(v_index + uint32_1)

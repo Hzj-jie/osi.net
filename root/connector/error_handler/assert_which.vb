@@ -8,12 +8,20 @@ Partial Public NotInheritable Class assert_which
         Return New double_assertion(i)
     End Function
 
+    Public Shared Function of_debug(ByVal i As Double) As debug_double_assertion
+        Return New debug_double_assertion(i)
+    End Function
+
     Public Shared Function [of](ByVal i As Decimal) As decimal_assertion
         Return New decimal_assertion(i)
     End Function
 
     Public Shared Function [of](ByVal i As Int32) As int32_assertion
         Return New int32_assertion(i)
+    End Function
+
+    Public Shared Function of_debug(ByVal i As Int32) As debug_int32_assertion
+        Return New debug_int32_assertion(i)
     End Function
 
     Public Shared Function [of](ByVal i As Int64) As int64_assertion
@@ -26,6 +34,10 @@ Partial Public NotInheritable Class assert_which
 
     Public Shared Function [of](ByVal i As UInt64) As uint64_assertion
         Return New uint64_assertion(i)
+    End Function
+
+    Public Shared Function of_debug(ByVal i As UInt64) As debug_uint64_assertion
+        Return New debug_uint64_assertion(i)
     End Function
 
     Public Shared Function [of](ByVal i As Object) As object_assertion
