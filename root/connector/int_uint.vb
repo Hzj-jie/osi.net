@@ -1,7 +1,7 @@
 ﻿
-Option Strict On
-
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict Off
 
 Public Module _non_integer_overflow
     Public Function uint8_int8(ByVal i As Byte) As SByte

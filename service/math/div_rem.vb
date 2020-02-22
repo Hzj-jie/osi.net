@@ -37,7 +37,11 @@ Public Module _div_rem
         ' * and - pair is more efficient than Mod.
         Dim r As UInt64 = 0
         r = this \ that
+#If DEBUG Then
         remainder = assert_which.of(this - that * r).can_cast_to_uint32()
+#Else
+        remainder = CUInt(this - that * r)
+#End If
         Return r
     End Function
 End Module

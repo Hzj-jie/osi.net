@@ -27,7 +27,7 @@ Partial Public NotInheritable Class big_uint
                 t = shift.left(v(i), ls)
                 Dim c As UInt32 = 0
                 v(i) = CUInt(t And max_uint32)
-                c = assert_which.of(t >> bit_count_in_uint32).can_cast_to_uint32()
+                c = CUInt(t >> bit_count_in_uint32)
                 If c > 0 Then
                     If i = v.size() - uint32_1 Then
                         v.push_back(0)
@@ -94,7 +94,7 @@ Partial Public NotInheritable Class big_uint
                     t = shift.left(v(i), bit_count_in_uint32 - ls)
                     Dim c As UInt32 = 0
                     c = CUInt(t And max_uint32)
-                    v(i) = assert_which.of(t >> bit_count_in_uint32).can_cast_to_uint32()
+                    v(i) = CUInt(t >> bit_count_in_uint32)
                     If i > 0 AndAlso c > 0 Then
                         assert((v(i - uint32_1) And c) = 0)
                         v(i - uint32_1) = v(i - uint32_1) Or c
