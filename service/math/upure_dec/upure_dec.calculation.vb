@@ -25,7 +25,7 @@ Partial Public NotInheritable Class upure_dec
             overflow = True
         End If
         replace_by(n, d)
-        reduct_of_fraction()
+        reduce_fraction()
         Return Me
     End Function
 
@@ -69,7 +69,7 @@ Partial Public NotInheritable Class upure_dec
         End If
         assert(Not n Is Nothing)
         replace_by(n, d)
-        reduct_of_fraction()
+        reduce_fraction()
         Return Me
     End Function
 
@@ -108,7 +108,7 @@ Partial Public NotInheritable Class upure_dec
         n = Me.n * that.n
         d = Me.d * that.d
         replace_by(n, d)
-        reduct_of_fraction()
+        reduce_fraction()
         Return Me
     End Function
 
@@ -134,7 +134,7 @@ Partial Public NotInheritable Class upure_dec
             overflow = True
         End If
         replace_by(n, d)
-        reduct_of_fraction()
+        reduce_fraction()
         Return Me
     End Function
 
@@ -206,7 +206,7 @@ Partial Public NotInheritable Class upure_dec
         Dim d As big_uint = Nothing
         d = ((Me.n * Me.d) ^ p)
         replace_by(n, d)
-        reduct_of_fraction()
+        reduce_fraction()
         Return Me
     End Function
 

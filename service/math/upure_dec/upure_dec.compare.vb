@@ -38,6 +38,22 @@ Partial Public NotInheritable Class upure_dec
             Return -1
         End If
 
+        If this.d > that.d AndAlso this.n <= that.n Then
+            Return -1
+        End If
+        If this.d < that.d AndAlso this.n >= that.n Then
+            Return 1
+        End If
+        If this.d >= that.d AndAlso this.n < that.n Then
+            Return -1
+        End If
+        If this.d <= that.d AndAlso this.n > that.n Then
+            Return 1
+        End If
+        If this.d = that.d AndAlso this.n = that.n Then
+            Return 0
+        End If
+
         Dim v1 As big_uint = Nothing
         Dim r1 As big_uint = Nothing
         Dim v2 As big_uint = Nothing

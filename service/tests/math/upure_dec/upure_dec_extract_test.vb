@@ -106,7 +106,7 @@ Public NotInheritable Class upure_dec_extract_test
         u = New upure_dec(0.1)
         u = u.assert_extract(New big_uint(3))
 
-        assertion.equal(u.str(), "0.464158883361277339566469616965230323949346546088885098257910799")
+        assertion.equal(u.str(), "0.46415888336127733956646961696523032394934654608888509825791")
         '                         0.46415888336128
     End Sub
 
