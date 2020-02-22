@@ -27,12 +27,12 @@ Partial Public NotInheritable Class big_uint
 
     Public Sub New(ByVal i As big_uint)
         Me.New()
-        replace_by(i)
+        assert(replace_by(i))
     End Sub
 
     Public Sub New(ByVal i() As Byte)
         Me.New()
-        replace_by(i)
+        assert(replace_by(i))
     End Sub
 
     Public Sub New(ByVal i As Single)

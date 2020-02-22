@@ -247,6 +247,24 @@ Partial Public NotInheritable Class upure_dec
         Return power(that.n).assert_extract(that.d)
     End Function
 
+    Public Function power(ByVal that As upure_dec) As upure_dec
+        Dim overflow As Boolean = False
+        Dim r As upure_dec = Nothing
+        r = power(that, overflow)
+        If overflow Then
+            throws.overflow()
+        End If
+        Return r
+    End Function
+
+    Public Function assert_power(ByVal that As upure_dec) As upure_dec
+        Dim overflow As Boolean = False
+        Dim r As upure_dec = Nothing
+        r = power(that, overflow)
+        assert(Not overflow)
+        Return r
+    End Function
+
     Public Function extract(ByVal that As upure_dec, ByRef divide_by_zero As Boolean) As upure_dec
         divide_by_zero = False
         If that Is Nothing OrElse that.is_zero() Then
@@ -255,5 +273,23 @@ Partial Public NotInheritable Class upure_dec
         End If
 
         Return power(that.d).assert_extract(that.n)
+    End Function
+
+    Public Function extract(ByVal that As upure_dec) As upure_dec
+        Dim divide_by_zero As Boolean = False
+        Dim r As upure_dec = Nothing
+        r = extract(that, divide_by_zero)
+        If divide_by_zero Then
+            throws.divide_by_zero()
+        End If
+        Return r
+    End Function
+
+    Public Function assert_extract(ByVal that As upure_dec) As upure_dec
+        Dim divide_by_zero As Boolean = False
+        Dim r As upure_dec = Nothing
+        r = extract(that, divide_by_zero)
+        assert(Not divide_by_zero)
+        Return r
     End Function
 End Class

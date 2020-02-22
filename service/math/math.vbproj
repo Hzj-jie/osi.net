@@ -135,6 +135,8 @@
     <Compile Include="upure_dec\upure_dec.compare.vb" />
     <Compile Include="upure_dec\upure_dec.constants.vb" />
     <Compile Include="upure_dec\upure_dec.implementation.vb" />
+    <Compile Include="upure_dec\upure_dec.operator.vb" />
+    <Compile Include="upure_dec\upure_dec.override.vb" />
     <Compile Include="upure_dec\upure_dec.private.vb" />
     <Compile Include="upure_dec\upure_dec.str.vb" />
     <Compile Include="upure_dec\upure_dec.vb" />
@@ -170,7 +172,9 @@
   <ItemGroup>
     <Content Include="expression\expression.syntax.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="big_float\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="math.dep" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
