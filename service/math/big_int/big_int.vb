@@ -36,17 +36,17 @@ Partial Public NotInheritable Class big_int
 
     Public Sub New(ByVal i As big_int)
         Me.New()
-        replace_by(i)
+        assert(replace_by(i))
     End Sub
 
     Public Sub New(ByVal i As big_uint)
         Me.New()
-        replace_by(i)
+        assert(replace_by(i))
     End Sub
 
     Public Sub New(ByVal i() As Byte)
         Me.New()
-        replace_by(i)
+        assert(replace_by(i))
     End Sub
 
     Public Shared Function move(ByVal i As big_int) As big_int

@@ -110,10 +110,10 @@ Partial Public NotInheritable Class big_uint
     End Sub
 
     Public Function replace_by(ByVal a() As Byte) As Boolean
-        If isemptyarray(a) Then
-            Return False
-        End If
         set_zero()
+        If isemptyarray(a) Then
+            Return True
+        End If
         v.reserve((array_size(a) + uint32_3) \ byte_count_in_uint32)
         Dim start As UInt32 = 0
         Dim [end] As UInt32 = 0
