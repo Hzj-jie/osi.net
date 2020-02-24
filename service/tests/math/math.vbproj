@@ -69,6 +69,7 @@
     <Compile Include="big_int\predefined\big_int_io_perf.vb" />
     <Compile Include="big_int\predefined\big_int_predefined_perf_test.vb" />
     <Compile Include="big_int\predefined\big_int_predefined_test.vb" />
+    <Compile Include="big_ufloat\big_ufloat_str_test.vb" />
     <Compile Include="big_uint\big_uint_add_sub_multiply_case.vb" />
     <Compile Include="big_uint\big_uint_bytes_case.vb" />
     <Compile Include="big_uint\big_uint_divide_multiply_case.vb" />

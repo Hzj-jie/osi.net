@@ -57,6 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="abs.vb" />
+    <Compile Include="big_ufloat\big_ufloat.constants.vb" />
+    <Compile Include="big_ufloat\big_ufloat.str.vb" />
+    <Compile Include="big_ufloat\big_ufloat.vb" />
     <Compile Include="big_int\big_int.assert.vb" />
     <Compile Include="big_int\big_int.bit.vb" />
     <Compile Include="big_int\big_int.calculation.vb" />
@@ -172,9 +175,7 @@
   <ItemGroup>
     <Content Include="expression\expression.syntax.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="big_float\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="math.dep" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
