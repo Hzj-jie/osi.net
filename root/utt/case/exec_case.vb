@@ -88,43 +88,41 @@ Public Class exec_case
     End Sub
 
     Public NotOverridable Overrides Function run() As Boolean
-        If File.Exists(exec_file) Then
-            Using p As shell_less_process = New shell_less_process(True)
-                p.start_info().FileName() = exec_file
-                p.start_info().Arguments() = exec_arg
-                If Not init_process(p) Then
-                    Return False
-                End If
-                AddHandler p.receive_output, AddressOf output_received
-                AddHandler p.receive_error, AddressOf error_received
-                Dim ex As Exception = Nothing
-                If p.start(ex) Then
-                    assert(ex Is Nothing)
-                    If Not inputs() Is Nothing Then
-                        For Each s As String In inputs()
-                            p.stdin().Write(s)
-                        Next
-                    End If
-                    If Not assertion.is_true(p.wait_for_exit(timeout_ms),
-                                       process_name,
-                                       " cannot finish in ",
-                                       timeout_ms,
-                                       " milliseconds") Then
-                        If Not p.quit(0) Then
-                            utt_raise_error("failed to stop ", process_name)
-                        End If
-                    End If
-                    assertion.equal(p.exit_code(), expected_return)
-                    Return True
-                Else
-                    If Not ex Is Nothing Then
-                        assertion.is_true(False, ex.Message())
-                    End If
-                    Return False
-                End If
-            End Using
-        Else
+        If Not File.Exists(exec_file) Then
             Return False
         End If
+        Using p As shell_less_process = New shell_less_process(True)
+            p.start_info().FileName() = exec_file
+            p.start_info().Arguments() = exec_arg
+            If Not init_process(p) Then
+                Return False
+            End If
+            AddHandler p.receive_output, AddressOf output_received
+            AddHandler p.receive_error, AddressOf error_received
+            Dim ex As Exception = Nothing
+            If Not p.start(ex) Then
+                If Not ex Is Nothing Then
+                    assertion.is_true(False, ex.Message())
+                End If
+                Return False
+            End If
+            assert(ex Is Nothing)
+            If Not inputs() Is Nothing Then
+                For Each s As String In inputs()
+                    p.stdin().Write(s)
+                Next
+            End If
+            If Not assertion.is_true(p.wait_for_exit(timeout_ms),
+                                     process_name,
+                                     " cannot finish in ",
+                                     timeout_ms,
+                                     " milliseconds") Then
+                If Not p.quit(0) Then
+                    utt_raise_error("failed to stop ", process_name)
+                End If
+            End If
+            assertion.equal(p.exit_code(), expected_return)
+            Return True
+        End Using
     End Function
 End Class
