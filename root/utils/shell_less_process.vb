@@ -64,29 +64,29 @@ Public NotInheritable Class shell_less_process
     End Sub
 
     Private Sub received(ByVal e As DataReceivedEventArgs, ByVal output As Boolean)
-        If Not e Is Nothing AndAlso Not e.Data() Is Nothing Then
-            If output Then
-                RaiseEvent receive_output(e.Data())
-            Else
-                RaiseEvent receive_error(e.Data())
-            End If
+        If e Is Nothing OrElse e.Data() Is Nothing Then
+            Return
+        End If
+        If output Then
+            RaiseEvent receive_output(e.Data())
+        Else
+            RaiseEvent receive_error(e.Data())
         End If
     End Sub
 
     Private Sub invoke_in_synchronizing_object(ByVal v As Action)
         If proc().SynchronizingObject() Is Nothing Then
             v()
+            Return
+        End If
+        Dim si As synchronize_invoke = Nothing
+        si = direct_cast(Of synchronize_invoke)(proc().SynchronizingObject(), False)
+        ' This is definitely not the correct behavior, but Process.Exited() may be raised on a random ThreadPool thread.
+        ' TODO: Why Process.Exited() won't respect SynchronizingObject().
+        If si Is Nothing Then
+            proc().SynchronizingObject().Invoke(v, Nothing)
         Else
-            Dim si As synchronize_invoke = Nothing
-            si = direct_cast(Of synchronize_invoke)(proc().SynchronizingObject(), False)
-            ' This is definitely not the correct behavior, but Process.Exited() may be raised on a random ThreadPool
-            ' thread.
-            ' TODO: Why Process.Exited() won't respect SynchronizingObject().
-            If si Is Nothing Then
-                proc().SynchronizingObject().Invoke(v, Nothing)
-            Else
-                si.async_invoke(v, Nothing)
-            End If
+            si.async_invoke(v, Nothing)
         End If
     End Sub
 
@@ -109,20 +109,21 @@ Public NotInheritable Class shell_less_process
     End Sub
 
     Private Sub process_exited()
-        If proc_exited.mark_in_use() Then
-            assert(ce.wait())
-            proc_started.release()
-            RaiseEvent process_exit()
-            If enable_raise_event Then
-                void_(Sub()
-                          proc().CancelOutputRead()
-                          proc().CancelErrorRead()
-                      End Sub)
-            End If
-#If USE_EXIT_SIGNAL Then
-            exit_signal.force_set()
-#End If
+        If Not proc_exited.mark_in_use() Then
+            Return
         End If
+        assert(ce.wait())
+        proc_started.release()
+        RaiseEvent process_exit()
+        If enable_raise_event Then
+            void_(Sub()
+                      proc().CancelOutputRead()
+                      proc().CancelErrorRead()
+                  End Sub)
+        End If
+#If USE_EXIT_SIGNAL Then
+        exit_signal.force_set()
+#End If
     End Sub
 
     Private Sub process_exited(ByVal sender As Object, ByVal e As EventArgs)
@@ -152,33 +153,32 @@ Public NotInheritable Class shell_less_process
     End Function
 
     Public Function start(Optional ByRef ex As Exception = Nothing) As Boolean
-        If proc_started.mark_in_use() Then
-            ce.increment()
-            Using defer(AddressOf ce.decrement)
-                If proc_exited.in_use() Then
-                    proc_exited.release()
-                End If
-                start_info().UseShellExecute() = False
-                start_info().RedirectStandardOutput() = True
-                start_info().RedirectStandardError() = True
-                start_info().RedirectStandardInput() = True
-                Try
-                    If Not proc().Start() Then
-                        Return False
-                    End If
-                Catch e As Exception
-                    ex = e
-                    Return False
-                End Try
-                If enable_raise_event Then
-                    proc().BeginOutputReadLine()
-                    proc().BeginErrorReadLine()
-                End If
-            End Using
-            Return True
-        Else
+        If Not proc_started.mark_in_use() Then
             Return False
         End If
+        ce.increment()
+        Using defer(AddressOf ce.decrement)
+            If proc_exited.in_use() Then
+                proc_exited.release()
+            End If
+            start_info().UseShellExecute() = False
+            start_info().RedirectStandardOutput() = True
+            start_info().RedirectStandardError() = True
+            start_info().RedirectStandardInput() = True
+            Try
+                If Not proc().Start() Then
+                    Return False
+                End If
+            Catch e As Exception
+                ex = e
+                Return False
+            End Try
+            If enable_raise_event Then
+                proc().BeginOutputReadLine()
+                proc().BeginErrorReadLine()
+            End If
+        End Using
+        Return True
     End Function
 
     Public Function quit(ByVal wait_ms As Int64) As Boolean
@@ -247,8 +247,7 @@ Public NotInheritable Class shell_less_process
     Public Shared Operator +(ByVal this As shell_less_process) As Process
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return this.p.get()
         End If
+        Return this.p.get()
     End Operator
 End Class
