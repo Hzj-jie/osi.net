@@ -28,14 +28,14 @@ Partial Public NotInheritable Class upure_dec
         assert(Not this Is Nothing)
         assert(Not that Is Nothing)
 
-        If this.n.is_zero() AndAlso that.n.is_zero() Then
+        If this.is_zero() AndAlso that.is_zero() Then
             Return 0
         End If
-        If this.n.is_zero() Then
-            Return 1
-        End If
-        If that.n.is_zero() Then
+        If this.is_zero() Then
             Return -1
+        End If
+        If that.is_zero() Then
+            Return 1
         End If
 
         If this.d > that.d AndAlso this.n <= that.n Then

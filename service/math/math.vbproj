@@ -57,7 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="abs.vb" />
+    <Compile Include="big_ufloat\big_ufloat.compare.vb" />
     <Compile Include="big_ufloat\big_ufloat.constants.vb" />
+    <Compile Include="big_ufloat\big_ufloat.implementation.vb" />
+    <Compile Include="big_ufloat\big_ufloat.override.vb" />
     <Compile Include="big_ufloat\big_ufloat.str.vb" />
     <Compile Include="big_ufloat\big_ufloat.vb" />
     <Compile Include="big_int\big_int.assert.vb" />

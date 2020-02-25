@@ -11,9 +11,13 @@ Partial Public NotInheritable Class upure_dec
     Private ReadOnly n As big_uint
     Private ReadOnly d As big_uint
 
+    Public Shared Function zero() As upure_dec
+        Return New upure_dec()
+    End Function
+
     Public Sub New()
-        n = New big_uint()
-        d = New big_uint()
+        n = big_uint.zero()
+        d = big_uint.one()
     End Sub
 
     Public Sub New(ByVal d As Double, ByVal max_shift As UInt32)

@@ -32,6 +32,14 @@ Partial Public NotInheritable Class big_ufloat
         Me.d = d
     End Sub
 
+    Public Sub New(ByVal i As big_uint)
+        Me.New(i, upure_dec.zero())
+    End Sub
+
+    Public Sub New(ByVal d As upure_dec)
+        Me.New(big_uint.zero(), d)
+    End Sub
+
     Public Sub replace_by(ByVal d As Double, ByVal max_shift As UInt32)
         Me.i.replace_by(int_part(d))
         Me.d.replace_by(dec_part(d), max_shift)
@@ -48,5 +56,9 @@ Partial Public NotInheritable Class big_ufloat
 
     Private Shared Function dec_part(ByVal d As Double) As Double
         Return d - int_part(d)
+    End Function
+
+    Public Function is_zero() As Boolean
+        Return i.is_zero() AndAlso d.is_zero()
     End Function
 End Class
