@@ -18,6 +18,15 @@ Public NotInheritable Class big_ufloat_str_test
         '                         2.71828182845905
     End Sub
 
+    <test>
+    Private Shared Sub pi()
+        Dim v As big_ufloat = Nothing
+        v = New big_ufloat(System.Math.PI)
+
+        assertion.equal(v.str(), "3.1415926535897931159979634")
+        '                         3.14159265358979
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
