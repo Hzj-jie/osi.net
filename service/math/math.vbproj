@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="abs.vb" />
+    <Compile Include="big_ufloat\big_ufloat.calculation.vb" />
     <Compile Include="big_ufloat\big_ufloat.compare.vb" />
     <Compile Include="big_ufloat\big_ufloat.constants.vb" />
     <Compile Include="big_ufloat\big_ufloat.implementation.vb" />

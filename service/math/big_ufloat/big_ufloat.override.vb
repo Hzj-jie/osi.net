@@ -5,7 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 
-Public NotInheritable Class big_ufloat
+Partial Public NotInheritable Class big_ufloat
     Public Overrides Function Equals(ByVal obj As Object) As Boolean
         Return Equals(cast(Of big_ufloat)().from(obj, False))
     End Function
