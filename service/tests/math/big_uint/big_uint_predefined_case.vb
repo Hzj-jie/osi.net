@@ -3,10 +3,11 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.constants
 Imports osi.root.utt
 Imports osi.service.math
 
-Friend Class big_uint_predefined_case
+Friend NotInheritable Class big_uint_predefined_case
     Inherits [case]
 
     Private Shared Function case1() As Boolean
@@ -41,8 +42,38 @@ Friend Class big_uint_predefined_case
         Return True
     End Function
 
+    Private Shared Function case3() As Boolean
+        Dim l As big_uint = Nothing
+        l = New big_uint(10)
+        Dim r As big_uint = Nothing
+        r = New big_uint(13)
+        Dim overflow As Boolean = False
+        l.sub(r, overflow)
+        assertion.is_true(overflow)
+        assertion.equal(l.as_uint32(overflow), CUInt(4294967293))
+        assertion.is_false(overflow)
+        Return True
+    End Function
+
+    Private Shared Function case4() As Boolean
+        Dim l As big_uint = Nothing
+        l = New big_uint(10)
+        l *= (max_uint32 + 1UL)
+        Dim r As big_uint = Nothing
+        r = New big_uint(13)
+        r *= (max_uint32 + 1UL)
+        Dim overflow As Boolean = False
+        l.sub(r, overflow)
+        assertion.is_true(overflow)
+        assertion.equal(l.as_uint64(overflow), 4294967293UL * (max_uint32 + 1UL))
+        assertion.is_false(overflow)
+        Return True
+    End Function
+
     Public Overrides Function run() As Boolean
         Return case1() AndAlso
-               case2()
+               case2() AndAlso
+               case3() AndAlso
+               case4()
     End Function
 End Class
