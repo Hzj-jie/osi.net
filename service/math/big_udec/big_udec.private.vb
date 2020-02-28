@@ -3,7 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Partial Public NotInheritable Class udec
+Partial Public NotInheritable Class big_udec
     Private Sub reduce_fraction()
         For i As Int32 = 0 To prime_count - 1
             While True

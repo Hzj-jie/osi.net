@@ -7,12 +7,12 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 ' A positive decimal in range of [0, +inf) by the representation of n / d.
-Partial Public NotInheritable Class udec
+Partial Public NotInheritable Class big_udec
     Private ReadOnly n As big_uint
     Private ReadOnly d As big_uint
 
-    Public Shared Function zero() As udec
-        Return New udec()
+    Public Shared Function zero() As big_udec
+        Return New big_udec()
     End Function
 
     Public Sub New()
@@ -106,7 +106,7 @@ Partial Public NotInheritable Class udec
         Return True
     End Function
 
-    Public Function replace_by(ByVal n As udec) As Boolean
+    Public Function replace_by(ByVal n As big_udec) As Boolean
         If n Is Nothing Then
             Return False
         End If
@@ -123,14 +123,14 @@ Partial Public NotInheritable Class udec
         d.set_one()
     End Sub
 
-    Public Shared Function move(ByVal i As udec) As udec
+    Public Shared Function move(ByVal i As big_udec) As big_udec
         If i Is Nothing Then
             Return Nothing
         End If
-        Return New udec(big_uint.move(i.n), big_uint.move(i.d))
+        Return New big_udec(big_uint.move(i.n), big_uint.move(i.d))
     End Function
 
-    Public Shared Function swap(ByVal this As udec, ByVal that As udec) As Boolean
+    Public Shared Function swap(ByVal this As big_udec, ByVal that As big_udec) As Boolean
         If this Is Nothing OrElse that Is Nothing Then
             Return False
         End If
@@ -146,13 +146,13 @@ Partial Public NotInheritable Class udec
         Return n.is_one() AndAlso d.is_one()
     End Function
 
-    Public Function upure_dec_part() As udec
+    Public Function upure_dec_part() As big_udec
         If upure_dec() Then
             Return CloneT()
         End If
         Dim r As big_uint = Nothing
         n.CloneT().assert_divide(d, r)
-        Return New udec(r, d)
+        Return New big_udec(r, d)
     End Function
 
     Public Function int_part() As big_uint

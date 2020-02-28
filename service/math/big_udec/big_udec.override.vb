@@ -5,9 +5,9 @@ Option Strict On
 
 Imports osi.root.connector
 
-Partial Public NotInheritable Class udec
+Partial Public NotInheritable Class big_udec
     Public Overrides Function Equals(ByVal obj As Object) As Boolean
-        Return equal(cast(Of udec)(obj))
+        Return equal(cast(Of big_udec)(obj))
     End Function
 
     Public Overrides Function GetHashCode() As Int32

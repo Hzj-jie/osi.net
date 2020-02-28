@@ -6,8 +6,8 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 
-Partial Public NotInheritable Class udec
-    Public Function add(ByVal that As udec) As udec
+Partial Public NotInheritable Class big_udec
+    Public Function add(ByVal that As big_udec) As big_udec
         If that Is Nothing OrElse that.is_zero() Then
             Return Me
         End If
@@ -48,7 +48,7 @@ Partial Public NotInheritable Class udec
         reduce_fraction()
     End Sub
 
-    Public Function [sub](ByVal that As udec, ByRef overflow As Boolean) As udec
+    Public Function [sub](ByVal that As big_udec, ByRef overflow As Boolean) As big_udec
         If that Is Nothing OrElse that.is_zero() Then
             Return Me
         End If
@@ -61,9 +61,9 @@ Partial Public NotInheritable Class udec
         Return Me
     End Function
 
-    Public Function [sub](ByVal that As udec) As udec
+    Public Function [sub](ByVal that As big_udec) As big_udec
         Dim overflow As Boolean = False
-        Dim r As udec = Nothing
+        Dim r As big_udec = Nothing
         r = [sub](that, overflow)
         If overflow Then
             throws.overflow()
@@ -71,15 +71,15 @@ Partial Public NotInheritable Class udec
         Return r
     End Function
 
-    Public Function assert_sub(ByVal that As udec) As udec
+    Public Function assert_sub(ByVal that As big_udec) As big_udec
         Dim overflow As Boolean = False
-        Dim r As udec = Nothing
+        Dim r As big_udec = Nothing
         r = [sub](that, overflow)
         assert(Not overflow)
         Return r
     End Function
 
-    Public Function multiply(ByVal that As udec) As udec
+    Public Function multiply(ByVal that As big_udec) As big_udec
         If that Is Nothing Then
             Return Me
         End If
@@ -100,7 +100,7 @@ Partial Public NotInheritable Class udec
         Return Me
     End Function
 
-    Public Function divide(ByVal that As udec, ByRef divide_by_zero As Boolean) As udec
+    Public Function divide(ByVal that As big_udec, ByRef divide_by_zero As Boolean) As big_udec
         divide_by_zero = False
         If that Is Nothing OrElse that.is_zero() Then
             divide_by_zero = True
@@ -115,9 +115,9 @@ Partial Public NotInheritable Class udec
         Return Me
     End Function
 
-    Public Function divide(ByVal that As udec) As udec
+    Public Function divide(ByVal that As big_udec) As big_udec
         Dim divide_by_zero As Boolean = False
-        Dim r As udec = Nothing
+        Dim r As big_udec = Nothing
         r = divide(that, divide_by_zero)
         If divide_by_zero Then
             throws.divide_by_zero()
@@ -125,15 +125,15 @@ Partial Public NotInheritable Class udec
         Return r
     End Function
 
-    Public Function assert_divide(ByVal that As udec) As udec
+    Public Function assert_divide(ByVal that As big_udec) As big_udec
         Dim divide_by_zero As Boolean = False
-        Dim r As udec = Nothing
+        Dim r As big_udec = Nothing
         r = divide(that, divide_by_zero)
         assert(Not divide_by_zero)
         Return r
     End Function
 
-    Public Function power(ByVal that As big_uint) As udec
+    Public Function power(ByVal that As big_uint) As big_udec
         If that Is Nothing OrElse that.is_zero() Then
             set_zero()
             Return Me
@@ -150,13 +150,13 @@ Partial Public NotInheritable Class udec
         Return Me
     End Function
 
-    Public Function extract(ByVal that As big_uint, ByRef overflow As Boolean) As udec
+    Public Function extract(ByVal that As big_uint, ByRef overflow As Boolean) As big_udec
         Return extract(that, constants.extract_power_base, overflow)
     End Function
 
     Public Function extract(ByVal that As big_uint,
                             ByVal extract_power_base As UInt32,
-                            ByRef overflow As Boolean) As udec
+                            ByRef overflow As Boolean) As big_udec
         assert(extract_power_base > 0)
         If that Is Nothing OrElse that.is_zero() Then
             overflow = True
@@ -181,13 +181,13 @@ Partial Public NotInheritable Class udec
         Return Me
     End Function
 
-    Public Function extract(ByVal that As big_uint) As udec
+    Public Function extract(ByVal that As big_uint) As big_udec
         Return extract(that, constants.extract_power_base)
     End Function
 
-    Public Function extract(ByVal that As big_uint, ByVal extract_power_base As UInt32) As udec
+    Public Function extract(ByVal that As big_uint, ByVal extract_power_base As UInt32) As big_udec
         Dim overflow As Boolean = False
-        Dim r As udec = Nothing
+        Dim r As big_udec = Nothing
         r = extract(that, extract_power_base, overflow)
         If overflow Then
             throws.overflow()
@@ -195,19 +195,19 @@ Partial Public NotInheritable Class udec
         Return r
     End Function
 
-    Public Function assert_extract(ByVal that As big_uint) As udec
+    Public Function assert_extract(ByVal that As big_uint) As big_udec
         Return assert_extract(that, constants.extract_power_base)
     End Function
 
-    Public Function assert_extract(ByVal that As big_uint, ByVal extract_power_base As UInt32) As udec
+    Public Function assert_extract(ByVal that As big_uint, ByVal extract_power_base As UInt32) As big_udec
         Dim overflow As Boolean = False
-        Dim r As udec = Nothing
+        Dim r As big_udec = Nothing
         r = extract(that, extract_power_base, overflow)
         assert(Not overflow)
         Return r
     End Function
 
-    Public Function power(ByVal that As udec) As udec
+    Public Function power(ByVal that As big_udec) As big_udec
         If that Is Nothing OrElse that.is_zero() Then
             set_one()
             Return Me
@@ -216,7 +216,7 @@ Partial Public NotInheritable Class udec
         Return power(that.n).assert_extract(that.d)
     End Function
 
-    Public Function extract(ByVal that As udec, ByRef divide_by_zero As Boolean) As udec
+    Public Function extract(ByVal that As big_udec, ByRef divide_by_zero As Boolean) As big_udec
         divide_by_zero = False
         If that Is Nothing OrElse that.is_zero() Then
             divide_by_zero = True
@@ -226,9 +226,9 @@ Partial Public NotInheritable Class udec
         Return power(that.d).assert_extract(that.n)
     End Function
 
-    Public Function extract(ByVal that As udec) As udec
+    Public Function extract(ByVal that As big_udec) As big_udec
         Dim divide_by_zero As Boolean = False
-        Dim r As udec = Nothing
+        Dim r As big_udec = Nothing
         r = extract(that, divide_by_zero)
         If divide_by_zero Then
             throws.divide_by_zero()
@@ -236,9 +236,9 @@ Partial Public NotInheritable Class udec
         Return r
     End Function
 
-    Public Function assert_extract(ByVal that As udec) As udec
+    Public Function assert_extract(ByVal that As big_udec) As big_udec
         Dim divide_by_zero As Boolean = False
-        Dim r As udec = Nothing
+        Dim r As big_udec = Nothing
         r = extract(that, divide_by_zero)
         assert(Not divide_by_zero)
         Return r

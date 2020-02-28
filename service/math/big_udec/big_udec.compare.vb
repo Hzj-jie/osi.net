@@ -5,20 +5,20 @@ Option Strict On
 
 Imports osi.root.connector
 
-Partial Public NotInheritable Class udec
-    Public Function less(ByVal that As udec) As Boolean
+Partial Public NotInheritable Class big_udec
+    Public Function less(ByVal that As big_udec) As Boolean
         Return CompareTo(that) < 0
     End Function
 
-    Public Function equal(ByVal that As udec) As Boolean
+    Public Function equal(ByVal that As big_udec) As Boolean
         Return CompareTo(that) = 0
     End Function
 
-    Public Function less_or_equal(ByVal that As udec) As Boolean
+    Public Function less_or_equal(ByVal that As big_udec) As Boolean
         Return CompareTo(that) <= 0
     End Function
 
-    Public Shared Function compare(ByVal this As udec, ByVal that As udec) As Int32
+    Public Shared Function compare(ByVal this As big_udec, ByVal that As big_udec) As Int32
         Dim c As Int32 = 0
         c = object_compare(this, that)
         If c <> object_compare_undetermined Then
