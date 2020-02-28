@@ -7,7 +7,7 @@ Imports osi.root.procedure
 Imports osi.root.lock
 Imports osi.root.utt
 
-Public Class ##TYPE##_test
+Public NotInheritable Class ##TYPE##_test
     Inherits [case]
 
     Private Class case1
@@ -39,7 +39,7 @@ Public Class ##TYPE##_test
         End Function
     End Class
 
-    Private Class case2
+    Private NotInheritable Class case2
         Inherits case1
 
         Public ReadOnly init_runs As ref(Of unchecked_int)
@@ -72,7 +72,7 @@ Public Class ##TYPE##_test
         End Function
     End Class
 
-    Private Class case3
+    Private NotInheritable Class case3
         Inherits [case]
 
         Public Overrides Function run() As Boolean
@@ -92,16 +92,16 @@ Public Class ##TYPE##_test
     Private Overloads Function run(ByVal rc As case1, ByVal c As [case]) As Boolean
         assert(Not rc Is Nothing)
         assert(Not c Is Nothing)
-        If c.run() Then
-            sleep()
-            assertion.is_true(rc.rcec.expired())
-            assertion.is_false(rc.rcec.running())
-            assertion.equal(+(rc.c1), +(rc.c2.p))
-            assertion.not_equal(+(rc.c1), 0)
-            Return True
-        Else
+        If Not c.run() Then
             Return False
         End If
+        assertion.happening(Function() As Boolean
+                                Return rc.rcec.expired()
+                            End Function)
+        assertion.is_false(rc.rcec.running())
+        assertion.equal(+(rc.c1), +(rc.c2.p))
+        assertion.not_equal(+(rc.c1), 0)
+        Return True
     End Function
 
     Private Function run_case() As Boolean
@@ -114,9 +114,12 @@ Public Class ##TYPE##_test
         End If
         Dim last As Int32 = 0
         last = +(rc.c1)
-        sleep()
-        assertion.equal(+(rc.c1), last)
-        assertion.equal(+(rc.c2.p), last)
+        assertion.not_happening(Function() As Boolean
+                                    Return (+(rc.c1) <> last)
+                                End Function)
+        assertion.not_happening(Function() As Boolean
+                                    Return (+(rc.c2.p) <> last)
+                                End Function)
 
         If Not run(rc, c) Then
             Return False
