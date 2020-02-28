@@ -57,13 +57,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="abs.vb" />
-    <Compile Include="big_ufloat\big_ufloat.calculation.vb" />
-    <Compile Include="big_ufloat\big_ufloat.compare.vb" />
-    <Compile Include="big_ufloat\big_ufloat.constants.vb" />
-    <Compile Include="big_ufloat\big_ufloat.implementation.vb" />
-    <Compile Include="big_ufloat\big_ufloat.override.vb" />
-    <Compile Include="big_ufloat\big_ufloat.str.vb" />
-    <Compile Include="big_ufloat\big_ufloat.vb" />
     <Compile Include="big_int\big_int.assert.vb" />
     <Compile Include="big_int\big_int.bit.vb" />
     <Compile Include="big_int\big_int.calculation.vb" />
@@ -147,15 +140,6 @@
     <Compile Include="big_udec\big_udec.vb" />
     <Compile Include="unchecked\operators.vb" />
     <Compile Include="unchecked\shift.vb" />
-    <Compile Include="upure_dec\upure_dec.calculation.vb" />
-    <Compile Include="upure_dec\upure_dec.compare.vb" />
-    <Compile Include="upure_dec\upure_dec.constants.vb" />
-    <Compile Include="upure_dec\upure_dec.implementation.vb" />
-    <Compile Include="upure_dec\upure_dec.operator.vb" />
-    <Compile Include="upure_dec\upure_dec.override.vb" />
-    <Compile Include="upure_dec\upure_dec.private.vb" />
-    <Compile Include="upure_dec\upure_dec.str.vb" />
-    <Compile Include="upure_dec\upure_dec.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

@@ -8,7 +8,7 @@ Imports osi.root.constants
 
 Partial Public NotInheritable Class big_uint
     Public Overrides Function Equals(ByVal obj As Object) As Boolean
-        Return equal(cast(Of big_uint)(obj))
+        Return equal(cast(Of big_uint)().from(obj, False))
     End Function
 
     Public Overrides Function GetHashCode() As Int32

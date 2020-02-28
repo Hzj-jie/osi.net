@@ -72,7 +72,6 @@
     <Compile Include="big_udec\big_udec_extract_test.vb" />
     <Compile Include="big_udec\big_udec_str_test.vb" />
     <Compile Include="big_udec\big_udec_binary_str_test.vb" />
-    <Compile Include="big_ufloat\big_ufloat_str_test.vb" />
     <Compile Include="big_uint\big_uint_add_sub_multiply_case.vb" />
     <Compile Include="big_uint\big_uint_bytes_case.vb" />
     <Compile Include="big_uint\big_uint_divide_multiply_case.vb" />
@@ -110,9 +109,6 @@
     <Compile Include="prime_divisors_test.vb" />
     <Compile Include="prime_test.vb" />
     <Compile Include="relatively_prime_test.vb" />
-    <Compile Include="upure_dec\upure_dec_binary_str_test.vb" />
-    <Compile Include="upure_dec\upure_dec_extract_test.vb" />
-    <Compile Include="upure_dec\upure_dec_str_test.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

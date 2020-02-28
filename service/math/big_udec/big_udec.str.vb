@@ -45,7 +45,7 @@ Partial Public NotInheritable Class big_udec
             base = New big_uint(str_base)
             Dim l As UInt32 = 0
             Dim n As big_uint = Nothing
-            n = New big_uint(this.upure_dec_part().n)
+            n = New big_uint(this.dec_part().n)
             While n.uint32_size() <= (this.d.uint32_size() * upure_numerator_size_multiply)
                 l += uint32_1
                 n *= base

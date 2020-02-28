@@ -143,11 +143,11 @@ Partial Public NotInheritable Class big_udec
     End Function
 
     Public Function is_one() As Boolean
-        Return n.is_one() AndAlso d.is_one()
+        Return n.equal(d)
     End Function
 
-    Public Function upure_dec_part() As big_udec
-        If upure_dec() Then
+    Public Function dec_part() As big_udec
+        If is_pure_dec() Then
             Return CloneT()
         End If
         Dim r As big_uint = Nothing
@@ -156,13 +156,13 @@ Partial Public NotInheritable Class big_udec
     End Function
 
     Public Function int_part() As big_uint
-        If upure_dec() Then
+        If is_pure_dec() Then
             Return big_uint.zero()
         End If
         Return New big_uint(n \ d)
     End Function
 
-    Public Function upure_dec() As Boolean
+    Public Function is_pure_dec() As Boolean
         Return n.less(d)
     End Function
 End Class

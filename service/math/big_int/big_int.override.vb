@@ -7,7 +7,7 @@ Imports osi.root.connector
 
 Partial Public NotInheritable Class big_int
     Public Overrides Function Equals(ByVal obj As Object) As Boolean
-        Return equal(cast(Of big_int)(obj))
+        Return equal(cast(Of big_int)().from(obj, False))
     End Function
 
     Public Overrides Function GetHashCode() As Int32
