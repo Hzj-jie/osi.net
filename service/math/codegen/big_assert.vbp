@@ -1,0 +1,7 @@
+
+Partial Public NotInheritable Class ##CLASS_NAME##
+    Public Shared Function support_base(ByVal b As Byte) As Boolean
+        Return ##IMPL_CLASS##.support_base(b)
+    End Function
+End Class
+

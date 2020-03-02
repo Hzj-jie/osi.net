@@ -1,0 +1,229 @@
+
+Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.formation
+
+##INCLUDE big_assert.vbp
+##INCLUDE big_bit.vbp
+##INCLUDE big_calculation.vbp
+##INCLUDE big_cast.vbp
+##INCLUDE big_compare.vbp
+##INCLUDE big_constants.vbp
+##INCLUDE big_implement.vbp
+##INCLUDE big_operator.vbp
+##INCLUDE big_override.vbp
+##INCLUDE big_predefined.vbp
+##INCLUDE big_private.vbp
+##INCLUDE big_rnd.vbp
+##INCLUDE big_shift.vbp
+##INCLUDE big_str.vbp
+
+Partial Public NotInheritable Class ##CLASS_NAME##
+    Private ReadOnly d As ##IMPL_CLASS##
+    Private s As Boolean
+
+    Public Sub New()
+        d = New ##IMPL_CLASS##()
+        set_positive()
+    End Sub
+
+    Public Sub New(ByVal i As Int32)
+        Me.New()
+        replace_by(i)
+    End Sub
+
+    Public Sub New(ByVal i As UInt32)
+        Me.New()
+        replace_by(i)
+    End Sub
+
+    Public Sub New(ByVal i As Int64)
+        Me.New()
+        replace_by(i)
+    End Sub
+
+    Public Sub New(ByVal i As UInt64)
+        Me.New()
+        replace_by(i)
+    End Sub
+
+    Public Sub New(ByVal i As ##CLASS_NAME##)
+        Me.New()
+        assert(replace_by(i))
+    End Sub
+
+    Public Sub New(ByVal i As ##IMPL_CLASS##)
+        Me.New()
+        assert(replace_by(i))
+    End Sub
+
+    Public Sub New(ByVal i() As Byte)
+        Me.New()
+        assert(replace_by(i))
+    End Sub
+
+    Public Shared Function move(ByVal i As ##CLASS_NAME##) As ##CLASS_NAME##
+        If i Is Nothing Then
+            Return Nothing
+        End If
+        Dim s As Boolean = False
+        s = i.signal()
+        Dim r As ##CLASS_NAME## = Nothing
+        r = New ##CLASS_NAME##(##IMPL_CLASS##.move(i.d), s)
+        i.confirm_signal()
+        Return r
+    End Function
+
+    Public Shared Function swap(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As Boolean
+        If this Is Nothing OrElse that Is Nothing Then
+            Return False
+        End If
+        root.connector.swap(this.s, that.s)
+        Return assert(##IMPL_CLASS##.swap(this.d, that.d))
+    End Function
+
+    Public Sub replace_by(ByVal i As Int32)
+        If i >= 0 Then
+            replace_by(CUInt(i))
+        Else
+            replace_by(CUInt(-CLng(i)))
+            set_negative()
+        End If
+    End Sub
+
+    Public Sub replace_by(ByVal i As UInt32)
+        d.replace_by(i)
+        set_positive()
+    End Sub
+
+    Public Sub replace_by(ByVal i As Int64)
+        If i >= 0 Then
+            replace_by(CULng(i))
+        Else
+            replace_by(CULng(-CDec(i)))
+            set_negative()
+        End If
+    End Sub
+
+    Public Sub replace_by(ByVal i As UInt64)
+        d.replace_by(i)
+        set_positive()
+    End Sub
+
+    Public Function replace_by(ByVal i As ##CLASS_NAME##) As Boolean
+        If i Is Nothing Then
+            Return False
+        End If
+        assert(d.replace_by(i.d))
+        set_signal(i.signal())
+        Return True
+    End Function
+
+    Public Function replace_by(ByVal i As ##IMPL_CLASS##) As Boolean
+        If d.replace_by(i) Then
+            set_positive()
+            Return True
+        End If
+        Return False
+    End Function
+
+    Public Sub replace_by(ByVal i As Boolean)
+        d.replace_by(i)
+        set_signal(Not i)
+    End Sub
+
+    ' treat as positive, otherwise, we will need to revert and +1
+    Public Function replace_by(ByVal a() As Byte) As Boolean
+        If d.replace_by(a) Then
+            set_positive()
+            Return True
+        End If
+        Return False
+    End Function
+
+    Public Function signal() As Boolean
+        Return s
+    End Function
+
+    Public Function not_negative() As Boolean
+        Return signal()
+    End Function
+
+    Public Function not_positive() As Boolean
+        Return Not signal() OrElse is_zero()
+    End Function
+
+    Public Function positive() As Boolean
+        Return signal() AndAlso Not is_zero()
+    End Function
+
+    Public Function negative() As Boolean
+        Return Not signal() AndAlso Not is_zero()
+    End Function
+
+    Public Sub set_positive()
+        set_signal(True)
+    End Sub
+
+    Public Sub set_negative()
+        set_signal(False)
+    End Sub
+
+    Public Sub reverse_signal()
+        set_signal(Not positive())
+    End Sub
+
+    Public Sub set_zero()
+        d.set_zero()
+        set_positive()
+    End Sub
+
+    Public Function is_zero() As Boolean
+        'just make sure there is no logic error in the class,
+        'but no matter s is true or false, d.is_zero() can determine whether is_zero()
+        Return d.is_zero() AndAlso assert(signal())
+    End Function
+
+    Public Sub set_one()
+        d.set_one()
+        set_positive()
+    End Sub
+
+    Public Function is_one() As Boolean
+        Return positive() AndAlso d.is_one()
+    End Function
+
+    Public Sub set_negative_one()
+        d.set_one()
+        set_negative()
+    End Sub
+
+    Public Function is_negative_one() As Boolean
+        Return negative() AndAlso d.is_one()
+    End Function
+
+    Public Function is_zero_or_one() As Boolean
+        Return is_zero() OrElse is_one()
+    End Function
+
+    Public Function is_zero_or_negative_one() As Boolean
+        Return is_zero() OrElse is_negative_one()
+    End Function
+
+    Public Function is_one_or_negative_one() As Boolean
+        Return is_one() OrElse is_negative_one()
+    End Function
+
+    Public Function is_zero_or_one_or_negative_one() As Boolean
+        Return is_zero() OrElse is_one() OrElse is_negative_one()
+    End Function
+
+    Public Function [true]() As Boolean
+        Return Not [false]()
+    End Function
+
+    Public Function [false]() As Boolean
+        Return is_zero()
+    End Function
+End Class
+

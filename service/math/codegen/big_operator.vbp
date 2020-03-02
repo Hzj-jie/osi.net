@@ -1,0 +1,85 @@
+
+Partial Public NotInheritable Class ##CLASS_NAME##
+    Public Shared Operator +(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As ##CLASS_NAME##
+        Dim r As ##CLASS_NAME## = Nothing
+        r = New ##CLASS_NAME##(this)
+        Return r.add(that)
+    End Operator
+
+    Public Shared Operator -(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As ##CLASS_NAME##
+        Dim r As ##CLASS_NAME## = Nothing
+        r = New ##CLASS_NAME##(this)
+        Return r.sub(that)
+    End Operator
+
+    Public Shared Operator *(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As ##CLASS_NAME##
+        Dim r As ##CLASS_NAME## = Nothing
+        r = New ##CLASS_NAME##(this)
+        Return r.multiply(that)
+    End Operator
+
+    Public Shared Operator \(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As ##CLASS_NAME##
+        Dim r As ##CLASS_NAME## = Nothing
+        r = New ##CLASS_NAME##(this)
+        Return r.divide(that)
+    End Operator
+
+    Public Shared Operator /(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As pair(Of ##CLASS_NAME##, ##CLASS_NAME##)
+        Dim q As ##CLASS_NAME## = Nothing
+        Dim r As ##CLASS_NAME## = Nothing
+        q = New ##CLASS_NAME##(this)
+        q.divide(that, r)
+        Return pair.emplace_of(q, r)
+    End Operator
+
+    Public Shared Operator Mod(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As ##CLASS_NAME##
+        Dim q As ##CLASS_NAME## = Nothing
+        Dim r As ##CLASS_NAME## = Nothing
+        q = New ##CLASS_NAME##(this)
+        q.divide(that, r)
+        Return r
+    End Operator
+
+    Public Shared Operator >(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As Boolean
+        Return compare(this, that) > 0
+    End Operator
+
+    Public Shared Operator <(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As Boolean
+        Return compare(this, that) < 0
+    End Operator
+
+    Public Shared Operator =(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As Boolean
+        Return compare(this, that) = 0
+    End Operator
+
+    Public Shared Operator <>(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As Boolean
+        Return compare(this, that) <> 0
+    End Operator
+
+    Public Shared Operator <=(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As Boolean
+        Return compare(this, that) <= 0
+    End Operator
+
+    Public Shared Operator >=(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As Boolean
+        Return compare(this, that) >= 0
+    End Operator
+
+    Public Shared Operator >>(ByVal this As ##CLASS_NAME##, ByVal that As Int32) As ##CLASS_NAME##
+        Dim r As ##CLASS_NAME## = Nothing
+        r = New ##CLASS_NAME##(this)
+        Return r.right_shift(that)
+    End Operator
+
+    Public Shared Operator <<(ByVal this As ##CLASS_NAME##, ByVal that As Int32) As ##CLASS_NAME##
+        Dim r As ##CLASS_NAME## = Nothing
+        r = New ##CLASS_NAME##(this)
+        Return r.left_shift(that)
+    End Operator
+
+    Public Shared Operator ^(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As ##CLASS_NAME##
+        Dim r As ##CLASS_NAME## = Nothing
+        r = New ##CLASS_NAME##(this)
+        Return r.power(that)
+    End Operator
+End Class
+

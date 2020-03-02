@@ -1,0 +1,62 @@
+
+Partial Public NotInheritable Class ##CLASS_NAME##
+    Public Function less(ByVal that As ##IMPL_CLASS##) As Boolean
+        Return compare(that) < 0
+    End Function
+
+    Public Function less(ByVal that As ##CLASS_NAME##) As Boolean
+        Return compare(that) < 0
+    End Function
+
+    Public Function equal(ByVal that As ##IMPL_CLASS##) As Boolean
+        Return compare(that) = 0
+    End Function
+
+    Public Function equal(ByVal that As ##CLASS_NAME##) As Boolean
+        Return compare(that) = 0
+    End Function
+
+    Public Function less_or_equal(ByVal that As ##IMPL_CLASS##) As Boolean
+        Return compare(that) <= 0
+    End Function
+
+    Public Function less_or_equal(ByVal that As ##CLASS_NAME##) As Boolean
+        Return compare(that) <= 0
+    End Function
+
+    Public Function compare(ByVal that As ##IMPL_CLASS##) As Int32
+        Return compare(Me, that)
+    End Function
+
+    Public Function compare(ByVal that As ##CLASS_NAME##) As Int32
+        Return compare(Me, that)
+    End Function
+
+    Public Shared Function compare(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As Int32
+        Dim c As Int32 = 0
+        c = object_compare(this, that)
+        If c = object_compare_undetermined Then
+            assert(Not this Is Nothing)
+            assert(Not that Is Nothing)
+            If this.positive() <> that.positive() Then
+                Return If(this.positive(), 1, -1)
+            Else
+                Dim r As Int32 = 0
+                r = this.d.compare(that.d)
+                assert(r <> min_int32)
+                Return If(this.positive(), r, -r)
+            End If
+        Else
+            Return c
+        End If
+    End Function
+
+    Public Shared Function compare(ByVal this As ##IMPL_CLASS##, ByVal that As ##CLASS_NAME##) As Int32
+        Return compare(share(this), that)
+    End Function
+
+    Public Shared Function compare(ByVal this As ##CLASS_NAME##, ByVal that As ##IMPL_CLASS##) As Int32
+        Return compare(this, share(that))
+    End Function
+End Class
+

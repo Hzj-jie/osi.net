@@ -1,0 +1,27 @@
+
+Partial Public NotInheritable Class ##CLASS_NAME##
+    Public Shared Function zero() As ##CLASS_NAME##
+        Return New ##CLASS_NAME##()
+    End Function
+
+    Public Shared Function _0() As ##CLASS_NAME##
+        Return zero()
+    End Function
+
+    Public Shared Function one() As ##CLASS_NAME##
+        Return New ##CLASS_NAME##(uint32_1)
+    End Function
+
+    Public Shared Function _1() As ##CLASS_NAME##
+        Return one()
+    End Function
+
+    Public Shared Function negative_one() As ##CLASS_NAME##
+        Return New ##CLASS_NAME##(-1)
+    End Function
+
+    Public Shared Function n1() As ##CLASS_NAME##
+        Return negative_one()
+    End Function
+End Class
+

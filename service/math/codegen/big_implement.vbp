@@ -1,0 +1,34 @@
+
+Partial Public NotInheritable Class ##CLASS_NAME##
+    Implements ICloneable,
+               ICloneable(Of ##CLASS_NAME##),
+               IComparable,
+               IComparable(Of ##IMPL_CLASS##),
+               IComparable(Of ##CLASS_NAME##),
+               IEquatable(Of ##CLASS_NAME##)
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
+    End Function
+
+    Public Function CloneT() As ##CLASS_NAME## Implements ICloneable(Of ##CLASS_NAME##).Clone
+        Return New ##CLASS_NAME##(Me)
+    End Function
+
+    Public Function CompareTo(ByVal other As ##IMPL_CLASS##) As Int32 Implements IComparable(Of ##IMPL_CLASS##).CompareTo
+        Return compare(other)
+    End Function
+
+    Public Function CompareTo(ByVal other As ##CLASS_NAME##) As Int32 Implements IComparable(Of ##CLASS_NAME##).CompareTo
+        Return compare(other)
+    End Function
+
+    Public Function CompareTo(ByVal other As Object) As Int32 Implements IComparable.CompareTo
+        Return compare(cast(Of ##CLASS_NAME##)().from(other, False))
+    End Function
+
+    Public Overloads Function Equals(ByVal other As ##CLASS_NAME##) As Boolean Implements IEquatable(Of ##CLASS_NAME##).Equals
+        Return equal(other)
+    End Function
+End Class
+

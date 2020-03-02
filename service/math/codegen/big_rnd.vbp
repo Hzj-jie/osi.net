@@ -1,0 +1,28 @@
+
+Partial Public NotInheritable Class ##CLASS_NAME##
+    Public Shared Function rnd_support_str(ByVal length As UInt32,
+                                           Optional ByVal base As Byte = default_str_base) As String
+        If length <= 1 OrElse rnd_bool() Then
+            Return ##IMPL_CLASS##.rnd_support_str(length, base)
+        End If
+        Return negative_signal_mask + ##IMPL_CLASS##.rnd_support_str(length - uint32_1, base)
+    End Function
+
+    Public Shared Function rnd_support_base() As Byte
+        Return ##IMPL_CLASS##.rnd_support_base()
+    End Function
+
+    Public Shared Function rnd_unsupport_str_char(Optional ByVal base As Byte = default_str_base) As Char
+        Return ##IMPL_CLASS##.rnd_unsupport_str_char(base)
+    End Function
+
+    Public Shared Function random(Optional ByVal length As UInt32 = 0) As ##CLASS_NAME##
+        Dim r As ##CLASS_NAME## = Nothing
+        r = share(##IMPL_CLASS##.random(length))
+        If rnd_bool() Then
+            r.set_negative()
+        End If
+        Return r
+    End Function
+End Class
+

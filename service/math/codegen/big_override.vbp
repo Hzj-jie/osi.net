@@ -1,0 +1,18 @@
+
+Partial Public NotInheritable Class ##CLASS_NAME##
+    Public Overrides Function Equals(ByVal obj As Object) As Boolean
+        Return equal(cast(Of ##CLASS_NAME##)().from(obj, False))
+    End Function
+
+    Public Overrides Function GetHashCode() As Int32
+        If positive() Then
+            Return d.GetHashCode()
+        End If
+        Return Not d.GetHashCode()
+    End Function
+
+    Public Overrides Function ToString() As String
+        Return str()
+    End Function
+End Class
+

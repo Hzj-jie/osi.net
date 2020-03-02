@@ -57,21 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="abs.vb" />
-    <Compile Include="big_int\big_int.assert.vb" />
-    <Compile Include="big_int\big_int.bit.vb" />
-    <Compile Include="big_int\big_int.calculation.vb" />
-    <Compile Include="big_int\big_int.cast.vb" />
-    <Compile Include="big_int\big_int.compare.vb" />
-    <Compile Include="big_int\big_int.constants.vb" />
-    <Compile Include="big_int\big_int.implement.vb" />
-    <Compile Include="big_int\big_int.operator.vb" />
-    <Compile Include="big_int\big_int.override.vb" />
-    <Compile Include="big_int\big_int.predefined.vb" />
-    <Compile Include="big_int\big_int.private.vb" />
-    <Compile Include="big_int\big_int.rnd.vb" />
-    <Compile Include="big_int\big_int.shift.vb" />
-    <Compile Include="big_int\big_int.str.vb" />
-    <Compile Include="big_int\big_int.vb" />
+    <Compile Include="big_dec.vb" />
+    <Compile Include="big_dec\big_dec.private.vb" />
+    <Compile Include="big_dec\big_dec.vb" />
+    <Compile Include="big_int.vb" />
     <Compile Include="big_uint\big_uint.adaptive_array.vb" />
     <Compile Include="big_uint\big_uint.assert.vb" />
     <Compile Include="big_uint\big_uint.bit.vb" />

@@ -1,0 +1,172 @@
+
+Partial Public NotInheritable Class ##CLASS_NAME##
+    Public Function add(ByVal that As ##IMPL_CLASS##) As ##CLASS_NAME##
+        Return add(share(that))
+    End Function
+
+    Public Function add(ByVal that As ##CLASS_NAME##) As ##CLASS_NAME##
+        If Not that Is Nothing AndAlso Not that.is_zero() Then
+            If is_zero() Then
+                replace_by(that)
+            ElseIf positive() = that.positive() Then
+                d.add(that.d)
+            Else
+                If d.less(that.d) Then
+                    Dim t As ##IMPL_CLASS## = Nothing
+                    t = New ##IMPL_CLASS##(that.d)
+                    t.assert_sub(d)
+                    assert(##IMPL_CLASS##.swap(d, t))
+                    set_signal(that.signal())
+                Else
+                    d.assert_sub(that.d)
+                    confirm_signal()
+                End If
+            End If
+        End If
+        Return Me
+    End Function
+
+    Public Function [sub](ByVal that As ##IMPL_CLASS##) As ##CLASS_NAME##
+        Return [sub](share(that))
+    End Function
+
+    Public Function [sub](ByVal that As ##CLASS_NAME##) As ##CLASS_NAME##
+        Dim t As ##CLASS_NAME## = Nothing
+        t = share(that)
+        If t Is Nothing Then
+            Return Me
+        Else
+            t.reverse_signal()
+            Return add(t)
+        End If
+    End Function
+
+    Public Function multiply(ByVal that As ##IMPL_CLASS##) As ##CLASS_NAME##
+        Return multiply(share(that))
+    End Function
+
+    Public Function multiply(ByVal that As ##CLASS_NAME##) As ##CLASS_NAME##
+        If Not that Is Nothing Then
+            d.multiply(that.d)
+            set_signal(positive() = that.positive())
+        End If
+        Return Me
+    End Function
+
+    Public Function divide(ByVal that As ##IMPL_CLASS##,
+                           ByRef divide_by_zero As Boolean,
+                           Optional ByRef remainder As ##CLASS_NAME## = Nothing) As ##CLASS_NAME##
+        Return divide(share(that), divide_by_zero, remainder)
+    End Function
+
+    Public Function divide(ByVal that As ##CLASS_NAME##,
+                           ByRef divide_by_zero As Boolean,
+                           Optional ByRef remainder As ##CLASS_NAME## = Nothing) As ##CLASS_NAME##
+        divide(that, remainder, divide_by_zero)
+        Return Me
+    End Function
+
+    Public Function divide(ByVal that As ##IMPL_CLASS##,
+                           Optional ByRef remainder As ##CLASS_NAME## = Nothing) As ##CLASS_NAME##
+        Return divide(share(that), remainder)
+    End Function
+
+    Public Function divide(ByVal that As ##CLASS_NAME##,
+                           Optional ByRef remainder As ##CLASS_NAME## = Nothing) As ##CLASS_NAME##
+        Dim r As Boolean = False
+        divide(that, remainder, r)
+        If r Then
+            Throw divide_by_zero()
+        End If
+        Return Me
+    End Function
+
+    Public Function assert_divide(ByVal that As ##IMPL_CLASS##,
+                                  Optional ByRef remainder As ##CLASS_NAME## = Nothing) As ##CLASS_NAME##
+        Return assert_divide(share(that), remainder)
+    End Function
+
+    Public Function assert_divide(ByVal that As ##CLASS_NAME##,
+                                  Optional ByRef remainder As ##CLASS_NAME## = Nothing) As ##CLASS_NAME##
+        Dim r As Boolean = False
+        divide(that, remainder, r)
+        assert(Not r)
+        Return Me
+    End Function
+
+    Public Function power_2() As ##CLASS_NAME##
+        d.power_2()
+        set_positive()
+        Return Me
+    End Function
+
+    Public Function power(ByVal that As ##IMPL_CLASS##) As ##CLASS_NAME##
+        Return power(share(that))
+    End Function
+
+    Public Function power(ByVal that As ##CLASS_NAME##) As ##CLASS_NAME##
+        If Not that Is Nothing Then
+            If Not is_zero() Then
+                If that.not_negative() Then
+                    d.power(that.d)
+                ElseIf Not is_one_or_negative_one() Then
+                    set_zero()
+                End If
+                If that.d.even() Then
+                    set_positive()
+                End If
+            End If
+        End If
+        Return Me
+    End Function
+
+    Public Function extract(ByVal that As ##IMPL_CLASS##,
+                            ByRef divide_by_zero As Boolean,
+                            ByRef imaginary_number As Boolean,
+                            Optional ByRef remainder As ##CLASS_NAME## = Nothing) As ##CLASS_NAME##
+        Return extract(share(that), divide_by_zero, imaginary_number, remainder)
+    End Function
+
+    Public Function extract(ByVal that As ##CLASS_NAME##,
+                            ByRef divide_by_zero As Boolean,
+                            ByRef imaginary_number As Boolean,
+                            Optional ByRef remainder As ##CLASS_NAME## = Nothing) As ##CLASS_NAME##
+        extract(that, remainder, divide_by_zero, imaginary_number)
+        Return Me
+    End Function
+
+    Public Function extract(ByVal that As ##IMPL_CLASS##,
+                            Optional ByRef remainder As ##CLASS_NAME## = Nothing) As ##CLASS_NAME##
+        Return extract(share(that), remainder)
+    End Function
+
+    Public Function extract(ByVal that As ##CLASS_NAME##,
+                            Optional ByRef remainder As ##CLASS_NAME## = Nothing) As ##CLASS_NAME##
+        Dim d As Boolean = False
+        Dim i As Boolean = False
+        extract(that, remainder, d, i)
+        If d Then
+            Throw divide_by_zero()
+        End If
+        If i Then
+            Throw imaginary_number()
+        End If
+        Return Me
+    End Function
+
+    Public Function assert_extract(ByVal that As ##IMPL_CLASS##,
+                                   Optional ByRef remainder As ##CLASS_NAME## = Nothing) As ##CLASS_NAME##
+        Return assert_extract(share(that), remainder)
+    End Function
+
+    Public Function assert_extract(ByVal that As ##CLASS_NAME##,
+                                   Optional ByRef remainder As ##CLASS_NAME## = Nothing) As ##CLASS_NAME##
+        Dim d As Boolean = False
+        Dim i As Boolean = False
+        extract(that, remainder, d, i)
+        assert(Not d)
+        assert(Not i)
+        Return Me
+    End Function
+End Class
+

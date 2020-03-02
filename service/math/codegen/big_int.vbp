@@ -1,0 +1,4 @@
+
+##DEFINE CLASS_NAME big_int
+##DEFINE IMPL_CLASS big_uint
+##INCLUDE big_unsigned_to_signed.vbp

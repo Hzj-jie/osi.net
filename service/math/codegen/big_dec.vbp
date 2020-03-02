@@ -1,0 +1,8 @@
+
+#If 0 Then
+
+##DEFINE CLASS_NAME big_dec2
+##DEFINE IMPL_CLASS big_udec
+##INCLUDE big_unsigned_to_signed.vbp
+
+#End If
