@@ -920,7 +920,11 @@ Partial Public NotInheritable Class big_int
 
     Public Sub New(ByVal i() As Byte)
         Me.New()
+#If False Then
         assert(replace_by(i))
+#Else
+        replace_by(i)
+#End If
     End Sub
 
     Public Shared Function move(ByVal i As big_int) As big_int
@@ -993,7 +997,7 @@ Partial Public NotInheritable Class big_int
         set_signal(Not i)
     End Sub
 
-    ' treat as positive, otherwise, we will need to revert and +1
+#If False Then
     Public Function replace_by(ByVal a() As Byte) As Boolean
         If d.replace_by(a) Then
             set_positive()
@@ -1001,6 +1005,12 @@ Partial Public NotInheritable Class big_int
         End If
         Return False
     End Function
+#Else
+    Public Sub replace_by(ByVal a() As Byte)
+        d.replace_by(a)
+        set_positive()
+    End Sub
+#End If
 
     Public Function signal() As Boolean
         Return s

@@ -32,7 +32,7 @@ Partial Public NotInheritable Class big_uint
 
     Public Sub New(ByVal i() As Byte)
         Me.New()
-        assert(replace_by(i))
+        replace_by(i)
     End Sub
 
     Public Sub New(ByVal i As Single)
@@ -109,10 +109,10 @@ Partial Public NotInheritable Class big_uint
         End If
     End Sub
 
-    Public Function replace_by(ByVal a() As Byte) As Boolean
+    Public Sub replace_by(ByVal a() As Byte)
         set_zero()
         If isemptyarray(a) Then
-            Return True
+            Return
         End If
         v.reserve((array_size(a) + uint32_3) \ byte_count_in_uint32)
         Dim start As UInt32 = 0
@@ -140,8 +140,7 @@ Partial Public NotInheritable Class big_uint
         Next
         v.push_back(x)
         remove_extra_blank()
-        Return True
-    End Function
+    End Sub
 
     Public Function replace_by_big_endian(ByVal d() As UInt32) As Boolean
         If isemptyarray(d) Then

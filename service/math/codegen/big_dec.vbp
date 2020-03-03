@@ -3,6 +3,7 @@
 
 ##DEFINE CLASS_NAME big_dec2
 ##DEFINE IMPL_CLASS big_udec
+##DEFINE REPLACE_BY_ARRAY_RETURNS_BOOLEAN True
 ##INCLUDE big_unsigned_to_signed.vbp
 
 #End If

@@ -1,4 +1,5 @@
 
 ##DEFINE CLASS_NAME big_int
 ##DEFINE IMPL_CLASS big_uint
+##DEFINE REPLACE_BY_ARRAY_RETURNS_BOOLEAN False
 ##INCLUDE big_unsigned_to_signed.vbp
