@@ -55,7 +55,7 @@ Public NotInheritable Class bstyle
                 ignore_parameters(AddressOf condition.register),
                 ignore_parameters(AddressOf else_condition.register),
                 ignore_parameters(AddressOf for_loop.register),
-                ignore_parameters(AddressOf float.register),
+                ignore_parameters(AddressOf ufloat.register),
                 registerer(AddressOf [function].register),
                 ignore_parameters(AddressOf function_call.register),
                 registerer(AddressOf ignore_result_function_call.register),

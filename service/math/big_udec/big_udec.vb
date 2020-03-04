@@ -12,10 +12,6 @@ Partial Public NotInheritable Class big_udec
     Private ReadOnly n As big_uint
     Private ReadOnly d As big_uint
 
-    Public Shared Function zero() As big_udec
-        Return New big_udec()
-    End Function
-
     Public Sub New()
         n = big_uint.zero()
         d = big_uint.one()

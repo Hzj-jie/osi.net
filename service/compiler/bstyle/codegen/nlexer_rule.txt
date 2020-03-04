@@ -14,7 +14,7 @@ blank [\b]+
 bool [true,false]
 integer [+,-]?[\d]+
 biguint [\d]+[l,L]
-float [+,-]?[\d]*.[\d]+
+ufloat [\d]*.[\d]+
 string "[\",*|"]*"
 
 comma \,

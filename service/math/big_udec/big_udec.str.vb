@@ -74,4 +74,44 @@ Partial Public NotInheritable Class big_udec
                 with_upure_numerator_size_multiply(constants.str_upure_numerator_size_multiply).
                 with_upure_length(constants.str_upure_len)
     End Function
+
+    Public Shared Function support_base(ByVal base As Byte) As Boolean
+        Return big_uint.support_base(base)
+    End Function
+
+    Public Shared Function parse(ByVal s As String,
+                                 ByRef o As big_udec,
+                                 Optional ByVal base As Byte = constants.str_base) As Boolean
+        If Not support_base(base) Then
+            Return False
+        End If
+        If String.IsNullOrEmpty(s) Then
+            o = big_udec.zero()
+            Return True
+        End If
+        Dim i As Int32 = 0
+        i = s.IndexOf(character.dot)
+        If i = strlen(s) - uint32_1 Then
+            Return False
+        End If
+        Dim n As big_uint = Nothing
+        Dim d As big_uint = Nothing
+        If i = npos Then
+            If Not big_uint.parse(s, n, base) Then
+                Return False
+            End If
+            d = big_uint.one()
+        Else
+            Dim zero_count As UInt32 = 0
+            zero_count = strlen(s) - CUInt(i) - uint32_1
+            assert(zero_count > 0)
+            s = s.Remove(i, 1)
+            If Not big_uint.parse(s, n, base) Then
+                Return False
+            End If
+            assert(big_uint.parse(strncat("1", "0", zero_count), n, base))
+        End If
+        o = New big_udec(n, d)
+        Return True
+    End Function
 End Class

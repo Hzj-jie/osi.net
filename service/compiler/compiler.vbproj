@@ -68,9 +68,9 @@
     <Compile Include="b2style\rewriter\statements.vb" />
     <Compile Include="bstyle\bstyle.vb" />
     <Compile Include="bstyle\bstyle_rules.vb" />
+    <Compile Include="bstyle\logic\nodes\ufloat.vb" />
     <Compile Include="bstyle\logic\nodes\biguint.vb" />
     <Compile Include="bstyle\logic\nodes\bool.vb" />
-    <Compile Include="bstyle\logic\nodes\float.vb" />
     <Compile Include="bstyle\logic\nodes\function_name.vb" />
     <Compile Include="bstyle\logic\nodes\ignore_result_function_call.vb" />
     <Compile Include="bstyle\logic\nodes\integer.vb" />
@@ -213,7 +213,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="b2style\codegen\nlexer_rule.txt" />
-    <Content Include="b2style\codegen\rlexer_rule.txt" />
     <Content Include="b2style\codegen\syntaxer_rule.txt" />
     <Content Include="b2style\rewriter\codegen\prefix.txt" />
     <Content Include="b2style\rewriter\codegen\suffix.txt" />

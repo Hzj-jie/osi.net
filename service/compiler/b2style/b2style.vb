@@ -92,7 +92,7 @@ Public NotInheritable Class b2style
                        default_registerer("bool"),
                        default_registerer("integer"),
                        default_registerer("biguint"),
-                       default_registerer("float"),
+                       default_registerer("ufloat"),
                        default_registerer("string"),
                        default_registerer("comma"),
                        default_registerer("colon"),

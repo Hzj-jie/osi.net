@@ -13,13 +13,13 @@ Partial Public NotInheritable Class bstyle
     Public NotInheritable Class types
         Implements statement
 
-        Public Const biguint As String = "biguint"
         Public Const int As String = "int"
+        Public Const biguint As String = "biguint"
         Public Const [long] As String = "long"
         Public Const bool As String = "bool"
         Public Const [byte] As String = "byte"
         Public Const [string] As String = "string"
-        Public Const float As String = "float"
+        Public Const ufloat As String = "ufloat"
         Public Const void As String = "void"
 
         Private Shared ReadOnly v As vector(Of pair(Of String, Int32))
@@ -31,11 +31,10 @@ Partial Public NotInheritable Class bstyle
                 pair.emplace_of(int, 4),
                 pair.emplace_of([long], 8),
                 pair.emplace_of(bool, 1),
-                pair.emplace_of([byte], 1),
-                pair.emplace_of(float, 16)
-            )
+                pair.emplace_of([byte], 1)
+)
             type_0_s = vector.of(void)
-            type_asterisk_s = vector.of(biguint, [string])
+            type_asterisk_s = vector.of(biguint, ufloat, [string])
         End Sub
 
         Public Shared Sub register(ByVal p As statements, ByVal l As logic_rule_wrapper)

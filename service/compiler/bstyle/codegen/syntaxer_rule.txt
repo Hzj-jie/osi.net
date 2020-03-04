@@ -29,7 +29,7 @@ for-loop kw-for start-bracket [value-declaration, value-definition]? semi-colon 
 
 value [value-with-bracket, value-without-bracket]
 value-with-bracket start-bracket value end-bracket
-value-without-bracket [function-call, variable-name, integer, biguint, float, bool, string]
+value-without-bracket [function-call, variable-name, integer, biguint, ufloat, bool, string]
 
 variable-name name
 
