@@ -14,6 +14,7 @@ Option Strict On
 'so change big_unsigned_to_signed.vbp instead of this file
 
 
+Imports System.IO
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
@@ -287,9 +288,12 @@ Partial Public NotInheritable Class big_int
         Return If(negative(), -v, v)
     End Function
 
-    Public Function as_bytes(Optional ByRef neg As Boolean = Nothing) As Byte()
-        neg = negative()
-        Return d.as_bytes()
+    Public Function as_bytes() As Byte()
+        Using r As MemoryStream = New MemoryStream(CInt(d.byte_size() + uint32_1))
+            r.WriteByte(If(negative(), byte_1, byte_0))
+            assert(r.write(d.as_bytes()))
+            Return r.export()
+        End Using
     End Function
 End Class
 
@@ -920,11 +924,7 @@ Partial Public NotInheritable Class big_int
 
     Public Sub New(ByVal i() As Byte)
         Me.New()
-#If False Then
         assert(replace_by(i))
-#Else
-        replace_by(i)
-#End If
     End Sub
 
     Public Shared Function move(ByVal i As big_int) As big_int
@@ -997,20 +997,29 @@ Partial Public NotInheritable Class big_int
         set_signal(Not i)
     End Sub
 
-#If False Then
     Public Function replace_by(ByVal a() As Byte) As Boolean
-        If d.replace_by(a) Then
-            set_positive()
-            Return True
+        If isemptyarray(a) Then
+            Return False
         End If
-        Return False
-    End Function
+        Dim p As piece = Nothing
+        p = New piece(a)
+        If Not p.consume(uint32_1, p) Then
+            Return False
+        End If
+#If False Then
+        If Not d.replace_by(p.export()) Then
+            Return False
+        End If
 #Else
-    Public Sub replace_by(ByVal a() As Byte)
-        d.replace_by(a)
-        set_positive()
-    End Sub
+        d.replace_by(p.export())
 #End If
+        If a(0) = byte_0 Then
+            set_positive()
+        Else
+            set_negative()
+        End If
+        Return True
+    End Function
 
     Public Function signal() As Boolean
         Return s

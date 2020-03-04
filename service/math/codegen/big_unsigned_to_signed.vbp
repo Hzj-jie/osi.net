@@ -1,4 +1,5 @@
 
+Imports System.IO
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
@@ -59,11 +60,7 @@ Partial Public NotInheritable Class ##CLASS_NAME##
 
     Public Sub New(ByVal i() As Byte)
         Me.New()
-#If ##REPLACE_BY_ARRAY_RETURNS_BOOLEAN## Then
         assert(replace_by(i))
-#Else
-        replace_by(i)
-#End If
     End Sub
 
     Public Shared Function move(ByVal i As ##CLASS_NAME##) As ##CLASS_NAME##
@@ -136,20 +133,29 @@ Partial Public NotInheritable Class ##CLASS_NAME##
         set_signal(Not i)
     End Sub
 
-#If ##REPLACE_BY_ARRAY_RETURNS_BOOLEAN## Then
     Public Function replace_by(ByVal a() As Byte) As Boolean
-        If d.replace_by(a) Then
-            set_positive()
-            Return True
+        If isemptyarray(a) Then
+            Return False
         End If
-        Return False
-    End Function
+        Dim p As piece = Nothing
+        p = New piece(a)
+        If Not p.consume(uint32_1, p) Then
+            Return False
+        End If
+#If ##REPLACE_BY_ARRAY_RETURNS_BOOLEAN## Then
+        If Not d.replace_by(p.export()) Then
+            Return False
+        End If
 #Else
-    Public Sub replace_by(ByVal a() As Byte)
-        d.replace_by(a)
-        set_positive()
-    End Sub
+        d.replace_by(p.export())
 #End If
+        If a(0) = byte_0 Then
+            set_positive()
+        Else
+            set_negative()
+        End If
+        Return True
+    End Function
 
     Public Function signal() As Boolean
         Return s

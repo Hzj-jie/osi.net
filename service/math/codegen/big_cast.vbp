@@ -50,9 +50,12 @@ Partial Public NotInheritable Class ##CLASS_NAME##
         Return If(negative(), -v, v)
     End Function
 
-    Public Function as_bytes(Optional ByRef neg As Boolean = Nothing) As Byte()
-        neg = negative()
-        Return d.as_bytes()
+    Public Function as_bytes() As Byte()
+        Using r As MemoryStream = New MemoryStream(CInt(d.byte_size() + uint32_1))
+            r.WriteByte(If(negative(), byte_1, byte_0))
+            assert(r.write(d.as_bytes()))
+            Return r.export()
+        End Using
     End Function
 End Class
 
