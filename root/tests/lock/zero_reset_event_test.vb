@@ -22,7 +22,7 @@ Public NotInheritable Class zero_reset_event_test
                                         assertion.equal(e.decrease(), uint32_0)
                                         Return goto_end()
                                     End Function))
-            assertion.is_true(e.wait(1000))
+            assertion.is_true(e.wait(10000))
         End Using
     End Sub
 
