@@ -87,7 +87,7 @@ Partial Public NotInheritable Class big_uint
         If v.empty() Then
             ReDim r(-1)
         Else
-            ReDim r(CInt(v.size() * byte_count_in_uint32 - uint32_1))
+            ReDim r(CInt(byte_size() - uint32_1))
             Dim start As Int64 = 0
             Dim [end] As Int64 = 0
             Dim [step] As Int32 = 0

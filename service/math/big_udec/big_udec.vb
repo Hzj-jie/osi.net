@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 
 ' A positive decimal in range of [0, +inf) by the representation of n / d.
 Partial Public NotInheritable Class big_udec
@@ -56,6 +57,11 @@ Partial Public NotInheritable Class big_udec
         assert(Not d Is Nothing)
         Me.n = n
         Me.d = d
+    End Sub
+
+    Public Sub New(ByVal b() As Byte)
+        Me.New()
+        assert(replace_by(b))
     End Sub
 
     Public Sub replace_by(ByVal v As Double, ByVal max_shift As UInt32)
@@ -111,6 +117,34 @@ Partial Public NotInheritable Class big_udec
             Return False
         End If
         Return assert(replace_by(n.n, n.d))
+    End Function
+
+    Public Function replace_by(ByVal b() As Byte) As Boolean
+        If isemptyarray(b) Then
+            set_zero()
+            Return True
+        End If
+        Dim l As UInt32 = 0
+        Dim i As UInt32 = 0
+        If Not bytes_uint32(b, l, i) Then
+            Return False
+        End If
+        Dim p As piece = Nothing
+        p = New piece(b)
+        If Not p.consume(i, p) Then
+            Return False
+        End If
+        Dim n As piece = Nothing
+        Dim d As piece = Nothing
+        If Not p.keep(l, n) Then
+            Return False
+        End If
+        If Not p.consume(l, d) Then
+            Return False
+        End If
+        Me.n.replace_by(n.export())
+        Me.d.replace_by(d.export())
+        Return True
     End Function
 
     Public Sub set_zero()

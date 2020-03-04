@@ -13,14 +13,13 @@ Partial Public NotInheritable Class big_uint
         assert_support_base(base)
         If length = 0 Then
             Return Nothing
-        Else
-            Dim r As StringBuilder = Nothing
-            r = New StringBuilder(CInt(length))
-            For i As UInt32 = 0 To length - uint32_1
-                r.Append(number_to_char(assert_which.of(rnd_int(If(i = 0, byte_1, byte_0), base)).can_cast_to_byte()))
-            Next
-            Return Convert.ToString(r)
         End If
+        Dim r As StringBuilder = Nothing
+        r = New StringBuilder(CInt(length))
+        For i As UInt32 = 0 To length - uint32_1
+            r.Append(number_to_char(assert_which.of(rnd_int(If(i = 0, byte_1, byte_0), base)).can_cast_to_byte()))
+        Next
+        Return Convert.ToString(r)
     End Function
 
     Public Shared Function rnd_support_base() As Byte

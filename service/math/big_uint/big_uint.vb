@@ -245,4 +245,8 @@ Partial Public NotInheritable Class big_uint
     Public Function uint32_size() As UInt32
         Return v.size()
     End Function
+
+    Public Function byte_size() As UInt32
+        Return v.size() * byte_count_in_uint32
+    End Function
 End Class
