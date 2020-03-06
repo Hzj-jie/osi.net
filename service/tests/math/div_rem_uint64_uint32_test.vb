@@ -39,7 +39,7 @@ Public NotInheritable Class div_rem_uint64_uint32_test
     <test>
     <repeat(10000000)>
     Private Shared Sub random()
-        run_case(rnd_uint64(), rnd_uint())
+        run_case(rnd_uint64(), rnd_uint(uint32_1, max_uint32))
     End Sub
 
     Private Sub New()
