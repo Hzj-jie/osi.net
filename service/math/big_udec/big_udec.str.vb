@@ -41,11 +41,14 @@ Partial Public NotInheritable Class big_udec
         End Function
 
         Private Function upure_part() As String
+            Dim n As big_uint = Nothing
+            n = New big_uint(this.dec_part().n)
+            If n.is_zero() Then
+                Return empty_string
+            End If
             Dim base As big_uint = Nothing
             base = New big_uint(str_base)
             Dim l As UInt32 = 0
-            Dim n As big_uint = Nothing
-            n = New big_uint(this.dec_part().n)
             While n.uint32_size() <= (this.d.uint32_size() * upure_numerator_size_multiply)
                 l += uint32_1
                 n *= base
@@ -55,8 +58,8 @@ Partial Public NotInheritable Class big_udec
             r = n.str(str_base)
             assert(l >= strlen(r))
             Return strcat(strncat(character.dot, character.zero, l - strlen(r)), r).
-                       TrimEnd(character.zero).
-                       strleft(upure_len)
+                       strleft(upure_len).
+                       TrimEnd(character.dot, character.zero)
         End Function
 
         Public Overrides Function ToString() As String
@@ -109,9 +112,15 @@ Partial Public NotInheritable Class big_udec
             If Not big_uint.parse(s, n, base) Then
                 Return False
             End If
-            assert(big_uint.parse(strncat("1", "0", zero_count), n, base))
+            assert(big_uint.parse(strncat("1", "0", zero_count), d, base))
         End If
         o = New big_udec(n, d)
         Return True
+    End Function
+
+    Public Shared Function parse(ByVal s As String, Optional ByVal base As Byte = constants.str_base) As big_udec
+        Dim r As big_udec = Nothing
+        assert(parse(s, r, base))
+        Return r
     End Function
 End Class

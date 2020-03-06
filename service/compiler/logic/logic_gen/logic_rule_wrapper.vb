@@ -78,14 +78,14 @@ Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
 
     Public NotInheritable Shadows Class parse_wrapper
         Inherits code_gen_rule_wrapper(Of writer,
-                                      logic_rule_wrapper,
-                                      logic_gens,
-                                      statements,
-                                      _nlexer_rule,
-                                      _syntaxer_rule,
-                                      _prefixes,
-                                      _suffixes,
-                                      _logic_gens).parse_wrapper
+                                          logic_rule_wrapper,
+                                          logic_gens,
+                                          statements,
+                                          _nlexer_rule,
+                                          _syntaxer_rule,
+                                          _prefixes,
+                                          _suffixes,
+                                          _logic_gens).parse_wrapper
         Public Sub New(ByVal functions As interrupts)
             MyBase.New(functions)
         End Sub
