@@ -30,11 +30,8 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.leaf())
-            Dim s As String = Nothing
-            s = n.word().str()
-            s = strmid(s, 0, strlen(s) - uint32_1)
             Dim i As big_udec = Nothing
-            If Not big_udec.parse(s, i) Then
+            If Not big_udec.parse(n.word().str(), i) Then
                 raise_error(error_type.user, "Cannot parse data to bigufloat ", n.trace_back_str())
                 Return False
             End If

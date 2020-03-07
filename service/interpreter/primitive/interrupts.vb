@@ -8,7 +8,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Namespace primitive
-    Public Class interrupts
+    Public NotInheritable Class interrupts
         Public Shared ReadOnly [default] As interrupts
         Private ReadOnly io As console_io
         Private ReadOnly v As vector(Of Func(Of Byte(), Byte()))

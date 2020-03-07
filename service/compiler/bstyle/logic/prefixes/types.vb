@@ -33,10 +33,11 @@ Partial Public NotInheritable Class bstyle
                     type_of(bool, 1),
                     type_of([byte], 1),
                     type_of(biguint, max_uint32 - 1),
-                    type_of(ufloat, max_uint32 - 2)
+                    type_of(ufloat, max_uint32 - 2),
+                    type_of([string], max_uint32 - 3)
                 )
             type_0_s = vector.of(void)
-            type_asterisk_s = vector.of([string])
+            type_asterisk_s = vector.of(Of String)()
         End Sub
 
         Private Shared Function type_of(ByVal name As String, ByVal size As UInt32) As pair(Of String, UInt32)

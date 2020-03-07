@@ -14,7 +14,7 @@ Namespace logic
         Public Shared ReadOnly empty As types
         Public Const variable_type As String = "type*"
         Public Const zero_type As String = "type0"
-        Private Const variable_size As UInt32 = max_uint32
+        Private Const variable_size As UInt32 = max_int32
         Private Const zero_size As UInt32 = uint32_0
         Private ReadOnly sizes As map(Of String, UInt32)
 
@@ -49,7 +49,7 @@ Namespace logic
         End Sub
 
         Public Shared Function is_variable_size(ByVal size As UInt32) As Boolean
-            Return size = variable_size
+            Return size >= variable_size
         End Function
 
         Public Shared Function is_zero_size(ByVal size As UInt32) As Boolean
