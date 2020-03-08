@@ -66,7 +66,7 @@ Public NotInheritable Class big_udec_extract_test
         u = New big_udec(0.5)
         u = u.assert_extract(New big_uint(3), 350)
 
-        assertion.equal(u.str(), "0.793700525984099737375852819636154130195746663949926504904142880")
+        assertion.equal(u.str(), "0.79370052598409973737585281963615413019574666394992650490414288")
         '                         0.7937005259841
     End Sub
 
