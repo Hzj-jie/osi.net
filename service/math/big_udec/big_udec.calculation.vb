@@ -150,20 +150,20 @@ Partial Public NotInheritable Class big_udec
         Return Me
     End Function
 
-    Public Function extract(ByVal that As big_uint, ByRef overflow As Boolean) As big_udec
-        Return extract(that, constants.extract_power_base, overflow)
+    Public Function extract(ByVal that As big_uint, ByRef divide_by_zero As Boolean) As big_udec
+        Return extract(that, constants.extract_power_base, divide_by_zero)
     End Function
 
     Public Function extract(ByVal that As big_uint,
                             ByVal extract_power_base As UInt32,
-                            ByRef overflow As Boolean) As big_udec
+                            ByRef divide_by_zero As Boolean) As big_udec
         assert(extract_power_base > 0)
         If that Is Nothing OrElse that.is_zero() Then
-            overflow = True
+            divide_by_zero = True
             set_zero()
             Return Me
         End If
-        overflow = False
+        divide_by_zero = False
         If that.is_one() Then
             Return Me
         End If
@@ -186,11 +186,11 @@ Partial Public NotInheritable Class big_udec
     End Function
 
     Public Function extract(ByVal that As big_uint, ByVal extract_power_base As UInt32) As big_udec
-        Dim overflow As Boolean = False
+        Dim divide_by_zero As Boolean = False
         Dim r As big_udec = Nothing
-        r = extract(that, extract_power_base, overflow)
-        If overflow Then
-            throws.overflow()
+        r = extract(that, extract_power_base, divide_by_zero)
+        If divide_by_zero Then
+            throws.divide_by_zero()
         End If
         Return r
     End Function
@@ -200,10 +200,10 @@ Partial Public NotInheritable Class big_udec
     End Function
 
     Public Function assert_extract(ByVal that As big_uint, ByVal extract_power_base As UInt32) As big_udec
-        Dim overflow As Boolean = False
+        Dim divide_by_zero As Boolean = False
         Dim r As big_udec = Nothing
-        r = extract(that, extract_power_base, overflow)
-        assert(Not overflow)
+        r = extract(that, extract_power_base, divide_by_zero)
+        assert(Not divide_by_zero)
         Return r
     End Function
 

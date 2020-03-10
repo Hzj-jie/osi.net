@@ -101,7 +101,7 @@ Partial Public Class hasharray(Of T,
     End Function
 
     Private Function cell_is(ByVal column As UInt32, ByVal row As UInt32, ByVal value As T) As Boolean
-        Return Not cell_is_empty(column, row) AndAlso equaler(+v(column)(row), value)
+        Return Not cell_is_empty(column, row) AndAlso equaler(v(column)(row).get(), value)
     End Function
 
     Private Function cell_is_empty(ByVal column As UInt32, ByVal row As UInt32) As Boolean

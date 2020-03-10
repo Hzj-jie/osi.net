@@ -74,10 +74,7 @@ Partial Public NotInheritable Class big_uint
 
     'store the result of this * that in me
     Private Sub multiply(ByVal this As big_uint, ByVal that As big_uint)
-        If this Is Nothing OrElse that Is Nothing Then
-            Return
-        End If
-        If this.is_zero() OrElse that.is_zero() Then
+        If this Is Nothing OrElse that Is Nothing OrElse this.is_zero() OrElse that.is_zero() Then
             set_zero()
             Return
         End If
@@ -115,10 +112,7 @@ Partial Public NotInheritable Class big_uint
 
     'store the result of yroot(me, that) in me, and the remainder will be the me - (me ^ (yroot(me, that)))
     Private Sub extract(ByVal that As big_uint, ByRef remainder As big_uint, ByRef divide_by_zero As Boolean)
-        If that Is Nothing Then
-            Return
-        End If
-        If that.is_zero() Then
+        If that Is Nothing OrElse that.is_zero() Then
             If is_one() Then
                 divide_by_zero = False
                 remainder = zero()
@@ -226,7 +220,8 @@ Partial Public NotInheritable Class big_uint
 
     'store the result of me / that in me, and remainder will be the remainder
     Private Sub divide(ByVal that As big_uint, ByRef remainder As big_uint, ByRef divide_by_zero As Boolean)
-        If that Is Nothing Then
+        If that Is Nothing OrElse that.is_zero() Then
+            divide_by_zero = True
             Return
         End If
         If that.fit_uint32() Then

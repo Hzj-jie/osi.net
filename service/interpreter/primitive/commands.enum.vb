@@ -40,7 +40,7 @@ Namespace primitive
         [cpdbz]
         ' (*A) = IN 
         [cpin]
-        ' finish execution, and leave the executor in a stop but not error status. 
+        ' finish execution, and leave the executor in a stop but not error state. 
         [stop]
         ' (*A) = ((*B big_uint) == (*C big_uint)) 
         [equal]
@@ -74,6 +74,22 @@ Namespace primitive
         [stst]
         ' pop extra (StackSize - states.top.StackSize) slots from stack, and jump to instruction @(* states.top.IP uint64) 
         [rest]
+        ' (*A big_udec) = (*B big_udec) + (*B big_udec) 
+        [fadd]
+        ' (*A big_udec) = (*B big_udec) - (*B big_udec) 
+        [fsub]
+        ' (*A big_udec) = (*B big_udec) * (*B big_udec) 
+        [fmul]
+        ' (*A big_udec) = (*B big_udec) / (*C big_udec) 
+        [fdiv]
+        ' (*A big_udec) = extract((*B big_udec), (*C big_udec)) 
+        [fext]
+        ' (*A big_udec) = pow((*B big_udec), (*B big_udec)) 
+        [fpow]
+        ' (*A) = ((*B big_udec) == (*C big_udec)) 
+        [fequal]
+        ' (*A) = ((*B big_udec) < (*C big_udec)) 
+        [fless]
 
         COUNT
     End Enum

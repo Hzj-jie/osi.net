@@ -32,3 +32,12 @@ or	data_ref	data_ref	data_ref	#(*A big_uint) = (*B big_uint) OR (*C big_uint)
 not	data_ref	data_ref	#(*A big_uint) = NOT (*B big_uint)
 stst	#push current state into states, such as IP_AFTER_THIS_INSTRUCTION, i.e. IP + 1, Stack Size, a typical usage is [ stst, jump ? ]
 rest	#pop extra (StackSize - states.top.StackSize) slots from stack, and jump to instruction @(* states.top.IP uint64)
+
+fadd	data_ref	data_ref	data_ref	#(*A big_udec) = (*B big_udec) + (*B big_udec)
+fsub	data_ref	data_ref	data_ref	#(*A big_udec) = (*B big_udec) - (*B big_udec)
+fmul	data_ref	data_ref	data_ref	#(*A big_udec) = (*B big_udec) * (*B big_udec)
+fdiv	data_ref	data_ref	data_ref	#(*A big_udec) = (*B big_udec) / (*C big_udec)
+fext	data_ref	data_ref	data_ref	#(*A big_udec) = extract((*B big_udec), (*C big_udec)) 
+fpow	data_ref	data_ref	data_ref	#(*A big_udec) = pow((*B big_udec), (*B big_udec))
+fequal	data_ref	data_ref	data_ref	#(*A) = ((*B big_udec) == (*C big_udec))
+fless	data_ref	data_ref	data_ref	#(*A) = ((*B big_udec) < (*C big_udec))

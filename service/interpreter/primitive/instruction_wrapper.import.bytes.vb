@@ -82,6 +82,22 @@ Namespace primitive
                         Me.i = New instructions.stst()
                     Case command.rest
                         Me.i = New instructions.rest()
+                    Case command.fadd
+                        Me.i = New instructions.fadd()
+                    Case command.fsub
+                        Me.i = New instructions.fsub()
+                    Case command.fmul
+                        Me.i = New instructions.fmul()
+                    Case command.fdiv
+                        Me.i = New instructions.fdiv()
+                    Case command.fext
+                        Me.i = New instructions.fext()
+                    Case command.fpow
+                        Me.i = New instructions.fpow()
+                    Case command.fequal
+                        Me.i = New instructions.fequal()
+                    Case command.fless
+                        Me.i = New instructions.fless()
                     Case Else
                         Return False
                 End Select

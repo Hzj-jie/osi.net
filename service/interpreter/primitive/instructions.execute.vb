@@ -549,5 +549,113 @@ Namespace primitive
                 imi.restore_state()
             End Sub
         End Class
+
+        Partial Public NotInheritable Class [fadd]
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                assert(Not imi Is Nothing)
+                Dim b1 As big_udec = Nothing
+                Dim b2 As big_udec = Nothing
+                b1 = New big_udec(+p1(imi))
+                b2 = New big_udec(+p2(imi))
+                p0(imi).set(b1.add(b2).as_bytes())
+            End Sub
+        End Class
+
+        Partial Public NotInheritable Class [fsub]
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                assert(Not imi Is Nothing)
+                Dim b1 As big_udec = Nothing
+                Dim b2 As big_udec = Nothing
+                b1 = New big_udec(+p1(imi))
+                b2 = New big_udec(+p2(imi))
+                p0(imi).set(b1.sub(b2).as_bytes())
+            End Sub
+        End Class
+
+        Partial Public NotInheritable Class [fmul]
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                assert(Not imi Is Nothing)
+                Dim b1 As big_udec = Nothing
+                Dim b2 As big_udec = Nothing
+                b1 = New big_udec(+p1(imi))
+                b2 = New big_udec(+p2(imi))
+                p0(imi).set(b1.multiply(b2).as_bytes())
+            End Sub
+        End Class
+
+        Partial Public NotInheritable Class [fdiv]
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                assert(Not imi Is Nothing)
+                Dim b1 As big_udec = Nothing
+                Dim b2 As big_udec = Nothing
+                Dim c As Boolean = False
+                b1 = New big_udec(+p1(imi))
+                b2 = New big_udec(+p2(imi))
+                p0(imi).set(b1.divide(b2, c).as_bytes())
+                imi.divided_by_zero(c)
+            End Sub
+        End Class
+
+        Partial Public NotInheritable Class [fext]
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                assert(Not imi Is Nothing)
+                Dim b1 As big_udec = Nothing
+                Dim b2 As big_udec = Nothing
+                Dim c As Boolean = False
+                b1 = New big_udec(+p1(imi))
+                b2 = New big_udec(+p2(imi))
+                p0(imi).set(b1.extract(b2, c).as_bytes())
+                imi.divided_by_zero(c)
+            End Sub
+        End Class
+
+        Partial Public NotInheritable Class [fpow]
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                assert(Not imi Is Nothing)
+                Dim b1 As big_udec = Nothing
+                Dim b2 As big_udec = Nothing
+                b1 = New big_udec(+p1(imi))
+                b2 = New big_udec(+p2(imi))
+                p0(imi).set(b1.power(b2).as_bytes())
+            End Sub
+        End Class
+
+        Partial Public NotInheritable Class [fequal]
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                assert(Not imi Is Nothing)
+                Dim b1 As big_udec = Nothing
+                Dim b2 As big_udec = Nothing
+                b1 = New big_udec(+p1(imi))
+                b2 = New big_udec(+p2(imi))
+                p0(imi).set(bool_bytes(b1.equal(b2)))
+            End Sub
+        End Class
+
+        Partial Public NotInheritable Class [fless]
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                assert(Not imi Is Nothing)
+                Dim b1 As big_udec = Nothing
+                Dim b2 As big_udec = Nothing
+                b1 = New big_udec(+p1(imi))
+                b2 = New big_udec(+p2(imi))
+                p0(imi).set(bool_bytes(b1.less(b2)))
+            End Sub
+        End Class
     End Namespace
 End Namespace

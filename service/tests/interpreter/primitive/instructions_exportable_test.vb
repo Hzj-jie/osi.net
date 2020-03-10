@@ -343,5 +343,93 @@ Namespace primitive
             End Function
         End Class
 
+        Public Class fadd_exportable_test
+            Inherits exportable_test(Of [fadd])
+
+            Protected Overrides Function create() As [fadd]
+                Return New [fadd]( _
+                        data_ref.random(),
+                        data_ref.random(),
+                        data_ref.random())
+            End Function
+        End Class
+
+        Public Class fsub_exportable_test
+            Inherits exportable_test(Of [fsub])
+
+            Protected Overrides Function create() As [fsub]
+                Return New [fsub]( _
+                        data_ref.random(),
+                        data_ref.random(),
+                        data_ref.random())
+            End Function
+        End Class
+
+        Public Class fmul_exportable_test
+            Inherits exportable_test(Of [fmul])
+
+            Protected Overrides Function create() As [fmul]
+                Return New [fmul]( _
+                        data_ref.random(),
+                        data_ref.random(),
+                        data_ref.random())
+            End Function
+        End Class
+
+        Public Class fdiv_exportable_test
+            Inherits exportable_test(Of [fdiv])
+
+            Protected Overrides Function create() As [fdiv]
+                Return New [fdiv]( _
+                        data_ref.random(),
+                        data_ref.random(),
+                        data_ref.random())
+            End Function
+        End Class
+
+        Public Class fext_exportable_test
+            Inherits exportable_test(Of [fext])
+
+            Protected Overrides Function create() As [fext]
+                Return New [fext]( _
+                        data_ref.random(),
+                        data_ref.random(),
+                        data_ref.random())
+            End Function
+        End Class
+
+        Public Class fpow_exportable_test
+            Inherits exportable_test(Of [fpow])
+
+            Protected Overrides Function create() As [fpow]
+                Return New [fpow]( _
+                        data_ref.random(),
+                        data_ref.random(),
+                        data_ref.random())
+            End Function
+        End Class
+
+        Public Class fequal_exportable_test
+            Inherits exportable_test(Of [fequal])
+
+            Protected Overrides Function create() As [fequal]
+                Return New [fequal]( _
+                        data_ref.random(),
+                        data_ref.random(),
+                        data_ref.random())
+            End Function
+        End Class
+
+        Public Class fless_exportable_test
+            Inherits exportable_test(Of [fless])
+
+            Protected Overrides Function create() As [fless]
+                Return New [fless]( _
+                        data_ref.random(),
+                        data_ref.random(),
+                        data_ref.random())
+            End Function
+        End Class
+
     End Namespace
 End Namespace
