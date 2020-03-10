@@ -170,7 +170,9 @@ Partial Public Class hasharray(Of T,
         assert(Not c Is Nothing)
         Dim column As UInt32 = 0
         column = hash(c)
-        assert(Not find_first_cell(+c, column, uint32_0))
+        If isdebugmode() Then
+            assert(Not find_first_cell(+c, column, uint32_0))
+        End If
         emplace_back(column, c)
     End Sub
 

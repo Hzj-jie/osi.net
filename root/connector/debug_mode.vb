@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Public Module _debug_mode
     Private PAUSEWHENINDEBUGMODE As Boolean = True
 
@@ -43,10 +47,10 @@ Public Module _debug_mode
     Public Function isdebugmode() As Boolean
         If INDEBUGMODE Then
             Return True
-        ElseIf NOTINDEBUGMODE Then
-            Return False
-        Else
-            Return isdebugbuild()
         End If
+        If NOTINDEBUGMODE Then
+            Return False
+        End If
+        Return isdebugbuild()
     End Function
 End Module
