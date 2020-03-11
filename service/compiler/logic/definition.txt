@@ -38,6 +38,14 @@ subtract	string	string	string
 #  multiply target source1 source2
 multiply	string	string	string
 
+# execute devide against two variables and store the result (quotient and remainder) in the first two variables:
+#  divide quotient remainder dividend divisor
+divide	string	string	string	string
+
+# execute extract against two varaibles and store the result (root and remainder) in the first two variables:
+#  extract root remainder radicand index
+extract	string	string	string	string
+
 # execute power command against two variables and store the result in the first variable:
 #  power target source1 source2
 power	string	string	string
@@ -47,7 +55,7 @@ power	string	string	string
 and	string	string	string
 
 # execute or command against two variables and store the result in the first variable:
-#  power target source1 source2
+#  or target source1 source2
 or	string	string	string
 
 # define a callee / function with name, parameters and body:
@@ -119,14 +127,6 @@ interrupt	string	string	string
 #  move target source
 move	string	string
 
-# execute devide against two variables and store the result (quotient and remainder) in the first two variables:
-#  divide quotient remainder dividend divisor
-divide	string	string	string	string
-
-# execute extract against two varaibles and store the result (root and remainder) in the first two variables:
-#  extract root remainder radicand index
-extract	string	string	string	string
-
 # exit a function without return value:
 # to avoid increasing the complexity in this level, the language contains no "syntax" concept, but only fixed rules. so
 # the "*" is used as a placeholder to make the parsing logic same as return string string.
@@ -161,3 +161,47 @@ while_then	string	paragraph
 # execute stop command:
 #  stop
 stop
+
+# execute add command against two variables and store the result in the first variable:
+#  float_add target source1 source2
+float_add	string	string	string
+
+# execute subtract command against two variables and store the result in the first variable:
+#  float_subtract target source1 source2
+float_subtract	string	string	string
+
+# execute multiply command against two variables and store the result in the first variable:
+#  float_multiply target source1 source2
+float_multiply	string	string	string
+
+# execute devide against two variables and store the result quotient in the first variable:
+#  float_divide quotient dividend divisor
+float_divide	string	string	string
+
+# execute extract against two varaibles and store the result root in the first variable:
+#  float_extract root radicand index
+float_extract	string	string	string
+
+# execute power command against two variables and store the result in the first variable:
+#  float_power target source1 source2
+float_power	string	string	string
+
+# execute less command against two variables and store the result in the first variable:
+#  float_less target source1 source2
+float_less	string	string	string
+
+# execute more command against two variables and store the result in the first variable:
+#  float_more target source1 source2
+float_more	string	string	string
+
+# execute equal command against two variables and store the result in the first variable:
+#  float_equal target source1 source2
+float_equal	string	string	string
+
+# execute less_or_equal command against two variables and store the result in the first variable:
+#  float_less_or_equal target source1 source2
+float_less_or_equal	string	string	string
+
+# execute more_or_equal command against two variables and store the result in the first variable:
+#  float_more_or_equal target source1 source2
+float_more_or_equal	string	string	string

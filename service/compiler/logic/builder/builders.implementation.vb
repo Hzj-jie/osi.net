@@ -225,11 +225,75 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_power(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As power_builder_9
-            Return New power_builder_9(string_1, string_2, string_3)
+        Public Shared Function of_divide(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String, ByVal string_4 As String) As divide_builder_9
+            Return New divide_builder_9(string_1, string_2, string_3, string_4)
         End Function
 
-        Public NotInheritable Class power_builder_9
+        Public NotInheritable Class divide_builder_9
+
+            Private ReadOnly string_1 As String
+            Private ReadOnly string_2 As String
+            Private ReadOnly string_3 As String
+            Private ReadOnly string_4 As String
+
+            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String, ByVal string_4 As String)
+                assert(Not string_1.null_or_whitespace())
+                Me.string_1 = string_1
+                assert(Not string_2.null_or_whitespace())
+                Me.string_2 = string_2
+                assert(Not string_3.null_or_whitespace())
+                Me.string_3 = string_3
+                assert(Not string_4.null_or_whitespace())
+                Me.string_4 = string_4
+            End Sub
+
+            Public Sub [to](ByVal o As writer)
+                o.append("divide")
+                o.append(string_1)
+                o.append(string_2)
+                o.append(string_3)
+                o.append(string_4)
+                o.append(newline.incode())
+            End Sub
+        End Class
+
+        Public Shared Function of_extract(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String, ByVal string_4 As String) As extract_builder_10
+            Return New extract_builder_10(string_1, string_2, string_3, string_4)
+        End Function
+
+        Public NotInheritable Class extract_builder_10
+
+            Private ReadOnly string_1 As String
+            Private ReadOnly string_2 As String
+            Private ReadOnly string_3 As String
+            Private ReadOnly string_4 As String
+
+            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String, ByVal string_4 As String)
+                assert(Not string_1.null_or_whitespace())
+                Me.string_1 = string_1
+                assert(Not string_2.null_or_whitespace())
+                Me.string_2 = string_2
+                assert(Not string_3.null_or_whitespace())
+                Me.string_3 = string_3
+                assert(Not string_4.null_or_whitespace())
+                Me.string_4 = string_4
+            End Sub
+
+            Public Sub [to](ByVal o As writer)
+                o.append("extract")
+                o.append(string_1)
+                o.append(string_2)
+                o.append(string_3)
+                o.append(string_4)
+                o.append(newline.incode())
+            End Sub
+        End Class
+
+        Public Shared Function of_power(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As power_builder_11
+            Return New power_builder_11(string_1, string_2, string_3)
+        End Function
+
+        Public NotInheritable Class power_builder_11
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -253,11 +317,11 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_and(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As and_builder_10
-            Return New and_builder_10(string_1, string_2, string_3)
+        Public Shared Function of_and(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As and_builder_12
+            Return New and_builder_12(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class and_builder_10
+        Public NotInheritable Class and_builder_12
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -281,11 +345,11 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_or(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As or_builder_11
-            Return New or_builder_11(string_1, string_2, string_3)
+        Public Shared Function of_or(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As or_builder_13
+            Return New or_builder_13(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class or_builder_11
+        Public NotInheritable Class or_builder_13
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -309,11 +373,11 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_callee(ByVal string_1 As String, ByVal string_2 As String, ByVal typed_parameters_3 As vector(Of pair(Of String, String)), ByVal paragraph_4 As Func(Of Boolean)) As callee_builder_12
-            Return New callee_builder_12(string_1, string_2, typed_parameters_3, paragraph_4)
+        Public Shared Function of_callee(ByVal string_1 As String, ByVal string_2 As String, ByVal typed_parameters_3 As vector(Of pair(Of String, String)), ByVal paragraph_4 As Func(Of Boolean)) As callee_builder_14
+            Return New callee_builder_14(string_1, string_2, typed_parameters_3, paragraph_4)
         End Function
 
-        Public NotInheritable Class callee_builder_12
+        Public NotInheritable Class callee_builder_14
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -346,11 +410,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_caller(ByVal string_1 As String, ByVal string_2 As String, ByVal parameters_3 As vector(Of String)) As caller_builder_13
-            Return New caller_builder_13(string_1, string_2, parameters_3)
+        Public Shared Function of_caller(ByVal string_1 As String, ByVal string_2 As String, ByVal parameters_3 As vector(Of String)) As caller_builder_15
+            Return New caller_builder_15(string_1, string_2, parameters_3)
         End Function
 
-        Public NotInheritable Class caller_builder_13
+        Public NotInheritable Class caller_builder_15
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -376,11 +440,11 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_caller(ByVal string_1 As String, ByVal parameters_2 As vector(Of String)) As caller_builder_14
-            Return New caller_builder_14(string_1, parameters_2)
+        Public Shared Function of_caller(ByVal string_1 As String, ByVal parameters_2 As vector(Of String)) As caller_builder_16
+            Return New caller_builder_16(string_1, parameters_2)
         End Function
 
-        Public NotInheritable Class caller_builder_14
+        Public NotInheritable Class caller_builder_16
 
             Private ReadOnly string_1 As String
             Private ReadOnly parameters_2 As vector(Of String)
@@ -402,11 +466,11 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_less(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As less_builder_15
-            Return New less_builder_15(string_1, string_2, string_3)
+        Public Shared Function of_less(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As less_builder_17
+            Return New less_builder_17(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class less_builder_15
+        Public NotInheritable Class less_builder_17
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -430,11 +494,11 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_more(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As more_builder_16
-            Return New more_builder_16(string_1, string_2, string_3)
+        Public Shared Function of_more(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As more_builder_18
+            Return New more_builder_18(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class more_builder_16
+        Public NotInheritable Class more_builder_18
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -458,11 +522,11 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As equal_builder_17
-            Return New equal_builder_17(string_1, string_2, string_3)
+        Public Shared Function of_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As equal_builder_19
+            Return New equal_builder_19(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class equal_builder_17
+        Public NotInheritable Class equal_builder_19
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -486,11 +550,11 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_less_or_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As less_or_equal_builder_18
-            Return New less_or_equal_builder_18(string_1, string_2, string_3)
+        Public Shared Function of_less_or_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As less_or_equal_builder_20
+            Return New less_or_equal_builder_20(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class less_or_equal_builder_18
+        Public NotInheritable Class less_or_equal_builder_20
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -514,11 +578,11 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_more_or_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As more_or_equal_builder_19
-            Return New more_or_equal_builder_19(string_1, string_2, string_3)
+        Public Shared Function of_more_or_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As more_or_equal_builder_21
+            Return New more_or_equal_builder_21(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class more_or_equal_builder_19
+        Public NotInheritable Class more_or_equal_builder_21
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -542,11 +606,11 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_if(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean), ByVal paragraph_4 As Func(Of Boolean)) As if_builder_20
-            Return New if_builder_20(string_1, paragraph_2, paragraph_4)
+        Public Shared Function of_if(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean), ByVal paragraph_4 As Func(Of Boolean)) As if_builder_22
+            Return New if_builder_22(string_1, paragraph_2, paragraph_4)
         End Function
 
-        Public NotInheritable Class if_builder_20
+        Public NotInheritable Class if_builder_22
 
             Private ReadOnly string_1 As String
             Private ReadOnly paragraph_2 As Func(Of Boolean)
@@ -576,11 +640,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_if(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean)) As if_builder_21
-            Return New if_builder_21(string_1, paragraph_2)
+        Public Shared Function of_if(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean)) As if_builder_23
+            Return New if_builder_23(string_1, paragraph_2)
         End Function
 
-        Public NotInheritable Class if_builder_21
+        Public NotInheritable Class if_builder_23
 
             Private ReadOnly string_1 As String
             Private ReadOnly paragraph_2 As Func(Of Boolean)
@@ -603,11 +667,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_copy(ByVal string_1 As String, ByVal string_2 As String) As copy_builder_22
-            Return New copy_builder_22(string_1, string_2)
+        Public Shared Function of_copy(ByVal string_1 As String, ByVal string_2 As String) As copy_builder_24
+            Return New copy_builder_24(string_1, string_2)
         End Function
 
-        Public NotInheritable Class copy_builder_22
+        Public NotInheritable Class copy_builder_24
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -627,11 +691,11 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_copy_const(ByVal string_1 As String, ByVal data_block_2 As data_block) As copy_const_builder_23
-            Return New copy_const_builder_23(string_1, data_block_2)
+        Public Shared Function of_copy_const(ByVal string_1 As String, ByVal data_block_2 As data_block) As copy_const_builder_25
+            Return New copy_const_builder_25(string_1, data_block_2)
         End Function
 
-        Public NotInheritable Class copy_const_builder_23
+        Public NotInheritable Class copy_const_builder_25
 
             Private ReadOnly string_1 As String
             Private ReadOnly data_block_2 As data_block
@@ -651,11 +715,11 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_define(ByVal string_1 As String, ByVal string_2 As String) As define_builder_24
-            Return New define_builder_24(string_1, string_2)
+        Public Shared Function of_define(ByVal string_1 As String, ByVal string_2 As String) As define_builder_26
+            Return New define_builder_26(string_1, string_2)
         End Function
 
-        Public NotInheritable Class define_builder_24
+        Public NotInheritable Class define_builder_26
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -675,11 +739,11 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_do_until(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean)) As do_until_builder_25
-            Return New do_until_builder_25(string_1, paragraph_2)
+        Public Shared Function of_do_until(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean)) As do_until_builder_27
+            Return New do_until_builder_27(string_1, paragraph_2)
         End Function
 
-        Public NotInheritable Class do_until_builder_25
+        Public NotInheritable Class do_until_builder_27
 
             Private ReadOnly string_1 As String
             Private ReadOnly paragraph_2 As Func(Of Boolean)
@@ -702,11 +766,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_do_while(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean)) As do_while_builder_26
-            Return New do_while_builder_26(string_1, paragraph_2)
+        Public Shared Function of_do_while(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean)) As do_while_builder_28
+            Return New do_while_builder_28(string_1, paragraph_2)
         End Function
 
-        Public NotInheritable Class do_while_builder_26
+        Public NotInheritable Class do_while_builder_28
 
             Private ReadOnly string_1 As String
             Private ReadOnly paragraph_2 As Func(Of Boolean)
@@ -729,11 +793,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_interrupt(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As interrupt_builder_27
-            Return New interrupt_builder_27(string_1, string_2, string_3)
+        Public Shared Function of_interrupt(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As interrupt_builder_29
+            Return New interrupt_builder_29(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class interrupt_builder_27
+        Public NotInheritable Class interrupt_builder_29
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -757,11 +821,11 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_move(ByVal string_1 As String, ByVal string_2 As String) As move_builder_28
-            Return New move_builder_28(string_1, string_2)
+        Public Shared Function of_move(ByVal string_1 As String, ByVal string_2 As String) As move_builder_30
+            Return New move_builder_30(string_1, string_2)
         End Function
 
-        Public NotInheritable Class move_builder_28
+        Public NotInheritable Class move_builder_30
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -777,70 +841,6 @@ Namespace logic
                 o.append("move")
                 o.append(string_1)
                 o.append(string_2)
-                o.append(newline.incode())
-            End Sub
-        End Class
-
-        Public Shared Function of_divide(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String, ByVal string_4 As String) As divide_builder_29
-            Return New divide_builder_29(string_1, string_2, string_3, string_4)
-        End Function
-
-        Public NotInheritable Class divide_builder_29
-
-            Private ReadOnly string_1 As String
-            Private ReadOnly string_2 As String
-            Private ReadOnly string_3 As String
-            Private ReadOnly string_4 As String
-
-            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String, ByVal string_4 As String)
-                assert(Not string_1.null_or_whitespace())
-                Me.string_1 = string_1
-                assert(Not string_2.null_or_whitespace())
-                Me.string_2 = string_2
-                assert(Not string_3.null_or_whitespace())
-                Me.string_3 = string_3
-                assert(Not string_4.null_or_whitespace())
-                Me.string_4 = string_4
-            End Sub
-
-            Public Sub [to](ByVal o As writer)
-                o.append("divide")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(string_4)
-                o.append(newline.incode())
-            End Sub
-        End Class
-
-        Public Shared Function of_extract(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String, ByVal string_4 As String) As extract_builder_30
-            Return New extract_builder_30(string_1, string_2, string_3, string_4)
-        End Function
-
-        Public NotInheritable Class extract_builder_30
-
-            Private ReadOnly string_1 As String
-            Private ReadOnly string_2 As String
-            Private ReadOnly string_3 As String
-            Private ReadOnly string_4 As String
-
-            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String, ByVal string_4 As String)
-                assert(Not string_1.null_or_whitespace())
-                Me.string_1 = string_1
-                assert(Not string_2.null_or_whitespace())
-                Me.string_2 = string_2
-                assert(Not string_3.null_or_whitespace())
-                Me.string_3 = string_3
-                assert(Not string_4.null_or_whitespace())
-                Me.string_4 = string_4
-            End Sub
-
-            Public Sub [to](ByVal o As writer)
-                o.append("extract")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(string_4)
                 o.append(newline.incode())
             End Sub
         End Class
@@ -1021,6 +1021,314 @@ Namespace logic
 
             Public Sub [to](ByVal o As writer)
                 o.append("stop")
+                o.append(newline.incode())
+            End Sub
+        End Class
+
+        Public Shared Function of_float_add(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_add_builder_39
+            Return New float_add_builder_39(string_1, string_2, string_3)
+        End Function
+
+        Public NotInheritable Class float_add_builder_39
+
+            Private ReadOnly string_1 As String
+            Private ReadOnly string_2 As String
+            Private ReadOnly string_3 As String
+
+            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String)
+                assert(Not string_1.null_or_whitespace())
+                Me.string_1 = string_1
+                assert(Not string_2.null_or_whitespace())
+                Me.string_2 = string_2
+                assert(Not string_3.null_or_whitespace())
+                Me.string_3 = string_3
+            End Sub
+
+            Public Sub [to](ByVal o As writer)
+                o.append("float_add")
+                o.append(string_1)
+                o.append(string_2)
+                o.append(string_3)
+                o.append(newline.incode())
+            End Sub
+        End Class
+
+        Public Shared Function of_float_subtract(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_subtract_builder_40
+            Return New float_subtract_builder_40(string_1, string_2, string_3)
+        End Function
+
+        Public NotInheritable Class float_subtract_builder_40
+
+            Private ReadOnly string_1 As String
+            Private ReadOnly string_2 As String
+            Private ReadOnly string_3 As String
+
+            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String)
+                assert(Not string_1.null_or_whitespace())
+                Me.string_1 = string_1
+                assert(Not string_2.null_or_whitespace())
+                Me.string_2 = string_2
+                assert(Not string_3.null_or_whitespace())
+                Me.string_3 = string_3
+            End Sub
+
+            Public Sub [to](ByVal o As writer)
+                o.append("float_subtract")
+                o.append(string_1)
+                o.append(string_2)
+                o.append(string_3)
+                o.append(newline.incode())
+            End Sub
+        End Class
+
+        Public Shared Function of_float_multiply(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_multiply_builder_41
+            Return New float_multiply_builder_41(string_1, string_2, string_3)
+        End Function
+
+        Public NotInheritable Class float_multiply_builder_41
+
+            Private ReadOnly string_1 As String
+            Private ReadOnly string_2 As String
+            Private ReadOnly string_3 As String
+
+            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String)
+                assert(Not string_1.null_or_whitespace())
+                Me.string_1 = string_1
+                assert(Not string_2.null_or_whitespace())
+                Me.string_2 = string_2
+                assert(Not string_3.null_or_whitespace())
+                Me.string_3 = string_3
+            End Sub
+
+            Public Sub [to](ByVal o As writer)
+                o.append("float_multiply")
+                o.append(string_1)
+                o.append(string_2)
+                o.append(string_3)
+                o.append(newline.incode())
+            End Sub
+        End Class
+
+        Public Shared Function of_float_divide(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_divide_builder_42
+            Return New float_divide_builder_42(string_1, string_2, string_3)
+        End Function
+
+        Public NotInheritable Class float_divide_builder_42
+
+            Private ReadOnly string_1 As String
+            Private ReadOnly string_2 As String
+            Private ReadOnly string_3 As String
+
+            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String)
+                assert(Not string_1.null_or_whitespace())
+                Me.string_1 = string_1
+                assert(Not string_2.null_or_whitespace())
+                Me.string_2 = string_2
+                assert(Not string_3.null_or_whitespace())
+                Me.string_3 = string_3
+            End Sub
+
+            Public Sub [to](ByVal o As writer)
+                o.append("float_divide")
+                o.append(string_1)
+                o.append(string_2)
+                o.append(string_3)
+                o.append(newline.incode())
+            End Sub
+        End Class
+
+        Public Shared Function of_float_extract(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_extract_builder_43
+            Return New float_extract_builder_43(string_1, string_2, string_3)
+        End Function
+
+        Public NotInheritable Class float_extract_builder_43
+
+            Private ReadOnly string_1 As String
+            Private ReadOnly string_2 As String
+            Private ReadOnly string_3 As String
+
+            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String)
+                assert(Not string_1.null_or_whitespace())
+                Me.string_1 = string_1
+                assert(Not string_2.null_or_whitespace())
+                Me.string_2 = string_2
+                assert(Not string_3.null_or_whitespace())
+                Me.string_3 = string_3
+            End Sub
+
+            Public Sub [to](ByVal o As writer)
+                o.append("float_extract")
+                o.append(string_1)
+                o.append(string_2)
+                o.append(string_3)
+                o.append(newline.incode())
+            End Sub
+        End Class
+
+        Public Shared Function of_float_power(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_power_builder_44
+            Return New float_power_builder_44(string_1, string_2, string_3)
+        End Function
+
+        Public NotInheritable Class float_power_builder_44
+
+            Private ReadOnly string_1 As String
+            Private ReadOnly string_2 As String
+            Private ReadOnly string_3 As String
+
+            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String)
+                assert(Not string_1.null_or_whitespace())
+                Me.string_1 = string_1
+                assert(Not string_2.null_or_whitespace())
+                Me.string_2 = string_2
+                assert(Not string_3.null_or_whitespace())
+                Me.string_3 = string_3
+            End Sub
+
+            Public Sub [to](ByVal o As writer)
+                o.append("float_power")
+                o.append(string_1)
+                o.append(string_2)
+                o.append(string_3)
+                o.append(newline.incode())
+            End Sub
+        End Class
+
+        Public Shared Function of_float_less(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_less_builder_45
+            Return New float_less_builder_45(string_1, string_2, string_3)
+        End Function
+
+        Public NotInheritable Class float_less_builder_45
+
+            Private ReadOnly string_1 As String
+            Private ReadOnly string_2 As String
+            Private ReadOnly string_3 As String
+
+            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String)
+                assert(Not string_1.null_or_whitespace())
+                Me.string_1 = string_1
+                assert(Not string_2.null_or_whitespace())
+                Me.string_2 = string_2
+                assert(Not string_3.null_or_whitespace())
+                Me.string_3 = string_3
+            End Sub
+
+            Public Sub [to](ByVal o As writer)
+                o.append("float_less")
+                o.append(string_1)
+                o.append(string_2)
+                o.append(string_3)
+                o.append(newline.incode())
+            End Sub
+        End Class
+
+        Public Shared Function of_float_more(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_more_builder_46
+            Return New float_more_builder_46(string_1, string_2, string_3)
+        End Function
+
+        Public NotInheritable Class float_more_builder_46
+
+            Private ReadOnly string_1 As String
+            Private ReadOnly string_2 As String
+            Private ReadOnly string_3 As String
+
+            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String)
+                assert(Not string_1.null_or_whitespace())
+                Me.string_1 = string_1
+                assert(Not string_2.null_or_whitespace())
+                Me.string_2 = string_2
+                assert(Not string_3.null_or_whitespace())
+                Me.string_3 = string_3
+            End Sub
+
+            Public Sub [to](ByVal o As writer)
+                o.append("float_more")
+                o.append(string_1)
+                o.append(string_2)
+                o.append(string_3)
+                o.append(newline.incode())
+            End Sub
+        End Class
+
+        Public Shared Function of_float_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_equal_builder_47
+            Return New float_equal_builder_47(string_1, string_2, string_3)
+        End Function
+
+        Public NotInheritable Class float_equal_builder_47
+
+            Private ReadOnly string_1 As String
+            Private ReadOnly string_2 As String
+            Private ReadOnly string_3 As String
+
+            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String)
+                assert(Not string_1.null_or_whitespace())
+                Me.string_1 = string_1
+                assert(Not string_2.null_or_whitespace())
+                Me.string_2 = string_2
+                assert(Not string_3.null_or_whitespace())
+                Me.string_3 = string_3
+            End Sub
+
+            Public Sub [to](ByVal o As writer)
+                o.append("float_equal")
+                o.append(string_1)
+                o.append(string_2)
+                o.append(string_3)
+                o.append(newline.incode())
+            End Sub
+        End Class
+
+        Public Shared Function of_float_less_or_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_less_or_equal_builder_48
+            Return New float_less_or_equal_builder_48(string_1, string_2, string_3)
+        End Function
+
+        Public NotInheritable Class float_less_or_equal_builder_48
+
+            Private ReadOnly string_1 As String
+            Private ReadOnly string_2 As String
+            Private ReadOnly string_3 As String
+
+            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String)
+                assert(Not string_1.null_or_whitespace())
+                Me.string_1 = string_1
+                assert(Not string_2.null_or_whitespace())
+                Me.string_2 = string_2
+                assert(Not string_3.null_or_whitespace())
+                Me.string_3 = string_3
+            End Sub
+
+            Public Sub [to](ByVal o As writer)
+                o.append("float_less_or_equal")
+                o.append(string_1)
+                o.append(string_2)
+                o.append(string_3)
+                o.append(newline.incode())
+            End Sub
+        End Class
+
+        Public Shared Function of_float_more_or_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_more_or_equal_builder_49
+            Return New float_more_or_equal_builder_49(string_1, string_2, string_3)
+        End Function
+
+        Public NotInheritable Class float_more_or_equal_builder_49
+
+            Private ReadOnly string_1 As String
+            Private ReadOnly string_2 As String
+            Private ReadOnly string_3 As String
+
+            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String)
+                assert(Not string_1.null_or_whitespace())
+                Me.string_1 = string_1
+                assert(Not string_2.null_or_whitespace())
+                Me.string_2 = string_2
+                assert(Not string_3.null_or_whitespace())
+                Me.string_3 = string_3
+            End Sub
+
+            Public Sub [to](ByVal o As writer)
+                o.append("float_more_or_equal")
+                o.append(string_1)
+                o.append(string_2)
+                o.append(string_3)
                 o.append(newline.incode())
             End Sub
         End Class

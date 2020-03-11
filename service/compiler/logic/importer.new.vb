@@ -179,5 +179,69 @@ Namespace logic
         Private Function new_stop() As [stop]
             Return New [stop]()
         End Function
+
+        Private Function new_float_add(ByVal p1 As String, ByVal p2 As String, ByVal p3 As String) As float_add
+            Return New float_add(types, p1, p2, p3)
+        End Function
+
+        Private Function new_float_subtract(ByVal p1 As String,
+                                            ByVal p2 As String,
+                                            ByVal p3 As String) As float_subtract
+            Return New float_subtract(types, p1, p2, p3)
+        End Function
+
+        Private Function new_float_multiply(ByVal p1 As String,
+                                            ByVal p2 As String,
+                                            ByVal p3 As String) As float_multiply
+            Return New float_multiply(types, p1, p2, p3)
+        End Function
+
+        Private Function new_float_divide(ByVal p1 As String,
+                                          ByVal p2 As String,
+                                          ByVal p3 As String) As float_divide
+            Return New float_divide(types, p1, p2, p3)
+        End Function
+
+        Private Function new_float_extract(ByVal p1 As String,
+                                           ByVal p2 As String,
+                                           ByVal p3 As String) As float_extract
+            Return New float_extract(types, p1, p2, p3)
+        End Function
+
+        Private Function new_float_power(ByVal p1 As String,
+                                         ByVal p2 As String,
+                                         ByVal p3 As String) As float_power
+            Return New float_power(types, p1, p2, p3)
+        End Function
+
+        Private Function new_float_less(ByVal p1 As String,
+                                        ByVal p2 As String,
+                                        ByVal p3 As String) As float_less
+            Return New float_less(types, p1, p2, p3)
+        End Function
+
+        Private Function new_float_more(ByVal p1 As String,
+                                        ByVal p2 As String,
+                                        ByVal p3 As String) As float_more
+            Return New float_more(types, p1, p2, p3)
+        End Function
+
+        Private Function new_float_equal(ByVal p1 As String,
+                                         ByVal p2 As String,
+                                         ByVal p3 As String) As float_equal
+            Return New float_equal(types, p1, p2, p3)
+        End Function
+
+        Private Function new_float_less_or_equal(ByVal p1 As String,
+                                                 ByVal p2 As String,
+                                                 ByVal p3 As String) As float_less_or_equal
+            Return New float_less_or_equal(types, p1, p2, p3)
+        End Function
+
+        Private Function new_float_more_or_equal(ByVal p1 As String,
+                                                 ByVal p2 As String,
+                                                 ByVal p3 As String) As float_more_or_equal
+            Return New float_more_or_equal(types, p1, p2, p3)
+        End Function
     End Class
 End Namespace

@@ -17,7 +17,7 @@ Namespace logic
 
         Public Shared Function of_define(ByVal ta As type_alias,
                                          ByVal name As String,
-                                         ByVal type As String) As define_builder_24
+                                         ByVal type As String) As define_builder_26
             assert(Not ta Is Nothing)
             Return of_define(name, ta(type))
         End Function
@@ -38,7 +38,7 @@ Namespace logic
                                          ByVal name As String,
                                          ByVal type As String,
                                          ByVal parameters As vector(Of parameter),
-                                         ByVal paragraph As Func(Of Boolean)) As callee_builder_12
+                                         ByVal paragraph As Func(Of Boolean)) As callee_builder_14
             assert(Not ta Is Nothing)
             Return of_callee(name,
                              ta(type),

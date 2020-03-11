@@ -27,7 +27,7 @@ Partial Public NotInheritable Class bstyle
                                          ByVal raw_name As String,
                                          ByVal return_type As String,
                                          ByVal parameters As vector(Of builders.parameter),
-                                         ByVal paragraph As Func(Of Boolean)) As builders.callee_builder_12
+                                         ByVal paragraph As Func(Of Boolean)) As builders.callee_builder_14
             Return builders.of_callee(ta,
                                       of_function(ta, raw_name, parameters),
                                       return_type,
@@ -44,7 +44,7 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         Public Shared Function of_caller(ByVal raw_name As String,
-                                         ByVal parameters As vector(Of String)) As builders.caller_builder_14
+                                         ByVal parameters As vector(Of String)) As builders.caller_builder_16
             Return builders.of_caller(of_function_call(raw_name, parameters), parameters)
         End Function
 

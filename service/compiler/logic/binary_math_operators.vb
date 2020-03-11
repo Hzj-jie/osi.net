@@ -77,4 +77,82 @@ Namespace logic
             Return command.or
         End Function
     End Class
+
+    Public NotInheritable Class float_add
+        Inherits binary_math_operator
+
+        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(types, result, left, right)
+        End Sub
+
+        Protected Overrides Function instruction() As command
+            Return command.fadd
+        End Function
+    End Class
+
+    Public NotInheritable Class float_subtract
+        Inherits binary_math_operator
+
+        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(types, result, left, right)
+        End Sub
+
+        Protected Overrides Function instruction() As command
+            Return command.fsub
+        End Function
+    End Class
+
+    Public NotInheritable Class float_multiply
+        Inherits binary_math_operator
+
+        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(types, result, left, right)
+        End Sub
+
+        Protected Overrides Function instruction() As command
+            Return command.fmul
+        End Function
+    End Class
+
+    Public NotInheritable Class float_power
+        Inherits binary_math_operator
+
+        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(types, result, left, right)
+        End Sub
+
+        Protected Overrides Function instruction() As command
+            Return command.fpow
+        End Function
+    End Class
+
+    Public NotInheritable Class float_divide
+        Inherits binary_math_operator
+
+        Public Sub New(ByVal types As types,
+                       ByVal result As String,
+                       ByVal left As String,
+                       ByVal right As String)
+            MyBase.New(types, result, left, right)
+        End Sub
+
+        Protected Overrides Function instruction() As command
+            Return command.fdiv
+        End Function
+    End Class
+
+    Public NotInheritable Class float_extract
+        Inherits binary_math_operator
+
+        Public Sub New(ByVal types As types,
+                       ByVal result As String,
+                       ByVal left As String,
+                       ByVal right As String)
+            MyBase.New(types, result, left, right)
+        End Sub
+
+        Protected Overrides Function instruction() As command
+            Return command.fext
+        End Function
+    End Class
 End Namespace
