@@ -9,15 +9,15 @@ Imports osi.root.formation
 Imports osi.root.utt
 
 ' Compare perf of map, hashmap, unordered_map, unordered_map2 and Dictionary
-Public Class map_hashmap_unordered_map_perf_test
+Public NotInheritable Class map_hashmap_unordered_map_perf_test
     Inherits performance_comparison_case_wrapper
 
     Public Sub New()
-        MyBase.New(R(New map_case()),
-                   R(New hashmap_case()),
-                   R(New dictionary_case()),
-                   R(New unordered_map_case()),
-                   R(New unordered_map2_case()))
+        MyBase.New(r(New map_case()),
+                   r(New hashmap_case()),
+                   r(New dictionary_case()),
+                   r(New unordered_map_case()),
+                   r(New unordered_map2_case()))
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
@@ -28,7 +28,7 @@ Public Class map_hashmap_unordered_map_perf_test
         End If
     End Function
 
-    Private Shared Function R(ByVal c As [case]) As [case]
+    Private Shared Function r(ByVal c As [case]) As [case]
         Return repeat(c, 100000)
     End Function
 
