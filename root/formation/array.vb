@@ -8,12 +8,12 @@ Imports osi.root.constants
 Imports osi.root.template
 
 Public NotInheritable Class array
-    ' TODO: Rename to [of].
-    Public Shared Function [New](Of T)(ByVal v() As T) As array(Of T)
+    Public Shared Function [of](Of T)(ByVal v() As T) As array(Of T)
         Return New array(Of T)(v)
     End Function
 
-    Public Shared Function [of](Of T)(ByVal v() As T) As array(Of T)
+    Public Shared Function elements(Of T)(ByVal ParamArray v() As T) As array(Of T)
+        assert(array_size(v) > 1 OrElse Not type_info(Of T).is_array)
         Return New array(Of T)(v)
     End Function
 

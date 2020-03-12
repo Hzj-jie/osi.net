@@ -8,11 +8,12 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Namespace primitive
-    Public NotInheritable Class interrupts
+    Partial Public NotInheritable Class interrupts
         Public Shared ReadOnly [default] As interrupts
         Private ReadOnly io As console_io
         Private ReadOnly v As vector(Of Func(Of Byte(), Byte()))
         Private ReadOnly m As map(Of String, UInt32)
+        Private ReadOnly lm As loaded_method
 
         Shared Sub New()
             [default] = New interrupts()
@@ -26,35 +27,21 @@ Namespace primitive
             v.emplace_back(AddressOf stderr)
             v.emplace_back(AddressOf stdin)
             v.emplace_back(AddressOf current_ms)
+            v.emplace_back(AddressOf load_method)
+            v.emplace_back(AddressOf execute_loaded_method)
 
             m = New map(Of String, UInt32)()
             For i As UInt32 = 0 To v.size() - uint32_1
                 assert(Not v(i) Is Nothing)
                 m(v(i).Method().Name()) = i
             Next
+
+            lm = New loaded_method()
         End Sub
 
         Public Sub New()
             Me.New(New console_io())
         End Sub
-
-        Public Function stdout(ByVal i() As Byte) As Byte()
-            io.output().Write(bytes_str(i))
-            Return Nothing
-        End Function
-
-        Public Function stderr(ByVal i() As Byte) As Byte()
-            io.error().Write(bytes_str(i))
-            Return Nothing
-        End Function
-
-        Public Function stdin(ByVal i() As Byte) As Byte()
-            Return str_bytes(io.input().ReadToEnd())
-        End Function
-
-        Public Function current_ms(ByVal i() As Byte) As Byte()
-            Return int64_bytes(nowadays.milliseconds())
-        End Function
 
         Public Function invoke(ByVal i As UInt32, ByVal j() As Byte) As Byte()
             If i >= v.size() Then

@@ -1,0 +1,25 @@
+﻿
+long loaded_current_ms() {
+  string method_name = "osi.service.interpreter.primitive.loaded_methods, osi.service.interpreter:current_ms";
+  logic "interrupt load_method method_name @@prefixes@temps@string";
+  long result;
+  logic "interrupt execute_loaded_method @@prefixes@temps@string result";
+  return result;
+}
+
+bool is_even(long i) {
+  long _2 = 2;
+  long _0 = 0;
+  return b2style::equal(b2style::mod(i, _2), _0);
+}
+
+void main() {
+  for (int i = 0; i < 100; i = i++) {
+    long x;
+    x = loaded_current_ms();
+    if (is_even(x)) {
+	  x = x--;
+	}
+    b2style::bool_std_out(is_even(x));
+  }
+} 

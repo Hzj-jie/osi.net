@@ -26,18 +26,18 @@ Public NotInheritable Class connectivity
     Shared Sub New()
         ' Except for the example hosts, other six are top six sites analyzed by alexa @ http://www.alexa.com/topsites.
         ' Latest updated on July, 23rd, 2016 09:58 (AM).
-        golden_hosts = const_array.[New]({"example.org",
-                                          "example.com",
-                                          "example.net",
-                                          "www.example.org",
-                                          "www.example.com",
-                                          "www.example.net",
-                                          "www.google.com",
-                                          "www.youtube.com",
-                                          "www.facebook.com",
-                                          "www.baidu.com",
-                                          "www.yahoo.com",
-                                          "www.wikipedia.org"})
+        golden_hosts = const_array.elements("example.org",
+                                            "example.com",
+                                            "example.net",
+                                            "www.example.org",
+                                            "www.example.com",
+                                            "www.example.net",
+                                            "www.google.com",
+                                            "www.youtube.com",
+                                            "www.facebook.com",
+                                            "www.baidu.com",
+                                            "www.yahoo.com",
+                                            "www.wikipedia.org")
 
         ServicePointManager.Expect100Continue() = True
         For Each i As SecurityProtocolType In {SecurityProtocolType.Tls,

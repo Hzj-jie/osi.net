@@ -1,11 +1,13 @@
 ﻿
-bool is_even(int i) {
-  return b2style::equal(b2style::mod(i, 2), 0);
+bool is_even(long i) {
+  long _2 = 2;
+  long _0 = 0;
+  return b2style::equal(b2style::mod(i, _2), _0);
 }
 
 void main() {
   for (int i = 0; i < 100; i = i++) {
-    int x;
+    long x;
     x = b2style::current_ms();
     if (is_even(x)) {
       x = x--;

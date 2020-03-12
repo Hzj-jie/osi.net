@@ -15,13 +15,27 @@ Public Module _const_array
 End Module
 
 Public NotInheritable Class const_array
-    ' TODO: Rename to [of]
-    Public Shared Function [New](Of T)(ByVal v() As T) As const_array(Of T)
+    Public Shared Function [of](Of T)(ByVal v() As T) As const_array(Of T)
         Return New const_array(Of T)(v)
     End Function
 
-    Public Shared Function [of](Of T)(ByVal v() As T) As const_array(Of T)
+    Public Shared Function elements(Of T)(ByVal ParamArray v() As T) As const_array(Of T)
+        assert(array_size(v) > 1 OrElse Not type_info(Of T).is_array)
         Return New const_array(Of T)(v)
+    End Function
+
+    Public Shared Function compare(Of T, __SIZE As _int64)(ByVal this As const_array(Of T, __SIZE),
+                                                           ByVal that As const_array(Of T, __SIZE)) As Int32
+        If this Is Nothing AndAlso that Is Nothing Then
+            Return 0
+        End If
+        If this Is Nothing Then
+            Return -1
+        End If
+        If that Is Nothing Then
+            Return 1
+        End If
+        Return this.CompareTo(that)
     End Function
 
     Public Shared Function alloc_of(Of T)(ByVal f As Func(Of T), ByVal size As UInt32) As const_array(Of T)
@@ -48,7 +62,11 @@ Public NotInheritable Class const_array
 End Class
 
 Public Class const_array(Of T, __SIZE As _int64)
-    Implements ICloneable, ICloneable(Of const_array(Of T, __SIZE))
+    Implements ICloneable,
+               ICloneable(Of const_array(Of T, __SIZE)),
+               IComparable,
+               IComparable(Of const_array(Of T, __SIZE)),
+               IEquatable(Of const_array(Of T, __SIZE))
 
     Private Shared ReadOnly _size As Int64
     Protected ReadOnly v() As T
@@ -140,6 +158,28 @@ Public Class const_array(Of T, __SIZE As _int64)
 
     Public Function CloneT() As const_array(Of T, __SIZE) Implements ICloneable(Of const_array(Of T, __SIZE)).Clone
         Return clone(Of const_array(Of T, __SIZE))()
+    End Function
+
+    Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
+        Return CompareTo(cast(Of const_array(Of T, __SIZE))().from(obj, False))
+    End Function
+
+    Public Function CompareTo(ByVal other As const_array(Of T, __SIZE)) As Int32 _
+            Implements IComparable(Of const_array(Of T, __SIZE)).CompareTo
+        If other Is Nothing Then
+            Return 1
+        End If
+
+        Return memcmp(Me.v, other.v)
+    End Function
+
+    Public Overloads Function Equals(ByVal other As const_array(Of T, __SIZE)) As Boolean _
+            Implements IEquatable(Of const_array(Of T, __SIZE)).Equals
+        Return CompareTo(other) = 0
+    End Function
+
+    Public NotOverridable Overrides Function Equals(ByVal other As Object) As Boolean
+        Return Equals(cast(Of const_array(Of T, __SIZE)()).from(other, False))
     End Function
 End Class
 

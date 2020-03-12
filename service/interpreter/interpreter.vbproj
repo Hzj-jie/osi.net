@@ -95,6 +95,7 @@
     <Compile Include="primitive\console_io.vb" />
     <Compile Include="primitive\data_block.vb" />
     <Compile Include="primitive\data_ref.vb" />
+    <Compile Include="primitive\interrupts.implementation.vb" />
     <Compile Include="primitive\interrupts.vb" />
     <Compile Include="primitive\instructions.execute.vb" />
     <Compile Include="primitive\instructions.vb" />
@@ -105,6 +106,8 @@
     <Compile Include="primitive\interfaces\executor.vb" />
     <Compile Include="primitive\interfaces\exportable.vb" />
     <Compile Include="primitive\interfaces\instruction.vb" />
+    <Compile Include="primitive\loaded_method.vb" />
+    <Compile Include="primitive\loaded_methods.vb" />
     <Compile Include="primitive\simulator.vb" />
     <Compile Include="turing\executor\call.vb" />
     <Compile Include="turing\executor\clear.vb" />
