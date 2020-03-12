@@ -1,0 +1,5 @@
+﻿
+void main() {
+  ufloat f = 1.1;
+  b2style::std_out(f);
+}

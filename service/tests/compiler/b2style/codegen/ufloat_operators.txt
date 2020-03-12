@@ -1,0 +1,8 @@
+﻿
+void main() {
+  ufloat i = 2.2;
+  i += 3.0;
+  i -= 3.0;
+  i /= 2.0;
+  b2style::std_out(i);
+}

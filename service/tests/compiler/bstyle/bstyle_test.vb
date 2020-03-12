@@ -46,7 +46,7 @@ Public NotInheritable Class bstyle_test
         io = New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(bstyle.with_functions(New interrupts(+io)).
-                              parse(_bstyle_test_data.global_variable.as_text(), e))
+                                 parse(_bstyle_test_data.global_variable.as_text(), e))
         assertion.is_not_null(e)
         e.execute()
         assertion.equal(io.output(), "TrueFalse")
@@ -58,7 +58,7 @@ Public NotInheritable Class bstyle_test
         io = New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(bstyle.with_functions(New interrupts(+io)).
-                              parse(_bstyle_test_data.overload_function.as_text(), e))
+                                 parse(_bstyle_test_data.overload_function.as_text(), e))
         assertion.is_not_null(e)
         e.execute()
         assertion.equal(io.output(), "TrueFalseFalseTrue")
