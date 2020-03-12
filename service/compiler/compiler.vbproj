@@ -215,7 +215,6 @@
     <Content Include="b2style\codegen\nlexer_rule.txt" />
     <Content Include="b2style\codegen\syntaxer_rule.txt" />
     <Content Include="b2style\rewriter\codegen\prefix.txt" />
-    <Content Include="b2style\rewriter\codegen\suffix.txt" />
     <Content Include="bstyle\codegen\nlexer_rule.txt" />
     <Content Include="bstyle\codegen\syntaxer_rule.txt" />
     <Content Include="logic\codegen\builder_gen.cs" />
