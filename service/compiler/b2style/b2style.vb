@@ -40,8 +40,7 @@ Public NotInheritable Class b2style
         Inherits __do(Of vector(Of Action(Of statements, rewriter_rule_wrapper)))
 
         Protected Overrides Function at() As vector(Of Action(Of statements, rewriter_rule_wrapper))
-            Return vector.of(
-                       ignore_parameters(AddressOf suffix.register))
+            Return New vector(Of Action(Of statements, rewriter_rule_wrapper))()
         End Function
     End Class
 

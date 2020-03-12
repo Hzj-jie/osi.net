@@ -30,27 +30,4 @@ Partial Public NotInheritable Class b2style
         Private Sub New()
         End Sub
     End Class
-
-    Public NotInheritable Class suffix
-        Implements statement
-
-        Private Shared ReadOnly instance As suffix
-
-        Shared Sub New()
-            instance = New suffix()
-        End Sub
-
-        Public Shared Sub register(ByVal p As statements)
-            assert(Not p Is Nothing)
-            p.register(instance)
-        End Sub
-
-        Public Sub export(ByVal o As typed_node_writer) Implements statement(Of typed_node_writer).export
-            assert(Not o Is Nothing)
-            o.append(b2style_statements.suffix.as_text())
-        End Sub
-
-        Private Sub New()
-        End Sub
-    End Class
 End Class
