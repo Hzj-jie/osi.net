@@ -5,7 +5,7 @@ bool equal(int i, int j) {
   return result;
 }
 
-bool is_even(int i) {
+bool is_even(long i) {
   int quotient;
   int remainder;
   int v = 2;
@@ -24,14 +24,14 @@ void print(bool i) {
   }
 }
 
-int current_ms() {
-  int result;
+long current_ms() {
+  long result;
   int temp;
   logic "interrupt current_ms temp result";
   return result;
 }
 
-int self_decrease(int x) {
+long self_decrease(long x) {
   int temp = 1;
   logic "subtract x x temp";
   return x;
@@ -51,7 +51,7 @@ bool less(int x, int y) {
 
 void main() {
   for (int i = 0; less(i, 100); i = self_increase(i)) {
-    int x;
+    long x;
     x = current_ms();
     if (is_even(x)) {
       x = self_decrease(x);

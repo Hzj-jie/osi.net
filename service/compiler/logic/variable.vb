@@ -69,25 +69,7 @@ Namespace logic
             Return False
         End Function
 
-        Private Function is_assignable_from(ByVal source As variable) As Boolean
-            assert(size)
-            assert(Not source Is Nothing)
-            assert(source.size)
-            If is_zero_size() Then
-                Return False
-            End If
-            If types.is_size_or_variable(+size, +(source.size)) Then
-                Return True
-            End If
-            ' TODO: Should this be allowed?
-            If (+size) >= +(source.size) Then
-                Return True
-            End If
-            errors.unassignable(Me, source)
-            Return False
-        End Function
-
-        Public Function is_assignable_from(ByVal exp_size As UInt32) As Boolean
+        Private Function is_assignable_from_size(ByVal exp_size As UInt32) As Boolean
             assert(size)
             If is_zero_size() Then
                 Return False
@@ -95,16 +77,33 @@ Namespace logic
             If types.is_size_or_variable(+size, exp_size) Then
                 Return True
             End If
+            ' TODO: Should this be allowed?
+            If (+size) >= exp_size Then
+                Return True
+            End If
+            Return False
+        End Function
+
+        Private Function is_assignable_from(ByVal source As variable) As Boolean
+            assert(Not source Is Nothing)
+            assert(source.size)
+            If is_assignable_from_size(+(source.size)) Then
+                Return True
+            End If
+            errors.unassignable(Me, source)
+            Return False
+        End Function
+
+        Public Function is_assignable_from(ByVal exp_size As UInt32) As Boolean
+            If is_assignable_from_size(exp_size) Then
+                Return True
+            End If
             errors.unassignable_array(Me, exp_size)
             Return False
         End Function
 
         Public Function is_assignable_from_uint32() As Boolean
-            assert(size)
-            If is_zero_size() Then
-                Return False
-            End If
-            If types.is_size_or_variable(+size, sizeof_uint32) Then
+            If is_assignable_from_size(sizeof_uint32) Then
                 Return True
             End If
             errors.unassignable_from_uint32(Me)
@@ -124,11 +123,7 @@ Namespace logic
         End Function
 
         Public Function is_assignable_from_bool() As Boolean
-            assert(size)
-            If is_zero_size() Then
-                Return False
-            End If
-            If types.is_size_or_variable(+size, sizeof_bool_implementation) Then
+            If is_assignable_from_size(sizeof_bool_implementation) Then
                 Return True
             End If
             errors.unassignable_from_bool(Me)

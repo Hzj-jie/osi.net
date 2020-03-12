@@ -23,8 +23,8 @@ Friend Module _b2style_test_data
     Sub New()
         case1 = Convert.FromBase64String(strcat_hint(CUInt(76), _
         "77u/DQp2b2lkIG1haW4oKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoIkhlbGxvIFdvcmxkIik7DQp9"))
-        case2 = Convert.FromBase64String(strcat_hint(CUInt(368), _
-        "77u/DQpib29sIGlzX2V2ZW4oaW50IGkpIHsNCiAgcmV0dXJuIGIyc3R5bGU6OmVxdWFsKGIyc3R5bGU6Om1vZChpLCAyKSwgMCk7DQp9DQoNCnZvaWQgbWFpbigpIHsNCiAgZm9yIChpbnQgaSA9IDA7IGkgPCAxMDA7IGkgPSBpKyspIHsNCiAgICBpbnQgeDsNCiAgICB4ID0gYjJzdHlsZTo6Y3VycmVudF9tcygpOw0KICAgIGlmIChpc19ldmVuKHgpKSB7DQogICAgICB4ID0geC0tOw0KICAgIH0NCiAgICBiMnN0eWxlOjpib29sX3N0ZF9vdXQoaXNfZXZlbih4KSk7DQogIH0NCn0NCg=="))
+        case2 = Convert.FromBase64String(strcat_hint(CUInt(416), _
+        "77u/DQpib29sIGlzX2V2ZW4obG9uZyBpKSB7DQogIGxvbmcgXzIgPSAyOw0KICBsb25nIF8wID0gMDsNCiAgcmV0dXJuIGIyc3R5bGU6OmVxdWFsKGIyc3R5bGU6Om1vZChpLCBfMiksIF8wKTsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBmb3IgKGludCBpID0gMDsgaSA8IDEwMDsgaSA9IGkrKykgew0KICAgIGxvbmcgeDsNCiAgICB4ID0gYjJzdHlsZTo6Y3VycmVudF9tcygpOw0KICAgIGlmIChpc19ldmVuKHgpKSB7DQogICAgICB4ID0geC0tOw0KICAgIH0NCiAgICBiMnN0eWxlOjpib29sX3N0ZF9vdXQoaXNfZXZlbih4KSk7DQogIH0NCn0NCg=="))
         bool_and_bool = Convert.FromBase64String(strcat_hint(CUInt(468), _
         "77u/DQp2b2lkIG1haW4oKSB7DQogIGIyc3R5bGU6OmJvb2xfc3RkX291dCh0cnVlICYmIHRydWUpOw0KICBiMnN0eWxlOjpib29sX3N0ZF9vdXQodHJ1ZSAmJiBmYWxzZSk7DQogIGIyc3R5bGU6OmJvb2xfc3RkX291dChmYWxzZSAmJiB0cnVlKTsNCiAgYjJzdHlsZTo6Ym9vbF9zdGRfb3V0KGZhbHNlICYmIGZhbHNlKTsNCiAgYjJzdHlsZTo6Ym9vbF9zdGRfb3V0KHRydWUgfHwgdHJ1ZSk7DQogIGIyc3R5bGU6OmJvb2xfc3RkX291dCh0cnVlIHx8IGZhbHNlKTsNCiAgYjJzdHlsZTo6Ym9vbF9zdGRfb3V0KGZhbHNlIHx8IHRydWUpOw0KICBiMnN0eWxlOjpib29sX3N0ZF9vdXQoZmFsc2UgfHwgZmFsc2UpOw0KfQ0K"))
         str_unescape = Convert.FromBase64String(strcat_hint(CUInt(76), _
