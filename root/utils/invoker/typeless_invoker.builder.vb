@@ -4,6 +4,8 @@ Option Infer Off
 Option Strict On
 
 Imports System.Reflection
+Imports osi.root.connector
+Imports osi.root.constants
 
 Partial Public NotInheritable Class typeless_invoker
     Public MustInherit Class typeless_invoker_builder(Of RT)
@@ -26,6 +28,19 @@ Partial Public NotInheritable Class typeless_invoker
         Public Function with_assembly_name(ByVal assembly_name As String) As typeless_invoker_builder(Of RT)
             Me.assembly_name = assembly_name
             Return Me
+        End Function
+
+        Public Function with_fully_qualifed_name(ByVal name As String) As typeless_invoker_builder(Of RT)
+            If name.null_or_whitespace() Then
+                Return Me
+            End If
+            Dim i As Int32 = 0
+            i = name.LastIndexOf(character.colon)
+            If i = npos OrElse i = name.Length() - 1 Then
+                Return with_type_name(name)
+            End If
+            with_type_name(name.Substring(0, i))
+            Return with_name(name.Substring(i + 1))
         End Function
     End Class
 

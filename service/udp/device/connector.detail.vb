@@ -120,7 +120,7 @@ Partial Public NotInheritable Class connector
                               End Function,
                               Function() As Boolean
                                   If ec.end_result() Then
-                                      Return eva(o, New listener.multiple_accepter(const_array.[New](+e))) AndAlso
+                                      Return eva(o, New listener.multiple_accepter(const_array.of(+e))) AndAlso
                                              goto_end()
                                   Else
                                       Return False
@@ -139,7 +139,7 @@ Partial Public NotInheritable Class connector
                               End Function,
                               Function() As Boolean
                                   If ec.end_result() Then
-                                      Return eva(o, New udp_dev(p, const_array.[New](+e))) AndAlso
+                                      Return eva(o, New udp_dev(p, const_array.of(+e))) AndAlso
                                              goto_end()
                                   Else
                                       Return False

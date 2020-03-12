@@ -30,6 +30,7 @@ Partial Public NotInheritable Class type_info(Of T)
     Public Shared ReadOnly is_integral As Boolean
     Public Shared ReadOnly is_number As Boolean
     Public Shared ReadOnly is_enum As Boolean
+    Public Shared ReadOnly is_array As Boolean
 
     Shared Sub New()
         fullname = GetType(T).FullName()
@@ -61,6 +62,7 @@ Partial Public NotInheritable Class type_info(Of T)
             GetType(T) Is GetType(Double) OrElse
             GetType(T) Is GetType(Decimal)))
         is_enum = GetType(T).IsEnum()
+        is_array = GetType(T).IsArray()
     End Sub
 
     Public Shared Function has_finalizer() As Boolean

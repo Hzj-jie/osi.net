@@ -181,6 +181,21 @@ Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
         End Try
     End Function
 
+    Public Shared Function catch_thrown(Of EXCEPTION_TYPE)(ByVal d As Action,
+                                                           ByVal ParamArray msg() As Object) As EXCEPTION_TYPE
+        If Not is_not_null(d) Then
+            Return Nothing
+        End If
+        Try
+            d()
+            not_reach(msg)
+            Return Nothing
+        Catch ex As Exception
+            is_true(ex.GetType().is(GetType(EXCEPTION_TYPE)), msg)
+            Return direct_cast(Of EXCEPTION_TYPE)(ex)
+        End Try
+    End Function
+
     Public Shared Function thrown(ByVal d As Action, ByVal ParamArray msg() As Object) As Boolean
         Return thrown(Of Exception)(d, msg)
     End Function

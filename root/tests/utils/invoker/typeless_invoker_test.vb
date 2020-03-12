@@ -42,6 +42,18 @@ Public NotInheritable Class typeless_invoker_test
         Next
     End Sub
 
+    Private Shared Sub run_fully_qualifed_name(ByVal name As String)
+        Dim i As invoker(Of Func(Of Int32, Int32)) = Nothing
+        assertion.is_true(typeless_invoker.of(i).
+                        with_fully_qualifed_name(name).
+                        with_binding_flags(binding_flags.static_private_method).
+                        build(i))
+        assertion.is_not_null(i)
+        For j As Int32 = -100 To 100
+            assertion.equal(direct_cast(Of Int32)(i.invoke(Nothing, j)), j + 1)
+        Next
+    End Sub
+
     <test>
     Private Shared Sub run()
         run_case("osi.tests.root.utils.typeless_invoker_test, osi.tests.root.utils")
@@ -55,6 +67,9 @@ Public NotInheritable Class typeless_invoker_test
         run_case(GetType(typeless_invoker_test).AssemblyQualifiedName(), default_string)
         run_case(".typeless_invoker_test", "osi.tests.root.utils")
         run_case(".typeless_invoker_test", GetType(typeless_invoker_test).Assembly().FullName())
+
+        run_fully_qualifed_name("osi.tests.root.utils.typeless_invoker_test, osi.tests.root.utils:f")
+        run_fully_qualifed_name("osi.tests.root.utils.typeless_invoker_test:f")
 
         Dim i As invoker(Of Func(Of Int32, Int32)) = Nothing
         assertion.is_false(typeless_invoker.of(i).

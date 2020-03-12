@@ -72,7 +72,7 @@ Public Module _delegate2
                        .Append(character.colon)
                 End If
                 rtn.Append(d.Method().DeclaringType().FullName()) _
-                   .Append(character.dot) _
+                   .Append(character.colon) _
                    .Append(d.Method().Name())
                 If isdebugmode() Then
                     rtn.Append(character.at) _
