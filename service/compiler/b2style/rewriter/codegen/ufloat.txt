@@ -1,0 +1,59 @@
+
+bool b2style__equal(ufloat i, ufloat j) {
+  bool result;
+  logic "float_equal result i j";
+  return result;
+}
+
+bool b2style__not_equal(ufloat i, ufloat j) {
+  bool result;
+  logic "float_equal result i j";
+  return b2style__not(result);
+}
+
+bool b2style__greater_than(ufloat i, ufloat j) {
+  bool result;
+  logic "float_more result i j";
+  return result;
+}
+
+bool b2style__greater_or_equal(ufloat i, ufloat j) {
+  return b2style__or(b2style__greater_than(i, j), b2style__equal(i, j));
+}
+
+bool b2style__less_than(ufloat i, ufloat j) {
+  bool result;
+  logic "float_less result i j";
+  return result;
+}
+
+bool b2style__less_or_equal(ufloat i, ufloat j) {
+  return b2style__or(b2style__less_than(i, j), b2style__equal(i, j));
+}
+
+ufloat b2style__add(ufloat i, ufloat j) {
+  logic "float_add i i j";
+  return i;
+}
+
+ufloat b2style__minus(ufloat i, ufloat j) {
+  logic "float_subtract i i j";
+  return i;
+}
+
+ufloat b2style__multiply(ufloat i, ufloat j) {
+  logic "float_multiply i i j";
+  return i;
+}
+
+ufloat b2style__divide(ufloat i, ufloat j) {
+  ufloat result;
+  logic "float_divide result @@prefixes@temps@string i j";
+  return result;
+}
+
+ufloat b2style__power(ufloat i, ufloat j) {
+  logic "float_power i i j";
+  return i;
+}
+
