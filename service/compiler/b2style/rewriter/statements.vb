@@ -25,6 +25,7 @@ Partial Public NotInheritable Class b2style
         Public Sub export(ByVal o As typed_node_writer) Implements statement(Of typed_node_writer).export
             assert(Not o Is Nothing)
             o.append(b2style_statements.prefix.as_text())
+            o.append(b2style_statements.ufloat.as_text())
         End Sub
 
         Private Sub New()

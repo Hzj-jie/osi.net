@@ -351,7 +351,7 @@ int b2style__self_dec(int x) {
   return b2style__fit_in_int(x);
 }
 
-string b2style__biguint_to_str(biguint i) {
+string b2style__legacy_biguint_to_str(biguint i) {
   if (b2style__equal(i, 0L)) {
     return "0";
   }
@@ -363,6 +363,14 @@ string b2style__biguint_to_str(biguint i) {
 	s = b2style__str_concat(b2style__to_str(b2style__to_byte(b)), s);
   }
   return s;
+}
+
+string b2style__biguint_to_str(biguint i) {
+  string method_name = "osi.service.interpreter.primitive.loaded_methods, osi.service.interpreter:big_uint_to_str";
+  logic "interrupt load_method method_name @@prefixes@temps@string";
+  string result;
+  logic "interrupt execute_loaded_method i result";
+  return result;
 }
 
 string b2style__int_to_str(int i) {

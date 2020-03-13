@@ -127,11 +127,35 @@ Public NotInheritable Class b2style_test
         Dim io As console_io.test_wrapper = Nothing
         io = New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).parse(_b2style_test_data.loaded_method.as_text(),
-                                                                            e))
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.loaded_method.as_text(), e))
         assertion.is_not_null(e)
         e.execute()
         assertion.equal(io.output(), strncat("", "False", 100))
+    End Sub
+
+    <test>
+    Private Shared Sub ufloat_std_out()
+        Dim io As console_io.test_wrapper = Nothing
+        io = New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.ufloat_std_out.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), "1.1")
+    End Sub
+
+    <test>
+    Private Shared Sub ufloat_operators()
+        Dim io As console_io.test_wrapper = Nothing
+        io = New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.ufloat_operators.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), "1.1")
     End Sub
 
     Private Sub New()

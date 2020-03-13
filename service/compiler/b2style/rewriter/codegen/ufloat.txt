@@ -48,7 +48,7 @@ ufloat b2style__multiply(ufloat i, ufloat j) {
 
 ufloat b2style__divide(ufloat i, ufloat j) {
   ufloat result;
-  logic "float_divide result @@prefixes@temps@string i j";
+  logic "float_divide result i j";
   return result;
 }
 
@@ -57,3 +57,14 @@ ufloat b2style__power(ufloat i, ufloat j) {
   return i;
 }
 
+string b2style__ufloat_to_str(ufloat i) {
+  string method_name = "osi.service.interpreter.primitive.loaded_methods, osi.service.interpreter:big_udec_to_str";
+  logic "interrupt load_method method_name @@prefixes@temps@string";
+  string result;
+  logic "interrupt execute_loaded_method i result";
+  return result; 
+}
+
+void b2style__std_out(ufloat i) {
+  b2style__std_out(b2style__ufloat_to_str(i));
+}

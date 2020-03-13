@@ -48,6 +48,7 @@ Namespace primitive
             unsupported_feature
             invalid_buffer_size
             interrupt_failure
+            interrupt_implementation_failure
         End Enum
 
         Structure state
