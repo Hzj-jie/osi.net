@@ -123,7 +123,11 @@ Partial Public NotInheritable Class big_uint
         End If
         divide_by_zero = False
         If that.is_one() Then
-            remainder = New big_uint()
+            remainder = zero()
+            Return
+        End If
+        If is_zero() OrElse is_one() Then
+            remainder = zero()
             Return
         End If
         Dim r As big_uint = Nothing
@@ -135,6 +139,7 @@ Partial Public NotInheritable Class big_uint
         Else
             l = r.as_uint64() + uint64_1
         End If
+        assert(l > 0)
         r.set_zero()
         r.set_bit_count(l)
         For i As UInt64 = 0 To l - uint64_1
