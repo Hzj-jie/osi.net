@@ -49,6 +49,31 @@ Public NotInheritable Class big_udec_power_test
         '                         3.14159265
     End Sub
 
+    <command_line_specified>
+    <test>
+    Private Shared Sub calculate_pi_integral_high_res()
+        Dim x As big_udec = Nothing
+        x = New big_udec()
+        Dim dx As big_udec = Nothing
+        dx = New big_udec(0.001)
+        Dim s As big_udec = Nothing
+        s = New big_udec()
+        Dim one As big_udec = Nothing
+        one = big_udec.one()
+        Dim two As big_udec = Nothing
+        two = New big_udec(2)
+        Dim half As big_udec = Nothing
+        half = New big_udec(big_uint.one(), New big_uint(2))
+        While x < one
+            s += ((one - x ^ two) ^ half) * dx
+            x += dx
+        End While
+
+        s *= New big_udec(4)
+        assertion.equal(s.str(), "3.160417040038098059978563049550622536854317482358934093156346794")
+        '                         3.14159265
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
