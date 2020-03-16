@@ -70,7 +70,7 @@ Public NotInheritable Class big_udec_power_test
         End While
 
         s *= New big_udec(4)
-        assertion.equal(s.str(), "3.160417040038098059978563049550622536854317482358934093156346794")
+        assertion.equal(s.str(), "3.143555466911071948935343231220868364057631202804471077508511478")
         '                         3.14159265
     End Sub
 
