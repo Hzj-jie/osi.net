@@ -164,7 +164,7 @@ Partial Public NotInheritable Class big_udec
             Return Me
         End If
         divide_by_zero = False
-        If that.is_one() Then
+        If is_zero() OrElse is_one() OrElse that.is_one() Then
             Return Me
         End If
         Dim p As big_uint = Nothing

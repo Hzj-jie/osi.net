@@ -26,7 +26,7 @@ Public NotInheritable Class big_udec_power_test
     End Sub
 
     <test>
-    Private Shared Sub calculate_pi_integral()
+    Private Shared Sub calculate_pi_integral_0_01()
         Dim x As big_udec = Nothing
         x = New big_udec()
         Dim dx As big_udec = Nothing
@@ -51,7 +51,7 @@ Public NotInheritable Class big_udec_power_test
 
     <command_line_specified>
     <test>
-    Private Shared Sub calculate_pi_integral_high_res()
+    Private Shared Sub calculate_pi_integral_0_001()
         Dim x As big_udec = Nothing
         x = New big_udec()
         Dim dx As big_udec = Nothing

@@ -158,6 +158,44 @@ Public NotInheritable Class b2style_test
         assertion.equal(io.output(), "1.1")
     End Sub
 
+    <test>
+    Private Shared Sub while_1_to_100()
+        Dim io As console_io.test_wrapper = Nothing
+        io = New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                          parse(_b2style_test_data.while_1_to_100.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), strcat("5050", character.newline))
+    End Sub
+
+    <test>
+    Private Shared Sub while_0_to_1()
+        Dim io As console_io.test_wrapper = Nothing
+        io = New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                          parse(_b2style_test_data.while_0_to_1.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), strcat("50.5", character.newline))
+    End Sub
+
+    <command_line_specified>
+    <test>
+    Private Shared Sub pi_integral_0_1()
+        Dim io As console_io.test_wrapper = Nothing
+        io = New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                          parse(_b2style_test_data.pi_integral_0_1.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), strcat("3.304518326248318338508394330371205830216509246678390049350471115"))
+        '                                    3.14159265
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

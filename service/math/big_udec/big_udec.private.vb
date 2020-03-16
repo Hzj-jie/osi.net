@@ -5,6 +5,14 @@ Option Strict On
 
 Partial Public NotInheritable Class big_udec
     Private Sub reduce_fraction()
+        If is_zero() Then
+            set_zero()
+            Return
+        End If
+        If is_one() Then
+            set_one()
+            Return
+        End If
         For i As Int32 = 0 To prime_count - 1
             While True
                 Dim n As big_uint = Nothing
