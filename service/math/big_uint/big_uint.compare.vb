@@ -42,8 +42,8 @@ Partial Public NotInheritable Class big_uint
         Dim i As UInt32 = 0
         i = this.v.size() - uint32_1
         While True
-            If this.v(i) <> that.v(i) Then
-                Return If(this.v(i) > that.v(i), 1, -1)
+            If this.v.get(i) <> that.v.get(i) Then
+                Return If(this.v.get(i) > that.v.get(i), 1, -1)
             End If
             If i = 0 Then
                 Exit While

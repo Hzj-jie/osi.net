@@ -3,6 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+#Const DEBUG = False
+
 #Const BITWISE_DIVIDE = True
 Imports osi.root.connector
 Imports osi.root.constants
@@ -19,9 +21,9 @@ Partial Public NotInheritable Class big_uint
         assert(p >= 0 AndAlso p < v.size())
         Dim t As Int64 = 0
         t = -c
-        t += v(p)
+        t += v.get(p)
         t -= d
-        v(p) = CUInt(t And max_uint32)
+        v.set(p, CUInt(t And max_uint32))
         c = If(t < 0, uint32_1, uint32_0)
     End Sub
 
@@ -36,7 +38,7 @@ Partial Public NotInheritable Class big_uint
         assert(v.size() > 0 AndAlso that.v.size() > 0)
         Dim i As UInt32 = 0
         For i = 0 To that.v.size() - uint32_1
-            [sub](that.v(i), c, i)
+            [sub](that.v.get(i), c, i)
         Next
         If c > 0 Then
             For i = i To v.size() - uint32_1
@@ -51,15 +53,15 @@ Partial Public NotInheritable Class big_uint
 
     'add d to the pos as p with carry-over as c
     Private Sub add(ByVal d As UInt32, ByRef c As UInt32, ByVal p As UInt32)
-#If DEBUG Then
         'this assert is too costly
-        assert(p >= 0 AndAlso p < v.size())
+#If DEBUG Then
+        assert(p < v.size())
 #End If
         Dim t As UInt64 = 0
         t = c
-        t += v(p)
+        t += v.get(p)
         t += d
-        v(p) = CUInt(t And max_uint32)
+        v.set(p, CUInt(t And max_uint32))
         c = CUInt(t >> bit_count_in_uint32)
     End Sub
 
@@ -91,19 +93,17 @@ Partial Public NotInheritable Class big_uint
         assert(this.v.size() > 0 AndAlso that.v.size() > 0)
         Dim c As UInt32 = 0
         For i As UInt32 = 0 To this.v.size() - uint32_1
-            If this.v(i) <> 0 Then
+            If this.v.get(i) <> 0 Then
                 For j As UInt32 = 0 To that.v.size() - uint32_1
                     Dim t As UInt64 = 0
-                    t = this.v(i)
-                    t *= that.v(j)
+                    t = this.v.get(i)
+                    t *= that.v.get(j)
                     add(CUInt(t And max_uint32), c, i + j)
                     c += CUInt(t >> bit_count_in_uint32)
                 Next
                 If c > 0 Then
                     add(0, c, i + that.v.size())
-#If DEBUG Then
-                    assert(c = 0)
-#End If
+                    assert(c = uint32_0)
                 End If
             End If
         Next
@@ -147,7 +147,9 @@ Partial Public NotInheritable Class big_uint
             If r ^ that > Me Then
                 r.setrbit(l - i - uint64_1, False)
             End If
-            assert(Not isdebugmode() OrElse (r ^ that <= Me))
+#If DEBUG Then
+            assert(r ^ that <= Me)
+#End If
         Next
         remainder = New big_uint(Me - r ^ that)
         assert(replace_by(r))
@@ -181,12 +183,12 @@ Partial Public NotInheritable Class big_uint
                 r = r Or v(i)
 
 #If DEBUG Then
-                Dim t As UInt64 = 0
-                t = r.div_rem(that, r)
-                assert(t <= max_uint32)
-                v(i) = t
+                    Dim t As UInt64 = 0
+                    t = r.div_rem(that, r)
+                    assert(t <= max_uint32)
+                    v(i) = t
 #Else
-                v(i) = CUInt(r.div_rem(that, r))
+                    v(i) = CUInt(r.div_rem(that, r))
 #End If
             End If
             If i = 0 Then
@@ -201,16 +203,16 @@ Partial Public NotInheritable Class big_uint
         Dim i As UInt32 = 0
         i = v.size() - uint32_1
         While True
-            If remainder > 0 OrElse v(i) > 0 Then
+            If remainder > 0 OrElse v.get(i) > 0 Then
                 Dim t As UInt64 = 0
                 t = remainder
                 t <<= bit_count_in_uint32
-                t = t Or v(i)
+                t = t Or v.get(i)
                 t = t.div_rem(that, remainder)
 #If DEBUG Then
-                v(i) = assert_which.of(t).can_cast_to_uint32()
+                v.set(i, assert_which.of(t).can_cast_to_uint32())
 #Else
-                v(i) = CUInt(t)
+                v.set(i, CUInt(t))
 #End If
             End If
             If i = 0 Then
@@ -357,8 +359,8 @@ Partial Public NotInheritable Class big_uint
         Dim i As UInt32 = 0
         i = v.size() - uint32_1
         While True
-            v(i) = v(i - slot_count)
-            If v(i) <> 0 Then
+            v.set(i, v.get(i - slot_count))
+            If v.get(i) <> 0 Then
                 last_no_zero_position = i
             End If
             If i = slot_count Then
@@ -369,7 +371,7 @@ Partial Public NotInheritable Class big_uint
         assert(last_no_zero_position >= slot_count AndAlso last_no_zero_position < v.size())
         i = slot_count - uint32_1
         While True
-            v(i) = 0
+            v.set(i, uint32_0)
             If i = 0 Then
                 Exit While
             End If

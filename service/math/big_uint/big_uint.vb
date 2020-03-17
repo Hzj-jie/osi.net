@@ -223,7 +223,7 @@ Partial Public NotInheritable Class big_uint
 
     Public Sub set_one()
         v.resize(1)
-        v(0) = 1
+        v.set(0, uint32_1)
     End Sub
 
     Public Function is_one() As Boolean

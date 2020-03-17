@@ -21,7 +21,7 @@ Partial Public NotInheritable Class big_uint
         Dim h As Int32 = 0
         Dim i As UInt32 = 0
         While i < v.size()
-            h = h Xor v(i).GetHashCode()
+            h = h Xor v.get(i).GetHashCode()
             i += uint32_1
         End While
         Return h

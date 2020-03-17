@@ -82,6 +82,8 @@ Private Class adaptive_array_uint32
         Return d
     End Function
 
+        ' Property access is expensive.
+#If 0 Then
     Default Public Property at(ByVal p As UInt32) As UInt32
         Get
             Return [get](p)
@@ -90,8 +92,9 @@ Private Class adaptive_array_uint32
             [set](p, value)
         End Set
     End Property
+#End If
 
-    Public Function [get](ByVal p As UInt32) As UInt32
+        Public Function [get](ByVal p As UInt32) As UInt32
         Return d(CInt(p))
     End Function
 

@@ -24,16 +24,16 @@ Partial Public NotInheritable Class big_uint
             i = v.size() - uint32_1
             While True
                 Dim t As UInt64 = 0
-                t = shift.left(v(i), ls)
+                t = shift.left(v.get(i), ls)
                 Dim c As UInt32 = 0
-                v(i) = CUInt(t And max_uint32)
+                v.set(i, CUInt(t And max_uint32))
                 c = CUInt(t >> bit_count_in_uint32)
                 If c > 0 Then
                     If i = v.size() - uint32_1 Then
                         v.push_back(0)
                     End If
-                    assert((v(i + uint32_1) And c) = 0)
-                    v(i + uint32_1) = (v(i + uint32_1) Or c)
+                    assert((v.get(i + uint32_1) And c) = 0)
+                    v.set(i + uint32_1, v.get(i + uint32_1) Or c)
                 End If
                 If i = till Then
                     Exit While
@@ -91,13 +91,13 @@ Partial Public NotInheritable Class big_uint
                 ls = assert_which.of(size And bit_count_in_uint32_mask).can_cast_to_uint32()
                 For i As UInt32 = 0 To v.size() - uint32_1
                     Dim t As UInt64 = 0
-                    t = shift.left(v(i), bit_count_in_uint32 - ls)
+                    t = shift.left(v.get(i), bit_count_in_uint32 - ls)
                     Dim c As UInt32 = 0
                     c = CUInt(t And max_uint32)
-                    v(i) = CUInt(t >> bit_count_in_uint32)
+                    v.set(i, CUInt(t >> bit_count_in_uint32))
                     If i > 0 AndAlso c > 0 Then
-                        assert((v(i - uint32_1) And c) = 0)
-                        v(i - uint32_1) = v(i - uint32_1) Or c
+                        assert((v.get(i - uint32_1) And c) = 0)
+                        v.set(i - uint32_1, v.get(i - uint32_1) Or c)
                     End If
                 Next
                 assert(remove_extra_blank() <= 1)

@@ -22,7 +22,7 @@ Partial Public NotInheritable Class big_uint
         Dim c As UInt32 = 0
         Dim i As UInt32 = 0
         For i = 0 To that.v.size() - uint32_1
-            add(that.v(i), c, i)
+            add(that.v.get(i), c, i)
             assert(c = 0 OrElse c = 1)
         Next
         For i = i To v.size() - uint32_1

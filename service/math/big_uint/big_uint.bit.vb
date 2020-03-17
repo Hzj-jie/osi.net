@@ -3,6 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+#Const DEBUG = False
+
 Imports osi.root.connector
 Imports osi.root.constants
 
@@ -64,17 +66,17 @@ Partial Public NotInheritable Class big_uint
             For i As UInt32 = 0 To v.size() - uint32_1
                 Dim t As UInt32 = 0
                 If i < that.v.size() Then
-                    t = that.v(i)
+                    t = that.v.get(i)
                 Else
                     t = 0
                 End If
                 Select Case op
                     Case bit_wise_operator.and
-                        v(i) = v(i) And t
+                        v.set(i, v.get(i) And t)
                     Case bit_wise_operator.or
-                        v(i) = v(i) Or t
+                        v.set(i, v.get(i) Or t)
                     Case bit_wise_operator.xor
-                        v(i) = v(i) Xor t
+                        v.set(i, v.get(i) Xor t)
                     Case Else
                         assert(False)
                 End Select
@@ -91,7 +93,7 @@ Partial Public NotInheritable Class big_uint
         If Not is_zero() Then
             assert(v.size() > 0)
             For i As UInt32 = 0 To v.size() - uint32_1
-                v(i) = Not v(i)
+                v.set(i, Not v.get(i))
             Next
         End If
         Return Me
@@ -125,7 +127,7 @@ Partial Public NotInheritable Class big_uint
         Else
             Dim r As UInt64 = 0
             For i As UInt32 = 0 To v.size() - uint32_1
-                r += v(i)._1count()
+                r += v.get(i)._1count()
             Next
             Return r
         End If
@@ -143,7 +145,7 @@ Partial Public NotInheritable Class big_uint
             Dim i As UInt32 = 0
             i = v.size() - uint32_1
             While True
-                r += v(i)._1count()
+                r += v.get(i)._1count()
                 If r > 1 Then
                     Return False
                 End If
@@ -162,14 +164,14 @@ Partial Public NotInheritable Class big_uint
         Dim vi As UInt32 = 0
         Dim bi As Byte = 0
         bit_pos(pos, vi, bi)
-        v(vi).setbit(bi, value)
+        v.set(vi, v.get(vi).setbit(bi, value))
     End Sub
 
     Public Function getbit(ByVal pos As UInt64) As Boolean
         Dim vi As UInt32 = 0
         Dim bi As Byte = 0
         bit_pos(pos, vi, bi)
-        Return v(vi).getbit(bi)
+        Return v.get(vi).getbit(bi)
     End Function
 
     Public Sub setrbit(ByVal pos As UInt64, Optional ByVal value As Boolean = True)
@@ -178,7 +180,7 @@ Partial Public NotInheritable Class big_uint
         Dim ov As Boolean = False
         bit_rpos(pos, vi, bi, ov, value, False)
         If Not ov OrElse value Then
-            v(vi).setrbit(bi, value)
+            v.set(vi, v.get(vi).setrbit(bi, value))
         End If
     End Sub
 
@@ -186,7 +188,7 @@ Partial Public NotInheritable Class big_uint
         Dim vi As UInt32 = 0
         Dim bi As Byte = 0
         bit_rpos(pos, vi, bi)
-        Return v(vi).getrbit(bi)
+        Return v.get(vi).getrbit(bi)
     End Function
 
     Public Function even() As Boolean
