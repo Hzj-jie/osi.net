@@ -14,7 +14,7 @@ Public NotInheritable Class big_udec_str_test
         Dim v As big_udec = Nothing
         v = New big_udec(System.Math.E)
 
-        assertion.equal(v.str(), "2.718281828459044646706388")
+        assertion.equal(v.str(), "2.7182818284590446467063")
         '                         2.71828182845905
     End Sub
 
@@ -23,7 +23,7 @@ Public NotInheritable Class big_udec_str_test
         Dim v As big_udec = Nothing
         v = New big_udec(System.Math.PI)
 
-        assertion.equal(v.str(), "3.1415926535897931159979634")
+        assertion.equal(v.str(), "3.1415926535897931159979")
         '                         3.14159265358979
     End Sub
 
@@ -41,7 +41,7 @@ Public NotInheritable Class big_udec_str_test
         u = New big_udec(0.999999999)
 
         '                         0.999999999
-        assertion.equal(u.str(), "0.999999998999999917259629")
+        assertion.equal(u.str(), "0.9999999989999999172596")
     End Sub
 
     <test>
@@ -50,7 +50,7 @@ Public NotInheritable Class big_udec_str_test
         u = New big_udec(0.00000000001)
 
         '                         0.00000000001
-        assertion.equal(u.str(), "0.00000000001000000082740370999090373")
+        assertion.equal(u.str(), "0.000000000010000000827403709990903")
     End Sub
 
     <test>
@@ -59,7 +59,7 @@ Public NotInheritable Class big_udec_str_test
         u = New big_udec(System.Math.E - 2)
 
         '                         0.71828182845905
-        assertion.equal(u.str(), "0.718281828459044646706388")
+        assertion.equal(u.str(), "0.7182818284590446467063")
     End Sub
 
     <test>
@@ -68,7 +68,7 @@ Public NotInheritable Class big_udec_str_test
         u = New big_udec(System.Math.PI - 3)
 
         '                         0.14159265358979
-        assertion.equal(u.str(), "0.1415926535897931159979634")
+        assertion.equal(u.str(), "0.1415926535897931159979")
     End Sub
 
     Private Sub New()

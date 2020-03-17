@@ -244,10 +244,6 @@ Partial Public NotInheritable Class big_udec
         Return r
     End Function
 
-    Public Function reduce_fraction(ByVal i As UInt32) As UInt32
-        Return reduce_fraction(New big_uint(i))
-    End Function
-
     Public Function reduce_fraction(ByVal i As big_uint) As UInt32
         assert(Not i Is Nothing)
         assert(Not i.is_zero_or_one())
