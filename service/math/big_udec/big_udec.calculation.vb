@@ -243,4 +243,32 @@ Partial Public NotInheritable Class big_udec
         assert(Not divide_by_zero)
         Return r
     End Function
+
+    Public Function reduce_fraction(ByVal i As UInt32) As UInt32
+        Return reduce_fraction(New big_uint(i))
+    End Function
+
+    Public Function reduce_fraction(ByVal i As big_uint) As UInt32
+        assert(Not i Is Nothing)
+        assert(Not i.is_zero_or_one())
+        Dim c As UInt32 = 0
+        While True
+            Dim n As big_uint = Nothing
+            Dim d As big_uint = Nothing
+            n = Me.n.CloneT()
+            d = Me.d.CloneT()
+            Dim r As big_uint = Nothing
+            n.assert_divide(i, r)
+            If Not r.is_zero() Then
+                Exit While
+            End If
+            d.assert_divide(i, r)
+            If Not r.is_zero() Then
+                Exit While
+            End If
+            c += uint32_1
+            assert(replace_by(n, d))
+        End While
+        Return c
+    End Function
 End Class
