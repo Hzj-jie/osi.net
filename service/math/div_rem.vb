@@ -3,7 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-#Const DEBUG = False
+' #Const DEBUG = False
 
 #Const USE_DIV_REM = False
 

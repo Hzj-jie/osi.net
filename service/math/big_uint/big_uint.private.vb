@@ -3,7 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-#Const DEBUG = False
+' #Const DEBUG = False
 
 #Const BITWISE_DIVIDE = True
 Imports osi.root.connector
@@ -231,9 +231,18 @@ Partial Public NotInheritable Class big_uint
             divide_by_zero = True
             Return
         End If
+        divide_by_zero = False
+        If that.power_of_2() Then
+            Dim l As UInt64 = 0
+            l = that.bit_count() - uint64_1
+            remainder = Me.CloneT().[and](that - uint32_1)
+            right_shift(l)
+            Return
+        End If
         If that.fit_uint32() Then
             Dim r As UInt32 = 0
             divide(that.as_uint32(), r, divide_by_zero)
+            assert(Not divide_by_zero)
             remainder = New big_uint(r)
             Return
         End If

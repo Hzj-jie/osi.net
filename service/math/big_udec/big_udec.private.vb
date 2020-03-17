@@ -7,7 +7,7 @@ Imports osi.root.connector
 
 Partial Public NotInheritable Class big_udec
     Private NotInheritable Class reduce_fraction_primes
-        Public Const selected_prime_count As Int32 = 3
+        Public Const selected_prime_count As Int32 = 2
 
         Shared Sub New()
             assert(prime_count >= selected_prime_count)

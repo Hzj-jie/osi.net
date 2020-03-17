@@ -3,7 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-#Const DEBUG = False
+' #Const DEBUG = False
 
 Imports osi.root.connector
 Imports osi.root.constants
@@ -102,11 +102,11 @@ Partial Public NotInheritable Class big_uint
     Public Function bit_count() As UInt64
         If is_zero() Then
             Return uint64_0
-        ElseIf is_one() Then
-            Return uint64_1
-        Else
-            Return ((v.size() - uint64_1) << bit_count_in_uint32_shift) + v.back().bit_count()
         End If
+        If is_one() Then
+            Return uint64_1
+        End If
+        Return ((v.size() - uint64_1) << bit_count_in_uint32_shift) + v.back().bit_count()
     End Function
 
     Public Function [and](ByVal that As big_uint) As big_uint
@@ -124,13 +124,12 @@ Partial Public NotInheritable Class big_uint
     Public Function _1count() As UInt64
         If is_zero() Then
             Return 0
-        Else
-            Dim r As UInt64 = 0
-            For i As UInt32 = 0 To v.size() - uint32_1
-                r += v.get(i)._1count()
-            Next
-            Return r
         End If
+        Dim r As UInt64 = 0
+        For i As UInt32 = 0 To v.size() - uint32_1
+            r += v.get(i)._1count()
+        Next
+        Return r
     End Function
 
     Public Function onecount() As UInt64
@@ -140,24 +139,23 @@ Partial Public NotInheritable Class big_uint
     Public Function power_of_2() As Boolean
         If is_zero() Then
             Return False
-        Else
-            Dim r As UInt64 = 0
-            Dim i As UInt32 = 0
-            i = v.size() - uint32_1
-            While True
-                r += v.get(i)._1count()
-                If r > 1 Then
-                    Return False
-                End If
-                If i = 0 Then
-                    Exit While
-                Else
-                    i -= uint32_1
-                End If
-            End While
-            assert(r = 1)
-            Return True
         End If
+        Dim r As UInt64 = 0
+        Dim i As UInt32 = 0
+        i = v.size() - uint32_1
+        While True
+            r += v.get(i)._1count()
+            If r > 1 Then
+                Return False
+            End If
+            If i = 0 Then
+                Exit While
+            Else
+                i -= uint32_1
+            End If
+        End While
+        assert(r = 1)
+        Return True
     End Function
 
     Public Sub setbit(ByVal pos As UInt64, Optional ByVal value As Boolean = True)
