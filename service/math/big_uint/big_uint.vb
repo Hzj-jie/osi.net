@@ -68,6 +68,9 @@ Partial Public NotInheritable Class big_uint
         If i Is Nothing Then
             Return False
         End If
+        If object_compare(Me, i) = 0 Then
+            Return True
+        End If
         If i.is_zero() Then
             set_zero()
         ElseIf i.is_one() Then

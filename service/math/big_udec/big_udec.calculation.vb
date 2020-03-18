@@ -16,7 +16,11 @@ Partial Public NotInheritable Class big_udec
             Return Me
         End If
 
-        replace_by(Me.n * that.d + Me.d * that.n, Me.d * that.d)
+        If Me.d.equal(that.d) Then
+            replace_by(Me.n + that.n, Me.d)
+        Else
+            replace_by(Me.n * that.d + Me.d * that.n, Me.d * that.d)
+        End If
         reduce_fraction()
         Return Me
     End Function
@@ -54,7 +58,11 @@ Partial Public NotInheritable Class big_udec
             Return Me
         End If
 
-        [sub](Me.n * that.d, that.n * Me.d, Me.d * that.d, overflow)
+        If Me.d.equal(that.d) Then
+            [sub](Me.n, that.n.CloneT(), Me.d, overflow)
+        Else
+            [sub](Me.n * that.d, that.n * Me.d, Me.d * that.d, overflow)
+        End If
         Return Me
     End Function
 

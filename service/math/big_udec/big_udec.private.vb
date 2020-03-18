@@ -44,7 +44,7 @@ Partial Public NotInheritable Class big_udec
         assert(c.is_zero())
 #Else
 #If REDUCE_FRACTION_OF_NUMERATOR Then
-        'reduce_fraction(n)
+        reduce_fraction(n)
 #End If
         For i As Int32 = 0 To reduce_fraction_primes.selected_prime_count - 1
             reduce_fraction(reduce_fraction_primes.selected_prime(i))
