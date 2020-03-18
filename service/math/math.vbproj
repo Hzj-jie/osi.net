@@ -62,6 +62,7 @@
     <Compile Include="big_dec\big_dec.vb" />
     <Compile Include="big_int.vb" />
     <Compile Include="big_udec\big_udec.cast.vb" />
+    <Compile Include="big_udec\big_udec.creators.vb" />
     <Compile Include="big_udec\big_udec.predefined.vb" />
     <Compile Include="big_udec\big_udec.rnd.vb" />
     <Compile Include="big_uint\big_uint.adaptive_array.vb" />

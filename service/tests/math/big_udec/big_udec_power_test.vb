@@ -74,6 +74,59 @@ Public NotInheritable Class big_udec_power_test
         '                         3.14159265
     End Sub
 
+    <test>
+    Private Shared Sub calculate_pi_sequence_of_numbers_257()
+        Dim s As big_udec = Nothing
+        s = big_udec.zero()
+        For i As UInt32 = 1 To 257 Step 2
+            Dim c As big_udec = Nothing
+            c = big_udec.fraction(CUInt(4), i)
+            If ((i \ 2) Mod 2) = 0 Then
+                s.add(c)
+            Else
+                s.assert_sub(c)
+            End If
+        Next
+        assertion.equal(s.str(), "3.149344475124619884924585085570033726572656722644429715863680771")
+        '                         3.14159265
+    End Sub
+
+    <command_line_specified>
+    <test>
+    Private Shared Sub calculate_pi_sequence_of_numbers_65537()
+        Dim s As big_udec = Nothing
+        s = big_udec.zero()
+        For i As UInt32 = 1 To 65537 Step 2
+            Dim c As big_udec = Nothing
+            c = big_udec.fraction(CUInt(4), i)
+            If ((i \ 2) Mod 2) = 0 Then
+                s.add(c)
+            Else
+                s.assert_sub(c)
+            End If
+        Next
+        assertion.equal(s.str(), "3.141623170236616979912392273028839981728932502884783801155901887")
+        '                         3.14159265
+    End Sub
+
+    <command_line_specified>
+    <test>
+    Private Shared Sub calculate_pi_sequence_of_numbers_262145()
+        Dim s As big_udec = Nothing
+        s = big_udec.zero()
+        For i As UInt32 = 1 To 262145 Step 2
+            Dim c As big_udec = Nothing
+            c = big_udec.fraction(CUInt(4), i)
+            If ((i \ 2) Mod 2) = 0 Then
+                s.add(c)
+            Else
+                s.assert_sub(c)
+            End If
+        Next
+        assertion.equal(s.str(), "3.141623170236616979912392273028839981728932502884783801155901887")
+        '                         3.14159265
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
