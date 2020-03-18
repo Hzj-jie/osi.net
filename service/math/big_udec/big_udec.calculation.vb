@@ -96,6 +96,7 @@ Partial Public NotInheritable Class big_udec
             Return Me
         End If
 
+        ' TODO: Use big_uint.gcd to reduce complexity of reduce_fraction.
         assert(replace_by(Me.n * that.n, Me.d * that.d))
         reduce_fraction()
         Return Me
@@ -111,6 +112,7 @@ Partial Public NotInheritable Class big_udec
             Return Me
         End If
 
+        ' TODO: Use big_uint.gcd to reduce complexity of reduce_fraction.
         assert(replace_by(Me.n * that.d, Me.d * that.n))
         reduce_fraction()
         Return Me
