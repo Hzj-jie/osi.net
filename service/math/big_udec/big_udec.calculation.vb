@@ -15,11 +15,8 @@ Partial Public NotInheritable Class big_udec
             replace_by(that)
             Return Me
         End If
-        Dim n As big_uint = Nothing
-        n = Me.n * that.d + Me.d * that.n
-        Dim d As big_uint = Nothing
-        d = Me.d * that.d
-        replace_by(n, d)
+
+        replace_by(Me.n * that.d + Me.d * that.n, Me.d * that.d)
         reduce_fraction()
         Return Me
     End Function
@@ -91,11 +88,7 @@ Partial Public NotInheritable Class big_udec
             Return Me
         End If
 
-        Dim n As big_uint = Nothing
-        Dim d As big_uint = Nothing
-        n = Me.n * that.n
-        d = Me.d * that.d
-        assert(replace_by(n, d))
+        assert(replace_by(Me.n * that.n, Me.d * that.d))
         reduce_fraction()
         Return Me
     End Function
@@ -142,11 +135,7 @@ Partial Public NotInheritable Class big_udec
             Return Me
         End If
 
-        Dim n As big_uint = Nothing
-        Dim d As big_uint = Nothing
-        n = Me.n ^ that
-        d = Me.d ^ that
-        replace_by(n, d)
+        replace_by(Me.n ^ that, Me.d ^ that)
         Return Me
     End Function
 
@@ -172,11 +161,8 @@ Partial Public NotInheritable Class big_udec
         If p.is_zero_or_one() Then
             p = New big_uint(CUInt(2))
         End If
-        Dim n As big_uint = Nothing
-        n = ((Me.n ^ (that * p + uint32_1)) * (Me.d ^ (that * p - uint32_1))).assert_extract(that)
-        Dim d As big_uint = Nothing
-        d = ((Me.n * Me.d) ^ p)
-        replace_by(n, d)
+        replace_by(((Me.n ^ (that * p + uint32_1)) * (Me.d ^ (that * p - uint32_1))).assert_extract(that),
+                   (Me.n * Me.d) ^ p)
         reduce_fraction()
         Return Me
     End Function

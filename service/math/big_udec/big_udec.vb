@@ -176,6 +176,14 @@ Partial Public NotInheritable Class big_udec
         Return n.equal(d)
     End Function
 
+    Public Function is_greater_than_one() As Boolean
+        Return d.less(n)
+    End Function
+
+    Public Function is_less_than_one() As Boolean
+        Return is_pure_dec()
+    End Function
+
     Public Function dec_part() As big_udec
         If is_pure_dec() Then
             Return CloneT()

@@ -76,8 +76,15 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    Public Function divide(ByVal that As big_uint,
-                           Optional ByRef remainder As big_uint = Nothing) As big_uint
+    Public Function modulus(ByVal that As big_uint, ByRef divide_by_zero As Boolean) As big_uint
+        Dim remainder As big_uint = Nothing
+        ' TODO: Do not use divide, implement a dedicate modulus operator.
+        divide(that, divide_by_zero, remainder)
+        assert(replace_by(remainder))
+        Return Me
+    End Function
+
+    Public Function divide(ByVal that As big_uint, Optional ByRef remainder As big_uint = Nothing) As big_uint
         Dim r As Boolean = False
         divide(that, remainder, r)
         If r Then
@@ -86,10 +93,25 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    Public Function assert_divide(ByVal that As big_uint,
-                                  Optional ByRef remainder As big_uint = Nothing) As big_uint
+    Public Function modulus(ByVal that As big_uint) As big_uint
+        Dim r As Boolean = False
+        modulus(that, r)
+        If r Then
+            Throw divide_by_zero()
+        End If
+        Return Me
+    End Function
+
+    Public Function assert_divide(ByVal that As big_uint, Optional ByRef remainder As big_uint = Nothing) As big_uint
         Dim r As Boolean = False
         divide(that, remainder, r)
+        assert(Not r)
+        Return Me
+    End Function
+
+    Public Function assert_modulus(ByVal that As big_uint) As big_uint
+        Dim r As Boolean = False
+        modulus(that, r)
         assert(Not r)
         Return Me
     End Function
@@ -227,5 +249,26 @@ Partial Public NotInheritable Class big_uint
             End While
         End If
         Return Me
+    End Function
+
+    Public Shared Function gcd(ByVal a As big_uint, ByVal b As big_uint) As big_uint
+        assert(Not a Is Nothing)
+        assert(Not b Is Nothing)
+        If a.equal(b) Then
+            Return a.CloneT()
+        End If
+        Dim c As big_uint = Nothing
+        If a.less(b) Then
+            c = a
+            a = b
+            b = c
+        End If
+        c = a.CloneT().assert_modulus(b)
+        While Not c.is_zero()
+            a = b.CloneT()
+            b = c
+            c = a.assert_modulus(b)
+        End While
+        Return b
     End Function
 End Class

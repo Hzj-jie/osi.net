@@ -34,9 +34,21 @@ Partial Public NotInheritable Class big_udec
         If n.is_zero_or_one() Then
             Return
         End If
-        reduce_fraction(n)
+#If USE_GCD Then
+        Dim b As big_uint = Nothing
+        b = big_uint.gcd(n, d)
+        Dim c As big_uint = Nothing
+        n.assert_divide(b, c)
+        assert(c.is_zero())
+        d.assert_divide(b, c)
+        assert(c.is_zero())
+#Else
+#If REDUCE_FRACTION_OF_NUMERATOR Then
+        'reduce_fraction(n)
+#End If
         For i As Int32 = 0 To reduce_fraction_primes.selected_prime_count - 1
             reduce_fraction(reduce_fraction_primes.selected_prime(i))
         Next
+#End If
     End Sub
 End Class
