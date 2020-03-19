@@ -18,6 +18,10 @@ Partial Public NotInheritable Class big_udec
         Return CompareTo(that) <= 0
     End Function
 
+    Public Function compare(ByVal that As big_udec) As Int32
+        Return compare(Me, that)
+    End Function
+
     Public Shared Function compare(ByVal this As big_udec, ByVal that As big_udec) As Int32
         Dim c As Int32 = 0
         c = object_compare(this, that)

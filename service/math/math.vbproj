@@ -58,8 +58,6 @@
   <ItemGroup>
     <Compile Include="abs.vb" />
     <Compile Include="big_dec.vb" />
-    <Compile Include="big_dec\big_dec.private.vb" />
-    <Compile Include="big_dec\big_dec.vb" />
     <Compile Include="big_int.vb" />
     <Compile Include="big_udec\big_udec.cast.vb" />
     <Compile Include="big_udec\big_udec.creators.vb" />

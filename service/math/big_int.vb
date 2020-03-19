@@ -46,10 +46,6 @@ Partial Public NotInheritable Class big_int
     Public Function odd() As Boolean
         Return d.odd()
     End Function
-
-    Public Function power_of_2() As Boolean
-        Return positive() AndAlso d.power_of_2()
-    End Function
 End Class
 
 'finish big_bit.vbp --------
@@ -113,47 +109,6 @@ Partial Public NotInheritable Class big_int
         Return Me
     End Function
 
-    Public Function divide(ByVal that As big_uint,
-                           ByRef divide_by_zero As Boolean,
-                           Optional ByRef remainder As big_int = Nothing) As big_int
-        Return divide(share(that), divide_by_zero, remainder)
-    End Function
-
-    Public Function divide(ByVal that As big_int,
-                           ByRef divide_by_zero As Boolean,
-                           Optional ByRef remainder As big_int = Nothing) As big_int
-        divide(that, remainder, divide_by_zero)
-        Return Me
-    End Function
-
-    Public Function divide(ByVal that As big_uint,
-                           Optional ByRef remainder As big_int = Nothing) As big_int
-        Return divide(share(that), remainder)
-    End Function
-
-    Public Function divide(ByVal that As big_int,
-                           Optional ByRef remainder As big_int = Nothing) As big_int
-        Dim r As Boolean = False
-        divide(that, remainder, r)
-        If r Then
-            Throw divide_by_zero()
-        End If
-        Return Me
-    End Function
-
-    Public Function assert_divide(ByVal that As big_uint,
-                                  Optional ByRef remainder As big_int = Nothing) As big_int
-        Return assert_divide(share(that), remainder)
-    End Function
-
-    Public Function assert_divide(ByVal that As big_int,
-                                  Optional ByRef remainder As big_int = Nothing) As big_int
-        Dim r As Boolean = False
-        divide(that, remainder, r)
-        assert(Not r)
-        Return Me
-    End Function
-
     Public Function power_2() As big_int
         d.power_2()
         set_positive()
@@ -165,67 +120,22 @@ Partial Public NotInheritable Class big_int
     End Function
 
     Public Function power(ByVal that As big_int) As big_int
-        If Not that Is Nothing Then
-            If Not is_zero() Then
-                If that.not_negative() Then
-                    d.power(that.d)
-                ElseIf Not is_one_or_negative_one() Then
-                    set_zero()
-                End If
-                If that.d.even() Then
-                    set_positive()
-                End If
-            End If
+        If that Is Nothing OrElse that.is_one() Then
+            set_positive()
+            set_one()
+            Return Me
         End If
-        Return Me
-    End Function
-
-    Public Function extract(ByVal that As big_uint,
-                            ByRef divide_by_zero As Boolean,
-                            ByRef imaginary_number As Boolean,
-                            Optional ByRef remainder As big_int = Nothing) As big_int
-        Return extract(share(that), divide_by_zero, imaginary_number, remainder)
-    End Function
-
-    Public Function extract(ByVal that As big_int,
-                            ByRef divide_by_zero As Boolean,
-                            ByRef imaginary_number As Boolean,
-                            Optional ByRef remainder As big_int = Nothing) As big_int
-        extract(that, remainder, divide_by_zero, imaginary_number)
-        Return Me
-    End Function
-
-    Public Function extract(ByVal that As big_uint,
-                            Optional ByRef remainder As big_int = Nothing) As big_int
-        Return extract(share(that), remainder)
-    End Function
-
-    Public Function extract(ByVal that As big_int,
-                            Optional ByRef remainder As big_int = Nothing) As big_int
-        Dim d As Boolean = False
-        Dim i As Boolean = False
-        extract(that, remainder, d, i)
-        If d Then
-            Throw divide_by_zero()
+        If is_zero() OrElse is_one() Then
+            Return Me
         End If
-        If i Then
-            Throw imaginary_number()
+        If that.not_negative() Then
+            d.power(that.d)
+        ElseIf Not is_one_or_negative_one() Then
+            set_zero()
         End If
-        Return Me
-    End Function
-
-    Public Function assert_extract(ByVal that As big_uint,
-                                   Optional ByRef remainder As big_int = Nothing) As big_int
-        Return assert_extract(share(that), remainder)
-    End Function
-
-    Public Function assert_extract(ByVal that As big_int,
-                                   Optional ByRef remainder As big_int = Nothing) As big_int
-        Dim d As Boolean = False
-        Dim i As Boolean = False
-        extract(that, remainder, d, i)
-        assert(Not d)
-        assert(Not i)
+        If that.d.even() Then
+            set_positive()
+        End If
         Return Me
     End Function
 End Class
@@ -258,13 +168,6 @@ Partial Public NotInheritable Class big_int
         Return New big_int(this)
     End Operator
 
-    Public Shared Widening Operator CType(ByVal this As Boolean) As big_int
-        Dim r As big_int = Nothing
-        r = New big_int()
-        r.replace_by(this)
-        Return r
-    End Operator
-
     Public Shared Widening Operator CType(ByVal this As big_int) As Boolean
         Return Not this Is Nothing AndAlso this.true()
     End Operator
@@ -272,21 +175,6 @@ Partial Public NotInheritable Class big_int
     Public Shared Operator Not(ByVal this As big_int) As Boolean
         Return this Is Nothing OrElse this.false()
     End Operator
-
-    Public Function as_uint64(ByRef overflow As Boolean) As UInt64
-        If negative() Then
-            overflow = True
-            Return 0
-        Else
-            Return d.as_uint64(overflow)
-        End If
-    End Function
-
-    Public Function as_int32(ByRef overflow As Boolean) As Int32
-        Dim v As Int32 = 0
-        v = d.as_int32(overflow)
-        Return If(negative(), -v, v)
-    End Function
 
     Public Function as_bytes() As Byte()
         Using r As MemoryStream = New MemoryStream(CInt(d.byte_size() + uint32_1))
@@ -455,22 +343,6 @@ Partial Public NotInheritable Class big_int
         Return r.divide(that)
     End Operator
 
-    Public Shared Operator /(ByVal this As big_int, ByVal that As big_int) As pair(Of big_int, big_int)
-        Dim q As big_int = Nothing
-        Dim r As big_int = Nothing
-        q = New big_int(this)
-        q.divide(that, r)
-        Return pair.emplace_of(q, r)
-    End Operator
-
-    Public Shared Operator Mod(ByVal this As big_int, ByVal that As big_int) As big_int
-        Dim q As big_int = Nothing
-        Dim r As big_int = Nothing
-        q = New big_int(this)
-        q.divide(that, r)
-        Return r
-    End Operator
-
     Public Shared Operator >(ByVal this As big_int, ByVal that As big_int) As Boolean
         Return compare(this, that) > 0
     End Operator
@@ -493,18 +365,6 @@ Partial Public NotInheritable Class big_int
 
     Public Shared Operator >=(ByVal this As big_int, ByVal that As big_int) As Boolean
         Return compare(this, that) >= 0
-    End Operator
-
-    Public Shared Operator >>(ByVal this As big_int, ByVal that As Int32) As big_int
-        Dim r As big_int = Nothing
-        r = New big_int(this)
-        Return r.right_shift(that)
-    End Operator
-
-    Public Shared Operator <<(ByVal this As big_int, ByVal that As Int32) As big_int
-        Dim r As big_int = Nothing
-        r = New big_int(this)
-        Return r.left_shift(that)
     End Operator
 
     Public Shared Operator ^(ByVal this As big_int, ByVal that As big_int) As big_int
@@ -618,49 +478,6 @@ Partial Public NotInheritable Class big_int
     Private Sub confirm_signal()
         set_signal(signal())
     End Sub
-
-    Private Sub divide(ByVal that As big_int, ByRef remainder As big_int, ByRef divide_by_zero As Boolean)
-        If that Is Nothing Then
-            Return
-        End If
-        Dim n As Boolean = False
-        n = negative()
-        Dim r As big_uint = Nothing
-        d.divide(that.d, divide_by_zero, r)
-        remainder = share(r)
-        confirm_signal()
-        If n Then
-            remainder.set_negative()
-        End If
-        If n = that.negative() Then
-            set_positive()
-        Else
-            set_negative()
-        End If
-    End Sub
-
-    Private Sub extract(ByVal that As big_int,
-                        ByRef remainder As big_int,
-                        ByRef divide_by_zero As Boolean,
-                        ByRef imaginary_number As Boolean)
-        If that Is Nothing Then
-            Return
-        End If
-        imaginary_number = (negative() AndAlso that.even())
-        remainder = New big_int()
-        If Not is_zero_or_one_or_negative_one() Then
-            If that.negative() Then
-                remainder.replace_by(Me)
-                set_zero()
-            Else
-                Dim r As big_uint = Nothing
-                d.extract(that.d, divide_by_zero, r)
-                remainder.replace_by(r)
-                remainder.set_signal(signal())
-            End If
-            confirm_signal()
-        End If
-    End Sub
 End Class
 
 'finish big_private.vbp --------
@@ -698,143 +515,6 @@ Partial Public NotInheritable Class big_int
 End Class
 
 'finish big_rnd.vbp --------
-
-'the following code is generated by /osi/root/codegen/precompile/precompile.exe
-'with big_shift.vbp ----------
-'so change big_shift.vbp instead of this file
-
-
-Partial Public NotInheritable Class big_int
-    Public Function left_shift(ByVal size As Int32) As big_int
-        d.left_shift(size)
-        Return Me
-    End Function
-
-    Public Function left_shift(ByVal size As UInt64) As big_int
-        d.left_shift(size)
-        Return Me
-    End Function
-
-    Public Function left_shift(ByVal size As big_int, ByRef overflow As Boolean) As big_int
-        If Not size Is Nothing Then
-            Dim u As UInt64 = 0
-            u = size.as_uint64(overflow)
-            If Not overflow Then
-                assert(object_compare(left_shift(u), Me) = 0)
-            End If
-        End If
-        Return Me
-    End Function
-
-    Public Function left_shift(ByVal size As big_uint, ByRef overflow As Boolean) As big_int
-        If Not size Is Nothing Then
-            Dim u As UInt64 = 0
-            u = size.as_uint64(overflow)
-            If Not overflow Then
-                assert(object_compare(left_shift(u), Me) = 0)
-            End If
-        End If
-        Return Me
-    End Function
-
-    Public Function left_shift(ByVal size As big_int) As big_int
-        Dim o As Boolean = False
-        assert(object_compare(left_shift(size, o), Me) = 0)
-        If o Then
-            Throw overflow()
-        End If
-        Return Me
-    End Function
-
-    Public Function left_shift(ByVal size As big_uint) As big_int
-        Dim o As Boolean = False
-        assert(object_compare(left_shift(size, o), Me) = 0)
-        If o Then
-            Throw overflow()
-        End If
-        Return Me
-    End Function
-
-    Public Function assert_left_shift(ByVal size As big_int) As big_int
-        Dim o As Boolean = False
-        assert(object_compare(left_shift(size, o), Me) = 0)
-        assert(Not o)
-        Return Me
-    End Function
-
-    Public Function assert_left_shift(ByVal size As big_uint) As big_int
-        Dim o As Boolean = False
-        assert(object_compare(left_shift(size, o), Me) = 0)
-        assert(Not o)
-        Return Me
-    End Function
-
-    Public Function right_shift(ByVal size As Int32) As big_int
-        d.right_shift(size)
-        Return Me
-    End Function
-
-    Public Function right_shift(ByVal size As UInt64) As big_int
-        d.right_shift(size)
-        Return Me
-    End Function
-
-    Public Function right_shift(ByVal size As big_int, ByRef overflow As Boolean) As big_int
-        If Not size Is Nothing Then
-            Dim u As UInt64 = 0
-            u = size.as_uint64(overflow)
-            If Not overflow Then
-                assert(object_compare(right_shift(u), Me) = 0)
-            End If
-        End If
-        Return Me
-    End Function
-
-    Public Function right_shift(ByVal size As big_uint, ByRef overflow As Boolean) As big_int
-        If Not size Is Nothing Then
-            Dim u As UInt64 = 0
-            u = size.as_uint64(overflow)
-            If Not overflow Then
-                assert(object_compare(right_shift(u), Me) = 0)
-            End If
-        End If
-        Return Me
-    End Function
-
-    Public Function right_shift(ByVal size As big_int) As big_int
-        Dim o As Boolean = False
-        assert(object_compare(right_shift(size, o), Me) = 0)
-        If o Then
-            Throw overflow()
-        End If
-        Return Me
-    End Function
-
-    Public Function right_shift(ByVal size As big_uint) As big_int
-        Dim o As Boolean = False
-        assert(object_compare(right_shift(size, o), Me) = 0)
-        If o Then
-            Throw overflow()
-        End If
-        Return Me
-    End Function
-
-    Public Function assert_right_shift(ByVal size As big_int) As big_int
-        Dim o As Boolean = False
-        assert(object_compare(right_shift(size, o), Me) = 0)
-        assert(Not o)
-        Return Me
-    End Function
-
-    Public Function assert_right_shift(ByVal size As big_uint) As big_int
-        Dim o As Boolean = False
-        assert(object_compare(right_shift(size, o), Me) = 0)
-        assert(Not o)
-        Return Me
-    End Function
-End Class
-
-'finish big_shift.vbp --------
 
 'the following code is generated by /osi/root/codegen/precompile/precompile.exe
 'with big_str.vbp ----------
@@ -992,11 +672,6 @@ Partial Public NotInheritable Class big_int
         Return False
     End Function
 
-    Public Sub replace_by(ByVal i As Boolean)
-        d.replace_by(i)
-        set_signal(Not i)
-    End Sub
-
     Public Function replace_by(ByVal a() As Byte) As Boolean
         If isemptyarray(a) Then
             Return False
@@ -1108,4 +783,346 @@ Partial Public NotInheritable Class big_int
 End Class
 
 'finish big_unsigned_to_signed.vbp --------
+
+'the following code is generated by /osi/root/codegen/precompile/precompile.exe
+'with big_shift.vbp ----------
+'so change big_shift.vbp instead of this file
+
+
+Partial Public NotInheritable Class big_int
+    Public Function left_shift(ByVal size As Int32) As big_int
+        d.left_shift(size)
+        Return Me
+    End Function
+
+    Public Function left_shift(ByVal size As UInt64) As big_int
+        d.left_shift(size)
+        Return Me
+    End Function
+
+    Public Function left_shift(ByVal size As big_int, ByRef overflow As Boolean) As big_int
+        If Not size Is Nothing Then
+            Dim u As UInt64 = 0
+            u = size.as_uint64(overflow)
+            If Not overflow Then
+                assert(object_compare(left_shift(u), Me) = 0)
+            End If
+        End If
+        Return Me
+    End Function
+
+    Public Function left_shift(ByVal size As big_uint, ByRef overflow As Boolean) As big_int
+        If Not size Is Nothing Then
+            Dim u As UInt64 = 0
+            u = size.as_uint64(overflow)
+            If Not overflow Then
+                assert(object_compare(left_shift(u), Me) = 0)
+            End If
+        End If
+        Return Me
+    End Function
+
+    Public Function left_shift(ByVal size As big_int) As big_int
+        Dim o As Boolean = False
+        assert(object_compare(left_shift(size, o), Me) = 0)
+        If o Then
+            Throw overflow()
+        End If
+        Return Me
+    End Function
+
+    Public Function left_shift(ByVal size As big_uint) As big_int
+        Dim o As Boolean = False
+        assert(object_compare(left_shift(size, o), Me) = 0)
+        If o Then
+            Throw overflow()
+        End If
+        Return Me
+    End Function
+
+    Public Function assert_left_shift(ByVal size As big_int) As big_int
+        Dim o As Boolean = False
+        assert(object_compare(left_shift(size, o), Me) = 0)
+        assert(Not o)
+        Return Me
+    End Function
+
+    Public Function assert_left_shift(ByVal size As big_uint) As big_int
+        Dim o As Boolean = False
+        assert(object_compare(left_shift(size, o), Me) = 0)
+        assert(Not o)
+        Return Me
+    End Function
+
+    Public Function right_shift(ByVal size As Int32) As big_int
+        d.right_shift(size)
+        Return Me
+    End Function
+
+    Public Function right_shift(ByVal size As UInt64) As big_int
+        d.right_shift(size)
+        Return Me
+    End Function
+
+    Public Function right_shift(ByVal size As big_int, ByRef overflow As Boolean) As big_int
+        If Not size Is Nothing Then
+            Dim u As UInt64 = 0
+            u = size.as_uint64(overflow)
+            If Not overflow Then
+                assert(object_compare(right_shift(u), Me) = 0)
+            End If
+        End If
+        Return Me
+    End Function
+
+    Public Function right_shift(ByVal size As big_uint, ByRef overflow As Boolean) As big_int
+        If Not size Is Nothing Then
+            Dim u As UInt64 = 0
+            u = size.as_uint64(overflow)
+            If Not overflow Then
+                assert(object_compare(right_shift(u), Me) = 0)
+            End If
+        End If
+        Return Me
+    End Function
+
+    Public Function right_shift(ByVal size As big_int) As big_int
+        Dim o As Boolean = False
+        assert(object_compare(right_shift(size, o), Me) = 0)
+        If o Then
+            Throw overflow()
+        End If
+        Return Me
+    End Function
+
+    Public Function right_shift(ByVal size As big_uint) As big_int
+        Dim o As Boolean = False
+        assert(object_compare(right_shift(size, o), Me) = 0)
+        If o Then
+            Throw overflow()
+        End If
+        Return Me
+    End Function
+
+    Public Function assert_right_shift(ByVal size As big_int) As big_int
+        Dim o As Boolean = False
+        assert(object_compare(right_shift(size, o), Me) = 0)
+        assert(Not o)
+        Return Me
+    End Function
+
+    Public Function assert_right_shift(ByVal size As big_uint) As big_int
+        Dim o As Boolean = False
+        assert(object_compare(right_shift(size, o), Me) = 0)
+        assert(Not o)
+        Return Me
+    End Function
+
+    Public Shared Operator >>(ByVal this As big_int, ByVal that As Int32) As big_int
+        Dim r As big_int = Nothing
+        r = New big_int(this)
+        Return r.right_shift(that)
+    End Operator
+
+    Public Shared Operator <<(ByVal this As big_int, ByVal that As Int32) As big_int
+        Dim r As big_int = Nothing
+        r = New big_int(this)
+        Return r.left_shift(that)
+    End Operator
+End Class
+'finish big_shift.vbp --------
+
+Partial Public NotInheritable Class big_int
+    Public Sub replace_by(ByVal i As Boolean)
+        d.replace_by(i)
+        set_signal(Not i)
+    End Sub
+
+    Public Shared Widening Operator CType(ByVal this As Boolean) As big_int
+        Dim r As big_int = Nothing
+        r = New big_int()
+        r.replace_by(this)
+        Return r
+    End Operator
+
+    Public Function power_of_2() As Boolean
+        Return positive() AndAlso d.power_of_2()
+    End Function
+
+    Public Function as_uint64(ByRef overflow As Boolean) As UInt64
+        If negative() Then
+            overflow = True
+            Return 0
+        End If
+        Return d.as_uint64(overflow)
+    End Function
+
+    Public Function as_int32(ByRef overflow As Boolean) As Int32
+        Dim v As Int32 = 0
+        v = d.as_int32(overflow)
+        Return If(negative(), -v, v)
+    End Function
+
+    Private Sub divide(ByVal that As big_int, ByRef remainder As big_int, ByRef divide_by_zero As Boolean)
+        If that Is Nothing OrElse that.is_zero() Then
+            divide_by_zero = True
+            Return
+        End If
+        Dim n As Boolean = False
+        n = negative()
+        Dim r As big_uint = Nothing
+        d.divide(that.d, divide_by_zero, r)
+        remainder = share(r)
+        confirm_signal()
+        If n Then
+            remainder.set_negative()
+        End If
+        If n = that.negative() Then
+            set_positive()
+        Else
+            set_negative()
+        End If
+    End Sub
+
+    Private Sub extract(ByVal that As big_int,
+                        ByRef remainder As big_int,
+                        ByRef divide_by_zero As Boolean,
+                        ByRef imaginary_number As Boolean)
+        divide_by_zero = False
+        imaginary_number = False
+        If that Is Nothing OrElse that.is_zero() Then
+            If is_one() Then
+                divide_by_zero = False
+                remainder = zero()
+            Else
+                divide_by_zero = True
+            End If
+            Return
+        End If
+        imaginary_number = (negative() AndAlso that.even())
+        If imaginary_number Then
+            Return
+        End If
+        remainder = New big_int()
+        If is_zero_or_one_or_negative_one() Then
+            Return
+        End If
+        If that.negative() Then
+            remainder.replace_by(Me)
+            set_zero()
+        Else
+            Dim r As big_uint = Nothing
+            d.extract(that.d, divide_by_zero, r)
+            remainder.replace_by(r)
+            remainder.set_signal(signal())
+        End If
+        confirm_signal()
+    End Sub
+
+    Public Function divide(ByVal that As big_uint,
+                           ByRef divide_by_zero As Boolean,
+                           Optional ByRef remainder As big_int = Nothing) As big_int
+        Return divide(share(that), divide_by_zero, remainder)
+    End Function
+
+    Public Function divide(ByVal that As big_int,
+                           ByRef divide_by_zero As Boolean,
+                           Optional ByRef remainder As big_int = Nothing) As big_int
+        divide(that, remainder, divide_by_zero)
+        Return Me
+    End Function
+
+    Public Function divide(ByVal that As big_uint,
+                           Optional ByRef remainder As big_int = Nothing) As big_int
+        Return divide(share(that), remainder)
+    End Function
+
+    Public Function divide(ByVal that As big_int,
+                           Optional ByRef remainder As big_int = Nothing) As big_int
+        Dim r As Boolean = False
+        divide(that, remainder, r)
+        If r Then
+            Throw divide_by_zero()
+        End If
+        Return Me
+    End Function
+
+    Public Function assert_divide(ByVal that As big_uint,
+                                  Optional ByRef remainder As big_int = Nothing) As big_int
+        Return assert_divide(share(that), remainder)
+    End Function
+
+    Public Function assert_divide(ByVal that As big_int,
+                                  Optional ByRef remainder As big_int = Nothing) As big_int
+        Dim r As Boolean = False
+        divide(that, remainder, r)
+        assert(Not r)
+        Return Me
+    End Function
+
+    Public Function extract(ByVal that As big_uint,
+                            ByRef divide_by_zero As Boolean,
+                            ByRef imaginary_number As Boolean,
+                            Optional ByRef remainder As big_int = Nothing) As big_int
+        Return extract(share(that), divide_by_zero, imaginary_number, remainder)
+    End Function
+
+    Public Function extract(ByVal that As big_int,
+                            ByRef divide_by_zero As Boolean,
+                            ByRef imaginary_number As Boolean,
+                            Optional ByRef remainder As big_int = Nothing) As big_int
+        extract(that, remainder, divide_by_zero, imaginary_number)
+        Return Me
+    End Function
+
+    Public Function extract(ByVal that As big_uint,
+                            Optional ByRef remainder As big_int = Nothing) As big_int
+        Return extract(share(that), remainder)
+    End Function
+
+    Public Function extract(ByVal that As big_int,
+                            Optional ByRef remainder As big_int = Nothing) As big_int
+        Dim d As Boolean = False
+        Dim i As Boolean = False
+        extract(that, remainder, d, i)
+        If d Then
+            Throw divide_by_zero()
+        End If
+        If i Then
+            Throw imaginary_number()
+        End If
+        Return Me
+    End Function
+
+    Public Function assert_extract(ByVal that As big_uint,
+                                   Optional ByRef remainder As big_int = Nothing) As big_int
+        Return assert_extract(share(that), remainder)
+    End Function
+
+    Public Function assert_extract(ByVal that As big_int,
+                                   Optional ByRef remainder As big_int = Nothing) As big_int
+        Dim d As Boolean = False
+        Dim i As Boolean = False
+        extract(that, remainder, d, i)
+        assert(Not d)
+        assert(Not i)
+        Return Me
+    End Function
+
+    Public Shared Operator /(ByVal this As big_int, ByVal that As big_int) As pair(Of big_int, big_int)
+        Dim q As big_int = Nothing
+        Dim r As big_int = Nothing
+        q = New big_int(this)
+        q.divide(that, r)
+        Return pair.emplace_of(q, r)
+    End Operator
+
+    Public Shared Operator Mod(ByVal this As big_int, ByVal that As big_int) As big_int
+        Dim q As big_int = Nothing
+        Dim r As big_int = Nothing
+        q = New big_int(this)
+        q.divide(that, r)
+        Return r
+    End Operator
+End Class
 'finish big_int.vbp --------

@@ -81,6 +81,10 @@ Partial Public NotInheritable Class big_udec
         Return big_uint.support_base(base)
     End Function
 
+    Public Shared Sub assert_support_base(ByVal base As Byte)
+        assert(support_base(base))
+    End Sub
+
     Public Shared Function parse(ByVal s As String,
                                  ByRef o As big_udec,
                                  Optional ByVal base As Byte = constants.str_base) As Boolean

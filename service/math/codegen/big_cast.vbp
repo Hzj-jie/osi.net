@@ -20,13 +20,6 @@ Partial Public NotInheritable Class ##CLASS_NAME##
         Return New ##CLASS_NAME##(this)
     End Operator
 
-    Public Shared Widening Operator CType(ByVal this As Boolean) As ##CLASS_NAME##
-        Dim r As ##CLASS_NAME## = Nothing
-        r = New ##CLASS_NAME##()
-        r.replace_by(this)
-        Return r
-    End Operator
-
     Public Shared Widening Operator CType(ByVal this As ##CLASS_NAME##) As Boolean
         Return Not this Is Nothing AndAlso this.true()
     End Operator
@@ -34,21 +27,6 @@ Partial Public NotInheritable Class ##CLASS_NAME##
     Public Shared Operator Not(ByVal this As ##CLASS_NAME##) As Boolean
         Return this Is Nothing OrElse this.false()
     End Operator
-
-    Public Function as_uint64(ByRef overflow As Boolean) As UInt64
-        If negative() Then
-            overflow = True
-            Return 0
-        Else
-            Return d.as_uint64(overflow)
-        End If
-    End Function
-
-    Public Function as_int32(ByRef overflow As Boolean) As Int32
-        Dim v As Int32 = 0
-        v = d.as_int32(overflow)
-        Return If(negative(), -v, v)
-    End Function
 
     Public Function as_bytes() As Byte()
         Using r As MemoryStream = New MemoryStream(CInt(d.byte_size() + uint32_1))

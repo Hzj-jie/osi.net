@@ -55,6 +55,10 @@ Partial Public NotInheritable Class big_udec
         Me.d = d
     End Sub
 
+    Public Sub New(ByVal d As big_udec)
+        assert(replace_by(d))
+    End Sub
+
     Public Sub New(ByVal b() As Byte)
         Me.New()
         assert(replace_by(b))
@@ -202,5 +206,13 @@ Partial Public NotInheritable Class big_udec
 
     Public Function is_pure_dec() As Boolean
         Return n.less(d)
+    End Function
+
+    Public Function even() As Boolean
+        Return n.even()
+    End Function
+
+    Public Function odd() As Boolean
+        Return Not even()
     End Function
 End Class

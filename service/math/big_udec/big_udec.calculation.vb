@@ -203,6 +203,10 @@ Partial Public NotInheritable Class big_udec
         Return r
     End Function
 
+    Public Function power_2() As big_udec
+        Return multiply(Me)
+    End Function
+
     Public Function power(ByVal that As big_udec) As big_udec
         If that Is Nothing OrElse that.is_zero() Then
             set_one()
@@ -262,5 +266,32 @@ Partial Public NotInheritable Class big_udec
             assert(replace_by(n, d))
         End While
         Return c
+    End Function
+
+    Public Function reciprocal(ByRef divide_by_zero As Boolean) As big_udec
+        If is_zero() Then
+            divide_by_zero = True
+            Return CloneT()
+        End If
+        divide_by_zero = False
+        Return New big_udec(d.CloneT(), n.CloneT())
+    End Function
+
+    Public Function reciprocal() As big_udec
+        Dim d As Boolean = False
+        Dim r As big_udec = Nothing
+        r = reciprocal(d)
+        If d Then
+            throws.divide_by_zero()
+        End If
+        Return r
+    End Function
+
+    Public Function assert_reciprocal() As big_udec
+        Dim d As Boolean = False
+        Dim r As big_udec = Nothing
+        r = reciprocal(d)
+        assert(Not d)
+        Return r
     End Function
 End Class
