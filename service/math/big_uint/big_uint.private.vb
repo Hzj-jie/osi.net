@@ -252,6 +252,9 @@ Partial Public NotInheritable Class big_uint
         If remainder.is_zero_or_one() Then
             Return
         End If
+        If remainder.less(that) Then
+            Return
+        End If
         Dim remainder_bit_count As UInt64 = 0
         Dim that_bit_count As UInt64 = 0
         remainder_bit_count = remainder.bit_count()

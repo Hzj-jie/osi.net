@@ -76,14 +76,6 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    Public Function modulus(ByVal that As big_uint, ByRef divide_by_zero As Boolean) As big_uint
-        Dim remainder As big_uint = Nothing
-        ' TODO: Do not use divide, implement a dedicate modulus operator.
-        divide(that, divide_by_zero, remainder)
-        assert(replace_by(remainder))
-        Return Me
-    End Function
-
     Public Function divide(ByVal that As big_uint, Optional ByRef remainder As big_uint = Nothing) As big_uint
         Dim r As Boolean = False
         divide(that, remainder, r)
@@ -93,25 +85,9 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    Public Function modulus(ByVal that As big_uint) As big_uint
-        Dim r As Boolean = False
-        modulus(that, r)
-        If r Then
-            Throw divide_by_zero()
-        End If
-        Return Me
-    End Function
-
     Public Function assert_divide(ByVal that As big_uint, Optional ByRef remainder As big_uint = Nothing) As big_uint
         Dim r As Boolean = False
         divide(that, remainder, r)
-        assert(Not r)
-        Return Me
-    End Function
-
-    Public Function assert_modulus(ByVal that As big_uint) As big_uint
-        Dim r As Boolean = False
-        modulus(that, r)
         assert(Not r)
         Return Me
     End Function
@@ -171,6 +147,126 @@ Partial Public NotInheritable Class big_uint
     Public Function assert_divide(ByVal that As Byte,
                                   Optional ByRef remainder As UInt32 = 0) As big_uint
         Return assert_divide(CUInt(that), remainder)
+    End Function
+
+    Public Function modulus(ByVal that As UInt32, ByRef divide_by_zero As Boolean) As big_uint
+        If that = 0 Then
+            divide_by_zero = True
+            Return Me
+        End If
+        divide_by_zero = False
+        If is_zero() Then
+            Return Me
+        End If
+        If that = 1 Then
+            set_zero()
+            Return Me
+        End If
+        If is_one() Then
+            Return Me
+        End If
+        If fit_uint32() Then
+            If as_uint32() < that Then
+                Return Me
+            End If
+            If as_uint32() = that Then
+                set_zero()
+                Return Me
+            End If
+        End If
+        Dim r As UInt32 = 0
+        Dim i As UInt32 = 0
+        i = uint32_size() - uint32_1
+        While True
+            If r > 0 OrElse v.get(i) > 0 Then
+                Dim t As UInt64 = 0
+                t = r
+                t <<= bit_count_in_uint32
+                t = t Or v.get(i)
+                r = CUInt(t Mod that)
+            End If
+            If i = 0 Then
+                Exit While
+            End If
+            i -= uint32_1
+        End While
+        replace_by(r)
+        Return Me
+    End Function
+
+    Public Function modulus(ByVal that As UInt32) As big_uint
+        Dim r As Boolean = False
+        modulus(that, r)
+        If r Then
+            Throw divide_by_zero()
+        End If
+        Return Me
+    End Function
+
+    Public Function assert_modulus(ByVal that As UInt32) As big_uint
+        Dim r As Boolean = False
+        modulus(that, r)
+        assert(Not r)
+        Return Me
+    End Function
+
+    Public Function modulus(ByVal that As big_uint, ByRef divide_by_zero As Boolean) As big_uint
+        If that Is Nothing OrElse that.is_zero() Then
+            divide_by_zero = True
+            Return Me
+        End If
+        divide_by_zero = False
+        If that.power_of_2() Then
+            [and](that - uint32_1)
+            Return Me
+        End If
+        If that.fit_uint32() Then
+            modulus(that.as_uint32(), divide_by_zero)
+            assert(Not divide_by_zero)
+            Return Me
+        End If
+        If is_zero_or_one() Then
+            Return Me
+        End If
+        If less(that) Then
+            Return Me
+        End If
+        Dim dl As UInt64 = 0
+        dl = bit_count() - that.bit_count()
+        that = that.CloneT()
+        that.left_shift(dl)
+        While True
+            Dim cmp As Int32 = 0
+            cmp = compare(that)
+            If cmp = 0 Then
+                set_zero()
+                Return Me
+            End If
+            If cmp > 0 Then
+                assert_sub(that)
+            End If
+            If dl = uint64_0 Then
+                Exit While
+            End If
+            dl -= uint64_1
+        End While
+        Return Me
+    End Function
+
+    Public Function modulus(ByVal that As big_uint) As big_uint
+        Dim r As Boolean = False
+        modulus(that, r)
+        If r Then
+            Throw divide_by_zero()
+        End If
+        Return Me
+    End Function
+
+    Public Function assert_modulus(ByVal that As big_uint) As big_uint
+        Dim r As Boolean = False
+        modulus(that, r)
+        assert(Not r)
+        Return Me
     End Function
 
     Public Function power_2() As big_uint
