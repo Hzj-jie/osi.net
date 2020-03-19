@@ -249,6 +249,7 @@ Partial Public NotInheritable Class big_uint
                 Exit While
             End If
             dl -= uint64_1
+            that.right_shift(1)
         End While
         Return Me
     End Function
@@ -350,6 +351,12 @@ Partial Public NotInheritable Class big_uint
     Public Shared Function gcd(ByVal a As big_uint, ByVal b As big_uint) As big_uint
         assert(Not a Is Nothing)
         assert(Not b Is Nothing)
+        If a.is_zero() OrElse b.is_zero() Then
+            Return zero()
+        End If
+        If a.is_one() OrElse b.is_one() Then
+            Return one()
+        End If
         If a.equal(b) Then
             Return a.CloneT()
         End If
@@ -363,7 +370,7 @@ Partial Public NotInheritable Class big_uint
         While Not c.is_zero()
             a = b.CloneT()
             b = c
-            c = a.assert_modulus(b)
+            c = a.CloneT().assert_modulus(b)
         End While
         Return b
     End Function
