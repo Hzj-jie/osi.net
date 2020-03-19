@@ -3,6 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+#Const GCD_USE_SUCCESSIVE_DIVISION = False
+
 Imports osi.root.connector
 Imports osi.root.constants
 
@@ -360,6 +362,7 @@ Partial Public NotInheritable Class big_uint
         If a.equal(b) Then
             Return a.CloneT()
         End If
+#If GCD_USE_SUCCESSIVE_DIVISION Then
         Dim c As big_uint = Nothing
         If a.less(b) Then
             c = a
@@ -373,5 +376,35 @@ Partial Public NotInheritable Class big_uint
             c = a.CloneT().assert_modulus(b)
         End While
         Return b
+#Else
+        a = a.CloneT()
+        b = b.CloneT()
+        Dim shift As UInt32 = 0
+        While True
+            assert(Not a.is_zero())
+            assert(Not b.is_zero())
+            Dim az As UInt32 = 0
+            Dim bz As UInt32 = 0
+            az = a.binary_trailing_zero_count()
+            bz = b.binary_trailing_zero_count()
+            a.right_shift(az)
+            b.right_shift(bz)
+            shift += min(az, bz)
+
+            Dim cmp As Int32 = 0
+            cmp = a.compare(b)
+            If cmp = 0 Then
+                Return a.left_shift(shift)
+            End If
+            If cmp < 0 Then
+                b.assert_sub(a)
+            Else
+                assert(cmp > 0)
+                a.assert_sub(b)
+            End If
+        End While
+        assert(False)
+        Return Nothing
+#End If
     End Function
 End Class

@@ -9,6 +9,7 @@ Imports osi.root.formation
 
 'TODO: consider to add a temporary value for uint32 / uint64 to big_uint convert to save object create time
 Partial Public NotInheritable Class big_uint
+    ' Little-endian
     Private ReadOnly v As adaptive_array_uint32
 
     Public Sub New()

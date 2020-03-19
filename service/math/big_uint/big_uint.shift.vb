@@ -32,7 +32,9 @@ Partial Public NotInheritable Class big_uint
                     If i = v.size() - uint32_1 Then
                         v.push_back(0)
                     End If
+#If DEBUG Then
                     assert((v.get(i + uint32_1) And c) = 0)
+#End If
                     v.set(i + uint32_1, v.get(i + uint32_1) Or c)
                 End If
                 If i = till Then
@@ -96,7 +98,9 @@ Partial Public NotInheritable Class big_uint
                     c = CUInt(t And max_uint32)
                     v.set(i, CUInt(t >> bit_count_in_uint32))
                     If i > 0 AndAlso c > 0 Then
+#If DEBUG Then
                         assert((v.get(i - uint32_1) And c) = 0)
+#End If
                         v.set(i - uint32_1, v.get(i - uint32_1) Or c)
                     End If
                 Next

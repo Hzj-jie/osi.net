@@ -18,7 +18,9 @@ Partial Public NotInheritable Class big_uint
 
     'sub d at position p with carry-over as c
     Private Sub [sub](ByVal d As UInt32, ByRef c As UInt32, ByVal p As UInt32)
+#If DEBUG Then
         assert(p >= 0 AndAlso p < v.size())
+#End If
         Dim t As Int64 = 0
         t = -c
         t += v.get(p)

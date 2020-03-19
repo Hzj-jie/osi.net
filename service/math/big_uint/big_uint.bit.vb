@@ -197,4 +197,21 @@ Partial Public NotInheritable Class big_uint
         '0 is even
         Return bit_count() > 0 AndAlso getrbit(0)
     End Function
+
+    Public Function binary_trailing_zero_count() As UInt32
+        assert(Not is_zero())
+        Dim r As UInt32 = 0
+        Dim i As UInt32 = 0
+        While i < uint32_size()
+            If v.get(i) = 0 Then
+                r += bit_count_in_uint32
+            Else
+                r += v.get(i).binary_trailing_zero_count()
+                Return r
+            End If
+            i += uint32_1
+        End While
+        assert(False)
+        Return uint32_0
+    End Function
 End Class
