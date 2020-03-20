@@ -66,8 +66,8 @@ Partial Public NotInheritable Class big_udec
                     If Not r.is_zero() Then
                         Exit While
                     End If
-                    n = nn
-                    d = nd
+                    n.replace_by(nn)
+                    d.replace_by(nd)
                 End While
             Next
         End Using
