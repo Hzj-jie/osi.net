@@ -391,10 +391,8 @@ Partial Public NotInheritable Class big_uint
         While True
             assert(Not a.is_zero())
             assert(Not b.is_zero())
-            az = a.binary_trailing_zero_count()
-            bz = b.binary_trailing_zero_count()
-            a.right_shift(az)
-            b.right_shift(bz)
+            a.right_shift(a.binary_trailing_zero_count())
+            b.right_shift(b.binary_trailing_zero_count())
 
             Dim cmp As Int32 = 0
             cmp = a.compare(b)

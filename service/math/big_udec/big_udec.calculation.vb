@@ -21,7 +21,6 @@ Partial Public NotInheritable Class big_udec
         Else
             replace_by(Me.n * that.d + Me.d * that.n, Me.d * that.d)
         End If
-        reduce_fraction()
         Return Me
     End Function
 
@@ -46,7 +45,6 @@ Partial Public NotInheritable Class big_udec
                 assert(replace_by(d - r, d))
             End If
         End If
-        reduce_fraction()
     End Sub
 
     Public Function [sub](ByVal that As big_udec, ByRef overflow As Boolean) As big_udec
@@ -96,9 +94,17 @@ Partial Public NotInheritable Class big_udec
             Return Me
         End If
 
-        ' TODO: Use big_uint.gcd to reduce complexity of reduce_fraction.
-        assert(replace_by(Me.n * that.n, Me.d * that.d))
-        reduce_fraction()
+        Dim n1 As big_uint = Nothing
+        Dim n2 As big_uint = Nothing
+        Dim d1 As big_uint = Nothing
+        Dim d2 As big_uint = Nothing
+        n1 = Me.n.CloneT()
+        n2 = that.n.CloneT()
+        d1 = Me.d.CloneT()
+        d2 = that.d.CloneT()
+        reduce_fraction(n1, d2)
+        reduce_fraction(n2, d1)
+        replace_by(n1.multiply(n2), d1.multiply(d2))
         Return Me
     End Function
 
@@ -112,9 +118,17 @@ Partial Public NotInheritable Class big_udec
             Return Me
         End If
 
-        ' TODO: Use big_uint.gcd to reduce complexity of reduce_fraction.
-        assert(replace_by(Me.n * that.d, Me.d * that.n))
-        reduce_fraction()
+        Dim n1 As big_uint = Nothing
+        Dim n2 As big_uint = Nothing
+        Dim d1 As big_uint = Nothing
+        Dim d2 As big_uint = Nothing
+        n1 = Me.n.CloneT()
+        n2 = that.n.CloneT()
+        d1 = Me.d.CloneT()
+        d2 = that.d.CloneT()
+        reduce_fraction(n1, n2)
+        reduce_fraction(d1, d2)
+        replace_by(n1.multiply(d2), d1.multiply(n2))
         Return Me
     End Function
 
@@ -173,7 +187,6 @@ Partial Public NotInheritable Class big_udec
         End If
         replace_by(((Me.n ^ (that * p + uint32_1)) * (Me.d ^ (that * p - uint32_1))).assert_extract(that),
                    (Me.n * Me.d) ^ p)
-        reduce_fraction()
         Return Me
     End Function
 

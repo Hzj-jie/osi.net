@@ -18,6 +18,17 @@ Partial Public NotInheritable Class big_udec
         End Sub
 
         Public Shared Function selected_prime(ByVal i As Int32) As UInt32
+#If 0 Then
+            If i = 0 Then
+                Return 3
+            End If
+            If i = 1 Then
+                Return 5
+            End If
+            assert(False)
+            Return 0
+#End If
+
             assert(i >= 0 AndAlso i < selected_prime_count)
             Return prime(i)
         End Function
@@ -42,6 +53,9 @@ Partial Public NotInheritable Class big_udec
         If n.is_zero_or_one() Then
             Return
         End If
+
+        'n.right_shift(n.binary_trailing_zero_count())
+        'd.right_shift(d.binary_trailing_zero_count())
 
 #If REDUCE_FRACTION_OF_NUMERATOR Then
         Using code_block
@@ -76,8 +90,6 @@ Partial Public NotInheritable Class big_udec
 #End If
 
 #If USE_GCD Then
-        n.right_shift(n.binary_trailing_zero_count())
-        d.right_shift(d.binary_trailing_zero_count())
         Using code_block
             Dim b As big_uint = Nothing
             b = big_uint.gcd(n, d)
@@ -88,9 +100,5 @@ Partial Public NotInheritable Class big_udec
             assert(c.is_zero())
         End Using
 #End If
-    End Sub
-
-    Private Sub reduce_fraction()
-        reduce_fraction(Me.n, Me.d)
     End Sub
 End Class

@@ -109,6 +109,7 @@ Partial Public NotInheritable Class big_udec
         End If
         assert(Me.n.replace_by(n))
         assert(Me.d.replace_by(d))
+        reduce_fraction(Me.n, Me.d)
         Return True
     End Function
 
@@ -116,7 +117,9 @@ Partial Public NotInheritable Class big_udec
         If n Is Nothing Then
             Return False
         End If
-        Return assert(replace_by(n.n, n.d))
+        assert(Me.n.replace_by(n.n))
+        assert(Me.d.replace_by(n.d))
+        Return True
     End Function
 
     Public Function replace_by(ByVal b() As Byte) As Boolean
