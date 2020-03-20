@@ -18,7 +18,7 @@ Partial Public NotInheritable Class big_udec
         End Sub
 
         Public Shared Function selected_prime(ByVal i As Int32) As UInt32
-#If False Then
+#If True Then
             If i = 0 Then
                 Return 3
             End If
@@ -54,8 +54,12 @@ Partial Public NotInheritable Class big_udec
             Return
         End If
 
-        'n.right_shift(n.binary_trailing_zero_count())
-        'd.right_shift(d.binary_trailing_zero_count())
+        Using code_block
+            Dim m As UInt32 = 0
+            m = min(n.binary_trailing_zero_count(), d.binary_trailing_zero_count())
+            n.right_shift(m)
+            d.right_shift(m)
+        End Using
 
 #If REDUCE_FRACTION_OF_NUMERATOR Then
         Using code_block
