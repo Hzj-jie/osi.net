@@ -244,6 +244,7 @@ Partial Public NotInheritable Class big_udec
         Return r
     End Function
 
+#If 0 Then
     Public Function reduce_fraction(ByVal i As big_uint) As UInt32
         assert(Not i Is Nothing)
         assert(Not i.is_zero_or_one())
@@ -267,6 +268,7 @@ Partial Public NotInheritable Class big_udec
         End While
         Return c
     End Function
+#End If
 
     Public Function reciprocal(ByRef divide_by_zero As Boolean) As big_udec
         If is_zero() Then

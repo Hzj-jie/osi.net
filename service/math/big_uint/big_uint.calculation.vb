@@ -380,16 +380,21 @@ Partial Public NotInheritable Class big_uint
         a = a.CloneT()
         b = b.CloneT()
         Dim shift As UInt32 = 0
+        Dim az As UInt32 = 0
+        Dim bz As UInt32 = 0
+        az = a.binary_trailing_zero_count()
+        bz = b.binary_trailing_zero_count()
+        a.right_shift(az)
+        b.right_shift(bz)
+        shift = min(az, bz)
+
         While True
             assert(Not a.is_zero())
             assert(Not b.is_zero())
-            Dim az As UInt32 = 0
-            Dim bz As UInt32 = 0
             az = a.binary_trailing_zero_count()
             bz = b.binary_trailing_zero_count()
             a.right_shift(az)
             b.right_shift(bz)
-            shift += min(az, bz)
 
             Dim cmp As Int32 = 0
             cmp = a.compare(b)
