@@ -63,11 +63,7 @@ Partial Public NotInheritable Class big_uint
     End Operator
 
     Public Shared Operator Mod(ByVal this As big_uint, ByVal that As big_uint) As big_uint
-        Dim q As big_uint = Nothing
-        Dim r As big_uint = Nothing
-        q = this.CloneT()
-        q.divide(that, r)
-        Return r
+        Return this.CloneT().modulus(that)
     End Operator
 
     Public Shared Operator >(ByVal this As big_uint, ByVal that As big_uint) As Boolean

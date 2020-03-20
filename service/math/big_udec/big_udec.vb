@@ -55,6 +55,10 @@ Partial Public NotInheritable Class big_udec
         Me.d = d
     End Sub
 
+    Public Sub New(ByVal d As big_udec)
+        assert(replace_by(d))
+    End Sub
+
     Public Sub New(ByVal b() As Byte)
         Me.New()
         assert(replace_by(b))
@@ -105,6 +109,7 @@ Partial Public NotInheritable Class big_udec
         End If
         assert(Me.n.replace_by(n))
         assert(Me.d.replace_by(d))
+        reduce_fraction(Me.n, Me.d)
         Return True
     End Function
 
@@ -112,7 +117,9 @@ Partial Public NotInheritable Class big_udec
         If n Is Nothing Then
             Return False
         End If
-        Return assert(replace_by(n.n, n.d))
+        assert(Me.n.replace_by(n.n))
+        assert(Me.d.replace_by(n.d))
+        Return True
     End Function
 
     Public Function replace_by(ByVal b() As Byte) As Boolean
@@ -176,6 +183,14 @@ Partial Public NotInheritable Class big_udec
         Return n.equal(d)
     End Function
 
+    Public Function is_greater_than_one() As Boolean
+        Return d.less(n)
+    End Function
+
+    Public Function is_less_than_one() As Boolean
+        Return is_pure_dec()
+    End Function
+
     Public Function dec_part() As big_udec
         If is_pure_dec() Then
             Return CloneT()
@@ -194,5 +209,13 @@ Partial Public NotInheritable Class big_udec
 
     Public Function is_pure_dec() As Boolean
         Return n.less(d)
+    End Function
+
+    Public Function even() As Boolean
+        Return n.even()
+    End Function
+
+    Public Function odd() As Boolean
+        Return Not even()
     End Function
 End Class

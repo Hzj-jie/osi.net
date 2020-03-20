@@ -21,6 +21,9 @@ Public Module _app
         If envs.utt_no_assert Then
             error_writer_ignore_types(Of file_error_writer).ignore(errortype_char)
         End If
+        If envs.utt_no_debug_mode Then
+            set_not_debug_mode()
+        End If
         commandline.initialize(args)
 
         Dim run_case_count As Int32 = 0

@@ -49,10 +49,9 @@ Partial Public NotInheritable Class big_udec
             Dim base As big_uint = Nothing
             base = New big_uint(str_base)
             Dim l As UInt32 = 0
-            While n.uint32_size() <= (this.d.uint32_size() * upure_numerator_size_multiply)
-                l += uint32_1
-                n *= base
-            End While
+            l = (this.d.uint32_size() * upure_numerator_size_multiply - n.uint32_size()) *
+                CUInt(System.Math.Log(max_uint32, str_base) + 1)
+            n.multiply(base.power(l))
             n.divide(this.d)
             Dim r As String = Nothing
             r = n.str(str_base)
@@ -81,6 +80,10 @@ Partial Public NotInheritable Class big_udec
     Public Shared Function support_base(ByVal base As Byte) As Boolean
         Return big_uint.support_base(base)
     End Function
+
+    Public Shared Sub assert_support_base(ByVal base As Byte)
+        assert(support_base(base))
+    End Sub
 
     Public Shared Function parse(ByVal s As String,
                                  ByRef o As big_udec,

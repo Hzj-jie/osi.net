@@ -40,13 +40,13 @@ Partial Public NotInheritable Class big_uint
         If v.size() = 0 Then
             overflow = False
             Return 0
-        ElseIf v.size() = 1 Then
-            overflow = False
-            Return v(0)
-        Else
-            overflow = (v.size() > 2)
-            Return v(0) + v(1) * (CULng(max_uint32) + uint32_1)
         End If
+        If v.size() = 1 Then
+            overflow = False
+            Return v.get(0)
+        End If
+        overflow = (v.size() > 2)
+        Return v.get(0) + (CULng(v.get(1)) << bit_count_in_uint32)
     End Function
 
     Public Function fit_uint32() As Boolean
@@ -57,29 +57,27 @@ Partial Public NotInheritable Class big_uint
         If v.size() = 0 Then
             overflow = False
             Return 0
-        Else
-            overflow = (v.size() > 1)
-            Return v(0)
         End If
+        overflow = (v.size() > 1)
+        Return v.get(0)
     End Function
 
     Public Function fit_int32() As Boolean
         Return v.size() = 0 OrElse
-               (v.size() = 1 AndAlso v(0) <= max_int32)
+               (v.size() = 1 AndAlso v.get(0) <= max_int32)
     End Function
 
     Public Function as_int32(ByRef overflow As Boolean) As Int32
         If v.size() = 0 Then
             overflow = False
             Return 0
-        Else
-            If v.size() > 1 Then
-                overflow = True
-            Else
-                overflow = (v(0) > max_int32)
-            End If
-            Return CInt((v(0) And CUInt(max_int32)))
         End If
+        If v.size() > 1 Then
+            overflow = True
+        Else
+            overflow = (v.get(0) > max_int32)
+        End If
+        Return CInt((v.get(0) And CUInt(max_int32)))
     End Function
 
     Public Function as_bytes() As Byte()
@@ -101,7 +99,7 @@ Partial Public NotInheritable Class big_uint
                 [step] = -1
             End If
             For i As Int64 = start To [end] Step [step]
-                assert(uint32_bytes(v(CUInt(i)), r, CUInt(i) * byte_count_in_uint32))
+                assert(uint32_bytes(v.get(CUInt(i)), r, CUInt(i) * byte_count_in_uint32))
             Next
         End If
 

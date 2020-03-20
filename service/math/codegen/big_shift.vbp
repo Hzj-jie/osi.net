@@ -127,5 +127,16 @@ Partial Public NotInheritable Class ##CLASS_NAME##
         assert(Not o)
         Return Me
     End Function
-End Class
 
+    Public Shared Operator >>(ByVal this As ##CLASS_NAME##, ByVal that As Int32) As ##CLASS_NAME##
+        Dim r As ##CLASS_NAME## = Nothing
+        r = New ##CLASS_NAME##(this)
+        Return r.right_shift(that)
+    End Operator
+
+    Public Shared Operator <<(ByVal this As ##CLASS_NAME##, ByVal that As Int32) As ##CLASS_NAME##
+        Dim r As ##CLASS_NAME## = Nothing
+        r = New ##CLASS_NAME##(this)
+        Return r.left_shift(that)
+    End Operator
+End Class

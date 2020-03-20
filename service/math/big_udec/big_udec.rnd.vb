@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 
 Partial Public NotInheritable Class big_udec
     Public Shared Function random(Optional ByVal length As UInt32 = 0) As big_udec
@@ -17,5 +18,20 @@ Partial Public NotInheritable Class big_udec
             d = big_uint.random(length)
         Loop While d.is_zero()
         Return New big_udec(n, d)
+    End Function
+
+    Public Shared Function rnd_support_str(ByVal length As UInt32,
+                                           Optional ByVal base As Byte = constants.str_base) As String
+        Dim s As String = Nothing
+        s = big_uint.rnd_support_str(length, base)
+        Return s.strrplc(rnd_uint(0, length), character.dot)
+    End Function
+
+    Public Shared Function rnd_support_base() As Byte
+        Return big_uint.rnd_support_base()
+    End Function
+
+    Public Shared Function rnd_unsupport_str_char(Optional ByVal base As Byte = constants.str_base) As Char
+        Return big_uint.rnd_unsupport_str_char(base)
     End Function
 End Class

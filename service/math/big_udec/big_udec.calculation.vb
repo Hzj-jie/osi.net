@@ -15,12 +15,12 @@ Partial Public NotInheritable Class big_udec
             replace_by(that)
             Return Me
         End If
-        Dim n As big_uint = Nothing
-        n = Me.n * that.d + Me.d * that.n
-        Dim d As big_uint = Nothing
-        d = Me.d * that.d
-        replace_by(n, d)
-        reduce_fraction()
+
+        If Me.d.equal(that.d) Then
+            replace_by(Me.n + that.n, Me.d)
+        Else
+            replace_by(Me.n * that.d + Me.d * that.n, Me.d * that.d)
+        End If
         Return Me
     End Function
 
@@ -45,7 +45,6 @@ Partial Public NotInheritable Class big_udec
                 assert(replace_by(d - r, d))
             End If
         End If
-        reduce_fraction()
     End Sub
 
     Public Function [sub](ByVal that As big_udec, ByRef overflow As Boolean) As big_udec
@@ -57,7 +56,11 @@ Partial Public NotInheritable Class big_udec
             Return Me
         End If
 
-        [sub](Me.n * that.d, that.n * Me.d, Me.d * that.d, overflow)
+        If Me.d.equal(that.d) Then
+            [sub](Me.n, that.n.CloneT(), Me.d, overflow)
+        Else
+            [sub](Me.n * that.d, that.n * Me.d, Me.d * that.d, overflow)
+        End If
         Return Me
     End Function
 
@@ -91,12 +94,17 @@ Partial Public NotInheritable Class big_udec
             Return Me
         End If
 
-        Dim n As big_uint = Nothing
-        Dim d As big_uint = Nothing
-        n = Me.n * that.n
-        d = Me.d * that.d
-        assert(replace_by(n, d))
-        reduce_fraction()
+        Dim n1 As big_uint = Nothing
+        Dim n2 As big_uint = Nothing
+        Dim d1 As big_uint = Nothing
+        Dim d2 As big_uint = Nothing
+        n1 = Me.n.CloneT()
+        n2 = that.n.CloneT()
+        d1 = Me.d.CloneT()
+        d2 = that.d.CloneT()
+        reduce_fraction(n1, d2)
+        reduce_fraction(n2, d1)
+        replace_by(n1.multiply(n2), d1.multiply(d2))
         Return Me
     End Function
 
@@ -110,8 +118,17 @@ Partial Public NotInheritable Class big_udec
             Return Me
         End If
 
-        assert(replace_by(Me.n * that.d, Me.d * that.n))
-        reduce_fraction()
+        Dim n1 As big_uint = Nothing
+        Dim n2 As big_uint = Nothing
+        Dim d1 As big_uint = Nothing
+        Dim d2 As big_uint = Nothing
+        n1 = Me.n.CloneT()
+        n2 = that.n.CloneT()
+        d1 = Me.d.CloneT()
+        d2 = that.d.CloneT()
+        reduce_fraction(n1, n2)
+        reduce_fraction(d1, d2)
+        replace_by(n1.multiply(d2), d1.multiply(n2))
         Return Me
     End Function
 
@@ -142,11 +159,7 @@ Partial Public NotInheritable Class big_udec
             Return Me
         End If
 
-        Dim n As big_uint = Nothing
-        Dim d As big_uint = Nothing
-        n = Me.n ^ that
-        d = Me.d ^ that
-        replace_by(n, d)
+        replace_by(Me.n ^ that, Me.d ^ that)
         Return Me
     End Function
 
@@ -164,7 +177,7 @@ Partial Public NotInheritable Class big_udec
             Return Me
         End If
         divide_by_zero = False
-        If that.is_one() Then
+        If is_zero() OrElse is_one() OrElse that.is_one() Then
             Return Me
         End If
         Dim p As big_uint = Nothing
@@ -172,12 +185,8 @@ Partial Public NotInheritable Class big_udec
         If p.is_zero_or_one() Then
             p = New big_uint(CUInt(2))
         End If
-        Dim n As big_uint = Nothing
-        n = ((Me.n ^ (that * p + uint32_1)) * (Me.d ^ (that * p - uint32_1))).assert_extract(that)
-        Dim d As big_uint = Nothing
-        d = ((Me.n * Me.d) ^ p)
-        replace_by(n, d)
-        reduce_fraction()
+        replace_by(((Me.n ^ (that * p + uint32_1)) * (Me.d ^ (that * p - uint32_1))).assert_extract(that),
+                   (Me.n * Me.d) ^ p)
         Return Me
     End Function
 
@@ -205,6 +214,10 @@ Partial Public NotInheritable Class big_udec
         r = extract(that, extract_power_base, divide_by_zero)
         assert(Not divide_by_zero)
         Return r
+    End Function
+
+    Public Function power_2() As big_udec
+        Return multiply(Me)
     End Function
 
     Public Function power(ByVal that As big_udec) As big_udec
@@ -241,6 +254,59 @@ Partial Public NotInheritable Class big_udec
         Dim r As big_udec = Nothing
         r = extract(that, divide_by_zero)
         assert(Not divide_by_zero)
+        Return r
+    End Function
+
+#If 0 Then
+    Public Function reduce_fraction(ByVal i As big_uint) As UInt32
+        assert(Not i Is Nothing)
+        assert(Not i.is_zero_or_one())
+        Dim c As UInt32 = 0
+        While True
+            Dim n As big_uint = Nothing
+            Dim d As big_uint = Nothing
+            n = Me.n.CloneT()
+            d = Me.d.CloneT()
+            Dim r As big_uint = Nothing
+            n.assert_divide(i, r)
+            If Not r.is_zero() Then
+                Exit While
+            End If
+            d.assert_divide(i, r)
+            If Not r.is_zero() Then
+                Exit While
+            End If
+            c += uint32_1
+            assert(replace_by(n, d))
+        End While
+        Return c
+    End Function
+#End If
+
+    Public Function reciprocal(ByRef divide_by_zero As Boolean) As big_udec
+        If is_zero() Then
+            divide_by_zero = True
+            Return CloneT()
+        End If
+        divide_by_zero = False
+        Return New big_udec(d.CloneT(), n.CloneT())
+    End Function
+
+    Public Function reciprocal() As big_udec
+        Dim d As Boolean = False
+        Dim r As big_udec = Nothing
+        r = reciprocal(d)
+        If d Then
+            throws.divide_by_zero()
+        End If
+        Return r
+    End Function
+
+    Public Function assert_reciprocal() As big_udec
+        Dim d As Boolean = False
+        Dim r As big_udec = Nothing
+        r = reciprocal(d)
+        assert(Not d)
         Return r
     End Function
 End Class

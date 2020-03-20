@@ -16,7 +16,7 @@ Public NotInheritable Class big_udec_extract_test
         u = u.assert_extract(New big_uint(2), 350)
 
         assertion.equal(u.as_str().with_upure_length(128),
-                        "0.7071067811865475244008443621048490392848359376884740365883398689953662392310535194251937671638207863675065")
+                        "0.7071067811865475244008443621048490392848359376884740365883398689953662392310535194251937671638207863675065022097118471484")
         '                0.707106781186547524400844362104849039284835937688474036588339868995366239231053519425193767163820786367506
     End Sub
 
@@ -26,7 +26,7 @@ Public NotInheritable Class big_udec_extract_test
         u = New big_udec(New big_uint(9), New big_uint(10))
         u = u.assert_extract(New big_uint(2))
 
-        assertion.equal(u.str(), "0.948683298050513799599668063329815554695025")
+        assertion.equal(u.str(), "0.94868329805051379959966806332981555469502588")
         '                         0.94868329805
     End Sub
 
@@ -56,7 +56,7 @@ Public NotInheritable Class big_udec_extract_test
         u = New big_udec(0.1)
         u = u.assert_extract(New big_uint(2))
 
-        assertion.equal(u.str(), "0.31622776601683737146653438217061084741446638326044857952937")
+        assertion.equal(u.str(), "0.31622776601683737146653438217061084741446638326044857952937984")
         '                         0.31622776601
     End Sub
 
@@ -106,7 +106,7 @@ Public NotInheritable Class big_udec_extract_test
         u = New big_udec(0.1)
         u = u.assert_extract(New big_uint(3))
 
-        assertion.equal(u.str(), "0.46415888336127733956646961696523032394934654608888509825791")
+        assertion.equal(u.str(), "0.464158883361277339566469616965230323949346546088885098257910799")
         '                         0.46415888336128
     End Sub
 

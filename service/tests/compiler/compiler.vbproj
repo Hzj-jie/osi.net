@@ -120,9 +120,12 @@
     <Content Include="b2style\codegen\biguint.txt" />
     <Content Include="b2style\codegen\loaded_method.txt" />
     <Content Include="b2style\codegen\negative_int.txt" />
+    <Content Include="b2style\codegen\pi_integral_0_1.txt" />
     <Content Include="b2style\codegen\self_add.txt" />
     <Content Include="b2style\codegen\ufloat_operators.txt" />
     <Content Include="b2style\codegen\ufloat_std_out.txt" />
+    <Content Include="b2style\codegen\while_0_to_1.txt" />
+    <Content Include="b2style\codegen\while_1_to_100.txt" />
     <Content Include="b2style\codegen\_1_to_100.txt" />
     <Content Include="b2style\codegen\case1.txt" />
     <Content Include="b2style\codegen\case2.txt" />

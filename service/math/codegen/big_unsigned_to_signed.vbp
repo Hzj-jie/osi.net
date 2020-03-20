@@ -16,7 +16,6 @@ Imports osi.root.formation
 ##INCLUDE big_predefined.vbp
 ##INCLUDE big_private.vbp
 ##INCLUDE big_rnd.vbp
-##INCLUDE big_shift.vbp
 ##INCLUDE big_str.vbp
 
 Partial Public NotInheritable Class ##CLASS_NAME##
@@ -127,11 +126,6 @@ Partial Public NotInheritable Class ##CLASS_NAME##
         End If
         Return False
     End Function
-
-    Public Sub replace_by(ByVal i As Boolean)
-        d.replace_by(i)
-        set_signal(Not i)
-    End Sub
 
     Public Function replace_by(ByVal a() As Byte) As Boolean
         If isemptyarray(a) Then

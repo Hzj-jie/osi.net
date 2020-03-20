@@ -3,6 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+' #Const DEBUG = False
+
 Imports osi.root.connector
 Imports osi.root.constants
 
@@ -64,17 +66,17 @@ Partial Public NotInheritable Class big_uint
             For i As UInt32 = 0 To v.size() - uint32_1
                 Dim t As UInt32 = 0
                 If i < that.v.size() Then
-                    t = that.v(i)
+                    t = that.v.get(i)
                 Else
                     t = 0
                 End If
                 Select Case op
                     Case bit_wise_operator.and
-                        v(i) = v(i) And t
+                        v.set(i, v.get(i) And t)
                     Case bit_wise_operator.or
-                        v(i) = v(i) Or t
+                        v.set(i, v.get(i) Or t)
                     Case bit_wise_operator.xor
-                        v(i) = v(i) Xor t
+                        v.set(i, v.get(i) Xor t)
                     Case Else
                         assert(False)
                 End Select
@@ -91,7 +93,7 @@ Partial Public NotInheritable Class big_uint
         If Not is_zero() Then
             assert(v.size() > 0)
             For i As UInt32 = 0 To v.size() - uint32_1
-                v(i) = Not v(i)
+                v.set(i, Not v.get(i))
             Next
         End If
         Return Me
@@ -100,11 +102,11 @@ Partial Public NotInheritable Class big_uint
     Public Function bit_count() As UInt64
         If is_zero() Then
             Return uint64_0
-        ElseIf is_one() Then
-            Return uint64_1
-        Else
-            Return ((v.size() - uint64_1) << bit_count_in_uint32_shift) + v.back().bit_count()
         End If
+        If is_one() Then
+            Return uint64_1
+        End If
+        Return ((v.size() - uint64_1) << bit_count_in_uint32_shift) + v.back().bit_count()
     End Function
 
     Public Function [and](ByVal that As big_uint) As big_uint
@@ -122,13 +124,12 @@ Partial Public NotInheritable Class big_uint
     Public Function _1count() As UInt64
         If is_zero() Then
             Return 0
-        Else
-            Dim r As UInt64 = 0
-            For i As UInt32 = 0 To v.size() - uint32_1
-                r += v(i)._1count()
-            Next
-            Return r
         End If
+        Dim r As UInt64 = 0
+        For i As UInt32 = 0 To v.size() - uint32_1
+            r += v.get(i)._1count()
+        Next
+        Return r
     End Function
 
     Public Function onecount() As UInt64
@@ -138,38 +139,37 @@ Partial Public NotInheritable Class big_uint
     Public Function power_of_2() As Boolean
         If is_zero() Then
             Return False
-        Else
-            Dim r As UInt64 = 0
-            Dim i As UInt32 = 0
-            i = v.size() - uint32_1
-            While True
-                r += v(i)._1count()
-                If r > 1 Then
-                    Return False
-                End If
-                If i = 0 Then
-                    Exit While
-                Else
-                    i -= uint32_1
-                End If
-            End While
-            assert(r = 1)
-            Return True
         End If
+        Dim r As UInt64 = 0
+        Dim i As UInt32 = 0
+        i = v.size() - uint32_1
+        While True
+            r += v.get(i)._1count()
+            If r > 1 Then
+                Return False
+            End If
+            If i = 0 Then
+                Exit While
+            Else
+                i -= uint32_1
+            End If
+        End While
+        assert(r = 1)
+        Return True
     End Function
 
     Public Sub setbit(ByVal pos As UInt64, Optional ByVal value As Boolean = True)
         Dim vi As UInt32 = 0
         Dim bi As Byte = 0
         bit_pos(pos, vi, bi)
-        v(vi).setbit(bi, value)
+        v.set(vi, v.get(vi).setbit(bi, value))
     End Sub
 
     Public Function getbit(ByVal pos As UInt64) As Boolean
         Dim vi As UInt32 = 0
         Dim bi As Byte = 0
         bit_pos(pos, vi, bi)
-        Return v(vi).getbit(bi)
+        Return v.get(vi).getbit(bi)
     End Function
 
     Public Sub setrbit(ByVal pos As UInt64, Optional ByVal value As Boolean = True)
@@ -178,7 +178,7 @@ Partial Public NotInheritable Class big_uint
         Dim ov As Boolean = False
         bit_rpos(pos, vi, bi, ov, value, False)
         If Not ov OrElse value Then
-            v(vi).setrbit(bi, value)
+            v.set(vi, v.get(vi).setrbit(bi, value))
         End If
     End Sub
 
@@ -186,7 +186,7 @@ Partial Public NotInheritable Class big_uint
         Dim vi As UInt32 = 0
         Dim bi As Byte = 0
         bit_rpos(pos, vi, bi)
-        Return v(vi).getrbit(bi)
+        Return v.get(vi).getrbit(bi)
     End Function
 
     Public Function even() As Boolean
@@ -197,4 +197,25 @@ Partial Public NotInheritable Class big_uint
         '0 is even
         Return bit_count() > 0 AndAlso getrbit(0)
     End Function
+
+    Public Function binary_trailing_zero_count() As UInt32
+        assert(Not is_zero())
+        Dim r As UInt32 = 0
+        Dim i As UInt32 = 0
+        While i < uint32_size()
+            If v.get(i) = 0 Then
+                r += bit_count_in_uint32
+            Else
+                r += v.get(i).binary_trailing_zero_count()
+                Return r
+            End If
+            i += uint32_1
+        End While
+        assert(False)
+        Return uint32_0
+    End Function
+
+    Public Sub remove_binary_trailing_zeros()
+        assert_right_shift(binary_trailing_zero_count())
+    End Sub
 End Class

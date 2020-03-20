@@ -49,7 +49,7 @@ Public NotInheritable Class vector(Of T)
         assert(v.capacity() >= array_size(vs))
         Dim i As UInt32 = 0
         While i < array_size(vs)
-            copy(v(i), vs(CInt(i)))
+            v.set(i, copy_no_error(vs(CInt(i))))
             i += uint32_1
         End While
     End Sub
@@ -57,12 +57,12 @@ Public NotInheritable Class vector(Of T)
     Default Public Property at(ByVal p As UInt32) As T
         Get
             assert(p < v.size())
-            Return v(p)
+            Return v.get(p)
         End Get
         Set(ByVal value As T)
             assert(p < v.size())
-            If object_compare(v(p), value) <> 0 Then
-                copy(v(p), value)
+            If object_compare(v.get(p), value) <> 0 Then
+                v.set(p, copy_no_error(value))
             End If
         End Set
     End Property
@@ -91,7 +91,7 @@ Public NotInheritable Class vector(Of T)
         Else
             v.push_back(d)
             memmove(v.data(), pos + uint32_1, v.data(), pos, v.size() - pos - uint32_1)
-            v(pos) = d
+            v.set(pos, d)
         End If
     End Sub
 
@@ -124,7 +124,7 @@ Public NotInheritable Class vector(Of T)
 
     Public Function front() As T
         assert(Not v.empty())
-        Return v(0)
+        Return v.get(0)
     End Function
 
     Public Sub insert(ByVal pos As UInt32, ByVal v As T)
@@ -157,7 +157,7 @@ Public NotInheritable Class vector(Of T)
         os = v.size()
         v.resize(n)
         For i As UInt32 = os To n - uint32_1
-            copy(v(i), d)
+            v.set(i, copy_no_error(d))
         Next
     End Sub
 

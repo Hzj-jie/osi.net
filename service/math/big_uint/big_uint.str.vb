@@ -86,7 +86,7 @@ Partial Public NotInheritable Class big_uint
             m = ((uint32_1 << ss) - uint32_1)
             While Not t.is_zero()
                 Dim d As UInt32 = 0
-                d = t.v(0)
+                d = t.v.get(0)
                 For i As UInt32 = 0 To dc - uint32_1
                     r.Append(number_to_char(assert_which.of(d And m).can_cast_to_byte()))
                     d >>= ss

@@ -9,6 +9,7 @@ Imports osi.root.formation
 
 'TODO: consider to add a temporary value for uint32 / uint64 to big_uint convert to save object create time
 Partial Public NotInheritable Class big_uint
+    ' Little-endian
     Private ReadOnly v As adaptive_array_uint32
 
     Public Sub New()
@@ -67,6 +68,9 @@ Partial Public NotInheritable Class big_uint
     Public Function replace_by(ByVal i As big_uint) As Boolean
         If i Is Nothing Then
             Return False
+        End If
+        If object_compare(Me, i) = 0 Then
+            Return True
         End If
         If i.is_zero() Then
             set_zero()
@@ -223,7 +227,7 @@ Partial Public NotInheritable Class big_uint
 
     Public Sub set_one()
         v.resize(1)
-        v(0) = 1
+        v.set(0, uint32_1)
     End Sub
 
     Public Function is_one() As Boolean

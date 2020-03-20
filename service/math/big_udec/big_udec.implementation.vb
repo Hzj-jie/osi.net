@@ -17,7 +17,7 @@ Partial Public NotInheritable Class big_udec
     End Function
 
     Public Function CompareTo(ByVal other As big_udec) As Int32 Implements IComparable(Of big_udec).CompareTo
-        Return compare(Me, other)
+        Return compare(other)
     End Function
 
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo

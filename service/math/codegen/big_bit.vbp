@@ -7,9 +7,5 @@ Partial Public NotInheritable Class ##CLASS_NAME##
     Public Function odd() As Boolean
         Return d.odd()
     End Function
-
-    Public Function power_of_2() As Boolean
-        Return positive() AndAlso d.power_of_2()
-    End Function
 End Class
 
