@@ -214,4 +214,8 @@ Partial Public NotInheritable Class big_uint
         assert(False)
         Return uint32_0
     End Function
+
+    Public Sub remove_binary_trailing_zeros()
+        assert_right_shift(binary_trailing_zero_count())
+    End Sub
 End Class
