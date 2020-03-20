@@ -51,18 +51,20 @@ Partial Public NotInheritable Class big_udec
 
 #If REDUCE_SELECTED_PRIMES Then
         Using code_block
-            For i As Int32 = 0 To reduce_fraction_primes.selected_prime_count - 1
+            For j As Int32 = 0 To reduce_fraction_primes.selected_prime_count - 1
+                Dim i As UInt32 = 0
+                i = reduce_fraction_primes.selected_prime(j)
                 While True
                     Dim nn As big_uint = Nothing
                     Dim nd As big_uint = Nothing
                     nn = n.CloneT()
-                    nd = nd.CloneT()
+                    nd = d.CloneT()
                     Dim r As big_uint = Nothing
-                    nn.assert_divide(reduce_fraction_primes.selected_prime(i), r)
+                    nn.assert_divide(i, r)
                     If Not r.is_zero() Then
                         Exit While
                     End If
-                    nd.assert_divide(reduce_fraction_primes.selected_prime(i), r)
+                    nd.assert_divide(i, r)
                     If Not r.is_zero() Then
                         Exit While
                     End If
@@ -89,5 +91,6 @@ Partial Public NotInheritable Class big_udec
     End Sub
 
     Private Sub reduce_fraction()
+        reduce_fraction(Me.n, Me.d)
     End Sub
 End Class
