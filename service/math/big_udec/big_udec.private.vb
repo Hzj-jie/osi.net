@@ -18,7 +18,7 @@ Partial Public NotInheritable Class big_udec
         End Sub
 
         Public Shared Function selected_prime(ByVal i As Int32) As UInt32
-#If 0 Then
+#If False Then
             If i = 0 Then
                 Return 3
             End If
@@ -27,10 +27,10 @@ Partial Public NotInheritable Class big_udec
             End If
             assert(False)
             Return 0
-#End If
-
+#Else
             assert(i >= 0 AndAlso i < selected_prime_count)
             Return prime(i)
+#End If
         End Function
 
         Private Sub New()
@@ -45,12 +45,12 @@ Partial Public NotInheritable Class big_udec
             d.set_one()
             Return
         End If
+        If n.is_one() OrElse d.is_one() Then
+            Return
+        End If
         If n.equal(d) Then
             n.set_one()
             d.set_one()
-            Return
-        End If
-        If n.is_zero_or_one() Then
             Return
         End If
 
