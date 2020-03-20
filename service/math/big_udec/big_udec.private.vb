@@ -4,7 +4,7 @@ Option Infer Off
 Option Strict On
 
 #Const USE_GCD = False
-#Const REDUCE_FRACTION_OF_NUMERATOR = False
+#Const REDUCE_FRACTION_OF_EACH_OTHER = False
 #Const REDUCE_SELECTED_PRIMES = True
 
 Imports osi.root.connector
@@ -14,23 +14,12 @@ Partial Public NotInheritable Class big_udec
         Public Const selected_prime_count As Int32 = 2
 
         Shared Sub New()
-            assert(prime_count >= selected_prime_count)
+            assert(prime_count >= selected_prime_count + 1)
         End Sub
 
         Public Shared Function selected_prime(ByVal i As Int32) As UInt32
-#If True Then
-            If i = 0 Then
-                Return 3
-            End If
-            If i = 1 Then
-                Return 5
-            End If
-            assert(False)
-            Return 0
-#Else
             assert(i >= 0 AndAlso i < selected_prime_count)
-            Return prime(i)
-#End If
+            Return prime(i + 1)
         End Function
 
         Private Sub New()
@@ -61,9 +50,33 @@ Partial Public NotInheritable Class big_udec
             d.right_shift(m)
         End Using
 
-#If REDUCE_FRACTION_OF_NUMERATOR Then
+#If REDUCE_FRACTION_OF_EACH_OTHER Then
         Using code_block
-            reduce_fraction(n)
+            assert(Not d.is_zero())
+            assert(Not n.is_zero())
+            Dim cmp As Int32 = 0
+            cmp = n.compare(d)
+            assert(cmp <> 0)
+            Dim l As big_uint = Nothing
+            Dim r As big_uint = Nothing
+            If cmp < 0 Then
+                l = d.CloneT()
+                r = n.CloneT()
+            ElseIf cmp > 0 Then
+                l = n.CloneT()
+                r = d.CloneT()
+            End If
+            Dim c As big_uint = Nothing
+            l.assert_divide(r, c)
+            If c.is_zero() Then
+                If cmp < 0 Then
+                    d.replace_by(l)
+                    n.set_one()
+                Else
+                    d.set_one()
+                    n.replace_by(l)
+                End If
+            End If
         End Using
 #End If
 
