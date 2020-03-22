@@ -76,8 +76,8 @@ Public NotInheritable Class big_udec_pi_test
                 s.assert_sub(c)
             End If
         Next
-        assertion.equal(s.str(), "3.141600282926117160615236325805874484799183595558135389722686711")
-        '                         3.14159265
+        assertion.equal(s.str(), "3.141594560934788077359718789531080630631742149542323170812144822")
+        '                         3.15159265
     End Sub
 
     <command_line_specified>
@@ -94,8 +94,7 @@ Public NotInheritable Class big_udec_pi_test
                 s.assert_sub(c)
             End If
         Next
-        assertion.equal(s.str(), "3.141600282926117160615236325805874484799183595558135389722686711")
-        '                         3.14159265
+        assertion.equal(s.fractional_str(), "3.141600282926117160615236325805874484799183595558135389722686711")
     End Sub
 
     <command_line_specified>
@@ -112,8 +111,7 @@ Public NotInheritable Class big_udec_pi_test
                 s.assert_sub(c)
             End If
         Next
-        assertion.equal(s.str(), "3.141600282926117160615236325805874484799183595558135389722686711")
-        '                         3.14159265
+        assertion.equal(s.fractional_str(), "3.141600282926117160615236325805874484799183595558135389722686711")
     End Sub
 
     <command_line_specified>
@@ -130,8 +128,7 @@ Public NotInheritable Class big_udec_pi_test
                 s.assert_sub(c)
             End If
         Next
-        assertion.equal(s.str(), "3.141600282926117160615236325805874484799183595558135389722686711")
-        '                         3.14159265
+        assertion.equal(s.fractional_str(), "3.141600282926117160615236325805874484799183595558135389722686711")
     End Sub
 
     Private Sub New()

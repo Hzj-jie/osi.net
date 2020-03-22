@@ -3,7 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-#Const USE_GCD = False
+#Const USE_GCD = True
 #Const REDUCE_FRACTION_OF_EACH_OTHER = False
 #Const REDUCE_SELECTED_PRIMES = True
 
@@ -11,7 +11,7 @@ Imports osi.root.connector
 
 Partial Public NotInheritable Class big_udec
     Private NotInheritable Class reduce_fraction_primes
-        Public Const selected_prime_count As Int32 = 2
+        Public Const selected_prime_count As Int32 = 2  ' 3 5
 
         Shared Sub New()
             assert(prime_count >= selected_prime_count + 1)

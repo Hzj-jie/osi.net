@@ -11,6 +11,10 @@ Partial Public NotInheritable Class big_udec
         Return as_str().with_str_base(str_base).ToString()
     End Function
 
+    Public Function fractional_str(Optional ByVal str_base As Byte = constants.str_base) As String
+        Return strcat(n.str(str_base), " / ", d.str(str_base))
+    End Function
+
     Public Structure str_option
         Private ReadOnly this As big_udec
         Private str_base As Byte
@@ -42,7 +46,7 @@ Partial Public NotInheritable Class big_udec
 
         Private Function upure_part() As String
             Dim n As big_uint = Nothing
-            n = New big_uint(this.dec_part().n)
+            n = this.dec_part().n
             If n.is_zero() Then
                 Return empty_string
             End If
