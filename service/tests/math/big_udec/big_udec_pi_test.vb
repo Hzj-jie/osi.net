@@ -77,7 +77,7 @@ Public NotInheritable Class big_udec_pi_test
             End If
         Next
         assertion.equal(s.str(), "3.141594560934788077359718789531080630631742149542323170812144822")
-        '                         3.15159265
+        '                         3.14159265
     End Sub
 
     <command_line_specified>

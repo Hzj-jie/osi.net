@@ -54,7 +54,7 @@ Partial Public NotInheritable Class big_udec
             base = New big_uint(str_base)
             Dim l As UInt32 = 0
             l = (this.d.uint32_size() * upure_numerator_size_multiply - n.uint32_size()) *
-                CUInt(System.Math.Log(max_uint32, str_base) + 1)
+                CUInt(System.Math.Log(upure_len, str_base) + 1)
             n.multiply(base.power(l))
             n.divide(this.d)
             Dim r As String = Nothing
