@@ -171,7 +171,6 @@ Partial Public NotInheritable Class big_udec
             Return False
         End If
         o = New big_udec(n, d)
-        o.fully_reduce_fraction()
         Return True
     End Function
 

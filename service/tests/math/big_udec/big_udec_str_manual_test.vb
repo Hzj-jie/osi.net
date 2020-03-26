@@ -8,7 +8,7 @@ Imports osi.service.math
 
 <command_line_specified>
 <test>
-Public NotInheritable Class big_udec_fractional_manual_test
+Public NotInheritable Class big_udec_str_manual_test
     <test>
     Private Shared Sub fraction_to_decimal()
         Console.WriteLine(big_udec.parse_fraction(Console.ReadLine()).str())
