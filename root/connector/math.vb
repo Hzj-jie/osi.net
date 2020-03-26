@@ -125,44 +125,4 @@ Public Module _math
     <Extension()> Public Function even(ByVal i As UInt64) As Boolean
         Return Not odd(i)
     End Function
-
-    <Extension()> Public Function binary_trailing_zero_count(ByVal b As Byte) As Byte
-        assert(b > 0)
-        Dim r As Byte = 0
-        While b.even()
-            r += uint8_1
-            b >>= 1
-        End While
-        Return r
-    End Function
-
-    <Extension()> Public Function binary_trailing_zero_count(ByVal b As UInt16) As Byte
-        assert(b > 0)
-        Dim r As Byte = 0
-        While b.even()
-            r += uint8_1
-            b >>= 1
-        End While
-        Return r
-    End Function
-
-    <Extension()> Public Function binary_trailing_zero_count(ByVal b As UInt32) As Byte
-        assert(b > 0)
-        Dim r As Byte = 0
-        While b.even()
-            r += uint8_1
-            b >>= 1
-        End While
-        Return r
-    End Function
-
-    <Extension()> Public Function binary_trailing_zero_count(ByVal b As UInt64) As Byte
-        assert(b > 0)
-        Dim r As Byte = 0
-        While b.even()
-            r += uint8_1
-            b >>= 1
-        End While
-        Return r
-    End Function
 End Module
