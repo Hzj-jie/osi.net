@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
 
@@ -18,7 +19,6 @@ Partial Public NotInheritable Class big_udec
     Public Structure str_option
         Private ReadOnly this As big_udec
         Private str_base As Byte
-        Private upure_numerator_size_multiply As UInt32
         Private upure_len As UInt32
 
         Public Sub New(ByVal this As big_udec)
@@ -32,41 +32,43 @@ Partial Public NotInheritable Class big_udec
             Return Me
         End Function
 
-        Public Function with_upure_numerator_size_multiply(ByVal v As UInt32) As str_option
-            assert(v > 0)
-            Me.upure_numerator_size_multiply = v
-            Return Me
-        End Function
-
         Public Function with_upure_length(ByVal v As UInt32) As str_option
             assert(v > 0)
             Me.upure_len = v
             Return Me
         End Function
 
-        Private Function upure_part() As String
-            Dim n As big_uint = Nothing
-            n = this.dec_part().n
-            If n.is_zero() Then
-                Return empty_string
-            End If
-            Dim base As big_uint = Nothing
-            base = New big_uint(str_base)
-            Dim l As UInt32 = 0
-            l = (this.d.uint32_size() * upure_numerator_size_multiply - n.uint32_size()) *
-                CUInt(System.Math.Log(upure_len, str_base) + 1)
-            n.multiply(base.power(l))
-            n.divide(this.d)
-            Dim r As String = Nothing
-            r = n.str(str_base)
-            assert(l >= strlen(r))
-            Return strcat(strncat(character.dot, character.zero, l - strlen(r)), r).
-                       strleft(upure_len).
-                       TrimEnd(character.dot, character.zero)
-        End Function
-
         Public Overrides Function ToString() As String
-            Return strcat(this.int_part().str(str_base), upure_part())
+            If this.is_zero() Then
+                Return character._0
+            End If
+            If this.is_one() Then
+                Return character._1
+            End If
+
+            Dim o As StringBuilder = Nothing
+            o = New StringBuilder()
+            Dim n As big_uint = Nothing
+            n = this.n.CloneT()
+            For i As UInt32 = 0 To upure_len
+                Dim r As big_uint = Nothing
+                n.assert_divide(this.d, r)
+                o.Append(n.str(str_base))
+                If i = 0 Then
+                    o.Append(character.dot)
+                End If
+                If r.is_zero() Then
+                    Exit For
+                End If
+                n = r
+                n.multiply(str_base)
+            Next
+            o.trim_end(character.zero)
+            o.trim_end(character.dot)
+            If o.Length() = 0 Then
+                Return character._0
+            End If
+            Return o.ToString()
         End Function
 
         Public Shared Widening Operator CType(ByVal this As str_option) As String
@@ -77,7 +79,6 @@ Partial Public NotInheritable Class big_udec
     Public Function as_str() As str_option
         Return New str_option(Me).
                 with_str_base(constants.str_base).
-                with_upure_numerator_size_multiply(constants.str_upure_numerator_size_multiply).
                 with_upure_length(constants.str_upure_len)
     End Function
 

@@ -24,7 +24,7 @@ Public NotInheritable Class big_udec_pi_test
                 s.assert_sub(c)
             End If
         Next
-        assertion.equal(s.str(), "3.149344475124619884924585085570033726572656722644429715863680771")
+        assertion.equal(s.str(), "3.1493444751246198849245850855700337265726567226444297158636807717")
         '                         3.14159265
     End Sub
 
