@@ -160,6 +160,52 @@ Public NotInheritable Class big_udec_pi_test
         Next
     End Sub
 
+    <test>
+    Private Shared Sub calculate_pi_nilakantha_20002()
+        Dim s As big_udec = Nothing
+        s = New big_udec(uint32_3, uint32_1)
+        For i As UInt32 = 2 To 20002 Step 2
+            Dim d As big_uint = Nothing
+            d = New big_uint(i).
+                    multiply(i + uint32_1).
+                    multiply(i + uint32_2)
+            Dim c As big_udec = Nothing
+            c = big_udec.fraction(CUInt(4), d)
+            If (i >> 1).odd() Then
+                s.add(c)
+            Else
+                s.assert_sub(c)
+            End If
+        Next
+        assertion.equal(s.str(), "3.1415926535898843072987055427557349131778346627488965940739355126")
+        '                         3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
+    End Sub
+
+    <command_line_specified>
+    <test>
+    Private Shared Sub calculate_pi_nilakantha_max_uint32_minus_3_progressively()
+        Dim s As big_udec = Nothing
+        s = New big_udec(uint32_3, uint32_1)
+        For i As UInt32 = 2 To max_uint32 - CUInt(3) Step 2
+            Dim d As big_uint = Nothing
+            d = New big_uint(i).
+                    multiply(i + uint32_1).
+                    multiply(i + uint32_2)
+            Dim c As big_udec = Nothing
+            c = big_udec.fraction(CUInt(4), d)
+            If (i >> 1).odd() Then
+                s.add(c)
+            Else
+                s.assert_sub(c)
+            End If
+
+            If (i Mod 1000) = 2 Then
+                s.fully_reduce_fraction()
+                raise_error(error_type.warning, "@ ", i, " -> ", s.fractional_str())
+            End If
+        Next
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
