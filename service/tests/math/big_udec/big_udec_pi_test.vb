@@ -3,7 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.connector._strcat
 Imports osi.root.connector._raise_error
 Imports osi.root.constants
 Imports osi.root.utt
@@ -156,7 +155,7 @@ Public NotInheritable Class big_udec_pi_test
 
             If (i Mod 100000) = 0 Then
                 s.fully_reduce_fraction()
-                raise_error(error_type.warning, strcat("@ ", i, " - ", s.fractional_str()))
+                raise_error(error_type.warning, "@ ", i, " -> ", s.fractional_str())
             End If
         Next
     End Sub
