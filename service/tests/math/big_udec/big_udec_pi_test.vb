@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector._strcat
+Imports osi.root.constants
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.math
@@ -140,10 +141,10 @@ Public NotInheritable Class big_udec_pi_test
 
     <command_line_specified>
     <test>
-    Private Shared Sub calculate_pi_sequence_of_numbers_67108865_progressively()
+    Private Shared Sub calculate_pi_sequence_of_numbers_max_uint32_minus_3_progressively()
         Dim s As big_udec = Nothing
         s = big_udec.zero()
-        For i As UInt32 = 1 To 67108865 Step 2
+        For i As UInt32 = 1 To max_uint32 - CUInt(3) Step 2
             Dim c As big_udec = Nothing
             c = big_udec.fraction(CUInt(4), i)
             If (i >> 1).even() Then
