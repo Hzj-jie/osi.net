@@ -71,6 +71,7 @@
     <Compile Include="big_int\predefined\big_int_predefined_test.vb" />
     <Compile Include="big_udec\big_udec_bytes_test.vb" />
     <Compile Include="big_udec\big_udec_extract_test.vb" />
+    <Compile Include="big_udec\big_udec_fractional_str_test.vb" />
     <Compile Include="big_udec\big_udec_parse_str_test.vb" />
     <Compile Include="big_udec\big_udec_pi_test.vb" />
     <Compile Include="big_udec\big_udec_power_test.vb" />

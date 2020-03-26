@@ -12,7 +12,7 @@ Partial Public NotInheritable Class big_udec
     End Function
 
     Public Function fractional_str(Optional ByVal str_base As Byte = constants.str_base) As String
-        Return strcat(n.str(str_base), " / ", d.str(str_base))
+        Return strcat(n.str(str_base), " ", character.left_slash, " ", d.str(str_base))
     End Function
 
     Public Structure str_option
@@ -99,6 +99,7 @@ Partial Public NotInheritable Class big_udec
             o = big_udec.zero()
             Return True
         End If
+        s = s.Trim()
         Dim i As Int32 = 0
         i = s.IndexOf(character.dot)
         If i = strlen(s) - uint32_1 Then
@@ -128,6 +129,55 @@ Partial Public NotInheritable Class big_udec
     Public Shared Function parse(ByVal s As String, Optional ByVal base As Byte = constants.str_base) As big_udec
         Dim r As big_udec = Nothing
         assert(parse(s, r, base))
+        Return r
+    End Function
+
+    Public Shared Function parse_fraction(ByVal s As String,
+                                          ByRef o As big_udec,
+                                          Optional ByVal base As Byte = constants.str_base) As Boolean
+        If Not support_base(base) Then
+            Return False
+        End If
+        If String.IsNullOrEmpty(s) Then
+            o = big_udec.zero()
+            Return True
+        End If
+        s = s.Trim()
+        If s.StartsWith(character.left_slash) OrElse s.EndsWith(character.left_slash) Then
+            Return False
+        End If
+        Dim i As Int32 = 0
+        i = s.IndexOf(character.left_slash)
+        assert(i > 0 OrElse i < s.Length() - 1 OrElse i = npos)
+        Dim n As big_uint = Nothing
+        Dim d As big_uint = Nothing
+        If i = npos Then
+            If Not big_uint.parse(s, n, base) Then
+                Return False
+            End If
+            d = big_uint.one()
+        Else
+            If Not big_uint.parse(s.Substring(0, i - 1), n, base) Then
+                Return False
+            End If
+            If Not big_uint.parse(s.Substring(i + 1), d, base) Then
+                Return False
+            End If
+        End If
+        assert(Not n Is Nothing)
+        assert(Not d Is Nothing)
+        If d.is_zero() Then
+            Return False
+        End If
+        o = New big_udec(n, d)
+        o.fully_reduce_fraction()
+        Return True
+    End Function
+
+    Public Shared Function parse_fraction(ByVal s As String,
+                                          Optional ByVal base As Byte = constants.str_base) As big_udec
+        Dim r As big_udec = Nothing
+        assert(parse_fraction(s, r, base))
         Return r
     End Function
 End Class
