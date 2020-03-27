@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+
 Imports System.Runtime.CompilerServices
 Imports osi.root
 Imports osi.root.connector
+Imports osi.root.constants
 
 Public Module _math
     <Extension()> Public Function even(ByVal i As SByte) As Boolean
@@ -154,5 +158,45 @@ Public Module _math
 
     <Extension()> Public Function power_2(ByVal i As Double) As Double
         Return connector.power_2(i)
+    End Function
+
+    <Extension()> Public Function binary_trailing_zero_count(ByVal b As Byte) As Byte
+        assert(b > 0)
+        Dim r As Byte = 0
+        While b.even()
+            r += uint8_1
+            b >>= 1
+        End While
+        Return r
+    End Function
+
+    <Extension()> Public Function binary_trailing_zero_count(ByVal b As UInt16) As Byte
+        assert(b > 0)
+        Dim r As Byte = 0
+        While b.even()
+            r += uint8_1
+            b >>= 1
+        End While
+        Return r
+    End Function
+
+    <Extension()> Public Function binary_trailing_zero_count(ByVal b As UInt32) As Byte
+        assert(b > 0)
+        Dim r As Byte = 0
+        While b.even()
+            r += uint8_1
+            b >>= 1
+        End While
+        Return r
+    End Function
+
+    <Extension()> Public Function binary_trailing_zero_count(ByVal b As UInt64) As Byte
+        assert(b > 0)
+        Dim r As Byte = 0
+        While b.even()
+            r += uint8_1
+            b >>= 1
+        End While
+        Return r
     End Function
 End Module

@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
 Imports osi.root.envs
 Imports osi.root.connector
@@ -8,7 +12,7 @@ Public Module deploys
     Public ReadOnly temp_folder As String = Nothing
 
     Sub New()
-        temp_folder = Path.Combine(Path.Combine(deploys_folder, temp_folder_name), guid_str())
+        temp_folder = Path.Combine(deploys_folder, temp_folder_name, application_name, guid_str())
         Try
             assert(Not Directory.CreateDirectory(temp_folder) Is Nothing)
         Catch ex As Exception

@@ -90,6 +90,8 @@
     <Compile Include="calculator\ioutputter.vb" />
     <Compile Include="calculator\iparser.vb" />
     <Compile Include="calculator\uint_binary_calculator.vb" />
+    <Compile Include="constants.vb" />
+    <Compile Include="math_constants.vb" />
     <Compile Include="div_rem.vb" />
     <Compile Include="exceptions.vb" />
     <Compile Include="expression\basic_expression.vb" />
@@ -145,6 +147,23 @@
     <None Include="calculator\codegen\int_binary_calculator.vbp" />
     <None Include="calculator\codegen\run.cmd" />
     <None Include="calculator\codegen\uint_binary_calculator.vbp" />
+    <None Include="codegen\big_assert.vbp" />
+    <None Include="codegen\big_bit.vbp" />
+    <None Include="codegen\big_calculation.vbp" />
+    <None Include="codegen\big_cast.vbp" />
+    <None Include="codegen\big_compare.vbp" />
+    <None Include="codegen\big_constants.vbp" />
+    <None Include="codegen\big_dec.vbp" />
+    <None Include="codegen\big_implement.vbp" />
+    <None Include="codegen\big_int.vbp" />
+    <None Include="codegen\big_operator.vbp" />
+    <None Include="codegen\big_override.vbp" />
+    <None Include="codegen\big_predefined.vbp" />
+    <None Include="codegen\big_private.vbp" />
+    <None Include="codegen\big_rnd.vbp" />
+    <None Include="codegen\big_shift.vbp" />
+    <None Include="codegen\big_str.vbp" />
+    <None Include="codegen\big_unsigned_to_signed.vbp" />
     <None Include="math.dep" />
     <None Include="math.props" />
     <None Include="My Project\Application.myapp">
@@ -161,7 +180,10 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="codegen\e-1m.txt" />
+    <Content Include="codegen\pi-1m.txt" />
     <Content Include="expression\expression.syntax.txt" />
+    <None Include="codegen\run.cmd" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

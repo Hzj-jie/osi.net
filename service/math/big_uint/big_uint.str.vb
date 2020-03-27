@@ -131,6 +131,7 @@ Partial Public NotInheritable Class big_uint
             r = New big_uint()
             Return True
         End If
+        s = s.Trim()
         If s = number_to_char(1) Then
             r = New big_uint()
             r.set_one()

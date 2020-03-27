@@ -164,6 +164,14 @@ Partial Public NotInheritable Class big_uint
             set_zero()
             Return Me
         End If
+        If that = 2 Then
+            If even() Then
+                set_zero()
+            Else
+                set_one()
+            End If
+            Return Me
+        End If
         If is_one() Then
             Return Me
         End If
