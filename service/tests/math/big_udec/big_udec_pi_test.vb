@@ -206,6 +206,23 @@ Public NotInheritable Class big_udec_pi_test
         Next
     End Sub
 
+    <command_line_specified>
+    <test>
+    Private Shared Sub calculate_pi_wallis_product_max_uint32_progressively()
+        Dim s As big_udec = Nothing
+        s = big_udec.one()
+        s.multiply(big_udec.fraction(CUInt(2), CUInt(1)))
+        For i As UInt32 = 2 To max_uint32 - CUInt(2) Step 2
+            s.multiply(big_udec.fraction(i, i - uint32_1))
+            s.multiply(big_udec.fraction(i, i + uint32_1))
+
+            If (i Mod 10000) = 2 Then
+                s.fully_reduce_fraction()
+                raise_error(error_type.warning, "@ ", i, " -> ", s.fractional_str())
+            End If
+        Next
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
