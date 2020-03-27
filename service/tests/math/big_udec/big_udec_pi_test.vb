@@ -177,7 +177,7 @@ Public NotInheritable Class big_udec_pi_test
                 s.assert_sub(c)
             End If
         Next
-        assertion.equal(s.str(), "3.1415926535898843072987055427557349131778346627488965940739355126")
+        assertion.equal(s.str(), "3.1415926535900430885195015124988771459935110088383081739079144538")
         '                         3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679
     End Sub
 
@@ -198,6 +198,23 @@ Public NotInheritable Class big_udec_pi_test
             Else
                 s.assert_sub(c)
             End If
+
+            If (i Mod 10000) = 2 Then
+                s.fully_reduce_fraction()
+                raise_error(error_type.warning, "@ ", i, " -> ", s.fractional_str())
+            End If
+        Next
+    End Sub
+
+    <command_line_specified>
+    <test>
+    Private Shared Sub calculate_pi_wallis_product_max_uint32_progressively()
+        Dim s As big_udec = Nothing
+        s = big_udec.one()
+        s.multiply(big_udec.fraction(CUInt(2), CUInt(1)))
+        For i As UInt32 = 2 To max_uint32 - CUInt(2) Step 2
+            s.multiply(big_udec.fraction(i, i - uint32_1))
+            s.multiply(big_udec.fraction(i, i + uint32_1))
 
             If (i Mod 10000) = 2 Then
                 s.fully_reduce_fraction()
