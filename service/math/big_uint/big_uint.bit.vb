@@ -218,4 +218,18 @@ Partial Public NotInheritable Class big_uint
     Public Sub remove_binary_trailing_zeros()
         assert_right_shift(binary_trailing_zero_count())
     End Sub
+
+    Public Function highest_uint32() As UInt32
+        Return get_ruint32(0)
+    End Function
+
+    Public Function get_uint32(ByVal i As UInt32) As UInt32
+        assert(i < uint32_size())
+        Return v.get(i)
+    End Function
+
+    Public Function get_ruint32(ByVal i As UInt32) As UInt32
+        assert(i < uint32_size())
+        Return v.get(uint32_size() - i - uint32_1)
+    End Function
 End Class
