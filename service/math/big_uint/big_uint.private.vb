@@ -5,7 +5,6 @@ Option Strict On
 
 ' #Const DEBUG = False
 
-#Const BITWISE_DIVIDE = True
 Imports osi.root.connector
 Imports osi.root.constants
 
@@ -243,7 +242,6 @@ Partial Public NotInheritable Class big_uint
 #End If
         that = New big_uint(that)
         set_bit_count(remainder_bit_count - that_bit_count + uint64_1)
-#If BITWISE_DIVIDE Then
         that.left_shift(remainder_bit_count - that_bit_count)
         Dim i As UInt64 = 0
         i = remainder_bit_count - that_bit_count
@@ -283,52 +281,6 @@ Partial Public NotInheritable Class big_uint
             End If
             i -= uint64_1
         End While
-#Else
-        that.left_shift_slot(v.size(), Nothing)
-        Dim i As UInt32 = 0
-        i = v.size() - uint32_1
-        While True
-            that.right_shift_slot(1)
-            Dim cmp As Int32 = 0
-            cmp = that.compare(remainder)
-            If cmp = 0 Then
-                v(i) = 1
-                remainder.set_zero()
-                Exit While
-            End If
-            If cmp < 0 Then
-                assert(remainder.v.size() - that.v.size() <= 1)
-                Dim t As UInt32 = 0
-                If remainder.v.size() = that.v.size() Then
-                    t = remainder.v.back() \ that.v.back()
-                Else
-                    t = ((CULng(remainder.v.back()) << bit_count_in_uint32) +
-                         remainder.v(remainder.v.size() - 2)) \ that.v.back()
-                    assert(t > 0)
-                End If
-                If t > 0 Then
-                    Dim c As big_uint = Nothing
-                    c = that * t
-                    While remainder.less(c) AndAlso t > 1
-                        t -= uint32_1
-                        c = that * t
-                    End While
-                    If t > 0 Then
-                        v(i) = t
-                        remainder.assert_sub(c)
-                        If remainder.is_zero_or_one() Then
-                            Exit While
-                        End If
-                    End If
-                End If
-            End If
-
-            If i = 0 Then
-                Exit While
-            End If
-            i -= uint32_1
-        End While
-#End If
 #If DEBUG Then
         assert(remainder.less(original_that))
 #End If
