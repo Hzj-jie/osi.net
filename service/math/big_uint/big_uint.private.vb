@@ -204,6 +204,15 @@ Partial Public NotInheritable Class big_uint
             Return
         End If
         divide_by_zero = False
+        If is_zero() OrElse that.is_one() Then
+            remainder = big_uint.zero()
+            Return
+        End If
+        If is_one() Then
+            remainder = big_uint.one()
+            set_zero()
+            Return
+        End If
         If that.power_of_2() Then
             Dim l As UInt64 = 0
             l = that.bit_count() - uint64_1
@@ -221,30 +230,21 @@ Partial Public NotInheritable Class big_uint
         assert(Not that.is_zero_or_one())
         remainder = move(Me)
         set_zero()
-        If remainder.is_zero_or_one() Then
-            Return
-        End If
         If remainder.less(that) Then
             Return
         End If
-        Dim remainder_bit_count As UInt64 = 0
-        Dim that_bit_count As UInt64 = 0
-        remainder_bit_count = remainder.bit_count()
-        that_bit_count = that.bit_count()
-        If remainder_bit_count < that_bit_count Then
-            'do not need to divide
-            Return
-        End If
+
+        assert(remainder.bit_count() >= that.bit_count())
         'make sure the that will not be impacted during the calculation
 #If DEBUG Then
         Dim original_that As big_uint = Nothing
         original_that = that
 #End If
         that = New big_uint(that)
-        set_bit_count(remainder_bit_count - that_bit_count + uint64_1)
-        that.left_shift(remainder_bit_count - that_bit_count)
+        set_bit_count(remainder.bit_count() - that.bit_count() + uint64_1)
+        that.left_shift(remainder.bit_count() - that.bit_count())
         Dim i As UInt64 = 0
-        i = remainder_bit_count - that_bit_count
+        i = remainder.bit_count() - that.bit_count()
         While True
             Dim cmp As Int32 = 0
             cmp = that.compare(remainder)
@@ -260,17 +260,15 @@ Partial Public NotInheritable Class big_uint
             Else 'that > remainder, right_shift again
             End If
             'do not care about that after the operation, since the data has been copied already
-            remainder_bit_count = remainder.bit_count()
-            that_bit_count = that.bit_count()
-            If that_bit_count > remainder_bit_count Then
+            If that.bit_count() > remainder.bit_count() Then
                 Dim s As UInt64 = 0
-                s = that_bit_count - remainder_bit_count
+                s = that.bit_count() - remainder.bit_count()
                 If s > i Then
                     Exit While
                 End If
                 that.right_shift(s)
                 i = i + uint64_1 - s
-            ElseIf that_bit_count = remainder_bit_count Then
+            ElseIf that.bit_count() = remainder.bit_count() Then
                 that.right_shift(uint64_1)
             Else
                 'should not happen, since remainder has just been subtracted by that
