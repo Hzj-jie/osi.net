@@ -174,34 +174,6 @@ Partial Public NotInheritable Class big_uint
             Return
         End If
         assert(v.size() > 0)
-#If 0 Then
-        'why this is slower?
-        Dim r As UInt64 = 0
-        Dim i As UInt32 = 0
-        i = v.size() - uint32_1
-        While True
-            If r > 0 OrElse v(i) > 0 Then
-                r <<= bit_count_in_uint32
-                r = r Or v(i)
-
-#If DEBUG Then
-                    Dim t As UInt64 = 0
-                    t = r.div_rem(that, r)
-                    assert(t <= max_uint32)
-                    v(i) = t
-#Else
-                    v(i) = CUInt(r.div_rem(that, r))
-#End If
-            End If
-            If i = 0 Then
-                Exit While
-            End If
-            i -= uint32_1
-        End While
-        assert(r <= max_uint32)
-        remainder = r
-        assert(remove_extra_blank() <= 1)
-#Else
         Dim i As UInt32 = 0
         i = v.size() - uint32_1
         While True
@@ -223,7 +195,6 @@ Partial Public NotInheritable Class big_uint
             i -= uint32_1
         End While
         assert(remove_extra_blank() <= 1)
-#End If
         assert(remainder < that)
     End Sub
 
