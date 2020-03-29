@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Public Module _number
     Public Const max_int8 As SByte = SByte.MaxValue
     Public Const min_int8 As SByte = SByte.MinValue
@@ -18,12 +22,13 @@ Public Module _number
     Public Const min_uint64 As UInt64 = UInt64.MinValue
     Public Const min_double As Double = Double.MinValue
     Public Const max_double As Double = Double.MaxValue
+    Public Const max_array_size As UInt32 = 2147483591
 
     Public Const bit_shift_in_byte As Byte = 3
     Public Const bit_count_in_byte As Byte = (1 << bit_shift_in_byte)
 
-    Public Const bool_0 As Boolean = 0
-    Public Const bool_1 As Boolean = 1
+    Public Const bool_0 As Boolean = False
+    Public Const bool_1 As Boolean = True
     Public ReadOnly char_0 As Char = Convert.ToChar(0)
     Public Const int8_0 As SByte = 0
     Public Const int8_1 As SByte = 1

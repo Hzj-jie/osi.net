@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="abs.vb" />
     <Compile Include="big_dec.vb" />
+    <Compile Include="big_int.cast.vb" />
     <Compile Include="big_int.vb" />
     <Compile Include="big_udec\big_udec.cast.vb" />
     <Compile Include="big_udec\big_udec.creators.vb" />
@@ -178,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="codegen\e-1m.txt" />

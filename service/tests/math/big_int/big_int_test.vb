@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Numerics
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.math
@@ -103,6 +104,26 @@ Public NotInheritable Class big_int_other_tests
         Dim i As big_int = Nothing
         i = big_int.random()
         assertion.equal(i ^ 1, i)
+    End Sub
+
+    <command_line_specified>
+    <test>
+    Private Shared Sub power_7_7()
+        Dim i As big_int = Nothing
+        i = New big_int(7)
+        For j As Int32 = 0 To 7 - 1
+            i = i ^ 7
+        Next
+    End Sub
+
+    <command_line_specified>
+    <test>
+    Private Shared Sub BigInteger_power_7_7()
+        Dim i As BigInteger = Nothing
+        i = New BigInteger(7)
+        For j As Int32 = 0 To 7 - 1
+            i = BigInteger.Pow(i, 7)
+        Next
     End Sub
 
     Private Sub New()

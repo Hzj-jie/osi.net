@@ -325,10 +325,21 @@ Partial Public NotInheritable Class big_int
         Return r.add(that)
     End Operator
 
+    Public Shared Operator +(ByVal this As big_int) As big_int
+        Return this
+    End Operator
+
     Public Shared Operator -(ByVal this As big_int, ByVal that As big_int) As big_int
         Dim r As big_int = Nothing
         r = New big_int(this)
         Return r.sub(that)
+    End Operator
+
+    Public Shared Operator -(ByVal this As big_int) As big_int
+        Dim r As big_int = Nothing
+        r = New big_int(this)
+        r.reverse_signal()
+        Return r
     End Operator
 
     Public Shared Operator *(ByVal this As big_int, ByVal that As big_int) As big_int
