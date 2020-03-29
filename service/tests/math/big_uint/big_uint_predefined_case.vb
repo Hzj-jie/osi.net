@@ -70,10 +70,18 @@ Friend NotInheritable Class big_uint_predefined_case
         Return True
     End Function
 
+    Private Shared Function case5() As Boolean
+        Dim x As big_uint = Nothing
+        x = big_uint.random()
+        assertion.equal(x ^ uint32_1, x)
+        Return True
+    End Function
+
     Public Overrides Function run() As Boolean
         Return case1() AndAlso
                case2() AndAlso
                case3() AndAlso
-               case4()
+               case4() AndAlso
+               case5()
     End Function
 End Class

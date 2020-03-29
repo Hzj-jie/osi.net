@@ -120,12 +120,12 @@ Partial Public NotInheritable Class big_dec
     End Function
 
     Public Function power(ByVal that As big_dec) As big_dec
-        If that Is Nothing OrElse that.is_one() Then
+        If that Is Nothing OrElse that.is_zero() Then
             set_positive()
             set_one()
             Return Me
         End If
-        If is_zero() OrElse is_one() Then
+        If is_zero() OrElse is_one() OrElse that.is_one() Then
             Return Me
         End If
         If that.not_negative() Then
