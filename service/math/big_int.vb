@@ -1071,6 +1071,44 @@ Partial Public NotInheritable Class big_int
         Return Me
     End Function
 
+    Public Function modulus(ByVal that As big_uint,
+                            ByRef divide_by_zero As Boolean) As big_int
+        Return modulus(share(that), divide_by_zero)
+    End Function
+
+    ' TODO: A better modulus implementation without divide.
+    Public Function modulus(ByVal that As big_int,
+                            ByRef divide_by_zero As Boolean) As big_int
+        Dim remainder As big_int = Nothing
+        divide(that, remainder, divide_by_zero)
+        assert(replace_by(remainder))
+        Return Me
+    End Function
+
+    Public Function modulus(ByVal that As big_uint) As big_int
+        Return modulus(share(that))
+    End Function
+
+    Public Function modulus(ByVal that As big_int) As big_int
+        Dim r As Boolean = False
+        modulus(that, r)
+        If r Then
+            Throw divide_by_zero()
+        End If
+        Return Me
+    End Function
+
+    Public Function assert_modulus(ByVal that As big_uint) As big_int
+        Return assert_modulus(share(that))
+    End Function
+
+    Public Function assert_modulus(ByVal that As big_int) As big_int
+        Dim r As Boolean = False
+        modulus(that, r)
+        assert(Not r)
+        Return Me
+    End Function
+
     Public Function extract(ByVal that As big_uint,
                             ByRef divide_by_zero As Boolean,
                             ByRef imaginary_number As Boolean,
