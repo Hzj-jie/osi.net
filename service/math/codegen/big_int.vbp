@@ -133,6 +133,44 @@ Partial Public NotInheritable Class ##CLASS_NAME##
         Return Me
     End Function
 
+    Public Function modulus(ByVal that As ##IMPL_CLASS##,
+                            ByRef divide_by_zero As Boolean) As ##CLASS_NAME##
+        Return modulus(share(that), divide_by_zero)
+    End Function
+
+    ' TODO: A better modulus implementation without divide.
+    Public Function modulus(ByVal that As ##CLASS_NAME##,
+                            ByRef divide_by_zero As Boolean) As ##CLASS_NAME##
+        Dim remainder As ##CLASS_NAME## = Nothing
+        divide(that, remainder, divide_by_zero)
+        assert(replace_by(remainder))
+        Return Me
+    End Function
+
+    Public Function modulus(ByVal that As ##IMPL_CLASS##) As ##CLASS_NAME##
+        Return modulus(share(that))
+    End Function
+
+    Public Function modulus(ByVal that As ##CLASS_NAME##) As ##CLASS_NAME##
+        Dim r As Boolean = False
+        modulus(that, r)
+        If r Then
+            Throw divide_by_zero()
+        End If
+        Return Me
+    End Function
+
+    Public Function assert_modulus(ByVal that As ##IMPL_CLASS##) As ##CLASS_NAME##
+        Return assert_modulus(share(that))
+    End Function
+
+    Public Function assert_modulus(ByVal that As ##CLASS_NAME##) As ##CLASS_NAME##
+        Dim r As Boolean = False
+        modulus(that, r)
+        assert(Not r)
+        Return Me
+    End Function
+
     Public Function extract(ByVal that As ##IMPL_CLASS##,
                             ByRef divide_by_zero As Boolean,
                             ByRef imaginary_number As Boolean,

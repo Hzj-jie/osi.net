@@ -240,11 +240,11 @@ Partial Public NotInheritable Class big_uint
         Dim original_that As big_uint = Nothing
         original_that = that
 #End If
-        that = New big_uint(that)
-        set_bit_count(remainder.bit_count() - that.bit_count() + uint64_1)
-        that.left_shift(remainder.bit_count() - that.bit_count())
         Dim i As UInt64 = 0
         i = remainder.bit_count() - that.bit_count()
+        set_bit_count(remainder.bit_count() - that.bit_count() + uint64_1)
+        that = that.CloneT()
+        that.left_shift(remainder.bit_count() - that.bit_count())
         While True
             Dim cmp As Int32 = 0
             cmp = that.compare(remainder)
@@ -260,7 +260,8 @@ Partial Public NotInheritable Class big_uint
             Else 'that > remainder, right_shift again
             End If
             'do not care about that after the operation, since the data has been copied already
-            If that.bit_count() > remainder.bit_count() Then
+            cmp = that.bit_count().CompareTo(remainder.bit_count())
+            If cmp > 0 Then
                 Dim s As UInt64 = 0
                 s = that.bit_count() - remainder.bit_count()
                 If s > i Then
@@ -268,7 +269,7 @@ Partial Public NotInheritable Class big_uint
                 End If
                 that.right_shift(s)
                 i = i + uint64_1 - s
-            ElseIf that.bit_count() = remainder.bit_count() Then
+            ElseIf cmp = 0 Then
                 that.right_shift(uint64_1)
             Else
                 'should not happen, since remainder has just been subtracted by that

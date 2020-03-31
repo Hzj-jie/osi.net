@@ -120,12 +120,12 @@ Partial Public NotInheritable Class big_int
     End Function
 
     Public Function power(ByVal that As big_int) As big_int
-        If that Is Nothing OrElse that.is_one() Then
+        If that Is Nothing OrElse that.is_zero() Then
             set_positive()
             set_one()
             Return Me
         End If
-        If is_zero() OrElse is_one() Then
+        If is_zero() OrElse is_one() OrElse that.is_one() Then
             Return Me
         End If
         If that.not_negative() Then
@@ -325,10 +325,21 @@ Partial Public NotInheritable Class big_int
         Return r.add(that)
     End Operator
 
+    Public Shared Operator +(ByVal this As big_int) As big_int
+        Return this
+    End Operator
+
     Public Shared Operator -(ByVal this As big_int, ByVal that As big_int) As big_int
         Dim r As big_int = Nothing
         r = New big_int(this)
         Return r.sub(that)
+    End Operator
+
+    Public Shared Operator -(ByVal this As big_int) As big_int
+        Dim r As big_int = Nothing
+        r = New big_int(this)
+        r.reverse_signal()
+        Return r
     End Operator
 
     Public Shared Operator *(ByVal this As big_int, ByVal that As big_int) As big_int
@@ -1056,6 +1067,44 @@ Partial Public NotInheritable Class big_int
                                   Optional ByRef remainder As big_int = Nothing) As big_int
         Dim r As Boolean = False
         divide(that, remainder, r)
+        assert(Not r)
+        Return Me
+    End Function
+
+    Public Function modulus(ByVal that As big_uint,
+                            ByRef divide_by_zero As Boolean) As big_int
+        Return modulus(share(that), divide_by_zero)
+    End Function
+
+    ' TODO: A better modulus implementation without divide.
+    Public Function modulus(ByVal that As big_int,
+                            ByRef divide_by_zero As Boolean) As big_int
+        Dim remainder As big_int = Nothing
+        divide(that, remainder, divide_by_zero)
+        assert(replace_by(remainder))
+        Return Me
+    End Function
+
+    Public Function modulus(ByVal that As big_uint) As big_int
+        Return modulus(share(that))
+    End Function
+
+    Public Function modulus(ByVal that As big_int) As big_int
+        Dim r As Boolean = False
+        modulus(that, r)
+        If r Then
+            Throw divide_by_zero()
+        End If
+        Return Me
+    End Function
+
+    Public Function assert_modulus(ByVal that As big_uint) As big_int
+        Return assert_modulus(share(that))
+    End Function
+
+    Public Function assert_modulus(ByVal that As big_int) As big_int
+        Dim r As Boolean = False
+        modulus(that, r)
         assert(Not r)
         Return Me
     End Function

@@ -15,6 +15,10 @@ Public NotInheritable Class throws
         Throw New NotImplementedException()
     End Sub
 
+    Public Shared Sub out_of_memory(ParamArray ByVal msg() As Object)
+        Throw New OutOfMemoryException(strcat(msg))
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

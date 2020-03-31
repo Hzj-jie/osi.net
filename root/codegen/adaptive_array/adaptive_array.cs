@@ -141,10 +141,12 @@ public static class Program
 "    Private Shared ReadOnly default_value As " + a.type + " = Nothing",
 "",
 "    Private Shared Function expected_capacity(ByVal n As UInt32) As UInt32",
+"        throws.out_of_memory(\"adaptive_array size \", n, \" exceeds limitation.\")"
 "        If n <= 2 Then",
 "            Return 4",
 "        End If",
-"        Return n << 1",
+"        n <<= 1",
+"        Return If(n > max_array_size, max_array_size, n)",
 "    End Function",
 "",
 "    Private d() As " + a.type,
