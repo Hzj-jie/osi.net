@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="big_int\big_int_add_sub_multiply_case.vb" />
-    <Compile Include="big_int\big_int_BigInteger_perf_comparison.vb" />
+    <Compile Include="big_int\big_int_BigInteger_perf_comparisons.vb" />
     <Compile Include="big_int\big_int_BigInteger_test.vb" />
     <Compile Include="big_int\big_int_bytes_case.vb" />
     <Compile Include="big_int\big_int_divide_multiply_case.vb" />
