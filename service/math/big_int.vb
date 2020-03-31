@@ -570,6 +570,13 @@ Partial Public NotInheritable Class big_int
         End If
         Return False
     End Function
+
+    Public Shared Function parse(ByVal s As String,
+                                 Optional ByVal base As Byte = default_str_base) As big_int
+        Dim r As big_int = Nothing
+        assert(parse(s, r, base))
+        Return r
+    End Function
 End Class
 
 'finish big_str.vbp --------
@@ -998,6 +1005,7 @@ Partial Public NotInheritable Class big_int
         n = negative()
         Dim r As big_uint = Nothing
         d.divide(that.d, divide_by_zero, r)
+        assert(Not divide_by_zero)
         remainder = share(r)
         confirm_signal()
         If n Then
@@ -1091,12 +1099,15 @@ Partial Public NotInheritable Class big_int
         Return modulus(share(that), divide_by_zero)
     End Function
 
-    ' TODO: A better modulus implementation without divide.
     Public Function modulus(ByVal that As big_int,
                             ByRef divide_by_zero As Boolean) As big_int
-        Dim remainder As big_int = Nothing
-        divide(that, remainder, divide_by_zero)
-        assert(replace_by(remainder))
+        If that Is Nothing OrElse that.is_zero() Then
+            divide_by_zero = True
+            Return Me
+        End If
+        d.modulus(that.d, divide_by_zero)
+        assert(Not divide_by_zero)
+        confirm_signal()
         Return Me
     End Function
 

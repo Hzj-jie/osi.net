@@ -115,6 +115,26 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         End Function
     End Class
 
+    Public NotInheritable Class big_int_BigInteger_io_perf
+        Inherits big_int_BigInteger_perf_comparison
+
+        Public Sub New()
+            MyBase.New(Sub(ByVal i As BigInteger, ByVal j As BigInteger)
+                           BigInteger.Parse(i.ToString())
+                           BigInteger.Parse(j.ToString())
+                       End Sub,
+                       Sub(ByVal i As big_int, ByVal j As big_int)
+                           big_int.parse(i.str())
+                           big_int.parse(j.str())
+                       End Sub,
+                       10000)
+        End Sub
+
+        Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+            Return loosen_bound({1, 1}, i, j)
+        End Function
+    End Class
+
     Public MustInherit Class big_int_BigInteger_perf_comparison
         Inherits performance_comparison_case_wrapper
 
@@ -122,7 +142,9 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
             Me.New(e1, e2, 100000)
         End Sub
 
-        Public Sub New(ByVal e1 As Action(Of BigInteger, BigInteger), ByVal e2 As Action(Of big_int, big_int), ByVal size As UInt64)
+        Public Sub New(ByVal e1 As Action(Of BigInteger, BigInteger),
+                       ByVal e2 As Action(Of big_int, big_int),
+                       ByVal size As UInt64)
             MyBase.New(r(New run_case(Sub(ByVal i As big_int, ByVal j As big_int)
                                           e1(i.as_BigInteger(), j.as_BigInteger())
                                       End Sub),

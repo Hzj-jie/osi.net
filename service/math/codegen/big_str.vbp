@@ -37,5 +37,12 @@ Partial Public NotInheritable Class ##CLASS_NAME##
         End If
         Return False
     End Function
+
+    Public Shared Function parse(ByVal s As String,
+                                 Optional ByVal base As Byte = default_str_base) As ##CLASS_NAME##
+        Dim r As ##CLASS_NAME## = Nothing
+        assert(parse(s, r, base))
+        Return r
+    End Function
 End Class
 

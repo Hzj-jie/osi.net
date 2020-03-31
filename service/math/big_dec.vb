@@ -570,6 +570,13 @@ Partial Public NotInheritable Class big_dec
         End If
         Return False
     End Function
+
+    Public Shared Function parse(ByVal s As String,
+                                 Optional ByVal base As Byte = default_str_base) As big_dec
+        Dim r As big_dec = Nothing
+        assert(parse(s, r, base))
+        Return r
+    End Function
 End Class
 
 'finish big_str.vbp --------
