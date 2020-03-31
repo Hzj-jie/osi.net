@@ -630,7 +630,8 @@ Partial Public NotInheritable Class big_int
         Return r
     End Function
 
-    Public Shared Function swap(ByVal this As big_int, ByVal that As big_int) As Boolean
+    Public Shared Function swap(ByVal this As big_int,
+                                ByVal that As big_int) As Boolean
         If this Is Nothing OrElse that Is Nothing Then
             Return False
         End If
@@ -638,6 +639,10 @@ Partial Public NotInheritable Class big_int
         Return assert(big_uint.swap(this.d, that.d))
     End Function
 
+    ' replace_by does not need to return Me, because,
+    ' 1. Some replace_by returns boolean, the signature should be kept consistent.
+    ' 2. ???.replace_by(...) equals to new ???(...). replace_by is unlikely to be an intermediate
+    '    operation.
     Public Sub replace_by(ByVal i As Int32)
         If i >= 0 Then
             replace_by(CUInt(i))
@@ -727,22 +732,30 @@ Partial Public NotInheritable Class big_int
         Return Not signal() AndAlso Not is_zero()
     End Function
 
-    Public Sub set_positive()
+    Public Function set_positive() As big_int
         set_signal(True)
-    End Sub
+        Return Me
+    End Function
 
-    Public Sub set_negative()
+    Public Function abs() As big_int
+        Return set_positive()
+    End Function
+
+    Public Function set_negative() As big_int
         set_signal(False)
-    End Sub
+        Return Me
+    End Function
 
-    Public Sub reverse_signal()
+    Public Function reverse_signal() As big_int
         set_signal(Not positive())
-    End Sub
+        Return Me
+    End Function
 
-    Public Sub set_zero()
+    Public Function set_zero() As big_int
         d.set_zero()
         set_positive()
-    End Sub
+        Return Me
+    End Function
 
     Public Function is_zero() As Boolean
         'just make sure there is no logic error in the class,
@@ -750,19 +763,21 @@ Partial Public NotInheritable Class big_int
         Return d.is_zero() AndAlso assert(signal())
     End Function
 
-    Public Sub set_one()
+    Public Function set_one() As big_int
         d.set_one()
         set_positive()
-    End Sub
+        Return Me
+    End Function
 
     Public Function is_one() As Boolean
         Return positive() AndAlso d.is_one()
     End Function
 
-    Public Sub set_negative_one()
+    Public Function set_negative_one() As big_int
         d.set_one()
         set_negative()
-    End Sub
+        Return Me
+    End Function
 
     Public Function is_negative_one() As Boolean
         Return negative() AndAlso d.is_one()

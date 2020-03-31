@@ -102,10 +102,10 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
 
         Public Sub New()
             MyBase.New(Sub(ByVal i As BigInteger, ByVal j As BigInteger)
-                           BigInteger.Pow(i, CInt(j.ToByteArray()(0)))
+                           BigInteger.Pow(i, CInt((BigInteger.Abs(j) Mod 127) + 1))
                        End Sub,
                        Sub(ByVal i As big_int, ByVal j As big_int)
-                           i.power(CInt(j.as_bytes()(0)))
+                           i.power(j.set_positive().modulus(127) + 1)
                        End Sub,
                        100)
         End Sub
