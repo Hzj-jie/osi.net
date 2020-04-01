@@ -7,6 +7,7 @@ Imports System.Runtime.CompilerServices
 
 ' #Const DEBUG = False
 #Const USE_MULTIPLY_BIT = False
+#Const USE_DIVIDE_BIT = False
 
 Imports osi.root.connector
 Imports osi.root.constants
@@ -14,7 +15,6 @@ Imports osi.root.constants
 Partial Public NotInheritable Class big_uint
     'support move constructor
     Private Sub New(ByVal i As adaptive_array_uint32)
-        Me.New()
         Me.v = i
     End Sub
 
@@ -70,6 +70,18 @@ Partial Public NotInheritable Class big_uint
         t += d
         v.set(p, CUInt(t And max_uint32))
         c = CUInt(t >> bit_count_in_uint32)
+    End Sub
+
+    Private Sub add(ByVal d As UInt32, ByVal p As UInt32)
+        While d > 0 AndAlso p < v.size()
+            Dim nd As UInt32 = 0
+            add(d, nd, p)
+            d = nd
+            p += uint32_1
+        End While
+        If d > 0 Then
+            v.push_back(d)
+        End If
     End Sub
 
     Private Function remove_extra_blank() As UInt32
@@ -229,49 +241,7 @@ Partial Public NotInheritable Class big_uint
         assert(remainder < that)
     End Sub
 
-    'store the result of me / that in me, and remainder will be the remainder
-    Private Sub divide(ByVal that As big_uint, ByRef remainder As big_uint, ByRef divide_by_zero As Boolean)
-        If that Is Nothing OrElse that.is_zero() Then
-            divide_by_zero = True
-            Return
-        End If
-        divide_by_zero = False
-        If is_zero() OrElse that.is_one() Then
-            remainder = big_uint.zero()
-            Return
-        End If
-        If is_one() Then
-            remainder = big_uint.one()
-            set_zero()
-            Return
-        End If
-        If that.power_of_2() Then
-            Dim l As UInt64 = 0
-            l = that.bit_count() - uint64_1
-            remainder = Me.CloneT().[and](that - uint32_1)
-            right_shift(l)
-            Return
-        End If
-        If that.fit_uint32() Then
-            Dim r As UInt32 = 0
-            divide(that.as_uint32(), r, divide_by_zero)
-            assert(Not divide_by_zero)
-            remainder = New big_uint(r)
-            Return
-        End If
-        assert(Not that.is_zero_or_one())
-        remainder = move(Me)
-        set_zero()
-        If remainder.less(that) Then
-            Return
-        End If
-
-        assert(remainder.bit_count() >= that.bit_count())
-        'make sure the that will not be impacted during the calculation
-#If DEBUG Then
-        Dim original_that As big_uint = Nothing
-        original_that = that
-#End If
+    Private Sub divide_bit(ByVal that As big_uint, ByVal remainder As big_uint)
         Dim i As UInt64 = 0
         i = remainder.bit_count() - that.bit_count()
         set_bit_count(remainder.bit_count() - that.bit_count() + uint64_1)
@@ -312,10 +282,118 @@ Partial Public NotInheritable Class big_uint
             End If
             i -= uint64_1
         End While
+    End Sub
+
+    Private Sub divide_uint32(ByVal that As big_uint, ByVal remainder As big_uint)
+        Dim i As UInt32 = 0
+        i = remainder.uint32_size() - that.uint32_size()
+        v.resize(i + uint32_1)
+        that.left_shift(CULng(i) << bit_count_in_uint32_shift)
+        While True
+            While True
+                If remainder.uint32_size < that.uint32_size() Then
+                    Exit While
+                End If
+                Dim t As UInt64 = 0
+                t = remainder.highest_uint32()
+                If remainder.uint32_size() > (that.uint32_size()) Then
+                    t <<= bit_count_in_uint32
+                    t = t Or remainder.second_highest_uint32()
+                End If
+                If t < that.highest_uint32() Then
+                    Exit While
+                End If
+                If t = that.highest_uint32() Then
+                    Dim cmp As Int32 = 0
+                    cmp = that.compare(remainder)
+                    If cmp <= 0 Then
+                        remainder.assert_sub(that)
+                        add(uint32_1, i)
+                        If cmp = 0 Then
+                            that.right_shift(CULng(i) << bit_count_in_uint32_shift)
+                        End If
+                    End If
+                    Exit While
+                End If
+                t \= (that.highest_uint32() + uint32_1)
+                Dim t32 As UInt32 = 0
 #If DEBUG Then
-        assert(remainder.less(original_that))
+                t32 = assert_which.of(t).can_cast_to_uint32()
+#Else
+                t32 = CUInt(t)
+#End If
+                add(t32, i)
+                remainder.assert_sub(that * CUInt(t))
+            End While
+
+            If i = 0 Then
+                Return
+            End If
+
+            that.right_shift(CULng(bit_count_in_uint32))
+            i -= uint32_1
+        End While
+    End Sub
+
+    'store the result of me / that in me, and remainder will be the remainder
+    Private Sub divide(ByVal that As big_uint, ByRef remainder As big_uint, ByRef divide_by_zero As Boolean)
+        If that Is Nothing OrElse that.is_zero() Then
+            divide_by_zero = True
+            Return
+        End If
+        divide_by_zero = False
+        If is_zero() OrElse that.is_one() Then
+            remainder = big_uint.zero()
+            Return
+        End If
+        If is_one() Then
+            remainder = big_uint.one()
+            set_zero()
+            Return
+        End If
+        If that.power_of_2() Then
+            Dim l As UInt64 = 0
+            l = that.bit_count() - uint64_1
+            remainder = Me.CloneT().[and](that - uint32_1)
+            right_shift(l)
+            Return
+        End If
+        If that.fit_uint32() Then
+            Dim r As UInt32 = 0
+            divide(that.as_uint32(), r, divide_by_zero)
+            assert(Not divide_by_zero)
+            remainder = New big_uint(r)
+            Return
+        End If
+        assert(Not that.is_zero_or_one())
+        remainder = move(Me)
+        set_zero()
+        If remainder.less(that) Then
+            Return
+        End If
+
+#If DEBUG Then
+        assert(remainder.bit_count() >= that.bit_count())
+#End If
+
+        'make sure the that will not be impacted during the calculation
+#If DEBUG Then
+        Dim original_that As big_uint = Nothing
+        original_that = that
+        that = that.CloneT()
+#End If
+
+#If USE_DIVIDE_BIT Then
+        divide_bit(that, remainder)
+#Else
+        divide_uint32(that, remainder)
 #End If
         assert(remove_extra_blank() <= 1)
+
+#If DEBUG Then
+        assert(remainder.less(original_that))
+        assert(that.equal(original_that))
+#End If
     End Sub
 
     'fake a push_front action for vector
