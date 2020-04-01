@@ -79,12 +79,12 @@ Private Class adaptive_array_t
         assert(replace_by(d, array_size(d)))
     End Sub
 
-    <MethodImplAttribute(method_impl_options.aggressive_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function max_size() As UInt32
         Return size_limitation
     End Function
 
-    <MethodImplAttribute(method_impl_options.aggressive_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function data() As T()
         Return d
     End Function
@@ -101,32 +101,32 @@ Private Class adaptive_array_t
     End Property
 #End If
 
-    <MethodImplAttribute(method_impl_options.aggressive_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [get](ByVal p As UInt32) As T
         Return d(CInt(p))
     End Function
 
-    <MethodImplAttribute(method_impl_options.aggressive_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub [set](ByVal p As UInt32, ByVal v As T)
         d(CInt(p)) = v
     End Sub
 
-    <MethodImplAttribute(method_impl_options.aggressive_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function size() As UInt32
         Return s
     End Function
 
-    <MethodImplAttribute(method_impl_options.aggressive_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function empty() As Boolean
         Return size() = uint32_0
     End Function
 
-    <MethodImplAttribute(method_impl_options.aggressive_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function capacity() As UInt32
         Return array_size(d)
     End Function
 
-    <MethodImplAttribute(method_impl_options.aggressive_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function back() As T
         assert(size() >= uint32_1)
         Return d(CInt(size() - uint32_1))

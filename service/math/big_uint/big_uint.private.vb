@@ -19,7 +19,7 @@ Partial Public NotInheritable Class big_uint
     End Sub
 
     'sub d at position p with carry-over as c
-    <MethodImplAttribute(method_impl_options.aggressive_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub [sub](ByVal d As UInt32, ByRef c As UInt32, ByVal p As UInt32)
         'this assert is too costly
 #If DEBUG Then
@@ -58,7 +58,7 @@ Partial Public NotInheritable Class big_uint
     End Sub
 
     'add d to the pos as p with carry-over as c
-    <MethodImplAttribute(method_impl_options.aggressive_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub add(ByVal d As UInt32, ByRef c As UInt32, ByVal p As UInt32)
         'this assert is too costly
 #If DEBUG Then

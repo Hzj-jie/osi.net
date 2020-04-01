@@ -3,16 +3,19 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
 Partial Public NotInheritable Class assert_which
     Public Structure uint32_assertion
         Private ReadOnly i As UInt32
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub New(ByVal i As UInt32)
             Me.i = i
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function can_cast_to_int32() As Int32
             Try
                 Return CInt(i)
@@ -23,6 +26,7 @@ Partial Public NotInheritable Class assert_which
             End Try
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function can_cast_to_byte() As Byte
             Try
                 Return CByte(i)
