@@ -102,10 +102,12 @@ Partial Public NotInheritable Class big_int
     End Function
 
     Public Function multiply(ByVal that As big_int) As big_int
-        If Not that Is Nothing Then
-            d.multiply(that.d)
-            set_signal(positive() = that.positive())
+        If that Is Nothing OrElse that.is_zero() Then
+            set_zero()
+            Return Me
         End If
+        d.multiply(that.d)
+        set_signal(positive() = that.positive())
         Return Me
     End Function
 

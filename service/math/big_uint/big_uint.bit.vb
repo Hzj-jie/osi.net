@@ -215,7 +215,10 @@ Partial Public NotInheritable Class big_uint
         Return uint32_0
     End Function
 
-    Public Sub remove_binary_trailing_zeros()
-        assert_right_shift(binary_trailing_zero_count())
-    End Sub
+    Public Function remove_binary_trailing_zeros() As UInt32
+        Dim r As UInt32 = 0
+        r = binary_trailing_zero_count()
+        assert_right_shift(r)
+        Return r
+    End Function
 End Class

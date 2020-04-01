@@ -3,6 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
+
 ' #Const DEBUG = False
 
 Imports osi.root.connector
@@ -17,8 +19,9 @@ Partial Public NotInheritable Class big_uint
 
     'sub d at position p with carry-over as c
     Private Sub [sub](ByVal d As UInt32, ByRef c As UInt32, ByVal p As UInt32)
+        'this assert is too costly
 #If DEBUG Then
-        assert(p >= 0 AndAlso p < v.size())
+        assert(p < v.size())
 #End If
         Dim t As Int64 = 0
         t = -c
@@ -75,6 +78,41 @@ Partial Public NotInheritable Class big_uint
         Return r
     End Function
 
+    Private Sub multiply_bit(ByVal this As big_uint, ByVal that As big_uint)
+        this = this.CloneT()
+        that = that.CloneT()
+        While Not that.is_zero()
+            Dim m As UInt32 = 0
+            m = that.remove_binary_trailing_zeros()
+            assert(that.odd())
+            this.left_shift(m)
+            add(this)
+        End While
+    End Sub
+
+    Private Sub multiply_uint32(ByVal this As big_uint, ByVal that As big_uint)
+        v.resize(this.v.size() + that.v.size())
+        assert(this.v.size() > 0 AndAlso that.v.size() > 0)
+        Dim c As UInt32 = 0
+        For i As UInt32 = 0 To this.v.size() - uint32_1
+            If this.v.get(i) = 0 Then
+                Continue For
+            End If
+            For j As UInt32 = 0 To that.v.size() - uint32_1
+                Dim t As UInt64 = 0
+                t = this.v.get(i)
+                t *= that.v.get(j)
+                add(CUInt(t And max_uint32), c, i + j)
+                c += CUInt(t >> bit_count_in_uint32)
+            Next
+            If c > 0 Then
+                add(0, c, i + that.v.size())
+                assert(c = uint32_0)
+            End If
+        Next
+        assert(remove_extra_blank() <= 1)
+    End Sub
+
     'store the result of this * that in me
     Private Sub multiply(ByVal this As big_uint, ByVal that As big_uint)
         If this Is Nothing OrElse that Is Nothing OrElse this.is_zero() OrElse that.is_zero() Then
@@ -90,25 +128,19 @@ Partial Public NotInheritable Class big_uint
             Return
         End If
         set_zero()
-        v.resize(this.v.size() + that.v.size())
-        assert(this.v.size() > 0 AndAlso that.v.size() > 0)
-        Dim c As UInt32 = 0
-        For i As UInt32 = 0 To this.v.size() - uint32_1
-            If this.v.get(i) <> 0 Then
-                For j As UInt32 = 0 To that.v.size() - uint32_1
-                    Dim t As UInt64 = 0
-                    t = this.v.get(i)
-                    t *= that.v.get(j)
-                    add(CUInt(t And max_uint32), c, i + j)
-                    c += CUInt(t >> bit_count_in_uint32)
-                Next
-                If c > 0 Then
-                    add(0, c, i + that.v.size())
-                    assert(c = uint32_0)
-                End If
-            End If
-        Next
-        assert(remove_extra_blank() <= 1)
+
+        multiply_uint32(this, that)
+        Return
+
+#If USE_MULTIPLY_BIT Then
+        If that._1count() <= that.uint32_size() Then
+            multiply_bit(this, that)
+        Else
+            multiply_uint32(this, that)
+        End If
+#Else
+        multiply_uint32(this, that)
+#End If
     End Sub
 
     'store the result of yroot(me, that) in me, and the remainder will be the me - (me ^ (yroot(me, that)))
