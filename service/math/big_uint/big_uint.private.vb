@@ -284,14 +284,14 @@ Partial Public NotInheritable Class big_uint
         End While
     End Sub
 
-    Private Sub divide_uint32(ByVal that As big_uint, ByVal remainder As big_uint)
+    Private Sub divide_uint(ByVal that As big_uint, ByVal remainder As big_uint)
         Dim i As UInt32 = 0
         i = remainder.uint32_size() - that.uint32_size()
         v.resize(i + uint32_1)
         that.left_shift(CULng(i) << bit_count_in_uint32_shift)
         While True
             While True
-                If remainder.uint32_size < that.uint32_size() Then
+                If remainder.uint32_size() < that.uint32_size() Then
                     Exit While
                 End If
                 Dim t As UInt64 = 0
@@ -311,6 +311,7 @@ Partial Public NotInheritable Class big_uint
                         add(uint32_1, i)
                         If cmp = 0 Then
                             that.right_shift(CULng(i) << bit_count_in_uint32_shift)
+                            Return
                         End If
                     End If
                     Exit While
@@ -323,7 +324,7 @@ Partial Public NotInheritable Class big_uint
                 t32 = CUInt(t)
 #End If
                 add(t32, i)
-                remainder.assert_sub(that * CUInt(t))
+                remainder.assert_sub(that * t32)
             End While
 
             If i = 0 Then
@@ -386,7 +387,7 @@ Partial Public NotInheritable Class big_uint
 #If USE_DIVIDE_BIT Then
         divide_bit(that, remainder)
 #Else
-        divide_uint32(that, remainder)
+        divide_uint(that, remainder)
 #End If
         assert(remove_extra_blank() <= 1)
 
@@ -452,4 +453,76 @@ Partial Public NotInheritable Class big_uint
         assert(Not o)
         Return r
     End Function
+
+    Private Sub modulus_bit(ByVal that As big_uint)
+        Dim dl As UInt64 = 0
+        dl = bit_count() - that.bit_count()
+        that = that.CloneT()
+        that.left_shift(dl)
+        While True
+            Dim cmp As Int32 = 0
+            cmp = compare(that)
+            If cmp = 0 Then
+                set_zero()
+                Return
+            End If
+            If cmp > 0 Then
+                assert_sub(that)
+            End If
+            If dl = uint64_0 Then
+                Exit While
+            End If
+            dl -= uint64_1
+            that.right_shift(1)
+        End While
+    End Sub
+
+    Private Sub modulus_uint(ByVal that As big_uint)
+        Dim i As UInt32 = 0
+        i = uint32_size() - that.uint32_size()
+        that.left_shift(CULng(i) << bit_count_in_uint32_shift)
+        While True
+            While True
+                If uint32_size() < that.uint32_size() Then
+                    Exit While
+                End If
+                Dim t As UInt64 = 0
+                t = highest_uint32()
+                If uint32_size() > (that.uint32_size()) Then
+                    t <<= bit_count_in_uint32
+                    t = t Or second_highest_uint32()
+                End If
+                If t < that.highest_uint32() Then
+                    Exit While
+                End If
+                If t = that.highest_uint32() Then
+                    Dim cmp As Int32 = 0
+                    cmp = that.compare(Me)
+                    If cmp <= 0 Then
+                        assert_sub(that)
+                        If cmp = 0 Then
+                            that.right_shift(CULng(i) << bit_count_in_uint32_shift)
+                            Return
+                        End If
+                    End If
+                    Exit While
+                End If
+                t \= (that.highest_uint32() + uint32_1)
+                Dim t32 As UInt32 = 0
+#If DEBUG Then
+                t32 = assert_which.of(t).can_cast_to_uint32()
+#Else
+                t32 = CUInt(t)
+#End If
+                assert_sub(that * t32)
+            End While
+
+            If i = 0 Then
+                Return
+            End If
+
+            that.right_shift(CULng(bit_count_in_uint32))
+            i -= uint32_1
+        End While
+    End Sub
 End Class

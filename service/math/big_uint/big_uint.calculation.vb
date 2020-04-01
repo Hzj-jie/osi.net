@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 #Const GCD_USE_SUCCESSIVE_DIVISION = False
+#Const USE_MODULUS_BIT = False
 
 Imports osi.root.connector
 Imports osi.root.constants
@@ -241,26 +242,13 @@ Partial Public NotInheritable Class big_uint
         If less(that) Then
             Return Me
         End If
-        Dim dl As UInt64 = 0
-        dl = bit_count() - that.bit_count()
-        that = that.CloneT()
-        that.left_shift(dl)
-        While True
-            Dim cmp As Int32 = 0
-            cmp = compare(that)
-            If cmp = 0 Then
-                set_zero()
-                Return Me
-            End If
-            If cmp > 0 Then
-                assert_sub(that)
-            End If
-            If dl = uint64_0 Then
-                Exit While
-            End If
-            dl -= uint64_1
-            that.right_shift(1)
-        End While
+
+#If USE_MODULUS_BIT Then
+        modulus_bit(that)
+#Else
+        modulus_uint(that)
+#End If
+
         Return Me
     End Function
 
