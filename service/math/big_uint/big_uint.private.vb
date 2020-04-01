@@ -6,6 +6,7 @@ Option Strict On
 Imports System.Runtime.CompilerServices
 
 ' #Const DEBUG = False
+#Const USE_MULTIPLY_BIT = False
 
 Imports osi.root.connector
 Imports osi.root.constants
@@ -132,7 +133,7 @@ Partial Public NotInheritable Class big_uint
         set_zero()
 
 #If USE_MULTIPLY_BIT Then
-        If that._1count() <= that.uint32_size() Then
+        If that._1count() <= (that.uint32_size() << 1) Then
             multiply_bit(this, that)
         Else
             multiply_uint32(this, that)
