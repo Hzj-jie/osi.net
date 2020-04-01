@@ -13,35 +13,35 @@ Public Module _array
 
 #If Not DEBUG Then
 
-    Public Function array_size(ByVal i() As Decimal) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i() As Decimal) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.Length()))
     End Function
 
-    Public Function array_size_i(ByVal i() As Decimal) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i() As Decimal) As Int32
         Return If(i Is Nothing, 0, i.Length())
     End Function
 
-    Public Function array_long_size(ByVal i() As Decimal) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i() As Decimal) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.LongLength()))
     End Function
 
-    Public Function isemptyarray(ByVal i() As Decimal) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i() As Decimal) As Boolean
         Return i Is Nothing OrElse i.Length() = 0
     End Function
 
-    Public Function array_size(ByVal i(,) As Decimal) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i(,) As Decimal) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.GetLength(0)))
     End Function
 
-    Public Function array_size_i(ByVal i(,) As Decimal) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i(,) As Decimal) As Int32
         Return If(i Is Nothing, 0, i.GetLength(0))
     End Function
 
-    Public Function array_long_size(ByVal i(,) As Decimal) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i(,) As Decimal) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.GetLongLength(0)))
     End Function
 
-    Public Function isemptyarray(ByVal i(,) As Decimal) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i(,) As Decimal) As Boolean
         Return i Is Nothing OrElse i.GetLength(0) = 0
     End Function
 
@@ -120,35 +120,35 @@ Public Module _array
         Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
-    Public Function array_size(ByVal i() As Int64) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i() As Int64) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.Length()))
     End Function
 
-    Public Function array_size_i(ByVal i() As Int64) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i() As Int64) As Int32
         Return If(i Is Nothing, 0, i.Length())
     End Function
 
-    Public Function array_long_size(ByVal i() As Int64) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i() As Int64) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.LongLength()))
     End Function
 
-    Public Function isemptyarray(ByVal i() As Int64) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i() As Int64) As Boolean
         Return i Is Nothing OrElse i.Length() = 0
     End Function
 
-    Public Function array_size(ByVal i(,) As Int64) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i(,) As Int64) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.GetLength(0)))
     End Function
 
-    Public Function array_size_i(ByVal i(,) As Int64) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i(,) As Int64) As Int32
         Return If(i Is Nothing, 0, i.GetLength(0))
     End Function
 
-    Public Function array_long_size(ByVal i(,) As Int64) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i(,) As Int64) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.GetLongLength(0)))
     End Function
 
-    Public Function isemptyarray(ByVal i(,) As Int64) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i(,) As Int64) As Boolean
         Return i Is Nothing OrElse i.GetLength(0) = 0
     End Function
 
@@ -227,35 +227,35 @@ Public Module _array
         Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
-    Public Function array_size(ByVal i() As Int32) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i() As Int32) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.Length()))
     End Function
 
-    Public Function array_size_i(ByVal i() As Int32) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i() As Int32) As Int32
         Return If(i Is Nothing, 0, i.Length())
     End Function
 
-    Public Function array_long_size(ByVal i() As Int32) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i() As Int32) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.LongLength()))
     End Function
 
-    Public Function isemptyarray(ByVal i() As Int32) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i() As Int32) As Boolean
         Return i Is Nothing OrElse i.Length() = 0
     End Function
 
-    Public Function array_size(ByVal i(,) As Int32) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i(,) As Int32) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.GetLength(0)))
     End Function
 
-    Public Function array_size_i(ByVal i(,) As Int32) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i(,) As Int32) As Int32
         Return If(i Is Nothing, 0, i.GetLength(0))
     End Function
 
-    Public Function array_long_size(ByVal i(,) As Int32) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i(,) As Int32) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.GetLongLength(0)))
     End Function
 
-    Public Function isemptyarray(ByVal i(,) As Int32) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i(,) As Int32) As Boolean
         Return i Is Nothing OrElse i.GetLength(0) = 0
     End Function
 
@@ -334,35 +334,35 @@ Public Module _array
         Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
-    Public Function array_size(ByVal i() As Int16) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i() As Int16) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.Length()))
     End Function
 
-    Public Function array_size_i(ByVal i() As Int16) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i() As Int16) As Int32
         Return If(i Is Nothing, 0, i.Length())
     End Function
 
-    Public Function array_long_size(ByVal i() As Int16) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i() As Int16) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.LongLength()))
     End Function
 
-    Public Function isemptyarray(ByVal i() As Int16) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i() As Int16) As Boolean
         Return i Is Nothing OrElse i.Length() = 0
     End Function
 
-    Public Function array_size(ByVal i(,) As Int16) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i(,) As Int16) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.GetLength(0)))
     End Function
 
-    Public Function array_size_i(ByVal i(,) As Int16) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i(,) As Int16) As Int32
         Return If(i Is Nothing, 0, i.GetLength(0))
     End Function
 
-    Public Function array_long_size(ByVal i(,) As Int16) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i(,) As Int16) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.GetLongLength(0)))
     End Function
 
-    Public Function isemptyarray(ByVal i(,) As Int16) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i(,) As Int16) As Boolean
         Return i Is Nothing OrElse i.GetLength(0) = 0
     End Function
 
@@ -441,35 +441,35 @@ Public Module _array
         Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
-    Public Function array_size(ByVal i() As SByte) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i() As SByte) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.Length()))
     End Function
 
-    Public Function array_size_i(ByVal i() As SByte) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i() As SByte) As Int32
         Return If(i Is Nothing, 0, i.Length())
     End Function
 
-    Public Function array_long_size(ByVal i() As SByte) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i() As SByte) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.LongLength()))
     End Function
 
-    Public Function isemptyarray(ByVal i() As SByte) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i() As SByte) As Boolean
         Return i Is Nothing OrElse i.Length() = 0
     End Function
 
-    Public Function array_size(ByVal i(,) As SByte) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i(,) As SByte) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.GetLength(0)))
     End Function
 
-    Public Function array_size_i(ByVal i(,) As SByte) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i(,) As SByte) As Int32
         Return If(i Is Nothing, 0, i.GetLength(0))
     End Function
 
-    Public Function array_long_size(ByVal i(,) As SByte) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i(,) As SByte) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.GetLongLength(0)))
     End Function
 
-    Public Function isemptyarray(ByVal i(,) As SByte) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i(,) As SByte) As Boolean
         Return i Is Nothing OrElse i.GetLength(0) = 0
     End Function
 
@@ -548,35 +548,35 @@ Public Module _array
         Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
-    Public Function array_size(ByVal i() As UInt64) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i() As UInt64) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.Length()))
     End Function
 
-    Public Function array_size_i(ByVal i() As UInt64) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i() As UInt64) As Int32
         Return If(i Is Nothing, 0, i.Length())
     End Function
 
-    Public Function array_long_size(ByVal i() As UInt64) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i() As UInt64) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.LongLength()))
     End Function
 
-    Public Function isemptyarray(ByVal i() As UInt64) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i() As UInt64) As Boolean
         Return i Is Nothing OrElse i.Length() = 0
     End Function
 
-    Public Function array_size(ByVal i(,) As UInt64) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i(,) As UInt64) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.GetLength(0)))
     End Function
 
-    Public Function array_size_i(ByVal i(,) As UInt64) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i(,) As UInt64) As Int32
         Return If(i Is Nothing, 0, i.GetLength(0))
     End Function
 
-    Public Function array_long_size(ByVal i(,) As UInt64) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i(,) As UInt64) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.GetLongLength(0)))
     End Function
 
-    Public Function isemptyarray(ByVal i(,) As UInt64) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i(,) As UInt64) As Boolean
         Return i Is Nothing OrElse i.GetLength(0) = 0
     End Function
 
@@ -655,35 +655,35 @@ Public Module _array
         Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
-    Public Function array_size(ByVal i() As UInt32) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i() As UInt32) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.Length()))
     End Function
 
-    Public Function array_size_i(ByVal i() As UInt32) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i() As UInt32) As Int32
         Return If(i Is Nothing, 0, i.Length())
     End Function
 
-    Public Function array_long_size(ByVal i() As UInt32) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i() As UInt32) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.LongLength()))
     End Function
 
-    Public Function isemptyarray(ByVal i() As UInt32) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i() As UInt32) As Boolean
         Return i Is Nothing OrElse i.Length() = 0
     End Function
 
-    Public Function array_size(ByVal i(,) As UInt32) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i(,) As UInt32) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.GetLength(0)))
     End Function
 
-    Public Function array_size_i(ByVal i(,) As UInt32) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i(,) As UInt32) As Int32
         Return If(i Is Nothing, 0, i.GetLength(0))
     End Function
 
-    Public Function array_long_size(ByVal i(,) As UInt32) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i(,) As UInt32) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.GetLongLength(0)))
     End Function
 
-    Public Function isemptyarray(ByVal i(,) As UInt32) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i(,) As UInt32) As Boolean
         Return i Is Nothing OrElse i.GetLength(0) = 0
     End Function
 
@@ -762,35 +762,35 @@ Public Module _array
         Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
-    Public Function array_size(ByVal i() As UInt16) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i() As UInt16) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.Length()))
     End Function
 
-    Public Function array_size_i(ByVal i() As UInt16) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i() As UInt16) As Int32
         Return If(i Is Nothing, 0, i.Length())
     End Function
 
-    Public Function array_long_size(ByVal i() As UInt16) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i() As UInt16) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.LongLength()))
     End Function
 
-    Public Function isemptyarray(ByVal i() As UInt16) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i() As UInt16) As Boolean
         Return i Is Nothing OrElse i.Length() = 0
     End Function
 
-    Public Function array_size(ByVal i(,) As UInt16) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i(,) As UInt16) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.GetLength(0)))
     End Function
 
-    Public Function array_size_i(ByVal i(,) As UInt16) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i(,) As UInt16) As Int32
         Return If(i Is Nothing, 0, i.GetLength(0))
     End Function
 
-    Public Function array_long_size(ByVal i(,) As UInt16) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i(,) As UInt16) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.GetLongLength(0)))
     End Function
 
-    Public Function isemptyarray(ByVal i(,) As UInt16) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i(,) As UInt16) As Boolean
         Return i Is Nothing OrElse i.GetLength(0) = 0
     End Function
 
@@ -869,35 +869,35 @@ Public Module _array
         Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
-    Public Function array_size(ByVal i() As Byte) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i() As Byte) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.Length()))
     End Function
 
-    Public Function array_size_i(ByVal i() As Byte) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i() As Byte) As Int32
         Return If(i Is Nothing, 0, i.Length())
     End Function
 
-    Public Function array_long_size(ByVal i() As Byte) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i() As Byte) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.LongLength()))
     End Function
 
-    Public Function isemptyarray(ByVal i() As Byte) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i() As Byte) As Boolean
         Return i Is Nothing OrElse i.Length() = 0
     End Function
 
-    Public Function array_size(ByVal i(,) As Byte) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i(,) As Byte) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.GetLength(0)))
     End Function
 
-    Public Function array_size_i(ByVal i(,) As Byte) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i(,) As Byte) As Int32
         Return If(i Is Nothing, 0, i.GetLength(0))
     End Function
 
-    Public Function array_long_size(ByVal i(,) As Byte) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i(,) As Byte) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.GetLongLength(0)))
     End Function
 
-    Public Function isemptyarray(ByVal i(,) As Byte) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i(,) As Byte) As Boolean
         Return i Is Nothing OrElse i.GetLength(0) = 0
     End Function
 
@@ -976,35 +976,35 @@ Public Module _array
         Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
-    Public Function array_size(ByVal i() As Single) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i() As Single) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.Length()))
     End Function
 
-    Public Function array_size_i(ByVal i() As Single) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i() As Single) As Int32
         Return If(i Is Nothing, 0, i.Length())
     End Function
 
-    Public Function array_long_size(ByVal i() As Single) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i() As Single) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.LongLength()))
     End Function
 
-    Public Function isemptyarray(ByVal i() As Single) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i() As Single) As Boolean
         Return i Is Nothing OrElse i.Length() = 0
     End Function
 
-    Public Function array_size(ByVal i(,) As Single) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i(,) As Single) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.GetLength(0)))
     End Function
 
-    Public Function array_size_i(ByVal i(,) As Single) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i(,) As Single) As Int32
         Return If(i Is Nothing, 0, i.GetLength(0))
     End Function
 
-    Public Function array_long_size(ByVal i(,) As Single) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i(,) As Single) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.GetLongLength(0)))
     End Function
 
-    Public Function isemptyarray(ByVal i(,) As Single) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i(,) As Single) As Boolean
         Return i Is Nothing OrElse i.GetLength(0) = 0
     End Function
 
@@ -1083,35 +1083,35 @@ Public Module _array
         Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
-    Public Function array_size(ByVal i() As Double) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i() As Double) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.Length()))
     End Function
 
-    Public Function array_size_i(ByVal i() As Double) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i() As Double) As Int32
         Return If(i Is Nothing, 0, i.Length())
     End Function
 
-    Public Function array_long_size(ByVal i() As Double) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i() As Double) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.LongLength()))
     End Function
 
-    Public Function isemptyarray(ByVal i() As Double) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i() As Double) As Boolean
         Return i Is Nothing OrElse i.Length() = 0
     End Function
 
-    Public Function array_size(ByVal i(,) As Double) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i(,) As Double) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.GetLength(0)))
     End Function
 
-    Public Function array_size_i(ByVal i(,) As Double) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i(,) As Double) As Int32
         Return If(i Is Nothing, 0, i.GetLength(0))
     End Function
 
-    Public Function array_long_size(ByVal i(,) As Double) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i(,) As Double) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.GetLongLength(0)))
     End Function
 
-    Public Function isemptyarray(ByVal i(,) As Double) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i(,) As Double) As Boolean
         Return i Is Nothing OrElse i.GetLength(0) = 0
     End Function
 
@@ -1190,35 +1190,35 @@ Public Module _array
         Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
     End Function
 
-    Public Function array_size(ByVal i() As String) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i() As String) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.Length()))
     End Function
 
-    Public Function array_size_i(ByVal i() As String) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i() As String) As Int32
         Return If(i Is Nothing, 0, i.Length())
     End Function
 
-    Public Function array_long_size(ByVal i() As String) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i() As String) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.LongLength()))
     End Function
 
-    Public Function isemptyarray(ByVal i() As String) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i() As String) As Boolean
         Return i Is Nothing OrElse i.Length() = 0
     End Function
 
-    Public Function array_size(ByVal i(,) As String) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(ByVal i(,) As String) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.GetLength(0)))
     End Function
 
-    Public Function array_size_i(ByVal i(,) As String) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(ByVal i(,) As String) As Int32
         Return If(i Is Nothing, 0, i.GetLength(0))
     End Function
 
-    Public Function array_long_size(ByVal i(,) As String) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(ByVal i(,) As String) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.GetLongLength(0)))
     End Function
 
-    Public Function isemptyarray(ByVal i(,) As String) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(ByVal i(,) As String) As Boolean
         Return i Is Nothing OrElse i.GetLength(0) = 0
     End Function
 
@@ -1299,35 +1299,35 @@ Public Module _array
 
 #End If
 
-    Public Function array_size(Of T)(ByVal i() As T) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(Of T)(ByVal i() As T) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.Length()))
     End Function
 
-    Public Function array_size_i(Of T)(ByVal i() As T) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(Of T)(ByVal i() As T) As Int32
         Return If(i Is Nothing, 0, i.Length())
     End Function
 
-    Public Function array_long_size(Of T)(ByVal i() As T) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(Of T)(ByVal i() As T) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.LongLength()))
     End Function
 
-    Public Function isemptyarray(Of T)(ByVal i() As T) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(Of T)(ByVal i() As T) As Boolean
         Return i Is Nothing OrElse i.Length() = 0
     End Function
 
-    Public Function array_size(Of T)(ByVal i(,) As T) As UInt32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size(Of T)(ByVal i(,) As T) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.GetLength(0)))
     End Function
 
-    Public Function array_size_i(Of T)(ByVal i(,) As T) As Int32
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_size_i(Of T)(ByVal i(,) As T) As Int32
         Return If(i Is Nothing, 0, i.GetLength(0))
     End Function
 
-    Public Function array_long_size(Of T)(ByVal i(,) As T) As UInt64
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function array_long_size(Of T)(ByVal i(,) As T) As UInt64
         Return If(i Is Nothing, uint32_0, CULng(i.GetLongLength(0)))
     End Function
 
-    Public Function isemptyarray(Of T)(ByVal i(,) As T) As Boolean
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>    Public Function isemptyarray(Of T)(ByVal i(,) As T) As Boolean
         Return i Is Nothing OrElse i.GetLength(0) = 0
     End Function
 

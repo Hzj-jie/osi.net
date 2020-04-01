@@ -8,6 +8,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
+
 Imports osi.root
 Imports osi.root.connector
 Imports osi.root.constants
@@ -20,10 +22,15 @@ Private Class adaptive_array_uint32
     Private Shared ReadOnly default_value As UInt32 = Nothing
 
     Private Shared Function expected_capacity(ByVal n As UInt32) As UInt32
+        assert(n <= max_array_size)
+        If n = max_array_size Then
+            root.connector.throws.out_of_memory("adaptive_array size ", n, " exceeds limitation.")
+        End If
         If n <= 2 Then
             Return 4
         End If
-        Return n << 1
+        n <<= 1
+        Return If(n > max_array_size, max_array_size, n)
     End Function
 
     Private d() As UInt32
@@ -53,11 +60,10 @@ Private Class adaptive_array_uint32
     Public Shared Function swap(ByVal this As adaptive_array_uint32, ByVal that As adaptive_array_uint32) As Boolean
         If this Is Nothing OrElse that Is Nothing Then
             Return False
-        Else
-            connector.swap(this.d, that.d)
-            connector.swap(this.s, that.s)
-            Return True
         End If
+        connector.swap(this.d, that.d)
+        connector.swap(this.s, that.s)
+        Return True
     End Function
 
     Public Function replace_by(ByVal d() As UInt32, ByVal s As UInt32) As Boolean
@@ -65,19 +71,20 @@ Private Class adaptive_array_uint32
             Me.d = d
             Me.s = s
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 
     Public Sub replace_by(ByVal d() As UInt32)
         assert(replace_by(d, array_size(d)))
     End Sub
 
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>
     Public Function max_size() As UInt32
         Return size_limitation
     End Function
 
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>
     Public Function data() As UInt32()
         Return d
     End Function
@@ -94,26 +101,32 @@ Private Class adaptive_array_uint32
     End Property
 #End If
 
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>
     Public Function [get](ByVal p As UInt32) As UInt32
         Return d(CInt(p))
     End Function
 
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>
     Public Sub [set](ByVal p As UInt32, ByVal v As UInt32)
         d(CInt(p)) = v
     End Sub
 
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>
     Public Function size() As UInt32
         Return s
     End Function
 
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>
     Public Function empty() As Boolean
         Return size() = uint32_0
     End Function
 
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>
     Public Function capacity() As UInt32
         Return array_size(d)
     End Function
 
+    <MethodImplAttribute(method_impl_options.aggressive_inlining)>
     Public Function back() As UInt32
         assert(size() >= uint32_1)
         Return d(CInt(size() - uint32_1))
