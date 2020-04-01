@@ -234,9 +234,8 @@ Partial Public NotInheritable Class ##CLASS_NAME##
 
     Public Shared Operator Mod(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As ##CLASS_NAME##
         Dim q As ##CLASS_NAME## = Nothing
-        Dim r As ##CLASS_NAME## = Nothing
         q = New ##CLASS_NAME##(this)
-        q.divide(that, r)
-        Return r
+        q.modulus(that)
+        Return q
     End Operator
 End Class

@@ -1196,10 +1196,9 @@ Partial Public NotInheritable Class big_int
 
     Public Shared Operator Mod(ByVal this As big_int, ByVal that As big_int) As big_int
         Dim q As big_int = Nothing
-        Dim r As big_int = Nothing
         q = New big_int(this)
-        q.divide(that, r)
-        Return r
+        q.modulus(that)
+        Return q
     End Operator
 End Class
 'finish big_int.vbp --------
