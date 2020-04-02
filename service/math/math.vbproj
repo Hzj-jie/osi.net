@@ -72,6 +72,7 @@
     <Compile Include="big_uint\big_uint.cast.vb" />
     <Compile Include="big_uint\big_uint.compare.vb" />
     <Compile Include="big_uint\big_uint.constants.vb" />
+    <Compile Include="big_uint\big_uint.divide.vb" />
     <Compile Include="big_uint\big_uint.implement.vb" />
     <Compile Include="big_uint\big_uint.inplace.vb" />
     <Compile Include="big_uint\big_uint.operator.vb" />

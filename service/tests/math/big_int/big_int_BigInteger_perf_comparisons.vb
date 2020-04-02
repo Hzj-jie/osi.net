@@ -52,8 +52,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
                        End Sub,
                        Sub(ByVal i As big_int, ByVal j As big_int)
                            i *= j
-                       End Sub,
-                       50000)
+                       End Sub)
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
@@ -70,8 +69,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
                        End Sub,
                        Sub(ByVal i As big_int, ByVal j As big_int)
                            i \= j
-                       End Sub,
-                       10000)
+                       End Sub)
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
@@ -88,8 +86,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
                        End Sub,
                        Sub(ByVal i As big_int, ByVal j As big_int)
                            i = i Mod j
-                       End Sub,
-                       10000)
+                       End Sub)
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double

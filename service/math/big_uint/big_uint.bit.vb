@@ -3,6 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
+
 ' #Const DEBUG = False
 
 Imports osi.root.connector
@@ -222,19 +224,28 @@ Partial Public NotInheritable Class big_uint
         Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function highest_uint32() As UInt32
         Return get_ruint32(0)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function second_highest_uint32() As UInt32
         Return get_ruint32(1)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function highest_uint64() As UInt64
+        Return (CULng(highest_uint32()) << bit_count_in_uint32) Or second_highest_uint32()
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function get_uint32(ByVal i As UInt32) As UInt32
         assert(i < uint32_size())
         Return v.get(i)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function get_ruint32(ByVal i As UInt32) As UInt32
         assert(i < uint32_size())
         Return v.get(uint32_size() - i - uint32_1)
