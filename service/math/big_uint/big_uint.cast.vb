@@ -86,20 +86,8 @@ Partial Public NotInheritable Class big_uint
             ReDim r(-1)
         Else
             ReDim r(CInt(byte_size() - uint32_1))
-            Dim start As Int64 = 0
-            Dim [end] As Int64 = 0
-            Dim [step] As Int32 = 0
-            If BitConverter.IsLittleEndian Then
-                start = 0
-                [end] = v.size() - uint32_1
-                [step] = 1
-            Else
-                start = v.size() - uint32_1
-                [end] = 0
-                [step] = -1
-            End If
-            For i As Int64 = start To [end] Step [step]
-                assert(uint32_bytes(v.get(CUInt(i)), r, CUInt(i) * byte_count_in_uint32))
+            For i As Int32 = 0 To CInt(v.size()) - 1
+                assert(uint32_little_endian_bytes(v.get(CUInt(i)), r, CUInt(i) * byte_count_in_uint32))
             Next
         End If
 

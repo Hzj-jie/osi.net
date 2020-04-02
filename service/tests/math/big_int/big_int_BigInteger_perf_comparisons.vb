@@ -47,17 +47,30 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         Inherits big_int_BigInteger_perf_comparison
 
         Public Sub New()
+            Me.New(default_size)
+        End Sub
+
+        Public Sub New(ByVal size As UInt64)
             MyBase.New(Sub(ByVal i As BigInteger, ByVal j As BigInteger)
                            i *= j
                        End Sub,
                        Sub(ByVal i As big_int, ByVal j As big_int)
                            i *= j
-                       End Sub)
+                       End Sub,
+                       size)
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
             Return loosen_bound({1, 1}, i, j)
         End Function
+    End Class
+
+    Public NotInheritable Class big_int_BigInteger_multiply_large_perf
+        Inherits commandline_specified_case_wrapper
+
+        Public Sub New()
+            MyBase.New(New big_int_BigInteger_multiply_perf(1000000))
+        End Sub
     End Class
 
     Public NotInheritable Class big_int_BigInteger_divide_perf
@@ -135,8 +148,10 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
     Public MustInherit Class big_int_BigInteger_perf_comparison
         Inherits performance_comparison_case_wrapper
 
+        Protected Const default_size As UInt64 = 100000
+
         Public Sub New(ByVal e1 As Action(Of BigInteger, BigInteger), ByVal e2 As Action(Of big_int, big_int))
-            Me.New(e1, e2, 100000)
+            Me.New(e1, e2, default_size)
         End Sub
 
         Public Sub New(ByVal e1 As Action(Of BigInteger, BigInteger),

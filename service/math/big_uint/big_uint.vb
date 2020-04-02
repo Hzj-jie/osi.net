@@ -118,31 +118,18 @@ Partial Public NotInheritable Class big_uint
         If isemptyarray(a) Then
             Return
         End If
-        v.reserve((array_size(a) + uint32_3) \ byte_count_in_uint32)
-        Dim start As UInt32 = 0
-        Dim [end] As UInt32 = 0
-        Dim [step] As Int32 = 0
-        If BitConverter.IsLittleEndian Then
-            start = 0
-            [end] = array_size(a) - uint32_1
-            [step] = 1
-        Else
-            start = array_size(a) - uint32_1
-            [end] = 0
-            [step] = -1
+        If (array_size(a) Mod byte_count_in_uint32) <> 0 Then
+            ReDim Preserve a(CInt(((array_size(a) + uint32_3) \ byte_count_in_uint32) * byte_count_in_uint32 -
+                             uint32_1))
         End If
-        Dim x As UInt32 = 0
-        Dim j As UInt32 = 0
-        For i As Int32 = CInt(start) To CInt([end]) Step [step]
-            x += (CUInt(a(i)) << assert_which.of(j << bit_shift_in_byte).can_cast_to_int32())
-            j += uint32_1
-            If j = byte_count_in_uint32 Then
-                v.push_back(x)
-                j = 0
-                x = 0
-            End If
-        Next
-        v.push_back(x)
+        assert((array_size(a) Mod byte_count_in_uint32) = 0)
+        v.reserve(array_size(a) \ byte_count_in_uint32)
+        Dim i As UInt32 = 0
+        While i < array_size(a)
+            Dim x As UInt32 = 0
+            assert(little_endian_bytes_uint32(a, x, i))
+            v.push_back(x)
+        End While
         remove_extra_blank()
     End Sub
 

@@ -126,7 +126,7 @@ Public NotInheritable Class big_uint
                     If cmp <= 0 Then
                         remainder.assert_sub(that)
                         If Not result Is Nothing Then
-                            result.add(uint32_1, i)
+                            result.recursive_add(uint32_1, i)
                         End If
                         If cmp = 0 Then
                             that.right_shift(CULng(i) << bit_count_in_uint32_shift)
@@ -143,7 +143,7 @@ Public NotInheritable Class big_uint
                 t32 = CUInt(n)
 #End If
                 If Not result Is Nothing Then
-                    result.add(t32, i)
+                    result.recursive_add(t32, i)
                 End If
                 remainder.assert_sub(that * t32)
             End While
