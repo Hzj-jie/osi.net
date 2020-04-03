@@ -246,8 +246,8 @@ Partial Public NotInheritable Class big_uint
         i = v.size() - uint32_1
         While True
             v.set(i, v.get(i - slot_count))
-            If v.get(i) = 0 Then
-                last_non_zero_position = i + uint32_1
+            If v.get(i) <> 0 Then
+                last_non_zero_position = i
             End If
             If i = slot_count Then
                 Exit While
