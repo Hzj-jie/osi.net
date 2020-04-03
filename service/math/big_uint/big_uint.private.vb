@@ -73,9 +73,23 @@ Partial Public NotInheritable Class big_uint
         Return t.second_uint32()
     End Function
 
+    'add d to the pos as p with carry-over as c
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Function add(ByVal d As UInt32, ByVal p As UInt32) As UInt32
+        'this assert is too costly
+#If DEBUG Then
+        assert(p < v.size())
+#End If
+        Dim t As UInt64 = 0
+        t = v.get(p)
+        t += d
+        v.set(p, t.first_uint32())
+        Return t.second_uint32()
+    End Function
+
     Private Sub recursive_add(ByVal d As UInt32, ByVal p As UInt32)
         While d > 0 AndAlso p < v.size()
-            d = add(d, 0, p)
+            d = add(d, p)
             p += uint32_1
         End While
         If d > 0 Then
@@ -120,7 +134,7 @@ Partial Public NotInheritable Class big_uint
                 c += t.second_uint32()
             Next
             If c > 0 Then
-                c = add(0, c, i + that.v.size())
+                c = add(c, i + that.v.size())
                 assert(c = uint32_0)
             End If
         Next
