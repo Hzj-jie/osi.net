@@ -86,48 +86,56 @@ int main(int argc, char* argv[])
         for(int i = 0; i < sizeof(types) / sizeof(types[0]); i++)
         {
             fprintf(fo,
+                    "    <MethodImpl(method_impl_options.aggressive_inlining)>"
                     "    Public Function array_size(ByVal i() As %s) As UInt32\n"
                     ARRAY_SIZE_0
                     "    End Function\n\n",
                     types[i]);
 
             fprintf(fo,
+                    "    <MethodImpl(method_impl_options.aggressive_inlining)>"
                     "    Public Function array_size_i(ByVal i() As %s) As Int32\n"
                     ARRAY_SIZE_2
                     "    End Function\n\n",
                     types[i]);
 
             fprintf(fo,
+                    "    <MethodImpl(method_impl_options.aggressive_inlining)>"
                     "    Public Function array_long_size(ByVal i() As %s) As UInt64\n"
                     ARRAY_LONG_SIZE_0
                     "    End Function\n\n",
                     types[i]);
 
             fprintf(fo,
+                    "    <MethodImpl(method_impl_options.aggressive_inlining)>"
                     "    Public Function isemptyarray(ByVal i() As %s) As Boolean\n"
                     IS_EMPTY_ARRAY_0
                     "    End Function\n\n",
                     types[i]);
 
             fprintf(fo,
+                    "    <MethodImpl(method_impl_options.aggressive_inlining)>"
                     "    Public Function array_size(ByVal i(,) As %s) As UInt32\n"
                     ARRAY_SIZE_1
                     "    End Function\n\n",
                     types[i]);
 
             fprintf(fo,
+                    "    <MethodImpl(method_impl_options.aggressive_inlining)>"
                     "    Public Function array_size_i(ByVal i(,) As %s) As Int32\n"
                     ARRAY_SIZE_3
                     "    End Function\n\n",
                     types[i]);
 
             fprintf(fo,
+                    "    <MethodImpl(method_impl_options.aggressive_inlining)>"
                     "    Public Function array_long_size(ByVal i(,) As %s) As UInt64\n"
                     ARRAY_LONG_SIZE_1
                     "    End Function\n\n",
                     types[i]);
 
             fprintf(fo,
+                    "    <MethodImpl(method_impl_options.aggressive_inlining)>"
                     "    Public Function isemptyarray(ByVal i(,) As %s) As Boolean\n"
                     IS_EMPTY_ARRAY_1
                     "    End Function\n\n",
@@ -183,42 +191,50 @@ int main(int argc, char* argv[])
         }
         fputs("#End If\n\n", fo);
 
-        fputs("    Public Function array_size(Of T)(ByVal i() As T) As UInt32\n"
+        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>"
+              "    Public Function array_size(Of T)(ByVal i() As T) As UInt32\n"
               ARRAY_SIZE_0
               "    End Function\n\n",
               fo);
 
-        fputs("    Public Function array_size_i(Of T)(ByVal i() As T) As Int32\n"
+        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>"
+              "    Public Function array_size_i(Of T)(ByVal i() As T) As Int32\n"
               ARRAY_SIZE_2
               "    End Function\n\n",
               fo);
 
-        fputs("    Public Function array_long_size(Of T)(ByVal i() As T) As UInt64\n"
+        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>"
+              "    Public Function array_long_size(Of T)(ByVal i() As T) As UInt64\n"
               ARRAY_LONG_SIZE_0
               "    End Function\n\n",
               fo);
 
-        fputs("    Public Function isemptyarray(Of T)(ByVal i() As T) As Boolean\n"
+        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>"
+              "    Public Function isemptyarray(Of T)(ByVal i() As T) As Boolean\n"
               IS_EMPTY_ARRAY_0
               "    End Function\n\n",
               fo);
 
-        fputs("    Public Function array_size(Of T)(ByVal i(,) As T) As UInt32\n"
+        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>"
+              "    Public Function array_size(Of T)(ByVal i(,) As T) As UInt32\n"
               ARRAY_SIZE_1
               "    End Function\n\n",
               fo);
 
-        fputs("    Public Function array_size_i(Of T)(ByVal i(,) As T) As Int32\n"
+        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>"
+              "    Public Function array_size_i(Of T)(ByVal i(,) As T) As Int32\n"
               ARRAY_SIZE_3
               "    End Function\n\n",
               fo);
 
-        fputs("    Public Function array_long_size(Of T)(ByVal i(,) As T) As UInt64\n"
+        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>"
+              "    Public Function array_long_size(Of T)(ByVal i(,) As T) As UInt64\n"
               ARRAY_LONG_SIZE_1
               "    End Function\n\n",
               fo);
 
-        fputs("    Public Function isemptyarray(Of T)(ByVal i(,) As T) As Boolean\n"
+        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>"
+              "    Public Function isemptyarray(Of T)(ByVal i(,) As T) As Boolean\n"
               IS_EMPTY_ARRAY_1
               "    End Function\n\n",
               fo);

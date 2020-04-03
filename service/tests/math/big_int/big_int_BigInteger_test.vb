@@ -31,7 +31,7 @@ Public NotInheritable Class big_int_BigInteger_test
         assertion.equal(a - b, big_int.from_BigInteger(a.as_BigInteger() - b.as_BigInteger()))
     End Sub
 
-    <repeat(50000)>
+    <repeat(100000)>
     <test>
     Private Shared Sub multiply()
         Dim a As big_int = Nothing
@@ -41,7 +41,7 @@ Public NotInheritable Class big_int_BigInteger_test
         assertion.equal(a * b, big_int.from_BigInteger(a.as_BigInteger() * b.as_BigInteger()))
     End Sub
 
-    <repeat(10000)>
+    <repeat(100000)>
     <test>
     Private Shared Sub divide()
         Dim a As big_int = Nothing
@@ -54,7 +54,14 @@ Public NotInheritable Class big_int_BigInteger_test
         assertion.equal(a \ b, big_int.from_BigInteger(a.as_BigInteger() / b.as_BigInteger()))
     End Sub
 
-    <repeat(10000)>
+    <command_line_specified>
+    <repeat(10000000)>
+    <test>
+    Private Shared Sub divide_large()
+        divide()
+    End Sub
+
+    <repeat(100000)>
     <test>
     Private Shared Sub modulus()
         Dim a As big_int = Nothing
@@ -65,6 +72,13 @@ Public NotInheritable Class big_int_BigInteger_test
             b = big_int.random()
         End While
         assertion.equal(a Mod b, big_int.from_BigInteger(a.as_BigInteger() Mod b.as_BigInteger()))
+    End Sub
+
+    <command_line_specified>
+    <repeat(10000000)>
+    <test>
+    Private Shared Sub modulus_large()
+        modulus()
     End Sub
 
     <repeat(100)>

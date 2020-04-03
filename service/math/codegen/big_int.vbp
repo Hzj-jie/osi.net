@@ -45,6 +45,7 @@ Partial Public NotInheritable Class ##CLASS_NAME##
         n = negative()
         Dim r As ##IMPL_CLASS## = Nothing
         d.divide(that.d, divide_by_zero, r)
+        assert(Not divide_by_zero)
         remainder = share(r)
         confirm_signal()
         If n Then
@@ -138,12 +139,15 @@ Partial Public NotInheritable Class ##CLASS_NAME##
         Return modulus(share(that), divide_by_zero)
     End Function
 
-    ' TODO: A better modulus implementation without divide.
     Public Function modulus(ByVal that As ##CLASS_NAME##,
                             ByRef divide_by_zero As Boolean) As ##CLASS_NAME##
-        Dim remainder As ##CLASS_NAME## = Nothing
-        divide(that, remainder, divide_by_zero)
-        assert(replace_by(remainder))
+        If that Is Nothing OrElse that.is_zero() Then
+            divide_by_zero = True
+            Return Me
+        End If
+        d.modulus(that.d, divide_by_zero)
+        assert(Not divide_by_zero)
+        confirm_signal()
         Return Me
     End Function
 
@@ -230,9 +234,8 @@ Partial Public NotInheritable Class ##CLASS_NAME##
 
     Public Shared Operator Mod(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As ##CLASS_NAME##
         Dim q As ##CLASS_NAME## = Nothing
-        Dim r As ##CLASS_NAME## = Nothing
         q = New ##CLASS_NAME##(this)
-        q.divide(that, r)
-        Return r
+        q.modulus(that)
+        Return q
     End Operator
 End Class

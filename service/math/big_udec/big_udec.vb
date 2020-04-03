@@ -107,6 +107,9 @@ Partial Public NotInheritable Class big_udec
         If n Is Nothing OrElse d Is Nothing Then
             Return False
         End If
+        If d.is_zero() Then
+            Return False
+        End If
         assert(Me.n.replace_by(n))
         assert(Me.d.replace_by(d))
         reduce_fraction(Me.n, Me.d)

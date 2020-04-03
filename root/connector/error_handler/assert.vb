@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
 Public Module _assert
@@ -34,27 +35,33 @@ Public Module _assert
         Return Not isdebugmode() OrElse assert_failed("debug assert", msgs)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function debug_assert(ByVal v As Boolean) As Boolean
         Return v OrElse debug_assert_failed(Nothing)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function debug_assert(ByVal v As Boolean, ByVal ParamArray msgs() As Object) As Boolean
         Return v OrElse debug_assert_failed(msgs)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function assert(ByVal v As Boolean) As Boolean
         Return v OrElse assert_failed(Nothing)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function assert(ByVal v As Boolean, ByVal ParamArray msgs() As Object) As Boolean
         Return v OrElse assert_failed(msgs)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function assert_not_nothing_return(Of T)(ByVal i As T, ByVal ParamArray msgs() As Object) As T
         assert(Not i Is Nothing, msgs)
         Return i
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function assert_return(Of T)(ByVal v As Boolean, ByVal i As T, ByVal ParamArray msgs() As Object) As T
         assert(v, msgs)
         Return i

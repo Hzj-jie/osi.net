@@ -102,10 +102,12 @@ Partial Public NotInheritable Class big_dec
     End Function
 
     Public Function multiply(ByVal that As big_dec) As big_dec
-        If Not that Is Nothing Then
-            d.multiply(that.d)
-            set_signal(positive() = that.positive())
+        If that Is Nothing OrElse that.is_zero() Then
+            set_zero()
+            Return Me
         End If
+        d.multiply(that.d)
+        set_signal(positive() = that.positive())
         Return Me
     End Function
 
@@ -570,6 +572,13 @@ Partial Public NotInheritable Class big_dec
         End If
         Return False
     End Function
+
+    Public Shared Function parse(ByVal s As String,
+                                 Optional ByVal base As Byte = default_str_base) As big_dec
+        Dim r As big_dec = Nothing
+        assert(parse(s, r, base))
+        Return r
+    End Function
 End Class
 
 'finish big_str.vbp --------
@@ -630,7 +639,8 @@ Partial Public NotInheritable Class big_dec
         Return r
     End Function
 
-    Public Shared Function swap(ByVal this As big_dec, ByVal that As big_dec) As Boolean
+    Public Shared Function swap(ByVal this As big_dec,
+                                ByVal that As big_dec) As Boolean
         If this Is Nothing OrElse that Is Nothing Then
             Return False
         End If
@@ -638,6 +648,10 @@ Partial Public NotInheritable Class big_dec
         Return assert(big_udec.swap(this.d, that.d))
     End Function
 
+    ' replace_by does not need to return Me, because,
+    ' 1. Some replace_by returns boolean, the signature should be kept consistent.
+    ' 2. ???.replace_by(...) equals to new ???(...). replace_by is unlikely to be an intermediate
+    '    operation.
     Public Sub replace_by(ByVal i As Int32)
         If i >= 0 Then
             replace_by(CUInt(i))
@@ -727,22 +741,30 @@ Partial Public NotInheritable Class big_dec
         Return Not signal() AndAlso Not is_zero()
     End Function
 
-    Public Sub set_positive()
+    Public Function set_positive() As big_dec
         set_signal(True)
-    End Sub
+        Return Me
+    End Function
 
-    Public Sub set_negative()
+    Public Function abs() As big_dec
+        Return set_positive()
+    End Function
+
+    Public Function set_negative() As big_dec
         set_signal(False)
-    End Sub
+        Return Me
+    End Function
 
-    Public Sub reverse_signal()
+    Public Function reverse_signal() As big_dec
         set_signal(Not positive())
-    End Sub
+        Return Me
+    End Function
 
-    Public Sub set_zero()
+    Public Function set_zero() As big_dec
         d.set_zero()
         set_positive()
-    End Sub
+        Return Me
+    End Function
 
     Public Function is_zero() As Boolean
         'just make sure there is no logic error in the class,
@@ -750,19 +772,21 @@ Partial Public NotInheritable Class big_dec
         Return d.is_zero() AndAlso assert(signal())
     End Function
 
-    Public Sub set_one()
+    Public Function set_one() As big_dec
         d.set_one()
         set_positive()
-    End Sub
+        Return Me
+    End Function
 
     Public Function is_one() As Boolean
         Return positive() AndAlso d.is_one()
     End Function
 
-    Public Sub set_negative_one()
+    Public Function set_negative_one() As big_dec
         d.set_one()
         set_negative()
-    End Sub
+        Return Me
+    End Function
 
     Public Function is_negative_one() As Boolean
         Return negative() AndAlso d.is_one()

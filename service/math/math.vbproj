@@ -28,6 +28,7 @@
     <DocumentationFile>
     </DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -71,6 +72,7 @@
     <Compile Include="big_uint\big_uint.cast.vb" />
     <Compile Include="big_uint\big_uint.compare.vb" />
     <Compile Include="big_uint\big_uint.constants.vb" />
+    <Compile Include="big_uint\big_uint.divide.vb" />
     <Compile Include="big_uint\big_uint.implement.vb" />
     <Compile Include="big_uint\big_uint.inplace.vb" />
     <Compile Include="big_uint\big_uint.operator.vb" />

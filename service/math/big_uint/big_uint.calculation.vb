@@ -4,6 +4,8 @@ Option Infer Off
 Option Strict On
 
 #Const GCD_USE_SUCCESSIVE_DIVISION = False
+#Const USE_MODULUS_BIT = False
+#Const USE_DIVIDE_BIT = False
 
 Imports osi.root.connector
 Imports osi.root.constants
@@ -24,11 +26,11 @@ Partial Public NotInheritable Class big_uint
         Dim c As UInt32 = 0
         Dim i As UInt32 = 0
         For i = 0 To that.v.size() - uint32_1
-            add(that.v.get(i), c, i)
+            c = add(that.v.get(i), c, i)
             assert(c = 0 OrElse c = 1)
         Next
         For i = i To v.size() - uint32_1
-            add(0, c, i)
+            c = add(0, c, i)
             assert(c = 0 OrElse c = 1)
             If c = 0 Then
                 Exit For
@@ -41,28 +43,19 @@ Partial Public NotInheritable Class big_uint
     End Function
 
     Public Function [sub](ByVal that As big_uint) As big_uint
-        Dim c As UInt32 = 0
-        [sub](that, c)
-        assert(c = 0 OrElse c = 1)
-        If c = 1 Then
+        If sub_with_overflow(that) Then
             Throw overflow()
         End If
         Return Me
     End Function
 
     Public Function assert_sub(ByVal that As big_uint) As big_uint
-        Dim c As UInt32 = 0
-        [sub](that, c)
-        assert(c = 0 OrElse c = 1)
-        assert(c = 0)
+        assert(Not sub_with_overflow(that))
         Return Me
     End Function
 
     Public Function [sub](ByVal that As big_uint, ByRef overflow As Boolean) As big_uint
-        Dim c As UInt32 = 0
-        [sub](that, c)
-        assert(c = 0 OrElse c = 1)
-        overflow = (c = 1)
+        overflow = sub_with_overflow(that)
         Return Me
     End Function
 
@@ -74,13 +67,69 @@ Partial Public NotInheritable Class big_uint
     Public Function divide(ByVal that As big_uint,
                            ByRef divide_by_zero As Boolean,
                            Optional ByRef remainder As big_uint = Nothing) As big_uint
-        divide(that, remainder, divide_by_zero)
+        If that Is Nothing OrElse that.is_zero() Then
+            divide_by_zero = True
+            Return Me
+        End If
+        divide_by_zero = False
+        If is_zero() OrElse that.is_one() Then
+            remainder = big_uint.zero()
+            Return Me
+        End If
+        If is_one() Then
+            remainder = big_uint.one()
+            set_zero()
+            Return Me
+        End If
+        If that.power_of_2() Then
+            Dim l As UInt64 = 0
+            l = that.bit_count() - uint64_1
+            remainder = Me.CloneT().[and](that - uint32_1)
+            right_shift(l)
+            Return Me
+        End If
+        If that.fit_uint32() Then
+            Dim r As UInt32 = 0
+            divide(that.as_uint32(), r, divide_by_zero)
+            assert(Not divide_by_zero)
+            remainder = New big_uint(r)
+            Return Me
+        End If
+        assert(Not that.is_zero_or_one())
+        remainder = move(Me)
+        set_zero()
+        If remainder.less(that) Then
+            Return Me
+        End If
+
+#If DEBUG Then
+        assert(remainder.bit_count() >= that.bit_count())
+#End If
+
+        'make sure the that will not be impacted during the calculation
+#If DEBUG Then
+        Dim original_that As big_uint = Nothing
+        original_that = that
+        that = that.CloneT()
+#End If
+
+#If USE_DIVIDE_BIT Then
+        divide_bit(that, remainder)
+#Else
+        divide_uint(that, remainder)
+#End If
+        assert(remove_extra_blank() <= 1)
+
+#If DEBUG Then
+        assert(remainder.less(original_that))
+        assert(that.equal(original_that))
+#End If
         Return Me
     End Function
 
     Public Function divide(ByVal that As big_uint, Optional ByRef remainder As big_uint = Nothing) As big_uint
         Dim r As Boolean = False
-        divide(that, remainder, r)
+        divide(that, r, remainder)
         If r Then
             Throw divide_by_zero()
         End If
@@ -89,7 +138,7 @@ Partial Public NotInheritable Class big_uint
 
     Public Function assert_divide(ByVal that As big_uint, Optional ByRef remainder As big_uint = Nothing) As big_uint
         Dim r As Boolean = False
-        divide(that, remainder, r)
+        divide(that, r, remainder)
         assert(Not r)
         Return Me
     End Function
@@ -193,7 +242,7 @@ Partial Public NotInheritable Class big_uint
                 t = r
                 t <<= bit_count_in_uint32
                 t = t Or v.get(i)
-                r = CUInt(t Mod that)
+                r = (t Mod that).first_uint32()
             End If
             If i = 0 Then
                 Exit While
@@ -241,26 +290,13 @@ Partial Public NotInheritable Class big_uint
         If less(that) Then
             Return Me
         End If
-        Dim dl As UInt64 = 0
-        dl = bit_count() - that.bit_count()
-        that = that.CloneT()
-        that.left_shift(dl)
-        While True
-            Dim cmp As Int32 = 0
-            cmp = compare(that)
-            If cmp = 0 Then
-                set_zero()
-                Return Me
-            End If
-            If cmp > 0 Then
-                assert_sub(that)
-            End If
-            If dl = uint64_0 Then
-                Exit While
-            End If
-            dl -= uint64_1
-            that.right_shift(1)
-        End While
+
+#If USE_MODULUS_BIT Then
+        modulus_bit(that)
+#Else
+        modulus_uint(that)
+#End If
+
         Return Me
     End Function
 
