@@ -242,7 +242,7 @@ Partial Public NotInheritable Class big_uint
                 t = r
                 t <<= bit_count_in_uint32
                 t = t Or v.get(i)
-                r = (t Mod that).first_uint32()
+                r = CUInt(t Mod that)
             End If
             If i = 0 Then
                 Exit While

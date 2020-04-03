@@ -10,7 +10,7 @@ Public Module _int64_uint32
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function first_uint32(ByVal this As UInt64) As UInt32
-        Dim v As union_int64 = Nothing
+        Dim v As union_int64
         v.u_value = this
         Return v.first_u32
     End Function
@@ -18,7 +18,7 @@ Public Module _int64_uint32
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function second_uint32(ByVal this As UInt64) As UInt32
-        Dim v As union_int64 = Nothing
+        Dim v As union_int64
         v.u_value = this
         Return v.second_u32
     End Function
@@ -26,7 +26,7 @@ Public Module _int64_uint32
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function first_uint32(ByVal this As Int64) As UInt32
-        Dim v As union_int64 = Nothing
+        Dim v As union_int64
         v.s_value = this
         Return v.first_u32
     End Function
@@ -34,7 +34,7 @@ Public Module _int64_uint32
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function second_uint32(ByVal this As Int64) As UInt32
-        Dim v As union_int64 = Nothing
+        Dim v As union_int64
         v.s_value = this
         Return v.second_u32
     End Function

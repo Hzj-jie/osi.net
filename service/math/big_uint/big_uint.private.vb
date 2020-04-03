@@ -27,7 +27,7 @@ Partial Public NotInheritable Class big_uint
         t = -c
         t += v.get(p)
         t -= d
-        v.set(p, t.first_uint32())
+        v.set(p, CUInt(t And max_uint32))
         Return If(t < 0, uint32_1, uint32_0)
     End Function
 
@@ -69,8 +69,8 @@ Partial Public NotInheritable Class big_uint
         t = c
         t += v.get(p)
         t += d
-        v.set(p, t.first_uint32())
-        Return t.second_uint32()
+        v.set(p, CUInt(t And max_uint32))
+        Return CUInt(t >> bit_count_in_uint32)
     End Function
 
     'add d to the pos as p with carry-over as c
@@ -83,8 +83,8 @@ Partial Public NotInheritable Class big_uint
         Dim t As UInt64 = 0
         t = v.get(p)
         t += d
-        v.set(p, t.first_uint32())
-        Return t.second_uint32()
+        v.set(p, CUInt(t And max_uint32))
+        Return CUInt(t >> bit_count_in_uint32)
     End Function
 
     Private Sub recursive_add(ByVal d As UInt32, ByVal p As UInt32)
@@ -130,13 +130,11 @@ Partial Public NotInheritable Class big_uint
                 Dim t As UInt64 = 0
                 t = this.v.get(i)
                 t *= that.v.get(j)
-                c = add(t.first_uint32(), c, i + j)
-                c += t.second_uint32()
+                c = add(CUInt(t And max_uint32), c, i + j)
+                c += CUInt(t >> bit_count_in_uint32)
             Next
-            If c > 0 Then
-                c = add(c, i + that.v.size())
-                assert(c = uint32_0)
-            End If
+            assert(v.get(i + that.v.size()) = 0)
+            v.set(i + that.v.size(), c)
         Next
         assert(remove_extra_blank() <= 1)
     End Sub
@@ -235,7 +233,6 @@ Partial Public NotInheritable Class big_uint
 
     'fake a push_front action for vector and return the last non-zero position
     Private Function left_shift_slot_till(ByVal slot_count As UInt32) As UInt32
-        assert(slot_count > 0)
         If slot_count = 0 Then
             Return Me.last_non_zero_position()
         End If

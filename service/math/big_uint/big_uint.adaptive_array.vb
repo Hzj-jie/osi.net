@@ -128,7 +128,6 @@ Private Class adaptive_array_uint32
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function back() As UInt32
-        assert(size() >= uint32_1)
         Return d(CInt(size() - uint32_1))
     End Function
 
@@ -146,7 +145,6 @@ Private Class adaptive_array_uint32
     End Sub
 
     Public Sub pop_back()
-        assert(s >= uint32_1)
         s -= uint32_1
         d(CInt(size())) = default_value
     End Sub
