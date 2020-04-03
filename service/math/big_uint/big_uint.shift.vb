@@ -18,12 +18,8 @@ Partial Public NotInheritable Class big_uint
         If size = 0 OrElse is_zero() Then
             Return Me
         End If
-        Dim slot_count As UInt32 = 0
-        slot_count = assert_which.of(size >> bit_count_in_uint32_shift).can_cast_to_uint32()
         Dim till As UInt32 = 0
-        till = last_non_zero_position()
-        till += slot_count
-        left_shift_slot(slot_count)
+        till = left_shift_slot_till(assert_which.of(size >> bit_count_in_uint32_shift).can_cast_to_uint32())
         Dim ls As UInt32 = 0
         ls = assert_which.of(size And bit_count_in_uint32_mask).can_cast_to_uint32()
         If ls = 0 Then

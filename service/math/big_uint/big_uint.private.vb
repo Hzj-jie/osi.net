@@ -220,15 +220,30 @@ Partial Public NotInheritable Class big_uint
     End Sub
 
     'fake a push_front action for vector and return the last non-zero position
-    Private Sub left_shift_slot(ByVal slot_count As UInt32)
-        Dim last_non_zero_position As UInt32 = 0
+    Private Function left_shift_slot_till(ByVal slot_count As UInt32) As UInt32
+        assert(slot_count > 0)
         If slot_count = 0 Then
-            Return
+            Return Me.last_non_zero_position()
         End If
+
+        Dim last_non_zero_position As UInt32 = 0
         v.resize(slot_count + v.size())
-        memmove(v.data(), slot_count, v.data(), 0, v.size() - slot_count)
+        Dim i As UInt32 = 0
+        i = v.size() - uint32_1
+        While True
+            v.set(i, v.get(i - slot_count))
+            If v.get(i) = 0 Then
+                last_non_zero_position = i + uint32_1
+            End If
+            If i = slot_count Then
+                Exit While
+            End If
+            i -= uint32_1
+        End While
+        assert(last_non_zero_position >= slot_count AndAlso last_non_zero_position < v.size())
         memclr(v.data(), 0, slot_count)
-    End Sub
+        Return last_non_zero_position
+    End Function
 
     Private Function last_non_zero_position() As UInt32
         Dim i As UInt32 = 0
