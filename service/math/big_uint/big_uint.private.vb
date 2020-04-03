@@ -18,7 +18,7 @@ Partial Public NotInheritable Class big_uint
 
     'sub d at position p with carry-over as c
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Sub [sub](ByVal d As UInt32, ByRef c As UInt32, ByVal p As UInt32)
+    Private Function [sub](ByVal d As UInt32, ByVal c As UInt32, ByVal p As UInt32) As UInt32
         'this assert is too costly
 #If DEBUG Then
         assert(p < v.size())
@@ -28,14 +28,14 @@ Partial Public NotInheritable Class big_uint
         t += v.get(p)
         t -= d
         v.set(p, t.first_uint32())
-        c = If(t < 0, uint32_1, uint32_0)
-    End Sub
+        Return If(t < 0, uint32_1, uint32_0)
+    End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Sub [sub](ByVal that As big_uint, ByRef c As UInt32)
-        c = 0
+    Private Function sub_with_overflow(ByVal that As big_uint) As Boolean
+        Dim c As UInt32 = 0
         If that Is Nothing OrElse that.is_zero() Then
-            Return
+            Return False
         End If
         If that.v.size() > v.size() Then
             v.resize(that.v.size())
@@ -43,22 +43,24 @@ Partial Public NotInheritable Class big_uint
         assert(v.size() > 0 AndAlso that.v.size() > 0)
         Dim i As UInt32 = 0
         For i = 0 To that.v.size() - uint32_1
-            [sub](that.v.get(i), c, i)
+            c = [sub](that.v.get(i), c, i)
         Next
         If c > 0 Then
             For i = i To v.size() - uint32_1
-                [sub](0, c, i)
+                c = [sub](0, c, i)
                 If c = 0 Then
                     Exit For
                 End If
             Next
         End If
         remove_extra_blank()
-    End Sub
+        assert(c = 0 OrElse c = 1)
+        Return (c = 1)
+    End Function
 
     'add d to the pos as p with carry-over as c
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Sub add(ByVal d As UInt32, ByRef c As UInt32, ByVal p As UInt32)
+    Private Function add(ByVal d As UInt32, ByVal c As UInt32, ByVal p As UInt32) As UInt32
         'this assert is too costly
 #If DEBUG Then
         assert(p < v.size())
@@ -68,14 +70,12 @@ Partial Public NotInheritable Class big_uint
         t += v.get(p)
         t += d
         v.set(p, t.first_uint32())
-        c = t.second_uint32()
-    End Sub
+        Return t.second_uint32()
+    End Function
 
     Private Sub recursive_add(ByVal d As UInt32, ByVal p As UInt32)
         While d > 0 AndAlso p < v.size()
-            Dim nd As UInt32 = 0
-            add(d, nd, p)
-            d = nd
+            d = add(d, 0, p)
             p += uint32_1
         End While
         If d > 0 Then
@@ -116,11 +116,11 @@ Partial Public NotInheritable Class big_uint
                 Dim t As UInt64 = 0
                 t = this.v.get(i)
                 t *= that.v.get(j)
-                add(t.first_uint32(), c, i + j)
+                c = add(t.first_uint32(), c, i + j)
                 c += t.second_uint32()
             Next
             If c > 0 Then
-                add(0, c, i + that.v.size())
+                c = add(0, c, i + that.v.size())
                 assert(c = uint32_0)
             End If
         Next
@@ -219,34 +219,28 @@ Partial Public NotInheritable Class big_uint
         divide_uint(that, Me, Nothing)
     End Sub
 
-    'fake a push_front action for vector
-    Private Sub left_shift_slot(ByVal slot_count As UInt32, ByRef last_no_zero_position As UInt32)
+    'fake a push_front action for vector and return the last non-zero position
+    Private Sub left_shift_slot(ByVal slot_count As UInt32)
+        Dim last_non_zero_position As UInt32 = 0
         If slot_count = 0 Then
             Return
         End If
         v.resize(slot_count + v.size())
-        Dim i As UInt32 = 0
-        i = v.size() - uint32_1
-        While True
-            v.set(i, v.get(i - slot_count))
-            If v.get(i) <> 0 Then
-                last_no_zero_position = i
-            End If
-            If i = slot_count Then
-                Exit While
-            End If
-            i -= uint32_1
-        End While
-        assert(last_no_zero_position >= slot_count AndAlso last_no_zero_position < v.size())
-        i = slot_count - uint32_1
-        While True
-            v.set(i, uint32_0)
-            If i = 0 Then
-                Exit While
-            End If
-            i -= uint32_1
-        End While
+        memmove(v.data(), slot_count, v.data(), 0, v.size() - slot_count)
+        memclr(v.data(), 0, slot_count)
     End Sub
+
+    Private Function last_non_zero_position() As UInt32
+        Dim i As UInt32 = 0
+        While i < v.size()
+            If v.get(i) <> 0 Then
+                Return i
+            End If
+            i += uint32_1
+        End While
+        assert(False)
+        Return max_uint32
+    End Function
 
     'fake a pop_front action for vector
     Private Sub right_shift_slot(ByVal slot_count As UInt32)

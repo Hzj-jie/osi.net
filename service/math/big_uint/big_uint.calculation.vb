@@ -26,11 +26,11 @@ Partial Public NotInheritable Class big_uint
         Dim c As UInt32 = 0
         Dim i As UInt32 = 0
         For i = 0 To that.v.size() - uint32_1
-            add(that.v.get(i), c, i)
+            c = add(that.v.get(i), c, i)
             assert(c = 0 OrElse c = 1)
         Next
         For i = i To v.size() - uint32_1
-            add(0, c, i)
+            c = add(0, c, i)
             assert(c = 0 OrElse c = 1)
             If c = 0 Then
                 Exit For
@@ -43,28 +43,19 @@ Partial Public NotInheritable Class big_uint
     End Function
 
     Public Function [sub](ByVal that As big_uint) As big_uint
-        Dim c As UInt32 = 0
-        [sub](that, c)
-        assert(c = 0 OrElse c = 1)
-        If c = 1 Then
+        If sub_with_overflow(that) Then
             Throw overflow()
         End If
         Return Me
     End Function
 
     Public Function assert_sub(ByVal that As big_uint) As big_uint
-        Dim c As UInt32 = 0
-        [sub](that, c)
-        assert(c = 0 OrElse c = 1)
-        assert(c = 0)
+        assert(Not sub_with_overflow(that))
         Return Me
     End Function
 
     Public Function [sub](ByVal that As big_uint, ByRef overflow As Boolean) As big_uint
-        Dim c As UInt32 = 0
-        [sub](that, c)
-        assert(c = 0 OrElse c = 1)
-        overflow = (c = 1)
+        overflow = sub_with_overflow(that)
         Return Me
     End Function
 
