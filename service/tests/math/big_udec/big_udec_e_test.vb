@@ -71,7 +71,7 @@ Public NotInheritable Class big_udec_e_test
             c.assert_divide(New big_udec(i))
             s.add(c)
 
-            If (i Mod 100) = 0 Then
+            If (i Mod 1000) = 0 Then
                 s.fully_reduce_fraction()
                 raise_error(error_type.warning, "@ ", i, " -> ", s.fractional_str())
             End If
