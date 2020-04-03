@@ -223,6 +223,37 @@ Public NotInheritable Class big_udec_pi_test
         Next
     End Sub
 
+    <test>
+    Private Shared Sub calculate_pi_arctangent_500()
+        Dim s As big_udec = Nothing
+        s = big_udec.fraction(2, 1)
+        Dim c As big_udec = Nothing
+        c = big_udec.fraction(2, 3)
+        For i As UInt32 = 2 To 500
+            s.add(c)
+            c.multiply(big_udec.fraction(i, (i << 1) + uint32_1))
+        Next
+        assertion.equal(s.as_str().with_upure_length(151), constants.pi_1m().Substring(0, 153))
+    End Sub
+
+    <command_line_specified>
+    <test>
+    Private Shared Sub calculate_pi_arctangent()
+        Dim s As big_udec = Nothing
+        s = big_udec.fraction(2, 1)
+        Dim c As big_udec = Nothing
+        c = big_udec.fraction(2, 3)
+        For i As UInt32 = 2 To max_uint32 - uint32_1
+            s.add(c)
+            c.multiply(big_udec.fraction(i, (i << 1) + uint32_1))
+
+            If (i Mod 10000) = 0 Then
+                s.fully_reduce_fraction()
+                raise_error(error_type.warning, "@ ", i, " -> ", s.fractional_str())
+            End If
+        Next
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

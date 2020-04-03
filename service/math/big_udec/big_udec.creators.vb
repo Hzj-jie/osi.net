@@ -23,4 +23,22 @@ Partial Public NotInheritable Class big_udec
         assert(fraction(numerator, denominator, r))
         Return r
     End Function
+
+    Public Shared Function fraction(ByVal numerator As Int32,
+                                    ByVal denominator As Int32,
+                                    ByRef o As big_udec) As Boolean
+        If numerator < 0 AndAlso denominator < 0 Then
+            Return fraction(CUInt(-numerator), CUInt(-denominator), o)
+        End If
+        If numerator >= 0 AndAlso denominator >= 0 Then
+            Return fraction(CUInt(numerator), CUInt(denominator), o)
+        End If
+        Return False
+    End Function
+
+    Public Shared Function fraction(ByVal numerator As Int32, ByVal denominator As Int32) As big_udec
+        Dim r As big_udec = Nothing
+        assert(fraction(numerator, denominator, r))
+        Return r
+    End Function
 End Class
