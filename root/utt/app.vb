@@ -57,7 +57,7 @@ Public Module _app
                              thread_pool().thread_count() +
                              queue_runner.thread_count +
                              5)
-        assertion.less_or_equal(gc_total_memory(), 64 * 1024 * 1024)
+        assertion.less_or_equal(gc_total_memory(), 128 * 1024 * 1024)
         If assertion.failure_count() > 0 OrElse expectation.failure_count() > 0 Then
             If assertion.failure_count() > 0 Then
                 failed("failure count = ", assertion.failure_count())
