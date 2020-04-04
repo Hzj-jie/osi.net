@@ -10,6 +10,7 @@ Partial Public NotInheritable Class big_uint
         Return b > 1 AndAlso b <= support_str_base
     End Function
 
+    ' TODO: This method should be used somewhere everywhere.
     Private Sub assert_no_extra_blank_position()
         assert(v.empty() OrElse v.back() > 0)
     End Sub

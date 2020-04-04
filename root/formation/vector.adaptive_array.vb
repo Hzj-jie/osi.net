@@ -19,7 +19,7 @@ Private Class adaptive_array_t
     Implements ICloneable, ICloneable(Of adaptive_array_t), IComparable(Of adaptive_array_t), IComparable
 
     Private Const size_limitation As UInt32 = (max_uint32 >> 1)
-    Private Shared ReadOnly default_value As T = Nothing
+    'Private Shared ReadOnly default_value As T = Nothing
 
     Private Shared Function expected_capacity(ByVal n As UInt32) As UInt32
         assert(n <= max_array_size)
@@ -132,10 +132,13 @@ Private Class adaptive_array_t
     End Function
 
     Public Sub clear()
+        s = uint32_0
+#If 0 Then
         If size() > uint32_0 Then
             memclr(d, uint32_0, s)
             s = uint32_0
         End If
+#End If
     End Sub
 
     Public Sub push_back(ByVal v As T)
@@ -146,7 +149,7 @@ Private Class adaptive_array_t
 
     Public Sub pop_back()
         s -= uint32_1
-        d(CInt(size())) = default_value
+        'd(CInt(size())) = default_value
     End Sub
 
     Public Sub reserve(ByVal n As UInt32)
@@ -165,8 +168,8 @@ Private Class adaptive_array_t
     Public Sub resize(ByVal n As UInt32)
         If capacity() < n Then
             reserve(n)
-        ElseIf size() > n Then
-            memclr(d, n, size() - n)
+        'ElseIf size() > n Then
+            'memclr(d, n, size() - n)
         End If
         s = n
     End Sub

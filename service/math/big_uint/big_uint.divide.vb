@@ -9,6 +9,7 @@ Imports osi.root.constants
 
 Public NotInheritable Class big_uint
     'store the result of me / that in me, and remainder will be the remainder
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub divide(ByVal that As UInt32, ByRef remainder As UInt32, ByRef divide_by_zero As Boolean)
         If that = 0 Then
             divide_by_zero = True
@@ -49,6 +50,7 @@ Public NotInheritable Class big_uint
         assert(remainder < that)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Sub divide_bit(ByVal that As big_uint,
                                   ByVal remainder As big_uint,
                                   ByVal result As big_uint)
@@ -100,6 +102,7 @@ Public NotInheritable Class big_uint
         End While
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Sub divide_uint(ByVal that As big_uint,
                                    ByVal remainder As big_uint,
                                    ByVal result As big_uint)
@@ -111,9 +114,6 @@ Public NotInheritable Class big_uint
         that.left_shift(CULng(i) << bit_count_in_uint32_shift)
         While True
             While True
-                If remainder.uint32_size() < that.uint32_size() Then
-                    Exit While
-                End If
                 Dim n As UInt64 = 0
                 Dim d As UInt64 = 0
                 select_significant_divide_fraction(remainder, that, n, d)
@@ -146,6 +146,9 @@ Public NotInheritable Class big_uint
                     result.recursive_add(t32, i)
                 End If
                 remainder.assert_sub(that * t32)
+                If remainder.uint32_size() < that.uint32_size() Then
+                    Exit While
+                End If
             End While
 
             If i = 0 Then
@@ -162,7 +165,9 @@ Public NotInheritable Class big_uint
                                                           ByVal that As big_uint,
                                                           ByRef n As UInt64,
                                                           ByRef d As UInt64)
+#If DEBUG Then
         assert(remainder.uint32_size() >= that.uint32_size())
+#End If
         If remainder.uint32_size() = that.uint32_size() Then
             If remainder.uint32_size() > 1 Then
                 n = remainder.highest_uint64()
