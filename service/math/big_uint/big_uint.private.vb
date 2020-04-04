@@ -32,6 +32,25 @@ Partial Public NotInheritable Class big_uint
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Function recursive_sub(ByVal c As UInt32, ByVal p As UInt32) As Boolean
+        If c = 0 Then
+            Return False
+        End If
+        While p < v.size()
+            Dim t As Int64 = 0
+            t -= c
+            t += v.get(p)
+            v.set(p, CUInt(t And max_uint32))
+            c = If(t < 0, uint32_1, uint32_0)
+            If c = 0 Then
+                Return False
+            End If
+            p += uint32_1
+        End While
+        Return True
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function sub_with_overflow(ByVal that As big_uint) As Boolean
         Dim c As UInt32 = 0
         If that Is Nothing OrElse that.is_zero() Then
@@ -45,17 +64,10 @@ Partial Public NotInheritable Class big_uint
         For i = 0 To that.v.size() - uint32_1
             c = [sub](that.v.get(i), c, i)
         Next
-        If c > 0 Then
-            For i = i To v.size() - uint32_1
-                c = [sub](0, c, i)
-                If c = 0 Then
-                    Exit For
-                End If
-            Next
-        End If
+        Dim r As Boolean = False
+        r = recursive_sub(c, i)
         remove_extra_blank()
-        assert(c = 0 OrElse c = 1)
-        Return (c = 1)
+        Return r
     End Function
 
     'add d to the pos as p with carry-over as c
@@ -73,29 +85,23 @@ Partial Public NotInheritable Class big_uint
         Return CUInt(t >> bit_count_in_uint32)
     End Function
 
-    'add d to the pos as p with carry-over as c
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function add(ByVal d As UInt32, ByVal p As UInt32) As UInt32
-        'this assert is too costly
-#If DEBUG Then
-        assert(p < v.size())
-#End If
-        Dim t As UInt64 = 0
-        t = v.get(p)
-        t += d
-        v.set(p, CUInt(t And max_uint32))
-        Return CUInt(t >> bit_count_in_uint32)
-    End Function
-
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub recursive_add(ByVal d As UInt32, ByVal p As UInt32)
-        While d > 0 AndAlso p < v.size()
-            d = add(d, p)
+        If d = 0 Then
+            Return
+        End If
+        While p < v.size()
+            Dim t As UInt64 = 0
+            t = v.get(p)
+            t += d
+            v.set(p, CUInt(t And max_uint32))
+            d = CUInt(t >> bit_count_in_uint32)
+            If d = 0 Then
+                Return
+            End If
             p += uint32_1
         End While
-        If d > 0 Then
-            v.push_back(d)
-        End If
+        v.push_back(d)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -142,7 +148,7 @@ Partial Public NotInheritable Class big_uint
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Sub multiply_uint32(ByVal this As big_uint, ByVal that As big_uint)
+    Private Sub multiply_uint(ByVal this As big_uint, ByVal that As big_uint)
         v.resize(this.v.size() + that.v.size())
         assert(this.v.size() > 0 AndAlso that.v.size() > 0)
         For i As UInt32 = 0 To this.v.size() - uint32_1
@@ -157,7 +163,9 @@ Partial Public NotInheritable Class big_uint
                 c = add(CUInt(t And max_uint32), c, i + j)
                 c += CUInt(t >> bit_count_in_uint32)
             Next
+#If DEBUG Then
             assert(v.get(i + that.v.size()) = 0)
+#End If
             v.set(i + that.v.size(), c)
         Next
         assert(remove_extra_blank() <= 1)
@@ -184,10 +192,10 @@ Partial Public NotInheritable Class big_uint
         If that._1count() <= (that.uint32_size() << 1) Then
             multiply_bit(this, that)
         Else
-            multiply_uint32(this, that)
+            multiply_uint(this, that)
         End If
 #Else
-        multiply_uint32(this, that)
+        multiply_uint(this, that)
 #End If
     End Sub
 

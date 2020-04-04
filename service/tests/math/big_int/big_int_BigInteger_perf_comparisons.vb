@@ -223,7 +223,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
             Private Function next_random() As big_int
                 tc.assert()
                 index += 1
-                Return samples.modget(index)
+                Return samples.modget(index).CloneT()
             End Function
         End Class
     End Class
