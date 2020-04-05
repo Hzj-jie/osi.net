@@ -8,6 +8,7 @@ Imports osi.root.constants
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.math
+Imports constants = osi.service.resources.math
 
 <test>
 Public NotInheritable Class big_udec_pi_test

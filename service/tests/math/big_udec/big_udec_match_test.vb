@@ -7,6 +7,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.utt.attributes
 Imports osi.service.math
+Imports constants = osi.service.resources.math
 
 <command_line_specified>
 <test>

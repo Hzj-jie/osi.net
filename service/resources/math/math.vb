@@ -5,7 +5,7 @@ Option Strict On
 
 Imports osi.service.resource
 
-Public NotInheritable Class constants
+Public NotInheritable Class math
     Public Shared Function pi_1m() As String
         Return pi_1m_holder.v
     End Function
