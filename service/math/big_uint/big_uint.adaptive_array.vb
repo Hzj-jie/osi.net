@@ -207,11 +207,11 @@ Private Class adaptive_array_uint32
         assert(Not that Is Nothing)
         If this.size() < that.size() Then
             Return -1
-        ElseIf this.size() > that.size() Then
-            Return 1
-        Else
-            Return deep_compare(this.d, that.d, this.size())
         End If
+        If this.size() > that.size() Then
+            Return 1
+        End If
+        Return deep_compare(this.d, that.d, this.size())
     End Function
 
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo

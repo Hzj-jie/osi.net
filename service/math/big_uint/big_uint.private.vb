@@ -31,43 +31,18 @@ Partial Public NotInheritable Class big_uint
         Return If(t < 0, uint32_1, uint32_0)
     End Function
 
+    'sub data at position p with carry-over as c
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function recursive_sub(ByVal c As UInt32, ByVal p As UInt32) As Boolean
-        If c = 0 Then
-            Return False
-        End If
-        While p < v.size()
-            Dim t As Int64 = 0
-            t -= c
-            t += v.get(p)
-            v.set(p, CUInt(t And max_uint32))
-            c = If(t < 0, uint32_1, uint32_0)
-            If c = 0 Then
-                Return False
-            End If
-            p += uint32_1
-        End While
-        Return True
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function sub_with_overflow(ByVal that As big_uint) As Boolean
-        Dim c As UInt32 = 0
-        If that Is Nothing OrElse that.is_zero() Then
-            Return False
-        End If
-        If that.v.size() > v.size() Then
-            v.resize(that.v.size())
-        End If
-        assert(v.size() > 0 AndAlso that.v.size() > 0)
-        Dim i As UInt32 = 0
-        For i = 0 To that.v.size() - uint32_1
-            c = [sub](that.v.get(i), c, i)
-        Next
-        Dim r As Boolean = False
-        r = recursive_sub(c, i)
-        remove_extra_blank()
-        Return r
+    Private Function [sub](ByVal c As UInt32, ByVal p As UInt32) As UInt32
+        'this assert is too costly
+#If DEBUG Then
+        assert(p < v.size())
+#End If
+        Dim t As Int64 = 0
+        t = -c
+        t += v.get(p)
+        v.set(p, CUInt(t And max_uint32))
+        Return If(t < 0, uint32_1, uint32_0)
     End Function
 
     'add d to the pos as p with carry-over as c
