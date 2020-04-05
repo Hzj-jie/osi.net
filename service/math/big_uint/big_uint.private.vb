@@ -3,7 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-' #Const DEBUG = False
 #Const USE_MULTIPLY_BIT = False
 
 Imports System.Runtime.CompilerServices
@@ -22,11 +21,12 @@ Partial Public NotInheritable Class big_uint
         'this assert is too costly
 #If DEBUG Then
         assert(p < v.size())
+        assert(c = uint32_0 OrElse c = uint32_1)
 #End If
         Dim t As Int64 = 0
-        t = -c
-        t += v.get(p)
+        t = v.get(p)
         t -= d
+        t -= c
         v.set(p, CUInt(t And max_uint32))
         Return If(t < 0, uint32_1, uint32_0)
     End Function
@@ -124,7 +124,7 @@ Partial Public NotInheritable Class big_uint
         End If
 #If DEBUG Then
         If Not v.empty() Then
-            assert(lowest_uint32() = 0)
+            assert(v.back() <> 0)
         End If
 #End If
     End Sub

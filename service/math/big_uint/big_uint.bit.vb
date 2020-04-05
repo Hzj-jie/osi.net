@@ -4,9 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports System.Runtime.CompilerServices
-
-' #Const DEBUG = False
-
 Imports osi.root.connector
 Imports osi.root.constants
 
@@ -231,11 +228,6 @@ Partial Public NotInheritable Class big_uint
         r = binary_trailing_zero_count()
         assert_right_shift(r)
         Return r
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function lowest_uint32() As UInt32
-        Return get_uint32(0)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
