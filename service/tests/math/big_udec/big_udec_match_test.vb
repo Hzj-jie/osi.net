@@ -36,14 +36,14 @@ Public NotInheritable Class big_udec_match_test
         Dim s As String = Nothing
         s = big_udec.parse_fraction(IO.File.ReadAllText("e.txt")).
                 as_str().
-                with_upure_length(constants.e_1m().strlen())
+                with_upure_length(constants.e_2m().strlen())
         For i As Int32 = 0 To s.Length() - 1
-            If constants.e_1m()(i) <> s(i) Then
+            If constants.e_2m()(i) <> s(i) Then
                 match_digits(i)
                 Return
             End If
         Next
-        match_digits(constants.e_1m().Length())
+        match_digits(constants.e_2m().Length())
     End Sub
 
     Private Sub New()
