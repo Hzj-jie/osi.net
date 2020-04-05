@@ -118,7 +118,9 @@ Partial Public NotInheritable Class big_uint
             v.pop_back()
         End If
 #If DEBUG Then
-        assert(lowest_uint32() = 0)
+        If Not v.empty() Then
+            assert(lowest_uint32() = 0)
+        End If
 #End If
     End Sub
 
