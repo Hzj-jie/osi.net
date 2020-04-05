@@ -19,7 +19,9 @@ Partial Public NotInheritable Class big_udec
         If Me.d.equal(that.d) Then
             replace_by(Me.n + that.n, Me.d)
         Else
-            replace_by(Me.n * that.d + Me.d * that.n, Me.d * that.d)
+            Dim g As big_uint = Nothing
+            g = big_uint.gcd(Me.d, that.d)
+            replace_by((that.d \ g) * Me.n + (Me.d \ g) * that.n, (Me.d \ g) * that.d)
         End If
         Return Me
     End Function
@@ -59,7 +61,9 @@ Partial Public NotInheritable Class big_udec
         If Me.d.equal(that.d) Then
             [sub](Me.n, that.n.CloneT(), Me.d, overflow)
         Else
-            [sub](Me.n * that.d, that.n * Me.d, Me.d * that.d, overflow)
+            Dim g As big_uint = Nothing
+            g = big_uint.gcd(Me.d, that.d)
+            [sub]((that.d \ g) * Me.n, (Me.d \ g) * that.n, (Me.d \ g) * that.d, overflow)
         End If
         Return Me
     End Function
