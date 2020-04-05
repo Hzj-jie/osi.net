@@ -21,17 +21,19 @@ Partial Public NotInheritable Class big_uint
             Return Me
         End If
         assert(v.size() > 0 AndAlso that.v.size() > 0)
-        If that.v.size() > v.size() Then
-            v.resize(that.v.size())
-        End If
-        Dim c As UInt32 = 0
         Dim i As UInt32 = 0
-        For i = 0 To that.v.size() - uint32_1
+        Dim c As UInt32 = 0
+        For i = 0 To min(v.size(), that.v.size()) - uint32_1
             c = add(that.v.get(i), c, i)
 #If DEBUG Then
             assert(c = 0 OrElse c = 1)
 #End If
         Next
+
+        If v.size() < that.v.size() Then
+            v.resize(that.v.size())
+            memcpy(v.data(), i, that.v.data(), i, that.v.size() - i)
+        End If
         recursive_add(c, i)
         Return Me
     End Function
