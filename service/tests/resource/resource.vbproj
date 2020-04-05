@@ -55,7 +55,7 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="data.do_not_parse_as_vb" />
+    <Compile Include="data.vb" />
     <Compile Include="zipgen_test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -72,7 +72,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="zipdata.do_not_parse_as_vb" />
+    <Compile Include="zipdata.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
