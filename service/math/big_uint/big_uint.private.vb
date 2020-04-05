@@ -57,7 +57,12 @@ Partial Public NotInheritable Class big_uint
         t += v.get(p)
         t += d
         v.set(p, CUInt(t And max_uint32))
-        Return CUInt(t >> bit_count_in_uint32)
+
+        t >>= bit_count_in_uint32
+#If DEBUG Then
+        assert(t <= 2)
+#End If
+        Return CUInt(t)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
