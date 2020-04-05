@@ -46,8 +46,10 @@ Public NotInheritable Class big_uint
             End If
             i -= uint32_1
         End While
-        assert(remove_extra_blank() <= 1)
+        remove_last_blank()
+#If DEBUG Then
         assert(remainder < that)
+#End If
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

@@ -234,6 +234,11 @@ Partial Public NotInheritable Class big_uint
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function lowest_uint32() As UInt32
+        Return get_uint32(0)
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function highest_uint32() As UInt32
         Return get_ruint32(0)
     End Function

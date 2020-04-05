@@ -3,22 +3,27 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 
 Partial Public NotInheritable Class big_uint
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function less(ByVal that As big_uint) As Boolean
         Return compare(that) < 0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function equal(ByVal that As big_uint) As Boolean
         Return compare(that) = 0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function less_or_equal(ByVal that As big_uint) As Boolean
         Return compare(that) <= 0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(ByVal that As big_uint) As Int32
         Return compare(Me, that)
     End Function

@@ -110,6 +110,19 @@ Partial Public NotInheritable Class big_uint
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Sub remove_last_blank()
+        If v.empty() Then
+            Return
+        End If
+        If v.back() = uint32_0 Then
+            v.pop_back()
+        End If
+#If DEBUG Then
+        assert(lowest_uint32() = 0)
+#End If
+    End Sub
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub multiply_bit(ByVal this As big_uint, ByVal that As big_uint)
         this = this.CloneT()
         that = that.CloneT()
@@ -143,7 +156,7 @@ Partial Public NotInheritable Class big_uint
 #End If
             v.set(i + that.v.size(), c)
         Next
-        assert(remove_extra_blank() <= 1)
+        remove_last_blank()
     End Sub
 
     'store the result of this * that in me

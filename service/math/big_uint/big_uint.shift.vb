@@ -115,7 +115,7 @@ Partial Public NotInheritable Class big_uint
                 v.set(i - uint32_1, v.get(i - uint32_1) Or c)
             End If
         Next
-        assert(remove_extra_blank() <= 1)
+        remove_last_blank()
         Return Me
     End Function
 
