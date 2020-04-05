@@ -38,6 +38,18 @@ Partial Public NotInheritable Class big_udec
             Return Me
         End Function
 
+        Public Function increase_upure_length(ByVal v As UInt32) As str_option
+            assert(v > 0)
+            Me.upure_len += v
+            Return Me
+        End Function
+
+        Public Function double_upure_length() As str_option
+            assert(Me.upure_len > 0)
+            Me.upure_len <<= 1
+            Return Me
+        End Function
+
         Public Overrides Function ToString() As String
             If this.is_zero() Then
                 Return character._0
