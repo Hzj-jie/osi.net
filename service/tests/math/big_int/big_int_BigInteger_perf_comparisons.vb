@@ -5,6 +5,8 @@ Option Strict On
 
 Imports System.Numerics
 Imports osi.root.connector
+Imports osi.root.formation
+Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.math
 
@@ -76,18 +78,32 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
     Public NotInheritable Class big_int_BigInteger_divide_perf
         Inherits big_int_BigInteger_perf_comparison
 
+
         Public Sub New()
+            Me.New(default_size)
+        End Sub
+
+        Public Sub New(ByVal size As UInt64)
             MyBase.New(Sub(ByVal i As BigInteger, ByVal j As BigInteger)
                            i /= j
                        End Sub,
                        Sub(ByVal i As big_int, ByVal j As big_int)
                            i \= j
-                       End Sub)
+                       End Sub,
+                       size)
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
             Return loosen_bound({1, 1}, i, j)
         End Function
+    End Class
+
+    Public NotInheritable Class big_int_BigInteger_divide_large_perf
+        Inherits commandline_specified_case_wrapper
+
+        Public Sub New()
+            MyBase.New(New big_int_BigInteger_divide_perf(1000000))
+        End Sub
     End Class
 
     Public NotInheritable Class big_int_BigInteger_modulus_perf
@@ -176,20 +192,38 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         Private NotInheritable Class run_case
             Inherits [case]
 
+            Private Shared ReadOnly samples As vector(Of big_int)
             Private ReadOnly e As Action(Of big_int, big_int)
+            Private ReadOnly tc As debug_thread_checker
+            Private index As Int64
+
+            Shared Sub New()
+                samples = New vector(Of big_int)()
+                For i As Int32 = 0 To 792
+                    samples.emplace_back(big_int.random())
+                Next
+            End Sub
 
             Public Sub New(ByVal e As Action(Of big_int, big_int))
                 assert(Not e Is Nothing)
                 Me.e = e
+                tc = New debug_thread_checker()
+                index = 0
             End Sub
 
             Public Overrides Function run() As Boolean
                 Dim i As big_int = Nothing
                 Dim j As big_int = Nothing
-                i = big_int.random()
-                j = big_int.random()
+                i = next_random()
+                j = next_random()
                 e(i, j)
                 Return True
+            End Function
+
+            Private Function next_random() As big_int
+                tc.assert()
+                index += 1
+                Return samples.modget(index).CloneT()
             End Function
         End Class
     End Class

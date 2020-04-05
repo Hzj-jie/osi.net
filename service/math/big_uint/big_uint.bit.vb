@@ -11,6 +11,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 Partial Public NotInheritable Class big_uint
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub set_bit_count(ByVal s As UInt64)
         set_zero()
         Dim l As UInt32 = 0
@@ -25,17 +26,20 @@ Partial Public NotInheritable Class big_uint
         v.resize(l)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub bit_pos(ByVal pos As UInt64, ByRef v_index As UInt32, ByRef b_index As Byte)
         bit_rpos(pos, v_index, b_index)
         v_index = v.size() - uint32_1 - v_index
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub bit_rpos(ByVal pos As UInt64,
                          ByRef v_index As UInt32,
                          ByRef b_rindex As Byte)
         bit_rpos(pos, v_index, b_rindex, Nothing, False, True)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub bit_rpos(ByVal pos As UInt64,
                          ByRef v_index As UInt32,
                          ByRef b_rindex As Byte,
@@ -53,10 +57,8 @@ Partial Public NotInheritable Class big_uint
         v_index = CUInt(pos >> bit_count_in_uint32_shift)
         b_rindex = CByte(pos And bit_count_in_uint32_mask)
 #End If
-        If fill AndAlso overflow Then
-            If v_index >= v.size() Then
-                v.resize(v_index + uint32_1)
-            End If
+        If fill AndAlso overflow AndAlso v_index >= v.size() Then
+            v.resize(v_index + uint32_1)
         End If
     End Sub
 
@@ -64,29 +66,30 @@ Partial Public NotInheritable Class big_uint
     '1. if that is longer than me, ignore the overlength bits
     '2. if that is shorter than me, treat all the bits left as 0
     Private Function bit_wise_operation(ByVal that As big_uint, ByVal op As bit_wise_operator) As big_uint
-        If Not that Is Nothing AndAlso Not is_zero() Then
-            For i As UInt32 = 0 To v.size() - uint32_1
-                Dim t As UInt32 = 0
-                If i < that.v.size() Then
-                    t = that.v.get(i)
-                Else
-                    t = 0
-                End If
-                Select Case op
-                    Case bit_wise_operator.and
-                        v.set(i, v.get(i) And t)
-                    Case bit_wise_operator.or
-                        v.set(i, v.get(i) Or t)
-                    Case bit_wise_operator.xor
-                        v.set(i, v.get(i) Xor t)
-                    Case Else
-                        assert(False)
-                End Select
-            Next
-            If op = bit_wise_operator.and OrElse
-               op = bit_wise_operator.xor Then
-                remove_extra_blank()
+        If that Is Nothing Then
+            Return Me
+        End If
+        For i As UInt32 = 0 To v.size() - uint32_1
+            Dim t As UInt32 = 0
+            If i < that.v.size() Then
+                t = that.v.get(i)
+            Else
+                t = 0
             End If
+            Select Case op
+                Case bit_wise_operator.and
+                    v.set(i, v.get(i) And t)
+                Case bit_wise_operator.or
+                    v.set(i, v.get(i) Or t)
+                Case bit_wise_operator.xor
+                    v.set(i, v.get(i) Xor t)
+                Case Else
+                    assert(False)
+            End Select
+        Next
+        If op = bit_wise_operator.and OrElse
+           op = bit_wise_operator.xor Then
+            remove_extra_blank()
         End If
         Return Me
     End Function
@@ -160,6 +163,7 @@ Partial Public NotInheritable Class big_uint
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub setbit(ByVal pos As UInt64, Optional ByVal value As Boolean = True)
         Dim vi As UInt32 = 0
         Dim bi As Byte = 0
@@ -167,6 +171,7 @@ Partial Public NotInheritable Class big_uint
         v.set(vi, v.get(vi).setbit(bi, value))
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function getbit(ByVal pos As UInt64) As Boolean
         Dim vi As UInt32 = 0
         Dim bi As Byte = 0
@@ -174,6 +179,7 @@ Partial Public NotInheritable Class big_uint
         Return v.get(vi).getbit(bi)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub setrbit(ByVal pos As UInt64, Optional ByVal value As Boolean = True)
         Dim vi As UInt32 = 0
         Dim bi As Byte = 0
@@ -184,6 +190,7 @@ Partial Public NotInheritable Class big_uint
         End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function getrbit(ByVal pos As UInt64) As Boolean
         Dim vi As UInt32 = 0
         Dim bi As Byte = 0
@@ -191,10 +198,12 @@ Partial Public NotInheritable Class big_uint
         Return v.get(vi).getrbit(bi)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function even() As Boolean
         Return Not odd()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function odd() As Boolean
         '0 is even
         Return bit_count() > 0 AndAlso getrbit(0)

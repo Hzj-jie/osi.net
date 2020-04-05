@@ -18,9 +18,6 @@ Partial Public Class vector(Of T)
 Private Class adaptive_array_t
     Implements ICloneable, ICloneable(Of adaptive_array_t), IComparable(Of adaptive_array_t), IComparable
 
-    Private Const size_limitation As UInt32 = (max_uint32 >> 1)
-    Private Shared ReadOnly default_value As T = Nothing
-
     Private Shared Function expected_capacity(ByVal n As UInt32) As UInt32
         assert(n <= max_array_size)
         If n = max_array_size Then
@@ -81,7 +78,7 @@ Private Class adaptive_array_t
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function max_size() As UInt32
-        Return size_limitation
+        Return max_array_size
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -128,60 +125,54 @@ Private Class adaptive_array_t
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function back() As T
-        assert(size() >= uint32_1)
         Return d(CInt(size() - uint32_1))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub clear()
-        If size() > uint32_0 Then
-            memclr(d, uint32_0, s)
-            s = uint32_0
-        End If
+        s = uint32_0
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub push_back(ByVal v As T)
         reserve(size() + uint32_1)
         d(CInt(size())) = v
         s += uint32_1
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub pop_back()
-        assert(s >= uint32_1)
         s -= uint32_1
-        d(CInt(size())) = default_value
     End Sub
 
     Public Sub reserve(ByVal n As UInt32)
-        If capacity() < n Then
-            Dim ec As UInt32 = 0
-            ec = expected_capacity(n)
-            assert(ec >= uint32_1)
-            If empty() Then
-                ReDim d(CInt(ec - uint32_1))
-            Else
-                ReDim Preserve d(CInt(ec - uint32_1))
-            End If
+        If capacity() >= n Then
+            Return
+        End If
+        Dim ec As UInt32 = 0
+        ec = expected_capacity(n)
+        assert(ec >= uint32_1)
+        If empty() Then
+            ReDim d(CInt(ec - uint32_1))
+        Else
+            ReDim Preserve d(CInt(ec - uint32_1))
         End If
     End Sub
 
     Public Sub resize(ByVal n As UInt32)
-        If capacity() < n Then
-            reserve(n)
-        ElseIf size() > n Then
-            memclr(d, n, size() - n)
+        reserve(n)
+        If size() < n Then
+            memclr(d, size(), n - size())
         End If
         s = n
     End Sub
 
     Public Sub resize(ByVal n As UInt32, ByVal v As T)
-        Dim os As UInt32 = 0
-        os = size()
-        If n > os Then
-            resize(n)
-            memset(d, os, n - os, v)
-        Else
-            resize(n)
+        reserve(n)
+        If size() < n Then
+            memset(d, size(), n - size(), v)
         End If
+        s = n
     End Sub
 
     Public Sub shrink_to_fit()
@@ -193,6 +184,7 @@ Private Class adaptive_array_t
         End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function

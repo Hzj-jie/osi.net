@@ -11,35 +11,34 @@ Public Module _array_ext
     <Extension()> Public Function reverse(Of T)(ByVal i() As T) As T()
         If isemptyarray(i) Then
             Return i
-        Else
-            Dim r() As T = Nothing
-            ReDim r(array_size_i(i) - 1)
-            For j As Int32 = 0 To array_size_i(i) - 1
-                copy(r(j), i(array_size_i(i) - j - 1))
-            Next
-            Return r
         End If
+        Dim r() As T = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            copy(r(j), i(array_size_i(i) - j - 1))
+        Next
+        Return r
     End Function
 
     <Extension()> Public Function emplace_reverse(Of T)(ByVal i() As T) As T()
         If isemptyarray(i) Then
             Return i
-        Else
-            Dim r() As T = Nothing
-            ReDim r(array_size_i(i) - 1)
-            For j As Int32 = 0 To array_size_i(i) - 1
-                r(j) = i(array_size_i(i) - j - 1)
-            Next
-            Return r
         End If
+        Dim r() As T = Nothing
+        ReDim r(array_size_i(i) - 1)
+        For j As Int32 = 0 To array_size_i(i) - 1
+            r(j) = i(array_size_i(i) - j - 1)
+        Next
+        Return r
     End Function
 
     <Extension()> Public Sub in_place_reverse(Of T)(ByVal i() As T)
-        If array_size(i) > 1 Then
-            For j As Int32 = 0 To (array_size_i(i) >> 1) - 1
-                swap(i(j), i(array_size_i(i) - j - 1))
-            Next
+        If array_size(i) <= 1 Then
+            Return
         End If
+        For j As Int32 = 0 To (array_size_i(i) >> 1) - 1
+            swap(i(j), i(array_size_i(i) - j - 1))
+        Next
     End Sub
 
     <Extension()> Public Sub gc_keepalive(Of T)(ByVal v() As T)
@@ -53,6 +52,7 @@ Public Module _array_ext
         Return Not isemptyarray(i) AndAlso Array.IndexOf(i, j) >= 0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function index_of(Of T)(ByVal i() As T, ByVal j As T) As Int32
         If isemptyarray(i) Then
             Return npos
@@ -60,6 +60,7 @@ Public Module _array_ext
         Return Array.IndexOf(i, j)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub memcpy(Of T)(ByVal dest() As T,
                             ByVal deststart As UInt32,
                             ByVal src() As T,
@@ -68,54 +69,66 @@ Public Module _array_ext
         memmove(dest, deststart, src, srcstart, count)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub memcpy(Of T)(ByVal dest() As T, ByVal src() As T)
         memcpy(dest, uint32_0, src, uint32_0, array_size(src))
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub memcpy(Of T)(ByVal dest() As T, ByVal deststart As UInt32, ByVal src() As T)
         memcpy(dest, deststart, src, uint32_0, array_size(src))
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub memcpy(Of T)(ByVal dest() As T, ByVal src() As T, ByVal count As UInt32)
         memcpy(dest, uint32_0, src, uint32_0, count)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub memmove(Of T)(ByVal dest() As T,
                              ByVal deststart As UInt32,
                              ByVal src() As T,
                              ByVal srcstart As UInt32,
                              ByVal count As UInt32)
-        If count > 0 Then
-            Array.Copy(src, srcstart, dest, deststart, count)
+        If count = 0 Then
+            Return
         End If
+        Array.Copy(src, srcstart, dest, deststart, count)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub memset(Of T)(ByVal dest() As T,
                             ByVal start As UInt32,
                             ByVal count As UInt32,
                             ByVal src As T)
-        If count > 0 Then
-            assert(start + count <= max_int32)
-            For i As UInt32 = start To start + count - uint32_1
-                copy(dest(CInt(i)), src)
-            Next
+        If count = 0 Then
+            Return
         End If
+        assert(start + count <= max_int32)
+        For i As UInt32 = start To start + count - uint32_1
+            copy(dest(CInt(i)), src)
+        Next
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub memset(Of T)(ByVal dest() As T, ByVal src As T)
         memset(dest, uint32_0, array_size(dest), src)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub memclr(Of T)(ByVal dest() As T, ByVal start As UInt32, ByVal count As UInt32)
-        If count > uint32_0 Then
-            Array.Clear(dest, CInt(start), CInt(count))
+        If count = uint32_0 Then
+            Return
         End If
+        Array.Clear(dest, CInt(start), CInt(count))
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub memclr(Of T)(ByVal dest() As T)
         memclr(dest, uint32_0, array_size(dest))
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function append(Of T)(ByRef this() As T, ByVal ParamArray that() As T) As T()
         this = this.concat(that)
         Return this
@@ -127,46 +140,45 @@ Public Module _array_ext
                                                   Optional ByVal ellipsis As String = " ...") As String
         If isemptyarray(this) OrElse limited_length = 0 Then
             Return Nothing
-        Else
-            Dim s As StringBuilder = Nothing
-            s = New StringBuilder()
-            Dim i As Int32 = 0
-            For i = 0 To min(array_size_i(this), CInt(limited_length)) - 1
-                If i > 0 AndAlso Not String.IsNullOrEmpty(separator) Then
-                    s.Append(separator)
-                End If
-                s.Append(Convert.ToString(this(i)))
-            Next
-            If i < array_size(this) AndAlso Not String.IsNullOrEmpty(ellipsis) Then
-                s.Append(ellipsis)
-            End If
-            Return Convert.ToString(s)
         End If
+        Dim s As StringBuilder = Nothing
+        s = New StringBuilder()
+        Dim i As Int32 = 0
+        For i = 0 To min(array_size_i(this), CInt(limited_length)) - 1
+            If i > 0 AndAlso Not String.IsNullOrEmpty(separator) Then
+                s.Append(separator)
+            End If
+            s.Append(Convert.ToString(this(i)))
+        Next
+        If i < array_size(this) AndAlso Not String.IsNullOrEmpty(ellipsis) Then
+            s.Append(ellipsis)
+        End If
+        Return Convert.ToString(s)
     End Function
 
     Public Function array_concat(Of T)(ByVal ParamArray i()() As T) As T()
         If isemptyarray(i) Then
             Return Nothing
-        ElseIf array_size(i) = uint32_1 Then
+        End If
+        If array_size(i) = uint32_1 Then
             Return i(0)
+        End If
+        Dim l As UInt32 = 0
+        For j As Int32 = 0 To array_size_i(i) - 1
+            l += array_size(i(j))
+        Next
+        Dim r() As T = Nothing
+        If l = 0 Then
+            ReDim r(-1)
         Else
-            Dim l As UInt32 = 0
+            ReDim r(CInt(l - uint32_1))
+            l = 0
             For j As Int32 = 0 To array_size_i(i) - 1
+                memcpy(r, l, i(j), uint32_0, array_size(i(j)))
                 l += array_size(i(j))
             Next
-            Dim r() As T = Nothing
-            If l = 0 Then
-                ReDim r(-1)
-            Else
-                ReDim r(CInt(l - uint32_1))
-                l = 0
-                For j As Int32 = 0 To array_size_i(i) - 1
-                    memcpy(r, l, i(j), uint32_0, array_size(i(j)))
-                    l += array_size(i(j))
-                Next
-            End If
-            Return r
         End If
+        Return r
     End Function
 
     <Extension()> Public Function concat(Of T)(ByVal i() As T, ByVal ParamArray j()() As T) As T()
@@ -194,31 +206,35 @@ Public Module _array_ext
         If isemptyarray(i) Then
             ReDim o(-1)
             Return True
-        ElseIf array_size(i) Mod sizeof_uint32 = 0 Then
+        End If
+        If array_size(i) Mod sizeof_uint32 = 0 Then
             ReDim o(array_size_i(i) \ CInt(sizeof_uint32) - 1)
             For j As UInt32 = 0 To array_size(i) - uint32_1 Step sizeof_uint32
                 assert(bytes_uint32(i, j, sizeof_uint32, o(CInt(j \ sizeof_uint32))))
             Next
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function byte_array_uint32_array(ByVal i() As Byte) As UInt32()
         Dim r() As UInt32 = Nothing
         assert(byte_array_uint32_array(i, r))
         Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function byte_array(ByVal i() As UInt32) As Byte()
         Return uint32_array_byte_array(i)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function uint32_array(ByVal i() As Byte, ByRef o() As UInt32) As Boolean
         Return byte_array_uint32_array(i, o)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function uint32_array(ByVal i() As Byte) As UInt32()
         Return byte_array_uint32_array(i)
     End Function
@@ -275,22 +291,23 @@ Public Module _array_ext
                                                ByVal preserve As Boolean) As Boolean
         If size > max_int32 Then
             Return False
-        Else
-            If size = uint32_0 Then
-                ReDim i(-1)
-            ElseIf preserve Then
-                ReDim Preserve i(CInt(size) - 1)
-            Else
-                ReDim i(CInt(size) - 1)
-            End If
-            Return True
         End If
+        If size = uint32_0 Then
+            ReDim i(-1)
+        ElseIf preserve Then
+            ReDim Preserve i(CInt(size) - 1)
+        Else
+            ReDim i(CInt(size) - 1)
+        End If
+        Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function resize(Of T)(ByRef i() As T, ByVal size As UInt64) As Boolean
         Return resize(i, size, False)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function preserve(Of T)(ByRef i() As T, ByVal size As UInt64) As Boolean
         Return resize(i, size, True)
     End Function

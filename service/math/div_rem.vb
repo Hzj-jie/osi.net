@@ -8,14 +8,13 @@ Option Strict On
 #Const USE_DIV_REM = False
 
 Imports System.Runtime.CompilerServices
-Imports osi.root.connector
-#If USE_DIV_REM Then
 Imports osi.root.constants
-#End If
+Imports osi.root.connector
 
 Public Module _div_rem
     ' max_uint64 / max_uint32 = max_uint32 + 2, so the result needs to be UInt64.
     ' https://stackoverflow.com/questions/447282/why-is-math-divrem-so-inefficient
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function div_rem(ByVal this As UInt64,
                                           ByVal that As UInt32,
                                           ByRef remainder As UInt32) As UInt64
