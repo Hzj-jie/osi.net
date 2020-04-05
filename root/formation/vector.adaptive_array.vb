@@ -181,7 +181,14 @@ Private Class adaptive_array_t
         ElseIf capacity() > size() Then
             assert(size() >= uint32_1)
             ReDim Preserve d(CInt(size() - uint32_1))
+        Else
+            assert(capacity() = size())
         End If
+    End Sub
+
+    Public Sub clear_unused_slots()
+        assert(capacity() >= size())
+        memclr(d, size(), capacity() - size())
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
