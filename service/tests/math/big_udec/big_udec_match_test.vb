@@ -4,34 +4,45 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.utt.attributes
 Imports osi.service.math
 
 <command_line_specified>
 <test>
 Public NotInheritable Class big_udec_match_test
+    Private Shared Sub match_digits(ByVal i As Int32)
+        raise_error(error_type.warning, "Match first ", i, " digits")
+    End Sub
+
     <test>
     Private Shared Sub pi_fractional_str()
         Dim s As String = Nothing
-        s = big_udec.parse_fraction(Console.ReadLine()).as_str().with_upure_length(102400)
-        For i As Int32 = 1 To s.Length()
-            If Not constants.pi_1m().StartsWith(s.Substring(0, i)) OrElse i = s.Length() Then
-                Console.WriteLine(strcat("Match first ", i, " digits"))
+        s = big_udec.parse_fraction(IO.File.ReadAllText("pi.txt")).as_str().with_upure_length(102400)
+        Dim till As Int32 = 0
+        till = min(s.Length(), constants.pi_1m().Length())
+        For i As Int32 = 0 To till - 1
+            If constants.pi_1m()(i) <> s(i) Then
+                match_digits(i)
                 Return
             End If
         Next
+        match_digits(till)
     End Sub
 
     <test>
     Private Shared Sub e_fractional_str()
         Dim s As String = Nothing
-        s = big_udec.parse_fraction(Console.ReadLine()).as_str().with_upure_length(102400)
-        For i As Int32 = 1 To s.Length()
-            If Not constants.e_1m().StartsWith(s.Substring(0, i)) OrElse i = s.Length() Then
-                Console.WriteLine(strcat("Match first ", i, " digits"))
+        s = big_udec.parse_fraction(IO.File.ReadAllText("e.txt")).as_str().with_upure_length(1024000)
+        Dim till As Int32 = 0
+        till = min(s.Length(), constants.e_1m().Length())
+        For i As Int32 = 0 To till - 1
+            If constants.e_1m()(i) <> s(i) Then
+                match_digits(i)
                 Return
             End If
         Next
+        match_digits(till)
     End Sub
 
     Private Sub New()
