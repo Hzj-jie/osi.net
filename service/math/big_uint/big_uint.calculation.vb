@@ -7,6 +7,7 @@ Option Strict On
 #Const USE_MODULUS_BIT = False
 #Const USE_DIVIDE_BIT = False
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 
@@ -27,7 +28,9 @@ Partial Public NotInheritable Class big_uint
         Dim i As UInt32 = 0
         For i = 0 To that.v.size() - uint32_1
             c = add(that.v.get(i), c, i)
+#If DEBUG Then
             assert(c = 0 OrElse c = 1)
+#End If
         Next
         recursive_add(c, i)
         Return Me
@@ -75,6 +78,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function multiply(ByVal that As big_uint) As big_uint
         multiply(move(Me), that)
         Return Me

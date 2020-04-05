@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
@@ -51,6 +52,7 @@ Partial Public NotInheritable Class big_uint
         assert(replace_by(i))
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function move(ByVal i As big_uint) As big_uint
         If i Is Nothing Then
             Return Nothing
