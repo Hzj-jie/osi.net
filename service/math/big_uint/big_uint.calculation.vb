@@ -55,8 +55,8 @@ Partial Public NotInheritable Class big_uint
     End Function
 
     Public Function [sub](ByVal that As big_uint, ByRef overflow As Boolean) As big_uint
-        overflow = False
         If that Is Nothing OrElse that.is_zero() Then
+            overflow = False
             Return Me
         End If
         If that.v.size() > v.size() Then
