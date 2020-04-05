@@ -47,6 +47,21 @@ Public NotInheritable Class big_udec_e_test
 
     <command_line_specified>
     <test>
+    Private Shared Sub calculate_e_factorial_500()
+        Dim s As big_udec = Nothing
+        s = big_udec.one()
+        Dim c As big_udec = Nothing
+        c = big_udec.one()
+        For i As UInt32 = 1 To 500
+            c.assert_divide(New big_udec(i))
+            s.add(c)
+        Next
+        assertion.equal(s.str(), "2.7182818284590452353602874713526624977572470936999595749669676277")
+        '                         2.71828182845904523536028747135266249775724709369995957
+    End Sub
+
+    <command_line_specified>
+    <test>
     Private Shared Sub calculate_e_factorial_1000()
         Dim s As big_udec = Nothing
         s = big_udec.one()
@@ -71,7 +86,7 @@ Public NotInheritable Class big_udec_e_test
             c.assert_divide(New big_udec(i))
             s.add(c)
 
-            If (i Mod 1000) = 0 Then
+            If (i Mod 100000) = 0 Then
                 s.fully_reduce_fraction()
                 raise_error(error_type.warning, "@ ", i, " -> ", s.fractional_str())
             End If

@@ -222,6 +222,10 @@ Public NotInheritable Class vector(Of T)
         Return push_back(vs, start, n, True)
     End Function
 
+    Public Sub clear_unused_slots()
+        v.clear_unused_slots()
+    End Sub
+
     '.net implementations
     Public Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()

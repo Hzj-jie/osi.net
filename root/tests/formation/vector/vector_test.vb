@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utt
 
-Partial Public Class vector_test
+Partial Public NotInheritable Class vector_test
     Inherits repeat_case_wrapper
     Private ReadOnly size_base As Int32 = 0
 

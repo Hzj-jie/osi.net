@@ -3,7 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-' #Const DEBUG = False
 #Const USE_MULTIPLY_BIT = False
 
 Imports System.Runtime.CompilerServices
@@ -16,48 +15,58 @@ Partial Public NotInheritable Class big_uint
         Me.v = i
     End Sub
 
-    'sub d at position p with carry-over as c
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function [sub](ByVal d As UInt32, ByVal c As UInt32, ByVal p As UInt32) As UInt32
+    Private Function set_and_borrow(ByVal t As Int64, ByVal p As UInt32) As UInt32
+        v.set(p, CUInt(t And max_uint32))
+        Return If(t < 0, uint32_1, uint32_0)
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Sub sub_assertions(ByVal c As UInt32, ByVal p As UInt32)
         'this assert is too costly
 #If DEBUG Then
         assert(p < v.size())
+        assert(c = uint32_0 OrElse c = uint32_1)
 #End If
-        Dim t As Int64 = 0
-        t = -c
-        t += v.get(p)
-        t -= d
-        v.set(p, CUInt(t And max_uint32))
-        Return If(t < 0, uint32_1, uint32_0)
+    End Sub
+
+    'sub d at position p with carry-over as c
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Function [sub](ByVal d As UInt32, ByVal c As UInt32, ByVal p As UInt32) As UInt32
+        sub_assertions(c, p)
+        Return set_and_borrow(CLng(v.get(p)) - d - c, p)
     End Function
 
     'sub data at position p with carry-over as c
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function [sub](ByVal c As UInt32, ByVal p As UInt32) As UInt32
+        sub_assertions(c, p)
+        Return set_and_borrow(CLng(v.get(p)) - c, p)
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Sub add_assertions(ByVal p As UInt32)
         'this assert is too costly
 #If DEBUG Then
         assert(p < v.size())
 #End If
-        Dim t As Int64 = 0
-        t = -c
-        t += v.get(p)
+    End Sub
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Function set_and_carry(ByVal t As UInt64, ByVal p As UInt32) As UInt32
         v.set(p, CUInt(t And max_uint32))
-        Return If(t < 0, uint32_1, uint32_0)
+        t >>= bit_count_in_uint32
+#If DEBUG Then
+        assert(t <= 2)
+#End If
+        Return CUInt(t)
     End Function
 
     'add d to the pos as p with carry-over as c
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function add(ByVal d As UInt32, ByVal c As UInt32, ByVal p As UInt32) As UInt32
-        'this assert is too costly
-#If DEBUG Then
-        assert(p < v.size())
-#End If
-        Dim t As UInt64 = 0
-        t = c
-        t += v.get(p)
-        t += d
-        v.set(p, CUInt(t And max_uint32))
-        Return CUInt(t >> bit_count_in_uint32)
+        add_assertions(p)
+        Return set_and_carry(CULng(v.get(p)) + c + d, p)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -66,11 +75,8 @@ Partial Public NotInheritable Class big_uint
             Return
         End If
         While p < v.size()
-            Dim t As UInt64 = 0
-            t = v.get(p)
-            t += d
-            v.set(p, CUInt(t And max_uint32))
-            d = CUInt(t >> bit_count_in_uint32)
+            add_assertions(p)
+            d = set_and_carry(CULng(v.get(p)) + d, p)
             If d = 0 Then
                 Return
             End If
@@ -119,7 +125,7 @@ Partial Public NotInheritable Class big_uint
         End If
 #If DEBUG Then
         If Not v.empty() Then
-            assert(lowest_uint32() = 0)
+            assert(v.back() <> 0)
         End If
 #End If
     End Sub
