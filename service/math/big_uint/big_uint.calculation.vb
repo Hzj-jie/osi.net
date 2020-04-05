@@ -84,6 +84,34 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function multiply(ByVal that As UInt32) As big_uint
+        If that = 0 Then
+            set_zero()
+            Return Me
+        End If
+        If that = 1 OrElse is_zero() Then
+            Return Me
+        End If
+        If is_one() Then
+            replace_by(that)
+        End If
+        Dim c As UInt32 = 0
+        For i As UInt32 = 0 To v.size() - uint32_1
+            Dim t As UInt64 = 0
+            t = v.get(i)
+            t *= that
+            t += c
+            v.set(i, CUInt(t And max_uint32))
+            c = CUInt(t >> bit_count_in_uint32)
+        Next
+        If c <> 0 Then
+            v.push_back(c)
+        End If
+        remove_last_blank()
+        Return Me
+    End Function
+
     Public Function divide(ByVal that As big_uint,
                            ByRef divide_by_zero As Boolean,
                            Optional ByRef remainder As big_uint = Nothing) As big_uint
@@ -138,7 +166,7 @@ Partial Public NotInheritable Class big_uint
 #Else
         divide_uint(that, remainder)
 #End If
-        assert(remove_extra_blank() <= 1)
+        remove_last_blank()
 
 #If DEBUG Then
         assert(remainder.less(original_that))

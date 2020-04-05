@@ -28,6 +28,16 @@ Partial Public NotInheritable Class big_uint
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Operator *(ByVal this As big_uint, ByVal that As UInt32) As big_uint
+        Return this.CloneT().multiply(that)
+    End Operator
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Operator *(ByVal this As UInt32, ByVal that As big_uint) As big_uint
+        Return that.CloneT().multiply(this)
+    End Operator
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator \(ByVal this As big_uint, ByVal that As big_uint) As big_uint
         Return this.CloneT().divide(that)
     End Operator
@@ -56,28 +66,13 @@ Partial Public NotInheritable Class big_uint
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Operator \(ByVal this As big_uint, ByVal that As UInt16) As big_uint
-        Return this \ CUInt(that)
-    End Operator
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Operator /(ByVal this As big_uint, ByVal that As UInt16) As pair(Of big_uint, UInt32)
-        Return this / CUInt(that)
-    End Operator
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Operator \(ByVal this As big_uint, ByVal that As Byte) As big_uint
-        Return this \ CUInt(that)
-    End Operator
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Operator /(ByVal this As big_uint, ByVal that As Byte) As pair(Of big_uint, UInt32)
-        Return this / CUInt(that)
-    End Operator
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator Mod(ByVal this As big_uint, ByVal that As big_uint) As big_uint
         Return this.CloneT().modulus(that)
+    End Operator
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Operator Mod(ByVal this As big_uint, ByVal that As UInt32) As UInt32
+        Return this.CloneT().modulus(that).as_uint32()
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
