@@ -34,19 +34,44 @@ Partial Public NotInheritable Class big_uint
     End Function
 
     Public Function [sub](ByVal that As big_uint) As big_uint
-        If sub_with_overflow(that) Then
+        Dim o As Boolean = False
+        [sub](that, o)
+        If o Then
             Throw overflow()
         End If
         Return Me
     End Function
 
     Public Function assert_sub(ByVal that As big_uint) As big_uint
-        assert(Not sub_with_overflow(that))
+        Dim o As Boolean = False
+        [sub](that, o)
+        assert(Not o)
         Return Me
     End Function
 
     Public Function [sub](ByVal that As big_uint, ByRef overflow As Boolean) As big_uint
-        overflow = sub_with_overflow(that)
+        overflow = False
+        If that Is Nothing OrElse that.is_zero() Then
+            Return Me
+        End If
+        If that.v.size() > v.size() Then
+            v.resize(that.v.size())
+        End If
+        assert(v.size() > 0 AndAlso that.v.size() > 0)
+        Dim i As UInt32 = 0
+        Dim c As UInt32 = 0
+        For i = 0 To that.v.size() - uint32_1
+            c = [sub](that.v.get(i), c, i)
+        Next
+        While i < v.size()
+            c = [sub](c, i)
+            If c = 0 Then
+                Exit While
+            End If
+            i += uint32_1
+        End While
+        overflow = (c = uint32_1)
+        remove_extra_blank()
         Return Me
     End Function
 
