@@ -11,6 +11,7 @@ Imports osi.root.constants
 
 Partial Public NotInheritable Class big_uint
     'support move constructor
+    <copy_constructor>
     Private Sub New(ByVal i As adaptive_array_uint32)
         Me.v = i
     End Sub

@@ -1,6 +1,4 @@
 ﻿
-#Const USE_WORK_ON = False
-
 Option Explicit On
 Option Infer Off
 Option Strict On
@@ -52,21 +50,9 @@ Namespace primitive
                 assert(Not imi Is Nothing)
                 Dim b1 As big_uint = Nothing
                 Dim b2 As big_uint = Nothing
-#If USE_WORK_ON Then
-                b1 = New big_uint()
-                If Not b1.work_on(+p1(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                b2 = New big_uint()
-                If Not b2.work_on(+p2(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                p0(imi).set(b1.add(b2).release_as_bytes())
-#Else
                 b1 = New big_uint(+p1(imi))
                 b2 = New big_uint(+p2(imi))
                 p0(imi).set(b1.add(b2).as_bytes())
-#End If
             End Sub
         End Class
 
@@ -78,21 +64,9 @@ Namespace primitive
                 Dim b1 As big_uint = Nothing
                 Dim b2 As big_uint = Nothing
                 Dim c As Boolean = False
-#If USE_WORK_ON Then
-                b1 = New big_uint()
-                If Not b1.work_on(+p1(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                b2 = New big_uint()
-                If Not b2.work_on(+p2(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                p0(imi).set(b1.sub(b2, c).release_as_bytes())
-#Else
                 b1 = New big_uint(+p1(imi))
                 b2 = New big_uint(+p2(imi))
                 p0(imi).set(b1.sub(b2, c).as_bytes())
-#End If
                 imi.carry_over(c)
             End Sub
         End Class
@@ -132,21 +106,9 @@ Namespace primitive
                 assert(Not imi Is Nothing)
                 Dim b1 As big_uint = Nothing
                 Dim b2 As big_uint = Nothing
-#If USE_WORK_ON Then
-                b1 = New big_uint()
-                If Not b1.work_on(+p1(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                b2 = New big_uint()
-                If Not b2.work_on(+p2(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                p0(imi).set(b1.multiply(b2).release_as_bytes())
-#Else
                 b1 = New big_uint(+p1(imi))
                 b2 = New big_uint(+p2(imi))
                 p0(imi).set(b1.multiply(b2).as_bytes())
-#End If
             End Sub
         End Class
 
@@ -159,25 +121,11 @@ Namespace primitive
                 Dim b3 As big_uint = Nothing
                 Dim rmd As big_uint = Nothing
                 Dim c As Boolean = False
-#If USE_WORK_ON Then
-                b2 = New big_uint()
-                If Not b2.work_on(+p2(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                b3 = New big_uint()
-                If Not b3.work_on(+p3(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                b2.divide(b3, c, rmd)
-                p0(imi).set(b2.release_as_bytes())
-                p1(imi).set(rmd.release_as_bytes())
-#Else
                 b2 = New big_uint(+p2(imi))
                 b3 = New big_uint(+p3(imi))
                 b2.divide(b3, c, rmd)
                 p0(imi).set(b2.as_bytes())
                 p1(imi).set(rmd.as_bytes())
-#End If
                 imi.divided_by_zero(c)
             End Sub
         End Class
@@ -191,25 +139,11 @@ Namespace primitive
                 Dim b3 As big_uint = Nothing
                 Dim rmd As big_uint = Nothing
                 Dim c As Boolean = False
-#If USE_WORK_ON Then
-                b2 = New big_uint()
-                If Not b2.work_on(+p2(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                b3 = New big_uint()
-                If Not b3.work_on(+p3(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                b2.extract(b3, c, rmd)
-                p0(imi).set(b2.release_as_bytes())
-                p1(imi).set(rmd.release_as_bytes())
-#Else
                 b2 = New big_uint(+p2(imi))
                 b3 = New big_uint(+p3(imi))
                 b2.extract(b3, c, rmd)
                 p0(imi).set(b2.as_bytes())
                 p1(imi).set(rmd.as_bytes())
-#End If
                 imi.divided_by_zero(c)
             End Sub
         End Class
@@ -221,21 +155,9 @@ Namespace primitive
                 assert(Not imi Is Nothing)
                 Dim b1 As big_uint = Nothing
                 Dim b2 As big_uint = Nothing
-#If USE_WORK_ON Then
-                b1 = New big_uint()
-                If Not b1.work_on(+p1(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                b2 = New big_uint()
-                If Not b2.work_on(+p2(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                p0(imi).set(b1.power(b2).release_as_bytes())
-#Else
                 b1 = New big_uint(+p1(imi))
                 b2 = New big_uint(+p2(imi))
                 p0(imi).set(b1.power(b2).as_bytes())
-#End If
             End Sub
         End Class
 
@@ -300,21 +222,9 @@ Namespace primitive
                 assert(Not imi Is Nothing)
                 Dim b1 As big_uint = Nothing
                 Dim b2 As big_uint = Nothing
-#If USE_WORK_ON Then
-                b1 = New big_uint()
-                If Not b1.work_on(+p1(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                b2 = New big_uint()
-                If Not b2.work_on(+p2(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                p0(imi).set(bool_bytes(b1.equal(b2)))
-#Else
                 b1 = New big_uint(+p1(imi))
                 b2 = New big_uint(+p2(imi))
                 p0(imi).set(bool_bytes(b1.equal(b2)))
-#End If
             End Sub
         End Class
 
@@ -325,21 +235,9 @@ Namespace primitive
                 assert(Not imi Is Nothing)
                 Dim b1 As big_uint = Nothing
                 Dim b2 As big_uint = Nothing
-#If USE_WORK_ON Then
-                b1 = New big_uint()
-                If Not b1.work_on(+p1(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                b2 = New big_uint()
-                If Not b2.work_on(+p2(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                p0(imi).set(bool_bytes(b1.less(b2)))
-#Else
                 b1 = New big_uint(+p1(imi))
                 b2 = New big_uint(+p2(imi))
                 p0(imi).set(bool_bytes(b1.less(b2)))
-#End If
             End Sub
         End Class
 
@@ -470,21 +368,9 @@ Namespace primitive
                 assert(Not imi Is Nothing)
                 Dim b1 As big_uint = Nothing
                 Dim b2 As big_uint = Nothing
-#If USE_WORK_ON Then
-                b1 = New big_uint()
-                If Not b1.work_on(+p1(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                b2 = New big_uint()
-                If Not b2.work_on(+p2(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                p0(imi).set(b1.and(b2).release_as_bytes())
-#Else
                 b1 = New big_uint(+p1(imi))
                 b2 = New big_uint(+p2(imi))
                 p0(imi).set(b1.and(b2).as_bytes())
-#End If
             End Sub
         End Class
 
@@ -495,21 +381,9 @@ Namespace primitive
                 assert(Not imi Is Nothing)
                 Dim b1 As big_uint = Nothing
                 Dim b2 As big_uint = Nothing
-#If USE_WORK_ON Then
-                b1 = New big_uint()
-                If Not b1.work_on(+p1(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                b2 = New big_uint()
-                If Not b2.work_on(+p2(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                p0(imi).set(b1.or(b2).release_as_bytes())
-#Else
                 b1 = New big_uint(+p1(imi))
                 b2 = New big_uint(+p2(imi))
                 p0(imi).set(b1.or(b2).as_bytes())
-#End If
             End Sub
         End Class
 
@@ -519,16 +393,8 @@ Namespace primitive
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
                 assert(Not imi Is Nothing)
                 Dim b1 As big_uint = Nothing
-#If USE_WORK_ON Then
-                b1 = New big_uint()
-                If Not b1.work_on(+p1(imi)) Then
-                    executor_stop_error.throw(executor.error_type.invalid_buffer_size)
-                End If
-                p0(imi).set(b1.not().release_as_bytes())
-#Else
                 b1 = New big_uint(+p1(imi))
                 p0(imi).set(b1.not().as_bytes())
-#End If
             End Sub
         End Class
 
