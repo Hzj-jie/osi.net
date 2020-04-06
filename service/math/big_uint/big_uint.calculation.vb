@@ -68,14 +68,7 @@ Partial Public NotInheritable Class big_uint
         For i = 0 To that.v.size() - uint32_1
             c = [sub](that.v.get(i), c, i)
         Next
-        While i < v.size()
-            c = [sub](c, i)
-            If c = 0 Then
-                Exit While
-            End If
-            i += uint32_1
-        End While
-        overflow = (c = uint32_1)
+        overflow = recursive_sub(c, i)
         remove_extra_blank()
         Return Me
     End Function

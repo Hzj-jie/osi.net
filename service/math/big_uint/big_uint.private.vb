@@ -11,6 +11,7 @@ Imports osi.root.constants
 
 Partial Public NotInheritable Class big_uint
     'support move constructor
+    <copy_constructor>
     Private Sub New(ByVal i As adaptive_array_uint32)
         Me.v = i
     End Sub
@@ -37,11 +38,20 @@ Partial Public NotInheritable Class big_uint
         Return set_and_borrow(CLng(v.get(p)) - d - c, p)
     End Function
 
-    'sub data at position p with carry-over as c
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function [sub](ByVal c As UInt32, ByVal p As UInt32) As UInt32
-        sub_assertions(c, p)
-        Return set_and_borrow(CLng(v.get(p)) - c, p)
+    Private Function recursive_sub(ByVal c As UInt32, ByVal p As UInt32) As Boolean
+        If c = 0 Then
+            Return False
+        End If
+        While p < v.size()
+            sub_assertions(c, p)
+            c = set_and_borrow(CLng(v.get(p)) - c, p)
+            If c = 0 Then
+                Exit While
+            End If
+            p += uint32_1
+        End While
+        Return (c = uint32_1)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

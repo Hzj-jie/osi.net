@@ -104,7 +104,7 @@ Public NotInheritable Class big_uint
         End While
     End Sub
 
-    '<MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Sub divide_uint(ByVal that As big_uint,
                                    ByVal remainder As big_uint,
                                    ByVal result As big_uint)
