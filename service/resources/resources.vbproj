@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="math\math.vb" />
-    <Compile Include="math\math_constants.vb" />
+    <Compile Include="math\math_constants.do_not_parse_as_vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -94,9 +94,13 @@
     <Content Include="math\codegen\e-2m.txt" />
     <Content Include="math\codegen\pi-10m.txt" />
     <Content Include="math\codegen\pi-1m.txt" />
+    <Content Include="run.cmd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="resources.dep" />
+  <PropertyGroup>
+    <PreBuildEvent>"$(ProjectDir)\run.cmd"</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
