@@ -16,6 +16,10 @@ Public NotInheritable Class big_udec_match_test
         raise_error(error_type.warning, "Match first ", i, " digits")
     End Sub
 
+    Private Shared Sub match_more_digits(ByVal i As Int32)
+        raise_error(error_type.warning, "Match more than first ", i, " digits")
+    End Sub
+
     <test>
     Private Shared Sub pi_fractional_str()
         Dim s As String = Nothing
@@ -28,7 +32,7 @@ Public NotInheritable Class big_udec_match_test
                 Return
             End If
         Next
-        match_digits(s.Length())
+        match_more_digits(s.Length())
     End Sub
 
     <test>
@@ -43,7 +47,7 @@ Public NotInheritable Class big_udec_match_test
                 Return
             End If
         Next
-        match_digits(constants.e_2m().Length())
+        match_more_digits(constants.e_2m().Length())
     End Sub
 
     Private Sub New()
