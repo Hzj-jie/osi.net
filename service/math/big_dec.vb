@@ -381,9 +381,7 @@ Partial Public NotInheritable Class big_dec
     End Operator
 
     Public Shared Operator ^(ByVal this As big_dec, ByVal that As big_dec) As big_dec
-        Dim r As big_dec = Nothing
-        r = New big_dec(this)
-        Return r.power(that)
+        Return this.CloneT().power(that)
     End Operator
 End Class
 

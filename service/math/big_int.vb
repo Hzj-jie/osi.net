@@ -381,9 +381,7 @@ Partial Public NotInheritable Class big_int
     End Operator
 
     Public Shared Operator ^(ByVal this As big_int, ByVal that As big_int) As big_int
-        Dim r As big_int = Nothing
-        r = New big_int(this)
-        Return r.power(that)
+        Return this.CloneT().power(that)
     End Operator
 End Class
 
@@ -990,6 +988,14 @@ Partial Public NotInheritable Class big_int
             Return 0
         End If
         Return d.as_uint64(overflow)
+    End Function
+
+    Public Function as_uint32(ByRef overflow As Boolean) As UInt32
+        If negative() Then
+            overflow = True
+            Return 0
+        End If
+        Return d.as_uint32(overflow)
     End Function
 
     Public Function as_int32(ByRef overflow As Boolean) As Int32

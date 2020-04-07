@@ -30,6 +30,14 @@ Partial Public NotInheritable Class ##CLASS_NAME##
         Return d.as_uint64(overflow)
     End Function
 
+    Public Function as_uint32(ByRef overflow As Boolean) As UInt32
+        If negative() Then
+            overflow = True
+            Return 0
+        End If
+        Return d.as_uint32(overflow)
+    End Function
+
     Public Function as_int32(ByRef overflow As Boolean) As Int32
         Dim v As Int32 = 0
         v = d.as_int32(overflow)
