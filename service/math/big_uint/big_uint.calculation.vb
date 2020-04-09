@@ -375,13 +375,12 @@ Partial Public NotInheritable Class big_uint
         If is_zero_or_one() OrElse that.is_one() Then
             Return Me
         End If
+        that = that.CloneT()
+        For i As UInt32 = 1 To that.remove_binary_trailing_zeros()
+            power_2()
+        Next
         Dim c As big_uint = Nothing
-        If that.getrbit(0) Then
-            c = Me.CloneT()
-        Else
-            c = move(Me)
-            set_one()
-        End If
+        c = Me.CloneT()
         assert(that.bit_count() > 0)
         Dim last As UInt64 = 0
         For i As UInt64 = 1 To that.bit_count() - uint64_1
