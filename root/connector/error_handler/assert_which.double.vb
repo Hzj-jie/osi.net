@@ -28,6 +28,19 @@ Partial Public NotInheritable Class assert_which
         End Function
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function can_cast_to_uint64() As UInt64
+            assert(i.is_integral())
+            Try
+                Return CULng(i)
+            Catch ex As OverflowException
+                assert(i <= max_uint64, ex)
+                assert(i >= 0, ex)
+                assert(False, ex)
+                Return 0
+            End Try
+        End Function
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function can_truncate_to_uint32() As UInt32
             Try
                 Return CUInt(i)
