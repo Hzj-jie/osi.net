@@ -141,7 +141,7 @@ Partial Public NotInheritable Class big_uint
         assert(Not that.is_zero_or_one())
         remainder = move(Me)
         set_zero()
-        If remainder.less(that) Then
+        If remainder.uint32_size() < that.uint32_size() Then
             Return Me
         End If
 
@@ -367,10 +367,7 @@ Partial Public NotInheritable Class big_uint
     End Function
 
     Public Function power(ByVal that As big_uint) As big_uint
-        If that Is Nothing Then
-            Return Me
-        End If
-        If that.is_zero() Then
+        If that Is Nothing OrElse that.is_zero() Then
             '0 ^ 0 = 1
             set_one()
             Return Me
@@ -378,23 +375,23 @@ Partial Public NotInheritable Class big_uint
         If is_zero_or_one() OrElse that.is_one() Then
             Return Me
         End If
+        that = that.CloneT()
+        For i As UInt32 = 1 To that.remove_binary_trailing_zeros()
+            power_2()
+        Next
         Dim c As big_uint = Nothing
-        If that.getrbit(0) Then
-            c = New big_uint(Me)
-        Else
-            c = move(Me)
-            set_one()
-        End If
+        c = Me.CloneT()
         assert(that.bit_count() > 0)
         Dim last As UInt64 = 0
         For i As UInt64 = 1 To that.bit_count() - uint64_1
-            If that.getrbit(i) Then
-                While last < i
-                    c.power_2()
-                    last += uint64_1
-                End While
-                multiply(c)
+            If Not that.getrbit(i) Then
+                Continue For
             End If
+            While last < i
+                c.power_2()
+                last += uint64_1
+            End While
+            multiply(c)
         Next
         Return Me
     End Function

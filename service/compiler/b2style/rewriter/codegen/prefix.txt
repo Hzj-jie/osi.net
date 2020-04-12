@@ -407,3 +407,15 @@ void b2style__std_out(int i) {
 void b2style__std_err(int i) {
   b2style__int_std_err(i);
 }
+
+biguint b2style__extract(biguint i, biguint j) {
+  biguint r;
+  logic "extract r @@prefixes@temps@biguint i j";
+  return r;
+}
+
+biguint b2style__extract_remainder(biguint i, biguint j) {
+  biguint r;
+  logic "extract @@prefixes@temps@biguint r i j";
+  return r;
+}
