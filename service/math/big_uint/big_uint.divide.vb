@@ -8,22 +8,90 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 Public NotInheritable Class big_uint
-    'store the result of me / that in me, and remainder will be the remainder
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Sub divide(ByVal that As UInt32, ByRef remainder As UInt32, ByRef divide_by_zero As Boolean)
+    Public Function divide(ByVal that As big_uint,
+                           ByRef divide_by_zero As Boolean,
+                           Optional ByRef remainder As big_uint = Nothing) As big_uint
+        If that Is Nothing OrElse that.is_zero() Then
+            divide_by_zero = True
+            Return Me
+        End If
+        divide_by_zero = False
+        If is_zero() OrElse that.is_one() Then
+            remainder = big_uint.zero()
+            Return Me
+        End If
+        If is_one() Then
+            remainder = big_uint.one()
+            set_zero()
+            Return Me
+        End If
+        If that.power_of_2() Then
+            Dim l As UInt64 = 0
+            l = that.bit_count() - uint64_1
+            remainder = Me.CloneT().[and](that - uint32_1)
+            right_shift(l)
+            Return Me
+        End If
+        If that.fit_uint32() Then
+            Dim r As UInt32 = 0
+            divide(that.as_uint32(), divide_by_zero, r)
+            assert(Not divide_by_zero)
+            remainder = New big_uint(r)
+            Return Me
+        End If
+        assert(Not that.is_zero_or_one())
+        remainder = move(Me)
+        set_zero()
+        If remainder.uint32_size() < that.uint32_size() Then
+            Return Me
+        End If
+
+#If DEBUG Then
+        assert(remainder.bit_count() >= that.bit_count())
+#End If
+
+        'make sure the that will not be impacted during the calculation
+#If DEBUG Then
+        Dim original_that As big_uint = Nothing
+        original_that = that
+        that = that.CloneT()
+#End If
+
+#If USE_DIVIDE_BIT Then
+        divide_bit(that, remainder)
+#Else
+        divide_uint(that, remainder)
+#End If
+        remove_last_blank()
+
+#If DEBUG Then
+        assert(remainder.less(original_that))
+        assert(that.equal(original_that))
+#End If
+        Return Me
+    End Function
+
+    Public Function divide(ByVal that As UInt32,
+                           ByRef divide_by_zero As Boolean,
+                           Optional ByRef remainder As UInt32 = 0) As big_uint
         If that = 0 Then
             divide_by_zero = True
-            Return
+            Return Me
         End If
         divide_by_zero = False
         remainder = 0
         If is_zero() OrElse that = 1 Then
-            Return
+            Return Me
         End If
         If is_one() Then
             remainder = 1
             set_zero()
-            Return
+            Return Me
+        End If
+        If that.bit_count() = 1 Then
+            remainder = (lowest_uint32() Mod that)
+            right_shift(that.bit_count() - uint32_1)
+            Return Me
         End If
         assert(v.size() > 0)
         Dim i As UInt32 = 0
@@ -50,7 +118,8 @@ Public NotInheritable Class big_uint
 #If DEBUG Then
         assert(remainder < that)
 #End If
-    End Sub
+        Return Me
+    End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Sub divide_bit(ByVal that As big_uint,
