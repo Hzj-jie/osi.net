@@ -103,15 +103,17 @@ Partial Public NotInheritable Class big_uint
         If Not support_base(base) Then
             Return False
         End If
-        If String.IsNullOrEmpty(s) OrElse
-           s = number_to_char(0) Then
+        If s.null_or_whitespace() Then
             r = New big_uint()
             Return True
         End If
         s = s.Trim()
-        If s = number_to_char(1) Then
+        If s = number_to_char(0) Then
             r = New big_uint()
-            r.set_one()
+            Return True
+        End If
+        If s = number_to_char(1) Then
+            r = big_uint.one()
             Return True
         End If
         Dim dc As Byte = 0
