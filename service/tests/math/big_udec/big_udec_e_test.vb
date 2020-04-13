@@ -88,7 +88,7 @@ Public NotInheritable Class big_udec_e_test
 
             If (i Mod 100000) = 0 Then
                 s.fully_reduce_fraction()
-                raise_error(error_type.warning, "@ ", i, " -> ", s.fractional_str())
+                raise_error(error_type.warning, "@ ", i, " -> ", s.fractional_str(), " : c -> ", c.fractional_str())
             End If
         Next
     End Sub
