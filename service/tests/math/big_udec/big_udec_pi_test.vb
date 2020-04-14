@@ -234,7 +234,7 @@ Public NotInheritable Class big_udec_pi_test
             s.add(c)
             c.multiply(big_udec.fraction(i, (i << 1) + uint32_1))
         Next
-        assertion.equal(s.as_str().with_upure_length(151), constants.pi_1m().Substring(0, 153))
+        assertion.equal(s.as_str().with_upure_length(151), constants.pi_1k().Substring(0, 153))
     End Sub
 
     <command_line_specified>
@@ -248,7 +248,7 @@ Public NotInheritable Class big_udec_pi_test
             s.add(c)
             c.multiply(big_udec.fraction(i, (i << 1) + uint32_1))
         Next
-        assertion.equal(s.as_str().with_upure_length(151), constants.pi_1m().Substring(0, 153))
+        assertion.equal(s.as_str().with_upure_length(151), constants.pi_1k().Substring(0, 153))
     End Sub
 
     <command_line_specified>
