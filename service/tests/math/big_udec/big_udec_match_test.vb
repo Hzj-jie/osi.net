@@ -21,11 +21,11 @@ Public NotInheritable Class big_udec_match_test
     End Sub
 
     Private Shared Function pi_str() As String
-        Return constants.pi_1k()
+        Return constants.pi_10m()
     End Function
 
     Private Shared Function e_str() As String
-        Return constants.e_1k()
+        Return constants.e_2m()
     End Function
 
     <test>

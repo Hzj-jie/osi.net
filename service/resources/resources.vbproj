@@ -88,14 +88,9 @@
     <None Include="resources.dep" />
     <None Include="resources.props" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="math\codegen\e-1k.txt" />
-    <Content Include="math\codegen\e-1m.txt" />
-    <Content Include="math\codegen\e-2m.txt" />
-    <Content Include="math\codegen\pi-10m.txt" />
     <Content Include="math\codegen\pi-1k.txt" />
-    <Content Include="math\codegen\pi-1m.txt" />
     <Content Include="run.cmd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

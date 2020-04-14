@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="as.vb" />
     <Compile Include="export.vb" />
+    <Compile Include="file_resource.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
