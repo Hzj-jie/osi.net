@@ -79,14 +79,17 @@ Partial Public NotInheritable Class big_uint
         assert(dc > 0)
         Dim bu As big_uint = Nothing
         bu = assert_which.of(base ^ dc).can_cast_to_uint64()
+        assert(bu.less_or_equal(CULng(max_uint32_plus_1)))
         While Not t.is_zero()
-            Dim rm As big_uint = Nothing
-            t.assert_divide(bu, rm)
+            Dim rmb As big_uint = Nothing
+            t.assert_divide(bu, rmb)
+            Dim rm As UInt32 = 0
+            rm = rmb.as_uint32()
             For i As UInt32 = 0 To dc - uint32_1
                 Dim c As UInt32 = 0
-                rm.assert_divide(base, c)
+                rm = rm.div_rem(base, c)
                 r.Append(number_to_char(assert_which.of(c).can_cast_to_byte()))
-                If rm.is_zero() Then
+                If rm = 0 Then
                     If Not t.is_zero() Then
                         r.Append(digit_0, CInt(dc - i - uint32_1))
                     End If

@@ -152,9 +152,8 @@ Partial Public NotInheritable Class big_uint
             End If
             If i = 0 Then
                 Exit While
-            Else
-                i -= uint32_1
             End If
+            i -= uint32_1
         End While
         assert(r = 1)
         Return True
