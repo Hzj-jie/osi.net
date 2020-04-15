@@ -3,9 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-#Const USE_GCD = True
-#Const REDUCE_FRACTION_OF_EACH_OTHER = True
-#Const REDUCE_SELECTED_PRIMES = True
+#Const REDUCE_FRACTION_OF_EACH_OTHER = False
 
 Imports osi.root.connector
 
@@ -26,27 +24,59 @@ Partial Public NotInheritable Class big_udec
         End Sub
     End Class
 
-    Private Shared Sub reduce_fraction(ByVal n As big_uint, ByVal d As big_uint)
+    Private Shared Function fast_reduce_fraction(ByVal n As big_uint, ByVal d As big_uint) As Boolean
         assert(Not n Is Nothing)
         assert(Not d Is Nothing)
 
         If n.is_zero() Then
             d.set_one()
-            Return
+            Return True
         End If
         If n.is_one() OrElse d.is_one() Then
-            Return
+            Return True
         End If
         If n.equal(d) Then
             n.set_one()
             d.set_one()
-            Return
+            Return True
         End If
 
         Dim m As UInt32 = 0
         m = min(n.binary_trailing_zero_count(), d.binary_trailing_zero_count())
         n.right_shift(m)
         d.right_shift(m)
+
+        Using code_block
+            For j As Int32 = 0 To reduce_fraction_primes.selected_prime_count - 1
+                Dim i As UInt32 = 0
+                i = reduce_fraction_primes.selected_prime(j)
+                While True
+                    Dim nn As big_uint = Nothing
+                    Dim nd As big_uint = Nothing
+                    nn = n.CloneT()
+                    nd = d.CloneT()
+                    Dim r As big_uint = Nothing
+                    nn.assert_divide(i, r)
+                    If Not r.is_zero() Then
+                        Exit While
+                    End If
+                    nd.assert_divide(i, r)
+                    If Not r.is_zero() Then
+                        Exit While
+                    End If
+                    n.replace_by(nn)
+                    d.replace_by(nd)
+                End While
+            Next
+        End Using
+
+        Return False
+    End Function
+
+    Private Shared Sub reduce_fraction(ByVal n As big_uint, ByVal d As big_uint)
+        If fast_reduce_fraction(n, d) Then
+            Return
+        End If
 
 #If REDUCE_FRACTION_OF_EACH_OTHER Then
         Using code_block
@@ -80,33 +110,6 @@ Partial Public NotInheritable Class big_udec
         End Using
 #End If
 
-#If REDUCE_SELECTED_PRIMES Then
-        Using code_block
-            For j As Int32 = 0 To reduce_fraction_primes.selected_prime_count - 1
-                Dim i As UInt32 = 0
-                i = reduce_fraction_primes.selected_prime(j)
-                While True
-                    Dim nn As big_uint = Nothing
-                    Dim nd As big_uint = Nothing
-                    nn = n.CloneT()
-                    nd = d.CloneT()
-                    Dim r As big_uint = Nothing
-                    nn.assert_divide(i, r)
-                    If Not r.is_zero() Then
-                        Exit While
-                    End If
-                    nd.assert_divide(i, r)
-                    If Not r.is_zero() Then
-                        Exit While
-                    End If
-                    n.replace_by(nn)
-                    d.replace_by(nd)
-                End While
-            Next
-        End Using
-#End If
-
-#If USE_GCD Then
         Using code_block
             Dim b As big_uint = Nothing
             b = big_uint.gcd(n, d)
@@ -116,8 +119,12 @@ Partial Public NotInheritable Class big_udec
             d.assert_divide(b, c)
             assert(c.is_zero())
         End Using
-#End If
     End Sub
+
+    Private Function fast_reduce_fraction() As big_udec
+        fast_reduce_fraction(Me.n, Me.d)
+        Return Me
+    End Function
 
     Public Function reduce_fraction() As big_udec
         reduce_fraction(Me.n, Me.d)

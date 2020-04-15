@@ -155,6 +155,8 @@ Public NotInheritable Class big_udec_pi_test
             End If
 
             If (i Mod 2500000) = 1 Then
+                c.reduce_fraction()
+                s.reduce_fraction()
                 raise_error(error_type.warning, "@ ", i, " -> ", s.fractional_str())
             End If
         Next
@@ -200,6 +202,8 @@ Public NotInheritable Class big_udec_pi_test
             End If
 
             If (i Mod 400000) = 2 Then
+                c.reduce_fraction()
+                s.reduce_fraction()
                 raise_error(error_type.warning, "@ ", i, " -> ", s.fractional_str())
             End If
         Next
@@ -216,6 +220,7 @@ Public NotInheritable Class big_udec_pi_test
             s.multiply(big_udec.fraction(i, i + uint32_1))
 
             If (i Mod 900000) = 2 Then
+                s.reduce_fraction()
                 raise_error(error_type.warning, "@ ", i, " -> ", s.fractional_str())
             End If
         Next
@@ -274,6 +279,8 @@ Public NotInheritable Class big_udec_pi_test
             c.multiply(big_udec.fraction(i, (i << 1) + uint32_1))
 
             If (i Mod 100000) = 0 Then
+                c.reduce_fraction()
+                s.reduce_fraction()
                 raise_error(error_type.warning, "@ ", i, " -> ", s.fractional_str(), " : c -> ", c.fractional_str())
             End If
         Next

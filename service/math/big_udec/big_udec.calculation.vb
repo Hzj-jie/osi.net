@@ -21,7 +21,10 @@ Partial Public NotInheritable Class big_udec
         Else
             Dim g As big_uint = Nothing
             g = big_uint.gcd(Me.d, that.d)
-            replace_by((that.d \ g) * Me.n + (Me.d \ g) * that.n, (Me.d \ g) * that.d)
+            Dim c As big_uint = Nothing
+            Me.d.assert_divide(g, c)
+            assert(c.is_zero())
+            replace_by((that.d \ g) * Me.n + Me.d * that.n, Me.d * that.d)
         End If
         Return Me
     End Function
@@ -33,7 +36,7 @@ Partial Public NotInheritable Class big_udec
         assert(Not d Is Nothing)
         overflow = False
         If y.is_zero() Then
-            assert(replace_by(x, d))
+            assert(replace_only(x, d))
         ElseIf y.less_or_equal(x) Then
             assert(replace_by(x - y, d))
         Else
@@ -63,7 +66,10 @@ Partial Public NotInheritable Class big_udec
         Else
             Dim g As big_uint = Nothing
             g = big_uint.gcd(Me.d, that.d)
-            [sub]((that.d \ g) * Me.n, (Me.d \ g) * that.n, (Me.d \ g) * that.d, overflow)
+            Dim c As big_uint = Nothing
+            Me.d.assert_divide(g, c)
+            assert(c.is_zero())
+            [sub]((that.d \ g) * Me.n, Me.d * that.n, Me.d * that.d, overflow)
         End If
         Return Me
     End Function
@@ -106,9 +112,9 @@ Partial Public NotInheritable Class big_udec
         n2 = that.n.CloneT()
         d1 = Me.d.CloneT()
         d2 = that.d.CloneT()
-        reduce_fraction(n1, d2)
-        reduce_fraction(n2, d1)
-        replace_by(n1.multiply(n2), d1.multiply(d2))
+        fast_reduce_fraction(n1, d2)
+        fast_reduce_fraction(n2, d1)
+        replace_only(n1.multiply(n2), d1.multiply(d2))
         Return Me
     End Function
 
@@ -130,9 +136,9 @@ Partial Public NotInheritable Class big_udec
         n2 = that.n.CloneT()
         d1 = Me.d.CloneT()
         d2 = that.d.CloneT()
-        reduce_fraction(n1, n2)
-        reduce_fraction(d1, d2)
-        replace_by(n1.multiply(d2), d1.multiply(n2))
+        fast_reduce_fraction(n1, n2)
+        fast_reduce_fraction(d1, d2)
+        replace_only(n1.multiply(d2), d1.multiply(n2))
         Return Me
     End Function
 
@@ -163,7 +169,7 @@ Partial Public NotInheritable Class big_udec
             Return Me
         End If
 
-        replace_by(Me.n ^ that, Me.d ^ that)
+        replace_only(Me.n ^ that, Me.d ^ that)
         Return Me
     End Function
 
@@ -189,8 +195,8 @@ Partial Public NotInheritable Class big_udec
         If p.is_zero_or_one() Then
             p = New big_uint(CUInt(2))
         End If
-        replace_by(((Me.n ^ (that * p + uint32_1)) * (Me.d ^ (that * p - uint32_1))).assert_extract(that),
-                   (Me.n * Me.d) ^ p)
+        replace_only(((Me.n ^ (that * p + uint32_1)) * (Me.d ^ (that * p - uint32_1))).assert_extract(that),
+                     (Me.n * Me.d) ^ p)
         Return Me
     End Function
 

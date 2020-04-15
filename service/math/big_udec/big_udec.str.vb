@@ -135,7 +135,7 @@ Partial Public NotInheritable Class big_udec
             End If
             assert(big_uint.parse(strncat("1", "0", zero_count), d, base))
         End If
-        o = New big_udec(n, d).reduce_fraction()
+        o = New big_udec(n, d).fast_reduce_fraction()
         Return True
     End Function
 
@@ -182,7 +182,7 @@ Partial Public NotInheritable Class big_udec
         If d.is_zero() Then
             Return False
         End If
-        o = New big_udec(n, d).reduce_fraction()
+        o = New big_udec(n, d).fast_reduce_fraction()
         Return True
     End Function
 
