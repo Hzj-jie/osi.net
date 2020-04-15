@@ -5,6 +5,7 @@ Option Strict On
 
 #Const REDUCE_FRACTION_OF_EACH_OTHER = False
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 
@@ -124,11 +125,13 @@ Partial Public NotInheritable Class big_udec
         End Using
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function fast_reduce_fraction() As big_udec
         fast_reduce_fraction(Me.n, Me.d)
         Return Me
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function increase_fraction_dirty_rate() As Boolean
         fraction_dirty_rate += 1
         If fraction_dirty_rate = max_int32 Then
@@ -138,6 +141,7 @@ Partial Public NotInheritable Class big_udec
         Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub reduce_fraction()
         reduce_fraction(Me.n, Me.d)
         fraction_dirty_rate = 0
