@@ -161,6 +161,24 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         End Function
     End Class
 
+    Public NotInheritable Class big_int_BigInteger_gcd_perf
+        Inherits big_int_BigInteger_perf_comparison
+
+        Public Sub New()
+            MyBase.New(Sub(ByVal i As BigInteger, ByVal j As BigInteger)
+                           BigInteger.GreatestCommonDivisor(BigInteger.Abs(i), BigInteger.Abs(j))
+                       End Sub,
+                       Sub(ByVal i As big_int, ByVal j As big_int)
+                           big_uint.gcd(i.abs_big_uint(), j.abs_big_uint())
+                       End Sub,
+                       10000)
+        End Sub
+
+        Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+            Return loosen_bound({1, 1}, i, j)
+        End Function
+    End Class
+
     Public MustInherit Class big_int_BigInteger_perf_comparison
         Inherits performance_comparison_case_wrapper
 
