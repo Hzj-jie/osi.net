@@ -399,6 +399,8 @@ Partial Public NotInheritable Class big_uint
         While Not c.is_zero()
             a = b
             b = c
+            a.remove_binary_trailing_zeros()
+            b.remove_binary_trailing_zeros()
             c = a.assert_modulus(b)
         End While
         Return b.left_shift(shift)
