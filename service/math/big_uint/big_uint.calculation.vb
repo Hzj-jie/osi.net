@@ -3,7 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-#Const GCD_USE_SUCCESSIVE_DIVISION = False
+#Const GCD_USE_SUCCESSIVE_DIVISION = True
 #Const USE_MODULUS_BIT = False
 #Const USE_DIVIDE_BIT = False
 
@@ -376,21 +376,7 @@ Partial Public NotInheritable Class big_uint
         If a.equal(b) Then
             Return a.CloneT()
         End If
-#If GCD_USE_SUCCESSIVE_DIVISION Then
-        Dim c As big_uint = Nothing
-        If a.less(b) Then
-            c = a
-            a = b
-            b = c
-        End If
-        c = a.CloneT().assert_modulus(b)
-        While Not c.is_zero()
-            a = b.CloneT()
-            b = c
-            c = a.CloneT().assert_modulus(b)
-        End While
-        Return b
-#Else
+
         a = a.CloneT()
         b = b.CloneT()
         Dim shift As UInt32 = 0
@@ -402,6 +388,21 @@ Partial Public NotInheritable Class big_uint
         b.right_shift(bz)
         shift = min(az, bz)
 
+#If GCD_USE_SUCCESSIVE_DIVISION Then
+        Dim c As big_uint = Nothing
+        If a.less(b) Then
+            c = a
+            a = b
+            b = c
+        End If
+        c = a.assert_modulus(b)
+        While Not c.is_zero()
+            a = b
+            b = c
+            c = a.assert_modulus(b)
+        End While
+        Return b.left_shift(shift)
+#Else
         While True
             assert(Not a.is_zero())
             assert(Not b.is_zero())
