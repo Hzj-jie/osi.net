@@ -53,8 +53,7 @@ Public NotInheritable Class big_uint
         'make sure the that will not be impacted during the calculation
 #If DEBUG Then
         Dim original_that As big_uint = Nothing
-        original_that = that
-        that = that.CloneT()
+        original_that = that.CloneT()
 #End If
 
 #If USE_DIVIDE_BIT Then
@@ -185,6 +184,9 @@ Public NotInheritable Class big_uint
         that.left_shift(CULng(i) << bit_count_in_uint32_shift)
         While True
             While True
+                If remainder.uint32_size() < that.uint32_size() Then
+                    Exit While
+                End If
                 Dim n As UInt64 = 0
                 Dim d As UInt64 = 0
                 select_significant_divide_fraction(remainder, that, n, d)
@@ -217,9 +219,6 @@ Public NotInheritable Class big_uint
                     result.recursive_add(t32, i)
                 End If
                 remainder.assert_sub(that * t32)
-                If remainder.uint32_size() < that.uint32_size() Then
-                    Exit While
-                End If
             End While
 
             If i = 0 Then
