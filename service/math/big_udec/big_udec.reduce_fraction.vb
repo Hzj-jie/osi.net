@@ -6,8 +6,11 @@ Option Strict On
 #Const REDUCE_FRACTION_OF_EACH_OTHER = False
 
 Imports osi.root.connector
+Imports osi.root.constants
 
 Partial Public NotInheritable Class big_udec
+    Private fraction_dirty_rate As Int32 = 0
+
     Private NotInheritable Class reduce_fraction_primes
         Public Const selected_prime_count As Int32 = 2  ' 3 5
 
@@ -126,8 +129,17 @@ Partial Public NotInheritable Class big_udec
         Return Me
     End Function
 
-    Public Function reduce_fraction() As big_udec
-        reduce_fraction(Me.n, Me.d)
-        Return Me
+    Private Function increase_fraction_dirty_rate() As Boolean
+        fraction_dirty_rate += 1
+        If fraction_dirty_rate = max_int32 Then
+            reduce_fraction()
+            Return True
+        End If
+        Return False
     End Function
+
+    Public Sub reduce_fraction()
+        reduce_fraction(Me.n, Me.d)
+        fraction_dirty_rate = 0
+    End Sub
 End Class

@@ -26,6 +26,8 @@ Partial Public NotInheritable Class big_udec
             assert(c.is_zero())
             replace_by((that.d \ g) * Me.n + Me.d * that.n, Me.d * that.d)
         End If
+
+        increase_fraction_dirty_rate()
         Return Me
     End Function
 
@@ -71,6 +73,8 @@ Partial Public NotInheritable Class big_udec
             assert(c.is_zero())
             [sub]((that.d \ g) * Me.n, Me.d * that.n, Me.d * that.d, overflow)
         End If
+
+        increase_fraction_dirty_rate()
         Return Me
     End Function
 
@@ -115,6 +119,8 @@ Partial Public NotInheritable Class big_udec
         fast_reduce_fraction(n1, d2)
         fast_reduce_fraction(n2, d1)
         replace_only(n1.multiply(n2), d1.multiply(d2))
+
+        increase_fraction_dirty_rate()
         Return Me
     End Function
 
@@ -139,6 +145,8 @@ Partial Public NotInheritable Class big_udec
         fast_reduce_fraction(n1, n2)
         fast_reduce_fraction(d1, d2)
         replace_only(n1.multiply(d2), d1.multiply(n2))
+
+        increase_fraction_dirty_rate()
         Return Me
     End Function
 
