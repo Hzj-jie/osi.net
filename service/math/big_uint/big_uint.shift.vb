@@ -20,8 +20,8 @@ Partial Public NotInheritable Class big_uint
         End If
         Dim till As UInt32 = 0
         till = left_shift_slot_till(assert_which.of(size >> bit_count_in_uint32_shift).can_cast_to_uint32())
-        Dim ls As UInt32 = 0
-        ls = assert_which.of(size And bit_count_in_uint32_mask).can_cast_to_uint32()
+        Dim ls As Byte = 0
+        ls = assert_which.of(size And bit_count_in_uint32_mask).can_cast_to_byte()
         If ls = 0 Then
             Return Me
         End If
@@ -97,8 +97,8 @@ Partial Public NotInheritable Class big_uint
         End If
         assert(Not is_zero())
         right_shift_slot(assert_which.of(size >> bit_count_in_uint32_shift).can_cast_to_uint32())
-        Dim ls As UInt32 = 0
-        ls = assert_which.of(size And bit_count_in_uint32_mask).can_cast_to_uint32()
+        Dim ls As Byte = 0
+        ls = assert_which.of(size And bit_count_in_uint32_mask).can_cast_to_byte()
         If ls = 0 Then
             Return Me
         End If

@@ -101,6 +101,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function bit_count() As UInt64
         If is_zero() Then
             Return uint64_0

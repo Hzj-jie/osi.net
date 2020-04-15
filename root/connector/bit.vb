@@ -65,11 +65,13 @@ Public Module _bit
         assert(i < bit_count_in_int8)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function getbit(ByVal b As Byte, ByVal index As Byte) As Boolean
         assert_index_int8(index)
         Return (b And jump1(index + int8_offset)) <> byte_0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function setbit(ByRef b As Byte,
                                          ByVal index As Byte,
                                          Optional ByVal value As Boolean = True) As Byte
@@ -82,11 +84,13 @@ Public Module _bit
         Return b
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function getrbit(ByVal b As Byte, ByVal index As Byte) As Boolean
         assert_index_int8(index)
         Return (b And rjump1(index)) <> byte_0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function setrbit(ByRef b As Byte,
                                           ByVal index As Byte,
                                           Optional ByVal value As Boolean = True) As Byte
@@ -99,10 +103,12 @@ Public Module _bit
         Return b
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function getbit(ByVal b As SByte, ByVal index As Byte) As Boolean
         Return getbit(int8_uint8(b), index)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function setbit(ByRef b As SByte,
                                          ByVal index As Byte,
                                          Optional ByVal value As Boolean = True) As SByte
@@ -113,10 +119,12 @@ Public Module _bit
         Return b
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function getrbit(ByVal b As SByte, ByVal index As Byte) As Boolean
         Return getrbit(int8_uint8(b), index)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function setrbit(ByRef b As SByte,
                                           ByVal index As Byte,
                                           Optional ByVal value As Boolean = True) As SByte
@@ -127,15 +135,18 @@ Public Module _bit
         Return b
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub assert_index_int16(ByVal i As Byte)
         assert(i < bit_count_in_int16)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function getbit(ByVal b As UInt16, ByVal index As Byte) As Boolean
         assert_index_int16(index)
         Return (b And jump1(index + int16_offset)) <> uint16_0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function setbit(ByRef b As UInt16,
                                          ByVal index As Byte,
                                          Optional ByVal value As Boolean = True) As UInt16
@@ -148,11 +159,13 @@ Public Module _bit
         Return b
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function getrbit(ByVal b As UInt16, ByVal index As Byte) As Boolean
         assert_index_int16(index)
         Return (b And rjump1(index)) <> uint16_0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function setrbit(ByRef b As UInt16,
                                           ByVal index As Byte,
                                           Optional ByVal value As Boolean = True) As UInt16
@@ -165,10 +178,12 @@ Public Module _bit
         Return b
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function getbit(ByVal b As Int16, ByVal index As Byte) As Boolean
         Return getbit(int16_uint16(b), index)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function setbit(ByRef b As Int16,
                                          ByVal index As Byte,
                                          Optional ByVal value As Boolean = True) As Int16
@@ -179,10 +194,12 @@ Public Module _bit
         Return b
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function getrbit(ByVal b As Int16, ByVal index As Byte) As Boolean
         Return getrbit(int16_uint16(b), index)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function setrbit(ByRef b As Int16,
                                           ByVal index As Byte,
                                           Optional ByVal value As Boolean = True) As Int16
@@ -193,15 +210,18 @@ Public Module _bit
         Return b
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub assert_index_int32(ByVal i As Byte)
         assert(i < bit_count_in_int32)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function getbit(ByVal b As UInt32, ByVal index As Byte) As Boolean
         assert_index_int32(index)
         Return (b And jump1(index + int32_offset)) <> uint32_0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function setbit(ByRef b As UInt32,
                                          ByVal index As Byte,
                                          Optional ByVal value As Boolean = True) As UInt32
@@ -214,11 +234,13 @@ Public Module _bit
         Return b
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function getrbit(ByVal b As UInt32, ByVal index As Byte) As Boolean
         assert_index_int32(index)
         Return (b And rjump1(index)) <> uint32_0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function setrbit(ByRef b As UInt32,
                                           ByVal index As Byte,
                                           Optional ByVal value As Boolean = True) As UInt32
@@ -231,10 +253,12 @@ Public Module _bit
         Return b
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function getbit(ByVal b As Int32, ByVal index As Byte) As Boolean
         Return getbit(int32_uint32(b), index)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function setbit(ByRef b As Int32,
                                          ByVal index As Byte,
                                          Optional ByVal value As Boolean = True) As Int32
@@ -245,10 +269,12 @@ Public Module _bit
         Return b
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function getrbit(ByVal b As Int32, ByVal index As Byte) As Boolean
         Return getrbit(int32_uint32(b), index)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function setrbit(ByRef b As Int32,
                                           ByVal index As Byte,
                                           Optional ByVal value As Boolean = True) As Int32
@@ -259,15 +285,18 @@ Public Module _bit
         Return b
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub assert_index_int64(ByVal i As Byte)
         assert(i < bit_count_in_int64)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function getbit(ByVal b As UInt64, ByVal index As Byte) As Boolean
         assert_index_int64(index)
         Return (b And jump1(index + int64_offset)) <> uint64_0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function setbit(ByRef b As UInt64,
                                          ByVal index As Byte,
                                          Optional ByVal value As Boolean = True) As UInt64
@@ -280,11 +309,13 @@ Public Module _bit
         Return b
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function getrbit(ByVal b As UInt64, ByVal index As Byte) As Boolean
         assert_index_int64(index)
         Return (b And rjump1(index)) <> uint64_0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function setrbit(ByRef b As UInt64,
                                           ByVal index As Byte,
                                           Optional ByVal value As Boolean = True) As UInt64
@@ -297,10 +328,12 @@ Public Module _bit
         Return b
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function getbit(ByVal b As Int64, ByVal index As Byte) As Boolean
         Return getbit(int64_uint64(b), index)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function setbit(ByRef b As Int64,
                                          ByVal index As Byte,
                                          Optional ByVal value As Boolean = True) As Int64
@@ -311,10 +344,12 @@ Public Module _bit
         Return b
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function getrbit(ByVal b As Int64, ByVal index As Byte) As Boolean
         Return getrbit(int64_uint64(b), index)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function setrbit(ByRef b As Int64,
                                           ByVal index As Byte,
                                           Optional ByVal value As Boolean = True) As Int64
@@ -325,6 +360,7 @@ Public Module _bit
         Return b
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function bit_byte(ByVal c As Char, ByRef v As Boolean) As Boolean
         Select Case c
             Case character._0
@@ -431,6 +467,7 @@ Public Module _bit
     End Function
 
     'bit_count is the minmum bit count to hold the value, say (7)10 = (111)2, so 7.bit_count() = 3
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function bit_count(ByVal v As Byte) As Byte
         Dim r As Byte = 0
         While v > 0
@@ -450,10 +487,12 @@ Public Module _bit
 #End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function bit_count(ByVal v As SByte) As Byte
         Return bit_count(sbyte_byte(v))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function bit_count(ByVal v As UInt16) As Byte
         Dim r As Byte = 0
         While v > 0
@@ -472,10 +511,12 @@ Public Module _bit
 #End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function bit_count(ByVal v As Int16) As Byte
         Return bit_count(int16_uint16(v))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function bit_count(ByVal v As UInt32) As Byte
         Dim r As Byte = 0
         While v > 0
@@ -494,10 +535,12 @@ Public Module _bit
 #End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function bit_count(ByVal v As Int32) As Byte
         Return bit_count(int32_uint32(v))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function bit_count(ByVal v As UInt64) As Byte
         For i As Byte = 0 To jump_size - uint8_1
             If rjump1(i) > v Then
@@ -507,6 +550,7 @@ Public Module _bit
         Return jump_size
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function bit_count(ByVal v As Int64) As Byte
         Return bit_count(int64_uint64(v))
     End Function
