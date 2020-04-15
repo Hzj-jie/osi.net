@@ -264,10 +264,19 @@ Partial Public NotInheritable Class big_uint
             Return Me
         End If
 
+#If DEBUG Then
+        Dim original_that As big_uint = Nothing
+        original_that = that.CloneT()
+#End If
+
 #If USE_MODULUS_BIT Then
         modulus_bit(that)
 #Else
         modulus_uint(that)
+#End If
+
+#If DEBUG Then
+        assert(that.equal(original_that))
 #End If
 
         Return Me

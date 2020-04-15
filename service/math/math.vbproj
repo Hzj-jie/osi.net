@@ -130,7 +130,7 @@
     <Compile Include="big_udec\big_udec.implementation.vb" />
     <Compile Include="big_udec\big_udec.operator.vb" />
     <Compile Include="big_udec\big_udec.override.vb" />
-    <Compile Include="big_udec\big_udec.private.vb" />
+    <Compile Include="big_udec\big_udec.reduce_fraction.vb" />
     <Compile Include="big_udec\big_udec.str.vb" />
     <Compile Include="big_udec\big_udec.vb" />
     <Compile Include="unchecked\operators.vb" />

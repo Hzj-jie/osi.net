@@ -23,7 +23,7 @@ Public NotInheritable Class big_udec_extract_test
     <test>
     Private Shared Sub _9_div_10_extract_by_2()
         Dim u As big_udec = Nothing
-        u = New big_udec(New big_uint(9), New big_uint(10))
+        u = big_udec.fraction(9, 10)
         u = u.assert_extract(New big_uint(2))
 
         assertion.equal(u.str(), "0.9486832980505137995996680633298155546950258892561342237094936251")
@@ -73,7 +73,7 @@ Public NotInheritable Class big_udec_extract_test
     <test>
     Private Shared Sub _9_div_10_extract_by_3()
         Dim u As big_udec = Nothing
-        u = New big_udec(New big_uint(9), New big_uint(10))
+        u = big_udec.fraction(9, 10)
         u = u.assert_extract(New big_uint(3))
 
         assertion.equal(u.str(), "0.96548938460562975785993278443506691761278948241073248606247529")

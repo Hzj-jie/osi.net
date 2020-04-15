@@ -12,7 +12,7 @@ Partial Public NotInheritable Class big_udec
         Dim r As big_udec = Nothing
         r = big_udec.zero()
         If r.replace_by(numerator, denominator) Then
-            o = r
+            o = r.reduce_fraction()
             Return True
         End If
         Return False

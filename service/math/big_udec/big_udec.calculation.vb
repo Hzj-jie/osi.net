@@ -287,8 +287,4 @@ Partial Public NotInheritable Class big_udec
         assert(Not d)
         Return r
     End Function
-
-    Public Sub fully_reduce_fraction()
-        reduce_fraction(Me.n, Me.d, True, True, True)
-    End Sub
 End Class

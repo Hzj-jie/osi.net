@@ -3,15 +3,15 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-#Const USE_GCD = False
-#Const REDUCE_FRACTION_OF_EACH_OTHER = False
+#Const USE_GCD = True
+#Const REDUCE_FRACTION_OF_EACH_OTHER = True
 #Const REDUCE_SELECTED_PRIMES = True
 
 Imports osi.root.connector
 
 Partial Public NotInheritable Class big_udec
     Private NotInheritable Class reduce_fraction_primes
-        Public Const selected_prime_count As Int32 = 2  ' 3 5
+        Public Const selected_prime_count As Int32 = 3  ' 3 5 7
 
         Shared Sub New()
             assert(prime_count >= selected_prime_count + 1)
@@ -26,11 +26,7 @@ Partial Public NotInheritable Class big_udec
         End Sub
     End Class
 
-    Private Shared Sub reduce_fraction(ByVal n As big_uint,
-                                       ByVal d As big_uint,
-                                       ByVal reduce_of_each_other As Boolean,
-                                       ByVal reduce_with_selected_primes As Boolean,
-                                       ByVal reduce_with_gcd As Boolean)
+    Private Shared Sub reduce_fraction(ByVal n As big_uint, ByVal d As big_uint)
         assert(Not n Is Nothing)
         assert(Not d Is Nothing)
 
@@ -52,7 +48,8 @@ Partial Public NotInheritable Class big_udec
         n.right_shift(m)
         d.right_shift(m)
 
-        If reduce_of_each_other Then
+#If REDUCE_FRACTION_OF_EACH_OTHER Then
+        Using code_block
             assert(Not n.is_zero())
             assert(Not d.is_zero())
 
@@ -78,10 +75,13 @@ Partial Public NotInheritable Class big_udec
                     d.set_one()
                     n.replace_by(l)
                 End If
+                Return
             End If
-        End If
+        End Using
+#End If
 
-        If reduce_with_selected_primes Then
+#If REDUCE_SELECTED_PRIMES Then
+        Using code_block
             For j As Int32 = 0 To reduce_fraction_primes.selected_prime_count - 1
                 Dim i As UInt32 = 0
                 i = reduce_fraction_primes.selected_prime(j)
@@ -103,9 +103,11 @@ Partial Public NotInheritable Class big_udec
                     d.replace_by(nd)
                 End While
             Next
-        End If
+        End Using
+#End If
 
-        If reduce_with_gcd Then
+#If USE_GCD Then
+        Using code_block
             Dim b As big_uint = Nothing
             b = big_uint.gcd(n, d)
             Dim c As big_uint = Nothing
@@ -113,34 +115,12 @@ Partial Public NotInheritable Class big_udec
             assert(c.is_zero())
             d.assert_divide(b, c)
             assert(c.is_zero())
-        End If
+        End Using
+#End If
     End Sub
 
-    Private Shared Sub reduce_fraction(ByVal n As big_uint, ByVal d As big_uint)
-        Dim reduce_of_each_other As Boolean = False
-#If REDUCE_FRACTION_OF_EACH_OTHER Then
-        reduce_of_each_other = True
-#Else
-        reduce_of_each_other = False
-#End If
-
-        Dim reduce_with_selected_primes As Boolean = False
-#If REDUCE_SELECTED_PRIMES Then
-        reduce_with_selected_primes = True
-#Else
-        reduce_with_selected_primes = False
-#End If
-
-        Dim reduce_with_gcd As Boolean = False
-#If USE_GCD Then
-        reduce_with_gcd = True
-#Else
-        reduce_with_gcd = False
-#End If
-        reduce_fraction(n,
-                        d,
-                        reduce_of_each_other:=reduce_of_each_other,
-                        reduce_with_selected_primes:=reduce_with_selected_primes,
-                        reduce_with_gcd:=reduce_with_gcd)
-    End Sub
+    Public Function reduce_fraction() As big_udec
+        reduce_fraction(Me.n, Me.d)
+        Return Me
+    End Function
 End Class
