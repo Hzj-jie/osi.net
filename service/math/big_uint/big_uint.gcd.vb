@@ -30,8 +30,8 @@ Partial Public NotInheritable Class big_uint
     Private Shared Function shifting(ByVal a As big_uint, ByVal b As big_uint) As UInt32
         Dim az As UInt32 = 0
         Dim bz As UInt32 = 0
-        az = a.binary_trailing_zero_count()
-        bz = b.binary_trailing_zero_count()
+        az = a.trailing_binary_zero_count()
+        bz = b.trailing_binary_zero_count()
         a.right_shift(az)
         b.right_shift(bz)
         Return min(az, bz)
@@ -45,8 +45,8 @@ Partial Public NotInheritable Class big_uint
         While True
             assert(Not a.is_zero())
             assert(Not b.is_zero())
-            a.remove_binary_trailing_zeros()
-            b.remove_binary_trailing_zeros()
+            a.remove_trailing_binary_zeros()
+            b.remove_trailing_binary_zeros()
 
             Dim cmp As Int32 = 0
             cmp = a.compare(b)
@@ -73,10 +73,10 @@ Partial Public NotInheritable Class big_uint
             swap(a, b)
         End If
         While True
-            b.remove_binary_trailing_zeros()
+            b.remove_trailing_binary_zeros()
             If a.uint32_size() > b.uint32_size() Then
                 Dim m As UInt32 = 0
-                m = (a.binary_trailing_zero_count() >> bit_count_in_uint32_shift)
+                m = (a.trailing_binary_zero_count() >> bit_count_in_uint32_shift)
                 m = min(m, a.uint32_size() - b.uint32_size())
                 a.right_shift(m << bit_count_in_uint32_shift)
             End If

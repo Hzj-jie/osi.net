@@ -46,7 +46,7 @@ Partial Public NotInheritable Class big_udec
         End If
 
         Dim m As UInt32 = 0
-        m = min(n.binary_trailing_zero_count(), d.binary_trailing_zero_count())
+        m = min(n.trailing_binary_zero_count(), d.trailing_binary_zero_count())
         n.right_shift(m)
         d.right_shift(m)
 

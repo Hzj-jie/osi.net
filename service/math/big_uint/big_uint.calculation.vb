@@ -91,7 +91,7 @@ Partial Public NotInheritable Class big_uint
             replace_by(that)
         End If
         Dim c As UInt32 = 0
-        For i As UInt32 = 0 To v.size() - uint32_1
+        For i As UInt32 = trailing_uint32_zero_count() To v.size() - uint32_1
             Dim t As UInt64 = 0
             t = v.get(i)
             t *= that
@@ -314,7 +314,7 @@ Partial Public NotInheritable Class big_uint
             Return Me
         End If
         that = that.CloneT()
-        For i As UInt32 = 1 To that.remove_binary_trailing_zeros()
+        For i As UInt32 = 1 To that.remove_trailing_binary_zeros()
             power_2()
         Next
         Dim c As big_uint = Nothing

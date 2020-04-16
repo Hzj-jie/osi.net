@@ -206,16 +206,12 @@ Partial Public NotInheritable Class big_uint
         Return bit_count() > 0 AndAlso getrbit(0)
     End Function
 
-    Public Function binary_trailing_zero_count() As UInt32
+    Public Function trailing_binary_zero_count() As UInt32
         assert(Not is_zero())
-        Dim r As UInt32 = 0
         Dim i As UInt32 = 0
         While i < uint32_size()
-            If v.get(i) = 0 Then
-                r += bit_count_in_uint32
-            Else
-                r += v.get(i).binary_trailing_zero_count()
-                Return r
+            If v.get(i) <> 0 Then
+                Return (i << bit_count_in_uint32_shift) + v.get(i).binary_trailing_zero_count()
             End If
             i += uint32_1
         End While
@@ -223,9 +219,21 @@ Partial Public NotInheritable Class big_uint
         Return uint32_0
     End Function
 
-    Public Function remove_binary_trailing_zeros() As UInt32
+    Public Function trailing_uint32_zero_count() As UInt32
+        Dim i As UInt32 = 0
+        While i < uint32_size()
+            If v.get(i) <> 0 Then
+                Return i
+            End If
+            i += uint32_1
+        End While
+        assert(False)
+        Return uint32_0
+    End Function
+
+    Public Function remove_trailing_binary_zeros() As UInt32
         Dim r As UInt32 = 0
-        r = binary_trailing_zero_count()
+        r = trailing_binary_zero_count()
         assert_right_shift(r)
         Return r
     End Function
