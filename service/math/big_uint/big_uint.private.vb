@@ -16,13 +16,13 @@ Partial Public NotInheritable Class big_uint
         Me.v = i
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Function set_and_borrow(ByVal t As Int64, ByVal p As UInt32) As UInt32
         v.set(p, CUInt(t And max_uint32))
         Return If(t < 0, uint32_1, uint32_0)
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Sub sub_assertions(ByVal c As UInt32, ByVal p As UInt32)
         'this assert is too costly
 #If DEBUG Then
@@ -32,13 +32,13 @@ Partial Public NotInheritable Class big_uint
     End Sub
 
     'sub d at position p with carry-over as c
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Function [sub](ByVal d As UInt32, ByVal c As UInt32, ByVal p As UInt32) As UInt32
         sub_assertions(c, p)
         Return set_and_borrow(CLng(v.get(p)) - d - c, p)
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Function recursive_sub(ByVal c As UInt32, ByVal p As UInt32) As Boolean
         If c = 0 Then
             Return False
@@ -54,7 +54,7 @@ Partial Public NotInheritable Class big_uint
         Return (c = uint32_1)
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Sub add_assertions(ByVal p As UInt32)
         'this assert is too costly
 #If DEBUG Then
@@ -62,7 +62,7 @@ Partial Public NotInheritable Class big_uint
 #End If
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Function set_and_carry(ByVal t As UInt64, ByVal p As UInt32) As UInt32
         v.set(p, CUInt(t And max_uint32))
         t >>= bit_count_in_uint32
@@ -73,13 +73,13 @@ Partial Public NotInheritable Class big_uint
     End Function
 
     'add d to the pos as p with carry-over as c
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Function add(ByVal d As UInt32, ByVal c As UInt32, ByVal p As UInt32) As UInt32
         add_assertions(p)
         Return set_and_carry(CULng(v.get(p)) + c + d, p)
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Sub recursive_add(ByVal d As UInt32, ByVal p As UInt32)
         If d = 0 Then
             Return
@@ -95,7 +95,7 @@ Partial Public NotInheritable Class big_uint
         v.push_back(d)
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Function remove_extra_blank() As UInt32
         If v.empty() Then
             Return uint32_0
@@ -125,7 +125,7 @@ Partial Public NotInheritable Class big_uint
         Return uint32_0
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Sub remove_last_blank()
         If v.empty() Then
             Return
@@ -140,7 +140,7 @@ Partial Public NotInheritable Class big_uint
 #End If
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Sub multiply_bit(ByVal this As big_uint, ByVal that As big_uint)
         this = this.CloneT()
         that = that.CloneT()
@@ -153,7 +153,7 @@ Partial Public NotInheritable Class big_uint
         End While
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Sub multiply_uint(ByVal this As big_uint, ByVal that As big_uint)
         v.resize(this.v.size() + that.v.size())
         assert(this.v.size() > 0 AndAlso that.v.size() > 0)
@@ -178,7 +178,7 @@ Partial Public NotInheritable Class big_uint
     End Sub
 
     'store the result of this * that in me
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Sub multiply(ByVal this As big_uint, ByVal that As big_uint)
         If this Is Nothing OrElse that Is Nothing OrElse this.is_zero() OrElse that.is_zero() Then
             set_zero()
@@ -206,7 +206,7 @@ Partial Public NotInheritable Class big_uint
     End Sub
 
     'store the result of yroot(me, that) in me, and the remainder will be the me - (me ^ (yroot(me, that)))
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Sub extract(ByVal that As big_uint, ByRef remainder As big_uint, ByRef divide_by_zero As Boolean)
         If that Is Nothing OrElse that.is_zero() Then
             If is_one() Then
@@ -251,28 +251,28 @@ Partial Public NotInheritable Class big_uint
         assert(replace_by(r))
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Sub divide_bit(ByVal that As big_uint, ByVal remainder As big_uint)
         divide_bit(that, remainder, Me)
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Sub divide_uint(ByVal that As big_uint, ByVal remainder As big_uint)
         divide_uint(that, remainder, Me)
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Sub modulus_bit(ByVal that As big_uint)
         divide_bit(that, Me, Nothing)
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Sub modulus_uint(ByVal that As big_uint)
         divide_uint(that, Me, Nothing)
     End Sub
 
     'fake a push_front action for vector and return the last non-zero position
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Function left_shift_slot_till(ByVal slot_count As UInt32) As UInt32
         If slot_count = 0 Then
             Return Me.last_non_zero_position()
@@ -297,7 +297,7 @@ Partial Public NotInheritable Class big_uint
         Return last_non_zero_position
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Function last_non_zero_position() As UInt32
         Dim i As UInt32 = 0
         While i < v.size()
@@ -311,7 +311,7 @@ Partial Public NotInheritable Class big_uint
     End Function
 
     'fake a pop_front action for vector
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Sub right_shift_slot(ByVal slot_count As UInt32)
         If slot_count = 0 Then
             Return
@@ -323,7 +323,7 @@ Partial Public NotInheritable Class big_uint
         v.resize(ns)
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Function as_uint32() As UInt32
         Dim o As Boolean = False
         Dim r As UInt32 = 0
@@ -332,7 +332,7 @@ Partial Public NotInheritable Class big_uint
         Return r
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Function as_uint64() As UInt64
         Dim o As Boolean = False
         Dim r As UInt64 = 0

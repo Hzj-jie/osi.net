@@ -37,7 +37,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function [sub](ByVal that As big_uint) As big_uint
         Dim o As Boolean = False
         [sub](that, o)
@@ -47,7 +47,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Function assert_sub(ByVal that As big_uint, ByVal offset As UInt32) As big_uint
         Dim o As Boolean = False
         [sub](that, offset, o)
@@ -55,7 +55,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function assert_sub(ByVal that As big_uint) As big_uint
         Dim o As Boolean = False
         [sub](that, o)
@@ -63,7 +63,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Function [sub](ByVal that As big_uint, ByVal offset As UInt32, ByRef overflow As Boolean) As big_uint
         If that Is Nothing OrElse that.is_zero() Then
             overflow = False
@@ -83,18 +83,18 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function [sub](ByVal that As big_uint, ByRef overflow As Boolean) As big_uint
         Return [sub](that, 0, overflow)
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function multiply(ByVal that As big_uint) As big_uint
         multiply(move(Me), that)
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function multiply(ByVal that As UInt32) As big_uint
         If that = 0 Then
             set_zero()
@@ -122,7 +122,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function divide(ByVal that As big_uint, Optional ByRef remainder As big_uint = Nothing) As big_uint
         Dim r As Boolean = False
         divide(that, r, remainder)
@@ -132,7 +132,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function assert_divide(ByVal that As big_uint, Optional ByRef remainder As big_uint = Nothing) As big_uint
         Dim r As Boolean = False
         divide(that, r, remainder)
@@ -140,7 +140,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function divide(ByVal that As UInt32,
                            Optional ByRef remainder As UInt32 = 0) As big_uint
         Dim r As Boolean = False
@@ -151,7 +151,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function assert_divide(ByVal that As UInt32,
                                   Optional ByRef remainder As UInt32 = 0) As big_uint
         Dim r As Boolean = False
@@ -160,39 +160,39 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function divide(ByVal that As UInt16,
                            ByRef divide_by_zero As Boolean,
                            Optional ByRef remainder As UInt32 = 0) As big_uint
         Return divide(CUInt(that), divide_by_zero, remainder)
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function divide(ByVal that As UInt16,
                            Optional ByRef remainder As UInt32 = 0) As big_uint
         Return divide(CUInt(that), remainder)
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function assert_divide(ByVal that As UInt16,
                                   Optional ByRef remainder As UInt32 = 0) As big_uint
         Return assert_divide(CUInt(that), remainder)
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function divide(ByVal that As Byte,
                            ByRef divide_by_zero As Boolean,
                            Optional ByRef remainder As UInt32 = 0) As big_uint
         Return divide(CUInt(that), divide_by_zero, remainder)
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function divide(ByVal that As Byte,
                            Optional ByRef remainder As UInt32 = 0) As big_uint
         Return divide(CUInt(that), remainder)
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function assert_divide(ByVal that As Byte,
                                   Optional ByRef remainder As UInt32 = 0) As big_uint
         Return assert_divide(CUInt(that), remainder)
@@ -251,7 +251,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function modulus(ByVal that As UInt32) As big_uint
         Dim r As Boolean = False
         modulus(that, r)
@@ -261,7 +261,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function assert_modulus(ByVal that As UInt32) As big_uint
         Dim r As Boolean = False
         modulus(that, r)
@@ -309,7 +309,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function modulus(ByVal that As big_uint) As big_uint
         Dim r As Boolean = False
         modulus(that, r)
@@ -319,7 +319,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function assert_modulus(ByVal that As big_uint) As big_uint
         Dim r As Boolean = False
         modulus(that, r)
@@ -327,7 +327,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function power_2() As big_uint
         Dim s As big_uint = Nothing
         s = move(Me)
@@ -365,7 +365,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function extract(ByVal that As big_uint,
                             ByRef divide_by_zero As Boolean,
                             Optional ByRef remainder As big_uint = Nothing) As big_uint
@@ -373,7 +373,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function extract(ByVal that As big_uint, Optional ByRef remainder As big_uint = Nothing) As big_uint
         Dim r As Boolean = False
         extract(that, remainder, r)
@@ -383,7 +383,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function assert_extract(ByVal that As big_uint, Optional ByRef remainder As big_uint = Nothing) As big_uint
         Dim r As Boolean = False
         extract(that, remainder, r)

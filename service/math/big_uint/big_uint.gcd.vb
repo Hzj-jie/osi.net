@@ -11,14 +11,14 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 Partial Public NotInheritable Class big_uint
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Shared Sub ensure_a_is_larger(ByRef a As big_uint, ByRef b As big_uint)
         If a.less(b) Then
             swap(a, b)
         End If
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Shared Function gcd_successive_division(ByVal a As big_uint, ByVal b As big_uint) As big_uint
         ensure_a_is_larger(a, b)
         Dim c As big_uint = Nothing
@@ -31,7 +31,7 @@ Partial Public NotInheritable Class big_uint
         Return b
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Shared Function shifting(ByVal a As big_uint, ByVal b As big_uint) As UInt32
         Dim az As UInt32 = 0
         Dim bz As UInt32 = 0
@@ -42,7 +42,7 @@ Partial Public NotInheritable Class big_uint
         Return min(az, bz)
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Shared Function gcd_successive_sub(ByVal a As big_uint, ByVal b As big_uint) As big_uint
         Dim shift As UInt32 = 0
         shift = shifting(a, b)
@@ -69,7 +69,7 @@ Partial Public NotInheritable Class big_uint
         Return Nothing
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Shared Function gcd_combined(ByVal a As big_uint, ByVal b As big_uint) As big_uint
         Dim shift As UInt32 = 0
         shift = shifting(a, b)

@@ -1,7 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.utils
 
 Public Module _relative_prime
     Public Function gcd(ByVal a As Int32, ByVal b As Int32) As Int32

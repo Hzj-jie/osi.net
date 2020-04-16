@@ -52,7 +52,7 @@ Partial Public NotInheritable Class big_uint
         assert(replace_by(i))
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Shared Function move(ByVal i As big_uint) As big_uint
         If i Is Nothing Then
             Return Nothing
@@ -85,7 +85,7 @@ Partial Public NotInheritable Class big_uint
         Return True
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub replace_by(ByVal i As UInt32)
         set_zero()
         If i > 0 Then
@@ -93,7 +93,7 @@ Partial Public NotInheritable Class big_uint
         End If
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub replace_by(ByVal i As UInt64)
         set_zero()
         If i = 0 Then
@@ -107,7 +107,7 @@ Partial Public NotInheritable Class big_uint
         End If
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub replace_by(ByVal i As Boolean)
         set_zero()
         If i Then
@@ -170,7 +170,7 @@ Partial Public NotInheritable Class big_uint
         Return ternary.unknown
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function replace_by(ByVal d As Single) As Boolean
         Return replace_by(CDbl(d))
     End Function
@@ -209,48 +209,48 @@ Partial Public NotInheritable Class big_uint
         Return True
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub set_zero()
         v.clear()
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function is_zero() As Boolean
         Return v.empty()
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub set_one()
         v.resize(1)
         v.set(0, uint32_1)
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function is_one() As Boolean
         Return v.size() = 1 AndAlso v.back() = 1
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function is_zero_or_one() As Boolean
         Return is_zero() OrElse is_one()
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function [true]() As Boolean
         Return Not [false]()
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function [false]() As Boolean
         Return is_zero()
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function uint32_size() As UInt32
         Return v.size()
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function byte_size() As UInt32
         Return v.size() * byte_count_in_uint32
     End Function
