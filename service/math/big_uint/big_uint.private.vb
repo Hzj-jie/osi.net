@@ -157,14 +157,12 @@ Partial Public NotInheritable Class big_uint
     Private Sub multiply_uint(ByVal this As big_uint, ByVal that As big_uint)
         v.resize(this.v.size() + that.v.size())
         assert(this.v.size() > 0 AndAlso that.v.size() > 0)
-        Dim that_trailing_zeros As UInt32 = 0
-        that_trailing_zeros = that.trailing_uint32_zero_count()
-        For i As UInt32 = this.trailing_uint32_zero_count() To this.v.size() - uint32_1
+        For i As UInt32 = 0 To this.v.size() - uint32_1
             If this.v.get(i) = 0 Then
                 Continue For
             End If
             Dim c As UInt32 = 0
-            For j As UInt32 = that_trailing_zeros To that.v.size() - uint32_1
+            For j As UInt32 = 0 To that.v.size() - uint32_1
                 Dim t As UInt64 = 0
                 t = this.v.get(i)
                 t *= that.v.get(j)

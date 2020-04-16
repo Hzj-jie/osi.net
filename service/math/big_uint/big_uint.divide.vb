@@ -181,28 +181,26 @@ Public NotInheritable Class big_uint
         If Not result Is Nothing Then
             result.v.resize(i + uint32_1)
         End If
-        that.left_shift(CULng(i) << bit_count_in_uint32_shift)
         While True
             While True
-                If remainder.uint32_size() < that.uint32_size() Then
+                If remainder.uint32_size() < that.uint32_size() + i Then
                     Exit While
                 End If
                 Dim n As UInt64 = 0
                 Dim d As UInt64 = 0
-                select_significant_divide_fraction(remainder, that, n, d)
+                select_significant_divide_fraction(remainder, that, i, n, d)
                 If n < d Then
                     Exit While
                 End If
                 If n = d Then
                     Dim cmp As Int32 = 0
-                    cmp = that.compare(remainder)
-                    If cmp <= 0 Then
-                        remainder.assert_sub(that)
+                    cmp = compare(remainder, that, i)
+                    If cmp >= 0 Then
+                        remainder.assert_sub(that, i)
                         If Not result Is Nothing Then
                             result.recursive_add(uint32_1, i)
                         End If
                         If cmp = 0 Then
-                            that.right_shift(CULng(i) << bit_count_in_uint32_shift)
                             Return
                         End If
                     End If
@@ -218,14 +216,12 @@ Public NotInheritable Class big_uint
                 If Not result Is Nothing Then
                     result.recursive_add(t32, i)
                 End If
-                remainder.assert_sub(that * t32)
+                remainder.assert_sub(that * t32, i)
             End While
 
             If i = 0 Then
                 Return
             End If
-
-            that.right_shift(CULng(bit_count_in_uint32))
             i -= uint32_1
         End While
     End Sub
@@ -233,12 +229,13 @@ Public NotInheritable Class big_uint
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Sub select_significant_divide_fraction(ByVal remainder As big_uint,
                                                           ByVal that As big_uint,
+                                                          ByVal i As UInt32,
                                                           ByRef n As UInt64,
                                                           ByRef d As UInt64)
 #If DEBUG Then
-        assert(remainder.uint32_size() >= that.uint32_size())
+        assert(remainder.uint32_size() >= that.uint32_size() + i)
 #End If
-        If remainder.uint32_size() = that.uint32_size() Then
+        If remainder.uint32_size() = that.uint32_size() + i Then
             If remainder.uint32_size() > 1 Then
                 n = remainder.highest_uint64()
                 d = that.highest_uint64()
