@@ -50,30 +50,6 @@ Partial Public NotInheritable Class big_udec
         n.right_shift(m)
         d.right_shift(m)
 
-        Using code_block
-            For j As Int32 = 0 To reduce_fraction_primes.selected_prime_count - 1
-                Dim i As UInt32 = 0
-                i = reduce_fraction_primes.selected_prime(j)
-                While True
-                    Dim nn As big_uint = Nothing
-                    Dim nd As big_uint = Nothing
-                    nn = n.CloneT()
-                    nd = d.CloneT()
-                    Dim r As big_uint = Nothing
-                    nn.assert_divide(i, r)
-                    If Not r.is_zero() Then
-                        Exit While
-                    End If
-                    nd.assert_divide(i, r)
-                    If Not r.is_zero() Then
-                        Exit While
-                    End If
-                    n = nn
-                    d = nd
-                End While
-            Next
-        End Using
-
         Return False
     End Function
 
@@ -115,6 +91,30 @@ Partial Public NotInheritable Class big_udec
 #End If
 
         Using code_block
+            For j As Int32 = 0 To reduce_fraction_primes.selected_prime_count - 1
+                Dim i As UInt32 = 0
+                i = reduce_fraction_primes.selected_prime(j)
+                While True
+                    Dim nn As big_uint = Nothing
+                    Dim nd As big_uint = Nothing
+                    nn = n.CloneT()
+                    nd = d.CloneT()
+                    Dim r As big_uint = Nothing
+                    nn.assert_divide(i, r)
+                    If Not r.is_zero() Then
+                        Exit While
+                    End If
+                    nd.assert_divide(i, r)
+                    If Not r.is_zero() Then
+                        Exit While
+                    End If
+                    n = nn
+                    d = nd
+                End While
+            Next
+        End Using
+
+        Using code_block
             Dim b As big_uint = Nothing
             b = big_uint.gcd(n, d)
             Dim c As big_uint = Nothing
@@ -134,7 +134,7 @@ Partial Public NotInheritable Class big_udec
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function increase_fraction_dirty_rate() As Boolean
         fraction_dirty_rate += 1
-        If fraction_dirty_rate = max_int32 Then
+        If fraction_dirty_rate = 10000 Then
             reduce_fraction()
             Return True
         End If

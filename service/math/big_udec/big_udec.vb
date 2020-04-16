@@ -103,7 +103,7 @@ Partial Public NotInheritable Class big_udec
         replace_by(v, constants.replace_by_dec_max_shift)
     End Sub
 
-    Private Function replace_only(ByVal n As big_uint, ByVal d As big_uint) As Boolean
+    Public Function replace_by(ByVal n As big_uint, ByVal d As big_uint) As Boolean
         If n Is Nothing OrElse d Is Nothing Then
             Return False
         End If
@@ -112,13 +112,7 @@ Partial Public NotInheritable Class big_udec
         End If
         assert(Me.n.replace_by(n))
         assert(Me.d.replace_by(d))
-        Return True
-    End Function
 
-    Public Function replace_by(ByVal n As big_uint, ByVal d As big_uint) As Boolean
-        If Not replace_only(n, d) Then
-            Return False
-        End If
         fast_reduce_fraction(Me.n, Me.d)
         Return True
     End Function

@@ -24,7 +24,7 @@ Partial Public NotInheritable Class big_udec
             Dim c As big_uint = Nothing
             Me.d.assert_divide(g, c)
             assert(c.is_zero())
-            replace_by((that.d \ g) * Me.n + Me.d * that.n, Me.d * that.d)
+            replace_by((that.d \ g) * Me.n + that.n * Me.d, that.d * Me.d)
         End If
 
         increase_fraction_dirty_rate()
@@ -38,7 +38,7 @@ Partial Public NotInheritable Class big_udec
         assert(Not d Is Nothing)
         overflow = False
         If y.is_zero() Then
-            assert(replace_only(x, d))
+            assert(replace_by(x, d))
         ElseIf y.less_or_equal(x) Then
             assert(replace_by(x - y, d))
         Else
@@ -118,7 +118,7 @@ Partial Public NotInheritable Class big_udec
         d2 = that.d.CloneT()
         fast_reduce_fraction(n1, d2)
         fast_reduce_fraction(n2, d1)
-        replace_only(n1.multiply(n2), d1.multiply(d2))
+        replace_by(n1.multiply(n2), d1.multiply(d2))
 
         increase_fraction_dirty_rate()
         Return Me
@@ -144,7 +144,7 @@ Partial Public NotInheritable Class big_udec
         d2 = that.d.CloneT()
         fast_reduce_fraction(n1, n2)
         fast_reduce_fraction(d1, d2)
-        replace_only(n1.multiply(d2), d1.multiply(n2))
+        replace_by(n1.multiply(d2), d1.multiply(n2))
 
         increase_fraction_dirty_rate()
         Return Me
@@ -177,7 +177,7 @@ Partial Public NotInheritable Class big_udec
             Return Me
         End If
 
-        replace_only(Me.n ^ that, Me.d ^ that)
+        replace_by(Me.n ^ that, Me.d ^ that)
         Return Me
     End Function
 
@@ -203,8 +203,8 @@ Partial Public NotInheritable Class big_udec
         If p.is_zero_or_one() Then
             p = New big_uint(CUInt(2))
         End If
-        replace_only(((Me.n ^ (that * p + uint32_1)) * (Me.d ^ (that * p - uint32_1))).assert_extract(that),
-                     (Me.n * Me.d) ^ p)
+        replace_by(((Me.n ^ (that * p + uint32_1)) * (Me.d ^ (that * p - uint32_1))).assert_extract(that),
+                   (Me.n * Me.d) ^ p)
         Return Me
     End Function
 
