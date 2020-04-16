@@ -3,7 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-#Const GCD_USE_SUCCESSIVE_DIVISION = False
+#Const GCD_USE_SUCCESSIVE_DIVISION = True
 #Const GCD_USE_SUCCESSIVE_SUB = False
 
 Imports System.Runtime.CompilerServices
@@ -12,10 +12,15 @@ Imports osi.root.constants
 
 Partial Public NotInheritable Class big_uint
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Shared Function gcd_successive_division(ByVal a As big_uint, ByVal b As big_uint) As big_uint
+    Private Shared Sub ensure_a_is_larger(ByRef a As big_uint, ByRef b As big_uint)
         If a.less(b) Then
             swap(a, b)
         End If
+    End Sub
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Shared Function gcd_successive_division(ByVal a As big_uint, ByVal b As big_uint) As big_uint
+        ensure_a_is_larger(a, b)
         Dim c As big_uint = Nothing
         c = a.assert_modulus(b)
         While Not c.is_zero()
@@ -69,17 +74,16 @@ Partial Public NotInheritable Class big_uint
         Dim shift As UInt32 = 0
         shift = shifting(a, b)
 
-        If a.less(b) Then
-            swap(a, b)
-        End If
+        ensure_a_is_larger(a, b)
         While True
+            a.remove_trailing_binary_zeros()
             b.remove_trailing_binary_zeros()
-            If a.uint32_size() > b.uint32_size() Then
-                Dim m As UInt32 = 0
-                m = (a.trailing_binary_zero_count() >> bit_count_in_uint32_shift)
-                m = min(m, a.uint32_size() - b.uint32_size())
-                a.right_shift(m << bit_count_in_uint32_shift)
-            End If
+            ensure_a_is_larger(a, b)
+
+            a.assert_sub(b)
+            a.remove_trailing_binary_zeros()
+            ensure_a_is_larger(a, b)
+
             Dim c As big_uint = Nothing
             c = a.assert_modulus(b)
             If c.is_zero() Then
