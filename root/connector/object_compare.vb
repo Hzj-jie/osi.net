@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
 Public Module _object_compare
@@ -21,20 +22,24 @@ Public Module _object_compare
                compare_error_result <> object_compare_larger)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function object_comparable(ByVal this_is_value_type As Boolean,
                                        ByVal that_is_value_type As Boolean) As Boolean
         Return Not (this_is_value_type OrElse that_is_value_type)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function object_comparable(Of T, T2)() As Boolean
         Return object_comparable(type_info(Of T).is_valuetype, type_info(Of T2).is_valuetype)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function object_comparable(ByVal this As Object, ByVal that As Object) As Boolean
         Return object_comparable(TypeOf this Is ValueType, TypeOf that Is ValueType)
     End Function
 
     ' Should use next object_compare() function.
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function object_compare(ByVal this As Object, ByVal that As Object) As Int32
         If Object.ReferenceEquals(this, that) Then
             Return object_compare_equal
@@ -48,6 +53,7 @@ Public Module _object_compare
         Return object_compare_undetermined
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function object_compare(ByVal this As Object, ByVal that As Object, ByRef o As Int32) As Boolean
         If Object.ReferenceEquals(this, that) Then
             o = object_compare_equal

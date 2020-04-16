@@ -58,14 +58,14 @@ Partial Public NotInheritable Class big_uint
         Dim u As UInt64 = 0
         u = size.as_uint64(overflow)
         If Not overflow Then
-            assert(object_compare(left_shift(u), Me) = 0)
+            left_shift(u)
         End If
         Return Me
     End Function
 
     Public Function left_shift(ByVal size As big_uint) As big_uint
         Dim o As Boolean = False
-        assert(object_compare(left_shift(size, o), Me) = 0)
+        left_shift(size, o)
         If o Then
             Throw overflow()
         End If
@@ -74,7 +74,7 @@ Partial Public NotInheritable Class big_uint
 
     Public Function assert_left_shift(ByVal size As big_uint) As big_uint
         Dim o As Boolean = False
-        assert(object_compare(left_shift(size, o), Me) = 0)
+        left_shift(size, o)
         assert(Not o)
         Return Me
     End Function
@@ -126,14 +126,14 @@ Partial Public NotInheritable Class big_uint
         Dim u As UInt64 = 0
         u = size.as_uint64(overflow)
         If Not overflow Then
-            assert(object_compare(right_shift(u), Me) = 0)
+            right_shift(u)
         End If
         Return Me
     End Function
 
     Public Function right_shift(ByVal size As big_uint) As big_uint
         Dim o As Boolean = False
-        assert(object_compare(right_shift(size, o), Me) = 0)
+        right_shift(size, o)
         If o Then
             Throw overflow()
         End If
@@ -142,7 +142,7 @@ Partial Public NotInheritable Class big_uint
 
     Public Function assert_right_shift(ByVal size As big_uint) As big_uint
         Dim o As Boolean = False
-        assert(object_compare(right_shift(size, o), Me) = 0)
+        right_shift(size, o)
         assert(Not o)
         Return Me
     End Function

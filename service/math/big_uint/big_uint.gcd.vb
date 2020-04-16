@@ -3,7 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-#Const GCD_USE_SUCCESSIVE_DIVISION = True
+#Const GCD_USE_SUCCESSIVE_DIVISION = False
 #Const GCD_USE_SUCCESSIVE_SUB = False
 
 Imports System.Runtime.CompilerServices
@@ -27,15 +27,20 @@ Partial Public NotInheritable Class big_uint
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Shared Function gcd_successive_sub(ByVal a As big_uint, ByVal b As big_uint) As big_uint
-        Dim shift As UInt32 = 0
+    Private Shared Function shifting(ByVal a As big_uint, ByVal b As big_uint) As UInt32
         Dim az As UInt32 = 0
         Dim bz As UInt32 = 0
         az = a.binary_trailing_zero_count()
         bz = b.binary_trailing_zero_count()
         a.right_shift(az)
         b.right_shift(bz)
-        shift = min(az, bz)
+        Return min(az, bz)
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Shared Function gcd_successive_sub(ByVal a As big_uint, ByVal b As big_uint) As big_uint
+        Dim shift As UInt32 = 0
+        shift = shifting(a, b)
 
         While True
             assert(Not a.is_zero())
@@ -61,19 +66,30 @@ Partial Public NotInheritable Class big_uint
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function gcd_combined(ByVal a As big_uint, ByVal b As big_uint) As big_uint
+        Dim shift As UInt32 = 0
+        shift = shifting(a, b)
+
         If a.less(b) Then
             swap(a, b)
         End If
-        Dim c As big_uint = Nothing
-        c = a.assert_modulus(b)
-        While Not c.is_zero()
+        While True
+            b.remove_binary_trailing_zeros()
+            If a.uint32_size() > b.uint32_size() Then
+                Dim m As UInt32 = 0
+                m = (a.binary_trailing_zero_count() >> bit_count_in_uint32_shift)
+                m = min(m, a.uint32_size() - b.uint32_size())
+                a.right_shift(m << bit_count_in_uint32_shift)
+            End If
+            Dim c As big_uint = Nothing
+            c = a.assert_modulus(b)
+            If c.is_zero() Then
+                Return b.left_shift(shift)
+            End If
             a = b
             b = c
-            a.remove_binary_trailing_zeros()
-            b.remove_binary_trailing_zeros()
-            c = a.assert_modulus(b)
         End While
-        Return b
+        assert(False)
+        Return Nothing
     End Function
 
     Public Shared Function gcd(ByVal a As big_uint, ByVal b As big_uint) As big_uint

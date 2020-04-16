@@ -167,14 +167,6 @@ Private Class adaptive_array_t
         s = n
     End Sub
 
-    Public Sub resize(ByVal n As UInt32, ByVal v As T)
-        reserve(n)
-        If size() < n Then
-            memset(d, size(), n - size(), v)
-        End If
-        s = n
-    End Sub
-
     Public Sub shrink_to_fit()
         If empty() Then
             ReDim d(-1)
