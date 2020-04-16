@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports System.Runtime.CompilerServices
-Imports osi.root.constants
 Imports osi.root.formation
 
 Partial Public NotInheritable Class big_uint

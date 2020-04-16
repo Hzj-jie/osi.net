@@ -8,7 +8,6 @@ Option Strict On
 
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
-Imports osi.root.constants
 
 Partial Public NotInheritable Class big_uint
     <MethodImpl(math_debug.aggressive_inlining)>
