@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 #Const REDUCE_FRACTION_OF_EACH_OTHER = False
+#Const REDUCE_FRACTION_OF_PREDEFINED_PRIMES = False
 
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
@@ -90,6 +91,7 @@ Partial Public NotInheritable Class big_udec
         End Using
 #End If
 
+#If REDUCE_FRACTION_OF_PREDEFINED_PRIMES Then
         Using code_block
             For j As Int32 = 0 To reduce_fraction_primes.selected_prime_count - 1
                 Dim i As UInt32 = 0
@@ -113,6 +115,7 @@ Partial Public NotInheritable Class big_udec
                 End While
             Next
         End Using
+#End If
 
         Using code_block
             Dim b As big_uint = Nothing
@@ -134,7 +137,7 @@ Partial Public NotInheritable Class big_udec
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function increase_fraction_dirty_rate() As Boolean
         fraction_dirty_rate += 1
-        If fraction_dirty_rate = 10000 Then
+        If fraction_dirty_rate = max_int32 Then
             reduce_fraction()
             Return True
         End If
