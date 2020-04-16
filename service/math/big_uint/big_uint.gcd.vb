@@ -1,0 +1,103 @@
+﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+#Const GCD_USE_SUCCESSIVE_DIVISION = True
+#Const GCD_USE_SUCCESSIVE_SUB = False
+
+Imports System.Runtime.CompilerServices
+Imports osi.root.connector
+Imports osi.root.constants
+
+Partial Public NotInheritable Class big_uint
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Shared Function gcd_successive_division(ByVal a As big_uint, ByVal b As big_uint) As big_uint
+        If a.less(b) Then
+            swap(a, b)
+        End If
+        Dim c As big_uint = Nothing
+        c = a.assert_modulus(b)
+        While Not c.is_zero()
+            a = b
+            b = c
+            c = a.assert_modulus(b)
+        End While
+        Return b
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Shared Function gcd_successive_sub(ByVal a As big_uint, ByVal b As big_uint) As big_uint
+        Dim shift As UInt32 = 0
+        Dim az As UInt32 = 0
+        Dim bz As UInt32 = 0
+        az = a.binary_trailing_zero_count()
+        bz = b.binary_trailing_zero_count()
+        a.right_shift(az)
+        b.right_shift(bz)
+        shift = min(az, bz)
+
+        While True
+            assert(Not a.is_zero())
+            assert(Not b.is_zero())
+            a.remove_binary_trailing_zeros()
+            b.remove_binary_trailing_zeros()
+
+            Dim cmp As Int32 = 0
+            cmp = a.compare(b)
+            If cmp = 0 Then
+                Return a.left_shift(shift)
+            End If
+            If cmp < 0 Then
+                b.assert_sub(a)
+            Else
+                assert(cmp > 0)
+                a.assert_sub(b)
+            End If
+        End While
+        assert(False)
+        Return Nothing
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Shared Function gcd_combined(ByVal a As big_uint, ByVal b As big_uint) As big_uint
+        If a.less(b) Then
+            swap(a, b)
+        End If
+        Dim c As big_uint = Nothing
+        c = a.assert_modulus(b)
+        While Not c.is_zero()
+            a = b
+            b = c
+            a.remove_binary_trailing_zeros()
+            b.remove_binary_trailing_zeros()
+            c = a.assert_modulus(b)
+        End While
+        Return b
+    End Function
+
+    Public Shared Function gcd(ByVal a As big_uint, ByVal b As big_uint) As big_uint
+        assert(Not a Is Nothing)
+        assert(Not b Is Nothing)
+        If a.is_zero() OrElse b.is_zero() Then
+            Return zero()
+        End If
+        If a.is_one() OrElse b.is_one() Then
+            Return one()
+        End If
+        If a.equal(b) Then
+            Return a.CloneT()
+        End If
+
+        a = a.CloneT()
+        b = b.CloneT()
+
+#If GCD_USE_SUCCESSIVE_DIVISION Then
+        Return gcd_successive_division(a, b)
+#ElseIf GCD_USE_SUCCESSIVE_SUB Then
+        Return gcd_successive_sub(a, b)
+#Else
+        Return gcd_combined(a, b)
+#End If
+    End Function
+End Class
