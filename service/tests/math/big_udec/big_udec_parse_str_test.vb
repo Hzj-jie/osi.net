@@ -19,7 +19,7 @@ Public NotInheritable Class big_udec_parse_str_test
         i = 2
         While big_udec.support_base(i)
             Dim o As big_udec = Nothing
-            assertion.is_true(big_udec.parse(u.as_str().with_str_base(i).increase_upure_length(uint32_3), o, i))
+            assertion.is_true(big_udec.parse(u.as_str().with_str_base(i).increase_upure_length(CUInt(5)), o, i))
             assertion.equal(u.str(i), o.str(i))
             i += byte_1
         End While
