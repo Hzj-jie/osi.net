@@ -3,7 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-#Const GCD_USE_SUCCESSIVE_DIVISION = True
+#Const GCD_USE_SUCCESSIVE_DIVISION = False
 #Const GCD_USE_SUCCESSIVE_SUB = False
 
 Imports System.Runtime.CompilerServices
@@ -49,19 +49,17 @@ Partial Public NotInheritable Class big_uint
         While True
             assert(Not a.is_zero())
             assert(Not b.is_zero())
-            a.remove_trailing_binary_zeros()
-            b.remove_trailing_binary_zeros()
 
-            Dim cmp As Int32 = 0
-            cmp = a.compare(b)
-            If cmp = 0 Then
+            If a.equal(b) Then
                 Return a.left_shift(shift)
             End If
-            If cmp < 0 Then
-                b.assert_sub(a)
-            Else
-                assert(cmp > 0)
-                a.assert_sub(b)
+
+            If a.remove_trailing_binary_zeros() = 0 AndAlso b.remove_trailing_binary_zeros() = 0 Then
+                If a.less(b) Then
+                    b.assert_sub(a)
+                Else
+                    a.assert_sub(b)
+                End If
             End If
         End While
         assert(False)
@@ -73,23 +71,38 @@ Partial Public NotInheritable Class big_uint
         Dim shift As UInt32 = 0
         shift = shifting(a, b)
 
-        ensure_a_is_larger(a, b)
         While True
-            a.remove_trailing_binary_zeros()
-            b.remove_trailing_binary_zeros()
-            ensure_a_is_larger(a, b)
+            assert(Not a.is_zero())
+            assert(Not b.is_zero())
 
-            a.assert_sub(b)
-            a.remove_trailing_binary_zeros()
-            ensure_a_is_larger(a, b)
+            Dim cmp As Int32 = 0
+            cmp = a.compare(b)
 
-            Dim c As big_uint = Nothing
-            c = a.assert_modulus(b)
-            If c.is_zero() Then
-                Return b.left_shift(shift)
+            If cmp = 0 Then
+                Return a.left_shift(shift)
             End If
-            a = b
-            b = c
+
+            If a.uint32_size() = b.uint32_size() Then
+                If cmp < 0 Then
+                    swap(a, b)
+                End If
+                Dim c As big_uint = Nothing
+                c = a.assert_modulus(b)
+                If c.is_zero() Then
+                    Return b.left_shift(shift)
+                End If
+                a = b
+                b = c
+                Continue While
+            End If
+
+            If a.remove_trailing_binary_zeros() = 0 AndAlso b.remove_trailing_binary_zeros() = 0 Then
+                If a.less(b) Then
+                    b.assert_sub(a)
+                Else
+                    a.assert_sub(b)
+                End If
+            End If
         End While
         assert(False)
         Return Nothing

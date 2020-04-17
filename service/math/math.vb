@@ -202,44 +202,54 @@ Public Module _math
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function trailing_binary_zero_count(ByVal b As Byte) As Byte
         assert(b > 0)
-        Dim r As Byte = 0
-        While b.even()
-            r += uint8_1
-            b >>= 1
-        End While
-        Return r
+        If (b And &HF) = 0 Then
+            If (b And &H1F) <> 0 Then
+                Return 4
+            End If
+            If (b And &H3F) <> 0 Then
+                Return 5
+            End If
+            If (b And &H7F) <> 0 Then
+                Return 6
+            End If
+            Return 7
+        End If
+        If (b And &H7) = 0 Then
+            Return 3
+        End If
+        If (b And &H3) = 0 Then
+            Return 2
+        End If
+        If (b And &H1) = 0 Then
+            Return 1
+        End If
+        Return 0
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function trailing_binary_zero_count(ByVal b As UInt16) As Byte
         assert(b > 0)
-        Dim r As Byte = 0
-        While b.even()
-            r += uint8_1
-            b >>= 1
-        End While
-        Return r
+        If (b And max_uint8) = 0 Then
+            Return CByte(8) + CByte(b >> 8).trailing_binary_zero_count()
+        End If
+        Return CByte(b And max_uint8).trailing_binary_zero_count()
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function trailing_binary_zero_count(ByVal b As UInt32) As Byte
         assert(b > 0)
-        Dim r As Byte = 0
-        While b.even()
-            r += uint8_1
-            b >>= 1
-        End While
-        Return r
+        If (b And max_uint16) = 0 Then
+            Return CByte(16) + CUShort(b >> 16).trailing_binary_zero_count()
+        End If
+        Return CUShort(b And max_uint16).trailing_binary_zero_count()
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function trailing_binary_zero_count(ByVal b As UInt64) As Byte
         assert(b > 0)
-        Dim r As Byte = 0
-        While b.even()
-            r += uint8_1
-            b >>= 1
-        End While
-        Return r
+        If (b And max_uint32) = 0 Then
+            Return CByte(32) + CUInt(b >> 32).trailing_binary_zero_count()
+        End If
+        Return CUInt(b And max_uint32).trailing_binary_zero_count()
     End Function
 End Module

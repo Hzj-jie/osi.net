@@ -3,6 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+#Const REDUCE_FRACTION_IN_ADD = False
+
 Imports osi.root.connector
 Imports osi.root.constants
 
@@ -19,12 +21,16 @@ Partial Public NotInheritable Class big_udec
         If Me.d.equal(that.d) Then
             replace_by(Me.n + that.n, Me.d)
         Else
+#If REDUCE_FRACTION_IN_ADD Then
             Dim g As big_uint = Nothing
             g = big_uint.gcd(Me.d, that.d)
             Dim c As big_uint = Nothing
             Me.d.assert_divide(g, c)
             assert(c.is_zero())
             replace_by((that.d \ g) * Me.n + that.n * Me.d, that.d * Me.d)
+#Else
+            replace_by(that.d * Me.n + that.n * Me.d, that.d * Me.d)
+#End If
         End If
 
         increase_fraction_dirty_rate()
@@ -66,12 +72,16 @@ Partial Public NotInheritable Class big_udec
         If Me.d.equal(that.d) Then
             [sub](Me.n, that.n.CloneT(), Me.d, overflow)
         Else
+#If REDUCE_FRACTION_IN_ADD Then
             Dim g As big_uint = Nothing
             g = big_uint.gcd(Me.d, that.d)
             Dim c As big_uint = Nothing
             Me.d.assert_divide(g, c)
             assert(c.is_zero())
             [sub]((that.d \ g) * Me.n, Me.d * that.n, Me.d * that.d, overflow)
+#Else
+            [sub](that.d * Me.n, Me.d * that.n, Me.d * that.d, overflow)
+#End If
         End If
 
         increase_fraction_dirty_rate()
