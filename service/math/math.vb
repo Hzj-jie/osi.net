@@ -201,7 +201,9 @@ Public Module _math
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function trailing_binary_zero_count(ByVal b As Byte) As Byte
+#If DEBUG Then
         assert(b > 0)
+#End If
         If (b And &HF) = 0 Then
             If (b And &H1F) <> 0 Then
                 Return 4
@@ -228,7 +230,9 @@ Public Module _math
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function trailing_binary_zero_count(ByVal b As UInt16) As Byte
+#If DEBUG Then
         assert(b > 0)
+#End If
         If (b And max_uint8) = 0 Then
             Return CByte(8) + CByte(b >> 8).trailing_binary_zero_count()
         End If
@@ -237,7 +241,9 @@ Public Module _math
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function trailing_binary_zero_count(ByVal b As UInt32) As Byte
+#If DEBUG Then
         assert(b > 0)
+#End If
         If (b And max_uint16) = 0 Then
             Return CByte(16) + CUShort(b >> 16).trailing_binary_zero_count()
         End If
@@ -246,7 +252,9 @@ Public Module _math
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function trailing_binary_zero_count(ByVal b As UInt64) As Byte
+#If DEBUG Then
         assert(b > 0)
+#End If
         If (b And max_uint32) = 0 Then
             Return CByte(32) + CUInt(b >> 32).trailing_binary_zero_count()
         End If

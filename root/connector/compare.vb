@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 Imports osi.root.delegates
 
@@ -32,6 +33,7 @@ Public Module _compare
         compare_error_result = rnd_int(min_int32, min_int8)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub compare_error(Of T, T2)(ByVal ex As Exception)
         If Not is_suppressed.compare_error() Then
             raise_error(error_type.exclamation,
@@ -109,29 +111,30 @@ Public Module _compare
                type_info(Of T, type_info_operators.is, T2).v Then
                 o = always_succeed(AddressOf this_to_object)
                 Return True
-            ElseIf type_info(Of T).is_nullable Then
+            End If
+            If type_info(Of T).is_nullable Then
                 If GetType(T2).is(Nullable.GetUnderlyingType(GetType(T))) Then
                     o = always_succeed(AddressOf this_to_t2(Of T2))
                     Return True
-                ElseIf type_info(Of T2).is_object Then
-                    Return False
-                Else
-                    o = always_fail
-                    Return True
                 End If
-            ElseIf type_info(Of T2).is_nullable Then
+                If type_info(Of T2).is_object Then
+                    Return False
+                End If
+                o = always_fail
+                Return True
+            End If
+            If type_info(Of T2).is_nullable Then
                 If GetType(T).is(Nullable.GetUnderlyingType(GetType(T2))) Then
                     o = always_succeed(AddressOf that_to_t(Of T))
                     Return True
-                ElseIf type_info(Of T).is_object Then
-                    Return False
-                Else
-                    o = always_fail
-                    Return True
                 End If
-            Else
-                Return False
+                If type_info(Of T).is_object Then
+                    Return False
+                End If
+                o = always_fail
+                Return True
             End If
+            Return False
         End Function
 
         Public Shared Function compare(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
@@ -158,11 +161,13 @@ Public Module _compare
 #End If
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Function comparable() As Boolean
             Return Not c Is Nothing
         End Function
     End Class
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function use_restricted_compare_to_object(Of T)() As Boolean
         Dim result As Boolean = False
         result = type_info(Of T).is_primitive OrElse type_info(Of T, type_info_operators.is, String).v
@@ -172,84 +177,91 @@ Public Module _compare
         Return result
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function this_to_t2(Of T)(ByVal this As Object, ByVal that As T) As Int32
         Return direct_cast(Of IComparable(Of T))(this).CompareTo(that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function this_to_object(ByVal this As Object, ByVal that As Object) As Int32
         Return direct_cast(Of IComparable)(this).CompareTo(that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function this_to_object_with_same_type(Of T) _
                                                   (ByVal this As T, ByVal that As Object, ByRef o As Int32) As Boolean
         If that.GetType().is(Of T)() Then
             o = this_to_object(this, that)
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function that_to_t(Of T)(ByVal this As T, ByVal that As Object) As Int32
         Return -direct_cast(Of IComparable(Of T))(that).CompareTo(this)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function that_to_object(ByVal this As Object, ByVal that As Object) As Int32
         Return -direct_cast(Of IComparable)(that).CompareTo(this)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function that_to_object_with_same_type(Of T) _
                                                   (ByVal this As Object, ByVal that As T, ByRef o As Int32) As Boolean
         If this.GetType().is(Of T)() Then
             o = that_to_object(this, that)
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function runtime_this_to_t2(Of T)(ByVal this As Object, ByVal that As T, ByRef o As Int32) As Boolean
         If TypeOf this Is IComparable(Of T) Then
             o = this_to_t2(this, that)
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function runtime_this_to_object(ByVal this As Object, ByVal that As Object, ByRef o As Int32) As Boolean
         If TypeOf this Is IComparable Then
             o = this_to_object(this, that)
             Return True
-        ElseIf TypeOf this Is IComparable(Of Object) Then
+        End If
+        If TypeOf this Is IComparable(Of Object) Then
             o = this_to_t2(this, that)
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function runtime_that_to_t(Of T)(ByVal this As T, ByVal that As Object, ByRef o As Int32) As Boolean
         If TypeOf that Is IComparable(Of T) Then
             o = that_to_t(this, that)
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function runtime_that_to_object(ByVal this As Object, ByVal that As Object, ByRef o As Int32) As Boolean
         If TypeOf that Is IComparable Then
             o = that_to_object(this, that)
             Return True
-        ElseIf TypeOf that Is IComparable(Of Object) Then
+        End If
+        If TypeOf that Is IComparable(Of Object) Then
             o = that_to_t(this, that)
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function runtime_this_compare(Of T)(ByVal this As Object, ByVal that As T, ByRef o As Int32) As Boolean
         assert(Not this Is Nothing)
         assert(Not that Is Nothing)
@@ -258,6 +270,7 @@ Public Module _compare
                runtime_this_to_object(this, that, o)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function runtime_that_compare(Of T)(ByVal this As T, ByVal that As Object, ByRef o As Int32) As Boolean
         assert(Not this Is Nothing)
         assert(Not that Is Nothing)
@@ -266,6 +279,7 @@ Public Module _compare
                runtime_that_to_object(this, that, o)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function runtime_object_compare(ByVal this As Object, ByVal that As Object, ByRef o As Int32) As Boolean
         assert(Not this Is Nothing)
         assert(Not that Is Nothing)
@@ -274,6 +288,7 @@ Public Module _compare
                runtime_that_to_object(this, that, o)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function runtime_compare(ByVal this As Object, ByVal that As Object) As Int32
         Dim o As Int32 = 0
         o = object_compare(this, that)
@@ -284,11 +299,13 @@ Public Module _compare
         Return o
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function not_null_runtime_compare(ByVal this As Object, ByVal that As Object, ByRef o As Int32) As Boolean
         Return runtime_this_to_object(this, that, o) OrElse
                runtime_that_to_object(this, that, o)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function runtime_compare(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
         assert(Not this Is Nothing)
         assert(Not that Is Nothing)
@@ -299,16 +316,19 @@ Public Module _compare
                runtime_that_to_object(this, that, o)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function do_non_null_compare(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
         If comparer(Of T, T2).defined() Then
             o = comparer.compare(this, that)
             Return True
-        ElseIf compare_cache(Of T, T2).compare(this, that, o) Then
+        End If
+        If compare_cache(Of T, T2).compare(this, that, o) Then
             Return True
         End If
         Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function non_null_compare(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
         Try
             Return do_non_null_compare(this, that, o)
@@ -318,6 +338,7 @@ Public Module _compare
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
         o = object_compare(this, that)
         If o <> object_compare_undetermined Then
@@ -326,82 +347,101 @@ Public Module _compare
         Return non_null_compare(this, that, o)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function comparable(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
         Return compare(this, that, 0)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function comparable(Of T, T2)() As Boolean
         Return object_comparable(Of T, T2)() OrElse
                comparer(Of T, T2).defined() OrElse
                compare_cache(Of T, T2).comparable()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(Of T, T2)(ByVal this As T, ByVal that As T2) As Int32
         Dim o As Int32 = 0
         Return If(compare(this, that, o), o, compare_error_result)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function cast_compare(Of T, T2, CompT)(ByVal this As T, ByVal that As T2) As Int32
         Return compare(this, cast(Of CompT)(that))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(Of T, T2 As CompT, CompT)(ByVal this As T, ByVal that As T2) As Int32
         Return compare(this, cast(Of CompT)(that))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(Of T)(ByVal this As T, ByVal that As Object) As Int32
         Return compare(Of T, Object)(this, that)
     End Function
 
     'speed up
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(ByVal this As Byte, ByVal that As Byte) As Int32
         Return this.CompareTo(that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(ByVal this As Int16, ByVal that As Int16) As Int32
         Return this.CompareTo(that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(ByVal this As Int32, ByVal that As Int32) As Int32
         Return this.CompareTo(that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(ByVal this As Int64, ByVal that As Int64) As Int32
         Return this.CompareTo(that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(ByVal this As SByte, ByVal that As SByte) As Int32
         Return this.CompareTo(that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(ByVal this As UInt16, ByVal that As UInt16) As Int32
         Return this.CompareTo(that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(ByVal this As Char, ByVal that As Char) As Int32
         Return this.CompareTo(that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(ByVal this As UInt32, ByVal that As UInt32) As Int32
         Return this.CompareTo(that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(ByVal this As UInt64, ByVal that As UInt64) As Int32
         Return this.CompareTo(that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(ByVal this As Single, ByVal that As Single) As Int32
         Return this.CompareTo(that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(ByVal this As Double, ByVal that As Double) As Int32
         Return this.CompareTo(that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(ByVal this As Decimal, ByVal that As Decimal) As Int32
         Return this.CompareTo(that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(ByVal this As String, ByVal that As String) As Int32
         Return strcmp(this, that)
     End Function

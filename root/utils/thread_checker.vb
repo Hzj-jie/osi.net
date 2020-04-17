@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict Off
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.lock
@@ -35,6 +36,7 @@ Public NotInheritable Class debug_thread_checker
 #End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function check() As Boolean
         If tc Is Nothing Then
             Return True
@@ -42,6 +44,7 @@ Public NotInheritable Class debug_thread_checker
         Return tc.check()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub assert()
         If tc Is Nothing Then
             Return
