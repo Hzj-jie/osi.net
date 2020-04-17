@@ -13,40 +13,48 @@ Partial Public NotInheritable Class big_uint
     ' Little-endian
     Private ReadOnly v As adaptive_array_uint32
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub New()
         Me.v = New adaptive_array_uint32()
     End Sub
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub New(ByVal i As UInt32)
         Me.New()
         replace_by(i)
     End Sub
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub New(ByVal i As UInt64)
         Me.New()
         replace_by(i)
     End Sub
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub New(ByVal i As big_uint)
         Me.New()
         Me.v = i.v.CloneT()
     End Sub
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub New(ByVal i() As Byte)
         Me.New()
         replace_by(i)
     End Sub
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub New(ByVal i As Single)
         Me.New()
         assert(replace_by(i))
     End Sub
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub New(ByVal i As Double)
         Me.New()
         assert(replace_by(i))
     End Sub
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub New(ByVal i As Decimal)
         Me.New()
         assert(replace_by(i))
@@ -67,6 +75,7 @@ Partial Public NotInheritable Class big_uint
         Return assert(adaptive_array_uint32.swap(this.v, that.v))
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function replace_by(ByVal i As big_uint) As Boolean
         If i Is Nothing Then
             Return False

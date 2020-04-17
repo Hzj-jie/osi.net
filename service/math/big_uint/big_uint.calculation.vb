@@ -63,7 +63,6 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    <MethodImpl(math_debug.aggressive_inlining)>
     Private Function [sub](ByVal that As big_uint, ByVal offset As UInt32, ByRef overflow As Boolean) As big_uint
         If that Is Nothing OrElse that.is_zero() Then
             overflow = False

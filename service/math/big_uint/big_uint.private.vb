@@ -22,19 +22,21 @@ Partial Public NotInheritable Class big_uint
         Return If(t < 0, uint32_1, uint32_0)
     End Function
 
+#If DEBUG Then
     <MethodImpl(math_debug.aggressive_inlining)>
     Private Sub sub_assertions(ByVal c As UInt32, ByVal p As UInt32)
         'this assert is too costly
-#If DEBUG Then
         assert(p < v.size())
         assert(c = uint32_0 OrElse c = uint32_1)
-#End If
     End Sub
+#End If
 
     'sub d at position p with carry-over as c
     <MethodImpl(math_debug.aggressive_inlining)>
     Private Function [sub](ByVal d As UInt32, ByVal c As UInt32, ByVal p As UInt32) As UInt32
+#If DEBUG Then
         sub_assertions(c, p)
+#End If
         Return set_and_borrow(CLng(v.get(p)) - d - c, p)
     End Function
 
@@ -44,7 +46,9 @@ Partial Public NotInheritable Class big_uint
             Return False
         End If
         While p < v.size()
+#If DEBUG Then
             sub_assertions(c, p)
+#End If
             c = set_and_borrow(CLng(v.get(p)) - c, p)
             If c = 0 Then
                 Exit While
@@ -54,13 +58,13 @@ Partial Public NotInheritable Class big_uint
         Return (c = uint32_1)
     End Function
 
+#If DEBUG Then
     <MethodImpl(math_debug.aggressive_inlining)>
     Private Sub add_assertions(ByVal p As UInt32)
         'this assert is too costly
-#If DEBUG Then
         assert(p < v.size())
-#End If
     End Sub
+#End If
 
     <MethodImpl(math_debug.aggressive_inlining)>
     Private Function set_and_carry(ByVal t As UInt64, ByVal p As UInt32) As UInt32
@@ -75,7 +79,9 @@ Partial Public NotInheritable Class big_uint
     'add d to the pos as p with carry-over as c
     <MethodImpl(math_debug.aggressive_inlining)>
     Private Function add(ByVal d As UInt32, ByVal c As UInt32, ByVal p As UInt32) As UInt32
+#If DEBUG Then
         add_assertions(p)
+#End If
         Return set_and_carry(CULng(v.get(p)) + c + d, p)
     End Function
 
@@ -85,7 +91,9 @@ Partial Public NotInheritable Class big_uint
             Return
         End If
         While p < v.size()
+#If DEBUG Then
             add_assertions(p)
+#End If
             d = set_and_carry(CULng(v.get(p)) + d, p)
             If d = 0 Then
                 Return

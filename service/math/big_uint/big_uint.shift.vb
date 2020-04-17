@@ -3,10 +3,12 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 
 Partial Public NotInheritable Class big_uint
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function left_shift(ByVal size As Int32) As big_uint
         If size < 0 Then
             Return right_shift(CULng(-size))
@@ -14,6 +16,7 @@ Partial Public NotInheritable Class big_uint
         Return left_shift(CULng(size))
     End Function
 
+    ' TODO: One loop rather than two
     Public Function left_shift(ByVal size As UInt64) As big_uint
         If size = 0 OrElse is_zero() Then
             Return Me
@@ -51,6 +54,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function left_shift(ByVal size As big_uint, ByRef overflow As Boolean) As big_uint
         If size Is Nothing OrElse size.is_zero() Then
             Return Me
@@ -63,6 +67,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function left_shift(ByVal size As big_uint) As big_uint
         Dim o As Boolean = False
         left_shift(size, o)
@@ -72,6 +77,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function assert_left_shift(ByVal size As big_uint) As big_uint
         Dim o As Boolean = False
         left_shift(size, o)
@@ -79,14 +85,15 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function right_shift(ByVal size As Int32) As big_uint
         If size < 0 Then
             Return left_shift(CULng(-size))
-        Else
-            Return right_shift(CULng(size))
         End If
+        Return right_shift(CULng(size))
     End Function
 
+    ' TODO: One loop rather than two
     Public Function right_shift(ByVal size As UInt64) As big_uint
         If size = 0 Then
             Return Me
@@ -119,6 +126,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function right_shift(ByVal size As big_uint, ByRef overflow As Boolean) As big_uint
         If size Is Nothing OrElse size.is_zero() Then
             Return Me
@@ -131,6 +139,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function right_shift(ByVal size As big_uint) As big_uint
         Dim o As Boolean = False
         right_shift(size, o)
@@ -140,6 +149,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function assert_right_shift(ByVal size As big_uint) As big_uint
         Dim o As Boolean = False
         right_shift(size, o)
