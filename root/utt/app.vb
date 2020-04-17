@@ -36,7 +36,9 @@ Public Module _app
 
         'make sure the Finalize called before output overall failure_count
         host.cases.clear()
-        garbage_collector.repeat_collect()
+        Using garbage_collector.force_aggressive_collecting
+            garbage_collector.repeat_collect()
+        End Using
         debugpause()
 
         If Not assertion.equal(counter.instance_count_counter(Of event_comb).count(), 0) Then
