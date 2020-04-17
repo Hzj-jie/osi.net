@@ -24,7 +24,7 @@ Partial Public Class fces
         Else
             cid = bytes_int64(b)
             ReDim key(CInt(array_size(b) - sizeof_int64 - uint32_1))
-            memcpy(key, 0, b, sizeof_int64, array_size(key))
+            arrays.copy(key, 0, b, sizeof_int64, array_size(key))
             Return True
         End If
     End Function
@@ -35,7 +35,7 @@ Partial Public Class fces
         Else
             ReDim b(CInt(array_size(key) + sizeof_int64 - uint32_1))
             assert(int64_bytes(cid, b))
-            memcpy(b, sizeof_int64, key)
+            arrays.copy(b, sizeof_int64, key)
             Return True
         End If
     End Function

@@ -116,6 +116,6 @@ Public Structure fixed_stack(Of T, _MAX_SIZE As _int64)
 
     Public Sub clear()
         index = 0
-        memclr(q)
+        arrays.clear(q)
     End Sub
 End Structure

@@ -97,7 +97,7 @@ Public Module _constructor
 
         Dim parameters(this.GetParameters().Length - 1) As Object
         'assert vb.net will clear the array here
-        'memclr(parameters, 0, parameters.Length())
+        'arrays.clear(parameters, 0, parameters.Length())
         Try
             Return this.Invoke(parameters)
         Catch ex As Exception

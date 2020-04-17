@@ -231,7 +231,7 @@ Namespace primitive
             Dim p As UInt32 = 0
             assert(uint32_bytes(array_size(buff), b, p))
             assert(p = sizeof_uint32)
-            memcpy(b, p, buff)
+            arrays.copy(b, p, buff)
             Return True
         End Function
 
@@ -243,7 +243,7 @@ Namespace primitive
             Dim l As UInt32 = 0
             If bytes_uint32(i, l, p) AndAlso array_size(i) >= p + l Then
                 ReDim buff(CInt(l) - 1)
-                memcpy(buff, uint32_0, i, p, l)
+                arrays.copy(buff, uint32_0, i, p, l)
                 p += l
                 Return True
             End If

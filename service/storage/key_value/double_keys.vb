@@ -11,7 +11,7 @@ Public Module _double_keys
         Dim r() As Byte = Nothing
         ReDim r(array_size(key))
         r(0) = prefix
-        memcpy(r, 1, key)
+        arrays.copy(r, 1, key)
         Return r
     End Function
 
@@ -23,7 +23,7 @@ Public Module _double_keys
         ElseIf key(0) = prefix Then
             l -= 1
             ReDim original(l - 1)
-            memcpy(original, 0, key, 1, l)
+            arrays.copy(original, 0, key, 1, l)
             Return True
         Else
             Return False

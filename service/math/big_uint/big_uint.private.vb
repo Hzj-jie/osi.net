@@ -293,7 +293,7 @@ Partial Public NotInheritable Class big_uint
             i -= uint32_1
         End While
         assert(last_non_zero_position >= slot_count AndAlso last_non_zero_position < v.size())
-        memclr(v.data(), 0, slot_count)
+        arrays.clear(v.data(), 0, slot_count)
         Return last_non_zero_position
     End Function
 
@@ -319,7 +319,7 @@ Partial Public NotInheritable Class big_uint
         assert(slot_count < v.size())
         Dim ns As UInt32 = 0
         ns = v.size() - slot_count
-        memmove(v.data(), 0, v.data(), slot_count, ns)
+        arrays.copy(v.data(), 0, v.data(), slot_count, ns)
         v.resize(ns)
     End Sub
 

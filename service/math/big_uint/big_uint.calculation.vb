@@ -31,7 +31,7 @@ Partial Public NotInheritable Class big_uint
 
         If v.size() < that.v.size() Then
             v.resize(that.v.size())
-            memcpy(v.data(), i, that.v.data(), i, that.v.size() - i)
+            arrays.copy(v.data(), i, that.v.data(), i, that.v.size() - i)
         End If
         recursive_add(c, i)
         Return Me

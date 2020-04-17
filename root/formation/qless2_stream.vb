@@ -67,7 +67,7 @@ Public Class qless2_stream(Of T, MAX_COUNT As _int64)
             assert(last_index < array_size(last))
             Dim l As Int64 = 0
             l = min(array_size(last) - last_index, count - offset)
-            memcpy(r, CUInt(offset), last, CUInt(last_index), CUInt(l))
+            arrays.copy(r, CUInt(offset), last, CUInt(last_index), CUInt(l))
             last_index += l
             If array_size(last) = last_index Then
                 last = Nothing

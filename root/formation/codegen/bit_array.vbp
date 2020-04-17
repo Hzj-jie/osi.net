@@ -45,7 +45,7 @@ Public NotInheritable Class bit_array
     End Function
 
     Public Sub clear()
-        memclr(b)
+        arrays.clear(b)
     End Sub
 
     Private Sub devide(ByVal i As UInt32, ByRef p As Byte, ByRef index As Int32)

@@ -85,6 +85,6 @@ Public Structure fixed_queue(Of T, _MAX_SIZE As _int64)
     Public Sub clear()
         start = 0
         last = 0
-        memclr(q)
+        arrays.clear(q)
     End Sub
 End Structure

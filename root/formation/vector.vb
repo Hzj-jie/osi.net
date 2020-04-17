@@ -90,7 +90,7 @@ Public NotInheritable Class vector(Of T)
             v.push_back(d)
         Else
             v.push_back(d)
-            memmove(v.data(), pos + uint32_1, v.data(), pos, v.size() - pos - uint32_1)
+            arrays.copy(v.data(), pos + uint32_1, v.data(), pos, v.size() - pos - uint32_1)
             v.set(pos, d)
         End If
     End Sub
@@ -110,7 +110,7 @@ Public NotInheritable Class vector(Of T)
         If start < [end] Then
             If [end] < size() Then
                 'remove elements between [start, end)
-                memmove(v.data(), start, v.data(), [end], v.size() - [end])
+                arrays.copy(v.data(), start, v.data(), [end], v.size() - [end])
                 v.resize(v.size() - ([end] - start))
             Else
                 v.resize(start)

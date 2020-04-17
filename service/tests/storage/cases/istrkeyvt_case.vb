@@ -220,8 +220,8 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                       Dim ov() As Byte = Nothing
                                       ov = d(k).first
                                       ReDim v2(array_size_i(ov) + array_size_i(v) - 1)
-                                      memcpy(v2, ov)
-                                      memcpy(v2, array_size(ov), v)
+                                      arrays.copy(v2, ov)
+                                      arrays.copy(v2, array_size(ov), v)
                                       d(k) = pair.emplace_of(v2, t)
                                   End If
                                   Return goto_end()

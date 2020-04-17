@@ -18,7 +18,7 @@ Public Class bytes_transformer_test
             ReDim o(count + sizeof_int32 * 2 - 1)
             assert(int32_bytes(offset, o))
             assert(int32_bytes(count, o, sizeof_int32))
-            memcpy(o, sizeof_int32 * 2, i, 0, count)
+            arrays.copy(o, sizeof_int32 * 2, i, 0, count)
             Return True
         End If
     End Function

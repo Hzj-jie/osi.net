@@ -93,7 +93,7 @@ Public NotInheritable Class thread_static(Of T)
     End Property
 
     Public Sub clear()
-        memclr(slot)
+        arrays.clear(slot)
     End Sub
 
     Public Shared Operator +(ByVal this As thread_static(Of T)) As T

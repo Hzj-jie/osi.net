@@ -162,7 +162,7 @@ Private Class adaptive_array_uint32
     Public Sub resize(ByVal n As UInt32)
         reserve(n)
         If size() < n Then
-            memclr(d, size(), n - size())
+            arrays.clear(d, size(), n - size())
         End If
         s = n
     End Sub
@@ -180,7 +180,7 @@ Private Class adaptive_array_uint32
 
     Public Sub clear_unused_slots()
         assert(capacity() >= size())
-        memclr(d, size(), capacity() - size())
+        arrays.clear(d, size(), capacity() - size())
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

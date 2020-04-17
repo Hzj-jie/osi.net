@@ -80,7 +80,7 @@ Partial Public NotInheritable Class big_uint
             set_one()
         Else
             v.resize(i.v.size())
-            memcpy(v.data(), i.v.data(), i.v.size())
+            arrays.copy(v.data(), i.v.data(), i.v.size())
         End If
         Return True
     End Function

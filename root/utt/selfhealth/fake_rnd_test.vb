@@ -113,7 +113,7 @@ Public NotInheritable Class fake_rnd_test
             t = fake_next_bytes(seed, min, max)
             If assertion.more(array_size(t), uint32_0) Then
                 ReDim Preserve r(array_size_i(r) + array_size_i(t) - 1)
-                memcpy(r, array_size(r) - array_size(t), t)
+                arrays.copy(r, array_size(r) - array_size(t), t)
             End If
         Next
         assertion.is_true(is_fake_next_bytes_chained(seed, r, min, max))

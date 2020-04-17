@@ -38,7 +38,7 @@ Public Module _memory_stream
         i.assert_valid()
         Dim o() As Byte = Nothing
         ReDim o(CInt(i.Length()) - 1)
-        memcpy(o, i.GetBuffer(), CUInt(i.Length()))
+        arrays.copy(o, i.GetBuffer(), CUInt(i.Length()))
         Return o
     End Function
 

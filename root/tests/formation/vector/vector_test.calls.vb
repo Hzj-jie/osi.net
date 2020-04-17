@@ -184,7 +184,7 @@ Partial Public Class vector_test
 
             If validation Then
                 ReDim a(CInt(j - i + uint32_1))
-                memcpy(a, 0, v.data(), i, j - i)
+                arrays.copy(a, 0, v.data(), i, j - i)
             End If
 
             v.erase(i, j)
@@ -215,7 +215,7 @@ Partial Public Class vector_test
         Private Sub shrink_to_fit()
             Dim a() As String = Nothing
             ReDim a(CInt(v.size()) - 1)
-            memcpy(a, v.data(), array_size(a))
+            arrays.copy(a, v.data(), array_size(a))
             v.shrink_to_fit()
             assertion.equal(v.capacity(), v.size(), "v.capacity() <> v.size() after shrink_to_fit.")
             If validation Then

@@ -68,7 +68,7 @@ Partial Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
     End Function
 
     Public Sub clear()
-        memclr(_data)
+        arrays.clear(_data)
     End Sub
 
     Default Public Property _D(ByVal k As KEY_T) As VALUE_T

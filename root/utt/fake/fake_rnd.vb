@@ -70,18 +70,18 @@ Public Module _fake_rnd
         If l < bytes_prefix_len Then
             Dim r() As Byte = Nothing
             ReDim r(CInt(l - uint32_1))
-            memcpy(r, bytes_prefix, l)
+            arrays.copy(r, bytes_prefix, l)
             Return r
         End If
         If l > bytes_prefix_len Then
             Dim r() As Byte = Nothing
             ReDim r(CInt(l - uint32_1))
             assert(next_bytes(r))
-            memcpy(r, bytes_prefix, bytes_prefix_len)
+            arrays.copy(r, bytes_prefix, bytes_prefix_len)
             If l < (bytes_prefix_len << 1) Then
-                memcpy(r, bytes_prefix_len, bytes_prefix, 0, l - bytes_prefix_len)
+                arrays.copy(r, bytes_prefix_len, bytes_prefix, 0, l - bytes_prefix_len)
             Else
-                memcpy(r, l - bytes_prefix_len, bytes_prefix, 0, bytes_prefix_len)
+                arrays.copy(r, l - bytes_prefix_len, bytes_prefix, 0, bytes_prefix_len)
             End If
             Return r
         End If

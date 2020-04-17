@@ -76,8 +76,8 @@ Public Class free_cluster_test
                                           Dim ob() As Byte = Nothing
                                           ob = d(id)
                                           ReDim b(array_size_i(ob) + array_size_i(buff) - 1)
-                                          memcpy(b, ob)
-                                          memcpy(b, array_size(ob), buff)
+                                          arrays.copy(b, ob)
+                                          arrays.copy(b, array_size(ob), buff)
                                           buff = b
                                       End If
                                       d(id) = buff

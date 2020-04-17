@@ -65,7 +65,7 @@
 #Else
             Dim t() As Byte = Nothing
             t = ##NAME##_##PREFIX##bytes(i)
-            memcpy(d, offset, t)
+            arrays.copy(d, offset, t)
 #End If
             offset += size
             Return True

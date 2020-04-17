@@ -31,12 +31,12 @@ Public Class block_pump_flow_pump_adapter
         Else
             assert(Not buffered.empty())
             If buffered.count <= count Then
-                memcpy(buff, offset, buffered.buff, buffered.offset, buffered.count)
+                arrays.copy(buff, offset, buffered.buff, buffered.offset, buffered.count)
                 eva(result, buffered.count)
                 buffered = Nothing
             Else
                 assert(buffered.count > count)
-                memcpy(buff, offset, buffered.buff, buffered.offset, count)
+                arrays.copy(buff, offset, buffered.buff, buffered.offset, count)
                 eva(result, count)
                 buffered = buffered.consume(count)
             End If
@@ -68,12 +68,12 @@ Public Class block_pump_flow_pump_adapter
                                                  goto_end()
                                       Else
                                           If array_size(+b) > count Then
-                                              memcpy(buff, offset, +b, uint32_0, count)
+                                              arrays.copy(buff, offset, +b, uint32_0, count)
                                               eva(result, count)
                                               buffered = New piece(+b, count, array_size(+b) - count)
                                               Return goto_end()
                                           Else
-                                              memcpy(buff, offset, +b, uint32_0, array_size(+b))
+                                              arrays.copy(buff, offset, +b, uint32_0, array_size(+b))
                                               Return eva(result, array_size(+b)) AndAlso
                                                      goto_end()
                                           End If

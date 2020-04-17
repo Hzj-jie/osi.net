@@ -26,7 +26,7 @@ Friend Class qless2_stream_case
 
     Public Overrides Function finish() As Boolean
         s.clear()
-        memclr(popped)
+        arrays.clear(popped)
         pushed = 0
         pop_tid = 0
         Return MyBase.finish()

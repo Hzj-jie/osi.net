@@ -74,7 +74,7 @@ Friend Class heap_case
     End Sub
 
     Public Overrides Function finish() As Boolean
-        memclr(s)
+        arrays.clear(s)
         h.clear()
         Return MyBase.finish()
     End Function

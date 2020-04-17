@@ -14,7 +14,7 @@ Public Module _prime
 
     Sub New()
         ReDim is_pr(max_prime - 1)
-        memset(is_pr, True)
+        arrays.fill(is_pr, True)
         is_pr(0) = False
         is_pr(1) = False
         For i As Int32 = 0 To max_prime.sqrt()

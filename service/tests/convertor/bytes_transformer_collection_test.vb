@@ -18,7 +18,7 @@ Public Class bytes_transformer_collection_test
             Return False
         Else
             ReDim o(count)
-            memcpy(o, i, count)
+            arrays.copy(o, i, count)
             o(count) = append
             Return True
         End If

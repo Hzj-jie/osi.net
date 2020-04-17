@@ -283,7 +283,7 @@ Namespace primitive
                 Else
                     Dim r() As Byte = Nothing
                     ReDim r(CInt(array_size(+p1) - l - uint32_1))
-                    memcpy(r, uint32_0, +p1, l, array_size(+p1) - l)
+                    arrays.copy(r, uint32_0, +p1, l, array_size(+p1) - l)
                     p0.set(r)
                 End If
             End Sub
@@ -306,7 +306,7 @@ Namespace primitive
                 Else
                     Dim r() As Byte = Nothing
                     ReDim r(CInt(min(array_size(+p1) - sl(0), sl(1)) - uint32_1))
-                    memcpy(r, uint32_0, +p1, sl(0), array_size(r))
+                    arrays.copy(r, uint32_0, +p1, sl(0), array_size(r))
                     p0.set(r)
                 End If
             End Sub

@@ -51,7 +51,7 @@ Public Class memory
                 Dim original_size As UInt32 = 0
                 original_size = array_size((+it).second)
                 ReDim Preserve (+it).second(CInt(original_size) + array_size_i(value) - 1)
-                memcpy((+it).second, original_size, value)
+                arrays.copy((+it).second, original_size, value)
             End If
             vs += array_size(value)
             result = True
