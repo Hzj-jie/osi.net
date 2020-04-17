@@ -144,7 +144,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
                            BigInteger.Pow(i, CInt((BigInteger.Abs(j) Mod 127) + 1))
                        End Sub,
                        Sub(ByVal i As big_int, ByVal j As big_int)
-                           i.power(j.set_positive().modulus(127) + 1)
+                           i ^= j.set_positive().modulus(127) + 1
                        End Sub,
                        100)
         End Sub
@@ -170,7 +170,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-            Return loosen_bound({1, 1}, i, j)
+            Return loosen_bound({33866961264, 15504057375}, i, j)
         End Function
     End Class
 
@@ -270,7 +270,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
             Private Function next_random() As big_int
                 tc.assert()
                 index += 1
-                Return samples.modget(index).CloneT()
+                Return samples.modget(index)
             End Function
 
             Private Function next_random_BigInteger() As BigInteger
