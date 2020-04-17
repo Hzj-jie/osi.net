@@ -188,11 +188,12 @@ Private Class adaptive_array_uint32
         Return CloneT()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub copy_from(ByVal i As adaptive_array_uint32)
         assert(Not i Is Nothing)
 #If "UInt32" = "UInt32" Then
         ReDim d(array_size_i(i.d) - 1)
-        arrays.copy(d, i.d)
+        arrays.copy(d, i.d, i.s)
 #Else
         d = deep_clone(i.d)
 #End If
