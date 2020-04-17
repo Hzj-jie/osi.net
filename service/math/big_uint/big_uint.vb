@@ -29,7 +29,7 @@ Partial Public NotInheritable Class big_uint
 
     Public Sub New(ByVal i As big_uint)
         Me.New()
-        assert(replace_by(i))
+        Me.v = i.v.CloneT()
     End Sub
 
     Public Sub New(ByVal i() As Byte)
@@ -79,8 +79,7 @@ Partial Public NotInheritable Class big_uint
         ElseIf i.is_one() Then
             set_one()
         Else
-            v.resize(i.v.size())
-            arrays.copy(v.data(), i.v.data(), i.v.size())
+            v.copy_from(i.v)
         End If
         Return True
     End Function
@@ -118,22 +117,18 @@ Partial Public NotInheritable Class big_uint
     End Sub
 
     Public Sub replace_by(ByVal a() As Byte)
-        set_zero()
         If isemptyarray(a) Then
+            set_zero()
             Return
         End If
+
         If (array_size(a) Mod byte_count_in_uint32) <> 0 Then
             ReDim Preserve a(CInt(((array_size(a) + uint32_3) \ byte_count_in_uint32) * byte_count_in_uint32 -
                              uint32_1))
         End If
         assert((array_size(a) Mod byte_count_in_uint32) = 0)
-        v.reserve(array_size(a) \ byte_count_in_uint32)
-        Dim i As UInt32 = 0
-        While i < array_size(a)
-            Dim x As UInt32 = 0
-            assert(little_endian_bytes_uint32(a, x, i))
-            v.push_back(x)
-        End While
+        v.resize(array_size(a) \ byte_count_in_uint32)
+        arrays.memcpy(v.data(), a, array_size(a))
         remove_extra_blank()
     End Sub
 

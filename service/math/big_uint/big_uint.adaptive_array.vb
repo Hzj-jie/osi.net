@@ -188,11 +188,21 @@ Private Class adaptive_array_uint32
         Return CloneT()
     End Function
 
+    Public Sub copy_from(ByVal i As adaptive_array_uint32)
+        assert(Not i Is Nothing)
+#If "UInt32" = "UInt32" Then
+        ReDim d(array_size_i(i.d) - 1)
+        arrays.copy(d, i.d)
+#Else
+        d = deep_clone(i.d)
+#End If
+        s = i.s
+    End Sub
+
     Public Function CloneT() As adaptive_array_uint32 Implements ICloneable(Of adaptive_array_uint32).Clone
         Dim r As adaptive_array_uint32 = Nothing
         r = New adaptive_array_uint32()
-        r.d = deep_clone(d)
-        r.s = s
+        r.copy_from(Me)
         Return r
     End Function
 

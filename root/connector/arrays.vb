@@ -78,6 +78,16 @@ Partial Public NotInheritable Class arrays
         clear(dest, uint32_0, array_size(dest))
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Sub memcpy(Of T1, T2)(ByVal dest() As T1, ByVal src() As T2)
+        memcpy(src, dest, array_size(src) * uint32_sizeof(Of T2)())
+    End Sub
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Sub memcpy(Of T1, T2)(ByVal dest() As T1, ByVal src() As T2, ByVal byte_count As UInt32)
+        Buffer.BlockCopy(src, 0, dest, 0, CInt(byte_count))
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
