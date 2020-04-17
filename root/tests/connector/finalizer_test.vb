@@ -91,7 +91,7 @@ Public Class finalizer_test
             o = ctor(f)
             If envs.mono Then
                 o = Nothing
-                repeat_gc_collect()
+                garbage_collector.repeat_collect()
             End If
         Next
         validate(f)

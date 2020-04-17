@@ -60,7 +60,7 @@ Public Class pointer_test
                 ps(i) = New pointer(Of test_class)(New test_class())
             Next
             assertion.equal(test_class.finalized_count(), 0)
-            repeat_gc_collect()
+            garbage_collector.repeat_collect()
             assertion.equal(test_class.finalized_count(), 0)
 
             Dim released As Int64 = 0
@@ -68,13 +68,13 @@ Public Class pointer_test
             For i As Int64 = 0 To released - 1
                 ps(i) = Nothing
             Next
-            repeat_gc_collect()
+            garbage_collector.repeat_collect()
             assertion.equal(test_class.finalized_count(), released)
 
             For i As Int64 = 0 To count - 1
                 ps(i) = Nothing
             Next
-            repeat_gc_collect()
+            garbage_collector.repeat_collect()
             assertion.equal(test_class.finalized_count(), count)
 
             Return True
@@ -82,7 +82,7 @@ Public Class pointer_test
 
         Private Shared Sub wait()
             For i As Int32 = 0 To 60 - 1
-                repeat_gc_collect()
+                garbage_collector.repeat_collect()
                 sleep()
             Next
         End Sub

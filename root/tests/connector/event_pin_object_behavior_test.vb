@@ -21,7 +21,7 @@ Public Class event_pin_object_behavior_test
             Dim a As c = Nothing
             a = New c()
             AddHandler a.e, AddressOf handler
-            repeat_gc_collect()
+            garbage_collector.repeat_collect()
         Next
         assertion.more(c.destructed(), uint32_0)
         For i As Int32 = 0 To 1000
@@ -29,7 +29,7 @@ Public Class event_pin_object_behavior_test
             a = New c()
             AddHandler a.e, Sub()
                             End Sub
-            repeat_gc_collect()
+            garbage_collector.repeat_collect()
         Next
         assertion.more(c.destructed(), uint32_0)
         Return True

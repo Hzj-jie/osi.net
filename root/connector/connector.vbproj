@@ -115,6 +115,7 @@
     <Compile Include="functor\string_serializer\string_serializer.object.vb" />
     <Compile Include="functor\string_serializer\string_serializer.vb" />
     <Compile Include="functor\string_serializer\uri_serializer.vb" />
+    <Compile Include="garbage_collector.vb" />
     <Compile Include="string_utils\func_to_string.vb" />
     <Compile Include="string_utils\null_str.vb" />
     <Compile Include="struct\struct.definition.vb" />
@@ -289,7 +290,6 @@
     <Compile Include="debugger.vb" />
     <Compile Include="debug_mode.vb" />
     <Compile Include="error_handler\error_message.vb" />
-    <Compile Include="gc.vb" />
     <Compile Include="type\type.inherit.vb" />
     <Compile Include="type\type.constructor.vb" />
     <Compile Include="minmax.vb" />

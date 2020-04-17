@@ -80,7 +80,7 @@ Public Class gc_behavior_test
             x = New tc(a)
             x = Nothing
         Next
-        repeat_gc_collect()
+        garbage_collector.repeat_collect()
         assertion.equal(+a, CInt(r))
         Return True
     End Function

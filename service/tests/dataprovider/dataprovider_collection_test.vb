@@ -13,17 +13,17 @@ Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.dataprovider
 
-Public Class dataprovider_collection_test
+Public NotInheritable Class dataprovider_collection_test
     Inherits [case]
 
     Private Shared ReadOnly lifetime_ms As Int64 = seconds_to_milliseconds(1)
 
-    Private Class fake_datawatcher
+    Private NotInheritable Class fake_datawatcher
         Inherits cd_object(Of fake_datawatcher)
         Implements idatawatcher
 
         Private Sub New()
-            MyBase.new()
+            MyBase.New()
         End Sub
 
         Public Shared Function generate() As idatawatcher
@@ -42,12 +42,12 @@ Public Class dataprovider_collection_test
         End Function
     End Class
 
-    Private Class fake_datafetcher
+    Private NotInheritable Class fake_datafetcher
         Inherits cd_object(Of fake_datafetcher)
         Implements idatafetcher
 
         Private Sub New()
-            MyBase.new()
+            MyBase.New()
         End Sub
 
         Public Shared Function generate() As idatafetcher
@@ -59,7 +59,7 @@ Public Class dataprovider_collection_test
         End Function
     End Class
 
-    Private Class fake_dataloader
+    Private NotInheritable Class fake_dataloader
         Implements idataloader(Of Byte)
 
         Public Shared ReadOnly instance As fake_dataloader
@@ -77,7 +77,7 @@ Public Class dataprovider_collection_test
         End Function
     End Class
 
-    Private Class fake_dataprovider
+    Private NotInheritable Class fake_dataprovider
         Inherits dataprovider(Of Byte)
 
         Private Sub New()
@@ -94,57 +94,70 @@ Public Class dataprovider_collection_test
     End Function
 
     Public Overrides Function run() As Boolean
-        collection.start_auto_cleanup(lifetime_ms)
-        timeslice_sleep_wait_until(Function() collection.dataprovider_count() = 0, lifetime_ms << 1)
-        assertion.equal(collection.dataprovider_count(), uint32_0)
+        Using garbage_collector.force_aggressive_collecting
+            collection.start_auto_cleanup(lifetime_ms)
+            timeslice_sleep_wait_until(Function() collection.dataprovider_count() = 0, lifetime_ms << 1)
+            assertion.equal(collection.dataprovider_count(), uint32_0)
 
-        Dim i As idataprovider = Nothing
-        i = fake_dataprovider.generate()
-        assertion.equal(collection.dataprovider_count(), uint32_1)
-        timeslice_sleep_wait_until(Function() i.valid(), lifetime_ms >> 2)
-        assertion.is_true(i.valid())
-        assertion.equal(fake_datawatcher.constructed(), uint32_1)
-        assertion.equal(fake_datafetcher.constructed(), uint32_1)
-        assertion.equal(fake_datawatcher.destructed(), uint32_0)
-        assertion.equal(fake_datafetcher.destructed(), uint32_0)
-        GC.KeepAlive(i)
-        i = Nothing
-        sleep(lifetime_ms << 1)
-        repeat_gc_collect()
-        assertion.equal(collection.dataprovider_count(), uint32_0)
-        assertion.equal(fake_datawatcher.constructed(), uint32_1)
-        assertion.equal(fake_datafetcher.constructed(), uint32_1)
-        assertion.equal(fake_datawatcher.destructed(), uint32_1)
-        assertion.equal(fake_datafetcher.destructed(), uint32_1)
+            Dim i As idataprovider = Nothing
+            i = fake_dataprovider.generate()
+            assertion.equal(collection.dataprovider_count(), uint32_1)
+            timeslice_sleep_wait_until(Function() i.valid(), lifetime_ms >> 2)
+            assertion.is_true(i.valid())
+            assertion.equal(fake_datawatcher.constructed(), uint32_1)
+            assertion.equal(fake_datafetcher.constructed(), uint32_1)
+            assertion.equal(fake_datawatcher.destructed(), uint32_0)
+            assertion.equal(fake_datafetcher.destructed(), uint32_0)
+            GC.KeepAlive(i)
+            i = Nothing
+            sleep(lifetime_ms << 1)
+            assertion.equal(collection.dataprovider_count(), uint32_0)
+            assertion.equal(fake_datawatcher.constructed(), uint32_1)
+            assertion.equal(fake_datafetcher.constructed(), uint32_1)
+            expectation.happening(Function() As Boolean
+                                      garbage_collector.repeat_collect()
+                                      Return fake_datawatcher.destructed() = uint32_1
+                                  End Function)
+            expectation.happening(Function() As Boolean
+                                      garbage_collector.repeat_collect()
+                                      Return fake_datafetcher.destructed() = uint32_1
+                                  End Function)
 
-        i = fake_dataprovider.generate()
-        assertion.equal(collection.dataprovider_count(), uint32_1)
-        timeslice_sleep_wait_until(Function() i.valid(), lifetime_ms >> 2)
-        assertion.is_true(i.valid())
-        assertion.equal(fake_datawatcher.constructed(), uint32_2)
-        assertion.equal(fake_datafetcher.constructed(), uint32_2)
-        assertion.equal(fake_datawatcher.destructed(), uint32_1)
-        assertion.equal(fake_datafetcher.destructed(), uint32_1)
-        GC.KeepAlive(i)
-        i = Nothing
-        sleep(0)
-        repeat_gc_collect()
-        assertion.equal(collection.dataprovider_count(), uint32_1)
-        assertion.equal(fake_datawatcher.constructed(), uint32_2)
-        assertion.equal(fake_datafetcher.constructed(), uint32_2)
-        assertion.equal(fake_datawatcher.destructed(), uint32_1)
-        assertion.equal(fake_datafetcher.destructed(), uint32_1)
+            i = fake_dataprovider.generate()
+            assertion.equal(collection.dataprovider_count(), uint32_1)
+            timeslice_sleep_wait_until(Function() i.valid(), lifetime_ms >> 2)
+            assertion.is_true(i.valid())
+            expectation.equal(fake_datawatcher.constructed(), uint32_2)
+            expectation.equal(fake_datafetcher.constructed(), uint32_2)
+            expectation.equal(fake_datawatcher.destructed(), uint32_1)
+            expectation.equal(fake_datafetcher.destructed(), uint32_1)
+            GC.KeepAlive(i)
+            i = Nothing
+            sleep(0)
+            garbage_collector.repeat_collect()
+            assertion.equal(collection.dataprovider_count(), uint32_1)
+            expectation.equal(fake_datawatcher.constructed(), uint32_2)
+            expectation.equal(fake_datafetcher.constructed(), uint32_2)
+            expectation.equal(fake_datawatcher.destructed(), uint32_1)
+            expectation.equal(fake_datafetcher.destructed(), uint32_1)
 
-        sleep(lifetime_ms << 1)
-        repeat_gc_collect()
-        assertion.equal(collection.dataprovider_count(), uint32_0)
-        assertion.equal(fake_datawatcher.constructed(), uint32_2)
-        assertion.equal(fake_datafetcher.constructed(), uint32_2)
-        assertion.equal(fake_datawatcher.destructed(), uint32_2)
-        assertion.equal(fake_datafetcher.destructed(), uint32_2)
+            sleep(lifetime_ms << 1)
+            garbage_collector.repeat_collect()
+            assertion.equal(collection.dataprovider_count(), uint32_0)
+            expectation.equal(fake_datawatcher.constructed(), uint32_2)
+            expectation.equal(fake_datafetcher.constructed(), uint32_2)
+            expectation.happening(Function() As Boolean
+                                      garbage_collector.repeat_collect()
+                                      Return fake_datawatcher.destructed() = uint32_2
+                                  End Function)
+            expectation.happening(Function() As Boolean
+                                      garbage_collector.repeat_collect()
+                                      Return fake_datafetcher.destructed() = uint32_2
+                                  End Function)
 
-        collection.stop_auto_cleanup()
-        collection.waitfor_auto_cleanup_stop()
-        Return True
+            collection.stop_auto_cleanup()
+            collection.waitfor_auto_cleanup_stop()
+            Return True
+        End Using
     End Function
 End Class
