@@ -87,7 +87,7 @@ Public NotInheritable Class big_uint
             set_zero()
             Return Me
         End If
-        If that.bit_count() = 1 Then
+        If that.power_of_2() Then
             remainder = (lowest_uint32() Mod that)
             right_shift(that.bit_count() - uint32_1)
             Return Me
