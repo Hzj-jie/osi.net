@@ -279,32 +279,6 @@ Partial Public NotInheritable Class big_uint
         divide_uint(that, Me, Nothing)
     End Sub
 
-    'fake a push_front action for vector and return the last non-zero position
-    <MethodImpl(math_debug.aggressive_inlining)>
-    Private Function left_shift_slot_till(ByVal slot_count As UInt32) As UInt32
-        If slot_count = 0 Then
-            Return Me.last_non_zero_position()
-        End If
-
-        Dim last_non_zero_position As UInt32 = 0
-        v.resize(slot_count + v.size())
-        Dim i As UInt32 = 0
-        i = v.size() - uint32_1
-        While True
-            v.set(i, v.get(i - slot_count))
-            If v.get(i) <> 0 Then
-                last_non_zero_position = i
-            End If
-            If i = slot_count Then
-                Exit While
-            End If
-            i -= uint32_1
-        End While
-        assert(last_non_zero_position >= slot_count AndAlso last_non_zero_position < v.size())
-        arrays.clear(v.data(), 0, slot_count)
-        Return last_non_zero_position
-    End Function
-
     <MethodImpl(math_debug.aggressive_inlining)>
     Private Function last_non_zero_position() As UInt32
         Dim i As UInt32 = 0
@@ -317,19 +291,6 @@ Partial Public NotInheritable Class big_uint
         assert(False)
         Return max_uint32
     End Function
-
-    'fake a pop_front action for vector
-    <MethodImpl(math_debug.aggressive_inlining)>
-    Private Sub right_shift_slot(ByVal slot_count As UInt32)
-        If slot_count = 0 Then
-            Return
-        End If
-        assert(slot_count < v.size())
-        Dim ns As UInt32 = 0
-        ns = v.size() - slot_count
-        arrays.copy(v.data(), 0, v.data(), slot_count, ns)
-        v.resize(ns)
-    End Sub
 
     <MethodImpl(math_debug.aggressive_inlining)>
     Private Function as_uint32() As UInt32

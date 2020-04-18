@@ -42,7 +42,7 @@ Public NotInheritable Class big_uint
         assert(Not that.is_zero_or_one())
         remainder = move(Me)
         set_zero()
-        If remainder.uint32_size() < that.uint32_size() Then
+        If remainder.less(that) Then
             Return Me
         End If
 
