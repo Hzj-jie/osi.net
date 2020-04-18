@@ -145,7 +145,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
                            BigInteger.Pow(i, CInt((BigInteger.Abs(j) Mod 127) + 1))
                        End Sub,
                        Sub(ByVal i As big_int, ByVal j As big_int)
-                           i ^= j.set_positive().modulus(127) + 1
+                           i ^= j.CloneT().set_positive().modulus(127) + 1
                        End Sub,
                        100)
         End Sub
