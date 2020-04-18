@@ -145,7 +145,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
                            BigInteger.Pow(i, CInt((BigInteger.Abs(j) Mod 127) + 1))
                        End Sub,
                        Sub(ByVal i As big_int, ByVal j As big_int)
-                           i ^= j.CloneT().set_positive().modulus(127) + 1
+                           i ^= (j.unsigned_ref().lowest_uint32() Mod 127) + 1
                        End Sub,
                        100)
         End Sub
@@ -185,8 +185,8 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
                                BigInteger.Abs(j * multiplier(CUInt(BigInteger.Abs(j) Mod max_uint32))))
                        End Sub,
                        Sub(ByVal i As big_int, ByVal j As big_int)
-                           big_uint.gcd((i * j * multiplier(j.abs_big_uint().lowest_uint32())).abs_big_uint(),
-                                        (j * multiplier(j.abs_big_uint().lowest_uint32())).abs_big_uint())
+                           big_uint.gcd((i * j * multiplier(j.unsigned_ref().lowest_uint32())).unsigned_ref(),
+                                        (j * multiplier(j.unsigned_ref().lowest_uint32())).unsigned_ref())
                        End Sub,
                        10000)
         End Sub

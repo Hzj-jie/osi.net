@@ -286,5 +286,15 @@ Partial Public NotInheritable Class ##CLASS_NAME##
     Public Function [false]() As Boolean
         Return is_zero()
     End Function
+
+    <MethodImpl(math_debug.aggressive_inlining)>
+    Public Function unsigned_ref() As ##IMPL_CLASS##
+        Return d
+    End Function
+
+    <MethodImpl(math_debug.aggressive_inlining)>
+    Public Function abs_##IMPL_CLASS##() As ##IMPL_CLASS##
+        Return d.CloneT()
+    End Function
 End Class
 

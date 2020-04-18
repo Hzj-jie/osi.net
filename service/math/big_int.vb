@@ -849,6 +849,16 @@ Partial Public NotInheritable Class big_int
     Public Function [false]() As Boolean
         Return is_zero()
     End Function
+
+    <MethodImpl(math_debug.aggressive_inlining)>
+    Public Function unsigned_ref() As big_uint
+        Return d
+    End Function
+
+    <MethodImpl(math_debug.aggressive_inlining)>
+    Public Function abs_big_uint() As big_uint
+        Return d.CloneT()
+    End Function
 End Class
 
 'finish big_unsigned_to_signed.vbp --------

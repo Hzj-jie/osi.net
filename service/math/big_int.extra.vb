@@ -247,8 +247,4 @@ Partial Public NotInheritable Class big_int
         q.modulus(that)
         Return q
     End Operator
-
-    Public Function abs_big_uint() As big_uint
-        Return d.CloneT()
-    End Function
 End Class
