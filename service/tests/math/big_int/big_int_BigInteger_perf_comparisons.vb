@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.Numerics
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.root.utt
@@ -179,13 +180,21 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
 
         Public Sub New()
             MyBase.New(Sub(ByVal i As BigInteger, ByVal j As BigInteger)
-                           BigInteger.GreatestCommonDivisor(BigInteger.Abs(i), BigInteger.Abs(j))
+                           BigInteger.GreatestCommonDivisor(
+                               BigInteger.Abs(i * j * multiplier(CUInt(BigInteger.Abs(j) Mod max_uint32))),
+                               BigInteger.Abs(j * multiplier(CUInt(BigInteger.Abs(j) Mod max_uint32))))
                        End Sub,
                        Sub(ByVal i As big_int, ByVal j As big_int)
-                           big_uint.gcd(i.abs_big_uint(), j.abs_big_uint())
+                           big_uint.gcd((i * j * multiplier(j.abs_big_uint().lowest_uint32())).abs_big_uint(),
+                                        (j * multiplier(j.abs_big_uint().lowest_uint32())).abs_big_uint())
                        End Sub,
                        10000)
         End Sub
+
+        Private Shared Function multiplier(ByVal i As UInt32) As UInt32
+            Return (CULng(primes.select_precalculated(i And max_uint16)) *
+                    primes.select_precalculated((i >> bit_count_in_byte) >> bit_count_in_byte)).low_uint32()
+        End Function
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
             Return loosen_bound({1, 1}, i, j)

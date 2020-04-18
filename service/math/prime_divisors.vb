@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 
 Public Module _prime_divisors
@@ -16,24 +17,24 @@ Public Module _prime_divisors
     End Function
 
     <Extension()> Public Function prime_factorization(ByVal i As UInt32) As vector(Of pair(Of UInt32, Int32))
-        If i < prime(0) Then
+        If i < primes.precalculated(0) Then
             Return New vector(Of pair(Of UInt32, Int32))()
         End If
         Dim r As vector(Of pair(Of UInt32, Int32)) = Nothing
         r = New vector(Of pair(Of UInt32, Int32))()
-        For j As Int32 = 0 To prime_count - 1
+        For j As UInt32 = 0 To primes.precalculated_count - uint32_1
 #If DEBUG Then
-            assert(prime(j) <= i)
+            assert(primes.precalculated(j) <= i)
 #End If
-            If prime(j) = i Then
+            If primes.precalculated(j) = i Then
                 r.emplace_back(pair.of(i, 1))
                 i = 1
-            ElseIf i Mod prime(j) = 0 Then
+            ElseIf i Mod primes.precalculated(j) = 0 Then
                 Dim p As pair(Of UInt32, Int32) = Nothing
-                p = pair.of(prime(j), 0)
-                While i Mod prime(j) = 0
+                p = pair.of(primes.precalculated(j), 0)
+                While i Mod primes.precalculated(j) = 0
                     p.second += 1
-                    i \= prime(j)
+                    i \= primes.precalculated(j)
                 End While
                 r.emplace_back(p)
             End If

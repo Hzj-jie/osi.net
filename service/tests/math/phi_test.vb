@@ -1,24 +1,27 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.utt
 Imports osi.service.math
 
-Public Class phi_test
+Public NotInheritable Class phi_test
     Inherits [case]
 
     Private Shared Function stupid_phi(ByVal x As Int32) As Int32
         If x < 0 Then
             Return npos
-        Else
-            Dim r As Int32 = 0
-            For i As Int32 = 1 To x
-                If relatively_prime(x, i) Then
-                    r += 1
-                End If
-            Next
-            Return r
         End If
+        Dim r As Int32 = 0
+        For i As Int32 = 1 To x
+            If relatively_prime.between(x, i) Then
+                r += 1
+            End If
+        Next
+        Return r
     End Function
 
     Public Overrides Function run() As Boolean

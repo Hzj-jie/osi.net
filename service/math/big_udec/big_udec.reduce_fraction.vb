@@ -8,7 +8,6 @@ Option Strict On
 
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
-Imports osi.root.constants
 
 Partial Public NotInheritable Class big_udec
     Private fraction_dirty_rate As Int32 = 0
@@ -17,12 +16,12 @@ Partial Public NotInheritable Class big_udec
         Public Const selected_prime_count As Int32 = 2  ' 3 5
 
         Shared Sub New()
-            assert(prime_count >= selected_prime_count + 1)
+            assert(primes.precalculated_count >= selected_prime_count + 1)
         End Sub
 
         Public Shared Function selected_prime(ByVal i As Int32) As UInt32
             assert(i >= 0 AndAlso i < selected_prime_count)
-            Return prime(i + 1)
+            Return primes.precalculated(CUInt(i + 1))
         End Function
 
         Private Sub New()

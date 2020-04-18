@@ -123,9 +123,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="phi.vb" />
-    <Compile Include="prime.vb" />
+    <Compile Include="primes.vb" />
     <Compile Include="prime_divisors.vb" />
-    <Compile Include="relative_prime.vb" />
+    <Compile Include="relatively_prime.vb" />
     <Compile Include="big_udec\big_udec.calculation.vb" />
     <Compile Include="big_udec\big_udec.compare.vb" />
     <Compile Include="big_udec\big_udec.constants.vb" />

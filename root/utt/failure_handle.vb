@@ -8,13 +8,17 @@ Imports osi.root.constants
 Imports osi.root.constants.utt
 
 Friend Module failure_handle
-    Public Sub utt_raise_error(ByVal ParamArray msg() As Object)
+    Private Sub utt_raise_error(ByVal msg() As Object, ByVal additional_jump As Int32)
         If Not self_health_stage() Then
-            raise_error(error_type.other, errortype_char, msg)
+            raise_error(error_type.other, errortype_char, additional_jump + 1, msg)
         End If
     End Sub
 
+    Public Sub utt_raise_error(ByVal ParamArray msg() As Object)
+        utt_raise_error(msg, 1)
+    End Sub
+
     Public Sub failed(ByVal ParamArray reason() As Object)
-        utt_raise_error("failed to run utt cases, ", reason)
+        utt_raise_error({"failed to run utt cases, ", reason}, 1)
     End Sub
 End Module

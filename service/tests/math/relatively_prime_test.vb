@@ -1,33 +1,38 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.utt
 Imports osi.service.math
 
-Public Class relatively_prime_test
+Public NotInheritable Class relatively_prime_test
     Inherits [case]
 
     Private Shared Function stupid_relatively_prime(ByVal x As Int32, ByVal y As Int32) As Boolean
         If x = 1 OrElse y = 1 Then
             Return True
-        ElseIf x Mod y = 0 OrElse y Mod x = 0 Then
+        End If
+        If x Mod y = 0 OrElse y Mod x = 0 Then
             Return False
         End If
-        For i As Int32 = 0 To prime_count - 1
-            If prime(i) > x OrElse
-               prime(i) > y Then
+        For i As UInt32 = 0 To primes.precalculated_count - uint32_1
+            If primes.precalculated(i) > x OrElse
+               primes.precalculated(i) > y Then
                 Exit For
             End If
-            If x Mod prime(i) = 0 AndAlso
-               y Mod prime(i) = 0 Then
+            If x Mod primes.precalculated(i) = 0 AndAlso
+               y Mod primes.precalculated(i) = 0 Then
                 Return False
-            ElseIf x Mod prime(i) = 0 Then
-                While x Mod prime(i) = 0
-                    x \= prime(i)
+            ElseIf x Mod primes.precalculated(i) = 0 Then
+                While x Mod primes.precalculated(i) = 0
+                    x \= CInt(primes.precalculated(i))
                 End While
-            ElseIf y Mod prime(i) = 0 Then
-                While y Mod prime(i) = 0
-                    y \= prime(i)
+            ElseIf y Mod primes.precalculated(i) = 0 Then
+                While y Mod primes.precalculated(i) = 0
+                    y \= CInt(primes.precalculated(i))
                 End While
             End If
         Next
@@ -42,7 +47,7 @@ Public Class relatively_prime_test
             Dim y As Int32 = 0
             x = rnd_int(0, max_int32)
             y = rnd_int(0, max_int32)
-            assertion.equal(relatively_prime(x, y), stupid_relatively_prime(x, y), x, character.tab, y)
+            assertion.equal(relatively_prime.between(x, y), stupid_relatively_prime(x, y), x, character.tab, y)
         Next
         Return True
     End Function

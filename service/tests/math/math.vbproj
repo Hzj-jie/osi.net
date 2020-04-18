@@ -118,7 +118,7 @@
     </Compile>
     <Compile Include="phi_test.vb" />
     <Compile Include="prime_divisors_test.vb" />
-    <Compile Include="prime_test.vb" />
+    <Compile Include="primes_test.vb" />
     <Compile Include="relatively_prime_test.vb" />
   </ItemGroup>
   <ItemGroup>

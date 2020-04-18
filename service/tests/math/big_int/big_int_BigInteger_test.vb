@@ -104,8 +104,20 @@ Public NotInheritable Class big_int_BigInteger_test
     Private Shared Sub gcd()
         Dim a As big_int = Nothing
         Dim b As big_int = Nothing
-        a = big_int.random().abs()
-        b = big_int.random().abs()
+        a = big_int.random(20)
+        b = big_int.random(20)
+        For i As Int32 = 0 To 20
+            Dim c As big_int = Nothing
+            c = big_int.random(20)
+            If rnd_bool() Then
+                a.multiply(c)
+            End If
+            If rnd_bool() Then
+                b.multiply(c)
+            End If
+        Next
+        a.set_positive()
+        b.set_positive()
         assertion.equal(New big_int(big_uint.gcd(a.abs_big_uint(), b.abs_big_uint())),
                         big_int.from_BigInteger(BigInteger.GreatestCommonDivisor(a.as_BigInteger(), b.as_BigInteger())))
     End Sub
