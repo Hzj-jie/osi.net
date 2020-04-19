@@ -17,6 +17,9 @@ Public NotInheritable Class relatively_prime
 
     <MethodImpl(math_debug.aggressive_inlining)>
     Public Shared Function gcd(ByVal a As UInt32, ByVal b As UInt32) As UInt32
+        If a = b Then
+            Return a
+        End If
         If a = 0 OrElse b = 0 Then
             Return 0
         End If
@@ -24,13 +27,18 @@ Public NotInheritable Class relatively_prime
             Return 1
         End If
 
+        If a < b Then
+            swap(a, b)
+        End If
+
+        If a Mod b = 0 Then
+            Return b
+        End If
+
         If primes.precalculated_contain(a) OrElse primes.precalculated_contain(b) Then
             Return 1
         End If
 
-        If a < b Then
-            swap(a, b)
-        End If
         Dim c As UInt32 = 0
         c = a Mod b
         While c > 0
@@ -54,6 +62,9 @@ Public NotInheritable Class relatively_prime
             Return gcd(CUInt(a), CUInt(b))
         End If
 
+        If a = b Then
+            Return a
+        End If
         If a = 0 OrElse b = 0 Then
             Return 0
         End If
@@ -64,6 +75,11 @@ Public NotInheritable Class relatively_prime
         If a < b Then
             swap(a, b)
         End If
+
+        If a Mod b = 0 Then
+            Return b
+        End If
+
         Dim c As UInt64 = 0
         c = a Mod b
         While c > 0
