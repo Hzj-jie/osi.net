@@ -3,7 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-#Const REDUCE_FRACTION_IN_ADD = False
+#Const REDUCE_FRACTION_WHEN_CALCULATING = True
 
 Imports osi.root.connector
 Imports osi.root.constants
@@ -21,7 +21,7 @@ Partial Public NotInheritable Class big_udec
         If Me.d.equal(that.d) Then
             replace_by(Me.n + that.n, Me.d)
         Else
-#If REDUCE_FRACTION_IN_ADD Then
+#If REDUCE_FRACTION_WHEN_CALCULATING Then
             Dim g As big_uint = Nothing
             g = big_uint.gcd(Me.d, that.d)
             Dim c As big_uint = Nothing
@@ -72,7 +72,7 @@ Partial Public NotInheritable Class big_udec
         If Me.d.equal(that.d) Then
             [sub](Me.n, that.n.CloneT(), Me.d, overflow)
         Else
-#If REDUCE_FRACTION_IN_ADD Then
+#If REDUCE_FRACTION_WHEN_CALCULATING Then
             Dim g As big_uint = Nothing
             g = big_uint.gcd(Me.d, that.d)
             Dim c As big_uint = Nothing
@@ -126,8 +126,13 @@ Partial Public NotInheritable Class big_udec
         n2 = that.n.CloneT()
         d1 = Me.d.CloneT()
         d2 = that.d.CloneT()
+#If REDUCE_FRACTION_WHEN_CALCULATING Then
+        reduce_fraction(n1, d2)
+        reduce_fraction(n2, d1)
+#Else
         fast_reduce_fraction(n1, d2)
         fast_reduce_fraction(n2, d1)
+#End If
         replace_by(n1.multiply(n2), d1.multiply(d2))
 
         increase_fraction_dirty_rate()
@@ -152,8 +157,13 @@ Partial Public NotInheritable Class big_udec
         n2 = that.n.CloneT()
         d1 = Me.d.CloneT()
         d2 = that.d.CloneT()
+#If REDUCE_FRACTION_WHEN_CALCULATING Then
+        reduce_fraction(n1, n2)
+        reduce_fraction(d1, d2)
+#Else
         fast_reduce_fraction(n1, n2)
         fast_reduce_fraction(d1, d2)
+#End If
         replace_by(n1.multiply(d2), d1.multiply(n2))
 
         increase_fraction_dirty_rate()
