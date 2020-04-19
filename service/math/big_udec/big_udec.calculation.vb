@@ -20,6 +20,9 @@ Partial Public NotInheritable Class big_udec
 
         If Me.d.equal(that.d) Then
             replace_by(Me.n + that.n, Me.d)
+#If REDUCE_FRACTION_WHEN_CALCULATING Then
+            reduce_fraction()
+#End If
         Else
 #If REDUCE_FRACTION_WHEN_CALCULATING Then
             Dim g As big_uint = Nothing
@@ -33,7 +36,9 @@ Partial Public NotInheritable Class big_udec
 #End If
         End If
 
+#If Not REDUCE_FRACTION_WHEN_CALCULATING Then
         increase_fraction_dirty_rate()
+#End If
         Return Me
     End Function
 
@@ -71,6 +76,9 @@ Partial Public NotInheritable Class big_udec
 
         If Me.d.equal(that.d) Then
             [sub](Me.n, that.n.CloneT(), Me.d, overflow)
+#If REDUCE_FRACTION_WHEN_CALCULATING Then
+            reduce_fraction()
+#End If
         Else
 #If REDUCE_FRACTION_WHEN_CALCULATING Then
             Dim g As big_uint = Nothing
@@ -84,7 +92,9 @@ Partial Public NotInheritable Class big_udec
 #End If
         End If
 
+#If Not REDUCE_FRACTION_WHEN_CALCULATING Then
         increase_fraction_dirty_rate()
+#End If
         Return Me
     End Function
 
@@ -135,7 +145,9 @@ Partial Public NotInheritable Class big_udec
 #End If
         replace_by(n1.multiply(n2), d1.multiply(d2))
 
+#If Not REDUCE_FRACTION_WHEN_CALCULATING Then
         increase_fraction_dirty_rate()
+#End If
         Return Me
     End Function
 
@@ -166,7 +178,9 @@ Partial Public NotInheritable Class big_udec
 #End If
         replace_by(n1.multiply(d2), d1.multiply(n2))
 
+#If Not REDUCE_FRACTION_WHEN_CALCULATING Then
         increase_fraction_dirty_rate()
+#End If
         Return Me
     End Function
 
