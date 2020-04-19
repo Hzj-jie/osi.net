@@ -3,9 +3,11 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-#Const GCD_USE_SUCCESSIVE_DIVISION = True
+#Const GCD_USE_SUCCESSIVE_DIVISION = False
 #Const GCD_USE_SUCCESSIVE_SUB = False
+#Const GCD_USE_BIG_INTEGER_GCD = True
 
+Imports System.Numerics
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 
@@ -85,7 +87,7 @@ Partial Public NotInheritable Class big_uint
                 Return a
             End If
 
-            If a.remove_trailing_binary_zeros() > 0  Then
+            If a.remove_trailing_binary_zeros() > 0 Then
                 Continue While
             End If
 
@@ -129,6 +131,13 @@ Partial Public NotInheritable Class big_uint
         Return True
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
+    Private Shared Function gcd_big_integer(ByVal a As big_uint, ByVal b As big_uint) As big_uint
+        Return big_int.from_BigInteger(BigInteger.GreatestCommonDivisor(
+                                           New big_int(a).as_BigInteger(),
+                                           New big_int(b).as_BigInteger())).unsigned_ref()
+    End Function
+
     Public Shared Function gcd(ByVal a As big_uint, ByVal b As big_uint) As big_uint
         assert(Not a Is Nothing)
         assert(Not b Is Nothing)
@@ -149,6 +158,10 @@ Partial Public NotInheritable Class big_uint
         If a.equal(b) Then
             Return a.CloneT()
         End If
+
+#If GCD_USE_BIG_INTEGER_GCD Then
+        Return gcd_big_integer(a, b)
+#End If
 
         a = a.CloneT()
         b = b.CloneT()
