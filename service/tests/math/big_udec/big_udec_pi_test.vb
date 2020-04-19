@@ -307,7 +307,7 @@ Public NotInheritable Class big_udec_pi_test
             c.multiply(big_udec.fraction(big_uint.one(), big_uint.one().left_shift(CULng(4) * i)))
             s.add(c)
 
-            If i <> 0 AndAlso (i Mod 100000) = 0 Then
+            If i <> 0 AndAlso (i Mod 10000) = 0 Then
                 c.reduce_fraction()
                 s.reduce_fraction()
                 raise_error(error_type.warning, "@ ", i, " -> ", s.fractional_str(), " : c -> ", c.fractional_str())
