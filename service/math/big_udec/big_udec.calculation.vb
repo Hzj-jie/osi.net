@@ -67,6 +67,7 @@ Partial Public NotInheritable Class big_udec
 
     Public Function [sub](ByVal that As big_udec, ByRef overflow As Boolean) As big_udec
         If that Is Nothing OrElse that.is_zero() Then
+            overflow = False
             Return Me
         End If
         If is_zero() Then

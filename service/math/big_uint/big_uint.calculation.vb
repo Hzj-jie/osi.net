@@ -104,7 +104,13 @@ Partial Public NotInheritable Class big_uint
         End If
         If is_one() Then
             replace_by(that)
+            Return Me
         End If
+        If that.power_of_2() Then
+            left_shift(CULng(that.trailing_binary_zero_count()))
+            Return Me
+        End If
+
         Dim c As UInt32 = 0
         For i As UInt32 = 0 To v.size() - uint32_1
             Dim t As UInt64 = 0

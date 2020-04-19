@@ -200,6 +200,11 @@ Partial Public NotInheritable Class big_uint
             assert(replace_by(this))
             Return
         End If
+        If that.power_of_2() Then
+            assert(replace_by(this))
+            left_shift(that.trailing_binary_zero_count())
+            Return
+        End If
         set_zero()
 
 #If USE_MULTIPLY_BIT Then
