@@ -3,9 +3,9 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-#Const GCD_USE_SUCCESSIVE_DIVISION = False
+#Const GCD_USE_SUCCESSIVE_DIVISION = True
 #Const GCD_USE_SUCCESSIVE_SUB = False
-#Const GCD_USE_BIG_INTEGER_GCD = True
+#Const GCD_USE_BIG_INTEGER_GCD = False
 
 Imports System.Numerics
 Imports System.Runtime.CompilerServices
