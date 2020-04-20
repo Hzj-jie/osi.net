@@ -77,6 +77,9 @@ Partial Public NotInheritable Class gitver
         latest = parse(latest_commit_raw)
         current = parse(current_commit_raw)
         diff = bytes_str(Convert.FromBase64String(diff_base64))
+        If diff.null_or_whitespace() Then
+            diff = "<identical>"
+        End If
         assert(array_size(titles) = field_count)
     End Sub
 
