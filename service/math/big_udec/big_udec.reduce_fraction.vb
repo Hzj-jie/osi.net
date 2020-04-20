@@ -136,7 +136,7 @@ Partial Public NotInheritable Class big_udec
     <MethodImpl(math_debug.aggressive_inlining)>
     Private Function increase_fraction_dirty_rate() As Boolean
         fraction_dirty_rate += 1
-        If fraction_dirty_rate = 10000 Then
+        If fraction_dirty_rate = 1000000 Then
             reduce_fraction()
             Return True
         End If

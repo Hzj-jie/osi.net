@@ -3,7 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-#Const REDUCE_FRACTION_WHEN_CALCULATING = True
+#Const REDUCE_FRACTION_WHEN_CALCULATING = False
 
 Imports osi.root.connector
 Imports osi.root.constants
