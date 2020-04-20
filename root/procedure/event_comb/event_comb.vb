@@ -5,6 +5,7 @@ Option Strict On
 
 #Const USE_LOCK_T = False
 #Const DISALLOW_REENTERABLE_LOCK = True
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
@@ -36,9 +37,11 @@ Partial Public Class event_comb
 #End If
 
     Public Shared Property current() As event_comb
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Get
             Return instance_stack(Of event_comb).current()
         End Get
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Protected Set(ByVal value As event_comb)
             instance_stack(Of event_comb).current() = value
         End Set
@@ -50,6 +53,7 @@ Partial Public Class event_comb
         End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub New(ByVal d() As Func(Of Boolean), ByVal callstack As String)
         assert(Not callstack Is Nothing)
 #If USE_LOCK_T Then
@@ -72,19 +76,20 @@ Partial Public Class event_comb
     End Sub
 
 #If DEBUG Then
-    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
+    <MethodImpl(MethodImplOptions.NoInlining)>
     Public Sub New(ByVal ParamArray d() As Func(Of Boolean))
 #Else
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal ParamArray d() As Func(Of Boolean))
 #End If
         Me.New(d, Function() As String
-                      If event_comb_trace OrElse event_comb_alloc_trace Then
-                          If event_comb_full_alloc_stack Then
-                              Return connector.callstack()
-                          End If
-                          Return backtrace(Of event_comb)()
+                      If Not event_comb_trace AndAlso Not event_comb_alloc_trace Then
+                          Return "##NOT_TRACE##"
                       End If
-                      Return "##NOT_TRACE##"
+                      If event_comb_full_alloc_stack Then
+                          Return connector.callstack()
+                      End If
+                      Return backtrace(Of event_comb)()
                   End Function())
     End Sub
 
@@ -93,57 +98,69 @@ Partial Public Class event_comb
         Return New event_comb(ds, callstack())
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Function callstack() As String
         Return _callstack
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function end_result_raw() As ternary
         Return _end_result
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function end_result() As Boolean
         assert(end_result_raw().notunknown())
         Return end_result_raw().true_()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function pending() As Boolean
         Return pends > 0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function not_pending() As Boolean
         Return pends = 0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Sub attach_suspending(ByVal v As suspendingEventHandler)
         If Not v Is Nothing Then
             AddHandler suspending, v
         End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Sub inc_pends()
         assert_in_lock()
         pends += uint32_1
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Sub dec_pends()
         assert_in_lock()
         assert(pends > 0)
         pends -= uint32_1
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Sub mark_as_failed()
         _end_result = False
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub clear_pends()
         assert_in_lock()
         pends = 0
     End Sub
 
     Public Property begin_ticks() As Int64
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Get
             Return _begin_ticks
         End Get
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Set(ByVal value As Int64)
             assert_in_lock()
             assert(_begin_ticks = npos OrElse value = npos)
@@ -152,9 +169,11 @@ Partial Public Class event_comb
     End Property
 
     Public Property end_ticks() As Int64
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Get
             Return _end_ticks
         End Get
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Set(ByVal value As Int64)
             assert_in_lock()
             assert(_end_ticks = npos OrElse value = npos)
@@ -222,6 +241,7 @@ Partial Public Class event_comb
         End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Sub [resume](ByVal cb As event_comb)
         If cb Is Nothing Then
             Return
@@ -233,6 +253,7 @@ Partial Public Class event_comb
 #End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub [resume]()
         reenterable_locked(Sub()
                                If pending() Then
@@ -244,20 +265,24 @@ Partial Public Class event_comb
                            End Sub)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Friend Sub [do]()
         reenterable_locked(AddressOf _do)
     End Sub
 
     'ATTENTION, the cancel function does not try to cancel all the event_combs / callback_actions / void it waits for
     'it cancels itself only, so cancel from the latest event_comb is a good idea
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub cancel()
         suspend("has been canceled")
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub timeout()
         suspend("timeout")
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub suspend(ByVal action As String)
         reenterable_locked(Sub()
                                If _end() Then
