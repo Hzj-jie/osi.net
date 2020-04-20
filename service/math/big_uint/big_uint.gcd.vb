@@ -115,6 +115,8 @@ Partial Public NotInheritable Class big_uint
     Private Shared Function gcd_hybrid(ByVal a As big_uint, ByVal b As big_uint) As big_uint
         Dim shift As UInt32 = 0
         shift = shifting(a, b)
+        a.remove_trailing_binary_zeros()
+        b.remove_trailing_binary_zeros()
         Return gcd_hybrid_loop(a, b).left_shift(shift)
     End Function
 
