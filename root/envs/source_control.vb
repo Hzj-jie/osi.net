@@ -1,8 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Public NotInheritable Class source_control
     Public Const unknown_value As String = "UNKNOWN"
 
-    Public Class commit_info
+    Public NotInheritable Class commit_info
         Public ReadOnly id As String
         Public ReadOnly user As String
         Public ReadOnly [date] As String
