@@ -179,6 +179,10 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         Inherits big_int_BigInteger_perf_comparison
 
         Public Sub New()
+            Me.New(10000)
+        End Sub
+
+        Public Sub New(ByVal size As UInt32)
             MyBase.New(Sub(ByVal i As BigInteger, ByVal j As BigInteger)
                            BigInteger.GreatestCommonDivisor(
                                BigInteger.Abs(i * j * multiplier(CUInt(BigInteger.Abs(j) Mod max_uint32))),
@@ -188,7 +192,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
                            big_uint.gcd((i * j * multiplier(j.unsigned_ref().lowest_uint32())).unsigned_ref(),
                                         (j * multiplier(j.unsigned_ref().lowest_uint32())).unsigned_ref())
                        End Sub,
-                       10000)
+                       size)
         End Sub
 
         Private Shared Function multiplier(ByVal i As UInt32) As UInt32
@@ -199,6 +203,14 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
             Return loosen_bound({1, 1}, i, j)
         End Function
+    End Class
+
+    Public NotInheritable Class big_int_BigInteger_gcd_large_perf
+        Inherits commandline_specified_case_wrapper
+
+        Public Sub New()
+            MyBase.New(New big_int_BigInteger_gcd_perf(100000))
+        End Sub
     End Class
 
     Public MustInherit Class big_int_BigInteger_perf_comparison

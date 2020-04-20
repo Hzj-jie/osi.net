@@ -3,7 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-#Const GCD_USE_SUCCESSIVE_DIVISION = True
+#Const GCD_USE_SUCCESSIVE_DIVISION = False
 #Const GCD_USE_SUCCESSIVE_SUB = False
 #Const GCD_USE_BIG_INTEGER_GCD = False
 
@@ -95,7 +95,7 @@ Partial Public NotInheritable Class big_uint
                 Continue While
             End If
 
-            If a.uint32_size() - b.uint32_size() > 1 Then
+            If a.uint32_size() - b.uint32_size() >= 2 OrElse b.uint32_size() <= 2 Then
                 c = a.assert_modulus(b)
                 If c.is_zero() Then
                     Return b
