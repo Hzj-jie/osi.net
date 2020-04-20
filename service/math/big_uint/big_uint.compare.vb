@@ -38,9 +38,14 @@ Partial Public NotInheritable Class big_uint
         End If
         assert(Not this Is Nothing)
         assert(Not that Is Nothing)
-        If (this.is_zero() AndAlso that.is_zero()) OrElse
-           (this.is_one() AndAlso that.is_one()) Then
+        If this.is_zero() AndAlso that.is_zero() Then
             Return 0
+        End If
+        If this.is_one() AndAlso that.is_one() Then
+            If offset = 0 Then
+                Return 0
+            End If
+            Return -1
         End If
         If this.v.size() <> that.v.size() + offset Then
             Return If(this.v.size() > that.v.size() + offset, 1, -1)
