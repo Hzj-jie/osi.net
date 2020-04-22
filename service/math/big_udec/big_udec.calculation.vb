@@ -118,14 +118,11 @@ Partial Public NotInheritable Class big_udec
     End Function
 
     Public Function multiply(ByVal that As big_udec) As big_udec
-        If that Is Nothing Then
+        If that Is Nothing OrElse that.is_zero() Then
+            set_zero()
             Return Me
         End If
         If is_zero() Then
-            Return Me
-        End If
-        If that.is_zero() Then
-            set_zero()
             Return Me
         End If
 
@@ -153,11 +150,11 @@ Partial Public NotInheritable Class big_udec
     End Function
 
     Public Function divide(ByVal that As big_udec, ByRef divide_by_zero As Boolean) As big_udec
-        divide_by_zero = False
         If that Is Nothing OrElse that.is_zero() Then
             divide_by_zero = True
             Return Me
         End If
+        divide_by_zero = False
         If is_zero() Then
             Return Me
         End If
