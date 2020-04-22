@@ -110,6 +110,16 @@ Public NotInheritable Class big_udec_extract_test
         '                         0.46415888336128
     End Sub
 
+    <test>
+    Private Shared Sub _33_33_extract_by_2()
+        Dim u As big_udec = Nothing
+        u = big_udec.fraction(100, 3)
+        u = u.assert_extract(New big_uint(2))
+
+        assertion.equal(u.str(), "5.7735026918962576450914878050195745564760175127012687601860232648")
+        '                         5.7735026919
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
