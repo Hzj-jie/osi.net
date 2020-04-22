@@ -74,6 +74,7 @@
     <Compile Include="big_udec\big_udec_bytes_test.vb" />
     <Compile Include="big_udec\big_udec_extract_test.vb" />
     <Compile Include="big_udec\big_udec_e_test.vb" />
+    <Compile Include="big_udec\big_udec_dec_str_perf.vb" />
     <Compile Include="big_udec\big_udec_match_test.vb" />
     <Compile Include="big_udec\big_udec_str_manual_test.vb" />
     <Compile Include="big_udec\big_udec_fractional_str_test.vb" />
