@@ -12,7 +12,7 @@ Partial Public NotInheritable Class big_udec
         Public Const replace_by_dec_max_shift As UInt32 = 50
         Public Const str_base As Byte = 10
         Public Const str_upure_len As UInt32 = 64
-        Public Const extract_power_base As UInt32 = 10
+        Public Const extract_power_base As UInt32 = 40
 
         Private Sub New()
         End Sub

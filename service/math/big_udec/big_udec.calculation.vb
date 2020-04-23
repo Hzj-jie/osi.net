@@ -231,7 +231,7 @@ Partial Public NotInheritable Class big_udec
             Return Me
         End If
         Dim p As big_uint = Nothing
-        p = Me.n * that * extract_power_base \ Me.d
+        p = Me.n * extract_power_base \ Me.d \ that
         If p.is_zero_or_one() Then
             p = New big_uint(CUInt(2))
         End If
