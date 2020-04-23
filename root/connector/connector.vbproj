@@ -116,7 +116,6 @@
     <Compile Include="functor\string_serializer\string_serializer.vb" />
     <Compile Include="functor\string_serializer\uri_serializer.vb" />
     <Compile Include="garbage_collector.vb" />
-    <Compile Include="string_utils\func_to_string.vb" />
     <Compile Include="string_utils\null_str.vb" />
     <Compile Include="struct\struct.definition.vb" />
     <Compile Include="struct\struct.reflector.vb" />

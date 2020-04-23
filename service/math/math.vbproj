@@ -67,6 +67,7 @@
     <Compile Include="big_udec\big_udec.creators.vb" />
     <Compile Include="big_udec\big_udec.predefined.vb" />
     <Compile Include="big_udec\big_udec.rnd.vb" />
+    <Compile Include="big_udec\big_udec.strmatch.vb" />
     <Compile Include="big_uint\big_uint.adaptive_array.vb" />
     <Compile Include="big_uint\big_uint.assert.vb" />
     <Compile Include="big_uint\big_uint.bit.vb" />
