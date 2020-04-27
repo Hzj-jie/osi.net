@@ -6,7 +6,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports System.Runtime.CompileServices
+Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 Imports osi.root.formation
 
