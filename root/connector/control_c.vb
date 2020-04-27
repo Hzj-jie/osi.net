@@ -1,9 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
 Imports osi.root.constants
 
 <global_init(global_init_level.foundamental)>
-Public Class control_c
+Public NotInheritable Class control_c
     Public Shared Event press(ByRef cancel As Boolean)
     Private Const fast_fail_threshold As Int32 = 2
     Private Shared _pressed As Boolean = False
@@ -57,26 +61,30 @@ Public Class control_c
 
     Shared Sub New()
         AddHandler Console.CancelKeyPress,
-                   Sub(sender As Object, arg As ConsoleCancelEventArgs)
-                       If enabled() Then
-                           _pressed = True
-                           RaiseEvent press(arg.Cancel())
-                           If Not arg.Cancel() Then
-                               While blocking()
-                                   sleep()
-                               End While
-                               If process_will_exit() Then
-                                   ' Trigger normal exit process
-                                   [exit]()
-                               Else
-                                   arg.Cancel() = True
-                               End If
-                           End If
-                           _pressed = False
+                   Sub(ByVal sender As Object, ByVal arg As ConsoleCancelEventArgs)
+                       If Not enabled() Then
+                           Return
                        End If
+                       _pressed = True
+                       RaiseEvent press(arg.Cancel())
+                       If Not arg.Cancel() Then
+                           While blocking()
+                               sleep()
+                           End While
+                           If process_will_exit() Then
+                               ' Trigger normal exit process
+                               Environment.Exit(0)
+                           Else
+                               arg.Cancel() = True
+                           End If
+                       End If
+                       _pressed = False
                    End Sub
     End Sub
 
     Private Shared Sub init()
+    End Sub
+
+    Private Sub New()
     End Sub
 End Class

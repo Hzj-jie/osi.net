@@ -33,7 +33,7 @@ Public Class native_window_test
                         Dim process_id As UInt32 = 0
                         Dim thread_id As UInt32 = 0
                         assertion.is_true(native_window.get_thread_process_id(f, process_id, thread_id))
-                        assertion.equal(process_id, CUInt(osi.root.envs.current_process.Id()))
+                        assertion.equal(process_id, CUInt(osi.root.envs.this_process.ref.Id()))
                         assertion.equal(thread_id, CUInt(osi.root.envs.current_process_thread_id()))
                         Console.WriteLine(strcat("Native API: process id: ", process_id, ", thread id: ", thread_id))
                         Dim rect As native_window.rect = Nothing

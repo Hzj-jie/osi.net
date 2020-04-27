@@ -41,10 +41,10 @@ Public Module _priority
              env_value(set4, priority_string)) AndAlso
             enum_def.from(priority_string, priority_class)) Then
             has_priority_defined = True
-            current_process.PriorityClass() = priority_class
+            this_process.ref.PriorityClass() = priority_class
         Else
             has_priority_defined = False
-            priority_class = current_process.PriorityClass()
+            priority_class = this_process.ref.PriorityClass()
         End If
     End Sub
 

@@ -87,7 +87,6 @@
     <Compile Include="os.vb" />
     <Compile Include="performance.vb" />
     <Compile Include="priority.vb" />
-    <Compile Include="process.vb" />
     <Compile Include="processor.vb" />
     <Compile Include="source_control.vb" />
     <Compile Include="spin.vb" />
@@ -100,6 +99,7 @@
     <Compile Include="system_perf\thread_static_operator.vb" />
     <Compile Include="tfver.vb" />
     <Compile Include="tfver_parser.vb" />
+    <Compile Include="this_process.vb" />
     <Compile Include="thread.vb" />
     <Compile Include="thread_count.vb" />
     <Compile Include="timeslice.vb" />

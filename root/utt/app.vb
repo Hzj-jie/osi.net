@@ -53,12 +53,12 @@ Public Module _app
         assertion.is_true(using_default_ithreadpool())
         ' A .Net framework uses ~ 15 threads, and since ManagedThreadPool was involved in concurrent_runner, it may have
         ' some 4 threads. Unmanaged threads are not controllable, so add an extra 5.
-        assertion.less_or_equal(current_process.Threads().Count(),
-                             15 +
-                             Environment.ProcessorCount() +
-                             thread_pool().thread_count() +
-                             queue_runner.thread_count +
-                             5)
+        assertion.less_or_equal(this_process.ref.Threads().Count(),
+                                15 +
+                                Environment.ProcessorCount() +
+                                thread_pool().thread_count() +
+                                queue_runner.thread_count +
+                                5)
         assertion.less_or_equal(gc_total_memory(), 128 * 1024 * 1024)
         If assertion.failure_count() > 0 OrElse expectation.failure_count() > 0 Then
             If assertion.failure_count() > 0 Then
@@ -79,6 +79,6 @@ Public Module _app
                     ", average processor usage percentage ",
                     processor_usage())
 
-        [exit]()
+        this_process.exit()
     End Sub
 End Module

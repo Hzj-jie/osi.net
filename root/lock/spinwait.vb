@@ -174,7 +174,7 @@ Public Module _sleep_wait
     'should not use this, for test only
     Private Function select_sleep_ms() As Int64
         Try
-            Return timeslice_length_ms * Math.Pow(2, min(current_process.Threads().Count() \ 10, 5) + 2)
+            Return timeslice_length_ms * Math.Pow(2, min(this_process.ref.Threads().Count() \ 10, 5) + 2)
         Catch
             Return sixteen_timeslice_length_ms
         End Try

@@ -12,7 +12,7 @@ Public Module _assert
             attach_debugger()
         Else
             error_event.a()
-            [exit]()
+            Environment.Exit(0)
         End If
     End Sub
 

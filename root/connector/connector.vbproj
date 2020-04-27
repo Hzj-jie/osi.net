@@ -116,6 +116,7 @@
     <Compile Include="functor\string_serializer\string_serializer.vb" />
     <Compile Include="functor\string_serializer\uri_serializer.vb" />
     <Compile Include="garbage_collector.vb" />
+    <Compile Include="mono.vb" />
     <Compile Include="string_utils\null_str.vb" />
     <Compile Include="struct\struct.definition.vb" />
     <Compile Include="struct\struct.reflector.vb" />
@@ -273,7 +274,6 @@
     <Compile Include="encoding.vb" />
     <Compile Include="type\enum_def.vb" />
     <Compile Include="event.vb" />
-    <Compile Include="mono.vb" />
     <Compile Include="time\nowadays.vb" />
     <Compile Include="string_utils\c_str.vb" />
     <Compile Include="string_utils\levenshtein.vb" />
@@ -324,7 +324,6 @@
     <Compile Include="string_utils\strrplc.vb" />
     <Compile Include="string_utils\substring.vb" />
     <Compile Include="string_utils\upper_lower.vb" />
-    <Compile Include="exit.vb" />
     <Compile Include="swap.vb" />
     <Compile Include="text_writer.vb" />
     <Compile Include="threadpool.vb" />

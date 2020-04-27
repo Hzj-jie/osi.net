@@ -16,7 +16,7 @@ Friend Class application_info_logging
                     ", ver ",
                     application_version,
                     ", process id ",
-                    current_process.Id(),
+                    this_process.ref.Id(),
                     ", under clr ",
                     clr_version,
                     ", source control current changeset id ",

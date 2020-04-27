@@ -45,7 +45,7 @@ Public Module _thread
             If r Is Nothing Then
                 Thread.BeginThreadAffinity()
                 Dim tps As ProcessThreadCollection = Nothing
-                tps = current_process.Threads()
+                tps = this_process.ref.Threads()
                 assert(Not tps.null_or_empty())
                 For i As Int32 = 0 To tps.Count() - 1
                     assert(Not tps(i) Is Nothing)
