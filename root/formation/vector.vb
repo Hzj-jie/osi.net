@@ -81,9 +81,6 @@ Public NotInheritable Class vector(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub clear()
-        If size() > uint32_0 Then
-            arrays.clear(data(), uint32_0, size())
-        End If
         v.clear()
     End Sub
 
@@ -153,7 +150,6 @@ Public NotInheritable Class vector(Of T)
     Public Sub pop_back()
         assert(Not empty())
         v.pop_back()
-        data()(CInt(size())) = [default](Of T).null
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -167,9 +163,6 @@ Public NotInheritable Class vector(Of T)
     End Sub
 
     Public Sub resize(ByVal n As UInt32)
-        If n < size() Then
-            arrays.clear(data(), n, size() - n)
-        End If
         v.resize(n)
     End Sub
 

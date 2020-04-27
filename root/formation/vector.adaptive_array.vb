@@ -130,7 +130,10 @@ Private Class adaptive_array_t
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub clear()
-        s = uint32_0
+        If size() > uint32_0 Then
+            arrays.clear(data(), uint32_0, size())
+            s = uint32_0
+        End If
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -143,6 +146,11 @@ Private Class adaptive_array_t
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub pop_back()
         s -= uint32_1
+#If "T" = "UInt32" Then
+        d(CInt(size())) = uint32_0
+#Else
+        d(CInt(size())) = [default](Of T).null
+#End If
     End Sub
 
     Public Sub reserve(ByVal n As UInt32)
@@ -162,6 +170,8 @@ Private Class adaptive_array_t
     Public Sub resize(ByVal n As UInt32)
         If capacity() < n Then
             reserve(n)
+        ElseIf size() > n Then
+            arrays.clear(d, n, size() - n)
         End If
         s = n
     End Sub
