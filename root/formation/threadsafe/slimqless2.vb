@@ -1,10 +1,16 @@
 ﻿
-Imports System.Threading
-Imports osi.root.lock
-Imports osi.root.connector
-Imports osi.root.envs
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Public Class slimqless2(Of T)
+Imports System.Runtime.CompilerServices
+Imports System.Threading
+Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.envs
+Imports osi.root.lock
+
+Public NotInheritable Class slimqless2(Of T)
     Shared Sub New()
         should_yield()
     End Sub
@@ -20,10 +26,12 @@ Public Class slimqless2(Of T)
             assert(DirectCast(Nothing, Int32) = nv)
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function mark_value_writting() As Boolean
             Return atomic.compare_exchange(v, bw, nv)
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub mark_value_written()
 #If DEBUG Then
             assert(v = bw)
@@ -31,6 +39,7 @@ Public Class slimqless2(Of T)
             atomic.eva(v, aw)
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function value_written() As Boolean
 #If DEBUG Then
             assert(not_no_value())
@@ -38,12 +47,13 @@ Public Class slimqless2(Of T)
             Return v = aw
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function not_no_value() As Boolean
             Return v <> nv
         End Function
     End Structure
 
-    Private Class node
+    Private NotInheritable Class node
         Public [next] As node
         Public v As T
         Public vs As value_status
@@ -58,6 +68,7 @@ Public Class slimqless2(Of T)
         f.next = e
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub clear()
         While pop(Nothing)
         End While
@@ -85,6 +96,7 @@ Public Class slimqless2(Of T)
         End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub push(ByVal v As T)
         emplace(copy_no_error(v))
     End Sub
@@ -154,13 +166,13 @@ Public Class slimqless2(Of T)
         Return assert(False)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function pop() As T
         Dim o As T = Nothing
         If pop(o) Then
             Return o
-        Else
-            Return Nothing
         End If
+        Return Nothing
     End Function
 
     Public Function pick(ByRef o As T) As Boolean
@@ -168,22 +180,22 @@ Public Class slimqless2(Of T)
         nf = f.next
         If nf Is e Then
             Return False
-        Else
-            wait_written(nf)
-            o = nf.v
-            Return True
         End If
+        wait_written(nf)
+        o = nf.v
+        Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function pick() As T
         Dim o As T = Nothing
         If pick(o) Then
             Return o
-        Else
-            Return Nothing
         End If
+        Return Nothing
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function empty() As Boolean
         Return f.next Is e
     End Function
