@@ -9,6 +9,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 Public Module vector_extension
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function renew(Of T)(ByRef v As vector(Of T)) As vector(Of T)
         If v Is Nothing Then
             v = New vector(Of T)()
@@ -18,10 +19,12 @@ Public Module vector_extension
         Return v
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function null_or_empty(Of T)(ByVal i As vector(Of T)) As Boolean
         Return i Is Nothing OrElse i.empty()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function size_or_0(Of T)(ByVal i As vector(Of T)) As UInt32
         If i Is Nothing Then
             Return uint32_0
@@ -55,6 +58,7 @@ Public Module vector_extension
         Return rtn
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function modget(Of T)(ByVal v As vector(Of T), ByVal i As Int64) As T
         If v.null_or_empty() Then
             Return Nothing
@@ -62,6 +66,7 @@ Public Module vector_extension
         Return v(CUInt(Math.Abs(i Mod v.size())))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function take(Of T)(ByVal v As vector(Of T), ByVal i As Int32, ByRef o As T) As Boolean
         If available_index(v, i) Then
             assert(i >= 0)
@@ -71,6 +76,7 @@ Public Module vector_extension
         Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function take(Of T)(ByVal v As vector(Of T), ByVal i As UInt32, ByRef o As T) As Boolean
         If available_index(v, i) Then
             o = v(i)
@@ -79,6 +85,7 @@ Public Module vector_extension
         Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function take(Of T)(ByVal v As vector(Of T), ByVal i As Int64, ByRef o As T) As Boolean
         If available_index(v, i) Then
             assert(i >= 0)
@@ -89,6 +96,7 @@ Public Module vector_extension
         Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function take(Of T)(ByVal v As vector(Of T), ByVal i As UInt64, ByRef o As T) As Boolean
         If available_index(v, i) Then
             assert(i <= max_uint32)
@@ -98,22 +106,27 @@ Public Module vector_extension
         Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function available_index(Of T)(ByVal v As vector(Of T), ByVal i As Int32) As Boolean
         Return Not v Is Nothing AndAlso i >= 0 AndAlso i < v.size()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function available_index(Of T)(ByVal v As vector(Of T), ByVal i As UInt32) As Boolean
         Return Not v Is Nothing AndAlso i < v.size()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function available_index(Of T)(ByVal v As vector(Of T), ByVal i As Int64) As Boolean
         Return Not v Is Nothing AndAlso i >= 0 AndAlso i < v.size()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function available_index(Of T)(ByVal v As vector(Of T), ByVal i As UInt64) As Boolean
         Return Not v Is Nothing AndAlso i < v.size()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function [erase](Of T)(ByVal v As vector(Of T), ByVal i As Int32) As Boolean
         If i < 0 Then
             Return False
@@ -122,10 +135,12 @@ Public Module vector_extension
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function [erase](Of T)(ByVal v As vector(Of T), ByVal d As T) As Boolean
         Return [erase](v, v.find(d))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function push_back(Of T)(ByVal d As vector(Of T), ByVal s As vector(Of T)) As Boolean
         If d Is Nothing OrElse s.null_or_empty() Then
             Return False
@@ -133,6 +148,7 @@ Public Module vector_extension
         Return assert(d.push_back(s.data(), 0, s.size()))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function emplace_back(Of T)(ByVal d As vector(Of T), ByVal s As vector(Of T)) As Boolean
         If d Is Nothing OrElse s.null_or_empty() Then
             Return False
@@ -141,17 +157,18 @@ Public Module vector_extension
     End Function
 
     <Extension()> Public Sub fill(Of T)(ByVal v As vector(Of T), ByRef d() As T)
-        If Not v Is Nothing Then
-            If v.empty() Then
-                ReDim d(-1)
-            Else
-                If array_size(d) <> v.size() Then
-                    ReDim d(CInt(v.size() - uint32_1))
-                End If
-                For i As UInt32 = 0 To v.size() - uint32_1
-                    copy(d(CInt(i)), v(i))
-                Next
+        If v Is Nothing Then
+            Return
+        End If
+        If v.empty() Then
+            ReDim d(-1)
+        Else
+            If array_size(d) <> v.size() Then
+                ReDim d(CInt(v.size() - uint32_1))
             End If
+            For i As UInt32 = 0 To v.size() - uint32_1
+                copy(d(CInt(i)), v(i))
+            Next
         End If
     End Sub
 
@@ -188,14 +205,17 @@ Public Module vector_extension
         Return Convert.ToString(r)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function str(Of T)(ByVal v As vector(Of T), ByVal separator As String) As String
         Return str(v, AddressOf Convert.ToString, separator)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function str(Of T)(ByVal v As vector(Of T)) As String
         Return str(v, Nothing)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function map(Of T, R)(ByVal v As vector(Of T), ByVal f As Func(Of T, R)) As vector(Of R)
         Return vector.map(v, f)
     End Function
@@ -213,10 +233,12 @@ Public NotInheritable Class vector
         Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](Of T)(ByVal ParamArray vs() As T) As vector(Of T)
         Return create(vs, True)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function emplace_of(Of T)(ByVal ParamArray vs() As T) As vector(Of T)
         Return create(vs, False)
     End Function

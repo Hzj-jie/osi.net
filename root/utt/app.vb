@@ -5,11 +5,10 @@ Option Strict On
 
 Imports System.DateTime
 Imports osi.root.connector
-Imports osi.root.constants.utt
-Imports osi.root.envs
 Imports osi.root.procedure
 Imports osi.root.threadpool
 Imports osi.root.utils
+Imports this_process = osi.root.envs.this_process
 
 Public Module _app
     Public Sub main(ByVal args() As String)
@@ -19,7 +18,7 @@ Public Module _app
         start_ms = Now().milliseconds()
         assertion.is_true(using_default_ithreadpool())
         If envs.utt_no_assert Then
-            error_writer_ignore_types(Of file_error_writer).ignore(errortype_char)
+            error_writer_ignore_types(Of file_error_writer).ignore(constants.utt.errortype_char)
         End If
         If envs.utt_no_debug_mode Then
             set_not_debug_mode()
@@ -42,7 +41,7 @@ Public Module _app
         debugpause()
 
         If Not assertion.equal(counter.instance_count_counter(Of event_comb).count(), 0) Then
-            If event_comb_alloc_trace Then
+            If envs.event_comb_alloc_trace Then
                 raise_error(event_comb.dump_alloc_trace())
             End If
         End If
@@ -59,7 +58,7 @@ Public Module _app
                                 thread_pool().thread_count() +
                                 queue_runner.thread_count +
                                 5)
-        assertion.less_or_equal(gc_total_memory(), 128 * 1024 * 1024)
+        assertion.less_or_equal(envs.gc_total_memory(), 128 * 1024 * 1024)
         If assertion.failure_count() > 0 OrElse expectation.failure_count() > 0 Then
             If assertion.failure_count() > 0 Then
                 failed("failure count = ", assertion.failure_count())
@@ -75,10 +74,10 @@ Public Module _app
                     " cases, total used time in milliseconds ",
                     Now().milliseconds() - start_ms,
                     ", total processor time in milliseconds ",
-                    total_processor_time_ms(),
+                    envs.total_processor_time_ms(),
                     ", average processor usage percentage ",
-                    processor_usage())
+                    envs.processor_usage())
 
-        this_process.exit()
+        this_process.exit(constants.exit_code.succeeded)
     End Sub
 End Module

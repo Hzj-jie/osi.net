@@ -9,11 +9,11 @@ Imports osi.root.constants
 <global_init(global_init_level.foundamental)>
 Public NotInheritable Class control_c
     Public Shared Event press(ByRef cancel As Boolean)
-    Private Const fast_fail_threshold As Int32 = 2
     Private Shared _pressed As Boolean = False
     Private Shared _enabled As Boolean = True
     Private Shared _blocking As Int32 = 0
     Private Shared _exit_process As Boolean = True
+    Private Shared _exit_code As Int32 = constants.exit_code.succeeded
 
     Public Shared Function enabled() As Boolean
         Return _enabled
@@ -59,6 +59,14 @@ Public NotInheritable Class control_c
         Return _pressed
     End Function
 
+    Public Shared Sub exit_code(ByVal c As Int32)
+        _exit_code = c
+    End Sub
+
+    Public Shared Function exit_code() As Int32
+        Return _exit_code
+    End Function
+
     Shared Sub New()
         AddHandler Console.CancelKeyPress,
                    Sub(ByVal sender As Object, ByVal arg As ConsoleCancelEventArgs)
@@ -73,7 +81,7 @@ Public NotInheritable Class control_c
                            End While
                            If process_will_exit() Then
                                ' Trigger normal exit process
-                               Environment.Exit(0)
+                               Environment.Exit(exit_code())
                            Else
                                arg.Cancel() = True
                            End If

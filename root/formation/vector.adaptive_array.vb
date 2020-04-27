@@ -130,7 +130,10 @@ Private Class adaptive_array_t
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub clear()
-        s = uint32_0
+        If size() > uint32_0 Then
+            arrays.clear(data(), uint32_0, size())
+            s = uint32_0
+        End If
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -143,6 +146,11 @@ Private Class adaptive_array_t
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub pop_back()
         s -= uint32_1
+#If "T" = "UInt32" Then
+        d(CInt(size())) = uint32_0
+#Else
+        d(CInt(size())) = [default](Of T).null
+#End If
     End Sub
 
     Public Sub reserve(ByVal n As UInt32)
@@ -160,9 +168,10 @@ Private Class adaptive_array_t
     End Sub
 
     Public Sub resize(ByVal n As UInt32)
-        reserve(n)
-        If size() < n Then
-            arrays.clear(d, size(), n - size())
+        If capacity() < n Then
+            reserve(n)
+        ElseIf size() > n Then
+            arrays.clear(d, n, size() - n)
         End If
         s = n
     End Sub
@@ -178,11 +187,6 @@ Private Class adaptive_array_t
         End If
     End Sub
 
-    Public Sub clear_unused_slots()
-        assert(capacity() >= size())
-        arrays.clear(d, size(), capacity() - size())
-    End Sub
-
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
@@ -195,7 +199,7 @@ Private Class adaptive_array_t
         ReDim d(array_size_i(i.d) - 1)
         arrays.copy(d, i.d, i.s)
 #Else
-        d = deep_clone(i.d)
+        d = i.d.deep_clone()
 #End If
         s = i.s
     End Sub
@@ -221,7 +225,7 @@ Private Class adaptive_array_t
         If this.size() > that.size() Then
             Return 1
         End If
-        Return deep_compare(this.d, that.d, this.size())
+        Return this.d.deep_compare(that.d, this.size())
     End Function
 
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo

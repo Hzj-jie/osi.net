@@ -7,6 +7,11 @@ Rule of Thumb
 1. Use Module *ONLY* when \<Extension\> functions are included or serving only
    private methods for \<global\_init\>, e.g. no global functions.
 
+1. Only use \<Extension\> functions as member functions.
+
+1. Unless explicitly claimed in the function name, \<Extension\> functions
+   should throw NullReferenceException or assert(this != null).
+
 1. Static / Shared methods within a meaningful named class for "global
    functions".
 
