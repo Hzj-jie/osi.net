@@ -76,6 +76,8 @@ int main(int argc, char* argv[])
               "Option Explicit On\n"
               "Option Infer Off\n"
               "Option Strict On\n\n"
+              "Imports System.Runtime.CompileServices\n"
+              "Imports osi.root.constants\n"
               "Imports osi.root.formation\n"
               "\nPublic Module _eva\n\n"
               "#If Not DEBUG Then\n\n", fo);
@@ -87,6 +89,7 @@ int main(int argc, char* argv[])
                 t = types[i];
                 if(j == 1) t += "()";
                 fprintf(fo,
+                        "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
                         "    Public Function eva(ByRef x As %s, ByVal y As %s) As Boolean\n",
                         t.c_str(), t.c_str());
                 eva1(fo);
@@ -97,6 +100,7 @@ int main(int argc, char* argv[])
                 eva2(fo);
                 */
                 fprintf(fo,
+                        "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
                         "    Public Function eva(ByRef x As %s, ByVal y As Func(Of %s)) As Boolean\n",
                         t.c_str(), t.c_str());
                 eva2(fo);
@@ -105,6 +109,7 @@ int main(int argc, char* argv[])
                     string ext;
                     if(string(pointer_types[k]) == "array_pointer") ext = "()";
                     fprintf(fo,
+                            "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
                             "    Public Function eva(ByVal x As %s(Of %s), ByVal y As %s%s) As Boolean\n",
                             pointer_types[k], t.c_str(), t.c_str(), ext.c_str());
                     eva3(fo);
@@ -115,6 +120,7 @@ int main(int argc, char* argv[])
                     eva4(fo);
                     */
                     fprintf(fo,
+                            "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
                             "    Public Function eva(ByVal x As %s(Of %s), ByVal y As Func(Of %s%s)) As Boolean\n",
                             pointer_types[k], t.c_str(), t.c_str(), ext.c_str());
                     eva4(fo);
@@ -123,19 +129,22 @@ int main(int argc, char* argv[])
         }
 
         fputs("#End If\n\n", fo);
-        fputs("    Public Function eva(Of T)(ByRef x As T, ByVal y As T) As Boolean\n", fo);
+        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+              "    Public Function eva(Of T)(ByRef x As T, ByVal y As T) As Boolean\n", fo);
         eva1(fo);
         /*
         fputs("    Public Function eva(Of T)(ByRef x As T, ByVal y As _do(Of T)) As Boolean\n", fo);
         eva2(fo);
         */
-        fputs("    Public Function eva(Of T)(ByRef x As T, ByVal y As Func(Of T)) As Boolean\n", fo);
+        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+              "    Public Function eva(Of T)(ByRef x As T, ByVal y As Func(Of T)) As Boolean\n", fo);
         eva2(fo);
         for(int i = 0; i < sizeof(pointer_types) / sizeof(pointer_types[0]); i++)
         {
             string ext;
             if(string(pointer_types[i]) == "array_pointer") ext = "()";
             fprintf(fo,
+                    "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
                     "    Public Function eva(Of T)(ByVal x As %s(Of T), ByVal y As T%s) As Boolean\n",
                     pointer_types[i], ext.c_str());
             eva3(fo);
@@ -146,6 +155,7 @@ int main(int argc, char* argv[])
             eva4(fo);
             */
             fprintf(fo,
+                    "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
                     "    Public Function eva(Of T)(ByVal x As %s(Of T), ByVal y As Func(Of T%s)) As Boolean\n",
                     pointer_types[i], ext.c_str());
             eva4(fo);

@@ -6,17 +6,21 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompileServices
+Imports osi.root.constants
 Imports osi.root.formation
 
 Public Module _eva
 
 #If Not DEBUG Then
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Decimal, ByVal y As Decimal) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Decimal, ByVal y As Func(Of Decimal)) As Boolean
         If y Is Nothing Then
             Return False
@@ -26,6 +30,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Decimal), ByVal y As Decimal) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -33,6 +38,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Decimal), ByVal y As Func(Of Decimal)) As Boolean
         If y Is Nothing Then
             Return False
@@ -44,6 +50,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Decimal), ByVal y As Decimal()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -51,6 +58,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Decimal), ByVal y As Func(Of Decimal())) As Boolean
         If y Is Nothing Then
             Return False
@@ -62,6 +70,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Decimal), ByVal y As Decimal) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -69,6 +78,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Decimal), ByVal y As Func(Of Decimal)) As Boolean
         If y Is Nothing Then
             Return False
@@ -80,11 +90,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Decimal(), ByVal y As Decimal()) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Decimal(), ByVal y As Func(Of Decimal())) As Boolean
         If y Is Nothing Then
             Return False
@@ -94,6 +106,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Decimal()), ByVal y As Decimal()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -101,6 +114,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Decimal()), ByVal y As Func(Of Decimal())) As Boolean
         If y Is Nothing Then
             Return False
@@ -112,6 +126,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Decimal()), ByVal y As Decimal()()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -119,6 +134,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Decimal()), ByVal y As Func(Of Decimal()())) As Boolean
         If y Is Nothing Then
             Return False
@@ -130,6 +146,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Decimal()), ByVal y As Decimal()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -137,6 +154,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Decimal()), ByVal y As Func(Of Decimal())) As Boolean
         If y Is Nothing Then
             Return False
@@ -148,11 +166,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Int64, ByVal y As Int64) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Int64, ByVal y As Func(Of Int64)) As Boolean
         If y Is Nothing Then
             Return False
@@ -162,6 +182,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Int64), ByVal y As Int64) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -169,6 +190,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Int64), ByVal y As Func(Of Int64)) As Boolean
         If y Is Nothing Then
             Return False
@@ -180,6 +202,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Int64), ByVal y As Int64()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -187,6 +210,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Int64), ByVal y As Func(Of Int64())) As Boolean
         If y Is Nothing Then
             Return False
@@ -198,6 +222,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Int64), ByVal y As Int64) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -205,6 +230,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Int64), ByVal y As Func(Of Int64)) As Boolean
         If y Is Nothing Then
             Return False
@@ -216,11 +242,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Int64(), ByVal y As Int64()) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Int64(), ByVal y As Func(Of Int64())) As Boolean
         If y Is Nothing Then
             Return False
@@ -230,6 +258,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Int64()), ByVal y As Int64()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -237,6 +266,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Int64()), ByVal y As Func(Of Int64())) As Boolean
         If y Is Nothing Then
             Return False
@@ -248,6 +278,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Int64()), ByVal y As Int64()()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -255,6 +286,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Int64()), ByVal y As Func(Of Int64()())) As Boolean
         If y Is Nothing Then
             Return False
@@ -266,6 +298,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Int64()), ByVal y As Int64()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -273,6 +306,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Int64()), ByVal y As Func(Of Int64())) As Boolean
         If y Is Nothing Then
             Return False
@@ -284,11 +318,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Int32, ByVal y As Int32) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Int32, ByVal y As Func(Of Int32)) As Boolean
         If y Is Nothing Then
             Return False
@@ -298,6 +334,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Int32), ByVal y As Int32) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -305,6 +342,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Int32), ByVal y As Func(Of Int32)) As Boolean
         If y Is Nothing Then
             Return False
@@ -316,6 +354,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Int32), ByVal y As Int32()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -323,6 +362,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Int32), ByVal y As Func(Of Int32())) As Boolean
         If y Is Nothing Then
             Return False
@@ -334,6 +374,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Int32), ByVal y As Int32) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -341,6 +382,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Int32), ByVal y As Func(Of Int32)) As Boolean
         If y Is Nothing Then
             Return False
@@ -352,11 +394,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Int32(), ByVal y As Int32()) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Int32(), ByVal y As Func(Of Int32())) As Boolean
         If y Is Nothing Then
             Return False
@@ -366,6 +410,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Int32()), ByVal y As Int32()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -373,6 +418,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Int32()), ByVal y As Func(Of Int32())) As Boolean
         If y Is Nothing Then
             Return False
@@ -384,6 +430,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Int32()), ByVal y As Int32()()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -391,6 +438,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Int32()), ByVal y As Func(Of Int32()())) As Boolean
         If y Is Nothing Then
             Return False
@@ -402,6 +450,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Int32()), ByVal y As Int32()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -409,6 +458,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Int32()), ByVal y As Func(Of Int32())) As Boolean
         If y Is Nothing Then
             Return False
@@ -420,11 +470,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Int16, ByVal y As Int16) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Int16, ByVal y As Func(Of Int16)) As Boolean
         If y Is Nothing Then
             Return False
@@ -434,6 +486,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Int16), ByVal y As Int16) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -441,6 +494,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Int16), ByVal y As Func(Of Int16)) As Boolean
         If y Is Nothing Then
             Return False
@@ -452,6 +506,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Int16), ByVal y As Int16()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -459,6 +514,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Int16), ByVal y As Func(Of Int16())) As Boolean
         If y Is Nothing Then
             Return False
@@ -470,6 +526,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Int16), ByVal y As Int16) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -477,6 +534,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Int16), ByVal y As Func(Of Int16)) As Boolean
         If y Is Nothing Then
             Return False
@@ -488,11 +546,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Int16(), ByVal y As Int16()) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Int16(), ByVal y As Func(Of Int16())) As Boolean
         If y Is Nothing Then
             Return False
@@ -502,6 +562,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Int16()), ByVal y As Int16()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -509,6 +570,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Int16()), ByVal y As Func(Of Int16())) As Boolean
         If y Is Nothing Then
             Return False
@@ -520,6 +582,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Int16()), ByVal y As Int16()()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -527,6 +590,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Int16()), ByVal y As Func(Of Int16()())) As Boolean
         If y Is Nothing Then
             Return False
@@ -538,6 +602,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Int16()), ByVal y As Int16()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -545,6 +610,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Int16()), ByVal y As Func(Of Int16())) As Boolean
         If y Is Nothing Then
             Return False
@@ -556,11 +622,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As SByte, ByVal y As SByte) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As SByte, ByVal y As Func(Of SByte)) As Boolean
         If y Is Nothing Then
             Return False
@@ -570,6 +638,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of SByte), ByVal y As SByte) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -577,6 +646,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of SByte), ByVal y As Func(Of SByte)) As Boolean
         If y Is Nothing Then
             Return False
@@ -588,6 +658,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of SByte), ByVal y As SByte()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -595,6 +666,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of SByte), ByVal y As Func(Of SByte())) As Boolean
         If y Is Nothing Then
             Return False
@@ -606,6 +678,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of SByte), ByVal y As SByte) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -613,6 +686,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of SByte), ByVal y As Func(Of SByte)) As Boolean
         If y Is Nothing Then
             Return False
@@ -624,11 +698,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As SByte(), ByVal y As SByte()) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As SByte(), ByVal y As Func(Of SByte())) As Boolean
         If y Is Nothing Then
             Return False
@@ -638,6 +714,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of SByte()), ByVal y As SByte()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -645,6 +722,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of SByte()), ByVal y As Func(Of SByte())) As Boolean
         If y Is Nothing Then
             Return False
@@ -656,6 +734,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of SByte()), ByVal y As SByte()()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -663,6 +742,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of SByte()), ByVal y As Func(Of SByte()())) As Boolean
         If y Is Nothing Then
             Return False
@@ -674,6 +754,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of SByte()), ByVal y As SByte()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -681,6 +762,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of SByte()), ByVal y As Func(Of SByte())) As Boolean
         If y Is Nothing Then
             Return False
@@ -692,11 +774,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As UInt64, ByVal y As UInt64) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As UInt64, ByVal y As Func(Of UInt64)) As Boolean
         If y Is Nothing Then
             Return False
@@ -706,6 +790,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of UInt64), ByVal y As UInt64) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -713,6 +798,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of UInt64), ByVal y As Func(Of UInt64)) As Boolean
         If y Is Nothing Then
             Return False
@@ -724,6 +810,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of UInt64), ByVal y As UInt64()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -731,6 +818,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of UInt64), ByVal y As Func(Of UInt64())) As Boolean
         If y Is Nothing Then
             Return False
@@ -742,6 +830,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of UInt64), ByVal y As UInt64) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -749,6 +838,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of UInt64), ByVal y As Func(Of UInt64)) As Boolean
         If y Is Nothing Then
             Return False
@@ -760,11 +850,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As UInt64(), ByVal y As UInt64()) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As UInt64(), ByVal y As Func(Of UInt64())) As Boolean
         If y Is Nothing Then
             Return False
@@ -774,6 +866,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of UInt64()), ByVal y As UInt64()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -781,6 +874,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of UInt64()), ByVal y As Func(Of UInt64())) As Boolean
         If y Is Nothing Then
             Return False
@@ -792,6 +886,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of UInt64()), ByVal y As UInt64()()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -799,6 +894,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of UInt64()), ByVal y As Func(Of UInt64()())) As Boolean
         If y Is Nothing Then
             Return False
@@ -810,6 +906,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of UInt64()), ByVal y As UInt64()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -817,6 +914,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of UInt64()), ByVal y As Func(Of UInt64())) As Boolean
         If y Is Nothing Then
             Return False
@@ -828,11 +926,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As UInt32, ByVal y As UInt32) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As UInt32, ByVal y As Func(Of UInt32)) As Boolean
         If y Is Nothing Then
             Return False
@@ -842,6 +942,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of UInt32), ByVal y As UInt32) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -849,6 +950,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of UInt32), ByVal y As Func(Of UInt32)) As Boolean
         If y Is Nothing Then
             Return False
@@ -860,6 +962,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of UInt32), ByVal y As UInt32()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -867,6 +970,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of UInt32), ByVal y As Func(Of UInt32())) As Boolean
         If y Is Nothing Then
             Return False
@@ -878,6 +982,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of UInt32), ByVal y As UInt32) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -885,6 +990,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of UInt32), ByVal y As Func(Of UInt32)) As Boolean
         If y Is Nothing Then
             Return False
@@ -896,11 +1002,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As UInt32(), ByVal y As UInt32()) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As UInt32(), ByVal y As Func(Of UInt32())) As Boolean
         If y Is Nothing Then
             Return False
@@ -910,6 +1018,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of UInt32()), ByVal y As UInt32()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -917,6 +1026,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of UInt32()), ByVal y As Func(Of UInt32())) As Boolean
         If y Is Nothing Then
             Return False
@@ -928,6 +1038,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of UInt32()), ByVal y As UInt32()()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -935,6 +1046,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of UInt32()), ByVal y As Func(Of UInt32()())) As Boolean
         If y Is Nothing Then
             Return False
@@ -946,6 +1058,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of UInt32()), ByVal y As UInt32()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -953,6 +1066,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of UInt32()), ByVal y As Func(Of UInt32())) As Boolean
         If y Is Nothing Then
             Return False
@@ -964,11 +1078,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As UInt16, ByVal y As UInt16) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As UInt16, ByVal y As Func(Of UInt16)) As Boolean
         If y Is Nothing Then
             Return False
@@ -978,6 +1094,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of UInt16), ByVal y As UInt16) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -985,6 +1102,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of UInt16), ByVal y As Func(Of UInt16)) As Boolean
         If y Is Nothing Then
             Return False
@@ -996,6 +1114,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of UInt16), ByVal y As UInt16()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1003,6 +1122,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of UInt16), ByVal y As Func(Of UInt16())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1014,6 +1134,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of UInt16), ByVal y As UInt16) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1021,6 +1142,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of UInt16), ByVal y As Func(Of UInt16)) As Boolean
         If y Is Nothing Then
             Return False
@@ -1032,11 +1154,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As UInt16(), ByVal y As UInt16()) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As UInt16(), ByVal y As Func(Of UInt16())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1046,6 +1170,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of UInt16()), ByVal y As UInt16()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1053,6 +1178,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of UInt16()), ByVal y As Func(Of UInt16())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1064,6 +1190,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of UInt16()), ByVal y As UInt16()()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1071,6 +1198,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of UInt16()), ByVal y As Func(Of UInt16()())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1082,6 +1210,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of UInt16()), ByVal y As UInt16()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1089,6 +1218,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of UInt16()), ByVal y As Func(Of UInt16())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1100,11 +1230,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Byte, ByVal y As Byte) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Byte, ByVal y As Func(Of Byte)) As Boolean
         If y Is Nothing Then
             Return False
@@ -1114,6 +1246,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Byte), ByVal y As Byte) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1121,6 +1254,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Byte), ByVal y As Func(Of Byte)) As Boolean
         If y Is Nothing Then
             Return False
@@ -1132,6 +1266,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Byte), ByVal y As Byte()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1139,6 +1274,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Byte), ByVal y As Func(Of Byte())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1150,6 +1286,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Byte), ByVal y As Byte) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1157,6 +1294,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Byte), ByVal y As Func(Of Byte)) As Boolean
         If y Is Nothing Then
             Return False
@@ -1168,11 +1306,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Byte(), ByVal y As Byte()) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Byte(), ByVal y As Func(Of Byte())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1182,6 +1322,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Byte()), ByVal y As Byte()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1189,6 +1330,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Byte()), ByVal y As Func(Of Byte())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1200,6 +1342,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Byte()), ByVal y As Byte()()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1207,6 +1350,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Byte()), ByVal y As Func(Of Byte()())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1218,6 +1362,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Byte()), ByVal y As Byte()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1225,6 +1370,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Byte()), ByVal y As Func(Of Byte())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1236,11 +1382,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Single, ByVal y As Single) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Single, ByVal y As Func(Of Single)) As Boolean
         If y Is Nothing Then
             Return False
@@ -1250,6 +1398,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Single), ByVal y As Single) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1257,6 +1406,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Single), ByVal y As Func(Of Single)) As Boolean
         If y Is Nothing Then
             Return False
@@ -1268,6 +1418,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Single), ByVal y As Single()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1275,6 +1426,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Single), ByVal y As Func(Of Single())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1286,6 +1438,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Single), ByVal y As Single) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1293,6 +1446,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Single), ByVal y As Func(Of Single)) As Boolean
         If y Is Nothing Then
             Return False
@@ -1304,11 +1458,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Single(), ByVal y As Single()) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Single(), ByVal y As Func(Of Single())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1318,6 +1474,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Single()), ByVal y As Single()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1325,6 +1482,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Single()), ByVal y As Func(Of Single())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1336,6 +1494,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Single()), ByVal y As Single()()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1343,6 +1502,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Single()), ByVal y As Func(Of Single()())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1354,6 +1514,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Single()), ByVal y As Single()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1361,6 +1522,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Single()), ByVal y As Func(Of Single())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1372,11 +1534,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Double, ByVal y As Double) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Double, ByVal y As Func(Of Double)) As Boolean
         If y Is Nothing Then
             Return False
@@ -1386,6 +1550,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Double), ByVal y As Double) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1393,6 +1558,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Double), ByVal y As Func(Of Double)) As Boolean
         If y Is Nothing Then
             Return False
@@ -1404,6 +1570,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Double), ByVal y As Double()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1411,6 +1578,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Double), ByVal y As Func(Of Double())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1422,6 +1590,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Double), ByVal y As Double) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1429,6 +1598,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Double), ByVal y As Func(Of Double)) As Boolean
         If y Is Nothing Then
             Return False
@@ -1440,11 +1610,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Double(), ByVal y As Double()) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Double(), ByVal y As Func(Of Double())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1454,6 +1626,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Double()), ByVal y As Double()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1461,6 +1634,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Double()), ByVal y As Func(Of Double())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1472,6 +1646,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Double()), ByVal y As Double()()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1479,6 +1654,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Double()), ByVal y As Func(Of Double()())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1490,6 +1666,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Double()), ByVal y As Double()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1497,6 +1674,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Double()), ByVal y As Func(Of Double())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1508,11 +1686,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As String, ByVal y As String) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As String, ByVal y As Func(Of String)) As Boolean
         If y Is Nothing Then
             Return False
@@ -1522,6 +1702,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of String), ByVal y As String) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1529,6 +1710,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of String), ByVal y As Func(Of String)) As Boolean
         If y Is Nothing Then
             Return False
@@ -1540,6 +1722,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of String), ByVal y As String()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1547,6 +1730,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of String), ByVal y As Func(Of String())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1558,6 +1742,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of String), ByVal y As String) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1565,6 +1750,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of String), ByVal y As Func(Of String)) As Boolean
         If y Is Nothing Then
             Return False
@@ -1576,11 +1762,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As String(), ByVal y As String()) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As String(), ByVal y As Func(Of String())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1590,6 +1778,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of String()), ByVal y As String()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1597,6 +1786,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of String()), ByVal y As Func(Of String())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1608,6 +1798,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of String()), ByVal y As String()()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1615,6 +1806,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of String()), ByVal y As Func(Of String()())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1626,6 +1818,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of String()), ByVal y As String()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1633,6 +1826,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of String()), ByVal y As Func(Of String())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1644,11 +1838,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Boolean, ByVal y As Boolean) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Boolean, ByVal y As Func(Of Boolean)) As Boolean
         If y Is Nothing Then
             Return False
@@ -1658,6 +1854,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Boolean), ByVal y As Boolean) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1665,6 +1862,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Boolean), ByVal y As Func(Of Boolean)) As Boolean
         If y Is Nothing Then
             Return False
@@ -1676,6 +1874,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Boolean), ByVal y As Boolean()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1683,6 +1882,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Boolean), ByVal y As Func(Of Boolean())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1694,6 +1894,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Boolean), ByVal y As Boolean) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1701,6 +1902,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Boolean), ByVal y As Func(Of Boolean)) As Boolean
         If y Is Nothing Then
             Return False
@@ -1712,11 +1914,13 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Boolean(), ByVal y As Boolean()) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByRef x As Boolean(), ByVal y As Func(Of Boolean())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1726,6 +1930,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Boolean()), ByVal y As Boolean()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1733,6 +1938,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As pointer(Of Boolean()), ByVal y As Func(Of Boolean())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1744,6 +1950,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Boolean()), ByVal y As Boolean()()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1751,6 +1958,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_pointer(Of Boolean()), ByVal y As Func(Of Boolean()())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1762,6 +1970,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Boolean()), ByVal y As Boolean()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1769,6 +1978,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_pointer(Of Boolean()), ByVal y As Func(Of Boolean())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1782,11 +1992,13 @@ Public Module _eva
 
 #End If
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(Of T)(ByRef x As T, ByVal y As T) As Boolean
         x = y
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(Of T)(ByRef x As T, ByVal y As Func(Of T)) As Boolean
         If y Is Nothing Then
             Return False
@@ -1796,6 +2008,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(Of T)(ByVal x As pointer(Of T), ByVal y As T) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1803,6 +2016,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(Of T)(ByVal x As pointer(Of T), ByVal y As Func(Of T)) As Boolean
         If y Is Nothing Then
             Return False
@@ -1814,6 +2028,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(Of T)(ByVal x As array_pointer(Of T), ByVal y As T()) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1821,6 +2036,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(Of T)(ByVal x As array_pointer(Of T), ByVal y As Func(Of T())) As Boolean
         If y Is Nothing Then
             Return False
@@ -1832,6 +2048,7 @@ Public Module _eva
         End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(Of T)(ByVal x As weak_pointer(Of T), ByVal y As T) As Boolean
         If Not x Is Nothing Then
             x.set(y)
@@ -1839,6 +2056,7 @@ Public Module _eva
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(Of T)(ByVal x As weak_pointer(Of T), ByVal y As Func(Of T)) As Boolean
         If y Is Nothing Then
             Return False
