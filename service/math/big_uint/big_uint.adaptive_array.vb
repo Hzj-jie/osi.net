@@ -160,9 +160,8 @@ Private Class adaptive_array_uint32
     End Sub
 
     Public Sub resize(ByVal n As UInt32)
-        reserve(n)
-        If size() < n Then
-            arrays.clear(d, size(), n - size())
+        If capacity() < n Then
+            reserve(n)
         End If
         s = n
     End Sub
@@ -178,11 +177,6 @@ Private Class adaptive_array_uint32
         End If
     End Sub
 
-    Public Sub clear_unused_slots()
-        assert(capacity() >= size())
-        arrays.clear(d, size(), capacity() - size())
-    End Sub
-
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
@@ -195,7 +189,7 @@ Private Class adaptive_array_uint32
         ReDim d(array_size_i(i.d) - 1)
         arrays.copy(d, i.d, i.s)
 #Else
-        d = deep_clone(i.d)
+        d = i.d.deep_clone()
 #End If
         s = i.s
     End Sub
@@ -221,7 +215,7 @@ Private Class adaptive_array_uint32
         If this.size() > that.size() Then
             Return 1
         End If
-        Return deep_compare(this.d, that.d, this.size())
+        Return this.d.deep_compare(that.d, this.size())
     End Function
 
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo

@@ -36,7 +36,6 @@ Partial Public Class vector_test
             v.clear()
             assertion.equal(v.size(), uint32_0, "v.size() <> 0 after clear.")
             If validation Then
-                v.clear_unused_slots()
                 For i As Int32 = 0 To CInt(v.capacity()) - 1
                     assertion.is_null(v.data()(i), "cannot clear ", i, " after clear operation.")
                 Next
