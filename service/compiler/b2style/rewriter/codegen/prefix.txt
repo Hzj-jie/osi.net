@@ -444,6 +444,22 @@ biguint b2style__right_shift(biguint i, biguint j) {
   return r;
 }
 
+biguint b2style__left_shift(biguint i, int j) {
+  return b2style__left_shift(i, b2style__to_biguint(j));
+}
+
+biguint b2style__right_shift(biguint i, int j) {
+  return b2style__right_shift(i, b2style__to_biguint(j));
+}
+
+biguint b2style__left_shift(biguint i, long j) {
+  return b2style__left_shift(i, b2style__to_biguint(j));
+}
+
+biguint b2style__right_shift(biguint i, long j) {
+  return b2style__right_shift(i, b2style__to_biguint(j));
+}
+
 int b2style__left_shift(int i, int j) {
   return b2style__to_int(
       b2style__left_shift(b2style__to_biguint(i),

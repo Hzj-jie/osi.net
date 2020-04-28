@@ -91,6 +91,22 @@ ufloat b2style__ufloat__fraction(biguint n, biguint d) {
   return b2style__divide(result, ud);
 }
 
+ufloat b2style__ufloat__fraction(biguint n, int d) {
+  return b2style__ufloat__fraction(n, b2style__to_biguint(d));
+}
+
+ufloat b2style__ufloat__fraction(biguint n, long d) {
+  return b2style__ufloat__fraction(n, b2style__to_biguint(d));
+}
+
+ufloat b2style__ufloat__fraction(int n, biguint d) {
+  return b2style__ufloat__fraction(b2style__to_biguint(n), d);
+}
+
+ufloat b2style__ufloat__fraction(long n, biguint d) {
+  return b2style__ufloat__fraction(b2style__to_biguint(n), d);
+}
+
 ufloat b2style__ufloat__fraction(int n, int d) {
   return b2style__ufloat__fraction(b2style__to_biguint(n), b2style__to_biguint(d));
 }
