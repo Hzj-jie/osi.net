@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Text
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.utt
 Imports osi.service.math
 
@@ -16,9 +20,9 @@ Friend Class big_uint_str_case
         MyBase.New()
     End Sub
 
-    Private Shared Function run_case(ByVal u As Int32, ByVal b As Byte) As Boolean
+    Private Shared Function run_case(ByVal u As UInt32, ByVal b As Byte) As Boolean
         Dim s As String = Nothing
-        s = big_uint.rnd_support_str(rnd_int(1, u), b)
+        s = big_uint.rnd_support_str(rnd_uint(1, u), b)
         Dim r As big_uint = Nothing
         assertion.is_true(big_uint.parse(s, r, b))
         assertion.equal(r.str(b), s)
@@ -52,7 +56,7 @@ Friend Class big_uint_str_case
         Next
         'make sure there is at least one unsupported character
         s.Append(big_uint.rnd_unsupport_str_char(b))
-        assertion.is_false(big_uint.parse(Convert.ToString(s), Nothing, b))
+        assertion.is_false(big_uint.parse(Convert.ToString(s), Nothing, b), s)
         Return True
     End Function
 
