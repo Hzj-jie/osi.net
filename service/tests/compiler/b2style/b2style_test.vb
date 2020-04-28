@@ -155,7 +155,7 @@ Public NotInheritable Class b2style_test
                                   parse(_b2style_test_data.ufloat_operators.as_text(), e))
         assertion.is_not_null(e)
         e.execute()
-        assertion.equal(io.output(), "1.1")
+        assertion.equal(io.output(), "1.10.5")
     End Sub
 
     <test>

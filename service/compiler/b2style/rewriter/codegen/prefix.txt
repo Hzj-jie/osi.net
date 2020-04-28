@@ -358,9 +358,9 @@ string b2style__legacy_biguint_to_str(biguint i) {
   string s;
   while (b2style__greater_than(i, 0L)) {
     int b = b2style__to_int(b2style__mod(i, 10L));
-	i = b2style__divide(i, 10L);
-	b = b2style__add(b, 48);
-	s = b2style__str_concat(b2style__to_str(b2style__to_byte(b)), s);
+    i = b2style__divide(i, 10L);
+    b = b2style__add(b, 48);
+    s = b2style__str_concat(b2style__to_str(b2style__to_byte(b)), s);
   }
   return s;
 }
@@ -376,10 +376,10 @@ string b2style__biguint_to_str(biguint i) {
 string b2style__int_to_str(int i) {
   if (b2style__greater_than(i, 2147483647)) {
     i = b2style__minus(i, 2147483647);
-	i = b2style__minus(2147483647, i);
-	i = b2style__add(i, 2);
-	string s = "-";
-	return b2style__str_concat(s, b2style__biguint_to_str(b2style__to_biguint(i)));
+    i = b2style__minus(2147483647, i);
+    i = b2style__add(i, 2);
+    string s = "-";
+    return b2style__str_concat(s, b2style__biguint_to_str(b2style__to_biguint(i)));
   }
   return b2style__biguint_to_str(b2style__to_biguint(i));
 }

@@ -62,9 +62,39 @@ string b2style__ufloat_to_str(ufloat i) {
   logic "interrupt load_method method_name @@prefixes@temps@string";
   string result;
   logic "interrupt execute_loaded_method i result";
-  return result; 
+  return result;
 }
 
 void b2style__std_out(ufloat i) {
   b2style__std_out(b2style__ufloat_to_str(i));
+}
+
+ufloat b2style__ufloat__from(biguint i) {
+  string method_name = "osi.service.interpreter.primitive.loaded_methods, osi.service.interpreter:big_uint_to_big_udec";
+  logic "interrupt load_method method_name @@prefixes@temps@string";
+  ufloat result;
+  logic "interrupt execute_loaded_method i result";
+  return result;
+}
+
+ufloat b2style__ufloat__from(int i) {
+  return b2style__ufloat__from(b2style__to_biguint(i));
+}
+
+ufloat b2style__ufloat__from(long i) {
+  return b2style__ufloat__from(b2style__to_biguint(i));
+}
+
+ufloat b2style__ufloat__fraction(biguint n, biguint d) {
+  ufloat result = b2style__ufloat__from(n);
+  ufloat ud = b2style__ufloat__from(d);
+  return b2style__divide(result, ud);
+}
+
+ufloat b2style__ufloat__fraction(int n, int d) {
+  return b2style__ufloat__fraction(b2style__to_biguint(n), b2style__to_biguint(d));
+}
+
+ufloat b2style__ufloat__fraction(long n, long d) {
+  return b2style__ufloat__fraction(b2style__to_biguint(n), b2style__to_biguint(d));
 }

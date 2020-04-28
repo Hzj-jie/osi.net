@@ -5,4 +5,6 @@ void main() {
   i -= 3.0;
   i /= 2.0;
   b2style::std_out(i);
+  i = b2style::ufloat::fraction(1, 2);
+  b2style::std_out(i);
 }

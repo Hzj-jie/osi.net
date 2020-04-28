@@ -3,8 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 
 Namespace primitive
@@ -43,18 +43,16 @@ Namespace primitive
             If x.[set](i) Then
                 o = x
                 Return True
-            Else
-                Return False
             End If
+            Return False
         End Function
 
         Public Shared Function rel(ByVal i As Int64, ByRef o As data_ref) As Boolean
             If i <= max_value AndAlso i >= rel_min_value Then
                 o = New data_ref() With {.r = True, .o = i}
                 Return True
-            Else
-                Return False
             End If
+            Return False
         End Function
 
         Public Shared Function rel(ByVal i As Int64) As data_ref
@@ -67,9 +65,8 @@ Namespace primitive
             If i <= max_value AndAlso i >= abs_min_value Then
                 o = New data_ref() With {.r = False, .o = i}
                 Return True
-            Else
-                Return False
             End If
+            Return False
         End Function
 
         Public Shared Function abs(ByVal i As Int64) As data_ref
@@ -82,9 +79,8 @@ Namespace primitive
             If relative() Then
                 o = Me
                 Return True
-            Else
-                Return rel(CLng(size) - offset() - 1, o)
             End If
+            Return rel(CLng(size) - offset() - 1, o)
         End Function
 
         Public Function to_rel(ByVal size As UInt64) As data_ref
@@ -97,9 +93,8 @@ Namespace primitive
             If absolute() Then
                 o = Me
                 Return True
-            Else
-                Return abs(CLng(size) - offset() - 1, o)
             End If
+            Return abs(CLng(size) - offset() - 1, o)
         End Function
 
         Public Function to_abs(ByVal size As UInt64) As data_ref
@@ -144,9 +139,8 @@ Namespace primitive
         Public Function export() As Int64
             If r Then
                 Return (o << 1) + int64_1
-            Else
-                Return (o << 1)
             End If
+            Return (o << 1)
         End Function
 
         Public Function bytes_size() As UInt32 Implements exportable.bytes_size
@@ -172,44 +166,40 @@ Namespace primitive
         Private Shared Function separate(ByVal s As String, ByRef t As String, ByRef o As Int64) As Boolean
             If s.null_or_whitespace() Then
                 Return False
-            Else
-                t = Nothing
-                For i As Int32 = 0 To array_size_i(ref_types) - 1
-                    If strstartwith(s, ref_types(i)) Then
-                        t = ref_types(i)
-                        assert(Not t Is Nothing)
-                        Exit For
-                    End If
-                Next
-                If t Is Nothing Then
-                    Return False
-                Else
-                    Return Int64.TryParse(strmid(s, strlen(t)), o)
-                End If
             End If
+            t = Nothing
+            For i As Int32 = 0 To array_size_i(ref_types) - 1
+                If strstartwith(s, ref_types(i)) Then
+                    t = ref_types(i)
+                    assert(Not t Is Nothing)
+                    Exit For
+                End If
+            Next
+            If t Is Nothing Then
+                Return False
+            End If
+            Return Int64.TryParse(strmid(s, strlen(t)), o)
         End Function
 
         Public Function import(ByVal s As vector(Of String), ByRef p As UInt32) As Boolean Implements exportable.import
             If s Is Nothing OrElse s.size() <= p Then
                 Return False
-            Else
-                Dim ref_type As String = Nothing
-                Dim offset As Int64 = 0
-                If separate(s(p), ref_type, offset) Then
-                    If strsame(ref_type, rel_str) Then
-                        r = True
-                    ElseIf strsame(ref_type, abs_str) Then
-                        r = False
-                    Else
-                        Return False
-                    End If
-                    o = offset
-                    p += uint32_1
-                    Return True
-                Else
-                    Return False
-                End If
             End If
+            Dim ref_type As String = Nothing
+            Dim offset As Int64 = 0
+            If Not separate(s(p), ref_type, offset) Then
+                Return False
+            End If
+            If strsame(ref_type, rel_str) Then
+                r = True
+            ElseIf strsame(ref_type, abs_str) Then
+                r = False
+            Else
+                Return False
+            End If
+            o = offset
+            p += uint32_1
+            Return True
         End Function
 
         Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
@@ -219,22 +209,21 @@ Namespace primitive
         Public Function CompareTo(ByVal other As data_ref) As Int32 Implements IComparable(Of data_ref).CompareTo
             Dim c As Int32 = 0
             c = object_compare(Me, other)
-            If c = object_compare_undetermined Then
-                assert(Not other Is Nothing)
-                Dim x As Int64 = 0
-                Dim y As Int64 = 0
-                x = export()
-                y = other.export()
-                If x > y Then
-                    Return 1
-                ElseIf x < y Then
-                    Return -1
-                Else
-                    Return 0
-                End If
-            Else
+            If c <> object_compare_undetermined Then
                 Return c
             End If
+            assert(Not other Is Nothing)
+            Dim x As Int64 = 0
+            Dim y As Int64 = 0
+            x = export()
+            y = other.export()
+            If x > y Then
+                Return 1
+            End If
+            If x < y Then
+                Return -1
+            End If
+            Return 0
         End Function
 
         Public NotOverridable Overrides Function ToString() As String
