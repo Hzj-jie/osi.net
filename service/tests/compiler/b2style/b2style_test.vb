@@ -196,6 +196,18 @@ Public NotInheritable Class b2style_test
         '                                    3.14159265
     End Sub
 
+    <test>
+    Private Shared Sub shift()
+        Dim io As console_io.test_wrapper = Nothing
+        io = New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                          parse(_b2style_test_data.shift.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), "40040012")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

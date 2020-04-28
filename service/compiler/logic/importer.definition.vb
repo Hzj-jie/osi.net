@@ -1558,6 +1558,70 @@ Namespace logic
             Return True
         End Function
 
+        Private Function parse_left_shift_49(
+                ByVal v As vector(Of String),
+                ByRef p As UInt32,
+                ByRef o As exportable) As Boolean
+            assert(Not v Is Nothing)
+            assert(v.size() > p)
+            If Not strsame(v(p), "left_shift") Then
+                Return False
+            End If
+            Dim start As UInt32
+            start = p
+            p += uint32_1
+            Dim p1 As String = Nothing
+            p1 = v(p)
+            p += uint32_1
+            Dim p2 As String = Nothing
+            p2 = v(p)
+            p += uint32_1
+            Dim p3 As String = Nothing
+            p3 = v(p)
+            p += uint32_1
+            o = new_left_shift(
+                p1,
+                p2,
+                p3
+            )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
+            Return True
+        End Function
+
+        Private Function parse_right_shift_50(
+                ByVal v As vector(Of String),
+                ByRef p As UInt32,
+                ByRef o As exportable) As Boolean
+            assert(Not v Is Nothing)
+            assert(v.size() > p)
+            If Not strsame(v(p), "right_shift") Then
+                Return False
+            End If
+            Dim start As UInt32
+            start = p
+            p += uint32_1
+            Dim p1 As String = Nothing
+            p1 = v(p)
+            p += uint32_1
+            Dim p2 As String = Nothing
+            p2 = v(p)
+            p += uint32_1
+            Dim p3 As String = Nothing
+            p3 = v(p)
+            p += uint32_1
+            o = new_right_shift(
+                p1,
+                p2,
+                p3
+            )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
+            Return True
+        End Function
+
         Private Function parse(ByVal v As vector(Of String),
                                ByRef p As UInt32,
                                ByRef o As exportable) As Boolean
@@ -1952,6 +2016,22 @@ Namespace logic
                 Dim pos As UInt32 = 0
                 pos = p
                 If parse_float_more_or_equal_48(v, pos, o) Then
+                    p = pos
+                    Return True
+                End If
+            End Using
+            Using code_block
+                Dim pos As UInt32 = 0
+                pos = p
+                If parse_left_shift_49(v, pos, o) Then
+                    p = pos
+                    Return True
+                End If
+            End Using
+            Using code_block
+                Dim pos As UInt32 = 0
+                pos = p
+                If parse_right_shift_50(v, pos, o) Then
                     p = pos
                     Return True
                 End If

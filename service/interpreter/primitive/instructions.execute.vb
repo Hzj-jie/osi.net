@@ -523,5 +523,31 @@ Namespace primitive
                 p0(imi).set(bool_bytes(b1.less(b2)))
             End Sub
         End Class
+
+        Partial Public NotInheritable Class lfs
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                assert(Not imi Is Nothing)
+                Dim b1 As big_uint = Nothing
+                Dim b2 As big_uint = Nothing
+                b1 = New big_uint(+p1(imi))
+                b2 = New big_uint(+p2(imi))
+                p0(imi).set(b1.left_shift(b2).as_bytes())
+            End Sub
+        End Class
+
+        Partial Public NotInheritable Class rfs
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                assert(Not imi Is Nothing)
+                Dim b1 As big_uint = Nothing
+                Dim b2 As big_uint = Nothing
+                b1 = New big_uint(+p1(imi))
+                b2 = New big_uint(+p2(imi))
+                p0(imi).set(b1.right_shift(b2).as_bytes())
+            End Sub
+        End Class
     End Namespace
 End Namespace

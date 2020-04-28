@@ -58,7 +58,7 @@ ufloat b2style__power(ufloat i, ufloat j) {
 }
 
 string b2style__ufloat_to_str(ufloat i) {
-  string method_name = "osi.service.interpreter.primitive.loaded_methods, osi.service.interpreter:big_udec_to_str";
+  string method_name = b2style__loaded_methods("big_udec_to_str");
   logic "interrupt load_method method_name @@prefixes@temps@string";
   string result;
   logic "interrupt execute_loaded_method i result";
@@ -70,7 +70,7 @@ void b2style__std_out(ufloat i) {
 }
 
 ufloat b2style__ufloat__from(biguint i) {
-  string method_name = "osi.service.interpreter.primitive.loaded_methods, osi.service.interpreter:big_uint_to_big_udec";
+  string method_name = b2style__loaded_methods("big_uint_to_big_udec");
   logic "interrupt load_method method_name @@prefixes@temps@string";
   ufloat result;
   logic "interrupt execute_loaded_method i result";

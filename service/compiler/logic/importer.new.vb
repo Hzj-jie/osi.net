@@ -243,5 +243,17 @@ Namespace logic
                                                  ByVal p3 As String) As float_more_or_equal
             Return New float_more_or_equal(types, p1, p2, p3)
         End Function
+
+        Private Function new_left_shift(ByVal p1 As String,
+                                        ByVal p2 As String,
+                                        ByVal p3 As String) As left_shift
+            Return New left_shift(types, p1, p2, p3)
+        End Function
+
+        Private Function new_right_shift(ByVal p1 As String,
+                                         ByVal p2 As String,
+                                         ByVal p3 As String) As right_shift
+            Return New right_shift(types, p1, p2, p3)
+        End Function
     End Class
 End Namespace

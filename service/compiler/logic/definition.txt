@@ -205,3 +205,11 @@ float_less_or_equal	string	string	string
 # execute more_or_equal command against two variables and store the result in the first variable:
 #  float_more_or_equal target source1 source2
 float_more_or_equal	string	string	string
+
+# execute left_shift command against two variables and store the result in the first variable:
+#  left_shift target source1 source2
+left_shift	string	string	string
+
+# execute right_shift command against two variables and store the result in the first variable:
+#  right_shift target source1 source2
+right_shift	string	string	string

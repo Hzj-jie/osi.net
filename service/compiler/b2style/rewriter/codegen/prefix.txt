@@ -178,8 +178,14 @@ byte b2style__fit_in_byte(byte x) {
   return x;
 }
 
+long b2style__to_long(biguint x) {
+  long y;
+  logic "cut_slice y x @@prefixes@constants@int_0 @@prefixes@constants@size_of_long";
+  return y;
+}
+
 int b2style__to_int(biguint x) {
-  byte y;
+  int y;
   logic "cut_slice y x @@prefixes@constants@int_0 @@prefixes@constants@size_of_int";
   return y;
 }
@@ -365,8 +371,14 @@ string b2style__legacy_biguint_to_str(biguint i) {
   return s;
 }
 
+string b2style__loaded_methods(string m) {
+  return b2style__str_concat(
+      "osi.service.interpreter.primitive.loaded_methods, osi.service.interpreter:",
+	  m);
+}
+
 string b2style__biguint_to_str(biguint i) {
-  string method_name = "osi.service.interpreter.primitive.loaded_methods, osi.service.interpreter:big_uint_to_str";
+  string method_name = b2style__loaded_methods("big_uint_to_str");
   logic "interrupt load_method method_name @@prefixes@temps@string";
   string result;
   logic "interrupt execute_loaded_method i result";
@@ -418,4 +430,44 @@ biguint b2style__extract_remainder(biguint i, biguint j) {
   biguint r;
   logic "extract @@prefixes@temps@biguint r i j";
   return r;
+}
+
+biguint b2style__left_shift(biguint i, biguint j) {
+  biguint r;
+  logic "left_shift r i j";
+  return r;
+}
+
+biguint b2style__right_shift(biguint i, biguint j) {
+  biguint r;
+  logic "right_shift r i j";
+  return r;
+}
+
+int b2style__left_shift(int i, int j) {
+  return b2style__to_int(
+      b2style__left_shift(b2style__to_biguint(i),
+						  b2style__to_biguint(j))
+  );
+}
+
+int b2style__right_shift(int i, int j) {
+  return b2style__to_int(
+      b2style__right_shift(b2style__to_biguint(i),
+						   b2style__to_biguint(j))
+  );
+}
+
+long b2style__left_shift(long i, long j) {
+  return b2style__to_long(
+	  b2style__left_shift(b2style__to_biguint(i),
+						  b2style__to_biguint(j))
+  );
+}
+
+long b2style__right_shift(long i, long j) {
+  return b2style__to_long(
+      b2style__right_shift(b2style__to_biguint(i),
+	                       b2style__to_biguint(j))
+  );
 }

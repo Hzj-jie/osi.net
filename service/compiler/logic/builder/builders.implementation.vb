@@ -1332,5 +1332,61 @@ Namespace logic
                 o.append(newline.incode())
             End Sub
         End Class
+
+        Public Shared Function of_left_shift(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As left_shift_builder_50
+            Return New left_shift_builder_50(string_1, string_2, string_3)
+        End Function
+
+        Public NotInheritable Class left_shift_builder_50
+
+            Private ReadOnly string_1 As String
+            Private ReadOnly string_2 As String
+            Private ReadOnly string_3 As String
+
+            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String)
+                assert(Not string_1.null_or_whitespace())
+                Me.string_1 = string_1
+                assert(Not string_2.null_or_whitespace())
+                Me.string_2 = string_2
+                assert(Not string_3.null_or_whitespace())
+                Me.string_3 = string_3
+            End Sub
+
+            Public Sub [to](ByVal o As writer)
+                o.append("left_shift")
+                o.append(string_1)
+                o.append(string_2)
+                o.append(string_3)
+                o.append(newline.incode())
+            End Sub
+        End Class
+
+        Public Shared Function of_right_shift(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As right_shift_builder_51
+            Return New right_shift_builder_51(string_1, string_2, string_3)
+        End Function
+
+        Public NotInheritable Class right_shift_builder_51
+
+            Private ReadOnly string_1 As String
+            Private ReadOnly string_2 As String
+            Private ReadOnly string_3 As String
+
+            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String)
+                assert(Not string_1.null_or_whitespace())
+                Me.string_1 = string_1
+                assert(Not string_2.null_or_whitespace())
+                Me.string_2 = string_2
+                assert(Not string_3.null_or_whitespace())
+                Me.string_3 = string_3
+            End Sub
+
+            Public Sub [to](ByVal o As writer)
+                o.append("right_shift")
+                o.append(string_1)
+                o.append(string_2)
+                o.append(string_3)
+                o.append(newline.incode())
+            End Sub
+        End Class
     End Class
 End Namespace
