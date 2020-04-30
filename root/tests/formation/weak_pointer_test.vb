@@ -38,7 +38,7 @@ Public Class weak_pointer_test
             Dim c As test_class = Nothing
             c = New test_class(s)
             Dim p As weak_pointer(Of test_class) = Nothing
-            p = make_weak_pointer(c)
+            p = weak_pointer.of(c)
             assertion.is_true(p.alive())
             Dim c2 As test_class = Nothing
             assertion.is_true(p.get(c2))
@@ -66,7 +66,7 @@ Public Class weak_pointer_test
 
             For i As Int32 = 0 To size - 1
                 cs(i) = New test_class(s)
-                ps(i) = make_weak_pointer(cs(i))
+                ps(i) = weak_pointer.of(cs(i))
             Next
             garbage_collector.repeat_collect()
 

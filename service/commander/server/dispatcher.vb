@@ -13,7 +13,7 @@ Imports action_map = osi.root.formation.map(Of _
                                            osi.service.commander.command, _
                                            osi.root.procedure.event_comb))
 
-Public Class dispatcher
+Public NotInheritable Class dispatcher
     Implements executor
 
     Public Shared ReadOnly [default] As dispatcher
@@ -33,9 +33,8 @@ Public Class dispatcher
         Return l.writer_locked(Function() As Boolean
                                    If isemptyarray(action) Then
                                        Return False
-                                   Else
-                                       Return m.erase(make_array_pointer(action))
                                    End If
+                                   Return m.erase(array_pointer.of(action))
                                End Function)
     End Function
 
@@ -51,15 +50,14 @@ Public Class dispatcher
                Not act Is Nothing AndAlso
                l.writer_locked(Function() As Boolean
                                    Dim ap As array_pointer(Of Byte) = Nothing
-                                   ap = make_array_pointer(action)
+                                   ap = array_pointer.of(action)
                                    Dim it As action_map.iterator = Nothing
                                    it = m.find(ap)
                                    If it = m.end() OrElse replace Then
                                        m(ap) = act
                                        Return True
-                                   Else
-                                       Return False
                                    End If
+                                   Return False
                                End Function)
     End Function
 
@@ -78,23 +76,21 @@ Public Class dispatcher
                                      o Is Nothing OrElse
                                      Not l.reader_locked(Function() As Boolean
                                                              Dim action As array_pointer(Of Byte) = Nothing
-                                                             action = make_array_pointer(i.action())
+                                                             action = array_pointer.of(i.action())
                                                              Dim it As action_map.iterator = Nothing
                                                              it = m.find(action)
                                                              If it = m.end() Then
                                                                  Return False
-                                                             Else
-                                                                 a = (+it).second
-                                                                 Return True
                                                              End If
+                                                             a = (+it).second
+                                                             Return True
                                                          End Function) Then
                                       Return False
-                                  Else
-                                      assert(Not a Is Nothing)
-                                      ec = a(i, o)
-                                      Return waitfor(ec) AndAlso
-                                             goto_next()
                                   End If
+                                  assert(Not a Is Nothing)
+                                  ec = a(i, o)
+                                  Return waitfor(ec) AndAlso
+                                             goto_next()
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso

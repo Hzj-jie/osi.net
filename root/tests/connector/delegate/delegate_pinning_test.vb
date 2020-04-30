@@ -26,7 +26,7 @@ Public Class delegate_pinning_test
         Dim c As test_class = Nothing
         c = New test_class()
         Dim p As weak_pointer(Of test_class) = Nothing
-        p = make_weak_pointer(c)
+        p = weak_pointer.of(c)
 
         Dim d As Action = Nothing
         d = AddressOf c.run

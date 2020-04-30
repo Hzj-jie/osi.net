@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.template
@@ -52,14 +53,17 @@ Partial Public Class hasharray(Of T,
         Me.New(0)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function size() As UInt32
         Return s
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function empty() As Boolean
         Return size() = uint32_0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function begin() As iterator
         If empty() Then
             Return [end]()
@@ -72,10 +76,12 @@ Partial Public Class hasharray(Of T,
         Return it
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [end]() As iterator
         Return iterator.end
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function rbegin() As iterator
         If empty() Then
             Return rend()
@@ -90,6 +96,7 @@ Partial Public Class hasharray(Of T,
         Return it
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function rend() As iterator
         Return iterator.end
     End Function

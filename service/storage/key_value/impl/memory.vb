@@ -69,7 +69,7 @@ Public Class memory
     Public Function delete(ByVal key() As Byte,
                            ByRef result As Boolean) As Boolean Implements isynckeyvalue.delete
         Dim it As store_t.iterator = Nothing
-        it = m.find(make_array_pointer(key))
+        it = m.find(array_pointer.of(key))
         If it = m.end() Then
             result = False
         Else
@@ -126,7 +126,7 @@ Public Class memory
             inc = array_size(value)
         End If
         If enough_storage(inc) Then
-            m(make_array_pointer(key)) = value
+            m(array_pointer.of(key)) = value
             vs += inc
             result = True
         Else
@@ -155,7 +155,7 @@ Public Class memory
 
     Public Function seek(ByVal key() As Byte,
                          ByRef result As Boolean) As Boolean Implements isynckeyvalue.seek
-        result = (m.find(make_array_pointer(Of Byte)(key)) <> m.end())
+        result = (m.find(array_pointer.of(Of Byte)(key)) <> m.end())
         Return True
     End Function
 

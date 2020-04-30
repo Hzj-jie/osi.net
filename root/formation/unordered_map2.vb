@@ -15,7 +15,9 @@ Option Strict On
 
 
 #Const PAIR_IS_CLASS = ("first_const_pair" = "first_const_pair")
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.template
 
 Partial Public Class unordered_map2( _
@@ -52,10 +54,12 @@ Partial Public Class unordered_map2( _
         Return MyBase.clone(Of R)()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function CloneT() As unordered_map2(Of KEY_T, VALUE_T, _HASHER, _EQUALER) _
             Implements ICloneable(Of unordered_map2(Of KEY_T, VALUE_T, _HASHER, _EQUALER)).Clone
         Return clone(Of unordered_map2(Of KEY_T, VALUE_T, _HASHER, _EQUALER))()
@@ -79,27 +83,33 @@ Partial Public Class unordered_map2( _
                    .swap(this, that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overloads Function emplace(ByVal key As KEY_T, ByVal value As VALUE_T) As fast_pair(Of iterator, Boolean)
         Return MyBase.emplace(first_const_pair.emplace_of(key, value))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overloads Function insert(ByVal key As KEY_T, ByVal value As VALUE_T) As fast_pair(Of iterator, Boolean)
         Return emplace(copy_no_error(key), copy_no_error(value))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function [erase](ByVal it As iterator) As Boolean
         Return MyBase.erase(it)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function [erase](ByVal key As KEY_T) As Boolean
         Return MyBase.erase(find(key))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function find(ByVal key As KEY_T) As iterator
         Return MyBase.find(first_const_pair(Of KEY_T, VALUE_T).emplace_of(key))
     End Function
 
     Default Public Property at(ByVal key As KEY_T) As VALUE_T
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Get
             Dim r As iterator = Nothing
             r = find(key)
@@ -108,6 +118,7 @@ Partial Public Class unordered_map2( _
             End If
             Return (+r).second
         End Get
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Set(ByVal value As VALUE_T)
             Dim r As fast_pair(Of iterator, Boolean) = Nothing
             r = insert(key, value)
@@ -117,7 +128,7 @@ Partial Public Class unordered_map2( _
         End Set
     End Property
 
-    Public Class first_const_pair_hasher
+    Public NotInheritable Class first_const_pair_hasher
         Inherits _to_uint32(Of first_const_pair(Of KEY_T, VALUE_T))
 
         Private Shared ReadOnly hasher As _HASHER
@@ -139,7 +150,7 @@ Partial Public Class unordered_map2( _
         End Function
     End Class
 
-    Public Class first_const_pair_equaler
+    Public NotInheritable Class first_const_pair_equaler
         Inherits _equaler(Of first_const_pair(Of KEY_T, VALUE_T))
 
         Private Shared ReadOnly equaler As _EQUALER
@@ -186,14 +197,17 @@ Public Class unordered_map2(Of KEY_T, VALUE_T)
         MyBase.New()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Shadows Function clone(Of R As unordered_map2(Of KEY_T, VALUE_T))() As R
         Return MyBase.clone(Of R)()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function CloneT() As unordered_map2(Of KEY_T, VALUE_T) _
             Implements ICloneable(Of unordered_map2(Of KEY_T, VALUE_T)).Clone
         Return MyBase.clone(Of unordered_map2(Of KEY_T, VALUE_T))()

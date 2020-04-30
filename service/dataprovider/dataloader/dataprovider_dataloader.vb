@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports osi.root.connector
 Imports osi.root.utils
 
 Public Class dataprovider_dataloader(Of T)
@@ -14,7 +18,7 @@ Public Class dataprovider_dataloader(Of T)
                    ByVal ParamArray dps() As idataprovider)
         assert(Not isemptyarray(dps))
         Me.loader = loader
-        Me.dps = make_weak_pointers(dps)
+        Me.dps = weak_pointers.of(dps)
     End Sub
 
     Public Sub New(ByVal ParamArray dps() As idataprovider)
@@ -30,16 +34,15 @@ Public Class dataprovider_dataloader(Of T)
                          ByVal result As pointer(Of T)) As event_comb Implements idataloader(Of T).load
         Return New event_comb(Function() As Boolean
                                   Dim v() As idataprovider = Nothing
-                                  ReDim v(array_size(dps) - 1)
-                                  For i As Int32 = 0 To array_size(dps) - 1
+                                  ReDim v(array_size_i(dps) - 1)
+                                  For i As Int32 = 0 To array_size_i(dps) - 1
                                       Dim p As idataprovider = Nothing
                                       p = (+(dps(i)))
                                       If p Is Nothing OrElse
                                          Not p.valid() Then
                                           Return False
-                                      Else
-                                          v(i) = p
                                       End If
+                                      v(i) = p
                                   Next
                                   Return eva(result, load(v)) AndAlso
                                          goto_end()

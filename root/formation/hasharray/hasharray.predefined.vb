@@ -3,7 +3,9 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.template
 
 Public Class hasharray(Of T, UNIQUE As _boolean)
@@ -21,22 +23,27 @@ Public Class hasharray(Of T, UNIQUE As _boolean)
         MyBase.New()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Shadows Function clone(Of R As hasharray(Of T, UNIQUE))() As R
         Return MyBase.clone(Of R)()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function CloneT() As hasharray(Of T, UNIQUE) Implements ICloneable(Of hasharray(Of T, UNIQUE)).Clone
         Return MyBase.clone(Of hasharray(Of T, UNIQUE))()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Shadows Function move(ByVal v As hasharray(Of T, UNIQUE)) As hasharray(Of T, UNIQUE)
         Return hasharray(Of T, UNIQUE, fast_to_uint32(Of T), default_equaler(Of T)).move(Of hasharray(Of T, UNIQUE))(v)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Shadows Function swap(ByVal this As hasharray(Of T, UNIQUE),
                                         ByVal that As hasharray(Of T, UNIQUE)) As Boolean
         Return hasharray(Of T, UNIQUE, fast_to_uint32(Of T), default_equaler(Of T)).swap(this, that)

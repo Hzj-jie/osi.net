@@ -15,6 +15,7 @@ Option Strict On
 
 
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.template
@@ -44,38 +45,46 @@ Public Class unordered_set2(Of _
         MyBase.New()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Shadows Function clone(Of R As unordered_set2(Of T, _HASHER, _EQUALER))() As R
         Return MyBase.clone(Of R)()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function CloneT() As unordered_set2(Of T, _HASHER, _EQUALER) _
             Implements ICloneable(Of unordered_set2(Of T, _HASHER, _EQUALER)).Clone
         Return clone(Of unordered_set2(Of T, _HASHER, _EQUALER))()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Shadows Function move(ByVal v As unordered_set2(Of T, _HASHER, _EQUALER)) _
                                        As unordered_set2(Of T, _HASHER, _EQUALER)
         Return hashtable(Of T, _true, _HASHER, _EQUALER) _
                    .move(Of unordered_set2(Of T, _HASHER, _EQUALER))(v)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Shared Shadows Function move(Of R As unordered_set2(Of T, _HASHER, _EQUALER))(ByVal v As R) As R
         Return hashtable(Of T, _true, _HASHER, _EQUALER).move(Of R)(v)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Shadows Function swap(ByVal this As unordered_set2(Of T, _HASHER, _EQUALER),
                                         ByVal that As unordered_set2(Of T, _HASHER, _EQUALER)) As Boolean
         Return hashtable(Of T, _true, _HASHER, _EQUALER).swap(this, that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function [erase](ByVal it As iterator) As Boolean
         Return MyBase.erase(it)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function [erase](ByVal value As T) As Boolean
         Return MyBase.erase(value) = uint32_1
     End Function
@@ -103,25 +112,30 @@ Public Class unordered_set2(Of T)
         MyBase.New()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Shadows Function clone(Of R As unordered_set2(Of T))() As R
         Return MyBase.clone(Of R)()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function CloneT() As unordered_set2(Of T) _
             Implements ICloneable(Of unordered_set2(Of T)).Clone
         Return MyBase.clone(Of unordered_set2(Of T))()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Shadows Function move(ByVal v As unordered_set2(Of T)) _
                                        As unordered_set2(Of T)
         Return unordered_set2(Of T, fast_to_uint32(Of T), default_equaler(Of T)) _
                   .move(Of unordered_set2(Of T))(v)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Shadows Function swap(ByVal this As unordered_set2(Of T),
                                         ByVal that As unordered_set2(Of T)) As Boolean
         Return unordered_set2(Of T, fast_to_uint32(Of T), default_equaler(Of T)).swap(this, that)

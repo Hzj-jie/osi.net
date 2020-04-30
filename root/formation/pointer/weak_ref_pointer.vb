@@ -17,20 +17,13 @@ Option Strict On
 
 Imports System.Diagnostics.CodeAnalysis
 Imports System.Runtime.CompilerServices
+Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.lock
 Imports osi.root.lock.slimlock
-Imports osi.root.connector
 
-' TODO: Remove
 Public Module _weak_ref_pointer
-    Public Function make_weak_ref_pointer(Of T)(ByVal i As T) As weak_ref_pointer(Of T)
-        Return weak_ref_pointer.of(i)
-    End Function
-
-    Public Function make_weak_ref_pointers(Of T)(ByVal ParamArray i As T()) As weak_ref_pointer(Of T)()
-        Return weak_ref_pointer.of(i)
-    End Function
-
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function renew(Of T)(ByRef i As weak_ref_pointer(Of T)) As weak_ref_pointer(Of T)
         If i Is Nothing Then
             i = New weak_ref_pointer(Of T)()
@@ -41,18 +34,25 @@ Public Module _weak_ref_pointer
     End Function
 End Module
 
-Public NotInheritable Class weak_ref_pointer
-    Public Shared Function [of](Of T)(ByVal i As T) As weak_ref_pointer(Of T)
-        Return New weak_ref_pointer(Of T)(i)
-    End Function
-
+Public NotInheritable Class weak_ref_pointers
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](Of T)(ByVal ParamArray i As T()) As weak_ref_pointer(Of T)()
         Dim r() As weak_ref_pointer(Of T) = Nothing
         ReDim r(array_size_i(i) - 1)
         For j As Int32 = 0 To array_size_i(i) - 1
-            r(j) = make_weak_ref_pointer(i(j))
+            r(j) = weak_ref_pointer.[of](i(j))
         Next
         Return r
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
+
+Public NotInheritable Class weak_ref_pointer
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function [of](Of T)(ByVal i As T) As weak_ref_pointer(Of T)
+        Return New weak_ref_pointer(Of T)(i)
     End Function
 
     Private Sub New()
@@ -76,25 +76,28 @@ Public Class weak_ref_pointer(Of T)
         bytes_serializer(Of weak_ref_pointer(Of T)).forward_registration.from(Of T)()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function move(ByVal that As weak_ref_pointer(Of T)) As weak_ref_pointer(Of T)
         If that Is Nothing Then
             Return Nothing
-        Else
-            Dim r As weak_ref_pointer(Of T) = Nothing
-            r = New weak_ref_pointer(Of T)(that)
-            that.clear()
-            Return r
         End If
+        Dim r As weak_ref_pointer(Of T) = Nothing
+        r = New weak_ref_pointer(Of T)(that)
+        that.clear()
+        Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New()
         clear()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal i As T)
         [set](i)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal i As weak_ref_pointer(Of T))
         If i Is Nothing Then
             clear()
@@ -138,6 +141,7 @@ Public Class weak_ref_pointer(Of T)
         p = Nothing
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function empty() As Boolean
         Dim p As WeakReference = Nothing
         p = Me.p
@@ -147,59 +151,66 @@ Public Class weak_ref_pointer(Of T)
     End Function
 
 #If "pointer(Of T)" = "T" Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [get](ByRef o As pointer(Of T)) As Boolean
 #Else
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function [get](ByRef o As pointer(Of T)) As Boolean
 #End If
         Dim p As WeakReference = Nothing
         p = Me.p
         If p Is Nothing Then
             Return False
-        Else
-            Try
-                o = DirectCast(p.Target(), pointer(Of T))
-            Catch
-                assert(False)
-            End Try
-            Return p.IsAlive()
         End If
+        Try
+            o = DirectCast(p.Target(), pointer(Of T))
+        Catch
+            assert(False)
+        End Try
+        Return p.IsAlive()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function alive() As Boolean
         Dim p As WeakReference = Nothing
         p = Me.p
         Return Not p Is Nothing AndAlso p.IsAlive()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [get]() As T
         Dim o As T = Nothing
         Return If([get](o), o, Nothing)
     End Function
 
 #If "pointer(Of T)" = "T" Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub [set](ByVal i As pointer(Of T))
 #Else
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub [set](ByVal i As pointer(Of T))
 #End If
         p = New WeakReference(i)
     End Sub
 'finish weak_pointer.override.vbp --------
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [get](ByRef o As T) As Boolean
         Dim p As pointer(Of T) = Nothing
         If [get](p) AndAlso Not p Is Nothing AndAlso Not p.empty() Then
             o = p.get()
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub [set](ByVal i As T)
-        [set](make_pointer(i))
+        [set](pointer.of(i))
     End Sub
 'finish weak_ref_pointer.override.vbp --------
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function release() As T
         Dim r As T = Nothing
         r = [get]()
@@ -207,21 +218,25 @@ Public Class weak_ref_pointer(Of T)
         Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
         Return CompareTo(cast(Of weak_ref_pointer(Of T))(obj, False))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal that As weak_ref_pointer(Of T)) As Int32 _
                              Implements IComparable(Of weak_ref_pointer(Of T)).CompareTo
         Return CompareTo(+that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal that As T) As Int32 _
                              Implements IComparable(Of T).CompareTo
         Return compare([get](), that)
     End Function
 
 #If Not (PocketPC OrElse Smartphone) Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator ^(ByVal p As weak_ref_pointer(Of T), ByVal ji As Decimal) As Object
         On Error GoTo finish
         Dim p2 As Object = Nothing
@@ -237,105 +252,122 @@ finish:
     End Operator
 #End If
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CloneT() As weak_ref_pointer(Of T) Implements ICloneable(Of weak_ref_pointer(Of T)).Clone
         Return New weak_ref_pointer(Of T)(Me)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator +(ByVal p As weak_ref_pointer(Of T)) As T
         Return If(p Is Nothing, Nothing, p.get())
     End Operator
 
     'special treatment for pointer, it compares reference equaling, instead of internal object
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As weak_ref_pointer(Of T), ByVal that As weak_ref_pointer(Of T)) As Boolean
         Return Not this = that
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As weak_ref_pointer(Of T), ByVal that As weak_ref_pointer(Of T)) As Boolean
         If that Is Nothing OrElse that.get() Is Nothing Then
             Return this Is Nothing OrElse this.get() Is Nothing
-        Else
-            Return this = that.get()
         End If
+        Return this = that.get()
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As weak_ref_pointer(Of T), ByVal that As T) As Boolean
         Return Not this = that
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As weak_ref_pointer(Of T), ByVal that As T) As Boolean
         If this Is Nothing Then
             Return that Is Nothing
-        Else
-            Return object_compare(this.get(), that) = 0
         End If
+        Return object_compare(this.get(), that) = 0
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As T, ByVal that As weak_ref_pointer(Of T)) As Boolean
         Return Not this = that
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As T, ByVal that As weak_ref_pointer(Of T)) As Boolean
         Return that = this
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As weak_ref_pointer(Of T), ByVal obj As Object) As Boolean
         Dim that As weak_ref_pointer(Of T) = Nothing
         If cast(Of weak_ref_pointer(Of T))(obj, that) Then
             Return this = that
-        Else
-            Return this = cast(Of T)(obj, False)
         End If
+        Return this = cast(Of T)(obj, False)
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As weak_ref_pointer(Of T), ByVal obj As Object) As Boolean
         Return Not this = obj
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As Object, ByVal that As weak_ref_pointer(Of T)) As Boolean
         Return that = this
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As Object, ByVal that As weak_ref_pointer(Of T)) As Boolean
         Return Not this = that
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <(ByVal this As weak_ref_pointer(Of T), ByVal that As T) As Boolean
         If this Is Nothing Then
             Return False
-        Else
-            this.set(that)
-            Return True
         End If
+        this.set(that)
+        Return True
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator >(ByVal this As weak_ref_pointer(Of T), ByVal that As T) As Boolean
         Return assert(False)
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <(ByVal this As T, ByVal that As weak_ref_pointer(Of T)) As Boolean
         Return that > this
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator >(ByVal this As T, ByVal that As weak_ref_pointer(Of T)) As Boolean
         Return that < this
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Widening Operator CType(ByVal this As weak_ref_pointer(Of T)) As Boolean
         Return Not this Is Nothing AndAlso Not this.empty()
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Narrowing Operator CType(ByVal i As T) As weak_ref_pointer(Of T)
         Return New weak_ref_pointer(Of T)(i)
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Narrowing Operator CType(ByVal i As weak_ref_pointer(Of T)) As T
         Return +i
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator Not(ByVal this As weak_ref_pointer(Of T)) As Boolean
         Return this Is Nothing OrElse this.empty()
     End Operator

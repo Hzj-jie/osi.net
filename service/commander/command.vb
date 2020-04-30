@@ -9,7 +9,7 @@ Imports osi.root.formation
 Imports osi.root.utils
 
 ' TODO: Remove. Basic types and collections should be able to be used directly with dev_T.
-Partial Public Class command
+Partial Public NotInheritable Class command
     Private ReadOnly a As array_pointer(Of Byte)
     Private ReadOnly ps As map(Of array_pointer(Of Byte), Byte())
 
@@ -90,7 +90,7 @@ Partial Public Class command
             Return False
         End If
         Dim it As map(Of array_pointer(Of Byte), Byte()).iterator = Nothing
-        it = ps.find(make_array_pointer(key))
+        it = ps.find(array_pointer.of(key))
         If it = ps.end() Then
             Return False
         End If
@@ -206,7 +206,7 @@ Partial Public Class command
     'for bytes / uri
     Friend Sub set_parameter_no_copy(ByVal k() As Byte, ByVal v() As Byte)
         If Not isemptyarray(k) Then
-            ps(make_array_pointer(k)) = v
+            ps(array_pointer.of(k)) = v
         End If
     End Sub
 

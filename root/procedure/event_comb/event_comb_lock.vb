@@ -201,7 +201,7 @@ Public Structure unlimited_event_comb_lock
         assert(Not v Is Nothing)
         l.wait()
         If inuse = IN_USE Then
-            assert(q.push(make_pointer(v)))
+            assert(q.push(pointer.of(v)))
         Else
             inuse = IN_USE
             v()
