@@ -1,6 +1,7 @@
 ﻿
-Imports osi.root.connector
-Imports osi.root.utils
+Option Explicit On
+Option Infer Off
+Option Strict On
 
 Public Class comparison_case_wrapper
     Inherits chained_case_wrapper

@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.utils
@@ -22,64 +23,61 @@ Public Class invoker_perf
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-        If isdebugbuild() Then
-            Return loosen_bound({64468, 18928, 5846, 40173, 6773, 5846}, i, j)
-        End If
-        Return loosen_bound({13300, 10722, 922, 5166, 2400, 1300}, i, j)
+        Return loosen_bound({11196, 4079, 1629, 7129, 1629, 1225}, i, j)
     End Function
 
     Private Shared Function r(ByVal c As [case]) As [case]
         Return repeat(c, 10000000)
     End Function
 
-    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
+    <MethodImpl(MethodImplOptions.NoInlining)>
     Private Shared Function f1() As Int32
         Dim x As Int32 = 0
         x += 1
         Return 0
     End Function
 
-    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
+    <MethodImpl(MethodImplOptions.NoInlining)>
     Private Shared Function f2(ByVal i As Int32) As Int32
         Dim x As Int32 = 0
         x += 1
         Return i
     End Function
 
-    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
+    <MethodImpl(MethodImplOptions.NoInlining)>
     Private Shared Sub g1()
         Dim x As Int32 = 0
         x += 1
     End Sub
 
-    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
+    <MethodImpl(MethodImplOptions.NoInlining)>
     Private Shared Sub g2(ByVal i As Int32)
         Dim x As Int32 = 0
         x += 1
     End Sub
 
-    Private Class test_class
-        <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
+    Private NotInheritable Class test_class
+        <MethodImpl(MethodImplOptions.NoInlining)>
         Public Function f1() As Int32
             Dim x As Int32 = 0
             x += 1
             Return 0
         End Function
 
-        <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
+        <MethodImpl(MethodImplOptions.NoInlining)>
         Public Function f2(ByVal i As Int32) As Int32
             Dim x As Int32 = 0
             x += 1
             Return i
         End Function
 
-        <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
+        <MethodImpl(MethodImplOptions.NoInlining)>
         Public Sub g1()
             Dim x As Int32 = 0
             x += 1
         End Sub
 
-        <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
+        <MethodImpl(MethodImplOptions.NoInlining)>
         Public Sub g2(ByVal i As Int32)
             Dim x As Int32 = 0
             x += 1
@@ -130,7 +128,7 @@ Public Class invoker_perf
         End Function
     End Class
 
-    Private Class invoker_static_pre_bind_case
+    Private NotInheritable Class invoker_static_pre_bind_case
         Inherits invoker_static_case
 
         Private Shadows ReadOnly i As Func(Of Int32)
@@ -155,7 +153,7 @@ Public Class invoker_perf
         End Function
     End Class
 
-    Private Class call_static_case
+    Private NotInheritable Class call_static_case
         Inherits [case]
 
         Public Overrides Function run() As Boolean
@@ -213,7 +211,7 @@ Public Class invoker_perf
         End Function
     End Class
 
-    Private Class invoker_object_pre_bind_case
+    Private NotInheritable Class invoker_object_pre_bind_case
         Inherits invoker_object_case
 
         Private Shadows ReadOnly i As Func(Of Int32)
@@ -237,7 +235,7 @@ Public Class invoker_perf
         End Function
     End Class
 
-    Private Class call_object_case
+    Private NotInheritable Class call_object_case
         Inherits [case]
 
         Private ReadOnly o As test_class
