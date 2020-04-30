@@ -3,12 +3,12 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.utt
 
-Public Class cint_convert_toint_perf_test
+Public NotInheritable Class cint_convert_toint_perf_test
     Inherits performance_comparison_case_wrapper
 
     Private Const size As UInt64 = CULng(1024) * CULng(1024) * CULng(1024) * CULng(16)

@@ -1,10 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.utt
 
 ' Do I need to cache GetType result?
 ' Conclusion is, obj.GetType() is 3x times slower than a cached value, GetType(T) is a little bit (0.2x) slower.
-Public Class gettype_perf
+Public NotInheritable Class gettype_perf
     Inherits chained_case_wrapper
 
     Private Const round As Int64 = 3
@@ -21,16 +25,19 @@ Public Class gettype_perf
     End Class
 
     Public Sub New()
-        MyBase.New(New case1(), New case2(), New case3(), New case4(), New case5(), New case6())
+        MyBase.New(New value_type(),
+                   New string_type(),
+                   New interface_type(),
+                   New base_type(),
+                   New class_type(),
+                   New class_type_get_type_vs_type_info())
     End Sub
 
-    Private Class case1
+    Private NotInheritable Class value_type
         Inherits performance_comparison_case_wrapper
 
-        Protected Overrides Function min_rate_table() As Double(,)
-            Return {{0, 0.58, 2.5},
-                    {7, 0, 12},
-                    {0.9, 0.33, 0}}
+        Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+            Return loosen_bound({7620, 7877, 7104}, i, j)
         End Function
 
         Public Sub New()
@@ -38,13 +45,11 @@ Public Class gettype_perf
         End Sub
     End Class
 
-    Private Class case2
+    Private NotInheritable Class string_type
         Inherits performance_comparison_case_wrapper
 
-        Protected Overrides Function min_rate_table() As Double(,)
-            Return {{0, 1.2, 4},
-                    {1.5, 0, 4},
-                    {0.8, 0.8, 0}}
+        Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+            Return loosen_bound({8715, 20469, 7298}, i, j)
         End Function
 
         Public Sub New()
@@ -52,14 +57,11 @@ Public Class gettype_perf
         End Sub
     End Class
 
-    Private Class case3
+    Private NotInheritable Class interface_type
         Inherits performance_comparison_case_wrapper
 
-        Protected Overrides Function min_rate_table() As Double(,)
-            Return {{0, 1.2, 4, 1.2},
-                    {1.5, 0, 4, 1.2},
-                    {0.8, 0.8, 0, 0.8},
-                    {1.5, 1.2, 3.5, 0}}
+        Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+            Return loosen_bound({8715, 20791, 7616, 20085}, i, j)
         End Function
 
         Public Sub New()
@@ -67,14 +69,11 @@ Public Class gettype_perf
         End Sub
     End Class
 
-    Private Class case4
+    Private NotInheritable Class base_type
         Inherits performance_comparison_case_wrapper
 
-        Protected Overrides Function min_rate_table() As Double(,)
-            Return {{0, 1.2, 4, 1.2},
-                    {1.5, 0, 4, 1.2},
-                    {0.8, 0.8, 0, 0.8},
-                    {1.5, 1.2, 3.5, 0}}
+        Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+            Return loosen_bound({8649, 20147, 7298, 19824}, i, j)
         End Function
 
         Public Sub New()
@@ -82,13 +81,11 @@ Public Class gettype_perf
         End Sub
     End Class
 
-    Private Class case5
+    Private NotInheritable Class class_type
         Inherits performance_comparison_case_wrapper
 
-        Protected Overrides Function min_rate_table() As Double(,)
-            Return {{0, 1.2, 4},
-                    {1.5, 0, 4},
-                    {0.8, 0.8, 0}}
+        Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+            Return loosen_bound({8393, 20275, 7554}, i, j)
         End Function
 
         Public Sub New()
@@ -106,12 +103,11 @@ Public Class gettype_perf
                 r(New cache_type_run(Of T)(i))}
     End Function
 
-    Private Class case6
+    Private NotInheritable Class class_type_get_type_vs_type_info
         Inherits performance_comparison_case_wrapper
 
-        Protected Overrides Function min_rate_table() As Double(,)
-            Return {{0, 0.7},
-                    {2.5, 0}}
+        Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+            Return loosen_bound({8587, 34033}, i, j)
         End Function
 
         Public Sub New()
@@ -121,7 +117,7 @@ Public Class gettype_perf
         End Sub
     End Class
 
-    Private Class gettype_run1(Of T)
+    Private NotInheritable Class gettype_run1(Of T)
         Inherits [case]
 
         Public Overrides Function run() As Boolean
@@ -131,7 +127,7 @@ Public Class gettype_perf
         End Function
     End Class
 
-    Private Class gettype_run2(Of T)
+    Private NotInheritable Class gettype_run2(Of T)
         Inherits [case]
 
         Private ReadOnly v As T
@@ -148,7 +144,7 @@ Public Class gettype_perf
         End Function
     End Class
 
-    Private Class cache_type_run(Of T)
+    Private NotInheritable Class cache_type_run(Of T)
         Inherits [case]
 
         Private ReadOnly i As Type
@@ -165,11 +161,11 @@ Public Class gettype_perf
         End Function
     End Class
 
-    Private Class type_info_type_run(Of T)
+    Private NotInheritable Class type_info_type_run(Of T)
         Inherits [case]
 
         ' Simulate type_info.type
-        Private Class cache
+        Private NotInheritable Class cache
             Public Shared ReadOnly type As Type
 
             Shared Sub New()
