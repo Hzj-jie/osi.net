@@ -19,10 +19,7 @@ Private Class adaptive_array_uint32
     Implements ICloneable, ICloneable(Of adaptive_array_uint32), IComparable(Of adaptive_array_uint32), IComparable
 
     Private Shared Function expected_capacity(ByVal n As UInt32) As UInt32
-        assert(n <= max_array_size)
-        If n = max_array_size Then
-            root.connector.throws.out_of_memory("adaptive_array size ", n, " exceeds limitation.")
-        End If
+        assert(n < max_array_size)
         If n <= 2 Then
             Return 4
         End If

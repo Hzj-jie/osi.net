@@ -10,7 +10,7 @@ Imports osi.root.formation
 
 Public Module _matcher
     <Extension()> Public Function match(ByVal m As nlexer.matcher, ByVal i As String) As [optional](Of UInt32)
-        Return throws.not_null(m).match(i, uint32_0)
+        Return assert_which.of(m).is_not_null().match(i, uint32_0)
     End Function
 End Module
 
