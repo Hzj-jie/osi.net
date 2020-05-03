@@ -14,7 +14,6 @@ Option Strict On
 'so change map_case.vbp instead of this file
 
 
-#Const first_with_brackets = False
 
 Imports osi.root.constants
 Imports osi.root.connector
@@ -159,13 +158,8 @@ Friend Class unordered_map_case
             it = m.begin()
             Dim c As Int64 = 0
             While it <> m.end()
-#If first_with_brackets Then
-                assertion.not_equal(v.find((+it).first()), v.end())
-                assertion.equal((+it).second, value((+it).first()))
-#Else
                 assertion.not_equal(v.find((+it).first), v.end())
                 assertion.equal((+it).second, value((+it).first))
-#End If
                 c += 1
                 it += 1
             End While
@@ -198,15 +192,9 @@ Friend Class unordered_map_case
                     c = 0
                     it = base.begin()
                     While it <> base.end()
-#If first_with_brackets Then
-                        assertion.not_equal(camp.find((+it).first()), camp.end())
-                        assertion.equal((+it).second, value((+it).first()))
-                        assertion.equal((+it).second, camp((+it).first()))
-#Else
                         assertion.not_equal(camp.find((+it).first), camp.end())
                         assertion.equal((+it).second, value((+it).first))
                         assertion.equal((+it).second, camp((+it).first))
-#End If
                         c += 1
                         it += 1
                     End While
