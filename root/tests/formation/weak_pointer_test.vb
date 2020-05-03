@@ -7,14 +7,14 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utt
 
-Public Class weak_pointer_test
+Public NotInheritable Class weak_pointer_test
     Inherits flaky_case_wrapper
 
     Public Sub New()
         MyBase.New(New weak_pointer_case())
     End Sub
 
-    Private Class weak_pointer_case
+    Private NotInheritable Class weak_pointer_case
         Inherits [case]
 
         Private Class test_class
