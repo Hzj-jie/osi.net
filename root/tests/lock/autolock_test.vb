@@ -1,11 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.delegates
-Imports osi.root.utt
 Imports osi.root.lock
-Imports osi.root.utils
+Imports osi.root.utt
 
-Public Class autolock_test
+Public NotInheritable Class autolock_test
     Inherits chained_case_wrapper
 
     Private Shared ReadOnly size As Int64
@@ -17,21 +20,21 @@ Public Class autolock_test
     End Sub
 
     Public Sub New()
-        MyBase.New(R(New autolock_case(Of ref(Of slimlock.simplelock))(
+        MyBase.New(r(New autolock_case(Of ref(Of slimlock.simplelock))(
                              AddressOf make_autolock(Of slimlock.simplelock))),
-                   R(New autolock_case(Of ref(Of monitorlock))(
+                   r(New autolock_case(Of ref(Of monitorlock))(
                              AddressOf make_autolock(Of monitorlock))),
-                   R(New autolock_case(Of ref(Of slimlock.monitorlock))(
+                   r(New autolock_case(Of ref(Of slimlock.monitorlock))(
                              AddressOf make_autolock(Of slimlock.monitorlock))),
-                   R(New autolock_case(Of ref(Of slimlock.eventlock))(
-                             AddressOf make_autolock(Of slimlock.eventlock))))
+                   multithreading(repeat(New autolock_case(Of ref(Of slimlock.eventlock))(
+                                                 AddressOf make_autolock(Of slimlock.eventlock)), 1024), 4))
     End Sub
 
-    Private Shared Function R(ByVal i As [case]) As [case]
+    Private Shared Function r(ByVal i As [case]) As [case]
         Return multithreading(repeat(i, size), thread_count)
     End Function
 
-    Private Class autolock_case(Of T)
+    Private NotInheritable Class autolock_case(Of T)
         Inherits [case]
 
         Private ReadOnly run_times As atomic_int

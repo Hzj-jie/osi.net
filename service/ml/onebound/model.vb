@@ -18,6 +18,12 @@ Partial Public NotInheritable Class onebound
                 m = New unordered_map(Of K, unordered_map(Of K, Double))()
             End Sub
 
+            <copy_constructor>
+            Public Sub New(ByVal m As unordered_map(Of K, unordered_map(Of K, Double)))
+                assert(Not m Is Nothing)
+                Me.m = m
+            End Sub
+
             Public Function dump(ByVal o As MemoryStream) As Boolean
                 Return bytes_serializer.append_to(m, o)
             End Function
