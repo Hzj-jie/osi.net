@@ -16,10 +16,6 @@ Public Module _object_compare
         assert(object_compare_less = npos)
         assert(object_compare_larger = 1)
         assert(object_compare_equal = 0)
-        assert(compare_error_result < 0 AndAlso
-               compare_error_result <> object_compare_less AndAlso
-               compare_error_result <> object_compare_equal AndAlso
-               compare_error_result <> object_compare_larger)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

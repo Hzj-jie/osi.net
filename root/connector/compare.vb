@@ -27,12 +27,6 @@ Imports osi.root.delegates
 '   }
 ' }
 Public Module _compare
-    Public ReadOnly compare_error_result As Int32 = 0
-
-    Sub New()
-        compare_error_result = rnd_int(min_int32, min_int8)
-    End Sub
-
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub compare_error(Of T, T2)(ByVal ex As Exception)
         If Not is_suppressed.compare_error() Then
@@ -137,6 +131,7 @@ Public Module _compare
             Return False
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Function compare(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
             If c Is Nothing Then
                 Return False
@@ -144,10 +139,10 @@ Public Module _compare
 #If DEBUG Then
             Dim msg As String = Nothing
             msg = strcat("Comparing ",
-                     type_info(Of T).fullname,
-                     " with ",
-                     type_info(Of T2).fullname,
-                     " needs to be specifically handled.")
+                         type_info(Of T).fullname,
+                         " with ",
+                         type_info(Of T2).fullname,
+                         " needs to be specifically handled.")
             Dim o2 As Int32 = 0
             Dim r As Boolean = False
             r = c(this, that, o)
@@ -362,7 +357,8 @@ Public Module _compare
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(Of T, T2)(ByVal this As T, ByVal that As T2) As Int32
         Dim o As Int32 = 0
-        Return If(compare(this, that, o), o, compare_error_result)
+        assert(compare(this, that, o))
+        Return o
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
