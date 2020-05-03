@@ -8,7 +8,9 @@ Option Strict On
 'so change hashmap.vbp instead of this file
 
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+Imports osi.root.constants
 
 Public NotInheritable Class hashmap(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     Inherits hashmap(Of KEY_T, VALUE_T, default_to_uint32(Of KEY_T))
@@ -42,6 +44,7 @@ Public NotInheritable Class hashmap(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
         Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overloads Function Equals(ByVal that As hashmap(Of KEY_T, VALUE_T)) As Boolean _
             Implements IEquatable(Of hashmap(Of KEY_T, VALUE_T)).Equals
         If that Is Nothing OrElse that.empty() Then
@@ -50,6 +53,7 @@ Public NotInheritable Class hashmap(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
         Return exclude(that).empty() AndAlso that.exclude(Me).empty()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overrides Function Equals(ByVal that As Object) As Boolean
         Return Equals(cast(Of hashmap(Of KEY_T, VALUE_T))(that, False))
     End Function

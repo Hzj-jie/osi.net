@@ -1,5 +1,7 @@
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+Imports osi.root.constants
 
 Public NotInheritable Class [##FILENAME##](Of T)
     Inherits bbst(Of T)
@@ -8,17 +10,18 @@ Public NotInheritable Class [##FILENAME##](Of T)
 ##INCLUDE set.container_operator.vbp
 ##INCLUDE set.compare.vbp
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Shadows Function move(ByVal v As [##FILENAME##](Of T)) As [##FILENAME##](Of T)
         If v Is Nothing Then
             Return Nothing
-        Else
-            Dim r As [##FILENAME##](Of T) = Nothing
-            r = New [##FILENAME##](Of T)()
-            move_to(v, r)
-            Return r
         End If
+        Dim r As [##FILENAME##](Of T) = Nothing
+        r = New [##FILENAME##](Of T)()
+        move_to(v, r)
+        Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function clone() As [##FILENAME##](Of T)
         Dim r As [##FILENAME##](Of T) = Nothing
         r = New [##FILENAME##](Of T)()
@@ -26,10 +29,12 @@ Public NotInheritable Class [##FILENAME##](Of T)
         Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CloneT() As [##FILENAME##](Of T) Implements ICloneable(Of [##FILENAME##](Of T)).Clone
         Return clone()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function ICloneable_Clone() As Object Implements ICloneable.Clone
         Return clone()
     End Function

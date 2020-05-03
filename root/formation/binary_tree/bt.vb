@@ -3,9 +3,10 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports cc = osi.root.connector
 
 Friend Module binary_tree
@@ -17,17 +18,18 @@ Partial Public Class bt(Of T)
 
     Protected root As node
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function move(ByVal v As bt(Of T)) As bt(Of T)
         If v Is Nothing Then
             Return Nothing
-        Else
-            Dim r As bt(Of T) = Nothing
-            r = New bt(Of T)()
-            move_to(v, r)
-            Return r
         End If
+        Dim r As bt(Of T) = Nothing
+        r = New bt(Of T)()
+        move_to(v, r)
+        Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Shared Sub move_to(ByVal from As bt(Of T), ByVal [to] As bt(Of T))
         assert(Not from Is Nothing)
         assert(Not [to] Is Nothing)
@@ -36,6 +38,7 @@ Partial Public Class bt(Of T)
     End Sub
 
     'make sure the tree from root <r> is not a graph
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Sub assert_structure(ByVal r As node, ByVal v As vector(Of node))
         assert(Not r Is Nothing)
         assert(Not v Is Nothing)
@@ -51,85 +54,95 @@ Partial Public Class bt(Of T)
         End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Shared Sub assert_structure(ByVal r As node)
         assert(Not r Is Nothing)
-        Dim v As vector(Of node) = Nothing
-        v = New vector(Of node)()
-        assert_structure(r, v)
+        assert_structure(r, New vector(Of node)())
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [end]() As iterator
         Return iterator.end
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function rend() As iterator
         Return iterator.end
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function begin() As iterator
         Return If(empty(), [end](), New iterator(root.min()))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function rbegin() As iterator
         Return If(empty(), rend(), New iterator(root.max()))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function size() As UInt32
         Return If(empty(), uint32_0, root.subtree_node_count())
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function count() As UInt32
         Return size()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function empty() As Boolean
         Return root Is Nothing
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub clear()
         root = Nothing
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub preorder_traversal(ByVal s As StringBuilder)
         If Not root Is Nothing Then
             root.preorder_traversal(s)
         End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function preorder_traversal() As String
         If root Is Nothing Then
             Return Nothing
-        Else
-            Return root.preorder_traversal()
         End If
+        Return root.preorder_traversal()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub inorder_traversal(ByVal s As StringBuilder)
         If Not root Is Nothing Then
             root.inorder_traversal(s)
         End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function inorder_traversal() As String
         If root Is Nothing Then
             Return Nothing
-        Else
-            Return root.inorder_traversal()
         End If
+        Return root.inorder_traversal()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub postorder_traversal(ByVal s As StringBuilder)
         If Not root Is Nothing Then
             root.postorder_traversal(s)
         End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function postorder_traversal() As String
         If root Is Nothing Then
             Return Nothing
-        Else
-            Return root.postorder_traversal()
         End If
+        Return root.postorder_traversal()
     End Function
 
     Protected Shared Function compare(Of BTT As bt(Of T)) _
@@ -140,49 +153,49 @@ Partial Public Class bt(Of T)
         assert(Not cmp Is Nothing)
         Dim c As Int32 = 0
         c = object_compare(this, that)
-        If c = object_compare_undetermined Then
-            assert(Not this Is Nothing)
-            assert(Not that Is Nothing)
-            If Not size Is Nothing Then
-                Dim l As UInt32 = 0
-                Dim r As UInt32 = 0
-                l = size(this)
-                r = size(that)
-                If l < r Then
-                    Return -1
-                ElseIf l > r Then
-                    Return 1
-                End If
-            End If
-            Dim i As iterator = Nothing
-            Dim j As iterator = Nothing
-            i = this.begin()
-            j = that.begin()
-            While i <> this.end() AndAlso
-                  j <> that.end()
-                c = cmp(i.value(), j.value())
-                If c = 0 Then
-                    i += 1
-                    j += 1
-                Else
-                    Return c
-                End If
-            End While
-            If i = this.end() AndAlso j = that.end() Then
-                Return 0
-            ElseIf i = this.end() Then
-                Return -1
-            ElseIf j = that.end() Then
-                Return 1
-            Else
-                assert(False)
-                Return npos
-            End If
-        Else
+        If c <> object_compare_undetermined Then
             Return c
         End If
+        assert(Not this Is Nothing)
+        assert(Not that Is Nothing)
+        If Not size Is Nothing Then
+            Dim l As UInt32 = 0
+            Dim r As UInt32 = 0
+            l = size(this)
+            r = size(that)
+            If l < r Then
+                Return -1
+            ElseIf l > r Then
+                Return 1
+            End If
+        End If
+        Dim i As iterator = Nothing
+        Dim j As iterator = Nothing
+        i = this.begin()
+        j = that.begin()
+        While i <> this.end() AndAlso
+                  j <> that.end()
+            c = cmp(i.value(), j.value())
+            If c <> 0 Then
+                Return c
+            End If
+            i += 1
+            j += 1
+        End While
+        If i = this.end() AndAlso j = that.end() Then
+            Return 0
+        End If
+        If i = this.end() Then
+            Return -1
+        End If
+        If j = that.end() Then
+            Return 1
+        End If
+        assert(False)
+        Return npos
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Shared Function compare(Of BTT As bt(Of T)) _
                                      (ByVal this As BTT,
                                       ByVal that As BTT,
@@ -190,6 +203,7 @@ Partial Public Class bt(Of T)
         Return compare(Of BTT)(this, that, size, AddressOf cc.compare)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Shared Function compare(Of BTT As bt(Of T)) _
                                      (ByVal this As BTT,
                                       ByVal that As BTT,
@@ -197,20 +211,24 @@ Partial Public Class bt(Of T)
         Return compare(Of BTT)(this, that, Nothing, cmp)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Shared Function compare(Of BTT As bt(Of T)) _
                                      (ByVal this As BTT,
                                       ByVal that As BTT) As Int32
         Return compare(Of BTT)(this, that, Nothing, AddressOf cc.compare)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
         Return CompareTo(cast(Of bt(Of T))(obj, False))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal other As bt(Of T)) As Int32 Implements IComparable(Of bt(Of T)).CompareTo
         Return compare(Me, other)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public NotOverridable Overrides Function ToString() As String
         Return preorder_traversal()
     End Function

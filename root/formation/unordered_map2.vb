@@ -282,6 +282,7 @@ Public Class unordered_map2(Of KEY_T, VALUE_T)
         Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overloads Function Equals(ByVal that As unordered_map2(Of KEY_T, VALUE_T)) As Boolean _
             Implements IEquatable(Of unordered_map2(Of KEY_T, VALUE_T)).Equals
         If that Is Nothing OrElse that.empty() Then
@@ -290,6 +291,7 @@ Public Class unordered_map2(Of KEY_T, VALUE_T)
         Return exclude(that).empty() AndAlso that.exclude(Me).empty()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overrides Function Equals(ByVal that As Object) As Boolean
         Return Equals(cast(Of unordered_map2(Of KEY_T, VALUE_T))(that, False))
     End Function

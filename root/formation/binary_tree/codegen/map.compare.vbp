@@ -21,6 +21,7 @@
         Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overloads Function Equals(ByVal that As ##FILENAME##(Of KEY_T, VALUE_T)) As Boolean _
             Implements IEquatable(Of ##FILENAME##(Of KEY_T, VALUE_T)).Equals
         If that Is Nothing OrElse that.empty() Then
@@ -29,6 +30,7 @@
         Return exclude(that).empty() AndAlso that.exclude(Me).empty()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overrides Function Equals(ByVal that As Object) As Boolean
         Return Equals(cast(Of ##FILENAME##(Of KEY_T, VALUE_T))(that, False))
     End Function

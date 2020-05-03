@@ -3,10 +3,13 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+Imports osi.root.constants
 
 Partial Public Class bt(Of T)
     Partial Protected Friend Class node
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Function left_rotate(ByVal a As node) As node
             assert(Not a Is Nothing)
             assert(a.has_right_child())
@@ -25,10 +28,12 @@ Partial Public Class bt(Of T)
             Return c
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function left_rotate() As node
             Return left_rotate(Me)
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Function right_rotate(ByVal a As node) As node
             assert(Not a Is Nothing)
             assert(a.has_left_child())
@@ -47,6 +52,7 @@ Partial Public Class bt(Of T)
             Return b
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function right_rotate() As node
             Return right_rotate(Me)
         End Function

@@ -3,9 +3,10 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 
 Partial Public Class bt(Of T)
     Partial Protected Friend Class node
@@ -31,6 +32,7 @@ Partial Public Class bt(Of T)
             End If
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Function left_linked(ByVal n As node) As Boolean
             Return (n Is Nothing AndAlso
                     Not has_left_child()) OrElse
@@ -41,6 +43,7 @@ Partial Public Class bt(Of T)
                     assert(object_compare(left_child().parent(), Me) = 0))
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Function right_linked(ByVal n As node) As Boolean
             Return (n Is Nothing AndAlso
                     Not has_right_child()) OrElse
@@ -51,6 +54,7 @@ Partial Public Class bt(Of T)
                     assert(object_compare(right_child().parent(), Me) = 0))
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Function parent_linked(ByVal n As node) As Boolean
             Return (n Is Nothing AndAlso
                     Not has_parent()) OrElse
@@ -63,16 +67,19 @@ Partial Public Class bt(Of T)
                               object_compare(n.right_child(), Me) = 0)))
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub append_to_min(ByVal n As node)
             assert(Not n Is Nothing)
             min().replace_left(n)
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub append_to_max(ByVal n As node)
             assert(Not n Is Nothing)
             max().replace_right(n)
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub replace_left(ByVal n As node)
             l = n
             If Not n Is Nothing Then
@@ -80,6 +87,7 @@ Partial Public Class bt(Of T)
             End If
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub replace_right(ByVal n As node)
             r = n
             If Not n Is Nothing Then
@@ -87,19 +95,23 @@ Partial Public Class bt(Of T)
             End If
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub clear_left()
             l = Nothing
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub clear_right()
             r = Nothing
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub clear_parent()
             p = Nothing
         End Sub
 
         'return the min node of the subtree rooted by this node
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function min() As node
             Dim n As node = Nothing
             n = Me
@@ -111,6 +123,7 @@ Partial Public Class bt(Of T)
         End Function
 
         'return the max node of the subtree rooted by this node
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function max() As node
             Dim n As node = Nothing
             n = Me
@@ -121,6 +134,7 @@ Partial Public Class bt(Of T)
             Return n
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub replace_parent_subtree(ByVal c As node)
             If has_parent() Then
                 If is_left_subtree() Then
@@ -134,17 +148,20 @@ Partial Public Class bt(Of T)
             End If
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub clear_parent_subtree()
-            If has_parent() Then
-                If is_left_subtree() Then
-                    parent().clear_left()
-                Else
-                    assert(is_right_subtree())
-                    parent().clear_right()
-                End If
+            If Not has_parent() Then
+                Return
+            End If
+            If is_left_subtree() Then
+                parent().clear_left()
+            Else
+                assert(is_right_subtree())
+                parent().clear_right()
             End If
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Function replace_by(ByVal a As node, ByVal b As node) As node
             assert(Not a Is Nothing)
             assert(Not b Is Nothing)
@@ -165,6 +182,7 @@ Partial Public Class bt(Of T)
             Return b
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Function replace_by_left_subtree(ByVal a As node) As node
             assert(Not a Is Nothing)
             assert(a.has_left_child())
@@ -181,6 +199,7 @@ Partial Public Class bt(Of T)
             Return b
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Function replace_by_right_subtree(ByVal a As node) As node
             assert(Not a Is Nothing)
             assert(a.has_right_child())
@@ -197,6 +216,7 @@ Partial Public Class bt(Of T)
             Return b
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Function replace_by_left_max(ByVal a As node,
                                                     ByRef parent_of_replaced_node As node) As node
             assert(Not a Is Nothing)
@@ -228,6 +248,7 @@ Partial Public Class bt(Of T)
             Return b
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Function replace_by_right_min(ByVal a As node,
                                                      ByRef parent_of_replaced_node As node) As node
             assert(Not a Is Nothing)
@@ -260,6 +281,7 @@ Partial Public Class bt(Of T)
             Return b
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Function [erase](ByVal n As node,
                                         ByVal select_left As Boolean,
                                         ByRef parent_of_removed_node As node) As node
@@ -297,73 +319,81 @@ Partial Public Class bt(Of T)
             Return r
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function revise_parent_subtree_height() As Boolean
             assert(has_parent())
             If is_left_subtree() Then
                 Return parent().revise_left_subtree_height()
-            Else
-                assert(is_right_subtree())
-                Return parent().revise_right_subtree_height()
             End If
+            assert(is_right_subtree())
+            Return parent().revise_right_subtree_height()
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function revise_or_clear_left_subtree_height() As Boolean
             Dim n As UInt32 = 0
             n = If(has_left_child(), left_child().boxed_subtree_height(), uint32_0)
-            If boxed_left_subtree_height() <> n Then
-                heighted_box().left_height = n
-                Return True
-            Else
+            If boxed_left_subtree_height() = n Then
                 Return False
             End If
+            heighted_box().left_height = n
+            Return True
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function revise_or_clear_right_subtree_height() As Boolean
             Dim n As UInt32 = 0
             n = If(has_right_child(), right_child().boxed_subtree_height(), uint32_0)
-            If boxed_right_subtree_height() <> n Then
-                heighted_box().right_height = n
-                Return True
-            Else
+            If boxed_right_subtree_height() = n Then
                 Return False
             End If
+            heighted_box().right_height = n
+            Return True
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function revise_left_subtree_height() As Boolean
             assert(has_left_child())
             Return revise_or_clear_left_subtree_height()
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function clear_left_subtree_height() As Boolean
             assert(Not has_left_child())
             Return revise_or_clear_left_subtree_height()
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function revise_right_subtree_height() As Boolean
             assert(has_right_child())
             Return revise_or_clear_right_subtree_height()
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function clear_right_subtree_height() As Boolean
             assert(Not has_right_child())
             Return revise_or_clear_right_subtree_height()
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Sub begin_child_node(ByVal s As StringBuilder)
             assert(Not s Is Nothing)
             s.Append("{")
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Sub seperate_child_node(ByVal s As StringBuilder)
             assert(Not s Is Nothing)
             s.Append(", ")
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Sub end_child_node(ByVal s As StringBuilder)
             assert(Not s Is Nothing)
             s.Append("}")
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub preorder_traversal(ByVal s As StringBuilder)
             assert(Not s Is Nothing)
             s.Append(Convert.ToString(Me))
@@ -378,6 +408,7 @@ Partial Public Class bt(Of T)
             end_child_node(s)
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function preorder_traversal() As String
             Dim s As StringBuilder = Nothing
             s = New StringBuilder()
@@ -385,6 +416,7 @@ Partial Public Class bt(Of T)
             Return Convert.ToString(s)
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub inorder_traversal(ByVal s As StringBuilder)
             assert(Not s Is Nothing)
             begin_child_node(s)
@@ -400,6 +432,7 @@ Partial Public Class bt(Of T)
             end_child_node(s)
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function inorder_traversal() As String
             Dim s As StringBuilder = Nothing
             s = New StringBuilder()
@@ -407,6 +440,7 @@ Partial Public Class bt(Of T)
             Return Convert.ToString(s)
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub postorder_traversal(ByVal s As StringBuilder)
             assert(Not s Is Nothing)
             begin_child_node(s)
@@ -421,6 +455,7 @@ Partial Public Class bt(Of T)
             s.Append(Convert.ToString(Me))
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function postorder_traversal() As String
             Dim s As StringBuilder = Nothing
             s = New StringBuilder()
@@ -428,6 +463,7 @@ Partial Public Class bt(Of T)
             Return Convert.ToString(s)
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Overrides Function ToString() As String
             Return strcat("(", box(), ")")
         End Function

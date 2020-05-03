@@ -1,5 +1,7 @@
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+Imports osi.root.constants
 
 Public NotInheritable Class hashmap(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     Inherits hashmap(Of KEY_T, VALUE_T, default_to_uint32(Of KEY_T))

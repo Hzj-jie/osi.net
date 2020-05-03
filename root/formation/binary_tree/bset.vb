@@ -8,7 +8,9 @@ Option Strict On
 'so change bset.vbp instead of this file
 
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+Imports osi.root.constants
 
 Public NotInheritable Class [bset](Of T)
     Inherits bbst(Of T)
@@ -94,6 +96,7 @@ Public NotInheritable Class [bset](Of T)
         Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overloads Function Equals(ByVal that As [bset](Of T)) As Boolean _
             Implements IEquatable(Of [bset](Of T)).Equals
         If that Is Nothing OrElse that.empty() Then
@@ -102,23 +105,25 @@ Public NotInheritable Class [bset](Of T)
         Return exclude(that).empty() AndAlso that.exclude(Me).empty()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overrides Function Equals(ByVal that As Object) As Boolean
         Return Equals(cast(Of [bset](Of T))(that, False))
     End Function
 
 'finish set.compare.vbp --------
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Shadows Function move(ByVal v As [bset](Of T)) As [bset](Of T)
         If v Is Nothing Then
             Return Nothing
-        Else
-            Dim r As [bset](Of T) = Nothing
-            r = New [bset](Of T)()
-            move_to(v, r)
-            Return r
         End If
+        Dim r As [bset](Of T) = Nothing
+        r = New [bset](Of T)()
+        move_to(v, r)
+        Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function clone() As [bset](Of T)
         Dim r As [bset](Of T) = Nothing
         r = New [bset](Of T)()
@@ -126,10 +131,12 @@ Public NotInheritable Class [bset](Of T)
         Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CloneT() As [bset](Of T) Implements ICloneable(Of [bset](Of T)).Clone
         Return clone()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function ICloneable_Clone() As Object Implements ICloneable.Clone
         Return clone()
     End Function
