@@ -21,11 +21,7 @@ Public NotInheritable Class map_hashmap_unordered_map_perf_test
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-        If isdebugbuild() Then
-            Return loosen_bound({1711, 1263, 578, 1527, 1527}, i, j)
-        Else
-            Return loosen_bound({756, 813, 251, 717, 775}, i, j)
-        End If
+        Return loosen_bound({1142, 892, 347, 719, 1116}, i, j)
     End Function
 
     Private Shared Function r(ByVal c As [case]) As [case]

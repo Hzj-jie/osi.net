@@ -105,7 +105,7 @@ Public Class unordered_map_perf(Of KEY_T, VALUE_T)
         End Sub
     End Class
 
-    Private Class unordered_map_case
+    Private NotInheritable Class unordered_map_case
         Inherits perf_case
 
         Private ReadOnly m As unordered_map(Of KEY_T, VALUE_T)
@@ -138,7 +138,7 @@ Public Class unordered_map_perf(Of KEY_T, VALUE_T)
         End Sub
     End Class
 
-    Private Class unordered_map2_case
+    Private NotInheritable Class unordered_map2_case
         Inherits perf_case
 
         Private ReadOnly m As unordered_map2(Of KEY_T, VALUE_T)
@@ -171,7 +171,7 @@ Public Class unordered_map_perf(Of KEY_T, VALUE_T)
         End Sub
     End Class
 
-    Private Class map_case
+    Private NotInheritable Class map_case
         Inherits perf_case
 
         Private ReadOnly m As map(Of KEY_T, VALUE_T)
