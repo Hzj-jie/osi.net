@@ -1,0 +1,6 @@
+﻿
+Calculate the possibility of the binding of A-B.
+Model: {A, B, possibility}
+Evaluator:
+  Input: ABCDE
+  Output: AB CDE
