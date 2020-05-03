@@ -178,34 +178,36 @@ Friend Class unordered_map_case
         Dim m2 As unordered_map(Of String, UInt32) = Nothing
         copy(m2, m)
         assertion.equal(object_compare(m, m2), object_compare_undetermined)
-        If validate() Then
-            assertion.equal(m.size(), m2.size())
-            Dim sz As Int64 = 0
-            sz = m.size()
-            Dim c As Int64 = 0
-            Dim it As unordered_map(Of String, UInt32).iterator = Nothing
-
-            Dim cmp As void(Of unordered_map(Of String, UInt32), unordered_map(Of String, UInt32)) =
-                Sub(ByRef base, ByRef camp)
-                    assert(Not base Is Nothing)
-                    assert(Not camp Is Nothing)
-                    c = 0
-                    it = base.begin()
-                    While it <> base.end()
-                        assertion.not_equal(camp.find((+it).first), camp.end())
-                        assertion.equal((+it).second, value((+it).first))
-                        assertion.equal((+it).second, camp((+it).first))
-                        c += 1
-                        it += 1
-                    End While
-                    assertion.equal(c, base.size())
-                    assertion.equal(c, sz)
-                End Sub
-            cmp(m, m2)
-            cmp(m2, m)
-
-            assertion.equal(m.size(), m2.size())
+        If Not validate() Then
+            Return
         End If
+        assertion.equal(m.size(), m2.size())
+        Dim sz As Int64 = 0
+        sz = m.size()
+        Dim c As Int64 = 0
+        Dim it As unordered_map(Of String, UInt32).iterator = Nothing
+
+        Dim cmp As void(Of unordered_map(Of String, UInt32), unordered_map(Of String, UInt32)) =
+            Sub(ByRef base, ByRef camp)
+                assert(Not base Is Nothing)
+                assert(Not camp Is Nothing)
+                c = 0
+                it = base.begin()
+                While it <> base.end()
+                    assertion.not_equal(camp.find((+it).first), camp.end())
+                    assertion.equal((+it).second, value((+it).first))
+                    assertion.equal((+it).second, camp((+it).first))
+                    c += 1
+                    it += 1
+                End While
+                assertion.equal(c, base.size())
+                assertion.equal(c, sz)
+            End Sub
+        cmp(m, m2)
+        cmp(m2, m)
+
+        assertion.equal(m.size(), m2.size())
+        assertion.equal(m, m2)
     End Sub
 End Class
 

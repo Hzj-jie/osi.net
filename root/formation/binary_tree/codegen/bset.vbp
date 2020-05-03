@@ -1,74 +1,32 @@
 
-##DEFAULT TYPE bset
-
 Imports osi.root.connector
 
-Public Class ##TYPE##(Of T)
+Public NotInheritable Class [##FILENAME##](Of T)
     Inherits bbst(Of T)
-    Implements ICloneable, ICloneable(Of ##TYPE##(Of T))
+    Implements ICloneable, ICloneable(Of [##FILENAME##](Of T)), IEquatable(Of [##FILENAME##](Of T))
 
-    Shared Sub New()
-        container_operator(Of ##TYPE##(Of T), T).size(Function(ByVal i As ##TYPE##(Of T)) As UInt32
-                                                          assert(Not i Is Nothing)
-                                                          Return i.size()
-                                                      End Function)
-        container_operator(Of ##TYPE##(Of T), T).emplace(Function(ByVal i As ##TYPE##(Of T), ByVal j As T) As Boolean
-                                                             assert(Not i Is Nothing)
-                                                             Return i.emplace(j).second
-                                                         End Function)
-        container_operator(Of ##TYPE##(Of T), T).enumerate(Function(ByVal i As ##TYPE##(Of T)) _
-                                                                   As container_operator(Of ##TYPE##(Of T), T).enumerator
-                                                               Return New enumerator(i)
-                                                           End Function)
-        container_operator(Of ##TYPE##(Of T), T).clear(Sub(ByVal i As ##TYPE##(Of T))
-                                                           assert(Not i Is Nothing)
-                                                           i.clear()
-                                                       End Sub)
-        bytes_serializer(Of ##TYPE##(Of T)).container(Of T).register()
-    End Sub
+##INCLUDE set.container_operator.vbp
+##INCLUDE set.compare.vbp
 
-    Private NotInheritable Class enumerator
-        Implements container_operator(Of ##TYPE##(Of T), T).enumerator
-
-        Private it As iterator
-
-        Public Sub New(ByVal s As ##TYPE##(Of T))
-            assert(Not s Is Nothing)
-            it = s.begin()
-        End Sub
-
-        Public Sub [next]() Implements container_operator(Of ##TYPE##(Of T), T).enumerator.next
-            it += 1
-        End Sub
-
-        Public Function current() As T Implements container_operator(Of ##TYPE##(Of T), T).enumerator.current
-            Return +it
-        End Function
-
-        Public Function [end]() As Boolean Implements container_operator(Of ##TYPE##(Of T), T).enumerator.end
-            Return it.is_end()
-        End Function
-    End Class
-
-    Public Shared Shadows Function move(ByVal v As ##TYPE##(Of T)) As ##TYPE##(Of T)
+    Public Shared Shadows Function move(ByVal v As [##FILENAME##](Of T)) As [##FILENAME##](Of T)
         If v Is Nothing Then
             Return Nothing
         Else
-            Dim r As ##TYPE##(Of T) = Nothing
-            r = New ##TYPE##(Of T)()
+            Dim r As [##FILENAME##](Of T) = Nothing
+            r = New [##FILENAME##](Of T)()
             move_to(v, r)
             Return r
         End If
     End Function
 
-    Public Shadows Function clone() As ##TYPE##(Of T)
-        Dim r As ##TYPE##(Of T) = Nothing
-        r = New ##TYPE##(Of T)()
+    Public Shadows Function clone() As [##FILENAME##](Of T)
+        Dim r As [##FILENAME##](Of T) = Nothing
+        r = New [##FILENAME##](Of T)()
         clone_to(Me, r)
         Return r
     End Function
 
-    Public Function CloneT() As ##TYPE##(Of T) Implements ICloneable(Of ##TYPE##(Of T)).Clone
+    Public Function CloneT() As [##FILENAME##](Of T) Implements ICloneable(Of [##FILENAME##](Of T)).Clone
         Return clone()
     End Function
 

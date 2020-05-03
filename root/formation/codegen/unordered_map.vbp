@@ -153,9 +153,12 @@ End Class
 
 Public Class ##FILENAME##(Of KEY_T, VALUE_T)
     Inherits ##FILENAME##(Of KEY_T, VALUE_T, fast_to_uint32(Of KEY_T), default_equaler(Of KEY_T))
-    Implements ICloneable, ICloneable(Of ##FILENAME##(Of KEY_T, VALUE_T))
+    Implements ICloneable, ICloneable(Of ##FILENAME##(Of KEY_T, VALUE_T)), IEquatable(Of ##FILENAME##(Of KEY_T, VALUE_T))
 
 ##INCLUDE ##HASHTABLE##.copy_constructor.vbp
+
+##INCLUDE ..\binary_tree\codegen\map.container_operator.vbp
+##INCLUDE ..\binary_tree\codegen\map.compare.vbp
 
     Public Sub New()
         MyBase.New()

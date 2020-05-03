@@ -67,10 +67,12 @@ End Class
 
 Public Class ##FILENAME##(Of T)
     Inherits ##FILENAME##(Of T, fast_to_uint32(Of T), default_equaler(Of T))
-    Implements ICloneable, ICloneable(Of ##FILENAME##(Of T))
+    Implements ICloneable, ICloneable(Of ##FILENAME##(Of T)), IEquatable(Of ##FILENAME##(Of T))
 
 ##DEFINE VALUE_TYPE T
 ##INCLUDE ##HASHTABLE##.copy_constructor.vbp
+##INCLUDE ..\binary_tree\codegen\set.container_operator.vbp
+##INCLUDE ..\binary_tree\codegen\set.compare.vbp
 
     Public Sub New()
         MyBase.New()

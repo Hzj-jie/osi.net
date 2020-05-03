@@ -119,32 +119,34 @@ Friend Class sset_case
         Dim s2 As [sset](Of String) = Nothing
         copy(s2, s)
         assertion.equal(object_compare(s, s2), object_compare_undetermined, "cannot clone to a new instance.")
-        If validate() Then
-            assertion.equal(s.size(), s2.size())
-            Dim sz As Int64 = 0
-            sz = s.size()
-            Dim c As Int64 = 0
-            Dim it As [sset](Of String).iterator = Nothing
-
-            Dim cmp As void(Of [sset](Of String), [sset](Of String)) =
-                Sub(ByRef base, ByRef camp)
-                    assert(Not base Is Nothing)
-                    assert(Not camp Is Nothing)
-                    c = 0
-                    it = base.begin()
-                    While it <> base.end()
-                        assertion.not_equal(camp.find(+it), camp.end())
-                        c += 1
-                        it += 1
-                    End While
-                    assertion.equal(c, base.size())
-                    assertion.equal(c, sz)
-                End Sub
-            cmp(s, s2)
-            cmp(s2, s)
-
-            assertion.equal(s.size(), s2.size())
+        If Not validate() Then
+            Return
         End If
+        assertion.equal(s.size(), s2.size())
+        Dim sz As Int64 = 0
+        sz = s.size()
+        Dim c As Int64 = 0
+        Dim it As [sset](Of String).iterator = Nothing
+
+        Dim cmp As void(Of [sset](Of String), [sset](Of String)) =
+            Sub(ByRef base, ByRef camp)
+                assert(Not base Is Nothing)
+                assert(Not camp Is Nothing)
+                c = 0
+                it = base.begin()
+                While it <> base.end()
+                    assertion.not_equal(camp.find(+it), camp.end())
+                    c += 1
+                    it += 1
+                End While
+                assertion.equal(c, base.size())
+                assertion.equal(c, sz)
+            End Sub
+        cmp(s, s2)
+        cmp(s2, s)
+
+        assertion.equal(s.size(), s2.size())
+        assertion.equal(s, s2)
     End Sub
 
     Private Sub clear()
