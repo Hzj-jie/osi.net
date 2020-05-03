@@ -1,0 +1,6 @@
+﻿
+Calculate the strongness of affinity between A and a boolean value.
+Model: {A-true-possibility, A-false-possibility}
+Evaluator:
+  Input: ABCDE
+  Output: ABCDE-true-possibility, ABCDE-false-possibility

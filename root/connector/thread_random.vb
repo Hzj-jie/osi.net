@@ -36,6 +36,10 @@ Public NotInheritable Class thread_random
             Return r
         End Function
 
+        Public Shared Function larger_or_equal_than_0_and_less_than_1() As Double
+            Return ref().NextDouble()
+        End Function
+
         Private Sub New()
         End Sub
     End Class

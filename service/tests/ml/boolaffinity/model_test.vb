@@ -7,9 +7,9 @@ Imports System.IO
 Imports osi.root.connector
 Imports osi.root.utt
 Imports osi.root.utt.attributes
-Imports osi.service.ml.onebound
+Imports osi.service.ml.boolaffinity
 
-Namespace onebound
+Namespace boolaffinity
     <test>
     Public NotInheritable Class model_test
         <test>
@@ -19,12 +19,19 @@ Namespace onebound
                 Dim m As typed(Of String).model = Nothing
                 m = New typed(Of String).model()
                 For i As Int32 = 0 To 100
-                    Dim a As String = Nothing
-                    Dim b As String = Nothing
-                    a = guid_str()
-                    b = guid_str()
-                    If m.affinity(a, b) = 0 Then
-                        m.set(a, b, thread_random.of_double.larger_than_0_and_less_or_equal_than_1())
+                    Dim k As String = Nothing
+                    k = guid_str()
+                    If m.has(k) Then
+                        Continue For
+                    End If
+                    If rnd_bool() Then
+                        m.set(k,
+                              thread_random.of_double.larger_than_0_and_less_or_equal_than_1(),
+                              thread_random.of_double.larger_or_equal_than_0_and_less_than_1())
+                    Else
+                        m.set(k,
+                              thread_random.of_double.larger_or_equal_than_0_and_less_than_1(),
+                              thread_random.of_double.larger_than_0_and_less_or_equal_than_1())
                     End If
                 Next
                 assertion.is_true(m.dump(ms))

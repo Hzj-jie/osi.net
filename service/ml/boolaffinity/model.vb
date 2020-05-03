@@ -7,15 +7,32 @@ Imports System.IO
 Imports osi.root.connector
 Imports osi.root.formation
 
-Partial Public NotInheritable Class onebound
+Partial Public NotInheritable Class boolaffinity
     Partial Public NotInheritable Class typed(Of K)
         Public NotInheritable Class model
             Implements IEquatable(Of model)
 
-            Private ReadOnly m As unordered_map(Of K, unordered_map(Of K, Double))
+            Public Structure affinity
+                Public ReadOnly true_affinity As Double
+                Public ReadOnly false_affinity As Double
+
+                Shared Sub New()
+                    struct(Of affinity).register()
+                End Sub
+
+                Public Sub New(ByVal true_affinity As Double, ByVal false_affinity As Double)
+                    assert(true_affinity >= 0 AndAlso true_affinity <= 1)
+                    assert(false_affinity >= 0 AndAlso false_affinity <= 1)
+                    assert(true_affinity > 0 OrElse false_affinity > 0)
+                    Me.true_affinity = true_affinity
+                    Me.false_affinity = false_affinity
+                End Sub
+            End Structure
+
+            Private ReadOnly m As unordered_map(Of K, affinity)
 
             Public Sub New()
-                m = New unordered_map(Of K, unordered_map(Of K, Double))()
+                m = New unordered_map(Of K, affinity)()
             End Sub
 
             Public Function dump(ByVal o As MemoryStream) As Boolean
@@ -29,9 +46,9 @@ Partial Public NotInheritable Class onebound
             End Function
 
             Public Function load(ByVal i As MemoryStream) As Boolean
-                Dim r As unordered_map(Of K, unordered_map(Of K, Double)) = Nothing
+                Dim r As unordered_map(Of K, affinity) = Nothing
                 Return bytes_serializer.consume_from(i, r) AndAlso
-                       unordered_map(Of K, unordered_map(Of K, Double)).swap(r, m)
+                       unordered_map(Of K, affinity).swap(r, m)
             End Function
 
             Public Function load(ByVal i As String) As Boolean
@@ -44,18 +61,20 @@ Partial Public NotInheritable Class onebound
                 End Using
             End Function
 
-            Public Sub [set](ByVal a As K, ByVal b As K, ByVal v As Double)
-                assert(m.find(a) = m.end() OrElse m(a).find(b) = m(a).end())
-                assert(v > 0)
-                assert(v <= 1)
-                m(a)(b) = v
+            Public Sub [set](ByVal k As K, ByVal true_affinity As Double, ByVal false_affinity As Double)
+                assert(m.find(k) = m.end())
+                m(k) = New affinity(true_affinity, false_affinity)
             End Sub
 
-            Public Function affinity(ByVal a As K, ByVal b As K) As Double
-                If m.find(a) = m.end() OrElse m(a).find(b) = m(a).end() Then
-                    Return 0
+            Public Function has(ByVal a As K) As Boolean
+                Return m.find(a) <> m.end()
+            End Function
+
+            Public Function [get](ByVal a As K) As affinity
+                If m.find(a) = m.end() Then
+                    Return New affinity()
                 End If
-                Return m(a)(b)
+                Return m(a)
             End Function
 
             Public Overloads Function Equals(ByVal other As model) As Boolean Implements IEquatable(Of model).Equals

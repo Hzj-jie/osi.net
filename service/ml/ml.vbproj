@@ -48,6 +48,7 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="boolaffinity\model.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -87,6 +88,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="boolaffinity\design.txt" />
     <Content Include="onebound\design.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
