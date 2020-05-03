@@ -20,14 +20,11 @@ Public NotInheritable Class high_res_ticks_retriever
             perf_freq /= milli_tick
             perf_freq /= second_milli
             assert(perf_freq <> 0)
-            high_res_ticks()
+            ticks()
         Else
             perf_freq = 0
             raise_error(error_type.system, "high-resolution performance counter is not supported.")
         End If
-    End Sub
-
-    Private Sub New()
     End Sub
 
     'force revise the distance during next high_res_ticks() call.
@@ -35,7 +32,7 @@ Public NotInheritable Class high_res_ticks_retriever
         distance = 0
     End Sub
 
-    Public Shared Function high_res_ticks() As Int64
+    Public Shared Function ticks() As Int64
         If Not Stopwatch.IsHighResolution Then
             Return Now().Ticks()
         End If
@@ -73,4 +70,7 @@ Public NotInheritable Class high_res_ticks_retriever
         assert(perf_freq > 0)
         Return CLng(Stopwatch.GetTimestamp() / perf_freq)
     End Function
+
+    Private Sub New()
+    End Sub
 End Class

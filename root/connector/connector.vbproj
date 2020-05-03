@@ -145,6 +145,7 @@
     <Compile Include="template\equaler.vb" />
     <Compile Include="thread_random.vb" />
     <Compile Include="thread_static_ref.vb" />
+    <Compile Include="time\strong_high_res_ticks_retriever.vb" />
     <Compile Include="time\tick_clock.vb" />
     <Compile Include="time\tick_clock.implementations.vb" />
     <Compile Include="typed_once_action.vb" />

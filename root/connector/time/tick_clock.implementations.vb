@@ -9,7 +9,7 @@ Partial Public Class tick_clock
 
         Public Overrides Function ticks() As UInt64
             Dim r As Int64 = 0
-            r = high_res_ticks_retriever.high_res_ticks()
+            r = high_res_ticks_retriever.ticks()
             assert(r >= 0)
             Return CULng(r)
         End Function
@@ -20,7 +20,7 @@ Partial Public Class tick_clock
 
         Public Overrides Function milliseconds() As UInt64
             Dim r As Int64 = 0
-            r = low_res_ticks_retriever.low_res_milliseconds()
+            r = low_res_ticks_retriever.milliseconds()
             assert(r >= 0)
             Return CULng(r)
         End Function

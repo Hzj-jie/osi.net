@@ -21,11 +21,19 @@ Public NotInheritable Class nowadays
     End Sub
 
     Public Shared Function high_res_ticks() As Int64
-        Return high_res_ticks_retriever.high_res_ticks()
+        Return high_res_ticks_retriever.ticks()
+    End Function
+
+    Public Shared Function strong_high_res_ticks() As Int64
+        Return strong_high_res_ticks_retriever.ticks()
     End Function
 
     Public Shared Function high_res_milliseconds() As Int64
         Return ticks_to_milliseconds(high_res_ticks())
+    End Function
+
+    Public Shared Function strong_high_res_milliseconds() As Int64
+        Return ticks_to_milliseconds(strong_high_res_ticks())
     End Function
 
     Public Shared Function normal_res_ticks() As Int64
@@ -41,7 +49,7 @@ Public NotInheritable Class nowadays
     End Function
 
     Public Shared Function low_res_milliseconds() As Int64
-        Return low_res_ticks_retriever.low_res_milliseconds()
+        Return low_res_ticks_retriever.milliseconds()
     End Function
 
     Public Shared Function milliseconds() As Int64
