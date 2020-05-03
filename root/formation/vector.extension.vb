@@ -244,7 +244,9 @@ Public NotInheritable Class vector
     End Function
 
     Public Shared Function map(Of T, R)(ByVal i As vector(Of T), ByVal f As Func(Of T, R)) As vector(Of R)
-        assert(Not i Is Nothing)
+        If i Is Nothing Then
+            Return Nothing
+        End If
         assert(Not f Is Nothing)
         Dim o As vector(Of R) = Nothing
         o = New vector(Of R)(i.size())

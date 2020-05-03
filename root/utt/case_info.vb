@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 
-Friend Class case_info
+Friend NotInheritable Class case_info
     Public ReadOnly [case] As [case]
     Public finished As Boolean
 
