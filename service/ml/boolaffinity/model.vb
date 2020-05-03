@@ -47,8 +47,7 @@ Partial Public NotInheritable Class boolaffinity
 
             Public Function load(ByVal i As MemoryStream) As Boolean
                 Dim r As unordered_map(Of K, affinity) = Nothing
-                Return bytes_serializer.consume_from(i, r) AndAlso
-                       unordered_map(Of K, affinity).swap(r, m)
+                Return bytes_serializer.consume_from(i, r) AndAlso unordered_map.swap(r, m)
             End Function
 
             Public Function load(ByVal i As String) As Boolean

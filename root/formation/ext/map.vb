@@ -203,6 +203,10 @@ Public NotInheritable Class map
         Return create_index(vs, False)
     End Function
 
+    Public Shared Function move(Of K, V)(ByVal i As map(Of K, V)) As map(Of K, V)
+        Return map(Of K, V).move(i)
+    End Function
+
     Private Sub New()
     End Sub
 End Class

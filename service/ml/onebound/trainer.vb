@@ -20,8 +20,12 @@ Partial Public NotInheritable Class onebound
                 m(a)(b) += v
             End Sub
 
+            Private Function normalize() As unordered_map(Of K, model.bind)
+
+            End Function
+
             Public Function dump() As model
-                Return New model(m)
+                Return New model(normalize())
             End Function
         End Class
     End Class

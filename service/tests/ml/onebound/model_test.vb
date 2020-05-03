@@ -20,11 +20,17 @@ Namespace onebound
                 m = New typed(Of String).model()
                 For i As Int32 = 0 To 100
                     Dim a As String = Nothing
-                    Dim b As String = Nothing
                     a = guid_str()
-                    b = guid_str()
-                    If m.affinity(a, b) = 0 Then
-                        m.set(a, b, thread_random.of_double.larger_than_0_and_less_or_equal_than_1())
+                    If rnd_bool() Then
+                        Dim b As String = Nothing
+                        b = guid_str()
+                        If m.affinity(a, b) = 0 Then
+                            m.set(a, b, thread_random.of_double.larger_than_0_and_less_or_equal_than_1())
+                        End If
+                    Else
+                        If m.independence(a) = 0 Then
+                            m.set(a, thread_random.of_double.larger_than_0_and_less_or_equal_than_1())
+                        End If
                     End If
                 Next
                 assertion.is_true(m.dump(ms))
