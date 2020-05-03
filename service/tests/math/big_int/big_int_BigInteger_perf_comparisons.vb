@@ -30,7 +30,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-            Return loosen_bound({1, 1}, i, j)
+            Return loosen_bound({653, 1296}, i, j)
         End Function
     End Class
 
@@ -55,7 +55,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-            Return loosen_bound({1, 1}, i, j)
+            Return loosen_bound({809, 1950}, i, j)
         End Function
     End Class
 
@@ -77,7 +77,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-            Return loosen_bound({1, 1}, i, j)
+            Return loosen_bound({544, 956}, i, j)
         End Function
     End Class
 
@@ -108,7 +108,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-            Return loosen_bound({1, 1}, i, j)
+            Return loosen_bound({267, 941}, i, j)
         End Function
     End Class
 
@@ -133,7 +133,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-            Return loosen_bound({1, 1}, i, j)
+            Return loosen_bound({267, 865}, i, j)
         End Function
     End Class
 
@@ -151,7 +151,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-            Return loosen_bound({1, 1}, i, j)
+            Return loosen_bound({157, 303}, i, j)
         End Function
     End Class
 
@@ -201,7 +201,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         End Function
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-            Return loosen_bound({1, 1}, i, j)
+            Return loosen_bound({256, 729}, i, j)
         End Function
     End Class
 
@@ -228,7 +228,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         End Function
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-            Return loosen_bound({1, 1}, i, j)
+            Return loosen_bound({154, 3308}, i, j)
         End Function
     End Class
 
