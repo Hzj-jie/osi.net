@@ -67,6 +67,7 @@
     <Compile Include="onebound\evaluator.vb" />
     <Compile Include="onebound\model.vb" />
     <Compile Include="onebound\trainer.vb" />
+    <Compile Include="wordbreaker\cjk\trainer.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -91,6 +92,7 @@
     <Content Include="boolaffinity\design.txt" />
     <Content Include="onebound\design.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="ml.dep" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

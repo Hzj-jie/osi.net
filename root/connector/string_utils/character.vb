@@ -81,6 +81,12 @@ Public Module _character
         Return c.big_endian_bytes()(0) = 0
     End Function
 
+    <Extension()> Public Function cjk(ByVal c As Char) As Boolean
+        Dim v As UInt16 = 0
+        v = char_uint16(c)
+        Return v >= &H4E00 AndAlso v <= &H9FFF
+    End Function
+
     Public Function uint16_char(ByVal i As UInt16) As Char
         Return Convert.ToChar(i)
     End Function

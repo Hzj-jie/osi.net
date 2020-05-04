@@ -66,6 +66,7 @@
     </Compile>
     <Compile Include="onebound\evaluator_test.vb" />
     <Compile Include="onebound\model_test.vb" />
+    <Compile Include="wordbreaker\cjk\trainer_test.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -86,6 +87,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\..\..\root\root.utt.props" Condition="'$(RootUttProps)'==''" />
   <Import Project="$(ServicePath)\ml\ml.props" Condition="'$(MlProps)'==''" />
