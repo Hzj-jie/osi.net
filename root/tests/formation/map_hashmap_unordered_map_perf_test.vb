@@ -21,7 +21,7 @@ Public NotInheritable Class map_hashmap_unordered_map_perf_test
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-        Return loosen_bound({1142, 892, 347, 719, 1116}, i, j)
+        Return loosen_bound({1821, 2149, 562, 1166, 1169}, i, j)
     End Function
 
     Private Shared Function r(ByVal c As [case]) As [case]
