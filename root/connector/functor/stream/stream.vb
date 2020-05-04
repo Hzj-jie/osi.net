@@ -3,7 +3,9 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Partial Public Class streamer(Of T)
+Imports osi.root.constants
+
+Partial Public Class stream(Of T)
     Private ReadOnly e As container_operator(Of T).enumerator
 
     Public Sub New(ByVal e As container_operator(Of T).enumerator)
@@ -11,8 +13,8 @@ Partial Public Class streamer(Of T)
         Me.e = e
     End Sub
 
-    Public Function map(Of R)(ByVal f As Func(Of T, R)) As streamer(Of R)
-        Return New streamer(Of R)(container_operator(Of T).map_enumerator(e, f))
+    Public Function map(Of R)(ByVal f As Func(Of T, R)) As stream(Of R)
+        Return New stream(Of R)(container_operator.enumerators.map(e, f))
     End Function
 
     Public Function aggregate(ByVal f As Func(Of T, T, T), ByVal r As T) As T
@@ -46,5 +48,18 @@ Partial Public Class streamer(Of T)
 
     Public Function collect(Of CT)() As CT
         Return collect(alloc(Of CT)())
+    End Function
+
+    Public Function skip(ByVal count As UInt32) As stream(Of T)
+        Dim i As UInt32 = 0
+        While i < count AndAlso Not e.end()
+            e.next()
+            i += uint32_1
+        End While
+        Return Me
+    End Function
+
+    Public Function limit(ByVal count As UInt32) As stream(Of T)
+        Return New stream(Of T)(container_operator.enumerators.limit_count(e, count))
     End Function
 End Class

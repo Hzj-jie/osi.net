@@ -100,10 +100,10 @@
     <Compile Include="functor\container_operator\container_operator.enumerator.vb" />
     <Compile Include="functor\container_operator\container_operator.infer.vb" />
     <Compile Include="functor\container_operator\container_operator.vb" />
-    <Compile Include="functor\streamer\streamer.aggregator.vb" />
-    <Compile Include="functor\streamer\streamer.collector.vb" />
-    <Compile Include="functor\streamer\streamer.container.vb" />
-    <Compile Include="functor\streamer\streamer.vb" />
+    <Compile Include="functor\stream\stream.aggregator.vb" />
+    <Compile Include="functor\stream\stream.collector.vb" />
+    <Compile Include="functor\stream\stream.container.vb" />
+    <Compile Include="functor\stream\stream.vb" />
     <Compile Include="functor\string_serializer\json_serializer.vb" />
     <Compile Include="functor\registry\binary_operator_registry.vb" />
     <Compile Include="functor\registry\binary_operator_registry2.vb" />

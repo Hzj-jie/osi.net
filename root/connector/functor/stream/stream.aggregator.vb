@@ -3,7 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Partial Public Class streamer(Of T)
+Partial Public Class stream(Of T)
     Public NotInheritable Class aggregators
         Public Shared ReadOnly sum As Func(Of T, T, T) = Function(ByVal l As T, ByVal r As T) As T
                                                              Return binary_operator.add(l, r)

@@ -150,8 +150,8 @@ Public Module _map
         Return o
     End Function
 
-    <Extension()> Public Function stream(Of K, V)(ByVal i As map(Of K, V)) As streamer(Of first_const_pair(Of K, V))
-        Return New streamer(Of first_const_pair(Of K, V)).container(Of map(Of K, V))(i)
+    <Extension()> Public Function stream(Of K, V)(ByVal i As map(Of K, V)) As stream(Of first_const_pair(Of K, V))
+        Return New stream(Of first_const_pair(Of K, V)).container(Of map(Of K, V))(i)
     End Function
 End Module
 

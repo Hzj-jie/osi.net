@@ -25,15 +25,17 @@ Partial Public NotInheritable Class onebound
                 m = New unordered_map(Of K, bind)()
             End Sub
 
-            Public Sub accumulate(ByVal a As K, ByVal b As K, ByVal v As Double)
+            Public Function accumulate(ByVal a As K, ByVal b As K, ByVal v As Double) As trainer
                 assert(v > 0)
                 m(a).followers(b) += v
-            End Sub
+                Return Me
+            End Function
 
-            Public Sub accumulate(ByVal a As K, ByVal v As Double)
+            Public Function accumulate(ByVal a As K, ByVal v As Double) As trainer
                 assert(v > 0)
                 m(a).independence += v
-            End Sub
+                Return Me
+            End Function
 
             Private Shared Function normalize(ByVal b As bind) As model.bind
                 assert(Not b Is Nothing)
@@ -44,7 +46,7 @@ Partial Public NotInheritable Class onebound
                          map(Function(ByVal p As first_const_pair(Of K, Double)) As Double
                                  Return p.second
                              End Function).
-                         aggregate(streamer(Of Double).aggregators.sum)
+                         aggregate(stream(Of Double).aggregators.sum)
                 Return New model.bind(b.independence / a,
                                       b.followers.
                                           stream().

@@ -3,7 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Public NotInheritable Class container_operator
+Partial Public NotInheritable Class container_operator
     Public Shared Sub emplace(Of CONTAINER, T)(ByVal f As Func(Of CONTAINER, T, Boolean))
         container_operator(Of CONTAINER, T).emplace(f)
     End Sub

@@ -51,7 +51,7 @@ Public Module _unordered_map
     End Function
 
     <Extension()> Public Function stream(Of K, V) _
-                                        (ByVal this As unordered_map(Of K, V)) As streamer(Of first_const_pair(Of K, V))
-        Return New streamer(Of first_const_pair(Of K, V)).container(Of unordered_map(Of K, V))(this)
+                                        (ByVal this As unordered_map(Of K, V)) As stream(Of first_const_pair(Of K, V))
+        Return New stream(Of first_const_pair(Of K, V)).container(Of unordered_map(Of K, V))(this)
     End Function
 End Module

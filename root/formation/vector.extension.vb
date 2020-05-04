@@ -231,8 +231,8 @@ Public Module vector_extension
         Return o
     End Function
 
-    <Extension()> Public Function stream(Of T)(ByVal v As vector(Of T)) As streamer(Of T)
-        Return New streamer(Of T).container(Of vector(Of T))(v)
+    <Extension()> Public Function stream(Of T)(ByVal v As vector(Of T)) As stream(Of T)
+        Return New stream(Of T).container(Of vector(Of T))(v)
     End Function
 End Module
 

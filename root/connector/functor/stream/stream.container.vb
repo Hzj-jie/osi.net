@@ -3,9 +3,9 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Partial Public Class streamer(Of T)
+Partial Public Class stream(Of T)
     Public NotInheritable Class container(Of CT)
-        Inherits streamer(Of T)
+        Inherits stream(Of T)
 
         Public Sub New(ByVal i As CT)
             Me.New(container_operator(Of CT, T).default, i)
