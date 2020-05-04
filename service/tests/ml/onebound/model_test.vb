@@ -7,7 +7,7 @@ Imports System.IO
 Imports osi.root.connector
 Imports osi.root.utt
 Imports osi.root.utt.attributes
-Imports osi.service.ml.onebound
+Imports osi.service.ml.onebound(Of String)
 
 Namespace onebound
     <test>
@@ -16,8 +16,8 @@ Namespace onebound
         <repeat(100)>
         Private Shared Sub load_and_dump()
             Using ms As MemoryStream = New MemoryStream()
-                Dim t As typed(Of String).trainer = Nothing
-                t = New typed(Of String).trainer()
+                Dim t As trainer = Nothing
+                t = New trainer()
                 For i As Int32 = 0 To 100
                     Dim a As String = Nothing
                     a = guid_str()
@@ -29,12 +29,12 @@ Namespace onebound
                         t.accumulate(a, thread_random.of_double.larger_than_0_and_less_or_equal_than_1())
                     End If
                 Next
-                Dim m As typed(Of String).model = Nothing
+                Dim m As model = Nothing
                 m = t.dump()
                 assertion.is_true(m.dump(ms))
                 ms.Position() = 0
-                Dim m2 As typed(Of String).model = Nothing
-                assertion.is_true(typed(Of String).model.load(ms, m2))
+                Dim m2 As model = Nothing
+                assertion.is_true(model.load(ms, m2))
                 assertion.equal(m, m2)
             End Using
         End Sub
