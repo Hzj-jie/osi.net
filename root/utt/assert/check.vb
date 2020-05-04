@@ -57,13 +57,13 @@ Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
     Public Shared Function equal(Of T)(ByVal i As T,
                                        ByVal j As T,
                                        ByVal ParamArray msg() As Object) As Boolean
-        Return is_true(compare(i, j) = 0, left_right_msg("equal to", i, j, msg))
+        Return is_true(connector.equal(i, j), left_right_msg("equal to", i, j, msg))
     End Function
 
     Public Shared Function not_equal(Of T)(ByVal i As T,
                                            ByVal j As T,
                                            ByVal ParamArray msg() As Object) As Boolean
-        Return is_true(compare(i, j) <> 0, left_right_msg("not equal to", i, j, msg))
+        Return is_true(Not connector.equal(i, j), left_right_msg("not equal to", i, j, msg))
     End Function
 
     Public Shared Function less(Of T)(ByVal i As T, ByVal j As T, ByVal ParamArray msg() As Object) As Boolean
@@ -155,6 +155,17 @@ Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
     Public Shared Function happening(ByVal f As Func(Of Boolean),
                                      ByVal ParamArray msg() As Object) As Boolean
         Return happening_in(f, default_assert_async_wait_time_ms, msg)
+    End Function
+
+    Public Shared Function buzy_happening_in(ByVal f As Func(Of Boolean),
+                                             ByVal ms As UInt32,
+                                             ByVal ParamArray msg() As Object) As Boolean
+        Return is_true(lazy_sleep_wait_until(f, ms), msg)
+    End Function
+
+    Public Shared Function buzy_happening(ByVal f As Func(Of Boolean),
+                                          ByVal ParamArray msg() As Object) As Boolean
+        Return buzy_happening_in(f, default_assert_async_wait_time_ms, msg)
     End Function
 
     Public Shared Function not_happening_in(ByVal f As Func(Of Boolean),

@@ -45,8 +45,8 @@ Namespace sign
                 Case merge_method.concat
                     Dim b() As Byte = Nothing
                     ReDim b(array_size(key) + count - uint32_1)
-                    memcpy(b, key)
-                    memcpy(b, array_size(key), i, offset, count)
+                    arrays.copy(b, key)
+                    arrays.copy(b, array_size(key), i, offset, count)
                     Return compute(b)
                 Case merge_method.ring
                     Dim o() As Byte = Nothing

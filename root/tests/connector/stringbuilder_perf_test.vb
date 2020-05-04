@@ -75,7 +75,7 @@ Public Class stringbuilder_perf_test(Of PRE_ALLOC As _boolean, RND_EACH_ROUND As
         Public Overrides Function finish() As Boolean
             s.Clear()
             s.shrink_to_fit()
-            repeat_gc_collect()
+            garbage_collector.repeat_collect()
             Return MyBase.finish()
         End Function
     End Class

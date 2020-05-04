@@ -8,7 +8,7 @@ Imports osi.root.connector
 
 Public Module _performance
     Private Sub refresh_process_status()
-        current_process.Refresh()
+        this_process.ref.Refresh()
     End Sub
 
     Private Function processor_usage(ByVal usage As Int64,
@@ -41,7 +41,7 @@ Public Module _performance
         ticks = Now().Ticks()
         usage = total_processor_time().Ticks()
         If impl.last_ticks = 0 Then
-            impl.last_ticks = current_process.StartTime().Ticks()
+            impl.last_ticks = this_process.ref.StartTime().Ticks()
         End If
         Dim rtn As Double = 0
         rtn = processor_usage(usage, impl.last_usage_ticks, ticks, impl.last_ticks)
@@ -67,7 +67,7 @@ Public Module _performance
     ' system. The range of the return of this function is [0, 100 * number-of-processors].
     Public Function processor_usage() As Double
         Return processor_usage(total_processor_time().Ticks(), 0,
-                               Now().Ticks(), current_process.StartTime().Ticks())
+                               Now().Ticks(), this_process.ref.StartTime().Ticks())
     End Function
 
     Public Function recent_processor_usage_percentage() As Double
@@ -85,7 +85,7 @@ Public Module _performance
     Public Function total_processor_time() As TimeSpan
         refresh_process_status()
         Try
-            Return current_process.TotalProcessorTime()
+            Return this_process.ref.TotalProcessorTime()
         Catch
             Return Nothing
         End Try
@@ -98,7 +98,7 @@ Public Module _performance
     Public Function private_bytes_usage() As Int64
         refresh_process_status()
         Try
-            Return current_process.PrivateMemorySize64()
+            Return this_process.ref.PrivateMemorySize64()
         Catch
             Return 0
         End Try
@@ -107,7 +107,7 @@ Public Module _performance
     Public Function virtual_bytes_usage() As Int64
         refresh_process_status()
         Try
-            Return current_process.VirtualMemorySize64()
+            Return this_process.ref.VirtualMemorySize64()
         Catch
             Return 0
         End Try
@@ -116,7 +116,7 @@ Public Module _performance
     Public Function workingset_bytes_usage() As Int64
         refresh_process_status()
         Try
-            Return current_process.WorkingSet64()
+            Return this_process.ref.WorkingSet64()
         Catch
             Return 0
         End Try
@@ -125,7 +125,7 @@ Public Module _performance
     Public Function min_workingset_bytes_usage() As Int64
         refresh_process_status()
         Try
-            Return current_process.MinWorkingSet().ToInt64()
+            Return this_process.ref.MinWorkingSet().ToInt64()
         Catch
             Return 0
         End Try
@@ -134,7 +134,7 @@ Public Module _performance
     Public Function max_workingset_bytes_usage() As Int64
         refresh_process_status()
         Try
-            Return current_process.MaxWorkingSet().ToInt64()
+            Return this_process.ref.MaxWorkingSet().ToInt64()
         Catch
             Return 0
         End Try
@@ -143,7 +143,7 @@ Public Module _performance
     Public Function nonpaged_system_memory_bytes_usage() As Int64
         refresh_process_status()
         Try
-            Return current_process.NonpagedSystemMemorySize64()
+            Return this_process.ref.NonpagedSystemMemorySize64()
         Catch
             Return 0
         End Try
@@ -152,7 +152,7 @@ Public Module _performance
     Public Function paged_memory_bytes_usage() As Int64
         refresh_process_status()
         Try
-            Return current_process.PagedMemorySize64()
+            Return this_process.ref.PagedMemorySize64()
         Catch
             Return 0
         End Try
@@ -161,7 +161,7 @@ Public Module _performance
     Public Function paged_system_memory_bytes_usage() As Int64
         refresh_process_status()
         Try
-            Return current_process.PagedSystemMemorySize64()
+            Return this_process.ref.PagedSystemMemorySize64()
         Catch
             Return 0
         End Try
@@ -170,7 +170,7 @@ Public Module _performance
     Public Function peak_paged_memory_bytes_usage() As Int64
         refresh_process_status()
         Try
-            Return current_process.PeakPagedMemorySize64()
+            Return this_process.ref.PeakPagedMemorySize64()
         Catch
             Return 0
         End Try
@@ -179,7 +179,7 @@ Public Module _performance
     Public Function peak_virtual_memory_bytes_usage() As Int64
         refresh_process_status()
         Try
-            Return current_process.PeakVirtualMemorySize64()
+            Return this_process.ref.PeakVirtualMemorySize64()
         Catch
             Return 0
         End Try
@@ -188,7 +188,7 @@ Public Module _performance
     Public Function peak_workingset_bytes_usage() As Int64
         refresh_process_status()
         Try
-            Return current_process.PeakWorkingSet64()
+            Return this_process.ref.PeakWorkingSet64()
         Catch
             Return 0
         End Try

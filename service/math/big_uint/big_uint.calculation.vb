@@ -3,7 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-#Const GCD_USE_SUCCESSIVE_DIVISION = False
 #Const USE_MODULUS_BIT = False
 #Const USE_DIVIDE_BIT = False
 
@@ -32,12 +31,13 @@ Partial Public NotInheritable Class big_uint
 
         If v.size() < that.v.size() Then
             v.resize(that.v.size())
-            memcpy(v.data(), i, that.v.data(), i, that.v.size() - i)
+            arrays.copy(v.data(), i, that.v.data(), i, that.v.size() - i)
         End If
         recursive_add(c, i)
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function [sub](ByVal that As big_uint) As big_uint
         Dim o As Boolean = False
         [sub](that, o)
@@ -47,6 +47,15 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
+    Private Function assert_sub(ByVal that As big_uint, ByVal offset As UInt32) As big_uint
+        Dim o As Boolean = False
+        [sub](that, offset, o)
+        assert(Not o)
+        Return Me
+    End Function
+
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function assert_sub(ByVal that As big_uint) As big_uint
         Dim o As Boolean = False
         [sub](that, o)
@@ -54,32 +63,37 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    Public Function [sub](ByVal that As big_uint, ByRef overflow As Boolean) As big_uint
+    Private Function [sub](ByVal that As big_uint, ByVal offset As UInt32, ByRef overflow As Boolean) As big_uint
         If that Is Nothing OrElse that.is_zero() Then
             overflow = False
             Return Me
         End If
-        If that.v.size() > v.size() Then
-            v.resize(that.v.size())
+        If that.v.size() + offset > v.size() Then
+            v.resize(that.v.size() + offset)
         End If
         assert(v.size() > 0 AndAlso that.v.size() > 0)
         Dim i As UInt32 = 0
         Dim c As UInt32 = 0
         For i = 0 To that.v.size() - uint32_1
-            c = [sub](that.v.get(i), c, i)
+            c = [sub](that.v.get(i), c, i + offset)
         Next
-        overflow = recursive_sub(c, i)
+        overflow = recursive_sub(c, i + offset)
         remove_extra_blank()
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
+    Public Function [sub](ByVal that As big_uint, ByRef overflow As Boolean) As big_uint
+        Return [sub](that, 0, overflow)
+    End Function
+
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function multiply(ByVal that As big_uint) As big_uint
         multiply(move(Me), that)
         Return Me
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function multiply(ByVal that As UInt32) As big_uint
         If that = 0 Then
             set_zero()
@@ -90,7 +104,13 @@ Partial Public NotInheritable Class big_uint
         End If
         If is_one() Then
             replace_by(that)
+            Return Me
         End If
+        If that.power_of_2() Then
+            left_shift(CULng(that.trailing_binary_zero_count()))
+            Return Me
+        End If
+
         Dim c As UInt32 = 0
         For i As UInt32 = 0 To v.size() - uint32_1
             Dim t As UInt64 = 0
@@ -107,69 +127,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    Public Function divide(ByVal that As big_uint,
-                           ByRef divide_by_zero As Boolean,
-                           Optional ByRef remainder As big_uint = Nothing) As big_uint
-        If that Is Nothing OrElse that.is_zero() Then
-            divide_by_zero = True
-            Return Me
-        End If
-        divide_by_zero = False
-        If is_zero() OrElse that.is_one() Then
-            remainder = big_uint.zero()
-            Return Me
-        End If
-        If is_one() Then
-            remainder = big_uint.one()
-            set_zero()
-            Return Me
-        End If
-        If that.power_of_2() Then
-            Dim l As UInt64 = 0
-            l = that.bit_count() - uint64_1
-            remainder = Me.CloneT().[and](that - uint32_1)
-            right_shift(l)
-            Return Me
-        End If
-        If that.fit_uint32() Then
-            Dim r As UInt32 = 0
-            divide(that.as_uint32(), r, divide_by_zero)
-            assert(Not divide_by_zero)
-            remainder = New big_uint(r)
-            Return Me
-        End If
-        assert(Not that.is_zero_or_one())
-        remainder = move(Me)
-        set_zero()
-        If remainder.uint32_size() < that.uint32_size() Then
-            Return Me
-        End If
-
-#If DEBUG Then
-        assert(remainder.bit_count() >= that.bit_count())
-#End If
-
-        'make sure the that will not be impacted during the calculation
-#If DEBUG Then
-        Dim original_that As big_uint = Nothing
-        original_that = that
-        that = that.CloneT()
-#End If
-
-#If USE_DIVIDE_BIT Then
-        divide_bit(that, remainder)
-#Else
-        divide_uint(that, remainder)
-#End If
-        remove_last_blank()
-
-#If DEBUG Then
-        assert(remainder.less(original_that))
-        assert(that.equal(original_that))
-#End If
-        Return Me
-    End Function
-
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function divide(ByVal that As big_uint, Optional ByRef remainder As big_uint = Nothing) As big_uint
         Dim r As Boolean = False
         divide(that, r, remainder)
@@ -179,6 +137,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function assert_divide(ByVal that As big_uint, Optional ByRef remainder As big_uint = Nothing) As big_uint
         Dim r As Boolean = False
         divide(that, r, remainder)
@@ -186,58 +145,59 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
-    Public Function divide(ByVal that As UInt32,
-                           ByRef divide_by_zero As Boolean,
-                           Optional ByRef remainder As UInt32 = 0) As big_uint
-        divide(that, remainder, divide_by_zero)
-        Return Me
-    End Function
-
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function divide(ByVal that As UInt32,
                            Optional ByRef remainder As UInt32 = 0) As big_uint
         Dim r As Boolean = False
-        divide(that, remainder, r)
+        divide(that, r, remainder)
         If r Then
             Throw divide_by_zero()
         End If
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function assert_divide(ByVal that As UInt32,
                                   Optional ByRef remainder As UInt32 = 0) As big_uint
         Dim r As Boolean = False
-        divide(that, remainder, r)
+        divide(that, r, remainder)
         assert(Not r)
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function divide(ByVal that As UInt16,
                            ByRef divide_by_zero As Boolean,
                            Optional ByRef remainder As UInt32 = 0) As big_uint
         Return divide(CUInt(that), divide_by_zero, remainder)
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function divide(ByVal that As UInt16,
                            Optional ByRef remainder As UInt32 = 0) As big_uint
         Return divide(CUInt(that), remainder)
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function assert_divide(ByVal that As UInt16,
                                   Optional ByRef remainder As UInt32 = 0) As big_uint
         Return assert_divide(CUInt(that), remainder)
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function divide(ByVal that As Byte,
                            ByRef divide_by_zero As Boolean,
                            Optional ByRef remainder As UInt32 = 0) As big_uint
         Return divide(CUInt(that), divide_by_zero, remainder)
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function divide(ByVal that As Byte,
                            Optional ByRef remainder As UInt32 = 0) As big_uint
         Return divide(CUInt(that), remainder)
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function assert_divide(ByVal that As Byte,
                                   Optional ByRef remainder As UInt32 = 0) As big_uint
         Return assert_divide(CUInt(that), remainder)
@@ -296,6 +256,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function modulus(ByVal that As UInt32) As big_uint
         Dim r As Boolean = False
         modulus(that, r)
@@ -305,6 +266,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function assert_modulus(ByVal that As UInt32) As big_uint
         Dim r As Boolean = False
         modulus(that, r)
@@ -334,15 +296,25 @@ Partial Public NotInheritable Class big_uint
             Return Me
         End If
 
+#If DEBUG Then
+        Dim original_that As big_uint = Nothing
+        original_that = that.CloneT()
+#End If
+
 #If USE_MODULUS_BIT Then
         modulus_bit(that)
 #Else
         modulus_uint(that)
 #End If
 
+#If DEBUG Then
+        assert(that.equal(original_that))
+#End If
+
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function modulus(ByVal that As big_uint) As big_uint
         Dim r As Boolean = False
         modulus(that, r)
@@ -352,6 +324,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function assert_modulus(ByVal that As big_uint) As big_uint
         Dim r As Boolean = False
         modulus(that, r)
@@ -359,6 +332,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function power_2() As big_uint
         Dim s As big_uint = Nothing
         s = move(Me)
@@ -376,7 +350,7 @@ Partial Public NotInheritable Class big_uint
             Return Me
         End If
         that = that.CloneT()
-        For i As UInt32 = 1 To that.remove_binary_trailing_zeros()
+        For i As UInt32 = 1 To that.remove_trailing_binary_zeros()
             power_2()
         Next
         Dim c As big_uint = Nothing
@@ -396,6 +370,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function extract(ByVal that As big_uint,
                             ByRef divide_by_zero As Boolean,
                             Optional ByRef remainder As big_uint = Nothing) As big_uint
@@ -403,6 +378,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function extract(ByVal that As big_uint, Optional ByRef remainder As big_uint = Nothing) As big_uint
         Dim r As Boolean = False
         extract(that, remainder, r)
@@ -412,6 +388,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function assert_extract(ByVal that As big_uint, Optional ByRef remainder As big_uint = Nothing) As big_uint
         Dim r As Boolean = False
         extract(that, remainder, r)
@@ -432,66 +409,5 @@ Partial Public NotInheritable Class big_uint
             End While
         End If
         Return Me
-    End Function
-
-    Public Shared Function gcd(ByVal a As big_uint, ByVal b As big_uint) As big_uint
-        assert(Not a Is Nothing)
-        assert(Not b Is Nothing)
-        If a.is_zero() OrElse b.is_zero() Then
-            Return zero()
-        End If
-        If a.is_one() OrElse b.is_one() Then
-            Return one()
-        End If
-        If a.equal(b) Then
-            Return a.CloneT()
-        End If
-#If GCD_USE_SUCCESSIVE_DIVISION Then
-        Dim c As big_uint = Nothing
-        If a.less(b) Then
-            c = a
-            a = b
-            b = c
-        End If
-        c = a.CloneT().assert_modulus(b)
-        While Not c.is_zero()
-            a = b.CloneT()
-            b = c
-            c = a.CloneT().assert_modulus(b)
-        End While
-        Return b
-#Else
-        a = a.CloneT()
-        b = b.CloneT()
-        Dim shift As UInt32 = 0
-        Dim az As UInt32 = 0
-        Dim bz As UInt32 = 0
-        az = a.binary_trailing_zero_count()
-        bz = b.binary_trailing_zero_count()
-        a.right_shift(az)
-        b.right_shift(bz)
-        shift = min(az, bz)
-
-        While True
-            assert(Not a.is_zero())
-            assert(Not b.is_zero())
-            a.remove_binary_trailing_zeros()
-            b.remove_binary_trailing_zeros()
-
-            Dim cmp As Int32 = 0
-            cmp = a.compare(b)
-            If cmp = 0 Then
-                Return a.left_shift(shift)
-            End If
-            If cmp < 0 Then
-                b.assert_sub(a)
-            Else
-                assert(cmp > 0)
-                a.assert_sub(b)
-            End If
-        End While
-        assert(False)
-        Return Nothing
-#End If
     End Function
 End Class

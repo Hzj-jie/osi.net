@@ -1,6 +1,7 @@
 
 ##DEFAULT HASHTABLE hasharray
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.template
@@ -19,38 +20,46 @@ Public Class ##FILENAME##(Of _
         MyBase.New()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Shadows Function clone(Of R As ##FILENAME##(Of T, _HASHER, _EQUALER))() As R
         Return MyBase.clone(Of R)()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function CloneT() As ##FILENAME##(Of T, _HASHER, _EQUALER) _
             Implements ICloneable(Of ##FILENAME##(Of T, _HASHER, _EQUALER)).Clone
         Return clone(Of ##FILENAME##(Of T, _HASHER, _EQUALER))()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Shadows Function move(ByVal v As ##FILENAME##(Of T, _HASHER, _EQUALER)) _
                                        As ##FILENAME##(Of T, _HASHER, _EQUALER)
         Return ##HASHTABLE##(Of T, _true, _HASHER, _EQUALER) _
                    .move(Of ##FILENAME##(Of T, _HASHER, _EQUALER))(v)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Shared Shadows Function move(Of R As ##FILENAME##(Of T, _HASHER, _EQUALER))(ByVal v As R) As R
         Return ##HASHTABLE##(Of T, _true, _HASHER, _EQUALER).move(Of R)(v)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Shadows Function swap(ByVal this As ##FILENAME##(Of T, _HASHER, _EQUALER),
                                         ByVal that As ##FILENAME##(Of T, _HASHER, _EQUALER)) As Boolean
         Return ##HASHTABLE##(Of T, _true, _HASHER, _EQUALER).swap(this, that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function [erase](ByVal it As iterator) As Boolean
         Return MyBase.erase(it)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function [erase](ByVal value As T) As Boolean
         Return MyBase.erase(value) = uint32_1
     End Function
@@ -58,34 +67,41 @@ End Class
 
 Public Class ##FILENAME##(Of T)
     Inherits ##FILENAME##(Of T, fast_to_uint32(Of T), default_equaler(Of T))
-    Implements ICloneable, ICloneable(Of ##FILENAME##(Of T))
+    Implements ICloneable, ICloneable(Of ##FILENAME##(Of T)), IEquatable(Of ##FILENAME##(Of T))
 
 ##DEFINE VALUE_TYPE T
 ##INCLUDE ##HASHTABLE##.copy_constructor.vbp
+##INCLUDE ..\binary_tree\codegen\set.container_operator.vbp
+##INCLUDE ..\binary_tree\codegen\set.compare.vbp
 
     Public Sub New()
         MyBase.New()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Shadows Function clone(Of R As ##FILENAME##(Of T))() As R
         Return MyBase.clone(Of R)()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function CloneT() As ##FILENAME##(Of T) _
             Implements ICloneable(Of ##FILENAME##(Of T)).Clone
         Return MyBase.clone(Of ##FILENAME##(Of T))()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Shadows Function move(ByVal v As ##FILENAME##(Of T)) _
                                        As ##FILENAME##(Of T)
         Return ##FILENAME##(Of T, fast_to_uint32(Of T), default_equaler(Of T)) _
                   .move(Of ##FILENAME##(Of T))(v)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Shadows Function swap(ByVal this As ##FILENAME##(Of T),
                                         ByVal that As ##FILENAME##(Of T)) As Boolean
         Return ##FILENAME##(Of T, fast_to_uint32(Of T), default_equaler(Of T)).swap(this, that)

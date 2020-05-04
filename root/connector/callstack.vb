@@ -43,7 +43,9 @@ Public Module _callstack
 
     Private Function build_stack_trace(ByVal s As StackFrame) As String
         assert(Not s Is Nothing)
-        assert(Not s.GetMethod() Is Nothing)
+        If s.GetMethod() Is Nothing Then
+            Return "##NO_MANAGED_METHOD##"
+        End If
         Dim r As StringBuilder = Nothing
         r = New StringBuilder()
         If isdebugmode() Then

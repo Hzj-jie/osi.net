@@ -100,7 +100,7 @@ Public Class performance_case_wrapper
                     max,
                     ", min used loops ",
                     min,
-                    ", average used_loops ",
+                    ", average used loops ",
                     ave)
         expectation.less_or_equal(min, max_loops(),
                                   "performance case ",

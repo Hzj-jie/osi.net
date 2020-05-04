@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 ' TODO: Move to type_info.
+Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 Imports osi.root.delegates
 
@@ -63,26 +64,29 @@ Public Module _equal
                    End Function
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Function equal(ByVal this As T, ByVal that As T2, ByRef o As Boolean) As Boolean
             If f Is Nothing Then
                 Return False
-            Else
-                Return f(this, that, o)
             End If
+            Return f(this, that, o)
         End Function
 
         Private Sub New()
         End Sub
     End Class
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function this_to_t2(Of T)(ByVal this As Object, ByVal that As T) As Boolean
         Return direct_cast(Of IEquatable(Of T))(this).Equals(that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function that_to_t(Of T)(ByVal this As T, ByVal that As Object) As Boolean
         Return direct_cast(Of IEquatable(Of T))(that).Equals(this)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function runtime_this_to_t2(Of T)(ByVal this As Object, ByVal that As T, ByRef o As Boolean) As Boolean
         If TypeOf this Is IEquatable(Of T) Then
             o = this_to_t2(this, that)
@@ -91,6 +95,7 @@ Public Module _equal
         Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function runtime_that_to_t(Of T)(ByVal this As T, ByVal that As Object, ByRef o As Boolean) As Boolean
         If TypeOf that Is IEquatable(Of T) Then
             o = that_to_t(this, that)
@@ -99,11 +104,13 @@ Public Module _equal
         Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function runtime_equal(ByVal this As Object, ByVal that As Object, ByRef o As Boolean) As Boolean
         Return runtime_this_to_t2(this, that, o) OrElse
                runtime_that_to_t(this, that, o)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function object_equal(ByVal this As Object, ByVal that As Object, ByRef o As Boolean) As Boolean
         Dim cmp As Int32 = 0
         cmp = object_compare(this, that)
@@ -114,6 +121,7 @@ Public Module _equal
         Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function compare_equal(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Boolean) As Boolean
         Dim cmp As Int32 = 0
         If non_null_compare(this, that, cmp) Then
@@ -123,6 +131,7 @@ Public Module _equal
         Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function runtime_compare_equal(ByVal this As Object, ByVal that As Object, ByRef o As Boolean) As Boolean
         Dim cmp As Int32 = 0
         If not_null_runtime_compare(this, that, cmp) Then
@@ -132,6 +141,7 @@ Public Module _equal
         Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function runtime_equal(ByVal this As Object, ByVal that As Object) As Boolean
         Dim o As Boolean = False
         If object_equal(this, that, o) Then
@@ -149,6 +159,7 @@ Public Module _equal
         Return Object.Equals(this, that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function do_equal(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
         Dim o As Boolean = False
         If object_equal(this, that, o) Then
@@ -169,6 +180,7 @@ Public Module _equal
         Return Object.Equals(this, that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function equal(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Boolean) As Boolean
         Try
             o = do_equal(this, that)
@@ -180,6 +192,7 @@ Public Module _equal
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function equal(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
         Dim o As Boolean = False
         assert(equal(this, that, o))

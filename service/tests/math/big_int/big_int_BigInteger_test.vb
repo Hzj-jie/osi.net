@@ -99,6 +99,42 @@ Public NotInheritable Class big_int_BigInteger_test
         assertion.equal(a, big_int.from_BigInteger(a.as_BigInteger()))
     End Sub
 
+    <repeat(100000)>
+    <test>
+    Private Shared Sub gcd()
+        Dim a As big_int = Nothing
+        Dim b As big_int = Nothing
+        a = big_int.random(20)
+        b = big_int.random(20)
+        For i As Int32 = 0 To 20
+            Dim c As big_int = Nothing
+            c = big_int.random(20)
+            If rnd_bool() Then
+                a.multiply(c)
+            End If
+            If rnd_bool() Then
+                b.multiply(c)
+            End If
+        Next
+        a.set_positive()
+        b.set_positive()
+        assertion.equal(New big_int(big_uint.gcd(a.abs_big_uint(), b.abs_big_uint())),
+                        big_int.from_BigInteger(BigInteger.GreatestCommonDivisor(a.as_BigInteger(), b.as_BigInteger())))
+    End Sub
+
+    <repeat(10000)>
+    <test>
+    Private Shared Sub gcd_edge()
+        Dim a As big_int = Nothing
+        Dim b As big_int = Nothing
+        a = big_int.random()
+        b = big_int.random()
+        a.set_positive()
+        b.set_positive()
+        assertion.equal(New big_int(big_uint.gcd(a.abs_big_uint(), b.abs_big_uint())),
+                        big_int.from_BigInteger(BigInteger.GreatestCommonDivisor(a.as_BigInteger(), b.as_BigInteger())))
+    End Sub
+
     Private Shared Sub cast_predefined_case(ByVal i As Int32)
         Dim a As big_int = Nothing
         a = New big_int(i)

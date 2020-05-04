@@ -130,7 +130,7 @@ Public NotInheritable Class piece
         End If
         consumed = min(Me.count, count)
         If consumed > uint32_0 Then
-            memcpy(buff, offset, Me.buff, Me.offset, consumed)
+            arrays.copy(buff, offset, Me.buff, Me.offset, consumed)
         End If
         Return assert(consume(consumed, o))
     End Function
@@ -240,7 +240,7 @@ Public NotInheritable Class piece
             Return r
         End If
         ReDim r(CInt(count - uint32_1))
-        memcpy(r, uint32_0, buff, offset, count)
+        arrays.copy(r, uint32_0, buff, offset, count)
         Return r
     End Function
 
@@ -258,7 +258,7 @@ Public NotInheritable Class piece
             Return r
         End If
         ReDim r(CInt(Me.count - uint32_1))
-        memcpy(r, uint32_0, buff, offset, Me.count)
+        arrays.copy(r, uint32_0, buff, offset, Me.count)
         count = Me.count
         Return r
     End Function

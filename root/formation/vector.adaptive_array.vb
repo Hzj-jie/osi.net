@@ -19,10 +19,7 @@ Private Class adaptive_array_t
     Implements ICloneable, ICloneable(Of adaptive_array_t), IComparable(Of adaptive_array_t), IComparable
 
     Private Shared Function expected_capacity(ByVal n As UInt32) As UInt32
-        assert(n <= max_array_size)
-        If n = max_array_size Then
-            root.connector.throws.out_of_memory("adaptive_array size ", n, " exceeds limitation.")
-        End If
+        assert(n < max_array_size)
         If n <= 2 Then
             Return 4
         End If
@@ -130,7 +127,10 @@ Private Class adaptive_array_t
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub clear()
-        s = uint32_0
+        If size() > uint32_0 Then
+            arrays.clear(data(), uint32_0, size())
+            s = uint32_0
+        End If
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -143,6 +143,11 @@ Private Class adaptive_array_t
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub pop_back()
         s -= uint32_1
+#If "T" = "UInt32" Then
+        d(CInt(size())) = uint32_0
+#Else
+        d(CInt(size())) = [default](Of T).null
+#End If
     End Sub
 
     Public Sub reserve(ByVal n As UInt32)
@@ -160,17 +165,10 @@ Private Class adaptive_array_t
     End Sub
 
     Public Sub resize(ByVal n As UInt32)
-        reserve(n)
-        If size() < n Then
-            memclr(d, size(), n - size())
-        End If
-        s = n
-    End Sub
-
-    Public Sub resize(ByVal n As UInt32, ByVal v As T)
-        reserve(n)
-        If size() < n Then
-            memset(d, size(), n - size(), v)
+        If capacity() < n Then
+            reserve(n)
+        ElseIf size() > n Then
+            arrays.clear(d, n, size() - n)
         End If
         s = n
     End Sub
@@ -186,21 +184,27 @@ Private Class adaptive_array_t
         End If
     End Sub
 
-    Public Sub clear_unused_slots()
-        assert(capacity() >= size())
-        memclr(d, size(), capacity() - size())
-    End Sub
-
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Sub copy_from(ByVal i As adaptive_array_t)
+        assert(Not i Is Nothing)
+#If "T" = "UInt32" Then
+        ReDim d(array_size_i(i.d) - 1)
+        arrays.copy(d, i.d, i.s)
+#Else
+        d = i.d.deep_clone()
+#End If
+        s = i.s
+    End Sub
+
     Public Function CloneT() As adaptive_array_t Implements ICloneable(Of adaptive_array_t).Clone
         Dim r As adaptive_array_t = Nothing
         r = New adaptive_array_t()
-        r.d = deep_clone(d)
-        r.s = s
+        r.copy_from(Me)
         Return r
     End Function
 
@@ -218,7 +222,7 @@ Private Class adaptive_array_t
         If this.size() > that.size() Then
             Return 1
         End If
-        Return deep_compare(this.d, that.d, this.size())
+        Return this.d.deep_compare(that.d, this.size())
     End Function
 
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo

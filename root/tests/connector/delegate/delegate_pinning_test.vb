@@ -26,19 +26,19 @@ Public Class delegate_pinning_test
         Dim c As test_class = Nothing
         c = New test_class()
         Dim p As weak_pointer(Of test_class) = Nothing
-        p = make_weak_pointer(c)
+        p = weak_pointer.of(c)
 
         Dim d As Action = Nothing
         d = AddressOf c.run
 
-        repeat_gc_collect()
+        garbage_collector.repeat_collect()
 
         assertion.is_true(p.alive())
         d()
         assertion.equal(c.count(), 1)
         GC.KeepAlive(c)
         c = Nothing
-        repeat_gc_collect()
+        garbage_collector.repeat_collect()
 
         assertion.is_true(p.alive())
         d()
@@ -47,10 +47,10 @@ Public Class delegate_pinning_test
         assertion.equal(c2.count(), 2)
         c2 = Nothing
         GC.KeepAlive(d)
-        repeat_gc_collect()
+        garbage_collector.repeat_collect()
 
         d = Nothing
-        repeat_gc_collect()
+        garbage_collector.repeat_collect()
 
         assertion.is_false(p.alive())
         Return True

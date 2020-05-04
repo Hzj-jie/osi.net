@@ -5,7 +5,6 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.formation
 Imports osi.root.template
 
 Partial Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
@@ -57,9 +56,8 @@ Partial Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
         Const r As UInt32 = 0
         If empty(r) Then
             Return next_index(r)
-        Else
-            Return r
         End If
+        Return r
     End Function
 
     Private Function next_index(ByVal this As UInt32) As UInt32

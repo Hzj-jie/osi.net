@@ -25,7 +25,7 @@ Public Module _stringbuilder
 
     <Extension()> Public Function trim_end(ByVal this As StringBuilder,
                                            ByVal trim_it As Func(Of Char, Boolean)) As StringBuilder
-        throws.not_null(this)
+        assert(Not this Is Nothing)
         assert(Not trim_it Is Nothing)
         For i As Int32 = this.last_index() To 0 Step -1
             If Not trim_it(this(i)) Then

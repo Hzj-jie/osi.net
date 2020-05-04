@@ -4,6 +4,8 @@ Option Infer Off
 Option Strict On
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
+Imports osi.root.constants
 Imports osi.root.delegates
 
 Partial Public NotInheritable Class type_info(Of T)
@@ -65,43 +67,53 @@ Partial Public NotInheritable Class type_info(Of T)
         is_array = GetType(T).IsArray()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function has_finalizer() As Boolean
         Return finalizer_cache.has()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function finalizer() As Action(Of T)
         Return finalizer_cache.v
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function annotated_constructor_info(Of ATTR)() As ConstructorInfo
         Return annotated_constructor_cache(Of ATTR).info
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function annotated_constructor(Of ATTR)() As Func(Of Object(), T)
         Return annotated_constructor_cache(Of ATTR).v.typed
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function dominated_constructor() As Func(Of T)
         Return constructor_cache.dominated.typed
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function size() As Int32
         Return size_cache.size
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function size_uint32() As UInt32
         assert(size() >= 0)
         Return CUInt(size())
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function new_object_clone() As _do_val_ref(Of T, T, Boolean)
         Return clone_cache.new_object_clone
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function dominated_clone() As _do_val_ref(Of T, T, Boolean)
         Return clone_cache.dominated_clone
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function static_constructor() As static_constructor
         Return static_constructor_cache.s
     End Function

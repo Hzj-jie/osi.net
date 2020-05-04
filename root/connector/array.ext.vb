@@ -61,74 +61,6 @@ Public Module _array_ext
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub memcpy(Of T)(ByVal dest() As T,
-                            ByVal deststart As UInt32,
-                            ByVal src() As T,
-                            ByVal srcstart As UInt32,
-                            ByVal count As UInt32)
-        memmove(dest, deststart, src, srcstart, count)
-    End Sub
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub memcpy(Of T)(ByVal dest() As T, ByVal src() As T)
-        memcpy(dest, uint32_0, src, uint32_0, array_size(src))
-    End Sub
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub memcpy(Of T)(ByVal dest() As T, ByVal deststart As UInt32, ByVal src() As T)
-        memcpy(dest, deststart, src, uint32_0, array_size(src))
-    End Sub
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub memcpy(Of T)(ByVal dest() As T, ByVal src() As T, ByVal count As UInt32)
-        memcpy(dest, uint32_0, src, uint32_0, count)
-    End Sub
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub memmove(Of T)(ByVal dest() As T,
-                             ByVal deststart As UInt32,
-                             ByVal src() As T,
-                             ByVal srcstart As UInt32,
-                             ByVal count As UInt32)
-        If count = 0 Then
-            Return
-        End If
-        Array.Copy(src, srcstart, dest, deststart, count)
-    End Sub
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub memset(Of T)(ByVal dest() As T,
-                            ByVal start As UInt32,
-                            ByVal count As UInt32,
-                            ByVal src As T)
-        If count = 0 Then
-            Return
-        End If
-        assert(start + count <= max_int32)
-        For i As UInt32 = start To start + count - uint32_1
-            copy(dest(CInt(i)), src)
-        Next
-    End Sub
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub memset(Of T)(ByVal dest() As T, ByVal src As T)
-        memset(dest, uint32_0, array_size(dest), src)
-    End Sub
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub memclr(Of T)(ByVal dest() As T, ByVal start As UInt32, ByVal count As UInt32)
-        If count = uint32_0 Then
-            Return
-        End If
-        Array.Clear(dest, CInt(start), CInt(count))
-    End Sub
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub memclr(Of T)(ByVal dest() As T)
-        memclr(dest, uint32_0, array_size(dest))
-    End Sub
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function append(Of T)(ByRef this() As T, ByVal ParamArray that() As T) As T()
         this = this.concat(that)
         Return this
@@ -174,7 +106,7 @@ Public Module _array_ext
             ReDim r(CInt(l - uint32_1))
             l = 0
             For j As Int32 = 0 To array_size_i(i) - 1
-                memcpy(r, l, i(j), uint32_0, array_size(i(j)))
+                arrays.copy(r, l, i(j), uint32_0, array_size(i(j)))
                 l += array_size(i(j))
             Next
         End If
@@ -185,7 +117,7 @@ Public Module _array_ext
         Dim r()() As T = Nothing
         ReDim r(array_size_i(j))
         r(0) = i
-        memcpy(r, uint32_1, j)
+        arrays.copy(r, uint32_1, j)
         Return array_concat(r)
     End Function
 

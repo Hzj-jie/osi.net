@@ -43,7 +43,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
         End Sub
 
         Public Sub clear()
-            memclr(child)
+            arrays.clear(child)
         End Sub
 
         Public Function first() As KEY_T()

@@ -18,7 +18,7 @@ Namespace counter
                               ", ver ",
                               application_version,
                               ", process id ",
-                              current_process.Id(),
+                              this_process.ref.Id(),
                               ", source control current changeset id ",
                               source_control.current.id,
                               ", built at ",

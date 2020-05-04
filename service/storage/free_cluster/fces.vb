@@ -3,10 +3,10 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.procedure
+Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.root.procedure
 Imports store_t = osi.root.formation.hashmap(Of osi.root.formation.array_pointer(Of Byte),
                                                 osi.root.formation.pair(Of System.Int64, System.Int64))
 
@@ -24,7 +24,7 @@ Partial Public Class fces
         Else
             cid = bytes_int64(b)
             ReDim key(CInt(array_size(b) - sizeof_int64 - uint32_1))
-            memcpy(key, 0, b, sizeof_int64, array_size(key))
+            arrays.copy(key, 0, b, sizeof_int64, array_size(key))
             Return True
         End If
     End Function
@@ -35,7 +35,7 @@ Partial Public Class fces
         Else
             ReDim b(CInt(array_size(key) + sizeof_int64 - uint32_1))
             assert(int64_bytes(cid, b))
-            memcpy(b, sizeof_int64, key)
+            arrays.copy(b, sizeof_int64, key)
             Return True
         End If
     End Function
@@ -108,7 +108,7 @@ Partial Public Class fces
     End Function
 
     Private Sub inject_index(ByVal key() As Byte, ByVal iid As Int64, ByVal cid As Int64)
-        If m.find(make_array_pointer(key)) <> m.end() Then
+        If m.find(array_pointer.of(key)) <> m.end() Then
             raise_error(error_type.warning,
                         "duplicate key ",
                         bytes_str(key),
@@ -116,14 +116,14 @@ Partial Public Class fces
                         index.file_name(),
                         ", over-written")
         End If
-        m(make_array_pointer(key)) = pair.of(iid, cid)
+        m(array_pointer.of(key)) = pair.of(iid, cid)
     End Sub
 
     Private Function find_cluster_id(ByVal key() As Byte,
                                      ByRef it As store_t.iterator,
                                      ByRef iid As Int64,
                                      ByRef cid As Int64) As Boolean
-        it = m.find(make_array_pointer(key))
+        it = m.find(array_pointer.of(key))
         Return find_cluster_id(it, iid, cid)
     End Function
 

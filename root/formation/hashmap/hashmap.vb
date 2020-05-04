@@ -68,7 +68,7 @@ Partial Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
     End Function
 
     Public Sub clear()
-        memclr(_data)
+        arrays.clear(_data)
     End Sub
 
     Default Public Property _D(ByVal k As KEY_T) As VALUE_T
@@ -99,15 +99,14 @@ Partial Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
     Public Function insert(ByVal other As hashmap(Of KEY_T, VALUE_T, _KEY_TO_INDEX)) As Boolean
         If other Is Nothing Then
             Return False
-        Else
-            For i As UInt32 = 0 To hash_size - uint32_1
-                If Not other.data(i, False) Is Nothing Then
-                    Dim it As map(Of KEY_T, VALUE_T).iterator = Nothing
-                    data(i).insert(other.data(i))
-                End If
-            Next
-            Return True
         End If
+        For i As UInt32 = 0 To hash_size - uint32_1
+            If Not other.data(i, False) Is Nothing Then
+                Dim it As map(Of KEY_T, VALUE_T).iterator = Nothing
+                data(i).insert(other.data(i))
+            End If
+        Next
+        Return True
     End Function
 
     Public Function find(ByVal k As KEY_T) As iterator
@@ -115,9 +114,8 @@ Partial Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
         index = key_index(k)
         If data(index, False) Is Nothing Then
             Return [end]()
-        Else
-            Return New iterator(Me, index, data(index).find(k))
         End If
+        Return New iterator(Me, index, data(index).find(k))
     End Function
 
     Public Function empty() As Boolean
@@ -140,9 +138,8 @@ Partial Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
     Public Function [erase](ByVal it As iterator) As Boolean
         If it Is Nothing OrElse it = [end]() OrElse object_compare(it.container(), Me) <> 0 Then
             Return False
-        Else
-            Return data(it.index()).erase(it.iterator())
         End If
+        Return data(it.index()).erase(it.iterator())
     End Function
 
     Public Function [erase](ByVal k As KEY_T) As Boolean

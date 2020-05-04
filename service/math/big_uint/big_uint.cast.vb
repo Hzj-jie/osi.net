@@ -86,6 +86,7 @@ Partial Public NotInheritable Class big_uint
             ReDim r(-1)
         Else
             ReDim r(CInt(byte_size() - uint32_1))
+            arrays.memcpy(r, v.data(), array_size(r))
             For i As Int32 = 0 To CInt(v.size()) - 1
                 assert(uint32_little_endian_bytes(v.get(CUInt(i)), r, CUInt(i) * byte_count_in_uint32))
             Next

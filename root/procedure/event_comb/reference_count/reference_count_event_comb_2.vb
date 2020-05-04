@@ -35,7 +35,7 @@ Public Class reference_count_event_comb_2
 
         Me.r = New ref(Of singleentry)()
         Me.b = New atomic_int()
-        start(make_weak_pointer(Me))
+        start(weak_pointer.of(Me))
     End Sub
 
     Protected Sub New()

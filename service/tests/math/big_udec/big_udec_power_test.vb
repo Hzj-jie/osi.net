@@ -21,7 +21,7 @@ Public NotInheritable Class big_udec_power_test
     Private Shared Sub _100_power_1_2()
         Dim b As big_udec = Nothing
         b = New big_udec(100)
-        b.power(New big_udec(New big_uint(1), New big_uint(2)))
+        b.power(big_udec.fraction(1, 2))
         assertion.equal(b.str(), "10")
     End Sub
 
@@ -38,7 +38,7 @@ Public NotInheritable Class big_udec_power_test
         Dim two As big_udec = Nothing
         two = New big_udec(2)
         Dim half As big_udec = Nothing
-        half = New big_udec(big_uint.one(), New big_uint(2))
+        half = big_udec.fraction(1, 2)
         While x < one
             s += ((one - x ^ two) ^ half) * dx
             x += dx
@@ -63,7 +63,7 @@ Public NotInheritable Class big_udec_power_test
         Dim two As big_udec = Nothing
         two = New big_udec(2)
         Dim half As big_udec = Nothing
-        half = New big_udec(big_uint.one(), New big_uint(2))
+        half = big_udec.fraction(1, 2)
         While x < one
             s += ((one - x ^ two) ^ half) * dx
             x += dx

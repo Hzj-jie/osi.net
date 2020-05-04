@@ -3,22 +3,13 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports System.DateTime
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
 
+' Prefer to use thread_random.
 Public Module _rnd
-    Private NotInheritable Class _r_holder
-        'the Random class is not thread-safe,
-        'when several threads get random number from one Random object at the same time, it will return 0
-        <ThreadStatic> Public Shared r As Random
-
-        Private Sub New()
-        End Sub
-    End Class
-
     Sub New()
         assert(-max_double >= min_double)
     End Sub
@@ -103,13 +94,7 @@ Public Module _rnd
 #Else
 
     Private Function r() As Random
-        If _r_holder.r Is Nothing Then
-            Const offset As Int32 = 6
-            _r_holder.r = New Random(CInt(
-                (Threading.Thread.CurrentThread().ManagedThreadId() And ((1 << offset) - 1)) +
-                ((Now().milliseconds() << offset) And max_int32)))
-        End If
-        Return _r_holder.r
+        Return thread_random.ref()
     End Function
 
     Private Function i(ByVal d As Int64) As Int32

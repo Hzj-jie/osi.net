@@ -376,7 +376,7 @@ Public Module _time
     End Function
 
     Public Function high_res_ticks() As Int64
-        Return high_res_ticks_retriever.high_res_ticks()
+        Return high_res_ticks_retriever.ticks()
     End Function
 
 #If PocketPC OrElse Smartphone Then

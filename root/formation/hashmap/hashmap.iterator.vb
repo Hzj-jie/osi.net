@@ -43,11 +43,10 @@ Partial Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
             it += 1
             If it = container().data(index, False).end() Then
                 index = container().next_index(index)
-                If container().valid_index(index) Then
-                    it = container().data(index, False).begin()
-                Else
+                If Not container().valid_index(index) Then
                     Return container().end()
                 End If
+                it = container().data(index, False).begin()
             End If
             Return New iterator(container, index, it)
         End Function
@@ -58,11 +57,10 @@ Partial Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
             it -= 1
             If it = container().data(index, False).end() Then
                 index = container().prev_index(index)
-                If container().valid_index(index) Then
-                    it = container().data(index, False).begin()
-                Else
+                If Not container().valid_index(index) Then
                     Return container().end()
                 End If
+                it = container().data(index, False).begin()
             End If
             Return New iterator(container, index, it)
         End Function
@@ -90,31 +88,30 @@ Partial Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
         Public Shared Operator +(ByVal this As iterator, ByVal that As Int32) As iterator
             If this Is Nothing OrElse this = this.container().end() OrElse that = 0 Then
                 Return this
-            ElseIf that > 0 Then
-                Return this.move_next(CUInt(that))
-            Else
-                assert(that < 0)
-                Return this.move_prev(CUInt(-that))
             End If
+            If that > 0 Then
+                Return this.move_next(CUInt(that))
+            End If
+            assert(that < 0)
+            Return this.move_prev(CUInt(-that))
         End Operator
 
         Public Shared Operator -(ByVal this As iterator, ByVal that As Int32) As iterator
             If this Is Nothing OrElse this = this.container().end() OrElse that = 0 Then
                 Return this
-            ElseIf that > 0 Then
-                Return this.move_prev(CUInt(that))
-            Else
-                assert(that < 0)
-                Return this.move_next(CUInt(-that))
             End If
+            If that > 0 Then
+                Return this.move_prev(CUInt(that))
+            End If
+            assert(that < 0)
+            Return this.move_next(CUInt(-that))
         End Operator
 
         Public Shared Operator +(ByVal this As iterator) As first_const_pair(Of KEY_T, VALUE_T)
             If this Is Nothing Then
                 Return Nothing
-            Else
-                Return +(this.it)
             End If
+            Return +(this.it)
         End Operator
 
         Public Shared Operator =(ByVal this As iterator, ByVal that As iterator) As Boolean
@@ -127,11 +124,10 @@ Partial Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
                        (object_compare(this.container(), that.container()) = 0 AndAlso
                         this.index() = that.index() AndAlso
                         this.iterator() = that.iterator())
-            Else
-                Return (c = 0) OrElse
-                       (this Is Nothing AndAlso that.is_end()) OrElse
-                       (that Is Nothing AndAlso this.is_end())
             End If
+            Return (c = 0) OrElse
+                   (this Is Nothing AndAlso that.is_end()) OrElse
+                   (that Is Nothing AndAlso this.is_end())
         End Operator
 
         Public Shared Operator <>(ByVal this As iterator, ByVal that As iterator) As Boolean
@@ -162,5 +158,4 @@ Partial Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
             Return CompareTo(cast(Of iterator)(obj, False))
         End Function
     End Class
-
 End Class

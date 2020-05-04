@@ -52,11 +52,11 @@ Public Class performance_comparison_case_wrapper
     Private Shared Function scan_table(ByVal t(,) As Double, ByVal i As Int32, ByVal j As Int32) As Double
         If t Is Nothing OrElse t.GetLength(0) <= i OrElse t.GetLength(1) <= j Then
             Return -1
-        ElseIf t(i, j) = -1 AndAlso t.GetLength(0) > j AndAlso t.GetLength(1) > i AndAlso t(j, i) > 0 Then
-            Return multiple_factor / t(j, i)
-        Else
-            Return t(i, j)
         End If
+        If t(i, j) = -1 AndAlso t.GetLength(0) > j AndAlso t.GetLength(1) > i AndAlso t(j, i) > 0 Then
+            Return multiple_factor / t(j, i)
+        End If
+        Return t(i, j)
     End Function
 
     Private Shared Function scan_table(ByVal t(,) As Double, ByVal i As UInt32, ByVal j As UInt32) As Double
@@ -87,35 +87,36 @@ Public Class performance_comparison_case_wrapper
     Protected Overrides Sub compare()
         For i As UInt32 = 0 To array_size(cases()) - uint32_1
             For j As UInt32 = 0 To array_size(cases()) - uint32_1
-                If i <> j Then
-                    Dim v As Double = 0
-                    v = max_rate_upper_bound(i, j)
-                    If v >= 0 Then
-                        expectation.less(perf_case(i).max_used_loops() / perf_case(j).max_used_loops(),
-                                         v,
-                                         "comparing max_used_loops of case ",
-                                         i,
-                                         " with case ",
-                                         j)
-                    End If
-                    v = min_rate_upper_bound(i, j)
-                    If v >= 0 Then
-                        expectation.less(perf_case(i).min_used_loops() / perf_case(j).min_used_loops(),
-                                         v,
-                                         "comparing min_used_loops of case ",
-                                         i,
-                                         " with case ",
-                                         j)
-                    End If
-                    v = average_rate_upper_bound(i, j)
-                    If v >= 0 Then
-                        expectation.less(perf_case(i).average_used_loops() / perf_case(j).average_used_loops(),
-                                         v,
-                                         "comparing average_used_loops of case ",
-                                         i,
-                                         " with case ",
-                                         j)
-                    End If
+                If i = j Then
+                    Continue For
+                End If
+                Dim v As Double = 0
+                v = max_rate_upper_bound(i, j)
+                If v >= 0 Then
+                    expectation.less(perf_case(i).max_used_loops() / perf_case(j).max_used_loops(),
+                                     v,
+                                     "comparing max_used_loops of case ",
+                                     i,
+                                     " with case ",
+                                     j)
+                End If
+                v = min_rate_upper_bound(i, j)
+                If v >= 0 Then
+                    expectation.less(perf_case(i).min_used_loops() / perf_case(j).min_used_loops(),
+                                     v,
+                                     "comparing min_used_loops of case ",
+                                     i,
+                                     " with case ",
+                                     j)
+                End If
+                v = average_rate_upper_bound(i, j)
+                If v >= 0 Then
+                    expectation.less(perf_case(i).average_used_loops() / perf_case(j).average_used_loops(),
+                                     v,
+                                     "comparing average_used_loops of case ",
+                                     i,
+                                     " with case ",
+                                     j)
                 End If
             Next
         Next

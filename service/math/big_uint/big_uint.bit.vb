@@ -8,7 +8,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 Partial Public NotInheritable Class big_uint
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Sub set_bit_count(ByVal s As UInt64)
         set_zero()
         Dim l As UInt32 = 0
@@ -23,20 +23,20 @@ Partial Public NotInheritable Class big_uint
         v.resize(l)
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Sub bit_pos(ByVal pos As UInt64, ByRef v_index As UInt32, ByRef b_index As Byte)
         bit_rpos(pos, v_index, b_index)
         v_index = v.size() - uint32_1 - v_index
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Sub bit_rpos(ByVal pos As UInt64,
                          ByRef v_index As UInt32,
                          ByRef b_rindex As Byte)
         bit_rpos(pos, v_index, b_rindex, Nothing, False, True)
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Private Sub bit_rpos(ByVal pos As UInt64,
                          ByRef v_index As UInt32,
                          ByRef b_rindex As Byte,
@@ -101,6 +101,7 @@ Partial Public NotInheritable Class big_uint
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function bit_count() As UInt64
         If is_zero() Then
             Return uint64_0
@@ -152,15 +153,14 @@ Partial Public NotInheritable Class big_uint
             End If
             If i = 0 Then
                 Exit While
-            Else
-                i -= uint32_1
             End If
+            i -= uint32_1
         End While
         assert(r = 1)
         Return True
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub setbit(ByVal pos As UInt64, Optional ByVal value As Boolean = True)
         Dim vi As UInt32 = 0
         Dim bi As Byte = 0
@@ -168,7 +168,7 @@ Partial Public NotInheritable Class big_uint
         v.set(vi, v.get(vi).setbit(bi, value))
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function getbit(ByVal pos As UInt64) As Boolean
         Dim vi As UInt32 = 0
         Dim bi As Byte = 0
@@ -176,7 +176,7 @@ Partial Public NotInheritable Class big_uint
         Return v.get(vi).getbit(bi)
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub setrbit(ByVal pos As UInt64, Optional ByVal value As Boolean = True)
         Dim vi As UInt32 = 0
         Dim bi As Byte = 0
@@ -187,7 +187,7 @@ Partial Public NotInheritable Class big_uint
         End If
     End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function getrbit(ByVal pos As UInt64) As Boolean
         Dim vi As UInt32 = 0
         Dim bi As Byte = 0
@@ -195,27 +195,23 @@ Partial Public NotInheritable Class big_uint
         Return v.get(vi).getrbit(bi)
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function even() As Boolean
         Return Not odd()
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function odd() As Boolean
         '0 is even
         Return bit_count() > 0 AndAlso getrbit(0)
     End Function
 
-    Public Function binary_trailing_zero_count() As UInt32
+    Public Function trailing_binary_zero_count() As UInt32
         assert(Not is_zero())
-        Dim r As UInt32 = 0
         Dim i As UInt32 = 0
         While i < uint32_size()
-            If v.get(i) = 0 Then
-                r += bit_count_in_uint32
-            Else
-                r += v.get(i).binary_trailing_zero_count()
-                Return r
+            If v.get(i) <> 0 Then
+                Return (i << bit_count_in_uint32_shift) + v.get(i).trailing_binary_zero_count()
             End If
             i += uint32_1
         End While
@@ -223,35 +219,52 @@ Partial Public NotInheritable Class big_uint
         Return uint32_0
     End Function
 
-    Public Function remove_binary_trailing_zeros() As UInt32
+    Public Function trailing_uint32_zero_count() As UInt32
+        Dim i As UInt32 = 0
+        While i < uint32_size()
+            If v.get(i) <> 0 Then
+                Return i
+            End If
+            i += uint32_1
+        End While
+        assert(False)
+        Return uint32_0
+    End Function
+
+    Public Function remove_trailing_binary_zeros() As UInt32
         Dim r As UInt32 = 0
-        r = binary_trailing_zero_count()
+        r = trailing_binary_zero_count()
         assert_right_shift(r)
         Return r
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
+    Public Function lowest_uint32() As UInt32
+        Return get_uint32(0)
+    End Function
+
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function highest_uint32() As UInt32
         Return get_ruint32(0)
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function second_highest_uint32() As UInt32
         Return get_ruint32(1)
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function highest_uint64() As UInt64
         Return (CULng(highest_uint32()) << bit_count_in_uint32) Or second_highest_uint32()
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function get_uint32(ByVal i As UInt32) As UInt32
         assert(i < uint32_size())
         Return v.get(i)
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function get_ruint32(ByVal i As UInt32) As UInt32
         assert(i < uint32_size())
         Return v.get(uint32_size() - i - uint32_1)

@@ -33,14 +33,14 @@ Public Class weak_event_disposer_test
             End If
             p = create(disposing)
         Next
-        repeat_gc_collect()
+        garbage_collector.repeat_collect()
         assertion.equal(cd_object(Of test_class).constructed(), size)
         assertion.more_or_equal_and_less_or_equal(cd_object(Of test_class).destructed(), size - uint32_1, size)
         assertion.equal(CUInt(+disposing), size - uint32_1)
         GC.KeepAlive(p)
         p.Dispose()
         p = Nothing
-        repeat_gc_collect()
+        garbage_collector.repeat_collect()
         assertion.equal(cd_object(Of test_class).constructed(), size)
         assertion.equal(cd_object(Of test_class).destructed(), size)
         assertion.equal(CUInt(+disposing), size)
@@ -57,7 +57,7 @@ Public Class weak_event_disposer_test
         For i As Int32 = 0 To size - uint32_1
             p(i) = create(disposing)
         Next
-        repeat_gc_collect()
+        garbage_collector.repeat_collect()
         assertion.equal(+disposing, 0)
         assertion.equal(cd_object(Of test_class).constructed(), size)
         assertion.equal(cd_object(Of test_class).destructed(), size)
@@ -66,7 +66,7 @@ Public Class weak_event_disposer_test
             p(i).Dispose()
             p(i) = Nothing
         Next
-        repeat_gc_collect()
+        garbage_collector.repeat_collect()
         assertion.equal(CUInt(+disposing), size)
         assertion.equal(cd_object(Of test_class).constructed(), size)
         assertion.equal(cd_object(Of test_class).destructed(), size)

@@ -5,14 +5,14 @@ Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.utt
 
-Public Class waitable_##TYPE##_test
+Public NotInheritable Class waitable_##TYPE##_test
     Inherits multithreading_case_wrapper
 
     Public Sub New()
         MyBase.New(New waitable_##TYPE##_case(), waitable_##TYPE##_case.push_threads << 1)
     End Sub
 
-    Private Class waitable_##TYPE##_case
+    Private NotInheritable Class waitable_##TYPE##_case
         Inherits [case]
 
         Public Const push_threads As Int32 = 2
@@ -28,14 +28,13 @@ Public Class waitable_##TYPE##_test
         End Sub
 
         Public Overrides Function prepare() As Boolean
-            If MyBase.prepare() Then
-                q.clear()
-                passed.set(0)
-                finished.set(0)
-                Return True
-            Else
+            If Not MyBase.prepare() Then
                 Return False
             End If
+            q.clear()
+            passed.set(0)
+            finished.set(0)
+            Return True
         End Function
 
         Public Overrides Function run() As Boolean
@@ -44,27 +43,29 @@ Public Class waitable_##TYPE##_test
                     Dim c As Int32 = 0
                     c = +passed
                     q.emplace(i)
-                    assertion.is_true(lazy_sleep_wait_until(Function() As Boolean
-                                                          Return +passed > c
-                                                      End Function,
-                                                      seconds_to_milliseconds(1)))
+                    assertion.buzy_happening(Function() As Boolean
+                                                 Return +passed > c
+                                             End Function)
                 Next
                 finished.increment()
                 Return True
-            Else
-                While +finished < push_threads
-                    assertion.is_true(q.wait(seconds_to_milliseconds(1)) OrElse +finished = push_threads)
-                    If +finished = push_threads Then
-                        While q.pop(Nothing)
-                            passed.increment()
-                        End While
-                    Else
-                        passed.increment()
-                        assertion.is_true(q.pop(Nothing))
-                    End If
-                End While
-                Return True
             End If
+
+            While +finished < push_threads
+                assertion.buzy_happening(Function() As Boolean
+                                             Return q.wait(seconds_to_milliseconds(1)) OrElse
+                                                    +finished = push_threads
+                                         End Function)
+                If +finished = push_threads Then
+                    While q.pop(Nothing)
+                        passed.increment()
+                    End While
+                Else
+                    passed.increment()
+                    assertion.is_true(q.pop(Nothing))
+                End If
+            End While
+            Return True
         End Function
 
         Public Overrides Function finish() As Boolean

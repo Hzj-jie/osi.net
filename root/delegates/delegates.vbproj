@@ -73,7 +73,6 @@
     </Compile>
     <Compile Include="parameters.vb" />
     <Compile Include="predicates.vb" />
-    <Compile Include="stream_api.vb" />
     <Compile Include="transformation.vb" />
   </ItemGroup>
   <ItemGroup>

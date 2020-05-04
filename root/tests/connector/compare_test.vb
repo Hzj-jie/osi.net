@@ -140,7 +140,7 @@ Public Class compare_test
             If comparable Then
                 assertion.equal(compare(this, that), exp)
             Else
-                assertion.equal(compare(this, that), compare_error_result)
+                assertion.is_false(compare(this, that, 0))
             End If
             Return True
         End Function

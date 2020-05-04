@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.constants
@@ -37,6 +38,7 @@ Partial Public Class event_comb
                         End Function)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _waitfor(ByVal ec As event_comb) As Boolean
         Return _waitfor(ec,
                         Function() As Boolean
@@ -44,6 +46,7 @@ Partial Public Class event_comb
                         End Function)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _waitfor_or_null(ByVal ec As event_comb) As Boolean
         Return If(ec Is Nothing, True, _waitfor(ec))
     End Function
@@ -118,6 +121,7 @@ Partial Public Class event_comb
                         timeout_ms)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _waitfor(ByVal [try] As Func(Of Boolean)) As Boolean
         Return _waitfor([try], Function(x, y) queue_runner.push(queue_runner.check(x, y)))
     End Function
@@ -138,6 +142,7 @@ Partial Public Class event_comb
                End Sub
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _wait() As Action
         assert_in_lock()
         inc_pends()
@@ -150,7 +155,8 @@ Partial Public Class event_comb
                End Sub
     End Function
 
-    Private Shared Sub _waitfor(ByVal d As Action, ByVal cb As action)
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Shared Sub _waitfor(ByVal d As Action, ByVal cb As Action)
         assert(Not d Is Nothing)
         assert(Not cb Is Nothing)
         queue_in_managed_threadpool(Sub()
@@ -162,6 +168,7 @@ Partial Public Class event_comb
                                     End Sub)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _waitfor(ByVal d As Action) As Boolean
         If d Is Nothing Then
             Return False
@@ -196,6 +203,7 @@ Partial Public Class event_comb
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _waitfor(Of T)(ByVal d As Func(Of T), ByVal r As pointer(Of T)) As Boolean
         Dim v As Action = Nothing
         If _do_void(d, r, v) Then
@@ -204,6 +212,7 @@ Partial Public Class event_comb
         Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _waitfor(Of T)(ByVal d As Func(Of T),
                                     ByVal r As pointer(Of T),
                                     ByVal timeout_ms As Int64) As Boolean
@@ -214,6 +223,7 @@ Partial Public Class event_comb
         Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _waitfor(ByVal e As WaitHandle, ByVal timeout_ms As Int64) As Boolean
         If e Is Nothing Then
             Return False
@@ -223,22 +233,26 @@ Partial Public Class event_comb
                         End Sub)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _waitfor(ByVal e As WaitHandle) As Boolean
         Return _waitfor(e, npos)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _waitfor(ByVal action As callback_action, ByVal timeout_ms As Int64) As Boolean
         assert_in_lock()
         Return begin(action, timeout_ms) AndAlso
                _waitfor(callback_action.action_check(action))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _waitfor(ByVal action As callback_action) As Boolean
         assert_in_lock()
         Return begin(action) AndAlso
                _waitfor(callback_action.action_check(action))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _waitfor(ByVal ms As Int64) As Boolean
         If ms < 0 Then
             Return False
@@ -249,6 +263,7 @@ Partial Public Class event_comb
         Return assert(Not stopwatch.push(ms, _wait()) Is Nothing)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _waitfor(ByVal l As ref(Of event_comb_lock)) As Boolean
         If l Is Nothing Then
             Return False
@@ -257,6 +272,7 @@ Partial Public Class event_comb
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _waitfor(ByVal i As ref(Of singleentry)) As Boolean
         If i Is Nothing Then
             Return False
@@ -264,6 +280,7 @@ Partial Public Class event_comb
         Return _waitfor(AddressOf i.in_use)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _waitfor(ByVal i As ref(Of singleentry), ByVal timeout_ms As Int64) As Boolean
         If i Is Nothing Then
             Return False
@@ -271,6 +288,7 @@ Partial Public Class event_comb
         Return _waitfor(AddressOf i.in_use, timeout_ms)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _waitfor(Of T)(ByVal l As multilock(Of event_comb_lock), ByVal i As T) As Boolean
         If l Is Nothing Then
             Return False
@@ -279,15 +297,18 @@ Partial Public Class event_comb
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _waitfor_nap() As Boolean
         Return assert(queue_runner.once(_wait()))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _waitfor_yield() As Boolean
         _wait()()
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _waitfor(ByVal i As attachable_event) As Boolean
         If i Is Nothing Then
             Return False

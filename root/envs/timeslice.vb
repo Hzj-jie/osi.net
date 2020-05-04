@@ -6,6 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 
+' TODO: Constants here should be uint32.
 Public Module _timeslice
     Public ReadOnly timeslice_length_ticks As Int64
     Public ReadOnly timeslice_length_ms As Int64

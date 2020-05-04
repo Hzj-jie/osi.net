@@ -18,10 +18,10 @@ Public Class weak_ref_pointer_test
 
     Private Shared Function wont_pin_objects() As Boolean
         Dim p As weak_ref_pointer(Of cd_object(Of weak_ref_pointer_test)) = Nothing
-        p = make_weak_ref_pointer(New cd_object(Of weak_ref_pointer_test)())
+        p = weak_ref_pointer.of(New cd_object(Of weak_ref_pointer_test)())
         For i As Int32 = 0 To 1000
             p.set(New cd_object(Of weak_ref_pointer_test)())
-            repeat_gc_collect()
+            garbage_collector.repeat_collect()
         Next
         assertion.more(cd_object(Of weak_ref_pointer_test).destructed(), uint32_0)
         Return True

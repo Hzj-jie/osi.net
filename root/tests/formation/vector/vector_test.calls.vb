@@ -36,7 +36,6 @@ Partial Public Class vector_test
             v.clear()
             assertion.equal(v.size(), uint32_0, "v.size() <> 0 after clear.")
             If validation Then
-                v.clear_unused_slots()
                 For i As Int32 = 0 To CInt(v.capacity()) - 1
                     assertion.is_null(v.data()(i), "cannot clear ", i, " after clear operation.")
                 Next
@@ -184,7 +183,7 @@ Partial Public Class vector_test
 
             If validation Then
                 ReDim a(CInt(j - i + uint32_1))
-                memcpy(a, 0, v.data(), i, j - i)
+                arrays.copy(a, 0, v.data(), i, j - i)
             End If
 
             v.erase(i, j)
@@ -215,7 +214,7 @@ Partial Public Class vector_test
         Private Sub shrink_to_fit()
             Dim a() As String = Nothing
             ReDim a(CInt(v.size()) - 1)
-            memcpy(a, v.data(), array_size(a))
+            arrays.copy(a, v.data(), array_size(a))
             v.shrink_to_fit()
             assertion.equal(v.capacity(), v.size(), "v.capacity() <> v.size() after shrink_to_fit.")
             If validation Then

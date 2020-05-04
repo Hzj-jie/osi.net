@@ -134,6 +134,28 @@ Namespace primitive
             End Function
         End Class
 
+        Public Class lfs_exportable_test
+            Inherits exportable_test(Of [lfs])
+
+            Protected Overrides Function create() As [lfs]
+                Return New [lfs]( _
+                        data_ref.random(),
+                        data_ref.random(),
+                        data_ref.random())
+            End Function
+        End Class
+
+        Public Class rfs_exportable_test
+            Inherits exportable_test(Of [rfs])
+
+            Protected Overrides Function create() As [rfs]
+                Return New [rfs]( _
+                        data_ref.random(),
+                        data_ref.random(),
+                        data_ref.random())
+            End Function
+        End Class
+
         Public Class jumpif_exportable_test
             Inherits exportable_test(Of [jumpif])
 

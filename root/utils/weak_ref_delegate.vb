@@ -14,7 +14,7 @@ Public NotInheritable Class weak_ref_delegate
         assert(Not i Is Nothing)
         assert(Not f Is Nothing)
         Dim o As weak_pointer(Of T) = Nothing
-        o = make_weak_pointer(i)
+        o = weak_pointer.of(i)
         Return Function() As R
                    Dim x As T = Nothing
                    x = o.get()
@@ -29,7 +29,7 @@ Public NotInheritable Class weak_ref_delegate
         assert(Not i Is Nothing)
         assert(Not f Is Nothing)
         Dim o As weak_pointer(Of T) = Nothing
-        o = make_weak_pointer(i)
+        o = weak_pointer.of(i)
         Return Sub()
                    Dim x As T = Nothing
                    x = o.get()

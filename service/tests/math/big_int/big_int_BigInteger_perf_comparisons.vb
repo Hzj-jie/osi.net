@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.Numerics
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.root.utt
@@ -15,17 +16,30 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         Inherits big_int_BigInteger_perf_comparison
 
         Public Sub New()
+            Me.New(default_size)
+        End Sub
+
+        Public Sub New(ByVal size As UInt32)
             MyBase.New(Sub(ByVal i As BigInteger, ByVal j As BigInteger)
                            i += j
                        End Sub,
                        Sub(ByVal i As big_int, ByVal j As big_int)
                            i += j
-                       End Sub)
+                       End Sub,
+                       size)
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-            Return loosen_bound({1, 1}, i, j)
+            Return loosen_bound({653, 1296}, i, j)
         End Function
+    End Class
+
+    Public NotInheritable Class big_int_BigInteger_add_large_perf
+        Inherits commandline_specified_case_wrapper
+
+        Public Sub New()
+            MyBase.New(New big_int_BigInteger_add_perf(10000000))
+        End Sub
     End Class
 
     Public NotInheritable Class big_int_BigInteger_sub_perf
@@ -41,7 +55,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-            Return loosen_bound({1, 1}, i, j)
+            Return loosen_bound({809, 1950}, i, j)
         End Function
     End Class
 
@@ -63,7 +77,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-            Return loosen_bound({1, 1}, i, j)
+            Return loosen_bound({544, 956}, i, j)
         End Function
     End Class
 
@@ -94,7 +108,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-            Return loosen_bound({1, 1}, i, j)
+            Return loosen_bound({267, 941}, i, j)
         End Function
     End Class
 
@@ -119,7 +133,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-            Return loosen_bound({1, 1}, i, j)
+            Return loosen_bound({267, 865}, i, j)
         End Function
     End Class
 
@@ -131,13 +145,13 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
                            BigInteger.Pow(i, CInt((BigInteger.Abs(j) Mod 127) + 1))
                        End Sub,
                        Sub(ByVal i As big_int, ByVal j As big_int)
-                           i.power(j.set_positive().modulus(127) + 1)
+                           i ^= (j.unsigned_ref().lowest_uint32() Mod 127) + 1
                        End Sub,
                        100)
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-            Return loosen_bound({1, 1}, i, j)
+            Return loosen_bound({157, 303}, i, j)
         End Function
     End Class
 
@@ -157,8 +171,73 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-            Return loosen_bound({1, 1}, i, j)
+            Return loosen_bound({33866961264, 15504057375}, i, j)
         End Function
+    End Class
+
+    Public NotInheritable Class big_int_BigInteger_gcd_perf
+        Inherits big_int_BigInteger_perf_comparison
+
+        Public Sub New()
+            Me.New(10000)
+        End Sub
+
+        Public Sub New(ByVal size As UInt32)
+            MyBase.New(Sub(ByVal i As BigInteger, ByVal j As BigInteger)
+                           BigInteger.GreatestCommonDivisor(
+                               BigInteger.Abs(i * j * multiplier(CUInt(BigInteger.Abs(j) Mod max_uint32))),
+                               BigInteger.Abs(j * multiplier(CUInt(BigInteger.Abs(j) Mod max_uint32))))
+                       End Sub,
+                       Sub(ByVal i As big_int, ByVal j As big_int)
+                           big_uint.gcd((i * j * multiplier(j.unsigned_ref().lowest_uint32())).unsigned_ref(),
+                                        (j * multiplier(j.unsigned_ref().lowest_uint32())).unsigned_ref())
+                       End Sub,
+                       size)
+        End Sub
+
+        Private Shared Function multiplier(ByVal i As UInt32) As UInt32
+            Return (CULng(primes.select_precalculated(i And max_uint16)) *
+                    primes.select_precalculated((i >> bit_count_in_byte) >> bit_count_in_byte)).low_uint32()
+        End Function
+
+        Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+            Return loosen_bound({256, 729}, i, j)
+        End Function
+    End Class
+
+    Public NotInheritable Class big_int_BigInteger_gcd_edge_perf
+        Inherits big_int_BigInteger_perf_comparison
+
+        Public Sub New()
+            Me.New(10000)
+        End Sub
+
+        Public Sub New(ByVal size As UInt32)
+            MyBase.New(Sub(ByVal i As BigInteger, ByVal j As BigInteger)
+                           BigInteger.GreatestCommonDivisor(BigInteger.Abs(i), BigInteger.Abs(j))
+                       End Sub,
+                       Sub(ByVal i As big_int, ByVal j As big_int)
+                           big_uint.gcd(i.unsigned_ref(), j.unsigned_ref())
+                       End Sub,
+                       size)
+        End Sub
+
+        Private Shared Function multiplier(ByVal i As UInt32) As UInt32
+            Return (CULng(primes.select_precalculated(i And max_uint16)) *
+                    primes.select_precalculated((i >> bit_count_in_byte) >> bit_count_in_byte)).low_uint32()
+        End Function
+
+        Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+            Return loosen_bound({154, 3308}, i, j)
+        End Function
+    End Class
+
+    Public NotInheritable Class big_int_BigInteger_gcd_large_perf
+        Inherits commandline_specified_case_wrapper
+
+        Public Sub New()
+            MyBase.New(New big_int_BigInteger_gcd_perf(100000))
+        End Sub
     End Class
 
     Public MustInherit Class big_int_BigInteger_perf_comparison
@@ -173,16 +252,8 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         Public Sub New(ByVal e1 As Action(Of BigInteger, BigInteger),
                        ByVal e2 As Action(Of big_int, big_int),
                        ByVal size As UInt64)
-            MyBase.New(r(New run_case(Sub(ByVal i As big_int, ByVal j As big_int)
-                                          e1(i.as_BigInteger(), j.as_BigInteger())
-                                      End Sub),
-                         size),
-                       r(New run_case(Sub(ByVal i As big_int, ByVal j As big_int)
-                                          i.as_BigInteger()
-                                          j.as_BigInteger()
-                                          e2(i, j)
-                                      End Sub),
-                         size))
+            MyBase.New(r(New run_case(e1), size),
+                       r(New run_case(e2), size))
         End Sub
 
         Private Shared Function r(ByVal c As [case], ByVal size As UInt64) As [case]
@@ -193,7 +264,9 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
             Inherits [case]
 
             Private Shared ReadOnly samples As vector(Of big_int)
-            Private ReadOnly e As Action(Of big_int, big_int)
+            Private Shared ReadOnly samples_BigInteger As vector(Of BigInteger)
+            Private ReadOnly e1 As Action(Of big_int, big_int)
+            Private ReadOnly e2 As Action(Of BigInteger, BigInteger)
             Private ReadOnly tc As debug_thread_checker
             Private index As Int64
 
@@ -202,28 +275,56 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
                 For i As Int32 = 0 To 792
                     samples.emplace_back(big_int.random())
                 Next
+                samples_BigInteger = samples.map(Function(ByVal i As big_int) As BigInteger
+                                                     Return i.as_BigInteger()
+                                                 End Function)
             End Sub
 
-            Public Sub New(ByVal e As Action(Of big_int, big_int))
-                assert(Not e Is Nothing)
-                Me.e = e
+            Private Sub New(ByVal e1 As Action(Of big_int, big_int), ByVal e2 As Action(Of BigInteger, BigInteger))
+                assert(Not e1 Is Nothing OrElse Not e2 Is Nothing)
+                assert(e1 Is Nothing OrElse e2 Is Nothing)
+                Me.e1 = e1
+                Me.e2 = e2
                 tc = New debug_thread_checker()
                 index = 0
             End Sub
 
+            Public Sub New(ByVal e As Action(Of big_int, big_int))
+                Me.New(e, Nothing)
+            End Sub
+
+            Public Sub New(ByVal e As Action(Of BigInteger, BigInteger))
+                Me.New(Nothing, e)
+            End Sub
+
             Public Overrides Function run() As Boolean
-                Dim i As big_int = Nothing
-                Dim j As big_int = Nothing
-                i = next_random()
-                j = next_random()
-                e(i, j)
+                If e1 Is Nothing Then
+                    Dim i As BigInteger = Nothing
+                    Dim j As BigInteger = Nothing
+                    i = next_random_BigInteger()
+                    j = next_random_BigInteger()
+                    e2(i, j)
+                Else
+                    Dim i As big_int = Nothing
+                    Dim j As big_int = Nothing
+                    i = next_random()
+                    j = next_random()
+                    e1(i, j)
+                End If
+
                 Return True
             End Function
 
             Private Function next_random() As big_int
                 tc.assert()
                 index += 1
-                Return samples.modget(index).CloneT()
+                Return samples.modget(index)
+            End Function
+
+            Private Function next_random_BigInteger() As BigInteger
+                tc.assert()
+                index += 1
+                Return samples_BigInteger.modget(index)
             End Function
         End Class
     End Class

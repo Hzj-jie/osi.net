@@ -67,7 +67,7 @@ Public Class singleton_device_pool_test
 
         GC.KeepAlive(p)
         p = Nothing
-        repeat_gc_collect()
+        garbage_collector.repeat_collect()
         If attach Then
             assertion.equal(d.get().close_times(), uint32_1)
         Else

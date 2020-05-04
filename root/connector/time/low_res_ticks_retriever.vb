@@ -13,10 +13,7 @@ Public Class low_res_ticks_retriever
     Private Shared offset As Int64
 
     Shared Sub New()
-        low_res_milliseconds()
-    End Sub
-
-    Private Sub New()
+        milliseconds()
     End Sub
 
     'force revise the offset during next high_res_ticks() call.
@@ -24,11 +21,11 @@ Public Class low_res_ticks_retriever
         offset = 0
     End Sub
 
-    Public Shared Function low_res_ticks() As Int64
-        Return milliseconds_to_ticks(low_res_milliseconds())
+    Public Shared Function ticks() As Int64
+        Return milliseconds_to_ticks(milliseconds())
     End Function
 
-    Public Shared Function low_res_milliseconds() As Int64
+    Public Shared Function milliseconds() As Int64
         Dim lrs As UInt32 = 0
         lrs = last_revise_ms
         Dim c As UInt32 = 0
@@ -62,4 +59,7 @@ Public Class low_res_ticks_retriever
         n -= environment_milliseconds
         Return New Date(milliseconds_to_ticks(Now().milliseconds() - n))
     End Function
+
+    Private Sub New()
+    End Sub
 End Class

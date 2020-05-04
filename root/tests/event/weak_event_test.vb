@@ -39,7 +39,7 @@ Public Class weak_event_test
         Dim r As event_receiver = Nothing
         r = New event_receiver()
         e.attach(r, AddressOf event_receiver.receive)
-        repeat_gc_collect()
+        garbage_collector.repeat_collect()
         For i As Int32 = 0 To count_per_round - 1
             e.raise()
         Next
@@ -50,7 +50,7 @@ Public Class weak_event_test
         event_receiver.clear()
         GC.KeepAlive(r)
         r = Nothing
-        repeat_gc_collect()
+        garbage_collector.repeat_collect()
         For i As Int32 = 0 To count_per_round - 1
             e.raise()
         Next
@@ -91,7 +91,7 @@ Public Class weak_event_test
                 detached += 1
             End If
         Next
-        repeat_gc_collect()
+        garbage_collector.repeat_collect()
         assert(detached <= c)
 
         For i As Int32 = 0 To count_per_round - 1
@@ -106,7 +106,7 @@ Public Class weak_event_test
         For i As Int32 = 0 To c - 1
             rs(i) = Nothing
         Next
-        repeat_gc_collect()
+        garbage_collector.repeat_collect()
 
         For i As Int32 = 0 To count_per_round - 1
             e.raise()
@@ -131,7 +131,7 @@ Public Class weak_event_test
         r2 = New event_receiver()
         e.attach(r1, AddressOf event_receiver.receive)
         e.attach(r2, AddressOf event_receiver.receive)
-        repeat_gc_collect()
+        garbage_collector.repeat_collect()
         For i As Int32 = 0 To count_per_round - 1
             e.raise()
         Next
@@ -151,7 +151,7 @@ Public Class weak_event_test
             r2 = Nothing
             detached += 1
         End If
-        repeat_gc_collect()
+        garbage_collector.repeat_collect()
         For i As Int32 = 0 To count_per_round - 1
             e.raise()
         Next
@@ -164,7 +164,7 @@ Public Class weak_event_test
         event_receiver.clear()
         r1 = Nothing
         r2 = Nothing
-        repeat_gc_collect()
+        garbage_collector.repeat_collect()
         For i As Int32 = 0 To count_per_round - 1
             e.raise()
         Next

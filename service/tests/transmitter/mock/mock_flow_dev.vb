@@ -77,7 +77,7 @@ Public Class mock_flow_dev
                                   assert(array_size(Me.send_buff) >= Me.send_position)
                                   s = min(count, array_size(Me.send_buff) - Me.send_position)
                                   If s > 0 Then
-                                      memcpy(Me.send_buff, Me.send_position, buff, offset, s)
+                                      arrays.copy(Me.send_buff, Me.send_position, buff, offset, s)
                                       Me.send_position += s
                                   End If
                                   Return eva(sent, s)
@@ -108,7 +108,7 @@ Public Class mock_flow_dev
                                   s = min(count, array_size(Me.receive_buff) - Me.receive_position)
                                   assert(s >= 0)
                                   If s > 0 Then
-                                      memcpy(buff, offset, Me.receive_buff, Me.receive_position, s)
+                                      arrays.copy(buff, offset, Me.receive_buff, Me.receive_position, s)
                                       Me.receive_position += s
                                   End If
                                   Return eva(result, s)

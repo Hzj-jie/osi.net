@@ -28,15 +28,57 @@ Partial Public NotInheritable Class big_udec
                                     ByVal denominator As Int32,
                                     ByRef o As big_udec) As Boolean
         If numerator < 0 AndAlso denominator < 0 Then
-            Return fraction(CUInt(-numerator), CUInt(-denominator), o)
+            Return fraction(New big_uint(CUInt(-numerator)), New big_uint(CUInt(-denominator)), o)
         End If
         If numerator >= 0 AndAlso denominator >= 0 Then
-            Return fraction(CUInt(numerator), CUInt(denominator), o)
+            Return fraction(New big_uint(CUInt(numerator)), New big_uint(CUInt(denominator)), o)
         End If
         Return False
     End Function
 
     Public Shared Function fraction(ByVal numerator As Int32, ByVal denominator As Int32) As big_udec
+        Dim r As big_udec = Nothing
+        assert(fraction(numerator, denominator, r))
+        Return r
+    End Function
+
+    Public Shared Function fraction(ByVal numerator As Int64,
+                                    ByVal denominator As Int64,
+                                    ByRef o As big_udec) As Boolean
+        If numerator < 0 AndAlso denominator < 0 Then
+            Return fraction(New big_uint(CULng(-numerator)), New big_uint(CULng(-denominator)), o)
+        End If
+        If numerator >= 0 AndAlso denominator >= 0 Then
+            Return fraction(New big_uint(CULng(numerator)), New big_uint(CULng(denominator)), o)
+        End If
+        Return False
+    End Function
+
+    Public Shared Function fraction(ByVal numerator As Int64, ByVal denominator As Int64) As big_udec
+        Dim r As big_udec = Nothing
+        assert(fraction(numerator, denominator, r))
+        Return r
+    End Function
+
+    Public Shared Function fraction(ByVal numerator As UInt32,
+                                    ByVal denominator As UInt32,
+                                    ByRef o As big_udec) As Boolean
+        Return fraction(New big_uint(numerator), New big_uint(denominator), o)
+    End Function
+
+    Public Shared Function fraction(ByVal numerator As UInt32, ByVal denominator As UInt32) As big_udec
+        Dim r As big_udec = Nothing
+        assert(fraction(numerator, denominator, r))
+        Return r
+    End Function
+
+    Public Shared Function fraction(ByVal numerator As UInt64,
+                                    ByVal denominator As UInt64,
+                                    ByRef o As big_udec) As Boolean
+        Return fraction(New big_uint(numerator), New big_uint(denominator), o)
+    End Function
+
+    Public Shared Function fraction(ByVal numerator As UInt64, ByVal denominator As UInt64) As big_udec
         Dim r As big_udec = Nothing
         assert(fraction(numerator, denominator, r))
         Return r

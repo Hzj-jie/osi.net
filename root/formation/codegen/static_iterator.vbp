@@ -16,8 +16,10 @@
         Private ReadOnly p As ##TYPE##
 
 #If ##FRIEND_CONSTRUCTOR## Then
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Friend Sub New(ByVal that As ##TYPE##)
 #Else
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Sub New(ByVal that As ##TYPE##)
 #End If
 #If Not ##TYPE_IS_STRUCT## Then
@@ -27,10 +29,12 @@
         End Sub
 
 #If ##USE_P_END## Then
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function is_end() As Boolean
             Return p.is_end()
         End Function
 #Else
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function is_end() As Boolean
 #If ##TYPE_IS_STRUCT## Then
             Return p Is Nothing
@@ -42,6 +46,7 @@
         End Function
 #End If
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function is_not_end() As Boolean
             Return Not is_end()
         End Function
@@ -52,30 +57,35 @@
         End Function
 #End If
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Operator =(ByVal this As iterator, ByVal that As iterator) As Boolean
             If this.null_or_end() AndAlso that.null_or_end() Then
                 Return True
-            ElseIf this.null_or_end() OrElse that.null_or_end() Then
-                Return False
-            Else
-                assert(Not this.is_null() AndAlso Not this.is_null())
-                Return is_equal(this.p, that.p)
             End If
+            If this.null_or_end() OrElse that.null_or_end() Then
+                Return False
+            End If
+            assert(Not this.is_null() AndAlso Not this.is_null())
+            Return is_equal(this.p, that.p)
         End Operator
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Operator <>(ByVal this As iterator, ByVal that As iterator) As Boolean
             Return Not (this = that)
         End Operator
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function CompareTo(ByVal other As iterator) As Int32 Implements IComparable(Of iterator).CompareTo
             Return If(Me = other, 0, -1)
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function CompareTo(ByVal other As Object) As Int32 Implements IComparable.CompareTo
             Return CompareTo(cast(Of iterator)(other, False))
         End Function
 
     #If ##DEFINE_OPERATOR_PLUS## Then
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Operator +(ByVal this As iterator) As ##TYPE##
             Return If(this = [end], Nothing, this.p)
         End Operator

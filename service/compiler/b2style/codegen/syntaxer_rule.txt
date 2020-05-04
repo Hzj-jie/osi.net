@@ -23,7 +23,7 @@ multi-sentence-paragraph start-paragraph [sentence]* end-paragraph
 value-declaration name name
 value-definition name name assignment value
 value-clause name assignment value
-self-value-clause name [self-add, self-minus, self-multiply, self-divide, self-mod, self-power, self-bit-and, self-bit-or, self-and, self-or] value
+self-value-clause name [self-add, self-minus, self-multiply, self-divide, self-mod, self-power, self-bit-and, self-bit-or, self-and, self-or, self-left-shift, self-right-shift] value
 
 condition kw-if start-bracket value end-bracket paragraph [else-condition]?
 else-condition kw-else paragraph
@@ -42,7 +42,7 @@ pre-operation-value [not, self-inc, self-dec] value
 # Should support post-operation-value value [self-inc, self-dec]
 post-operation-value raw-value [self-inc, self-dec]
 # Should support binary-operation-value value [add, minus, multiply, divide, mod, power, bit-and, bit-or, and, or, less-than, greater-than, less-or-equal, greater-or-equal, equal, not-equal] value
-binary-operation-value raw-value [add, minus, multiply, divide, mod, power, bit-and, bit-or, and, or, less-than, greater-than, less-or-equal, greater-or-equal, equal, not-equal] value
+binary-operation-value raw-value [add, minus, multiply, divide, mod, power, bit-and, bit-or, and, or, left-shift, right-shift, less-than, greater-than, less-or-equal, greater-or-equal, equal, not-equal] value
 
 variable-name name
 

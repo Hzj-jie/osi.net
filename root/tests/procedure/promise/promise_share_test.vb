@@ -21,7 +21,7 @@ Public Class promise_share_test
         start_ms = nowadays.milliseconds()
         Dim finished() As Boolean = Nothing
         ReDim finished(size - 1)
-        memclr(finished)
+        arrays.clear(finished)
         Dim ps() As promise = Nothing
         ReDim ps(size - 1)
         For i As Int32 = 0 To size - 1

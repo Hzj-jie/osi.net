@@ -38,7 +38,7 @@ Public Module _memory_stream
         i.assert_valid()
         Dim o() As Byte = Nothing
         ReDim o(CInt(i.Length()) - 1)
-        memcpy(o, i.GetBuffer(), CUInt(i.Length()))
+        arrays.copy(o, i.GetBuffer(), CUInt(i.Length()))
         Return o
     End Function
 
@@ -89,18 +89,17 @@ Public Module _memory_stream
         this.assert_valid()
         If o Is Nothing Then
             Return False
-        ElseIf isemptyarray(o) Then
-            Return True
-        Else
-            Dim p As Int64 = 0
-            p = this.Position()
-            If this.Read(o, 0, array_size_i(o)) = array_size_i(o) Then
-                Return True
-            Else
-                this.Position() = p
-                Return False
-            End If
         End If
+        If isemptyarray(o) Then
+            Return True
+        End If
+        Dim p As Int64 = 0
+        p = this.Position()
+        If this.Read(o, 0, array_size_i(o)) = array_size_i(o) Then
+            Return True
+        End If
+        this.Position() = p
+        Return False
     End Function
 
     <Extension()> Public Function write_byte(ByVal this As MemoryStream, ByVal b As Byte) As Boolean
@@ -116,6 +115,23 @@ Public Module _memory_stream
     <Extension()> Public Function eos(ByVal this As MemoryStream) As Boolean
         assert(Not this Is Nothing)
         Return this.Position() = this.Length()
+    End Function
+
+    <Extension()> Public Function dump_to_file(ByVal this As MemoryStream, ByVal o As String) As Boolean
+        Try
+            File.WriteAllBytes(o, this.export())
+            Return True
+        Catch
+        End Try
+        Return False
+    End Function
+
+    <Extension()> Public Function read_from_file(ByVal this As MemoryStream, ByVal i As String) As Boolean
+        Try
+            Return this.write(File.ReadAllBytes(i))
+        Catch
+        End Try
+        Return False
     End Function
 End Module
 

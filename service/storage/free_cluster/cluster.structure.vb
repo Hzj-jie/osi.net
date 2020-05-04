@@ -17,7 +17,7 @@ Partial Public Class cluster
         assert(uint64_bytes(data_length(), r, LENGTH_OFFSET))
         assert(int64_bytes(next_id(), r, NEXTCLUSTERID_OFFSET))
         assert(int64_bytes(prev_id(), r, PREVCLUSTERID_OFFSET))
-        memcpy(r, CHECKSUM_OFFSET, CHECKSUM, 0, CHECKSUM_SIZE)
+        arrays.copy(r, CHECKSUM_OFFSET, CHECKSUM, 0, CHECKSUM_SIZE)
         Return r
     End Function
 

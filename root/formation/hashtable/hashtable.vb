@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.template
@@ -30,6 +31,7 @@ Partial Public Class hashtable(Of T,
     Private c As UInt32
     Private s As UInt32
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub New(ByVal c As UInt32)
         assert(c < predefined_column_counts.size())
         Me.c = c
@@ -37,6 +39,7 @@ Partial Public Class hashtable(Of T,
         new_row()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <copy_constructor()>
     Protected Sub New(ByVal v As vector(Of array(Of hasher_node(Of T))), ByVal s As UInt32, ByVal c As UInt32)
         assert(Not v.null_or_empty())
@@ -47,18 +50,22 @@ Partial Public Class hashtable(Of T,
         Me.c = c
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New()
         Me.New(0)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function size() As UInt32
         Return s
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function empty() As Boolean
         Return size() = uint32_0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function begin() As iterator
         Dim it As iterator = Nothing
         it = iterator_at(0, 0)
@@ -68,10 +75,12 @@ Partial Public Class hashtable(Of T,
         Return it
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [end]() As iterator
         Return iterator.end
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function rbegin() As iterator
         Dim it As iterator = Nothing
         it = iterator_at(last_row(), last_column())
@@ -81,6 +90,7 @@ Partial Public Class hashtable(Of T,
         Return it
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function rend() As iterator
         Return iterator.end
     End Function

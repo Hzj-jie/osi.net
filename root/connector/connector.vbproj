@@ -80,7 +80,6 @@
     <Compile Include="error_handler\assert_which.uint32.vb" />
     <Compile Include="error_handler\assert_which.uint64.vb" />
     <Compile Include="error_handler\assert_which.vb" />
-    <Compile Include="error_handler\throws.vb" />
     <Compile Include="functor\bytes_serializer\bytes_serializer.endian.vb" />
     <Compile Include="functor\bytes_serializer\bytes_serializer.fixed.vb" />
     <Compile Include="functor\bytes_serializer\bytes_serializer.object.vb" />
@@ -101,6 +100,10 @@
     <Compile Include="functor\container_operator\container_operator.enumerator.vb" />
     <Compile Include="functor\container_operator\container_operator.infer.vb" />
     <Compile Include="functor\container_operator\container_operator.vb" />
+    <Compile Include="functor\streamer\streamer.aggregator.vb" />
+    <Compile Include="functor\streamer\streamer.collector.vb" />
+    <Compile Include="functor\streamer\streamer.container.vb" />
+    <Compile Include="functor\streamer\streamer.vb" />
     <Compile Include="functor\string_serializer\json_serializer.vb" />
     <Compile Include="functor\registry\binary_operator_registry.vb" />
     <Compile Include="functor\registry\binary_operator_registry2.vb" />
@@ -115,7 +118,8 @@
     <Compile Include="functor\string_serializer\string_serializer.object.vb" />
     <Compile Include="functor\string_serializer\string_serializer.vb" />
     <Compile Include="functor\string_serializer\uri_serializer.vb" />
-    <Compile Include="string_utils\func_to_string.vb" />
+    <Compile Include="garbage_collector.vb" />
+    <Compile Include="mono.vb" />
     <Compile Include="string_utils\null_str.vb" />
     <Compile Include="struct\struct.definition.vb" />
     <Compile Include="struct\struct.reflector.vb" />
@@ -143,7 +147,9 @@
     <Compile Include="template\boolean.vb" />
     <Compile Include="template\template_array.vb" />
     <Compile Include="template\equaler.vb" />
+    <Compile Include="thread_random.vb" />
     <Compile Include="thread_static_ref.vb" />
+    <Compile Include="time\strong_high_res_ticks_retriever.vb" />
     <Compile Include="time\tick_clock.vb" />
     <Compile Include="time\tick_clock.implementations.vb" />
     <Compile Include="typed_once_action.vb" />
@@ -273,7 +279,6 @@
     <Compile Include="encoding.vb" />
     <Compile Include="type\enum_def.vb" />
     <Compile Include="event.vb" />
-    <Compile Include="mono.vb" />
     <Compile Include="time\nowadays.vb" />
     <Compile Include="string_utils\c_str.vb" />
     <Compile Include="string_utils\levenshtein.vb" />
@@ -289,7 +294,6 @@
     <Compile Include="debugger.vb" />
     <Compile Include="debug_mode.vb" />
     <Compile Include="error_handler\error_message.vb" />
-    <Compile Include="gc.vb" />
     <Compile Include="type\type.inherit.vb" />
     <Compile Include="type\type.constructor.vb" />
     <Compile Include="minmax.vb" />
@@ -325,7 +329,6 @@
     <Compile Include="string_utils\strrplc.vb" />
     <Compile Include="string_utils\substring.vb" />
     <Compile Include="string_utils\upper_lower.vb" />
-    <Compile Include="exit.vb" />
     <Compile Include="swap.vb" />
     <Compile Include="text_writer.vb" />
     <Compile Include="threadpool.vb" />

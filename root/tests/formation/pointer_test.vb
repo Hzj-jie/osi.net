@@ -1,13 +1,16 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.root.lock
-Imports osi.root.connector
-Imports osi.root.utils
 
-Public Class pointer_test
+Public NotInheritable Class pointer_test
     Inherits gc_memory_measured_case_wrapper
 
     Public Sub New()
@@ -26,7 +29,7 @@ Public Class pointer_test
         Return min_upper_bound()
     End Function
 
-    Private Class pointer_case
+    Private NotInheritable Class pointer_case
         Inherits [case]
 
         Public Const large_memory_object_count_lowerbound As Int64 = 10000
@@ -52,59 +55,54 @@ Public Class pointer_test
         Private Shared Function hosting_and_release() As Boolean
             test_class.clear_finalized()
 
-            Dim count As Int64 = 0
+            Dim count As Int32 = 0
             count = rnd_int(100, 1000)
             Dim ps() As pointer(Of test_class) = Nothing
             ReDim ps(count - 1)
-            For i As Int64 = 0 To count - 1
+            For i As Int32 = 0 To count - 1
                 ps(i) = New pointer(Of test_class)(New test_class())
             Next
             assertion.equal(test_class.finalized_count(), 0)
-            repeat_gc_collect()
+            garbage_collector.repeat_collect()
             assertion.equal(test_class.finalized_count(), 0)
 
-            Dim released As Int64 = 0
+            Dim released As Int32 = 0
             released = rnd_int(0, count)
-            For i As Int64 = 0 To released - 1
+            For i As Int32 = 0 To released - 1
                 ps(i) = Nothing
             Next
-            repeat_gc_collect()
+            garbage_collector.repeat_collect()
             assertion.equal(test_class.finalized_count(), released)
 
-            For i As Int64 = 0 To count - 1
+            For i As Int32 = 0 To count - 1
                 ps(i) = Nothing
             Next
-            repeat_gc_collect()
+            garbage_collector.repeat_collect()
             assertion.equal(test_class.finalized_count(), count)
 
             Return True
         End Function
 
-        Private Shared Sub wait()
-            For i As Int32 = 0 To 60 - 1
-                repeat_gc_collect()
-                sleep()
-            Next
-        End Sub
-
         Private Shared Function large_memory() As Boolean
-            'a single character uses two bytes
-            Const string_size_lowerbound As Int64 = (large_memory_object_size_lowerbound >> 1)
-            Dim count As Int64 = 0
-            count = rnd_int(large_memory_object_count_lowerbound, large_memory_object_count_lowerbound * 3)
-            Dim ps() As pointer(Of String) = Nothing
-            ReDim ps(count - 1)
-            For i As Int64 = 0 To count - 1
-                ps(i) = New pointer(Of String)()
-                ps(i).set(New String(character.h, rnd_int(string_size_lowerbound, string_size_lowerbound * 3)))
-            Next
-            wait()
-            ps = Nothing
-            wait()
-            Return True
+            Using garbage_collector.force_aggressive_collecting()
+                'a single character uses two bytes
+                Const string_size_lowerbound As Int64 = (large_memory_object_size_lowerbound >> 1)
+                Dim count As Int32 = 0
+                count = rnd_int(large_memory_object_count_lowerbound, large_memory_object_count_lowerbound * 3)
+                Dim ps() As pointer(Of String) = Nothing
+                ReDim ps(count - 1)
+                For i As Int32 = 0 To count - 1
+                    ps(i) = New pointer(Of String)()
+                    ps(i).set(New String(character.h, rnd_int(string_size_lowerbound, string_size_lowerbound * 3)))
+                Next
+                garbage_collector.repeat_collect()
+                ps = Nothing
+                garbage_collector.repeat_collect()
+                Return True
+            End Using
         End Function
 
-        Private Class test_class2
+        Private NotInheritable Class test_class2
             Implements IComparable(Of test_class2)
 
             Private ReadOnly s As String = Nothing
@@ -237,7 +235,7 @@ Public Class pointer_test
         End Function
 
         Public Overrides Function reserved_processors() As Int16
-            Return Environment.ProcessorCount()
+            Return CShort(Environment.ProcessorCount())
         End Function
 
         Public Overrides Function run() As Boolean

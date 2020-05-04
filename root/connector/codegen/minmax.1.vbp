@@ -1,12 +1,15 @@
 ﻿
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function min(ByVal f As ##TYPE##, ByVal s As ##TYPE##) As ##TYPE##
         Return If(f < s, f, s)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function max(ByVal f As ##TYPE##, ByVal s As ##TYPE##) As ##TYPE##
         Return If(f < s, s, f)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function min(ByVal f As ##TYPE##, ByVal s As ##TYPE##, ByVal ParamArray v() As ##TYPE##) As ##TYPE##
         Dim r As ##TYPE## = min(f, s)
         For i As Int32 = 0 To array_size_i(v) - 1
@@ -17,6 +20,7 @@
         Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function max(ByVal f As ##TYPE##, ByVal s As ##TYPE##, ByVal ParamArray v() As ##TYPE##) As ##TYPE##
         Dim r As ##TYPE## = max(f, s)
         For i As Int32 = 0 To array_size_i(v) - 1

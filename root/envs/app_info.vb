@@ -20,7 +20,7 @@ Public Module _app_info
         If mono Then
             application_full_path = Reflection.Assembly.GetEntryAssembly().Location()
         Else
-            application_full_path = current_process.MainModule().FileName()
+            application_full_path = this_process.ref.MainModule().FileName()
         End If
         application_directory = Path.GetDirectoryName(application_full_path)
         application_file_name = Path.GetFileName(application_full_path)

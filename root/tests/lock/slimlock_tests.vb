@@ -1,21 +1,28 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.lock
 Imports osi.root.lock.slimlock
-Imports osi.root.utt
 
-Public Class eventlock_test
+Public NotInheritable Class eventlock_test
     Inherits islimlock_test(Of eventlock)
+
+    Public Sub New()
+        MyBase.New(True)
+    End Sub
 End Class
 
-Public Class lazylock_test
+Public NotInheritable Class lazylock_test
     Inherits islimlock_test(Of lazylock)
 End Class
 
-Public Class monitorlock_islimlock_test
+Public NotInheritable Class monitorlock_islimlock_test
     Inherits islimlock_test(Of slimlock.monitorlock)
 End Class
 
-Public Class sequentiallock_test
+Public NotInheritable Class sequentiallock_test
     Inherits islimlock_test(Of slimlock.sequentiallock)
 
     Public Sub New()
@@ -23,11 +30,11 @@ Public Class sequentiallock_test
     End Sub
 End Class
 
-Public Class simplelock_test
+Public NotInheritable Class simplelock_test
     Inherits islimlock_test(Of simplelock)
 End Class
 
-Public Class spinlock_test
+Public NotInheritable Class spinlock_test
     Inherits islimlock_test(Of spinlock)
 
     Public Sub New()
@@ -35,7 +42,7 @@ Public Class spinlock_test
     End Sub
 End Class
 
-Public Class spinlock2_test
+Public NotInheritable Class spinlock2_test
     Inherits islimlock_test(Of spinlock2)
 
     Public Sub New()

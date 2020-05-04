@@ -45,4 +45,14 @@ Public Module _div_rem
 #End If
         Return r
     End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <Extension()> Public Function div_rem(ByVal this As UInt32,
+                                          ByVal that As UInt32,
+                                          ByRef remainder As UInt32) As UInt32
+        Dim r As UInt32 = 0
+        r = this \ that
+        remainder = CUInt(this - that * r)
+        Return r
+    End Function
 End Module

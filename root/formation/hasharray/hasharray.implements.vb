@@ -3,7 +3,9 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.template
 
 Partial Public Class hasharray(Of T,
@@ -12,15 +14,18 @@ Partial Public Class hasharray(Of T,
                                   _EQUALER As _equaler(Of T))
     Implements ICloneable, ICloneable(Of hasharray(Of T, _UNIQUE, _HASHER, _EQUALER))
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CloneT() As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER) _
                              Implements ICloneable(Of hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)).Clone
         Return clone(Of hasharray(Of T, _UNIQUE, _HASHER, _EQUALER))()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Function clone(Of R As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER))() As R
         Return copy_constructor(Of R).invoke(v.CloneT(), s, c)
     End Function

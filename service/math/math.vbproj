@@ -67,6 +67,7 @@
     <Compile Include="big_udec\big_udec.creators.vb" />
     <Compile Include="big_udec\big_udec.predefined.vb" />
     <Compile Include="big_udec\big_udec.rnd.vb" />
+    <Compile Include="big_udec\big_udec.strmatch.vb" />
     <Compile Include="big_uint\big_uint.adaptive_array.vb" />
     <Compile Include="big_uint\big_uint.assert.vb" />
     <Compile Include="big_uint\big_uint.bit.vb" />
@@ -75,6 +76,7 @@
     <Compile Include="big_uint\big_uint.compare.vb" />
     <Compile Include="big_uint\big_uint.constants.vb" />
     <Compile Include="big_uint\big_uint.divide.vb" />
+    <Compile Include="big_uint\big_uint.gcd.vb" />
     <Compile Include="big_uint\big_uint.implement.vb" />
     <Compile Include="big_uint\big_uint.operator.vb" />
     <Compile Include="big_uint\big_uint.override.vb" />
@@ -94,6 +96,7 @@
     <Compile Include="calculator\ioutputter.vb" />
     <Compile Include="calculator\iparser.vb" />
     <Compile Include="calculator\uint_binary_calculator.vb" />
+    <Compile Include="math_debug.vb" />
     <Compile Include="div_rem.vb" />
     <Compile Include="exceptions.vb" />
     <Compile Include="expression\basic_expression.vb" />
@@ -121,16 +124,16 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="phi.vb" />
-    <Compile Include="prime.vb" />
+    <Compile Include="primes.vb" />
     <Compile Include="prime_divisors.vb" />
-    <Compile Include="relative_prime.vb" />
+    <Compile Include="relatively_prime.vb" />
     <Compile Include="big_udec\big_udec.calculation.vb" />
     <Compile Include="big_udec\big_udec.compare.vb" />
     <Compile Include="big_udec\big_udec.constants.vb" />
     <Compile Include="big_udec\big_udec.implementation.vb" />
     <Compile Include="big_udec\big_udec.operator.vb" />
     <Compile Include="big_udec\big_udec.override.vb" />
-    <Compile Include="big_udec\big_udec.private.vb" />
+    <Compile Include="big_udec\big_udec.reduce_fraction.vb" />
     <Compile Include="big_udec\big_udec.str.vb" />
     <Compile Include="big_udec\big_udec.vb" />
     <Compile Include="unchecked\operators.vb" />

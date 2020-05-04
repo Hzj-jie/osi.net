@@ -1,0 +1,7 @@
+﻿
+Calculate the possibility of the binding of A-B.
+Model: {A, B, possibility}
+B can be empty and serves as the possibility of independency of A.
+Evaluator:
+  Input: ABCDE
+  Output: AB CDE

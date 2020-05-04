@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.envs
@@ -12,7 +16,7 @@ Friend Class application_info_logging
                     ", ver ",
                     application_version,
                     ", process id ",
-                    current_process.Id(),
+                    this_process.ref.Id(),
                     ", under clr ",
                     clr_version,
                     ", source control current changeset id ",
@@ -60,7 +64,9 @@ Friend Class application_info_logging
                     ", comment ",
                     gitver.current.subject,
                     ", detail comment ",
-                    gitver.current.body)
+                    gitver.current.body,
+                    ", diff against base ",
+                    gitver.diff)
         raise_error("host os info as",
                     ", family ",
                     os.family,

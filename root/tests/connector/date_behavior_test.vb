@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Globalization
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utt
 
@@ -15,7 +19,7 @@ Public Class date_behavior_test
                                       ByVal format As String,
                                       ByVal culture As CultureInfo,
                                       ByVal d As Date) As tuple(Of String, String, CultureInfo, Date)
-        Return make_tuple(str, format, culture, d)
+        Return tuple.of(str, format, culture, d)
     End Function
 
     Private Shared Function make_case(ByVal str As String, ByVal culture As CultureInfo, ByVal d As Date) _
@@ -35,7 +39,7 @@ Public Class date_behavior_test
 
     Private Shared Function make_case(ByVal str As String, ByVal format As String, ByVal culture As CultureInfo) _
                                      As tuple(Of String, String, CultureInfo)
-        Return make_tuple(str, format, culture)
+        Return tuple.of(str, format, culture)
     End Function
 
     Private Shared Function make_case(ByVal str As String, ByVal culture As CultureInfo) _
@@ -59,7 +63,7 @@ Public Class date_behavior_test
 
     Private Shared Function try_parse_exact_case() As Boolean
         Dim t As Date = Nothing
-        For i As Int32 = 0 To array_size(success_cases) - 1
+        For i As Int32 = 0 To array_size_i(success_cases) - 1
             assertion.is_true(Date.TryParseExact(success_cases(i)._1(),
                                            success_cases(i)._2(),
                                            success_cases(i)._3(),
@@ -67,7 +71,7 @@ Public Class date_behavior_test
                                            t))
             assertion.equal(t, success_cases(i)._4())
         Next
-        For i As Int32 = 0 To array_size(failure_cases) - 1
+        For i As Int32 = 0 To array_size_i(failure_cases) - 1
             assertion.is_false(Date.TryParseExact(failure_cases(i)._1(),
                                             failure_cases(i)._2(),
                                             failure_cases(i)._3(),

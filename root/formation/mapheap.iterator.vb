@@ -15,8 +15,8 @@ Option Strict On
 
 
 Imports System.Runtime.CompilerServices
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 'finish iterator.imports.vbp --------
 
 Public Module _mapheap_iterator
@@ -52,8 +52,10 @@ Partial Public Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As 
         Private ReadOnly p As pair(Of HEAP_KEY, MAP_KEY)
 
 #If True Then
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Friend Sub New(ByVal that As pair(Of HEAP_KEY, MAP_KEY))
 #Else
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Sub New(ByVal that As pair(Of HEAP_KEY, MAP_KEY))
 #End If
 #If Not True Then
@@ -63,10 +65,12 @@ Partial Public Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As 
         End Sub
 
 #If False Then
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function is_end() As Boolean
             Return p.is_end()
         End Function
 #Else
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function is_end() As Boolean
 #If True Then
             Return p Is Nothing
@@ -78,6 +82,7 @@ Partial Public Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As 
         End Function
 #End If
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function is_not_end() As Boolean
             Return Not is_end()
         End Function
@@ -88,30 +93,35 @@ Partial Public Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As 
         End Function
 #End If
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Operator =(ByVal this As iterator, ByVal that As iterator) As Boolean
             If this.null_or_end() AndAlso that.null_or_end() Then
                 Return True
-            ElseIf this.null_or_end() OrElse that.null_or_end() Then
-                Return False
-            Else
-                assert(Not this.is_null() AndAlso Not this.is_null())
-                Return is_equal(this.p, that.p)
             End If
+            If this.null_or_end() OrElse that.null_or_end() Then
+                Return False
+            End If
+            assert(Not this.is_null() AndAlso Not this.is_null())
+            Return is_equal(this.p, that.p)
         End Operator
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Operator <>(ByVal this As iterator, ByVal that As iterator) As Boolean
             Return Not (this = that)
         End Operator
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function CompareTo(ByVal other As iterator) As Int32 Implements IComparable(Of iterator).CompareTo
             Return If(Me = other, 0, -1)
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function CompareTo(ByVal other As Object) As Int32 Implements IComparable.CompareTo
             Return CompareTo(cast(Of iterator)(other, False))
         End Function
 
     #If True Then
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Operator +(ByVal this As iterator) As pair(Of HEAP_KEY, MAP_KEY)
             Return If(this = [end], Nothing, this.p)
         End Operator

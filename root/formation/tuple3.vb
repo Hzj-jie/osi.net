@@ -22,8 +22,10 @@ Option Strict On
 
 #Const IS_CLASS = ("tuple" = "tuple")
 #If IS_CLASS Then
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports osi.root.connector
+Imports osi.root.constants
 #End If
 
 ' To reduce complexity, tuple is always const, use pointer if the fields are required to be muttable.
@@ -37,18 +39,21 @@ Public Structure tuple(Of T1, T2, T3)
 
     Private __1 As T1
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _1() As T1
         Return __1
     End Function
 
     Private __2 As T2
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _2() As T2
         Return __2
     End Function
 
     Private __3 As T3
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _3() As T3
         Return __3
     End Function
@@ -56,6 +61,7 @@ Public Structure tuple(Of T1, T2, T3)
 #If 3 > 3 Then
     Private __4 As T4
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _4() As T4
         Return __4
     End Function
@@ -64,6 +70,7 @@ Public Structure tuple(Of T1, T2, T3)
 #If 3 > 4 Then
     Private __5 As T5
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _5() As T5
         Return __5
     End Function
@@ -72,6 +79,7 @@ Public Structure tuple(Of T1, T2, T3)
 #If 3 > 5 Then
     Private __6 As T6
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _6() As T6
         Return __6
     End Function
@@ -80,6 +88,7 @@ Public Structure tuple(Of T1, T2, T3)
 #If 3 > 6 Then
     Private __7 As T7
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _7() As T7
         Return __7
     End Function
@@ -88,27 +97,32 @@ Public Structure tuple(Of T1, T2, T3)
 #If 3 > 7 Then
     Private __8 As T8
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _8() As T8
         Return __8
     End Function
 #End If
 
 #If 3 = 3 Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal _1 As T1,
                    ByVal _2 As T2,
                    ByVal _3 As T3)
 #ElseIf 3 = 4 Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal _1 As T1,
                    ByVal _2 As T2,
                    ByVal _3 As T3,
                    ByVal _4 As T4)
 #ElseIf 3 = 5 Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal _1 As T1,
                    ByVal _2 As T2,
                    ByVal _3 As T3,
                    ByVal _4 As T4,
                    ByVal _5 As T5)
 #ElseIf 3 = 6 Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal _1 As T1,
                    ByVal _2 As T2,
                    ByVal _3 As T3,
@@ -116,6 +130,7 @@ Public Structure tuple(Of T1, T2, T3)
                    ByVal _5 As T5,
                    ByVal _6 As T6)
 #ElseIf 3 = 7 Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal _1 As T1,
                    ByVal _2 As T2,
                    ByVal _3 As T3,
@@ -124,6 +139,7 @@ Public Structure tuple(Of T1, T2, T3)
                    ByVal _6 As T6,
                    ByVal _7 As T7)
 #ElseIf 3 = 8 Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal _1 As T1,
                    ByVal _2 As T2,
                    ByVal _3 As T3,
@@ -155,29 +171,32 @@ Public Structure tuple(Of T1, T2, T3)
 #End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CloneT() As tuple(Of T1, T2, T3) _
                                 Implements ICloneable(Of tuple(Of T1, T2, T3)).Clone
 #If 3 = 3 Then
-        Return make_tuple(__1, __2, __3)
+        Return tuple.of_tuple(__1, __2, __3)
 #ElseIf 3 = 4 Then
-        Return make_tuple(__1, __2, __3, __4)
+        Return tuple.of_tuple(__1, __2, __3, __4)
 #ElseIf 3 = 5 Then
-        Return make_tuple(__1, __2, __3, __4, __5)
+        Return tuple.of_tuple(__1, __2, __3, __4, __5)
 #ElseIf 3 = 6 Then
-        Return make_tuple(__1, __2, __3, __4, __5, __6)
+        Return tuple.of_tuple(__1, __2, __3, __4, __5, __6)
 #ElseIf 3 = 7 Then
-        Return make_tuple(__1, __2, __3, __4, __5, __6, __7)
+        Return tuple.of_tuple(__1, __2, __3, __4, __5, __6, __7)
 #ElseIf 3 = 8 Then
-        Return make_tuple(__1, __2, __3, __4, __5, __6, __7, __8)
+        Return tuple.of_tuple(__1, __2, __3, __4, __5, __6, __7, __8)
 #Else
-    Unexpected SIZE (3)
+        Unexpected SIZE (3)
 #End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal other As tuple(Of T1, T2, T3)) As Int32 _
                              Implements IComparable(Of tuple(Of T1, T2, T3)).CompareTo
 #If IS_CLASS Then
@@ -287,25 +306,30 @@ Public Structure tuple(Of T1, T2, T3)
         Return 0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
         Return CompareTo(cast(Of tuple(Of T1, T2, T3))(obj, False))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As tuple(Of T1, T2, T3),
                              ByVal that As tuple(Of T1, T2, T3)) As Boolean
         Return compare(this, that) = 0
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As tuple(Of T1, T2, T3),
                              ByVal that As Object) As Boolean
         Return compare(this, that) = 0
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As tuple(Of T1, T2, T3),
                               ByVal that As tuple(Of T1, T2, T3)) As Boolean
         Return compare(this, that) <> 0
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As tuple(Of T1, T2, T3),
                               ByVal that As Object) As Boolean
         Return compare(this, that) <> 0
@@ -385,8 +409,10 @@ End Structure
 
 #Const IS_CLASS = ("fast_tuple" = "tuple")
 #If IS_CLASS Then
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports osi.root.connector
+Imports osi.root.constants
 #End If
 
 ' To reduce complexity, tuple is always const, use pointer if the fields are required to be muttable.
@@ -400,18 +426,21 @@ Public Structure fast_tuple(Of T1, T2, T3)
 
     Private __1 As T1
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _1() As T1
         Return __1
     End Function
 
     Private __2 As T2
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _2() As T2
         Return __2
     End Function
 
     Private __3 As T3
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _3() As T3
         Return __3
     End Function
@@ -419,6 +448,7 @@ Public Structure fast_tuple(Of T1, T2, T3)
 #If 3 > 3 Then
     Private __4 As T4
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _4() As T4
         Return __4
     End Function
@@ -427,6 +457,7 @@ Public Structure fast_tuple(Of T1, T2, T3)
 #If 3 > 4 Then
     Private __5 As T5
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _5() As T5
         Return __5
     End Function
@@ -435,6 +466,7 @@ Public Structure fast_tuple(Of T1, T2, T3)
 #If 3 > 5 Then
     Private __6 As T6
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _6() As T6
         Return __6
     End Function
@@ -443,6 +475,7 @@ Public Structure fast_tuple(Of T1, T2, T3)
 #If 3 > 6 Then
     Private __7 As T7
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _7() As T7
         Return __7
     End Function
@@ -451,27 +484,32 @@ Public Structure fast_tuple(Of T1, T2, T3)
 #If 3 > 7 Then
     Private __8 As T8
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _8() As T8
         Return __8
     End Function
 #End If
 
 #If 3 = 3 Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal _1 As T1,
                    ByVal _2 As T2,
                    ByVal _3 As T3)
 #ElseIf 3 = 4 Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal _1 As T1,
                    ByVal _2 As T2,
                    ByVal _3 As T3,
                    ByVal _4 As T4)
 #ElseIf 3 = 5 Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal _1 As T1,
                    ByVal _2 As T2,
                    ByVal _3 As T3,
                    ByVal _4 As T4,
                    ByVal _5 As T5)
 #ElseIf 3 = 6 Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal _1 As T1,
                    ByVal _2 As T2,
                    ByVal _3 As T3,
@@ -479,6 +517,7 @@ Public Structure fast_tuple(Of T1, T2, T3)
                    ByVal _5 As T5,
                    ByVal _6 As T6)
 #ElseIf 3 = 7 Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal _1 As T1,
                    ByVal _2 As T2,
                    ByVal _3 As T3,
@@ -487,6 +526,7 @@ Public Structure fast_tuple(Of T1, T2, T3)
                    ByVal _6 As T6,
                    ByVal _7 As T7)
 #ElseIf 3 = 8 Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal _1 As T1,
                    ByVal _2 As T2,
                    ByVal _3 As T3,
@@ -518,29 +558,32 @@ Public Structure fast_tuple(Of T1, T2, T3)
 #End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CloneT() As fast_tuple(Of T1, T2, T3) _
                                 Implements ICloneable(Of fast_tuple(Of T1, T2, T3)).Clone
 #If 3 = 3 Then
-        Return make_fast_tuple(__1, __2, __3)
+        Return tuple.of_fast_tuple(__1, __2, __3)
 #ElseIf 3 = 4 Then
-        Return make_fast_tuple(__1, __2, __3, __4)
+        Return tuple.of_fast_tuple(__1, __2, __3, __4)
 #ElseIf 3 = 5 Then
-        Return make_fast_tuple(__1, __2, __3, __4, __5)
+        Return tuple.of_fast_tuple(__1, __2, __3, __4, __5)
 #ElseIf 3 = 6 Then
-        Return make_fast_tuple(__1, __2, __3, __4, __5, __6)
+        Return tuple.of_fast_tuple(__1, __2, __3, __4, __5, __6)
 #ElseIf 3 = 7 Then
-        Return make_fast_tuple(__1, __2, __3, __4, __5, __6, __7)
+        Return tuple.of_fast_tuple(__1, __2, __3, __4, __5, __6, __7)
 #ElseIf 3 = 8 Then
-        Return make_fast_tuple(__1, __2, __3, __4, __5, __6, __7, __8)
+        Return tuple.of_fast_tuple(__1, __2, __3, __4, __5, __6, __7, __8)
 #Else
-    Unexpected SIZE (3)
+        Unexpected SIZE (3)
 #End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal other As fast_tuple(Of T1, T2, T3)) As Int32 _
                              Implements IComparable(Of fast_tuple(Of T1, T2, T3)).CompareTo
 #If IS_CLASS Then
@@ -650,25 +693,30 @@ Public Structure fast_tuple(Of T1, T2, T3)
         Return 0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
         Return CompareTo(cast(Of fast_tuple(Of T1, T2, T3))(obj, False))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As fast_tuple(Of T1, T2, T3),
                              ByVal that As fast_tuple(Of T1, T2, T3)) As Boolean
         Return compare(this, that) = 0
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As fast_tuple(Of T1, T2, T3),
                              ByVal that As Object) As Boolean
         Return compare(this, that) = 0
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As fast_tuple(Of T1, T2, T3),
                               ByVal that As fast_tuple(Of T1, T2, T3)) As Boolean
         Return compare(this, that) <> 0
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As fast_tuple(Of T1, T2, T3),
                               ByVal that As Object) As Boolean
         Return compare(this, that) <> 0

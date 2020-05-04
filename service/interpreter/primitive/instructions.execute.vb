@@ -283,7 +283,7 @@ Namespace primitive
                 Else
                     Dim r() As Byte = Nothing
                     ReDim r(CInt(array_size(+p1) - l - uint32_1))
-                    memcpy(r, uint32_0, +p1, l, array_size(+p1) - l)
+                    arrays.copy(r, uint32_0, +p1, l, array_size(+p1) - l)
                     p0.set(r)
                 End If
             End Sub
@@ -306,7 +306,7 @@ Namespace primitive
                 Else
                     Dim r() As Byte = Nothing
                     ReDim r(CInt(min(array_size(+p1) - sl(0), sl(1)) - uint32_1))
-                    memcpy(r, uint32_0, +p1, sl(0), array_size(r))
+                    arrays.copy(r, uint32_0, +p1, sl(0), array_size(r))
                     p0.set(r)
                 End If
             End Sub
@@ -521,6 +521,32 @@ Namespace primitive
                 b1 = New big_udec(+p1(imi))
                 b2 = New big_udec(+p2(imi))
                 p0(imi).set(bool_bytes(b1.less(b2)))
+            End Sub
+        End Class
+
+        Partial Public NotInheritable Class lfs
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                assert(Not imi Is Nothing)
+                Dim b1 As big_uint = Nothing
+                Dim b2 As big_uint = Nothing
+                b1 = New big_uint(+p1(imi))
+                b2 = New big_uint(+p2(imi))
+                p0(imi).set(b1.left_shift(b2).as_bytes())
+            End Sub
+        End Class
+
+        Partial Public NotInheritable Class rfs
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                assert(Not imi Is Nothing)
+                Dim b1 As big_uint = Nothing
+                Dim b2 As big_uint = Nothing
+                b1 = New big_uint(+p1(imi))
+                b2 = New big_uint(+p2(imi))
+                p0(imi).set(b1.right_shift(b2).as_bytes())
             End Sub
         End Class
     End Namespace

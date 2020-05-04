@@ -26,22 +26,26 @@ Option Strict On
 Imports System.Collections.Generic
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 
 Public NotInheritable Class const_fast_pair
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](Of FT, ST)(ByVal first As FT, ByVal second As ST) As const_fast_pair(Of FT, ST)
         Return const_fast_pair(Of FT, ST).of(first, second)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function emplace_of(Of FT, ST)(ByVal first As FT, ByVal second As ST) As const_fast_pair(Of FT, ST)
         Return const_fast_pair(Of FT, ST).emplace_of(first, second)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](Of FT, ST)(ByVal i as KeyValuePair(Of FT, ST)) As const_fast_pair(Of FT, ST)
         Return const_fast_pair(Of FT, ST).of(i)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function emplace_of(Of FT, ST)(ByVal i as KeyValuePair(Of FT, ST)) As const_fast_pair(Of FT, ST)
         Return const_fast_pair(Of FT, ST).emplace_of(i)
     End Function
@@ -96,42 +100,52 @@ Public Structure const_fast_pair(Of FT, ST)
     End Sub
 #End If
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](ByVal first As FT, ByVal second As ST) As const_fast_pair(Of FT, ST)
         Return New const_fast_pair(Of FT, ST)(copy_no_error(first), copy_no_error(second))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](ByVal first As FT) As const_fast_pair(Of FT, ST)
         Return [of](first, Nothing)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](ByVal second As ST) As const_fast_pair(Of FT, ST)
         Return [of](Nothing, second)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of]() As const_fast_pair(Of FT, ST)
         Return [of](Nothing, Nothing)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function emplace_of(ByVal first As FT, ByVal second As ST) As const_fast_pair(Of FT, ST)
         Return New const_fast_pair(Of FT, ST)(first, second)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function emplace_of(ByVal first As FT) As const_fast_pair(Of FT, ST)
         Return emplace_of(first, Nothing)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function emplace_of(ByVal second As ST) As const_fast_pair(Of FT, ST)
         Return emplace_of(Nothing, second)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function emplace_of() As const_fast_pair(Of FT, ST)
         Return emplace_of(Nothing, Nothing)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](ByVal i As KeyValuePair(Of FT, ST)) As const_fast_pair(Of FT, ST)
         Return [of](i.Key(), i.Value())
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function emplace_of(ByVal i As KeyValuePair(Of FT, ST)) As const_fast_pair(Of FT, ST)
         Return emplace_of(i.Key(), i.Value())
     End Function
@@ -153,6 +167,7 @@ Public Structure const_fast_pair(Of FT, ST)
     End Function
 #End If
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal other As const_fast_pair(Of FT, ST)) As Int32 _
                              Implements IComparable(Of const_fast_pair(Of FT, ST)).CompareTo
 #If IS_CLASS Then
@@ -168,30 +183,37 @@ Public Structure const_fast_pair(Of FT, ST)
         Return c
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
         Return CompareTo(cast(Of const_fast_pair(Of FT, ST))().from(obj, False))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As const_fast_pair(Of FT, ST), ByVal that As const_fast_pair(Of FT, ST)) As Boolean
         Return compare(this, that) = 0
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As const_fast_pair(Of FT, ST), ByVal that As Object) As Boolean
         Return compare(this, that) = 0
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As const_fast_pair(Of FT, ST), ByVal that As const_fast_pair(Of FT, ST)) As Boolean
         Return compare(this, that) <> 0
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As const_fast_pair(Of FT, ST), ByVal that As Object) As Boolean
         Return compare(this, that) <> 0
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CloneT() As const_fast_pair(Of FT, ST) Implements ICloneable(Of const_fast_pair(Of FT, ST)).Clone
         Return New const_fast_pair(Of FT, ST)(copy_no_error(first), copy_no_error(second))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
@@ -209,33 +231,40 @@ Public Structure const_fast_pair(Of FT, ST)
     End Function
 
 #If Not IS_CONST Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function to_const_pair() As const_pair(Of FT, ST)
         Return const_pair.of(first, second)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function emplace_to_const_pair() As const_pair(Of FT, ST)
         Return const_pair.emplace_of(first, second)
     End Function
 #End If
 #If Not IS_FIRST_CONST Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function to_first_const_pair() As first_const_pair(Of FT, ST)
         Return first_const_pair.of(first, second)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function emplace_to_first_const_pair() As first_const_pair(Of FT, ST)
         Return first_const_pair.emplace_of(first, second)
     End Function
 #End If
 #If IS_CONST OrElse IS_FIRST_CONST Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function to_pair() As pair(Of FT, ST)
         Return pair.of(first, second)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function emplace_to_pair() As pair(Of FT, ST)
         Return pair.emplace_of(first, second)
     End Function
 #End If
 #If Not IS_CONST AndAlso Not IS_FIRST_CONST AndAlso Not IS_CLASS Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Widening Operator CType(ByVal this As const_fast_pair(Of FT, ST)) As pair(Of FT, ST)
         Return pair.emplace_of(this.first, this.second)
     End Operator
@@ -243,6 +272,7 @@ Public Structure const_fast_pair(Of FT, ST)
 End Structure
 
 Public Module _const_fast_pair
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function first_or_null(Of FT, ST)(ByVal i As const_fast_pair(Of FT, ST)) As FT
 #If IS_CLASS Then
         Return If(i Is Nothing, Nothing, i.first)
@@ -251,6 +281,7 @@ Public Module _const_fast_pair
 #End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function second_or_null(Of FT, ST)(ByVal i As const_fast_pair(Of FT, ST)) As ST
 #If IS_CLASS Then
         Return If(i Is Nothing, Nothing, i.second)

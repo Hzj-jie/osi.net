@@ -48,7 +48,7 @@ Partial Public NotInheritable Class big_udec
     End Sub
 
     <copy_constructor>
-    Public Sub New(ByVal n As big_uint, ByVal d As big_uint)
+    Private Sub New(ByVal n As big_uint, ByVal d As big_uint)
         assert(Not n Is Nothing)
         assert(Not d Is Nothing)
         Me.n = n
@@ -112,7 +112,8 @@ Partial Public NotInheritable Class big_udec
         End If
         assert(Me.n.replace_by(n))
         assert(Me.d.replace_by(d))
-        reduce_fraction(Me.n, Me.d)
+
+        fast_reduce_fraction(Me.n, Me.d)
         Return True
     End Function
 

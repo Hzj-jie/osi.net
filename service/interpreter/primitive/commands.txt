@@ -5,12 +5,14 @@ jump	data_ref	#jump to instruction @A
 cpc	data_ref	data_block	#(*A) = B
 mov	data_ref	data_ref	#(*A) = (*B), clr B
 cp	data_ref	data_ref	#(*A) = (*B)
+
 add	data_ref	data_ref	data_ref	#(*A big_uint) = (*B big_uint) + (*C big_uint)
 sub	data_ref	data_ref	data_ref	#(*A big_uint) = (*B big_uint) - (*C big_uint)
 mul	data_ref	data_ref	data_ref	#(*A big_uint) = (*B big_uint) * (*C big_uint)
 div	data_ref	data_ref	data_ref	data_ref	#(*A big_uint) = (*C big_uint) / (*D big_uint) (*B big_uint) = (*C big_uint) % (*D big_uint)
 ext	data_ref	data_ref	data_ref	data_ref	#(*A big_uint) = extract((*C big_uint), (*D big_uint)) (*B big_uint) = remainder(extract((*C big_uint), (*D big_uint)))
 pow	data_ref	data_ref	data_ref	#(*A big_uint) = pow((*B big_uint), (*C big_uint))
+
 jumpif	data_ref	data_ref	#jump to instruction @A, if (*B bool) is true
 cpco	data_ref	#(*A) = CO
 cpdbz	data_ref	#(*A) = DBZ
@@ -41,3 +43,6 @@ fext	data_ref	data_ref	data_ref	#(*A big_udec) = extract((*B big_udec), (*C big_
 fpow	data_ref	data_ref	data_ref	#(*A big_udec) = pow((*B big_udec), (*B big_udec))
 fequal	data_ref	data_ref	data_ref	#(*A) = ((*B big_udec) == (*C big_udec))
 fless	data_ref	data_ref	data_ref	#(*A) = ((*B big_udec) < (*C big_udec))
+
+lfs	data_ref	data_ref	data_ref	#(*A big_uint) = left_shift((*B big_uint), (*C big_uint))
+rfs	data_ref	data_ref	data_ref	#(*A big_uint) = left_shift((*B big_uint), (*C big_uint))

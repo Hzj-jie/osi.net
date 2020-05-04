@@ -54,6 +54,8 @@ or \|\|
 not !
 self-inc \+\+
 self-dec --
+left-shift <<
+right-shift >>
 
 self-add \+=
 self-minus -=
@@ -65,6 +67,8 @@ self-bit-and &=
 self-bit-or \|=
 self-and &&=
 self-or \|\|=
+self-left-shift <<=
+self-right-shift >>=
 
 kw-namespace namespace
 

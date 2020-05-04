@@ -210,7 +210,11 @@
     <Compile Include="vector.container.vb" />
     <Compile Include="vector.extension.vb" />
     <Compile Include="vector.vb" />
+    <None Include="binary_tree\codegen\bset.vbp" />
     <None Include="binary_tree\codegen\bt.iterator.vbp" />
+    <None Include="binary_tree\codegen\map.compare.vbp" />
+    <None Include="binary_tree\codegen\map.container_operator.vbp" />
+    <None Include="binary_tree\codegen\set.vbp" />
     <None Include="codegen\bit_array.vbp" />
     <None Include="codegen\bit_array_thread_safe.vbp" />
     <None Include="codegen\constant.vbp" />

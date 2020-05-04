@@ -65,6 +65,8 @@ Public NotInheritable Class b2style
                        default_registerer("and"),
                        default_registerer("or"),
                        default_registerer("not"),
+                       default_registerer("left-shift"),
+                       default_registerer("right-shift"),
                        default_registerer("self-inc"),
                        default_registerer("self-dec"),
                        default_registerer("self-add"),
@@ -77,6 +79,8 @@ Public NotInheritable Class b2style
                        default_registerer("self-bit-or"),
                        default_registerer("self-and"),
                        default_registerer("self-or"),
+                       default_registerer("self-left-shift"),
+                       default_registerer("self-right-shift"),
  _
                        default_registerer("kw-if"),
                        default_registerer("kw-else"),

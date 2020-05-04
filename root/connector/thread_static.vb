@@ -3,7 +3,9 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports System.Threading
+Imports osi.root.constants
 Imports osi.root.delegates
 
 'For mono debug purpose, the perf is a little bit worse than .net framework TheadStatic attribute.
@@ -18,9 +20,10 @@ Public NotInheritable Class thread_static(Of T)
     End Sub
 
     Public Sub New()
-        Me.New(constants.thread_static_default_slot_size)
+        Me.New(thread_static_default_slot_size)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function current_slot_id(ByRef o As UInt32) As Boolean
         Dim i As Int32 = 0
         i = Thread.CurrentThread().ManagedThreadId() - 1
@@ -29,6 +32,7 @@ Public NotInheritable Class thread_static(Of T)
         Return o < array_size(slot)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [get](ByRef o As T) As Boolean
         Dim tid As UInt32 = 0
         If Not current_slot_id(tid) Then
@@ -38,12 +42,14 @@ Public NotInheritable Class thread_static(Of T)
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [get]() As T
         Dim o As T = Nothing
         assert([get](o))
         Return o
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [set](ByVal i As T) As Boolean
         Dim tid As UInt32 = 0
         If Not current_slot_id(tid) Then
@@ -53,17 +59,20 @@ Public NotInheritable Class thread_static(Of T)
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function or_set(ByVal i As T, ByVal validate As Func(Of T, Boolean), ByRef o As T) As Boolean
         assert(Not i Is Nothing)
         Return or_set(func_t.of(i), validate, o)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function or_set(ByVal i As T, ByVal validate As Func(Of T, Boolean)) As T
         Dim o As T = Nothing
         assert(or_set(i, validate, o))
         Return o
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function or_set(ByVal i As Func(Of T), validate As Func(Of T, Boolean), ByRef o As T) As Boolean
         assert(Not i Is Nothing)
         Dim tid As UInt32 = 0
@@ -77,6 +86,7 @@ Public NotInheritable Class thread_static(Of T)
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function or_set(ByVal i As Func(Of T), ByVal validate As Func(Of T, Boolean)) As T
         Dim o As T = Nothing
         assert(or_set(i, validate, o))
@@ -84,18 +94,22 @@ Public NotInheritable Class thread_static(Of T)
     End Function
 
     Public Property at() As T
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Get
             Return [get]()
         End Get
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Set(ByVal value As T)
             assert([set](value))
         End Set
     End Property
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub clear()
-        memclr(slot)
+        arrays.clear(slot)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator +(ByVal this As thread_static(Of T)) As T
         If this Is Nothing Then
             Return Nothing

@@ -69,9 +69,9 @@ Public Class reference_count_runner_test
             assertion.is_true(r.bind())
             assertion.is_true(RC.v)
             r = Nothing
-            assertion.is_true(waitfor_gc_collect_when(Function() As Boolean
-                                                    Return RC.v
-                                                End Function))
+            assertion.is_true(garbage_collector.waitfor_collect_when(Function() As Boolean
+                                                                         Return RC.v
+                                                                     End Function))
             Return True
         End Function
     End Class

@@ -1,4 +1,0 @@
-﻿
-##DEFINE TYPE map
-##DEFINE BASE_TYPE bbst
-##INCLUDE map.vbp

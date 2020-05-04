@@ -7,14 +7,14 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utt
 
-Public Class weak_pointer_test
+Public NotInheritable Class weak_pointer_test
     Inherits flaky_case_wrapper
 
     Public Sub New()
         MyBase.New(New weak_pointer_case())
     End Sub
 
-    Private Class weak_pointer_case
+    Private NotInheritable Class weak_pointer_case
         Inherits [case]
 
         Private Class test_class
@@ -38,7 +38,7 @@ Public Class weak_pointer_test
             Dim c As test_class = Nothing
             c = New test_class(s)
             Dim p As weak_pointer(Of test_class) = Nothing
-            p = make_weak_pointer(c)
+            p = weak_pointer.of(c)
             assertion.is_true(p.alive())
             Dim c2 As test_class = Nothing
             assertion.is_true(p.get(c2))
@@ -47,7 +47,7 @@ Public Class weak_pointer_test
             GC.KeepAlive(c)
 
             c = Nothing
-            repeat_gc_collect()
+            garbage_collector.repeat_collect()
             assertion.is_false(p.alive())
             assertion.is_false(p.get(c2))
 
@@ -66,9 +66,9 @@ Public Class weak_pointer_test
 
             For i As Int32 = 0 To size - 1
                 cs(i) = New test_class(s)
-                ps(i) = make_weak_pointer(cs(i))
+                ps(i) = weak_pointer.of(cs(i))
             Next
-            repeat_gc_collect()
+            garbage_collector.repeat_collect()
 
             For i As Int32 = 0 To size - 1
                 Dim t As test_class = Nothing
@@ -83,7 +83,7 @@ Public Class weak_pointer_test
                     cs(i) = Nothing
                 End If
             Next
-            repeat_gc_collect()
+            garbage_collector.repeat_collect()
 
             For i As Int32 = 0 To size - 1
                 assertion.equal(Not cs(i) Is Nothing, ps(i).alive())
@@ -99,7 +99,7 @@ Public Class weak_pointer_test
             For i As Int32 = 0 To size - 1
                 cs(i) = Nothing
             Next
-            repeat_gc_collect()
+            garbage_collector.repeat_collect()
 
             For i As Int32 = 0 To size - 1
                 assertion.is_false(ps(i).alive())

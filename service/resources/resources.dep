@@ -2,5 +2,23 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\root\root.props" Condition="'$(RootProps)'==''" />
   <Import Project="$(ServicePath)\resource\resource.props" Condition="'$(ResourceProps)'==''" />
+  <ItemGroup>
+    <Content Include="$(ServicePath)\resources\math\codegen\e-1m.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>resources\math\e-1m.txt</Link>
+    </Content>
+    <Content Include="$(ServicePath)\resources\math\codegen\e-2m.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>resources\math\e-2m.txt</Link>
+    </Content>
+    <Content Include="$(ServicePath)\resources\math\codegen\pi-10m.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>resources\math\pi-10m.txt</Link>
+    </Content>
+    <Content Include="$(ServicePath)\resources\math\codegen\pi-1m.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>resources\math\pi-1m.txt</Link>
+    </Content>
+  </ItemGroup>
 </Project>
 

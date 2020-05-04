@@ -14,8 +14,9 @@ Option Strict On
 
 
 
-Imports osi.root.constants
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utils
 
@@ -33,14 +34,17 @@ Public NotInheritable Class slimheapless_threadpool2
         Next
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function current_thread_is_managed() As Boolean
         Return slimheapless_runner.current_thread_is_managed()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function in_managed_thread() As Boolean
         Return slimheapless_runner.current_thread_is_managed()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function running_in_current_thread() As Boolean
         For i As Int32 = 0 To array_size_i(rs) - 1
             If rs(i).running_in_current_thread() Then
@@ -50,10 +54,12 @@ Public NotInheritable Class slimheapless_threadpool2
         Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function thread_count() As UInt32
         Return threadpool.default_thread_count
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function stopping() As Boolean
         For i As Int32 = 0 To array_size_i(rs) - 1
             If rs(i).stopping() Then
@@ -63,57 +69,67 @@ Public NotInheritable Class slimheapless_threadpool2
         Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [stop]() As Boolean
-        If object_compare(Me, newable_global_instance(Of slimheapless_threadpool2).ref()) <> 0 Then
-            Dim r As Boolean = False
-            r = True
-            For i As Int32 = 0 To array_size_i(rs) - 1
-                If Not rs(i).stop() Then
-                    r = False
-                End If
-            Next
-            Return r
-        Else
+        If object_compare(Me, newable_global_instance(Of slimheapless_threadpool2).ref()) = 0 Then
             Return False
         End If
+        Dim r As Boolean = False
+        r = True
+        For i As Int32 = 0 To array_size_i(rs) - 1
+            If Not rs(i).stop() Then
+                r = False
+            End If
+        Next
+        Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function idle() As Boolean
         Return q.empty()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function wait(ByVal ms As Int64) As Boolean
         Return q.wait(ms)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function wait_job(ByVal ms As Int64) As Boolean
         Return wait(ms)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub wait()
         q.wait()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub wait_job()
         wait()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function execute() As Boolean
         Return rs(0).execute()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function execute_job() As Boolean
         Return execute()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function push(ByVal v As Action) As Boolean
         Return rs(0).push(v)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function queue_job(ByVal v As Action) As Boolean
         Return push(v)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function join(ByVal ms As Int64) As Boolean
         For i As Int32 = 0 To array_size_i(rs) - 1
             If Not rs(i).join(ms) Then
@@ -123,6 +139,7 @@ Public NotInheritable Class slimheapless_threadpool2
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub join()
         For i As Int32 = 0 To array_size_i(rs) - 1
             rs(i).join()
@@ -133,6 +150,7 @@ Public NotInheritable Class slimheapless_threadpool2
         [stop]()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator +(ByVal this As slimheapless_threadpool2, ByVal that As Action) As slimheapless_threadpool2
         assert(Not this Is Nothing)
         this.push(that)

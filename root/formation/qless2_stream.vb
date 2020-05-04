@@ -3,9 +3,10 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports System.Threading
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.template
 
 Public Class qless2_bytes_stream
@@ -53,30 +54,30 @@ Public Class qless2_stream(Of T, MAX_COUNT As _int64)
     Public Function pop(ByVal r() As T, ByVal offset As Int64, ByVal count As Int64) As Int64
         If offset < 0 OrElse count <= 0 OrElse array_size(r) < offset + count Then
             Return 0
-        Else
-            If last Is Nothing Then
-                Dim p As pointer(Of T()) = Nothing
-                If q.pop(p) Then
-                    assert(Not p Is Nothing AndAlso Not isemptyarray(+p))
-                    last = (+p)
-                    last_index = 0
-                Else
-                    Return 0
-                End If
-            End If
-            assert(last_index < array_size(last))
-            Dim l As Int64 = 0
-            l = min(array_size(last) - last_index, count - offset)
-            memcpy(r, CUInt(offset), last, CUInt(last_index), CUInt(l))
-            last_index += l
-            If array_size(last) = last_index Then
-                last = Nothing
-            End If
-            assert(Interlocked.Add(len, -l) >= 0)
-            Return l
         End If
+        If last Is Nothing Then
+            Dim p As pointer(Of T()) = Nothing
+            If Not q.pop(p) Then
+                Return 0
+            End If
+            assert(Not p Is Nothing AndAlso Not isemptyarray(+p))
+            last = (+p)
+            last_index = 0
+        End If
+
+        assert(last_index < array_size(last))
+        Dim l As Int64 = 0
+        l = min(array_size(last) - last_index, count - offset)
+        arrays.copy(r, CUInt(offset), last, CUInt(last_index), CUInt(l))
+        last_index += l
+        If array_size(last) = last_index Then
+            last = Nothing
+        End If
+        assert(Interlocked.Add(len, -l) >= 0)
+        Return l
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function pop(ByVal r() As T, Optional ByVal offset As Int64 = 0) As Int64
         Return pop(r, offset, array_size(r) - offset)
     End Function
@@ -84,26 +85,24 @@ Public Class qless2_stream(Of T, MAX_COUNT As _int64)
     Public Function block_pop(ByVal len As Int64) As T()
         If len <= 0 Then
             Return Nothing
-        Else
-            Dim r() As T = Nothing
-            ReDim r(CInt(len) - 1)
-            Dim i As Int64 = 0
-            While i < len
-                i += pop(r, i)
-            End While
-            Return r
         End If
+        Dim r() As T = Nothing
+        ReDim r(CInt(len) - 1)
+        Dim i As Int64 = 0
+        While i < len
+            i += pop(r, i)
+        End While
+        Return r
     End Function
 
     Public Function push(ByVal d() As T) As Boolean
         If isemptyarray(d) OrElse
            len + array_size(d) >= max_size Then
             Return False
-        Else
-            Interlocked.Add(len, array_size(d))
-            q.push(make_pointer(d))
-            Return True
         End If
+        Interlocked.Add(len, array_size(d))
+        q.push(pointer.of(d))
+        Return True
     End Function
 
     Public Sub clear()

@@ -47,7 +47,7 @@ Public Class memory2
             Dim original_size As UInt32 = 0
             original_size = array_size((+it).second)
             ReDim Preserve (+it).second(CInt(original_size) + array_size_i(value) - 1)
-            memcpy((+it).second, original_size, value)
+            arrays.copy((+it).second, original_size, value)
             result = True
         Else
             Return False
@@ -120,7 +120,7 @@ Public Class memory2
     Public Function seek(ByVal key() As Byte,
                          ByRef it As store_t.iterator,
                          ByRef result As Boolean) As Boolean Implements isynckeyvalue2(Of store_t.iterator).seek
-        it = m.find(make_array_pointer(key))
+        it = m.find(array_pointer.of(key))
         result = (it <> m.end())
         Return True
     End Function
@@ -148,7 +148,7 @@ Public Class memory2
                               ByRef result As Boolean) As Boolean _
                              Implements isynckeyvalue2(Of store_t.iterator).write_new
         If enough_storage(array_size(value)) Then
-            m(make_array_pointer(key)) = value
+            m(array_pointer.of(key)) = value
             result = True
         Else
             result = False

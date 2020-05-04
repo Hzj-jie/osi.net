@@ -111,7 +111,7 @@ Public Module _threadpool
 
     Public Function suspend_all_current_process_threads() As Boolean
         Dim tps As ProcessThreadCollection = Nothing
-        tps = current_process.Threads()
+        tps = this_process.ref.Threads()
         If tps.null_or_empty() Then
             Return False
         Else
@@ -149,7 +149,7 @@ Public Module _threadpool
 
     Public Function resume_all_current_process_threads() As Boolean
         Dim tps As ProcessThreadCollection = Nothing
-        tps = current_process.Threads()
+        tps = this_process.ref.Threads()
         Dim r As Boolean = False
         r = resume_all_process_threads(tps)
         tps.dispose()

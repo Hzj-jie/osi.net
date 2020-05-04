@@ -17,20 +17,13 @@ Option Strict On
 
 Imports System.Diagnostics.CodeAnalysis
 Imports System.Runtime.CompilerServices
+Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.lock
 Imports osi.root.lock.slimlock
-Imports osi.root.connector
 
-' TODO: Remove
 Public Module _array_pointer
-    Public Function make_array_pointer(Of T)(ByVal i As T()) As array_pointer(Of T)
-        Return array_pointer.of(i)
-    End Function
-
-    Public Function make_array_pointers(Of T)(ByVal ParamArray i As T()()) As array_pointer(Of T)()
-        Return array_pointer.of(i)
-    End Function
-
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function renew(Of T)(ByRef i As array_pointer(Of T)) As array_pointer(Of T)
         If i Is Nothing Then
             i = New array_pointer(Of T)()
@@ -41,18 +34,25 @@ Public Module _array_pointer
     End Function
 End Module
 
-Public NotInheritable Class array_pointer
-    Public Shared Function [of](Of T)(ByVal i As T()) As array_pointer(Of T)
-        Return New array_pointer(Of T)(i)
-    End Function
-
+Public NotInheritable Class array_pointers
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](Of T)(ByVal ParamArray i As T()()) As array_pointer(Of T)()
         Dim r() As array_pointer(Of T) = Nothing
         ReDim r(array_size_i(i) - 1)
         For j As Int32 = 0 To array_size_i(i) - 1
-            r(j) = make_array_pointer(i(j))
+            r(j) = array_pointer.[of](i(j))
         Next
         Return r
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
+
+Public NotInheritable Class array_pointer
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function [of](Of T)(ByVal i As T()) As array_pointer(Of T)
+        Return New array_pointer(Of T)(i)
     End Function
 
     Private Sub New()
@@ -76,25 +76,28 @@ Public Class array_pointer(Of T)
         bytes_serializer(Of array_pointer(Of T)).forward_registration.from(Of T())()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function move(ByVal that As array_pointer(Of T)) As array_pointer(Of T)
         If that Is Nothing Then
             Return Nothing
-        Else
-            Dim r As array_pointer(Of T) = Nothing
-            r = New array_pointer(Of T)(that)
-            that.clear()
-            Return r
         End If
+        Dim r As array_pointer(Of T) = Nothing
+        r = New array_pointer(Of T)(that)
+        that.clear()
+        Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New()
         clear()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal i As T())
         [set](i)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal i As array_pointer(Of T))
         If i Is Nothing Then
             clear()
@@ -152,6 +155,7 @@ Public Class array_pointer(Of T)
 'finish strong_pointer_override.vbp --------
 'finish array_pointer.override.vbp --------
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function release() As T()
         Dim r As T() = Nothing
         r = [get]()
@@ -159,21 +163,25 @@ Public Class array_pointer(Of T)
         Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
         Return CompareTo(cast(Of array_pointer(Of T))(obj, False))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal that As array_pointer(Of T)) As Int32 _
                              Implements IComparable(Of array_pointer(Of T)).CompareTo
         Return CompareTo(+that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal that As T()) As Int32 _
                              Implements IComparable(Of T()).CompareTo
         Return compare([get](), that)
     End Function
 
 #If Not (PocketPC OrElse Smartphone) Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator ^(ByVal p As array_pointer(Of T), ByVal ji As Decimal) As Object
         On Error GoTo finish
         Dim p2 As Object = Nothing
@@ -189,105 +197,122 @@ finish:
     End Operator
 #End If
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CloneT() As array_pointer(Of T) Implements ICloneable(Of array_pointer(Of T)).Clone
         Return New array_pointer(Of T)(Me)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator +(ByVal p As array_pointer(Of T)) As T()
         Return If(p Is Nothing, Nothing, p.get())
     End Operator
 
     'special treatment for pointer, it compares reference equaling, instead of internal object
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As array_pointer(Of T), ByVal that As array_pointer(Of T)) As Boolean
         Return Not this = that
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As array_pointer(Of T), ByVal that As array_pointer(Of T)) As Boolean
         If that Is Nothing OrElse that.get() Is Nothing Then
             Return this Is Nothing OrElse this.get() Is Nothing
-        Else
-            Return this = that.get()
         End If
+        Return this = that.get()
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As array_pointer(Of T), ByVal that As T) As Boolean
         Return Not this = that
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As array_pointer(Of T), ByVal that As T) As Boolean
         If this Is Nothing Then
             Return that Is Nothing
-        Else
-            Return object_compare(this.get(), that) = 0
         End If
+        Return object_compare(this.get(), that) = 0
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As T, ByVal that As array_pointer(Of T)) As Boolean
         Return Not this = that
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As T, ByVal that As array_pointer(Of T)) As Boolean
         Return that = this
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As array_pointer(Of T), ByVal obj As Object) As Boolean
         Dim that As array_pointer(Of T) = Nothing
         If cast(Of array_pointer(Of T))(obj, that) Then
             Return this = that
-        Else
-            Return this = cast(Of T)(obj, False)
         End If
+        Return this = cast(Of T)(obj, False)
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As array_pointer(Of T), ByVal obj As Object) As Boolean
         Return Not this = obj
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As Object, ByVal that As array_pointer(Of T)) As Boolean
         Return that = this
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As Object, ByVal that As array_pointer(Of T)) As Boolean
         Return Not this = that
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <(ByVal this As array_pointer(Of T), ByVal that As T()) As Boolean
         If this Is Nothing Then
             Return False
-        Else
-            this.set(that)
-            Return True
         End If
+        this.set(that)
+        Return True
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator >(ByVal this As array_pointer(Of T), ByVal that As T()) As Boolean
         Return assert(False)
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <(ByVal this As T(), ByVal that As array_pointer(Of T)) As Boolean
         Return that > this
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator >(ByVal this As T(), ByVal that As array_pointer(Of T)) As Boolean
         Return that < this
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Widening Operator CType(ByVal this As array_pointer(Of T)) As Boolean
         Return Not this Is Nothing AndAlso Not this.empty()
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Narrowing Operator CType(ByVal i As T()) As array_pointer(Of T)
         Return New array_pointer(Of T)(i)
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Narrowing Operator CType(ByVal i As array_pointer(Of T)) As T()
         Return +i
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator Not(ByVal this As array_pointer(Of T)) As Boolean
         Return this Is Nothing OrElse this.empty()
     End Operator

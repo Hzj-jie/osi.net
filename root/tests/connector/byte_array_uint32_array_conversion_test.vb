@@ -17,7 +17,7 @@ Public Class byte_array_uint32_array_conversion_test
             Dim b2() As Byte = Nothing
             ReDim b2(array_size_i(u) * sizeof_uint32 - 1)
             For j As Int32 = 0 To array_size_i(u) - 1
-                memcpy(b2, j * sizeof_uint32, u(j).bytes())
+                arrays.copy(b2, j * sizeof_uint32, u(j).bytes())
             Next
             assertion.array_equal(b, b2)
         Next

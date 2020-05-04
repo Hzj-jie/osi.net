@@ -35,6 +35,26 @@ Partial Friend NotInheritable Class host
     End Class
 
     Private NotInheritable Class loader
+        Private Shared Function load(ByVal j As Type) As vector(Of case_info)
+            If case_type_restriction.accepted_case_type(j) Then
+                Using defer(Sub()
+                                raise_error("loaded case ", j.FullName())
+                            End Sub)
+                    Return vector.of(New case_info(j.FullName(), j.allocate(Of [case])()))
+                End Using
+            End If
+            If case_type_restriction.accepted_case2_type(j) Then
+                Return case2.create(j).map(Function(ByVal i As [case]) As case_info
+                                               Using defer(Sub()
+                                                               raise_error("loaded case ", i.full_name)
+                                                           End Sub)
+                                                   Return New case_info(i.full_name, i)
+                                               End Using
+                                           End Function)
+            End If
+            Return New vector(Of case_info)()
+        End Function
+
         ' This function cannot be placed in host class. It depends on functions of host, which will trigger a deadlock.
         Public Shared Sub load(ByVal cases As vector(Of case_info))
             ' Cannot use event_comb, allocators of some cases may use async_sync.
@@ -42,29 +62,9 @@ Partial Friend NotInheritable Class host
             concurrency_runner.execute(Sub(i As Assembly)
                                            Try
                                                For Each j As Type In i.GetTypes()
-                                                   If case_type_restriction.accepted_case_type(j) Then
-                                                       raise_error("loading case ", j.FullName())
-                                                       Dim n As case_info = Nothing
-                                                       n = New case_info(j.FullName(), j.allocate(Of [case])())
-                                                       SyncLock cases
-                                                           cases.emplace_back(n)
-                                                       End SyncLock
-                                                       raise_error("loaded case ", j.FullName())
-                                                   ElseIf case_type_restriction.accepted_case2_type(j) Then
-                                                       Dim cs As vector(Of [case]) = Nothing
-                                                       cs = case2.create(j)
-                                                       If Not cs.null_or_empty() Then
-                                                           For k As UInt32 = 0 To cs.size() - uint32_1
-                                                               Dim n As case_info = Nothing
-                                                               raise_error("loading case ", cs(k).full_name)
-                                                               n = New case_info(cs(k).full_name, cs(k))
-                                                               SyncLock cases
-                                                                   cases.emplace_back(n)
-                                                               End SyncLock
-                                                               raise_error("loaded case ", cs(k).full_name)
-                                                           Next
-                                                       End If
-                                                   End If
+                                                   SyncLock cases
+                                                       cases.emplace_back(load(j))
+                                                   End SyncLock
                                                Next
                                            Catch ex As Exception
                                                raise_error(error_type.warning,

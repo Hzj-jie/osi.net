@@ -1,6 +1,6 @@
 ﻿
 long loaded_current_ms() {
-  string method_name = "osi.service.interpreter.primitive.loaded_methods, osi.service.interpreter:current_ms";
+  string method_name = b2style::loaded_methods("current_ms");
   logic "interrupt load_method method_name @@prefixes@temps@string";
   long result;
   logic "interrupt execute_loaded_method @@prefixes@temps@string result";

@@ -71,7 +71,7 @@ Partial Friend NotInheritable Class host
             If env_vars.utt_report_memory_status Then
                 ' utt_concurrency == 0 means no two cases will run together, so it's safe to force GC to collect.
                 If utt_concurrency() = 0 Then
-                    repeat_gc_collect()
+                    garbage_collector.repeat_collect()
                 End If
                 raise_error("memory status after case ",
                             c.full_name(),
@@ -111,7 +111,7 @@ Partial Friend NotInheritable Class host
         End If
 
         If envs.mono Then
-            waitfor_gc_collect()
+            garbage_collector.waitfor_collect()
         End If
 
         Interlocked.Decrement(running_cases)

@@ -3,13 +3,18 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
+Imports osi.root.constants
+
 Public Module _debug_mode
     Private PAUSEWHENINDEBUGMODE As Boolean = True
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function strongassert() As Boolean
         Return Not PAUSEWHENINDEBUGMODE
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub setstrongassert()
         PAUSEWHENINDEBUGMODE = False
     End Sub
@@ -32,10 +37,12 @@ Public Module _debug_mode
         NOTINDEBUGMODE = False
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function isreleasebuild() As Boolean
         Return Not isdebugbuild()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function isdebugbuild() As Boolean
 #If DEBUG Then
         Return True
@@ -44,6 +51,7 @@ Public Module _debug_mode
 #End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function isdebugmode() As Boolean
         If INDEBUGMODE Then
             Return True

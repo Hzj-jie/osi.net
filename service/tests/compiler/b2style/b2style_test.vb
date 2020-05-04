@@ -155,7 +155,7 @@ Public NotInheritable Class b2style_test
                                   parse(_b2style_test_data.ufloat_operators.as_text(), e))
         assertion.is_not_null(e)
         e.execute()
-        assertion.equal(io.output(), "1.1")
+        assertion.equal(io.output(), "1.10.5")
     End Sub
 
     <test>
@@ -194,6 +194,52 @@ Public NotInheritable Class b2style_test
         e.execute()
         assertion.equal(io.output(), strcat("3.304518326248318338508394330371205830216509246678390049350471115"))
         '                                    3.14159265
+    End Sub
+
+    <test>
+    Private Shared Sub shift()
+        Dim io As console_io.test_wrapper = Nothing
+        io = New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                          parse(_b2style_test_data.shift.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), "40040012")
+    End Sub
+
+    <test>
+    Private Shared Sub calculate_pi_bbp()
+        Dim io As console_io.test_wrapper = Nothing
+        io = New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                          parse(_b2style_test_data.calculate_pi_bbp.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), "3.1415926535897932384626433832795028841971693993751058209749445923")
+        '                             3.1415926535897932384626433832795028841971693993751058209749445923
+    End Sub
+
+    <test>
+    Private Shared Sub order_of_operators()
+        Dim io As console_io.test_wrapper = Nothing
+        io = New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                          parse(_b2style_test_data.order_of_operators.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), "15")
+        ' TODO:
+        ' Expected:
+        ' 1 + 6 + 4 - 30912
+        ' =-30901
+        ' Actually:
+        ' 1 + (2 * (3 + (4 - (5 * 6 * 7 * 8 * ( 9 / ( 10 * (11 + 12)))))))
+        ' =1 + (2 * (3 + 4))
+        ' =15
+        ' But it may not be handled by b2style.
     End Sub
 
     Private Sub New()

@@ -1,11 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.template
-Imports osi.root.utils
-Imports osi.service.device
 Imports osi.service.commander.constants
 
 Public MustInherit Class iquestioner(Of _ENABLE_AUTO_PING As _boolean)
@@ -33,20 +35,19 @@ Public MustInherit Class iquestioner(Of _ENABLE_AUTO_PING As _boolean)
         Get
             Dim ec As event_comb = Nothing
             Return New event_comb(Function() As Boolean
-                                      If Not enable_auto_ping OrElse (+last_error) < last_error_count Then
-                                          ec = communicate(request, response)
-                                          Return waitfor(ec) AndAlso
-                                                 goto_next()
-                                      Else
+                                      If enable_auto_ping AndAlso (+last_error) >= last_error_count Then
                                           Return False
                                       End If
+                                      ec = communicate(request, response)
+                                      Return waitfor(ec) AndAlso
+                                                 goto_next()
                                   End Function,
                                   Function() As Boolean
                                       If ec.end_result() Then
                                           Return goto_end()
                                       Else
                                           If enable_auto_ping AndAlso last_error.increment() = last_error_count Then
-                                              start_ping(make_weak_pointer(Me))
+                                              start_ping(weak_pointer.of(Me))
                                           End If
                                           Return False
                                       End If

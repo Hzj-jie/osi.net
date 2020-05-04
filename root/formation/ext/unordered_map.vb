@@ -6,6 +6,20 @@ Option Strict On
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 
+Public NotInheritable Class unordered_map
+    Public Shared Function move(Of K, V)(ByVal i As unordered_map(Of K, V)) As unordered_map(Of K, V)
+        Return unordered_map(Of K, V).move(i)
+    End Function
+
+    Public Shared Function swap(Of K, V)(ByVal i As unordered_map(Of K, V),
+                                         ByVal j As unordered_map(Of K, V)) As Boolean
+        Return unordered_map(Of K, V).swap(i, j)
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
+
 Public Module _unordered_map
     Private Function insert(Of KEY_T, VALUE_T) _
                            (ByVal this As unordered_map(Of KEY_T, VALUE_T),
@@ -34,5 +48,10 @@ Public Module _unordered_map
     <Extension()> Public Function emplace(Of KEY_T, VALUE_T)(ByVal this As unordered_map(Of KEY_T, VALUE_T),
                                                              ByVal that As unordered_map(Of KEY_T, VALUE_T)) As Boolean
         Return insert(this, that, AddressOf this.emplace)
+    End Function
+
+    <Extension()> Public Function stream(Of K, V) _
+                                        (ByVal this As unordered_map(Of K, V)) As streamer(Of first_const_pair(Of K, V))
+        Return New streamer(Of first_const_pair(Of K, V)).container(Of unordered_map(Of K, V))(this)
     End Function
 End Module

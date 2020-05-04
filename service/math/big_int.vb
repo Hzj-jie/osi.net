@@ -15,6 +15,7 @@ Option Strict On
 
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
@@ -585,41 +586,49 @@ Partial Public NotInheritable Class big_int
     Private ReadOnly d As big_uint
     Private s As Boolean
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub New()
         d = New big_uint()
         set_positive()
     End Sub
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub New(ByVal i As Int32)
         Me.New()
         replace_by(i)
     End Sub
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub New(ByVal i As UInt32)
         Me.New()
         replace_by(i)
     End Sub
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub New(ByVal i As Int64)
         Me.New()
         replace_by(i)
     End Sub
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub New(ByVal i As UInt64)
         Me.New()
         replace_by(i)
     End Sub
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub New(ByVal i As big_int)
         Me.New()
         assert(replace_by(i))
     End Sub
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub New(ByVal i As big_uint)
         Me.New()
         assert(replace_by(i))
     End Sub
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub New(ByVal i() As Byte)
         Me.New()
         assert(replace_by(i))
@@ -650,6 +659,7 @@ Partial Public NotInheritable Class big_int
     ' 1. Some replace_by returns boolean, the signature should be kept consistent.
     ' 2. ???.replace_by(...) equals to new ???(...). replace_by is unlikely to be an intermediate
     '    operation.
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub replace_by(ByVal i As Int32)
         If i >= 0 Then
             replace_by(CUInt(i))
@@ -659,11 +669,13 @@ Partial Public NotInheritable Class big_int
         End If
     End Sub
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub replace_by(ByVal i As UInt32)
         d.replace_by(i)
         set_positive()
     End Sub
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub replace_by(ByVal i As Int64)
         If i >= 0 Then
             replace_by(CULng(i))
@@ -673,11 +685,13 @@ Partial Public NotInheritable Class big_int
         End If
     End Sub
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Sub replace_by(ByVal i As UInt64)
         d.replace_by(i)
         set_positive()
     End Sub
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function replace_by(ByVal i As big_int) As Boolean
         If i Is Nothing Then
             Return False
@@ -687,6 +701,7 @@ Partial Public NotInheritable Class big_int
         Return True
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function replace_by(ByVal i As big_uint) As Boolean
         If d.replace_by(i) Then
             set_positive()
@@ -719,99 +734,130 @@ Partial Public NotInheritable Class big_int
         Return True
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function signal() As Boolean
         Return s
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function not_negative() As Boolean
         Return signal()
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function not_positive() As Boolean
         Return Not signal() OrElse is_zero()
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function positive() As Boolean
         Return signal() AndAlso Not is_zero()
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function negative() As Boolean
         Return Not signal() AndAlso Not is_zero()
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function set_positive() As big_int
         set_signal(True)
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function abs() As big_int
         Return set_positive()
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function set_negative() As big_int
         set_signal(False)
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function reverse_signal() As big_int
         set_signal(Not positive())
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function set_zero() As big_int
         d.set_zero()
         set_positive()
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function is_zero() As Boolean
         'just make sure there is no logic error in the class,
         'but no matter s is true or false, d.is_zero() can determine whether is_zero()
         Return d.is_zero() AndAlso assert(signal())
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function set_one() As big_int
         d.set_one()
         set_positive()
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function is_one() As Boolean
         Return positive() AndAlso d.is_one()
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function set_negative_one() As big_int
         d.set_one()
         set_negative()
         Return Me
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function is_negative_one() As Boolean
         Return negative() AndAlso d.is_one()
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function is_zero_or_one() As Boolean
         Return is_zero() OrElse is_one()
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function is_zero_or_negative_one() As Boolean
         Return is_zero() OrElse is_negative_one()
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function is_one_or_negative_one() As Boolean
         Return is_one() OrElse is_negative_one()
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function is_zero_or_one_or_negative_one() As Boolean
         Return is_zero() OrElse is_one() OrElse is_negative_one()
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function [true]() As Boolean
         Return Not [false]()
     End Function
 
+    <MethodImpl(math_debug.aggressive_inlining)>
     Public Function [false]() As Boolean
         Return is_zero()
+    End Function
+
+    <MethodImpl(math_debug.aggressive_inlining)>
+    Public Function unsigned_ref() As big_uint
+        Return d
+    End Function
+
+    <MethodImpl(math_debug.aggressive_inlining)>
+    Public Function abs_big_uint() As big_uint
+        Return d.CloneT()
     End Function
 End Class
 

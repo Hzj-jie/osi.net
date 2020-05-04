@@ -1,4 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict Off
+
+Imports System.Runtime.CompilerServices
+Imports osi.root.constants
+
 ' Provide a
 ' Using code_block.N
 ' End
@@ -7,6 +14,7 @@ Public Module _code_block
     Private Structure N
         Implements IDisposable
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub Dispose() Implements IDisposable.Dispose
         End Sub
     End Structure

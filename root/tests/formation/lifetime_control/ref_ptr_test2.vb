@@ -19,12 +19,12 @@ Public NotInheritable Class ref_ptr_test2
             r = ref_ptr.[New](New cd_object(Of joint_type(Of ref_ptr_test2, _0))())
             assertion.equal(cd_object(Of joint_type(Of ref_ptr_test2, _0)).constructed(), CUInt(i + 1))
             r = Nothing
-            waitfor_gc_collect()
+            garbage_collector.waitfor_collect()
             If cd_object(Of joint_type(Of ref_ptr_test2, _0)).disposed() > 0 Then
                 Return
             End If
         Next
-        waitfor_gc_collect()
+        garbage_collector.waitfor_collect()
 
         assertion.more(cd_object(Of joint_type(Of ref_ptr_test2, _0)).disposed(), uint32_0)
     End Sub

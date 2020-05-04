@@ -8,7 +8,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.utt
 
-Public Class int32_bytes_perf_test
+Public NotInheritable Class int32_bytes_perf_test
     Inherits performance_comparison_case_wrapper
 
     Private Const size As UInt32 = 1024 * 1024 * 128
@@ -33,7 +33,7 @@ Public Class int32_bytes_perf_test
         For i As UInt32 = 0 To size - 1
             Dim x() As Byte = Nothing
             x = BitConverter.GetBytes(t)
-            memcpy(d, x)
+            arrays.copy(d, x)
         Next
     End Sub
 

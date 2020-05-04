@@ -4,6 +4,8 @@ Option Infer Off
 Option Strict On
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
+Imports osi.root.constants
 
 Partial Public NotInheritable Class type_info(Of T)
     Private NotInheritable Class finalizer_cache
@@ -19,6 +21,7 @@ Partial Public NotInheritable Class type_info(Of T)
             End If
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Function has() As Boolean
             Return Not f Is Nothing
         End Function

@@ -6,6 +6,7 @@ Option Strict On
 #Const USE_LOCK_T = False
 #Const DISALLOW_REENTERABLE_LOCK = True
 Imports System.DateTime
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
@@ -18,6 +19,7 @@ Partial Public Class event_comb
     Private lock_thread_id As Int32 = npos
 #End If
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub debug_reenterable_locked(ByVal f As Action)
 #If Not USE_LOCK_T OrElse DEBUG Then
         reenterable_locked(f)
@@ -26,6 +28,7 @@ Partial Public Class event_comb
 #End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function debug_reenterable_locked(ByVal f As Func(Of Boolean)) As Boolean
 #If Not USE_LOCK_T OrElse DEBUG Then
         Return reenterable_locked(f)
@@ -34,6 +37,7 @@ Partial Public Class event_comb
 #End If
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub assert_in_lock()
 #If Not DEBUG Then
         Return
@@ -45,6 +49,7 @@ Partial Public Class event_comb
 #End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub assert_not_in_lock()
 #If Not DISALLOW_REENTERABLE_LOCK Then
         Return
@@ -59,6 +64,7 @@ Partial Public Class event_comb
 #End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub _reenterable_locked(ByVal d As Action)
 #If USE_LOCK_T Then
         _l.reenterable_locked(Sub()
@@ -88,6 +94,7 @@ Partial Public Class event_comb
     End Sub
 
     ' TODO: Remove reenterable_locked, use locked. Also remove the queue_job() in event_comb.lifetime: trigger_timeout.
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub reenterable_locked(ByVal d As Action)
         assert(Not d Is Nothing)
         If lock_trace AndAlso event_comb_trace Then
@@ -104,6 +111,7 @@ Partial Public Class event_comb
         End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function reenterable_locked(ByVal f As Func(Of Boolean)) As Boolean
         assert(Not f Is Nothing)
         Dim r As Boolean = False

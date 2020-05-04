@@ -1,9 +1,10 @@
 ﻿
-Imports osi.root.formation
-Imports osi.root.delegates
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.procedure
-Imports osi.root.utils
+Imports osi.root.formation
 
 Public Class dataprovider_datawatcher
     Inherits trigger_datawatcher
@@ -16,10 +17,10 @@ Public Class dataprovider_datawatcher
     Public Sub New(ByVal rule As trigger_rule, ByVal ParamArray dps() As idataprovider)
         assert(Not isemptyarray(dps))
         Dim wdps() As weak_pointer(Of idataprovider) = Nothing
-        wdps = make_weak_pointers(dps)
+        wdps = weak_pointers.of(dps)
         For i As Int32 = 0 To dps.Length() - 1
             assert(Not dps(i) Is Nothing)
-            dps(i).register_update_event(Me, Sub(x) x.rule_trigger(rule, dps))
+            dps(i).register_update_event(Me, Sub(x) x.rule_trigger(rule, wdps))
         Next
     End Sub
 

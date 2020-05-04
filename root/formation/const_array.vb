@@ -100,8 +100,8 @@ Public Class const_array(Of T, __SIZE As _int64)
         ReDim a(CInt(i.size()) - 1)
         Dim o As R = Nothing
         o = copy_constructor(Of R).invoke(a)
-        memcpy(o.v, i.v)
-        memclr(i.v)
+        arrays.copy(o.v, i.v)
+        arrays.clear(i.v)
         Return o
     End Function
 
@@ -130,7 +130,7 @@ Public Class const_array(Of T, __SIZE As _int64)
     Public Function as_array() As T()
         Dim r() As T = Nothing
         ReDim r(CInt(size() - uint32_1))
-        memcpy(r, v)
+        arrays.copy(r, v)
         Return r
     End Function
 

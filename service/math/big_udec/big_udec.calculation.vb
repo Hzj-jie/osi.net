@@ -3,6 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+#Const REDUCE_FRACTION_WHEN_CALCULATING = False
+
 Imports osi.root.connector
 Imports osi.root.constants
 
@@ -18,11 +20,25 @@ Partial Public NotInheritable Class big_udec
 
         If Me.d.equal(that.d) Then
             replace_by(Me.n + that.n, Me.d)
+#If REDUCE_FRACTION_WHEN_CALCULATING Then
+            reduce_fraction()
+#End If
         Else
+#If REDUCE_FRACTION_WHEN_CALCULATING Then
             Dim g As big_uint = Nothing
             g = big_uint.gcd(Me.d, that.d)
-            replace_by((that.d \ g) * Me.n + (Me.d \ g) * that.n, (Me.d \ g) * that.d)
+            Dim c As big_uint = Nothing
+            Me.d.assert_divide(g, c)
+            assert(c.is_zero())
+            replace_by((that.d \ g) * Me.n + that.n * Me.d, that.d * Me.d)
+#Else
+            replace_by(that.d * Me.n + that.n * Me.d, that.d * Me.d)
+#End If
         End If
+
+#If Not REDUCE_FRACTION_WHEN_CALCULATING Then
+        increase_fraction_dirty_rate()
+#End If
         Return Me
     End Function
 
@@ -51,6 +67,7 @@ Partial Public NotInheritable Class big_udec
 
     Public Function [sub](ByVal that As big_udec, ByRef overflow As Boolean) As big_udec
         If that Is Nothing OrElse that.is_zero() Then
+            overflow = False
             Return Me
         End If
         If is_zero() Then
@@ -60,11 +77,25 @@ Partial Public NotInheritable Class big_udec
 
         If Me.d.equal(that.d) Then
             [sub](Me.n, that.n.CloneT(), Me.d, overflow)
+#If REDUCE_FRACTION_WHEN_CALCULATING Then
+            reduce_fraction()
+#End If
         Else
+#If REDUCE_FRACTION_WHEN_CALCULATING Then
             Dim g As big_uint = Nothing
             g = big_uint.gcd(Me.d, that.d)
-            [sub]((that.d \ g) * Me.n, (Me.d \ g) * that.n, (Me.d \ g) * that.d, overflow)
+            Dim c As big_uint = Nothing
+            Me.d.assert_divide(g, c)
+            assert(c.is_zero())
+            [sub]((that.d \ g) * Me.n, Me.d * that.n, Me.d * that.d, overflow)
+#Else
+            [sub](that.d * Me.n, Me.d * that.n, Me.d * that.d, overflow)
+#End If
         End If
+
+#If Not REDUCE_FRACTION_WHEN_CALCULATING Then
+        increase_fraction_dirty_rate()
+#End If
         Return Me
     End Function
 
@@ -87,14 +118,11 @@ Partial Public NotInheritable Class big_udec
     End Function
 
     Public Function multiply(ByVal that As big_udec) As big_udec
-        If that Is Nothing Then
+        If that Is Nothing OrElse that.is_zero() Then
+            set_zero()
             Return Me
         End If
         If is_zero() Then
-            Return Me
-        End If
-        If that.is_zero() Then
-            set_zero()
             Return Me
         End If
 
@@ -106,18 +134,27 @@ Partial Public NotInheritable Class big_udec
         n2 = that.n.CloneT()
         d1 = Me.d.CloneT()
         d2 = that.d.CloneT()
+#If REDUCE_FRACTION_WHEN_CALCULATING Then
         reduce_fraction(n1, d2)
         reduce_fraction(n2, d1)
+#Else
+        fast_reduce_fraction(n1, d2)
+        fast_reduce_fraction(n2, d1)
+#End If
         replace_by(n1.multiply(n2), d1.multiply(d2))
+
+#If Not REDUCE_FRACTION_WHEN_CALCULATING Then
+        increase_fraction_dirty_rate()
+#End If
         Return Me
     End Function
 
     Public Function divide(ByVal that As big_udec, ByRef divide_by_zero As Boolean) As big_udec
-        divide_by_zero = False
         If that Is Nothing OrElse that.is_zero() Then
             divide_by_zero = True
             Return Me
         End If
+        divide_by_zero = False
         If is_zero() Then
             Return Me
         End If
@@ -130,9 +167,18 @@ Partial Public NotInheritable Class big_udec
         n2 = that.n.CloneT()
         d1 = Me.d.CloneT()
         d2 = that.d.CloneT()
+#If REDUCE_FRACTION_WHEN_CALCULATING Then
         reduce_fraction(n1, n2)
         reduce_fraction(d1, d2)
+#Else
+        fast_reduce_fraction(n1, n2)
+        fast_reduce_fraction(d1, d2)
+#End If
         replace_by(n1.multiply(d2), d1.multiply(n2))
+
+#If Not REDUCE_FRACTION_WHEN_CALCULATING Then
+        increase_fraction_dirty_rate()
+#End If
         Return Me
     End Function
 
@@ -185,7 +231,7 @@ Partial Public NotInheritable Class big_udec
             Return Me
         End If
         Dim p As big_uint = Nothing
-        p = Me.n * that * extract_power_base \ Me.d
+        p = Me.n * extract_power_base \ Me.d \ that
         If p.is_zero_or_one() Then
             p = New big_uint(CUInt(2))
         End If
@@ -287,8 +333,4 @@ Partial Public NotInheritable Class big_udec
         assert(Not d)
         Return r
     End Function
-
-    Public Sub fully_reduce_fraction()
-        reduce_fraction(Me.n, Me.d, True, True, True)
-    End Sub
 End Class

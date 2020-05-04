@@ -1,0 +1,55 @@
+
+    Shared Sub New()
+        container_operator(Of ##FILENAME##(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).size(
+                Function(ByVal i As ##FILENAME##(Of KEY_T, VALUE_T)) As UInt32
+                    assert(Not i Is Nothing)
+                    Return i.size()
+                End Function)
+        container_operator(Of ##FILENAME##(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).emplace(
+                Function(ByVal i As ##FILENAME##(Of KEY_T, VALUE_T),
+                         ByVal j As first_const_pair(Of KEY_T, VALUE_T)) As Boolean
+                    assert(Not i Is Nothing)
+                    Return i.emplace(j).second
+                End Function)
+        container_operator(Of ##FILENAME##(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).enumerate(
+                Function(ByVal i As ##FILENAME##(Of KEY_T, VALUE_T)) _
+                        As container_operator(Of ##FILENAME##(Of KEY_T, VALUE_T),
+                                                 first_const_pair(Of KEY_T, VALUE_T)).enumerator
+                    Return New enumerator(i)
+                End Function)
+        container_operator(Of ##FILENAME##(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).clear(
+                Sub(ByVal i As ##FILENAME##(Of KEY_T, VALUE_T))
+                    assert(Not i Is Nothing)
+                    i.clear()
+                End Sub)
+        bytes_serializer(Of ##FILENAME##(Of KEY_T, VALUE_T)).container(Of first_const_pair(Of KEY_T, VALUE_T)).register()
+    End Sub
+
+    Private NotInheritable Class enumerator
+        Implements container_operator(Of ##FILENAME##(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).enumerator
+
+        Private it As ##FILENAME##(Of KEY_T, VALUE_T).iterator
+
+        Public Sub New(ByVal m As ##FILENAME##(Of KEY_T, VALUE_T))
+            assert(Not m Is Nothing)
+            it = m.begin()
+        End Sub
+
+        Public Sub [next]() Implements container_operator(Of ##FILENAME##(Of KEY_T, VALUE_T),
+                                                             first_const_pair(Of KEY_T, VALUE_T)).enumerator.next
+            it += 1
+        End Sub
+
+        Public Function current() As first_const_pair(Of KEY_T, VALUE_T) _
+                Implements container_operator(Of ##FILENAME##(Of KEY_T, VALUE_T),
+                                                 first_const_pair(Of KEY_T, VALUE_T)).enumerator.current
+            Return +it
+        End Function
+
+        Public Function [end]() As Boolean _
+                Implements container_operator(Of ##FILENAME##(Of KEY_T, VALUE_T),
+                                                 first_const_pair(Of KEY_T, VALUE_T)).enumerator.end
+            Return it.is_end()
+        End Function
+    End Class
+

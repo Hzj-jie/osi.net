@@ -1,0 +1,14 @@
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MlProps>true</MlProps>
+  </PropertyGroup>
+  <Import Project="ml.dep" />
+  <ItemGroup>
+    <Reference Include="osi.service.ml">
+      <HintPath>$(ServicePath)\ml\bin\$(Configuration)\osi.service.ml.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>
+

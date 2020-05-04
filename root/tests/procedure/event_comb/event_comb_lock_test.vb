@@ -1,11 +1,14 @@
 ﻿
-Imports osi.root
-Imports osi.root.formation
-Imports osi.root.connector
-Imports osi.root.utt
-Imports osi.root.procedure
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Public Class event_comb_lock_test
+Imports osi.root
+Imports osi.root.connector
+Imports osi.root.procedure
+Imports osi.root.utt
+
+Public NotInheritable Class event_comb_lock_test
     Inherits multi_procedure_case_wrapper
 
     Private Shared ReadOnly pc As Int32
@@ -20,7 +23,7 @@ Public Class event_comb_lock_test
         MyBase.New(repeat(New event_comb_lock_case(), rc), pc)
     End Sub
 
-    Friend Class event_comb_lock_case
+    Private NotInheritable Class event_comb_lock_case
         Inherits utt.event_comb_case
 
         Private ReadOnly l As ref(Of event_comb_lock)

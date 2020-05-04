@@ -3,11 +3,13 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.formation
 
-Public Class weak_event_handler
+Public NotInheritable Class weak_event_handler
     Public Shared assert_as_not_pinning_delegate As Boolean
 
     Shared Sub New()
@@ -17,6 +19,9 @@ Public Class weak_event_handler
     Public Shared Sub assert_not_pinning_delegate(ByVal v As Object, ByVal a As [Delegate])
         assert(Not (assert_as_not_pinning_delegate AndAlso
                       delegate_is_pinning_object(a, v)))
+    End Sub
+
+    Private Sub New()
     End Sub
 End Class
 
@@ -30,7 +35,7 @@ Public Class weak_reference_handler(Of T, AT)
     End Sub
 
     Protected Sub New(ByVal v As T, ByVal a As AT, ByVal o As [Delegate])
-        Me.v = make_weak_pointer(v)
+        Me.v = weak_pointer.of(v)
         Me.a = a
         weak_event_handler.assert_not_pinning_delegate(v, o)
     End Sub

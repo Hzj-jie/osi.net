@@ -1,9 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
 Public Module _simhash
-    Private ReadOnly hash_size As Int32 = bit_count_in_byte * sizeof_int32
+    Private ReadOnly hash_size As Int32 = CInt(bit_count_in_byte * sizeof_int32)
 
     Public Function simhash(Of T)(ByVal i() As T) As UInt32
         If isemptyarray(i) Then
@@ -11,8 +15,8 @@ Public Module _simhash
         Else
             Dim v() As Int32 = Nothing
             ReDim v(hash_size - 1)
-            memclr(v)
-            For j As Int32 = 0 To array_size(i) - 1
+            arrays.clear(v)
+            For j As Int32 = 0 To array_size_i(i) - 1
                 Dim h As UInt32 = 0
                 h = signing(i(j))
                 For k As Int32 = 0 To hash_size - 1
@@ -27,7 +31,7 @@ Public Module _simhash
             Dim o As UInt32 = 0
             For j As Int32 = 0 To hash_size - 1
                 If v(j) > 0 Then
-                    o += (1 << j)
+                    o += (uint32_1 << j)
                 End If
             Next
             Return o

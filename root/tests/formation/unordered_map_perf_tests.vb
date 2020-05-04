@@ -3,7 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Public Class unordered_map_uint_perf
+Public NotInheritable Class unordered_map_uint_perf
     Inherits unordered_map_perf(Of UInt32, UInt32)
 
     Public Sub New()
@@ -11,7 +11,7 @@ Public Class unordered_map_uint_perf
     End Sub
 End Class
 
-Public Class unordered_map_uint_more_items_perf
+Public NotInheritable Class unordered_map_uint_more_items_perf
     Inherits unordered_map_perf(Of UInt32, UInt32)
 
     Public Sub New()
@@ -19,7 +19,7 @@ Public Class unordered_map_uint_more_items_perf
     End Sub
 End Class
 
-Public Class unordered_map_uint_large_range_perf
+Public NotInheritable Class unordered_map_uint_large_range_perf
     Inherits unordered_map_perf(Of UInt32, UInt32)
 
     Public Sub New()
@@ -27,7 +27,7 @@ Public Class unordered_map_uint_large_range_perf
     End Sub
 End Class
 
-Public Class unordered_map_uint_large_range_more_items_perf
+Public NotInheritable Class unordered_map_uint_large_range_more_items_perf
     Inherits unordered_map_perf(Of UInt32, UInt32)
 
     Public Sub New()
@@ -35,7 +35,7 @@ Public Class unordered_map_uint_large_range_more_items_perf
     End Sub
 End Class
 
-Public Class unordered_map_string_perf
+Public NotInheritable Class unordered_map_string_perf
     Inherits unordered_map_perf(Of String, String)
 
     Public Sub New()
@@ -43,7 +43,7 @@ Public Class unordered_map_string_perf
     End Sub
 End Class
 
-Public Class unordered_map_string_more_items_perf
+Public NotInheritable Class unordered_map_string_more_items_perf
     Inherits unordered_map_perf(Of String, String)
 
     Public Sub New()
@@ -51,7 +51,7 @@ Public Class unordered_map_string_more_items_perf
     End Sub
 End Class
 
-Public Class unordered_map_string_large_range_perf
+Public NotInheritable Class unordered_map_string_large_range_perf
     Inherits unordered_map_perf(Of String, String)
 
     Public Sub New()
@@ -59,7 +59,7 @@ Public Class unordered_map_string_large_range_perf
     End Sub
 End Class
 
-Public Class unordered_map_string_large_range_more_items_perf
+Public NotInheritable Class unordered_map_string_large_range_more_items_perf
     Inherits unordered_map_perf(Of String, String)
 
     Public Sub New()

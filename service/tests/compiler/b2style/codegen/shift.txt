@@ -1,0 +1,10 @@
+﻿
+void main() {
+  int i = 100;
+  i <<= 2;
+  b2style::std_out(i);
+  int j = 0;
+  j = i >> 5;
+  b2style::std_out(i);
+  b2style::std_out(j);
+}

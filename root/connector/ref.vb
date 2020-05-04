@@ -3,7 +3,11 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
+Imports osi.root.constants
+
 Public NotInheritable Class ref
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](Of T As Structure)(ByVal i As T) As ref(Of T)
         Dim r As ref(Of T) = Nothing
         r = New ref(Of T)()

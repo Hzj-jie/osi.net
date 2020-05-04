@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports osi.root.constants
 
@@ -23,10 +24,17 @@ Public Module _sizeof
     Public ReadOnly sizeof_single As UInt32 = type_info(Of Single).size_uint32()
     Public ReadOnly sizeof_double As UInt32 = type_info(Of Double).size_uint32()
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function sizeof(Of T)() As Int32
         Return type_info(Of T).size()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function uint32_sizeof(Of T)() As UInt32
+        Return type_info(Of T).size_uint32()
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function sizeof(Of T)(ByVal obj As T) As Int32
         Try
             Return Marshal.SizeOf(obj)
@@ -35,6 +43,7 @@ Public Module _sizeof
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function sizeof(ByVal t As Type) As Int32
         Try
             Return Marshal.SizeOf(t)
@@ -43,6 +52,7 @@ Public Module _sizeof
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function sizeof(Of T)(ByVal i() As T) As Int32
         Return array_size_i(i)
     End Function

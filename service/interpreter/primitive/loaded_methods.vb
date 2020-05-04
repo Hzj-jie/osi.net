@@ -27,6 +27,15 @@ Namespace primitive
             Return str_bytes(u.str())
         End Function
 
+        Public Shared Function big_uint_to_big_udec(ByVal i() As Byte) As Byte()
+            Dim u As big_uint = Nothing
+            u = New big_uint()
+            u.replace_by(i)
+            Dim d As big_udec = Nothing
+            d = big_udec.fraction(u, big_uint.one())
+            Return d.as_bytes()
+        End Function
+
         Private Sub New()
         End Sub
     End Class

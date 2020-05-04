@@ -149,6 +149,10 @@ Public Module _map
         assert(reverse(i, o))
         Return o
     End Function
+
+    <Extension()> Public Function stream(Of K, V)(ByVal i As map(Of K, V)) As streamer(Of first_const_pair(Of K, V))
+        Return New streamer(Of first_const_pair(Of K, V)).container(Of map(Of K, V))(i)
+    End Function
 End Module
 
 Public NotInheritable Class map
@@ -201,6 +205,10 @@ Public NotInheritable Class map
 
     Public Shared Function emplace_index(Of KEY_T)(ByVal ParamArray vs() As KEY_T) As map(Of KEY_T, UInt32)
         Return create_index(vs, False)
+    End Function
+
+    Public Shared Function move(Of K, V)(ByVal i As map(Of K, V)) As map(Of K, V)
+        Return map(Of K, V).move(i)
     End Function
 
     Private Sub New()

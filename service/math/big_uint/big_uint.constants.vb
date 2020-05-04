@@ -51,7 +51,7 @@ Partial Public NotInheritable Class big_uint
         digit_0 = digits(0)
 
         ReDim chars(Convert.ToInt32(Char.MaxValue) - Convert.ToInt32(Char.MinValue))
-        memset(chars, npos)
+        arrays.fill(chars, npos)
         For i As Int32 = 0 To array_size_i(digits) - 1
             chars(Convert.ToInt32(digits(i))) = CShort(i)
         Next

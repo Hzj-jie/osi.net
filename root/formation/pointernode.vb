@@ -16,7 +16,7 @@ Public Class pointernode(Of T)
 
     Public Sub clear()
         _data = Nothing
-        memclr(_p)
+        arrays.clear(_p)
     End Sub
 
     Public Sub New(ByVal pointer_count As UInt32)
