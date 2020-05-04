@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 
 Partial Public NotInheritable Class wordbreaker_cjk
     Public NotInheritable Class trainer
@@ -20,10 +21,10 @@ Partial Public NotInheritable Class wordbreaker_cjk
                 trainer.accumulate(s([end] - 1), 1)
             Else
                 For i As Int32 = start To [end] - 2
-                    trainer.accumulate(s(i), s(i + 1), 1)
+                    trainer.accumulate(s(i), s(i + 1), double_1 / ([end] - start))
                 Next
                 ' The last character is not "independent", but it's required to be identified as "end-of-a-word".
-                trainer.accumulate(s([end] - 1), 0.1)
+                trainer.accumulate(s([end] - 1), 0.1 / ([end] - start))
             End If
         End Sub
 
