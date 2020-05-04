@@ -217,7 +217,22 @@ Public Module vector_extension
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function map(Of T, R)(ByVal v As vector(Of T), ByVal f As Func(Of T, R)) As vector(Of R)
-        Return vector.map(v, f)
+        If v Is Nothing Then
+            Return Nothing
+        End If
+        assert(Not f Is Nothing)
+        Dim o As vector(Of R) = Nothing
+        o = New vector(Of R)(v.size())
+        Dim j As UInt32 = 0
+        While j < v.size()
+            o.push_back(f(v(j)))
+            j += uint32_1
+        End While
+        Return o
+    End Function
+
+    <Extension()> Public Function stream(Of T)(ByVal v As vector(Of T)) As streamer(Of T)
+        Return New streamer(Of T).container(Of vector(Of T))(v)
     End Function
 End Module
 
@@ -241,21 +256,6 @@ Public NotInheritable Class vector
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function emplace_of(Of T)(ByVal ParamArray vs() As T) As vector(Of T)
         Return create(vs, False)
-    End Function
-
-    Public Shared Function map(Of T, R)(ByVal i As vector(Of T), ByVal f As Func(Of T, R)) As vector(Of R)
-        If i Is Nothing Then
-            Return Nothing
-        End If
-        assert(Not f Is Nothing)
-        Dim o As vector(Of R) = Nothing
-        o = New vector(Of R)(i.size())
-        Dim j As UInt32 = 0
-        While j < i.size()
-            o.emplace_back(f(i(j)))
-            j += uint32_1
-        End While
-        Return o
     End Function
 
     Private Sub New()

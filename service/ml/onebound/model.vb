@@ -20,8 +20,8 @@ Partial Public NotInheritable Class onebound
                     struct(Of bind).register()
                 End Sub
 
-                Public Sub New()
-                    Me.New(0, New unordered_map(Of K, Double)())
+                ' For struct.byte_serializer only.
+                Private Sub New()
                 End Sub
 
                 Public Sub New(ByVal independence As Double, ByVal followers As unordered_map(Of K, Double))
@@ -30,17 +30,9 @@ Partial Public NotInheritable Class onebound
                     Me.independence = independence
                     Me.followers = followers
                 End Sub
-
-                Public Function replace_by(ByVal independence As Double) As bind
-                    Return New bind(independence, followers)
-                End Function
             End Class
 
             Private ReadOnly m As unordered_map(Of K, bind)
-
-            Public Sub New()
-                m = New unordered_map(Of K, bind)()
-            End Sub
 
             <copy_constructor>
             Public Sub New(ByVal m As unordered_map(Of K, bind))
@@ -58,32 +50,36 @@ Partial Public NotInheritable Class onebound
                 End Using
             End Function
 
-            Public Function load(ByVal i As MemoryStream) As Boolean
+            Public Shared Function load(ByVal i As MemoryStream, ByRef o As model) As Boolean
                 Dim r As unordered_map(Of K, bind) = Nothing
-                Return bytes_serializer.consume_from(i, r) AndAlso unordered_map.swap(r, m)
+                If bytes_serializer.consume_from(i, r) Then
+                    o = New model(r)
+                    Return True
+                End If
+                Return False
             End Function
 
-            Public Function load(ByVal i As String) As Boolean
+            Public Shared Function load(ByVal i As MemoryStream) As model
+                Dim o As model = Nothing
+                assert(load(i, o))
+                Return o
+            End Function
+
+            Public Shared Function load(ByVal i As String, ByRef o As model) As Boolean
                 Using ms As MemoryStream = New MemoryStream()
                     If Not ms.read_from_file(i) Then
                         Return False
                     End If
                     ms.Position() = 0
-                    Return load(ms)
+                    Return load(ms, o)
                 End Using
             End Function
 
-            Public Sub [set](ByVal a As K, ByVal v As Double)
-                assert(m.find(a) = m.end() OrElse m(a).independence = 0)
-                assert(v > 0 AndAlso v <= 1)
-                m(a) = m(a).replace_by(v)
-            End Sub
-
-            Public Sub [set](ByVal a As K, ByVal b As K, ByVal v As Double)
-                assert(m.find(a) = m.end() OrElse m(a).followers.find(b) = m(a).followers.end())
-                assert(v > 0 AndAlso v <= 1)
-                m(a).followers(b) = v
-            End Sub
+            Public Shared Function load(ByVal i As String) As model
+                Dim o As model = Nothing
+                assert(load(i, o))
+                Return o
+            End Function
 
             Public Function independence(ByVal a As K) As Double
                 If m.find(a) = m.end() Then

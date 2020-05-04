@@ -16,28 +16,25 @@ Namespace onebound
         <repeat(100)>
         Private Shared Sub load_and_dump()
             Using ms As MemoryStream = New MemoryStream()
-                Dim m As typed(Of String).model = Nothing
-                m = New typed(Of String).model()
+                Dim t As typed(Of String).trainer = Nothing
+                t = New typed(Of String).trainer()
                 For i As Int32 = 0 To 100
                     Dim a As String = Nothing
                     a = guid_str()
                     If rnd_bool() Then
                         Dim b As String = Nothing
                         b = guid_str()
-                        If m.affinity(a, b) = 0 Then
-                            m.set(a, b, thread_random.of_double.larger_than_0_and_less_or_equal_than_1())
-                        End If
+                        t.accumulate(a, b, thread_random.of_double.larger_than_0_and_less_or_equal_than_1())
                     Else
-                        If m.independence(a) = 0 Then
-                            m.set(a, thread_random.of_double.larger_than_0_and_less_or_equal_than_1())
-                        End If
+                        t.accumulate(a, thread_random.of_double.larger_than_0_and_less_or_equal_than_1())
                     End If
                 Next
+                Dim m As typed(Of String).model = Nothing
+                m = t.dump()
                 assertion.is_true(m.dump(ms))
                 ms.Position() = 0
                 Dim m2 As typed(Of String).model = Nothing
-                m2 = New typed(Of String).model()
-                assertion.is_true(m2.load(ms))
+                assertion.is_true(typed(Of String).model.load(ms, m2))
                 assertion.equal(m, m2)
             End Using
         End Sub
