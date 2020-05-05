@@ -9,6 +9,7 @@ Partial Public NotInheritable Class struct
         Public ReadOnly name As String
 
         Public Sub New(ByVal type As Type, ByVal name As String)
+            static_constructor.execute(type)
             assert(Not type Is Nothing)
             assert(Not String.IsNullOrEmpty(name))
             Me.type = type
