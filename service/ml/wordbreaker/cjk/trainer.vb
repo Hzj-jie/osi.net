@@ -24,7 +24,7 @@ Partial Public NotInheritable Class wordbreaker_cjk
                     trainer.accumulate(s(i), s(i + 1), double_1 / ([end] - start))
                 Next
                 ' The last character is not "independent", but it's required to be identified as "end-of-a-word".
-                trainer.accumulate(s(CInt([end]) - 1), 0.00001 / ([end] - start))
+                trainer.accumulate(s(CInt([end]) - 1), onebound(Of Char).trainer.min_possibility)
             End If
         End Sub
 

@@ -62,4 +62,12 @@ Partial Public Class stream(Of T)
     Public Function limit(ByVal count As UInt32) As stream(Of T)
         Return New stream(Of T)(container_operator.enumerators.limit_count(e, count))
     End Function
+
+    Public Sub foreach(ByVal f As Action(Of T))
+        assert(Not f Is Nothing)
+        While Not e.end()
+            f(e.current())
+            e.next()
+        End While
+    End Sub
 End Class

@@ -18,6 +18,8 @@ Partial Public NotInheritable Class onebound(Of K)
             End Sub
         End Class
 
+        ' The minimum value to be still considered as "possible".
+        Public Const min_possibility As Double = 2.2250738585072014E-308
         Private ReadOnly m As unordered_map(Of K, bind)
 
         Public Sub New()
@@ -37,6 +39,7 @@ Partial Public NotInheritable Class onebound(Of K)
         End Function
 
         Private Shared Function normalize(ByVal b As bind) As model.bind
+            ' Consider the average of ALL binds.
             assert(Not b Is Nothing)
             Dim a As Double = Nothing
             a = b.independence
@@ -51,6 +54,9 @@ Partial Public NotInheritable Class onebound(Of K)
                                       stream().
                                       map(Function(ByVal p As first_const_pair(Of K, Double)) _
                                                   As first_const_pair(Of K, Double)
+                                              If p.second <= min_possibility Then
+                                                  Return p
+                                              End If
                                               Return first_const_pair.of(p.first, p.second / a)
                                           End Function).
                                       collect(Of unordered_map(Of K, Double))())

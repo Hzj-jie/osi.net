@@ -23,8 +23,15 @@ Partial Public NotInheritable Class onebound(Of K)
             Private Sub New()
             End Sub
 
+            Private Shared Sub assert_valid_possibility(ByVal i As Double)
+                assert(i >= 0 AndAlso i <= 1)
+            End Sub
+
             Public Sub New(ByVal independence As Double, ByVal followers As unordered_map(Of K, Double))
-                assert(independence >= 0 AndAlso independence <= 1)
+                assert_valid_possibility(independence)
+                followers.stream().foreach(Sub(ByVal i As first_const_pair(Of K, Double))
+                                               assert_valid_possibility(i.second)
+                                           End Sub)
                 assert(Not followers Is Nothing)
                 Me.independence = independence
                 Me.followers = followers
