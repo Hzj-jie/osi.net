@@ -33,12 +33,13 @@ Partial Public NotInheritable Class wordbreaker_cjk
             Dim t As onebound(Of Char).trainer = Nothing
             t = New onebound(Of Char).trainer()
             Dim l As Int32 = 0
-            For i As Int32 = 0 To s.Length()
-                If Not s(i).cjk() OrElse i = s.Length() Then
+            For i As Int32 = 0 To s.Length() - 1
+                If Not s(i).cjk() Then
                     sentence(s, l, i, t)
                     l = i + 1
                 End If
             Next
+            sentence(s, l, s.Length(), t)
             Return t.dump()
         End Function
 
