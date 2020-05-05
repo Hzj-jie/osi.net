@@ -45,6 +45,13 @@ Public Module _sizeof
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function sizeof(ByVal t As Type) As Int32
+        ' https://stackoverflow.com/questions/11699005/why-is-char-4-bytes-in-marshal-sizeof
+        If t.Equals(GetType(Boolean)) Then
+            Return 1
+        End If
+        If t.Equals(GetType(Char)) Then
+            Return 2
+        End If
         Try
             Return Marshal.SizeOf(t)
         Catch

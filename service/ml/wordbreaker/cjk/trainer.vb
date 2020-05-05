@@ -9,8 +9,8 @@ Imports osi.root.constants
 Partial Public NotInheritable Class wordbreaker_cjk
     Public NotInheritable Class trainer
         Private Shared Sub sentence(ByVal s As String,
-                                    ByVal start As Int32,
-                                    ByVal [end] As Int32,
+                                    ByVal start As UInt32,
+                                    ByVal [end] As UInt32,
                                     ByVal trainer As onebound(Of Char).trainer)
             assert([end] >= start)
             assert(Not trainer Is Nothing)
@@ -18,13 +18,13 @@ Partial Public NotInheritable Class wordbreaker_cjk
                 Return
             End If
             If [end] - start = 1 Then
-                trainer.accumulate(s([end] - 1), 1)
+                trainer.accumulate(s(CInt([end]) - 1), 1)
             Else
-                For i As Int32 = start To [end] - 2
+                For i As Int32 = CInt(start) To CInt([end]) - 2
                     trainer.accumulate(s(i), s(i + 1), double_1 / ([end] - start))
                 Next
                 ' The last character is not "independent", but it's required to be identified as "end-of-a-word".
-                trainer.accumulate(s([end] - 1), 0.1 / ([end] - start))
+                trainer.accumulate(s(CInt([end]) - 1), 0.00001 / ([end] - start))
             End If
         End Sub
 
@@ -32,14 +32,10 @@ Partial Public NotInheritable Class wordbreaker_cjk
             assert(Not s.null_or_whitespace())
             Dim t As onebound(Of Char).trainer = Nothing
             t = New onebound(Of Char).trainer()
-            Dim l As Int32 = 0
-            For i As Int32 = 0 To s.Length() - 1
-                If Not s(i).cjk() Then
-                    sentence(s, l, i, t)
-                    l = i + 1
-                End If
-            Next
-            sentence(s, l, s.Length(), t)
+            s.strsep(AddressOf cjk,
+                     Sub(ByVal l As UInt32, ByVal i As UInt32)
+                         sentence(s, l, i, t)
+                     End Sub)
             Return t.dump()
         End Function
 

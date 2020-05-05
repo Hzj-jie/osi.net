@@ -26,7 +26,7 @@ Friend NotInheritable Class binary_operator_registry
 'so change binary_operator_registry_impl.vbp instead of this file
 
 
-#If "SByte" <> "Char" Then
+#If "SByte" <> "Char" AndAlso "SByte" <> "Boolean" Then
         binary_operator.register_add(Function(ByVal x As SByte, ByVal y As SByte) As SByte
                                          Return x + y
                                      End Function)
@@ -42,7 +42,7 @@ Friend NotInheritable Class binary_operator_registry
 'so change binary_operator_registry_impl.vbp instead of this file
 
 
-#If "Byte" <> "Char" Then
+#If "Byte" <> "Char" AndAlso "Byte" <> "Boolean" Then
         binary_operator.register_add(Function(ByVal x As Byte, ByVal y As Byte) As Byte
                                          Return x + y
                                      End Function)
@@ -58,7 +58,7 @@ Friend NotInheritable Class binary_operator_registry
 'so change binary_operator_registry_impl.vbp instead of this file
 
 
-#If "Int16" <> "Char" Then
+#If "Int16" <> "Char" AndAlso "Int16" <> "Boolean" Then
         binary_operator.register_add(Function(ByVal x As Int16, ByVal y As Int16) As Int16
                                          Return x + y
                                      End Function)
@@ -74,7 +74,7 @@ Friend NotInheritable Class binary_operator_registry
 'so change binary_operator_registry_impl.vbp instead of this file
 
 
-#If "UInt16" <> "Char" Then
+#If "UInt16" <> "Char" AndAlso "UInt16" <> "Boolean" Then
         binary_operator.register_add(Function(ByVal x As UInt16, ByVal y As UInt16) As UInt16
                                          Return x + y
                                      End Function)
@@ -90,7 +90,7 @@ Friend NotInheritable Class binary_operator_registry
 'so change binary_operator_registry_impl.vbp instead of this file
 
 
-#If "Int32" <> "Char" Then
+#If "Int32" <> "Char" AndAlso "Int32" <> "Boolean" Then
         binary_operator.register_add(Function(ByVal x As Int32, ByVal y As Int32) As Int32
                                          Return x + y
                                      End Function)
@@ -106,7 +106,7 @@ Friend NotInheritable Class binary_operator_registry
 'so change binary_operator_registry_impl.vbp instead of this file
 
 
-#If "UInt32" <> "Char" Then
+#If "UInt32" <> "Char" AndAlso "UInt32" <> "Boolean" Then
         binary_operator.register_add(Function(ByVal x As UInt32, ByVal y As UInt32) As UInt32
                                          Return x + y
                                      End Function)
@@ -122,7 +122,7 @@ Friend NotInheritable Class binary_operator_registry
 'so change binary_operator_registry_impl.vbp instead of this file
 
 
-#If "Int64" <> "Char" Then
+#If "Int64" <> "Char" AndAlso "Int64" <> "Boolean" Then
         binary_operator.register_add(Function(ByVal x As Int64, ByVal y As Int64) As Int64
                                          Return x + y
                                      End Function)
@@ -138,7 +138,7 @@ Friend NotInheritable Class binary_operator_registry
 'so change binary_operator_registry_impl.vbp instead of this file
 
 
-#If "UInt64" <> "Char" Then
+#If "UInt64" <> "Char" AndAlso "UInt64" <> "Boolean" Then
         binary_operator.register_add(Function(ByVal x As UInt64, ByVal y As UInt64) As UInt64
                                          Return x + y
                                      End Function)
@@ -154,7 +154,7 @@ Friend NotInheritable Class binary_operator_registry
 'so change binary_operator_registry_impl.vbp instead of this file
 
 
-#If "Double" <> "Char" Then
+#If "Double" <> "Char" AndAlso "Double" <> "Boolean" Then
         binary_operator.register_add(Function(ByVal x As Double, ByVal y As Double) As Double
                                          Return x + y
                                      End Function)
@@ -170,7 +170,7 @@ Friend NotInheritable Class binary_operator_registry
 'so change binary_operator_registry_impl.vbp instead of this file
 
 
-#If "Single" <> "Char" Then
+#If "Single" <> "Char" AndAlso "Single" <> "Boolean" Then
         binary_operator.register_add(Function(ByVal x As Single, ByVal y As Single) As Single
                                          Return x + y
                                      End Function)
@@ -186,12 +186,28 @@ Friend NotInheritable Class binary_operator_registry
 'so change binary_operator_registry_impl.vbp instead of this file
 
 
-#If "Char" <> "Char" Then
+#If "Char" <> "Char" AndAlso "Char" <> "Boolean" Then
         binary_operator.register_add(Function(ByVal x As Char, ByVal y As Char) As Char
                                          Return x + y
                                      End Function)
 
         binary_operator.register_minus(Function(ByVal x As Char, ByVal y As Char) As Char
+                                           Return x - y
+                                       End Function)
+#End If
+'finish binary_operator_registry_impl.vbp --------
+
+'the following code is generated by /osi/root/codegen/precompile/precompile.exe
+'with binary_operator_registry_impl.vbp ----------
+'so change binary_operator_registry_impl.vbp instead of this file
+
+
+#If "Boolean" <> "Char" AndAlso "Boolean" <> "Boolean" Then
+        binary_operator.register_add(Function(ByVal x As Boolean, ByVal y As Boolean) As Boolean
+                                         Return x + y
+                                     End Function)
+
+        binary_operator.register_minus(Function(ByVal x As Boolean, ByVal y As Boolean) As Boolean
                                            Return x - y
                                        End Function)
 #End If

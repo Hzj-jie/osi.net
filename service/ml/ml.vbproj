@@ -67,6 +67,7 @@
     <Compile Include="onebound\evaluator.vb" />
     <Compile Include="onebound\model.vb" />
     <Compile Include="onebound\trainer.vb" />
+    <Compile Include="wordbreaker\cjk\evaluator.vb" />
     <Compile Include="wordbreaker\cjk\trainer.vb" />
   </ItemGroup>
   <ItemGroup>

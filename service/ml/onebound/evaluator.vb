@@ -10,37 +10,79 @@ Imports osi.root.formation
 Partial Public NotInheritable Class onebound(Of K)
     Public NotInheritable Class evaluator
         Private ReadOnly m As model
+        Private ReadOnly longest_sequence As UInt32
 
         Public Sub New(ByVal m As model)
-            assert(Not m Is Nothing)
-            Me.m = m
+            Me.New(m, max_uint32)
         End Sub
+
+        Public Sub New(ByVal m As model, ByVal longest_Sequence As UInt32)
+            assert(Not m Is Nothing)
+            assert(longest_Sequence > 0)
+            Me.m = m
+            Me.longest_sequence = longest_Sequence
+        End Sub
+
+        Private NotInheritable Class result
+            Public ReadOnly splitters As vector(Of UInt32)
+            Public ReadOnly possibility As Double
+
+            Public Sub New(ByVal splitters As vector(Of UInt32), ByVal possibility As Double)
+                assert(Not splitters Is Nothing)
+                assert(possibility >= 0 AndAlso possibility <= 1)
+                Me.splitters = splitters
+                Me.possibility = possibility
+            End Sub
+
+            Public Function muliply(ByVal prefix_splitters As vector(Of UInt32), ByVal possibility As Double) As result
+                prefix_splitters.emplace_back(splitters)
+                Return New result(prefix_splitters, Me.possibility * possibility)
+            End Function
+        End Class
 
         Private Function evaluate(ByVal v As vector(Of K),
                                   ByVal i As UInt32,
                                   ByVal splitters As vector(Of UInt32),
-                                  ByVal possibility As Double) As const_pair(Of vector(Of UInt32), Double)
+                                  ByVal possibility As Double,
+                                  ByVal cache As vector(Of result)) As result
             assert(Not v Is Nothing)
             assert(Not splitters Is Nothing)
+            assert(Not cache Is Nothing)
             assert(v.size() > i)
             If i = v.size() - 1 OrElse possibility = 0 Then
-                Return const_pair.of(splitters, possibility)
+                Return New result(splitters, possibility)
             End If
 
-            Dim l As const_pair(Of vector(Of UInt32), Double) = Nothing
-            If m.independence(v(i)) > 0 Then
-                Dim s As vector(Of UInt32) = Nothing
-                s = splitters.CloneT()
-                s.emplace_back(i)
-                l = evaluate(v, i + uint32_1, s, possibility * m.independence(v(i)))
+            If i - If(splitters.empty(), uint32_0, splitters.back()) > longest_sequence Then
+                Return New result(splitters, 0)
             End If
-            Dim r As const_pair(Of vector(Of UInt32), Double) = Nothing
-            If m.affinity(v(i), v(i + uint32_1)) > 0 Then
-                r = evaluate(v, i + uint32_1, splitters.CloneT(), possibility * m.affinity(v(i), v(i + uint32_1)))
+
+            Dim l As result = Nothing
+            Dim d As Double = 0
+            d = m.independence(v(i))
+            If d > 0 Then
+                If Not cache(i) Is Nothing Then
+                    l = cache(i)
+                Else
+                    Dim s As vector(Of UInt32) = Nothing
+                    s = New vector(Of UInt32)()
+                    s.emplace_back(i)
+                    l = evaluate(v, i + uint32_1, s, 1, cache)
+                    assert(cache(i) Is Nothing)
+                    cache(i) = l
+                End If
+                l = l.muliply(splitters.CloneT(), d * possibility)
             End If
+            Dim r As result = Nothing
+            d = m.affinity(v(i), v(i + uint32_1))
+            If d > 0 Then
+                r = evaluate(v, i + uint32_1, splitters.CloneT(), d * possibility, cache)
+            End If
+
             If l Is Nothing AndAlso r Is Nothing Then
-                Return const_pair.of(splitters, double_0)
+                Return New result(splitters, double_0)
             End If
+
             If l Is Nothing Then
                 Return r
             End If
@@ -48,7 +90,7 @@ Partial Public NotInheritable Class onebound(Of K)
                 Return l
             End If
             ' Prefer longest match.
-            If l.second <= r.second Then
+            If l.possibility <= r.possibility Then
                 Return r
             End If
             Return l
@@ -56,20 +98,24 @@ Partial Public NotInheritable Class onebound(Of K)
 
         Default Public ReadOnly Property eva(ByVal v As vector(Of K)) As vector(Of vector(Of K))
             Get
-                Dim er As const_pair(Of vector(Of UInt32), Double) = Nothing
-                er = evaluate(v, uint32_0, New vector(Of UInt32)(), 1)
-                If er.first.empty() Then
+                Dim er As result = Nothing
+                er = evaluate(v,
+                              uint32_0,
+                              New vector(Of UInt32)(),
+                              1,
+                              vector.repeat_of(Of result)(Nothing, v.size()))
+                If er.splitters.empty() Then
                     Return vector.of(v.CloneT())
                 End If
 
                 Dim r As vector(Of vector(Of K)) = Nothing
                 r = New vector(Of vector(Of K))()
-                For i As UInt32 = 0 To er.first.size()
+                For i As UInt32 = 0 To er.splitters.size()
                     Dim skip As UInt32 = 0
-                    skip = If(i = 0, uint32_0, er.first(i - uint32_1) + uint32_1)
+                    skip = If(i = 0, uint32_0, er.splitters(i - uint32_1) + uint32_1)
                     r.emplace_back(v.stream().
                                      skip(skip).
-                                     limit(If(i = er.first.size(), v.size(), er.first(i)) - skip + uint32_1).
+                                     limit(If(i = er.splitters.size(), v.size(), er.splitters(i) + uint32_1) - skip).
                                      collect(Of vector(Of K))())
                 Next
                 Return r

@@ -32,19 +32,6 @@ Friend NotInheritable Class bytes_serializer_registry2
                                                 Return False
                                             End Function)
         bytes_serializer(Of StringBuilder).forward_registration.from(Of String)()
-        bytes_serializer.fixed.register(Function(ByVal i As Boolean, ByVal o As MemoryStream) As Boolean
-                                            assert(Not o Is Nothing)
-                                            Return o.write_byte(If(i, max_uint8, min_uint8))
-                                        End Function,
-                                        Function(ByVal i As MemoryStream, ByRef o As Boolean) As Boolean
-                                            Dim b As Int32 = 0
-                                            b = i.ReadByte()
-                                            If b = npos Then
-                                                Return False
-                                            End If
-                                            o = (b = max_uint8)
-                                            Return True
-                                        End Function)
         bytes_serializer.byte_size.register(Function(ByVal i() As Byte) As UInt32
                                                 Return array_size(i)
                                             End Function,

@@ -1,6 +1,6 @@
 
 ##DEFAULT TYPE Byte
-#If "##TYPE##" <> "Char" Then
+#If "##TYPE##" <> "Char" AndAlso "##TYPE##" <> "Boolean" Then
         binary_operator.register_add(Function(ByVal x As ##TYPE##, ByVal y As ##TYPE##) As ##TYPE##
                                          Return x + y
                                      End Function)

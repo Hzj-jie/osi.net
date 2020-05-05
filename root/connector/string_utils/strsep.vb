@@ -44,4 +44,23 @@ Public Module _strsep
                                           Optional ByVal case_sensitive As Boolean = True) As Boolean
         Return str_sep(input, f, s, sep, AddressOf strlastindexof, case_sensitive)
     End Function
+
+    <Extension()> Public Sub strsep(ByVal s As String,
+                                    ByVal sep As Func(Of Char, Boolean),
+                                    ByVal f As Action(Of UInt32, UInt32))
+        assert(Not sep Is Nothing)
+        assert(Not f Is Nothing)
+        If s.null_or_empty() Then
+            Return
+        End If
+
+        Dim l As Int32 = 0
+        For i As Int32 = 0 To s.Length() - 1
+            If Not s(i).cjk() Then
+                f(CUInt(l), CUInt(i))
+                l = i + 1
+            End If
+        Next
+        f(CUInt(l), s.strlen())
+    End Sub
 End Module

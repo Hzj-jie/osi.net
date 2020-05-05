@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Public Module _unref
     ' Convert a ByRef parameter to a ByVal one.
     ' Say,
@@ -11,7 +15,7 @@ Public Module _unref
     '     do_something(changeable)
     '     do_something(unref(unchangeable))
     ' End
-    Public Function unref(Of T)(ByRef a As T) As T
+    Public Function unref(Of T)(ByVal a As T) As T
         Return a
     End Function
 End Module

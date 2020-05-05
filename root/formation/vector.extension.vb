@@ -258,6 +258,25 @@ Public NotInheritable Class vector
         Return create(vs, False)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function repeat_of(Of T)(ByVal v As T, ByVal size As UInt32) As vector(Of T)
+        Dim r As vector(Of T) = Nothing
+        r = New vector(Of T)()
+        Dim i As UInt32 = 0
+        While i < size
+            r.push_back(v)
+            i += uint32_1
+        End While
+        Return r
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function matrix_of(Of T)(ByVal v As T,
+                                           ByVal height As UInt32,
+                                           ByVal width As UInt32) As vector(Of vector(Of T))
+        Return repeat_of(repeat_of(v, width), height)
+    End Function
+
     Private Sub New()
     End Sub
 End Class
