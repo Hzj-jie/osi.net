@@ -8,4 +8,8 @@
         binary_operator.register_minus(Function(ByVal x As ##TYPE##, ByVal y As ##TYPE##) As ##TYPE##
                                            Return x - y
                                        End Function)
+
+        binary_operator.register_multiply(Function(ByVal x As ##TYPE##, ByVal y As ##TYPE##) As ##TYPE##
+                                              Return x * y
+                                          End Function)
 #End If

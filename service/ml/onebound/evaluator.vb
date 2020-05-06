@@ -29,7 +29,7 @@ Partial Public NotInheritable Class onebound(Of K)
 
             Public Sub New(ByVal splitters As vector(Of UInt32), ByVal possibility As Double)
                 assert(Not splitters Is Nothing)
-                assert(possibility >= 0 AndAlso possibility <= 1)
+                assert(possibility >= 0)
                 Me.splitters = splitters
                 Me.possibility = possibility
             End Sub

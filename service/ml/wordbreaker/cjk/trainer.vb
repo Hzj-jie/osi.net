@@ -17,15 +17,10 @@ Partial Public NotInheritable Class wordbreaker_cjk
             If [end] = start Then
                 Return
             End If
-            If [end] - start = 1 Then
-                trainer.accumulate(s(CInt([end]) - 1), 1)
-            Else
-                For i As Int32 = CInt(start) To CInt([end]) - 2
-                    trainer.accumulate(s(i), s(i + 1), double_1 / ([end] - start))
-                Next
-                ' The last character is not "independent", but it's required to be identified as "end-of-a-word".
-                trainer.accumulate(s(CInt([end]) - 1), onebound(Of Char).trainer.min_possibility)
-            End If
+            For i As Int32 = CInt(start) To CInt([end]) - 2
+                trainer.accumulate(s(i), s(i + 1))
+            Next
+            trainer.accumulate(s(CInt([end]) - 1))
         End Sub
 
         Public Shared Function train(ByVal s As String) As onebound(Of Char).model

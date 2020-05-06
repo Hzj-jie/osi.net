@@ -21,6 +21,10 @@ Public Class binary_operator(Of T, T2, RT)
         global_resolver(Of Func(Of T, T2, RT), minus_protector).assert_first_register(f)
     End Sub
 
+    Public Shared Sub register_multiply(ByVal f As Func(Of T, T2, RT))
+        global_resolver(Of Func(Of T, T2, RT), multiply_protector).assert_first_register(f)
+    End Sub
+
     Public Shared Function log_addable() As Boolean
         If global_resolver(Of Func(Of T, T2, RT), add_protector).registered() OrElse
            accumulatable(Of T, T2, RT).v Then
@@ -66,6 +70,18 @@ Public Class binary_operator(Of T, T2, RT)
         Return f(i, j)
     End Function
 
+    Protected Overridable Function multiply() As Func(Of T, T2, RT)
+        Return global_resolver(Of Func(Of T, T2, RT), multiply_protector).resolve_or_null()
+    End Function
+
+    ' Return the value of i - j
+    Public Overridable Function multiply(ByVal i As T, ByVal j As T2) As RT
+        Dim f As Func(Of T, T2, RT) = Nothing
+        f = multiply()
+        assert(Not f Is Nothing)
+        Return f(i, j)
+    End Function
+
     Public Shared Operator +(ByVal this As binary_operator(Of T, T2, RT)) As binary_operator(Of T, T2, RT)
         If this Is Nothing Then
             Return [default]
@@ -77,6 +93,9 @@ Public Class binary_operator(Of T, T2, RT)
     End Interface
 
     Private Interface minus_protector
+    End Interface
+
+    Private Interface multiply_protector
     End Interface
 
     Protected Sub New()
