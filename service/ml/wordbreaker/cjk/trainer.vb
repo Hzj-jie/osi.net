@@ -3,8 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Collections.Generic
 Imports osi.root.connector
-Imports osi.root.constants
 
 Partial Public NotInheritable Class wordbreaker_cjk
     Public NotInheritable Class trainer
@@ -25,12 +25,21 @@ Partial Public NotInheritable Class wordbreaker_cjk
 
         Public Shared Function train(ByVal s As String) As onebound(Of Char).model
             assert(Not s.null_or_whitespace())
+            Return train({s})
+        End Function
+
+        Public Shared Function train(ByVal ss As IEnumerable(Of String)) As onebound(Of Char).model
             Dim t As onebound(Of Char).trainer = Nothing
             t = New onebound(Of Char).trainer()
-            s.strsep(AddressOf cjk,
-                     Sub(ByVal l As UInt32, ByVal i As UInt32)
-                         sentence(s, l, i, t)
-                     End Sub)
+            For Each s As String In ss
+                If s.null_or_whitespace() Then
+                    Continue For
+                End If
+                s.strsep(AddressOf cjk,
+                         Sub(ByVal l As UInt32, ByVal i As UInt32)
+                             sentence(s, l, i, t)
+                         End Sub)
+            Next
             Return t.dump()
         End Function
 

@@ -14,7 +14,7 @@ Namespace wordbreaker.cjk
         <command_line_specified>
         Private Shared Sub from_training_file()
             Dim m As model = Nothing
-            m = trainer.train(IO.File.ReadAllText("cjk.training.txt"))
+            m = trainer.train(IO.File.ReadLines("cjk.training.txt"))
             m.dump("cjk.model.bin")
         End Sub
 

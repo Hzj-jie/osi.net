@@ -20,7 +20,7 @@ Namespace wordbreaker.cjk
             Dim e As evaluator = Nothing
             e = New evaluator(m)
             Using o As StreamWriter = New StreamWriter("cjk.result.txt")
-                e.break(File.ReadAllText("cjk.evaluation.txt"),
+                e.break(File.ReadLines("cjk.evaluation.txt"),
                         Sub(ByVal s As String)
                             o.WriteLine(s)
                             o.Flush()

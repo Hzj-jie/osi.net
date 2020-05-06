@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Collections.Generic
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
@@ -30,13 +31,22 @@ Partial Public NotInheritable Class wordbreaker_cjk
             End Get
         End Property
 
-        Public Sub break(ByVal s As String, ByVal r As Action(Of String))
-            assert(Not s.null_or_whitespace())
+        Public Sub break(ByVal ss As IEnumerable(Of String), ByVal r As Action(Of String))
             assert(Not r Is Nothing)
-            s.strsep(AddressOf cjk,
+            For Each s As String In ss
+                If s.null_or_whitespace() Then
+                    Continue For
+                End If
+                s.strsep(AddressOf cjk,
                      Sub(ByVal l As UInt32, ByVal i As UInt32)
                          sentence(s, l, i, r)
                      End Sub)
+            Next
+        End Sub
+
+        Public Sub break(ByVal s As String, ByVal r As Action(Of String))
+            assert(Not s.null_or_whitespace())
+            break({s}, r)
         End Sub
 
         Private Sub sentence(ByVal s As String,
