@@ -94,6 +94,42 @@ Public Structure fast_pair(Of FT, ST)
     End Sub
 #End If
 
+    Public Shared ReadOnly first_getter As Func(Of fast_pair(Of FT, ST), FT) =
+        Function(ByVal p As fast_pair(Of FT, ST)) As FT
+#If IS_CLASS Then
+            assert(Not p Is Nothing)
+#End If
+            Return p.first
+        End Function
+
+    Public Shared ReadOnly first_or_null_getter As Func(Of fast_pair(Of FT, ST), FT) =
+        Function(ByVal p As fast_pair(Of FT, ST)) As FT
+#If IS_CLASS Then
+            If p Is Nothing Then
+                Return Nothing
+            End If
+#End If
+            Return p.first
+        End Function
+
+    Public Shared ReadOnly second_getter As Func(Of fast_pair(Of FT, ST), ST) =
+        Function(ByVal p As fast_pair(Of FT, ST)) As ST
+#If IS_CLASS Then
+            assert(Not p Is Nothing)
+#End If
+            Return p.second
+        End Function
+
+    Public Shared ReadOnly second_or_null_getter As Func(Of fast_pair(Of FT, ST), ST) =
+        Function(ByVal p As fast_pair(Of FT, ST)) As ST
+#If IS_CLASS Then
+            If p Is Nothing Then
+                Return Nothing
+            End If
+#End If
+            Return p.second
+        End Function
+
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](ByVal first As FT, ByVal second As ST) As fast_pair(Of FT, ST)
         Return New fast_pair(Of FT, ST)(copy_no_error(first), copy_no_error(second))
