@@ -39,6 +39,10 @@ Partial Public Class stream(Of T)
         Return c
     End Function
 
+    Public Function collect(Of CT)(ByVal f As Action(Of CT, T)) As CT
+        Return collect(f, alloc(Of CT)())
+    End Function
+
     Public Function collect(Of CT)(ByVal c As CT) As CT
         Return collect(Sub(ByVal i As CT, ByVal v As T)
                            container_operator.insert(i, v)

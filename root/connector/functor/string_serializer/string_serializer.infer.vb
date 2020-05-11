@@ -22,38 +22,38 @@ Partial Public NotInheritable Class string_serializer
     End Sub
 
     Public Shared Function from_str(Of T)(ByVal i As StringReader, ByRef o As T) As Boolean
-        Return string_serializer(Of T).default.from_str(i, o)
+        Return string_serializer(Of T).r.from_str(i, o)
     End Function
 
     Public Shared Function from_str(Of T)(ByVal i As String, ByRef o As T) As Boolean
-        Return string_serializer(Of T).default.from_str(i, o)
+        Return string_serializer(Of T).r.from_str(i, o)
     End Function
 
     Public Shared Function from_str(Of T)(ByVal i As String) As T
-        Return string_serializer(Of T).default.from_str(i)
+        Return string_serializer(Of T).r.from_str(i)
     End Function
 
     Public Shared Function from_str_or_default(Of T)(ByVal i As String, ByVal [default] As T) As T
-        Return string_serializer(Of T).default.from_str_or_default(i, [default])
+        Return string_serializer(Of T).r.from_str_or_default(i, [default])
     End Function
 
     Public Shared Function to_str(Of T)(ByVal i As T, ByVal o As StringWriter) As Boolean
-        Return string_serializer(Of T).default.to_str(i, o)
+        Return string_serializer(Of T).r.to_str(i, o)
     End Function
 
     Public Shared Function to_str(Of T)(ByVal i As T, ByRef o As String) As Boolean
-        Return string_serializer(Of T).default.to_str(i, o)
+        Return string_serializer(Of T).r.to_str(i, o)
     End Function
 
     Public Shared Function to_str(Of T)(ByVal i As T) As String
-        Return string_serializer(Of T).default.to_str(i)
+        Return string_serializer(Of T).r.to_str(i)
     End Function
 
     Public Shared Function to_str_or_default(Of T)(ByVal i As T, ByVal [default] As String) As String
-        Return string_serializer(Of T).default.to_str_or_default(i, [default])
+        Return string_serializer(Of T).r.to_str_or_default(i, [default])
     End Function
 
     Public Shared Function to_str_or_null(Of T)(ByVal i As T) As String
-        Return string_serializer(Of T).default.to_str_or_null(i)
+        Return string_serializer(Of T).r.to_str_or_null(i)
     End Function
 End Class

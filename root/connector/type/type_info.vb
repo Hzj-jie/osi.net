@@ -33,6 +33,8 @@ Partial Public NotInheritable Class type_info(Of T)
     Public Shared ReadOnly is_number As Boolean
     Public Shared ReadOnly is_enum As Boolean
     Public Shared ReadOnly is_array As Boolean
+    Public Shared ReadOnly is_array_type As Boolean
+    Public Shared ReadOnly can_cast_to_array_type As Boolean
 
     Shared Sub New()
         fullname = GetType(T).FullName()
@@ -65,6 +67,8 @@ Partial Public NotInheritable Class type_info(Of T)
             GetType(T) Is GetType(Decimal)))
         is_enum = GetType(T).IsEnum()
         is_array = GetType(T).IsArray()
+        is_array_type = GetType(T) Is GetType(Array)
+        can_cast_to_array_type = is_array OrElse is_array_type
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

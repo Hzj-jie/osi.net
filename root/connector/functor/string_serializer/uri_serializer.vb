@@ -16,19 +16,19 @@ Public NotInheritable Class uri_serializer
     End Sub
 
     Public Shared Function from_str(Of T)(ByVal i As StringReader, ByRef o As T) As Boolean
-        Return uri_serializer(Of T).default.from_str(i, o)
+        Return uri_serializer(Of T).r.from_str(i, o)
     End Function
 
     Public Shared Function from_str(Of T)(ByVal i As String, ByRef o As T) As Boolean
-        Return uri_serializer(Of T).default.from_str(i, o)
+        Return uri_serializer(Of T).r.from_str(i, o)
     End Function
 
     Public Shared Function to_str(Of T)(ByVal i As T, ByVal o As StringWriter) As Boolean
-        Return uri_serializer(Of T).default.to_str(i, o)
+        Return uri_serializer(Of T).r.to_str(i, o)
     End Function
 
     Public Shared Function to_str(Of T)(ByVal i As T) As String
-        Return uri_serializer(Of T).default.to_str(i)
+        Return uri_serializer(Of T).r.to_str(i)
     End Function
 
     Private Sub New()
@@ -37,18 +37,18 @@ End Class
 
 ' From or to URI safe strings. Types are expected to implement bytes_serializer or json_serializer instead of
 ' implementing uri_serializer directly.
-Public Class uri_serializer(Of T)
+Public NotInheritable Class uri_serializer(Of T)
     Inherits string_serializer(Of T, uri_serializer(Of T))
 
-    Public Shared Shadows ReadOnly [default] As uri_serializer(Of T)
+    Public Shared ReadOnly r As uri_serializer(Of T)
 
     Shared Sub New()
-        [default] = New uri_serializer(Of T)()
+        r = New uri_serializer(Of T)()
     End Sub
 
     Public Shared Shadows Operator +(ByVal this As uri_serializer(Of T)) As uri_serializer(Of T)
         If this Is Nothing Then
-            Return [default]
+            Return r
         End If
         Return this
     End Operator

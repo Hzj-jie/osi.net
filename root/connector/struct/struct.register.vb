@@ -128,12 +128,15 @@ Partial Public Class struct(Of T)
 #If TODO Then
         ' This implementation does not work, concating multiple strings into one is not right.
         string_serializer.register(Function(ByVal i As T, ByVal o As StringWriter) As Boolean
-                                       Return serialize(op, i, o, AddressOf type_string_serializer.to_str)
+                                       Return serialize(op, i, o, AddressOf type_string_serializer.default.to_str)
                                    End Function,
                                    Function(ByVal i As StringReader, ByRef o As T) As Boolean
-                                       Return deserialize(op, i, o, AddressOf type_string_serializer.from_str)
+                                       Return deserialize(op, i, o, AddressOf type_string_serializer.default.from_str)
                                    End Function)
 #End If
+        json_serializer.register(Function(ByVal i As T, ByVal o As StringWriter) As Boolean
+                                     Return serialize(op, i, o, AddressOf type_json_serializer.r.to_str)
+                                 End Function)
     End Sub
 
     Public Shared Sub register()
