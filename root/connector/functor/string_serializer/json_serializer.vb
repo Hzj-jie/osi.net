@@ -36,7 +36,7 @@ Public NotInheritable Class json_serializer
 End Class
 
 ' From or to json strings, with type information. This serializer works with both simple types and complex structures.
-Public NotInheritable Class json_serializer(Of T)
+Partial Public NotInheritable Class json_serializer(Of T)
     Inherits string_serializer(Of T, json_serializer(Of T))
 
     Public Shared ReadOnly r As json_serializer(Of T)
@@ -44,14 +44,6 @@ Public NotInheritable Class json_serializer(Of T)
     Shared Sub New()
         r = New json_serializer(Of T)()
     End Sub
-
-    ' TODO: Remove
-    Public Shared Shadows Operator +(ByVal this As json_serializer(Of T)) As json_serializer(Of T)
-        If this Is Nothing Then
-            Return r
-        End If
-        Return this
-    End Operator
 
     Protected Overrides Function to_str() As Func(Of T, StringWriter, Boolean)
         If type_info(Of T).can_cast_to_array_type Then

@@ -13,11 +13,8 @@ Public Class text_dev_T_adapter(Of T)
     Inherits T_adapter(Of text)
     Implements dev_T(Of T)
 
-    Private ReadOnly T_string As string_serializer(Of T)
-
-    Public Sub New(ByVal t As text, Optional ByVal T_string As string_serializer(Of T) = Nothing)
+    Public Sub New(ByVal t As text)
         MyBase.New(t)
-        Me.T_string = +T_string
     End Sub
 
     Public Function sense(ByVal pending As pointer(Of Boolean),
@@ -29,7 +26,7 @@ Public Class text_dev_T_adapter(Of T)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim s As String = Nothing
-                                  s = T_string.to_str(i)
+                                  s = string_serializer.to_str(i)
                                   ec = underlying_device.send(s)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -41,6 +38,6 @@ Public Class text_dev_T_adapter(Of T)
     End Function
 
     Public Function receive(ByVal o As pointer(Of T)) As event_comb Implements dev_T(Of T).receive
-        Return underlying_device.receive(o, T_string)
+        Return underlying_device.receive(o)
     End Function
 End Class

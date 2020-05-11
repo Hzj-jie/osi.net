@@ -60,32 +60,27 @@ Partial Public NotInheritable Class onebound(Of K)
             Dim l As result = Nothing
             Dim d As Double = 0
             d = m.independence(v(i))
-            If d > 0 Then
-                If Not cache(i) Is Nothing Then
-                    l = cache(i)
-                Else
-                    Dim s As vector(Of UInt32) = Nothing
-                    s = New vector(Of UInt32)()
-                    s.emplace_back(i)
-                    l = evaluate(v, i + uint32_1, s, 1, cache)
-                    assert(cache(i) Is Nothing)
-                    cache(i) = l
-                End If
-                l = l.muliply(splitters.CloneT(), d * possibility)
+            If d = 0 Then
+                d = 1
             End If
+            If Not cache(i) Is Nothing Then
+                l = cache(i)
+            Else
+                Dim s As vector(Of UInt32) = Nothing
+                s = New vector(Of UInt32)()
+                s.emplace_back(i)
+                l = evaluate(v, i + uint32_1, s, 1, cache)
+                assert(cache(i) Is Nothing)
+                cache(i) = l
+            End If
+            l = l.muliply(splitters.CloneT(), d * possibility)
+
             Dim r As result = Nothing
             d = m.affinity(v(i), v(i + uint32_1))
             If d > 0 Then
                 r = evaluate(v, i + uint32_1, splitters.CloneT(), d * possibility, cache)
             End If
 
-            If l Is Nothing AndAlso r Is Nothing Then
-                Return New result(splitters, double_0)
-            End If
-
-            If l Is Nothing Then
-                Return r
-            End If
             If r Is Nothing Then
                 Return l
             End If

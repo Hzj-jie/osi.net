@@ -74,11 +74,7 @@ Public Module _pump
         Return f.receive(buff, array_size(buff), result)
     End Function
 
-    <Extension()> Public Function receive(Of T) _
-                                         (ByVal i As text_pump,
-                                          ByVal o As pointer(Of T),
-                                          ByVal string_T As string_serializer(Of T)) _
-                                         As event_comb
+    <Extension()> Public Function receive(Of T)(ByVal i As text_pump, ByVal o As pointer(Of T)) As event_comb
         assert(Not i Is Nothing)
         Dim ec As event_comb = Nothing
         Dim p As pointer(Of String) = Nothing
@@ -90,7 +86,7 @@ Public Module _pump
                               End Function,
                               Function() As Boolean
                                   Dim r As T = Nothing
-                                  Return (+string_T).from_str(+p, r) AndAlso
+                                  Return string_serializer.from_str(+p, r) AndAlso
                                          eva(o, r) AndAlso
                                          goto_end()
                               End Function)

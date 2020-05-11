@@ -14,7 +14,7 @@ Imports osi.service.selector
 Imports constructor = osi.service.device.constructor
 
 <global_init(global_init_level.server_services)>
-Public Class target_questioner
+Public NotInheritable Class target_questioner
     Inherits iquestioner(Of _false)
 
     Private ReadOnly name() As Byte
@@ -37,11 +37,9 @@ Public Class target_questioner
         Me.New(copy(name), q, True)
     End Sub
 
-    Public Shared Shadows Function ctor(Of KEY_T)(ByVal name As KEY_T,
-                                                  ByVal q As questioner(Of _true),
-                                                  Optional ByVal key_t_bytes As bytes_serializer(Of KEY_T) = Nothing) _
-                                                 As target_questioner
-        Return New target_questioner((+key_t_bytes).to_bytes(name), q, True)
+    Public Shared Shadows Function ctor(Of KEY_T) _
+                                       (ByVal name As KEY_T, ByVal q As questioner(Of _true)) As target_questioner
+        Return New target_questioner(bytes_serializer.to_bytes(name), q, True)
     End Function
 
     Private Shared Function create(ByVal v As var,
@@ -49,15 +47,13 @@ Public Class target_questioner
                                    ByRef o As target_questioner) As Boolean
         If v Is Nothing OrElse q Is Nothing Then
             Return False
-        Else
-            Dim target As String = Nothing
-            If v.value("target", target) Then
-                o = ctor(target, q)
-                Return True
-            Else
-                Return False
-            End If
         End If
+        Dim target As String = Nothing
+        If v.value("target", target) Then
+            o = ctor(target, q)
+            Return True
+        End If
+        Return False
     End Function
 
     Public Shared Function create(ByVal v As var, ByRef o As target_questioner) As Boolean

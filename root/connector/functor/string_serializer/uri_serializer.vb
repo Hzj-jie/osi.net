@@ -46,13 +46,6 @@ Public NotInheritable Class uri_serializer(Of T)
         r = New uri_serializer(Of T)()
     End Sub
 
-    Public Shared Shadows Operator +(ByVal this As uri_serializer(Of T)) As uri_serializer(Of T)
-        If this Is Nothing Then
-            Return r
-        End If
-        Return this
-    End Operator
-
     ' TODO: Test
     Protected Overrides Function to_str() As Func(Of T, StringWriter, Boolean)
         Return Function(ByVal i As T, ByVal o As StringWriter) As Boolean

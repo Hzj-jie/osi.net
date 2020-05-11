@@ -94,7 +94,6 @@
     <Compile Include="functor\binary_operator\binary_operator.infer.vb" />
     <Compile Include="functor\binary_operator\binary_operator.vb" />
     <Compile Include="functor\bytes_serializer\bytes_serializer.forward_registration.vb" />
-    <Compile Include="functor\bytes_serializer\bytes_serializer.implementation.vb" />
     <Compile Include="functor\bytes_serializer\bytes_serializer.infer.vb" />
     <Compile Include="functor\bytes_serializer\bytes_serializer.shortcuts.vb" />
     <Compile Include="functor\container_operator\container_operator.enumerator.vb" />
@@ -104,6 +103,7 @@
     <Compile Include="functor\stream\stream.collector.vb" />
     <Compile Include="functor\stream\stream.container.vb" />
     <Compile Include="functor\stream\stream.vb" />
+    <Compile Include="functor\string_serializer\json_serializer.container.vb" />
     <Compile Include="functor\string_serializer\json_serializer.vb" />
     <Compile Include="functor\registry\binary_operator_registry.vb" />
     <Compile Include="functor\registry\binary_operator_registry2.vb" />

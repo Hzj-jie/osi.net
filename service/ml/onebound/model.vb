@@ -32,6 +32,10 @@ Partial Public NotInheritable Class onebound(Of K)
                 Me.independence = independence
                 Me.followers = followers
             End Sub
+
+            Public Overrides Function ToString() As String
+                Return json_serializer.to_str(Me)
+            End Function
         End Class
 
         Private ReadOnly m As unordered_map(Of K, bind)
@@ -108,6 +112,10 @@ Partial Public NotInheritable Class onebound(Of K)
 
         Public Overrides Function Equals(ByVal other As Object) As Boolean
             Return Equals(cast(Of model)(other, False))
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return json_serializer.to_str(m)
         End Function
     End Class
 End Class

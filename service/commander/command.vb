@@ -18,9 +18,8 @@ Partial Public NotInheritable Class command
         Return New command()
     End Function
 
-    Public Shared Function [New](Of T)(ByVal action As T,
-                                       Optional ByVal T_bytes As bytes_serializer(Of T) = Nothing) As command
-        Return (New command()).attach(Of T)(action, T_bytes)
+    Public Shared Function [New](Of T)(ByVal action As T) As command
+        Return (New command()).attach(Of T)(action)
     End Function
 
     <copy_constructor>
@@ -55,9 +54,9 @@ Partial Public NotInheritable Class command
         Return +a
     End Function
 
-    Public Function action(Of T)(Optional ByVal bytes_T As bytes_serializer(Of T) = Nothing) As T
+    Public Function action(Of T)() As T
         Dim r As T = Nothing
-        If (+bytes_T).from_bytes(action(), r) Then
+        If bytes_serializer.from_bytes(action(), r) Then
             Return r
         End If
         Return Nothing
@@ -68,8 +67,8 @@ Partial Public NotInheritable Class command
                (memcmp(action(), b) = 0)
     End Function
 
-    Public Function action_is(Of T)(ByVal k As T, Optional ByVal T_bytes As bytes_serializer(Of T) = Nothing) As Boolean
-        Return action_is((+T_bytes).to_bytes(k))
+    Public Function action_is(Of T)(ByVal k As T) As Boolean
+        Return action_is(bytes_serializer.to_bytes(k))
     End Function
 
     Public Function foreach(ByVal v As Action(Of Byte(), Byte())) As Boolean
@@ -98,43 +97,33 @@ Partial Public NotInheritable Class command
         Return True
     End Function
 
-    Public Function parameter(Of KT)(ByVal k As KT,
-                                     ByRef v() As Byte,
-                                     Optional ByVal KT_bytes As bytes_serializer(Of KT) = Nothing) As Boolean
-        Return parameter((+KT_bytes).to_bytes(k), v)
+    Public Function parameter(Of KT)(ByVal k As KT, ByRef v() As Byte) As Boolean
+        Return parameter(bytes_serializer.to_bytes(k), v)
     End Function
 
-    Public Function parameter(Of KT)(ByVal k As KT,
-                                     Optional ByVal KT_bytes As bytes_serializer(Of KT) = Nothing) As Byte()
+    Public Function parameter(Of KT)(ByVal k As KT) As Byte()
         Dim value() As Byte = Nothing
-        If parameter(k, value, KT_bytes) Then
+        If parameter(k, value) Then
             Return value
         End If
         Return Nothing
     End Function
 
-    Public Function parameter(Of VT)(ByVal key() As Byte,
-                                     ByRef v As VT,
-                                     Optional ByVal bytes_VT As bytes_serializer(Of VT) = Nothing) As Boolean
+    Public Function parameter(Of VT)(ByVal key() As Byte, ByRef v As VT) As Boolean
         Dim value() As Byte = Nothing
         Return parameter(key, value) AndAlso
-               (+bytes_VT).from_bytes(value, v)
+               bytes_serializer.from_bytes(value, v)
     End Function
 
-    Public Function parameter(Of KT, VT)(ByVal k As KT,
-                                         ByRef v As VT,
-                                         Optional ByVal KT_bytes As bytes_serializer(Of KT) = Nothing,
-                                         Optional ByVal bytes_VT As bytes_serializer(Of VT) = Nothing) As Boolean
+    Public Function parameter(Of KT, VT)(ByVal k As KT, ByRef v As VT) As Boolean
         Dim value() As Byte = Nothing
-        Return parameter((+KT_bytes).to_bytes(k), value) AndAlso
-               (+bytes_VT).from_bytes(value, v)
+        Return parameter(bytes_serializer.to_bytes(k), value) AndAlso
+               bytes_serializer.from_bytes(value, v)
     End Function
 
-    Public Function parameter(Of KT, VT)(ByVal k As KT,
-                                         Optional ByVal KT_bytes As bytes_serializer(Of KT) = Nothing,
-                                         Optional ByVal bytes_VT As bytes_serializer(Of VT) = Nothing) As VT
+    Public Function parameter(Of KT, VT)(ByVal k As KT) As VT
         Dim v As VT = Nothing
-        If parameter(k, v, KT_bytes, bytes_VT) Then
+        If parameter(k, v) Then
             Return v
         End If
         Return Nothing
@@ -146,28 +135,21 @@ Partial Public NotInheritable Class command
                eva(r, v)
     End Function
 
-    Public Function parameter(Of VT)(ByVal key() As Byte,
-                                     ByVal r As pointer(Of VT),
-                                     Optional ByVal bytes_VT As bytes_serializer(Of VT) = Nothing) As Boolean
+    Public Function parameter(Of VT)(ByVal key() As Byte, ByVal r As pointer(Of VT)) As Boolean
         Dim v As VT = Nothing
-        Return parameter(key, v, bytes_VT) AndAlso
+        Return parameter(key, v) AndAlso
                eva(r, v)
     End Function
 
-    Public Function parameter(Of KT)(ByVal k As KT,
-                                     ByVal r As pointer(Of Byte()),
-                                     Optional ByVal KT_bytes As bytes_serializer(Of KT) = Nothing) As Boolean
+    Public Function parameter(Of KT)(ByVal k As KT, ByVal r As pointer(Of Byte())) As Boolean
         Dim value() As Byte = Nothing
-        Return parameter(k, value, KT_bytes) AndAlso
+        Return parameter(k, value) AndAlso
                eva(r, value)
     End Function
 
-    Public Function parameter(Of KT, VT)(ByVal k As KT,
-                                         ByVal r As pointer(Of VT),
-                                         Optional ByVal KT_bytes As bytes_serializer(Of KT) = Nothing,
-                                         Optional ByVal bytes_VT As bytes_serializer(Of VT) = Nothing) As Boolean
+    Public Function parameter(Of KT, VT)(ByVal k As KT, ByVal r As pointer(Of VT)) As Boolean
         Dim v As VT = Nothing
-        Return parameter(k, v, KT_bytes, bytes_VT) AndAlso
+        Return parameter(k, v) AndAlso
                eva(r, v)
     End Function
 
@@ -175,9 +157,8 @@ Partial Public NotInheritable Class command
         Return parameter(key, default_bytes)
     End Function
 
-    Public Function has_parameter(Of KT)(ByVal k As KT,
-                                         Optional ByVal KT_bytes As bytes_serializer(Of KT) = Nothing) As Boolean
-        Return has_parameter((+KT_bytes).to_bytes(k))
+    Public Function has_parameter(Of KT)(ByVal k As KT) As Boolean
+        Return has_parameter(bytes_serializer.to_bytes(k))
     End Function
 
     Public Function parameter(ByVal key() As Byte) As Byte()
@@ -199,8 +180,8 @@ Partial Public NotInheritable Class command
         set_action_no_copy(copy(action))
     End Sub
 
-    Public Sub set_action(Of T)(ByVal i As T, Optional ByVal T_bytes As bytes_serializer(Of T) = Nothing)
-        set_action_no_copy((+T_bytes).to_bytes(i))
+    Public Sub set_action(Of T)(ByVal i As T)
+        set_action_no_copy(bytes_serializer.to_bytes(i))
     End Sub
 
     'for bytes / uri
@@ -214,22 +195,15 @@ Partial Public NotInheritable Class command
         set_parameter_no_copy(copy(k), copy(v))
     End Sub
 
-    Public Sub set_parameter(Of KT)(ByVal k As KT,
-                                    ByVal v() As Byte,
-                                    Optional ByVal KT_bytes As bytes_serializer(Of KT) = Nothing)
-        set_parameter_no_copy((+KT_bytes).to_bytes(k), copy(v))
+    Public Sub set_parameter(Of KT)(ByVal k As KT, ByVal v() As Byte)
+        set_parameter_no_copy(bytes_serializer.to_bytes(k), copy(v))
     End Sub
 
-    Public Sub set_parameter(Of VT)(ByVal k() As Byte,
-                                    ByVal v As VT,
-                                    Optional ByVal VT_bytes As bytes_serializer(Of VT) = Nothing)
-        set_parameter_no_copy(copy(k), (+VT_bytes).to_bytes(v))
+    Public Sub set_parameter(Of VT)(ByVal k() As Byte, ByVal v As VT)
+        set_parameter_no_copy(copy(k), bytes_serializer.to_bytes(v))
     End Sub
 
-    Public Sub set_parameter(Of KT, VT)(ByVal k As KT,
-                                        ByVal v As VT,
-                                        Optional ByVal KT_bytes As bytes_serializer(Of KT) = Nothing,
-                                        Optional ByVal VT_bytes As bytes_serializer(Of VT) = Nothing)
-        set_parameter_no_copy((+KT_bytes).to_bytes(k), (+VT_bytes).to_bytes(v))
+    Public Sub set_parameter(Of KT, VT)(ByVal k As KT, ByVal v As VT)
+        set_parameter_no_copy(bytes_serializer.to_bytes(k), bytes_serializer.to_bytes(v))
     End Sub
 End Class

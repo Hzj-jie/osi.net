@@ -8,7 +8,7 @@ Partial Public Class stream(Of T)
         Inherits stream(Of T)
 
         Public Sub New(ByVal i As CT)
-            Me.New(container_operator(Of CT, T).default, i)
+            Me.New(container_operator(Of CT, T).r, i)
         End Sub
 
         Public Sub New(ByVal o As container_operator(Of CT, T), ByVal i As CT)

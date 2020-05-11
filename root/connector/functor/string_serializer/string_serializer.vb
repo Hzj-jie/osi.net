@@ -146,14 +146,6 @@ Public Class string_serializer(Of T)
         r = New string_serializer(Of T)()
     End Sub
 
-    'TODO: Remove
-    Public Shared Shadows Operator +(ByVal this As string_serializer(Of T)) As string_serializer(Of T)
-        If this Is Nothing Then
-            Return r
-        End If
-        Return this
-    End Operator
-
     Protected Sub New()
     End Sub
 End Class

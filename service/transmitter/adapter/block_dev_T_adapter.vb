@@ -13,18 +13,15 @@ Public Class block_dev_T_adapter(Of T)
     Inherits T_adapter(Of block)
     Implements dev_T(Of T)
 
-    Private ReadOnly T_bytes As bytes_serializer(Of T)
-
-    Public Sub New(ByVal b As block, Optional ByVal T_bytes As bytes_serializer(Of T) = Nothing)
+    Public Sub New(ByVal b As block)
         MyBase.New(b)
-        Me.T_bytes = +T_bytes
     End Sub
 
     Public Function send(ByVal i As T) As event_comb Implements dev_T(Of T).send
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim b() As Byte = Nothing
-                                  b = T_bytes.to_bytes(i)
+                                  b = bytes_serializer.to_bytes(i)
                                   ec = underlying_device.send(b)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -46,7 +43,7 @@ Public Class block_dev_T_adapter(Of T)
                               End Function,
                               Function() As Boolean
                                   Dim r As T = Nothing
-                                  Return T_bytes.from_bytes(+p, r) AndAlso
+                                  Return bytes_serializer.from_bytes(+p, r) AndAlso
                                          eva(o, r) AndAlso
                                          goto_end()
                               End Function)

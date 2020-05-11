@@ -223,6 +223,7 @@ Public Class unordered_map2(Of KEY_T, VALUE_T)
                     i.clear()
                 End Sub)
         bytes_serializer(Of unordered_map2(Of KEY_T, VALUE_T)).container(Of first_const_pair(Of KEY_T, VALUE_T)).register()
+        json_serializer(Of unordered_map2(Of KEY_T, VALUE_T)).container(Of first_const_pair(Of KEY_T, VALUE_T)).register_as_object()
     End Sub
 
     Public ReadOnly first_selector As Func(Of first_const_pair(Of KEY_T, VALUE_T), KEY_T) =

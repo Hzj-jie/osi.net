@@ -30,7 +30,7 @@ Public NotInheritable Class piece_test
         For i As Int32 = 0 To rnd_int(1, 10) - 1
             v.emplace_back(random_piece())
         Next
-        Return bytes_serializer(Of vector(Of piece)).default.to_piece(v)
+        Return bytes_serializer(Of vector(Of piece)).r.to_piece(v)
     End Function
 
     Private Shared Sub empty_to_null(ByVal i As vector(Of piece))
@@ -52,18 +52,18 @@ Public NotInheritable Class piece_test
         p = random_serialized_piece(original)
 
         Dim v As vector(Of piece) = Nothing
-        assertion.is_true(bytes_serializer(Of vector(Of piece)).default.from_piece(p, v))
+        assertion.is_true(bytes_serializer(Of vector(Of piece)).r.from_piece(p, v))
         assertion.equal(v, original)
 
         ' TODO: Should compare support delegating null to the implementation?
         empty_to_null(original)
 
         Dim bytes As vector(Of Byte()) = Nothing
-        assertion.is_true(bytes_serializer(Of vector(Of Byte())).default.from_piece(p, bytes))
+        assertion.is_true(bytes_serializer(Of vector(Of Byte())).r.from_piece(p, bytes))
         assertion.is_true(deep_compare(+bytes, +original) = 0)
 
         Dim serialized() As Byte = Nothing
-        serialized = bytes_serializer(Of vector(Of Byte())).default.to_bytes(bytes)
+        serialized = bytes_serializer(Of vector(Of Byte())).r.to_bytes(bytes)
         assertion.is_true(compare(p, serialized) = 0)
     End Sub
 

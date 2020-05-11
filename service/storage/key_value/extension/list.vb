@@ -18,9 +18,8 @@ Public Module _list
                                             ByVal result As pointer(Of Boolean)) As event_comb
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return this.append(key, chunk.from_bytes(value), ts, result)
         End If
+        Return this.append(key, chunk.from_bytes(value), ts, result)
     End Function
 
     <Extension()> Public Function push_back(ByVal this As istrkeyvt,
@@ -69,12 +68,11 @@ Public Module _list
                                        ByVal ts As pointer(Of Int64)) As event_comb
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return read(Function(p As pointer(Of Byte())) As event_comb
-                            Return this.read(key, p, ts)
-                        End Function,
-                        result)
         End If
+        Return read(Function(p As pointer(Of Byte())) As event_comb
+                        Return this.read(key, p, ts)
+                    End Function,
+                    result)
     End Function
 
     <Extension()> Public Function read(ByVal this As istrkeyvt,
@@ -82,12 +80,11 @@ Public Module _list
                                        ByVal result As pointer(Of vector(Of Byte()))) As event_comb
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return read(Function(p As pointer(Of Byte())) As event_comb
-                            Return this.read(key, p)
-                        End Function,
-                        result)
         End If
+        Return read(Function(p As pointer(Of Byte())) As event_comb
+                        Return this.read(key, p)
+                    End Function,
+                    result)
     End Function
 
     Private Function read(ByVal d As Func(Of pointer(Of vector(Of Byte())), event_comb),
@@ -104,7 +101,7 @@ Public Module _list
                               Function() As Boolean
                                   Dim vs As vector(Of String) = Nothing
                                   Return ec.end_result() AndAlso
-                                         bytes_serializer(Of vector(Of Byte())).default.
+                                         bytes_serializer(Of vector(Of Byte())).r.
                                                  to_container(Of vector(Of String), String)(+r, vs) AndAlso
                                          eva(result, vs) AndAlso
                                          goto_end()
@@ -176,9 +173,8 @@ Public Module _list
                                       ec = push_back(i, key, value, r)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
-                                  Else
-                                      Return False
                                   End If
+                                  Return False
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso

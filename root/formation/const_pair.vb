@@ -83,6 +83,15 @@ Public Class const_pair(Of FT, ST)
                                             End If
                                             Return False
                                         End Function)
+        json_serializer.register(Function(ByVal i As const_pair(Of FT, ST), ByVal o As StringWriter) As Boolean
+                                     If Not json_serializer.to_str(i.first_or_null(), o) Then
+                                         Return False
+                                     End If
+                                     o.Write(":")
+                                     If Not json_serializer.to_str(i.second_or_null(), o) Then
+                                         Return False
+                                     End If
+                                 End Function)
     End Sub
 
     Private Sub New(ByVal first As FT, ByVal second As ST)

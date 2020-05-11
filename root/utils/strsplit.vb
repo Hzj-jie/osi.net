@@ -467,9 +467,7 @@ Public Module _strsplit
         Return Nothing
     End Function
 
-    <Extension()> Public Function split_from(Of T)(ByRef o As vector(Of T),
-                                                   ByVal s As String,
-                                                   Optional ByVal str_T As string_serializer(Of T) = Nothing) As Boolean
+    <Extension()> Public Function split_from(Of T)(ByRef o As vector(Of T), ByVal s As String) As Boolean
         Dim r As vector(Of String) = Nothing
         If Not strsplit(s, r) Then
             Return False
@@ -478,7 +476,7 @@ Public Module _strsplit
         Dim i As UInt32 = 0
         While i < r.size()
             Dim v As T = Nothing
-            If Not (+str_T).from_str(r(i), v) Then
+            If Not string_serializer.from_str(r(i), v) Then
                 Return False
             End If
             o.emplace_back(v)
@@ -487,11 +485,8 @@ Public Module _strsplit
         Return True
     End Function
 
-    <Extension()> Public Function split_from_or_null(Of T)(ByRef o As vector(Of T),
-                                                           ByVal s As String,
-                                                           Optional ByVal str_T As string_serializer(Of T) = Nothing) _
-                                                          As vector(Of T)
-        If split_from(o, s, str_T) Then
+    <Extension()> Public Function split_from_or_null(Of T)(ByRef o As vector(Of T), ByVal s As String) As vector(Of T)
+        If split_from(o, s) Then
             Return o
         End If
         Return Nothing

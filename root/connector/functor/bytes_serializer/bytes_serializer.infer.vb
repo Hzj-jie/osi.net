@@ -41,43 +41,43 @@ Partial Public NotInheritable Class bytes_serializer
     End Class
 
     Public Shared Function append_to(Of T)(ByVal i As T, ByVal o As MemoryStream) As Boolean
-        Return bytes_serializer(Of T).default.append_to(i, o)
+        Return bytes_serializer(Of T).r.append_to(i, o)
     End Function
 
     Public Shared Function write_to(Of T)(ByVal i As T, ByVal o As MemoryStream) As Boolean
-        Return bytes_serializer(Of T).default.write_to(i, o)
+        Return bytes_serializer(Of T).r.write_to(i, o)
     End Function
 
     Public Shared Function append_to(Of T)(ByVal i As T, ByVal o() As Byte, ByRef offset As UInt32) As Boolean
-        Return bytes_serializer(Of T).default.append_to(i, o, offset)
+        Return bytes_serializer(Of T).r.append_to(i, o, offset)
     End Function
 
     Public Shared Function to_bytes(Of T)(ByVal i As T) As Byte()
-        Return bytes_serializer(Of T).default.to_bytes(i)
+        Return bytes_serializer(Of T).r.to_bytes(i)
     End Function
 
     Public Shared Function consume_from(Of T)(ByVal i As MemoryStream, ByRef o As T) As Boolean
-        Return bytes_serializer(Of T).default.consume_from(i, o)
+        Return bytes_serializer(Of T).r.consume_from(i, o)
     End Function
 
     Public Shared Function read_from(Of T)(ByVal i As MemoryStream, ByRef o As T) As Boolean
-        Return bytes_serializer(Of T).default.read_from(i, o)
+        Return bytes_serializer(Of T).r.read_from(i, o)
     End Function
 
     Public Shared Function from_bytes(Of T)(ByVal i() As Byte, ByRef o As T) As Boolean
-        Return bytes_serializer(Of T).default.from_bytes(i, o)
+        Return bytes_serializer(Of T).r.from_bytes(i, o)
     End Function
 
     Public Shared Function consume_from(Of T)(ByVal i() As Byte, ByRef offset As UInt32, ByRef o As T) As Boolean
-        Return bytes_serializer(Of T).default.consume_from(i, offset, o)
+        Return bytes_serializer(Of T).r.consume_from(i, offset, o)
     End Function
 
     Public Shared Function from_container(Of CONTAINER, ELEMENT, T)(ByVal i As CONTAINER, ByRef o As T) As Boolean
-        Return bytes_serializer(Of T).default.from_container(Of CONTAINER, ELEMENT)(i, o)
+        Return bytes_serializer(Of T).r.from_container(Of CONTAINER, ELEMENT)(i, o)
     End Function
 
     Public Shared Function to_container(Of CONTAINER, ELEMENT, T)(ByVal i As T, ByRef o As CONTAINER) As Boolean
-        Return bytes_serializer(Of T).default.to_container(Of CONTAINER, ELEMENT)(i, o)
+        Return bytes_serializer(Of T).r.to_container(Of CONTAINER, ELEMENT)(i, o)
     End Function
 
     Public Shared Function from_container(Of ELEMENT)() As container_from(Of ELEMENT)

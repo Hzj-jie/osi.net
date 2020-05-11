@@ -12,11 +12,4 @@ Partial Public Class container_operator(Of CONTAINER, T)
         End If
         Return i
     End Function
-
-    Public Shared Operator +(ByVal this As container_operator(Of CONTAINER, T)) As container_operator(Of CONTAINER, T)
-        If this Is Nothing Then
-            Return [default]
-        End If
-        Return this
-    End Operator
 End Class

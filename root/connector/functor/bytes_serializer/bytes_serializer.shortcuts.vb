@@ -72,7 +72,7 @@ Partial Public Class bytes_serializer(Of T)
         End If
 
         Dim it As container_operator(Of CONTAINER, ELEMENT).enumerator = Nothing
-        it = container_operator(Of CONTAINER, ELEMENT).default.enumerate(i)
+        it = container_operator(Of CONTAINER, ELEMENT).r.enumerate(i)
         If o Is Nothing Then
             o = alloc(Of T)()
         Else
@@ -95,7 +95,7 @@ Partial Public Class bytes_serializer(Of T)
         End If
 
         Dim it As container_operator(Of T, Byte()).enumerator = Nothing
-        it = container_operator(Of T, Byte()).default.enumerate(i)
+        it = container_operator(Of T, Byte()).r.enumerate(i)
         If o Is Nothing Then
             o = alloc(Of CONTAINER)()
         Else
@@ -116,13 +116,6 @@ Partial Public Class bytes_serializer(Of T)
         End While
         Return True
     End Function
-
-    Public Shared Operator +(ByVal this As bytes_serializer(Of T)) As bytes_serializer(Of T)
-        If this Is Nothing Then
-            Return [default]
-        End If
-        Return this
-    End Operator
 End Class
 
 Public Module _bytes_serializer_shortcuts

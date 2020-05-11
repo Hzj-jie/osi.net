@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.Collections.Generic
 Imports osi.root.connector
+Imports osi.root.constants
 
 Partial Public NotInheritable Class wordbreaker_cjk
     Public NotInheritable Class trainer
@@ -17,10 +18,13 @@ Partial Public NotInheritable Class wordbreaker_cjk
             If [end] = start Then
                 Return
             End If
-            For i As Int32 = CInt(start) To CInt([end]) - 2
-                trainer.accumulate(s(i), s(i + 1))
-            Next
-            trainer.accumulate(s(CInt([end]) - 1))
+            If [end] = start + uint32_1 Then
+                trainer.accumulate(s(CInt([end]) - 1))
+            Else
+                For i As Int32 = CInt(start) To CInt([end]) - 2
+                    trainer.accumulate(s(i), s(i + 1))
+                Next
+            End If
         End Sub
 
         Public Shared Function train(ByVal s As String) As onebound(Of Char).model

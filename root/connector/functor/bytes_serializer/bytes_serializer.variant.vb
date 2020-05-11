@@ -54,12 +54,10 @@ Partial Public Class bytes_serializer(Of T)
     End Class
 
     Public NotInheritable Class container(Of ELEMENT)
-        Private Shared Function write_to(ByVal i As T,
-                                         ByVal o As MemoryStream,
-                                         ByVal op As container_operator(Of T, ELEMENT)) As Boolean
+        Private Shared Function write_to(ByVal i As T, ByVal o As MemoryStream) As Boolean
             assert(Not o Is Nothing)
             Dim it As container_operator(Of T, ELEMENT).enumerator = Nothing
-            it = (+op).enumerate(i)
+            it = container_operator(Of T, ELEMENT).r.enumerate(i)
             If it Is Nothing Then
                 Return True
             End If
@@ -78,15 +76,15 @@ Partial Public Class bytes_serializer(Of T)
             [variant].register(Function(ByVal i As T, ByVal o As MemoryStream) As Boolean
                                    assert(Not o Is Nothing)
                                    Dim l As UInt32 = 0
-                                   l = (+op).size(i)
+                                   l = container_operator(Of T, ELEMENT).r.size(i)
                                    If Not bytes_serializer.append_to(l, o) Then
                                        Return False
                                    End If
 
-                                   Return write_to(i, o, op)
+                                   Return write_to(i, o)
                                End Function,
                                Function(ByVal i As T, ByVal o As MemoryStream) As Boolean
-                                   Return write_to(i, o, op)
+                                   Return write_to(i, o)
                                End Function,
                                Function(ByVal i As MemoryStream, ByRef o As T) As Boolean
                                    assert(Not i Is Nothing)
@@ -100,7 +98,7 @@ Partial Public Class bytes_serializer(Of T)
                                        If Not bytes_serializer.consume_from(i, c) Then
                                            Return False
                                        End If
-                                       If Not (+op).emplace(o, c) Then
+                                       If Not container_operator.emplace(o, c) Then
                                            Return False
                                        End If
                                        l -= uint32_1
@@ -108,13 +106,13 @@ Partial Public Class bytes_serializer(Of T)
                                    Return True
                                End Function,
                                Function(ByVal i As MemoryStream, ByRef o As T) As Boolean
-                                   o = (+op).renew(o)
+                                   o = container_operator(Of T, ELEMENT).r.renew(o)
                                    While True
                                        Dim c As ELEMENT = Nothing
                                        If Not bytes_serializer.consume_from(i, c) Then
                                            Return True
                                        End If
-                                       If Not (+op).emplace(o, c) Then
+                                       If Not container_operator.emplace(o, c) Then
                                            Return False
                                        End If
                                    End While

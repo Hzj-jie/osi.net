@@ -7,10 +7,10 @@ Imports osi.root.constants
 
 ' A functor to implement binary operators between T and T2, and return RT.
 Public Class binary_operator(Of T, T2, RT)
-    Public Shared ReadOnly [default] As binary_operator(Of T, T2, RT)
+    Public Shared ReadOnly r As binary_operator(Of T, T2, RT)
 
     Shared Sub New()
-        [default] = New binary_operator(Of T, T2, RT)()
+        r = New binary_operator(Of T, T2, RT)()
     End Sub
 
     Public Shared Sub register_add(ByVal f As Func(Of T, T2, RT))
@@ -43,14 +43,10 @@ Public Class binary_operator(Of T, T2, RT)
         Return False
     End Function
 
-    Protected Overridable Function add() As Func(Of T, T2, RT)
-        Return global_resolver(Of Func(Of T, T2, RT), add_protector).resolve_or_null()
-    End Function
-
     ' Return the value of i + j
     Public Function add(ByVal i As T, ByVal j As T2) As RT
         Dim f As Func(Of T, T2, RT) = Nothing
-        f = add()
+        f = global_resolver(Of Func(Of T, T2, RT), add_protector).resolve_or_null()
         If Not f Is Nothing Then
             Return f(i, j)
         End If
@@ -58,33 +54,25 @@ Public Class binary_operator(Of T, T2, RT)
         Return cast(Of RT)(implicit_conversions.object_add(i, j))
     End Function
 
-    Protected Overridable Function minus() As Func(Of T, T2, RT)
-        Return global_resolver(Of Func(Of T, T2, RT), minus_protector).resolve_or_null()
-    End Function
-
     ' Return the value of i - j
-    Public Overridable Function minus(ByVal i As T, ByVal j As T2) As RT
+    Public Function minus(ByVal i As T, ByVal j As T2) As RT
         Dim f As Func(Of T, T2, RT) = Nothing
-        f = minus()
+        f = global_resolver(Of Func(Of T, T2, RT), minus_protector).resolve_or_null()
         assert(Not f Is Nothing)
         Return f(i, j)
     End Function
 
-    Protected Overridable Function multiply() As Func(Of T, T2, RT)
-        Return global_resolver(Of Func(Of T, T2, RT), multiply_protector).resolve_or_null()
-    End Function
-
     ' Return the value of i - j
-    Public Overridable Function multiply(ByVal i As T, ByVal j As T2) As RT
+    Public Function multiply(ByVal i As T, ByVal j As T2) As RT
         Dim f As Func(Of T, T2, RT) = Nothing
-        f = multiply()
+        f = global_resolver(Of Func(Of T, T2, RT), multiply_protector).resolve_or_null()
         assert(Not f Is Nothing)
         Return f(i, j)
     End Function
 
     Public Shared Operator +(ByVal this As binary_operator(Of T, T2, RT)) As binary_operator(Of T, T2, RT)
         If this Is Nothing Then
-            Return [default]
+            Return r
         End If
         Return this
     End Operator

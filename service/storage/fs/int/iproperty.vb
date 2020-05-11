@@ -31,12 +31,11 @@ Public Module _iproperty
         Return New event_comb(Function() As Boolean
                                   If i Is Nothing Then
                                       Return False
-                                  Else
-                                      p = New pointer(Of Byte())()
-                                      ec = i.[get](p)
-                                      Return waitfor(ec) AndAlso
-                                             goto_next()
                                   End If
+                                  p = New pointer(Of Byte())()
+                                  ec = i.[get](p)
+                                  Return waitfor(ec) AndAlso
+                                         goto_next()
                               End Function,
                               Function() As Boolean
                                   Dim v As T = Nothing
@@ -132,11 +131,10 @@ Public Module _iproperty
         Return New event_comb(Function() As Boolean
                                   If i Is Nothing Then
                                       Return False
-                                  Else
-                                      ec = i.set(v)
-                                      Return waitfor(ec) AndAlso
-                                             goto_next()
                                   End If
+                                  ec = i.set(v)
+                                  Return waitfor(ec) AndAlso
+                                         goto_next()
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso
@@ -204,11 +202,10 @@ Public Module _iproperty
         Return New event_comb(Function() As Boolean
                                   If i Is Nothing Then
                                       Return False
-                                  Else
-                                      ec = i.append(chunk.from_bytes(value))
-                                      Return waitfor(ec) AndAlso
-                                             goto_next()
                                   End If
+                                  ec = i.append(chunk.from_bytes(value))
+                                  Return waitfor(ec) AndAlso
+                                         goto_next()
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso
@@ -235,9 +232,8 @@ Public Module _iproperty
                                       ec = push_back(i, value)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
-                                  Else
-                                      Return False
                                   End If
+                                  Return False
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso
@@ -256,12 +252,11 @@ Public Module _iproperty
         Return New event_comb(Function() As Boolean
                                   If i Is Nothing Then
                                       Return False
-                                  Else
-                                      p = New pointer(Of Byte())()
-                                      ec = i.get(p)
-                                      Return waitfor(ec) AndAlso
-                                             goto_next()
                                   End If
+                                  p = New pointer(Of Byte())()
+                                  ec = i.get(p)
+                                  Return waitfor(ec) AndAlso
+                                         goto_next()
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso
@@ -279,12 +274,11 @@ Public Module _iproperty
         Return New event_comb(Function() As Boolean
                                   If i Is Nothing Then
                                       Return False
-                                  Else
-                                      p = New pointer(Of Byte())()
-                                      ec = i.get(p)
-                                      Return waitfor(ec) AndAlso
-                                             goto_next()
                                   End If
+                                  p = New pointer(Of Byte())()
+                                  ec = i.get(p)
+                                  Return waitfor(ec) AndAlso
+                                         goto_next()
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso
@@ -306,7 +300,7 @@ Public Module _iproperty
                               Function() As Boolean
                                   Dim vs As vector(Of String) = Nothing
                                   Return ec.end_result() AndAlso
-                                         bytes_serializer(Of vector(Of Byte())).default.
+                                         bytes_serializer(Of vector(Of Byte())).r.
                                                  to_container(Of vector(Of String), String)(+r, vs) AndAlso
                                          eva(v, vs) AndAlso
                                          goto_end()

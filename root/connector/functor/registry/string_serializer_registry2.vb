@@ -24,6 +24,12 @@ Friend NotInheritable Class string_serializer_registry2
                                      o.Write(i)
                                      o.Write("""")
                                  End Sub)
+        json_serializer.register(Sub(ByVal i As Char, ByVal o As StringWriter)
+                                     assert(Not o Is Nothing)
+                                     o.Write("""")
+                                     o.Write(i)
+                                     o.Write("""")
+                                 End Sub)
     End Sub
 
     Private Shared Sub init()
