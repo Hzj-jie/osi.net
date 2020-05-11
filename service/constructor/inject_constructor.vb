@@ -60,7 +60,7 @@ Public NotInheritable Class inject_constructor(Of T)
         Dim objs() As Object = Nothing
         ReDim objs(array_size_i(args) - 1)
         For i As Int32 = 0 To array_size_i(args) - 1
-            objs(i) = type_string_serializer.from_str(info.GetParameters()(i).ParameterType(), args(i))
+            objs(i) = type_string_serializer.r.from_str(info.GetParameters()(i).ParameterType(), args(i))
         Next
         Return invoke(o, objs)
     End Function
@@ -84,7 +84,7 @@ Public NotInheritable Class inject_constructor(Of T)
             End If
             Dim s As String = Nothing
             If v.value(info.GetParameters()(i).Name(), s) Then
-                objs(i) = type_string_serializer.from_str(info.GetParameters()(i).ParameterType(), s)
+                objs(i) = type_string_serializer.r.from_str(info.GetParameters()(i).ParameterType(), s)
             End If
         Next
         Return invoke(o, objs)
