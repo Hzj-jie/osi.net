@@ -36,6 +36,15 @@ Partial Public NotInheritable Class onebound(Of K)
             Public Overrides Function ToString() As String
                 Return json_serializer.to_str(Me)
             End Function
+
+            Public Function filter(ByVal lower_bound As Double) As bind
+                Return New bind(independence,
+                                followers.stream().
+                                          filter(followers.second_filter(Function(ByVal v As Double) As Boolean
+                                                                             Return v >= lower_bound
+                                                                         End Function)).
+                                          collect(Of unordered_map(Of K, Double))())
+            End Function
         End Class
 
         Private ReadOnly m As unordered_map(Of K, bind)
@@ -116,6 +125,14 @@ Partial Public NotInheritable Class onebound(Of K)
 
         Public Overrides Function ToString() As String
             Return json_serializer.to_str(m)
+        End Function
+
+        Public Overloads Function ToString(ByVal lower_bound As Double) As String
+            Return json_serializer.to_str(m.stream().
+                                            map(m.second_mapper(Function(ByVal i As bind) As bind
+                                                                    Return i.filter(lower_bound)
+                                                                End Function)).
+                                            collect(Of unordered_map(Of K, bind))())
         End Function
     End Class
 End Class

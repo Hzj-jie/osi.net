@@ -74,4 +74,8 @@ Partial Public Class stream(Of T)
             e.next()
         End While
     End Sub
+
+    Public Function filter(ByVal f As Func(Of T, Boolean)) As stream(Of T)
+        Return New stream(Of T)(container_operator.enumerators.filter(e, f))
+    End Function
 End Class

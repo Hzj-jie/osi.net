@@ -79,6 +79,22 @@ Public NotInheritable Class map(Of KEY_T, VALUE_T)
                End Function
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function first_filter(ByVal f As Func(Of KEY_T, Boolean)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), Boolean)
+        assert(Not f Is Nothing)
+        Return Function(ByVal i As first_const_pair(Of KEY_T, VALUE_T)) As Boolean
+                   Return f(i.first)
+               End Function
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function second_filter(ByVal f As Func(Of VALUE_T, Boolean)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), Boolean)
+        assert(Not f Is Nothing)
+        Return Function(ByVal i As first_const_pair(Of KEY_T, VALUE_T)) As Boolean
+                   Return f(i.second)
+               End Function
+    End Function
+
     Private NotInheritable Class enumerator
         Implements container_operator(Of map(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).enumerator
 

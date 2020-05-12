@@ -12,7 +12,7 @@ Namespace wordbreaker.cjk
         <test>
         <command_line_specified>
         Private Shared Sub dump()
-            Console.WriteLine(model.load("cjk.model.bin"))
+            Console.WriteLine(model.load("cjk.model.bin").ToString(1.0))
         End Sub
 
         Private Sub New()
