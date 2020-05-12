@@ -135,7 +135,25 @@ Partial Public Class struct(Of T)
                                    End Function)
 #End If
         json_serializer.register(Function(ByVal i As T, ByVal o As StringWriter) As Boolean
-                                     Return serialize(op, i, o, AddressOf type_json_serializer.r.to_str)
+                                     o.Write("{")
+                                     Dim not_first As Boolean = False
+                                     If Not serialize(op,
+                                                      i,
+                                                      o,
+                                                      Function(ByVal type As Type,
+                                                               ByVal x As Object,
+                                                               ByVal s As StringWriter) As Boolean
+                                                          If not_first Then
+                                                              o.Write(",")
+                                                          Else
+                                                              not_first = True
+                                                          End If
+                                                          Return type_json_serializer.r.to_str(type, x, s)
+                                                      End Function) Then
+                                         Return False
+                                     End If
+                                     o.Write("}")
+                                     Return True
                                  End Function)
     End Sub
 
