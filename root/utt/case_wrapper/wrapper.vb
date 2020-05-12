@@ -24,8 +24,6 @@ Public Module _wrapper
     End Function
 
     Public Function multithreading(ByVal c As [case], ByVal threadcount As Int32) As [case]
-        raise_error(error_type.deprecated,
-                    "multithreading([case], int32) is deprecated, use uint32 overloads: ", backtrace())
         assert(threadcount >= 0)
         Return multithreading(c, CUInt(threadcount))
     End Function
@@ -39,8 +37,6 @@ Public Module _wrapper
     End Function
 
     Public Function multi_procedure(ByVal c As event_comb_case, ByVal procedure_count As Int32) As event_comb_case
-        raise_error(error_type.deprecated,
-                    "multi_procedure(event_comb_case, int32) is deprecated, use uint32 overloads: ", backtrace())
         assert(procedure_count >= 0)
         Return multi_procedure(c, CUInt(procedure_count))
     End Function

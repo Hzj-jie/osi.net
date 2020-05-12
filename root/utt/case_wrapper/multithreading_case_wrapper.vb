@@ -35,8 +35,6 @@ Public Class multithreading_case_wrapper
 
     Public Sub New(ByVal c As [case], ByVal threadcount As Int32)
         Me.New(c, CUInt(assert_return(threadcount >= 0, threadcount)))
-        raise_error(error_type.deprecated,
-                    "multithreading_case_wrapper([case], int32) is deprecated, use uint32 overloads: ", backtrace())
     End Sub
 
     Public Overrides Function reserved_processors() As Int16
