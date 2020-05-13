@@ -14,7 +14,7 @@ Imports osi.root.constants
 Imports constants = osi.root.constants
 
 Partial Public Structure npos_uint
-    Implements IComparable, IComparable(Of npos_uint), ICloneable
+    Implements IComparable, IComparable(Of npos_uint), ICloneable, ICloneable(Of npos_uint)
 
     Public Shared ReadOnly inf As npos_uint
     Public Shared ReadOnly zero As npos_uint
@@ -804,8 +804,12 @@ Partial Public Structure npos_uint
         End If
     End Function
 
-    Public Function Clone() As Object Implements ICloneable.Clone
+    Public Function CloneT() As npos_uint Implements ICloneable(Of npos_uint).Clone
         Return New npos_uint(Me)
+    End Function
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
     End Function
 End Structure
 'finish npos_uint.vbp --------

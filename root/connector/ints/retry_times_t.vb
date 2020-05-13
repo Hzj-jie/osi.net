@@ -20,7 +20,7 @@ Imports osi.root.constants
 Imports constants = osi.root.constants
 
 Partial Public Structure retry_times_t
-    Implements IComparable, IComparable(Of retry_times_t), ICloneable
+    Implements IComparable, IComparable(Of retry_times_t), ICloneable, ICloneable(Of retry_times_t)
 
     Public Shared ReadOnly inf As retry_times_t
     Public Shared ReadOnly zero As retry_times_t
@@ -810,8 +810,12 @@ Partial Public Structure retry_times_t
         End If
     End Function
 
-    Public Function Clone() As Object Implements ICloneable.Clone
+    Public Function CloneT() As retry_times_t Implements ICloneable(Of retry_times_t).Clone
         Return New retry_times_t(Me)
+    End Function
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
     End Function
 End Structure
 'finish npos_uint.vbp --------
