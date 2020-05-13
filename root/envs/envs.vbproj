@@ -162,9 +162,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Target Name="BeforeCompile">
-    <Exec Command="copy &quot;$(ProjectDir)\..\codegen\buildInfoGen\buildInfo.vb&quot; &quot;$(ProjectDir)&quot;" />
-    <Exec Command="copy &quot;$(ProjectDir)\..\codegen\tfver\tfver.vb&quot; &quot;$(ProjectDir)&quot;" />
-    <Exec Command="copy &quot;$(ProjectDir)\..\codegen\gitver\gitver.vb&quot; &quot;$(ProjectDir)&quot;" />
+    <Exec Command="move /y &quot;$(ProjectDir)\..\codegen\buildInfoGen\buildInfo.vb&quot; &quot;$(ProjectDir)&quot;" />
+    <Exec Command="move /y &quot;$(ProjectDir)\..\codegen\tfver\tfver.vb&quot; &quot;$(ProjectDir)&quot;" />
+    <Exec Command="move /y &quot;$(ProjectDir)\..\codegen\gitver\gitver.vb&quot; &quot;$(ProjectDir)&quot;" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

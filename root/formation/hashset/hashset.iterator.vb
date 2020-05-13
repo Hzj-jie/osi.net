@@ -15,8 +15,8 @@ Option Strict On
 
 
 Imports System.Runtime.CompilerServices
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 'finish ..\..\codegen\iterator.imports.vbp --------
 Imports osi.root.template
 
@@ -56,6 +56,7 @@ Partial Public Class hashset(Of T,
 'so change ..\..\codegen\static_iterator.vbp instead of this file
 
 
+
         Implements IComparable(Of iterator), IComparable
 
         Public Shared ReadOnly [end] As iterator
@@ -67,24 +68,37 @@ Partial Public Class hashset(Of T,
         Private ReadOnly p As ref
 
 #If False Then
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Friend Sub New(ByVal that As ref)
 #Else
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Sub New(ByVal that As ref)
 #End If
+#If Not False Then
             assert(Not that Is Nothing)
+#End If
             p = that
         End Sub
 
+#If False Then
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function is_end() As Boolean
-            If type_info(Of iterator).is_valuetype Then
-                Return p Is Nothing
-            Else
-                Return p Is Nothing AndAlso
-                       (Not isdebugmode() OrElse
-                        assert(object_compare(Me, [end]) = 0))
-            End If
+            Return p.is_end()
         End Function
+#Else
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function is_end() As Boolean
+#If False Then
+            Return p Is Nothing
+#Else
+            Return p Is Nothing AndAlso
+                   (Not isdebugmode() OrElse
+                    assert(object_compare(Me, [end]) = 0))
+#End If
+        End Function
+#End If
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function is_not_end() As Boolean
             Return Not is_end()
         End Function
@@ -95,30 +109,35 @@ Partial Public Class hashset(Of T,
         End Function
 #End If
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Operator =(ByVal this As iterator, ByVal that As iterator) As Boolean
             If this.null_or_end() AndAlso that.null_or_end() Then
                 Return True
-            ElseIf this.null_or_end() OrElse that.null_or_end() Then
-                Return False
-            Else
-                assert(Not this.is_null() AndAlso Not this.is_null())
-                Return is_equal(this.p, that.p)
             End If
+            If this.null_or_end() OrElse that.null_or_end() Then
+                Return False
+            End If
+            assert(Not this.is_null() AndAlso Not this.is_null())
+            Return is_equal(this.p, that.p)
         End Operator
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Operator <>(ByVal this As iterator, ByVal that As iterator) As Boolean
             Return Not (this = that)
         End Operator
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function CompareTo(ByVal other As iterator) As Int32 Implements IComparable(Of iterator).CompareTo
             Return If(Me = other, 0, -1)
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function CompareTo(ByVal other As Object) As Int32 Implements IComparable.CompareTo
             Return CompareTo(cast(Of iterator)(other, False))
         End Function
 
     #If False Then
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Operator +(ByVal this As iterator) As ref
             Return If(this = [end], Nothing, this.p)
         End Operator
@@ -128,15 +147,16 @@ Partial Public Class hashset(Of T,
         '1. iterator / reverse_iterator are combined together
         '2. do not allow to - from end, it's not must-have
         '3. operator+ / operator- should not impact current instance, considering i = j + 1
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Operator +(ByVal this As iterator, ByVal that As Int32) As iterator
             If this.null_or_end() OrElse that = 0 Then
                 Return this
-            ElseIf that > 0 Then
-                Return this.move_next(CUInt(that))
-            Else
-                assert(that < 0)
-                Return this.move_prev(CUInt(-that))
             End If
+            If that > 0 Then
+                Return this.move_next(CUInt(that))
+            End If
+            assert(that < 0)
+            Return this.move_prev(CUInt(-that))
         End Operator
 
         Public Shared Operator -(ByVal this As iterator, ByVal that As Int32) As iterator
