@@ -10,18 +10,34 @@ Partial Public Class struct(Of T)
     Private Shared Function serialize(Of S)(ByVal op As struct(Of T),
                                             ByVal i As T,
                                             ByVal o As S,
-                                            ByVal f As Func(Of Type, Object, S, Boolean)) As Boolean
+                                            ByVal f As Func(Of UInt32, Type, Object, S, Boolean)) As Boolean
         assert(Not f Is Nothing)
         Dim vs() As struct.variable = Nothing
         If Not (+op).disassemble(i, vs) Then
             Return False
         End If
         For j As Int32 = 0 To array_size_i(vs) - 1
-            If Not f(vs(j).type, vs(j).value, o) Then
+            If Not f(CUInt(j), vs(j).type, vs(j).value, o) Then
                 Return False
             End If
         Next
         Return True
+    End Function
+
+    Private Shared Function serialize(Of S)(ByVal op As struct(Of T),
+                                            ByVal i As T,
+                                            ByVal o As S,
+                                            ByVal f As Func(Of Type, Object, S, Boolean)) As Boolean
+        assert(Not f Is Nothing)
+        Return serialize(op,
+                         i,
+                         o,
+                         Function(ByVal index As UInt32,
+                                  ByVal type As Type,
+                                  ByVal obj As Object,
+                                  ByVal writer As S) As Boolean
+                             Return f(type, obj, writer)
+                         End Function)
     End Function
 
     Private Shared Function deserialize(Of S)(ByVal op As struct(Of T),
@@ -136,17 +152,15 @@ Partial Public Class struct(Of T)
 #End If
         json_serializer.register(Function(ByVal i As T, ByVal o As StringWriter) As Boolean
                                      o.Write("{")
-                                     Dim not_first As Boolean = False
                                      If Not serialize(op,
                                                       i,
                                                       o,
-                                                      Function(ByVal type As Type,
+                                                      Function(ByVal index As UInt32,
+                                                               ByVal type As Type,
                                                                ByVal x As Object,
                                                                ByVal s As StringWriter) As Boolean
-                                                          If not_first Then
+                                                          If index > 0 Then
                                                               o.Write(",")
-                                                          Else
-                                                              not_first = True
                                                           End If
                                                           Return type_json_serializer.r.to_str(type, x, s)
                                                       End Function) Then

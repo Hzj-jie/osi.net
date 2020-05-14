@@ -4,40 +4,50 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.formation
 
 Partial Public NotInheritable Class onebound(Of K)
     Public NotInheritable Class trainer
         Public NotInheritable Class bind
-            Public independence As Double
-            Public ReadOnly followers As unordered_map(Of K, Double)
+            Public ending As Double
+            Public ReadOnly successors As unordered_map(Of K, Double)
+            Public ReadOnly predecessors As unordered_map(Of K, Double)
+            Private successor_sum As Double
+            Private predecessor_sum As Double
 
             Public Sub New()
-                independence = 0
-                followers = New unordered_map(Of K, Double)()
+                successors = New unordered_map(Of K, Double)()
+                predecessors = New unordered_map(Of K, Double)()
             End Sub
 
-            Public Function sum() As Double
-                Return independence +
-                       followers.
-                           stream().
-                           map(followers.second_selector).
-                           aggregate(stream(Of Double).aggregators.sum)
+            Private Shared Function sum(ByVal m As unordered_map(Of K, Double)) As Double
+                assert(Not m Is Nothing)
+                Return m.stream().
+                         map(m.second_selector).
+                         aggregate(stream(Of Double).aggregators.sum)
             End Function
 
-            Public Shared Function sum(ByVal b As bind) As Double
-                assert(Not b Is Nothing)
-                Return b.sum()
+            Public Sub sum()
+                successor_sum = sum(successors) + ending
+                predecessor_sum = sum(predecessors)
+            End Sub
+
+            Private Shared Function exclusive_average(ByVal m As unordered_map(Of K, Double),
+                                                      ByVal i As K,
+                                                      ByVal sum As Double) As Double
+                Dim it As unordered_map(Of K, Double).iterator = Nothing
+                it = m.find(i)
+                assert(it <> m.end())
+                assert((+it).second <= sum)
+                Return (+it).second / (sum - (+it).second)
             End Function
 
-            Public Function average() As Double
-                Return sum() / (followers.size() + uint32_1)
+            Public Function successor_exclusive_average(ByVal i As K) As Double
+                Return exclusive_average(successors, i, successor_sum)
             End Function
 
-            Public Shared Function average(ByVal b As bind) As Double
-                assert(Not b Is Nothing)
-                Return b.average()
+            Public Function predecessor_exclusive_average(ByVal i As K) As Double
+                Return exclusive_average(predecessors, i, predecessor_sum)
             End Function
         End Class
 
@@ -49,7 +59,8 @@ Partial Public NotInheritable Class onebound(Of K)
 
         Public Function accumulate(ByVal a As K, ByVal b As K, ByVal v As Double) As trainer
             assert(v > 0)
-            m(a).followers(b) += v
+            m(a).successors(b) += v
+            m(b).predecessors(a) += v
             Return Me
         End Function
 
@@ -59,7 +70,7 @@ Partial Public NotInheritable Class onebound(Of K)
 
         Public Function accumulate(ByVal a As K, ByVal v As Double) As trainer
             assert(v > 0)
-            m(a).independence += v
+            m(a).ending += v
             Return Me
         End Function
 
@@ -67,49 +78,33 @@ Partial Public NotInheritable Class onebound(Of K)
             Return accumulate(a, 1)
         End Function
 
-        Private Shared Function average(ByVal v As Double, ByVal a1 As Double, ByVal a2 As Double) As Double
-            Return Math.Sqrt(v * v / a1 / a2)
-        End Function
-
-        Private Shared Function exclusive_average(ByVal ave As Double,
-                                                  ByVal size As UInt32,
-                                                  ByVal v As Double) As Double
-            If size = uint32_1 Then
-                assert(ave = v)
-                Return ave
-            End If
-            Return (ave * size - v) / (size - uint32_1)
-        End Function
-
-        Private Shared Function normalize(ByVal global_ave As Double, ByVal b As bind) As model.bind
+        Private Shared Function normalize(ByVal k As K,
+                                          ByVal b As bind,
+                                          ByVal m As unordered_map(Of K, bind)) As unordered_map(Of K, Double)
             assert(Not b Is Nothing)
-            Dim ave As Double = 0
-            ave = b.average()
-            Return New model.bind(average(b.independence,
-                                          global_ave,
-                                          exclusive_average(ave, b.followers.size() + uint32_1, b.independence)),
-                                  b.followers.
-                                    stream().
-                                    map(b.followers.second_mapper(
-                                            Function(ByVal i As Double) As Double
-                                                Return average(i,
-                                                               global_ave,
-                                                               exclusive_average(ave, b.followers.size() + uint32_1, i))
-                                            End Function)).
-                                    collect(Of unordered_map(Of K, Double))())
+            Return b.successors.
+                     stream().
+                     map(b.successors.mapper(
+                             Function(ByVal successor As K, ByVal v As Double) As first_const_pair(Of K, Double)
+                                 Return first_const_pair.emplace_of(successor,
+                                                                    min(1.0,
+                                                                        b.successor_exclusive_average(successor) *
+                                                                        m(successor).predecessor_exclusive_average(k)))
+                             End Function)).
+                     collect(Of unordered_map(Of K, Double))()
         End Function
 
-        Private Function normalize() As unordered_map(Of K, model.bind)
-            Dim ave As Double = 0
-            ave = m.stream().
-                    map(m.second_selector).
-                    map(AddressOf bind.average).
-                    aggregate(stream(Of Double).aggregators.average)
+        Private Function normalize() As unordered_map(Of K, unordered_map(Of K, Double))
+            m.stream().
+              foreach(m.on_second(Sub(ByVal v As bind)
+                                      v.sum()
+                                  End Sub))
             Return m.stream().
-                     map(m.second_mapper(Function(ByVal b As bind) As model.bind
-                                             Return normalize(ave, b)
-                                         End Function)).
-                     collect(Of unordered_map(Of K, model.bind))()
+                     map(m.mapper(Function(ByVal k As K, ByVal b As bind) _
+                                          As first_const_pair(Of K, unordered_map(Of K, Double))
+                                      Return first_const_pair.emplace_of(k, normalize(k, b, m))
+                                  End Function)).
+                     collect(Of unordered_map(Of K, unordered_map(Of K, Double)))()
         End Function
 
         Public Function dump() As model

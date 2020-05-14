@@ -11,46 +11,10 @@ Partial Public NotInheritable Class onebound(Of K)
     Public NotInheritable Class model
         Implements IEquatable(Of model)
 
-        Public NotInheritable Class bind
-            Public ReadOnly independence As Double
-            Public ReadOnly followers As unordered_map(Of K, Double)
-
-            Shared Sub New()
-                struct(Of bind).register()
-            End Sub
-
-            ' For struct.byte_serializer only.
-            Private Sub New()
-            End Sub
-
-            Public Sub New(ByVal independence As Double, ByVal followers As unordered_map(Of K, Double))
-                assert(independence >= 0)
-                followers.stream().foreach(Sub(ByVal i As first_const_pair(Of K, Double))
-                                               assert(i.second >= 0)
-                                           End Sub)
-                assert(Not followers Is Nothing)
-                Me.independence = independence
-                Me.followers = followers
-            End Sub
-
-            Public Overrides Function ToString() As String
-                Return json_serializer.to_str(Me)
-            End Function
-
-            Public Function filter(ByVal lower_bound As Double) As bind
-                Return New bind(independence,
-                                followers.stream().
-                                          filter(followers.second_filter(Function(ByVal v As Double) As Boolean
-                                                                             Return v >= lower_bound
-                                                                         End Function)).
-                                          collect(Of unordered_map(Of K, Double))())
-            End Function
-        End Class
-
-        Private ReadOnly m As unordered_map(Of K, bind)
+        Private ReadOnly m As unordered_map(Of K, unordered_map(Of K, Double))
 
         <copy_constructor>
-        Public Sub New(ByVal m As unordered_map(Of K, bind))
+        Public Sub New(ByVal m As unordered_map(Of K, unordered_map(Of K, Double)))
             assert(Not m Is Nothing)
             Me.m = m
         End Sub
@@ -66,7 +30,7 @@ Partial Public NotInheritable Class onebound(Of K)
         End Function
 
         Public Shared Function load(ByVal i As MemoryStream, ByRef o As model) As Boolean
-            Dim r As unordered_map(Of K, bind) = Nothing
+            Dim r As unordered_map(Of K, unordered_map(Of K, Double)) = Nothing
             If bytes_serializer.consume_from(i, r) Then
                 o = New model(r)
                 Return True
@@ -96,18 +60,11 @@ Partial Public NotInheritable Class onebound(Of K)
             Return o
         End Function
 
-        Public Function independence(ByVal a As K) As Double
-            If m.find(a) = m.end() Then
-                Return 0
-            End If
-            Return m(a).independence
-        End Function
-
         Public Function affinity(ByVal a As K, ByVal b As K) As Double
-            If m.find(a) = m.end() OrElse m(a).followers.find(b) = m(a).followers.end() Then
+            If m.find(a) = m.end() OrElse m(a).find(b) = m(a).end() Then
                 Return 0
             End If
-            Return m(a).followers(b)
+            Return m(a)(b)
         End Function
 
         Public Overloads Function Equals(ByVal other As model) As Boolean Implements IEquatable(Of model).Equals
@@ -128,11 +85,18 @@ Partial Public NotInheritable Class onebound(Of K)
         End Function
 
         Public Overloads Function ToString(ByVal lower_bound As Double) As String
-            Return json_serializer.to_str(m.stream().
-                                            map(m.second_mapper(Function(ByVal i As bind) As bind
-                                                                    Return i.filter(lower_bound)
-                                                                End Function)).
-                                            collect(Of unordered_map(Of K, bind))())
+            Return json_serializer.to_str(
+                        m.stream().
+                          map(m.second_mapper(Function(ByVal i As unordered_map(Of K, Double)) _
+                                                      As unordered_map(Of K, Double)
+                                                  Return i.stream().
+                                                           filter(i.second_filter(
+                                                               Function(ByVal v As Double) As Boolean
+                                                                   Return v >= lower_bound
+                                                               End Function)).
+                                                           collect(Of unordered_map(Of K, Double))()
+                                              End Function)).
+                          collect(Of unordered_map(Of K, unordered_map(Of K, Double)))())
         End Function
     End Class
 End Class
