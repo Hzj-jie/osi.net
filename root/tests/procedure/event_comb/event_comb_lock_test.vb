@@ -15,8 +15,8 @@ Public NotInheritable Class event_comb_lock_test
     Private Shared ReadOnly rc As Int64
 
     Shared Sub New()
-        pc = 8 * If(isreleasebuild(), 4, 1)
-        rc = 1024 * If(isreleasebuild(), 8, 1)
+        pc = 8 * If(isreleasebuild(), 2, 1)
+        rc = 1024 * If(isreleasebuild(), 2, 1)
     End Sub
 
     Public Sub New()
