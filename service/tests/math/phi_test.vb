@@ -38,7 +38,7 @@ Public NotInheritable Class phi_test
             x = rnd_int(0, max_int32)
             assertion.equal(stupid_phi(x), phi(x), x)
         Next
-        For i As Int32 = 0 To 128 - 1
+        For i As Int32 = 0 To 2 - 1
             Dim x As Int32 = 0
             x = rnd_int(min_int32, 0)
             assertion.equal(stupid_phi(x), phi(x), x)
