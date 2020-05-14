@@ -1,8 +1,11 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.root.utt
 
 Friend Class segment_tree_case2
@@ -71,7 +74,8 @@ Friend Class segment_tree_case2
         assert(Not segments Is Nothing)
         has_value = False
         value = 0
-        For j As Int32 = 0 To segments.size() - 1
+        assert(Not segments.empty())
+        For j As UInt32 = 0 To segments.size() - uint32_1
             If segments(j).second.first <= p AndAlso
                segments(j).second.second >= p Then
                 has_value = True
@@ -117,33 +121,34 @@ Friend Class segment_tree_case2
             its = t.find(r.first, r.second)
             If assertion.is_not_null(its) Then
                 Dim v1() As pair(Of Boolean, Int64) = Nothing
-                ReDim v1(r.second - r.first)
-                For j As Int32 = 0 To array_size(v1) - 1
+                ReDim v1(CInt(r.second - r.first))
+                For j As Int32 = 0 To array_size_i(v1) - 1
                     v1(j) = pair.emplace_of(False, int64_0)
                 Next
-                For j As Int32 = 0 To its.size() - 1
+                assert(Not its.empty())
+                For j As UInt32 = 0 To its.size() - uint32_1
                     If assertion.is_not_null(its(j)) Then
                         If Not its(j).first.is_end() AndAlso
                            (+its(j).first).has_value() Then
                             For k As Int64 = max(its(j).second.first, r.first) To min(its(j).second.second, r.second)
-                                v1(k - r.first).first = True
-                                v1(k - r.first).second = (+its(j).first).value()
+                                v1(CInt(k - r.first)).first = True
+                                v1(CInt(k - r.first)).second = (+its(j).first).value()
                             Next
                         End If
                     End If
                 Next
 
                 Dim v2() As pair(Of Boolean, Int64) = Nothing
-                ReDim v2(r.second - r.first)
-                For j As Int32 = 0 To array_size(v2) - 1
+                ReDim v2(CInt(r.second - r.first))
+                For j As Int32 = 0 To array_size_i(v2) - 1
                     v2(j) = pair.emplace_of(False, int64_0)
                 Next
                 For j As Int64 = r.first To r.second
                     Dim hv As Boolean = False
                     Dim v As Int64 = 0
                     stupid_find(segments, j, hv, v)
-                    v2(j - r.first).first = hv
-                    v2(j - r.first).second = v
+                    v2(CInt(j - r.first)).first = hv
+                    v2(CInt(j - r.first)).second = v
                 Next
 
                 assertion.array_equal(v1, v2)
@@ -159,7 +164,8 @@ Friend Class segment_tree_case2
         s = prepare_segments(min, max)
         Dim t As segment_tree(Of Int64) = Nothing
         t = New segment_tree(Of Int64)(min, max)
-        For i As Int32 = 0 To s.size() - 1
+        assert(Not s.empty())
+        For i As UInt32 = 0 To s.size() - uint32_1
             assertion.is_true(t.emplace(s(i).second.first, s(i).second.second, s(i).first))
         Next
         Return Not verify OrElse
@@ -168,18 +174,18 @@ Friend Class segment_tree_case2
     End Function
 End Class
 
-Public Class segment_tree_test2
+Public NotInheritable Class segment_tree_test2
     Inherits repeat_case_wrapper
 
     Public Sub New()
-        MyBase.New(New segment_tree_case2(True), 32 * If(isreleasebuild(), 8, 1))
+        MyBase.New(New segment_tree_case2(True), 32 * If(isreleasebuild(), 2, 1))
     End Sub
 End Class
 
-Public Class segment_tree_perf2
+Public NotInheritable Class segment_tree_perf2
     Inherits performance_case_wrapper
 
     Public Sub New()
-        MyBase.New(repeat(New segment_tree_case2(False), 32 * If(isreleasebuild(), 8, 1)))
+        MyBase.New(repeat(New segment_tree_case2(False), 32 * If(isreleasebuild(), 2, 1)))
     End Sub
 End Class

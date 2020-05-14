@@ -1,11 +1,14 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.root.utt
 
-Friend Class segment_tree_case
+Friend NotInheritable Class segment_tree_case
     Inherits [case]
 
     Private ReadOnly verify As Boolean
@@ -38,10 +41,11 @@ Friend Class segment_tree_case
             it += 1
         End While
 
+        assert(Not v.empty())
         Dim v2 As vector(Of pair(Of Int64, pair(Of Int64, Int64))) = Nothing
         v2 = New vector(Of pair(Of Int64, pair(Of Int64, Int64)))()
-        For i As Int32 = 0 To v.size() - 1 Step 2
-            v2.emplace_back(pair.emplace_of(rnd_int64(), pair.emplace_of(v(i), v(i + 1))))
+        For i As UInt32 = 0 To v.size() - uint32_1 Step 2
+            v2.emplace_back(pair.emplace_of(rnd_int64(), pair.emplace_of(v(i), v(i + uint32_1))))
         Next
         Return v2
     End Function
@@ -49,9 +53,10 @@ Friend Class segment_tree_case
     Public Overrides Function run() As Boolean
         Dim v As vector(Of pair(Of Int64, pair(Of Int64, Int64))) = Nothing
         v = prepare_segments()
+        assert(Not v.empty())
         Dim t As segment_tree(Of Int64) = Nothing
         t = New segment_tree(Of Int64)(v.front().second.first, v.back().second.second)
-        For i As Int32 = 0 To v.size() - 1
+        For i As UInt32 = 0 To v.size() - uint32_1
             If Not verify OrElse
                (v(i).second.second - v(i).second.first <= 1) OrElse
                rnd_bool() Then
@@ -92,11 +97,11 @@ Friend Class segment_tree_case
                         assertion.equal((+it).value(), v(vi).first)
                     Else
                         assert(vi < v.size() - 1)
-                        assert(i <= v(vi + 1).second.first)
-                        If i < v(vi + 1).second.first Then
+                        assert(i <= v(vi + uint32_1).second.first)
+                        If i < v(vi + uint32_1).second.first Then
                             assertion.is_false((+it).has_value())
                         Else
-                            vi += 1
+                            vi += uint32_1
                             i -= 1
                         End If
                     End If
@@ -119,18 +124,18 @@ Friend Class segment_tree_case
     End Function
 End Class
 
-Public Class segment_tree_test
+Public NotInheritable Class segment_tree_test
     Inherits repeat_case_wrapper
 
     Public Sub New()
-        MyBase.New(New segment_tree_case(True), 32 * If(isreleasebuild(), 8, 1))
+        MyBase.New(New segment_tree_case(True), 32 * If(isreleasebuild(), 2, 1))
     End Sub
 End Class
 
-Public Class segment_tree_perf_test
+Public NotInheritable Class segment_tree_perf_test
     Inherits performance_case_wrapper
 
     Public Sub New()
-        MyBase.New(repeat(New segment_tree_case(False), 32 * If(isreleasebuild(), 8, 1)))
+        MyBase.New(repeat(New segment_tree_case(False), 32 * If(isreleasebuild(), 2, 1)))
     End Sub
 End Class
