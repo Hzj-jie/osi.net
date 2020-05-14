@@ -1,18 +1,21 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root
 Imports osi.root.connector
 Imports osi.root.procedure
-Imports osi.root.utils
 Imports osi.root.utt
 
-Public Class event_comb_cancel_test
+Public NotInheritable Class event_comb_cancel_test
     Inherits multi_procedure_case_wrapper
 
     Public Sub New()
-        MyBase.New(repeat(New event_comb_cancel_case, 1024 * 4), Environment.ProcessorCount() << 4)
+        MyBase.New(repeat(New event_comb_cancel_case, 1024), Environment.ProcessorCount() << 2)
     End Sub
 
-    Private Class event_comb_cancel_case
+    Private NotInheritable Class event_comb_cancel_case
         Inherits utt.event_comb_case
 
         Private Shared Function dummy_event_comb() As event_comb
