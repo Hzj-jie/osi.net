@@ -12,6 +12,8 @@ Partial Public NotInheritable Class boolaffinity(Of K)
         Implements IEquatable(Of model)
 
         Public Structure affinity
+            Implements IEquatable(Of affinity)
+
             Public ReadOnly true_affinity As Double
             Public ReadOnly false_affinity As Double
 
@@ -26,12 +28,26 @@ Partial Public NotInheritable Class boolaffinity(Of K)
                 Me.true_affinity = true_affinity
                 Me.false_affinity = false_affinity
             End Sub
+
+            Public Overloads Function Equals(ByVal other As affinity) As Boolean _
+                    Implements IEquatable(Of affinity).Equals
+                Return true_affinity = other.true_affinity AndAlso false_affinity = other.false_affinity
+            End Function
+
+            Public Overrides Function Equals(ByVal obj As Object) As Boolean
+                Return Equals(cast(Of affinity)(obj, False))
+            End Function
         End Structure
 
         Private ReadOnly m As unordered_map(Of K, affinity)
 
         Public Sub New()
-            m = New unordered_map(Of K, affinity)()
+            Me.New(New unordered_map(Of K, affinity)())
+        End Sub
+
+        Public Sub New(ByVal m As unordered_map(Of K, affinity))
+            assert(Not m Is Nothing)
+            Me.m = m
         End Sub
 
         Public Function dump(ByVal o As MemoryStream) As Boolean
@@ -64,16 +80,18 @@ Partial Public NotInheritable Class boolaffinity(Of K)
             m(k) = New affinity(true_affinity, false_affinity)
         End Sub
 
-        Public Function has(ByVal a As K) As Boolean
-            Return m.find(a) <> m.end()
+        Public Function has(ByVal k As K) As Boolean
+            Return m.find(k) <> m.end()
         End Function
 
-        Public Function [get](ByVal a As K) As affinity
-            If m.find(a) = m.end() Then
-                Return New affinity()
-            End If
-            Return m(a)
-        End Function
+        Default Public ReadOnly Property [get](ByVal a As K) As [optional](Of affinity)
+            Get
+                If m.find(a) = m.end() Then
+                    Return [optional].empty(Of affinity)()
+                End If
+                Return [optional].of(m(a))
+            End Get
+        End Property
 
         Public Overloads Function Equals(ByVal other As model) As Boolean Implements IEquatable(Of model).Equals
             Dim cmp As Int32 = 0

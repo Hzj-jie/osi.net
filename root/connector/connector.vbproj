@@ -103,6 +103,7 @@
     <Compile Include="functor\stream\stream.collector.vb" />
     <Compile Include="functor\stream\stream.container.vb" />
     <Compile Include="functor\stream\stream.vb" />
+    <Compile Include="functor\stream\streams.vb" />
     <Compile Include="functor\string_serializer\json_serializer.container.vb" />
     <Compile Include="functor\string_serializer\json_serializer.vb" />
     <Compile Include="functor\registry\binary_operator_registry.vb" />

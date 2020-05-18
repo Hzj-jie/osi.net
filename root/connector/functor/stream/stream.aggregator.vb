@@ -12,11 +12,11 @@ Partial Public Class stream(Of T)
                                                          End Function
 
         Public Shared ReadOnly max As Func(Of T, T, T) = Function(ByVal l As T, ByVal r As T) As T
-                                                             Return max(l, r)
+                                                             Return _minmax.max(l, r)
                                                          End Function
 
         Public Shared ReadOnly min As Func(Of T, T, T) = Function(ByVal l As T, ByVal r As T) As T
-                                                             Return min(l, r)
+                                                             Return _minmax.min(l, r)
                                                          End Function
 
         Public Shared Function average() As Func(Of Double, Double, Double)

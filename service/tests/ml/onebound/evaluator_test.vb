@@ -17,7 +17,6 @@ Namespace onebound
             Dim e As evaluator = Nothing
             e = New evaluator(New trainer().
                                    accumulate("a"c, "n"c).
-                                   accumulate("n"c).
                                    accumulate("a"c, "p"c).
                                    accumulate("p"c, "p"c).
                                    accumulate("p"c, "l"c).
@@ -32,28 +31,22 @@ Namespace onebound
             Dim e As evaluator = Nothing
             e = New evaluator(New trainer().
                                    accumulate("a"c, "n"c).
-                                   accumulate("n"c).
                                    accumulate("a"c, "p"c).
                                    accumulate("p"c, "p"c).
                                    accumulate("p"c, "l"c).
                                    accumulate("l"c, "e"c).
-                                   accumulate("e"c).
                                    accumulate("a"c, "p"c).
                                    accumulate("p"c, "p"c).
                                    accumulate("p"c, "l"c).
                                    accumulate("l"c, "e"c).
-                                   accumulate("e"c).
                                    accumulate("a"c, "n"c).
                                    accumulate("n"c, "d"c).
-                                   accumulate("d"c).
                                    accumulate("a"c, "n"c).
-                                   accumulate("n"c).
                                    accumulate("o"c, "r"c).
                                    accumulate("r"c, "a"c).
                                    accumulate("a"c, "n"c).
                                    accumulate("n"c, "g"c).
                                    accumulate("g"c, "e"c).
-                                   accumulate("e"c).
                                    dump())
             assertion.equal(e(vector.of("anappleandanorange".c_str())),
                             vector.of(vector.of("an".c_str()),

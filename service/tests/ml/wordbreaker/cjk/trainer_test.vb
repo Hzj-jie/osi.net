@@ -5,7 +5,7 @@ Option Strict On
 
 Imports osi.root.utt.attributes
 Imports osi.service.ml.onebound(Of Char)
-Imports trainer = osi.service.ml.wordbreaker_cjk.trainer
+Imports trainer = osi.service.ml.wordbreaker.cjk.trainer
 
 Namespace wordbreaker.cjk
     <test>

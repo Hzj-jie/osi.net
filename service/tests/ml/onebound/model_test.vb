@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.IO
 Imports osi.root.connector
+Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.ml.onebound(Of String)
@@ -21,13 +22,9 @@ Namespace onebound
                 For i As Int32 = 0 To 100
                     Dim a As String = Nothing
                     a = guid_str()
-                    If rnd_bool() Then
-                        Dim b As String = Nothing
-                        b = guid_str()
-                        t.accumulate(a, b, thread_random.of_double.larger_than_0_and_less_or_equal_than_1())
-                    Else
-                        t.accumulate(a, thread_random.of_double.larger_than_0_and_less_or_equal_than_1())
-                    End If
+                    Dim b As String = Nothing
+                    b = guid_str()
+                    t.accumulate(a, b, thread_random.of_double.larger_than_0_and_less_or_equal_than_1())
                 Next
                 Dim m As model = Nothing
                 m = t.dump()

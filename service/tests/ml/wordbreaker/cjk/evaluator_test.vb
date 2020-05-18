@@ -6,7 +6,7 @@ Option Strict On
 Imports System.IO
 Imports osi.root.utt.attributes
 Imports osi.service.ml.onebound(Of Char)
-Imports evaluator = osi.service.ml.wordbreaker_cjk.evaluator
+Imports evaluator = osi.service.ml.wordbreaker.cjk.evaluator
 
 Namespace wordbreaker.cjk
     <test>

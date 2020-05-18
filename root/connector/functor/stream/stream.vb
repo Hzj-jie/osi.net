@@ -39,11 +39,11 @@ Partial Public Class stream(Of T)
         Return c
     End Function
 
-    Public Function collect(Of CT)(ByVal f As Action(Of CT, T)) As CT
+    Public Function collect_by(Of CT)(ByVal f As Action(Of CT, T)) As CT
         Return collect(f, alloc(Of CT)())
     End Function
 
-    Public Function collect(Of CT)(ByVal c As CT) As CT
+    Public Function collect_to(Of CT)(ByVal c As CT) As CT
         Return collect(Sub(ByVal i As CT, ByVal v As T)
                            container_operator.insert(i, v)
                        End Sub,
@@ -51,7 +51,7 @@ Partial Public Class stream(Of T)
     End Function
 
     Public Function collect(Of CT)() As CT
-        Return collect(alloc(Of CT)())
+        Return collect_to(alloc(Of CT)())
     End Function
 
     Public Function skip(ByVal count As UInt32) As stream(Of T)
@@ -77,5 +77,30 @@ Partial Public Class stream(Of T)
 
     Public Function filter(ByVal f As Func(Of T, Boolean)) As stream(Of T)
         Return New stream(Of T)(container_operator.enumerators.filter(e, f))
+    End Function
+
+    Public Function to_array() As T()
+        Dim r() As T = Nothing
+        ReDim r(1)
+        Dim i As Int32 = 0
+        While Not e.end()
+            If i = array_size_i(r) Then
+                ReDim Preserve r(i << 1)
+            End If
+            r(i) = e.current()
+            i += 1
+            e.next()
+        End While
+        ReDim Preserve r(i - 1)
+        Return r
+    End Function
+
+    Public Function flat_map(Of R)(ByVal f As Func(Of T, stream(Of R))) As stream(Of R)
+        Return New stream(Of R)(container_operator.enumerators.concat(
+                                    map(f).
+                                    map(Function(ByVal s As stream(Of R)) As container_operator(Of R).enumerator
+                                            Return s.e
+                                        End Function).
+                                    to_array()))
     End Function
 End Class
