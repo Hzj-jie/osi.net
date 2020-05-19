@@ -67,13 +67,6 @@ Partial Public NotInheritable Class onebound(Of K)
             Return m(a)(b)
         End Function
 
-        Public Function followers(ByVal a As K) As unordered_map(Of K, Double)
-            If m.find(a) = m.end() Then
-                Return New unordered_map(Of K, Double)()
-            End If
-            Return m(a)
-        End Function
-
         Public Overloads Function Equals(ByVal other As model) As Boolean Implements IEquatable(Of model).Equals
             Dim cmp As Int32 = 0
             cmp = object_compare(Me, other)
@@ -92,6 +85,9 @@ Partial Public NotInheritable Class onebound(Of K)
         End Function
 
         Public Function filter(ByVal lower_bound As Double) As model
+            If lower_bound <= 0 Then
+                Return Me
+            End If
             Return New model(m.stream().
                                map(m.second_mapper(Function(ByVal i As unordered_map(Of K, Double)) _
                                                       As unordered_map(Of K, Double)
@@ -105,16 +101,17 @@ Partial Public NotInheritable Class onebound(Of K)
                                collect(Of unordered_map(Of K, unordered_map(Of K, Double)))())
         End Function
 
-        Public Function flat_map() As stream(Of const_pair(Of const_pair(Of K, K), Double))
+        Public Function flat_map() As stream(Of first_const_pair(Of const_pair(Of K, K), Double))
             Return m.stream().
                      flat_map(m.mapper(Function(ByVal k As K,
                                                 ByVal v As unordered_map(Of K, Double)) _
-                                               As stream(Of const_pair(Of const_pair(Of K, K), Double))
+                                               As stream(Of first_const_pair(Of const_pair(Of K, K), Double))
                                            Return v.stream().
                                                     map(v.mapper(Function(ByVal k2 As K,
                                                                           ByVal d As Double) _
-                                                                         As const_pair(Of const_pair(Of K, K), Double)
-                                                                     Return const_pair.emplace_of(
+                                                                         As first_const_pair(Of const_pair(Of K, K),
+                                                                                                Double)
+                                                                     Return first_const_pair.emplace_of(
                                                                                 const_pair.emplace_of(k, k2), d)
                                                                  End Function))
                                        End Function))

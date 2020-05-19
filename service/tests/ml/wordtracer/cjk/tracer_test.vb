@@ -17,18 +17,37 @@ Namespace wordtracer.cjk
         Private Shared Sub from_training_file()
             Dim m As model = Nothing
             m = tracer.train(IO.File.ReadLines("cjk.training.txt"))
-            m.dump("cjk.words.bin")
+            m.dump("cjk.words.2.bin")
+        End Sub
+
+        <test>
+        <command_line_specified>
+        Private Shared Sub from_small_training_file()
+            Dim m As model = Nothing
+            m = tracer.train(IO.File.ReadLines("cjk.training.small.txt"))
+            m.dump("cjk.words.2.small.bin")
         End Sub
 
         <test>
         <command_line_specified>
         Private Shared Sub dump()
-            Console.WriteLine(model.load("cjk.words.bin").
-                                    filter(0.1).
-                                    flat_map().
-                                    map(Function(x) const_pair.emplace_of(strcat(x.first.first, " ", x.first.second),
-                                                                          x.second)).
-                                    collect(Of vector(Of const_pair(Of String, Double)))())
+            model.load("cjk.words.2.bin").
+                  filter(0.1).
+                  flat_map().
+                  foreach(Sub(ByVal x As first_const_pair(Of const_pair(Of Char, Char), Double))
+                              Console.WriteLine(strcat(x.first.first, " ", x.first.second, ", ", x.second))
+                          End Sub)
+        End Sub
+
+        <test>
+        <command_line_specified>
+        Private Shared Sub dump_small()
+            model.load("cjk.words.2.small.bin").
+                  filter(0.1).
+                  flat_map().
+                  foreach(Sub(ByVal x As first_const_pair(Of const_pair(Of Char, Char), Double))
+                              Console.WriteLine(strcat(x.first.first, " ", x.first.second, ", ", x.second))
+                          End Sub)
         End Sub
 
         Private Sub New()

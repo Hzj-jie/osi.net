@@ -51,7 +51,6 @@
     <Compile Include="boolaffinity\evaluator.vb" />
     <Compile Include="boolaffinity\model.vb" />
     <Compile Include="boolaffinity\trainer.vb" />
-    <Compile Include="multibound\model.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -72,6 +71,7 @@
     <Compile Include="onebound\trainer.vb" />
     <Compile Include="wordbreaker\cjk\evaluator.vb" />
     <Compile Include="wordbreaker\cjk\trainer.vb" />
+    <Compile Include="wordtracer\cjk\oneplus.vb" />
     <Compile Include="wordtracer\cjk\tracer.vb" />
   </ItemGroup>
   <ItemGroup>
