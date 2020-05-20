@@ -39,13 +39,13 @@ Partial Public NotInheritable Class boolaffinity(Of K)
             End Function
         End Structure
 
-        Private ReadOnly m As unordered_map(Of K, affinity)
+        Private ReadOnly m As map(Of K, affinity)
 
         Public Sub New()
-            Me.New(New unordered_map(Of K, affinity)())
+            Me.New(New map(Of K, affinity)())
         End Sub
 
-        Public Sub New(ByVal m As unordered_map(Of K, affinity))
+        Public Sub New(ByVal m As map(Of K, affinity))
             assert(Not m Is Nothing)
             Me.m = m
         End Sub
@@ -61,8 +61,8 @@ Partial Public NotInheritable Class boolaffinity(Of K)
         End Function
 
         Public Function load(ByVal i As MemoryStream) As Boolean
-            Dim r As unordered_map(Of K, affinity) = Nothing
-            Return bytes_serializer.consume_from(i, r) AndAlso unordered_map.swap(r, m)
+            Dim r As map(Of K, affinity) = Nothing
+            Return bytes_serializer.consume_from(i, r) AndAlso map.swap(r, m)
         End Function
 
         Public Function load(ByVal i As String) As Boolean

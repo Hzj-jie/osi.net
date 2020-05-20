@@ -10,8 +10,8 @@ Imports osi.root.formation
 Partial Public NotInheritable Class onebound(Of K)
     Public NotInheritable Class trainer
         Public NotInheritable Class bind
-            Public ReadOnly successors As unordered_map(Of K, Double)
-            Public ReadOnly predecessors As unordered_map(Of K, Double)
+            Public ReadOnly successors As map(Of K, Double)
+            Public ReadOnly predecessors As map(Of K, Double)
             Private c As config
             Private successor_sum As Double
             Private successor_max As Double
@@ -19,18 +19,18 @@ Partial Public NotInheritable Class onebound(Of K)
             Private predecessor_max As Double
 
             Public Sub New()
-                successors = New unordered_map(Of K, Double)()
-                predecessors = New unordered_map(Of K, Double)()
+                successors = New map(Of K, Double)()
+                predecessors = New map(Of K, Double)()
             End Sub
 
-            Private Shared Function sum(ByVal m As unordered_map(Of K, Double)) As Double
+            Private Shared Function sum(ByVal m As map(Of K, Double)) As Double
                 assert(Not m Is Nothing)
                 Return m.stream().
                          map(m.second_selector).
                          aggregate(stream(Of Double).aggregators.sum)
             End Function
 
-            Private Shared Function max(ByVal m As unordered_map(Of K, Double)) As Double
+            Private Shared Function max(ByVal m As map(Of K, Double)) As Double
                 assert(Not m Is Nothing)
                 Return m.stream().
                          map(m.second_selector).
@@ -54,11 +54,11 @@ Partial Public NotInheritable Class onebound(Of K)
                 End If
             End Sub
 
-            Private Function ratio(ByVal m As unordered_map(Of K, Double),
+            Private Function ratio(ByVal m As map(Of K, Double),
                                    ByVal i As K,
                                    ByVal sum As Double,
                                    ByVal max As Double) As Double
-                Dim it As unordered_map(Of K, Double).iterator = Nothing
+                Dim it As map(Of K, Double).iterator = Nothing
                 it = m.find(i)
                 assert(it <> m.end())
                 assert((+it).second <= sum)
@@ -105,7 +105,7 @@ Partial Public NotInheritable Class onebound(Of K)
             End Sub
         End Class
 
-        Private ReadOnly m As unordered_map(Of K, bind)
+        Private ReadOnly m As map(Of K, bind)
         Private ReadOnly c As config
 
         Public Sub New()
@@ -115,7 +115,7 @@ Partial Public NotInheritable Class onebound(Of K)
         Public Sub New(ByVal c As config)
             assert(Not c Is Nothing)
             Me.c = c
-            Me.m = New unordered_map(Of K, bind)()
+            Me.m = New map(Of K, bind)()
         End Sub
 
         Public Function accumulate(ByVal a As K, ByVal b As K, ByVal v As Double) As trainer
@@ -133,7 +133,7 @@ Partial Public NotInheritable Class onebound(Of K)
 
         Private Function normalize(ByVal k As K,
                                    ByVal b As bind,
-                                   ByVal m As unordered_map(Of K, bind)) As unordered_map(Of K, Double)
+                                   ByVal m As map(Of K, bind)) As map(Of K, Double)
             assert(Not b Is Nothing)
             Return b.successors.
                      stream().
@@ -144,20 +144,20 @@ Partial Public NotInheritable Class onebound(Of K)
                                             b.successor_ratio(successor) *
                                             If(c.bidirectional, m(successor).predecessor_ratio(k), 1.0))
                              End Function)).
-                     collect(Of unordered_map(Of K, Double))()
+                     collect(Of map(Of K, Double))()
         End Function
 
-        Private Function normalize() As unordered_map(Of K, unordered_map(Of K, Double))
+        Private Function normalize() As map(Of K, map(Of K, Double))
             m.stream().
               foreach(m.on_second(Sub(ByVal v As bind)
                                       v.sum(c)
                                   End Sub))
             Return m.stream().
                      map(m.mapper(Function(ByVal k As K, ByVal b As bind) _
-                                          As first_const_pair(Of K, unordered_map(Of K, Double))
+                                          As first_const_pair(Of K, map(Of K, Double))
                                       Return first_const_pair.emplace_of(k, normalize(k, b, m))
                                   End Function)).
-                     collect(Of unordered_map(Of K, unordered_map(Of K, Double)))()
+                     collect(Of map(Of K, map(Of K, Double)))()
         End Function
 
         Public Function dump() As model

@@ -11,11 +11,11 @@ Imports osi.root.formation
 Partial Public NotInheritable Class wordtracer
     Partial Public NotInheritable Class cjk
         Public NotInheritable Class oneplus
-            Private ReadOnly m As unordered_map(Of String, Double)
+            Private ReadOnly m As map(Of String, Double)
             Private ReadOnly l As UInt32
             Private ReadOnly t As onebound(Of String).trainer
 
-            Public Sub New(ByVal m As unordered_map(Of String, Double))
+            Public Sub New(ByVal m As map(Of String, Double))
                 assert(Not m Is Nothing)
                 assert(Not m.empty())
                 Me.m = m
@@ -29,7 +29,7 @@ Partial Public NotInheritable Class wordtracer
                     Return
                 End If
                 For i As UInt32 = start To [end] - l - uint32_1
-                    Dim it As unordered_map(Of String, Double).iterator = Nothing
+                    Dim it As map(Of String, Double).iterator = Nothing
                     it = m.find(s.strmid(i, l))
                     If it = m.end() Then
                         Continue For

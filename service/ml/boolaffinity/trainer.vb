@@ -14,10 +14,10 @@ Partial Public NotInheritable Class boolaffinity(Of K)
             Public neg As UInt32
         End Class
 
-        Private ReadOnly m As unordered_map(Of K, trend)
+        Private ReadOnly m As map(Of K, trend)
 
         Public Sub New()
-            m = New unordered_map(Of K, trend)()
+            m = New map(Of K, trend)()
         End Sub
 
         Public Function accumulate(ByVal result As Boolean,
@@ -42,7 +42,7 @@ Partial Public NotInheritable Class boolaffinity(Of K)
             Return New model(m.stream().
                                map(m.second_mapper(Function(ByVal t As trend) As model.affinity
                                                    End Function)).
-                               collect(Of unordered_map(Of K, model.affinity))())
+                               collect(Of map(Of K, model.affinity))())
         End Function
     End Class
 End Class

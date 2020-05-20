@@ -211,6 +211,10 @@ Public NotInheritable Class map
         Return map(Of K, V).move(i)
     End Function
 
+    Public Shared Function swap(Of K, V)(ByVal i As map(Of K, V), ByVal j As map(Of K, V)) As Boolean
+        Return map(Of K, V).swap(i, j)
+    End Function
+
     Private Sub New()
     End Sub
 End Class
