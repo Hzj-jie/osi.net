@@ -31,7 +31,7 @@ Partial Public NotInheritable Class wordtracer
 
             Public Shared Function train(ByVal ss As IEnumerable(Of String)) As onebound(Of Char).model
                 Dim t As onebound(Of Char).trainer = Nothing
-                t = New onebound(Of Char).trainer(New onebound(Of Char).trainer.config() With {.bidirectional = False})
+                t = New onebound(Of Char).trainer()
                 For Each s As String In ss
                     If s.null_or_whitespace() Then
                         Continue For

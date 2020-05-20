@@ -66,10 +66,10 @@ Partial Public NotInheritable Class onebound(Of K)
                 If c.compare = config.comparison.with_average Then
                     Return (+it).second * m.size() / sum
                 End If
-                If c.compare = config.comparison.with_exclusive_average Then
+                If c.compare = config.comparison.with_max Then
                     Return (+it).second / max
                 End If
-                If c.compare = config.comparison.with_max Then
+                If c.compare = config.comparison.with_exclusive_average Then
                     If m.size() = uint32_1 Then
                         Return Double.MaxValue
                     End If
