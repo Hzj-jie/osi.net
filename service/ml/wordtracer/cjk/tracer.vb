@@ -44,24 +44,24 @@ Partial Public NotInheritable Class wordtracer
                 Return t.dump()
             End Function
 
-            Public Shared Function flat_map(ByVal i As onebound(Of Char).model) As map(Of String, Double)
+            Public Shared Function flat_map(ByVal i As onebound(Of Char).model) As unordered_map(Of String, Double)
                 assert(Not i Is Nothing)
                 Return i.flat_map().
                          map(Function(ByVal j As first_const_pair(Of const_pair(Of Char, Char), Double)) _
                                      As first_const_pair(Of String, Double)
                                  Return first_const_pair.emplace_of(j.first.first + j.first.second, j.second)
                              End Function).
-                         collect(Of map(Of String, Double))()
+                         collect(Of unordered_map(Of String, Double))()
             End Function
 
-            Public Shared Function flat_map(ByVal i As onebound(Of String).model) As map(Of String, Double)
+            Public Shared Function flat_map(ByVal i As onebound(Of String).model) As unordered_map(Of String, Double)
                 assert(Not i Is Nothing)
                 Return i.flat_map().
                          map(Function(ByVal j As first_const_pair(Of const_pair(Of String, String), Double)) _
                                      As first_const_pair(Of String, Double)
                                  Return first_const_pair.emplace_of(j.first.first + j.first.second, j.second)
                              End Function).
-                         collect(Of map(Of String, Double))()
+                         collect(Of unordered_map(Of String, Double))()
             End Function
 
             Private Sub New()

@@ -11,10 +11,10 @@ Partial Public NotInheritable Class onebound(Of K)
     Public NotInheritable Class model
         Implements IEquatable(Of model)
 
-        Private ReadOnly m As map(Of K, map(Of K, Double))
+        Private ReadOnly m As unordered_map(Of K, unordered_map(Of K, Double))
 
         <copy_constructor>
-        Public Sub New(ByVal m As map(Of K, map(Of K, Double)))
+        Public Sub New(ByVal m As unordered_map(Of K, unordered_map(Of K, Double)))
             assert(Not m Is Nothing)
             Me.m = m
         End Sub
@@ -30,7 +30,7 @@ Partial Public NotInheritable Class onebound(Of K)
         End Function
 
         Public Shared Function load(ByVal i As MemoryStream, ByRef o As model) As Boolean
-            Dim r As map(Of K, map(Of K, Double)) = Nothing
+            Dim r As unordered_map(Of K, unordered_map(Of K, Double)) = Nothing
             If bytes_serializer.consume_from(i, r) Then
                 o = New model(r)
                 Return True
@@ -89,22 +89,22 @@ Partial Public NotInheritable Class onebound(Of K)
                 Return Me
             End If
             Return New model(m.stream().
-                               map(m.second_mapper(Function(ByVal i As map(Of K, Double)) _
-                                                      As map(Of K, Double)
+                               map(m.second_mapper(Function(ByVal i As unordered_map(Of K, Double)) _
+                                                           As unordered_map(Of K, Double)
                                                        Return i.stream().
-                                                           filter(i.second_filter(
-                                                               Function(ByVal v As Double) As Boolean
-                                                                   Return v >= lower_bound
-                                                               End Function)).
-                                                           collect(Of map(Of K, Double))()
+                                                                filter(i.second_filter(
+                                                                    Function(ByVal v As Double) As Boolean
+                                                                        Return v >= lower_bound
+                                                                    End Function)).
+                                                                collect(Of unordered_map(Of K, Double))()
                                                    End Function)).
-                               collect(Of map(Of K, map(Of K, Double)))())
+                               collect(Of unordered_map(Of K, unordered_map(Of K, Double)))())
         End Function
 
         Public Function flat_map() As stream(Of first_const_pair(Of const_pair(Of K, K), Double))
             Return m.stream().
                      flat_map(m.mapper(Function(ByVal k As K,
-                                                ByVal v As map(Of K, Double)) _
+                                                ByVal v As unordered_map(Of K, Double)) _
                                                As stream(Of first_const_pair(Of const_pair(Of K, K), Double))
                                            Return v.stream().
                                                     map(v.mapper(Function(ByVal k2 As K,
@@ -125,16 +125,16 @@ Partial Public NotInheritable Class onebound(Of K)
             assert(Not f Is Nothing)
             Return New onebound(Of R).model(m.stream().
                                               map(m.mapper(Function(ByVal k As K,
-                                                                    ByVal v As map(Of K, Double)) _
+                                                                    ByVal v As unordered_map(Of K, Double)) _
                                                                    As first_const_pair(Of R,
-                                                                                          map(Of R, Double))
+                                                                                          unordered_map(Of R, Double))
                                                                Return first_const_pair.emplace_of(
                                                                           f(k),
                                                                           v.stream().
                                                                             map(v.first_mapper(f)).
-                                                                            collect(Of map(Of R, Double))())
+                                                                            collect(Of unordered_map(Of R, Double))())
                                                            End Function)).
-                                              collect(Of map(Of R, map(Of R, Double)))())
+                                              collect(Of unordered_map(Of R, unordered_map(Of R, Double)))())
         End Function
     End Class
 End Class
