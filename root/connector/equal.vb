@@ -134,7 +134,7 @@ Public Module _equal
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function runtime_compare_equal(ByVal this As Object, ByVal that As Object, ByRef o As Boolean) As Boolean
         Dim cmp As Int32 = 0
-        If not_null_runtime_compare(this, that, cmp) Then
+        If non_null_runtime_compare(this, that, cmp) Then
             o = (cmp = 0)
             Return True
         End If
@@ -160,11 +160,8 @@ Public Module _equal
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function do_equal(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
+    Private Function do_non_null_equal(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
         Dim o As Boolean = False
-        If object_equal(this, that, o) Then
-            Return o
-        End If
         If equaler(Of T, T2).defined() Then
             Return equaler.equal(this, that)
         End If
@@ -181,13 +178,45 @@ Public Module _equal
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Function do_equal(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
+        Dim o As Boolean = False
+        If object_equal(this, that, o) Then
+            Return o
+        End If
+        Return do_non_null_equal(this, that)
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Sub equal_error(Of T, T2)(ByVal ex As Exception)
+        raise_error(error_type.exclamation,
+                    "Failed to check the equality of ", GetType(T), " with ", GetType(T2), ", ex ", ex)
+    End Sub
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function non_null_equal(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Boolean) As Boolean
+        Try
+            o = do_non_null_equal(this, that)
+            Return True
+        Catch ex As Exception
+            equal_error(Of T, T2)(ex)
+            Return False
+        End Try
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function non_null_equal(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
+        Dim o As Boolean = False
+        assert(non_null_equal(this, that, o))
+        Return o
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function equal(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Boolean) As Boolean
         Try
             o = do_equal(this, that)
             Return True
         Catch ex As Exception
-            raise_error(error_type.exclamation,
-                        "Failed to check the equality of ", GetType(T), " with ", GetType(T2), ", ex ", ex)
+            equal_error(Of T, T2)(ex)
             Return False
         End Try
     End Function

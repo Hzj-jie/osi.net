@@ -3,6 +3,7 @@
 ##DEFAULT TARGET create_resolver()
 ##DEFAULT IMPL_SOURCE ##TYPE_NAME##_impl.vbp
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
 ' Auto-infer is error-prone. E.g.
@@ -36,39 +37,48 @@ Public Class ##TYPE_NAME##(Of T As Class, PROTECTOR)
     End Class
 
 ##INCLUDE ##IMPL_SOURCE##
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Sub register(ByVal i As T)
         ##TARGET##.register(i)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Sub register(ByVal i As Func(Of T))
         ##TARGET##.register(i)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Sub assert_first_register(ByVal i As T)
         ##TARGET##.assert_first_register(i)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Sub assert_first_register(ByVal i As Func(Of T))
         ##TARGET##.assert_first_register(i)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Sub unregister()
         ##TARGET##.unregister()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared sub assert_unregister()
         ##TARGET##.assert_unregister()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function resolve(ByRef o As T) As Boolean
         Return ##TARGET##.resolve(o)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function resolve(Of RT As T)(ByRef r As RT) As Boolean
         Dim o As T = Nothing
         Return resolve(o) AndAlso direct_cast(o, r)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function registered() As Boolean
         Return ##TARGET##.registered()
     End Function
@@ -79,11 +89,13 @@ Public Class ##TYPE_NAME##(Of T As Class, PROTECTOR)
     ##DEFINE RETURN_TYPE T
     ##INCLUDE resolver_wrapper_resolve.vbp
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function scoped_register(ByVal i As T) As IDisposable
         assert_first_register(i)
         Return unregister_delegate.instance
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function scoped_register(ByVal i As Func(Of T)) As IDisposable
         assert_first_register(i)
         Return unregister_delegate.instance

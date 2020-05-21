@@ -9,6 +9,7 @@ Option Strict On
 
 
 
+IMports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 
@@ -25,10 +26,12 @@ Public NotInheritable Class resolver(Of T As Class)
     End Sub
 #End If
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function registered() As Boolean
         Return Not cached Is Nothing OrElse Not f Is Nothing
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub register(ByVal f As Func(Of T),
                          ByVal cached As T,
                          ByVal when_registered As Boolean,
@@ -48,32 +51,39 @@ Public NotInheritable Class resolver(Of T As Class)
 #End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub register(ByVal i As T)
         register(Nothing, i, True, True)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub register(ByVal i As Func(Of T))
         register(i, Nothing, True, True)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub unregister()
         register(Nothing, Nothing, True, True)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub assert_first_register(ByVal i As T)
         assert(Not i Is Nothing)
         register(Nothing, i, False, True)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub assert_first_register(ByVal i As Func(Of T))
         assert(Not i Is Nothing)
         register(i, Nothing, False, True)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub assert_unregister()
         register(Nothing, Nothing, True, False)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function resolve(ByRef o As T) As Boolean
         If cached Is Nothing Then
 #If False Then

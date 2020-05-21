@@ -6,11 +6,22 @@ Option Strict On
 Imports System.Collections.Generic
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.root.utils
 Imports osi.root.utt
 
 ' Compare perf of map, hashmap, unordered_map, unordered_map2 and Dictionary
 Public NotInheritable Class map_hashmap_unordered_map_perf_test
     Inherits performance_comparison_case_wrapper
+
+    Private Const manual_case_rounds As Int64 = 20000000
+    Private Shared ReadOnly strs As samples(Of String)
+
+    Shared Sub New()
+        strs = samples.of(Function() As String
+                              Return rnd_chars(rnd_int(20, 50))
+                          End Function,
+                          100000)
+    End Sub
 
     Public Sub New()
         MyBase.New(r(New map_case()),
@@ -28,10 +39,6 @@ Public NotInheritable Class map_hashmap_unordered_map_perf_test
         Return repeat(c, 100000)
     End Function
 
-    Private Shared Function rnd_str() As String
-        Return rnd_chars(rnd_int(20, 50))
-    End Function
-
     Private MustInherit Class run_case
         Inherits random_run_case
 
@@ -44,12 +51,12 @@ Public NotInheritable Class map_hashmap_unordered_map_perf_test
         End Sub
 
         Public Overrides Function prepare() As Boolean
-            If MyBase.prepare() Then
-                clear()
-                Return True
-            Else
+            If Not MyBase.prepare() Then
                 Return False
             End If
+            clear()
+            strs.reset()
+            Return True
         End Function
 
         Public Overrides Function finish() As Boolean
@@ -63,15 +70,15 @@ Public NotInheritable Class map_hashmap_unordered_map_perf_test
         Protected MustOverride Sub clear()
     End Class
 
-    Public Class map_manual_perf
+    Public NotInheritable Class map_manual_perf
         Inherits commandline_specified_case_wrapper
 
         Public Sub New()
-            MyBase.New(repeat(New map_case(), 2000000))
+            MyBase.New(repeat(New map_case(), manual_case_rounds))
         End Sub
     End Class
 
-    Private Class map_case
+    Private NotInheritable Class map_case
         Inherits run_case
 
         Private ReadOnly m As map(Of String, String)
@@ -82,15 +89,15 @@ Public NotInheritable Class map_hashmap_unordered_map_perf_test
         End Sub
 
         Protected Overrides Sub insert()
-            m.emplace(rnd_str(), rnd_str())
+            m.emplace(strs.next(), strs.next())
         End Sub
 
         Protected Overrides Sub find()
-            m.find(rnd_str())
+            m.find(strs.next())
         End Sub
 
         Protected Overrides Sub [erase]()
-            m.erase(rnd_str())
+            m.erase(strs.next())
         End Sub
 
         Protected Overrides Sub clear()
@@ -98,15 +105,15 @@ Public NotInheritable Class map_hashmap_unordered_map_perf_test
         End Sub
     End Class
 
-    Public Class hashmap_manual_perf
+    Public NotInheritable Class hashmap_manual_perf
         Inherits commandline_specified_case_wrapper
 
         Public Sub New()
-            MyBase.New(repeat(New hashmap_case(), 2000000))
+            MyBase.New(repeat(New hashmap_case(), manual_case_rounds))
         End Sub
     End Class
 
-    Private Class hashmap_case
+    Private NotInheritable Class hashmap_case
         Inherits run_case
 
         Private ReadOnly m As hashmap(Of String, String)
@@ -117,15 +124,15 @@ Public NotInheritable Class map_hashmap_unordered_map_perf_test
         End Sub
 
         Protected Overrides Sub insert()
-            m.emplace(rnd_str(), rnd_str())
+            m.emplace(strs.next(), strs.next())
         End Sub
 
         Protected Overrides Sub find()
-            m.find(rnd_str())
+            m.find(strs.next())
         End Sub
 
         Protected Overrides Sub [erase]()
-            m.erase(rnd_str())
+            m.erase(strs.next())
         End Sub
 
         Protected Overrides Sub clear()
@@ -133,29 +140,29 @@ Public NotInheritable Class map_hashmap_unordered_map_perf_test
         End Sub
     End Class
 
-    Public Class dictionary_manual_perf
+    Public NotInheritable Class dictionary_manual_perf
         Inherits commandline_specified_case_wrapper
 
         Public Sub New()
-            MyBase.New(repeat(New dictionary_case(), 2000000))
+            MyBase.New(repeat(New dictionary_case(), manual_case_rounds))
         End Sub
     End Class
 
-    Private Class dictionary_case
+    Private NotInheritable Class dictionary_case
         Inherits run_case
 
         Private m As Dictionary(Of String, String)
 
         Protected Overrides Sub insert()
-            m.Add(rnd_str(), rnd_str())
+            m(strs.next()) = strs.next()
         End Sub
 
         Protected Overrides Sub find()
-            m.ContainsKey(rnd_str())
+            m.ContainsKey(strs.next())
         End Sub
 
         Protected Overrides Sub [erase]()
-            m.Remove(rnd_str())
+            m.Remove(strs.next())
         End Sub
 
         Protected Overrides Sub clear()
@@ -164,15 +171,15 @@ Public NotInheritable Class map_hashmap_unordered_map_perf_test
         End Sub
     End Class
 
-    Public Class unordered_map_manual_perf
+    Public NotInheritable Class unordered_map_manual_perf
         Inherits commandline_specified_case_wrapper
 
         Public Sub New()
-            MyBase.New(repeat(New unordered_map_case(), 2000000))
+            MyBase.New(repeat(New unordered_map_case(), manual_case_rounds))
         End Sub
     End Class
 
-    Private Class unordered_map_case
+    Private NotInheritable Class unordered_map_case
         Inherits run_case
 
         Private ReadOnly m As unordered_map(Of String, String) = Nothing
@@ -187,27 +194,27 @@ Public NotInheritable Class map_hashmap_unordered_map_perf_test
         End Sub
 
         Protected Overrides Sub [erase]()
-            m.erase(rnd_str())
+            m.erase(strs.next())
         End Sub
 
         Protected Overrides Sub find()
-            m.find(rnd_str())
+            m.find(strs.next())
         End Sub
 
         Protected Overrides Sub insert()
-            m.emplace(rnd_str(), rnd_str())
+            m.emplace(strs.next(), strs.next())
         End Sub
     End Class
 
-    Public Class unordered_map2_manual_perf
+    Public NotInheritable Class unordered_map2_manual_perf
         Inherits commandline_specified_case_wrapper
 
         Public Sub New()
-            MyBase.New(repeat(New unordered_map2_case(), 2000000))
+            MyBase.New(repeat(New unordered_map2_case(), manual_case_rounds))
         End Sub
     End Class
 
-    Private Class unordered_map2_case
+    Private NotInheritable Class unordered_map2_case
         Inherits run_case
 
         Private ReadOnly m As unordered_map2(Of String, String) = Nothing
@@ -222,15 +229,15 @@ Public NotInheritable Class map_hashmap_unordered_map_perf_test
         End Sub
 
         Protected Overrides Sub [erase]()
-            m.erase(rnd_str())
+            m.erase(strs.next())
         End Sub
 
         Protected Overrides Sub find()
-            m.find(rnd_str())
+            m.find(strs.next())
         End Sub
 
         Protected Overrides Sub insert()
-            m.emplace(rnd_str(), rnd_str())
+            m.emplace(strs.next(), strs.next())
         End Sub
     End Class
 End Class

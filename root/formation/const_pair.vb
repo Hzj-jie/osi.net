@@ -91,6 +91,7 @@ Public Class const_pair(Of FT, ST)
                                      If Not json_serializer.to_str(i.second_or_null(), o) Then
                                          Return False
                                      End If
+                                     Return True
                                  End Function)
     End Sub
 

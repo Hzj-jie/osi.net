@@ -25,7 +25,12 @@ Partial Public Class hasharray(Of T,
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function column_count() As UInt32
-        Return predefined_column_counts(c)
+        Return predefined_column_counts.get(c)
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Function row_count_upper_bound() As UInt32
+        Return predefined_row_count_upper_bound.get(c)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -188,7 +193,7 @@ Partial Public Class hasharray(Of T,
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function should_rehash() As Boolean
-        Return average_row_count() >= row_count_upper_bound
+        Return average_row_count() >= row_count_upper_bound()
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

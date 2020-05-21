@@ -2,22 +2,24 @@
 ##DEFAULT TEMPLATE (Of RT As T)
 ##DEFAULT RETURN_TYPE RT
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function resolve##TEMPLATE##() As ##RETURN_TYPE##
         Dim o As ##RETURN_TYPE## = Nothing
         assert(resolve(o))
         Return o
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function resolve_or_null##TEMPLATE##() As ##RETURN_TYPE##
         Return resolve_or_default([default](Of ##RETURN_TYPE##).null)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function resolve_or_default##TEMPLATE##(ByVal [default] As ##RETURN_TYPE##) As ##RETURN_TYPE##
         Dim o As ##RETURN_TYPE## = Nothing
         If resolve(o) Then
             Return o
-        Else
-            Return [default]
         End If
+        Return [default]
     End Function
 

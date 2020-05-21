@@ -22,6 +22,14 @@ Public NotInheritable Class default_equaler(Of T)
     End Function
 End Class
 
+Public NotInheritable Class default_non_null_equaler(Of T)
+    Inherits _equaler(Of T)
+
+    Public Overrides Function at(ByRef i As T, ByRef j As T) As Boolean
+        Return non_null_equal(i, j)
+    End Function
+End Class
+
 Public NotInheritable Class equality_comparer_equaler(Of T)
     Inherits _equaler(Of T)
 

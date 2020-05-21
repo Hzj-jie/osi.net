@@ -144,6 +144,7 @@
     </Compile>
     <Compile Include="pattern_match.vb" />
     <Compile Include="domain_unhandled_exception.vb" />
+    <Compile Include="samples.vb" />
     <Compile Include="thread_checker.vb" />
     <Compile Include="thread_static2.vb" />
     <Compile Include="transceive_timeout.vb" />

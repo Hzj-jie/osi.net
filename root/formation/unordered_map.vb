@@ -165,13 +165,13 @@ Partial Public Class unordered_map( _
             assert(Not i Is Nothing)
             assert(Not j Is Nothing)
 #End If
-            Return equaler(i.first, j.first)
+            Return equaler.at(i.first, j.first)
         End Function
     End Class
 End Class
 
 Public Class unordered_map(Of KEY_T, VALUE_T)
-    Inherits unordered_map(Of KEY_T, VALUE_T, fast_to_uint32(Of KEY_T), default_equaler(Of KEY_T))
+    Inherits unordered_map(Of KEY_T, VALUE_T, fast_to_uint32(Of KEY_T), default_non_null_equaler(Of KEY_T))
     Implements ICloneable, ICloneable(Of unordered_map(Of KEY_T, VALUE_T)), IEquatable(Of unordered_map(Of KEY_T, VALUE_T))
 
 

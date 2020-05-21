@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.template
@@ -62,27 +63,38 @@ Public Class array(Of T, SIZE As _int64)
     End Function
 
     Default Public Shadows Property data(ByVal i As UInt32) As T
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Get
-            Return MyBase.[get](i)
+            Return [get](i)
         End Get
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Set(ByVal v As T)
-            assert(i < size())
-            Me.v(CInt(i)) = v
+            [set](i, v)
         End Set
     End Property
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Sub [set](ByVal i As UInt32, ByVal v As T)
+        assert(i < size())
+        Me.v(CInt(i)) = v
+    End Sub
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function as_array() As T()
         Return v
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function CloneT() As array(Of T, SIZE) Implements ICloneable(Of array(Of T, SIZE)).Clone
         Return MyBase.clone(Of array(Of T, SIZE))()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Shadows Widening Operator CType(ByVal this As array(Of T, SIZE)) As T()
         If this Is Nothing Then
             Return Nothing
@@ -109,23 +121,28 @@ Public Class array(Of T)
     End Function
 
     Default Public Shadows Property data(ByVal i As UInt32) As T
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Get
-            Return MyBase.[get](i)
+            Return MyBase.data(i)
         End Get
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Set(ByVal v As T)
             assert(i < size())
             Me.v(CInt(i)) = v
         End Set
     End Property
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function CloneT() As array(Of T) Implements ICloneable(Of array(Of T)).Clone
         Return MyBase.clone(Of array(Of T))()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overloads Shared Widening Operator CType(ByVal this() As T) As array(Of T)
         Return New array(Of T)(this)
     End Operator

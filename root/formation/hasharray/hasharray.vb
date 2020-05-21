@@ -14,14 +14,18 @@ Partial Public Class hasharray(Of T,
                                   _EQUALER As _equaler(Of T))
 
     Private Shared ReadOnly predefined_column_counts As const_array(Of UInt32)
-    Private Shared ReadOnly row_count_upper_bound As UInt32
+    Private Shared ReadOnly predefined_row_count_upper_bound As const_array(Of UInt32)
     Private Shared ReadOnly unique As Boolean
     Private Shared ReadOnly hasher As _HASHER
     Private Shared ReadOnly equaler As _equaler(Of T)
 
     Shared Sub New()
         predefined_column_counts = New const_array(Of UInt32)(doubled_prime_sequence_int32())
-        row_count_upper_bound = 4
+        predefined_row_count_upper_bound = streams.of(predefined_column_counts.as_array()).
+                                                   map(Function(ByVal i As UInt32) As UInt32
+                                                           Return max(uint32_1, CUInt(Math.Log(i) / 1.5))
+                                                       End Function).
+                                                   to_array()
         unique = +(alloc(Of _UNIQUE)())
         hasher = alloc(Of _HASHER)()
         equaler = alloc(Of _EQUALER)()
@@ -42,7 +46,7 @@ Partial Public Class hasharray(Of T,
                       ByVal s As UInt32,
                       ByVal c As UInt32)
         assert(Not v.null_or_empty())
-        assert(v.size() = predefined_column_counts(c))
+        assert(v.size() = predefined_column_counts.get(c))
         assert(c < predefined_column_counts.size())
         Me.v = v
         Me.s = s

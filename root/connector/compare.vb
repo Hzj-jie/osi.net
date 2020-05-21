@@ -290,12 +290,12 @@ Public Module _compare
         If o <> object_compare_undetermined Then
             Return o
         End If
-        assert(not_null_runtime_compare(this, that, o))
+        assert(non_null_runtime_compare(this, that, o))
         Return o
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function not_null_runtime_compare(ByVal this As Object, ByVal that As Object, ByRef o As Int32) As Boolean
+    Public Function non_null_runtime_compare(ByVal this As Object, ByVal that As Object, ByRef o As Int32) As Boolean
         Return runtime_this_to_object(this, that, o) OrElse
                runtime_that_to_object(this, that, o)
     End Function

@@ -55,15 +55,16 @@ Public Module _cast
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub cast_assert(Of T)(ByVal i As Object, ByVal rst As Boolean, ByVal require_assert As Boolean)
-        If Not rst AndAlso require_assert Then
-            'may not be able to get type from i, if i is nothing
-            Try
-                'the call GetType() and GetType(t) uses lots of time, so in this way
-                assert(False, "cannot convert from ", i.GetType().FullName(), " to ", GetType(T).FullName())
-            Catch ex As Exception
-                assert(False, "failed to raise assert error ", ex.Message())
-            End Try
+        If rst OrElse Not require_assert Then
+            Return
         End If
+        'may not be able to get type from i, if i is nothing
+        Try
+            'the call GetType() and GetType(t) uses lots of time, so in this way
+            assert(False, "cannot convert from ", i.GetType().FullName(), " to ", GetType(T).FullName())
+        Catch ex As Exception
+            assert(False, "failed to raise assert error ", ex.Message())
+        End Try
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
