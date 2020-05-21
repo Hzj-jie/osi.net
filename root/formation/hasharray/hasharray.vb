@@ -46,7 +46,7 @@ Partial Public Class hasharray(Of T,
                       ByVal s As UInt32,
                       ByVal c As UInt32)
         assert(Not v.null_or_empty())
-        assert(v.size() = predefined_column_counts.get(c))
+        assert(v.size() = predefined_column_counts(c))
         assert(c < predefined_column_counts.size())
         Me.v = v
         Me.s = s

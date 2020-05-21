@@ -113,15 +113,10 @@ Public Class const_array(Of T, __SIZE As _int64)
     Default Public ReadOnly Property data(ByVal i As UInt32) As T
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Get
-            Return [get](i)
+            assert(i < size())
+            Return v(CInt(i))
         End Get
     End Property
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function [get](ByVal i As UInt32) As T
-        assert(i < size())
-        Return v(CInt(i))
-    End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function size() As UInt32

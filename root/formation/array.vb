@@ -65,19 +65,14 @@ Public Class array(Of T, SIZE As _int64)
     Default Public Shadows Property data(ByVal i As UInt32) As T
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Get
-            Return [get](i)
+            Return MyBase.data(i)
         End Get
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Set(ByVal v As T)
-            [set](i, v)
+            assert(i < size())
+            Me.v(CInt(i)) = v
         End Set
     End Property
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub [set](ByVal i As UInt32, ByVal v As T)
-        assert(i < size())
-        Me.v(CInt(i)) = v
-    End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function as_array() As T()

@@ -25,12 +25,12 @@ Partial Public Class hasharray(Of T,
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function column_count() As UInt32
-        Return predefined_column_counts.get(c)
+        Return predefined_column_counts(c)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function row_count_upper_bound() As UInt32
-        Return predefined_row_count_upper_bound.get(c)
+        Return predefined_row_count_upper_bound(c)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
