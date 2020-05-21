@@ -176,7 +176,7 @@ Partial Public Class unordered_map2( _
 End Class
 
 Public Class unordered_map2(Of KEY_T, VALUE_T)
-    Inherits unordered_map2(Of KEY_T, VALUE_T, fast_to_uint32(Of KEY_T), default_non_null_equaler(Of KEY_T))
+    Inherits unordered_map2(Of KEY_T, VALUE_T, fast_to_uint32(Of KEY_T), default_equaler(Of KEY_T))
     Implements ICloneable, ICloneable(Of unordered_map2(Of KEY_T, VALUE_T)), IEquatable(Of unordered_map2(Of KEY_T, VALUE_T))
 
 

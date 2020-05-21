@@ -20,7 +20,7 @@ Namespace wordtracer.cjk
             Dim m As model = Nothing
             m = model.load("cjk.words.2.bin").filter(0.5)
             Dim t As oneplus = Nothing
-            t = New oneplus(tracer.flat_map(m))
+            t = New oneplus(tracer.flat_map(m), 0.1)
             t.train(IO.File.ReadLines("cjk.training.txt")).dump("cjk.words.3.bin")
         End Sub
 
@@ -40,7 +40,7 @@ Namespace wordtracer.cjk
             Dim m As model_str = Nothing
             m = model_str.load("cjk.words.3.bin").filter(0.5)
             Dim t As oneplus = Nothing
-            t = New oneplus(tracer.flat_map(m))
+            t = New oneplus(tracer.flat_map(m), 0.1)
             t.train(IO.File.ReadLines("cjk.training.txt")).dump("cjk.words.4.bin")
         End Sub
 

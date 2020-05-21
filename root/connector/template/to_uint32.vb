@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.constants
 Imports osi.root.template
 
-Public Class fast_to_uint32(Of T)
+Public NotInheritable Class fast_to_uint32(Of T)
     Inherits _to_uint32(Of T)
 
     Private Shared ReadOnly f As Func(Of T, UInt32)

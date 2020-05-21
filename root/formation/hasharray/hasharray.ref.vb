@@ -12,7 +12,7 @@ Partial Public Class hasharray(Of T,
                                   _UNIQUE As _boolean,
                                   _HASHER As _to_uint32(Of T),
                                   _EQUALER As _equaler(Of T))
-    Friend Class ref
+    Friend NotInheritable Class ref
         Public ReadOnly owner As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)
         Public ReadOnly column As UInt32
         Public ReadOnly row As UInt32

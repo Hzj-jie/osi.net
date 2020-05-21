@@ -14,18 +14,28 @@ Partial Public NotInheritable Class wordtracer
             Private ReadOnly m As unordered_map(Of String, Double)
             Private ReadOnly l As UInt32
             Private ReadOnly t As onebound(Of String).trainer
+            Private ReadOnly sample_rate As Double
 
-            Public Sub New(ByVal m As unordered_map(Of String, Double))
+            Public Sub New(ByVal m As unordered_map(Of String, Double), ByVal sample_rate As Double)
                 assert(Not m Is Nothing)
                 assert(Not m.empty())
+                assert(sample_rate >= 0 AndAlso sample_rate <= 1)
                 Me.m = m
                 Me.l = (+(m.begin())).first.strlen()
                 Me.t = New onebound(Of String).trainer()
+                Me.sample_rate = sample_rate
+            End Sub
+
+            Public Sub New(ByVal m As unordered_map(Of String, Double))
+                Me.New(m, 1.0)
             End Sub
 
             Private Sub sentence(ByVal s As String, ByVal start As UInt32, ByVal [end] As UInt32)
                 assert([end] >= start)
                 If [end] - start <= l Then
+                    Return
+                End If
+                If sample_rate < 1 AndAlso thread_random.ref().NextDouble() >= sample_rate Then
                     Return
                 End If
                 For i As UInt32 = start To [end] - l - uint32_1
