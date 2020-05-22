@@ -182,7 +182,7 @@ Partial Public Class hashtable(Of T,
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function emplace(ByVal value As T, ByRef row As UInt32, ByRef column As UInt32) As Boolean
-        Return emplace(New hasher_node(Of T)(value, hasher), row, column)
+        Return emplace(New hasher_node(Of T)(value, hasher, equaler), row, column)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

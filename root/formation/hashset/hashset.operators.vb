@@ -21,15 +21,15 @@ Partial Public Class hashset(Of T,
         Return iterator.[end]
     End Function
 
-    Public Function emplace(ByVal value As T) As pair(Of iterator, Boolean)
+    Public Function emplace(ByVal value As T) As tuple(Of iterator, Boolean)
         Dim row As UInt32 = 0
         Dim column As [set](Of T).iterator = Nothing
         Dim r As Boolean = False
         r = emplace(value, row, column)
-        Return pair.emplace_of(iterator_at(row, column), r)
+        Return tuple.emplace_of(iterator_at(row, column), r)
     End Function
 
-    Public Function insert(ByVal value As T) As pair(Of iterator, Boolean)
+    Public Function insert(ByVal value As T) As tuple(Of iterator, Boolean)
         Return emplace(copy_no_error(value))
     End Function
 

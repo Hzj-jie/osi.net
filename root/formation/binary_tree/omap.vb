@@ -204,21 +204,8 @@ Public NotInheritable Class omap(Of KEY_T, VALUE_T)
 'finish map.compare.vbp --------
 
     Public Sub New()
-        MyBase.New(AddressOf first_compare)
+        MyBase.New(AddressOf first_const_pair.first_compare(Of KEY_T, VALUE_T))
     End Sub
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Shared Function first_compare(ByVal this As first_const_pair(Of KEY_T, VALUE_T),
-                                          ByVal that As first_const_pair(Of KEY_T, VALUE_T)) As Int32
-        Dim c As Int32 = 0
-        c = object_compare(this, that)
-        If c <> object_compare_undetermined Then
-            Return c
-        End If
-        assert(Not this Is Nothing)
-        assert(Not that Is Nothing)
-        Return connector.compare(this.first, that.first)
-    End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Shadows Function move(ByVal v As omap(Of KEY_T, VALUE_T)) As omap(Of KEY_T, VALUE_T)

@@ -13,11 +13,6 @@ Partial Public Class hasharray(Of T,
                                   _HASHER As _to_uint32(Of T),
                                   _EQUALER As _equaler(Of T))
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function hash(ByVal v As T) As UInt32
-        Return hasher(v) Mod column_count()
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function hash(ByVal v As hasher_node(Of T)) As UInt32
         assert(Not v Is Nothing)
         Return v.hash_code() Mod column_count()
@@ -30,7 +25,7 @@ Partial Public Class hasharray(Of T,
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function row_count_upper_bound() As UInt32
-        Return predefined_row_count_upper_bound(c)
+        Return 3
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -84,7 +79,7 @@ Partial Public Class hasharray(Of T,
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function new_node(ByVal value As T) As hasher_node(Of T)
-        Return New hasher_node(Of T)(value, hasher)
+        Return New hasher_node(Of T)(value, hasher, equaler)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -122,8 +117,11 @@ Partial Public Class hasharray(Of T,
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function cell_is(ByVal column As UInt32, ByVal row As UInt32, ByVal value As T) As Boolean
-        Return Not cell_is_empty(column, row) AndAlso equaler(v(column)(row).get(), value)
+    Private Function cell_is(ByVal column As UInt32, ByVal row As UInt32, ByVal value As hasher_node(Of T)) As Boolean
+        If cell_is_empty(column, row) Then
+            Return False
+        End If
+        Return v(column)(row).equal_to(value)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -142,7 +140,7 @@ Partial Public Class hasharray(Of T,
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function find_first_cell(ByVal value As T, ByVal column As UInt32, ByRef row As UInt32) As Boolean
+    Private Function find_first_cell(ByVal value As hasher_node(Of T), ByVal column As UInt32, ByRef row As UInt32) As Boolean
         row = 0
         While row < row_count(column)
             If cell_is(column, row, value) Then
@@ -168,7 +166,7 @@ Partial Public Class hasharray(Of T,
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function emplace(ByVal value As hasher_node(Of T), ByRef column As UInt32, ByRef row As UInt32) As Boolean
         column = hash(value)
-        If unique AndAlso find_first_cell(+value, column, row) Then
+        If unique AndAlso find_first_cell(value, column, row) Then
             Return False
         End If
 
@@ -202,7 +200,7 @@ Partial Public Class hasharray(Of T,
         Dim column As UInt32 = 0
         column = hash(c)
         If isdebugmode() Then
-            assert(Not find_first_cell(+c, column, uint32_0))
+            assert(Not find_first_cell(c, column, uint32_0))
         End If
         emplace_back(column, c)
     End Sub

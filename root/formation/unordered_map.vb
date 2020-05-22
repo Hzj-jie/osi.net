@@ -21,8 +21,8 @@ Partial Public Class unordered_map( _
     Inherits hasharray( _
                  Of first_const_pair(Of KEY_T, VALUE_T),
                     _true,
-                    first_const_pair_hasher,
-                    first_const_pair_equaler)
+                    first_const_pair.first_hasher(Of KEY_T, VALUE_T, _HASHER),
+                    first_const_pair.first_equaler(Of KEY_T, VALUE_T, _EQUALER))
     Implements ICloneable, ICloneable(Of unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER))
 
 
@@ -63,8 +63,8 @@ Partial Public Class unordered_map( _
                                        As unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER)
         Return hasharray(Of first_const_pair(Of KEY_T, VALUE_T),
                             _true,
-                            first_const_pair_hasher,
-                            first_const_pair_equaler) _
+                            first_const_pair.first_hasher(Of KEY_T, VALUE_T, _HASHER),
+                            first_const_pair.first_equaler(Of KEY_T, VALUE_T, _EQUALER)) _
                    .move(Of unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER))(v)
     End Function
 
@@ -72,8 +72,8 @@ Partial Public Class unordered_map( _
                                         ByVal that As unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER)) As Boolean
         Return hasharray(Of first_const_pair(Of KEY_T, VALUE_T),
                             _true,
-                            first_const_pair_hasher,
-                            first_const_pair_equaler) _
+                            first_const_pair.first_hasher(Of KEY_T, VALUE_T, _HASHER),
+                            first_const_pair.first_equaler(Of KEY_T, VALUE_T, _EQUALER)) _
                    .swap(this, that)
     End Function
 
@@ -121,48 +121,6 @@ Partial Public Class unordered_map( _
             End If
         End Set
     End Property
-
-    Public NotInheritable Class first_const_pair_hasher
-        Inherits _to_uint32(Of first_const_pair(Of KEY_T, VALUE_T))
-
-        Private Shared ReadOnly hasher As _HASHER
-
-        Shared Sub New()
-            hasher = alloc(Of _HASHER)()
-        End Sub
-
-        Public Overrides Function at(ByRef k As first_const_pair(Of KEY_T, VALUE_T)) As UInt32
-            assert(Not k Is Nothing)
-            Return hasher(k.first)
-        End Function
-
-        Public Overrides Function reverse(ByVal i As UInt32) As first_const_pair(Of KEY_T, VALUE_T)
-            assert(False)
-            Return Nothing
-        End Function
-    End Class
-
-    Public NotInheritable Class first_const_pair_equaler
-        Inherits _equaler(Of first_const_pair(Of KEY_T, VALUE_T))
-
-        Private Shared ReadOnly equaler As _EQUALER
-
-        Shared Sub New()
-            equaler = alloc(Of _EQUALER)()
-        End Sub
-
-        Public Overrides Function at(ByRef i As first_const_pair(Of KEY_T, VALUE_T),
-                                     ByRef j As first_const_pair(Of KEY_T, VALUE_T)) As Boolean
-            Dim c As Int32 = 0
-            c = object_compare(i, j)
-            If c <> object_compare_undetermined Then
-                Return c = 0
-            End If
-            assert(Not i Is Nothing)
-            assert(Not j Is Nothing)
-            Return equaler.at(i.first, j.first)
-        End Function
-    End Class
 End Class
 
 Public Class unordered_map(Of KEY_T, VALUE_T)
@@ -389,8 +347,8 @@ Public Class unordered_map(Of KEY_T, VALUE_T)
                                        As unordered_map(Of KEY_T, VALUE_T)
         Return hasharray(Of first_const_pair(Of KEY_T, VALUE_T),
                                 _true,
-                                first_const_pair_hasher,
-                                first_const_pair_equaler) _
+                                first_const_pair.first_hasher(Of KEY_T, VALUE_T, fast_to_uint32(Of KEY_T)),
+                                first_const_pair.first_equaler(Of KEY_T, VALUE_T, default_equaler(Of KEY_T))) _
                    .move(Of unordered_map(Of KEY_T, VALUE_T))(v)
     End Function
 
@@ -398,8 +356,8 @@ Public Class unordered_map(Of KEY_T, VALUE_T)
                                         ByVal that As unordered_map(Of KEY_T, VALUE_T)) As Boolean
         Return hasharray(Of first_const_pair(Of KEY_T, VALUE_T),
                                 _true,
-                                first_const_pair_hasher,
-                                first_const_pair_equaler) _
+                                first_const_pair.first_hasher(Of KEY_T, VALUE_T, fast_to_uint32(Of KEY_T)),
+                                first_const_pair.first_equaler(Of KEY_T, VALUE_T, default_equaler(Of KEY_T))) _
                    .swap(this, that)
     End Function
 End Class

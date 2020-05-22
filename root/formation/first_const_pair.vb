@@ -23,7 +23,7 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 
-Public NotInheritable Class first_const_pair
+Partial Public NotInheritable Class first_const_pair
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](Of FT, ST)(ByVal first As FT, ByVal second As ST) As first_const_pair(Of FT, ST)
         Return first_const_pair(Of FT, ST).of(first, second)

@@ -16,8 +16,10 @@ Partial Public Class hasharray(Of T,
     Public Function find(ByVal value As T) As iterator
         Dim column As UInt32 = 0
         Dim row As UInt32 = 0
-        column = hash(value)
-        If find_first_cell(value, column, row) Then
+        Dim n As hasher_node(Of T) = Nothing
+        n = new_node(value)
+        column = hash(n)
+        If find_first_cell(n, column, row) Then
             Return iterator_at(column, row)
         End If
         Return iterator.end
@@ -42,9 +44,11 @@ Partial Public Class hasharray(Of T,
         Dim r As UInt32 = 0
         Dim column As UInt32 = 0
         Dim row As UInt32 = 0
-        column = hash(value)
+        Dim n As hasher_node(Of T) = Nothing
+        n = new_node(value)
+        column = hash(n)
         While row < row_count(column)
-            If cell_is(column, row, value) Then
+            If cell_is(column, row, n) Then
                 clear_cell(column, row)
                 r += uint32_1
                 If unique Then

@@ -9,7 +9,7 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 
-Public NotInheritable Class ##FILENAME##
+Partial Public NotInheritable Class ##FILENAME##
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](Of FT, ST)(ByVal first As FT, ByVal second As ST) As ##FILENAME##(Of FT, ST)
         Return ##FILENAME##(Of FT, ST).of(first, second)
