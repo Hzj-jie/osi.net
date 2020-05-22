@@ -140,6 +140,7 @@
     <Compile Include="inlinable_perf.vb" />
     <Compile Include="int32_bytes_perf_test.vb" />
     <Compile Include="inherit_test2.vb" />
+    <Compile Include="int_loop_uint_loop_perf.vb" />
     <Compile Include="istype_perf.vb" />
     <Compile Include="istype_test.vb" />
     <Compile Include="kick_between_test.vb" />
