@@ -63,7 +63,7 @@ Public Module _map
                             ByVal that As map(Of KEY_T, VALUE_T),
                             ByVal f As Func(Of KEY_T,
                                                VALUE_T,
-                                               pair(Of map(Of KEY_T, VALUE_T).iterator, Boolean))) As Boolean
+                                               tuple(Of map(Of KEY_T, VALUE_T).iterator, Boolean))) As Boolean
         assert(Not f Is Nothing)
         If this Is Nothing OrElse that Is Nothing Then
             Return False

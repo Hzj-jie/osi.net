@@ -190,6 +190,8 @@
     <Compile Include="threadsafe\waitable_slimqless2.vb" />
     <Compile Include="trie.iterator.vb" />
     <Compile Include="trie.vb" />
+    <Compile Include="tuple2.ext.vb" />
+    <Compile Include="tuple2.vb" />
     <Compile Include="tuple3.vb" />
     <Compile Include="tuple4.vb" />
     <Compile Include="tuple5.vb" />

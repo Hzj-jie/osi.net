@@ -108,11 +108,11 @@ Public Class obst(Of T)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function emplace_hint(ByVal it As iterator, ByVal v As T) As pair(Of iterator, Boolean)
+    Public Function emplace_hint(ByVal it As iterator, ByVal v As T) As tuple(Of iterator, Boolean)
         If empty() Then
             root = create_node(v)
             s = 1
-            Return pair.emplace_of(New iterator(root), True)
+            Return tuple.emplace_of(New iterator(root), True)
         End If
         Dim n As node = Nothing
         n = If(it.null_or_end(), root, it.node())
@@ -121,7 +121,7 @@ Public Class obst(Of T)
             Dim c As Int32 = 0
             c = n.compare(v)
             If c = 0 Then
-                Return pair.emplace_of(New iterator(n), False)
+                Return tuple.emplace_of(New iterator(n), False)
             End If
             If c < 0 Then
                 If n.has_right_child() Then
@@ -131,7 +131,7 @@ Public Class obst(Of T)
                     Dim r As node = Nothing
                     r = create_node(v)
                     n.replace_right(r)
-                    Return pair.emplace_of(New iterator(r), True)
+                    Return tuple.emplace_of(New iterator(r), True)
                 End If
             ElseIf c > 0 Then
                 If n.has_left_child() Then
@@ -141,7 +141,7 @@ Public Class obst(Of T)
                     Dim r As node = Nothing
                     r = create_node(v)
                     n.replace_left(r)
-                    Return pair.emplace_of(New iterator(r), True)
+                    Return tuple.emplace_of(New iterator(r), True)
                 End If
             End If
         End While
@@ -150,17 +150,17 @@ Public Class obst(Of T)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function emplace(ByVal v As T) As pair(Of iterator, Boolean)
+    Public Function emplace(ByVal v As T) As tuple(Of iterator, Boolean)
         Return emplace_hint(Nothing, v)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function insert_hint(ByVal it As iterator, ByVal v As T) As pair(Of iterator, Boolean)
+    Public Function insert_hint(ByVal it As iterator, ByVal v As T) As tuple(Of iterator, Boolean)
         Return emplace_hint(it, copy_no_error(v))
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function insert(ByVal v As T) As pair(Of iterator, Boolean)
+    Public Function insert(ByVal v As T) As tuple(Of iterator, Boolean)
         Return insert_hint(Nothing, v)
     End Function
 

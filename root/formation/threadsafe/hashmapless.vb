@@ -163,7 +163,7 @@ Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T),
         Dim index As UInt32 = 0
         index = index_of_key(k)
         Using scoped_lock(index)
-            Dim w As pair(Of unordered_map(Of KEY_T, VALUE_T).iterator, Boolean) = Nothing
+            Dim w As tuple(Of unordered_map(Of KEY_T, VALUE_T).iterator, Boolean) = Nothing
             w = data(CInt(index)).emplace(k, v)
             Return pair.emplace_of((+w.first).second, w.second)
         End Using

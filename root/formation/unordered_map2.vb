@@ -14,7 +14,6 @@ Option Strict On
 'so change unordered_map.vbp instead of this file
 
 
-#Const PAIR_IS_CLASS = ("first_const_pair" = "first_const_pair")
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
@@ -84,12 +83,12 @@ Partial Public Class unordered_map2( _
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Overloads Function emplace(ByVal key As KEY_T, ByVal value As VALUE_T) As pair(Of iterator, Boolean)
+    Public Overloads Function emplace(ByVal key As KEY_T, ByVal value As VALUE_T) As tuple(Of iterator, Boolean)
         Return MyBase.emplace(first_const_pair.emplace_of(key, value))
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Overloads Function insert(ByVal key As KEY_T, ByVal value As VALUE_T) As pair(Of iterator, Boolean)
+    Public Overloads Function insert(ByVal key As KEY_T, ByVal value As VALUE_T) As tuple(Of iterator, Boolean)
         Return emplace(copy_no_error(key), copy_no_error(value))
     End Function
 
@@ -120,7 +119,7 @@ Partial Public Class unordered_map2( _
         End Get
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Set(ByVal value As VALUE_T)
-            Dim r As pair(Of iterator, Boolean) = Nothing
+            Dim r As tuple(Of iterator, Boolean) = Nothing
             r = insert(key, value)
             If Not r.second Then
                 copy(r.first.value().second, value)
@@ -138,9 +137,7 @@ Partial Public Class unordered_map2( _
         End Sub
 
         Public Overrides Function at(ByRef k As first_const_pair(Of KEY_T, VALUE_T)) As UInt32
-#If PAIR_IS_CLASS Then
             assert(Not k Is Nothing)
-#End If
             Return hasher(k.first)
         End Function
 
@@ -161,7 +158,6 @@ Partial Public Class unordered_map2( _
 
         Public Overrides Function at(ByRef i As first_const_pair(Of KEY_T, VALUE_T),
                                      ByRef j As first_const_pair(Of KEY_T, VALUE_T)) As Boolean
-#If PAIR_IS_CLASS Then
             Dim c As Int32 = 0
             c = object_compare(i, j)
             If c <> object_compare_undetermined Then
@@ -169,7 +165,6 @@ Partial Public Class unordered_map2( _
             End If
             assert(Not i Is Nothing)
             assert(Not j Is Nothing)
-#End If
             Return equaler.at(i.first, j.first)
         End Function
     End Class

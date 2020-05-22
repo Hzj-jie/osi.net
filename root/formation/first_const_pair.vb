@@ -90,12 +90,14 @@ Public NotInheritable Class first_const_pair(Of FT, ST)
                                  End Function)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub New(ByVal first As FT, ByVal second As ST)
         Me.first = first
         Me.second = second
     End Sub
 
 #If Not IS_CONST Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New()
     End Sub
 #End If
@@ -179,6 +181,7 @@ Public NotInheritable Class first_const_pair(Of FT, ST)
     End Function
 
 #If Not IS_CONST AndAlso Not IS_FIRST_CONST Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function move(ByVal that As first_const_pair(Of FT, ST)) As first_const_pair(Of FT, ST)
         If that Is Nothing Then
             Return Nothing

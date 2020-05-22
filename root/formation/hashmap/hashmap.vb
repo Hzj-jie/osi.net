@@ -76,7 +76,7 @@ Partial Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
             Return data(key_index(k))(k)
         End Get
         Set(ByVal value As VALUE_T)
-            Dim r As pair(Of iterator, Boolean) = Nothing
+            Dim r As tuple(Of iterator, Boolean) = Nothing
             r = insert(k, value)
             If Not r.second Then
                 copy(r.first.iterator().value().second, value)
@@ -84,16 +84,16 @@ Partial Public Class hashmap(Of KEY_T As IComparable(Of KEY_T),
         End Set
     End Property
 
-    Public Function insert(ByVal k As KEY_T, ByVal v As VALUE_T) As pair(Of iterator, Boolean)
+    Public Function insert(ByVal k As KEY_T, ByVal v As VALUE_T) As tuple(Of iterator, Boolean)
         Return emplace(k, copy_no_error(v))
     End Function
 
-    Public Function emplace(ByVal k As KEY_T, ByVal v As VALUE_T) As pair(Of iterator, Boolean)
+    Public Function emplace(ByVal k As KEY_T, ByVal v As VALUE_T) As tuple(Of iterator, Boolean)
         Dim index As UInt32 = 0
         index = key_index(k)
-        Dim p As pair(Of map(Of KEY_T, VALUE_T).iterator, Boolean) = Nothing
+        Dim p As tuple(Of map(Of KEY_T, VALUE_T).iterator, Boolean) = Nothing
         p = data(index).emplace(k, v)
-        Return pair.emplace_of(New iterator(Me, index, p.first), p.second)
+        Return tuple.emplace_of(New iterator(Me, index, p.first), p.second)
     End Function
 
     Public Function insert(ByVal other As hashmap(Of KEY_T, VALUE_T, _KEY_TO_INDEX)) As Boolean

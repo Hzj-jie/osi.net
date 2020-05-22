@@ -1,7 +1,5 @@
 
 ##DEFAULT HASHTABLE hasharray
-##DEFAULT PAIR first_const_pair
-#Const PAIR_IS_CLASS = ("##PAIR##" = "first_const_pair")
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
@@ -13,13 +11,13 @@ Partial Public Class ##FILENAME##( _
                             _HASHER As _to_uint32(Of KEY_T),
                             _EQUALER As _equaler(Of KEY_T))
     Inherits ##HASHTABLE##( _
-                 Of ##PAIR##(Of KEY_T, VALUE_T),
+                 Of first_const_pair(Of KEY_T, VALUE_T),
                     _true,
-                    ##PAIR##_hasher,
-                    ##PAIR##_equaler)
+                    first_const_pair_hasher,
+                    first_const_pair_equaler)
     Implements ICloneable, ICloneable(Of ##FILENAME##(Of KEY_T, VALUE_T, _HASHER, _EQUALER))
 
-##DEFINE VALUE_TYPE ##PAIR##(Of KEY_T, VALUE_T)
+##DEFINE VALUE_TYPE first_const_pair(Of KEY_T, VALUE_T)
 ##INCLUDE ##HASHTABLE##.copy_constructor.vbp
 
     Public Sub New()
@@ -43,29 +41,29 @@ Partial Public Class ##FILENAME##( _
 
     Public Shared Shadows Function move(ByVal v As ##FILENAME##(Of KEY_T, VALUE_T, _HASHER, _EQUALER)) _
                                        As ##FILENAME##(Of KEY_T, VALUE_T, _HASHER, _EQUALER)
-        Return ##HASHTABLE##(Of ##PAIR##(Of KEY_T, VALUE_T),
+        Return ##HASHTABLE##(Of first_const_pair(Of KEY_T, VALUE_T),
                             _true,
-                            ##PAIR##_hasher,
-                            ##PAIR##_equaler) _
+                            first_const_pair_hasher,
+                            first_const_pair_equaler) _
                    .move(Of ##FILENAME##(Of KEY_T, VALUE_T, _HASHER, _EQUALER))(v)
     End Function
 
     Public Shared Shadows Function swap(ByVal this As ##FILENAME##(Of KEY_T, VALUE_T, _HASHER, _EQUALER),
                                         ByVal that As ##FILENAME##(Of KEY_T, VALUE_T, _HASHER, _EQUALER)) As Boolean
-        Return ##HASHTABLE##(Of ##PAIR##(Of KEY_T, VALUE_T),
+        Return ##HASHTABLE##(Of first_const_pair(Of KEY_T, VALUE_T),
                             _true,
-                            ##PAIR##_hasher,
-                            ##PAIR##_equaler) _
+                            first_const_pair_hasher,
+                            first_const_pair_equaler) _
                    .swap(this, that)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Overloads Function emplace(ByVal key As KEY_T, ByVal value As VALUE_T) As pair(Of iterator, Boolean)
-        Return MyBase.emplace(##PAIR##.emplace_of(key, value))
+    Public Overloads Function emplace(ByVal key As KEY_T, ByVal value As VALUE_T) As tuple(Of iterator, Boolean)
+        Return MyBase.emplace(first_const_pair.emplace_of(key, value))
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Overloads Function insert(ByVal key As KEY_T, ByVal value As VALUE_T) As pair(Of iterator, Boolean)
+    Public Overloads Function insert(ByVal key As KEY_T, ByVal value As VALUE_T) As tuple(Of iterator, Boolean)
         Return emplace(copy_no_error(key), copy_no_error(value))
     End Function
 
@@ -81,7 +79,7 @@ Partial Public Class ##FILENAME##( _
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function find(ByVal key As KEY_T) As iterator
-        Return MyBase.find(##PAIR##(Of KEY_T, VALUE_T).emplace_of(key))
+        Return MyBase.find(first_const_pair(Of KEY_T, VALUE_T).emplace_of(key))
     End Function
 
     Default Public Property at(ByVal key As KEY_T) As VALUE_T
@@ -96,7 +94,7 @@ Partial Public Class ##FILENAME##( _
         End Get
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Set(ByVal value As VALUE_T)
-            Dim r As pair(Of iterator, Boolean) = Nothing
+            Dim r As tuple(Of iterator, Boolean) = Nothing
             r = insert(key, value)
             If Not r.second Then
                 copy(r.first.value().second, value)
@@ -104,8 +102,8 @@ Partial Public Class ##FILENAME##( _
         End Set
     End Property
 
-    Public NotInheritable Class ##PAIR##_hasher
-        Inherits _to_uint32(Of ##PAIR##(Of KEY_T, VALUE_T))
+    Public NotInheritable Class first_const_pair_hasher
+        Inherits _to_uint32(Of first_const_pair(Of KEY_T, VALUE_T))
 
         Private Shared ReadOnly hasher As _HASHER
 
@@ -113,21 +111,19 @@ Partial Public Class ##FILENAME##( _
             hasher = alloc(Of _HASHER)()
         End Sub
 
-        Public Overrides Function at(ByRef k As ##PAIR##(Of KEY_T, VALUE_T)) As UInt32
-#If PAIR_IS_CLASS Then
+        Public Overrides Function at(ByRef k As first_const_pair(Of KEY_T, VALUE_T)) As UInt32
             assert(Not k Is Nothing)
-#End If
             Return hasher(k.first)
         End Function
 
-        Public Overrides Function reverse(ByVal i As UInt32) As ##PAIR##(Of KEY_T, VALUE_T)
+        Public Overrides Function reverse(ByVal i As UInt32) As first_const_pair(Of KEY_T, VALUE_T)
             assert(False)
             Return Nothing
         End Function
     End Class
 
-    Public NotInheritable Class ##PAIR##_equaler
-        Inherits _equaler(Of ##PAIR##(Of KEY_T, VALUE_T))
+    Public NotInheritable Class first_const_pair_equaler
+        Inherits _equaler(Of first_const_pair(Of KEY_T, VALUE_T))
 
         Private Shared ReadOnly equaler As _EQUALER
 
@@ -135,9 +131,8 @@ Partial Public Class ##FILENAME##( _
             equaler = alloc(Of _EQUALER)()
         End Sub
 
-        Public Overrides Function at(ByRef i As ##PAIR##(Of KEY_T, VALUE_T),
-                                     ByRef j As ##PAIR##(Of KEY_T, VALUE_T)) As Boolean
-#If PAIR_IS_CLASS Then
+        Public Overrides Function at(ByRef i As first_const_pair(Of KEY_T, VALUE_T),
+                                     ByRef j As first_const_pair(Of KEY_T, VALUE_T)) As Boolean
             Dim c As Int32 = 0
             c = object_compare(i, j)
             If c <> object_compare_undetermined Then
@@ -145,7 +140,6 @@ Partial Public Class ##FILENAME##( _
             End If
             assert(Not i Is Nothing)
             assert(Not j Is Nothing)
-#End If
             Return equaler.at(i.first, j.first)
         End Function
     End Class
@@ -182,19 +176,19 @@ Public Class ##FILENAME##(Of KEY_T, VALUE_T)
 
     Public Shared Shadows Function move(ByVal v As ##FILENAME##(Of KEY_T, VALUE_T)) _
                                        As ##FILENAME##(Of KEY_T, VALUE_T)
-        Return ##HASHTABLE##(Of ##PAIR##(Of KEY_T, VALUE_T),
+        Return ##HASHTABLE##(Of first_const_pair(Of KEY_T, VALUE_T),
                                 _true,
-                                ##PAIR##_hasher,
-                                ##PAIR##_equaler) _
+                                first_const_pair_hasher,
+                                first_const_pair_equaler) _
                    .move(Of ##FILENAME##(Of KEY_T, VALUE_T))(v)
     End Function
 
     Public Shared Shadows Function swap(ByVal this As ##FILENAME##(Of KEY_T, VALUE_T),
                                         ByVal that As ##FILENAME##(Of KEY_T, VALUE_T)) As Boolean
-        Return ##HASHTABLE##(Of ##PAIR##(Of KEY_T, VALUE_T),
+        Return ##HASHTABLE##(Of first_const_pair(Of KEY_T, VALUE_T),
                                 _true,
-                                ##PAIR##_hasher,
-                                ##PAIR##_equaler) _
+                                first_const_pair_hasher,
+                                first_const_pair_equaler) _
                    .swap(this, that)
     End Function
 End Class

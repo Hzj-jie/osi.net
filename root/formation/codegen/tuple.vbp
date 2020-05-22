@@ -27,12 +27,14 @@ Public Structure ##TYPE_NAME##(Of ##TEMPLATE_LIST##)
         Return __2
     End Function
 
+#If ##SIZE## > 2 Then
     Private __3 As T3
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _3() As T3
         Return __3
     End Function
+#End If
 
 #If ##SIZE## > 3 Then
     Private __4 As T4
@@ -79,7 +81,11 @@ Public Structure ##TYPE_NAME##(Of ##TEMPLATE_LIST##)
     End Function
 #End If
 
-#If ##SIZE## = 3 Then
+#If ##SIZE## = 2 Then
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Sub New(ByVal _1 As T1,
+                   ByVal _2 As T2)
+#ElseIf ##SIZE## = 3 Then
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal _1 As T1,
                    ByVal _2 As T2,
@@ -129,7 +135,9 @@ Public Structure ##TYPE_NAME##(Of ##TEMPLATE_LIST##)
 #End If
         Me.__1 = _1
         Me.__2 = _2
+#If ##SIZE## > 2 Then
         Me.__3 = _3
+#End If
 #If ##SIZE## > 3 Then
         Me.__4 = _4
 #End If
@@ -155,7 +163,9 @@ Public Structure ##TYPE_NAME##(Of ##TEMPLATE_LIST##)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CloneT() As ##TYPE_NAME##(Of ##TEMPLATE_LIST##) _
                                 Implements ICloneable(Of ##TYPE_NAME##(Of ##TEMPLATE_LIST##)).Clone
-#If ##SIZE## = 3 Then
+#If ##SIZE## = 2 Then
+        Return tuple.of(__1, __2)
+#ElseIf ##SIZE## = 3 Then
         Return tuple.of(__1, __2, __3)
 #ElseIf ##SIZE## = 4 Then
         Return tuple.of(__1, __2, __3, __4)
@@ -180,8 +190,10 @@ Public Structure ##TYPE_NAME##(Of ##TEMPLATE_LIST##)
 ##INCLUDE tuple_compare.vbp
 ##DEFINE VALUE __2
 ##INCLUDE tuple_compare.vbp
+#If ##SIZE## > 2 Then
 ##DEFINE VALUE __3
 ##INCLUDE tuple_compare.vbp
+#End If
 #If ##SIZE## > 3 Then
 ##DEFINE VALUE __4
 ##INCLUDE tuple_compare.vbp
@@ -240,8 +252,10 @@ Public Structure ##TYPE_NAME##(Of ##TEMPLATE_LIST##)
         r.Append(Convert.ToString(__1))
         r.Append(", ")
         r.Append(Convert.ToString(__2))
+#If ##SIZE## > 2 Then
         r.Append(", ")
         r.Append(Convert.ToString(__3))
+#End If
 #If ##SIZE## > 3 Then
         r.Append(", ")
         r.Append(Convert.ToString(__4))
@@ -269,7 +283,9 @@ Public Structure ##TYPE_NAME##(Of ##TEMPLATE_LIST##)
         Dim r As Int32 = 0
         r = r Xor If(__1 Is Nothing, 0, __1.GetHashCode())
         r = r Xor If(__2 Is Nothing, 0, __2.GetHashCode())
+#If ##SIZE## > 2 Then
         r = r Xor If(__3 Is Nothing, 0, __3.GetHashCode())
+#End If
 #If ##SIZE## > 3 Then
         r = r Xor If(__4 Is Nothing, 0, __4.GetHashCode())
 #End If

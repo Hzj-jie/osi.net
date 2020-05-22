@@ -14,8 +14,6 @@ Option Strict On
 'so change set_case.vbp instead of this file
 
 
-#Const pair_return_insert = True
-
 Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
@@ -101,8 +99,8 @@ Friend Class sset_case
     Private Sub insert()
         Dim k As String = Nothing
         k = rnd_key()
-#If pair_return_insert Then
-        Dim r As pair(Of [sset](Of String).iterator, Boolean) = Nothing
+#If True Then
+        Dim r As tuple(Of [sset](Of String).iterator, Boolean) = Nothing
         r = s.insert(k)
         If assertion.is_not_null(r) Then
             assertion.equal(r.second, s.find(k) <> s.end(), "s.insert(", k, ") <> s.find")

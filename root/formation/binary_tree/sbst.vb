@@ -57,29 +57,28 @@ Public Class sbst(Of T)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function splay(ByVal r As pair(Of iterator, Boolean)) As pair(Of iterator, Boolean)
-        assert(Not r Is Nothing)
+    Private Function splay(ByVal r As tuple(Of iterator, Boolean)) As tuple(Of iterator, Boolean)
         splay(r.first.node())
-        Return pair.emplace_of(New iterator(root), r.second)
+        Return tuple.emplace_of(New iterator(root), r.second)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shadows Function emplace_hint(ByVal it As iterator, ByVal v As T) As pair(Of iterator, Boolean)
+    Public Shadows Function emplace_hint(ByVal it As iterator, ByVal v As T) As tuple(Of iterator, Boolean)
         Return splay(MyBase.emplace_hint(it, v))
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shadows Function emplace(ByVal v As T) As pair(Of iterator, Boolean)
+    Public Shadows Function emplace(ByVal v As T) As tuple(Of iterator, Boolean)
         Return splay(MyBase.emplace(v))
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shadows Function insert_hint(ByVal it As iterator, ByVal v As T) As pair(Of iterator, Boolean)
+    Public Shadows Function insert_hint(ByVal it As iterator, ByVal v As T) As tuple(Of iterator, Boolean)
         Return splay(MyBase.insert_hint(it, v))
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shadows Function insert(ByVal v As T) As pair(Of iterator, Boolean)
+    Public Shadows Function insert(ByVal v As T) As tuple(Of iterator, Boolean)
         Return splay(MyBase.insert(v))
     End Function
 

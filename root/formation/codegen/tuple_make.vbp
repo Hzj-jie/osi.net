@@ -4,6 +4,17 @@
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [##EMPLACE##of] _
+                              (Of T1, T2) _
+                              (ByVal _1 As T1,
+                               ByVal _2 As T2) As tuple(Of T1, T2)
+        Return New tuple _
+                        (Of T1, T2) _
+                        (##COPY##(_1),
+                         ##COPY##(_2))
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function [##EMPLACE##of] _
                               (Of T1, T2, T3) _
                               (ByVal _1 As T1,
                                ByVal _2 As T2,

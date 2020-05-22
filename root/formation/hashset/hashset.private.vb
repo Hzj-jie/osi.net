@@ -35,7 +35,7 @@ Partial Public Class hashset(Of T,
     End Function
 
     Private Function set_cell(ByVal row As UInt32, ByVal value As T) As [set](Of T).iterator
-        Dim r As pair(Of [set](Of T).iterator, Boolean) = Nothing
+        Dim r As tuple(Of [set](Of T).iterator, Boolean) = Nothing
         r = v(row).emplace(value)
         assert(r.second)
         s += uint32_1

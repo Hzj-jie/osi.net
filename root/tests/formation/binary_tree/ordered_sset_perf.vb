@@ -1,9 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utt
 
-Public Class ordered_sset_perf
+Public NotInheritable Class ordered_sset_perf
     Inherits commandline_specified_case_wrapper
 
     Public Sub New()
@@ -21,7 +25,7 @@ Public Class ordered_sset_perf
             Dim s As sset(Of Int32) = Nothing
             s = New sset(Of Int32)()
             For i As Int32 = min To max - 1
-                Dim r As pair(Of sset(Of Int32).iterator, Boolean) = Nothing
+                Dim r As tuple(Of sset(Of Int32).iterator, Boolean) = Nothing
                 r = s.insert(i)
                 If assertion.is_not_null(r) Then
                     assertion.is_true(r.second)

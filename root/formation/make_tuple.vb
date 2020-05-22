@@ -23,6 +23,17 @@ Public NotInheritable Class tuple
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of] _
+                              (Of T1, T2) _
+                              (ByVal _1 As T1,
+                               ByVal _2 As T2) As tuple(Of T1, T2)
+        Return New tuple _
+                        (Of T1, T2) _
+                        (copy_no_error(_1),
+                         copy_no_error(_2))
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function [of] _
                               (Of T1, T2, T3) _
                               (ByVal _1 As T1,
                                ByVal _2 As T2,
@@ -137,6 +148,17 @@ Public NotInheritable Class tuple
 'so change tuple_make.vbp instead of this file
 
 
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function [emplace_of] _
+                              (Of T1, T2) _
+                              (ByVal _1 As T1,
+                               ByVal _2 As T2) As tuple(Of T1, T2)
+        Return New tuple _
+                        (Of T1, T2) _
+                        ((_1),
+                         (_2))
+    End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [emplace_of] _
