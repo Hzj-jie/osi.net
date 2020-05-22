@@ -17,6 +17,7 @@ Partial Public Class hashset(Of T,
 ##DEFINE DEFINE_OPERATOR_PLUS False
 ##DEFINE FRIEND_CONSTRUCTOR False
 ##DEFINE DEFAULT_COMPARER False
+##DEFINE TYPE_IS_STRUCT True
 ##INCLUDE ..\..\codegen\random_access_iterator.single_step.vbp
 
         Friend Sub New(ByVal owner As hashset(Of T, _UNIQUE, _HASHER, _EQUALER),

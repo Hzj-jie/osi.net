@@ -74,7 +74,7 @@ Partial Public Class hashset(Of T,
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Sub New(ByVal that As ref)
 #End If
-#If Not False Then
+#If Not True Then
             assert(Not that Is Nothing)
 #End If
             p = that
@@ -88,7 +88,7 @@ Partial Public Class hashset(Of T,
 #Else
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function is_end() As Boolean
-#If False Then
+#If True Then
             Return p Is Nothing
 #Else
             Return p Is Nothing AndAlso
