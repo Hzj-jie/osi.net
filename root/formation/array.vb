@@ -69,7 +69,9 @@ Public Class array(Of T, SIZE As _int64)
         End Get
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Set(ByVal v As T)
+#If DEBUG Then
             assert(i < size())
+#End If
             Me.v(CInt(i)) = v
         End Set
     End Property
@@ -122,7 +124,9 @@ Public Class array(Of T)
         End Get
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Set(ByVal v As T)
+#If DEBUG Then
             assert(i < size())
+#End If
             Me.v(CInt(i)) = v
         End Set
     End Property

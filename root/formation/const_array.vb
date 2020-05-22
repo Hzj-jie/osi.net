@@ -113,7 +113,9 @@ Public Class const_array(Of T, __SIZE As _int64)
     Default Public ReadOnly Property data(ByVal i As UInt32) As T
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Get
+#If DEBUG Then
             assert(i < size())
+#End If
             Return v(CInt(i))
         End Get
     End Property

@@ -65,9 +65,7 @@ Public Class bst(Of T)
             Dim c As Int32 = 0
             c = n.compare(v)
             If c < 0 Then
-                assert(Not isdebugmode() OrElse
-                             l Is Nothing OrElse
-                             n.compare(l) > 0)
+                debug_assert(l Is Nothing OrElse n.compare(l) > 0)
                 l = n
                 If n.has_right_child() Then
                     n = n.right_child()
@@ -112,9 +110,7 @@ Public Class bst(Of T)
                 End If
             Else
                 assert(c > 0)
-                assert(Not isdebugmode() OrElse
-                       l Is Nothing OrElse
-                       n.compare(l) < 0)
+                debug_assert(l Is Nothing OrElse n.compare(l) < 0)
                 l = n
                 If n.has_left_child() Then
                     n = n.left_child()

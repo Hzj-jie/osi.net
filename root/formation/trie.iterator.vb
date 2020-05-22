@@ -89,8 +89,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
             Return p Is Nothing
 #Else
             Return p Is Nothing AndAlso
-                   (Not isdebugmode() OrElse
-                    assert(object_compare(Me, [end]) = 0))
+                   assert(object_compare(Me, [end]) = 0)
 #End If
         End Function
 #End If

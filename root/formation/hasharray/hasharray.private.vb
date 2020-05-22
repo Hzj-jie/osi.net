@@ -140,7 +140,9 @@ Partial Public Class hasharray(Of T,
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function find_first_cell(ByVal value As hasher_node(Of T), ByVal column As UInt32, ByRef row As UInt32) As Boolean
+    Private Function find_first_cell(ByVal value As hasher_node(Of T),
+                                     ByVal column As UInt32,
+                                     ByRef row As UInt32) As Boolean
         row = 0
         While row < row_count(column)
             If cell_is(column, row, value) Then

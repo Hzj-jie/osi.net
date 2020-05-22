@@ -76,8 +76,7 @@ Partial Public Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As 
             Return p Is Nothing
 #Else
             Return p Is Nothing AndAlso
-                   (Not isdebugmode() OrElse
-                    assert(object_compare(Me, [end]) = 0))
+                   assert(object_compare(Me, [end]) = 0)
 #End If
         End Function
 #End If

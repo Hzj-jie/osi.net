@@ -92,8 +92,7 @@ Partial Public Class hasharray(Of T,
             Return p Is Nothing
 #Else
             Return p Is Nothing AndAlso
-                   (Not isdebugmode() OrElse
-                    assert(object_compare(Me, [end]) = 0))
+                   assert(object_compare(Me, [end]) = 0)
 #End If
         End Function
 #End If
@@ -189,7 +188,7 @@ Partial Public Class hasharray(Of T,
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Friend Sub New(ByVal owner As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER), ByVal column As UInt32, ByVal row As UInt32)
-            Me.New(assert_not_nothing_return(owner).ref_at(column, row))
+            Me.New(assert_which.of(owner).is_not_null().ref_at(column, row))
         End Sub
 
         Private Function move_next() As iterator

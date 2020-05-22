@@ -83,17 +83,16 @@ Private Class adaptive_array_t
         Return d
     End Function
 
-' Property access is expensive.
-#If 0 Then
     Default Public Property at(ByVal p As UInt32) As T
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Get
             Return [get](p)
         End Get
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Set(ByVal value As T)
             [set](p, value)
         End Set
     End Property
-#End If
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [get](ByVal p As UInt32) As T
