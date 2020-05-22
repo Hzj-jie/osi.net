@@ -15,7 +15,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 Partial Public Class big_uint
-Private Class adaptive_array_uint32
+Private NotInheritable Class adaptive_array_uint32
     Implements ICloneable, ICloneable(Of adaptive_array_uint32), IComparable(Of adaptive_array_uint32), IComparable
 
     Private Shared Function expected_capacity(ByVal n As UInt32) As UInt32

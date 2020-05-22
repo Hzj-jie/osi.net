@@ -134,7 +134,7 @@ public static class Program
 
         if(!a.is_plugin)
         {
-            w(a.class_accessmodifier + " Class " + class_name(a));
+            w(a.class_accessmodifier + " NotInheritable Class " + class_name(a));
         }
         w(strcat(
 "    Implements ICloneable, ICloneable(Of " + class_name(a) + "), IComparable(Of " + class_name(a) + "), IComparable",

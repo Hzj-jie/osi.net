@@ -15,7 +15,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 Partial Public Class vector(Of T)
-Private Class adaptive_array_t
+Private NotInheritable Class adaptive_array_t
     Implements ICloneable, ICloneable(Of adaptive_array_t), IComparable(Of adaptive_array_t), IComparable
 
     Private Shared Function expected_capacity(ByVal n As UInt32) As UInt32
