@@ -9,7 +9,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Namespace counter
-    Partial Friend Class counter_record
+    Partial Friend NotInheritable Class counter_record
         Private Shared Sub try_inc(ByRef i As Int64, ByVal j As Int64, ByVal name As String)
             If Not connector.try_inc(i, j) Then
                 raise_error(error_type.warning, "overflow for count ", name, ", the value may not correct.")
@@ -19,9 +19,8 @@ Namespace counter
         Public Function average() As Int64
             If calltimes > 0 Then
                 Return count \ calltimes
-            Else
-                Return npos
             End If
+            Return npos
         End Function
 
         Private Function last_average_count() As Int64
@@ -32,9 +31,8 @@ Namespace counter
                     try_inc(c, last_averages(i), name)
                 Next
                 Return c
-            Else
-                Return npos
             End If
+            Return npos
         End Function
 
         Private Function last_averages_length() As Int64
@@ -74,9 +72,8 @@ Namespace counter
                 Else
                     Return 0
                 End If
-            Else
-                Return npos
             End If
+            Return npos
         End Function
 
         Public Function snapshot() As snapshot

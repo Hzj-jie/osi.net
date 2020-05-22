@@ -4,7 +4,7 @@ Option Infer Off
 Option Strict On
 
 Namespace counter
-    Partial Friend Class counter_record
+    Partial Friend NotInheritable Class counter_record
         Public ReadOnly name As String = Nothing
         Private ReadOnly multiple_instances As Boolean = False
         Private ReadOnly type As Int16 = 0

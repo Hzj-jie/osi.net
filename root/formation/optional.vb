@@ -52,7 +52,9 @@ Public Structure [optional](Of T)
 
     Shared Sub New()
         assert(Not (New [optional](Of T)()).b)
-        assert((New [optional](Of T)()).v Is Nothing)
+        If Not type_info(Of T).is_valuetype Then
+            assert((New [optional](Of T)()).v Is Nothing)
+        End If
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
