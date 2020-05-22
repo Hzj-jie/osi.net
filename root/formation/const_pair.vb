@@ -16,7 +16,6 @@ Option Strict On
 
 #Const IS_CONST = ("const_" = "const_")
 #Const IS_FIRST_CONST = ("const_" = "first_const_")
-#Const IS_CLASS = ("Class" = "Class")
 
 Imports System.Collections.Generic
 Imports System.IO
@@ -49,11 +48,7 @@ Public NotInheritable Class const_pair
     End Sub
 End Class
 
-#If IS_CLASS Then
 Public NotInheritable Class const_pair(Of FT, ST)
-#Else
-Public Class const_pair(Of FT, ST)
-#End If
     Implements IComparable(Of const_pair(Of FT, ST)), IComparable,
                ICloneable(Of const_pair(Of FT, ST)), ICloneable
 
@@ -100,44 +95,36 @@ Public Class const_pair(Of FT, ST)
         Me.second = second
     End Sub
 
-#If Not IS_CONST AndAlso IS_CLASS Then
+#If Not IS_CONST Then
     Public Sub New()
     End Sub
 #End If
 
     Public Shared ReadOnly first_getter As Func(Of const_pair(Of FT, ST), FT) =
         Function(ByVal p As const_pair(Of FT, ST)) As FT
-#If IS_CLASS Then
             assert(Not p Is Nothing)
-#End If
             Return p.first
         End Function
 
     Public Shared ReadOnly first_or_null_getter As Func(Of const_pair(Of FT, ST), FT) =
         Function(ByVal p As const_pair(Of FT, ST)) As FT
-#If IS_CLASS Then
             If p Is Nothing Then
                 Return Nothing
             End If
-#End If
             Return p.first
         End Function
 
     Public Shared ReadOnly second_getter As Func(Of const_pair(Of FT, ST), ST) =
         Function(ByVal p As const_pair(Of FT, ST)) As ST
-#If IS_CLASS Then
             assert(Not p Is Nothing)
-#End If
             Return p.second
         End Function
 
     Public Shared ReadOnly second_or_null_getter As Func(Of const_pair(Of FT, ST), ST) =
         Function(ByVal p As const_pair(Of FT, ST)) As ST
-#If IS_CLASS Then
             If p Is Nothing Then
                 Return Nothing
             End If
-#End If
             Return p.second
         End Function
 
@@ -193,11 +180,9 @@ Public Class const_pair(Of FT, ST)
 
 #If Not IS_CONST AndAlso Not IS_FIRST_CONST Then
     Public Shared Function move(ByVal that As const_pair(Of FT, ST)) As const_pair(Of FT, ST)
-#If IS_CLASS Then
         If that Is Nothing Then
             Return Nothing
         End If
-#End If
         Dim r As const_pair(Of FT, ST) = Nothing
         r = New const_pair(Of FT, ST)()
         r.first = that.first
@@ -211,11 +196,9 @@ Public Class const_pair(Of FT, ST)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal other As const_pair(Of FT, ST)) As Int32 _
                              Implements IComparable(Of const_pair(Of FT, ST)).CompareTo
-#If IS_CLASS Then
         If other Is Nothing Then
             Return 1
         End If
-#End If
         Dim c As Int32 = 0
         c = compare(first, other.first)
         If c = 0 Then
@@ -304,31 +287,17 @@ Public Class const_pair(Of FT, ST)
         Return pair.emplace_of(first, second)
     End Function
 #End If
-#If Not IS_CONST AndAlso Not IS_FIRST_CONST AndAlso Not IS_CLASS Then
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Widening Operator CType(ByVal this As const_pair(Of FT, ST)) As pair(Of FT, ST)
-        Return pair.emplace_of(this.first, this.second)
-    End Operator
-#End If
 End Class
 
 Public Module _const_pair
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function first_or_null(Of FT, ST)(ByVal i As const_pair(Of FT, ST)) As FT
-#If IS_CLASS Then
         Return If(i Is Nothing, Nothing, i.first)
-#Else
-        Return i.first
-#End If
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function second_or_null(Of FT, ST)(ByVal i As const_pair(Of FT, ST)) As ST
-#If IS_CLASS Then
         Return If(i Is Nothing, Nothing, i.second)
-#Else
-        Return i.second
-#End If
     End Function
 
     <Extension()> Public Function to_array(Of T)(ByVal i() As const_pair(Of T, T)) As T(,)
@@ -338,11 +307,9 @@ Public Module _const_pair
         Dim r(,) As T = Nothing
         ReDim r(CInt(array_size(i) - uint32_1), 2 - 1)
         For j As Int32 = 0 To CInt(array_size(i) - uint32_1)
-#If IS_CLASS Then
             If i(j) Is Nothing Then
                 Continue For
             End If
-#End If
             r(j, 0) = i(j).first
             r(j, 1) = i(j).second
         Next

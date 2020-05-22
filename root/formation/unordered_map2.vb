@@ -84,12 +84,12 @@ Partial Public Class unordered_map2( _
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Overloads Function emplace(ByVal key As KEY_T, ByVal value As VALUE_T) As fast_pair(Of iterator, Boolean)
+    Public Overloads Function emplace(ByVal key As KEY_T, ByVal value As VALUE_T) As pair(Of iterator, Boolean)
         Return MyBase.emplace(first_const_pair.emplace_of(key, value))
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Overloads Function insert(ByVal key As KEY_T, ByVal value As VALUE_T) As fast_pair(Of iterator, Boolean)
+    Public Overloads Function insert(ByVal key As KEY_T, ByVal value As VALUE_T) As pair(Of iterator, Boolean)
         Return emplace(copy_no_error(key), copy_no_error(value))
     End Function
 
@@ -120,7 +120,7 @@ Partial Public Class unordered_map2( _
         End Get
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Set(ByVal value As VALUE_T)
-            Dim r As fast_pair(Of iterator, Boolean) = Nothing
+            Dim r As pair(Of iterator, Boolean) = Nothing
             r = insert(key, value)
             If Not r.second Then
                 copy(r.first.value().second, value)

@@ -24,16 +24,16 @@ Partial Public Class hashtable(Of T,
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function emplace(ByVal value As T) As fast_pair(Of iterator, Boolean)
+    Public Function emplace(ByVal value As T) As pair(Of iterator, Boolean)
         Dim row As UInt32 = 0
         Dim column As UInt32 = 0
         Dim r As Boolean = False
         r = emplace(value, row, column)
-        Return fast_pair.emplace_of(iterator_at(row, column), r)
+        Return pair.emplace_of(iterator_at(row, column), r)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function insert(ByVal value As T) As fast_pair(Of iterator, Boolean)
+    Public Function insert(ByVal value As T) As pair(Of iterator, Boolean)
         Return emplace(copy_no_error(value))
     End Function
 

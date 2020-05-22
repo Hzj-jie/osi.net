@@ -75,10 +75,7 @@
     <Compile Include="bit_array.vb" />
     <Compile Include="bit_array_thread_safe.vb" />
     <Compile Include="chunk.vb" />
-    <Compile Include="const_fast_pair.vb" />
     <Compile Include="ext\unordered_map.vb" />
-    <Compile Include="fast_pair.vb" />
-    <Compile Include="first_const_fast_pair.vb" />
     <Compile Include="hasharray\hasharray.ext.vb" />
     <Compile Include="hasharray\hasharray.implements.vb" />
     <Compile Include="hasharray\hasharray.iterator.vb" />
