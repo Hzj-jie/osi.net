@@ -3,22 +3,17 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 
-Public Class tuple
+Public NotInheritable Class tuple
 
 ##DEFINE EMPLACE 
 ##DEFINE COPY copy_no_error
-##INCLUDE tuple_make.vbp
-
-##DEFINE FAST fast_
-##DEFINE OF_FAST _fast
 ##INCLUDE tuple_make.vbp
 
 ##DEFINE EMPLACE emplace_
 ##DEFINE COPY 
 ##INCLUDE tuple_make.vbp
 
-##DEFINE FAST 
-##DEFINE OF_FAST 
-##INCLUDE tuple_make.vbp
+    Private Sub New()
+    End Sub
 
 End Class

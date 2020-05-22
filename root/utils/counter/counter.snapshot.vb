@@ -8,18 +8,18 @@ Imports osi.root.formation
 Namespace counter
     Public NotInheritable Class snapshot
         Public ReadOnly name As String
-        Public ReadOnly count As constant(Of Int64)
-        Public ReadOnly average As constant(Of Int64)
-        Public ReadOnly last_average As constant(Of Int64)
-        Public ReadOnly rate As constant(Of Int64)
-        Public ReadOnly last_rate As constant(Of Int64)
+        Public ReadOnly count As [optional](Of Int64)
+        Public ReadOnly average As [optional](Of Int64)
+        Public ReadOnly last_average As [optional](Of Int64)
+        Public ReadOnly rate As [optional](Of Int64)
+        Public ReadOnly last_rate As [optional](Of Int64)
 
         Public Sub New(ByVal name As String,
-                       ByVal count As constant(Of Int64),
-                       ByVal average As constant(Of Int64),
-                       ByVal last_average As constant(Of Int64),
-                       ByVal rate As constant(Of Int64),
-                       ByVal last_rate As constant(Of Int64))
+                       ByVal count As [optional](Of Int64),
+                       ByVal average As [optional](Of Int64),
+                       ByVal last_average As [optional](Of Int64),
+                       ByVal rate As [optional](Of Int64),
+                       ByVal last_rate As [optional](Of Int64))
             Me.name = name
             Me.count = count
             Me.average = average

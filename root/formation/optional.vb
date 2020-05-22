@@ -9,21 +9,16 @@ Imports osi.root.constants
 
 Public NotInheritable Class [optional]
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Function [New](Of T)(ByVal v As T) As [optional](Of T)
-        Return New [optional](Of T)(v)
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function new_or_empty(Of T)(ByVal v As T) As [optional](Of T)
         If v Is Nothing Then
             Return [empty](Of T)()
         End If
-        Return [New](Of T)(v)
+        Return [of](Of T)(v)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](Of T)(ByVal v As T) As [optional](Of T)
-        Return [New](v)
+        Return New [optional](Of T)(v)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -51,20 +46,20 @@ Public NotInheritable Class [optional]
     End Class
 End Class
 
-Public NotInheritable Class [optional](Of T)
+Public Structure [optional](Of T)
     Private ReadOnly b As Boolean
     Private ReadOnly v As T
+
+    Shared Sub New()
+        assert(Not (New [optional](Of T)()).b)
+        assert((New [optional](Of T)()).v Is Nothing)
+    End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub New(ByVal b As Boolean, ByVal v As T)
         Me.b = b
         Me.v = v
         assert(Not b OrElse Not v Is Nothing)
-    End Sub
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub New()
-        Me.New(False, Nothing)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -106,12 +101,12 @@ Public NotInheritable Class [optional](Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Widening Operator CType(ByVal this As [optional](Of T)) As Boolean
-        Return Not this Is Nothing AndAlso this.b
+        Return this.b
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator Not(ByVal this As [optional](Of T)) As Boolean
-        Return this Is Nothing OrElse Not this.b
+        Return Not this.b
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -127,4 +122,11 @@ Public NotInheritable Class [optional](Of T)
         End If
         Return Nothing
     End Operator
-End Class
+
+    Public Overrides Function ToString() As String
+        If empty() Then
+            Return "optional.empty()"
+        End If
+        Return strcat("optional(", v, ")")
+    End Function
+End Structure

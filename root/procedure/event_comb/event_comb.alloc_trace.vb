@@ -55,7 +55,6 @@ Partial Public Class event_comb
                                                 Dim s As counter.snapshot = Nothing
                                                 s = counter.snapshot.[New]((+it).second)
                                                 assert(Not s Is Nothing)
-                                                assert(Not s.count Is Nothing)
                                                 If +s.count > 0 Then
                                                     r.Append(", [").Append((+it).first).Append("] - ").Append(+s.count)
                                                 End If

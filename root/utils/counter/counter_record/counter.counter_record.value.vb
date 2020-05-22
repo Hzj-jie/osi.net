@@ -80,26 +80,26 @@ Namespace counter
         End Function
 
         Public Function snapshot() As snapshot
-            Dim count As constant(Of Int64) = Nothing
-            Dim average As constant(Of Int64) = Nothing
-            Dim last_average As constant(Of Int64) = Nothing
-            Dim rate As constant(Of Int64) = Nothing
-            Dim last_rate As constant(Of Int64) = Nothing
+            Dim count As [optional](Of Int64) = Nothing
+            Dim average As [optional](Of Int64) = Nothing
+            Dim last_average As [optional](Of Int64) = Nothing
+            Dim rate As [optional](Of Int64) = Nothing
+            Dim last_rate As [optional](Of Int64) = Nothing
             With Me
                 If count_selected() Then
-                    count = constant.[New](.count)
+                    count = [optional].of(.count)
                 End If
                 If average_selected() Then
-                    average = constant.[New](.average())
+                    average = [optional].of(.average())
                 End If
                 If last_average_selected() Then
-                    last_average = constant.[New](.last_average())
+                    last_average = [optional].of(.last_average())
                 End If
                 If rate_selected() Then
-                    rate = constant.[New](.rate())
+                    rate = [optional].of(.rate())
                 End If
                 If last_rate_selected() Then
-                    last_rate = constant.[New](.last_rate())
+                    last_rate = [optional].of(.last_rate())
                 End If
             End With
             Return New snapshot(name, count, average, last_average, rate, last_rate)

@@ -37,19 +37,19 @@ Namespace counter
             Dim msg As StringBuilder = Nothing
             msg = New StringBuilder()
             With cr
-                If Not snapshot.count Is Nothing Then
+                If snapshot.count Then
                     msg.Append(patchup_counter_msg(.count_name, +snapshot.count))
                 End If
-                If Not snapshot.average Is Nothing Then
+                If snapshot.average Then
                     msg.Append(patchup_counter_msg(.average_name, +snapshot.average))
                 End If
-                If Not snapshot.last_average Is Nothing Then
+                If snapshot.last_average Then
                     msg.Append(patchup_counter_msg(.last_average_name, +snapshot.last_average))
                 End If
-                If Not snapshot.rate Is Nothing Then
+                If snapshot.rate Then
                     msg.Append(patchup_counter_msg(.rate_name, +snapshot.rate))
                 End If
-                If Not snapshot.last_rate Is Nothing Then
+                If snapshot.last_rate Then
                     msg.Append(patchup_counter_msg(.last_rate_name, +snapshot.last_rate))
                 End If
             End With

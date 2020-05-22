@@ -77,7 +77,6 @@
     <Compile Include="chunk.vb" />
     <Compile Include="const_fast_pair.vb" />
     <Compile Include="ext\unordered_map.vb" />
-    <Compile Include="fast_constant.vb" />
     <Compile Include="fast_pair.vb" />
     <Compile Include="first_const_fast_pair.vb" />
     <Compile Include="hasharray\hasharray.ext.vb" />
@@ -110,7 +109,6 @@
     <Compile Include="circle.vb" />
     <Compile Include="comparer\comparable_type.vb" />
     <Compile Include="comparer\reverse.vb" />
-    <Compile Include="constant.vb" />
     <Compile Include="const_array.vb" />
     <Compile Include="const_pair.vb" />
     <Compile Include="ext\conv.vb" />
@@ -217,14 +215,13 @@
     <None Include="binary_tree\codegen\set.vbp" />
     <None Include="codegen\bit_array.vbp" />
     <None Include="codegen\bit_array_thread_safe.vbp" />
-    <None Include="codegen\constant.vbp" />
     <None Include="codegen\const_fast_pair.vbp" />
     <None Include="codegen\const_pair.vbp" />
-    <None Include="codegen\fast_constant.vbp" />
     <None Include="codegen\fast_pair.vbp" />
     <None Include="codegen\first_const_fast_pair.vbp" />
     <None Include="codegen\first_const_pair.vbp" />
     <None Include="codegen\hasharray.copy_constructor.vbp" />
+    <None Include="codegen\hashmap.vbp" />
     <None Include="codegen\hashtable.copy_constructor.vbp" />
     <None Include="codegen\iterator.ext.vbp" />
     <None Include="codegen\iterator.imports.vbp" />

@@ -27,17 +27,17 @@ Partial Public NotInheritable Class server
         ' constant(Of ).empty(): failed to initialize.
 
         ' The raw request-body, or empty() is request has no body.
-        Private request_body As constant(Of piece)
+        Private request_body As [optional](Of piece)
         ' The parsed path.
-        Private path As constant(Of vector(Of String))
+        Private path As [optional](Of vector(Of String))
         ' The parsed query string from url.
-        Private query As constant(Of map(Of String, vector(Of String)))
+        Private query As [optional](Of map(Of String, vector(Of String)))
         ' The parsed request-body in www-form-urlencoded format.
-        Private www_form_urlencoded_body As constant(Of www_form_urlencoded)
+        Private www_form_urlencoded_body As [optional](Of www_form_urlencoded)
         ' The merged query from both url and www-form-urlencoded request body.
-        Private merged_query As constant(Of map(Of String, vector(Of String)))
+        Private merged_query As [optional](Of map(Of String, vector(Of String)))
         ' The request method.
-        Private method As constant(Of constants.request_method)
+        Private method As [optional](Of constants.request_method)
 
         Public Sub New(ByVal server As server,
                        ByVal context As HttpListenerContext,
@@ -167,7 +167,7 @@ Partial Public NotInheritable Class server
             Dim p As pointer(Of Byte()) = Nothing
             Dim ec As event_comb = Nothing
             Return New event_comb(Function() As Boolean
-                                      If Not request_body Is Nothing Then
+                                      If request_body Then
                                           Return Not request_body.empty() AndAlso
                                                  eva(o, +request_body) AndAlso
                                                  goto_end()
@@ -180,17 +180,17 @@ Partial Public NotInheritable Class server
                                   End Function,
                                   Function() As Boolean
                                       ' Do not expect to be called in two procedures.
-                                      assert(request_body Is Nothing)
+                                      assert(Not request_body)
                                       If ec.end_result() Then
                                           If p.empty() Then
-                                              request_body = constant.[New](piece.blank)
+                                              request_body = [optional].of(piece.blank)
                                           Else
-                                              request_body = constant.[New](New piece(+p))
+                                              request_body = [optional].of(New piece(+p))
                                           End If
                                           Return eva(o, +request_body) AndAlso
                                                  goto_end()
                                       Else
-                                          request_body = constant.[New](piece.null)
+                                          request_body = [optional].of(piece.null)
                                           Return False
                                       End If
                                   End Function)
@@ -200,7 +200,7 @@ Partial Public NotInheritable Class server
             Dim ec As event_comb = Nothing
             Dim b As pointer(Of piece) = Nothing
             Return New event_comb(Function() As Boolean
-                                      If Not www_form_urlencoded_body Is Nothing Then
+                                      If www_form_urlencoded_body Then
                                           Return Not www_form_urlencoded_body.empty() AndAlso
                                                  eva(result, +www_form_urlencoded_body) AndAlso
                                                  goto_end()
@@ -213,7 +213,7 @@ Partial Public NotInheritable Class server
                                   End Function,
                                   Function() As Boolean
                                       ' Do not expect to be called in two procedures.
-                                      assert(www_form_urlencoded_body Is Nothing)
+                                      assert(Not www_form_urlencoded_body)
                                       If ec.end_result() Then
                                           Dim m As map(Of String, vector(Of String)) = Nothing
                                           Dim charset As String = Nothing
@@ -225,12 +225,12 @@ Partial Public NotInheritable Class server
                                               raise_error(error_type.user,
                                                           "Failed to parse www-form-urlencoded request body.")
                                           End If
-                                          www_form_urlencoded_body = constant.[New](New www_form_urlencoded(
+                                          www_form_urlencoded_body = [optional].of(New www_form_urlencoded(
                                                                       Me, is_www_form_urlencoded, charset, encoder, m))
                                           Return eva(result, +www_form_urlencoded_body) AndAlso
                                                  goto_end()
                                       Else
-                                          www_form_urlencoded_body = constant.[New](
+                                          www_form_urlencoded_body = [optional].of(
                                                                          [default](Of www_form_urlencoded).null)
                                           Return False
                                       End If
@@ -252,7 +252,7 @@ Partial Public NotInheritable Class server
                                                  goto_end()
                                       End If
 
-                                      If Not merged_query Is Nothing Then
+                                      If merged_query Then
                                           Return Not merged_query.empty() AndAlso
                                                  eva(result, +merged_query) AndAlso
                                                  goto_end()
@@ -273,11 +273,11 @@ Partial Public NotInheritable Class server
                                           While it <> (+p).query.end()
                                               assert(m((+it).first).emplace_back((+it).second))
                                           End While
-                                          merged_query = constant.[New](m)
+                                          merged_query = [optional].of(m)
                                           Return eva(result, m) AndAlso
                                                  goto_end()
                                       Else
-                                          merged_query = constant.[New](
+                                          merged_query = [optional].of(
                                                              [default](Of map(Of String, vector(Of String))).null)
                                           Return False
                                       End If
@@ -289,33 +289,33 @@ Partial Public NotInheritable Class server
         End Function
 
         Public Function parse_query() As map(Of String, vector(Of String))
-            If query Is Nothing Then
+            If Not query Then
                 Dim m As map(Of String, vector(Of String)) = Nothing
                 If Not url_query.parse(context.Request(), m, encoder) Then
                     assert(m Is Nothing)
                     raise_error(error_type.user, "Failed to parse url query.")
                 End If
-                query = constant.[New](m)
+                query = [optional].of(m)
             End If
-            assert(Not query Is Nothing)
+            assert(query)
             Return +query
         End Function
 
         Public Function parse_path() As vector(Of String)
-            If path Is Nothing Then
+            If Not path Then
                 Dim v As vector(Of String) = Nothing
                 If Not url_path.parse(context.Request(), v, encoder) Then
                     assert(v Is Nothing)
                     raise_error(error_type.user, "Failed to parse url path.")
                 End If
-                path = constant.[New](v)
+                path = [optional].of(v)
             End If
-            assert(Not path Is Nothing)
+            assert(path)
             Return +path
         End Function
 
         Public Function parse_method() As constants.request_method
-            If method Is Nothing Then
+            If Not method Then
                 Dim m As constants.request_method = Nothing
                 m = constants.request_method.GET
                 Dim s As String = Nothing
@@ -327,9 +327,9 @@ Partial Public NotInheritable Class server
                     End If
                 Next
 
-                method = constant.[New](m)
+                method = [optional].of(m)
             End If
-            assert(Not method Is Nothing)
+            assert(method)
             Return +method
         End Function
     End Class
