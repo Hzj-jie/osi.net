@@ -10,7 +10,7 @@ Imports osi.root.template
 
 ' An internal implementation for hashtable / hasharray / hashset.
 Public NotInheritable Class hasher_node(Of T)
-    Private Shared ReadOnly uninitialized_hash_value As UInt32 = max_uint32
+    Private Const uninitialized_hash_value As UInt32 = max_uint32
     Private ReadOnly v As T
     Private ReadOnly hasher As _to_uint32(Of T)
     Private hash_value As UInt32
