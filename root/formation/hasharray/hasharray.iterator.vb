@@ -80,7 +80,7 @@ Partial Public Class hasharray(Of T,
             p = that
         End Sub
 
-#If False Then
+#If True Then
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function is_end() As Boolean
             Return p.is_end()
@@ -237,7 +237,6 @@ Partial Public Class hasharray(Of T,
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Function is_equal(ByVal this As ref, ByVal that As ref) As Boolean
-            assert(Not this Is Nothing AndAlso Not that Is Nothing)
             Return this.is_equal_to(that)
         End Function
 
