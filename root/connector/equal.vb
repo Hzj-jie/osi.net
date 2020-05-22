@@ -161,9 +161,6 @@ Public Module _equal
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function do_non_null_equal(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
-        If this.GetHashCode() <> that.GetHashCode() Then
-            Return False
-        End If
         Dim o As Boolean = False
         If equaler(Of T, T2).defined() Then
             Return equaler.equal(this, that)
