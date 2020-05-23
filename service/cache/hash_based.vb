@@ -37,6 +37,6 @@ Public Class hash_based(Of KEY_T As IComparable(Of KEY_T), _HASH_SIZE As _int64,
     End Function
 
     Protected Function [select](ByVal i As UInt32) As CT
-        [select](CInt(i))
+        Return [select](CInt(i))
     End Function
 End Class
