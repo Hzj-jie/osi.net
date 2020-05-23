@@ -93,7 +93,7 @@ Partial Public Class dispenser(Of DATA_T, ID_T)
                                                       If i.accept((+result).second) Then
                                                           i.raise((+result).first, (+result).second)
                                                           accepted = True
-                                                          Throw break_lambda.instance
+                                                          break_lambda.at_here()
                                                       End If
                                                   End Sub)
                                           End If

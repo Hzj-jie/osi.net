@@ -107,7 +107,7 @@ Public MustInherit Class itoken_defender(Of COLLECTION As Class, CONNECTION)
                                 assert(Not current Is Nothing)
                                 If match(current) Then
                                     selected = current
-                                    Throw break_lambda.instance
+                                    break_lambda.at_here()
                                 End If
                             End Sub)
         eva(c, selected)

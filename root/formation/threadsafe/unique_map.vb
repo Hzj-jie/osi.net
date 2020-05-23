@@ -149,7 +149,7 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
             Return False
         End If
         Return [get](key,
-                     Function(x As VALUE_T) As Boolean
+                     Function(ByVal x As VALUE_T) As Boolean
                          action(x)
                          Return True
                      End Function)

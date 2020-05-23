@@ -14,9 +14,12 @@ Public Module selfhealth
     End Function
 
     Private Function set_self_health(ByVal b As Boolean) As Boolean
-        Return Not host.cases.stream().filter(Function(ByVal x As case_info) As Boolean
-                                                  Return TypeOf x.case Is failure_case
-                                              End Function).find_first().empty()
+        Return Not host.cases.stream().
+                              filter(Function(ByVal x As case_info) As Boolean
+                                         Return TypeOf x.case Is failure_case
+                                     End Function).
+                              find_first().
+                              empty()
     End Function
 
     Public Function run() As Boolean
