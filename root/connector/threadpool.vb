@@ -1,14 +1,17 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports System.Threading
-Imports osi.root.constants
 Imports osi.root.delegates
 
 Public Module _threadpool
     ' DISABLED <global_init(global_init_level.foundamental)>
     Private NotInheritable Class min_thread_count
         Shared Sub New()
-            assert(ThreadPool.SetMinThreads(4, 4))
+            assert(ThreadPool.SetMinThreads(Environment.ProcessorCount() >> 1, Environment.ProcessorCount() >> 1))
         End Sub
 
         Private Shared Sub init()
@@ -56,11 +59,10 @@ Public Module _threadpool
     <Extension()> Public Function start_thread(ByRef t As Thread, ByVal v As ThreadStart) As Boolean
         If v Is Nothing Then
             Return False
-        Else
-            t = New Thread(v)
-            t.Start()
-            Return True
         End If
+        t = New Thread(v)
+        t.Start()
+        Return True
     End Function
 
     <Extension()> Public Function start_thread(ByVal v As ThreadStart) As Thread
@@ -74,11 +76,10 @@ Public Module _threadpool
                                                ByVal p As Object) As Boolean
         If v Is Nothing Then
             Return False
-        Else
-            t = New Thread(v)
-            t.Start(p)
-            Return True
         End If
+        t = New Thread(v)
+        t.Start(p)
+        Return True
     End Function
 
     <Extension()> Public Function start_thread(ByVal v As ParameterizedThreadStart, ByVal p As Object) As Thread
