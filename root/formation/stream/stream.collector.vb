@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports System.Text
+Imports osi.root.connector
 
 Partial Public Class stream(Of T)
     Public NotInheritable Class collectors
