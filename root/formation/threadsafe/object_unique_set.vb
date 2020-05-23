@@ -1,12 +1,15 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.template
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.lock
-Imports osi.root.delegates
+Imports osi.root.template
 
-Public Class object_unique_set(Of T As Class)
+Public NotInheritable Class object_unique_set(Of T As Class)
     Inherits object_unique_set(Of T, _true)
 End Class
 
@@ -28,11 +31,13 @@ Public Class object_unique_set(Of T As Class, THREADSAFE As _boolean)
     End Function
 
     Private Function unlocked_insert(ByVal o As T) As Boolean
-        For i As Int64 = 0 To v.size() - 1
+        Dim i As UInt32 = 0
+        While i < v.size()
             If object_same(v(i), o) Then
                 Return False
             End If
-        Next
+            i += uint32_1
+        End While
         v.emplace_back(o)
         Return True
     End Function
@@ -40,11 +45,11 @@ Public Class object_unique_set(Of T As Class, THREADSAFE As _boolean)
     Public Function insert(ByVal i As T) As Boolean
         If i Is Nothing Then
             Return False
-        ElseIf thread_safe Then
-            Return l.writer_locked(Function() unlocked_insert(i))
-        Else
-            Return unlocked_insert(i)
         End If
+        If thread_safe Then
+            Return l.writer_locked(Function() unlocked_insert(i))
+        End If
+        Return unlocked_insert(i)
     End Function
 
     Public Sub clear()
@@ -70,20 +75,19 @@ Public Class object_unique_set(Of T As Class, THREADSAFE As _boolean)
     Public Function [erase](ByVal w As T) As Boolean
         If w Is Nothing Then
             Return False
-        ElseIf thread_safe Then
-            Return l.writer_locked(Function() unlock_erase(w))
-        Else
-            Return unlock_erase(w)
         End If
+        If thread_safe Then
+            Return l.writer_locked(Function() unlock_erase(w))
+        End If
+        Return unlock_erase(w)
     End Function
 
     Default Public Property at(ByVal i As UInt32) As T
         Get
             If thread_safe Then
                 Return l.reader_locked(Function() v(i))
-            Else
-                Return v(i)
             End If
+            Return v(i)
         End Get
         Set(ByVal value As T)
             If thread_safe Then
@@ -98,25 +102,23 @@ Public Class object_unique_set(Of T As Class, THREADSAFE As _boolean)
         If v.available_index(i) Then
             o = v(i)
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 
     Public Function [get](ByVal i As UInt32, ByRef o As T) As Boolean
-        If thread_safe Then
-            Dim x As T = Nothing
-            If l.reader_locked(Function() As Boolean
-                                   Return unlocked_get(i, x)
-                               End Function) Then
-                o = x
-                Return True
-            Else
-                Return False
-            End If
-        Else
+        If Not thread_safe Then
             Return unlocked_get(i, o)
         End If
+
+        Dim x As T = Nothing
+        If l.reader_locked(Function() As Boolean
+                               Return unlocked_get(i, x)
+                           End Function) Then
+            o = x
+            Return True
+        End If
+        Return False
     End Function
 
     Public Function size() As UInt32
@@ -124,10 +126,16 @@ Public Class object_unique_set(Of T As Class, THREADSAFE As _boolean)
     End Function
 
     Public Function empty() As Boolean
-        Return If(thread_safe, l.reader_locked(Function() v.empty()), v.size())
+        Return If(thread_safe, l.reader_locked(Function() v.empty()), v.empty())
     End Function
 
-    Public Function foreach(ByVal d As _do(Of T, Boolean, Boolean)) As Boolean
-        Return If(thread_safe, l.reader_locked(Function() v.foreach(d)), v.foreach(d))
-    End Function
+    Public Sub foreach(ByVal f As Action(Of T))
+        If thread_safe Then
+            l.reader_locked(Sub()
+                                v.stream().foreach(f)
+                            End Sub)
+        Else
+            v.stream().foreach(f)
+        End If
+    End Sub
 End Class

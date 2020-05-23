@@ -7,7 +7,6 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.lock
 
@@ -16,19 +15,15 @@ Imports lock_t = osi.root.lock.slimlock.monitorlock
 #End If
 
 Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, VALUE_T)
-    Private ReadOnly m As hashmap(Of KEY_T, STORE_T)
+    Private ReadOnly m As unordered_map(Of KEY_T, STORE_T)
 #If USE_DUALLOCK Then
     Private l As duallock
 #Else
     Private l As lock_t
 #End If
 
-    Public Sub New(ByVal hash_size As UInt32)
-        m = New hashmap(Of KEY_T, STORE_T)(hash_size)
-    End Sub
-
     Public Sub New()
-        m = New hashmap(Of KEY_T, STORE_T)()
+        m = New unordered_map(Of KEY_T, STORE_T)()
     End Sub
 
     Protected MustOverride Function store_value(ByVal i As STORE_T, ByRef o As VALUE_T) As Boolean
@@ -85,7 +80,7 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
         If key Is Nothing Then
             Return False
         Else
-            Dim it As hashmap(Of KEY_T, STORE_T).iterator = Nothing
+            Dim it As unordered_map(Of KEY_T, STORE_T).iterator = Nothing
             it = m.find(key)
             If it = m.end() Then
                 Return False
@@ -142,7 +137,7 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
         Else
             Return reader_locked(Function() As T
                                      Dim v As VALUE_T = Nothing
-                                     Dim it As hashmap(Of KEY_T, STORE_T).iterator = Nothing
+                                     Dim it As unordered_map(Of KEY_T, STORE_T).iterator = Nothing
                                      it = m.find(key)
                                      If it <> m.end() AndAlso
                                         store_value((+it).second, v) Then
@@ -215,7 +210,7 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
             o = v
             Dim result As Boolean = False
             result = writer_locked(Function() As Boolean
-                                       Dim it As hashmap(Of KEY_T, STORE_T).iterator = Nothing
+                                       Dim it As unordered_map(Of KEY_T, STORE_T).iterator = Nothing
                                        Dim r As VALUE_T = Nothing
                                        it = m.find(k)
                                        If it = m.end() OrElse Not store_value((+it).second, r) Then
@@ -270,22 +265,5 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
 
     Public Function generate(Of VT As {VALUE_T, New})(ByVal key As KEY_T) As VALUE_T
         Return generate(key, Function() New VT())
-    End Function
-
-    Public Function foreach(ByVal d As _do(Of KEY_T, VALUE_T, Boolean, Boolean)) As Boolean
-        If d Is Nothing Then
-            Return False
-        Else
-            Return reader_locked(Function() m.foreach(
-                                     Function(ByRef x As KEY_T, ByRef y As STORE_T, ByRef c As Boolean) As Boolean
-                                         Dim v As VALUE_T = Nothing
-                                         If store_value(y, v) Then
-                                             Return d(x, v, c)
-                                         Else
-                                             c = True
-                                             Return True
-                                         End If
-                                     End Function))
-        End If
     End Function
 End Class

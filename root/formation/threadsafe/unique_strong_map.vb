@@ -6,10 +6,6 @@ Option Strict On
 Public Class unique_strong_map(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     Inherits unique_map(Of KEY_T, VALUE_T, VALUE_T)
 
-    Public Sub New(ByVal hash_size As UInt32)
-        MyBase.New(hash_size)
-    End Sub
-
     Public Sub New()
         MyBase.New()
     End Sub

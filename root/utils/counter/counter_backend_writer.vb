@@ -58,7 +58,7 @@ Namespace counter
 
         Private Sub write()
             If write_entry.mark_in_use() Then
-                foreach(Sub(ByRef cr As counter_record)
+                foreach(Sub(ByVal cr As counter_record)
                             assert(Not cr Is Nothing)
                             If cr.has_value() Then
                                 write(cr)

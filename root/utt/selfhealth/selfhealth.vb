@@ -15,15 +15,12 @@ Public Module selfhealth
 
     Private Function set_self_health(ByVal b As Boolean) As Boolean
         Dim found As Boolean = False
-        Return host.foreach(Function(ByRef x) As Boolean
-                                If TypeOf x.case Is failure_case Then
-                                    If found Then
-                                        Return False
-                                    End If
-                                    found = True
-                                End If
-                                Return True
-                            End Function) AndAlso found
+        host.foreach(Sub(ByVal x As case_info)
+                         If TypeOf x.case Is failure_case Then
+                             found = True
+                         End If
+                     End Sub)
+        Return found
     End Function
 
     Public Function run() As Boolean
@@ -46,9 +43,8 @@ Public Module selfhealth
                 set_self_health(False)) OrElse
                envs.utt_no_assert Then
                 assertion.clear_failure()
-            Else
-                Return False
             End If
+            Return False
         Next
 
         Return True

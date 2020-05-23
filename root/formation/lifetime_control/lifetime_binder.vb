@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.delegates
 
@@ -24,20 +28,10 @@ Public Class lifetime_binder(Of T As Class)
         assert(s.erase(i))
     End Sub
 
-    Public Function foreach(ByVal d As _do(Of T, Boolean, Boolean)) As Boolean
-        If d Is Nothing Then
-            Return False
-        Else
-            Return s.foreach(Function(ByRef x, ByRef y) d(+x, y))
-        End If
-    End Function
-
     Public Sub clear()
-        assert(s.foreach(Function(ByRef i As pointer(Of T), ByRef c As Boolean) As Boolean
-                             disposable.dispose(+i)
-                             c = True
-                             Return True
-                         End Function))
+        s.foreach(Sub(ByVal i As pointer(Of T))
+                      disposable.dispose(+i)
+                  End Sub)
         s.clear()
     End Sub
 

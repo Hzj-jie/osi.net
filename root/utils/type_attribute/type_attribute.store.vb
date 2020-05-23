@@ -1,15 +1,18 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.template
 Imports osi.root.formation
 
 Partial Public Class type_attribute
-    Private Class store
+    Private NotInheritable Class store
         Public Shared ReadOnly m As unique_strong_map(Of comparable_type, store)
         Private Shared ReadOnly ctor As Func(Of store)
 
         Shared Sub New()
-            m = New unique_strong_map(Of comparable_type, store)(127)
+            m = New unique_strong_map(Of comparable_type, store)()
             ctor = Function() As store
                        Return New store()
                    End Function

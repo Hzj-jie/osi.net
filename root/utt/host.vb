@@ -131,36 +131,22 @@ Partial Friend NotInheritable Class host
         End If
     End Function
 
-    Public Shared Function foreach(ByVal d As _do(Of case_info, Boolean, Boolean)) As Boolean
-        If d Is Nothing Then
-            Return False
-        Else
-            Return cases.foreach(d)
-        End If
-    End Function
-
-    Public Shared Function foreach(ByVal d As _do(Of case_info, Boolean)) As Boolean
-        Return utils.foreach(AddressOf foreach, d)
-    End Function
-
-    Public Shared Function foreach(ByVal d As void(Of case_info)) As Boolean
-        Return utils.foreach(AddressOf foreach, d)
-    End Function
-
     Public Shared Sub clear_selection()
-        foreach(Sub(ByRef x) x.finished = False)
+        cases.stream().foreach(Sub(ByVal x As case_info)
+                                   x.finished = False
+                               End Sub)
     End Sub
 
     Public Shared Function run(ByVal selector As vector(Of String)) As Int32
         Dim r As Int32 = 0
         clear_selection()
-        foreach(Sub(ByRef x)
-                    If [select](selector, x) Then
-                        r += 1
-                    Else
-                        x.finished = True
-                    End If
-                End Sub)
+        cases.stream().foreach(Sub(ByVal x)
+                                   If [select](selector, x) Then
+                                       r += 1
+                                   Else
+                                       x.finished = True
+                                   End If
+                               End Sub)
 
         host.run()
         Return r

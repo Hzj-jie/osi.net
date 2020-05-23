@@ -56,14 +56,14 @@ Namespace counter
                                    End Function)
         End Function
 
-        Friend Sub foreach(ByVal d As void(Of counter_record))
+        Friend Sub foreach(ByVal d As Action(Of counter_record))
             assert(Not d Is Nothing)
             l.reader_locked(Sub()
-                                assert(utils.foreach(AddressOf v.foreach, d))
+                                v.stream().foreach(d)
                             End Sub)
         End Sub
 
-        Friend Sub workon(ByVal i As Int64, ByVal d As void(Of counter_record))
+        Friend Sub workon(ByVal i As Int64, ByVal d As Action(Of counter_record))
             assert(Not d Is Nothing)
             assert(i <= max_uint32)
             assert(i >= 0)
