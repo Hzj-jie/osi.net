@@ -133,6 +133,11 @@
     <Compile Include="set.vb" />
     <Compile Include="setqueue.vb" />
     <Compile Include="stack.vb" />
+    <Compile Include="stream\stream.aggregator.vb" />
+    <Compile Include="stream\stream.collector.vb" />
+    <Compile Include="stream\stream.container.vb" />
+    <Compile Include="stream\stream.vb" />
+    <Compile Include="stream\streams.vb" />
     <Compile Include="ternary.vb" />
     <Compile Include="threadsafe\arrayless.vb" />
     <Compile Include="threadsafe\cycle.vb" />
