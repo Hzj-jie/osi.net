@@ -33,30 +33,14 @@ Public Class hash_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T, HASH_SIZE As
         MyBase.New(d)
     End Sub
 
-    Private Function foreach(ByVal d As Func(Of icache(Of KEY_T, VALUE_T), Boolean)) As Boolean
-        assert(Not d Is Nothing)
-        For i As Int32 = 0 To hash_size() - 1
-            If Not d([select](i)) Then
-                Return False
-            End If
-        Next
-        Return True
-    End Function
-
-    Private Sub foreach(ByVal d As Action(Of icache(Of KEY_T, VALUE_T)))
-        assert(Not d Is Nothing)
-        assert(foreach(Function(ByVal x As icache(Of KEY_T, VALUE_T)) As Boolean
-                           d(x)
-                           Return True
-                       End Function))
-    End Sub
-
     Public Function [get](ByVal key As KEY_T) As VALUE_T Implements icache(Of KEY_T, VALUE_T).get
         Return [select](key).get(key)
     End Function
 
     Public Sub clear() Implements icache(Of KEY_T, VALUE_T).clear
-        foreach(Sub(ByVal x) x.clear())
+        For i As Int32 = 0 To hash_size() - 1
+            [select](i).clear()
+        Next
     End Sub
 
     Public Function [erase](ByVal key As KEY_T) As Boolean Implements icache(Of KEY_T, VALUE_T).erase
@@ -74,12 +58,20 @@ Public Class hash_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T, HASH_SIZE As
 
     Public Function size() As Int64 Implements icache(Of KEY_T, VALUE_T).size
         Dim r As Int64 = 0
-        foreach(Sub(ByVal x) r += x.size())
+        For i As Int32 = 0 To hash_size() - 1
+            r += [select](i).size()
+        Next
         Return r
     End Function
 
     Public Function empty() As Boolean Implements icache(Of KEY_T, VALUE_T).empty
-        Return foreach(Function(ByVal x) x.empty())
+        Dim r As Int64 = 0
+        For i As Int32 = 0 To hash_size() - 1
+            If Not [select](i).empty() Then
+                Return False
+            End If
+        Next
+        Return True
     End Function
 
     Public Function have(ByVal key As KEY_T) As Boolean Implements icache(Of KEY_T, VALUE_T).have
