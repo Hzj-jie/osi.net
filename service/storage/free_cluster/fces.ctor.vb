@@ -9,21 +9,20 @@ Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.service.argument
-Imports osi.service.convertor
 Imports osi.service.selector
 Imports constructor = osi.service.device.constructor
-Imports store_t = osi.root.formation.hashmap(Of osi.root.formation.array_pointer(Of Byte),
-                                                osi.root.formation.pair(Of System.Int64, System.Int64))
+Imports store_t = osi.root.formation.unordered_map(Of osi.root.formation.array_pointer(Of Byte),
+                                                      osi.root.formation.pair(Of System.Int64, System.Int64))
 
 <global_init(global_init_level.server_services)>
-Partial Public Class fces
+Partial Public NotInheritable Class fces
     Private Sub New(ByVal index As free_cluster, ByVal content As free_cluster, ByVal max_key_count As Int64)
         assert(Not index Is Nothing)
         assert(Not content Is Nothing)
         Me.index = index
         Me.content = content
         Me.max_key_count = If(max_key_count <= 0, max_int64, max_key_count)
-        Me.m = New store_t(1023)
+        Me.m = New store_t()
     End Sub
 
     Private Shared Function ctor(ByVal r As pointer(Of fces),

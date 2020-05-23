@@ -71,8 +71,13 @@ Partial Public Class stream(Of T)
     Public Sub foreach(ByVal f As Action(Of T))
         assert(Not f Is Nothing)
         While Not e.end()
-            f(e.current())
-            e.next()
+            Try
+                f(e.current())
+            Catch ex As break_lambda
+                Return
+            Finally
+                e.next()
+            End Try
         End While
     End Sub
 
@@ -81,19 +86,7 @@ Partial Public Class stream(Of T)
     End Function
 
     Public Function to_array() As T()
-        Dim r() As T = Nothing
-        ReDim r(1)
-        Dim i As Int32 = 0
-        While Not e.end()
-            If i = array_size_i(r) Then
-                ReDim Preserve r(i << 1)
-            End If
-            r(i) = e.current()
-            i += 1
-            e.next()
-        End While
-        ReDim Preserve r(i - 1)
-        Return r
+        Return +collect(Of vector(Of T))()
     End Function
 
     Public Function flat_map(Of R)(ByVal f As Func(Of T, stream(Of R))) As stream(Of R)
@@ -103,5 +96,15 @@ Partial Public Class stream(Of T)
                                             Return s.e
                                         End Function).
                                     to_array()))
+    End Function
+
+    Public Function find_first() As [optional](Of T)
+        If e.end() Then
+            Return [optional].empty(Of T)()
+        End If
+        Dim r As [optional](Of T) = Nothing
+        r = [optional].of(e.current())
+        e.next()
+        Return r
     End Function
 End Class

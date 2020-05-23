@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.service.transmitter
@@ -86,19 +87,15 @@ Partial Public Class dispenser(Of DATA_T, ID_T)
                                       If Not result.empty() Then
                                           Dim accepted As Boolean = False
                                           If Not accepters.empty() Then
-                                              assert(accepters.foreach(
-                                                         Function(ByRef i As accepter,
-                                                                  ByRef [continue] As Boolean) As Boolean
-                                                             assert(Not i Is Nothing)
-                                                             If i.accept((+result).second) Then
-                                                                 i.raise((+result).first, (+result).second)
-                                                                 accepted = True
-                                                                 [continue] = False
-                                                             Else
-                                                                 [continue] = True
-                                                             End If
-                                                             Return True
-                                                         End Function))
+                                              accepters.foreach(
+                                                  Sub(ByVal i As accepter)
+                                                      assert(Not i Is Nothing)
+                                                      If i.accept((+result).second) Then
+                                                          i.raise((+result).first, (+result).second)
+                                                          accepted = True
+                                                          Throw break_lambda.instance
+                                                      End If
+                                                  End Sub)
                                           End If
                                           If Not accepted Then
                                               RaiseEvent unaccepted((+result).first, (+result).second)

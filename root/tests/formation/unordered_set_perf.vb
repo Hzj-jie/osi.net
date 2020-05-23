@@ -56,9 +56,8 @@ Public Class unordered_set_perf(Of T, _RND As __do(Of T))
     End Sub
 
     Public Sub New(ByVal percentages() As Double)
-        MyBase.New(R(New unordered_set_case(percentages)),
-                   R(New unordered_set2_case(percentages)),
-                   R(New set_case(percentages)))
+        MyBase.New(r(New unordered_set_case(percentages)),
+                   r(New set_case(percentages)))
     End Sub
 
     Protected Shared Function low_item_count_percentages() As Double()
@@ -71,7 +70,7 @@ Public Class unordered_set_perf(Of T, _RND As __do(Of T))
         Return {0.25, 0.25, 0.25, 0.24999, 0.00001}
     End Function
 
-    Private Shared Function R(ByVal c As [case]) As [case]
+    Private Shared Function r(ByVal c As [case]) As [case]
         Return repeat(c, 1024 * 256)
     End Function
 
@@ -122,37 +121,6 @@ Public Class unordered_set_perf(Of T, _RND As __do(Of T))
         Public Sub New(ByVal percentages() As Double)
             MyBase.New(percentages)
             s = New unordered_set(Of T)()
-        End Sub
-
-        Protected Overrides Sub clear()
-            s.clear()
-        End Sub
-
-        Protected Overrides Sub emplace(ByVal v As T)
-            s.emplace(v)
-        End Sub
-
-        Protected Overrides Sub [erase](ByVal v As T)
-            s.erase(v)
-        End Sub
-
-        Protected Overrides Sub find(ByVal v As T)
-            s.find(v)
-        End Sub
-
-        Protected Overrides Sub insert(ByVal v As T)
-            s.insert(v)
-        End Sub
-    End Class
-
-    Private Class unordered_set2_case
-        Inherits perf_case
-
-        Private ReadOnly s As unordered_set2(Of T)
-
-        Public Sub New(ByVal percentages() As Double)
-            MyBase.New(percentages)
-            s = New unordered_set2(Of T)()
         End Sub
 
         Protected Overrides Sub clear()

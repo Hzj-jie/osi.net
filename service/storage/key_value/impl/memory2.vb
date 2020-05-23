@@ -8,10 +8,10 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.argument
 Imports osi.service.device
-Imports store_t = osi.root.formation.hashmap(Of osi.root.formation.array_pointer(Of Byte), Byte())
+Imports store_t = osi.root.formation.unordered_map(Of osi.root.formation.array_pointer(Of Byte), Byte())
 
 <global_init(global_init_level.server_services)>
-Public Class memory2
+Public NotInheritable Class memory2
     Implements isynckeyvalue2(Of store_t.iterator)
 
     Private ReadOnly max_value_size As Int64
@@ -20,7 +20,7 @@ Public Class memory2
 
     Public Sub New(Optional ByVal max_value_size As Int64 = npos)
         Me.max_value_size = If(max_value_size <= 0, max_int64, max_value_size)
-        m = New store_t(63)
+        m = New store_t()
         vs = 0
     End Sub
 
@@ -31,27 +31,25 @@ Public Class memory2
     Private Function enough_storage(ByVal inc As Int64) As Boolean
         If inc < 0 Then
             Return True
-        Else
-            Dim c As Int64 = 0
-            assert(capacity(c))
-            Return inc + vs <= c
         End If
+        Dim c As Int64 = 0
+        assert(capacity(c))
+        Return inc + vs <= c
     End Function
 
     Public Function append_existing(ByVal it As store_t.iterator,
                                     ByVal value() As Byte,
                                     ByRef result As Boolean) As Boolean _
                                    Implements isynckeyvalue2(Of store_t.iterator).append_existing
-        assert(Not it Is Nothing AndAlso it <> m.end())
-        If enough_storage(array_size(value)) Then
-            Dim original_size As UInt32 = 0
-            original_size = array_size((+it).second)
-            ReDim Preserve (+it).second(CInt(original_size) + array_size_i(value) - 1)
-            arrays.copy((+it).second, original_size, value)
-            result = True
-        Else
+        assert(it <> m.end())
+        If Not enough_storage(array_size(value)) Then
             Return False
         End If
+        Dim original_size As UInt32 = 0
+        original_size = array_size((+it).second)
+        ReDim Preserve (+it).second(CInt(original_size) + array_size_i(value) - 1)
+        arrays.copy((+it).second, original_size, value)
+        result = True
         Return True
     End Function
 
@@ -106,7 +104,7 @@ Public Class memory2
     Public Function read_existing(ByVal it As store_t.iterator,
                                   ByRef value() As Byte) As Boolean _
                                  Implements isynckeyvalue2(Of store_t.iterator).read_existing
-        assert(Not it Is Nothing AndAlso it <> m.end())
+        assert(it <> m.end())
         value = copy((+it).second)
         Return True
     End Function
@@ -128,7 +126,7 @@ Public Class memory2
     Public Function sizeof_existing(ByVal it As store_t.iterator,
                                     ByRef result As Int64) As Boolean _
                                    Implements isynckeyvalue2(Of store_t.iterator).sizeof_existing
-        assert(Not it Is Nothing AndAlso it <> m.end())
+        assert(it <> m.end())
         result = array_size((+it).second)
         Return True
     End Function
@@ -159,16 +157,15 @@ Public Class memory2
     Public Shared Function create(ByVal p As var, ByRef o As memory2) As Boolean
         If p Is Nothing Then
             Return False
-        Else
-            Dim v As Int64 = 0
-            If p.other_values().empty() OrElse
-               Not Int64.TryParse(p.other_values()(0), v) Then
-                o = New memory2()
-            Else
-                o = New memory2(v)
-            End If
-            Return True
         End If
+        Dim v As Int64 = 0
+        If p.other_values().empty() OrElse
+           Not Int64.TryParse(p.other_values()(0), v) Then
+            o = New memory2()
+        Else
+            o = New memory2(v)
+        End If
+        Return True
     End Function
 
     Private Shared Sub init()

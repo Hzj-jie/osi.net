@@ -7,10 +7,10 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports store_t = osi.root.formation.hashmap(Of osi.root.formation.array_pointer(Of Byte),
-                                                osi.root.formation.pair(Of System.Int64, System.Int64))
+Imports store_t = osi.root.formation.unordered_map(Of osi.root.formation.array_pointer(Of Byte),
+                                                      osi.root.formation.pair(Of System.Int64, System.Int64))
 
-Partial Public Class fces
+Partial Public NotInheritable Class fces
     Private ReadOnly index As free_cluster
     Private ReadOnly content As free_cluster
     Private ReadOnly max_key_count As Int64
@@ -128,12 +128,11 @@ Partial Public Class fces
     End Function
 
     Private Function find_cluster_id(ByVal it As store_t.iterator, ByRef iid As Int64, ByRef cid As Int64) As Boolean
-        If it Is Nothing OrElse it = m.end() Then
+        If it = m.end() Then
             Return False
-        Else
-            iid = (+it).second.first
-            cid = (+it).second.second
-            Return True
         End If
+        iid = (+it).second.first
+        cid = (+it).second.second
+        Return True
     End Function
 End Class

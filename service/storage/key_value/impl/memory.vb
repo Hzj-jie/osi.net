@@ -8,10 +8,10 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.argument
 Imports osi.service.device
-Imports store_t = osi.root.formation.hashmap(Of osi.root.formation.array_pointer(Of Byte), Byte())
+Imports store_t = osi.root.formation.unordered_map(Of osi.root.formation.array_pointer(Of Byte), Byte())
 
 <global_init(global_init_level.server_services)>
-Public Class memory
+Public NotInheritable Class memory
     Implements isynckeyvalue
     Private ReadOnly max_value_size As Int64
     Private ReadOnly m As store_t
@@ -19,7 +19,7 @@ Public Class memory
 
     Public Sub New(Optional ByVal max_value_size As Int64 = npos)
         Me.max_value_size = If(max_value_size <= 0, max_int64, max_value_size)
-        m = New store_t(63)
+        m = New store_t()
         vs = 0
     End Sub
 
@@ -183,16 +183,15 @@ Public Class memory
     Public Shared Function create(ByVal p As var, ByRef o As memory) As Boolean
         If p Is Nothing Then
             Return False
-        Else
-            Dim v As Int64 = 0
-            If p.other_values().empty() OrElse
-               Not Int64.TryParse(p.other_values()(0), v) Then
-                o = New memory()
-            Else
-                o = New memory(v)
-            End If
-            Return True
         End If
+        Dim v As Int64 = 0
+        If p.other_values().empty() OrElse
+               Not Int64.TryParse(p.other_values()(0), v) Then
+            o = New memory()
+        Else
+            o = New memory(v)
+        End If
+        Return True
     End Function
 
     Private Shared Sub init()

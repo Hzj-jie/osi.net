@@ -8,10 +8,10 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
-Imports store_t = osi.root.formation.hashmap(Of osi.root.formation.array_pointer(Of Byte),
-                                                osi.root.formation.pair(Of System.Int64, System.Int64))
+Imports store_t = osi.root.formation.unordered_map(Of osi.root.formation.array_pointer(Of Byte),
+                                                      osi.root.formation.pair(Of System.Int64, System.Int64))
 
-Partial Public Class fces
+Partial Public NotInheritable Class fces
     Implements ikeyvalue2(Of store_t.iterator)
 
     Public Function append_existing(ByVal it As store_t.iterator,

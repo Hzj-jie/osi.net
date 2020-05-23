@@ -3,9 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root
 Imports osi.root.connector
-Imports osi.root.delegates
 Imports osi.root.lock
 Imports osi.root.utils
 Imports mhc = osi.service.cache.constants.mapheap_cache
@@ -18,13 +16,8 @@ Public Module _cache
         Return New cache(Of KEY_T, VALUE_T)(i)
     End Function
 
-    Public Function hashmap_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)(ByVal hash_size As UInt32) _
-                                 As icache(Of KEY_T, VALUE_T)
-        Return wrapper(New hashmap_cache(Of KEY_T, VALUE_T)(hash_size))
-    End Function
-
-    Public Function hashmap_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)() As icache(Of KEY_T, VALUE_T)
-        Return wrapper(New hashmap_cache(Of KEY_T, VALUE_T)())
+    Public Function unordered_map_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)() As icache(Of KEY_T, VALUE_T)
+        Return wrapper(New unordered_map_cache(Of KEY_T, VALUE_T)())
     End Function
 
     Public Function map_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)() As icache(Of KEY_T, VALUE_T)
@@ -97,16 +90,6 @@ Public Class cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
         Return l.locked(Function() c.empty())
     End Function
 
-    Public Function foreach(ByVal d As _do(Of KEY_T, VALUE_T, Boolean)) As Boolean _
-                           Implements icache(Of KEY_T, VALUE_T).foreach
-        Return utils.foreach(AddressOf foreach, d)
-    End Function
-
-    Public Function foreach(ByVal d As void(Of KEY_T, VALUE_T)) As Boolean _
-                           Implements icache(Of KEY_T, VALUE_T).foreach
-        Return utils.foreach(AddressOf foreach, d)
-    End Function
-
     Public Function [get](ByVal key As KEY_T) As VALUE_T Implements icache(Of KEY_T, VALUE_T).get
         Dim r As VALUE_T = Nothing
         If [get](key, r) Then
@@ -126,11 +109,6 @@ Public Class cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
 
     Public Function [erase](ByVal key As KEY_T) As Boolean Implements icache(Of KEY_T, VALUE_T).erase
         Return l.locked(Function() c.erase(key))
-    End Function
-
-    Public Function foreach(ByVal d As _do(Of KEY_T, VALUE_T, Boolean, Boolean)) As Boolean _
-                           Implements icache(Of KEY_T, VALUE_T).foreach
-        Return l.locked(Function() c.foreach(d))
     End Function
 
     Public Function [get](ByVal key As KEY_T, ByRef value As VALUE_T) As Boolean _

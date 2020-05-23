@@ -1,6 +1,8 @@
 ﻿
 ##INCLUDE iterator.imports.vbp
 
+##DEFINE TYPE_IS_STRUCT True
+
 Public Module _list_iterator
 ##DEFINE PARENT_CLASS list(Of T)
 ##DEFINE TEMPLATE_TYPE (Of T)
@@ -11,7 +13,6 @@ Partial Public Class list(Of T)
     Public Structure iterator
 ##DEFINE TYPE node
 ##DEFINE DEFINE_OPERATOR_PLUS False
-##DEFINE TYPE_IS_STRUCT True
 ##INCLUDE random_access_iterator.vbp
 
         Private Function move_prev(ByVal s As UInt32) As iterator

@@ -1,10 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 #Const bypass_empty_token = False
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.procedure
-Imports osi.root.formation
 Imports osi.root.utils
 
 Public MustInherit Class itoken_defender(Of COLLECTION As Class, CONNECTION)
@@ -99,17 +103,13 @@ Public MustInherit Class itoken_defender(Of COLLECTION As Class, CONNECTION)
                                         ByVal c As pointer(Of COLLECTION)) As Boolean
         assert(Not match Is Nothing)
         Dim selected As COLLECTION = Nothing
-        assert(powerpoints.foreach(Function(ByRef current As COLLECTION,
-                                            ByRef [continue] As Boolean) As Boolean
-                                       assert(Not current Is Nothing)
-                                       If match(current) Then
-                                           selected = current
-                                           [continue] = False
-                                       Else
-                                           [continue] = True
-                                       End If
-                                       Return True
-                                   End Function))
+        powerpoints.foreach(Sub(ByVal current As COLLECTION)
+                                assert(Not current Is Nothing)
+                                If match(current) Then
+                                    selected = current
+                                    Throw break_lambda.instance
+                                End If
+                            End Sub)
         eva(c, selected)
         Return Not selected Is Nothing
     End Function

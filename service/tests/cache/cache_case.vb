@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.delegates
 Imports osi.root.utt
 Imports osi.service.cache
 
@@ -28,10 +27,9 @@ Public Class cache_case
         End If
         insert_call(0.3, AddressOf [set])
         insert_call(0.3, AddressOf [get])
-        insert_call(0.1, AddressOf size)
+        insert_call(0.125, AddressOf size)
         insert_call(0.0001, AddressOf clear)
-        insert_call(0.1, AddressOf [erase])
-        insert_call(0.05, AddressOf foreach)
+        insert_call(0.125, AddressOf [erase])
         insert_call(0.1, AddressOf have)
         insert_call(0.0499, AddressOf empty)
     End Sub
@@ -85,25 +83,6 @@ Public Class cache_case
             assertion.equal(s1.erase(k), s2.erase(k))
         Else
             s1.erase(k)
-        End If
-    End Sub
-
-    Private Sub foreach()
-        Dim c As Int64 = 0
-        Dim f As void(Of String, Byte()) = Sub(ByRef k As String, ByRef v() As Byte)
-                                               If validate() Then
-                                                   c += 1
-                                                   assertion.is_true(key_value(k, v))
-                                               End If
-                                           End Sub
-        c = 0
-        assertion.is_true(s1.foreach(f))
-        If validate() Then
-            assertion.equal(c, s1.size())
-            c = 0
-            s2.foreach(f)
-            assertion.equal(c, s1.size())
-            assertion.equal(c, s2.size())
         End If
     End Sub
 

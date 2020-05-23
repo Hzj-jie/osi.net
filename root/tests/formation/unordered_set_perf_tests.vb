@@ -3,8 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.envs
-
 Public NotInheritable Class unordered_set_uint_perf
     Inherits unordered_set_perf(Of UInt32, unordered_set_perf_templates.small_range_uint)
 

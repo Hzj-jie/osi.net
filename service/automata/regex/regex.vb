@@ -1,8 +1,11 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.utils
 
 Partial Public Class rlexer
     Partial Public Class regex
@@ -34,7 +37,7 @@ Partial Public Class rlexer
                 c = gs(index).match(i, poses(j))
                 assert(c Is Nothing OrElse o.emplace(c))
             Next
-            Return o.emplace_to_vector()
+            Return o.stream().collect(Of vector(Of UInt32))()
         End Function
 
         Public Function match(ByVal i As String,

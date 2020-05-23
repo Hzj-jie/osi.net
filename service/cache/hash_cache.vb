@@ -1,8 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utils
 Imports osi.root.template
-Imports osi.root.delegates
 Imports mhc = osi.service.cache.constants.mapheap_cache
 
 Public Class hash_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
@@ -31,7 +33,7 @@ Public Class hash_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T, HASH_SIZE As
         MyBase.New(d)
     End Sub
 
-    Private Function foreach(ByVal d As _do(Of icache(Of KEY_T, VALUE_T), Boolean)) As Boolean
+    Private Function foreach(ByVal d As Func(Of icache(Of KEY_T, VALUE_T), Boolean)) As Boolean
         assert(Not d Is Nothing)
         For i As Int32 = 0 To hash_size() - 1
             If Not d([select](i)) Then
@@ -41,35 +43,20 @@ Public Class hash_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T, HASH_SIZE As
         Return True
     End Function
 
-    Private Sub foreach(ByVal d As void(Of icache(Of KEY_T, VALUE_T)))
+    Private Sub foreach(ByVal d As Action(Of icache(Of KEY_T, VALUE_T)))
         assert(Not d Is Nothing)
-        assert(foreach(Function(ByRef x As icache(Of KEY_T, VALUE_T)) As Boolean
+        assert(foreach(Function(ByVal x As icache(Of KEY_T, VALUE_T)) As Boolean
                            d(x)
                            Return True
                        End Function))
     End Sub
-
-    Public Function foreach(ByVal d As _do(Of KEY_T, VALUE_T, Boolean, Boolean)) As Boolean _
-                           Implements icache(Of KEY_T, VALUE_T).foreach
-        Return foreach(Function(ByRef x) x.foreach(d))
-    End Function
-
-    Public Function foreach(ByVal d As _do(Of KEY_T, VALUE_T, Boolean)) As Boolean _
-                           Implements icache(Of KEY_T, VALUE_T).foreach
-        Return foreach(Function(ByRef x) x.foreach(d))
-    End Function
-
-    Public Function foreach(ByVal d As void(Of KEY_T, VALUE_T)) As Boolean _
-                           Implements icache(Of KEY_T, VALUE_T).foreach
-        Return foreach(Function(ByRef x) x.foreach(d))
-    End Function
 
     Public Function [get](ByVal key As KEY_T) As VALUE_T Implements icache(Of KEY_T, VALUE_T).get
         Return [select](key).get(key)
     End Function
 
     Public Sub clear() Implements icache(Of KEY_T, VALUE_T).clear
-        foreach(Sub(ByRef x) x.clear())
+        foreach(Sub(ByVal x) x.clear())
     End Sub
 
     Public Function [erase](ByVal key As KEY_T) As Boolean Implements icache(Of KEY_T, VALUE_T).erase
@@ -87,12 +74,12 @@ Public Class hash_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T, HASH_SIZE As
 
     Public Function size() As Int64 Implements icache(Of KEY_T, VALUE_T).size
         Dim r As Int64 = 0
-        foreach(Sub(ByRef x) r += x.size())
+        foreach(Sub(ByVal x) r += x.size())
         Return r
     End Function
 
     Public Function empty() As Boolean Implements icache(Of KEY_T, VALUE_T).empty
-        Return foreach(Function(ByRef x) x.empty())
+        Return foreach(Function(ByVal x) x.empty())
     End Function
 
     Public Function have(ByVal key As KEY_T) As Boolean Implements icache(Of KEY_T, VALUE_T).have

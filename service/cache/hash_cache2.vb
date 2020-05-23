@@ -1,10 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.formation
-Imports osi.root.utils
-Imports osi.root.template
-Imports osi.root.procedure
 Imports osi.root.delegates
+Imports osi.root.formation
+Imports osi.root.procedure
+Imports osi.root.template
+Imports osi.root.utils
 Imports mhc = osi.service.cache.constants.mapheap_cache
 
 Public Class hash_cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
@@ -26,7 +30,7 @@ Public Class hash_cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T, HASH_SIZE A
 
     Public Sub New(Optional ByVal max_size As UInt64 = mhc.default_max_size,
                    Optional ByVal retire_ticks As UInt64 = mhc.default_retire_ticks)
-        MyBase.New(Function() _cache.mapheap_cache(Of KEY_T, VALUE_T)(max_size, retire_ticks))
+        MyBase.New(Function() _cache2.mapheap_cache2(Of KEY_T, VALUE_T)(max_size, retire_ticks))
     End Sub
 
     Public Sub New(ByVal d As Func(Of icache2(Of KEY_T, VALUE_T)))
@@ -64,21 +68,6 @@ Public Class hash_cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T, HASH_SIZE A
 
     Public Function [erase](ByVal key As KEY_T) As event_comb Implements icache2(Of KEY_T, VALUE_T).erase
         Return [select](key).erase(key)
-    End Function
-
-    Public Function foreach(ByVal d As _do(Of KEY_T, VALUE_T, Boolean)) As event_comb _
-                           Implements icache2(Of KEY_T, VALUE_T).foreach
-        Return foreach(Function(ByRef x) x.foreach(d))
-    End Function
-
-    Public Function foreach(ByVal d As _do(Of KEY_T, VALUE_T, Boolean, Boolean)) As event_comb _
-                           Implements icache2(Of KEY_T, VALUE_T).foreach
-        Return foreach(Function(ByRef x) x.foreach(d))
-    End Function
-
-    Public Function foreach(ByVal d As void(Of KEY_T, VALUE_T)) As event_comb _
-                           Implements icache2(Of KEY_T, VALUE_T).foreach
-        Return foreach(Function(ByRef x) x.foreach(d))
     End Function
 
     Public Function [get](ByVal key As KEY_T, ByVal value As pointer(Of VALUE_T)) As event_comb _

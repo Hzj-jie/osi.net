@@ -28,9 +28,9 @@ Public Class filtered_value(Of T)
         assert(Not fs Is Nothing)
         assert(Not m Is Nothing)
         Me.m = New map(Of String, vector(Of pair(Of T, filter_set)))()
-        m.foreach(Sub(ByRef key As String,
-                      ByRef value As T,
-                      ByRef vf As vector(Of pair(Of String, String)))
+        m.foreach(Sub(ByVal key As String,
+                      ByVal value As T,
+                      ByVal vf As vector(Of pair(Of String, String)))
                       Me.m(key).emplace_back(pair.emplace_of(value, New filter_set(fs, vf)))
                   End Sub)
     End Sub
@@ -42,9 +42,8 @@ Public Class filtered_value(Of T)
             Dim r As T = Nothing
             If [get](key, r, variants) Then
                 Return r
-            Else
-                Return default_value
             End If
+            Return default_value
         End Get
     End Property
 
@@ -85,9 +84,8 @@ Public Class filtered_value(Of T)
         it = m.find(key)
         If it = m.end() Then
             Return False
-        Else
-            Return [get]((+it).second, v, variants)
         End If
+        Return [get]((+it).second, v, variants)
     End Function
 
     Public Function [get](ByVal key As String,
@@ -96,9 +94,8 @@ Public Class filtered_value(Of T)
         it = m.find(key)
         If it = m.end() Then
             Return Nothing
-        Else
-            Return [get]((+it).second, variants)
         End If
+        Return [get]((+it).second, variants)
     End Function
 
     Public Function exists(ByVal key As String,
@@ -109,13 +106,11 @@ Public Class filtered_value(Of T)
     Public Function keys(Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) As vector(Of String)
         Dim r As vector(Of String) = Nothing
         r = New vector(Of String)()
-        osi.root.utils.foreach(AddressOf m.foreach,
-                               Sub(ByRef k As String,
-                                   ByRef v As vector(Of pair(Of T, filter_set)))
-                                   If [get](v, Nothing, variants) Then
-                                       r.emplace_back(k)
-                                   End If
-                               End Sub)
+        m.stream().foreach(m.on_pair(Sub(ByVal k As String, ByVal v As vector(Of pair(Of T, filter_set)))
+                                         If [get](v, Nothing, variants) Then
+                                             r.emplace_back(k)
+                                         End If
+                                     End Sub))
         Return r
     End Function
 
@@ -123,14 +118,12 @@ Public Class filtered_value(Of T)
                           As vector(Of pair(Of String, T))
         Dim r As vector(Of pair(Of String, T)) = Nothing
         r = New vector(Of pair(Of String, T))()
-        osi.root.utils.foreach(AddressOf m.foreach,
-                               Sub(ByRef k As String,
-                                   ByRef v As vector(Of pair(Of T, filter_set)))
-                                   Dim t As T = Nothing
-                                   If [get](v, t, variants) Then
-                                       r.emplace_back(pair.emplace_of(k, t))
-                                   End If
-                               End Sub)
+        m.stream().foreach(m.on_pair(Sub(ByVal k As String, ByVal v As vector(Of pair(Of T, filter_set)))
+                                         Dim t As T = Nothing
+                                         If [get](v, t, variants) Then
+                                             r.emplace_back(pair.emplace_of(k, t))
+                                         End If
+                                     End Sub))
         Return r
     End Function
 End Class

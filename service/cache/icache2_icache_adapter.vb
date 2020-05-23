@@ -4,12 +4,11 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.procedure
 
 ' Convert an icache2 implementation to icache; this is typically for tests only.
-Public Class icache2_icache_adapter(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
+Public NotInheritable Class icache2_icache_adapter(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     Implements icache(Of KEY_T, VALUE_T)
 
     Private ReadOnly i As icache2(Of KEY_T, VALUE_T)
@@ -35,28 +34,13 @@ Public Class icache2_icache_adapter(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
         Return async_sync(i.erase(key))
     End Function
 
-    Public Function foreach(ByVal d As _do(Of KEY_T, VALUE_T, Boolean, Boolean)) As Boolean _
-                           Implements islimcache(Of KEY_T, VALUE_T).foreach
-        Return async_sync(i.foreach(d))
-    End Function
-
-    Public Function foreach(ByVal d As void(Of KEY_T, VALUE_T)) As Boolean Implements icache(Of KEY_T, VALUE_T).foreach
-        Return async_sync(i.foreach(d))
-    End Function
-
-    Public Function foreach(ByVal d As _do(Of KEY_T, VALUE_T, Boolean)) As Boolean _
-                           Implements icache(Of KEY_T, VALUE_T).foreach
-        Return async_sync(i.foreach(d))
-    End Function
-
     Public Function [get](ByVal key As KEY_T) As VALUE_T Implements icache(Of KEY_T, VALUE_T).get
         Dim r As pointer(Of VALUE_T) = Nothing
         r = New pointer(Of VALUE_T)()
         If async_sync(i.get(key, r)) Then
             Return +r
-        Else
-            Return Nothing
         End If
+        Return Nothing
     End Function
 
     Public Function [get](ByVal key As KEY_T, ByRef value As VALUE_T) As Boolean Implements islimcache(Of KEY_T, VALUE_T).get
@@ -65,9 +49,8 @@ Public Class icache2_icache_adapter(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
         If async_sync(i.get(key, r)) Then
             value = (+r)
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 
     Public Function have(ByVal key As KEY_T) As Boolean Implements islimcache2(Of KEY_T, VALUE_T).have
@@ -79,8 +62,7 @@ Public Class icache2_icache_adapter(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
         r = New pointer(Of Int64)()
         If async_sync(i.size(r)) Then
             Return +r
-        Else
-            Return 0
         End If
+        Return 0
     End Function
 End Class

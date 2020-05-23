@@ -4,13 +4,12 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
 
 ' Convert an icache implementation to icache2; this is typically for tests only.
-Public Class icache_icache2_adapter(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
+Public NotInheritable Class icache_icache2_adapter(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     Implements icache2(Of KEY_T, VALUE_T)
 
     Private ReadOnly i As icache(Of KEY_T, VALUE_T)
@@ -35,27 +34,6 @@ Public Class icache_icache2_adapter(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     Public Function [erase](ByVal key As KEY_T) As event_comb Implements icache2(Of KEY_T, VALUE_T).erase
         Return sync_async(Function() As Boolean
                               Return i.erase(key)
-                          End Function)
-    End Function
-
-    Public Function foreach(ByVal d As _do(Of KEY_T, VALUE_T, Boolean)) As event_comb _
-                           Implements icache2(Of KEY_T, VALUE_T).foreach
-        Return sync_async(Function() As Boolean
-                              Return i.foreach(d)
-                          End Function)
-    End Function
-
-    Public Function foreach(ByVal d As void(Of KEY_T, VALUE_T)) As event_comb _
-                           Implements icache2(Of KEY_T, VALUE_T).foreach
-        Return sync_async(Function() As Boolean
-                              Return i.foreach(d)
-                          End Function)
-    End Function
-
-    Public Function foreach(ByVal d As _do(Of KEY_T, VALUE_T, Boolean, Boolean)) As event_comb _
-                           Implements icache2(Of KEY_T, VALUE_T).foreach
-        Return sync_async(Function() As Boolean
-                              Return i.foreach(d)
                           End Function)
     End Function
 

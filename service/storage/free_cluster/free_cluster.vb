@@ -8,9 +8,9 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
-Imports clusters_t = osi.root.formation.hashmap(Of System.Int64, osi.service.storage.cluster)
+Imports clusters_t = osi.root.formation.unordered_map(Of System.Int64, osi.service.storage.cluster)
 
-Partial Public Class free_cluster
+Partial Public NotInheritable Class free_cluster
     'all the clusters
     Private ReadOnly cs As clusters_t
     'a subset of cs, only head clusters
@@ -26,8 +26,8 @@ Partial Public Class free_cluster
 
     Private Sub New(ByVal i As virtdisk)
         assert(Not i Is Nothing)
-        cs = New clusters_t(1023)
-        hcs = New clusters_t(1023)
+        cs = New clusters_t()
+        hcs = New clusters_t()
         fcs = New queue(Of cluster)()
         max_cluster_id = 0
         vd = i

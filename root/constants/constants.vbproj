@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="binding_flags.vb" />
+    <Compile Include="break_lambda.vb" />
     <Compile Include="cast.vb" />
     <Compile Include="character.vb" />
     <Compile Include="console_key_info_mapping.vb" />

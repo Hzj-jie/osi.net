@@ -8,9 +8,9 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
-Imports clusters_t = osi.root.formation.hashmap(Of System.Int64, osi.service.storage.cluster)
+Imports clusters_t = osi.root.formation.unordered_map(Of System.Int64, osi.service.storage.cluster)
 
-Partial Public Class free_cluster
+Partial Public NotInheritable Class free_cluster
     Private Shared Function head_cluster(ByVal c As cluster) As Boolean
         Return assert(Not c Is Nothing) AndAlso Not c.free() AndAlso Not c.has_prev_id()
     End Function

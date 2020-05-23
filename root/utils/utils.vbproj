@@ -124,7 +124,6 @@
     <Compile Include="error_handle\error_counter.vb" />
     <Compile Include="error_handle\file_error_writer.vb" />
     <Compile Include="eva.vb" />
-    <Compile Include="foreach.vb" />
     <Compile Include="lifetime_binder\application_info_writer.vb" />
     <Compile Include="lifetime_binder\streamwriter_auto_disposer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

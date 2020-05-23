@@ -10,8 +10,7 @@ Public Class unique_strong_map(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
         MyBase.New()
     End Sub
 
-    Protected NotOverridable Overrides Function store_value(ByVal i As VALUE_T,
-                                                            ByRef o As VALUE_T) As Boolean
+    Protected NotOverridable Overrides Function store_value(ByVal i As VALUE_T, ByRef o As VALUE_T) As Boolean
         o = i
         Return True
     End Function

@@ -3,9 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root
 Imports osi.root.connector
-Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
@@ -18,13 +16,8 @@ Public Module _cache2
         Return New cache2(Of KEY_T, VALUE_T)(i)
     End Function
 
-    Public Function hashmap_cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T)(ByVal hash_size As UInt32) _
-                                 As icache2(Of KEY_T, VALUE_T)
-        Return wrapper(New hashmap_cache(Of KEY_T, VALUE_T)(hash_size))
-    End Function
-
-    Public Function hashmap_cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T)() As icache2(Of KEY_T, VALUE_T)
-        Return wrapper(New hashmap_cache(Of KEY_T, VALUE_T)())
+    Public Function unordered_map_cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T)() As icache2(Of KEY_T, VALUE_T)
+        Return wrapper(New unordered_map_cache(Of KEY_T, VALUE_T)())
     End Function
 
     Public Function map_cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T)() As icache2(Of KEY_T, VALUE_T)
@@ -86,21 +79,6 @@ Public Class cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
 
     Public Function [erase](ByVal key As KEY_T) As event_comb Implements icache2(Of KEY_T, VALUE_T).erase
         Return l.locked(Function() c.erase(key))
-    End Function
-
-    Public Function foreach(ByVal d As _do(Of KEY_T, VALUE_T, Boolean)) As event_comb _
-                           Implements icache2(Of KEY_T, VALUE_T).foreach
-        Return l.locked(Function() utils.foreach(AddressOf c.foreach, d))
-    End Function
-
-    Public Function foreach(ByVal d As _do(Of KEY_T, VALUE_T, Boolean, Boolean)) As event_comb _
-                           Implements icache2(Of KEY_T, VALUE_T).foreach
-        Return l.locked(Function() c.foreach(d))
-    End Function
-
-    Public Function foreach(ByVal d As void(Of KEY_T, VALUE_T)) As event_comb _
-                           Implements icache2(Of KEY_T, VALUE_T).foreach
-        Return l.locked(Function() utils.foreach(AddressOf c.foreach, d))
     End Function
 
     Public Function [get](ByVal key As KEY_T, ByVal value As pointer(Of VALUE_T)) As event_comb _

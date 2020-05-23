@@ -8,7 +8,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
 
-Public Class failure_case
+Public NotInheritable Class failure_case
     Inherits [case]
 
 #If TODO Then

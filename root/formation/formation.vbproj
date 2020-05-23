@@ -187,6 +187,7 @@
     <Compile Include="unique_ptr.vb" />
     <Compile Include="unordered_map.impl.vb" />
     <Compile Include="unordered_map.vb" />
+    <Compile Include="unordered_set.ext.vb" />
     <Compile Include="unordered_set.impl.vb" />
     <Compile Include="unordered_set.vb" />
     <Compile Include="vector.adaptive_array.vb" />
