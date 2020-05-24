@@ -105,7 +105,7 @@ Friend Class segment_tree_case2
                     assertion.equal((+it).value(), value)
                 End If
             Else
-                assertion.is_true(it.null_or_end() OrElse Not (+it).has_value())
+                assertion.is_true(it.is_end() OrElse Not (+it).has_value())
             End If
         Next
         Return True

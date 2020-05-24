@@ -1,17 +1,7 @@
 ﻿
 ##INCLUDE iterator.imports.vbp
 
-##DEFINE TYPE_IS_STRUCT True
-
-Public Module _mapheap_iterator
-##DEFINE PARENT_CLASS mapheap(Of MAP_KEY, HEAP_KEY)
-##DEFINE TEMPLATE_TYPE (Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As IComparable(Of HEAP_KEY))
-##INCLUDE iterator.ext.vbp
-End Module
-
 Partial Public Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As IComparable(Of HEAP_KEY))
-    Public Structure iterator
 ##DEFINE TYPE pair(Of HEAP_KEY, MAP_KEY)
 ##INCLUDE static_iterator.vbp
-    End Structure
 End Class

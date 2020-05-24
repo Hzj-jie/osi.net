@@ -111,13 +111,13 @@ Friend NotInheritable Class segment_tree_case
             For i As Int64 = v.front().second.first - 100 To v.front().second.first - 1
                 Dim it As segment_tree(Of Int64).iterator = Nothing
                 it = t.find(i)
-                assertion.is_true(it.null_or_end() OrElse Not (+it).has_value())
+                assertion.is_true(it.is_end() OrElse Not (+it).has_value())
             Next
             assert(v.back().second.second <= max_int64 - 100)
             For i As Int64 = v.back().second.second + 1 To v.back().second.second + 100
                 Dim it As segment_tree(Of Int64).iterator = Nothing
                 it = t.find(i)
-                assertion.is_true(it.null_or_end() OrElse Not (+it).has_value())
+                assertion.is_true(it.is_end() OrElse Not (+it).has_value())
             Next
         End If
         Return True

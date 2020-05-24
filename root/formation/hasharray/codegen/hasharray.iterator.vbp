@@ -2,19 +2,10 @@
 ##INCLUDE ..\..\codegen\iterator.imports.vbp
 Imports osi.root.template
 
-##DEFINE TYPE_IS_STRUCT True
-
-Public Module _hasharray_iterator
-##DEFINE PARENT_CLASS hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)
-##DEFINE TEMPLATE_TYPE (Of T, _UNIQUE As _boolean, _HASHER As _to_uint32(Of T), _EQUALER As _equaler(Of T))
-##INCLUDE ..\..\codegen\iterator.ext.vbp
-End Module
-
 Partial Public Class hasharray(Of T,
                                   _UNIQUE As _boolean,
                                   _HASHER As _to_uint32(Of T),
                                   _EQUALER As _equaler(Of T))
-    Public Structure iterator
 ##DEFINE TYPE ref
 ##DEFINE DEFINE_OPERATOR_PLUS False
 ##DEFINE FRIEND_CONSTRUCTOR False
@@ -22,6 +13,7 @@ Partial Public Class hasharray(Of T,
 ##DEFINE USE_P_END True
 ##INCLUDE ..\..\codegen\random_access_iterator.single_step.vbp
 
+    Partial Public Structure iterator
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Friend Sub New(ByVal owner As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER), ByVal column As UInt32, ByVal row As UInt32)
             Me.New(assert_which.of(owner).is_not_null().ref_at(column, row))

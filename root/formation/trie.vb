@@ -66,17 +66,15 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
             Dim rtn As UInt32
             If find_father_index(Me, rtn) Then
                 Return rtn
-            Else
-                Return npos
             End If
+            Return npos
         End Function
 
         Public Shared Operator +(ByVal this As node) As VALUE_T
             If this.has_value Then
                 Return this.value
-            Else
-                Return Nothing
             End If
+            Return Nothing
         End Operator
 
         Public Function Clone() As Object Implements System.ICloneable.Clone
@@ -101,9 +99,8 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
         Dim it As node = root
         If max(it) Then
             Return New iterator(it)
-        Else
-            Return _end
         End If
+        Return _end
     End Function
 
     Public Function [end]() As iterator
@@ -117,43 +114,39 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
     Private Shared Function find_father_index(ByVal it As node, ByRef index As UInt32) As Boolean
         If it.father Is Nothing Then
             Return False
-        Else
-            Dim i As UInt32
-            For i = 0 To CUInt(it.father.child.Length()) - uint32_1
-                If Object.ReferenceEquals(it.father.child(CInt(i)), it) Then
-                    index = i
-                    Exit For
-                End If
-            Next
-
-            assert(i < it.father.child.Length(),
-                     "cannot get a child of father reference equals to the node.")
-            Return True
         End If
+        Dim i As UInt32
+        For i = 0 To CUInt(it.father.child.Length()) - uint32_1
+            If Object.ReferenceEquals(it.father.child(CInt(i)), it) Then
+                index = i
+                Exit For
+            End If
+        Next
+
+        assert(i < it.father.child.Length(), "cannot get a child of father reference equals to the node.")
+        Return True
     End Function
 
     Private Shared Function max(ByRef it As node) As Boolean
         If it Is Nothing Then
             Return False
-        Else
-            While Not it.child(CInt(child_count - uint32_1)) Is Nothing
-                it = it.child(CInt(child_count - uint32_1))
-            End While
-
-            Return True
         End If
+        While Not it.child(CInt(child_count - uint32_1)) Is Nothing
+            it = it.child(CInt(child_count - uint32_1))
+        End While
+
+        Return True
     End Function
 
     Private Shared Function min(ByRef it As node) As Boolean
         If it Is Nothing Then
             Return False
-        Else
-            While Not it.child(0) Is Nothing
-                it = it.child(0)
-            End While
-
-            Return True
         End If
+        While Not it.child(0) Is Nothing
+            it = it.child(0)
+        End While
+
+        Return True
     End Function
 
     Shared Sub New()
@@ -231,37 +224,33 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
         For i = CInt(start) To array_size_i(k) - 1
             If w Is Nothing Then
                 Exit For
-            Else
-                index = CInt(key_to_index(k(i)))
-                assert(index >= 0 AndAlso index < child_count)
-                If w.child(index) Is Nothing Then
-                    If auto_insert Then
-                        w.child(index) = New node(child_count)
-                        w.child(index)._length = CUInt(i + 1)
-                        w.child(index).father = w
-                    ElseIf find_front Then
-                        Exit For
-                    End If
-                End If
-                w = w.child(index)
-                update_working_node()
             End If
+            index = CInt(key_to_index(k(i)))
+            assert(index >= 0 AndAlso index < child_count)
+            If w.child(index) Is Nothing Then
+                If auto_insert Then
+                    w.child(index) = New node(child_count)
+                    w.child(index)._length = CUInt(i + 1)
+                    w.child(index).father = w
+                ElseIf find_front Then
+                    Exit For
+                End If
+            End If
+            w = w.child(index)
+            update_working_node()
         Next
 
         If find_front Then
             assert(l Is Nothing OrElse l.has_value)
             If l Is Nothing Then
                 Return [end]()
-            Else
-                Return New iterator(l)
             End If
-        Else
-            If w Is Nothing Then
-                Return [end]()
-            Else
-                Return New iterator(w)
-            End If
+            Return New iterator(l)
         End If
+        If w Is Nothing Then
+            Return [end]()
+        End If
+        Return New iterator(w)
     End Function
 
     Public Function insert(ByVal k() As KEY_T) As pair(Of iterator, Boolean)
@@ -291,11 +280,10 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
         w = find(k, False, False)
         If w = [end]() OrElse Not w.get().has_value Then
             Return False
-        Else
-            w.get().has_value = False
-            w.get().value = Nothing
-            Return True
         End If
+        w.get().has_value = False
+        w.get().value = Nothing
+        Return True
     End Function
 
     Public Function remove(ByVal k() As KEY_T) As Boolean
@@ -303,16 +291,17 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
     End Function
 
     Private Shared Sub copy_node(ByRef dest As node, ByVal source As node)
-        If Not source Is Nothing Then
-            copy(dest, source)
-            Dim i As Int32
-            For i = 0 To CInt(child_count) - 1
-                If Not source.child(i) Is Nothing Then
-                    copy_node(dest.child(i), source.child(i))
-                    dest.child(i).father = dest
-                End If
-            Next
+        If source Is Nothing Then
+            Return
         End If
+        copy(dest, source)
+        Dim i As Int32
+        For i = 0 To CInt(child_count) - 1
+            If Not source.child(i) Is Nothing Then
+                copy_node(dest.child(i), source.child(i))
+                dest.child(i).father = dest
+            End If
+        Next
     End Sub
 
     Public Function Clone() As Object Implements ICloneable.Clone
@@ -388,11 +377,10 @@ Public Class chartrie(Of VALUE_T)
     End Property
 
     Public Shared Function first(ByVal it As iterator) As String
-        If it.null_or_end() Then
+        If it.is_end() Then
             Return Nothing
-        Else
-            Return Convert.ToString(it.get().first())
         End If
+        Return Convert.ToString(it.get().first())
     End Function
 End Class
 
@@ -465,10 +453,9 @@ Public Class stringtrie(Of VALUE_T)
     End Property
 
     Public Shared Function first(ByVal it As iterator) As String
-        If it.null_or_end() Then
+        If it.is_end() Then
             Return Nothing
-        Else
-            Return bytes_str(it.get().first())
         End If
+        Return bytes_str(it.get().first())
     End Function
 End Class
