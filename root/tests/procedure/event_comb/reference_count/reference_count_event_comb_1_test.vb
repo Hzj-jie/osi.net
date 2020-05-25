@@ -14,11 +14,9 @@ Option Strict On
 'so change reference_count_event_comb_test.vbp instead of this file
 
 
-Imports osi.root.formation
 Imports osi.root.connector
-Imports osi.root.utils
-Imports osi.root.procedure
 Imports osi.root.lock
+Imports osi.root.procedure
 Imports osi.root.utt
 
 Public NotInheritable Class reference_count_event_comb_1_test
@@ -29,11 +27,11 @@ Public NotInheritable Class reference_count_event_comb_1_test
 
         Public ReadOnly rcec As reference_count_event_comb_1
         Public ReadOnly c1 As atomic_int
-        Public ReadOnly c2 As ref(Of unchecked_int)
+        Public ReadOnly c2 As pointer(Of unchecked_int)
 
         Public Sub New()
             c1 = New atomic_int()
-            c2 = New ref(Of unchecked_int)()
+            c2 = New pointer(Of unchecked_int)()
             rcec = ctor()
         End Sub
 
@@ -56,13 +54,13 @@ Public NotInheritable Class reference_count_event_comb_1_test
     Private NotInheritable Class case2
         Inherits case1
 
-        Public ReadOnly init_runs As ref(Of unchecked_int)
-        Public ReadOnly final_runs As ref(Of unchecked_int)
+        Public ReadOnly init_runs As pointer(Of unchecked_int)
+        Public ReadOnly final_runs As pointer(Of unchecked_int)
 
         Public Sub New()
             MyBase.New()
-            init_runs = New ref(Of unchecked_int)()
-            final_runs = New ref(Of unchecked_int)()
+            init_runs = New pointer(Of unchecked_int)()
+            final_runs = New pointer(Of unchecked_int)()
         End Sub
 
         Protected Overrides Function ctor() As reference_count_event_comb_1

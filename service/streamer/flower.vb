@@ -8,10 +8,10 @@ Imports osi.root.lock
 Imports osi.root.procedure
 
 Public MustInherit Class flower(Of T)
-    Private ReadOnly s As ref(Of singleentry)
+    Private ReadOnly s As pointer(Of singleentry)
 
     Public Sub New()
-        s = New ref(Of singleentry)()
+        s = New pointer(Of singleentry)()
     End Sub
 
     Protected MustOverride Function flow() As event_comb

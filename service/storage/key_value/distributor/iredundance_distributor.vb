@@ -6,7 +6,7 @@ Imports osi.root.procedure
 
 Public Interface iredundance_distributor
     Function wrappered() As key_locked_istrkeyvt
-    Function expired() As ref(Of singleentry)
+    Function expired() As pointer(Of singleentry)
     Function read(ByVal key As String,
                   ByVal result As pointer(Of Byte()),
                   ByVal ts As pointer(Of Int64),

@@ -129,8 +129,8 @@ Partial Public Class event_comb
     Private Function _multiple_resume_wait() As Action
         assert_in_lock()
         inc_pends()
-        Dim se As ref(Of singleentry) = Nothing
-        se = New ref(Of singleentry)()
+        Dim se As pointer(Of singleentry) = Nothing
+        se = New pointer(Of singleentry)()
         Return Sub()
                    If se.mark_in_use() Then
                        '1, put it back to selected threadpool
@@ -264,7 +264,7 @@ Partial Public Class event_comb
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function _waitfor(ByVal l As ref(Of event_comb_lock)) As Boolean
+    Private Function _waitfor(ByVal l As pointer(Of event_comb_lock)) As Boolean
         If l Is Nothing Then
             Return False
         End If
@@ -273,7 +273,7 @@ Partial Public Class event_comb
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function _waitfor(ByVal i As ref(Of singleentry)) As Boolean
+    Private Function _waitfor(ByVal i As pointer(Of singleentry)) As Boolean
         If i Is Nothing Then
             Return False
         End If
@@ -281,7 +281,7 @@ Partial Public Class event_comb
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function _waitfor(ByVal i As ref(Of singleentry), ByVal timeout_ms As Int64) As Boolean
+    Private Function _waitfor(ByVal i As pointer(Of singleentry), ByVal timeout_ms As Int64) As Boolean
         If i Is Nothing Then
             Return False
         End If

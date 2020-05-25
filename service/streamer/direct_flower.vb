@@ -17,7 +17,7 @@ Public Class direct_flower(Of T)
     Private ReadOnly input As T_receiver(Of T)
     Private ReadOnly output As T_sender(Of T)
     Private ReadOnly sense_timeout_ms As Int64
-    Private ReadOnly broken_pipe As ref(Of singleentry)
+    Private ReadOnly broken_pipe As pointer(Of singleentry)
     Private ReadOnly idle_timeout_ms As Int64
     Private ReadOnly result As atomic_int64
     Private ReadOnly treat_no_flow_as_failure As Boolean
@@ -25,7 +25,7 @@ Public Class direct_flower(Of T)
     Public Sub New(ByVal input As T_receiver(Of T),
                    ByVal output As T_sender(Of T),
                    ByVal sense_timeout_ms As Int64,
-                   ByVal broken_pipe As ref(Of singleentry),
+                   ByVal broken_pipe As pointer(Of singleentry),
                    ByVal idle_timeout_ms As Int64,
                    Optional ByVal result As atomic_int64 = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
@@ -40,7 +40,7 @@ Public Class direct_flower(Of T)
             Me.sense_timeout_ms = sense_timeout_ms
         End If
         If broken_pipe Is Nothing Then
-            Me.broken_pipe = New ref(Of singleentry)()
+            Me.broken_pipe = New pointer(Of singleentry)()
         Else
             Me.broken_pipe = broken_pipe
         End If
@@ -58,7 +58,7 @@ Public Class direct_flower(Of T)
     Public Sub New(ByVal input As T_receiver(Of T),
                    ByVal output As T_sender(Of T),
                    ByVal sense_timeout_ms As Int64,
-                   ByVal broken_pipe As ref(Of singleentry),
+                   ByVal broken_pipe As pointer(Of singleentry),
                    Optional ByVal result As atomic_int64 = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
         Me.New(input, output, sense_timeout_ms, broken_pipe, npos, result, treat_no_flow_as_failure)
@@ -66,7 +66,7 @@ Public Class direct_flower(Of T)
 
     Public Sub New(ByVal input As T_receiver(Of T),
                    ByVal output As T_sender(Of T),
-                   ByVal broken_pipe As ref(Of singleentry),
+                   ByVal broken_pipe As pointer(Of singleentry),
                    ByVal idle_timeout_ms As Int64,
                    Optional ByVal result As atomic_int64 = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
@@ -81,7 +81,7 @@ Public Class direct_flower(Of T)
 
     Public Sub New(ByVal input As T_receiver(Of T),
                    ByVal output As T_sender(Of T),
-                   ByVal broken_pipe As ref(Of singleentry),
+                   ByVal broken_pipe As pointer(Of singleentry),
                    Optional ByVal result As atomic_int64 = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
         Me.New(input, output, broken_pipe, npos, result, treat_no_flow_as_failure)

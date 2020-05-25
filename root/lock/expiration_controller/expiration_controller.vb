@@ -27,7 +27,7 @@ Partial Public MustInherit Class expiration_controller
             Return New se()
         End Function
 
-        Public Shared Shadows Widening Operator CType(ByVal this As ref(Of singleentry)) As settable
+        Public Shared Shadows Widening Operator CType(ByVal this As pointer(Of singleentry)) As settable
             Return expiration_controller.[New](this)
         End Operator
     End Class
@@ -51,7 +51,7 @@ Partial Public MustInherit Class expiration_controller
         Return o
     End Function
 
-    Public Shared Function [New](ByVal stopping As ref(Of singleentry),
+    Public Shared Function [New](ByVal stopping As pointer(Of singleentry),
                                  ByRef o As expiration_controller.settable) As Boolean
         If stopping Is Nothing Then
             Return False
@@ -61,7 +61,7 @@ Partial Public MustInherit Class expiration_controller
         End If
     End Function
 
-    Public Shared Function [New](ByVal stopping As ref(Of singleentry)) As expiration_controller.settable
+    Public Shared Function [New](ByVal stopping As pointer(Of singleentry)) As expiration_controller.settable
         Dim o As expiration_controller.settable = Nothing
         assert([New](stopping, o))
         Return o
@@ -75,7 +75,7 @@ Partial Public MustInherit Class expiration_controller
         Return [New](this)
     End Operator
 
-    Public Shared Widening Operator CType(ByVal this As ref(Of singleentry)) As expiration_controller
+    Public Shared Widening Operator CType(ByVal this As pointer(Of singleentry)) As expiration_controller
         Return [New](this)
     End Operator
 End Class

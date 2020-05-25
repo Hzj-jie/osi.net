@@ -16,14 +16,14 @@ Partial Public Class redundance_distributor
     Private ReadOnly wrap As key_locked_istrkeyvt
     Private ReadOnly container As istrkeyvt_container
     Private ReadOnly verify_rate As Int32
-    Private ReadOnly exp As ref(Of singleentry)
+    Private ReadOnly exp As pointer(Of singleentry)
     Private ReadOnly sq As syncqueue
 
     Private Sub New(ByVal c As istrkeyvt_container, ByVal verify_rate As Int32)
         assert(Not c Is Nothing)
         Me.container = c
         Me.verify_rate = verify_rate
-        Me.exp = New ref(Of singleentry)()
+        Me.exp = New pointer(Of singleentry)()
         Me.wrap = New key_locked_istrkeyvt(Me)
         Me.sq = New syncqueue(Me)
     End Sub

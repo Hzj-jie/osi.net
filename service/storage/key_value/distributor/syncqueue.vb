@@ -11,7 +11,7 @@ Public Class syncqueue
     Private Const push_wait_ms As Int64 = second_milli
     Private ReadOnly prepare_sync_queue As slimqless2(Of String)
     Private ReadOnly sync_queue As setqueue(Of String)
-    Private ReadOnly sync_queue_lock As ref(Of event_comb_lock)
+    Private ReadOnly sync_queue_lock As pointer(Of event_comb_lock)
     Private ReadOnly impl As iredundance_distributor
 
     Public Sub New(ByVal impl As iredundance_distributor)
@@ -19,7 +19,7 @@ Public Class syncqueue
         assert(Not Me.impl Is Nothing)
         prepare_sync_queue = New slimqless2(Of String)()
         sync_queue = New setqueue(Of String)()
-        sync_queue_lock = New ref(Of event_comb_lock)()
+        sync_queue_lock = New pointer(Of event_comb_lock)()
         start_push_to_sync_queue()
         start_sync()
     End Sub

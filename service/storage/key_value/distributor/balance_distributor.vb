@@ -17,7 +17,7 @@ Public Class balance_distributor
     Implements istrkeyvt
 
     Private Const default_update_frequency As Int64 = 30 * second_milli
-    Private ReadOnly expired As ref(Of singleentry)
+    Private ReadOnly expired As pointer(Of singleentry)
     Private ReadOnly container As istrkeyvt_container
     Private ReadOnly capacities As vector(Of Int64)
     Private ReadOnly update_frequency As Int32
@@ -32,7 +32,7 @@ Public Class balance_distributor
         Me.container = c
         Me.capacities = New vector(Of Int64)()
         Me.capacities.resize(Me.container.size())
-        Me.expired = New ref(Of singleentry)()
+        Me.expired = New pointer(Of singleentry)()
         If update_frequency <= 0 Then
             raise_error(error_type.user,
                         "input update frequency ",

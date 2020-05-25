@@ -17,13 +17,13 @@ Public Class ddos
     Private Class count_resource
         Private ReadOnly m As map(Of String, UInt64)
         Private ReadOnly q As Queue(Of String)
-        Private ReadOnly l As ref(Of event_comb_lock)
-        Private ReadOnly exp As ref(Of singleentry)
+        Private ReadOnly l As pointer(Of event_comb_lock)
+        Private ReadOnly exp As pointer(Of singleentry)
 
         Public Sub New(ByVal len As UInt32, ByVal fake_insert_interval_ms As UInt32)
             assert(len > 0)
-            l = New ref(Of event_comb_lock)()
-            exp = New ref(Of singleentry)()
+            l = New pointer(Of event_comb_lock)()
+            exp = New pointer(Of singleentry)()
             m = New map(Of String, UInt64)()
             q = New queue(Of String)()
             m(fake_insert_string) = len
@@ -91,13 +91,13 @@ Public Class ddos
     Private Class percentage_resource
         Private ReadOnly m As map(Of String, UInt64)
         Private ReadOnly t As UInt64
-        Private ReadOnly l As ref(Of event_comb_lock)
+        Private ReadOnly l As pointer(Of event_comb_lock)
 
         Public Sub New(ByVal total As UInt64)
             assert(total > 0)
             t = total
             m = New map(Of String, UInt64)()
-            l = New ref(Of event_comb_lock)()
+            l = New pointer(Of event_comb_lock)()
         End Sub
 
         Public Function insert(ByVal s As String, ByVal r As pointer(Of Double)) As event_comb

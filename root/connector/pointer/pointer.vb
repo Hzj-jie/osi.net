@@ -116,7 +116,7 @@ Public Class pointer(Of T)
 'so change strong_pointer_override.vbp instead of this file
 
 
-    Private p As T
+    Public p As T
 
     Public Sub clear()
         p = Nothing

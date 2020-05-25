@@ -55,13 +55,13 @@ Public Class cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     Implements icache2(Of KEY_T, VALUE_T)
 
     Private ReadOnly c As islimcache2(Of KEY_T, VALUE_T)
-    Private ReadOnly l As ref(Of event_comb_lock)
+    Private ReadOnly l As pointer(Of event_comb_lock)
 
     Public Sub New(ByVal c As islimcache2(Of KEY_T, VALUE_T))
         assert(Not c Is Nothing)
         assert(Not TypeOf c Is icache(Of KEY_T, VALUE_T))
         Me.c = c
-        l = New ref(Of event_comb_lock)()
+        l = New pointer(Of event_comb_lock)()
     End Sub
 
     Public Sub New(ByVal c As islimcache(Of KEY_T, VALUE_T))

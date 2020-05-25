@@ -120,7 +120,6 @@
     <Compile Include="pointer\pointer.vb" />
     <Compile Include="pointer\weak_pointer.vb" />
     <Compile Include="pointer\weak_ref_pointer.vb" />
-    <Compile Include="ref.vb" />
     <Compile Include="string_utils\null_str.vb" />
     <Compile Include="struct\struct.definition.vb" />
     <Compile Include="struct\struct.reflector.vb" />

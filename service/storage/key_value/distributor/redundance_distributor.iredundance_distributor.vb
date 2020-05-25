@@ -8,7 +8,7 @@ Imports osi.root.utils
 Partial Public Class redundance_distributor
     Implements iredundance_distributor
 
-    Public Function expired() As ref(Of singleentry) Implements iredundance_distributor.expired
+    Public Function expired() As pointer(Of singleentry) Implements iredundance_distributor.expired
         Return exp
     End Function
 

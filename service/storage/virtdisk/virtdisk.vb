@@ -18,11 +18,11 @@ Partial Public Class virtdisk
     Private ReadOnly s As stream_flow_adapter
     Private ReadOnly fn As String
     Private ReadOnly c As capinfo
-    Private ReadOnly l As ref(Of event_comb_lock)
+    Private ReadOnly l As pointer(Of event_comb_lock)
     Private closed As singleentry
 
     Private Sub New(ByVal s As Stream)
-        l = New ref(Of event_comb_lock)()
+        l = New pointer(Of event_comb_lock)()
         'do not assert, since the valid will help to make sure it's safe
         Me.s = New stream_flow_adapter(s)
         AddHandler Me.s.dispose_exception,

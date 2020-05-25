@@ -12,12 +12,12 @@ Friend Class ikeyvt_false_ikeyvt_true
     Implements ikeyvt(Of _true)
 
     Private ReadOnly impl As ikeyvt(Of _false)
-    Private ReadOnly l As ref(Of event_comb_lock)
+    Private ReadOnly l As pointer(Of event_comb_lock)
 
     Public Sub New(ByVal impl As ikeyvt(Of _false))
         assert(Not impl Is Nothing)
         Me.impl = impl
-        Me.l = New ref(Of event_comb_lock)()
+        Me.l = New pointer(Of event_comb_lock)()
     End Sub
 
     Public Function append(ByVal key() As Byte,

@@ -12,7 +12,7 @@ Public Class stopable_istrkeyvt
     Implements istrkeyvt
 
     Private ReadOnly impl As istrkeyvt
-    Private ReadOnly stopping As ref(Of singleentry)
+    Private ReadOnly stopping As pointer(Of singleentry)
     Private ReadOnly working As atomic_int
 
     Shared Sub New()
@@ -22,7 +22,7 @@ Public Class stopable_istrkeyvt
     Public Sub New(ByVal impl As istrkeyvt)
         assert(Not impl Is Nothing)
         Me.impl = impl
-        Me.stopping = New ref(Of singleentry)()
+        Me.stopping = New pointer(Of singleentry)()
         Me.working = New atomic_int()
     End Sub
 

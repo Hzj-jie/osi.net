@@ -15,7 +15,7 @@ Public Class convector(Of T)
     Private Shared Function create_flower(ByVal dev1 As T_receiver(Of T),
                                           ByVal dev2 As T_sender(Of T),
                                           ByVal sense_timeout_ms As Int64,
-                                          ByVal broken_pipe As ref(Of singleentry),
+                                          ByVal broken_pipe As pointer(Of singleentry),
                                           ByVal use_buffered_flow As Boolean,
                                           ByVal idle_timeout_ms As Int64,
                                           ByVal result As atomic_int64,
@@ -42,12 +42,12 @@ Public Class convector(Of T)
         Return r
     End Function
 
-    Public Sub New(ByVal create_flower_a_b As Func(Of ref(Of singleentry), flower(Of T)),
-                   ByVal create_flower_b_a As Func(Of ref(Of singleentry), flower(Of T)))
+    Public Sub New(ByVal create_flower_a_b As Func(Of pointer(Of singleentry), flower(Of T)),
+                   ByVal create_flower_b_a As Func(Of pointer(Of singleentry), flower(Of T)))
         assert(Not create_flower_a_b Is Nothing)
         assert(Not create_flower_b_a Is Nothing)
-        Dim broken_pipe As ref(Of singleentry) = Nothing
-        broken_pipe = New ref(Of singleentry)()
+        Dim broken_pipe As pointer(Of singleentry) = Nothing
+        broken_pipe = New pointer(Of singleentry)()
         Me.a_b = create_flower_a_b(broken_pipe)
         Me.b_a = create_flower_b_a(broken_pipe)
     End Sub
@@ -59,7 +59,7 @@ Public Class convector(Of T)
                    ByVal idle_timeout_ms As Int64,
                    Optional ByVal result As atomic_int64 = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
-        Me.New(Function(broken_pipe As ref(Of singleentry)) As flower(Of T)
+        Me.New(Function(broken_pipe As pointer(Of singleentry)) As flower(Of T)
                    Return create_flower(dev1,
                                         dev2,
                                         sense_timeout_ms,
@@ -69,7 +69,7 @@ Public Class convector(Of T)
                                         result,
                                         treat_no_flow_as_failure)
                End Function,
-               Function(broken_pipe As ref(Of singleentry)) As flower(Of T)
+               Function(broken_pipe As pointer(Of singleentry)) As flower(Of T)
                    Return create_flower(dev2,
                                         dev1,
                                         sense_timeout_ms,
@@ -89,7 +89,7 @@ Public Class convector(Of T)
                    ByVal idle_timeout_ms As Int64,
                    Optional ByVal result As atomic_int64 = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
-        Me.New(Function(broken_pipe As ref(Of singleentry)) As flower(Of T)
+        Me.New(Function(broken_pipe As pointer(Of singleentry)) As flower(Of T)
                    Return New buffered_flower(Of T)(dev1,
                                                     dev2,
                                                     sense_timeout_ms,
@@ -99,7 +99,7 @@ Public Class convector(Of T)
                                                     result,
                                                     treat_no_flow_as_failure)
                End Function,
-               Function(broken_pipe As ref(Of singleentry)) As flower(Of T)
+               Function(broken_pipe As pointer(Of singleentry)) As flower(Of T)
                    Return New buffered_flower(Of T)(dev2,
                                                     dev1,
                                                     sense_timeout_ms,
@@ -132,10 +132,10 @@ Public Class convector(Of T)
                    ByVal dev2 As dev_T(Of T),
                    Optional ByVal result As atomic_int64 = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
-        Me.New(Function(broken_pipe As ref(Of singleentry)) As flower(Of T)
+        Me.New(Function(broken_pipe As pointer(Of singleentry)) As flower(Of T)
                    Return New buffered_flower(Of T)(dev1, dev2, broken_pipe, result, treat_no_flow_as_failure)
                End Function,
-               Function(broken_pipe As ref(Of singleentry)) As flower(Of T)
+               Function(broken_pipe As pointer(Of singleentry)) As flower(Of T)
                    Return New buffered_flower(Of T)(dev2, dev1, broken_pipe, Nothing, treat_no_flow_as_failure)
                End Function)
     End Sub

@@ -19,8 +19,8 @@ Public Class delegator
     Public ReadOnly p As powerpoint
     Public ReadOnly id As String
 #If SINGLE_OPERATION Then
-    Private ReadOnly send_lock As ref(Of event_comb_lock)
-    Private ReadOnly receive_lock As ref(Of event_comb_lock)
+    Private ReadOnly send_lock As pointer(Of event_comb_lock)
+    Private ReadOnly receive_lock As pointer(Of event_comb_lock)
 #End If
     Private ReadOnly sources As const_array(Of IPEndPoint)
     Private ReadOnly c As UdpClient
@@ -42,8 +42,8 @@ Public Class delegator
                    End Sub)
         assert(Not c Is Nothing)
 #If SINGLE_OPERATION Then
-        send_lock = New ref(Of event_comb_lock)()
-        receive_lock = New ref(Of event_comb_lock)()
+        send_lock = New pointer(Of event_comb_lock)()
+        receive_lock = New pointer(Of event_comb_lock)()
 #End If
         Me.c = c
         Me.sources = sources
