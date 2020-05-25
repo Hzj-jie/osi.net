@@ -7,7 +7,7 @@
 
 Public Class ##CLASS_NAME##(Of T)
     Inherits ##BASE_NAME##(Of T)
-    
+
     Private ReadOnly _disposer As Action(Of T)
 
 #If 0 Then
