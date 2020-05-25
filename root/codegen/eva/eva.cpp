@@ -77,6 +77,7 @@ int main(int argc, char* argv[])
               "Option Infer Off\n"
               "Option Strict On\n\n"
               "Imports System.Runtime.CompilerServices\n"
+              "Imports osi.root.connector\n"
               "Imports osi.root.constants\n"
               "Imports osi.root.formation\n"
               "\nPublic Module _eva\n\n"

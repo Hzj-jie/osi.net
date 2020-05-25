@@ -7,6 +7,7 @@ Option Infer Off
 Option Strict On
 
 Imports System.Runtime.CompilerServices
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 
