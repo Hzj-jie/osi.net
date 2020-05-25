@@ -101,10 +101,12 @@ Public Class array_ref(Of T)
 'so change array_ref.override.vbp instead of this file
 
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function compare(ByVal i As T(), ByVal j As T()) As Int32
         Return memcmp(i, j)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function hash(ByVal i As T()) As Int32
         'WTF, the Array.GetHashCode returns some random number in .net 3.5
         Dim r As Int32 = 0
@@ -126,18 +128,22 @@ Public Class array_ref(Of T)
 
     Public p As T()
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub clear()
         p = Nothing
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function empty() As Boolean
         Return p Is Nothing
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [get]() As T()
         Return p
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub [set](ByVal i As T())
         p = i
     End Sub

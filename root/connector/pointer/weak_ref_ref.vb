@@ -114,10 +114,12 @@ Public Class weak_ref_ref(Of T)
 'so change single_obj_ref_operator.vbp instead of this file
 
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function compare(ByVal this As T, ByVal that As T) As Int32
         Return connector.compare(this, that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function hash(ByVal i As T) As Int32
         assert(Not i Is Nothing)
         Return i.GetHashCode()
@@ -126,6 +128,7 @@ Public Class weak_ref_ref(Of T)
 
     Private p As WeakReference
     
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub clear()
         p = Nothing
     End Sub

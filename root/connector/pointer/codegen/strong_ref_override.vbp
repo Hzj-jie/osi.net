@@ -1,18 +1,22 @@
 ﻿
     Public p As ##INNER_TYPE##
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub clear()
         p = Nothing
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function empty() As Boolean
         Return p Is Nothing
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [get]() As ##INNER_TYPE##
         Return p
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub [set](ByVal i As ##INNER_TYPE##)
         p = i
     End Sub
