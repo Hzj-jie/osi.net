@@ -1,0 +1,18 @@
+
+##DEFINE WEAKREFERENCE_TYPE pointer(Of T)
+##INCLUDE weak_pointer.override.vbp
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function [get](ByRef o As T) As Boolean
+        Dim p As pointer(Of T) = Nothing
+        If [get](p) AndAlso Not p Is Nothing AndAlso Not p.empty() Then
+            o = p.get()
+            Return True
+        End If
+        Return False
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Sub [set](ByVal i As T)
+        [set](pointer.of(i))
+    End Sub

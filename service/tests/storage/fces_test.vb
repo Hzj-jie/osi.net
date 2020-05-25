@@ -3,7 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.formation
+Imports osi.root.connector
 Imports osi.root.procedure
 Imports osi.service.storage
 
@@ -23,7 +23,7 @@ Public Class fces_test
     End Function
 End Class
 
-Public Class fces_perf_test
+Public NotInheritable Class fces_perf_test
     Inherits fces_test
 
     Public Sub New()

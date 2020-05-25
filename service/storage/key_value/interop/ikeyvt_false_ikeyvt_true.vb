@@ -1,8 +1,12 @@
 ﻿
-Imports osi.root.procedure
-Imports osi.root.formation
-Imports osi.root.template
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.formation
+Imports osi.root.procedure
+Imports osi.root.template
 
 Friend Class ikeyvt_false_ikeyvt_true
     Implements ikeyvt(Of _true)

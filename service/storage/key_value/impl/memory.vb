@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.argument
 Imports osi.service.device
-Imports store_t = osi.root.formation.unordered_map(Of osi.root.formation.array_pointer(Of Byte), Byte())
+Imports store_t = osi.root.formation.unordered_map(Of osi.root.connector.array_pointer(Of Byte), Byte())
 
 <global_init(global_init_level.server_services)>
 Public NotInheritable Class memory

@@ -5,7 +5,7 @@ Option Strict On
 
 Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
-Imports osi.root.formation
+Imports osi.root.connector
 
 Public Module _synchronize_invoke
     <Extension()> Public Function invoke(ByVal si As ISynchronizeInvoke,

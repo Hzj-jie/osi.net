@@ -4,13 +4,12 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.procedure
-Imports action_map = osi.root.formation.map(Of _
-                            osi.root.formation.array_pointer(Of Byte), _
-                            System.Func(Of osi.service.commander.command, _
-                                           osi.service.commander.command, _
+Imports action_map = osi.root.formation.map(Of
+                            osi.root.connector.array_pointer(Of Byte),
+                            System.Func(Of osi.service.commander.command,
+                                           osi.service.commander.command,
                                            osi.root.procedure.event_comb))
 
 Public NotInheritable Class dispatcher

@@ -1,9 +1,11 @@
 ﻿
-Imports System.IO
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net
 Imports System.Runtime.CompilerServices
-Imports osi.root.constants
-Imports osi.root.formation
+Imports osi.root.connector
 
 Public Module _httplistener
     <Extension()> Public Function get_context(ByVal listener As HttpListener,

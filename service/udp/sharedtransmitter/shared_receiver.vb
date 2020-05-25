@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports System.Net.Sockets
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports base_sharedtransmitter = osi.service.sharedtransmitter.sharedtransmitter(Of System.UInt16,

@@ -49,7 +49,7 @@ Public Class istrkeyvt_container
                ctor(+(v.other_values()), o)
     End Function
 
-    Public Function size() As Int32
+    Public Function size() As UInt32
         Return targets.size()
     End Function
 
@@ -65,12 +65,11 @@ Public Class istrkeyvt_container
         Return target(rnd_int(0, size()))
     End Function
 
-    Public Function name(ByVal i As Int32) As String
-        assert(i >= 0 AndAlso i < targets.size())
+    Public Function name(ByVal i As UInt32) As String
+        assert(i < targets.size())
         If String.IsNullOrEmpty(targets(i).second) Then
             Return unknown_istrkeyvt_name
-        Else
-            Return targets(i).second
         End If
+        Return targets(i).second
     End Function
 End Class

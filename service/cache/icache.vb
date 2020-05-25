@@ -3,8 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.delegates
-Imports osi.root.formation
+Imports osi.root.connector
 Imports osi.root.procedure
 
 'no thread-safe expected

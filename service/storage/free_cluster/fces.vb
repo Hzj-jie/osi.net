@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports store_t = osi.root.formation.unordered_map(Of osi.root.formation.array_pointer(Of Byte),
+Imports store_t = osi.root.formation.unordered_map(Of osi.root.connector.array_pointer(Of Byte),
                                                       osi.root.formation.pair(Of System.Int64, System.Int64))
 
 Partial Public NotInheritable Class fces

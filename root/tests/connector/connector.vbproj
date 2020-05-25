@@ -162,6 +162,7 @@
     <Compile Include="object_extensions_test.vb" />
     <Compile Include="out_generic_behavior_test.vb" />
     <Compile Include="overload_behavior_test.vb" />
+    <Compile Include="pointer_test.vb" />
     <Compile Include="rate_timeout_test.vb" />
     <Compile Include="resolver_test.vb" />
     <Compile Include="rnd\guid_strs_test.vb" />

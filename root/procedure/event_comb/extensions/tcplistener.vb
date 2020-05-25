@@ -1,8 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
-Imports System.Net
 Imports System.Net.Sockets
-Imports osi.root.formation
+Imports osi.root.connector
 
 Public Module _tcplistener
     <Extension()> Public Function accept_tcp_client(ByVal listener As TcpListener,

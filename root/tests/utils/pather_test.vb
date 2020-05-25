@@ -1,13 +1,18 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.root.utt
 
-Public Class pather_test
+Public NotInheritable Class pather_test
     Inherits [case]
 
-    Private Class case_result
+    Private NotInheritable Class case_result
         Public ReadOnly splitted As vector(Of String)
         Public ReadOnly normalized As String
         Public ReadOnly parent As String
@@ -123,7 +128,7 @@ Public Class pather_test
     End Sub
 
     Private Shared Function run_cases() As Boolean
-        For i As Int32 = 0 To cases.size() - 1
+        For i As UInt32 = 0 To cases.size() - uint32_1
             Dim r1 As pointer(Of String) = Nothing
             Dim r2 As pointer(Of vector(Of String)) = Nothing
             Dim r3 As String = Nothing

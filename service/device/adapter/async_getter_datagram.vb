@@ -1,8 +1,12 @@
 ﻿
-Imports osi.root.formation
-Imports osi.root.utils
-Imports osi.root.procedure
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.formation
+Imports osi.root.procedure
+Imports osi.root.utils
 Imports osi.service.selector
 Imports osi.service.transmitter
 

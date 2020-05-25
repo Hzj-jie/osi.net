@@ -120,11 +120,7 @@
     <Compile Include="optional.vb" />
     <Compile Include="pair.vb" />
     <Compile Include="piece.vb" />
-    <Compile Include="pointer\array_pointer.vb" />
     <Compile Include="ref_node.vb" />
-    <Compile Include="pointer\pointer.vb" />
-    <Compile Include="pointer\weak_ref_pointer.vb" />
-    <Compile Include="pointer\weak_pointer.vb" />
     <Compile Include="pool\fixed_pool.vb" />
     <Compile Include="pool\pool.vb" />
     <Compile Include="pool\unmanaged_pool.vb" />

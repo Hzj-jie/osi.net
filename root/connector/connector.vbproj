@@ -116,6 +116,11 @@
     <Compile Include="functor\string_serializer\uri_serializer.vb" />
     <Compile Include="garbage_collector.vb" />
     <Compile Include="mono.vb" />
+    <Compile Include="pointer\array_pointer.vb" />
+    <Compile Include="pointer\pointer.vb" />
+    <Compile Include="pointer\weak_pointer.vb" />
+    <Compile Include="pointer\weak_ref_pointer.vb" />
+    <Compile Include="ref.vb" />
     <Compile Include="string_utils\null_str.vb" />
     <Compile Include="struct\struct.definition.vb" />
     <Compile Include="struct\struct.reflector.vb" />
@@ -213,7 +218,6 @@
     <Compile Include="string_utils\stringbuilder.vb" />
     <Compile Include="ints\range_int.vb" />
     <Compile Include="unchecked_int.ext.vb" />
-    <Compile Include="ref.vb" />
     <Compile Include="weak_action.vb" />
     <Compile Include="windows_native\windows_error_mode.vb" />
     <Compile Include="windows_native\windows_hook\auto_release_windows_hook.vb" />
@@ -335,6 +339,17 @@
     <Compile Include="unref.vb" />
     <Compile Include="uri\uri.vb" />
     <None Include="ints\codegen\size_t_64.vbp" />
+    <None Include="pointer\codegen\array_pointer.override.vbp" />
+    <None Include="pointer\codegen\array_pointer.vbp" />
+    <None Include="pointer\codegen\pointer.override.vbp" />
+    <None Include="pointer\codegen\pointer.vbp" />
+    <None Include="pointer\codegen\run.cmd" />
+    <None Include="pointer\codegen\single_obj_pointer_operator.vbp" />
+    <None Include="pointer\codegen\strong_pointer_override.vbp" />
+    <None Include="pointer\codegen\weak_pointer.override.vbp" />
+    <None Include="pointer\codegen\weak_pointer.vbp" />
+    <None Include="pointer\codegen\weak_ref_pointer.override.vbp" />
+    <None Include="pointer\codegen\weak_ref_pointer.vbp" />
     <None Include="resolver\codegen\global_resolver.vbp" />
     <None Include="resolver\codegen\global_resolver_impl.vbp" />
     <None Include="resolver\codegen\resolver.vbp" />

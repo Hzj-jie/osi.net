@@ -1,6 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
-Imports osi.root.formation
+Imports osi.root.connector
 Imports osi.root.procedure
 
 Public Module _no_timestamp

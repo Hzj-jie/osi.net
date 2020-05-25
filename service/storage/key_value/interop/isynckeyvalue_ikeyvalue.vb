@@ -1,7 +1,11 @@
 ﻿
-Imports osi.root.procedure
-Imports osi.root.formation
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.formation
+Imports osi.root.procedure
 
 Friend Class isynckeyvalue_ikeyvalue
     Implements ikeyvalue

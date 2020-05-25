@@ -1,4 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
@@ -60,7 +65,7 @@ Public Class flow_piece_dev_adapter
         Dim buff() As Byte = Nothing
         Dim result As pointer(Of UInt32) = Nothing
         Return New event_comb(Function() As Boolean
-                                  ReDim buff(buff_size - 1)
+                                  ReDim buff(CInt(buff_size) - 1)
                                   result = New pointer(Of UInt32)()
                                   ec = underlying_device.receive(buff, result)
                                   Return waitfor(ec) AndAlso

@@ -1,6 +1,11 @@
 ﻿
-Imports osi.root.procedure
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.root.procedure
 
 Public Interface ikeyvalue2(Of SEEK_RESULT)
     Function read_existing(ByVal r As SEEK_RESULT, ByVal value As pointer(Of Byte())) As event_comb

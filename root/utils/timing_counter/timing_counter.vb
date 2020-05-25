@@ -1,5 +1,9 @@
 ﻿
-Imports osi.root.formation
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 
 Public MustInherit Class timing_counter
     Implements IDisposable

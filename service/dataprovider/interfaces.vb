@@ -1,9 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
+Imports osi.root.connector
 Imports osi.root.lock
 Imports osi.root.procedure
-Imports osi.root.formation
-Imports osi.root.delegates
 
 Public Interface idataprovider
     Function last_refered_ticks() As Int64

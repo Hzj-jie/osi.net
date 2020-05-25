@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.IO
 Imports System.Net
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils

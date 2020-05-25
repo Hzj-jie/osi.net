@@ -5,6 +5,8 @@ Option Strict On
 
 'do not suggest to use these two classes, use disposer<> instead
 
+Imports osi.root.connector
+
 Public Class event_disposer(Of T)
     Inherits pointer(Of T)
     Implements IComparable(Of event_disposer(Of T)), IDisposable

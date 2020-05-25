@@ -1,6 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net
-Imports osi.root.formation
+Imports osi.root.connector
 
 Public Module _dns
     Public Function get_host_addresses(ByVal hostname_or_address As String,

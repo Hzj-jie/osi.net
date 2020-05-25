@@ -1,0 +1,4 @@
+﻿
+##DEFINE TYPE array_pointer
+##DEFINE INNER_TYPE T()
+##INCLUDE pointer.vbp

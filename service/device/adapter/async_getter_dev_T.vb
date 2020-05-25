@@ -1,4 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
@@ -17,12 +22,12 @@ Public Class async_getter_dev_T(Of T)
     Public Shared Shadows Function [New](Of IT, DT As dev_T(Of T)) _
                                         (ByVal i As async_getter(Of IT),
                                          ByVal c As Func(Of IT, DT)) As async_getter_dev_T(Of T)
-        Return New async_getter_dev_T(Of T, dev_T(Of T))(async_getter_adapter(Of dev_T(Of T)).convert(i, c))
+        Return New async_getter_dev_T(Of T)(async_getter_adapter(Of dev_T(Of T)).convert(i, c))
     End Function
 
     Public Shared Shadows Function [New](Of IT)(ByVal i As async_getter(Of IT),
                                                 ByVal c As Func(Of IT, dev_T(Of T))) As async_getter_dev_T(Of T)
-        Return New async_getter_dev_T(Of T, dev_T(Of T))(async_getter_adapter(Of dev_T(Of T)).convert(i, c))
+        Return New async_getter_dev_T(Of T)(async_getter_adapter(Of dev_T(Of T)).convert(i, c))
     End Function
 
     Public Shared Shadows Function [New](ByVal i As async_getter(Of dev_T(Of T))) As async_getter_dev_T(Of T)

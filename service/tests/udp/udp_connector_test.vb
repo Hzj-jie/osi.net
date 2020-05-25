@@ -1,12 +1,16 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.procedure
-Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.service.selector
 Imports osi.service.device
 Imports osi.service.udp
 
-Public Class udp_connector_test
+Public NotInheritable Class udp_connector_test
     Inherits repeat_event_comb_case_wrapper
 
     Public Sub New()
