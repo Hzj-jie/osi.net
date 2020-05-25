@@ -54,7 +54,7 @@ Public Module _process
 
     <Extension()> Public Function queue_quit(ByVal p As Process,
                                              Optional ByVal wait_ms As Int64 = default_close_process_wait_milliseconds,
-                                             Optional ByVal quit_result As pointer(Of Boolean) = Nothing) As Boolean
+                                             Optional ByVal quit_result As ref(Of Boolean) = Nothing) As Boolean
         If p Is Nothing Then
             Return False
         Else

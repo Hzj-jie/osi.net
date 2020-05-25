@@ -19,17 +19,17 @@ Public NotInheritable Class dns_cache_test
         If Not MyBase.prepare() Then
             Return False
         End If
-        Dim p As pointer(Of connectivity.result_t) = Nothing
+        Dim p As ref(Of connectivity.result_t) = Nothing
         p.renew()
         async_sync(connectivity.check_if_needed(p))
         dns_cache.clear_cache()
         Return (+p) >= connectivity.result_t.partial_dns_resolvable
     End Function
 
-    Private Shared Function check_cache(ByVal f As Func(Of pointer(Of IPHostEntry), event_comb),
+    Private Shared Function check_cache(ByVal f As Func(Of ref(Of IPHostEntry), event_comb),
                                         ByVal exp As IPHostEntry) As Boolean
         assert(Not f Is Nothing)
-        Dim c As pointer(Of IPHostEntry) = Nothing
+        Dim c As ref(Of IPHostEntry) = Nothing
         c.renew()
         ' Inserting to cache is an asynchronous operation.
         assertion.is_true(timeslice_sleep_wait_until(
@@ -44,7 +44,7 @@ Public NotInheritable Class dns_cache_test
         For i As UInt32 = 0 To connectivity.golden_hosts.size() - uint32_1
             Dim host As String = Nothing
             host = connectivity.golden_hosts(i)
-            Dim he As pointer(Of IPHostEntry) = Nothing
+            Dim he As ref(Of IPHostEntry) = Nothing
             he.renew()
             If Not async_sync(dns_cache.resolve(host, he)) Then
                 Continue For

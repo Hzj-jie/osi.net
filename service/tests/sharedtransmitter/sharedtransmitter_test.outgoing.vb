@@ -40,8 +40,8 @@ Partial Public Class sharedtransmitter_test
                         with_collection(c).
                         with_functor(Of functor)().
                         create()
-            Dim p As pointer(Of Int32) = Nothing
-            p = New pointer(Of Int32)()
+            Dim p As ref(Of Int32) = Nothing
+            p = New ref(Of Int32)()
             assertion.is_true(async_sync(s.receiver.receive(p)))
             assertion.equal(+p, 200)  ' The initial data
             For i As Int32 = 0 To 1000

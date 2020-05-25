@@ -104,7 +104,7 @@ Public Class bytes_transformer_block_wrapper
                               End Function)
     End Function
 
-    Public Function receive(ByVal result As pointer(Of Byte())) As event_comb Implements block.receive
+    Public Function receive(ByVal result As ref(Of Byte())) As event_comb Implements block.receive
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = block_dev.receive(result)
@@ -127,7 +127,7 @@ Public Class bytes_transformer_block_wrapper
                               End Function)
     End Function
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements block.sense
         Return block_dev.sense(pending, timeout_ms)
     End Function

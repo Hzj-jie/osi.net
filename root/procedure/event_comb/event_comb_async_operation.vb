@@ -99,7 +99,7 @@ Public Class event_comb_async_operation
     <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
     Public Shared Function ctor(Of T)(ByVal begin As Func(Of AsyncCallback, IAsyncResult),
                                       ByVal [end] As Func(Of IAsyncResult, T),
-                                      Optional ByVal result As pointer(Of T) = Nothing) As event_comb
+                                      Optional ByVal result As ref(Of T) = Nothing) As event_comb
         If use_promise_for_event_comb_async_operation Then
             Return event_comb.from(promise.[New](begin, [end]), result)
         Else

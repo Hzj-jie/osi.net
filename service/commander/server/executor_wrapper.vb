@@ -17,17 +17,17 @@ Public Class executor_wrapper
         e = a
     End Sub
 
-    Public Sub New(ByVal a As Func(Of Byte(), pointer(Of Byte()), event_comb))
+    Public Sub New(ByVal a As Func(Of Byte(), ref(Of Byte()), event_comb))
         If a Is Nothing Then
             e = Nothing
         Else
             e = Function(i As command, o As command) As event_comb
                     Dim ec As event_comb = Nothing
-                    Dim p As pointer(Of Byte()) = Nothing
+                    Dim p As ref(Of Byte()) = Nothing
                     Return New event_comb(Function() As Boolean
                                               assert(Not i Is Nothing)
                                               assert(Not o Is Nothing)
-                                              p = New pointer(Of Byte())()
+                                              p = New ref(Of Byte())()
                                               ec = a(i.action(), p)
                                               Return waitfor(ec) AndAlso
                                                      goto_next()
@@ -44,17 +44,17 @@ Public Class executor_wrapper
         End If
     End Sub
 
-    Public Sub New(ByVal a As Func(Of String, pointer(Of String), event_comb))
+    Public Sub New(ByVal a As Func(Of String, ref(Of String), event_comb))
         If a Is Nothing Then
             e = Nothing
         Else
             e = Function(i As command, o As command) As event_comb
                     Dim ec As event_comb = Nothing
-                    Dim p As pointer(Of String) = Nothing
+                    Dim p As ref(Of String) = Nothing
                     Return New event_comb(Function() As Boolean
                                               assert(Not i Is Nothing)
                                               assert(Not o Is Nothing)
-                                              p = New pointer(Of String)()
+                                              p = New ref(Of String)()
                                               ec = a(bytes_str(i.action()), p)
                                               Return waitfor(ec) AndAlso
                                                      goto_next()
@@ -75,14 +75,14 @@ Public Class executor_wrapper
         Return New executor_wrapper(this)
     End Operator
 
-    Public Shared Widening Operator CType(ByVal this As Func(Of Byte(), 
-                                                                pointer(Of Byte()), 
+    Public Shared Widening Operator CType(ByVal this As Func(Of Byte(),
+                                                                ref(Of Byte()),
                                                                 event_comb)) As executor_wrapper
         Return New executor_wrapper(this)
     End Operator
 
-    Public Shared Widening Operator CType(ByVal this As Func(Of String, 
-                                                                pointer(Of String), 
+    Public Shared Widening Operator CType(ByVal this As Func(Of String,
+                                                                ref(Of String),
                                                                 event_comb)) As executor_wrapper
         Return New executor_wrapper(this)
     End Operator

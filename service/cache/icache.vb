@@ -31,10 +31,10 @@ End Interface
 Public Interface icache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     'the event_comb will never fail
     Function [set](ByVal key As KEY_T, ByVal value As VALUE_T) As event_comb
-    'the event_comb will fail when value is nothing or the key is not existing, and the value will be an empty pointer
-    Function [get](ByVal key As KEY_T, ByVal value As pointer(Of VALUE_T)) As event_comb
+    'the event_comb will fail when value is nothing or the key is not existing, and the value will be an empty ref
+    Function [get](ByVal key As KEY_T, ByVal value As ref(Of VALUE_T)) As event_comb
     'the event_comb will fail when value is nothing
-    Function size(ByVal value As pointer(Of Int64)) As event_comb
+    Function size(ByVal value As ref(Of Int64)) As event_comb
     'the event_comb will never fail
     Function clear() As event_comb
     'the event_comb will fail when the key is not existing

@@ -16,4 +16,4 @@
         Return r
     End Function
     
-##INCLUDE strong_pointer_override.vbp
+##INCLUDE strong_ref_override.vbp

@@ -18,11 +18,11 @@ Partial Public Class virtdisk
     Private ReadOnly s As stream_flow_adapter
     Private ReadOnly fn As String
     Private ReadOnly c As capinfo
-    Private ReadOnly l As pointer(Of event_comb_lock)
+    Private ReadOnly l As ref(Of event_comb_lock)
     Private closed As singleentry
 
     Private Sub New(ByVal s As Stream)
-        l = New pointer(Of event_comb_lock)()
+        l = New ref(Of event_comb_lock)()
         'do not assert, since the valid will help to make sure it's safe
         Me.s = New stream_flow_adapter(s)
         AddHandler Me.s.dispose_exception,
@@ -200,7 +200,7 @@ Partial Public Class virtdisk
 
     Public Function read(ByVal start As UInt64,
                          ByVal len As UInt32,
-                         ByVal output As pointer(Of Byte())) As event_comb
+                         ByVal output As ref(Of Byte())) As event_comb
         Dim r() As Byte = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean

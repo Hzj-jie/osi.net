@@ -17,7 +17,7 @@ Public Class balance_distributor
     Implements istrkeyvt
 
     Private Const default_update_frequency As Int64 = 30 * second_milli
-    Private ReadOnly expired As pointer(Of singleentry)
+    Private ReadOnly expired As ref(Of singleentry)
     Private ReadOnly container As istrkeyvt_container
     Private ReadOnly capacities As vector(Of Int64)
     Private ReadOnly update_frequency As Int32
@@ -32,7 +32,7 @@ Public Class balance_distributor
         Me.container = c
         Me.capacities = New vector(Of Int64)()
         Me.capacities.resize(Me.container.size())
-        Me.expired = New pointer(Of singleentry)()
+        Me.expired = New ref(Of singleentry)()
         If update_frequency <= 0 Then
             raise_error(error_type.user,
                         "input update frequency ",
@@ -57,10 +57,10 @@ Public Class balance_distributor
 
     Private Sub update_capacity(ByVal i As UInt32)
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of Int64) = Nothing
+        Dim p As ref(Of Int64) = Nothing
         begin_lifetime_event_comb(expired,
                                   Function() As Boolean
-                                      p = New pointer(Of Int64)()
+                                      p = New ref(Of Int64)()
                                       Return goto_next()
                                   End Function,
                                   Function() As Boolean
@@ -94,13 +94,13 @@ Public Class balance_distributor
     End Sub
 
     Private Function select_by_key(ByVal key As String,
-                                   ByVal o As pointer(Of vector(Of istrkeyvt))) As event_comb
+                                   ByVal o As ref(Of vector(Of istrkeyvt))) As event_comb
         Return distribute(container,
-                          Function(keyvt As istrkeyvt, existing As pointer(Of Boolean)) As event_comb
+                          Function(keyvt As istrkeyvt, existing As ref(Of Boolean)) As event_comb
                               Return keyvt.seek(key, existing)
                           End Function,
                           o,
-                          Function(existings() As pointer(Of Boolean),
+                          Function(existings() As ref(Of Boolean),
                                    ByRef result As vector(Of istrkeyvt)) As Boolean
                               assert(array_size(existings) = container.size())
                               result = New vector(Of istrkeyvt)()
@@ -114,13 +114,13 @@ Public Class balance_distributor
     End Function
 
     Private Function select_by_key(ByVal key As String,
-                                   ByVal o As pointer(Of istrkeyvt)) As event_comb
+                                   ByVal o As ref(Of istrkeyvt)) As event_comb
         'if more than one istrkeyvts contain the key, just select the first one.
         'this should not happen
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of vector(Of istrkeyvt)) = Nothing
+        Dim p As ref(Of vector(Of istrkeyvt)) = Nothing
         Return New event_comb(Function() As Boolean
-                                  p = New pointer(Of vector(Of istrkeyvt))()
+                                  p = New ref(Of vector(Of istrkeyvt))()
                                   ec = select_by_key(key, p)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -139,9 +139,9 @@ Public Class balance_distributor
                                    Optional ByVal ud As Action = Nothing) As event_comb
         assert(Not d Is Nothing)
         Dim ec As event_comb = Nothing
-        Dim i As pointer(Of istrkeyvt) = Nothing
+        Dim i As ref(Of istrkeyvt) = Nothing
         Return New event_comb(Function() As Boolean
-                                  i = New pointer(Of istrkeyvt)()
+                                  i = New ref(Of istrkeyvt)()
                                   ec = select_by_key(key, i)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -186,7 +186,7 @@ Public Class balance_distributor
     End Function
 
     Private Function [select](ByVal key As String,
-                              ByVal o As pointer(Of istrkeyvt)) As event_comb
+                              ByVal o As ref(Of istrkeyvt)) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = select_by_key(key, o)
@@ -209,9 +209,9 @@ Public Class balance_distributor
                               ByVal d As Func(Of istrkeyvt, event_comb)) As event_comb
         assert(Not d Is Nothing)
         Dim ec As event_comb = Nothing
-        Dim i As pointer(Of istrkeyvt) = Nothing
+        Dim i As ref(Of istrkeyvt) = Nothing
         Return New event_comb(Function() As Boolean
-                                  i = New pointer(Of istrkeyvt)()
+                                  i = New ref(Of istrkeyvt)()
                                   ec = [select](key, i)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -235,24 +235,24 @@ Public Class balance_distributor
     Public Function append(ByVal key As String,
                            ByVal value() As Byte,
                            ByVal ts As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.append
+                           ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.append
         Return [select](key, Function(i) i.append(key, value, ts, result))
     End Function
 
-    Public Function capacity(ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.capacity
+    Public Function capacity(ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.capacity
         Return sum_capacity(container, result)
     End Function
 
     Public Function delete(ByVal key As String,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.delete
+                           ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.delete
         Return all_delete(container, key, result)
     End Function
 
-    Public Function empty(ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.empty
+    Public Function empty(ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.empty
         Return and_empty(container, result)
     End Function
 
-    Public Function full(ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.full
+    Public Function full(ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.full
         Return or_full(container, result)
     End Function
 
@@ -260,24 +260,24 @@ Public Class balance_distributor
         Return all_heartbeat(container)
     End Function
 
-    Public Function keycount(ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.keycount
+    Public Function keycount(ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.keycount
         Return sum_keycount(container, result)
     End Function
 
-    Public Function list(ByVal result As pointer(Of vector(Of String))) As event_comb Implements istrkeyvt.list
+    Public Function list(ByVal result As ref(Of vector(Of String))) As event_comb Implements istrkeyvt.list
         Return merge_list(container, result)
     End Function
 
     Public Function modify(ByVal key As String,
                            ByVal value() As Byte,
                            ByVal ts As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.modify
+                           ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.modify
         Return [select](key, Function(i) i.modify(key, value, ts, result))
     End Function
 
     Public Function read(ByVal key As String,
-                         ByVal result As pointer(Of Byte()),
-                         ByVal ts As pointer(Of Int64)) As event_comb Implements istrkeyvt.read
+                         ByVal result As ref(Of Byte()),
+                         ByVal ts As ref(Of Int64)) As event_comb Implements istrkeyvt.read
         Return select_by_key(key, Function(x) x.read(key, result, ts))
     End Function
 
@@ -286,7 +286,7 @@ Public Class balance_distributor
     End Function
 
     Public Function seek(ByVal key As String,
-                         ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.seek
+                         ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.seek
         Return select_by_key(key,
                              Function(x As istrkeyvt) As event_comb
                                  eva(result, True)
@@ -298,7 +298,7 @@ Public Class balance_distributor
     End Function
 
     Public Function sizeof(ByVal key As String,
-                           ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.sizeof
+                           ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.sizeof
         Return select_by_key(key, Function(x) x.sizeof(key, result))
     End Function
 
@@ -311,11 +311,11 @@ Public Class balance_distributor
     Public Function unique_write(ByVal key As String,
                                  ByVal value() As Byte,
                                  ByVal ts As Int64,
-                                 ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.unique_write
+                                 ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.unique_write
         Return [select](key, Function(x) x.unique_write(key, value, ts, result))
     End Function
 
-    Public Function valuesize(ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.valuesize
+    Public Function valuesize(ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.valuesize
         Return sum_valuesize(container, result)
     End Function
 

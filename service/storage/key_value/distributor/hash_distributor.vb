@@ -30,24 +30,24 @@ Public Class hash_distributor
     Public Function append(ByVal key As String,
                            ByVal value() As Byte,
                            ByVal ts As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.append
+                           ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.append
         Return [select](key).append(key, value, ts, result)
     End Function
 
-    Public Function capacity(ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.capacity
+    Public Function capacity(ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.capacity
         Return sum_capacity(container, result)
     End Function
 
     Public Function delete(ByVal key As String,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.delete
+                           ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.delete
         Return [select](key).delete(key, result)
     End Function
 
-    Public Function empty(ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.empty
+    Public Function empty(ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.empty
         Return and_empty(container, result)
     End Function
 
-    Public Function full(ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.full
+    Public Function full(ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.full
         Return or_full(container, result)
     End Function
 
@@ -55,24 +55,24 @@ Public Class hash_distributor
         Return all_heartbeat(container)
     End Function
 
-    Public Function keycount(ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.keycount
+    Public Function keycount(ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.keycount
         Return sum_keycount(container, result)
     End Function
 
-    Public Function list(ByVal result As pointer(Of vector(Of String))) As event_comb Implements istrkeyvt.list
+    Public Function list(ByVal result As ref(Of vector(Of String))) As event_comb Implements istrkeyvt.list
         Return merge_list(container, result)
     End Function
 
     Public Function modify(ByVal key As String,
                            ByVal value() As Byte,
                            ByVal ts As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.modify
+                           ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.modify
         Return [select](key).modify(key, value, ts, result)
     End Function
 
     Public Function read(ByVal key As String,
-                         ByVal result As pointer(Of Byte()),
-                         ByVal ts As pointer(Of Int64)) As event_comb Implements istrkeyvt.read
+                         ByVal result As ref(Of Byte()),
+                         ByVal ts As ref(Of Int64)) As event_comb Implements istrkeyvt.read
         Return [select](key).read(key, result, ts)
     End Function
 
@@ -81,12 +81,12 @@ Public Class hash_distributor
     End Function
 
     Public Function seek(ByVal key As String,
-                         ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.seek
+                         ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.seek
         Return [select](key).seek(key, result)
     End Function
 
     Public Function sizeof(ByVal key As String,
-                           ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.sizeof
+                           ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.sizeof
         Return [select](key).sizeof(key, result)
     End Function
 
@@ -97,11 +97,11 @@ Public Class hash_distributor
     Public Function unique_write(ByVal key As String,
                                  ByVal value() As Byte,
                                  ByVal ts As Int64,
-                                 ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.unique_write
+                                 ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.unique_write
         Return [select](key).unique_write(key, value, ts, result)
     End Function
 
-    Public Function valuesize(ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.valuesize
+    Public Function valuesize(ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.valuesize
         Return sum_valuesize(container, result)
     End Function
 

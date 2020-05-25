@@ -190,11 +190,11 @@ Public NotInheritable Class shell_less_process
     End Function
 
     Public Function queue_quit(ByVal wait_ms As Int64,
-                               Optional ByVal quit_result As pointer(Of Boolean) = Nothing) As Boolean
+                               Optional ByVal quit_result As ref(Of Boolean) = Nothing) As Boolean
         Return proc().queue_quit(wait_ms, quit_result)
     End Function
 
-    Public Function queue_quit(Optional ByVal quit_result As pointer(Of Boolean) = Nothing) As Boolean
+    Public Function queue_quit(Optional ByVal quit_result As ref(Of Boolean) = Nothing) As Boolean
         Return proc().queue_quit(quit_result:=quit_result)
     End Function
 

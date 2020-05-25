@@ -163,8 +163,8 @@ Partial Public NotInheritable Class server
                                   End Function)
         End Function
 
-        Public Function read_request_body(ByVal o As pointer(Of piece)) As event_comb
-            Dim p As pointer(Of Byte()) = Nothing
+        Public Function read_request_body(ByVal o As ref(Of piece)) As event_comb
+            Dim p As ref(Of Byte()) = Nothing
             Dim ec As event_comb = Nothing
             Return New event_comb(Function() As Boolean
                                       If request_body Then
@@ -173,7 +173,7 @@ Partial Public NotInheritable Class server
                                                  goto_end()
                                       End If
 
-                                      p = New pointer(Of Byte())()
+                                      p = New ref(Of Byte())()
                                       ec = context.Request().read_request_body(p, ls)
                                       Return waitfor(ec) AndAlso
                                                  goto_next()
@@ -196,9 +196,9 @@ Partial Public NotInheritable Class server
                                   End Function)
         End Function
 
-        Public Function parse_www_form_encoded_body(ByVal result As pointer(Of www_form_urlencoded)) As event_comb
+        Public Function parse_www_form_encoded_body(ByVal result As ref(Of www_form_urlencoded)) As event_comb
             Dim ec As event_comb = Nothing
-            Dim b As pointer(Of piece) = Nothing
+            Dim b As ref(Of piece) = Nothing
             Return New event_comb(Function() As Boolean
                                       If www_form_urlencoded_body Then
                                           Return Not www_form_urlencoded_body.empty() AndAlso
@@ -206,7 +206,7 @@ Partial Public NotInheritable Class server
                                                  goto_end()
                                       End If
 
-                                      b = New pointer(Of piece)()
+                                      b = New ref(Of piece)()
                                       ec = read_request_body(b)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -238,10 +238,10 @@ Partial Public NotInheritable Class server
         End Function
 
         Public Function parse_query(ByVal include_post As Boolean,
-                                    ByVal result As pointer(Of map(Of String, vector(Of String)))) As event_comb
+                                    ByVal result As ref(Of map(Of String, vector(Of String)))) As event_comb
             Dim ec As event_comb = Nothing
             Dim url_query As map(Of String, vector(Of String)) = Nothing
-            Dim p As pointer(Of www_form_urlencoded) = Nothing
+            Dim p As ref(Of www_form_urlencoded) = Nothing
             Return New event_comb(Function() As Boolean
                                       url_query = parse_query()
                                       If url_query Is Nothing Then
@@ -258,7 +258,7 @@ Partial Public NotInheritable Class server
                                                  goto_end()
                                       End If
 
-                                      p = New pointer(Of www_form_urlencoded)()
+                                      p = New ref(Of www_form_urlencoded)()
                                       ec = parse_www_form_encoded_body(p)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -284,7 +284,7 @@ Partial Public NotInheritable Class server
                                   End Function)
         End Function
 
-        Public Function parse_post_query(ByVal result As pointer(Of map(Of String, vector(Of String)))) As event_comb
+        Public Function parse_post_query(ByVal result As ref(Of map(Of String, vector(Of String)))) As event_comb
             Return parse_query(True, result)
         End Function
 

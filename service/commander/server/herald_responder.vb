@@ -80,7 +80,7 @@ Public Class herald_responder(Of CONTINUOUS As _boolean)
     Private Function respond_once() As event_comb
         assert(Not instance Is Nothing)
         Dim ec As event_comb = Nothing
-        Dim i As pointer(Of command) = Nothing
+        Dim i As ref(Of command) = Nothing
         Dim o As command = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = instance.sense(pending_request_timeout_ms)
@@ -89,7 +89,7 @@ Public Class herald_responder(Of CONTINUOUS As _boolean)
                               End Function,
                               Function() As Boolean
                                   If ec.end_result() Then
-                                      i = New pointer(Of command)()
+                                      i = New ref(Of command)()
                                       ec = instance.receive(i)
                                       Return waitfor(ec) AndAlso
                                              goto_next()

@@ -35,35 +35,35 @@ Public Class ikeyvalue2_ikeyvt2(Of SEEK_RESULT)
 
     Public Function append_existing(key As pair(Of SEEK_RESULT, SEEK_RESULT),
                                     value() As Byte,
-                                    result As pointer(Of Boolean)) As event_comb _
+                                    result As ref(Of Boolean)) As event_comb _
                                    Implements ikeyvt2(Of pair(Of SEEK_RESULT, SEEK_RESULT)).append_existing
         Return d.append_existing(data_seek_result(key), value, result)
     End Function
 
-    Public Function capacity(result As pointer(Of Int64)) As event_comb _
+    Public Function capacity(result As ref(Of Int64)) As event_comb _
                             Implements ikeyvt2(Of pair(Of SEEK_RESULT, SEEK_RESULT)).capacity
         Return d.capacity(result)
     End Function
 
     Public Function delete_existing(key As pair(Of SEEK_RESULT, SEEK_RESULT),
-                                    result As pointer(Of Boolean)) As event_comb _
+                                    result As ref(Of Boolean)) As event_comb _
                                    Implements ikeyvt2(Of pair(Of SEEK_RESULT, SEEK_RESULT)).delete_existing
         Return d.delete_existing(data_seek_result(key), result)
     End Function
 
     Public Function delete_existing_timestamp(key As pair(Of SEEK_RESULT, SEEK_RESULT),
-                                              result As pointer(Of Boolean)) As event_comb _
-                                             Implements ikeyvt2(Of pair(Of SEEK_RESULT, 
+                                              result As ref(Of Boolean)) As event_comb _
+                                             Implements ikeyvt2(Of pair(Of SEEK_RESULT,
                                                                            SEEK_RESULT)).delete_existing_timestamp
         Return t.delete_existing(timestamp_seek_result(key), result)
     End Function
 
-    Public Function empty(result As pointer(Of Boolean)) As event_comb _
+    Public Function empty(result As ref(Of Boolean)) As event_comb _
                          Implements ikeyvt2(Of pair(Of SEEK_RESULT, SEEK_RESULT)).empty
         Return parallel(AddressOf d.empty, AddressOf t.empty, result)
     End Function
 
-    Public Function full(result As pointer(Of Boolean)) As event_comb _
+    Public Function full(result As ref(Of Boolean)) As event_comb _
                         Implements ikeyvt2(Of pair(Of SEEK_RESULT, SEEK_RESULT)).full
         Return _parallel.[or](AddressOf d.full, AddressOf t.full, result)
     End Function
@@ -72,14 +72,14 @@ Public Class ikeyvalue2_ikeyvt2(Of SEEK_RESULT)
         Return parallel(AddressOf d.heartbeat, AddressOf t.heartbeat)
     End Function
 
-    Public Function keycount(result As pointer(Of Int64)) As event_comb _
+    Public Function keycount(result As ref(Of Int64)) As event_comb _
                             Implements ikeyvt2(Of pair(Of SEEK_RESULT, SEEK_RESULT)).keycount
         Return parallel(AddressOf d.keycount,
                         AddressOf t.keycount,
                         result)
     End Function
 
-    Public Function list(result As pointer(Of vector(Of Byte()))) As event_comb _
+    Public Function list(result As ref(Of vector(Of Byte()))) As event_comb _
                         Implements ikeyvt2(Of pair(Of SEEK_RESULT, SEEK_RESULT)).list
         Return parallel(AddressOf d.list,
                         AddressOf t.list,
@@ -96,19 +96,19 @@ Public Class ikeyvalue2_ikeyvt2(Of SEEK_RESULT)
     End Function
 
     Public Function read_existing(key As pair(Of SEEK_RESULT, SEEK_RESULT),
-                                  result As pointer(Of Byte())) As event_comb _
+                                  result As ref(Of Byte())) As event_comb _
                                  Implements ikeyvt2(Of pair(Of SEEK_RESULT, SEEK_RESULT)).read_existing
         Return d.read_existing(data_seek_result(key), result)
     End Function
 
     Public Function read_existing_timestamp(key As pair(Of SEEK_RESULT, SEEK_RESULT),
-                                            ts As pointer(Of Int64)) As event_comb _
-                                           Implements ikeyvt2(Of pair(Of SEEK_RESULT, 
+                                            ts As ref(Of Int64)) As event_comb _
+                                           Implements ikeyvt2(Of pair(Of SEEK_RESULT,
                                                                          SEEK_RESULT)).read_existing_timestamp
-        Dim b As pointer(Of Byte()) = Nothing
+        Dim b As ref(Of Byte()) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  b = New pointer(Of Byte())()
+                                  b = New ref(Of Byte())()
                                   ec = t.read_existing(timestamp_seek_result(key), b)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -127,21 +127,21 @@ Public Class ikeyvalue2_ikeyvt2(Of SEEK_RESULT)
     End Function
 
     Public Function seek(key() As Byte,
-                         r As pointer(Of pair(Of SEEK_RESULT, SEEK_RESULT)),
-                         result As pointer(Of Boolean)) As event_comb _
+                         r As ref(Of pair(Of SEEK_RESULT, SEEK_RESULT)),
+                         result As ref(Of Boolean)) As event_comb _
                         Implements ikeyvt2(Of pair(Of SEEK_RESULT, SEEK_RESULT)).seek
-        Dim dr As pointer(Of SEEK_RESULT) = Nothing
-        Dim tr As pointer(Of SEEK_RESULT) = Nothing
-        Dim drb As pointer(Of Boolean) = Nothing
-        Dim trb As pointer(Of Boolean) = Nothing
+        Dim dr As ref(Of SEEK_RESULT) = Nothing
+        Dim tr As ref(Of SEEK_RESULT) = Nothing
+        Dim drb As ref(Of Boolean) = Nothing
+        Dim trb As ref(Of Boolean) = Nothing
         Return parallel(Function() As event_comb
-                            dr = New pointer(Of SEEK_RESULT)()
-                            drb = New pointer(Of Boolean)()
+                            dr = New ref(Of SEEK_RESULT)()
+                            drb = New ref(Of Boolean)()
                             Return d.seek(key, dr, drb)
                         End Function,
                         Function() As event_comb
-                            tr = New pointer(Of SEEK_RESULT)()
-                            trb = New pointer(Of Boolean)()
+                            tr = New ref(Of SEEK_RESULT)()
+                            trb = New ref(Of Boolean)()
                             Return t.seek(key, tr, trb)
                         End Function,
                         Function() As Boolean
@@ -159,7 +159,7 @@ Public Class ikeyvalue2_ikeyvt2(Of SEEK_RESULT)
     End Function
 
     Public Function sizeof_existing(key As pair(Of SEEK_RESULT, SEEK_RESULT),
-                                    result As pointer(Of Int64)) As event_comb _
+                                    result As ref(Of Int64)) As event_comb _
                                    Implements ikeyvt2(Of pair(Of SEEK_RESULT, SEEK_RESULT)).sizeof_existing
         Return d.sizeof_existing(data_seek_result(key), result)
     End Function
@@ -168,21 +168,21 @@ Public Class ikeyvalue2_ikeyvt2(Of SEEK_RESULT)
         Return parallel(AddressOf d.stop, AddressOf t.stop)
     End Function
 
-    Public Function valuesize(result As pointer(Of Int64)) As event_comb _
+    Public Function valuesize(result As ref(Of Int64)) As event_comb _
                              Implements ikeyvt2(Of pair(Of SEEK_RESULT, SEEK_RESULT)).valuesize
         Return d.valuesize(result)
     End Function
 
     Public Function write_new(key() As Byte,
                               value() As Byte,
-                              result As pointer(Of Boolean)) As event_comb _
+                              result As ref(Of Boolean)) As event_comb _
                              Implements ikeyvt2(Of pair(Of SEEK_RESULT, SEEK_RESULT)).write_new
         Return d.write_new(key, value, result)
     End Function
 
     Public Function write_new_timestamp(key() As Byte,
                                         ts As Int64,
-                                        result As pointer(Of Boolean)) As event_comb _
+                                        result As ref(Of Boolean)) As event_comb _
                                        Implements ikeyvt2(Of pair(Of SEEK_RESULT, SEEK_RESULT)).write_new_timestamp
         Return t.write_new(key, ts.to_bytes(), result)
     End Function

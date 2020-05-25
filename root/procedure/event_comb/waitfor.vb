@@ -108,24 +108,24 @@ Public Module _waitfor
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function waitfor(Of T)(ByVal d As Func(Of T), ByVal r As pointer(Of T)) As Boolean
+    Public Function waitfor(Of T)(ByVal d As Func(Of T), ByVal r As ref(Of T)) As Boolean
         Return event_comb.waitfor(d, r)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub assert_waitfor(Of T)(ByVal d As Func(Of T), ByVal r As pointer(Of T))
+    Public Sub assert_waitfor(Of T)(ByVal d As Func(Of T), ByVal r As ref(Of T))
         assert(waitfor(d, r))
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function waitfor(Of T)(ByVal d As Func(Of T),
-                                  ByVal r As pointer(Of T),
+                                  ByVal r As ref(Of T),
                                   ByVal timeout_ms As Int64) As Boolean
         Return event_comb.waitfor(d, r, timeout_ms)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub assert_waitfor(Of T)(ByVal d As Func(Of T), ByVal r As pointer(Of T), ByVal timeout_ms As Int64)
+    Public Sub assert_waitfor(Of T)(ByVal d As Func(Of T), ByVal r As ref(Of T), ByVal timeout_ms As Int64)
         assert(waitfor(d, r, timeout_ms))
     End Sub
 
@@ -141,14 +141,14 @@ Public Module _waitfor
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function waitfor(ByVal [try] As Func(Of Boolean),
-                            ByVal try_result As pointer(Of Boolean),
+                            ByVal try_result As ref(Of Boolean),
                             ByVal timeout_ms As Int64) As Boolean
         Return event_comb.waitfor([try], try_result, timeout_ms)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub assert_waitfor(ByVal [try] As Func(Of Boolean),
-                              ByVal try_result As pointer(Of Boolean),
+                              ByVal try_result As ref(Of Boolean),
                               ByVal timeout_ms As Int64)
         assert(waitfor([try], try_result, timeout_ms))
     End Sub
@@ -174,32 +174,32 @@ Public Module _waitfor
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function waitfor(ByVal l As pointer(Of event_comb_lock)) As Boolean
+    Public Function waitfor(ByVal l As ref(Of event_comb_lock)) As Boolean
         Return event_comb.waitfor(l)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub assert_waitfor(ByVal l As pointer(Of event_comb_lock))
+    Public Sub assert_waitfor(ByVal l As ref(Of event_comb_lock))
         assert(waitfor(l))
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function waitfor(ByVal i As pointer(Of singleentry)) As Boolean
+    Public Function waitfor(ByVal i As ref(Of singleentry)) As Boolean
         Return event_comb.waitfor(i)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub assert_waitfor(ByVal i As pointer(Of singleentry))
+    Public Sub assert_waitfor(ByVal i As ref(Of singleentry))
         assert(waitfor(i))
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function waitfor(ByVal i As pointer(Of singleentry), ByVal timeout_ms As Int64) As Boolean
+    Public Function waitfor(ByVal i As ref(Of singleentry), ByVal timeout_ms As Int64) As Boolean
         Return event_comb.waitfor(i, timeout_ms)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub assert_waitfor(ByVal i As pointer(Of singleentry), ByVal timeout_ms As Int64)
+    Public Sub assert_waitfor(ByVal i As ref(Of singleentry), ByVal timeout_ms As Int64)
         assert(waitfor(i, timeout_ms))
     End Sub
 

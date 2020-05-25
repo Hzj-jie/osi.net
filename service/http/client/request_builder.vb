@@ -154,7 +154,7 @@ Public NotInheritable Class request_builder
         Return Me
     End Function
 
-    Public Function request(ByVal r As pointer(Of HttpWebResponse)) As event_comb
+    Public Function request(ByVal r As ref(Of HttpWebResponse)) As event_comb
         Return client.request(url, method, headers, body, length, r, request_link_status, response_link_status)
     End Function
 

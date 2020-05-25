@@ -59,8 +59,8 @@ Public Class performance_case_wrapper
         max = min_uint64
         ave = 0
         For i As Int64 = 0 To CLng(times() - uint64_1)
-            Dim used_loops As pointer(Of Int64) = Nothing
-            used_loops = New pointer(Of Int64)()
+            Dim used_loops As ref(Of Int64) = Nothing
+            used_loops = New ref(Of Int64)()
             Using New boost()
                 Using New processor_loops_timing_counter(used_loops)
                     If Not MyBase.run() Then

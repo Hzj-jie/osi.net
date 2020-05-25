@@ -30,7 +30,7 @@ Friend Class heapless_case2
         q = New heapless(Of Int64)()
     End Sub
 
-    Private Sub push_thread(ByVal finished As pointer(Of singleentry))
+    Private Sub push_thread(ByVal finished As ref(Of singleentry))
         assert(Not finished Is Nothing)
         For i As Int64 = -max To max
 #If False Then
@@ -47,7 +47,7 @@ Friend Class heapless_case2
         finished.mark_in_use()
     End Sub
 
-    Private Sub pop_thread(ByVal finished As pointer(Of singleentry))
+    Private Sub pop_thread(ByVal finished As ref(Of singleentry))
         assert(Not finished Is Nothing)
         While Not finished.in_use()
             If Not q.pop(Nothing) Then
@@ -61,8 +61,8 @@ Friend Class heapless_case2
     End Function
 
     Public Overrides Function run() As Boolean
-        Dim finished As pointer(Of singleentry) = Nothing
-        finished = New pointer(Of singleentry)()
+        Dim finished As ref(Of singleentry) = Nothing
+        finished = New ref(Of singleentry)()
         queue_in_managed_threadpool(Sub() push_thread(finished))
         queue_in_managed_threadpool(Sub() pop_thread(finished))
         While Not finished.in_use()

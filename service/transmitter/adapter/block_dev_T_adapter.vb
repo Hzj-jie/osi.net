@@ -32,11 +32,11 @@ Public Class block_dev_T_adapter(Of T)
                               End Function)
     End Function
 
-    Public Function receive(ByVal o As pointer(Of T)) As event_comb Implements dev_T(Of T).receive
+    Public Function receive(ByVal o As ref(Of T)) As event_comb Implements dev_T(Of T).receive
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of Byte()) = Nothing
+        Dim p As ref(Of Byte()) = Nothing
         Return New event_comb(Function() As Boolean
-                                  p = New pointer(Of Byte())()
+                                  p = New ref(Of Byte())()
                                   ec = underlying_device.receive(p)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -49,7 +49,7 @@ Public Class block_dev_T_adapter(Of T)
                               End Function)
     End Function
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements dev_T(Of T).sense
         Return underlying_device.sense(pending, timeout_ms)
     End Function

@@ -21,11 +21,11 @@ Public Class ikeyvalue2_ikeyvalue(Of SEEK_RESULT)
         assert(Not existing_do Is Nothing)
         assert(Not not_existing_do Is Nothing)
         Dim ec As event_comb = Nothing
-        Dim sr As pointer(Of SEEK_RESULT) = Nothing
-        Dim r As pointer(Of Boolean) = Nothing
+        Dim sr As ref(Of SEEK_RESULT) = Nothing
+        Dim r As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
-                                  sr = New pointer(Of SEEK_RESULT)()
-                                  r = New pointer(Of Boolean)()
+                                  sr = New ref(Of SEEK_RESULT)()
+                                  r = New ref(Of Boolean)()
                                   ec = impl.seek(key, sr, r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -52,7 +52,7 @@ Public Class ikeyvalue2_ikeyvalue(Of SEEK_RESULT)
 
     Public Function append(ByVal key() As Byte,
                            ByVal value() As Byte,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.append
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.append
         Return if_existing(key,
                            Function(sr As SEEK_RESULT) As event_comb
                                Return impl.append_existing(sr, value, result)
@@ -62,12 +62,12 @@ Public Class ikeyvalue2_ikeyvalue(Of SEEK_RESULT)
                            End Function)
     End Function
 
-    Public Function capacity(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvalue.capacity
+    Public Function capacity(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvalue.capacity
         Return impl.capacity(result)
     End Function
 
     Public Function delete(ByVal key() As Byte,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.delete
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.delete
         Return if_existing(key,
                            Function(sr As SEEK_RESULT) As event_comb
                                Return impl.delete_existing(sr, result)
@@ -78,11 +78,11 @@ Public Class ikeyvalue2_ikeyvalue(Of SEEK_RESULT)
                            End Function)
     End Function
 
-    Public Function empty(ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.empty
+    Public Function empty(ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.empty
         Return impl.empty(result)
     End Function
 
-    Public Function full(ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.full
+    Public Function full(ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.full
         Return impl.full(result)
     End Function
 
@@ -90,22 +90,22 @@ Public Class ikeyvalue2_ikeyvalue(Of SEEK_RESULT)
         Return impl.heartbeat()
     End Function
 
-    Public Function keycount(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvalue.keycount
+    Public Function keycount(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvalue.keycount
         Return impl.keycount(result)
     End Function
 
-    Public Function list(ByVal result As pointer(Of vector(Of Byte()))) As event_comb Implements ikeyvalue.list
+    Public Function list(ByVal result As ref(Of vector(Of Byte()))) As event_comb Implements ikeyvalue.list
         Return impl.list(result)
     End Function
 
     Private Function delete_then_write(ByVal sr As SEEK_RESULT,
                                        ByVal key() As Byte,
                                        ByVal value() As Byte,
-                                       ByVal result As pointer(Of Boolean)) As event_comb
+                                       ByVal result As ref(Of Boolean)) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If result Is Nothing Then
-                                      result = New pointer(Of Boolean)()
+                                      result = New ref(Of Boolean)()
                                   End If
                                   ec = impl.delete_existing(sr, result)
                                   Return waitfor(ec) AndAlso
@@ -128,7 +128,7 @@ Public Class ikeyvalue2_ikeyvalue(Of SEEK_RESULT)
 
     Public Function modify(ByVal key() As Byte,
                            ByVal value() As Byte,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.modify
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.modify
         Return if_existing(key,
                            Function(sr As SEEK_RESULT) As event_comb
                                Return delete_then_write(sr, key, value, result)
@@ -139,7 +139,7 @@ Public Class ikeyvalue2_ikeyvalue(Of SEEK_RESULT)
     End Function
 
     Public Function read(ByVal key() As Byte,
-                         ByVal value As pointer(Of Byte())) As event_comb Implements ikeyvalue.read
+                         ByVal value As ref(Of Byte())) As event_comb Implements ikeyvalue.read
         Return if_existing(key,
                            Function(sr As SEEK_RESULT) As event_comb
                                Return impl.read_existing(sr, value)
@@ -155,12 +155,12 @@ Public Class ikeyvalue2_ikeyvalue(Of SEEK_RESULT)
     End Function
 
     Public Function seek(ByVal key() As Byte,
-                         ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.seek
-        Return impl.seek(key, New pointer(Of SEEK_RESULT)(), result)
+                         ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.seek
+        Return impl.seek(key, New ref(Of SEEK_RESULT)(), result)
     End Function
 
     Public Function sizeof(ByVal key() As Byte,
-                           ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvalue.sizeof
+                           ByVal result As ref(Of Int64)) As event_comb Implements ikeyvalue.sizeof
         Return if_existing(key,
                            Function(sr As SEEK_RESULT) As event_comb
                                Return impl.sizeof_existing(sr, result)
@@ -175,7 +175,7 @@ Public Class ikeyvalue2_ikeyvalue(Of SEEK_RESULT)
         Return impl.stop()
     End Function
 
-    Public Function valuesize(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvalue.valuesize
+    Public Function valuesize(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvalue.valuesize
         Return impl.valuesize(result)
     End Function
 End Class

@@ -26,12 +26,12 @@ Public NotInheritable Class event_comb_lock_test
     Private NotInheritable Class event_comb_lock_case
         Inherits utt.event_comb_case
 
-        Private ReadOnly l As pointer(Of event_comb_lock)
+        Private ReadOnly l As ref(Of event_comb_lock)
         Private started As Boolean
         Private i As Int64
 
         Public Sub New()
-            l = New pointer(Of event_comb_lock)()
+            l = New ref(Of event_comb_lock)()
             i = 0
             started = False
         End Sub

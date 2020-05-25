@@ -35,7 +35,7 @@ Public Class pipe_dev(Of T)
         Me.sensor = New indicator_sensor_adapter(New pipe_indicator(pipe))
     End Sub
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements dev_T(Of T).sense
         Return sensor.sense(pending, timeout_ms)
     End Function
@@ -44,7 +44,7 @@ Public Class pipe_dev(Of T)
         Return pipe.push(i)
     End Function
 
-    Public Function receive(ByVal o As pointer(Of T)) As event_comb Implements dev_T(Of T).receive
+    Public Function receive(ByVal o As ref(Of T)) As event_comb Implements dev_T(Of T).receive
         Return pipe.pop(o)
     End Function
 

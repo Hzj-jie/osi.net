@@ -20,8 +20,8 @@ Imports osi.root.lock
 'finish disposer_imports.vbp --------
 
 Public Class dispose_ptr(Of T)
-    Inherits pointer(Of T)
-    
+    Inherits ref(Of T)
+
     Private ReadOnly _disposer As Action(Of T)
 
 #If 0 Then

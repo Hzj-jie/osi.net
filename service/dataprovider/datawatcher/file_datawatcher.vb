@@ -29,7 +29,7 @@ Public Class file_datawatcher
                                    Function() New file_datawatcher(filename, interval_ms))
     End Function
 
-    Protected Overrides Function info(ByVal sz As pointer(Of UInt64), ByVal tm As pointer(Of UInt64)) As event_comb
+    Protected Overrides Function info(ByVal sz As ref(Of UInt64), ByVal tm As ref(Of UInt64)) As event_comb
         Dim suc As Boolean = False
         Return New event_comb(Function() As Boolean
                                   Return waitfor(Sub()

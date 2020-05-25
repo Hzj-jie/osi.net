@@ -45,8 +45,8 @@ Friend Class auto_heartbeat_ikeyvt_false
         assert(Not d Is Nothing)
         Return retry(Function() As event_comb
                          Dim ec As event_comb = Nothing
-                         Dim b As pointer(Of Boolean) = Nothing
-                         Dim i As pointer(Of Int64) = Nothing
+                         Dim b As ref(Of Boolean) = Nothing
+                         Dim i As ref(Of Int64) = Nothing
                          Return New event_comb(Function() As Boolean
                                                    ec = d()
                                                    Return waitfor(ec) AndAlso
@@ -56,7 +56,7 @@ Friend Class auto_heartbeat_ikeyvt_false
                                                    If ec.end_result() Then
                                                        Return goto_end()
                                                    Else
-                                                       i = New pointer(Of Int64)()
+                                                       i = New ref(Of Int64)()
                                                        ec = impl.capacity(i)
                                                        Return waitfor(ec) AndAlso
                                                               goto_next()
@@ -67,7 +67,7 @@ Friend Class auto_heartbeat_ikeyvt_false
                                                        If (+i) <= 0 Then
                                                            Return goto_end()
                                                        Else
-                                                           b = New pointer(Of Boolean)()
+                                                           b = New ref(Of Boolean)()
                                                            ec = impl.full(b)
                                                            Return waitfor(ec) AndAlso
                                                                   goto_next()
@@ -87,24 +87,24 @@ Friend Class auto_heartbeat_ikeyvt_false
     Public Function append(ByVal key() As Byte,
                            ByVal value() As Byte,
                            ByVal ts As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of _false).append
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of _false).append
         Return not_full_retry(Function() impl.append(key, value, ts, result))
     End Function
 
-    Public Function capacity(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvt(Of _false).capacity
+    Public Function capacity(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvt(Of _false).capacity
         Return retry(Function() impl.capacity(result))
     End Function
 
     Public Function delete(ByVal key() As Byte,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of _false).delete
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of _false).delete
         Return retry(Function() impl.delete(key, result))
     End Function
 
-    Public Function empty(ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of _false).empty
+    Public Function empty(ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of _false).empty
         Return retry(Function() impl.empty(result))
     End Function
 
-    Public Function full(ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of _false).full
+    Public Function full(ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of _false).full
         Return retry(Function() impl.full(result))
     End Function
 
@@ -112,24 +112,24 @@ Friend Class auto_heartbeat_ikeyvt_false
         Return event_comb.succeeded()
     End Function
 
-    Public Function keycount(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvt(Of _false).keycount
+    Public Function keycount(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvt(Of _false).keycount
         Return retry(Function() impl.keycount(result))
     End Function
 
-    Public Function list(ByVal result As pointer(Of vector(Of Byte()))) As event_comb Implements ikeyvt(Of _false).list
+    Public Function list(ByVal result As ref(Of vector(Of Byte()))) As event_comb Implements ikeyvt(Of _false).list
         Return retry(Function() impl.list(result))
     End Function
 
     Public Function modify(ByVal key() As Byte,
                            ByVal value() As Byte,
                            ByVal ts As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of _false).modify
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of _false).modify
         Return not_full_retry(Function() impl.modify(key, value, ts, result))
     End Function
 
     Public Function read(ByVal key() As Byte,
-                         ByVal result As pointer(Of Byte()),
-                         ByVal ts As pointer(Of Int64)) As event_comb Implements ikeyvt(Of _false).read
+                         ByVal result As ref(Of Byte()),
+                         ByVal ts As ref(Of Int64)) As event_comb Implements ikeyvt(Of _false).read
         Return retry(Function() impl.read(key, result, ts))
     End Function
 
@@ -138,12 +138,12 @@ Friend Class auto_heartbeat_ikeyvt_false
     End Function
 
     Public Function seek(ByVal key() As Byte,
-                         ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of _false).seek
+                         ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of _false).seek
         Return retry(Function() impl.seek(key, result))
     End Function
 
     Public Function sizeof(ByVal key() As Byte,
-                           ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvt(Of _false).sizeof
+                           ByVal result As ref(Of Int64)) As event_comb Implements ikeyvt(Of _false).sizeof
         Return retry(Function() impl.sizeof(key, result))
     End Function
 
@@ -154,12 +154,12 @@ Friend Class auto_heartbeat_ikeyvt_false
     Public Function unique_write(ByVal key() As Byte,
                                  ByVal value() As Byte,
                                  ByVal ts As Int64,
-                                 ByVal result As pointer(Of Boolean)) As event_comb _
+                                 ByVal result As ref(Of Boolean)) As event_comb _
                                 Implements ikeyvt(Of _false).unique_write
         Return not_full_retry(Function() impl.unique_write(key, value, ts, result))
     End Function
 
-    Public Function valuesize(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvt(Of _false).valuesize
+    Public Function valuesize(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvt(Of _false).valuesize
         Return retry(Function() impl.valuesize(result))
     End Function
 End Class

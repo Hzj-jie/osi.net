@@ -9,14 +9,14 @@ Public Class trigger_datawatcher
     Implements idatawatcher
 
     Private ReadOnly interval_ms As Int64
-    Private ReadOnly inuse As pointer(Of singleentry)
+    Private ReadOnly inuse As ref(Of singleentry)
 
     Public Sub New(Optional ByVal interval_ms As Int64 = default_interval_ms)
         If interval_ms < 0 Then
             interval_ms = default_interval_ms
         End If
         Me.interval_ms = interval_ms
-        Me.inuse = New pointer(Of singleentry)()
+        Me.inuse = New ref(Of singleentry)()
     End Sub
 
     Public Sub trigger()

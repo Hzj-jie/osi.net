@@ -16,7 +16,7 @@ Public NotInheritable Class event_comb_while_test
         Dim i As Int32 = 0
         Dim j As Int32 = 0
         assertion.is_true(async_sync(event_comb.while(Function(last_ec As event_comb,
-                                                               error_break As pointer(Of Boolean)) As event_comb
+                                                               error_break As ref(Of Boolean)) As event_comb
                                                           Return sync_async(Function() As Boolean
                                                                                 If i > 0 Then
                                                                                     If assertion.is_not_null(last_ec) Then
@@ -46,7 +46,7 @@ Public NotInheritable Class event_comb_while_test
         Dim i As Int32 = 0
         Dim j As Int32 = 0
         assertion.is_false(async_sync(event_comb.while(Function(last_ec As event_comb,
-                                                                error_break As pointer(Of Boolean)) As event_comb
+                                                                error_break As ref(Of Boolean)) As event_comb
                                                            Return sync_async(Function() As Boolean
                                                                                  If i > 0 Then
                                                                                      If assertion.is_not_null(last_ec) Then
@@ -87,7 +87,7 @@ Public NotInheritable Class event_comb_while_test
                                                                             End Sub)
                                                       End Function,
                                                       Function(last_ec As event_comb,
-                                                               error_break As pointer(Of Boolean)) As event_comb
+                                                               error_break As ref(Of Boolean)) As event_comb
                                                           Return sync_async(
                                                               Function() As Boolean
                                                                   If assertion.is_not_null(last_ec) Then
@@ -114,7 +114,7 @@ Public NotInheritable Class event_comb_while_test
                                                                              End Sub)
                                                        End Function,
                                                        Function(last_ec As event_comb,
-                                                                error_break As pointer(Of Boolean)) As event_comb
+                                                                error_break As ref(Of Boolean)) As event_comb
                                                            Return sync_async(
                                                                Function() As Boolean
                                                                    If assertion.is_not_null(last_ec) Then

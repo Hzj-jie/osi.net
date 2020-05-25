@@ -20,7 +20,7 @@ Public NotInheritable Class fces_ondisk_test
         MyBase.New()
     End Sub
 
-    Protected Overrides Function create_valid_istrkeyvt(ByVal p As pointer(Of istrkeyvt)) As event_comb
+    Protected Overrides Function create_valid_istrkeyvt(ByVal p As ref(Of istrkeyvt)) As event_comb
         Return fces.ctor(p, IO.Path.Combine(data_dir, guid_str()))
     End Function
 End Class

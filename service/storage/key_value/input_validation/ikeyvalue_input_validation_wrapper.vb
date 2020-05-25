@@ -15,7 +15,7 @@ Friend Class ikeyvalue_input_validation_wrapper
 
     Public Function append(ByVal key() As Byte,
                            ByVal value() As Byte,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.append
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.append
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.append(key, value, result)
                                        End Function,
@@ -24,7 +24,7 @@ Friend Class ikeyvalue_input_validation_wrapper
                                        End Function)
     End Function
 
-    Public Function capacity(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvalue.capacity
+    Public Function capacity(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvalue.capacity
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.capacity(result)
                                        End Function,
@@ -34,7 +34,7 @@ Friend Class ikeyvalue_input_validation_wrapper
     End Function
 
     Public Function delete(ByVal key() As Byte,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.delete
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.delete
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.delete(key, result)
                                        End Function,
@@ -43,7 +43,7 @@ Friend Class ikeyvalue_input_validation_wrapper
                                        End Function)
     End Function
 
-    Public Function empty(ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.empty
+    Public Function empty(ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.empty
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.empty(result)
                                        End Function,
@@ -52,7 +52,7 @@ Friend Class ikeyvalue_input_validation_wrapper
                                        End Function)
     End Function
 
-    Public Function full(ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.full
+    Public Function full(ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.full
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.full(result)
                                        End Function,
@@ -65,7 +65,7 @@ Friend Class ikeyvalue_input_validation_wrapper
         Return impl.heartbeat()
     End Function
 
-    Public Function keycount(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvalue.keycount
+    Public Function keycount(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvalue.keycount
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.keycount(result)
                                        End Function,
@@ -74,7 +74,7 @@ Friend Class ikeyvalue_input_validation_wrapper
                                        End Function)
     End Function
 
-    Public Function list(ByVal result As pointer(Of vector(Of Byte()))) As event_comb Implements ikeyvalue.list
+    Public Function list(ByVal result As ref(Of vector(Of Byte()))) As event_comb Implements ikeyvalue.list
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.list(result)
                                        End Function,
@@ -85,7 +85,7 @@ Friend Class ikeyvalue_input_validation_wrapper
 
     Public Function modify(ByVal key() As Byte,
                            ByVal value() As Byte,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.modify
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.modify
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.modify(key, value, result)
                                        End Function,
@@ -95,7 +95,7 @@ Friend Class ikeyvalue_input_validation_wrapper
     End Function
 
     Public Function read(ByVal key() As Byte,
-                         ByVal value As pointer(Of Byte())) As event_comb Implements ikeyvalue.read
+                         ByVal value As ref(Of Byte())) As event_comb Implements ikeyvalue.read
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.read(key, value)
                                        End Function,
@@ -109,7 +109,7 @@ Friend Class ikeyvalue_input_validation_wrapper
     End Function
 
     Public Function seek(ByVal key() As Byte,
-                         ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.seek
+                         ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.seek
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.seek(key, result)
                                        End Function,
@@ -119,7 +119,7 @@ Friend Class ikeyvalue_input_validation_wrapper
     End Function
 
     Public Function sizeof(ByVal key() As Byte,
-                           ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvalue.sizeof
+                           ByVal result As ref(Of Int64)) As event_comb Implements ikeyvalue.sizeof
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.sizeof(key, result)
                                        End Function,
@@ -132,7 +132,7 @@ Friend Class ikeyvalue_input_validation_wrapper
         Return impl.stop()
     End Function
 
-    Public Function valuesize(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvalue.valuesize
+    Public Function valuesize(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvalue.valuesize
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.valuesize(result)
                                        End Function,

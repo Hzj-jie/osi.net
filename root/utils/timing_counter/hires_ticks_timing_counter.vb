@@ -8,7 +8,7 @@ Imports osi.root.connector
 Public Class hires_ticks_timing_counter
     Inherits timing_counter
 
-    Public Sub New(ByVal p As pointer(Of Int64))
+    Public Sub New(ByVal p As ref(Of Int64))
         MyBase.New(p)
     End Sub
 

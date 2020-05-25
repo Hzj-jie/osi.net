@@ -25,7 +25,7 @@ End Class
 'the push is thread-safe, but the pop is not, so if multi-threads are poping together, it needs a lock
 Public Class qless2_stream(Of T, MAX_COUNT As _int64)
     Public Shared ReadOnly max_size As Int64
-    Private ReadOnly q As qless2(Of pointer(Of T()))
+    Private ReadOnly q As qless2(Of ref(Of T()))
     Private len As Int64
     Private last() As T
     Private last_index As Int64
@@ -35,7 +35,7 @@ Public Class qless2_stream(Of T, MAX_COUNT As _int64)
     End Sub
 
     Public Sub New()
-        q = New qless2(Of pointer(Of T()))()
+        q = New qless2(Of ref(Of T()))()
         len = 0
         last = Nothing
         last_index = 0
@@ -56,7 +56,7 @@ Public Class qless2_stream(Of T, MAX_COUNT As _int64)
             Return 0
         End If
         If last Is Nothing Then
-            Dim p As pointer(Of T()) = Nothing
+            Dim p As ref(Of T()) = Nothing
             If Not q.pop(p) Then
                 Return 0
             End If
@@ -101,7 +101,7 @@ Public Class qless2_stream(Of T, MAX_COUNT As _int64)
             Return False
         End If
         Interlocked.Add(len, array_size(d))
-        q.push(pointer.of(d))
+        q.push(ref.of(d))
         Return True
     End Function
 

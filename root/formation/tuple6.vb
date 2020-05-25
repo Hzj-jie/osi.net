@@ -20,7 +20,7 @@ Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
 
-' To reduce complexity, tuple is always const, use pointer if the fields are required to be muttable.
+' To reduce complexity, tuple is always const, use ref if the fields are required to be muttable.
 Public Structure tuple(Of T1, T2, T3, T4, T5, T6)
     Implements ICloneable, ICloneable(Of tuple(Of T1, T2, T3, T4, T5, T6)),
                IComparable, IComparable(Of tuple(Of T1, T2, T3, T4, T5, T6))

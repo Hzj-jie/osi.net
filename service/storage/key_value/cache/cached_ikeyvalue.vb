@@ -22,11 +22,11 @@ Partial Friend Class cached_ikeyvalue
 
     Public Function append(ByVal key() As Byte,
                            ByVal value() As Byte,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.append
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.append
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If result Is Nothing Then
-                                      result = New pointer(Of Boolean)()
+                                      result = New ref(Of Boolean)()
                                   End If
                                   ec = impl.append(key, value, result)
                                   Return waitfor(ec) AndAlso
@@ -42,12 +42,12 @@ Partial Friend Class cached_ikeyvalue
                               End Function)
     End Function
 
-    Public Function capacity(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvalue.capacity
+    Public Function capacity(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvalue.capacity
         Return impl.capacity(result)
     End Function
 
     Public Function delete(ByVal key() As Byte,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.delete
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.delete
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If cache.havenot(key) Then
@@ -55,7 +55,7 @@ Partial Friend Class cached_ikeyvalue
                                              goto_end()
                                   Else
                                       If result Is Nothing Then
-                                          result = New pointer(Of Boolean)()
+                                          result = New ref(Of Boolean)()
                                       End If
                                       ec = impl.delete(key, result)
                                       Return waitfor(ec) AndAlso
@@ -72,11 +72,11 @@ Partial Friend Class cached_ikeyvalue
                               End Function)
     End Function
 
-    Public Function empty(ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.empty
+    Public Function empty(ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.empty
         Return impl.empty(result)
     End Function
 
-    Public Function full(ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.full
+    Public Function full(ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.full
         Return impl.full(result)
     End Function
 
@@ -97,21 +97,21 @@ Partial Friend Class cached_ikeyvalue
                               End Function)
     End Function
 
-    Public Function keycount(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvalue.keycount
+    Public Function keycount(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvalue.keycount
         Return impl.keycount(result)
     End Function
 
-    Public Function list(ByVal result As pointer(Of vector(Of Byte()))) As event_comb Implements ikeyvalue.list
+    Public Function list(ByVal result As ref(Of vector(Of Byte()))) As event_comb Implements ikeyvalue.list
         Return impl.list(result)
     End Function
 
     Public Function modify(ByVal key() As Byte,
                            ByVal value() As Byte,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.modify
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.modify
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If result Is Nothing Then
-                                      result = New pointer(Of Boolean)()
+                                      result = New ref(Of Boolean)()
                                   End If
                                   ec = impl.modify(key, value, result)
                                   Return waitfor(ec) AndAlso
@@ -128,7 +128,7 @@ Partial Friend Class cached_ikeyvalue
     End Function
 
     Public Function read(ByVal key() As Byte,
-                         ByVal value As pointer(Of Byte())) As event_comb Implements ikeyvalue.read
+                         ByVal value As ref(Of Byte())) As event_comb Implements ikeyvalue.read
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim t() As Byte = Nothing
@@ -137,7 +137,7 @@ Partial Friend Class cached_ikeyvalue
                                              goto_end()
                                   Else
                                       If value Is Nothing Then
-                                          value = New pointer(Of Byte())()
+                                          value = New ref(Of Byte())()
                                       End If
                                       ec = impl.read(key, value)
                                       Return waitfor(ec) AndAlso
@@ -172,7 +172,7 @@ Partial Friend Class cached_ikeyvalue
     End Function
 
     Public Function seek(ByVal key() As Byte,
-                         ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.seek
+                         ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.seek
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim t As Boolean = False
@@ -181,7 +181,7 @@ Partial Friend Class cached_ikeyvalue
                                              goto_end()
                                   Else
                                       If result Is Nothing Then
-                                          result = New pointer(Of Boolean)()
+                                          result = New ref(Of Boolean)()
                                       End If
                                       ec = impl.seek(key, result)
                                       Return waitfor(ec) AndAlso
@@ -199,7 +199,7 @@ Partial Friend Class cached_ikeyvalue
     End Function
 
     Public Function sizeof(ByVal key() As Byte,
-                           ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvalue.sizeof
+                           ByVal result As ref(Of Int64)) As event_comb Implements ikeyvalue.sizeof
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim t As Int64 = 0
@@ -208,7 +208,7 @@ Partial Friend Class cached_ikeyvalue
                                              goto_end()
                                   Else
                                       If result Is Nothing Then
-                                          result = New pointer(Of Int64)()
+                                          result = New ref(Of Int64)()
                                       End If
                                       ec = impl.sizeof(key, result)
                                       Return waitfor(ec) AndAlso
@@ -229,7 +229,7 @@ Partial Friend Class cached_ikeyvalue
         Return impl.stop()
     End Function
 
-    Public Function valuesize(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvalue.valuesize
+    Public Function valuesize(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvalue.valuesize
         Return impl.valuesize(result)
     End Function
 End Class

@@ -38,7 +38,7 @@ Public Module _localfile
 
     Public Function set_timestamp(ByVal fp As String,
                                   ByVal ts As Int64,
-                                  ByVal result As pointer(Of Boolean)) As event_comb
+                                  ByVal result As ref(Of Boolean)) As event_comb
         Dim r As Boolean = False
         Return New event_comb(Function() As Boolean
                                   Return waitfor(Sub()
@@ -64,7 +64,7 @@ Public Module _localfile
                               End Function)
     End Function
 
-    Public Function get_timestamp(ByVal fp As String, ByVal ts As pointer(Of Int64)) As event_comb
+    Public Function get_timestamp(ByVal fp As String, ByVal ts As ref(Of Int64)) As event_comb
         Dim r As Boolean = False
         Dim t As Date = Nothing
         Return New event_comb(Function() As Boolean
@@ -105,7 +105,7 @@ Public Module _localfile
         End Try
     End Function
 
-    Public Function list_files(ByVal path As String, ByVal f As pointer(Of String())) As event_comb
+    Public Function list_files(ByVal path As String, ByVal f As ref(Of String())) As event_comb
         Dim fs() As String = Nothing
         Return New event_comb(Function() As Boolean
                                   Return waitfor(Sub()
@@ -136,7 +136,7 @@ Public Module _localfile
         End Try
     End Function
 
-    Public Function file_size(ByVal f As String, ByVal r As pointer(Of Int64)) As event_comb
+    Public Function file_size(ByVal f As String, ByVal r As ref(Of Int64)) As event_comb
         Dim o As Int64 = 0
         Return New event_comb(Function() As Boolean
                                   Return waitfor(Sub()
@@ -153,7 +153,7 @@ Public Module _localfile
 
     Public Function write_file(ByVal file As String,
                                ByVal value() As Byte,
-                               ByVal result As pointer(Of Boolean),
+                               ByVal result As ref(Of Boolean),
                                ByVal append As Boolean) As event_comb
         Dim fs As IO.FileStream = Nothing
         Dim ec As event_comb = Nothing
@@ -180,11 +180,11 @@ Public Module _localfile
     End Function
 
     Public Function read_file(ByVal key As String,
-                              ByVal result As pointer(Of Byte())) As event_comb
+                              ByVal result As ref(Of Byte())) As event_comb
         Dim fs As IO.FileStream = Nothing
         Dim ec As event_comb = Nothing
         Dim r() As Byte = Nothing
-        Dim rc As pointer(Of UInt32) = Nothing
+        Dim rc As ref(Of UInt32) = Nothing
         Dim exp As UInt32 = 0
         Return New event_comb(Function() As Boolean
                                   fs = New IO.FileStream(key,
@@ -202,7 +202,7 @@ Public Module _localfile
                                              goto_end()
                                   Else
                                       ReDim r(CInt(exp) - 1)
-                                      rc = New pointer(Of UInt32)()
+                                      rc = New ref(Of UInt32)()
                                       ec = fs.receive(r, uint32_0, exp, rc)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -260,7 +260,7 @@ Public Module _localfile
         End Try
     End Function
 
-    Public Function file_exists(ByVal f As String, ByVal r As pointer(Of Boolean)) As event_comb
+    Public Function file_exists(ByVal f As String, ByVal r As ref(Of Boolean)) As event_comb
         Dim suc As Boolean = False
         Return New event_comb(Function() As Boolean
                                   Return waitfor(Sub()
@@ -275,7 +275,7 @@ Public Module _localfile
                               End Function)
     End Function
 
-    Public Function directory_size(ByVal path As String, ByVal result As pointer(Of Int64)) As event_comb
+    Public Function directory_size(ByVal path As String, ByVal result As ref(Of Int64)) As event_comb
         Dim r As Int64 = 0
         Return New event_comb(Function() As Boolean
                                   Return waitfor(Sub()

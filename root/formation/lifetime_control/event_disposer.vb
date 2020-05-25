@@ -8,7 +8,7 @@ Option Strict On
 Imports osi.root.connector
 
 Public Class event_disposer(Of T)
-    Inherits pointer(Of T)
+    Inherits ref(Of T)
     Implements IComparable(Of event_disposer(Of T)), IDisposable
 
     Public Event disposing()
@@ -21,7 +21,7 @@ Public Class event_disposer(Of T)
         MyBase.New(i)
     End Sub
 
-    Public Sub New(ByVal i As pointer(Of T))
+    Public Sub New(ByVal i As ref(Of T))
         MyBase.New(i)
     End Sub
 
@@ -54,7 +54,7 @@ Public Class event_disposer(Of T)
 End Class
 
 Public Class weak_event_disposer(Of T)
-    Inherits weak_pointer(Of T)
+    Inherits weak_ref(Of T)
     Implements IComparable(Of event_disposer(Of T)), IDisposable
 
     Public Event disposing()
@@ -67,7 +67,7 @@ Public Class weak_event_disposer(Of T)
         MyBase.New(i)
     End Sub
 
-    Public Sub New(ByVal i As weak_pointer(Of T))
+    Public Sub New(ByVal i As weak_ref(Of T))
         MyBase.New(i)
     End Sub
 

@@ -70,7 +70,7 @@ Public Class hash_cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T, HASH_SIZE A
         Return [select](key).erase(key)
     End Function
 
-    Public Function [get](ByVal key As KEY_T, ByVal value As pointer(Of VALUE_T)) As event_comb _
+    Public Function [get](ByVal key As KEY_T, ByVal value As ref(Of VALUE_T)) As event_comb _
                          Implements icache2(Of KEY_T, VALUE_T).get
         Return [select](key).get(key, value)
     End Function
@@ -84,17 +84,17 @@ Public Class hash_cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T, HASH_SIZE A
         Return [select](key).set(key, value)
     End Function
 
-    Public Function size(ByVal value As pointer(Of Int64)) As event_comb Implements icache2(Of KEY_T, VALUE_T).size
+    Public Function size(ByVal value As ref(Of Int64)) As event_comb Implements icache2(Of KEY_T, VALUE_T).size
         Dim r As Int64 = 0
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = foreach(Function(ByRef x As icache2(Of KEY_T, VALUE_T)) As event_comb
                                                    Dim ec2 As event_comb = Nothing
-                                                   Dim p As pointer(Of Int64) = Nothing
+                                                   Dim p As ref(Of Int64) = Nothing
                                                    Dim i As icache2(Of KEY_T, VALUE_T) = Nothing
                                                    i = x
                                                    Return New event_comb(Function() As Boolean
-                                                                             p = New pointer(Of Int64)()
+                                                                             p = New ref(Of Int64)()
                                                                              ec2 = i.size(p)
                                                                              Return waitfor(ec2) AndAlso
                                                                                     goto_next()

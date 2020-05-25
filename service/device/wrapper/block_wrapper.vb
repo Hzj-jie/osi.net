@@ -69,11 +69,11 @@ Public Class block_wrapper
         Return wrapped.send(buff, offset, count)
     End Function
 
-    Public Function receive(ByVal result As pointer(Of Byte())) As event_comb Implements block_pump.receive
+    Public Function receive(ByVal result As ref(Of Byte())) As event_comb Implements block_pump.receive
         Return wrapped.receive(result)
     End Function
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
         Return wrapped.sense(pending, timeout_ms)
     End Function

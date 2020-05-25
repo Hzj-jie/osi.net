@@ -43,7 +43,7 @@ Public Module _client_rr
         ServicePointManager.MaxServicePointIdleTime() = 0
     End Sub
 
-    <Extension()> Public Sub close(ByVal this As pointer(Of HttpWebResponse))
+    <Extension()> Public Sub close(ByVal this As ref(Of HttpWebResponse))
         If Not (+this) Is Nothing Then
             this.get().Close()
         End If
@@ -154,7 +154,7 @@ Public Module _client_rr
                                            ByVal send_link_status As link_status,
                                            ByVal receive_link_status As link_status,
                                            ByVal close_input_stream As Boolean,
-                                           Optional ByVal result As pointer(Of UInt64) = Nothing) As event_comb
+                                           Optional ByVal result As ref(Of UInt64) = Nothing) As event_comb
         Return write_request_body(o,
                                   i,
                                   send_link_status.this_or_unlimited().buff_size,
@@ -171,7 +171,7 @@ Public Module _client_rr
                                            ByVal send_rate_sec As UInt32,
                                            ByVal receive_rate_sec As UInt32,
                                            ByVal close_input_stream As Boolean,
-                                           Optional ByVal result As pointer(Of UInt64) = Nothing) As event_comb
+                                           Optional ByVal result As ref(Of UInt64) = Nothing) As event_comb
         Return read_from_stream(i,
                                 o,
                                 buff_size,
@@ -217,7 +217,7 @@ Public Module _client_rr
     End Function
 
     <Extension()> Public Function read_response_body(ByVal i As HttpWebResponse,
-                                                     ByVal o As pointer(Of String),
+                                                     ByVal o As ref(Of String),
                                                      ByVal enc As Text.Encoding,
                                                      ByVal buff_size As UInt32,
                                                      ByVal receive_rate_sec As UInt32,
@@ -234,7 +234,7 @@ Public Module _client_rr
     End Function
 
     <Extension()> Public Function read_response_body(ByVal i As HttpWebResponse,
-                                                     ByVal o As pointer(Of String),
+                                                     ByVal o As ref(Of String),
                                                      ByVal enc As Text.Encoding,
                                                      ByVal ls As link_status) As event_comb
         Return read_response_body(i,
@@ -246,7 +246,7 @@ Public Module _client_rr
     End Function
 
     <Extension()> Public Function read_response_body(ByVal i As HttpWebResponse,
-                                                     ByVal o As pointer(Of Byte()),
+                                                     ByVal o As ref(Of Byte()),
                                                      ByVal buff_size As UInt32,
                                                      ByVal receive_rate_sec As UInt32,
                                                      ByVal max_content_length As UInt64) As event_comb
@@ -261,7 +261,7 @@ Public Module _client_rr
     End Function
 
     <Extension()> Public Function read_response_body(ByVal i As HttpWebResponse,
-                                                     ByVal o As pointer(Of Byte()),
+                                                     ByVal o As ref(Of Byte()),
                                                      ByVal ls As link_status) As event_comb
         Return read_response_body(i,
                                   o,
@@ -274,7 +274,7 @@ Public Module _client_rr
                                                      ByVal o As Stream,
                                                      ByVal receive_link_status As link_status,
                                                      ByVal send_link_status As link_status,
-                                                     Optional ByVal result As pointer(Of UInt64) = Nothing) As event_comb
+                                                     Optional ByVal result As ref(Of UInt64) = Nothing) As event_comb
         Return read_response_body(i,
                                   o,
                                   receive_link_status.this_or_unlimited().buff_size,
@@ -290,7 +290,7 @@ Public Module _client_rr
                                                      ByVal receive_rate_sec As UInt32,
                                                      ByVal send_rate_sec As UInt32,
                                                      ByVal max_content_length As UInt64,
-                                                     Optional ByVal result As pointer(Of UInt64) = Nothing) As event_comb
+                                                     Optional ByVal result As ref(Of UInt64) = Nothing) As event_comb
         Return write_to_stream(i,
                                o,
                                buff_size,

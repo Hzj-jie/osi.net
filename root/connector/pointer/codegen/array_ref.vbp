@@ -1,0 +1,4 @@
+﻿
+##DEFINE TYPE array_ref
+##DEFINE INNER_TYPE T()
+##INCLUDE ref.vbp

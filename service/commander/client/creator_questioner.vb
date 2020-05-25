@@ -41,7 +41,7 @@ Public Class creator_questioner(Of _ENABLE_AUTO_PING As _boolean)
     End Sub
 
     Protected NotOverridable Overrides Function communicate(ByVal i As command,
-                                                            ByVal o As pointer(Of command)) As event_comb
+                                                            ByVal o As ref(Of command)) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim h As herald = Nothing

@@ -66,7 +66,7 @@ Partial Public Class dispenser(Of DATA_T, ID_T)
 
     Protected NotOverridable Overrides Function work() As event_comb
         Dim ec As event_comb = Nothing
-        Dim result As pointer(Of pair(Of DATA_T, ID_T)) = Nothing
+        Dim result As ref(Of pair(Of DATA_T, ID_T)) = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = d.sense(sense_timeout_ms)
                                   Return waitfor(ec) AndAlso

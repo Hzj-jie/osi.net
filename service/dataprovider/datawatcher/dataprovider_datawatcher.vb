@@ -16,15 +16,15 @@ Public Class dataprovider_datawatcher
 
     Public Sub New(ByVal rule As trigger_rule, ByVal ParamArray dps() As idataprovider)
         assert(Not isemptyarray(dps))
-        Dim wdps() As weak_pointer(Of idataprovider) = Nothing
-        wdps = weak_pointers.of(dps)
+        Dim wdps() As weak_ref(Of idataprovider) = Nothing
+        wdps = weak_refs.of(dps)
         For i As Int32 = 0 To dps.Length() - 1
             assert(Not dps(i) Is Nothing)
             dps(i).register_update_event(Me, Sub(x) x.rule_trigger(rule, wdps))
         Next
     End Sub
 
-    Private Sub rule_trigger(ByVal rule As trigger_rule, ByVal dps() As weak_pointer(Of idataprovider))
+    Private Sub rule_trigger(ByVal rule As trigger_rule, ByVal dps() As weak_ref(Of idataprovider))
         Dim last_trigger_time_ticks As Int64
         assert(Not isemptyarray(dps))
         If rule = trigger_rule.one OrElse dps.Length() = 1 Then

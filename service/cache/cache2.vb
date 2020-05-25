@@ -55,13 +55,13 @@ Public Class cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     Implements icache2(Of KEY_T, VALUE_T)
 
     Private ReadOnly c As islimcache2(Of KEY_T, VALUE_T)
-    Private ReadOnly l As pointer(Of event_comb_lock)
+    Private ReadOnly l As ref(Of event_comb_lock)
 
     Public Sub New(ByVal c As islimcache2(Of KEY_T, VALUE_T))
         assert(Not c Is Nothing)
         assert(Not TypeOf c Is icache(Of KEY_T, VALUE_T))
         Me.c = c
-        l = New pointer(Of event_comb_lock)()
+        l = New ref(Of event_comb_lock)()
     End Sub
 
     Public Sub New(ByVal c As islimcache(Of KEY_T, VALUE_T))
@@ -80,7 +80,7 @@ Public Class cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
         Return l.locked(Function() c.erase(key))
     End Function
 
-    Public Function [get](ByVal key As KEY_T, ByVal value As pointer(Of VALUE_T)) As event_comb _
+    Public Function [get](ByVal key As KEY_T, ByVal value As ref(Of VALUE_T)) As event_comb _
                          Implements icache2(Of KEY_T, VALUE_T).get
         Return l.locked(Function() As Boolean
                             Dim v As VALUE_T = Nothing
@@ -100,7 +100,7 @@ Public Class cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
         Return l.locked(Sub() c.set(key, value))
     End Function
 
-    Public Function size(ByVal value As pointer(Of Int64)) As event_comb _
+    Public Function size(ByVal value As ref(Of Int64)) As event_comb _
                         Implements icache2(Of KEY_T, VALUE_T).size
         Return l.locked(Function() As Boolean
                             Return Not value Is Nothing AndAlso

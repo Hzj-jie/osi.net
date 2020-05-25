@@ -20,13 +20,13 @@ Public NotInheritable Class autolock_test
     End Sub
 
     Public Sub New()
-        MyBase.New(r(New autolock_case(Of pointer(Of slimlock.simplelock))(
+        MyBase.New(r(New autolock_case(Of ref(Of slimlock.simplelock))(
                              AddressOf make_autolock(Of slimlock.simplelock))),
-                   r(New autolock_case(Of pointer(Of monitorlock))(
+                   r(New autolock_case(Of ref(Of monitorlock))(
                              AddressOf make_autolock(Of monitorlock))),
-                   r(New autolock_case(Of pointer(Of slimlock.monitorlock))(
+                   r(New autolock_case(Of ref(Of slimlock.monitorlock))(
                              AddressOf make_autolock(Of slimlock.monitorlock))),
-                   multithreading(repeat(New autolock_case(Of pointer(Of slimlock.eventlock))(
+                   multithreading(repeat(New autolock_case(Of ref(Of slimlock.eventlock))(
                                                  AddressOf make_autolock(Of slimlock.eventlock)), 1024), 4))
     End Sub
 

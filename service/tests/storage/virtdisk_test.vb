@@ -33,7 +33,7 @@ Public Class virtdisk_test
             Dim start As UInt64 = 0
             Dim len As UInt32 = 0
             Dim buff() As Byte = Nothing
-            Dim p As pointer(Of Byte()) = Nothing
+            Dim p As ref(Of Byte()) = Nothing
             Return New event_comb(Function() As Boolean
                                       rnd_data(start, len, buff)
                                       ec = vd.write(start, len, buff)
@@ -42,7 +42,7 @@ Public Class virtdisk_test
                                   End Function,
                                   Function() As Boolean
                                       assertion.is_true(ec.end_result())
-                                      p = New pointer(Of Byte())()
+                                      p = New ref(Of Byte())()
                                       ec = vd.read(start, len, p)
                                       Return waitfor(ec) AndAlso
                                              goto_next()

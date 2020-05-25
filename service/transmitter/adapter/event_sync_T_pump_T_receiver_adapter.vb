@@ -53,7 +53,7 @@ Public Class event_sync_T_pump_T_receiver_adapter(Of T)
         End If
     End Sub
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
         Dim end_time As Int64 = 0
         If timeout_ms < 0 Then
@@ -86,7 +86,7 @@ Public Class event_sync_T_pump_T_receiver_adapter(Of T)
                               End Function)
     End Function
 
-    Public Function receive(ByVal o As pointer(Of T)) As event_comb Implements T_pump(Of T).receive
+    Public Function receive(ByVal o As ref(Of T)) As event_comb Implements T_pump(Of T).receive
         Return New event_comb(Function() As Boolean
                                   Dim i As T = Nothing
                                   If p.receive(i) Then

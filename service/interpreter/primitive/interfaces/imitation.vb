@@ -15,22 +15,22 @@ Namespace primitive
         Sub pop_stack()
         Sub store_state()
         Sub restore_state()
-        Overloads Sub instruction_pointer(ByVal v As Int64)  ' data_ref.offset() returns int64
+        Overloads Sub instruction_ref(ByVal v As Int64)  ' data_ref.offset() returns int64
         Overloads Sub carry_over(ByVal v As Boolean)
         Overloads Sub divided_by_zero(ByVal v As Boolean)
         Overloads Sub imaginary_number(ByVal v As Boolean)
-        Sub advance_instruction_pointer(ByVal v As Int64)
-        Sub do_not_advance_instruction_pointer()
+        Sub advance_instruction_ref(ByVal v As Int64)
+        Sub do_not_advance_instruction_ref()
         Sub [stop]()
     End Interface
 
     Public Module _imitation
-        <Extension()> Public Sub instruction_pointer(ByVal this As imitation, ByVal v As UInt64)
+        <Extension()> Public Sub instruction_ref(ByVal this As imitation, ByVal v As UInt64)
             assert(Not this Is Nothing)
             If v > max_int64 Then
-                executor_stop_error.throw(executor.error_type.instruction_pointer_overflow)
+                executor_stop_error.throw(executor.error_type.instruction_ref_overflow)
             Else
-                this.instruction_pointer(CLng(v))
+                this.instruction_ref(CLng(v))
             End If
         End Sub
 

@@ -51,8 +51,8 @@ Public Class dataprovider(Of T)
         Dim w As event_comb = Nothing
         Dim f As event_comb = Nothing
         Dim l As event_comb = Nothing
-        Dim r As pointer(Of T) = Nothing
-        r = New pointer(Of T)()
+        Dim r As ref(Of T) = Nothing
+        r = New ref(Of T)()
         begin_lifetime_event_comb(exp,
                                   Function() As Boolean
                                       w = watcher.watch(exp)

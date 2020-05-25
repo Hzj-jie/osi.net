@@ -48,7 +48,7 @@ Partial Public Class constructor_test
         assertion.is_false(c.constructor(Of test_class).register(Nothing))
         assertion.is_false(c.constructor(Of test_class).register(Nothing,
                                                            Function(ByVal v As var,
-                                                                  ByVal o As pointer(Of test_class)) As event_comb
+                                                                  ByVal o As ref(Of test_class)) As event_comb
                                                                Return event_comb.failed()
                                                            End Function))
         assertion.is_false(c.constructor(Of test_class).register(Nothing, Nothing))

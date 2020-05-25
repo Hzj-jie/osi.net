@@ -19,8 +19,8 @@ Public Class delegator
     Public ReadOnly p As powerpoint
     Public ReadOnly id As String
 #If SINGLE_OPERATION Then
-    Private ReadOnly send_lock As pointer(Of event_comb_lock)
-    Private ReadOnly receive_lock As pointer(Of event_comb_lock)
+    Private ReadOnly send_lock As ref(Of event_comb_lock)
+    Private ReadOnly receive_lock As ref(Of event_comb_lock)
 #End If
     Private ReadOnly sources As const_array(Of IPEndPoint)
     Private ReadOnly c As UdpClient
@@ -42,8 +42,8 @@ Public Class delegator
                    End Sub)
         assert(Not c Is Nothing)
 #If SINGLE_OPERATION Then
-        send_lock = New pointer(Of event_comb_lock)()
-        receive_lock = New pointer(Of event_comb_lock)()
+        send_lock = New ref(Of event_comb_lock)()
+        receive_lock = New ref(Of event_comb_lock)()
 #End If
         Me.c = c
         Me.sources = sources
@@ -86,7 +86,7 @@ Public Class delegator
     Private Function unlock_send(ByVal buff() As Byte,
                                  ByVal len As UInt32,
                                  ByVal target As IPEndPoint,
-                                 ByVal sent As pointer(Of UInt32)) As event_comb
+                                 ByVal sent As ref(Of UInt32)) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If target Is Nothing OrElse Not c.active() Then
@@ -106,7 +106,7 @@ Public Class delegator
     Public Function send(ByVal buff() As Byte,
                          ByVal len As UInt32,
                          Optional ByVal target As IPEndPoint = Nothing,
-                         Optional ByVal sent As pointer(Of UInt32) = Nothing) As event_comb
+                         Optional ByVal sent As ref(Of UInt32) = Nothing) As event_comb
 #If SINGLE_OPERATION Then
         Return send_lock.locked(Function() As event_comb
                                     Return unlock_send(buff, len, target, sent)
@@ -116,8 +116,8 @@ Public Class delegator
 #End If
     End Function
 
-    Private Function unlock_receive(ByVal result As pointer(Of Byte()),
-                                    ByVal source As pointer(Of IPEndPoint)) As event_comb
+    Private Function unlock_receive(ByVal result As ref(Of Byte()),
+                                    ByVal source As ref(Of IPEndPoint)) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If fixed_sources() Then
@@ -147,8 +147,8 @@ Public Class delegator
                               End Function)
     End Function
 
-    Public Function receive(ByVal result As pointer(Of Byte()),
-                            Optional ByVal source As pointer(Of IPEndPoint) = Nothing) As event_comb
+    Public Function receive(ByVal result As ref(Of Byte()),
+                            Optional ByVal source As ref(Of IPEndPoint) = Nothing) As event_comb
 #If SINGLE_OPERATION Then
         Return receive_lock.locked(Function() As event_comb
                                        Return unlock_receive(result, source)

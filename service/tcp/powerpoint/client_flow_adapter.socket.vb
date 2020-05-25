@@ -33,7 +33,7 @@ Partial Public Class client_flow_adapter
         Public Function send(ByVal buff() As Byte,
                              ByVal offset As UInt32,
                              ByVal count As UInt32,
-                             ByVal sent As pointer(Of UInt32)) As event_comb Implements flow.send
+                             ByVal sent As ref(Of UInt32)) As event_comb Implements flow.send
             Return sync_async(Function() As Boolean
                                   If Not c.alive() OrElse
                                      single_send_size = 0 OrElse
@@ -64,7 +64,7 @@ Partial Public Class client_flow_adapter
         Public Function receive(ByVal buff() As Byte,
                                 ByVal offset As UInt32,
                                 ByVal count As UInt32,
-                                ByVal result As pointer(Of UInt32)) As event_comb Implements flow.receive
+                                ByVal result As ref(Of UInt32)) As event_comb Implements flow.receive
             Return sync_async(Function() As Boolean
                                   If Not c.alive() Then
                                       Return False
@@ -98,7 +98,7 @@ Partial Public Class client_flow_adapter
                               End Function)
         End Function
 
-        Public Function sense(ByVal pending As pointer(Of Boolean),
+        Public Function sense(ByVal pending As ref(Of Boolean),
                               ByVal timeout_ms As Int64) As event_comb Implements flow.sense
             Return sensor.sense(pending, timeout_ms)
         End Function

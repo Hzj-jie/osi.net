@@ -1,6 +1,6 @@
 ﻿
 ##DEFAULT CLASS_NAME dispose_ptr
-##DEFAULT BASE_NAME pointer
+##DEFAULT BASE_NAME ref
 ##DEFAULT DO_DISPOSE_IMPL dispose_ptr_do_dispose.vbp
 
 ##INCLUDE disposer_imports.vbp

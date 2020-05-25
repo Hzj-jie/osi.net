@@ -1,7 +1,7 @@
 ﻿
 ##DEFAULT WEAKREFERENCE_TYPE T
 
-##INCLUDE single_obj_pointer_operator.vbp
+##INCLUDE single_obj_ref_operator.vbp
 
     Private p As WeakReference
     

@@ -87,7 +87,7 @@ Public NotInheritable Class target_questioner
     End Function
 
     Protected Overrides Function communicate(ByVal request As command,
-                                             ByVal response As pointer(Of command)) As event_comb
+                                             ByVal response As ref(Of command)) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If request Is Nothing OrElse

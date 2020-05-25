@@ -16,7 +16,7 @@ Friend Class istrkeyvt_input_validation_wrapper
     Public Function append(ByVal key As String,
                            ByVal value() As Byte,
                            ByVal ts As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.append
+                           ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.append
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.append(key, value, ts, result)
                                        End Function,
@@ -25,7 +25,7 @@ Friend Class istrkeyvt_input_validation_wrapper
                                        End Function)
     End Function
 
-    Public Function capacity(ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.capacity
+    Public Function capacity(ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.capacity
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.capacity(result)
                                        End Function,
@@ -35,7 +35,7 @@ Friend Class istrkeyvt_input_validation_wrapper
     End Function
 
     Public Function delete(ByVal key As String,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.delete
+                           ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.delete
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.delete(key, result)
                                        End Function,
@@ -44,7 +44,7 @@ Friend Class istrkeyvt_input_validation_wrapper
                                        End Function)
     End Function
 
-    Public Function empty(ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.empty
+    Public Function empty(ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.empty
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.empty(result)
                                        End Function,
@@ -53,7 +53,7 @@ Friend Class istrkeyvt_input_validation_wrapper
                                        End Function)
     End Function
 
-    Public Function full(ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.full
+    Public Function full(ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.full
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.full(result)
                                        End Function,
@@ -66,7 +66,7 @@ Friend Class istrkeyvt_input_validation_wrapper
         Return impl.heartbeat()
     End Function
 
-    Public Function keycount(ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.keycount
+    Public Function keycount(ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.keycount
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.keycount(result)
                                        End Function,
@@ -75,7 +75,7 @@ Friend Class istrkeyvt_input_validation_wrapper
                                        End Function)
     End Function
 
-    Public Function list(ByVal result As pointer(Of vector(Of String))) As event_comb Implements istrkeyvt.list
+    Public Function list(ByVal result As ref(Of vector(Of String))) As event_comb Implements istrkeyvt.list
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.list(result)
                                        End Function,
@@ -87,7 +87,7 @@ Friend Class istrkeyvt_input_validation_wrapper
     Public Function modify(ByVal key As String,
                            ByVal value() As Byte,
                            ByVal ts As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.modify
+                           ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.modify
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.modify(key, value, ts, result)
                                        End Function,
@@ -97,8 +97,8 @@ Friend Class istrkeyvt_input_validation_wrapper
     End Function
 
     Public Function read(ByVal key As String,
-                         ByVal result As pointer(Of Byte()),
-                         ByVal ts As pointer(Of Int64)) As event_comb Implements istrkeyvt.read
+                         ByVal result As ref(Of Byte()),
+                         ByVal ts As ref(Of Int64)) As event_comb Implements istrkeyvt.read
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.read(key, result, ts)
                                        End Function,
@@ -112,7 +112,7 @@ Friend Class istrkeyvt_input_validation_wrapper
     End Function
 
     Public Function seek(ByVal key As String,
-                         ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.seek
+                         ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.seek
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.seek(key, result)
                                        End Function,
@@ -122,7 +122,7 @@ Friend Class istrkeyvt_input_validation_wrapper
     End Function
 
     Public Function sizeof(ByVal key As String,
-                           ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.sizeof
+                           ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.sizeof
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.sizeof(key, result)
                                        End Function,
@@ -138,7 +138,7 @@ Friend Class istrkeyvt_input_validation_wrapper
     Public Function unique_write(ByVal key As String,
                                  ByVal value() As Byte,
                                  ByVal ts As Int64,
-                                 ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.unique_write
+                                 ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.unique_write
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.unique_write(key, value, ts, result)
                                        End Function,
@@ -147,7 +147,7 @@ Friend Class istrkeyvt_input_validation_wrapper
                                        End Function)
     End Function
 
-    Public Function valuesize(ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.valuesize
+    Public Function valuesize(ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.valuesize
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.valuesize(result)
                                        End Function,

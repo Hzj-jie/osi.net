@@ -47,10 +47,10 @@ Friend Class ikeyvalue_ikeyvt_false
     Private Function append_or_modify(ByVal key() As Byte,
                                       ByVal value() As Byte,
                                       ByVal ts As Int64,
-                                      ByVal result As pointer(Of Boolean),
+                                      ByVal result As ref(Of Boolean),
                                       ByVal op As Func(Of Byte(),
-                                                          Byte(), 
-                                                          pointer(Of Boolean), 
+                                                          Byte(),
+                                                          ref(Of Boolean),
                                                           event_comb)) As event_comb
         assert(Not op Is Nothing)
         Dim ec As event_comb = Nothing
@@ -92,16 +92,16 @@ Friend Class ikeyvalue_ikeyvt_false
     Public Function append(ByVal key() As Byte,
                            ByVal value() As Byte,
                            ByVal ts As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of _false).append
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of _false).append
         Return append_or_modify(key, value, ts, result, Function(a, b, c) s.append(a, b, c))
     End Function
 
-    Public Function capacity(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvt(Of _false).capacity
+    Public Function capacity(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvt(Of _false).capacity
         Return s.capacity(result)
     End Function
 
     Public Function delete(ByVal key() As Byte,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of _false).delete
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of _false).delete
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = s.delete(timestamp_key(key), result)
@@ -132,11 +132,11 @@ Friend Class ikeyvalue_ikeyvt_false
                               End Function)
     End Function
 
-    Public Function empty(ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of _false).empty
+    Public Function empty(ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of _false).empty
         Return s.empty(result)
     End Function
 
-    Public Function full(ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of _false).full
+    Public Function full(ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of _false).full
         Return s.full(result)
     End Function
 
@@ -144,11 +144,11 @@ Friend Class ikeyvalue_ikeyvt_false
         Return s.heartbeat()
     End Function
 
-    Public Function keycount(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvt(Of _false).keycount
+    Public Function keycount(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvt(Of _false).keycount
         Return half_keycount(AddressOf s.keycount, result)
     End Function
 
-    Public Function list(ByVal result As pointer(Of vector(Of Byte()))) As event_comb _
+    Public Function list(ByVal result As ref(Of vector(Of Byte()))) As event_comb _
                         Implements ikeyvt(Of _false).list
         Return select_list(AddressOf s.list, AddressOf is_timestamp_key, result)
     End Function
@@ -156,13 +156,13 @@ Friend Class ikeyvalue_ikeyvt_false
     Public Function modify(ByVal key() As Byte,
                            ByVal value() As Byte,
                            ByVal ts As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of _false).modify
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of _false).modify
         Return append_or_modify(key, value, ts, result, AddressOf s.modify)
     End Function
 
     Public Function read(ByVal key() As Byte,
-                         ByVal result As pointer(Of Byte()),
-                         ByVal ts As pointer(Of Int64)) As event_comb Implements ikeyvt(Of _false).read
+                         ByVal result As ref(Of Byte()),
+                         ByVal ts As ref(Of Int64)) As event_comb Implements ikeyvt(Of _false).read
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = s.read(timestamp_key(key), result)
@@ -200,7 +200,7 @@ Friend Class ikeyvalue_ikeyvt_false
     End Function
 
     Public Function seek(ByVal key() As Byte,
-                         ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of _false).seek
+                         ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of _false).seek
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = s.seek(timestamp_key(key), result)
@@ -227,7 +227,7 @@ Friend Class ikeyvalue_ikeyvt_false
     End Function
 
     Public Function sizeof(ByVal key() As Byte,
-                           ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvt(Of _false).sizeof
+                           ByVal result As ref(Of Int64)) As event_comb Implements ikeyvt(Of _false).sizeof
         Return s.sizeof(value_key(key), result)
     End Function
 
@@ -238,7 +238,7 @@ Friend Class ikeyvalue_ikeyvt_false
     Public Function unique_write(ByVal key() As Byte,
                                  ByVal value() As Byte,
                                  ByVal ts As Int64,
-                                 ByVal result As pointer(Of Boolean)) As event_comb _
+                                 ByVal result As ref(Of Boolean)) As event_comb _
                                 Implements ikeyvt(Of _false).unique_write
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -266,7 +266,7 @@ Friend Class ikeyvalue_ikeyvt_false
                               End Function)
     End Function
 
-    Public Function valuesize(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvt(Of _false).valuesize
+    Public Function valuesize(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvt(Of _false).valuesize
         Return s.valuesize(result)
     End Function
 End Class

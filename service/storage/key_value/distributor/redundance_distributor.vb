@@ -16,14 +16,14 @@ Partial Public Class redundance_distributor
     Private ReadOnly wrap As key_locked_istrkeyvt
     Private ReadOnly container As istrkeyvt_container
     Private ReadOnly verify_rate As Int32
-    Private ReadOnly exp As pointer(Of singleentry)
+    Private ReadOnly exp As ref(Of singleentry)
     Private ReadOnly sq As syncqueue
 
     Private Sub New(ByVal c As istrkeyvt_container, ByVal verify_rate As Int32)
         assert(Not c Is Nothing)
         Me.container = c
         Me.verify_rate = verify_rate
-        Me.exp = New pointer(Of singleentry)()
+        Me.exp = New ref(Of singleentry)()
         Me.wrap = New key_locked_istrkeyvt(Me)
         Me.sq = New syncqueue(Me)
     End Sub
@@ -47,13 +47,13 @@ Partial Public Class redundance_distributor
     End Function
 
     Private Function amu(ByVal key As String,
-                         ByVal d As Func(Of istrkeyvt, pointer(Of Boolean), event_comb),
-                         ByVal result As pointer(Of Boolean)) As event_comb
+                         ByVal d As Func(Of istrkeyvt, ref(Of Boolean), event_comb),
+                         ByVal result As ref(Of Boolean)) As event_comb
         Return distribute(container,
                           d,
                           result,
                           Function(ecs() As event_comb,
-                                   rs() As pointer(Of Boolean),
+                                   rs() As ref(Of Boolean),
                                    ByRef r As Boolean) As Boolean
                               For i As Int32 = 1 To container.size() - 1
                                   If ecs(0).end_result() <> ecs(i).end_result() OrElse
@@ -80,19 +80,19 @@ Partial Public Class redundance_distributor
     Public Function append(ByVal key As String,
                            ByVal value() As Byte,
                            ByVal ts As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.append
+                           ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.append
         Return amu(key, Function(x, y) x.append(key, value, ts, y), result)
     End Function
 
-    Private Function compare_int64(ByVal d As Func(Of istrkeyvt, pointer(Of Int64), event_comb),
+    Private Function compare_int64(ByVal d As Func(Of istrkeyvt, ref(Of Int64), event_comb),
                                    ByVal init_value As Int64,
                                    ByVal choose As Func(Of Int64, Int64, Boolean),
-                                   ByVal result As pointer(Of Int64)) As event_comb
+                                   ByVal result As ref(Of Int64)) As event_comb
         assert(Not choose Is Nothing)
         Return distribute(container,
                           d,
                           result,
-                          Function(ecs() As event_comb, rs() As pointer(Of Int64), ByRef r As Int64) As Boolean
+                          Function(ecs() As event_comb, rs() As ref(Of Int64), ByRef r As Int64) As Boolean
                               Dim m As Int64 = 0
                               m = init_value
                               For i As Int32 = 0 To container.size() - 1
@@ -108,23 +108,23 @@ Partial Public Class redundance_distributor
                           End Function)
     End Function
 
-    Private Function min(ByVal d As Func(Of istrkeyvt, pointer(Of Int64), event_comb),
-                         ByVal result As pointer(Of Int64)) As event_comb
+    Private Function min(ByVal d As Func(Of istrkeyvt, ref(Of Int64), event_comb),
+                         ByVal result As ref(Of Int64)) As event_comb
         Return compare_int64(d,
                              npos,
                              Function(x, y) x < y,
                              result)
     End Function
 
-    Private Function max(ByVal d As Func(Of istrkeyvt, pointer(Of Int64), event_comb),
-                         ByVal result As pointer(Of Int64)) As event_comb
+    Private Function max(ByVal d As Func(Of istrkeyvt, ref(Of Int64), event_comb),
+                         ByVal result As ref(Of Int64)) As event_comb
         Return compare_int64(d,
                              npos,
                              Function(x, y) x > y,
                              result)
     End Function
 
-    Public Function capacity(ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.capacity
+    Public Function capacity(ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.capacity
         If need_verify() Then
             Return min(Function(x, y) x.capacity(y), result)
         Else
@@ -133,7 +133,7 @@ Partial Public Class redundance_distributor
     End Function
 
     Private Shared Function delete_result(ByVal ecs() As event_comb,
-                                     ByVal r() As pointer(Of Boolean)) As Boolean
+                                     ByVal r() As ref(Of Boolean)) As Boolean
         assert(array_size(ecs) = array_size(r))
         For i As Int32 = 0 To array_size(ecs) - 1
             If ecs(i).end_result() AndAlso +(r(i)) Then
@@ -144,12 +144,12 @@ Partial Public Class redundance_distributor
     End Function
 
     Public Function delete(ByVal key As String,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.delete
+                           ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.delete
         Return distribute(container,
                           Function(x, y) x.delete(key, y),
                           result,
                           Function(ecs() As event_comb,
-                                   i() As pointer(Of Boolean),
+                                   i() As ref(Of Boolean),
                                    ByRef o As Boolean) As Boolean
                               Return event_comb_result_suc(ecs) AndAlso
                                      eva(o, delete_result(ecs, i))
@@ -157,7 +157,7 @@ Partial Public Class redundance_distributor
     End Function
 
     Private Shared Function empty_result(ByVal ecs() As event_comb,
-                                         ByVal r() As pointer(Of Boolean)) As Boolean
+                                         ByVal r() As ref(Of Boolean)) As Boolean
         assert(array_size(ecs) = array_size(r))
         For i As Int32 = 0 To array_size(ecs) - 1
             If ecs(i).end_result() AndAlso Not (+(r(i))) Then
@@ -167,13 +167,13 @@ Partial Public Class redundance_distributor
         Return True
     End Function
 
-    Public Function empty(ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.empty
+    Public Function empty(ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.empty
         If need_verify() Then
             Return distribute(container,
                               Function(x, y) x.empty(y),
                               result,
                               Function(ecs() As event_comb,
-                                       i() As pointer(Of Boolean),
+                                       i() As ref(Of Boolean),
                                        ByRef o As Boolean) As Boolean
                                   Return event_comb_result_suc(ecs) AndAlso
                                          eva(o, empty_result(ecs, i))
@@ -184,7 +184,7 @@ Partial Public Class redundance_distributor
     End Function
 
     Private Shared Function full_result(ByVal ecs() As event_comb,
-                                        ByVal r() As pointer(Of Boolean)) As Boolean
+                                        ByVal r() As ref(Of Boolean)) As Boolean
         assert(array_size(ecs) = array_size(r))
         For i As Int32 = 0 To array_size(ecs) - 1
             If Not ecs(i).end_result() OrElse +(r(i)) Then
@@ -194,13 +194,13 @@ Partial Public Class redundance_distributor
         Return False
     End Function
 
-    Public Function full(ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.full
+    Public Function full(ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.full
         If need_verify() Then
             Return distribute(container,
                               Function(x, y) x.full(y),
                               result,
                               Function(ecs() As event_comb,
-                                       i() As pointer(Of Boolean),
+                                       i() As ref(Of Boolean),
                                        ByRef o As Boolean) As Boolean
                                   Return event_comb_result_suc(ecs) AndAlso
                                          eva(o, full_result(ecs, i))
@@ -214,7 +214,7 @@ Partial Public Class redundance_distributor
         Return all_heartbeat(container)
     End Function
 
-    Public Function keycount(ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.keycount
+    Public Function keycount(ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.keycount
         If need_verify() Then
             Return max(Function(x, y) x.keycount(y), result)
         Else
@@ -263,8 +263,8 @@ Partial Public Class redundance_distributor
     End Function
 
     Private Function list_result(ByVal ecs() As event_comb,
-                                 ByVal nr() As pointer(Of vector(Of String)),
-                                 ByVal result As pointer(Of vector(Of String))) As event_comb
+                                 ByVal nr() As ref(Of vector(Of String)),
+                                 ByVal result As ref(Of vector(Of String))) As event_comb
         assert(array_size(ecs) = array_size(nr))
         Dim ss As vector(Of stringtrie(Of Boolean)) = Nothing
         Return New event_comb(Function() As Boolean
@@ -325,16 +325,16 @@ Partial Public Class redundance_distributor
                               End Function)
     End Function
 
-    Public Function list(ByVal result As pointer(Of vector(Of String))) As event_comb Implements istrkeyvt.list
+    Public Function list(ByVal result As ref(Of vector(Of String))) As event_comb Implements istrkeyvt.list
         If need_verify() Then
-            Dim nr() As pointer(Of vector(Of String)) = Nothing
+            Dim nr() As ref(Of vector(Of String)) = Nothing
             Dim ecs() As event_comb = Nothing
             Dim ec As event_comb = Nothing
             Return New event_comb(Function() As Boolean
                                       ReDim nr(container.size() - 1)
                                       ReDim ecs(container.size() - 1)
                                       For i As Int32 = 0 To container.size() - 1
-                                          nr(i) = New pointer(Of vector(Of String))()
+                                          nr(i) = New ref(Of vector(Of String))()
                                           ecs(i) = container(i).list(nr(i))
                                       Next
                                       Return waitfor(ecs) AndAlso
@@ -364,18 +364,18 @@ Partial Public Class redundance_distributor
     Public Function modify(ByVal key As String,
                            ByVal value() As Byte,
                            ByVal ts As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.modify
+                           ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.modify
         Return amu(key, Function(x, y) x.modify(key, value, ts, y), result)
     End Function
 
     Public Function read(ByVal key As String,
-                         ByVal result As pointer(Of Byte()),
-                         ByVal ts As pointer(Of Int64)) As event_comb Implements istrkeyvt.read
+                         ByVal result As ref(Of Byte()),
+                         ByVal ts As ref(Of Int64)) As event_comb Implements istrkeyvt.read
         If need_verify() Then
-            Dim nr As pointer(Of Boolean()) = Nothing
+            Dim nr As ref(Of Boolean()) = Nothing
             Dim ec As event_comb = Nothing
             Return New event_comb(Function() As Boolean
-                                      nr = New pointer(Of Boolean())()
+                                      nr = New ref(Of Boolean())()
                                       ec = read(key, result, ts, nr)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -436,7 +436,7 @@ Partial Public Class redundance_distributor
     End Function
 
     Private Shared Sub seek_result(ByVal ecs() As event_comb,
-                                   ByVal rs() As pointer(Of Boolean),
+                                   ByVal rs() As ref(Of Boolean),
                                    ByRef has_found As Boolean,
                                    ByRef has_not_found As Boolean)
         assert(array_size(ecs) = array_size(rs))
@@ -457,12 +457,12 @@ Partial Public Class redundance_distributor
     End Sub
 
     Public Function seek(ByVal key As String,
-                         ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.seek
+                         ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.seek
         If need_verify() Then
             Return distribute(container,
                               Function(x, y) x.seek(key, y),
                               result,
-                              Function(ecs() As event_comb, i() As pointer(Of Boolean), ByRef o As Boolean) As Boolean
+                              Function(ecs() As event_comb, i() As ref(Of Boolean), ByRef o As Boolean) As Boolean
                                   Dim has_suc As Boolean = False
                                   Dim has_fail As Boolean = False
                                   event_comb_result(ecs, has_suc, has_fail)
@@ -485,7 +485,7 @@ Partial Public Class redundance_distributor
     End Function
 
     Private Shared Sub sizeof_result(ByVal ecs() As event_comb,
-                                     ByVal rs() As pointer(Of Int64),
+                                     ByVal rs() As ref(Of Int64),
                                      ByRef has_invalid As Boolean,
                                      ByRef min As Int64,
                                      ByRef max As Int64)
@@ -510,12 +510,12 @@ Partial Public Class redundance_distributor
     End Sub
 
     Public Function sizeof(ByVal key As String,
-                           ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.sizeof
+                           ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.sizeof
         If need_verify() Then
             Return distribute(container,
                               Function(x, y) x.sizeof(key, y),
                               result,
-                              Function(ecs() As event_comb, i() As pointer(Of Int64), ByRef o As Int64) As Boolean
+                              Function(ecs() As event_comb, i() As ref(Of Int64), ByRef o As Int64) As Boolean
                                   Dim has_suc As Boolean = False
                                   Dim has_fail As Boolean = False
                                   event_comb_result(ecs, has_suc, has_fail)
@@ -547,11 +547,11 @@ Partial Public Class redundance_distributor
     Public Function unique_write(ByVal key As String,
                                  ByVal value() As Byte,
                                  ByVal ts As Int64,
-                                 ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.unique_write
+                                 ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.unique_write
         Return amu(key, Function(x, y) x.unique_write(key, value, ts, y), result)
     End Function
 
-    Public Function valuesize(ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.valuesize
+    Public Function valuesize(ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.valuesize
         If need_verify() Then
             Return max(Function(x, y) x.valuesize(y), result)
         Else

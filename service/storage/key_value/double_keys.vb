@@ -30,13 +30,13 @@ Public Module _double_keys
         End If
     End Function
 
-    Public Function half_keycount(ByVal d As Func(Of pointer(Of Int64), event_comb),
-                                  ByVal r As pointer(Of Int64)) As event_comb
+    Public Function half_keycount(ByVal d As Func(Of ref(Of Int64), event_comb),
+                                  ByVal r As ref(Of Int64)) As event_comb
         assert(Not d Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If r Is Nothing Then
-                                      r = New pointer(Of Int64)()
+                                      r = New ref(Of Int64)()
                                   End If
                                   ec = d(r)
                                   Return waitfor(ec) AndAlso
@@ -56,15 +56,15 @@ Public Module _double_keys
                               End Function)
     End Function
 
-    Public Function select_list(ByVal d As Func(Of pointer(Of vector(Of Byte())), event_comb),
+    Public Function select_list(ByVal d As Func(Of ref(Of vector(Of Byte())), event_comb),
                                 ByVal [select] As _do_val_ref(Of Byte(), Byte(), Boolean),
-                                ByVal result As pointer(Of vector(Of Byte()))) As event_comb
+                                ByVal result As ref(Of vector(Of Byte()))) As event_comb
         assert(Not d Is Nothing)
         assert(Not [select] Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If result Is Nothing Then
-                                      result = New pointer(Of vector(Of Byte()))()
+                                      result = New ref(Of vector(Of Byte()))()
                                   End If
                                   ec = d(result)
                                   Return waitfor(ec) AndAlso

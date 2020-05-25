@@ -48,10 +48,10 @@ Partial Public Class accepter
         'http://social.msdn.microsoft.com/Forums/vstudio/en-US/7cb83d93-17cf-4241-a916-5b3fd673075e/can-i-beginaccepttcpclient-for-more-than-once-in-tcplistener
         Protected Overrides Function work() As event_comb
             Dim ec As event_comb = Nothing
-            Dim c As pointer(Of TcpClient) = Nothing
+            Dim c As ref(Of TcpClient) = Nothing
             Return New event_comb(Function() As Boolean
                                       assert(valid)
-                                      c = New pointer(Of TcpClient)()
+                                      c = New ref(Of TcpClient)()
                                       ec = l.accept_tcp_client(c)
                                       Return waitfor(ec) AndAlso
                                              goto_next()

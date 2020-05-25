@@ -11,14 +11,14 @@ Imports osi.service.commander
 Public Class bytes_ragent(Of CASE_T)
     Inherits command_ragent(Of CASE_T)
 
-    Public Sub New(ByVal r As Func(Of pointer(Of Byte()), event_comb))
+    Public Sub New(ByVal r As Func(Of ref(Of Byte()), event_comb))
         MyBase.New()
         start(r)
     End Sub
 
-    Private Sub start(ByVal r As Func(Of pointer(Of Byte()), event_comb))
+    Private Sub start(ByVal r As Func(Of ref(Of Byte()), event_comb))
         assert(Not r Is Nothing)
-        Dim p As pointer(Of Byte()) = Nothing
+        Dim p As ref(Of Byte()) = Nothing
         Dim ec As event_comb = Nothing
         assert_begin(New event_comb(Function() As Boolean
                                         p.renew()

@@ -25,7 +25,7 @@ Public Class name_questioner(Of ENABLE_AUTO_PING As _boolean)
     End Sub
 
     Protected NotOverridable Overrides Function communicate(ByVal request As command,
-                                                            ByVal response As pointer(Of command)) As event_comb
+                                                            ByVal response As ref(Of command)) As event_comb
         Dim ec As event_comb = Nothing
         Dim p As idevice_pool(Of herald) = Nothing
         Return New event_comb(Function() As Boolean

@@ -10,15 +10,15 @@ Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.root.lock
 
-Public NotInheritable Class pointer_test
+Public NotInheritable Class ref_test
     Inherits gc_memory_measured_case_wrapper
 
     Public Sub New()
-        MyBase.New(New pointer_case())
+        MyBase.New(New ref_case())
     End Sub
 
     Protected Overrides Function max_lower_bound() As Int64
-        Return pointer_case.large_memory_object_size_lowerbound * pointer_case.large_memory_object_count_lowerbound
+        Return ref_case.large_memory_object_size_lowerbound * ref_case.large_memory_object_count_lowerbound
     End Function
 
     Protected Overrides Function min_upper_bound() As Int64
@@ -29,7 +29,7 @@ Public NotInheritable Class pointer_test
         Return min_upper_bound()
     End Function
 
-    Private NotInheritable Class pointer_case
+    Private NotInheritable Class ref_case
         Inherits [case]
 
         Public Const large_memory_object_count_lowerbound As Int64 = 10000
@@ -57,10 +57,10 @@ Public NotInheritable Class pointer_test
 
             Dim count As Int32 = 0
             count = rnd_int(100, 1000)
-            Dim ps() As pointer(Of test_class) = Nothing
+            Dim ps() As ref(Of test_class) = Nothing
             ReDim ps(count - 1)
             For i As Int32 = 0 To count - 1
-                ps(i) = New pointer(Of test_class)(New test_class())
+                ps(i) = New ref(Of test_class)(New test_class())
             Next
             assertion.equal(test_class.finalized_count(), 0)
             garbage_collector.repeat_collect()
@@ -89,10 +89,10 @@ Public NotInheritable Class pointer_test
                 Const string_size_lowerbound As Int64 = (large_memory_object_size_lowerbound >> 1)
                 Dim count As Int32 = 0
                 count = rnd_int(large_memory_object_count_lowerbound, large_memory_object_count_lowerbound * 3)
-                Dim ps() As pointer(Of String) = Nothing
+                Dim ps() As ref(Of String) = Nothing
                 ReDim ps(count - 1)
                 For i As Int32 = 0 To count - 1
-                    ps(i) = New pointer(Of String)()
+                    ps(i) = New ref(Of String)()
                     ps(i).set(New String(character.h, rnd_int(string_size_lowerbound, string_size_lowerbound * 3)))
                 Next
                 garbage_collector.repeat_collect()
@@ -121,40 +121,40 @@ Public NotInheritable Class pointer_test
             End Function
         End Class
 
-        Private Shared Function compares(ByVal i As pointer(Of test_class2),
+        Private Shared Function compares(ByVal i As ref(Of test_class2),
                                          ByVal s As String,
                                          ByVal exp As Int32) As Boolean
             assert(Not i Is Nothing)
             assertion.equal(i.CompareTo(New test_class2(s)), exp)
-            assertion.equal(i.CompareTo(New pointer(Of test_class2)(New test_class2(s))), exp)
-            assertion.equal(i.CompareTo(DirectCast(New pointer(Of test_class2)(New test_class2(s)), Object)), exp)
+            assertion.equal(i.CompareTo(New ref(Of test_class2)(New test_class2(s))), exp)
+            assertion.equal(i.CompareTo(DirectCast(New ref(Of test_class2)(New test_class2(s)), Object)), exp)
             Return True
         End Function
 
         Private Shared Function compares() As Boolean
             Const s1 As String = "ABC"
             Const s2 As String = "abc"
-            Dim p As pointer(Of test_class2) = Nothing
-            p = New pointer(Of test_class2)(New test_class2(s1))
+            Dim p As ref(Of test_class2) = Nothing
+            p = New ref(Of test_class2)(New test_class2(s1))
             Return compares(p, s1, strcmp(s1, s1)) AndAlso
                    compares(p, s2, strcmp(s1, s2))
         End Function
 
         Private Shared Function operators() As Boolean
-            Dim p1 As pointer(Of test_class) = Nothing
-            Dim p2 As pointer(Of test_class) = Nothing
+            Dim p1 As ref(Of test_class) = Nothing
+            Dim p2 As ref(Of test_class) = Nothing
             Dim t1 As test_class = Nothing
             Dim t2 As test_class = Nothing
             t1 = New test_class()
             t2 = New test_class()
-            p1 = New pointer(Of test_class)(t1)
+            p1 = New ref(Of test_class)(t1)
             assertion.is_true(p1 = p1)
             assertion.is_false(p1 <> p1)
             assertion.is_true(p1 = t1)
             assertion.is_false(p1 <> t1)
             assertion.is_false(p1 = t2)
             assertion.is_true(p1 <> t2)
-            p2 = New pointer(Of test_class)(t2)
+            p2 = New ref(Of test_class)(t2)
             assertion.is_false(p1 = p2)
             assertion.is_true(p1 <> p2)
             assertion.is_true(p2 = DirectCast(t2, Object))
@@ -165,18 +165,18 @@ Public NotInheritable Class pointer_test
         End Function
 
         Private Shared Function [overrides]() As Boolean
-            Dim p1 As pointer(Of test_class) = Nothing
-            p1 = New pointer(Of test_class)(New test_class())
+            Dim p1 As ref(Of test_class) = Nothing
+            p1 = New ref(Of test_class)(New test_class())
             assertion.is_true(p1.Equals(p1))
             assertion.is_true(p1.Equals(+p1))
-            assertion.is_true(p1.Equals(New pointer(Of test_class)(p1)))
-            assertion.is_true(p1.Equals(+(New pointer(Of test_class)(p1))))
+            assertion.is_true(p1.Equals(New ref(Of test_class)(p1)))
+            assertion.is_true(p1.Equals(+(New ref(Of test_class)(p1))))
             assertion.is_false(p1.Equals(New test_class()))
-            assertion.is_false(p1.Equals(New pointer(Of test_class)(New test_class())))
+            assertion.is_false(p1.Equals(New ref(Of test_class)(New test_class())))
 
             Const s As String = "ABCDEF"
-            Dim p2 As pointer(Of String) = Nothing
-            p2 = New pointer(Of String)(s)
+            Dim p2 As ref(Of String) = Nothing
+            p2 = New ref(Of String)(s)
             assertion.equal(p2.GetHashCode(), s.GetHashCode())
             assertion.equal(p2.ToString(), s.ToString())
 
@@ -184,9 +184,9 @@ Public NotInheritable Class pointer_test
         End Function
 
         Private Shared Function clone() As Boolean
-            Dim p As pointer(Of test_class2) = Nothing
-            p = New pointer(Of test_class2)(New test_class2("abc"))
-            Dim q As pointer(Of test_class2) = Nothing
+            Dim p As ref(Of test_class2) = Nothing
+            p = New ref(Of test_class2)(New test_class2("abc"))
+            Dim q As ref(Of test_class2) = Nothing
             copy(q, p)
             assertion.equal(object_compare(p.get(), q.get()), 0)
             assertion.equal(object_compare(p, q), object_compare_undetermined)
@@ -194,16 +194,16 @@ Public NotInheritable Class pointer_test
         End Function
 
         Private Shared Function empty() As Boolean
-            Dim p As pointer(Of UInt32) = Nothing
-            p = New pointer(Of UInt32)()
+            Dim p As ref(Of UInt32) = Nothing
+            p = New ref(Of UInt32)()
             assertion.is_false(p.empty())
             p.set(100)
             assertion.is_false(p.empty())
             p.set(Nothing)
             assertion.is_false(p.empty())
 
-            Dim p2 As pointer(Of String) = Nothing
-            p2 = New pointer(Of String)()
+            Dim p2 As ref(Of String) = Nothing
+            p2 = New ref(Of String)()
             assertion.is_true(p2.empty())
             p2.set("abc")
             assertion.is_false(p2.empty())
@@ -216,21 +216,21 @@ Public NotInheritable Class pointer_test
         End Function
 
         Private Shared Function operator_less_or_great() As Boolean
-            Dim p As pointer(Of String) = Nothing
-            p = New pointer(Of String)()
+            Dim p As ref(Of String) = Nothing
+            p = New ref(Of String)()
             Dim str As String = Nothing
             str = guid_str()
             assertion.is_true(p < str)
             assertion.equal(+p, str)
 
-            Dim p2 As pointer(Of Int32) = Nothing
-            p2 = New pointer(Of Int32)()
+            Dim p2 As ref(Of Int32) = Nothing
+            p2 = New ref(Of Int32)()
             Dim i As Int32 = 0
             i = rnd_int()
             assertion.is_true(p2 < i)
             assertion.equal(+p2, i)
 
-            assertion.is_false(DirectCast(Nothing, pointer(Of Int32)) < 100)
+            assertion.is_false(DirectCast(Nothing, ref(Of Int32)) < 100)
             Return True
         End Function
 

@@ -11,7 +11,7 @@ Public Interface flow_injector
     Function send(ByVal buff() As Byte,
                   ByVal offset As UInt32,
                   ByVal count As UInt32,
-                  ByVal sent As pointer(Of UInt32)) As event_comb
+                  ByVal sent As ref(Of UInt32)) As event_comb
 End Interface
 
 Public Interface block_injector
@@ -39,14 +39,14 @@ Public Module _injector
     <Extension()> Public Function send(ByVal f As flow_injector,
                                        ByVal buff() As Byte,
                                        ByVal count As UInt32,
-                                       ByVal sent As pointer(Of UInt32)) As event_comb
+                                       ByVal sent As ref(Of UInt32)) As event_comb
         assert(Not f Is Nothing)
         Return f.send(buff, uint32_0, count, sent)
     End Function
 
     <Extension()> Public Function send(ByVal f As flow_injector,
                                        ByVal buff() As Byte,
-                                       ByVal sent As pointer(Of UInt32)) As event_comb
+                                       ByVal sent As ref(Of UInt32)) As event_comb
         assert(Not f Is Nothing)
         Return f.send(buff, array_size(buff), sent)
     End Function

@@ -7,14 +7,14 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utt
 
-Public NotInheritable Class weak_pointer_test
+Public NotInheritable Class weak_ref_test
     Inherits flaky_case_wrapper
 
     Public Sub New()
-        MyBase.New(New weak_pointer_case())
+        MyBase.New(New weak_ref_case())
     End Sub
 
-    Private NotInheritable Class weak_pointer_case
+    Private NotInheritable Class weak_ref_case
         Inherits [case]
 
         Private Class test_class
@@ -37,8 +37,8 @@ Public NotInheritable Class weak_pointer_test
             Const s As String = "this is a test string only"
             Dim c As test_class = Nothing
             c = New test_class(s)
-            Dim p As weak_pointer(Of test_class) = Nothing
-            p = weak_pointer.of(c)
+            Dim p As weak_ref(Of test_class) = Nothing
+            p = weak_ref.of(c)
             assertion.is_true(p.alive())
             Dim c2 As test_class = Nothing
             assertion.is_true(p.get(c2))
@@ -61,12 +61,12 @@ Public NotInheritable Class weak_pointer_test
             size = 1024 * rnd_int(2, 8)
             Dim cs() As test_class = Nothing
             ReDim cs(size - 1)
-            Dim ps() As weak_pointer(Of test_class) = Nothing
+            Dim ps() As weak_ref(Of test_class) = Nothing
             ReDim ps(size - 1)
 
             For i As Int32 = 0 To size - 1
                 cs(i) = New test_class(s)
-                ps(i) = weak_pointer.of(cs(i))
+                ps(i) = weak_ref.of(cs(i))
             Next
             garbage_collector.repeat_collect()
 

@@ -8,14 +8,14 @@ Imports osi.root.delegates
 
 Public Class lifetime_binder(Of T As Class)
     Public Shared ReadOnly instance As lifetime_binder(Of T) = Nothing
-    Private ReadOnly s As object_unique_pointer_set(Of T) = Nothing
+    Private ReadOnly s As object_unique_ref_set(Of T) = Nothing
 
     Shared Sub New()
         instance = New lifetime_binder(Of T)()
     End Sub
 
     Protected Sub New()
-        s = New object_unique_pointer_set(Of T)()
+        s = New object_unique_ref_set(Of T)()
     End Sub
 
     Public Sub insert(ByVal i As T)
@@ -29,7 +29,7 @@ Public Class lifetime_binder(Of T As Class)
     End Sub
 
     Public Sub clear()
-        s.foreach(Sub(ByVal i As pointer(Of T))
+        s.foreach(Sub(ByVal i As ref(Of T))
                       disposable.dispose(+i)
                   End Sub)
         s.clear()

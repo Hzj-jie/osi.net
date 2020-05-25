@@ -9,7 +9,7 @@ Imports osi.root.connector
 
 Public Module _tcplistener
     <Extension()> Public Function accept_tcp_client(ByVal listener As TcpListener,
-                                                    ByVal r As pointer(Of TcpClient)) As event_comb
+                                                    ByVal r As ref(Of TcpClient)) As event_comb
         Return create(Function() As Boolean
                           Return Not listener Is Nothing AndAlso
                                  Not r Is Nothing
@@ -26,7 +26,7 @@ Public Module _tcplistener
     End Function
 
     <Extension()> Public Function accept_socket(ByVal listener As TcpListener,
-                                                ByVal r As pointer(Of Socket)) As event_comb
+                                                ByVal r As ref(Of Socket)) As event_comb
         Return create(Function() As Boolean
                           Return Not listener Is Nothing AndAlso
                                  Not r Is Nothing

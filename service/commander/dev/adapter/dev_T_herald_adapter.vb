@@ -22,7 +22,7 @@ Public Class dev_T_herald_adapter(Of T)
         MyBase.New(dev_T)
     End Sub
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements herald.sense
         Return underlying_device.sense(pending, timeout_ms)
     End Function
@@ -45,11 +45,11 @@ Public Class dev_T_herald_adapter(Of T)
                               End Function)
     End Function
 
-    Public Function receive(ByVal o As pointer(Of command)) As event_comb Implements herald.receive
+    Public Function receive(ByVal o As ref(Of command)) As event_comb Implements herald.receive
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of T) = Nothing
+        Dim p As ref(Of T) = Nothing
         Return New event_comb(Function() As Boolean
-                                  p = New pointer(Of T)()
+                                  p = New ref(Of T)()
                                   ec = underlying_device.receive(p)
                                   Return waitfor(ec) AndAlso
                                          goto_next()

@@ -30,7 +30,7 @@ Partial Public Class cluster
                               End Function)
     End Function
 
-    Public Function read(ByVal r As pointer(Of Byte())) As event_comb
+    Public Function read(ByVal r As ref(Of Byte())) As event_comb
         Dim ec As event_comb = Nothing
         Dim buff() As Byte = Nothing
         Return New event_comb(Function() As Boolean

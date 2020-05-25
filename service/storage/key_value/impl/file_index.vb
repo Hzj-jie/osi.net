@@ -50,14 +50,14 @@ Public Class file_index
         Return adapt(gnew(index, data_dir))
     End Function
 
-    Public Shared Function ctor(ByVal r As pointer(Of file_index),
+    Public Shared Function ctor(ByVal r As ref(Of file_index),
                                 ByVal data_dir As String,
                                 Optional ByVal buff_size As Int32 = npos,
                                 Optional ByVal max_key_count As Int64 = npos) As event_comb
         Dim ec As event_comb = Nothing
-        Dim f As pointer(Of fces) = Nothing
+        Dim f As ref(Of fces) = Nothing
         Return New event_comb(Function() As Boolean
-                                  f = New pointer(Of fces)()
+                                  f = New ref(Of fces)()
                                   ec = fces.ctor(f,
                                                  IO.Path.Combine(data_dir, index_file),
                                                  IO.Path.Combine(data_dir, content_file),
@@ -73,14 +73,14 @@ Public Class file_index
                               End Function)
     End Function
 
-    Public Shared Function ctor(ByVal r As pointer(Of istrkeyvt),
+    Public Shared Function ctor(ByVal r As ref(Of istrkeyvt),
                                 ByVal data_dir As String,
                                 Optional ByVal buff_size As Int32 = npos,
                                 Optional ByVal max_key_count As Int64 = npos) As event_comb
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of file_index) = Nothing
+        Dim p As ref(Of file_index) = Nothing
         Return New event_comb(Function() As Boolean
-                                  p = New pointer(Of file_index)()
+                                  p = New ref(Of file_index)()
                                   ec = ctor(p, data_dir, buff_size, max_key_count)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -104,12 +104,12 @@ Public Class file_index
         Return is_merged_key(key, ts_prefix, original)
     End Function
 
-    Private Function new_filename(ByVal r As pointer(Of String)) As event_comb
+    Private Function new_filename(ByVal r As ref(Of String)) As event_comb
         Dim ec As event_comb = Nothing
         Dim s As String = Nothing
-        Dim ex As pointer(Of Boolean) = Nothing
+        Dim ex As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
-                                  ex = New pointer(Of Boolean)()
+                                  ex = New ref(Of Boolean)()
                                   Return goto_next()
                               End Function,
                               Function() As Boolean
@@ -158,16 +158,16 @@ Public Class file_index
 
         Public Shared Function ctor(ByVal fi As file_index,
                                     ByVal key() As Byte,
-                                    ByVal o As pointer(Of atom)) As event_comb
+                                    ByVal o As ref(Of atom)) As event_comb
             assert(Not fi Is Nothing)
             Dim ec As event_comb = Nothing
-            Dim b As pointer(Of Byte()) = Nothing
+            Dim b As ref(Of Byte()) = Nothing
             Dim ts_key() As Byte = Nothing
             Dim fn_key() As Byte = Nothing
             Dim ts As Int64 = 0
             Dim fn As String = Nothing
             Return New event_comb(Function() As Boolean
-                                      b = New pointer(Of Byte())()
+                                      b = New ref(Of Byte())()
                                       ts_key = timestamp_key(key)
                                       ec = fi.index.read(ts_key, b)
                                       Return waitfor(ec) AndAlso
@@ -197,7 +197,7 @@ Public Class file_index
         End Function
     End Class
 
-    Public Shared Function create(ByVal v As var, ByVal o As pointer(Of file_index)) As event_comb
+    Public Shared Function create(ByVal v As var, ByVal o As ref(Of file_index)) As event_comb
         Const buff_size As String = "buff-size"
         Const max_key_count As String = "max-key-count"
         Dim ec As event_comb = Nothing
@@ -225,11 +225,11 @@ Public Class file_index
                               End Function)
     End Function
 
-    Public Shared Function create(ByVal v As var, ByVal o As pointer(Of istrkeyvt)) As event_comb
+    Public Shared Function create(ByVal v As var, ByVal o As ref(Of istrkeyvt)) As event_comb
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of file_index) = Nothing
+        Dim p As ref(Of file_index) = Nothing
         Return New event_comb(Function() As Boolean
-                                  p = New pointer(Of file_index)()
+                                  p = New ref(Of file_index)()
                                   ec = create(v, p)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -243,13 +243,13 @@ Public Class file_index
     End Function
 
     Public Shared Function create_as_file_index(ByVal v As var) As async_getter(Of file_index)
-        Return async_preparer.[New](Function(p As pointer(Of file_index)) As event_comb
+        Return async_preparer.[New](Function(p As ref(Of file_index)) As event_comb
                                         Return create(v, p)
                                     End Function)
     End Function
 
     Public Shared Function create_as_istrkeyvt(ByVal v As var) As async_getter(Of istrkeyvt)
-        Return async_preparer.[New](Function(p As pointer(Of istrkeyvt)) As event_comb
+        Return async_preparer.[New](Function(p As ref(Of istrkeyvt)) As event_comb
                                         Return create(v, p)
                                     End Function)
     End Function

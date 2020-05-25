@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.argument
 Imports osi.service.device
-Imports store_t = osi.root.formation.unordered_map(Of osi.root.connector.array_pointer(Of Byte), Byte())
+Imports store_t = osi.root.formation.unordered_map(Of osi.root.connector.array_ref(Of Byte), Byte())
 
 <global_init(global_init_level.server_services)>
 Public NotInheritable Class memory
@@ -41,8 +41,8 @@ Public NotInheritable Class memory
                            ByVal value() As Byte,
                            ByRef result As Boolean) As Boolean Implements isynckeyvalue.append
         If enough_storage(array_size(value)) Then
-            Dim k As array_pointer(Of Byte) = Nothing
-            k = New array_pointer(Of Byte)(key)
+            Dim k As array_ref(Of Byte) = Nothing
+            k = New array_ref(Of Byte)(key)
             Dim it As store_t.iterator = Nothing
             it = m.find(k)
             If it = m.end() Then
@@ -69,7 +69,7 @@ Public NotInheritable Class memory
     Public Function delete(ByVal key() As Byte,
                            ByRef result As Boolean) As Boolean Implements isynckeyvalue.delete
         Dim it As store_t.iterator = Nothing
-        it = m.find(array_pointer.of(key))
+        it = m.find(array_ref.of(key))
         If it = m.end() Then
             result = False
         Else
@@ -126,7 +126,7 @@ Public NotInheritable Class memory
             inc = array_size(value)
         End If
         If enough_storage(inc) Then
-            m(array_pointer.of(key)) = value
+            m(array_ref.of(key)) = value
             vs += inc
             result = True
         Else
@@ -138,7 +138,7 @@ Public NotInheritable Class memory
     Public Function read(ByVal key() As Byte,
                          ByRef value() As Byte) As Boolean Implements isynckeyvalue.read
         Dim it As store_t.iterator = Nothing
-        it = m.find(New array_pointer(Of Byte)(key))
+        it = m.find(New array_ref(Of Byte)(key))
         If it = m.end() Then
             value = Nothing
         Else
@@ -155,14 +155,14 @@ Public NotInheritable Class memory
 
     Public Function seek(ByVal key() As Byte,
                          ByRef result As Boolean) As Boolean Implements isynckeyvalue.seek
-        result = (m.find(array_pointer.of(Of Byte)(key)) <> m.end())
+        result = (m.find(array_ref.of(Of Byte)(key)) <> m.end())
         Return True
     End Function
 
     Public Function sizeof(ByVal key() As Byte,
                            ByRef result As Int64) As Boolean Implements isynckeyvalue.sizeof
         Dim it As store_t.iterator = Nothing
-        it = m.find(New array_pointer(Of Byte)(key))
+        it = m.find(New array_ref(Of Byte)(key))
         If it = m.end() Then
             result = npos
         Else

@@ -38,7 +38,7 @@ Partial Public Class cluster
                                 ByVal id As Int64,
                                 ByVal offset As UInt64,
                                 ByVal length As UInt64,
-                                ByVal r As pointer(Of cluster)) As event_comb
+                                ByVal r As ref(Of cluster)) As event_comb
         Dim ec As event_comb = Nothing
         Dim c As cluster = Nothing
         Return New event_comb(Function() As Boolean
@@ -81,29 +81,29 @@ Partial Public Class cluster
     Public Shared Function ctor(ByVal vd As virtdisk,
                                 ByVal id As Int64,
                                 ByVal length As UInt64,
-                                ByVal r As pointer(Of cluster)) As event_comb
+                                ByVal r As ref(Of cluster)) As event_comb
         Return ctor(vd, id, If(vd Is Nothing, uint64_0, vd.size()), length, r)
     End Function
 
     'create an existing cluster from the virtdisk
     Public Shared Function ctor(ByVal vd As virtdisk,
                                 ByVal offset As UInt64,
-                                ByVal r As pointer(Of cluster)) As event_comb
-        Dim id As pointer(Of Int64) = Nothing
-        Dim used As pointer(Of Int64) = Nothing
-        Dim length As pointer(Of UInt64) = Nothing
-        Dim next_id As pointer(Of Int64) = Nothing
-        Dim prev_id As pointer(Of Int64) = Nothing
+                                ByVal r As ref(Of cluster)) As event_comb
+        Dim id As ref(Of Int64) = Nothing
+        Dim used As ref(Of Int64) = Nothing
+        Dim length As ref(Of UInt64) = Nothing
+        Dim next_id As ref(Of Int64) = Nothing
+        Dim prev_id As ref(Of Int64) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If vd Is Nothing Then
                                       Return False
                                   Else
-                                      id = New pointer(Of Int64)()
-                                      used = New pointer(Of Int64)()
-                                      length = New pointer(Of UInt64)()
-                                      next_id = New pointer(Of Int64)()
-                                      prev_id = New pointer(Of Int64)()
+                                      id = New ref(Of Int64)()
+                                      used = New ref(Of Int64)()
+                                      length = New ref(Of UInt64)()
+                                      next_id = New ref(Of Int64)()
+                                      prev_id = New ref(Of Int64)()
                                       ec = read_structure(vd, offset, id, used, length, next_id, prev_id)
                                       Return waitfor(ec) AndAlso
                                              goto_next()

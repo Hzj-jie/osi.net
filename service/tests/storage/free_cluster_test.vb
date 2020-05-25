@@ -31,11 +31,11 @@ Public Class free_cluster_test
 
     Private Shared Function read_case(ByVal fc As free_cluster, ByVal d As map(Of Int64, Byte())) As event_comb
         Dim id As Int64 = 0
-        Dim p As pointer(Of Byte()) = Nothing
+        Dim p As ref(Of Byte()) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   id = rand_id()
-                                  p = New pointer(Of Byte())()
+                                  p = New ref(Of Byte())()
                                   ec = fc.read(id, p)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -59,10 +59,10 @@ Public Class free_cluster_test
                                          ByVal exp As Boolean) As event_comb
         Dim buff() As Byte = Nothing
         Dim ec As event_comb = Nothing
-        Dim result As pointer(Of Boolean) = Nothing
+        Dim result As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
                                   buff = rand_bytes()
-                                  result = New pointer(Of Boolean)()
+                                  result = New ref(Of Boolean)()
                                   ec = fc.append(id, buff, result)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -88,9 +88,9 @@ Public Class free_cluster_test
 
     Private Shared Function apply_alloc_append(ByVal fc As free_cluster, ByVal d As map(Of Int64, Byte())) As event_comb
         Dim ec As event_comb = Nothing
-        Dim id As pointer(Of Int64) = Nothing
+        Dim id As ref(Of Int64) = Nothing
         Return New event_comb(Function() As Boolean
-                                  id = New pointer(Of Int64)()
+                                  id = New ref(Of Int64)()
                                   ec = fc.alloc(rand_buff_size(), id)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -125,7 +125,7 @@ Public Class free_cluster_test
     Private Shared Function delete_case(ByVal fc As free_cluster, ByVal d As map(Of Int64, Byte())) As event_comb
         Dim id As Int64 = 0
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of Boolean) = Nothing
+        Dim r As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
                                   If rnd_bool() AndAlso Not d.empty() Then
                                       Dim max As Int32 = 0
@@ -141,7 +141,7 @@ Public Class free_cluster_test
                                   Else
                                       id = rand_id()
                                   End If
-                                  r = New pointer(Of Boolean)()
+                                  r = New ref(Of Boolean)()
                                   ec = fc.delete(id, r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -156,10 +156,10 @@ Public Class free_cluster_test
     Private Shared Function seek_case(ByVal fc As free_cluster, ByVal d As map(Of Int64, Byte())) As event_comb
         Dim id As Int64 = 0
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of Boolean) = Nothing
+        Dim r As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
                                   id = rand_id()
-                                  r = New pointer(Of Boolean)()
+                                  r = New ref(Of Boolean)()
                                   ec = fc.seek(id, r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -174,10 +174,10 @@ Public Class free_cluster_test
     Private Shared Function sizeof_case(ByVal fc As free_cluster, ByVal d As map(Of Int64, Byte())) As event_comb
         Dim id As Int64 = 0
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of Int64) = Nothing
+        Dim r As ref(Of Int64) = Nothing
         Return New event_comb(Function() As Boolean
                                   id = rand_id()
-                                  r = New pointer(Of Int64)()
+                                  r = New ref(Of Int64)()
                                   ec = fc.sizeof(id, r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -231,13 +231,13 @@ Public Class free_cluster_test
 
     Public Overrides Function create() As event_comb
         Dim vd As virtdisk = Nothing
-        Dim fc As pointer(Of free_cluster) = Nothing
+        Dim fc As ref(Of free_cluster) = Nothing
         Dim ec As event_comb = Nothing
         Dim d As map(Of Int64, Byte()) = Nothing
         Dim round As Int32 = 0
         Return New event_comb(Function() As Boolean
                                   vd = virtdisk.memory_virtdisk()
-                                  fc = New pointer(Of free_cluster)()
+                                  fc = New ref(Of free_cluster)()
                                   d = New map(Of Int64, Byte())()
                                   round = reopen_round_count
                                   Return goto_next()

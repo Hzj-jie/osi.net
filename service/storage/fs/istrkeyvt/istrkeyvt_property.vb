@@ -41,7 +41,7 @@ Public Class istrkeyvt_property
     End Function
 
     Public Function append(ByVal v() As Byte) As event_comb Implements iproperty.append
-        Dim result As pointer(Of Boolean) = Nothing
+        Dim result As ref(Of Boolean) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = accessor.append(key, v, result)
@@ -55,15 +55,15 @@ Public Class istrkeyvt_property
                               End Function)
     End Function
 
-    Public Function [get](ByVal i As pointer(Of Byte())) As event_comb Implements iproperty.get
+    Public Function [get](ByVal i As ref(Of Byte())) As event_comb Implements iproperty.get
         Return accessor.read(key, i, Nothing)
     End Function
 
     Public Function lock(Optional ByVal wait_ms As Int64 = npos) As event_comb Implements iproperty.lock
-        Dim r As pointer(Of Boolean) = Nothing
+        Dim r As ref(Of Boolean) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of Boolean)()
+                                  r = New ref(Of Boolean)()
                                   ec = accessor.lock(lock_property_key(key), r, wait_ms)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -77,10 +77,10 @@ Public Class istrkeyvt_property
 
     Public Function locked(ByVal d As Func(Of event_comb),
                            Optional ByVal wait_ms As Int64 = npos) As event_comb
-        Dim r As pointer(Of Boolean) = Nothing
+        Dim r As ref(Of Boolean) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of Boolean)()
+                                  r = New ref(Of Boolean)()
                                   ec = accessor.locked(lock_property_key(key), d, r, wait_ms)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -94,9 +94,9 @@ Public Class istrkeyvt_property
 
     Public Function release() As event_comb Implements iproperty.release
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of Boolean) = Nothing
+        Dim r As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of Boolean)()
+                                  r = New ref(Of Boolean)()
                                   ec = accessor.release(lock_property_key(key), r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -110,9 +110,9 @@ Public Class istrkeyvt_property
 
     Public Function [set](ByVal v() As Byte) As event_comb Implements iproperty.set
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of Boolean) = Nothing
+        Dim r As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of Boolean)()
+                                  r = New ref(Of Boolean)()
                                   ec = accessor.modify(key, v, r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()

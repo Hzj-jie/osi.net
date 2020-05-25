@@ -284,9 +284,9 @@ public class commands_parser
             if (cmd.args[i] == "data_ref")
             {
                 instructions_writer.WriteLine("\r\n" +
-                                              "            Private Function p" + i.ToString() + "(ByVal imi As imitation) As pointer(Of Byte())\r\n" +
+                                              "            Private Function p" + i.ToString() + "(ByVal imi As imitation) As ref(Of Byte())\r\n" +
                                               "                assert(Not imi Is Nothing)\r\n" +
-                                              "                Dim p As pointer(Of Byte()) = Nothing\r\n" +
+                                              "                Dim p As ref(Of Byte()) = Nothing\r\n" +
                                               "                p = imi.access_stack(d" + i.ToString() + ")\r\n" +
                                               "                assert(Not p Is Nothing)\r\n" +
                                               "                Return p\r\n" +

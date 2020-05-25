@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.argument
 Imports osi.service.device
-Imports store_t = osi.root.formation.unordered_map(Of osi.root.connector.array_pointer(Of Byte), Byte())
+Imports store_t = osi.root.formation.unordered_map(Of osi.root.connector.array_ref(Of Byte), Byte())
 
 <global_init(global_init_level.server_services)>
 Public NotInheritable Class memory2
@@ -118,7 +118,7 @@ Public NotInheritable Class memory2
     Public Function seek(ByVal key() As Byte,
                          ByRef it As store_t.iterator,
                          ByRef result As Boolean) As Boolean Implements isynckeyvalue2(Of store_t.iterator).seek
-        it = m.find(array_pointer.of(key))
+        it = m.find(array_ref.of(key))
         result = (it <> m.end())
         Return True
     End Function
@@ -146,7 +146,7 @@ Public NotInheritable Class memory2
                               ByRef result As Boolean) As Boolean _
                              Implements isynckeyvalue2(Of store_t.iterator).write_new
         If enough_storage(array_size(value)) Then
-            m(array_pointer.of(key)) = value
+            m(array_ref.of(key)) = value
             result = True
         Else
             result = False

@@ -11,23 +11,23 @@ Imports osi.root.procedure
 
 Public Interface ifs
     Function create(ByVal path As String,
-                    ByVal r As pointer(Of inode),
+                    ByVal r As ref(Of inode),
                     Optional ByVal wait_ms As Int64 = npos) As event_comb
-    Function open(ByVal path As String, ByVal o As pointer(Of inode)) As event_comb
-    Function exist(ByVal path As String, ByVal r As pointer(Of Boolean)) As event_comb
+    Function open(ByVal path As String, ByVal o As ref(Of inode)) As event_comb
+    Function exist(ByVal path As String, ByVal r As ref(Of Boolean)) As event_comb
 End Interface
 
 Public Module _ifs
     <Extension()> Public Function list(ByVal fs As ifs,
                                        ByVal path As String,
-                                       ByVal r As pointer(Of vector(Of String))) As event_comb
+                                       ByVal r As ref(Of vector(Of String))) As event_comb
         Dim ec As event_comb = Nothing
-        Dim n As pointer(Of inode) = Nothing
+        Dim n As ref(Of inode) = Nothing
         Return New event_comb(Function() As Boolean
                                   If fs Is Nothing Then
                                       Return False
                                   Else
-                                      n = New pointer(Of inode)()
+                                      n = New ref(Of inode)()
                                       ec = fs.open(path, n)
                                       Return waitfor(ec) AndAlso
                                              goto_next()

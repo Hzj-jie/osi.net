@@ -21,7 +21,7 @@ Public Class block_piece_dev_adapter
         Return New block_piece_dev_adapter(b)
     End Function
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements piece_dev.sense
         Return underlying_device.sense(pending, timeout_ms)
     End Function
@@ -43,11 +43,11 @@ Public Class block_piece_dev_adapter
                               End Function)
     End Function
 
-    Public Function receive(ByVal o As pointer(Of piece)) As event_comb Implements piece_dev.receive
+    Public Function receive(ByVal o As ref(Of piece)) As event_comb Implements piece_dev.receive
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of Byte()) = Nothing
+        Dim p As ref(Of Byte()) = Nothing
         Return New event_comb(Function() As Boolean
-                                  p = New pointer(Of Byte())()
+                                  p = New ref(Of Byte())()
                                   ec = underlying_device.receive(p)
                                   Return waitfor(ec) AndAlso
                                          goto_next()

@@ -28,7 +28,7 @@ Partial Public Class channel
     End Sub
 
     Public Sub New(ByVal h As herald,
-                   ByVal stopping As pointer(Of singleentry),
+                   ByVal stopping As ref(Of singleentry),
                    Optional ByVal idle_timeout_ms As Int64 = npos,
                    Optional ByVal max_channel_count As UInt32 = constants.default_max_channel_count)
         Me.New(h, AddressOf stopping.not_null_and_in_use, idle_timeout_ms, max_channel_count)
@@ -81,7 +81,7 @@ Partial Public Class channel
 
     Private Sub receive()
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of command) = Nothing
+        Dim p As ref(Of command) = Nothing
         Dim o As command = Nothing
         assert_begin(New event_comb(Function() As Boolean
                                         If lifetime.marked() Then

@@ -9,7 +9,7 @@ Imports osi.root.envs
 Public Class processor_loops_timing_counter
     Inherits scale_timing_counter
 
-    Public Sub New(ByVal p As pointer(Of Int64))
+    Public Sub New(ByVal p As ref(Of Int64))
         MyBase.New(p, loops_per_ms)
     End Sub
 

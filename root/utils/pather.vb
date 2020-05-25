@@ -230,7 +230,7 @@ Public Class pather(Of _PATH_SEPARATORS As _strings,
         Return r
     End Function
 
-    Default Public ReadOnly Property n(ByVal path As String, ByVal r As pointer(Of String)) As Boolean
+    Default Public ReadOnly Property n(ByVal path As String, ByVal r As ref(Of String)) As Boolean
         Get
             Dim s As String = Nothing
             Return normalize(path, s) AndAlso
@@ -245,7 +245,7 @@ Public Class pather(Of _PATH_SEPARATORS As _strings,
     End Property
 
     Default Public ReadOnly Property n(ByVal path As String,
-                                       ByVal r As pointer(Of vector(Of String))) As Boolean
+                                       ByVal r As ref(Of vector(Of String))) As Boolean
         Get
             Dim v As vector(Of String) = Nothing
             Return split(path, v) AndAlso
@@ -254,7 +254,7 @@ Public Class pather(Of _PATH_SEPARATORS As _strings,
     End Property
 
     Default Public ReadOnly Property n(ByVal parts() As String,
-                                       ByVal r As pointer(Of String)) As Boolean
+                                       ByVal r As ref(Of String)) As Boolean
         Get
             Dim o As String = Nothing
             Return combine(parts, o) AndAlso
@@ -274,7 +274,7 @@ Public Class pather(Of _PATH_SEPARATORS As _strings,
     End Property
 
     Default Public ReadOnly Property n(ByVal parts As vector(Of String),
-                                       ByVal r As pointer(Of String)) As Boolean
+                                       ByVal r As ref(Of String)) As Boolean
         Get
             Dim o As String = Nothing
             Return combine(parts, o) AndAlso

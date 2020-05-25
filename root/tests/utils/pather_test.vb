@@ -129,15 +129,15 @@ Public NotInheritable Class pather_test
 
     Private Shared Function run_cases() As Boolean
         For i As UInt32 = 0 To cases.size() - uint32_1
-            Dim r1 As pointer(Of String) = Nothing
-            Dim r2 As pointer(Of vector(Of String)) = Nothing
+            Dim r1 As ref(Of String) = Nothing
+            Dim r2 As ref(Of vector(Of String)) = Nothing
             Dim r3 As String = Nothing
 
-            r1 = New pointer(Of String)()
+            r1 = New ref(Of String)()
             assertion.is_true(p(cases(i).first, r1), cases(i).first)
             assertion.equal(+r1, cases(i).second.normalized, cases(i).first)
 
-            r2 = New pointer(Of vector(Of String))()
+            r2 = New ref(Of vector(Of String))()
             assertion.is_true(p(cases(i).first, r2), cases(i).first)
             assertion.equal(+r2, cases(i).second.splitted, cases(i).first)
 

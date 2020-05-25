@@ -15,7 +15,7 @@ Partial Public Class event_comb
     End Operator
 
     Public Shared Function from(Of T)(ByVal this As promise,
-                                      Optional ByVal result As pointer(Of T) = Nothing) As event_comb
+                                      Optional ByVal result As ref(Of T) = Nothing) As event_comb
         If this Is Nothing Then
             Return Nothing
         End If

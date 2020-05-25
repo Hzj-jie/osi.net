@@ -65,13 +65,13 @@ Public Class async_getter_adapter(Of T)
                                      As pair(Of async_getter(Of T), type_attribute)
         assert(Not i Is Nothing)
         assert(Not c Is Nothing)
-        Dim p As pointer(Of IT) = Nothing
+        Dim p As ref(Of IT) = Nothing
         Dim ec As event_comb = Nothing
         Return pair.emplace_of(Of async_getter(Of T), type_attribute)(
                    New async_thread_unsafe_lazier(Of T)(
-                       Function(r As pointer(Of T)) As event_comb
+                       Function(r As ref(Of T)) As event_comb
                            Return New event_comb(Function() As Boolean
-                                                     p = New pointer(Of IT)()
+                                                     p = New ref(Of IT)()
                                                      ec = i.get(p)
                                                      Return waitfor(ec) AndAlso
                                                             goto_next()
@@ -112,9 +112,9 @@ Public Class async_getter_adapter(Of T)
     Public Function _do(ByVal d As Func(Of T, event_comb)) As event_comb
         assert(Not d Is Nothing)
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of T) = Nothing
+        Dim p As ref(Of T) = Nothing
         Return New event_comb(Function() As Boolean
-                                  p = New pointer(Of T)()
+                                  p = New ref(Of T)()
                                   ec = dev.get(p)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -142,7 +142,7 @@ Public Class async_getter_adapter(Of T)
         Return dev.alive()
     End Function
 
-    Public Function [get](ByVal r As pointer(Of T)) As event_comb Implements async_getter(Of T).get
+    Public Function [get](ByVal r As ref(Of T)) As event_comb Implements async_getter(Of T).get
         Return dev.get(r)
     End Function
 

@@ -25,13 +25,13 @@ Public Class selector_test
         Private Class test_class
             Inherits cd_object(Of test_class)
 
-            Private ReadOnly inited As pointer(Of singleentry)
+            Private ReadOnly inited As ref(Of singleentry)
             Private ReadOnly p As Int32
 
             Public Sub New(ByVal p As Int32)
                 MyBase.New()
                 Me.p = p
-                Me.inited = New pointer(Of singleentry)()
+                Me.inited = New ref(Of singleentry)()
             End Sub
 
             Public Shared Operator +(ByVal i As test_class) As Int32

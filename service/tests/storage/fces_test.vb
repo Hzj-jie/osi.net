@@ -18,7 +18,7 @@ Public Class fces_test
         MyBase.New()
     End Sub
 
-    Protected Overrides Function create_istrkeyvt(ByVal r As pointer(Of istrkeyvt)) As event_comb
+    Protected Overrides Function create_istrkeyvt(ByVal r As ref(Of istrkeyvt)) As event_comb
         Return fces.ctor(r, virtdisk.memory_virtdisk(), virtdisk.memory_virtdisk())
     End Function
 End Class

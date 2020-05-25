@@ -26,7 +26,7 @@ Public NotInheritable Class bypass_token_challenger
     Private Sub New()
     End Sub
 
-    Default Public ReadOnly Property challenge(ByVal accepted As pointer(Of Boolean)) As event_comb _
+    Default Public ReadOnly Property challenge(ByVal accepted As ref(Of Boolean)) As event_comb _
                                               Implements itoken_challenger.challenge
         Get
             Return sync_async(Sub()

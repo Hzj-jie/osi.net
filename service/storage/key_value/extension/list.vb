@@ -15,7 +15,7 @@ Public Module _list
                                             ByVal key As String,
                                             ByVal value() As Byte,
                                             ByVal ts As Int64,
-                                            ByVal result As pointer(Of Boolean)) As event_comb
+                                            ByVal result As ref(Of Boolean)) As event_comb
         If this Is Nothing Then
             Return Nothing
         End If
@@ -26,31 +26,31 @@ Public Module _list
                                             ByVal key As String,
                                             ByVal value As String,
                                             ByVal ts As Int64,
-                                            ByVal result As pointer(Of Boolean)) As event_comb
+                                            ByVal result As ref(Of Boolean)) As event_comb
         Return push_back(this, key, str_bytes(value), ts, result)
     End Function
 
     <Extension()> Public Function push_back(ByVal this As istrkeyvt,
                                             ByVal key As String,
                                             ByVal value() As Byte,
-                                            ByVal result As pointer(Of Boolean)) As event_comb
+                                            ByVal result As ref(Of Boolean)) As event_comb
         Return push_back(this, key, value, now_as_timestamp(), result)
     End Function
 
     <Extension()> Public Function push_back(ByVal this As istrkeyvt,
                                             ByVal key As String,
                                             ByVal value As String,
-                                            ByVal result As pointer(Of Boolean)) As event_comb
+                                            ByVal result As ref(Of Boolean)) As event_comb
         Return push_back(this, key, str_bytes(value), result)
     End Function
 
-    Private Function read(ByVal d As Func(Of pointer(Of Byte()), event_comb),
-                          ByVal result As pointer(Of vector(Of Byte()))) As event_comb
+    Private Function read(ByVal d As Func(Of ref(Of Byte()), event_comb),
+                          ByVal result As ref(Of vector(Of Byte()))) As event_comb
         assert(Not d Is Nothing)
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of Byte()) = Nothing
+        Dim p As ref(Of Byte()) = Nothing
         Return New event_comb(Function() As Boolean
-                                  p = New pointer(Of Byte())()
+                                  p = New ref(Of Byte())()
                                   ec = d(p)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -64,12 +64,12 @@ Public Module _list
 
     <Extension()> Public Function read(ByVal this As istrkeyvt,
                                        ByVal key As String,
-                                       ByVal result As pointer(Of vector(Of Byte())),
-                                       ByVal ts As pointer(Of Int64)) As event_comb
+                                       ByVal result As ref(Of vector(Of Byte())),
+                                       ByVal ts As ref(Of Int64)) As event_comb
         If this Is Nothing Then
             Return Nothing
         End If
-        Return read(Function(p As pointer(Of Byte())) As event_comb
+        Return read(Function(p As ref(Of Byte())) As event_comb
                         Return this.read(key, p, ts)
                     End Function,
                     result)
@@ -77,23 +77,23 @@ Public Module _list
 
     <Extension()> Public Function read(ByVal this As istrkeyvt,
                                        ByVal key As String,
-                                       ByVal result As pointer(Of vector(Of Byte()))) As event_comb
+                                       ByVal result As ref(Of vector(Of Byte()))) As event_comb
         If this Is Nothing Then
             Return Nothing
         End If
-        Return read(Function(p As pointer(Of Byte())) As event_comb
+        Return read(Function(p As ref(Of Byte())) As event_comb
                         Return this.read(key, p)
                     End Function,
                     result)
     End Function
 
-    Private Function read(ByVal d As Func(Of pointer(Of vector(Of Byte())), event_comb),
-                          ByVal result As pointer(Of vector(Of String))) As event_comb
+    Private Function read(ByVal d As Func(Of ref(Of vector(Of Byte())), event_comb),
+                          ByVal result As ref(Of vector(Of String))) As event_comb
         assert(Not d Is Nothing)
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of vector(Of Byte())) = Nothing
+        Dim r As ref(Of vector(Of Byte())) = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of vector(Of Byte()))()
+                                  r = New ref(Of vector(Of Byte()))()
                                   ec = d(r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -110,9 +110,9 @@ Public Module _list
 
     <Extension()> Public Function read(ByVal this As istrkeyvt,
                                        ByVal key As String,
-                                       ByVal result As pointer(Of vector(Of String)),
-                                       ByVal ts As pointer(Of Int64)) As event_comb
-        Return read(Function(r As pointer(Of vector(Of Byte()))) As event_comb
+                                       ByVal result As ref(Of vector(Of String)),
+                                       ByVal ts As ref(Of Int64)) As event_comb
+        Return read(Function(r As ref(Of vector(Of Byte()))) As event_comb
                         Return read(this, key, r, ts)
                     End Function,
                     result)
@@ -120,8 +120,8 @@ Public Module _list
 
     <Extension()> Public Function read(ByVal this As istrkeyvt,
                                        ByVal key As String,
-                                       ByVal result As pointer(Of vector(Of String))) As event_comb
-        Return read(Function(r As pointer(Of vector(Of Byte()))) As event_comb
+                                       ByVal result As ref(Of vector(Of String))) As event_comb
+        Return read(Function(r As ref(Of vector(Of Byte()))) As event_comb
                         Return read(this, key, r)
                     End Function,
                     result)
@@ -130,14 +130,14 @@ Public Module _list
     <Extension()> Public Function contains(ByVal i As istrkeyvt,
                                            ByVal key As String,
                                            ByVal v() As Byte,
-                                           ByVal r As pointer(Of Boolean)) As event_comb
+                                           ByVal r As ref(Of Boolean)) As event_comb
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of Byte()) = Nothing
+        Dim p As ref(Of Byte()) = Nothing
         Return New event_comb(Function() As Boolean
                                   If i Is Nothing Then
                                       Return False
                                   End If
-                                  p = New pointer(Of Byte())()
+                                  p = New ref(Of Byte())()
                                   ec = i.read(key, p)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -152,14 +152,14 @@ Public Module _list
     <Extension()> Public Function contains(ByVal i As istrkeyvt,
                                            ByVal key As String,
                                            ByVal v As String,
-                                           ByVal r As pointer(Of Boolean)) As event_comb
+                                           ByVal r As ref(Of Boolean)) As event_comb
         Return contains(i, key, str_bytes(v), r)
     End Function
 
     <Extension()> Public Function unique_push_back(ByVal i As istrkeyvt,
                                                    ByVal key As String,
                                                    ByVal value() As Byte,
-                                                   ByVal r As pointer(Of Boolean)) As event_comb
+                                                   ByVal r As ref(Of Boolean)) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   r.renew()
@@ -185,7 +185,7 @@ Public Module _list
     <Extension()> Public Function unique_push_back(ByVal i As istrkeyvt,
                                                    ByVal key As String,
                                                    ByVal value As String,
-                                                   ByVal r As pointer(Of Boolean)) As event_comb
+                                                   ByVal r As ref(Of Boolean)) As event_comb
         Return unique_push_back(i, key, str_bytes(value), r)
     End Function
 End Module

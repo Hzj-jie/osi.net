@@ -62,11 +62,11 @@ Public Class async_getter_dev_T(Of T, DT As dev_T(Of T))
         Return _do(Function(x) x.send(i))
     End Function
 
-    Public Function receive(ByVal result As pointer(Of T)) As event_comb Implements T_pump(Of T).receive
+    Public Function receive(ByVal result As ref(Of T)) As event_comb Implements T_pump(Of T).receive
         Return _do(Function(x) x.receive(result))
     End Function
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
         Return _do(Function(x) x.sense(pending, timeout_ms))
     End Function

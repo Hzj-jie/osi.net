@@ -37,7 +37,7 @@ Public NotInheritable Class icache_icache2_adapter(Of KEY_T As IComparable(Of KE
                           End Function)
     End Function
 
-    Public Function [get](ByVal key As KEY_T, ByVal value As pointer(Of VALUE_T)) As event_comb _
+    Public Function [get](ByVal key As KEY_T, ByVal value As ref(Of VALUE_T)) As event_comb _
                          Implements icache2(Of KEY_T, VALUE_T).get
         Dim r As VALUE_T = Nothing
         Return sync_async(Function() As Boolean
@@ -59,7 +59,7 @@ Public NotInheritable Class icache_icache2_adapter(Of KEY_T As IComparable(Of KE
                           End Sub)
     End Function
 
-    Public Function size(ByVal value As pointer(Of Int64)) As event_comb Implements icache2(Of KEY_T, VALUE_T).size
+    Public Function size(ByVal value As ref(Of Int64)) As event_comb Implements icache2(Of KEY_T, VALUE_T).size
         Return sync_async(Sub()
                               eva(value, i.size())
                           End Sub)

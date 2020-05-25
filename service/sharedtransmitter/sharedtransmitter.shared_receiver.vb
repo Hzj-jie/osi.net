@@ -34,9 +34,9 @@ Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T
         End Function
 
         Public MustOverride Function receive(
-                ByVal o As pointer(Of pair(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)))) As event_comb _
+                ByVal o As ref(Of pair(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T)))) As event_comb _
                 Implements T_pump(Of pair(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T))).receive
-        Public MustOverride Function sense(ByVal pending As pointer(Of Boolean),
+        Public MustOverride Function sense(ByVal pending As ref(Of Boolean),
                                            ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
     End Class
 End Class

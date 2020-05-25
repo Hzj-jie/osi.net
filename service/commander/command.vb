@@ -10,8 +10,8 @@ Imports osi.root.utils
 
 ' TODO: Remove. Basic types and collections should be able to be used directly with dev_T.
 Partial Public NotInheritable Class command
-    Private ReadOnly a As array_pointer(Of Byte)
-    Private ReadOnly ps As map(Of array_pointer(Of Byte), Byte())
+    Private ReadOnly a As array_ref(Of Byte)
+    Private ReadOnly ps As map(Of array_ref(Of Byte), Byte())
 
     '( cannot be the first character of a line in vb.net
     Public Shared Function [New]() As command
@@ -23,13 +23,13 @@ Partial Public NotInheritable Class command
     End Function
 
     <copy_constructor>
-    Protected Sub New(ByVal a As array_pointer(Of Byte), ByVal ps As map(Of array_pointer(Of Byte), Byte()))
+    Protected Sub New(ByVal a As array_ref(Of Byte), ByVal ps As map(Of array_ref(Of Byte), Byte()))
         Me.a = a
         Me.ps = ps
     End Sub
 
     Public Sub New()
-        Me.New(New array_pointer(Of Byte)(), New map(Of array_pointer(Of Byte), Byte()))
+        Me.New(New array_ref(Of Byte)(), New map(Of array_ref(Of Byte), Byte()))
     End Sub
 
     Public Sub clear()
@@ -75,7 +75,7 @@ Partial Public NotInheritable Class command
         If v Is Nothing Then
             Return False
         End If
-        Dim it As map(Of array_pointer(Of Byte), Byte()).iterator = Nothing
+        Dim it As map(Of array_ref(Of Byte), Byte()).iterator = Nothing
         it = ps.begin()
         While it <> ps.end()
             v(+((+it).first), (+it).second)
@@ -88,8 +88,8 @@ Partial Public NotInheritable Class command
         If isemptyarray(key) Then
             Return False
         End If
-        Dim it As map(Of array_pointer(Of Byte), Byte()).iterator = Nothing
-        it = ps.find(array_pointer.of(key))
+        Dim it As map(Of array_ref(Of Byte), Byte()).iterator = Nothing
+        it = ps.find(array_ref.of(key))
         If it = ps.end() Then
             Return False
         End If
@@ -129,25 +129,25 @@ Partial Public NotInheritable Class command
         Return Nothing
     End Function
 
-    Public Function parameter(ByVal key() As Byte, ByVal r As pointer(Of Byte())) As Boolean
+    Public Function parameter(ByVal key() As Byte, ByVal r As ref(Of Byte())) As Boolean
         Dim v() As Byte = Nothing
         Return parameter(key, v) AndAlso
                eva(r, v)
     End Function
 
-    Public Function parameter(Of VT)(ByVal key() As Byte, ByVal r As pointer(Of VT)) As Boolean
+    Public Function parameter(Of VT)(ByVal key() As Byte, ByVal r As ref(Of VT)) As Boolean
         Dim v As VT = Nothing
         Return parameter(key, v) AndAlso
                eva(r, v)
     End Function
 
-    Public Function parameter(Of KT)(ByVal k As KT, ByVal r As pointer(Of Byte())) As Boolean
+    Public Function parameter(Of KT)(ByVal k As KT, ByVal r As ref(Of Byte())) As Boolean
         Dim value() As Byte = Nothing
         Return parameter(k, value) AndAlso
                eva(r, value)
     End Function
 
-    Public Function parameter(Of KT, VT)(ByVal k As KT, ByVal r As pointer(Of VT)) As Boolean
+    Public Function parameter(Of KT, VT)(ByVal k As KT, ByVal r As ref(Of VT)) As Boolean
         Dim v As VT = Nothing
         Return parameter(k, v) AndAlso
                eva(r, v)
@@ -187,7 +187,7 @@ Partial Public NotInheritable Class command
     'for bytes / uri
     Friend Sub set_parameter_no_copy(ByVal k() As Byte, ByVal v() As Byte)
         If Not isemptyarray(k) Then
-            ps(array_pointer.of(k)) = v
+            ps(array_ref.of(k)) = v
         End If
     End Sub
 

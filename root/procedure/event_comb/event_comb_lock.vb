@@ -14,19 +14,19 @@ Imports lock_t = osi.root.lock.slimlock.monitorlock
 
 Public Module _event_comb_lock
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    <Extension()> Public Sub release(ByVal i As pointer(Of event_comb_lock))
+    <Extension()> Public Sub release(ByVal i As ref(Of event_comb_lock))
         assert(Not i Is Nothing)
         i.p.release()
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    <Extension()> Public Sub wait(ByVal i As pointer(Of event_comb_lock))
+    <Extension()> Public Sub wait(ByVal i As ref(Of event_comb_lock))
         assert(Not i Is Nothing)
         i.p.wait()
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    <Extension()> Public Function locked(ByVal i As pointer(Of event_comb_lock),
+    <Extension()> Public Function locked(ByVal i As ref(Of event_comb_lock),
                                          ByVal d As Func(Of event_comb)) As event_comb
         assert(Not i Is Nothing)
         assert(Not d Is Nothing)
@@ -48,7 +48,7 @@ Public Module _event_comb_lock
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    <Extension()> Public Function locked(ByVal i As pointer(Of event_comb_lock),
+    <Extension()> Public Function locked(ByVal i As ref(Of event_comb_lock),
                                          ByVal d As Func(Of Boolean)) As event_comb
         assert(Not i Is Nothing)
         assert(Not d Is Nothing)
@@ -69,7 +69,7 @@ Public Module _event_comb_lock
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    <Extension()> Public Function locked(ByVal i As pointer(Of event_comb_lock),
+    <Extension()> Public Function locked(ByVal i As ref(Of event_comb_lock),
                                          ByVal d As Action) As event_comb
         assert(Not d Is Nothing)
         Return locked(i, Function() As Boolean
@@ -187,11 +187,11 @@ Public Structure unlimited_event_comb_lock
     Private Const IN_USE As Boolean = Not NOT_IN_USE
     Private l As lock_t
     Private inuse As Boolean
-    Private q As queue(Of pointer(Of Action))
+    Private q As queue(Of ref(Of Action))
 
     Shared Sub New()
         assert(DirectCast(Nothing, Boolean) = NOT_IN_USE)
-        assert(DirectCast(Nothing, queue(Of pointer(Of Action))) Is Nothing)
+        assert(DirectCast(Nothing, queue(Of ref(Of Action))) Is Nothing)
     End Sub
 
     Public Sub wait() Implements islimlock.wait
@@ -201,7 +201,7 @@ Public Structure unlimited_event_comb_lock
         assert(Not v Is Nothing)
         l.wait()
         If inuse = IN_USE Then
-            assert(q.push(pointer.of(v)))
+            assert(q.push(ref.of(v)))
         Else
             inuse = IN_USE
             v()

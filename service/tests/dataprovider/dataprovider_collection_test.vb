@@ -71,7 +71,7 @@ Public NotInheritable Class dataprovider_collection_test
             instance = New fake_dataloader()
         End Sub
 
-        Public Function load(ByVal localfile As String, ByVal result As pointer(Of Byte)) As event_comb _
+        Public Function load(ByVal localfile As String, ByVal result As ref(Of Byte)) As event_comb _
                             Implements idataloader(Of Byte).load
             Return sync_async(Function() eva(result, 0))
         End Function

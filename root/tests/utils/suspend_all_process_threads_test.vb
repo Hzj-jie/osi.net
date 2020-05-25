@@ -31,7 +31,7 @@ Public Class suspend_all_process_threads_test
                 Return CShort(Environment.ProcessorCount())
             End Function
 
-            Private Sub exec(ByVal p As pointer(Of UInt32), ByVal stopping As pointer(Of Boolean))
+            Private Sub exec(ByVal p As ref(Of UInt32), ByVal stopping As ref(Of Boolean))
                 assert(Not p Is Nothing)
                 assert(Not stopping Is Nothing)
                 While Not +stopping
@@ -41,10 +41,10 @@ Public Class suspend_all_process_threads_test
             End Sub
 
             Public Overrides Function run() As Boolean
-                Dim p As pointer(Of UInt32) = Nothing
-                Dim stopping As pointer(Of Boolean) = Nothing
-                p = New pointer(Of UInt32)()
-                stopping = New pointer(Of Boolean)()
+                Dim p As ref(Of UInt32) = Nothing
+                Dim stopping As ref(Of Boolean) = Nothing
+                p = New ref(Of UInt32)()
+                stopping = New ref(Of Boolean)()
                 queue_in_managed_threadpool(Sub()
                                                 exec(p, stopping)
                                             End Sub)

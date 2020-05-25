@@ -13,8 +13,8 @@ Public NotInheritable Class weak_ref_delegate
                                          Optional ByVal default_value As R = Nothing) As Func(Of R)
         assert(Not i Is Nothing)
         assert(Not f Is Nothing)
-        Dim o As weak_pointer(Of T) = Nothing
-        o = weak_pointer.of(i)
+        Dim o As weak_ref(Of T) = Nothing
+        o = weak_ref.of(i)
         Return Function() As R
                    Dim x As T = Nothing
                    x = o.get()
@@ -28,8 +28,8 @@ Public NotInheritable Class weak_ref_delegate
     Public Shared Function bind(Of T)(ByVal i As T, ByVal f As Action(Of T)) As Action
         assert(Not i Is Nothing)
         assert(Not f Is Nothing)
-        Dim o As weak_pointer(Of T) = Nothing
-        o = weak_pointer.of(i)
+        Dim o As weak_ref(Of T) = Nothing
+        o = weak_ref.of(i)
         Return Sub()
                    Dim x As T = Nothing
                    x = o.get()

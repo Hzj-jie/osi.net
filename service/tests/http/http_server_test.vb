@@ -70,11 +70,11 @@ Public Class http_server_test
             Dim i As Int32 = 0
             Dim w As WebRequest = Nothing
             Dim ec As event_comb = Nothing
-            Dim resp As pointer(Of WebResponse) = Nothing
+            Dim resp As ref(Of WebResponse) = Nothing
             Dim buff() As Byte = Nothing
             Return New event_comb(Function() As Boolean
                                       w = WebRequest.Create(strcat("http://localhost:", port, "/"))
-                                      resp = New pointer(Of WebResponse)()
+                                      resp = New ref(Of WebResponse)()
                                       ec = w.get_response(resp)
                                       Return waitfor(ec, seconds_to_milliseconds(5)) AndAlso
                                              goto_next()

@@ -16,13 +16,13 @@ Public MustInherit Class stream_dataloader(Of T)
 
     Protected MustOverride Function create(ByVal localfile As String) As Stream
 
-    Protected Overridable Function load(ByVal s As Stream, ByVal result As pointer(Of T)) As event_comb
+    Protected Overridable Function load(ByVal s As Stream, ByVal result As ref(Of T)) As event_comb
         assert(Not l Is Nothing)
         Return l.load(s, result)
     End Function
 
     Public Function load(ByVal localfile As String,
-                         ByVal result As pointer(Of T)) As event_comb Implements idataloader(Of T).load
+                         ByVal result As ref(Of T)) As event_comb Implements idataloader(Of T).load
         Dim s As Stream = Nothing
         Dim ec As event_comb = Nothing
         Dim create_retry As Int32 = 0

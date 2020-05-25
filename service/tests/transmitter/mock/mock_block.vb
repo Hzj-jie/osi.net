@@ -60,7 +60,7 @@ Public Class mock_block(Of RANDOM_SEND_FAILURE As _boolean, RANDOM_RECEIVE_FAILU
         Return block_dev.send(buff, offset, count)
     End Function
 
-    Public Overloads Function receive(ByVal o As pointer(Of Byte())) As event_comb Implements block_pump.receive
+    Public Overloads Function receive(ByVal o As ref(Of Byte())) As event_comb Implements block_pump.receive
         Return block_dev.receive(o)
     End Function
 

@@ -59,7 +59,7 @@ Partial Public Class event_comb
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function waitfor(ByVal [try] As Func(Of Boolean),
-                                   ByVal try_result As pointer(Of Boolean),
+                                   ByVal try_result As ref(Of Boolean),
                                    ByVal timeout_ms As Int64) As Boolean
         Return current()._waitfor([try], try_result, timeout_ms)
     End Function
@@ -80,13 +80,13 @@ Partial Public Class event_comb
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Function waitfor(Of T)(ByVal d As Func(Of T), ByVal r As pointer(Of T)) As Boolean
+    Public Shared Function waitfor(Of T)(ByVal d As Func(Of T), ByVal r As ref(Of T)) As Boolean
         Return current()._waitfor(d, r)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function waitfor(Of T)(ByVal d As Func(Of T),
-                                         ByVal r As pointer(Of T),
+                                         ByVal r As ref(Of T),
                                          ByVal timeout_ms As Int64) As Boolean
         Return current()._waitfor(d, r, timeout_ms)
     End Function
@@ -107,17 +107,17 @@ Partial Public Class event_comb
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Function waitfor(ByVal l As pointer(Of event_comb_lock)) As Boolean
+    Public Shared Function waitfor(ByVal l As ref(Of event_comb_lock)) As Boolean
         Return current()._waitfor(l)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Function waitfor(ByVal i As pointer(Of singleentry)) As Boolean
+    Public Shared Function waitfor(ByVal i As ref(Of singleentry)) As Boolean
         Return current()._waitfor(i)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Function waitfor(ByVal i As pointer(Of singleentry), ByVal timeout_ms As Int64) As Boolean
+    Public Shared Function waitfor(ByVal i As ref(Of singleentry), ByVal timeout_ms As Int64) As Boolean
         Return current()._waitfor(i, timeout_ms)
     End Function
 

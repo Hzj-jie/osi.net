@@ -59,7 +59,7 @@ Public MustInherit Class client_block_dev
 
     Protected MustOverride Function issue_request(ByVal r As client.memory_stream_response) As event_comb
 
-    Public Function receive(ByVal result As pointer(Of Byte())) As event_comb Implements block_pump.receive
+    Public Function receive(ByVal result As ref(Of Byte())) As event_comb Implements block_pump.receive
         Return question(Function(ByVal r As client.memory_stream_response) As event_comb
                             assert(Not r Is Nothing)
                             Dim ec As event_comb = Nothing
@@ -76,7 +76,7 @@ Public MustInherit Class client_block_dev
                         End Function)
     End Function
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
         Return sync_async(Sub()
                               eva(pending, True)

@@ -106,7 +106,7 @@ Partial Public Class event_comb
     End Function
 
     Private Function _waitfor(ByVal [try] As Func(Of Boolean),
-                              ByVal try_result As pointer(Of Boolean),
+                              ByVal try_result As ref(Of Boolean),
                               ByVal timeout_ms As Int64) As Boolean
         If try_result Is Nothing Then
             Return _waitfor([try], timeout_ms)
@@ -129,8 +129,8 @@ Partial Public Class event_comb
     Private Function _multiple_resume_wait() As Action
         assert_in_lock()
         inc_pends()
-        Dim se As pointer(Of singleentry) = Nothing
-        se = New pointer(Of singleentry)()
+        Dim se As ref(Of singleentry) = Nothing
+        se = New ref(Of singleentry)()
         Return Sub()
                    If se.mark_in_use() Then
                        '1, put it back to selected threadpool
@@ -192,7 +192,7 @@ Partial Public Class event_comb
     End Function
 
     Private Shared Function _do_void(Of T)(ByVal d As Func(Of T),
-                                           ByVal r As pointer(Of T),
+                                           ByVal r As ref(Of T),
                                            ByRef v As Action) As Boolean
         If d Is Nothing Then
             Return False
@@ -204,7 +204,7 @@ Partial Public Class event_comb
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function _waitfor(Of T)(ByVal d As Func(Of T), ByVal r As pointer(Of T)) As Boolean
+    Private Function _waitfor(Of T)(ByVal d As Func(Of T), ByVal r As ref(Of T)) As Boolean
         Dim v As Action = Nothing
         If _do_void(d, r, v) Then
             Return _waitfor(v)
@@ -214,7 +214,7 @@ Partial Public Class event_comb
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _waitfor(Of T)(ByVal d As Func(Of T),
-                                    ByVal r As pointer(Of T),
+                                    ByVal r As ref(Of T),
                                     ByVal timeout_ms As Int64) As Boolean
         Dim v As Action = Nothing
         If _do_void(d, r, v) Then
@@ -264,7 +264,7 @@ Partial Public Class event_comb
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function _waitfor(ByVal l As pointer(Of event_comb_lock)) As Boolean
+    Private Function _waitfor(ByVal l As ref(Of event_comb_lock)) As Boolean
         If l Is Nothing Then
             Return False
         End If
@@ -273,7 +273,7 @@ Partial Public Class event_comb
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function _waitfor(ByVal i As pointer(Of singleentry)) As Boolean
+    Private Function _waitfor(ByVal i As ref(Of singleentry)) As Boolean
         If i Is Nothing Then
             Return False
         End If
@@ -281,7 +281,7 @@ Partial Public Class event_comb
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function _waitfor(ByVal i As pointer(Of singleentry), ByVal timeout_ms As Int64) As Boolean
+    Private Function _waitfor(ByVal i As ref(Of singleentry), ByVal timeout_ms As Int64) As Boolean
         If i Is Nothing Then
             Return False
         End If
@@ -326,8 +326,8 @@ Partial Public Class event_comb
         If i.marked() Then
             Return True
         End If
-        Dim e As pointer(Of stopwatch.event) = Nothing
-        e = New pointer(Of stopwatch.event)()
+        Dim e As ref(Of stopwatch.event) = Nothing
+        e = New ref(Of stopwatch.event)()
         Dim cb As Action = Nothing
         cb = _multiple_resume_wait()
         e.set(stopwatch.push(timeout_ms, cb))

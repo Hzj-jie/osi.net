@@ -55,7 +55,7 @@ Public Class generic_perf
         Return Environment.ProcessorCount()
     End Function
 
-    Private Sub report_performance(ByVal p As pointer(Of Int64), ByVal c As String)
+    Private Sub report_performance(ByVal p As ref(Of Int64), ByVal c As String)
         assert(Not p Is Nothing)
         raise_error(error_type.performance,
                     "generic_perf * ",
@@ -73,8 +73,8 @@ Public Class generic_perf
         read_count = test_size_scale * 1024 * 1024 * 1024
         Dim write_count As Int64 = 0
         write_count = test_size_scale * 1024 * 1024 * 1024
-        Dim p As pointer(Of Int64) = Nothing
-        p = New pointer(Of Int64)()
+        Dim p As ref(Of Int64) = Nothing
+        p = New ref(Of Int64)()
 
         Using New boost()
             Using New processor_loops_timing_counter(p)

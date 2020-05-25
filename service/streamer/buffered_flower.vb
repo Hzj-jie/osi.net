@@ -18,7 +18,7 @@ Public Class buffered_flower(Of T)
     Private Shared Function create_input_flower(ByVal input As T_receiver(Of T),
                                                 ByVal pipe_dev As pipe_dev(Of T),
                                                 ByVal sense_timeout_ms As Int64,
-                                                ByVal broken_pipe As pointer(Of singleentry),
+                                                ByVal broken_pipe As ref(Of singleentry),
                                                 ByVal idle_timeout_ms As Int64,
                                                 ByVal result As atomic_int64,
                                                 ByVal treat_no_flow_as_failure As Boolean) _
@@ -38,7 +38,7 @@ Public Class buffered_flower(Of T)
     Private Shared Function create_output_flower(ByVal pipe_dev As pipe_dev(Of T),
                                                  ByVal output As T_sender(Of T),
                                                  ByVal sense_timeout_ms As Int64,
-                                                 ByVal broken_pipe As pointer(Of singleentry),
+                                                 ByVal broken_pipe As ref(Of singleentry),
                                                  ByVal idle_timeout_ms As Int64) As direct_flower(Of T)
         assert(Not pipe_dev Is Nothing)
         assert(Not output Is Nothing)
@@ -49,7 +49,7 @@ Public Class buffered_flower(Of T)
     Public Sub New(ByVal input As T_receiver(Of T),
                    ByVal output As T_sender(Of T),
                    ByVal sense_timeout_ms As Int64,
-                   ByVal broken_pipe As pointer(Of singleentry),
+                   ByVal broken_pipe As ref(Of singleentry),
                    ByVal pipe As pipe(Of T),
                    ByVal idle_timoeut_ms As Int64,
                    Optional ByVal result As atomic_int64 = Nothing,
@@ -59,7 +59,7 @@ Public Class buffered_flower(Of T)
         Dim pipe_dev As pipe_dev(Of T) = Nothing
         pipe_dev = New pipe_dev(Of T)(pipe)
         If broken_pipe Is Nothing Then
-            broken_pipe = New pointer(Of singleentry)()
+            broken_pipe = New ref(Of singleentry)()
         End If
         Me.input_flower = create_input_flower(input,
                                               pipe_dev,
@@ -74,7 +74,7 @@ Public Class buffered_flower(Of T)
     Public Sub New(ByVal input As T_receiver(Of T),
                    ByVal output As T_sender(Of T),
                    ByVal sense_timeout_ms As Int64,
-                   ByVal broken_pipe As pointer(Of singleentry),
+                   ByVal broken_pipe As ref(Of singleentry),
                    ByVal pipe As pipe(Of T),
                    Optional ByVal result As atomic_int64 = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
@@ -84,7 +84,7 @@ Public Class buffered_flower(Of T)
     Public Sub New(ByVal input As T_receiver(Of T),
                    ByVal output As T_sender(Of T),
                    ByVal sense_timeout_ms As Int64,
-                   ByVal broken_pipe As pointer(Of singleentry),
+                   ByVal broken_pipe As ref(Of singleentry),
                    ByVal idle_timeout_ms As Int64,
                    Optional ByVal result As atomic_int64 = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
@@ -101,7 +101,7 @@ Public Class buffered_flower(Of T)
     Public Sub New(ByVal input As T_receiver(Of T),
                    ByVal output As T_sender(Of T),
                    ByVal sense_timeout_ms As Int64,
-                   ByVal broken_pipe As pointer(Of singleentry),
+                   ByVal broken_pipe As ref(Of singleentry),
                    Optional ByVal result As atomic_int64 = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
         Me.New(input, output, sense_timeout_ms, broken_pipe, npos, result, treat_no_flow_as_failure)
@@ -109,7 +109,7 @@ Public Class buffered_flower(Of T)
 
     Public Sub New(ByVal input As T_receiver(Of T),
                    ByVal output As T_sender(Of T),
-                   ByVal broken_pipe As pointer(Of singleentry),
+                   ByVal broken_pipe As ref(Of singleentry),
                    ByVal pipe As pipe(Of T),
                    ByVal idle_timeout_ms As Int64,
                    Optional ByVal result As atomic_int64 = Nothing,
@@ -126,7 +126,7 @@ Public Class buffered_flower(Of T)
 
     Public Sub New(ByVal input As T_receiver(Of T),
                    ByVal output As T_sender(Of T),
-                   ByVal broken_pipe As pointer(Of singleentry),
+                   ByVal broken_pipe As ref(Of singleentry),
                    ByVal pipe As pipe(Of T),
                    Optional ByVal result As atomic_int64 = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
@@ -135,7 +135,7 @@ Public Class buffered_flower(Of T)
 
     Public Sub New(ByVal input As T_receiver(Of T),
                    ByVal output As T_sender(Of T),
-                   ByVal broken_pipe As pointer(Of singleentry),
+                   ByVal broken_pipe As ref(Of singleentry),
                    ByVal idle_timeout_ms As Int64,
                    Optional ByVal result As atomic_int64 = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
@@ -144,7 +144,7 @@ Public Class buffered_flower(Of T)
 
     Public Sub New(ByVal input As T_receiver(Of T),
                    ByVal output As T_sender(Of T),
-                   ByVal broken_pipe As pointer(Of singleentry),
+                   ByVal broken_pipe As ref(Of singleentry),
                    Optional ByVal result As atomic_int64 = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
         Me.New(input, output, broken_pipe, npos, result, treat_no_flow_as_failure)

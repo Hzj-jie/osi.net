@@ -84,7 +84,7 @@ Partial Public NotInheritable Class free_cluster
     End Sub
 
     'exp_size is the real size of the data
-    Private Function free_cluster(ByVal exp_size As UInt64, ByVal c As pointer(Of cluster)) As event_comb
+    Private Function free_cluster(ByVal exp_size As UInt64, ByVal c As ref(Of cluster)) As event_comb
         assert(exp_size > 0)
         assert(Not c Is Nothing)
         Dim ec As event_comb = Nothing
@@ -116,14 +116,14 @@ Partial Public NotInheritable Class free_cluster
         assert(Not cs Is Nothing AndAlso cs.empty())
         assert(Not offsets Is Nothing AndAlso offsets.empty())
         Dim ec As event_comb = Nothing
-        Dim c As pointer(Of cluster) = Nothing
+        Dim c As ref(Of cluster) = Nothing
         Dim i As UInt64 = 0
         Return New event_comb(Function() As Boolean
                                   If ec Is Nothing OrElse
                                      ec.end_result() Then
                                       If ec Is Nothing Then
                                           assert(c Is Nothing)
-                                          c = New pointer(Of cluster)()
+                                          c = New ref(Of cluster)()
                                       Else
                                           assert(Not c Is Nothing AndAlso Not (+c) Is Nothing)
                                           cs.emplace_back(+c)

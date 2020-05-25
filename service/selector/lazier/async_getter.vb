@@ -10,7 +10,7 @@ Imports osi.root.connector
 Public Interface async_getter(Of T)
     Function alive() As ternary
     Function [get](ByRef r As T) As Boolean
-    Function [get](ByVal r As pointer(Of T)) As event_comb
+    Function [get](ByVal r As ref(Of T)) As event_comb
     Function initialized_wait_handle() As WaitHandle
 End Interface
 
@@ -29,11 +29,11 @@ Public Module _async_getter
             Return a.alive()
         End Function
 
-        Public Function [get](ByVal r As pointer(Of T)) As event_comb Implements async_getter(Of T).get
+        Public Function [get](ByVal r As ref(Of T)) As event_comb Implements async_getter(Of T).get
             Dim ec As event_comb = Nothing
-            Dim p As pointer(Of IT) = Nothing
+            Dim p As ref(Of IT) = Nothing
             Return New event_comb(Function() As Boolean
-                                      p = New pointer(Of IT)()
+                                      p = New ref(Of IT)()
                                       ec = a.get(p)
                                       Return waitfor(ec) AndAlso
                                              goto_next()

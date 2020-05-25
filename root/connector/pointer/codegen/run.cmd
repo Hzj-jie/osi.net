@@ -1,10 +1,10 @@
 
 setlocal
 PATH %PATH%;..\..\..\codegen\precompile;
-precompile.exe pointer.vbp > pointer.vb
-precompile.exe array_pointer.vbp > array_pointer.vb
-precompile.exe weak_pointer.vbp > weak_pointer.vb
-precompile.exe weak_ref_pointer.vbp > weak_ref_pointer.vb
+precompile.exe ref.vbp > ref.vb
+precompile.exe array_ref.vbp > array_ref.vb
+precompile.exe weak_ref.vbp > weak_ref.vb
+precompile.exe weak_ref_ref.vbp > weak_ref_ref.vb
 move /y *.vb ..\
 endlocal
 

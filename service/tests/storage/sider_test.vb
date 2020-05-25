@@ -33,7 +33,7 @@ Public Class sider_test
             Me.New(New default_istrkeyvt_case())
         End Sub
 
-        Protected Overrides Function create_istrkeyvt(ByVal p As pointer(Of istrkeyvt)) As event_comb
+        Protected Overrides Function create_istrkeyvt(ByVal p As ref(Of istrkeyvt)) As event_comb
             Return sync_async(Function() As Boolean
                                   Dim r As istrkeyvt_questioner = Nothing
                                   Dim v As var = Nothing

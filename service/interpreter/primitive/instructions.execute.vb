@@ -35,11 +35,11 @@ Namespace primitive
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
                 assert(Not imi Is Nothing)
                 If d0.relative() Then
-                    imi.advance_instruction_pointer(d0.offset())
+                    imi.advance_instruction_ref(d0.offset())
                 Else
-                    imi.instruction_pointer(d0.offset())
+                    imi.instruction_ref(d0.offset())
                 End If
-                imi.do_not_advance_instruction_pointer()
+                imi.do_not_advance_instruction_ref()
             End Sub
         End Class
 
@@ -170,11 +170,11 @@ Namespace primitive
                 b = imi.access_stack_as_bool(d1)
                 If b Then
                     If d0.relative() Then
-                        imi.advance_instruction_pointer(d0.offset())
+                        imi.advance_instruction_ref(d0.offset())
                     Else
-                        imi.instruction_pointer(d0.offset())
+                        imi.instruction_ref(d0.offset())
                     End If
-                    imi.do_not_advance_instruction_pointer()
+                    imi.do_not_advance_instruction_ref()
                 End If
             End Sub
         End Class
@@ -246,7 +246,7 @@ Namespace primitive
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
                 assert(Not imi Is Nothing)
-                Dim p0 As pointer(Of Byte()) = Nothing
+                Dim p0 As ref(Of Byte()) = Nothing
                 p0 = Me.p0(imi)
                 p0.set(array_concat(+p0, +p1(imi)))
             End Sub
@@ -257,7 +257,7 @@ Namespace primitive
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
                 assert(Not imi Is Nothing)
-                Dim p0 As pointer(Of Byte()) = Nothing
+                Dim p0 As ref(Of Byte()) = Nothing
                 p0 = Me.p0(imi)
                 Dim b() As Byte = Nothing
                 If Not chunk.from_bytes(+p1(imi), b) Then
@@ -272,8 +272,8 @@ Namespace primitive
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
                 assert(Not imi Is Nothing)
-                Dim p0 As pointer(Of Byte()) = Nothing
-                Dim p1 As pointer(Of Byte()) = Nothing
+                Dim p0 As ref(Of Byte()) = Nothing
+                Dim p1 As ref(Of Byte()) = Nothing
                 p0 = Me.p0(imi)
                 p1 = Me.p1(imi)
                 Dim l As UInt32 = 0
@@ -294,8 +294,8 @@ Namespace primitive
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
                 assert(Not imi Is Nothing)
-                Dim p0 As pointer(Of Byte()) = Nothing
-                Dim p1 As pointer(Of Byte()) = Nothing
+                Dim p0 As ref(Of Byte()) = Nothing
+                Dim p1 As ref(Of Byte()) = Nothing
                 p0 = Me.p0(imi)
                 p1 = Me.p1(imi)
                 Dim sl() As UInt32 = Nothing

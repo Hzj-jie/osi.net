@@ -22,7 +22,7 @@ Public Class stream_text_dev_T_adapter(Of T)
         Me.enc = If(enc Is Nothing, default_encoding, enc)
     End Sub
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
         Return underlying_device.sense(pending, timeout_ms)
     End Function
@@ -51,7 +51,7 @@ Public Class stream_text_dev_T_adapter(Of T)
                               End Function)
     End Function
 
-    Public Function receive(ByVal o As pointer(Of T)) As event_comb Implements dev_T(Of T).receive
+    Public Function receive(ByVal o As ref(Of T)) As event_comb Implements dev_T(Of T).receive
         Return underlying_device.receive(o)
     End Function
 End Class

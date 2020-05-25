@@ -39,8 +39,8 @@ Partial Public Class sharedtransmitter_test
                        Sub(ByVal new_component As sharedtransmitter(Of Byte, Byte, component, Int32, parameter))
                            s.emplace_back(new_component)
                        End Sub
-            Dim p As pointer(Of Int32) = Nothing
-            p = New pointer(Of Int32)()
+            Dim p As ref(Of Int32) = Nothing
+            p = New ref(Of Int32)()
             If assertion.is_true(component.referred()) Then
                 For i As Byte = 0 To ip_size - uint8_1
                     For j As Byte = 1 To port_size

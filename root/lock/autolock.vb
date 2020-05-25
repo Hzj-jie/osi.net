@@ -24,9 +24,9 @@ Public Module _autolock
     Private Structure wrapper_autolock(Of T As {islimlock, Structure})
         Implements IDisposable
 
-        Private ReadOnly i As pointer(Of T)
+        Private ReadOnly i As ref(Of T)
 
-        Public Sub New(ByRef i As pointer(Of T))
+        Public Sub New(ByRef i As ref(Of T))
             assert(Not i Is Nothing)
             Me.i = i
             Me.i.p.wait()
@@ -41,7 +41,7 @@ Public Module _autolock
         Return New ref_autolock(Of T)(i)
     End Function
 
-    Public Function make_autolock(Of T As {islimlock, Structure})(ByRef i As pointer(Of T)) As IDisposable
+    Public Function make_autolock(Of T As {islimlock, Structure})(ByRef i As ref(Of T)) As IDisposable
         Return New wrapper_autolock(Of T)(i)
     End Function
 End Module

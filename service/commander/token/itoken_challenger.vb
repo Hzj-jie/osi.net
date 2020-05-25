@@ -7,7 +7,7 @@ Imports osi.root.procedure
 Imports osi.root.utils
 
 Public Interface itoken_challenger
-    Default ReadOnly Property challenge(ByVal accepted As pointer(Of Boolean)) As event_comb
+    Default ReadOnly Property challenge(ByVal accepted As ref(Of Boolean)) As event_comb
 End Interface
 
 Public MustInherit Class itoken_challenger(Of COLLECTION, CONNECTION)
@@ -26,7 +26,7 @@ Public MustInherit Class itoken_challenger(Of COLLECTION, CONNECTION)
         Me.c = c
     End Sub
 
-    Protected MustOverride Function question(ByVal h As herald, ByVal accepted As pointer(Of Boolean)) As event_comb
+    Protected MustOverride Function question(ByVal h As herald, ByVal accepted As ref(Of Boolean)) As event_comb
 
     Private Shared Function bypass_empty_token() As Boolean
 #If bypass_empty_token Then
@@ -36,7 +36,7 @@ Public MustInherit Class itoken_challenger(Of COLLECTION, CONNECTION)
 #End If
     End Function
 
-    Default Public ReadOnly Property challenge(ByVal accepted As pointer(Of Boolean)) As event_comb _
+    Default Public ReadOnly Property challenge(ByVal accepted As ref(Of Boolean)) As event_comb _
                                               Implements itoken_challenger.challenge
         Get
             Dim ec As event_comb = Nothing

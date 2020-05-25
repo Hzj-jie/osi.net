@@ -48,13 +48,13 @@ Public Class flow_datagram_adapter(Of _PACKET_SIZE As _int64)
         MyBase.New(f, forward_type_attribute(f))
     End Sub
 
-    Public Function receive(ByVal result As pointer(Of Byte())) As event_comb Implements block_pump.receive
+    Public Function receive(ByVal result As ref(Of Byte())) As event_comb Implements block_pump.receive
         Dim buff() As Byte = Nothing
-        Dim received As pointer(Of UInt32) = Nothing
+        Dim received As ref(Of UInt32) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ReDim buff(packet_size - uint32_1)
-                                  received = New pointer(Of UInt32)()
+                                  received = New ref(Of UInt32)()
                                   ec = _pump.receive(underlying_device, buff, received)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -77,7 +77,7 @@ Public Class flow_datagram_adapter(Of _PACKET_SIZE As _int64)
     Public Function send(ByVal buff() As Byte,
                          ByVal offset As UInt32,
                          ByVal count As UInt32,
-                         ByVal sent As pointer(Of UInt32)) As event_comb Implements flow_injector.send
+                         ByVal sent As ref(Of UInt32)) As event_comb Implements flow_injector.send
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If offset + count > array_size(buff) Then
@@ -97,7 +97,7 @@ Public Class flow_datagram_adapter(Of _PACKET_SIZE As _int64)
                               End Function)
     End Function
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
         Return underlying_device.sense(pending, timeout_ms)
     End Function

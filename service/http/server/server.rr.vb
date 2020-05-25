@@ -15,7 +15,7 @@ Imports Text = System.Text
 
 Public Module _server_rr
     <Extension()> Public Function read_request_body(ByVal i As HttpListenerRequest,
-                                                    ByVal r As pointer(Of String),
+                                                    ByVal r As ref(Of String),
                                                     ByVal enc As Text.Encoding,
                                                     ByVal buff_size As UInt32,
                                                     ByVal receive_rate_sec As UInt32,
@@ -32,7 +32,7 @@ Public Module _server_rr
     End Function
 
     <Extension()> Public Function read_request_body(ByVal i As HttpListenerRequest,
-                                                    ByVal r As pointer(Of String),
+                                                    ByVal r As ref(Of String),
                                                     ByVal enc As Text.Encoding,
                                                     ByVal ls As link_status) As event_comb
         Return read_request_body(i,
@@ -44,7 +44,7 @@ Public Module _server_rr
     End Function
 
     <Extension()> Public Function read_request_body(ByVal i As HttpListenerRequest,
-                                                    ByVal r As pointer(Of Byte()),
+                                                    ByVal r As ref(Of Byte()),
                                                     ByVal buff_size As UInt32,
                                                     ByVal receive_rate_sec As UInt32,
                                                     ByVal max_content_length As UInt64) As event_comb
@@ -59,7 +59,7 @@ Public Module _server_rr
     End Function
 
     <Extension()> Public Function read_request_body(ByVal i As HttpListenerRequest,
-                                                    ByVal r As pointer(Of Byte()),
+                                                    ByVal r As ref(Of Byte()),
                                                     ByVal ls As link_status) As event_comb
         Return read_request_body(i,
                                  r,
@@ -74,7 +74,7 @@ Public Module _server_rr
                                                     ByVal receive_rate_sec As UInt32,
                                                     ByVal send_rate_sec As UInt32,
                                                     ByVal max_content_length As UInt64,
-                                                    Optional ByVal result As pointer(Of UInt64) = Nothing) As event_comb
+                                                    Optional ByVal result As ref(Of UInt64) = Nothing) As event_comb
         Return write_to_stream(i,
                                o,
                                buff_size,
@@ -97,7 +97,7 @@ Public Module _server_rr
                                                     ByVal o As Stream,
                                                     ByVal receive_link_status As link_status,
                                                     ByVal send_link_status As link_status,
-                                                    Optional ByVal result As pointer(Of UInt64) = Nothing) As event_comb
+                                                    Optional ByVal result As ref(Of UInt64) = Nothing) As event_comb
         Return read_request_body(i,
                                  o,
                                  receive_link_status.this_or_unlimited().buff_size,
@@ -180,7 +180,7 @@ Public Module _server_rr
                                     x.ContentLength64() = l
                                 End Sub,
                                 Function(ByVal x As HttpListenerResponse,
-                                         ByVal os As pointer(Of Stream)) As event_comb
+                                         ByVal os As ref(Of Stream)) As event_comb
                                     Return sync_async(Sub()
                                                           eva(os, x.OutputStream())
                                                       End Sub)
@@ -209,7 +209,7 @@ Public Module _server_rr
                                                  ByVal send_rate_sec As UInt32,
                                                  ByVal receive_rate_sec As UInt32,
                                                  ByVal close_input_stream As Boolean,
-                                                 Optional ByVal result As pointer(Of UInt64) = Nothing) As event_comb
+                                                 Optional ByVal result As ref(Of UInt64) = Nothing) As event_comb
         Return read_from_stream(i,
                                 o,
                                 buff_size,
@@ -219,7 +219,7 @@ Public Module _server_rr
                                     x.SendChunked() = True
                                 End Sub,
                                 Function(ByVal x As HttpListenerResponse,
-                                         ByVal os As pointer(Of Stream)) As event_comb
+                                         ByVal os As ref(Of Stream)) As event_comb
                                     Return sync_async(Sub()
                                                           eva(os, x.OutputStream())
                                                       End Sub)
@@ -233,7 +233,7 @@ Public Module _server_rr
                                                  ByVal send_link_status As link_status,
                                                  ByVal receive_link_status As link_status,
                                                  ByVal close_input_stream As Boolean,
-                                                 Optional ByVal result As pointer(Of UInt64) = Nothing) As event_comb
+                                                 Optional ByVal result As ref(Of UInt64) = Nothing) As event_comb
         Return write_response(o,
                               i,
                               send_link_status.this_or_unlimited().buff_size,

@@ -56,13 +56,13 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
 
     Private Function read_case(ByVal keyvt As istrkeyvt) As event_comb
         Dim k As String = Nothing
-        Dim v As pointer(Of Byte()) = Nothing
-        Dim t As pointer(Of Int64) = Nothing
+        Dim v As ref(Of Byte()) = Nothing
+        Dim t As ref(Of Int64) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   k = rand_key()
-                                  v = New pointer(Of Byte())()
-                                  t = New pointer(Of Int64)()
+                                  v = New ref(Of Byte())()
+                                  t = New ref(Of Int64)()
                                   ec = keyvt.read(k, v, t)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -79,12 +79,12 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
     Private Function append_case(ByVal keyvt As istrkeyvt) As event_comb
         Dim k As String = Nothing
         Dim v() As Byte = Nothing
-        Dim r As pointer(Of Boolean) = Nothing
+        Dim r As ref(Of Boolean) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   k = rand_key()
                                   v = rand_bytes()
-                                  r = New pointer(Of Boolean)()
+                                  r = New ref(Of Boolean)()
                                   ec = keyvt.append(k, v, r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -99,11 +99,11 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
 
     Private Function delete_case(ByVal keyvt As istrkeyvt) As event_comb
         Dim k As String = Nothing
-        Dim p As pointer(Of Boolean) = Nothing
+        Dim p As ref(Of Boolean) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   k = rand_key()
-                                  p = New pointer(Of Boolean)()
+                                  p = New ref(Of Boolean)()
                                   ec = keyvt.delete(k, p)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -119,11 +119,11 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
 
     Private Function seek_case(ByVal keyvt As istrkeyvt) As event_comb
         Dim k As String = Nothing
-        Dim p As pointer(Of Boolean) = Nothing
+        Dim p As ref(Of Boolean) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   k = rand_key()
-                                  p = New pointer(Of Boolean)()
+                                  p = New ref(Of Boolean)()
                                   ec = keyvt.seek(k, p)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -138,10 +138,10 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
     End Function
 
     Private Function list_case(ByVal keyvt As istrkeyvt) As event_comb
-        Dim r As pointer(Of vector(Of String)) = Nothing
+        Dim r As ref(Of vector(Of String)) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of vector(Of String))()
+                                  r = New ref(Of vector(Of String))()
                                   ec = keyvt.list(r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -172,13 +172,13 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
         Dim k As String = Nothing
         Dim v() As Byte = Nothing
         Dim t As Int64 = 0
-        Dim r As pointer(Of Boolean) = Nothing
+        Dim r As ref(Of Boolean) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   k = rand_key()
                                   v = rand_bytes()
                                   t = Now().to_timestamp()
-                                  r = New pointer(Of Boolean)()
+                                  r = New ref(Of Boolean)()
                                   ec = keyvt.modify(k, v, t, r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -193,11 +193,11 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
 
     Private Function sizeof_case(ByVal keyvt As istrkeyvt) As event_comb
         Dim k As String = Nothing
-        Dim v As pointer(Of Int64) = Nothing
+        Dim v As ref(Of Int64) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   k = rand_key()
-                                  v = New pointer(Of Int64)()
+                                  v = New ref(Of Int64)()
                                   ec = keyvt.sizeof(k, v)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -216,9 +216,9 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
 
     Private Function full_case(ByVal keyvt As istrkeyvt) As event_comb
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of Boolean) = Nothing
+        Dim r As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of Boolean)()
+                                  r = New ref(Of Boolean)()
                                   ec = keyvt.full(r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -232,9 +232,9 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
 
     Private Function empty_case(ByVal keyvt As istrkeyvt) As event_comb
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of Boolean) = Nothing
+        Dim r As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of Boolean)()
+                                  r = New ref(Of Boolean)()
                                   ec = keyvt.empty(r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -269,9 +269,9 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
 
     Private Function capacity_case(ByVal keyvt As istrkeyvt) As event_comb
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of Int64) = Nothing
+        Dim r As ref(Of Int64) = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of Int64)()
+                                  r = New ref(Of Int64)()
                                   ec = keyvt.capacity(r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -285,9 +285,9 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
 
     Private Function valuesize_case(ByVal keyvt As istrkeyvt) As event_comb
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of Int64) = Nothing
+        Dim r As ref(Of Int64) = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of Int64)()
+                                  r = New ref(Of Int64)()
                                   ec = keyvt.valuesize(r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -301,9 +301,9 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
 
     Private Function keycount_case(ByVal keyvt As istrkeyvt) As event_comb
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of Int64) = Nothing
+        Dim r As ref(Of Int64) = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of Int64)()
+                                  r = New ref(Of Int64)()
                                   ec = keyvt.keycount(r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -351,13 +351,13 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
         Dim k As String = Nothing
         Dim v() As Byte = Nothing
         Dim t As Int64 = 0
-        Dim r As pointer(Of Boolean) = Nothing
+        Dim r As ref(Of Boolean) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   k = rand_key()
                                   v = rand_bytes()
                                   t = Now().to_timestamp()
-                                  r = New pointer(Of Boolean)()
+                                  r = New ref(Of Boolean)()
                                   ec = keyvt.unique_write(k, v, t, r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()

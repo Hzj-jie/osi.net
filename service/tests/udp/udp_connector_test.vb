@@ -31,14 +31,14 @@ Public NotInheritable Class udp_connector_test
         End Sub
 
         Public Overrides Function create() As event_comb
-            Dim r As pointer(Of delegator) = Nothing
+            Dim r As ref(Of delegator) = Nothing
             Dim ec As event_comb = Nothing
             Return New event_comb(Function() As Boolean
                                       Dim d As idevice(Of async_getter(Of delegator)) = Nothing
                                       If assertion.is_true(c.create(d)) AndAlso
                                          assertion.is_not_null(d) AndAlso
                                          assertion.is_not_null(d.get()) Then
-                                          r = New pointer(Of delegator)()
+                                          r = New ref(Of delegator)()
                                           ec = d.get().get(r)
                                           Return waitfor(ec) AndAlso
                                                  goto_next()

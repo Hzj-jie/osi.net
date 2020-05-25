@@ -18,7 +18,7 @@ Public Module _io
     <Extension()> Public Function copy_to(ByVal this As flow_pump,
                                           ByVal that As flow_injector,
                                           Optional ByVal buff_size As UInt32 = uint32_0,
-                                          Optional ByVal result As pointer(Of UInt64) = Nothing) As event_comb
+                                          Optional ByVal result As ref(Of UInt64) = Nothing) As event_comb
         assert(Not this Is Nothing)
         assert(Not that Is Nothing)
         Return until_pending(AddressOf this.receive, AddressOf that.send, buff_size, result)

@@ -40,14 +40,14 @@ Partial Public MustInherit Class auto_device_exporter(Of T)
         End Sub
 
         ' Create the device and wait for its initialization.
-        Protected Overrides Function create_device(ByVal p As pointer(Of idevice(Of T))) As event_comb
+        Protected Overrides Function create_device(ByVal p As ref(Of idevice(Of T))) As event_comb
             Dim ad As idevice(Of async_getter(Of T)) = Nothing
             Return New event_comb(Function() As Boolean
                                       If c.create(ad) AndAlso Not ad Is Nothing Then
                                           Dim ag As async_getter(Of T) = Nothing
                                           ag = ad.get()
                                           If Not ag Is Nothing Then
-                                              Return waitfor(ag.get(DirectCast(Nothing, pointer(Of T)))) AndAlso
+                                              Return waitfor(ag.get(DirectCast(Nothing, ref(Of T)))) AndAlso
                                                      goto_next()
                                           Else
                                               Return False

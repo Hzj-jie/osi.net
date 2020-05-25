@@ -63,7 +63,7 @@ Public Module _stream
                                           ByVal buff() As Byte,
                                           ByVal offset As UInt32,
                                           ByVal count As UInt32,
-                                          ByVal result As pointer(Of UInt32),
+                                          ByVal result As ref(Of UInt32),
                                           Optional ByVal rate_sec As UInt32 = 0,
                                           Optional ByVal close_when_finish As Boolean = False,
                                           Optional ByVal close_when_fail As Boolean = True) As event_comb

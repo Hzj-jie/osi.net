@@ -25,8 +25,8 @@ Public Class delegate_pinning_test
     Public Overrides Function run() As Boolean
         Dim c As test_class = Nothing
         c = New test_class()
-        Dim p As weak_pointer(Of test_class) = Nothing
-        p = weak_pointer.of(c)
+        Dim p As weak_ref(Of test_class) = Nothing
+        p = weak_ref.of(c)
 
         Dim d As Action = Nothing
         d = AddressOf c.run

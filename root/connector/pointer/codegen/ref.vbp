@@ -1,5 +1,5 @@
 ﻿
-##DEFAULT TYPE pointer
+##DEFAULT TYPE ref
 ##DEFAULT INNER_TYPE T
 
 Imports System.Diagnostics.CodeAnalysis
@@ -141,7 +141,7 @@ finish:
         Return If(p Is Nothing, Nothing, p.get())
     End Operator
 
-    'special treatment for pointer, it compares reference equaling, instead of internal object
+    'special treatment for ref, it compares reference equaling, instead of internal object
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As ##TYPE##(Of T), ByVal that As ##TYPE##(Of T)) As Boolean
         Return Not this = that
@@ -250,7 +250,7 @@ finish:
         Return Me = that
     End Function
 
-    'open for array_pointer
+    'open for array_ref
     Public NotOverridable Overrides Function GetHashCode() As Int32
         Dim i As ##INNER_TYPE## = Nothing
         i = [get]()

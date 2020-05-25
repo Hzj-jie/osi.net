@@ -20,7 +20,7 @@ Public Class reference_count_event_comb_2
         Return False
     End Function
 
-    Private ReadOnly r As pointer(Of singleentry)
+    Private ReadOnly r As ref(Of singleentry)
     Private ReadOnly b As atomic_int
     Private ReadOnly i As Func(Of event_comb)
     Private ReadOnly w As Func(Of event_comb)
@@ -33,9 +33,9 @@ Public Class reference_count_event_comb_2
         Me.w = work
         Me.f = final
 
-        Me.r = New pointer(Of singleentry)()
+        Me.r = New ref(Of singleentry)()
         Me.b = New atomic_int()
-        start(weak_pointer.of(Me))
+        start(weak_ref.of(Me))
     End Sub
 
     Protected Sub New()
@@ -72,7 +72,7 @@ Public Class reference_count_event_comb_2
         Return binding_count() > 0
     End Function
 
-    Private Shared Sub start(ByVal wp As weak_pointer(Of reference_count_event_comb_2))
+    Private Shared Sub start(ByVal wp As weak_ref(Of reference_count_event_comb_2))
         assert(Not wp Is Nothing)
         assert_begin(New event_comb(Function() As Boolean
                                         Return waitfor(Function() As Boolean

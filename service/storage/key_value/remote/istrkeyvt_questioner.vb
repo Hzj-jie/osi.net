@@ -60,14 +60,14 @@ Partial Public Class istrkeyvt_questioner
     Public Function append(ByVal key As String,
                            ByVal value() As Byte,
                            ByVal ts As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.append
+                           ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.append
         Return q(request(action.istrkeyvt_append, key, value, ts),
                  Function(c As command) As Boolean
                      Return response(c, result)
                  End Function)
     End Function
 
-    Public Function capacity(ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.capacity
+    Public Function capacity(ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.capacity
         Return q(request(action.istrkeyvt_capacity),
                  Function(c As command) As Boolean
                      Return response(c, result)
@@ -75,21 +75,21 @@ Partial Public Class istrkeyvt_questioner
     End Function
 
     Public Function delete(ByVal key As String,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.delete
+                           ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.delete
         Return q(request(action.istrkeyvt_delete, key),
                  Function(c As command) As Boolean
                      Return response(c, result)
                  End Function)
     End Function
 
-    Public Function empty(ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.empty
+    Public Function empty(ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.empty
         Return q(request(action.istrkeyvt_empty),
                  Function(c As command) As Boolean
                      Return response(c, result)
                  End Function)
     End Function
 
-    Public Function full(ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.full
+    Public Function full(ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.full
         Return q(request(action.istrkeyvt_full),
                  Function(c As command) As Boolean
                      Return response(c, result)
@@ -103,14 +103,14 @@ Partial Public Class istrkeyvt_questioner
                  End Function)
     End Function
 
-    Public Function keycount(ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.keycount
+    Public Function keycount(ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.keycount
         Return q(request(action.istrkeyvt_keycount),
                  Function(c As command) As Boolean
                      Return response(c, result)
                  End Function)
     End Function
 
-    Public Function list(ByVal result As pointer(Of vector(Of String))) As event_comb Implements istrkeyvt.list
+    Public Function list(ByVal result As ref(Of vector(Of String))) As event_comb Implements istrkeyvt.list
         ' Special handle for list, it should always return a valid vector.
         Return q(request(action.istrkeyvt_list),
                  Function(c As command) As Boolean
@@ -126,7 +126,7 @@ Partial Public Class istrkeyvt_questioner
     Public Function modify(ByVal key As String,
                            ByVal value() As Byte,
                            ByVal ts As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.modify
+                           ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.modify
         Return q(request(action.istrkeyvt_modify, key, value, ts),
                  Function(c As command) As Boolean
                      Return response(c, result)
@@ -134,8 +134,8 @@ Partial Public Class istrkeyvt_questioner
     End Function
 
     Public Function read(ByVal key As String,
-                         ByVal result As pointer(Of Byte()),
-                         ByVal ts As pointer(Of Int64)) As event_comb Implements istrkeyvt.read
+                         ByVal result As ref(Of Byte()),
+                         ByVal ts As ref(Of Int64)) As event_comb Implements istrkeyvt.read
         Return q(request(action.istrkeyvt_read, key),
                  Function(c As command) As Boolean
                      Return Not c Is Nothing AndAlso
@@ -152,7 +152,7 @@ Partial Public Class istrkeyvt_questioner
     End Function
 
     Public Function seek(ByVal key As String,
-                         ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.seek
+                         ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.seek
         Return q(request(action.istrkeyvt_seek, key),
                  Function(c As command) As Boolean
                      Return response(c, result)
@@ -160,7 +160,7 @@ Partial Public Class istrkeyvt_questioner
     End Function
 
     Public Function sizeof(ByVal key As String,
-                           ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.sizeof
+                           ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.sizeof
         Return q(request(action.istrkeyvt_sizeof, key),
                  Function(c As command) As Boolean
                      Return response(c, result)
@@ -174,14 +174,14 @@ Partial Public Class istrkeyvt_questioner
     Public Function unique_write(ByVal key As String,
                                  ByVal value() As Byte,
                                  ByVal ts As Int64,
-                                 ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.unique_write
+                                 ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.unique_write
         Return q(request(action.istrkeyvt_unique_write, key, value, ts),
                  Function(c As command) As Boolean
                      Return response(c, result)
                  End Function)
     End Function
 
-    Public Function valuesize(ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.valuesize
+    Public Function valuesize(ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.valuesize
         Return q(request(action.istrkeyvt_valuesize),
                  Function(c As command) As Boolean
                      Return response(c, result)

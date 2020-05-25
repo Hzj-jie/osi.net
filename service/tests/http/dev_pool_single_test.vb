@@ -69,7 +69,7 @@ Public Class dev_pool_single_test
 
         Private Sub respond()
             Dim h As idevice(Of text) = Nothing
-            Dim p As pointer(Of String) = Nothing
+            Dim p As ref(Of String) = Nothing
             Dim ec As event_comb = Nothing
             begin_lifetime_event_comb(expiration_controller.[New](Function() Not s.alive()),
                                       Function() As Boolean
@@ -128,7 +128,7 @@ Public Class dev_pool_single_test
             Dim cp As idevice_pool(Of text) = Nothing
             Dim h As idevice(Of text) = Nothing
             Dim s As String = Nothing
-            Dim p As pointer(Of String) = Nothing
+            Dim p As ref(Of String) = Nothing
             Return New event_comb(Function() As Boolean
                                       If rnd_bool() Then
                                           cp = cpp
@@ -152,7 +152,7 @@ Public Class dev_pool_single_test
                                   End Function,
                                   Function() As Boolean
                                       assertion.is_true(ec.end_result())
-                                      p = New pointer(Of String)()
+                                      p = New ref(Of String)()
                                       assert(Not h Is Nothing AndAlso Not h.get() Is Nothing)
                                       ec = h.get().receive(p)
                                       Return waitfor(ec) AndAlso

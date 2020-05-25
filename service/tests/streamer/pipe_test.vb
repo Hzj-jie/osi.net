@@ -19,8 +19,8 @@ Public Class pipe_test
         assertion.equal(q.size(), uint32_1)
         assertion.is_false(async_sync(q.push(default_value)))
         assertion.equal(q.size(), uint32_1)
-        Dim p As pointer(Of Int32) = Nothing
-        p = New pointer(Of Int32)()
+        Dim p As ref(Of Int32) = Nothing
+        p = New ref(Of Int32)()
         assertion.is_true(async_sync(q.pop(p)))
         assertion.equal(+p, default_value)
         assertion.equal(q.size(), uint32_0)
@@ -65,8 +65,8 @@ Public Class pipe_test
             assertion.is_true(async_sync(q.push(default_value)))
         End Using
         assertion.equal(q.size(), uint32_1)
-        Dim p As pointer(Of Int32) = Nothing
-        p = New pointer(Of Int32)()
+        Dim p As ref(Of Int32) = Nothing
+        p = New ref(Of Int32)()
         assertion.is_true(async_sync(q.pop(p)))
         assertion.equal(+p, default_value)
         assert_begin(New event_comb(Function() As Boolean

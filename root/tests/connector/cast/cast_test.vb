@@ -45,11 +45,11 @@ Public NotInheritable Class cast_test
     Private Shared Function implicit_case() As Boolean
         Dim a() As Byte = Nothing
         a = rnd_bytes(rnd_uint(10, 20))
-        Dim r As array_pointer(Of Byte) = Nothing
+        Dim r As array_ref(Of Byte) = Nothing
         assertion.is_true(cast(a, r))
         assertion.array_equal(+r, a)
 
-        Dim r2 As pointer(Of Byte) = Nothing
+        Dim r2 As ref(Of Byte) = Nothing
         assertion.is_true(cast(a(0), r2))
         assertion.equal(+r2, a(0))
 

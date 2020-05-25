@@ -17,7 +17,7 @@ Friend Class ikeyvt_input_validation_wrapper(Of THREADSAFE As _boolean)
     Public Function append(ByVal key() As Byte,
                            ByVal value() As Byte,
                            ByVal ts As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of THREADSAFE).append
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of THREADSAFE).append
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.append(key, value, ts, result)
                                        End Function,
@@ -26,7 +26,7 @@ Friend Class ikeyvt_input_validation_wrapper(Of THREADSAFE As _boolean)
                                        End Function)
     End Function
 
-    Public Function capacity(ByVal result As pointer(Of Int64)) As event_comb _
+    Public Function capacity(ByVal result As ref(Of Int64)) As event_comb _
                             Implements ikeyvt(Of THREADSAFE).capacity
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.capacity(result)
@@ -37,7 +37,7 @@ Friend Class ikeyvt_input_validation_wrapper(Of THREADSAFE As _boolean)
     End Function
 
     Public Function delete(ByVal key() As Byte,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of THREADSAFE).delete
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of THREADSAFE).delete
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.delete(key, result)
                                        End Function,
@@ -46,7 +46,7 @@ Friend Class ikeyvt_input_validation_wrapper(Of THREADSAFE As _boolean)
                                        End Function)
     End Function
 
-    Public Function empty(ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of THREADSAFE).empty
+    Public Function empty(ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of THREADSAFE).empty
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.empty(result)
                                        End Function,
@@ -55,7 +55,7 @@ Friend Class ikeyvt_input_validation_wrapper(Of THREADSAFE As _boolean)
                                        End Function)
     End Function
 
-    Public Function full(ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of THREADSAFE).full
+    Public Function full(ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of THREADSAFE).full
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.full(result)
                                        End Function,
@@ -68,7 +68,7 @@ Friend Class ikeyvt_input_validation_wrapper(Of THREADSAFE As _boolean)
         Return impl.heartbeat()
     End Function
 
-    Public Function keycount(ByVal result As pointer(Of Int64)) As event_comb _
+    Public Function keycount(ByVal result As ref(Of Int64)) As event_comb _
                             Implements ikeyvt(Of THREADSAFE).keycount
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.keycount(result)
@@ -78,7 +78,7 @@ Friend Class ikeyvt_input_validation_wrapper(Of THREADSAFE As _boolean)
                                        End Function)
     End Function
 
-    Public Function list(ByVal result As pointer(Of vector(Of Byte()))) As event_comb _
+    Public Function list(ByVal result As ref(Of vector(Of Byte()))) As event_comb _
                         Implements ikeyvt(Of THREADSAFE).list
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.list(result)
@@ -91,7 +91,7 @@ Friend Class ikeyvt_input_validation_wrapper(Of THREADSAFE As _boolean)
     Public Function modify(ByVal key() As Byte,
                            ByVal value() As Byte,
                            ByVal ts As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of THREADSAFE).modify
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of THREADSAFE).modify
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.modify(key, value, ts, result)
                                        End Function,
@@ -101,8 +101,8 @@ Friend Class ikeyvt_input_validation_wrapper(Of THREADSAFE As _boolean)
     End Function
 
     Public Function read(ByVal key() As Byte,
-                         ByVal result As pointer(Of Byte()),
-                         ByVal ts As pointer(Of Int64)) As event_comb Implements ikeyvt(Of THREADSAFE).read
+                         ByVal result As ref(Of Byte()),
+                         ByVal ts As ref(Of Int64)) As event_comb Implements ikeyvt(Of THREADSAFE).read
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.read(key, result, ts)
                                        End Function,
@@ -116,7 +116,7 @@ Friend Class ikeyvt_input_validation_wrapper(Of THREADSAFE As _boolean)
     End Function
 
     Public Function seek(ByVal key() As Byte,
-                         ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of THREADSAFE).seek
+                         ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of THREADSAFE).seek
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.seek(key, result)
                                        End Function,
@@ -126,7 +126,7 @@ Friend Class ikeyvt_input_validation_wrapper(Of THREADSAFE As _boolean)
     End Function
 
     Public Function sizeof(ByVal key() As Byte,
-                           ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvt(Of THREADSAFE).sizeof
+                           ByVal result As ref(Of Int64)) As event_comb Implements ikeyvt(Of THREADSAFE).sizeof
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.sizeof(key, result)
                                        End Function,
@@ -142,7 +142,7 @@ Friend Class ikeyvt_input_validation_wrapper(Of THREADSAFE As _boolean)
     Public Function unique_write(ByVal key() As Byte,
                                  ByVal value() As Byte,
                                  ByVal ts As Int64,
-                                 ByVal result As pointer(Of Boolean)) As event_comb _
+                                 ByVal result As ref(Of Boolean)) As event_comb _
                                 Implements ikeyvt(Of THREADSAFE).unique_write
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.unique_write(key, value, ts, result)
@@ -152,7 +152,7 @@ Friend Class ikeyvt_input_validation_wrapper(Of THREADSAFE As _boolean)
                                        End Function)
     End Function
 
-    Public Function valuesize(ByVal result As pointer(Of Int64)) As event_comb _
+    Public Function valuesize(ByVal result As ref(Of Int64)) As event_comb _
                              Implements ikeyvt(Of THREADSAFE).valuesize
         Return event_comb.chain_before(Function() As Boolean
                                            Return input_validation.valuesize(result)

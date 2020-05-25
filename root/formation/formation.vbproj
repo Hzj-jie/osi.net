@@ -243,17 +243,6 @@
     <None Include="lifetime_control\codegen\weak_disposer_T.vbp" />
     <None Include="lifetime_control\codegen\weak_dispose_ptr.vbp" />
     <None Include="lifetime_control\codegen\weak_dispose_ptr_do_dispose.vbp" />
-    <None Include="pointer\codegen\array_pointer.override.vbp" />
-    <None Include="pointer\codegen\array_pointer.vbp" />
-    <None Include="pointer\codegen\pointer.override.vbp" />
-    <None Include="pointer\codegen\pointer.vbp" />
-    <None Include="pointer\codegen\run.cmd" />
-    <None Include="pointer\codegen\single_obj_pointer_operator.vbp" />
-    <None Include="pointer\codegen\strong_pointer_override.vbp" />
-    <None Include="pointer\codegen\weak_pointer.override.vbp" />
-    <None Include="pointer\codegen\weak_pointer.vbp" />
-    <None Include="pointer\codegen\weak_ref_pointer.override.vbp" />
-    <None Include="pointer\codegen\weak_ref_pointer.vbp" />
     <None Include="threadsafe\codegen\qless2.vbp" />
     <None Include="threadsafe\codegen\heapless.vbp" />
     <None Include="threadsafe\codegen\run.cmd" />

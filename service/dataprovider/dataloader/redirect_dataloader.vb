@@ -16,7 +16,7 @@ Public Class redirect_dataloader(Of T)
         Me.target = target
     End Sub
 
-    Public Function load(ByVal localfile As String, ByVal result As pointer(Of T)) As event_comb _
+    Public Function load(ByVal localfile As String, ByVal result As ref(Of T)) As event_comb _
                         Implements idataloader(Of T).load
         Return l.load(target, result)
     End Function

@@ -29,8 +29,8 @@ Friend Class threadpool_case
     End Sub
 
     Private Function run_case() As Boolean
-        Dim p As pointer(Of Int64) = Nothing
-        p = New pointer(Of Int64)()
+        Dim p As ref(Of Int64) = Nothing
+        p = New ref(Of Int64)()
 #If USE_FAST_THREAD_POOL Then
         Dim tp As fast_threadpool = Nothing
 #ElseIf USE_THREAD_POOL2 Then

@@ -66,10 +66,10 @@ Partial Public Class token_test
                                               ByVal ppt As mock_ppt,
                                               ByVal conn As mock_conn) As event_comb
         ' Usually we should not use the same ppt and conn instance.
-        Dim selected_ppt As pointer(Of mock_ppt) = Nothing
+        Dim selected_ppt As ref(Of mock_ppt) = Nothing
         Dim accept_ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  selected_ppt = New pointer(Of mock_ppt)()
+                                  selected_ppt = New ref(Of mock_ppt)()
                                   selected_ppt.set(ppts(rnd_int(0, array_size(ppts))))
                                   accept_ec = d(conn, selected_ppt)
                                   Return waitfor(accept_ec) AndAlso
@@ -97,9 +97,9 @@ Partial Public Class token_test
                                                  ByVal with_empty_ppt As Boolean,
                                                  ByVal conn As mock_conn) As event_comb
         Dim challenge_ec As event_comb = Nothing
-        Dim challenge_accepted As pointer(Of Boolean) = Nothing
+        Dim challenge_accepted As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
-                                  challenge_accepted = New pointer(Of Boolean)()
+                                  challenge_accepted = New ref(Of Boolean)()
                                   challenge_accepted.set(rnd_bool())
                                   challenge_ec = c(challenge_accepted)
                                   Return waitfor(challenge_ec) AndAlso

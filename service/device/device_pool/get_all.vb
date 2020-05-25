@@ -27,7 +27,7 @@ Public Module _get_all
     <Extension()> Public Function get_all(Of T) _
                                          (ByVal this As idevice_pool(Of T),
                                           ByVal v As Action(Of idevice(Of T), idevice_pool(Of T)),
-                                          ByVal stopping As pointer(Of singleentry)) As Boolean
+                                          ByVal stopping As ref(Of singleentry)) As Boolean
         Return this.get_all(v, AddressOf stopping.not_null_and_in_use)
     End Function
 
@@ -62,7 +62,7 @@ Public Module _get_all
     <Extension()> Public Function get_all(Of T) _
                                          (ByVal this As idevice_pool(Of T),
                                           ByVal v As Action(Of idevice(Of T)),
-                                          ByVal stopping As pointer(Of singleentry)) As Boolean
+                                          ByVal stopping As ref(Of singleentry)) As Boolean
         Return this.get_all(v, AddressOf stopping.not_null_and_in_use)
     End Function
 
@@ -87,7 +87,7 @@ Public Module _get_all
                                           ByVal v As Func(Of idevice(Of T),
                                                              idevice_pool(Of T),
                                                              event_comb),
-                                          ByVal stopping As pointer(Of singleentry)) As Boolean
+                                          ByVal stopping As ref(Of singleentry)) As Boolean
         Return this.get_all(v, AddressOf stopping.not_null_and_in_use)
     End Function
 
@@ -117,7 +117,7 @@ Public Module _get_all
     <Extension()> Public Function get_all(Of T) _
                                          (ByVal this As idevice_pool(Of T),
                                           ByVal v As Func(Of idevice(Of T), event_comb),
-                                          ByVal stopping As pointer(Of singleentry)) As Boolean
+                                          ByVal stopping As ref(Of singleentry)) As Boolean
         Return this.get_all(v, AddressOf stopping.not_null_and_in_use)
     End Function
 End Module

@@ -53,7 +53,7 @@ Public NotInheritable Class connectivity
         Next
     End Sub
 
-    Public Shared Function check_if_needed(ByVal result As pointer(Of result_t),
+    Public Shared Function check_if_needed(ByVal result As ref(Of result_t),
                                            Optional last_result_expiration_ms As Int64 =
                                                constants.default_connectivity_expiration_time_ms) As event_comb
         Dim ec As event_comb = Nothing
@@ -72,7 +72,7 @@ Public NotInheritable Class connectivity
                               End Function)
     End Function
 
-    Public Shared Function check(ByVal result As pointer(Of result_t)) As event_comb
+    Public Shared Function check(ByVal result As ref(Of result_t)) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   result.renew()
@@ -90,10 +90,10 @@ Public NotInheritable Class connectivity
                               End Function)
     End Function
 
-    Public Shared Function check(ByVal result As pointer(Of result_t),
+    Public Shared Function check(ByVal result As ref(Of result_t),
                                  ByVal hosts As const_array(Of String)) As event_comb
-        Dim r() As pointer(Of Boolean) = Nothing
-        Dim a() As pointer(Of Boolean) = Nothing
+        Dim r() As ref(Of Boolean) = Nothing
+        Dim a() As ref(Of Boolean) = Nothing
         Dim ecs() As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If hosts.null_or_empty() Then
@@ -141,7 +141,7 @@ Public NotInheritable Class connectivity
                               End Function)
     End Function
 
-    Private Shared Sub analyze(ByVal r() As pointer(Of Boolean), ByRef at As Boolean, ByRef af As Boolean)
+    Private Shared Sub analyze(ByVal r() As ref(Of Boolean), ByRef at As Boolean, ByRef af As Boolean)
         at = True
         af = True
         For i As Int32 = 0 To array_size_i(r) - 1
@@ -160,8 +160,8 @@ Public NotInheritable Class connectivity
     End Sub
 
     Private Shared Function check_host(ByVal host As String,
-                                       ByVal dns_resolve_result As pointer(Of Boolean),
-                                       ByVal access_result As pointer(Of Boolean)) As event_comb
+                                       ByVal dns_resolve_result As ref(Of Boolean),
+                                       ByVal access_result As ref(Of Boolean)) As event_comb
         assert(Not dns_resolve_result Is Nothing)
         assert(Not access_result Is Nothing)
         Dim ec As event_comb = Nothing
@@ -179,7 +179,7 @@ Public NotInheritable Class connectivity
                                   End If
                                   dns_resolve_result.set(True)
                                   ec = Net.WebRequest.Create(strcat("http://", host)).get_response(
-                                           New pointer(Of Net.WebResponse)())
+                                           New ref(Of Net.WebResponse)())
                                   Return waitfor(ec) AndAlso
                                          goto_next()
                               End Function,

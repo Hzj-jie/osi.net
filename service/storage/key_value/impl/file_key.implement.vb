@@ -13,12 +13,12 @@ Partial Public Class file_key
 
     Public Function append_existing(ByVal key As String,
                                     ByVal value() As Byte,
-                                    ByVal result As pointer(Of Boolean)) As event_comb _
+                                    ByVal result As ref(Of Boolean)) As event_comb _
                                    Implements ikeyvt2(Of String).append_existing
         Return write_file(key, value, result, True)
     End Function
 
-    Public Function capacity(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvt2(Of String).capacity
+    Public Function capacity(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvt2(Of String).capacity
         Return sync_async(Function() As Int64
                               Return CLng(ci.capacity())
                           End Function,
@@ -27,7 +27,7 @@ Partial Public Class file_key
     End Function
 
     Public Function delete_existing(ByVal key As String,
-                                    ByVal result As pointer(Of Boolean)) As event_comb _
+                                    ByVal result As ref(Of Boolean)) As event_comb _
                                    Implements ikeyvt2(Of String).delete_existing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -42,7 +42,7 @@ Partial Public Class file_key
     End Function
 
     Public Function delete_existing_timestamp(ByVal key As String,
-                                              ByVal result As pointer(Of Boolean)) As event_comb _
+                                              ByVal result As ref(Of Boolean)) As event_comb _
                                              Implements ikeyvt2(Of String).delete_existing_timestamp
         Return New event_comb(Function() As Boolean
                                   Return eva(result, True) AndAlso
@@ -50,11 +50,11 @@ Partial Public Class file_key
                               End Function)
     End Function
 
-    Public Function empty(ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt2(Of String).empty
+    Public Function empty(ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt2(Of String).empty
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of String()) = Nothing
+        Dim r As ref(Of String()) = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of String())()
+                                  r = New ref(Of String())()
                                   ec = list_files(r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -66,7 +66,7 @@ Partial Public Class file_key
                               End Function)
     End Function
 
-    Public Function full(ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt2(Of String).full
+    Public Function full(ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt2(Of String).full
         Return sync_async(Sub()
                               assert(eva(result, ci.capacity() <= 0))
                           End Sub)
@@ -76,11 +76,11 @@ Partial Public Class file_key
         Return create_directory(dr)
     End Function
 
-    Public Function keycount(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvt2(Of String).keycount
+    Public Function keycount(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvt2(Of String).keycount
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of String()) = Nothing
+        Dim r As ref(Of String()) = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of String())()
+                                  r = New ref(Of String())()
                                   ec = list_files(r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -92,12 +92,12 @@ Partial Public Class file_key
                               End Function)
     End Function
 
-    Public Function list(ByVal result As pointer(Of vector(Of Byte()))) As event_comb _
+    Public Function list(ByVal result As ref(Of vector(Of Byte()))) As event_comb _
                         Implements ikeyvt2(Of String).list
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of String()) = Nothing
+        Dim r As ref(Of String()) = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of String())()
+                                  r = New ref(Of String())()
                                   ec = list_files(r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -120,13 +120,13 @@ Partial Public Class file_key
     End Function
 
     Public Function read_existing(ByVal key As String,
-                                  ByVal result As pointer(Of Byte())) As event_comb _
+                                  ByVal result As ref(Of Byte())) As event_comb _
                                  Implements ikeyvt2(Of String).read_existing
         Return read_file(key, result)
     End Function
 
     Public Function read_existing_timestamp(ByVal key As String,
-                                            ByVal ts As pointer(Of Int64)) As event_comb _
+                                            ByVal ts As ref(Of Int64)) As event_comb _
                                            Implements ikeyvt2(Of String).read_existing_timestamp
         Return get_timestamp(key, ts)
     End Function
@@ -136,8 +136,8 @@ Partial Public Class file_key
     End Function
 
     Public Function seek(ByVal key() As Byte,
-                         ByVal r As pointer(Of String),
-                         ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt2(Of String).seek
+                         ByVal r As ref(Of String),
+                         ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt2(Of String).seek
         Dim f As String = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -157,7 +157,7 @@ Partial Public Class file_key
     End Function
 
     Public Function sizeof_existing(ByVal key As String,
-                                    ByVal result As pointer(Of Int64)) As event_comb _
+                                    ByVal result As ref(Of Int64)) As event_comb _
                                    Implements ikeyvt2(Of String).sizeof_existing
         Return file_size(key, result)
     End Function
@@ -166,13 +166,13 @@ Partial Public Class file_key
         Return event_comb.succeeded()
     End Function
 
-    Public Function valuesize(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvt2(Of String).valuesize
+    Public Function valuesize(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvt2(Of String).valuesize
         Return directory_size(dr.base_directory(), result)
     End Function
 
     Public Function write_new(ByVal key() As Byte,
                               ByVal value() As Byte,
-                              ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt2(Of String).write_new
+                              ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt2(Of String).write_new
         Dim f As String = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -193,7 +193,7 @@ Partial Public Class file_key
 
     Public Function write_new_timestamp(ByVal key() As Byte,
                                         ByVal ts As Int64,
-                                        ByVal result As pointer(Of Boolean)) As event_comb _
+                                        ByVal result As ref(Of Boolean)) As event_comb _
                                        Implements ikeyvt2(Of String).write_new_timestamp
         Dim f As String = Nothing
         Dim ec As event_comb = Nothing

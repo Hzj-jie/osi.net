@@ -14,7 +14,7 @@ Imports osi.root.utils
 Public Interface iproperty
     Function path() As String
     Function name() As String
-    Function [get](ByVal i As pointer(Of Byte())) As event_comb
+    Function [get](ByVal i As ref(Of Byte())) As event_comb
     Function [set](ByVal v() As Byte) As event_comb
     Function append(ByVal v() As Byte) As event_comb
     Function lock(Optional ByVal wait_ms As Int64 = npos) As event_comb
@@ -23,16 +23,16 @@ End Interface
 
 Public Module _iproperty
     Private Function [get](Of T)(ByVal i As iproperty,
-                                 ByVal r As pointer(Of T),
+                                 ByVal r As ref(Of T),
                                  ByVal convert As _do_val_ref(Of Byte(), T, Boolean)) As event_comb
         assert(Not convert Is Nothing)
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of Byte()) = Nothing
+        Dim p As ref(Of Byte()) = Nothing
         Return New event_comb(Function() As Boolean
                                   If i Is Nothing Then
                                       Return False
                                   End If
-                                  p = New pointer(Of Byte())()
+                                  p = New ref(Of Byte())()
                                   ec = i.[get](p)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -47,7 +47,7 @@ Public Module _iproperty
     End Function
 
     <Extension()> Public Function [get](ByVal i As iproperty,
-                                        ByVal r As pointer(Of String)) As event_comb
+                                        ByVal r As ref(Of String)) As event_comb
         Return [get](i,
                      r,
                      Function(x() As Byte, ByRef y As String) As Boolean
@@ -57,70 +57,70 @@ Public Module _iproperty
     End Function
 
     <Extension()> Public Function [get](ByVal i As iproperty,
-                                        ByVal r As pointer(Of SByte)) As event_comb
+                                        ByVal r As ref(Of SByte)) As event_comb
         Return [get](i,
                      r,
                      AddressOf bytes_sbyte)
     End Function
 
     <Extension()> Public Function [get](ByVal i As iproperty,
-                                        ByVal r As pointer(Of Byte)) As event_comb
+                                        ByVal r As ref(Of Byte)) As event_comb
         Return [get](i,
                      r,
                      AddressOf bytes_byte)
     End Function
 
     <Extension()> Public Function [get](ByVal i As iproperty,
-                                        ByVal r As pointer(Of Int16)) As event_comb
+                                        ByVal r As ref(Of Int16)) As event_comb
         Return [get](i,
                      r,
                      AddressOf bytes_int16)
     End Function
 
     <Extension()> Public Function [get](ByVal i As iproperty,
-                                        ByVal r As pointer(Of UInt16)) As event_comb
+                                        ByVal r As ref(Of UInt16)) As event_comb
         Return [get](i,
                      r,
                      AddressOf bytes_uint16)
     End Function
 
     <Extension()> Public Function [get](ByVal i As iproperty,
-                                        ByVal r As pointer(Of Int32)) As event_comb
+                                        ByVal r As ref(Of Int32)) As event_comb
         Return [get](i,
                      r,
                      AddressOf bytes_int32)
     End Function
 
     <Extension()> Public Function [get](ByVal i As iproperty,
-                                        ByVal r As pointer(Of UInt32)) As event_comb
+                                        ByVal r As ref(Of UInt32)) As event_comb
         Return [get](i,
                      r,
                      AddressOf bytes_uint32)
     End Function
 
     <Extension()> Public Function [get](ByVal i As iproperty,
-                                        ByVal r As pointer(Of Int64)) As event_comb
+                                        ByVal r As ref(Of Int64)) As event_comb
         Return [get](i,
                      r,
                      AddressOf bytes_int64)
     End Function
 
     <Extension()> Public Function [get](ByVal i As iproperty,
-                                        ByVal r As pointer(Of UInt64)) As event_comb
+                                        ByVal r As ref(Of UInt64)) As event_comb
         Return [get](i,
                      r,
                      AddressOf bytes_uint64)
     End Function
 
     <Extension()> Public Function [get](ByVal i As iproperty,
-                                        ByVal r As pointer(Of Single)) As event_comb
+                                        ByVal r As ref(Of Single)) As event_comb
         Return [get](i,
                      r,
                      AddressOf bytes_single)
     End Function
 
     <Extension()> Public Function [get](ByVal i As iproperty,
-                                        ByVal r As pointer(Of Double)) As event_comb
+                                        ByVal r As ref(Of Double)) As event_comb
         Return [get](i,
                      r,
                      AddressOf bytes_double)
@@ -219,9 +219,9 @@ Public Module _iproperty
 
     <Extension()> Public Function unique_push_back(ByVal i As iproperty, ByVal value() As Byte) As event_comb
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of Boolean) = Nothing
+        Dim r As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of Boolean)()
+                                  r = New ref(Of Boolean)()
                                   ec = contains(i, value, r)
                                   Return ec.end_result() AndAlso
                                          goto_next()
@@ -246,14 +246,14 @@ Public Module _iproperty
     End Function
 
     <Extension()> Public Function read(ByVal i As iproperty,
-                                       ByVal v As pointer(Of vector(Of Byte()))) As event_comb
+                                       ByVal v As ref(Of vector(Of Byte()))) As event_comb
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of Byte()) = Nothing
+        Dim p As ref(Of Byte()) = Nothing
         Return New event_comb(Function() As Boolean
                                   If i Is Nothing Then
                                       Return False
                                   End If
-                                  p = New pointer(Of Byte())()
+                                  p = New ref(Of Byte())()
                                   ec = i.get(p)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -268,14 +268,14 @@ Public Module _iproperty
 
     <Extension()> Public Function contains(ByVal i As iproperty,
                                            ByVal v() As Byte,
-                                           ByVal r As pointer(Of Boolean)) As event_comb
+                                           ByVal r As ref(Of Boolean)) As event_comb
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of Byte()) = Nothing
+        Dim p As ref(Of Byte()) = Nothing
         Return New event_comb(Function() As Boolean
                                   If i Is Nothing Then
                                       Return False
                                   End If
-                                  p = New pointer(Of Byte())()
+                                  p = New ref(Of Byte())()
                                   ec = i.get(p)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -288,11 +288,11 @@ Public Module _iproperty
     End Function
 
     <Extension()> Public Function read(ByVal p As iproperty,
-                                       ByVal v As pointer(Of vector(Of String))) As event_comb
+                                       ByVal v As ref(Of vector(Of String))) As event_comb
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of vector(Of Byte())) = Nothing
+        Dim r As ref(Of vector(Of Byte())) = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of vector(Of Byte()))()
+                                  r = New ref(Of vector(Of Byte()))()
                                   ec = read(p, r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -309,7 +309,7 @@ Public Module _iproperty
 
     <Extension()> Public Function contains(ByVal p As iproperty,
                                            ByVal v As String,
-                                           ByVal r As pointer(Of Boolean)) As event_comb
+                                           ByVal r As ref(Of Boolean)) As event_comb
         Return contains(p, str_bytes(v), r)
     End Function
 End Module

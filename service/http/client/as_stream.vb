@@ -19,8 +19,8 @@ Partial Public NotInheritable Class client
             Me.result = result
         End Sub
 
-        Friend Shadows Function eva(ByVal status As pointer(Of HttpStatusCode),
-                                    ByVal headers As pointer(Of WebHeaderCollection)) As Boolean
+        Friend Shadows Function eva(ByVal status As ref(Of HttpStatusCode),
+                                    ByVal headers As ref(Of WebHeaderCollection)) As Boolean
             Return MyBase.eva(status, headers)
         End Function
     End Class
@@ -34,9 +34,9 @@ Partial Public NotInheritable Class client
                                    Optional ByVal request_comm As link_status = Nothing,
                                    Optional ByVal response_comm As link_status = Nothing) As event_comb
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of HttpWebResponse) = Nothing
+        Dim r As ref(Of HttpWebResponse) = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of HttpWebResponse)()
+                                  r = New ref(Of HttpWebResponse)()
                                   ec = request(url,
                                                request_method,
                                                request_headers,

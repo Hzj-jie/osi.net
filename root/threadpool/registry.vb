@@ -66,7 +66,7 @@ Imports osi.root.formation
 Imports osi.root.utils
 
 Public Module _auto_updating_resolver
-    Private ReadOnly p As disposer(Of weak_pointer(Of ithreadpool))
+    Private ReadOnly p As disposer(Of weak_ref(Of ithreadpool))
 
     Sub New()
         p = resolver.auto_updating_resolve(Of ithreadpool)()

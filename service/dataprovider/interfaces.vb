@@ -29,9 +29,9 @@ Public Interface idatafetcher
 End Interface
 
 Public Interface idataloader(Of T)
-    Function load(ByVal localfile As String, ByVal result As pointer(Of T)) As event_comb
+    Function load(ByVal localfile As String, ByVal result As ref(Of T)) As event_comb
 End Interface
 
 Public Interface istreamdataloader(Of T)
-    Function load(ByVal s As Stream, ByVal result As pointer(Of T)) As event_comb
+    Function load(ByVal s As Stream, ByVal result As ref(Of T)) As event_comb
 End Interface

@@ -19,7 +19,7 @@ Public NotInheritable Class file_index_test
         MyBase.New()
     End Sub
 
-    Protected Overrides Function create_valid_istrkeyvt(ByVal p As pointer(Of istrkeyvt)) As event_comb
+    Protected Overrides Function create_valid_istrkeyvt(ByVal p As ref(Of istrkeyvt)) As event_comb
         Return file_index.ctor(p, data_dir)
     End Function
 End Class

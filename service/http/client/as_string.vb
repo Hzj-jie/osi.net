@@ -35,9 +35,9 @@ Partial Public NotInheritable Class client
             Return r
         End Function
 
-        Friend Shadows Function eva(ByVal status As pointer(Of HttpStatusCode),
-                                    ByVal headers As pointer(Of WebHeaderCollection),
-                                    ByVal result As pointer(Of String)) As Boolean
+        Friend Shadows Function eva(ByVal status As ref(Of HttpStatusCode),
+                                    ByVal headers As ref(Of WebHeaderCollection),
+                                    ByVal result As ref(Of String)) As Boolean
             Return MyBase.eva(status, headers) AndAlso
                    _eva.eva(result, Me.result())
         End Function

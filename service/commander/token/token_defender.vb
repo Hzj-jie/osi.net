@@ -49,8 +49,8 @@ Public NotInheritable Class token_defender(Of COLLECTION As Class, CONNECTION)
         MyBase.New(info, max_connecting, accepting_over_max_connecting_wait_ms)
     End Sub
 
-    Private Overloads Function verify_token(ByVal r As pointer(Of COLLECTION)) As executor
-        Return New executor_wrapper(Function(i() As Byte, o As pointer(Of Byte())) As event_comb
+    Private Overloads Function verify_token(ByVal r As ref(Of COLLECTION)) As executor
+        Return New executor_wrapper(Function(i() As Byte, o As ref(Of Byte())) As event_comb
                                         Return sync_async(
                                             Sub()
                                                 Dim p As piece = Nothing
@@ -68,7 +68,7 @@ Public NotInheritable Class token_defender(Of COLLECTION As Class, CONNECTION)
 
     Protected Overrides Function verify_token(ByVal h As herald,
                                               ByVal p As COLLECTION,
-                                              ByVal r As pointer(Of COLLECTION)) As event_comb
+                                              ByVal r As ref(Of COLLECTION)) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = +(New responder(Of _false)(h,

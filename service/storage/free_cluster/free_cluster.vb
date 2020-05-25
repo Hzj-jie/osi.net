@@ -33,7 +33,7 @@ Partial Public NotInheritable Class free_cluster
         vd = i
     End Sub
 
-    Public Shared Function ctor(ByVal r As pointer(Of free_cluster),
+    Public Shared Function ctor(ByVal r As ref(Of free_cluster),
                                 ByVal i As virtdisk) As event_comb
         Dim ec As event_comb = Nothing
         Dim f As free_cluster = Nothing
@@ -54,7 +54,7 @@ Partial Public NotInheritable Class free_cluster
                               End Function)
     End Function
 
-    Public Shared Function ctor(ByVal r As pointer(Of free_cluster),
+    Public Shared Function ctor(ByVal r As ref(Of free_cluster),
                                 ByVal file As String,
                                 Optional ByVal buff_size As Int32 = npos) As event_comb
         Return ctor(r, New virtdisk(file, buff_size))
@@ -72,11 +72,11 @@ Partial Public NotInheritable Class free_cluster
     Private Function open() As event_comb
         Dim offset As UInt64 = 0
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of cluster) = Nothing
+        Dim r As ref(Of cluster) = Nothing
         Return New event_comb(Function() As Boolean
                                   If offset < vd.size() Then
                                       If r Is Nothing Then
-                                          r = New pointer(Of cluster)()
+                                          r = New ref(Of cluster)()
                                       Else
                                           r.clear()
                                       End If
