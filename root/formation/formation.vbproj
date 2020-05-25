@@ -121,7 +121,7 @@
     <Compile Include="pair.vb" />
     <Compile Include="piece.vb" />
     <Compile Include="pointer\array_pointer.vb" />
-    <Compile Include="pointernode.vb" />
+    <Compile Include="ref_node.vb" />
     <Compile Include="pointer\pointer.vb" />
     <Compile Include="pointer\weak_ref_pointer.vb" />
     <Compile Include="pointer\weak_pointer.vb" />
