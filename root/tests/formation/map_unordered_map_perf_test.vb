@@ -30,11 +30,11 @@ Public NotInheritable Class map_unordered_map_perf_test
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-        Return loosen_bound({1821, 2149, 562, 1166, 1169}, i, j)
+        Return loosen_bound({19713, 1155, 5559}, i, j)
     End Function
 
     Private Shared Function r(ByVal c As [case]) As [case]
-        Return repeat(c, 100000)
+        Return repeat(c, 1000000)
     End Function
 
     Private MustInherit Class run_case
