@@ -65,7 +65,6 @@ Public Class ##TYPE##(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New()
-        clear()
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -75,22 +74,10 @@ Public Class ##TYPE##(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal i As ##TYPE##(Of T))
-        If i Is Nothing Then
-            clear()
-        Else
-            [set](+i)
-        End If
+        [set](+i)
     End Sub
 
     ##INCLUDE ##TYPE##.override.vbp
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function release() As ##INNER_TYPE##
-        Dim r As ##INNER_TYPE## = Nothing
-        r = [get]()
-        clear()
-        Return r
-    End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo

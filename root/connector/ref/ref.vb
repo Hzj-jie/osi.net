@@ -72,7 +72,6 @@ Public Class ref(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New()
-        clear()
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -82,11 +81,7 @@ Public Class ref(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal i As ref(Of T))
-        If i Is Nothing Then
-            clear()
-        Else
-            [set](+i)
-        End If
+        [set](+i)
     End Sub
 
 
@@ -121,9 +116,12 @@ Public Class ref(Of T)
     Public p As T
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub clear()
+    Public Function clear() As T
+        Dim r As T = Nothing
+        r = p
         p = Nothing
-    End Sub
+        Return r
+    End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function empty() As Boolean
@@ -141,14 +139,6 @@ Public Class ref(Of T)
     End Sub
 'finish strong_ref_override.vbp --------
 'finish ref.override.vbp --------
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function release() As T
-        Dim r As T = Nothing
-        r = [get]()
-        clear()
-        Return r
-    End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo

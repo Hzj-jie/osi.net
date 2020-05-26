@@ -6,9 +6,12 @@
     Private p As WeakReference
     
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub clear()
+    Public Function clear() As T
+        Dim r As T = Nothing
+        r = [get]()
         p = Nothing
-    End Sub
+        Return r
+    End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function empty() As Boolean
