@@ -86,6 +86,7 @@ int main(int argc, char* argv[])
         for(int i = 0; i < sizeof(types) / sizeof(types[0]); i++)
         {
             fprintf(fo,
+                    "    <Extension()>\n"
                     "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
                     "    Public Function array_size(ByVal i() As %s) As UInt32\n"
                     ARRAY_SIZE_0
@@ -93,6 +94,7 @@ int main(int argc, char* argv[])
                     types[i]);
 
             fprintf(fo,
+                    "    <Extension()>\n"
                     "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
                     "    Public Function array_size_i(ByVal i() As %s) As Int32\n"
                     ARRAY_SIZE_2
@@ -100,6 +102,7 @@ int main(int argc, char* argv[])
                     types[i]);
 
             fprintf(fo,
+                    "    <Extension()>\n"
                     "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
                     "    Public Function array_long_size(ByVal i() As %s) As UInt64\n"
                     ARRAY_LONG_SIZE_0
@@ -107,6 +110,7 @@ int main(int argc, char* argv[])
                     types[i]);
 
             fprintf(fo,
+                    "    <Extension()>\n"
                     "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
                     "    Public Function isemptyarray(ByVal i() As %s) As Boolean\n"
                     IS_EMPTY_ARRAY_0
@@ -114,6 +118,7 @@ int main(int argc, char* argv[])
                     types[i]);
 
             fprintf(fo,
+                    "    <Extension()>\n"
                     "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
                     "    Public Function array_size(ByVal i(,) As %s) As UInt32\n"
                     ARRAY_SIZE_1
@@ -121,6 +126,7 @@ int main(int argc, char* argv[])
                     types[i]);
 
             fprintf(fo,
+                    "    <Extension()>\n"
                     "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
                     "    Public Function array_size_i(ByVal i(,) As %s) As Int32\n"
                     ARRAY_SIZE_3
@@ -128,6 +134,7 @@ int main(int argc, char* argv[])
                     types[i]);
 
             fprintf(fo,
+                    "    <Extension()>\n"
                     "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
                     "    Public Function array_long_size(ByVal i(,) As %s) As UInt64\n"
                     ARRAY_LONG_SIZE_1
@@ -135,12 +142,14 @@ int main(int argc, char* argv[])
                     types[i]);
 
             fprintf(fo,
+                    "    <Extension()>\n"
                     "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
                     "    Public Function isemptyarray(ByVal i(,) As %s) As Boolean\n"
                     IS_EMPTY_ARRAY_1
                     "    End Function\n\n",
                     types[i]);
             fprintf(fo,
+                    "    <Extension()>\n"
                     "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
                     "    Public Function memcmp(ByVal first() As %s,\n"
                     "                           ByVal first_start As UInt32,\n"
@@ -152,6 +161,7 @@ int main(int argc, char* argv[])
                     types[i],
                     types[i]);
             fprintf(fo,
+                    "    <Extension()>\n"
                     "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
                     "    Public Function memcmp(ByVal first() As %s,\n"
                     "                           ByVal second() As %s,\n"
@@ -161,6 +171,7 @@ int main(int argc, char* argv[])
                     types[i],
                     types[i]);
             fprintf(fo,
+                    "    <Extension()>\n"
                     "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
                     "    Public Function memcmp(ByVal first() As %s,\n"
                     "                           ByVal second() As %s) As Int32\n"
@@ -169,28 +180,32 @@ int main(int argc, char* argv[])
                     types[i],
                     types[i]);
             fprintf(fo,
+                    "    <Extension()>\n"
                     "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
-                    "    <Extension()> Public Function to_strings(ByVal i() As %s) As String()\n"
+                    "    Public Function to_strings(ByVal i() As %s) As String()\n"
                     TO_STRINGS_1
                     "    End Function\n\n",
                     types[i]);
             fprintf(fo,
+                    "    <Extension()>\n"
                     "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
-                    "    <Extension()> Public Function with_strings(ByVal i As %s, ByVal ParamArray j() As %s) As String()\n"
+                    "    Public Function with_strings(ByVal i As %s, ByVal ParamArray j() As %s) As String()\n"
                     TO_STRINGS_2
                     "    End Function\n\n",
                     types[i],
                     types[i]);
             fprintf(fo,
+                    "    <Extension()>\n"
                     "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
-                    "    <Extension()> Public Function start_with(ByVal first() As %s, ByVal second() As %s) As Boolean\n"
+                    "    Public Function start_with(ByVal first() As %s, ByVal second() As %s) As Boolean\n"
                     START_WITH
                     "    End Function\n\n",
                     types[i],
                     types[i]);
             fprintf(fo,
+                    "    <Extension()>\n"
                     "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
-                    "    <Extension()> Public Function end_with(ByVal first() As %s, ByVal second() As %s) As Boolean\n"
+                    "    Public Function end_with(ByVal first() As %s, ByVal second() As %s) As Boolean\n"
                     END_WITH
                     "    End Function\n\n",
                     types[i],
@@ -198,55 +213,64 @@ int main(int argc, char* argv[])
         }
         fputs("#End If\n\n", fo);
 
-        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
               "    Public Function array_size(Of T)(ByVal i() As T) As UInt32\n"
               ARRAY_SIZE_0
               "    End Function\n\n",
               fo);
 
-        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
               "    Public Function array_size_i(Of T)(ByVal i() As T) As Int32\n"
               ARRAY_SIZE_2
               "    End Function\n\n",
               fo);
 
-        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
               "    Public Function array_long_size(Of T)(ByVal i() As T) As UInt64\n"
               ARRAY_LONG_SIZE_0
               "    End Function\n\n",
               fo);
 
-        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
               "    Public Function isemptyarray(Of T)(ByVal i() As T) As Boolean\n"
               IS_EMPTY_ARRAY_0
               "    End Function\n\n",
               fo);
 
-        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
               "    Public Function array_size(Of T)(ByVal i(,) As T) As UInt32\n"
               ARRAY_SIZE_1
               "    End Function\n\n",
               fo);
 
-        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
               "    Public Function array_size_i(Of T)(ByVal i(,) As T) As Int32\n"
               ARRAY_SIZE_3
               "    End Function\n\n",
               fo);
 
-        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
               "    Public Function array_long_size(Of T)(ByVal i(,) As T) As UInt64\n"
               ARRAY_LONG_SIZE_1
               "    End Function\n\n",
               fo);
 
-        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
               "    Public Function isemptyarray(Of T)(ByVal i(,) As T) As Boolean\n"
               IS_EMPTY_ARRAY_1
               "    End Function\n\n",
               fo);
 
-        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
               "    Public Function memcmp(Of T)(ByVal first() As T,\n"
               "                                 ByVal first_start As UInt32,\n"
               "                                 ByVal second() As T,\n"
@@ -255,56 +279,66 @@ int main(int argc, char* argv[])
               COMPARE_ARRAY_0
               "    End Function\n\n",
               fo);
-        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
               "    Public Function memcmp(Of T)(ByVal first() As T,\n"
               "                                 ByVal second() As T,\n"
               "                                 ByVal len As UInt32) As Int32\n"
               COMPARE_ARRAY_1
               "    End Function\n\n",
               fo);
-        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
               "    Public Function memcmp(Of T)(ByVal first() As T,\n"
               "                                 ByVal second() As T) As Int32\n"
               COMPARE_ARRAY_2
               "    End Function\n\n",
               fo);
-        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
-              "    <Extension()> Public Function to_strings(Of T)(ByVal i() As T) As String()\n"
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+              "    Public Function to_strings(Of T)(ByVal i() As T) As String()\n"
               TO_STRINGS_1
               "    End Function\n\n",
               fo);
-        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
-              "    <Extension()> Public Function with_strings(Of T)(ByVal i As T, ByVal ParamArray j() As T) As String()\n"
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+              "    Public Function with_strings(Of T)(ByVal i As T, ByVal ParamArray j() As T) As String()\n"
               TO_STRINGS_2
               "    End Function\n\n",
               fo);
-        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
-              "    <Extension()> Public Function start_with(Of T)(ByVal first() As T, ByVal second() As T) As Boolean\n"
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+              "    Public Function start_with(Of T)(ByVal first() As T, ByVal second() As T) As Boolean\n"
               START_WITH
               "    End Function\n\n",
               fo);
-        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
-              "    <Extension()> Public Function end_with(Of T)(ByVal first() As T, ByVal second() As T) As Boolean\n"
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+              "    Public Function end_with(Of T)(ByVal first() As T, ByVal second() As T) As Boolean\n"
               END_WITH
               "    End Function\n\n",
               fo);
-        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
-              "    <Extension()> Public Function to_strings(ByVal i() As Object) As String()\n"
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+              "    Public Function to_strings(ByVal i() As Object) As String()\n"
               TO_STRINGS_1
               "    End Function\n\n",
               fo);
-        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
-              "    <Extension()> Public Function with_strings(ByVal i As Object, ByVal ParamArray j() As Object) As String()\n"
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+              "    Public Function with_strings(ByVal i As Object, ByVal ParamArray j() As Object) As String()\n"
               TO_STRINGS_2
               "    End Function\n\n",
               fo);
-        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
-              "    <Extension()> Public Function start_with(ByVal first() As Object, ByVal second() As Object) As Boolean\n"
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+              "    Public Function start_with(ByVal first() As Object, ByVal second() As Object) As Boolean\n"
               START_WITH
               "    End Function\n\n",
               fo);
-        fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
-              "    <Extension()> Public Function end_with(ByVal first() As Object, ByVal second() As Object) As Boolean\n"
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+              "    Public Function end_with(ByVal first() As Object, ByVal second() As Object) As Boolean\n"
               END_WITH
               "    End Function\n\n",
               fo);
