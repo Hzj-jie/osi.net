@@ -1,16 +1,19 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.lock
-Imports osi.root.utils
 
-Public Class syncqueue
+Public NotInheritable Class syncqueue
     Private Const sync_wait_ms As Int64 = second_milli
     Private Const push_wait_ms As Int64 = second_milli
     Private ReadOnly prepare_sync_queue As slimqless2(Of String)
-    Private ReadOnly sync_queue As setqueue(Of String)
+    Private ReadOnly sync_queue As unique_queue(Of String)
     Private ReadOnly sync_queue_lock As ref(Of event_comb_lock)
     Private ReadOnly impl As iredundance_distributor
 
@@ -18,7 +21,7 @@ Public Class syncqueue
         Me.impl = impl
         assert(Not Me.impl Is Nothing)
         prepare_sync_queue = New slimqless2(Of String)()
-        sync_queue = New setqueue(Of String)()
+        sync_queue = New unique_queue(Of String)()
         sync_queue_lock = New ref(Of event_comb_lock)()
         start_push_to_sync_queue()
         start_sync()

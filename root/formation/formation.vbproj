@@ -75,6 +75,7 @@
     <Compile Include="bit_array.vb" />
     <Compile Include="bit_array_thread_safe.vb" />
     <Compile Include="chunk.vb" />
+    <Compile Include="stream\double_stream.vb" />
     <Compile Include="unordered_map.ext.vb" />
     <Compile Include="first_const_pair.ext.vb" />
     <Compile Include="hasharray\hasharray.ext.vb" />
@@ -127,7 +128,7 @@
     <Compile Include="qless2_stream.vb" />
     <Compile Include="queue.vb" />
     <Compile Include="set.vb" />
-    <Compile Include="setqueue.vb" />
+    <Compile Include="unique_queue.vb" />
     <Compile Include="stack.vb" />
     <Compile Include="stream\stream.aggregator.vb" />
     <Compile Include="stream\stream.collector.vb" />
