@@ -27,35 +27,35 @@ Partial Public NotInheritable Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY
         End Sub
 
         Public Overrides Function [erase](ByVal index As Int64) As Boolean
-            debug_assert(Not at(index) Is Nothing, "index " + Convert.ToString(index) + " is not in heap.")
+            assert(Not at(index) Is Nothing, "index " + Convert.ToString(index) + " is not in heap.")
             Dim k As MAP_KEY = Nothing
             k = at(index).second
-            debug_assert(MyBase.erase(index), "mybase.erase(" + Convert.ToString(index) + ") returns false.")
+            assert(MyBase.erase(index), "mybase.erase(" + Convert.ToString(index) + ") returns false.")
             If index = size() Then
                 'mybase will not call update here, if the removed index is the last one
-                debug_assert(m.erase(k), "_map.erase(" + Convert.ToString(k) + ") returns false.")
+                assert(m.erase(k), "_map.erase(" + Convert.ToString(k) + ") returns false.")
             End If
-            debug_assert(size() = m.size(), "heap.size() <> _map.size()")
+            assert(size() = m.size(), "heap.size() <> _map.size()")
             Return True
         End Function
 
         Public Overrides Function update(ByVal index As Int64, ByVal value As pair(Of HEAP_KEY, MAP_KEY)) As Int64
-            debug_assert(index <> npos, "should not call update with index = npos.")
-            debug_assert(Not value Is Nothing, "value is nothing.")
+            assert(index <> npos, "should not call update with index = npos.")
+            assert(Not value Is Nothing, "value is nothing.")
             If Not at(index) Is Nothing Then
-                debug_assert(m.erase(at(index).second) _
+                assert(m.erase(at(index).second) _
                             , "_map.erase(" + Convert.ToString(at(index).second) + ") returns false.")
             End If
             Dim rtn As Int64 = 0
             rtn = MyBase.update(index, value)
-            debug_assert(rtn <> npos, "cannot update index " + Convert.ToString(index))
+            assert(rtn <> npos, "cannot update index " + Convert.ToString(index))
             m(value.second) = rtn
-            debug_assert(size() = m.size(), "heap.size() <> _map.size()")
+            assert(size() = m.size(), "heap.size() <> _map.size()")
             Return rtn
         End Function
 
         Protected Overrides Function swap(ByVal first As Int64, ByVal second As Int64) As Boolean
-            debug_assert(Not m Is Nothing, "_map is nothing before swap")
+            assert(Not m Is Nothing, "_map is nothing before swap")
             If Not MyBase.swap(first, second) Then
                 Return False
             End If
@@ -128,7 +128,7 @@ Partial Public NotInheritable Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY
         End If
         Dim heap_node As pair(Of HEAP_KEY, MAP_KEY) = Nothing
         heap_node = h((+heap_pos).second)
-        debug_assert(Not heap_node Is Nothing, "heapNode is nothing, _map is not concur with _heap.")
+        assert(Not heap_node Is Nothing, "heapNode is nothing, _map is not concur with _heap.")
         If accumulate Then
             heap_node.first = binary_operator.add(heap_node.first, value)
         Else
@@ -166,7 +166,7 @@ Partial Public NotInheritable Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY
             Return [end]()
         End If
         Dim heapnode As pair(Of HEAP_KEY, MAP_KEY) = Nothing
-        debug_assert(h.take((+it).second, heapnode), "cannot get _heap(", (+it).second, ")")
+        assert(h.take((+it).second, heapnode), "cannot get _heap(", (+it).second, ")")
         Return New iterator(heapnode)
     End Function
 
@@ -180,12 +180,12 @@ Partial Public NotInheritable Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY
     End Sub
 
     Public Function size() As Int64
-        debug_assert(h.size() = m.size(), "_heap.size() <> _map.size()")
+        assert(h.size() = m.size(), "_heap.size() <> _map.size()")
         Return h.size()
     End Function
 
     Public Function empty() As Boolean
-        debug_assert(h.empty() = m.empty(), "_heap.empty() <> _map.empty()")
+        assert(h.empty() = m.empty(), "_heap.empty() <> _map.empty()")
         Return h.empty()
     End Function
 

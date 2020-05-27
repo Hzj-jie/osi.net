@@ -24,15 +24,13 @@ Namespace counter
         End Function
 
         Private Function last_average_count() As Int64
-            If debug_assert(Not last_averages Is Nothing AndAlso last_averages.Length() > 0,
-                           "last_averages is not initialized, the counter may not enabled last_average.") Then
-                Dim c As Int64 = 0
-                For i As Int32 = 0 To CInt(min(last_averages.Length(), calltimes)) - 1
-                    try_inc(c, last_averages(i), name)
-                Next
-                Return c
-            End If
-            Return npos
+            assert(Not last_averages Is Nothing AndAlso last_averages.Length() > 0,
+                   "last_averages is not initialized, the counter may not enabled last_average.")
+            Dim c As Int64 = 0
+            For i As Int32 = 0 To CInt(min(last_averages.Length(), calltimes)) - 1
+                try_inc(c, last_averages(i), name)
+            Next
+            Return c
         End Function
 
         Private Function last_averages_length() As Int64
@@ -54,26 +52,23 @@ Namespace counter
         End Function
 
         Public Function last_rate() As Int64
-            If debug_assert(Not last_times_ticks Is Nothing AndAlso last_times_ticks.Length() > 0,
-                           "last_times_ticks is not initialized, the counter may not enabled last_rate.") Then
-                Dim c As Int64 = 0
-                Dim oldest As Int64 = 0
-                oldest = max_int64
-                For i As Int32 = 0 To CInt(min(calltimes, last_times_ticks.Length())) - 1
-                    c = last_times_ticks(i)
-                    If c > 0 Then
-                        If oldest > c Then
-                            oldest = c
-                        End If
+            assert(Not last_times_ticks Is Nothing AndAlso last_times_ticks.Length() > 0,
+                   "last_times_ticks is not initialized, the counter may not enabled last_rate.")
+            Dim c As Int64 = 0
+            Dim oldest As Int64 = 0
+            oldest = max_int64
+            For i As Int32 = 0 To CInt(min(calltimes, last_times_ticks.Length())) - 1
+                c = last_times_ticks(i)
+                If c > 0 Then
+                    If oldest > c Then
+                        oldest = c
                     End If
-                Next
-                If oldest < max_int64 Then
-                    Return CLng(last_average_count() / time_interval(oldest))
-                Else
-                    Return 0
                 End If
+            Next
+            If oldest < max_int64 Then
+                Return CLng(last_average_count() / time_interval(oldest))
             End If
-            Return npos
+            Return 0
         End Function
 
         Public Function snapshot() As snapshot

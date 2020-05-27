@@ -29,7 +29,7 @@ Partial Public NotInheritable Class list(Of T)
         End Function
 
         Public Sub appendlast(ByVal that As node)
-            debug_assert(Not Object.ReferenceEquals(Me, that), "should not append last to a node itself.")
+            assert(Not Object.ReferenceEquals(Me, that), "should not append last to a node itself.")
             ref(ref_index.last) = that
             If Not that Is Nothing Then
                 that.ref(ref_index.next) = Me
@@ -37,7 +37,7 @@ Partial Public NotInheritable Class list(Of T)
         End Sub
 
         Public Sub appendnext(ByVal that As node)
-            debug_assert(Not Object.ReferenceEquals(Me, that), "should not append next to a node itself.")
+            assert(Not Object.ReferenceEquals(Me, that), "should not append next to a node itself.")
             ref(ref_index.next) = that
             If Not that Is Nothing Then
                 that.ref(ref_index.last) = Me
@@ -244,7 +244,7 @@ Partial Public NotInheritable Class list(Of T)
         End If
         _size += uint32_1
         it = it.next()
-        debug_assert(Not it Is Nothing, "it.next() is nothing after insert.")
+        assert(Not it Is Nothing, "it.next() is nothing after insert.")
 
         Return New iterator(it)
     End Function

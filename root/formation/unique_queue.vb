@@ -17,12 +17,12 @@ Public NotInheritable Class unique_queue(Of T As IComparable(Of T))
     End Sub
 
     Public Function size() As Int64
-        debug_assert(queue.size() = [set].size(), "queue does not coincide with set.")
+        assert(queue.size() = [set].size(), "queue does not coincide with set.")
         Return queue.size()
     End Function
 
     Public Function empty() As Boolean
-        debug_assert(queue.empty() = [set].empty(), "queue does not coincide with set.")
+        assert(queue.empty() = [set].empty(), "queue does not coincide with set.")
         Return queue.empty()
     End Function
 
@@ -36,7 +36,7 @@ Public NotInheritable Class unique_queue(Of T As IComparable(Of T))
     Public Sub pop()
         Dim v As T = queue.front()
         queue.pop()
-        debug_assert([set].erase(v), "queue does not coincide with set.")
+        assert([set].erase(v), "queue does not coincide with set.")
     End Sub
 
     Public Function front() As T
