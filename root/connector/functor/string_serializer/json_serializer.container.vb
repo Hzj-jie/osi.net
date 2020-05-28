@@ -13,7 +13,7 @@ Partial Public NotInheritable Class json_serializer(Of T)
                                          assert(Not o Is Nothing)
                                          o.Write(prefix)
 
-                                         Dim it As container_operator(Of T, ELEMENT).enumerator = Nothing
+                                         Dim it As container_operator(Of ELEMENT).enumerator = Nothing
                                          it = container_operator(Of T, ELEMENT).r.enumerate(i)
                                          If it Is Nothing Then
                                              Return True

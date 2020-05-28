@@ -17,8 +17,9 @@ Partial Public NotInheritable Class container_operator(Of CONTAINER, T)
         global_resolver(Of Func(Of CONTAINER, T, Boolean), container_operator(Of CONTAINER, T)).assert_first_register(f)
     End Sub
 
-    Public Shared Sub enumerate(ByVal f As Func(Of CONTAINER, enumerator))
-        global_resolver(Of Func(Of CONTAINER, enumerator), container_operator(Of CONTAINER, T)).assert_first_register(f)
+    Public Shared Sub enumerate(ByVal f As Func(Of CONTAINER, container_operator(Of T).enumerator))
+        global_resolver(Of Func(Of CONTAINER, container_operator(Of T).enumerator),
+                           container_operator(Of CONTAINER, T)).assert_first_register(f)
     End Sub
 
     Public Shared Sub size(ByVal f As Func(Of CONTAINER, UInt32))
@@ -44,15 +45,13 @@ Partial Public NotInheritable Class container_operator(Of CONTAINER, T)
         Return Not i Is Nothing AndAlso emplace(i, copy_no_error(j))
     End Function
 
-    Public Function enumerate(ByVal i As CONTAINER) As enumerator
+    Public Function enumerate(ByVal i As CONTAINER) As container_operator(Of T).enumerator
         If i Is Nothing Then
             Return Nothing
         End If
 
-        Dim f As Func(Of CONTAINER, enumerator) = Nothing
-        f = global_resolver(Of Func(Of CONTAINER, enumerator), container_operator(Of CONTAINER, T)).resolve_or_null()
-        assert(Not f Is Nothing)
-        Return f(i)
+        Return global_resolver(Of Func(Of CONTAINER, container_operator(Of T).enumerator),
+                                  container_operator(Of CONTAINER, T)).resolve()(i)
     End Function
 
     Public Function size(ByVal i As CONTAINER) As UInt32
@@ -66,7 +65,7 @@ Partial Public NotInheritable Class container_operator(Of CONTAINER, T)
             Return f(i)
         End If
 
-        Dim it As enumerator = Nothing
+        Dim it As container_operator(Of T).enumerator = Nothing
         it = enumerate(i)
         Dim r As UInt32 = 0
         While Not it Is Nothing AndAlso Not it.end()

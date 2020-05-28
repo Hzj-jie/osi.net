@@ -231,9 +231,3 @@ Public NotInheritable Class container_operator(Of T)
     Private Sub New()
     End Sub
 End Class
-
-Partial Public Class container_operator(Of CONTAINER, T)
-    Public Interface enumerator
-        Inherits container_operator(Of T).enumerator
-    End Interface
-End Class

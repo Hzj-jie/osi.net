@@ -9,7 +9,7 @@ Partial Public NotInheritable Class container_operator
     End Sub
 
     Public Shared Sub enumerate(Of CONTAINER, T) _
-                               (ByVal f As Func(Of CONTAINER, container_operator(Of CONTAINER, T).enumerator))
+                               (ByVal f As Func(Of CONTAINER, container_operator(Of T).enumerator))
         container_operator(Of CONTAINER, T).enumerate(f)
     End Sub
 

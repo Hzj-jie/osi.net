@@ -7,6 +7,8 @@ Partial Public Class hasharray(Of T,
                                   _HASHER As _to_uint32(Of T),
                                   _EQUALER As _equaler(Of T))
 ##DEFINE TYPE ref
+##DEFINE TEMPLATE_TYPES T, _UNIQUE, _HASHER, _EQUALER
+##DEFINE VALUE_TYPE T
 ##DEFINE DEFINE_OPERATOR_PLUS False
 ##DEFINE FRIEND_CONSTRUCTOR False
 ##DEFINE DEFAULT_COMPARER False

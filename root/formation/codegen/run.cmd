@@ -11,6 +11,7 @@ precompile const_pair.vbp > const_pair.vb
 precompile first_const_pair.vbp > first_const_pair.vb
 precompile unordered_map.vbp > unordered_map.vb
 precompile unordered_set.vbp > unordered_set.vb
+precompile vector.iterator.vbp > vector.iterator.vb
 
 for /l %%x in (2,1,8) do precompile tuple%%x.vbp > tuple%%x.vb
 precompile make_tuple.vbp > make_tuple.vb

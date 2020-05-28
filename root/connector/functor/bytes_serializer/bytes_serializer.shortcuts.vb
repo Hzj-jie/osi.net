@@ -71,7 +71,7 @@ Partial Public Class bytes_serializer(Of T)
             Return False
         End If
 
-        Dim it As container_operator(Of CONTAINER, ELEMENT).enumerator = Nothing
+        Dim it As container_operator(Of ELEMENT).enumerator = Nothing
         it = container_operator(Of CONTAINER, ELEMENT).r.enumerate(i)
         If o Is Nothing Then
             o = alloc(Of T)()
@@ -94,7 +94,7 @@ Partial Public Class bytes_serializer(Of T)
             Return False
         End If
 
-        Dim it As container_operator(Of T, Byte()).enumerator = Nothing
+        Dim it As container_operator(Of Byte()).enumerator = Nothing
         it = container_operator(Of T, Byte()).r.enumerate(i)
         If o Is Nothing Then
             o = alloc(Of CONTAINER)()

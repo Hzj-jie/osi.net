@@ -1,0 +1,40 @@
+##INCLUDE iterator.imports.vbp
+
+Partial Public NotInheritable Class vector(Of T)
+##DEFINE TYPE vector(Of T)
+##DEFINE DEFINE_OPERATOR_PLUS False
+##INCLUDE random_access_iterator.vbp
+
+    Partial Public Structure iterator
+        Private ReadOnly index As UInt32
+
+        Private Sub New(ByVal p as vector(Of T), ByVal index As UInt32)
+            assert(Not p Is Nothing)
+            assert(index < p.size())
+            Me.p = p
+            Me.index = index
+        End Sub
+
+        Private Function move_prev(ByVal s As UInt32) As iterator
+            assert(s > uint32_0)
+            s += index
+            If s >= p.size() Then
+                Return [end]
+            End If
+            Return New iterator(p, s)
+        End Function
+
+        Private Function move_next(ByVal s As UInt32) As iterator
+            assert(s > uint32_0)
+            If s > index Then
+                Return [end]
+            End If
+            Return New iterator(p, s - index)
+        End Function
+
+        Public Shared Operator +(ByVal this As iterator) As T
+            Return If(this = [end], Nothing, this.p(this.index))
+        End Operator
+    End Structure
+End Class
+

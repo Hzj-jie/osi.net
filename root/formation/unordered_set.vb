@@ -75,8 +75,8 @@ Partial Public NotInheritable Class unordered_set(Of T)
                     Return i.emplace(j).second
                 End Function)
         container_operator(Of [unordered_set](Of T), T).enumerate(
-                Function(ByVal i As [unordered_set](Of T)) _
-                        As container_operator(Of [unordered_set](Of T), T).enumerator
+                Function(ByVal i As [unordered_set](Of T)) As container_operator(Of T).enumerator
+                    assert(Not i Is Nothing)
                     Return New enumerator(i)
                 End Function)
         container_operator(Of [unordered_set](Of T), T).clear(
@@ -86,33 +86,6 @@ Partial Public NotInheritable Class unordered_set(Of T)
                 End Sub)
         bytes_serializer(Of [unordered_set](Of T)).container(Of T).register()
     End Sub
-
-    Private NotInheritable Class enumerator
-        Implements container_operator(Of [unordered_set](Of T), T).enumerator
-
-        Private it As iterator
-
-        <MethodImpl(method_impl_options.aggressive_inlining)>
-        Public Sub New(ByVal s As [unordered_set](Of T))
-            assert(Not s Is Nothing)
-            it = s.begin()
-        End Sub
-
-        <MethodImpl(method_impl_options.aggressive_inlining)>
-        Public Sub [next]() Implements container_operator(Of [unordered_set](Of T), T).enumerator.next
-            it += 1
-        End Sub
-
-        <MethodImpl(method_impl_options.aggressive_inlining)>
-        Public Function current() As T Implements container_operator(Of [unordered_set](Of T), T).enumerator.current
-            Return +it
-        End Function
-
-        <MethodImpl(method_impl_options.aggressive_inlining)>
-        Public Function [end]() As Boolean Implements container_operator(Of [unordered_set](Of T), T).enumerator.end
-            Return it.is_end()
-        End Function
-    End Class
 
 'finish ..\binary_tree\codegen\set.container_operator.vbp --------
 

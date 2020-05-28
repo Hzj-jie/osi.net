@@ -1,0 +1,32 @@
+
+##DEFAULT TEMPLATE_TYPES T
+##DEFAULT VALUE_TYPE T
+    Public Structure enumerator
+        Implements container_operator(Of ##VALUE_TYPE##).enumerator
+
+        Private it As ##ROOT_FILENAME##(Of ##TEMPLATE_TYPES##).iterator
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Sub New(ByVal m As ##ROOT_FILENAME##(Of ##TEMPLATE_TYPES##))
+            assert(Not m Is Nothing)
+            it = m.begin()
+        End Sub
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Sub [next]() Implements container_operator(Of ##VALUE_TYPE##).enumerator.next
+            it += 1
+        End Sub
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function current() As ##VALUE_TYPE## _
+                Implements container_operator(Of ##VALUE_TYPE##).enumerator.current
+            Return +it
+        End Function
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function [end]() As Boolean _
+                Implements container_operator(Of ##VALUE_TYPE##).enumerator.end
+            Return it.is_end()
+        End Function
+    End Structure
+

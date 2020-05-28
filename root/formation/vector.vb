@@ -69,6 +69,16 @@ Public NotInheritable Class vector(Of T)
     End Property
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function begin() As iterator
+        Return New iterator(Me)
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function [end]() As iterator
+        Return iterator.end
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function back() As T
         assert(Not empty())
         Return v.back()
