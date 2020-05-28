@@ -121,6 +121,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
 'finish static_iterator.vbp --------
 
     Partial Public Structure iterator
+        Implements container_operator(Of node).enumerator
         '1. iterator / reverse_iterator are combined together
         '2. do not allow to - from end, it's not must-have
         '3. operator+ / operator- should not impact current instance, considering i = j + 1
@@ -136,9 +137,25 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
             Return this.move_prev(CUInt(-that))
         End Operator
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Operator -(ByVal this As iterator, ByVal that As Int32) As iterator
             Return this + (-that)
         End Operator
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function at_end() As Boolean Implements container_operator(Of node).enumerator.[end]
+            Return is_end()
+        End Function
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function current() As node Implements container_operator(Of node).enumerator.current
+            Return +Me
+        End Function
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Sub [next]() Implements container_operator(Of node).enumerator.[next]
+            move_next(1)
+        End Sub
     End Structure
 'finish random_access_iterator.vbp --------
 

@@ -124,6 +124,7 @@ Partial Public Class hasharray(Of T,
 'finish ..\..\codegen\static_iterator.vbp --------
 
     Partial Public Structure iterator
+        Implements container_operator(Of T).enumerator
         '1. iterator / reverse_iterator are combined together
         '2. do not allow to - from end, it's not must-have
         '3. operator+ / operator- should not impact current instance, considering i = j + 1
@@ -139,9 +140,25 @@ Partial Public Class hasharray(Of T,
             Return this.move_prev(CUInt(-that))
         End Operator
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Operator -(ByVal this As iterator, ByVal that As Int32) As iterator
             Return this + (-that)
         End Operator
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function at_end() As Boolean Implements container_operator(Of T).enumerator.[end]
+            Return is_end()
+        End Function
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function current() As T Implements container_operator(Of T).enumerator.current
+            Return +Me
+        End Function
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Sub [next]() Implements container_operator(Of T).enumerator.[next]
+            move_next(1)
+        End Sub
     End Structure
 'finish ..\..\codegen\random_access_iterator.vbp --------
 

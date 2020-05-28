@@ -4,6 +4,7 @@ Imports osi.root.template
 
 Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_INDEX As _to_uint32(Of KEY_T))
 ##DEFINE TYPE node
+##DEFINE VALUE_TYPE node
 ##INCLUDE random_access_iterator.single_step.vbp
 
     Partial Public Structure iterator

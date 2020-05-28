@@ -18,6 +18,7 @@ Partial Public Class stream(Of T)
         Return New stream(Of R)(container_operator.enumerators.map(e, f))
     End Function
 
+    ' A + A + ... => A
     Public Function aggregate(ByVal f As Func(Of T, T, T), ByVal r As T) As T
         assert(Not f Is Nothing)
         While Not e.end()
@@ -31,6 +32,7 @@ Partial Public Class stream(Of T)
         Return aggregate(f, alloc(Of T)())
     End Function
 
+    ' A + A + ... => B
     Public Function collect(Of CT)(ByVal f As Action(Of CT, T), ByVal c As CT) As CT
         assert(Not f Is Nothing)
         While Not e.end()

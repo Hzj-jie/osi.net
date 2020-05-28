@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.root.constants
 
 Partial Public NotInheritable Class container_operator
@@ -31,7 +32,11 @@ Partial Public NotInheritable Class container_operator
             Return New array_wrapper(Of T)(e)
         End Function
 
-        Private NotInheritable Class filterer(Of T)
+        Public Shared Function repeat(Of T)(ByVal e As T, ByVal count As UInt32) As container_operator(Of T).enumerator
+            Return New repeater(Of T)(e, count)
+        End Function
+
+        Private Structure filterer(Of T)
             Implements container_operator(Of T).enumerator
 
             Private ReadOnly i As container_operator(Of T).enumerator
@@ -67,9 +72,9 @@ Partial Public NotInheritable Class container_operator
                 ignore_filtered()
                 Return i.end()
             End Function
-        End Class
+        End Structure
 
-        Private NotInheritable Class mapper(Of T, R)
+        Private Structure mapper(Of T, R)
             Implements container_operator(Of R).enumerator
 
             Private ReadOnly i As container_operator(Of T).enumerator
@@ -97,9 +102,9 @@ Partial Public NotInheritable Class container_operator
             Public Function [end]() As Boolean Implements container_operator(Of R).enumerator.end
                 Return i.end()
             End Function
-        End Class
+        End Structure
 
-        Private NotInheritable Class limiter(Of T)
+        Private Structure limiter(Of T)
             Implements container_operator(Of T).enumerator
 
             Private ReadOnly c As UInt32
@@ -126,9 +131,9 @@ Partial Public NotInheritable Class container_operator
             Public Function [end]() As Boolean Implements container_operator(Of T).enumerator.end
                 Return e.end() OrElse v = c
             End Function
-        End Class
+        End Structure
 
-        Private NotInheritable Class concator(Of T)
+        Private Structure concator(Of T)
             Implements container_operator(Of T).enumerator
 
             Private ReadOnly e() As container_operator(Of T).enumerator
@@ -158,9 +163,9 @@ Partial Public NotInheritable Class container_operator
                 next_available()
                 Return i = array_size_i(e)
             End Function
-        End Class
+        End Structure
 
-        Private NotInheritable Class array_wrapper(Of T)
+        Private Structure array_wrapper(Of T)
             Implements container_operator(Of T).enumerator
 
             Private ReadOnly e() As T
@@ -182,7 +187,34 @@ Partial Public NotInheritable Class container_operator
             Public Function [end]() As Boolean Implements container_operator(Of T).enumerator.end
                 Return i >= array_size_i(e)
             End Function
-        End Class
+        End Structure
+
+        Private Structure repeater(Of T)
+            Implements container_operator(Of T).enumerator
+
+            Private ReadOnly e As T
+            Private count As UInt32
+
+            Public Sub New(ByVal e As T, ByVal count As UInt32)
+                Me.e = e
+                Me.count = count
+            End Sub
+
+            Public Sub [next]() Implements container_operator(Of T).enumerator.next
+                If Not [end]() Then
+                    count -= uint32_1
+                End If
+            End Sub
+
+            Public Function current() As T Implements container_operator(Of T).enumerator.current
+                assert(Not [end]())
+                Return e
+            End Function
+
+            Public Function [end]() As Boolean Implements container_operator(Of T).enumerator.end
+                Return count = 0
+            End Function
+        End Structure
 
         Private Sub New()
         End Sub

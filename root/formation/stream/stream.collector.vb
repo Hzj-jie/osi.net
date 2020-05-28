@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.Text
 Imports osi.root.connector
+Imports osi.root.constants
 
 Partial Public Class stream(Of T)
     Public NotInheritable Class collectors
@@ -19,6 +20,12 @@ Partial Public Class stream(Of T)
 
         Public Shared Function to_str() As Action(Of StringBuilder, T)
             Return to_str(", ")
+        End Function
+
+        Public Shared Function count() As Action(Of ref(Of UInt32), T)
+            Return Sub(ByVal r As ref(Of UInt32), ByVal v As T)
+                       r.p += uint32_1
+                   End Sub
         End Function
 
         Private Sub New()
