@@ -136,22 +136,26 @@ Public NotInheritable Class smap(Of KEY_T, VALUE_T)
 
         Private it As smap(Of KEY_T, VALUE_T).iterator
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub New(ByVal m As smap(Of KEY_T, VALUE_T))
             assert(Not m Is Nothing)
             it = m.begin()
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub [next]() Implements container_operator(Of smap(Of KEY_T, VALUE_T),
                                                              first_const_pair(Of KEY_T, VALUE_T)).enumerator.next
             it += 1
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function current() As first_const_pair(Of KEY_T, VALUE_T) _
                 Implements container_operator(Of smap(Of KEY_T, VALUE_T),
                                                  first_const_pair(Of KEY_T, VALUE_T)).enumerator.current
             Return +it
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function [end]() As Boolean _
                 Implements container_operator(Of smap(Of KEY_T, VALUE_T),
                                                  first_const_pair(Of KEY_T, VALUE_T)).enumerator.end
@@ -203,6 +207,7 @@ Public NotInheritable Class smap(Of KEY_T, VALUE_T)
     End Function
 'finish map.compare.vbp --------
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New()
         MyBase.New(AddressOf first_const_pair.first_compare(Of KEY_T, VALUE_T))
     End Sub

@@ -1,11 +1,11 @@
 ﻿
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utt
-Imports osi.root.delegates
 
-Friend Class ##TYPE##_case
+Friend NotInheritable Class ##TYPE##_case
     Inherits random_run_case
 
     Private ReadOnly s As [##TYPE##](Of String) = Nothing
@@ -154,7 +154,7 @@ Friend Class ##TYPE##_case
     End Sub
 End Class
 
-Public Class ##TYPE##_perf
+Public NotInheritable Class ##TYPE##_perf
     Inherits performance_case_wrapper
 
     Private Shared Function round() As Int64
@@ -170,7 +170,7 @@ Public Class ##TYPE##_perf
     End Function
 End Class
 
-Public Class ##TYPE##_test
+Public NotInheritable Class ##TYPE##_test
     Inherits repeat_case_wrapper
 
     Private Shared Function round() As Int64

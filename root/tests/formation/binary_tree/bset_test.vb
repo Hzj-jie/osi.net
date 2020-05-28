@@ -14,13 +14,13 @@ Option Strict On
 'so change set_case.vbp instead of this file
 
 
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utt
-Imports osi.root.delegates
 
-Friend Class bset_case
+Friend NotInheritable Class bset_case
     Inherits random_run_case
 
     Private ReadOnly s As [bset](Of String) = Nothing
@@ -169,7 +169,7 @@ Friend Class bset_case
     End Sub
 End Class
 
-Public Class bset_perf
+Public NotInheritable Class bset_perf
     Inherits performance_case_wrapper
 
     Private Shared Function round() As Int64
@@ -185,7 +185,7 @@ Public Class bset_perf
     End Function
 End Class
 
-Public Class bset_test
+Public NotInheritable Class bset_test
     Inherits repeat_case_wrapper
 
     Private Shared Function round() As Int64

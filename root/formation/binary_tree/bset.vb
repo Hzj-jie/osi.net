@@ -52,19 +52,23 @@ Public NotInheritable Class [bset](Of T)
 
         Private it As iterator
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub New(ByVal s As [bset](Of T))
             assert(Not s Is Nothing)
             it = s.begin()
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub [next]() Implements container_operator(Of [bset](Of T), T).enumerator.next
             it += 1
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function current() As T Implements container_operator(Of [bset](Of T), T).enumerator.current
             Return +it
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function [end]() As Boolean Implements container_operator(Of [bset](Of T), T).enumerator.end
             Return it.is_end()
         End Function
