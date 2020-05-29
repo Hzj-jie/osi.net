@@ -3,9 +3,46 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
+
+Public Module _list
+    <Extension()> Public Function stream(Of T)(ByVal this As list(Of T)) As stream(Of T)
+        Return New stream(Of T).container(Of list(Of T))(this)
+    End Function
+End Module
+
+Public NotInheritable Class list
+    Private Shared Function create(Of T)(ByVal vs() As T, ByVal require_copy As Boolean) As list(Of T)
+        Dim r As list(Of T) = Nothing
+        r = New list(Of T)()
+        If require_copy Then
+            For i As Int32 = 0 To array_size_i(vs) - 1
+                r.push_back(vs(i))
+            Next
+        Else
+            For i As Int32 = 0 To array_size_i(vs) - 1
+                r.emplace_back(vs(i))
+            Next
+        End If
+        Return r
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function [of](Of T)(ByVal ParamArray v() As T) As list(Of T)
+        Return create(v, True)
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function emplace_of(Of T)(ByVal ParamArray v() As T) As list(Of T)
+        Return create(v, False)
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
 
 Partial Public NotInheritable Class list(Of T)
     Implements IComparable(Of list(Of T)), IComparable, ICloneable
@@ -44,12 +81,15 @@ Partial Public NotInheritable Class list(Of T)
             End If
         End Sub
 
-        Public Sub New()
-            MyBase.New(_ref_count)
-        End Sub
+        Public Shared Function [of](ByVal new_data As T) As node
+            Dim r As node = Nothing
+            r = New node()
+            r.emplace(new_data)
+            Return r
+        End Function
 
-        Public Sub New(ByVal new_data As T)
-            MyBase.New(_ref_count, new_data)
+        Private Sub New()
+            MyBase.New(_ref_count)
         End Sub
     End Class
 
@@ -182,9 +222,9 @@ Partial Public NotInheritable Class list(Of T)
         Return size() = 0
     End Function
 
-    Public Function push_back(ByVal new_data As T) As Boolean
+    Public Function emplace_back(ByVal new_data As T) As Boolean
         Dim add As node = Nothing
-        add = New node(new_data)
+        add = node.of(new_data)
         If Not _back Is Nothing Then
             _back.appendnext(add)
         Else
@@ -196,9 +236,13 @@ Partial Public NotInheritable Class list(Of T)
         Return True
     End Function
 
-    Public Function push_front(ByVal new_data As T) As Boolean
+    Public Function push_back(ByVal new_data As T) As Boolean
+        Return emplace_back(copy_no_error(new_data))
+    End Function
+
+    Public Function emplace_front(ByVal new_data As T) As Boolean
         Dim add As node = Nothing
-        add = New node(new_data)
+        add = node.of(new_data)
         If Not _front Is Nothing Then
             _front.appendlast(add)
         Else
@@ -208,6 +252,10 @@ Partial Public NotInheritable Class list(Of T)
         _size += uint32_1
 
         Return True
+    End Function
+
+    Public Function push_front(ByVal new_data As T) As Boolean
+        Return emplace_front(copy_no_error(new_data))
     End Function
 
     Public Function pop_back() As Boolean
@@ -226,16 +274,20 @@ Partial Public NotInheritable Class list(Of T)
         Return True
     End Function
 
-    Public Function insert(ByVal it As iterator, ByVal newdata As T) As iterator
-        Return insert(it.node(), newdata)
+    Public Function emplace(ByVal it As iterator, ByVal newdata As T) As iterator
+        Return emplace(it.node(), newdata)
     End Function
 
-    Private Function insert(ByVal it As node, ByVal newdata As T) As iterator
+    Public Function insert(ByVal it As iterator, ByVal newdata As T) As iterator
+        Return emplace(it.node(), copy_no_error(newdata))
+    End Function
+
+    Private Function emplace(ByVal it As node, ByVal newdata As T) As iterator
         Dim work As node = Nothing
         If it Is Nothing Then
             Return [end]()
         End If
-        work = New node(newdata)
+        work = node.of(newdata)
         'it.next will be changed after work.appendlast(it)
         work.appendnext(it.next)
         work.appendlast(it)
@@ -249,8 +301,17 @@ Partial Public NotInheritable Class list(Of T)
         Return New iterator(it)
     End Function
 
+    Public Function emplace(ByVal index As UInt32, ByVal new_data As T) As iterator
+        Return emplace(find(index), new_data)
+    End Function
+
     Public Function insert(ByVal index As UInt32, ByVal new_data As T) As iterator
-        Return insert(find(index), new_data)
+        Return emplace(find(index), copy_no_error(new_data))
+    End Function
+
+    Public Function emplace(ByVal newdata As T) As iterator
+        emplace_back(newdata)
+        Return rbegin()
     End Function
 
     Public Function insert(ByVal newdata As T) As iterator

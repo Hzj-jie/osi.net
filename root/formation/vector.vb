@@ -70,7 +70,18 @@ Public NotInheritable Class vector(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function begin() As iterator
+        If empty() Then
+            Return [end]()
+        End If
         Return New iterator(New ref(Me, 0))
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function rbegin() As iterator
+        If empty() Then
+            Return [end]()
+        End If
+        Return New iterator(New ref(Me, size() - uint32_1))
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
