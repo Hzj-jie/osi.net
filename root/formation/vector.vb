@@ -70,7 +70,7 @@ Public NotInheritable Class vector(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function begin() As iterator
-        Return New iterator(Me)
+        Return New iterator(New ref(Me, 0))
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

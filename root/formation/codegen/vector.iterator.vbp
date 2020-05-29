@@ -1,39 +1,38 @@
 ##INCLUDE iterator.imports.vbp
 
 Partial Public NotInheritable Class vector(Of T)
-##DEFINE TYPE vector(Of T)
+##DEFINE TYPE ref
 ##DEFINE DEFINE_OPERATOR_PLUS False
+##DEFINE DEFAULT_COMPARER False
+##DEFINE USE_P_END True
 ##INCLUDE random_access_iterator.vbp
 
     Partial Public Structure iterator
-        Private ReadOnly index As UInt32
-
-        Private Sub New(ByVal p as vector(Of T), ByVal index As UInt32)
-            assert(Not p Is Nothing)
-            assert(index < p.size())
-            Me.p = p
-            Me.index = index
-        End Sub
-
-        Private Function move_prev(ByVal s As UInt32) As iterator
+        Private Function move_next(ByVal s As UInt32) As iterator
             assert(s > uint32_0)
-            s += index
+            s += p.index()
             If s >= p.size() Then
                 Return [end]
             End If
-            Return New iterator(p, s)
+            Return New iterator(p.ref_at(s))
         End Function
 
-        Private Function move_next(ByVal s As UInt32) As iterator
+        Private Function move_prev(ByVal s As UInt32) As iterator
             assert(s > uint32_0)
-            If s > index Then
+            If s > p.index() Then
                 Return [end]
             End If
-            Return New iterator(p, s - index)
+            Return New iterator(p.ref_at(p.index() - s))
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Private Shared Function is_equal(ByVal this As ##TYPE##, ByVal that As ##TYPE##) As Boolean
+            Return this.is_equal_to(that)
+        End Function
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Operator +(ByVal this As iterator) As T
-            Return If(this = [end], Nothing, this.p(this.index))
+            Return If(this = [end], Nothing, this.p.value())
         End Operator
     End Structure
 End Class

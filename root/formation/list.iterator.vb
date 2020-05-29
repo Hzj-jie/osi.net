@@ -85,7 +85,6 @@ Partial Public Class list(Of T)
             If this.is_end() OrElse that.is_end() Then
                 Return False
             End If
-            assert(Not this.is_null() AndAlso Not this.is_null())
             Return is_equal(this.p, that.p)
         End Operator
 

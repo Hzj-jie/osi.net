@@ -3,14 +3,41 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports System.Runtime.CompilerServices
+Imports osi.root.connector
 
-Public Module _tuple2
-    <Extension()> Public Function first(Of T1, T2)(ByVal this As tuple(Of T1, T2)) As T1
-        Return this._1()
+Partial Public Structure tuple(Of T1, T2)
+    Public Function first() As T1
+        Return _1()
     End Function
 
-    <Extension()> Public Function second(Of T1, T2)(ByVal this As tuple(Of T1, T2)) As T2
-        Return this._2()
+    Public Function second() As T2
+        Return _2()
     End Function
-End Module
+
+    Public Function to_pair() As pair(Of T1, T2)
+        Return pair.of(_1(), _2())
+    End Function
+
+    Public Function to_const_pair() As const_pair(Of T1, T2)
+        Return const_pair.of(_1(), _2())
+    End Function
+
+    Public Function to_first_const_pair() As first_const_pair(Of T1, T2)
+        Return first_const_pair.of(_1(), _2())
+    End Function
+
+    Public Shared Function from_pair(ByVal p As pair(Of T1, T2)) As tuple(Of T1, T2)
+        assert(Not p Is Nothing)
+        Return New tuple(Of T1, T2)(p.first, p.second)
+    End Function
+
+    Public Shared Function from_const_pair(ByVal p As const_pair(Of T1, T2)) As tuple(Of T1, T2)
+        assert(Not p Is Nothing)
+        Return New tuple(Of T1, T2)(p.first, p.second)
+    End Function
+
+    Public Shared Function from_first_const_pair(ByVal p As first_const_pair(Of T1, T2)) As tuple(Of T1, T2)
+        assert(Not p Is Nothing)
+        Return New tuple(Of T1, T2)(p.first, p.second)
+    End Function
+End Structure

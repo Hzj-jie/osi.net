@@ -79,7 +79,6 @@ Partial Public Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As 
             If this.is_end() OrElse that.is_end() Then
                 Return False
             End If
-            assert(Not this.is_null() AndAlso Not this.is_null())
             Return is_equal(this.p, that.p)
         End Operator
 

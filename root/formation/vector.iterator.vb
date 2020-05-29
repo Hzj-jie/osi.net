@@ -41,19 +41,19 @@ Partial Public NotInheritable Class vector(Of T)
             [end] = New iterator()
         End Sub
 
-        Private ReadOnly p As vector(Of T)
+        Private ReadOnly p As ref
 
 #If True Then
         <MethodImpl(method_impl_options.aggressive_inlining)>
-        Friend Sub New(ByVal that As vector(Of T))
+        Friend Sub New(ByVal that As ref)
 #Else
         <MethodImpl(method_impl_options.aggressive_inlining)>
-        Private Sub New(ByVal that As vector(Of T))
+        Private Sub New(ByVal that As ref)
 #End If
             p = that
         End Sub
 
-#If False Then
+#If True Then
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function is_end() As Boolean
             Return p.is_end()
@@ -70,8 +70,8 @@ Partial Public NotInheritable Class vector(Of T)
             Return Not is_end()
         End Function
 
-#If True Then
-        Private Shared Function is_equal(ByVal this As vector(Of T), ByVal that As vector(Of T)) As Boolean
+#If False Then
+        Private Shared Function is_equal(ByVal this As ref, ByVal that As ref) As Boolean
             Return object_compare(this, that) = 0
         End Function
 #End If
@@ -84,7 +84,6 @@ Partial Public NotInheritable Class vector(Of T)
             If this.is_end() OrElse that.is_end() Then
                 Return False
             End If
-            assert(Not this.is_null() AndAlso Not this.is_null())
             Return is_equal(this.p, that.p)
         End Operator
 
@@ -105,7 +104,7 @@ Partial Public NotInheritable Class vector(Of T)
 
 #If False Then
         <MethodImpl(method_impl_options.aggressive_inlining)>
-        Public Shared Operator +(ByVal this As iterator) As vector(Of T)
+        Public Shared Operator +(ByVal this As iterator) As ref
             Return If(this = [end], Nothing, this.p)
         End Operator
 #End If
@@ -173,34 +172,31 @@ Partial Public NotInheritable Class vector(Of T)
 'finish random_access_iterator.vbp --------
 
     Partial Public Structure iterator
-        Private ReadOnly index As UInt32
-
-        Private Sub New(ByVal p as vector(Of T), ByVal index As UInt32)
-            assert(Not p Is Nothing)
-            assert(index < p.size())
-            Me.p = p
-            Me.index = index
-        End Sub
-
-        Private Function move_prev(ByVal s As UInt32) As iterator
+        Private Function move_next(ByVal s As UInt32) As iterator
             assert(s > uint32_0)
-            s += index
+            s += p.index()
             If s >= p.size() Then
                 Return [end]
             End If
-            Return New iterator(p, s)
+            Return New iterator(p.ref_at(s))
         End Function
 
-        Private Function move_next(ByVal s As UInt32) As iterator
+        Private Function move_prev(ByVal s As UInt32) As iterator
             assert(s > uint32_0)
-            If s > index Then
+            If s > p.index() Then
                 Return [end]
             End If
-            Return New iterator(p, s - index)
+            Return New iterator(p.ref_at(p.index() - s))
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Private Shared Function is_equal(ByVal this As ref, ByVal that As ref) As Boolean
+            Return this.is_equal_to(that)
+        End Function
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Operator +(ByVal this As iterator) As T
-            Return If(this = [end], Nothing, this.p(this.index))
+            Return If(this = [end], Nothing, this.p.value())
         End Operator
     End Structure
 End Class

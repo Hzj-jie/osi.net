@@ -28,6 +28,12 @@ Partial Public Class stream(Of T)
                    End Sub
         End Function
 
+        Public Shared Function frequency() As Action(Of unordered_map(Of T, UInt32), T)
+            Return Sub(ByVal r As unordered_map(Of T, UInt32), ByVal v As T)
+
+                   End Sub
+        End Function
+
         Private Sub New()
         End Sub
     End Class

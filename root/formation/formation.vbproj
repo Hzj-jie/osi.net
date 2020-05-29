@@ -191,6 +191,7 @@
     <Compile Include="vector.container.vb" />
     <Compile Include="vector.extension.vb" />
     <Compile Include="vector.iterator.vb" />
+    <Compile Include="vector.ref.vb" />
     <Compile Include="vector.vb" />
     <None Include="binary_tree\codegen\bset.vbp" />
     <None Include="binary_tree\codegen\bt.iterator.vbp" />
