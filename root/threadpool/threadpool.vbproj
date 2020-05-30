@@ -74,7 +74,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="qless_runner.vb" />
     <Compile Include="qless_threadpool.vb" />
+    <Compile Include="qless_threadpool2.vb" />
     <Compile Include="registry.vb" />
     <Compile Include="slimheapless_runner.vb" />
     <Compile Include="slimheapless_runner_synchronize_invoke.vb" />
@@ -100,7 +102,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="codegen\iqless_threadpool.vbp" />
+    <None Include="codegen\qless_runner.vbp" />
     <None Include="codegen\qless_threadpool.vbp" />
+    <None Include="codegen\qless_threadpool2.vbp" />
     <None Include="codegen\run.cmd" />
     <None Include="codegen\slimheapless_runner.vbp" />
     <None Include="codegen\slimheapless_runner_synchronize_invoke.vbp" />
