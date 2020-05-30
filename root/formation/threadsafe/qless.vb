@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.lock
@@ -15,14 +16,17 @@ Public Class qless(Of T, lock_t As islimlock)
     Private _size As UInt32 = uint32_0
     Private l As lock_t
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function size() As UInt32
         Return _size
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function empty() As Boolean
         Return size() = uint32_0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub clear()
         l.wait()
         f = Nothing
@@ -31,10 +35,12 @@ Public Class qless(Of T, lock_t As islimlock)
         l.release()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub push(ByVal d As T)
         emplace(copy_no_error(d))
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub emplace(ByVal d As T)
         Dim n As ref_node(Of T) = Nothing
         n = New ref_node(Of T)(1)
@@ -54,6 +60,7 @@ Public Class qless(Of T, lock_t As islimlock)
         l.release()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function pop() As T
         Dim o As T = Nothing
         If pop(o) Then
@@ -62,6 +69,7 @@ Public Class qless(Of T, lock_t As islimlock)
         Return Nothing
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function pop(ByRef o As T) As Boolean
         Dim rtn As Boolean = False
         l.wait()
@@ -82,6 +90,29 @@ Public Class qless(Of T, lock_t As islimlock)
 #End If
             _size -= uint32_1
             rtn = True
+        End If
+        l.release()
+        Return rtn
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function pick() As T
+        Dim o As T = Nothing
+        If pick(o) Then
+            Return o
+        End If
+        Return Nothing
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function pick(ByRef o As T) As Boolean
+        Dim rtn As Boolean = False
+        l.wait()
+        If f Is Nothing Then
+            rtn = False
+        Else
+            rtn = True
+            o = f.data()
         End If
         l.release()
         Return rtn

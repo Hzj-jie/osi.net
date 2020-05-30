@@ -40,9 +40,8 @@ Public NotInheritable Class global_instance(Of T, _new As _new(Of T))
     Public Shared Function ref() As T
         If initialized.v Then
             Return instance.v
-        Else
-            Return Nothing
         End If
+        Return Nothing
     End Function
 
     Private Sub New()

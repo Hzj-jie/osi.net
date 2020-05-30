@@ -1,0 +1,3 @@
+
+##DEFINE TYPE qless
+##INCLUDE waitable_slimqless2.vbp

@@ -1,8 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports System.Runtime.CompilerServices
 Imports System.Threading
-Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.envs
+Imports osi.root.constants
 
 Namespace slimlock
     Public Structure monitorlock
@@ -20,19 +24,23 @@ Namespace slimlock
             Me.obj = i
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub wait() Implements islimlock.wait
             atomic.create_if_nothing(obj)
             Monitor.Enter(obj)
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub release() Implements islimlock.release
             Monitor.Exit(obj)
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function can_thread_owned() As Boolean Implements islimlock.can_thread_owned
             Return True
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function can_cross_thread() As Boolean Implements islimlock.can_cross_thread
             Return False
         End Function
