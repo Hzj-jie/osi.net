@@ -22,9 +22,9 @@ Public NotInheritable Class threadpool
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function in_restricted_threadpool_thread() As Boolean
-        Return qless_threadpool2.in_managed_thread() OrElse
-               slimqless2_threadpool2.in_managed_thread() OrElse
-               slimheapless_threadpool2.in_managed_thread()
+        Return qless_threadpool.in_managed_thread() OrElse
+               slimqless2_threadpool.in_managed_thread() OrElse
+               slimheapless_threadpool.in_managed_thread()
     End Function
 
     Private Sub New()
