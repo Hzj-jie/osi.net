@@ -40,11 +40,7 @@ Public NotInheritable Class async_sync_test
                                             Return goto_end()
                                         End Function))
         Next
-        If tp.in_restricted_threadpool_thread() Then
-            assertion.is_true(w.WaitOne(CInt(seconds_to_milliseconds(10))))
-        Else
-            assertion.is_true(w.WaitOne(CInt(seconds_to_milliseconds(60))))
-        End If
+        assertion.is_true(w.WaitOne(CInt(seconds_to_milliseconds(If(tp.in_restricted_threadpool_thread(), 10, 60)))))
         Return True
     End Function
 

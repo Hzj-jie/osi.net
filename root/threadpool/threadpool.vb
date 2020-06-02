@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.utils
@@ -19,6 +20,7 @@ Public NotInheritable Class threadpool
                                             1)))
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function in_restricted_threadpool_thread() As Boolean
         Return qless_threadpool2.in_managed_thread() OrElse
                slimqless2_threadpool2.in_managed_thread() OrElse
