@@ -28,8 +28,9 @@ REM call "adaptive_array\adaptive_array.exe" "oc:vector(Of T)" cam:Private ntp:1
 call "unchecked_int2\unchecked_int2.exe" > "unchecked_int2\operators.vb"
 move /y "unchecked_int2\operators.vb" ..\..\service\math\unchecked\
 
-call "delegate\delegate.exe" "delegate\delegate.vb"
-move /y "delegate\delegate.vb" ..\connector\delegate\
+REM Handled by delegate/run.cmd
+REM call "delegate\delegate.exe" "delegate\delegate.vb"
+REM move /y "delegate\delegate.vb" ..\connector\delegate\
 
 REM copy by root/env proj
 call "tfver\tfver.cmd" > "tfver\tfver.vb"

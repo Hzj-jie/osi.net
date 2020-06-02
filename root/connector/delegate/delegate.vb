@@ -6,11 +6,13 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports osi.root.constants
 Imports osi.root.delegates
 
 Public Module _delegate
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function do_(Of RT) _
                     (ByVal d As Func(Of RT),
                      ByVal false_value As RT) As RT
@@ -28,6 +30,7 @@ Public Module _delegate
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub void_ _
                     (ByVal d As Action)
         If d Is Nothing Then
@@ -44,6 +47,7 @@ Public Module _delegate
         End Try
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function nothrow(Of RT) _
                     (ByVal d As Func(Of RT)) As RT
         assert(Not d Is Nothing)
@@ -56,6 +60,7 @@ Public Module _delegate
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub nothrow _
                     (ByVal d As Action)
         assert(Not d Is Nothing)
@@ -68,6 +73,7 @@ Public Module _delegate
         End Try
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function do_(Of T0, RT) _
                     (ByVal d As _do(Of T0, RT),
                      ByRef i0 As T0,
@@ -86,6 +92,7 @@ Public Module _delegate
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub void_(Of T0) _
                     (ByVal d As void(Of T0),
                      ByRef i0 As T0)
@@ -103,6 +110,7 @@ Public Module _delegate
         End Try
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function nothrow(Of T0, RT) _
                     (ByVal d As _do(Of T0, RT),
                      ByRef i0 As T0) As RT
@@ -116,6 +124,7 @@ Public Module _delegate
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub nothrow(Of T0) _
                     (ByVal d As void(Of T0),
                      ByRef i0 As T0)
@@ -129,6 +138,7 @@ Public Module _delegate
         End Try
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function do_(Of T0, RT) _
                     (ByVal d As Func(Of T0, RT),
                      ByVal i0 As T0,
@@ -147,6 +157,7 @@ Public Module _delegate
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub void_(Of T0) _
                     (ByVal d As Action(Of T0),
                      ByVal i0 As T0)
@@ -164,6 +175,7 @@ Public Module _delegate
         End Try
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function nothrow(Of T0, RT) _
                     (ByVal d As Func(Of T0, RT),
                      ByRef i0 As T0) As RT
@@ -177,6 +189,7 @@ Public Module _delegate
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub nothrow(Of T0) _
                     (ByVal d As Action(Of T0),
                      ByRef i0 As T0)
@@ -190,6 +203,7 @@ Public Module _delegate
         End Try
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function do_(Of T0, T1, RT) _
                     (ByVal d As _do(Of T0, T1, RT),
                      ByRef i0 As T0,
@@ -209,6 +223,7 @@ Public Module _delegate
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub void_(Of T0, T1) _
                     (ByVal d As void(Of T0, T1),
                      ByRef i0 As T0,
@@ -227,6 +242,7 @@ Public Module _delegate
         End Try
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function nothrow(Of T0, T1, RT) _
                     (ByVal d As _do(Of T0, T1, RT),
                      ByRef i0 As T0,
@@ -241,6 +257,7 @@ Public Module _delegate
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub nothrow(Of T0, T1) _
                     (ByVal d As void(Of T0, T1),
                      ByRef i0 As T0,
@@ -255,6 +272,7 @@ Public Module _delegate
         End Try
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function do_(Of T0, T1, RT) _
                     (ByVal d As Func(Of T0, T1, RT),
                      ByVal i0 As T0,
@@ -274,6 +292,7 @@ Public Module _delegate
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub void_(Of T0, T1) _
                     (ByVal d As Action(Of T0, T1),
                      ByVal i0 As T0,
@@ -292,6 +311,7 @@ Public Module _delegate
         End Try
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function nothrow(Of T0, T1, RT) _
                     (ByVal d As Func(Of T0, T1, RT),
                      ByRef i0 As T0,
@@ -306,6 +326,7 @@ Public Module _delegate
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub nothrow(Of T0, T1) _
                     (ByVal d As Action(Of T0, T1),
                      ByRef i0 As T0,
@@ -320,6 +341,7 @@ Public Module _delegate
         End Try
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function do_(Of T0, T1, T2, RT) _
                     (ByVal d As _do(Of T0, T1, T2, RT),
                      ByRef i0 As T0,
@@ -340,6 +362,7 @@ Public Module _delegate
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub void_(Of T0, T1, T2) _
                     (ByVal d As void(Of T0, T1, T2),
                      ByRef i0 As T0,
@@ -359,6 +382,7 @@ Public Module _delegate
         End Try
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function nothrow(Of T0, T1, T2, RT) _
                     (ByVal d As _do(Of T0, T1, T2, RT),
                      ByRef i0 As T0,
@@ -374,6 +398,7 @@ Public Module _delegate
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub nothrow(Of T0, T1, T2) _
                     (ByVal d As void(Of T0, T1, T2),
                      ByRef i0 As T0,
@@ -389,6 +414,7 @@ Public Module _delegate
         End Try
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function do_(Of T0, T1, T2, RT) _
                     (ByVal d As Func(Of T0, T1, T2, RT),
                      ByVal i0 As T0,
@@ -409,6 +435,7 @@ Public Module _delegate
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub void_(Of T0, T1, T2) _
                     (ByVal d As Action(Of T0, T1, T2),
                      ByVal i0 As T0,
@@ -428,6 +455,7 @@ Public Module _delegate
         End Try
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function nothrow(Of T0, T1, T2, RT) _
                     (ByVal d As Func(Of T0, T1, T2, RT),
                      ByRef i0 As T0,
@@ -443,6 +471,7 @@ Public Module _delegate
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub nothrow(Of T0, T1, T2) _
                     (ByVal d As Action(Of T0, T1, T2),
                      ByRef i0 As T0,
@@ -458,6 +487,7 @@ Public Module _delegate
         End Try
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function do_(Of T0, T1, T2, T3, RT) _
                     (ByVal d As _do(Of T0, T1, T2, T3, RT),
                      ByRef i0 As T0,
@@ -479,6 +509,7 @@ Public Module _delegate
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub void_(Of T0, T1, T2, T3) _
                     (ByVal d As void(Of T0, T1, T2, T3),
                      ByRef i0 As T0,
@@ -499,6 +530,7 @@ Public Module _delegate
         End Try
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function nothrow(Of T0, T1, T2, T3, RT) _
                     (ByVal d As _do(Of T0, T1, T2, T3, RT),
                      ByRef i0 As T0,
@@ -515,6 +547,7 @@ Public Module _delegate
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub nothrow(Of T0, T1, T2, T3) _
                     (ByVal d As void(Of T0, T1, T2, T3),
                      ByRef i0 As T0,
@@ -531,6 +564,7 @@ Public Module _delegate
         End Try
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function do_(Of T0, T1, T2, T3, RT) _
                     (ByVal d As Func(Of T0, T1, T2, T3, RT),
                      ByVal i0 As T0,
@@ -552,6 +586,7 @@ Public Module _delegate
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub void_(Of T0, T1, T2, T3) _
                     (ByVal d As Action(Of T0, T1, T2, T3),
                      ByVal i0 As T0,
@@ -572,6 +607,7 @@ Public Module _delegate
         End Try
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function nothrow(Of T0, T1, T2, T3, RT) _
                     (ByVal d As Func(Of T0, T1, T2, T3, RT),
                      ByRef i0 As T0,
@@ -588,6 +624,7 @@ Public Module _delegate
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub nothrow(Of T0, T1, T2, T3) _
                     (ByVal d As Action(Of T0, T1, T2, T3),
                      ByRef i0 As T0,
@@ -604,6 +641,7 @@ Public Module _delegate
         End Try
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function do_(Of T0, T1, T2, T3, T4, RT) _
                     (ByVal d As _do(Of T0, T1, T2, T3, T4, RT),
                      ByRef i0 As T0,
@@ -626,6 +664,7 @@ Public Module _delegate
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub void_(Of T0, T1, T2, T3, T4) _
                     (ByVal d As void(Of T0, T1, T2, T3, T4),
                      ByRef i0 As T0,
@@ -647,6 +686,7 @@ Public Module _delegate
         End Try
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function nothrow(Of T0, T1, T2, T3, T4, RT) _
                     (ByVal d As _do(Of T0, T1, T2, T3, T4, RT),
                      ByRef i0 As T0,
@@ -664,6 +704,7 @@ Public Module _delegate
         End Try
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub nothrow(Of T0, T1, T2, T3, T4) _
                     (ByVal d As void(Of T0, T1, T2, T3, T4),
                      ByRef i0 As T0,
