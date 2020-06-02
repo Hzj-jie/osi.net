@@ -1,0 +1,4 @@
+﻿
+##DEFINE THREADPOOL_TYPE qless_threadpool2
+##DEFINE JOINABLE True
+##INCLUDE threadpool_test.vbp

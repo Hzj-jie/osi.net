@@ -1,0 +1,3 @@
+
+##DEFINE TYPE qless_runner
+##INCLUDE slimqless2_runner_synchronize_invoke.vbp

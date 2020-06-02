@@ -1,11 +1,12 @@
 ﻿
-Imports System.Threading
-Imports osi.root.utils
-Imports osi.root.threadpool
-Imports osi.root.formation
-Imports osi.root.connector
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Partial Public Class callback_manager
+Imports osi.root.connector
+Imports osi.root.threadpool
+
+Partial Public NotInheritable Class callback_manager
     Public Shared ReadOnly [global] As callback_manager = Nothing
 
     Shared Sub New()
@@ -60,22 +61,21 @@ Partial Public Class callback_manager
            current_pending_timeout() Then
             Return False
         Else
-            thread_pool().queue_job(Sub()
-                                        work(action)
-                                    End Sub)
+            thread_pool().push(Sub()
+                                   work(action)
+                               End Sub)
             Return True
         End If
     End Function
 
     Public Function begin(ByVal action As callback_action, ByVal timeout_ms As Int64) As Boolean
-        If begin(action) Then
-            assert(Not action Is Nothing)
-            If timeout_ms >= 0 Then
-                action.set_timeout_ms(timeout_ms)
-            End If
-            Return True
-        Else
+        If Not begin(action) Then
             Return False
         End If
+        assert(Not action Is Nothing)
+        If timeout_ms >= 0 Then
+            action.set_timeout_ms(timeout_ms)
+        End If
+        Return True
     End Function
 End Class

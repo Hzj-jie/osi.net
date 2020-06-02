@@ -24,7 +24,7 @@ Friend Class event_driver
            instance_stack(Of event_comb).size() < 128 Then
             ec.do()
         Else
-            thread_pool().queue_job(AddressOf ec.do)
+            thread_pool().push(AddressOf ec.do)
         End If
         Return True
     End Function

@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.Runtime.CompilerServices
 Imports System.Threading
+Imports osi.root.constants
 Imports osi.root.delegates
 
 Public Module _threadpool
@@ -21,6 +22,7 @@ Public Module _threadpool
         End Sub
     End Class
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub queue_in_managed_threadpool(ByVal d As WaitCallback)
         assert(Not d Is Nothing)
         queue_in_managed_threadpool(Sub()
@@ -28,6 +30,7 @@ Public Module _threadpool
                                     End Sub)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub queue_in_managed_threadpool(ByVal d As WaitCallback, ByVal o As Object)
         assert(Not d Is Nothing)
         queue_in_managed_threadpool(Sub()
@@ -35,6 +38,7 @@ Public Module _threadpool
                                     End Sub)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub queue_in_managed_threadpool(ByVal d As Action)
         assert(Not d Is Nothing)
         assert(ThreadPool.QueueUserWorkItem(Sub()
@@ -42,6 +46,7 @@ Public Module _threadpool
                                             End Sub))
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub queue_in_managed_threadpool(Of T)(ByVal d As void(Of T), ByVal i As T)
         assert(Not d Is Nothing)
         queue_in_managed_threadpool(Sub()
@@ -49,6 +54,7 @@ Public Module _threadpool
                                     End Sub)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub queue_in_managed_threadpool(Of T)(ByVal d As Action(Of T), ByVal i As T)
         assert(Not d Is Nothing)
         queue_in_managed_threadpool(Sub()
@@ -56,6 +62,7 @@ Public Module _threadpool
                                     End Sub)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function start_thread(ByRef t As Thread, ByVal v As ThreadStart) As Boolean
         If v Is Nothing Then
             Return False
@@ -65,12 +72,14 @@ Public Module _threadpool
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function start_thread(ByVal v As ThreadStart) As Thread
         Dim x As Thread = Nothing
         assert(start_thread(x, v))
         Return x
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function start_thread(ByRef t As Thread,
                                                ByVal v As ParameterizedThreadStart,
                                                ByVal p As Object) As Boolean
@@ -82,6 +91,7 @@ Public Module _threadpool
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function start_thread(ByVal v As ParameterizedThreadStart, ByVal p As Object) As Thread
         Dim t As Thread = Nothing
         assert(start_thread(t, v, p))

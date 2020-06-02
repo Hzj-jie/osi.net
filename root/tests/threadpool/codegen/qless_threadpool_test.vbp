@@ -1,3 +1,0 @@
-﻿
-##DEFINE THREADPOOL_TYPE qless_threadpool
-##INCLUDE threadpool_test.vbp

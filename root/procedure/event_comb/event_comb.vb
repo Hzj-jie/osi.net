@@ -247,7 +247,7 @@ Partial Public Class event_comb
             Return
         End If
 #If DISALLOW_REENTERABLE_LOCK Then
-        thread_pool().queue_job(AddressOf cb.resume)
+        thread_pool().push(AddressOf cb.resume)
 #Else
         cb.resume()
 #End If

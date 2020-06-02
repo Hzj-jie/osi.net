@@ -3,37 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-#Const USE_FAST_THREAD_POOL = False
-#Const USE_THREAD_POOL2 = True
-
-#If USE_FAST_THREAD_POOL Then
-Imports osi.root.utils
-
-Public Module _auto_updating_resolver
-    Public Function thread_pool() As fast_threadpool
-        Return newable_global_instance(Of fast_threadpool).ref_new()
-    End Function
-End Module
-
-Public Module _registry
-    Public Sub register_managed_threadpool()
-    End Sub
-
-    Public Sub register_qless_threadpool()
-    End Sub
-
-    Public Sub register_slimqless2_threadpool()
-    End Sub
-
-    Public Sub register_slimheapless_threadpool()
-    End Sub
-
-    Public Function using_default_ithreadpool() As Boolean
-        Return True
-    End Function
-End Module
-
-#ElseIf USE_THREAD_POOL2 Then
 Imports osi.root.utils
 
 Public Module _auto_updating_resolver
@@ -41,68 +10,3 @@ Public Module _auto_updating_resolver
         Return newable_global_instance(Of slimqless2_threadpool2).ref_new()
     End Function
 End Module
-
-Public Module _registry
-    Public Sub register_managed_threadpool()
-    End Sub
-
-    Public Sub register_qless_threadpool()
-    End Sub
-
-    Public Sub register_slimqless2_threadpool()
-    End Sub
-
-    Public Sub register_slimheapless_threadpool()
-    End Sub
-
-    Public Function using_default_ithreadpool() As Boolean
-        Return True
-    End Function
-End Module
-#Else
-
-Imports osi.root.constants
-Imports osi.root.formation
-Imports osi.root.utils
-
-Public Module _auto_updating_resolver
-    Private ReadOnly p As disposer(Of weak_ref(Of ithreadpool))
-
-    Sub New()
-        p = resolver.auto_updating_resolve(Of ithreadpool)()
-    End Sub
-
-    Public Function thread_pool() As ithreadpool
-        Dim o As ithreadpool = Nothing
-        Return If((+p).get(o), o, managed_threadpool.global)
-    End Function
-End Module
-
-<global_init(global_init_level.threading_and_procedure)>
-Public Module _registry
-    Public Sub register_managed_threadpool()
-        managed_threadpool.register()
-    End Sub
-
-    Public Sub register_qless_threadpool()
-        qless_threadpool.register()
-    End Sub
-
-    Public Sub register_slimqless2_threadpool()
-        slimqless2_threadpool.register()
-    End Sub
-
-    Public Sub register_slimheapless_threadpool()
-        slimheapless_threadpool.register()
-    End Sub
-
-    Public Function using_default_ithreadpool() As Boolean
-        Return TypeOf thread_pool() Is slimqless2_threadpool
-    End Function
-
-    Private Sub init()
-        register_slimqless2_threadpool()
-    End Sub
-End Module
-
-#End If

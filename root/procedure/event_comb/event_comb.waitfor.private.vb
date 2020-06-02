@@ -135,9 +135,9 @@ Partial Public Class event_comb
                    If se.mark_in_use() Then
                        '1, put it back to selected threadpool
                        '2, no matter how the _wait() called, it would be safe
-                       thread_pool().queue_job(Sub()
-                                                   [resume](Me)
-                                               End Sub)
+                       thread_pool().push(Sub()
+                                              [resume](Me)
+                                          End Sub)
                    End If
                End Sub
     End Function
@@ -149,9 +149,9 @@ Partial Public Class event_comb
         Return Sub()
                    '1, put it back to selected threadpool
                    '2, no matter how the _wait() called, it would be safe
-                   thread_pool().queue_job(Sub()
-                                               [resume](Me)
-                                           End Sub)
+                   thread_pool().push(Sub()
+                                          [resume](Me)
+                                      End Sub)
                End Sub
     End Function
 

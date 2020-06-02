@@ -36,11 +36,6 @@ Public NotInheritable Class qless_threadpool2
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Function current_thread_is_managed() As Boolean
-        Return qless_runner.current_thread_is_managed()
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function in_managed_thread() As Boolean
         Return qless_runner.current_thread_is_managed()
     End Function
@@ -96,18 +91,8 @@ Public NotInheritable Class qless_threadpool2
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function wait_job(ByVal ms As Int64) As Boolean
-        Return wait(ms)
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub wait()
         q.wait()
-    End Sub
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub wait_job()
-        wait()
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -116,18 +101,8 @@ Public NotInheritable Class qless_threadpool2
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function execute_job() As Boolean
-        Return execute()
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function push(ByVal v As Action) As Boolean
         Return rs(0).push(v)
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function queue_job(ByVal v As Action) As Boolean
-        Return push(v)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

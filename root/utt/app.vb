@@ -16,7 +16,6 @@ Public Module _app
         global_init.execute()
         Dim start_ms As Int64 = 0
         start_ms = Now().milliseconds()
-        assertion.is_true(using_default_ithreadpool())
         If envs.utt_no_assert Then
             error_writer_ignore_types(Of file_error_writer).ignore(constants.utt.errortype_char)
         End If
@@ -49,7 +48,6 @@ Public Module _app
         'counter.backend_writer
         assertion.less_or_equal(queue_runner.size(), constants.uint32_1)
         assertion.is_true(suppress.init_state())
-        assertion.is_true(using_default_ithreadpool())
         ' A .Net framework uses ~ 15 threads, and since ManagedThreadPool was involved in concurrent_runner, it may have
         ' some 4 threads. Unmanaged threads are not controllable, so add an extra 5.
         assertion.less_or_equal(this_process.ref.Threads().Count(),
