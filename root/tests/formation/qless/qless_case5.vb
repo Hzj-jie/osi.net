@@ -13,6 +13,7 @@ Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.root.lock
 Imports osi.root.utt
 
 Friend Class qless_case5
@@ -42,13 +43,12 @@ Friend Class qless_case5
         End Sub
 
         Public Overrides Function prepare() As Boolean
-            If MyBase.prepare() Then
-                i = 0
-                b.resize(write_thread_count * round)
-                Return True
-            Else
+            If Not MyBase.prepare() Then
                 Return False
             End If
+            i = 0
+            b.resize(write_thread_count * round)
+            Return True
         End Function
 
         Private Sub write()
@@ -65,6 +65,8 @@ Friend Class qless_case5
             Dim v As UInt32 = 0
             If q.pop(v) Then
                 b(v) = True
+            Else
+                yield()
             End If
         End Sub
 
