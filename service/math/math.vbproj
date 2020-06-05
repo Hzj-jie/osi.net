@@ -96,6 +96,7 @@
     <Compile Include="calculator\ioutputter.vb" />
     <Compile Include="calculator\iparser.vb" />
     <Compile Include="calculator\uint_binary_calculator.vb" />
+    <Compile Include="integralor.vb" />
     <Compile Include="math_debug.vb" />
     <Compile Include="div_rem.vb" />
     <Compile Include="exceptions.vb" />

@@ -15,7 +15,7 @@ Partial Public Class stream(Of T)
     End Sub
 
     Public Function map(Of R)(ByVal f As Func(Of T, R)) As stream(Of R)
-        Return New stream(Of R)(container_operator.enumerators.map(e, f))
+        Return New stream(Of R)(streams.enumerators.map(e, f))
     End Function
 
     ' A + A + ... => A
@@ -67,7 +67,7 @@ Partial Public Class stream(Of T)
     End Function
 
     Public Function limit(ByVal count As UInt32) As stream(Of T)
-        Return New stream(Of T)(container_operator.enumerators.limit_count(e, count))
+        Return New stream(Of T)(streams.enumerators.limit_count(e, count))
     End Function
 
     Public Sub foreach(ByVal f As Action(Of T))
@@ -84,7 +84,7 @@ Partial Public Class stream(Of T)
     End Sub
 
     Public Function filter(ByVal f As Func(Of T, Boolean)) As stream(Of T)
-        Return New stream(Of T)(container_operator.enumerators.filter(e, f))
+        Return New stream(Of T)(streams.enumerators.filter(e, f))
     End Function
 
     Public Function to_array() As T()
@@ -92,7 +92,7 @@ Partial Public Class stream(Of T)
     End Function
 
     Public Function flat_map(Of R)(ByVal f As Func(Of T, stream(Of R))) As stream(Of R)
-        Return New stream(Of R)(container_operator.enumerators.concat(
+        Return New stream(Of R)(streams.enumerators.concat(
                                     map(f).
                                     map(Function(ByVal s As stream(Of R)) As container_operator(Of R).enumerator
                                             Return s.e

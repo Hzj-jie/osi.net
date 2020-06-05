@@ -58,10 +58,12 @@
     <Compile Include="app.vb" />
     <Compile Include="assert\assertion.vb" />
     <Compile Include="assert\assertions.vb" />
+    <Compile Include="assert\checks_of.double.vb" />
     <Compile Include="assert\checks_of.optional.vb" />
     <Compile Include="assert\check.array.vb" />
     <Compile Include="assert\check.optional.vb" />
     <Compile Include="assert\check.vb" />
+    <Compile Include="assert\checks_of.T.vb" />
     <Compile Include="assert\expectation.vb" />
     <Compile Include="assert\expectations.vb" />
     <Compile Include="case\case.vb" />

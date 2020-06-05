@@ -7,6 +7,7 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
 Partial Public NotInheritable Class arrays
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function type_erasure(Of T, IT As T)(ByVal i() As IT) As T()
         If i Is Nothing Then
             Return Nothing
@@ -87,6 +88,11 @@ Partial Public NotInheritable Class arrays
     Public Shared Sub memcpy(Of T1, T2)(ByVal dest() As T1, ByVal src() As T2, ByVal byte_count As UInt32)
         Buffer.BlockCopy(src, 0, dest, 0, CInt(byte_count))
     End Sub
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function [of](ByVal ParamArray v() As Object) As Object()
+        Return v
+    End Function
 
     Private Sub New()
     End Sub

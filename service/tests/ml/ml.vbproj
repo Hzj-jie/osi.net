@@ -64,6 +64,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="normal_distribution\estimator_estimate_test.vb" />
+    <Compile Include="normal_distribution\possibility_test.vb" />
     <Compile Include="onebound\evaluator_test.vb" />
     <Compile Include="onebound\model_test.vb" />
     <Compile Include="onebound\trainer_test.vb" />
