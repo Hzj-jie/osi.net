@@ -109,4 +109,23 @@ Partial Public Class stream(Of T)
         e.next()
         Return r
     End Function
+
+    Public Function sort() As stream(Of T)
+        Return collect_by(collectors.sorted_frequency()).
+               stream().
+               flat_map(Function(ByVal i As first_const_pair(Of T, UInt32)) As stream(Of T)
+                            Return streams.repeat(i.first, i.second)
+                        End Function)
+    End Function
+
+    Public Function sort(ByVal cmp As Func(Of T, T, Int32)) As stream(Of T)
+        assert(Not cmp Is Nothing)
+        Return map(Function(ByVal i As T) As compare_node
+                       Return New compare_node(i, cmp)
+                   End Function).
+               sort().
+               map(Function(ByVal i As compare_node) As T
+                       Return i.v
+                   End Function)
+    End Function
 End Class

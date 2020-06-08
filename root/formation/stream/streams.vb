@@ -4,7 +4,7 @@ Option Infer Off
 Option Strict On
 
 Partial Public NotInheritable Class streams
-    Public Shared Function [of](Of T)(ByVal i() As T) As stream(Of T)
+    Public Shared Function [of](Of T)(ByVal ParamArray i() As T) As stream(Of T)
         Return New stream(Of T)(enumerators.from_array(i))
     End Function
 

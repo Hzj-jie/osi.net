@@ -30,7 +30,13 @@ Partial Public Class stream(Of T)
 
         Public Shared Function frequency() As Action(Of unordered_map(Of T, UInt32), T)
             Return Sub(ByVal r As unordered_map(Of T, UInt32), ByVal v As T)
+                       r(v) += uint32_1
+                   End Sub
+        End Function
 
+        Public Shared Function sorted_frequency() As Action(Of map(Of T, UInt32), T)
+            Return Sub(ByVal r As map(Of T, UInt32), ByVal v As T)
+                       r(v) += uint32_1
                    End Sub
         End Function
 

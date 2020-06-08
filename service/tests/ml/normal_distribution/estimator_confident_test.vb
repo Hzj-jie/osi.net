@@ -10,7 +10,7 @@ Imports nd = osi.service.ml.normal_distribution
 
 Namespace normal_distribution
     <test>
-    Public NotInheritable Class estimator_estimate_test
+    Public NotInheritable Class estimator_confident_test
         <test>
         Private Shared Sub case1()
             Dim n As nd = Nothing
@@ -23,9 +23,7 @@ Namespace normal_distribution
                                       Return tuple.of(v, CUInt(n.range_possibility(v - 1 / 20, v + 1 / 20) * 1000))
                                   End Function).
                               to_array()
-            Dim n2 As nd = Nothing
-            n2 = nd.estimator.estimate(samples)
-            assertion.is_true(n.near_match(n2, 0.03), n, n2)
+            assertions.of(nd.estimator.confident(n, samples)).in_range(54416565476, 1)
         End Sub
 
         <test>
@@ -40,9 +38,7 @@ Namespace normal_distribution
                                       Return tuple.of(v, CUInt(n.range_possibility(v - 1 / 200, v + 1 / 200) * 1000000))
                                   End Function).
                               to_array()
-            Dim n2 As nd = Nothing
-            n2 = nd.estimator.estimate(samples)
-            assertion.is_true(n.near_match(n2, 0.0003), n, n2)
+            assertions.of(nd.estimator.confident(n, samples)).in_range(79564, 1)
         End Sub
 
         Private Sub New()

@@ -21,7 +21,7 @@ Partial Public NotInheritable Class normal_distribution
     End Sub
 
     Public Function possibility(ByVal v As Double) As Double
-        Return (SysMath.E ^ (-(v - mean) ^ 2 / 2 / variance)) / SysMath.Sqrt(SysMath.PI * 2 * variance)
+        Return (SysMath.E ^ (-((v - mean) ^ 2) / 2 / variance)) / SysMath.Sqrt(2 * SysMath.PI * variance)
     End Function
 
     Public Function range_possibility(ByVal min As Double, ByVal max As Double, ByVal incremental As Double) As Double

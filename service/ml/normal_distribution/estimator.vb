@@ -42,17 +42,38 @@ Partial Public NotInheritable Class normal_distribution
 
         Public Shared Function confident(ByVal d As normal_distribution,
                                          ByVal ParamArray samples() As tuple(Of Double, UInt32)) As Double
+            Const ratio As Double = 1000000000
             Dim count As UInt32 = 0
             count = streams.of(samples).
                             map(Function(ByVal i As tuple(Of Double, UInt32)) As UInt32
                                     Return i.second
                                 End Function).
                             aggregate(stream(Of UInt32).aggregators.sum)
-            Return streams.of(samples).
-                           map(Function(ByVal i As tuple(Of Double, UInt32)) As Double
-                                   Return Math.Abs(d.possibility(i.first) - i.second / count)
-                               End Function).
-                           aggregate(stream(Of Double).aggregators.sum)
+            Dim result As Double = 0
+            Using code_block
+                Dim v As vector(Of tuple(Of Double, UInt32)) = Nothing
+                v = streams.of(samples).
+                           sort(Function(ByVal l As tuple(Of Double, UInt32),
+                                         ByVal r As tuple(Of Double, UInt32)) As Int32
+                                    Return l.first().CompareTo(r.first())
+                                End Function).
+                           collect(Of vector(Of tuple(Of Double, UInt32)))()
+                Dim i As UInt32 = 0
+                While i < v.size()
+                    Dim p As Double = 0
+                    If i = 0 Then
+                        p = d.cumulative_distribute(v(i).first())
+                    ElseIf i = v.size() - uint32_1 Then
+                        p = 1 - d.cumulative_distribute(v(i).first())
+                    Else
+                        p = d.range_possibility((v(i - uint32_1).first() + v(i).first()) / 2,
+                                            (v(i).first() + v(i + uint32_1).first()) / 2)
+                    End If
+                    result += (p * ratio - v(i).second() * ratio / count) ^ 2
+                    i += uint32_1
+                End While
+            End Using
+            Return result / samples.array_size()
         End Function
 
         Private Sub New()

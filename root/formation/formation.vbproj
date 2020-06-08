@@ -76,6 +76,7 @@
     <Compile Include="bit_array_thread_safe.vb" />
     <Compile Include="chunk.vb" />
     <Compile Include="stream\double_stream.vb" />
+    <Compile Include="stream\stream.compare_node.vb" />
     <Compile Include="stream\streams.enumerator.vb" />
     <Compile Include="threadsafe\waitable_qless.vb" />
     <Compile Include="unordered_map.ext.vb" />
