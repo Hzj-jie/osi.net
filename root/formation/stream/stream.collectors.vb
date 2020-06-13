@@ -28,6 +28,16 @@ Partial Public Class stream(Of T)
                    End Sub
         End Function
 
+        Public Shared Function count_unique() As Action(Of ref(Of UInt32), T)
+            Dim s As unordered_set(Of T) = Nothing
+            s = New unordered_set(Of T)()
+            Return Sub(ByVal r As ref(Of UInt32), ByVal v As T)
+                       If s.emplace(v).second() Then
+                           r.p += uint32_1
+                       End If
+                   End Sub
+        End Function
+
         Public Shared Function frequency() As Action(Of unordered_map(Of T, UInt32), T)
             Return Sub(ByVal r As unordered_map(Of T, UInt32), ByVal v As T)
                        r(v) += uint32_1
@@ -37,6 +47,18 @@ Partial Public Class stream(Of T)
         Public Shared Function sorted_frequency() As Action(Of map(Of T, UInt32), T)
             Return Sub(ByVal r As map(Of T, UInt32), ByVal v As T)
                        r(v) += uint32_1
+                   End Sub
+        End Function
+
+        Public Shared Function unique() As Action(Of unordered_set(Of T), T)
+            Return Sub(ByVal r As unordered_set(Of T), ByVal v As T)
+                       r.emplace(v)
+                   End Sub
+        End Function
+
+        Public Shared Function sorted_unique() As Action(Of [set](Of T), T)
+            Return Sub(ByVal r As [set](Of T), ByVal v As T)
+                       r.emplace(v)
                    End Sub
         End Function
 

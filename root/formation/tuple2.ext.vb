@@ -40,4 +40,28 @@ Partial Public Structure tuple(Of T1, T2)
         assert(Not p Is Nothing)
         Return New tuple(Of T1, T2)(p.first, p.second)
     End Function
+
+    Public Shared Function first_selector() As Func(Of tuple(Of T1, T2), T1)
+        Return Function(ByVal i As tuple(Of T1, T2)) As T1
+                   Return i.first()
+               End Function
+    End Function
+
+    Public Shared Function second_selector() As Func(Of tuple(Of T1, T2), T2)
+        Return Function(ByVal i As tuple(Of T1, T2)) As T2
+                   Return i.second()
+               End Function
+    End Function
+
+    Public Shared Function first_comparer() As Func(Of tuple(Of T1, T2), tuple(Of T1, T2), Int32)
+        Return Function(ByVal l As tuple(Of T1, T2), ByVal r As tuple(Of T1, T2)) As Int32
+                   Return compare(l.first(), r.first())
+               End Function
+    End Function
+
+    Public Shared Function second_comparer() As Func(Of tuple(Of T1, T2), tuple(Of T1, T2), Int32)
+        Return Function(ByVal l As tuple(Of T1, T2), ByVal r As tuple(Of T1, T2)) As Int32
+                   Return compare(l.second(), r.second())
+               End Function
+    End Function
 End Structure

@@ -77,7 +77,7 @@
     <Compile Include="chunk.vb" />
     <Compile Include="stream\double_stream.vb" />
     <Compile Include="stream\stream.compare_node.vb" />
-    <Compile Include="stream\streams.enumerator.vb" />
+    <Compile Include="stream\streams.enumerators.vb" />
     <Compile Include="threadsafe\waitable_qless.vb" />
     <Compile Include="unordered_map.ext.vb" />
     <Compile Include="first_const_pair.ext.vb" />
@@ -133,8 +133,8 @@
     <Compile Include="set.vb" />
     <Compile Include="unique_queue.vb" />
     <Compile Include="stack.vb" />
-    <Compile Include="stream\stream.aggregator.vb" />
-    <Compile Include="stream\stream.collector.vb" />
+    <Compile Include="stream\stream.aggregators.vb" />
+    <Compile Include="stream\stream.collectors.vb" />
     <Compile Include="stream\stream.container.vb" />
     <Compile Include="stream\stream.vb" />
     <Compile Include="stream\streams.vb" />

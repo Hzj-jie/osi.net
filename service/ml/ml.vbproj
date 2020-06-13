@@ -51,6 +51,10 @@
     <Compile Include="boolaffinity\evaluator.vb" />
     <Compile Include="boolaffinity\model.vb" />
     <Compile Include="boolaffinity\trainer.vb" />
+    <Compile Include="confidentor.vb" />
+    <Compile Include="distribution.vb" />
+    <Compile Include="exponential_distribution\estimator.vb" />
+    <Compile Include="exponential_distribution\exponential_distribution.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

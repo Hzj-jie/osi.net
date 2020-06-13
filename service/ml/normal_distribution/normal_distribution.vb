@@ -8,7 +8,7 @@ Imports integralor = osi.service.math.integralor
 Imports SysMath = System.Math
 
 Partial Public NotInheritable Class normal_distribution
-    Implements IEquatable(Of normal_distribution)
+    Implements distribution, IEquatable(Of normal_distribution)
 
     Private Const default_incremental As Double = 0.000001
     Public ReadOnly mean As Double
@@ -28,7 +28,7 @@ Partial Public NotInheritable Class normal_distribution
         Me.variance = variance
     End Sub
 
-    Public Function possibility(ByVal v As Double) As Double
+    Public Function possibility(ByVal v As Double) As Double Implements distribution.possibility
         Return (SysMath.E ^ (-((v - mean) ^ 2) / 2 / variance)) / SysMath.Sqrt(2 * SysMath.PI * variance)
     End Function
 
@@ -42,7 +42,8 @@ Partial Public NotInheritable Class normal_distribution
                        calculate()
     End Function
 
-    Public Function range_possibility(ByVal min As Double, ByVal max As Double) As Double
+    Public Function range_possibility(ByVal min As Double,
+                                      ByVal max As Double) As Double Implements distribution.range_possibility
         Return range_possibility(min, max, default_incremental)
     End Function
 
@@ -50,7 +51,7 @@ Partial Public NotInheritable Class normal_distribution
         Return range_possibility(mean - 8 * SysMath.Sqrt(variance), v, incremental)
     End Function
 
-    Public Function cumulative_distribute(ByVal v As Double) As Double
+    Public Function cumulative_distribute(ByVal v As Double) As Double Implements distribution.cumulative_distribute
         Return cumulative_distribute(v, default_incremental)
     End Function
 

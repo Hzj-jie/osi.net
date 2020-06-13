@@ -128,4 +128,10 @@ Partial Public Class stream(Of T)
                        Return i.v
                    End Function)
     End Function
+
+    Public Function count() As stream(Of tuple(Of T, UInt32))
+        Return collect_by(collectors.frequency()).
+               stream().
+               map(AddressOf tuple(Of T, UInt32).from_first_const_pair)
+    End Function
 End Class
