@@ -61,19 +61,24 @@ Partial Public NotInheritable Class onebound(Of K)
                 Dim it As unordered_map(Of K, Double).iterator = Nothing
                 it = m.find(i)
                 assert(it <> m.end())
-                assert((+it).second <= sum)
 
                 If c.compare = config.comparison.with_average Then
+                    assert((+it).second <= sum)
                     Return (+it).second * m.size() / sum
                 End If
                 If c.compare = config.comparison.with_max Then
+                    assert((+it).second <= max)
                     Return (+it).second / max
                 End If
                 If c.compare = config.comparison.with_exclusive_average Then
+                    assert((+it).second <= sum)
                     If m.size() = uint32_1 Then
                         Return Double.MaxValue
                     End If
                     Return (+it).second * (m.size() - uint32_1) / (sum - (+it).second)
+                End If
+                If c.compare = config.comparison.raw Then
+                    Return (+it).second
                 End If
                 assert(False)
                 Return 0
@@ -94,6 +99,7 @@ Partial Public NotInheritable Class onebound(Of K)
                 with_average
                 with_max
                 with_exclusive_average
+                raw
             End Enum
 
             Public compare As comparison

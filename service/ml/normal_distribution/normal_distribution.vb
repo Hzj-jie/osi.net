@@ -11,8 +11,16 @@ Partial Public NotInheritable Class normal_distribution
     Implements IEquatable(Of normal_distribution)
 
     Private Const default_incremental As Double = 0.000001
-    Private ReadOnly mean As Double
-    Private ReadOnly variance As Double
+    Public ReadOnly mean As Double
+    Public ReadOnly variance As Double
+
+    Shared Sub New()
+        struct(Of normal_distribution).register()
+    End Sub
+
+    ' For typed_constructor / serialization
+    Private Sub New()
+    End Sub
 
     Public Sub New(ByVal mean As Double, ByVal variance As Double)
         assert(variance > 0)

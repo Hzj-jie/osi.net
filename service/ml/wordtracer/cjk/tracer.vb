@@ -11,9 +11,9 @@ Partial Public NotInheritable Class wordtracer
     Partial Public NotInheritable Class cjk
         Public NotInheritable Class tracer
             Private Shared Sub sentence(ByVal s As String,
-                                    ByVal start As UInt32,
-                                    ByVal [end] As UInt32,
-                                    ByVal trainer As onebound(Of Char).trainer)
+                                        ByVal start As UInt32,
+                                        ByVal [end] As UInt32,
+                                        ByVal trainer As onebound(Of Char).trainer)
                 assert([end] >= start)
                 assert(Not trainer Is Nothing)
                 If [end] = start Then
@@ -29,9 +29,10 @@ Partial Public NotInheritable Class wordtracer
                 Return train({s})
             End Function
 
-            Public Shared Function train(ByVal ss As IEnumerable(Of String)) As onebound(Of Char).model
+            Public Shared Function train(ByVal config As onebound(Of Char).trainer.config,
+                                         ByVal ss As IEnumerable(Of String)) As onebound(Of Char).model
                 Dim t As onebound(Of Char).trainer = Nothing
-                t = New onebound(Of Char).trainer()
+                t = New onebound(Of Char).trainer(config)
                 For Each s As String In ss
                     If s.null_or_whitespace() Then
                         Continue For
@@ -42,6 +43,10 @@ Partial Public NotInheritable Class wordtracer
                              End Sub)
                 Next
                 Return t.dump()
+            End Function
+
+            Public Shared Function train(ByVal ss As IEnumerable(Of String)) As onebound(Of Char).model
+                Return train(New onebound(Of Char).trainer.config(), ss)
             End Function
 
             Public Shared Function flat_map(ByVal i As onebound(Of Char).model) As unordered_map(Of String, Double)
