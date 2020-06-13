@@ -160,7 +160,7 @@
     </Compile>
     <Compile Include="threadsafe\hashmapless.vb" />
     <Compile Include="threadsafe\heapless.vb" />
-    <Compile Include="threadsafe\object_unique_pointer_set.vb" />
+    <Compile Include="threadsafe\object_unique_ref_set.vb" />
     <Compile Include="threadsafe\object_unique_set.vb" />
     <Compile Include="threadsafe\qless.vb" />
     <Compile Include="threadsafe\slimqless2.vb" />

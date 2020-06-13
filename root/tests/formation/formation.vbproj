@@ -187,8 +187,6 @@
     <Compile Include="vector\vector_perf.vb" />
     <Compile Include="vector\vector_test.calls.vb" />
     <Compile Include="vector\vector_test.vb" />
-    <Compile Include="weak_ref_pointer_test.vb" />
-    <Compile Include="weak_pointer_test.vb" />
     <None Include="qless\codegen\cycle_case2.vbp" />
     <None Include="qless\codegen\cycle_case3.vbp" />
     <None Include="qless\codegen\cycle_case4.vbp" />

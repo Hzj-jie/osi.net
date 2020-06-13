@@ -162,7 +162,7 @@
     <Compile Include="object_extensions_test.vb" />
     <Compile Include="out_generic_behavior_test.vb" />
     <Compile Include="overload_behavior_test.vb" />
-    <Compile Include="pointer_test.vb" />
+    <Compile Include="ref_test.vb" />
     <Compile Include="rate_timeout_test.vb" />
     <Compile Include="resolver_test.vb" />
     <Compile Include="rnd\guid_strs_test.vb" />
@@ -242,6 +242,8 @@
     <Compile Include="virtual_key_test.vb" />
     <Compile Include="wait_handle_behavior_test.vb" />
     <Compile Include="weakreference_behavior_test.vb" />
+    <Compile Include="weak_ref_test.vb" />
+    <Compile Include="weak_ref_ref_test.vb" />
     <Compile Include="windows_hook\lowlevel_keyboard_hook_test.vb" />
     <Compile Include="native_window_test\native_window_test.vb" />
     <Compile Include="native_window_test\native_window_test_form.Designer.vb">
