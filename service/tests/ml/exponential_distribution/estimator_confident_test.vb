@@ -17,14 +17,14 @@ Namespace exponential_distribution
             Dim n As ed = Nothing
             n = New ed(1)
             Dim samples() As tuple(Of Double, UInt32) = Nothing
-            samples = streams.range_closed(-50, 50).
+            samples = streams.range_closed(0, 100).
                               map(Function(ByVal i As Int32) As tuple(Of Double, UInt32)
                                       Dim v As Double = 0
                                       v = i / 10
                                       Return tuple.of(v, CUInt(n.range_possibility(v - 1 / 20, v + 1 / 20) * 1000))
                                   End Function).
                               to_array()
-            assertions.of(confidentor.confident(n, samples)).in_range(378043132774, 1)
+            assertions.of(confidentor.confident(n, samples)).in_range(23927697573779, 1)
         End Sub
 
         <test>
@@ -32,14 +32,14 @@ Namespace exponential_distribution
             Dim n As ed = Nothing
             n = New ed(1)
             Dim samples() As tuple(Of Double, UInt32) = Nothing
-            samples = streams.range_closed(-500, 500).
+            samples = streams.range_closed(0, 1000).
                               map(Function(ByVal i As Int32) As tuple(Of Double, UInt32)
                                       Dim v As Double = 0
                                       v = i / 100
                                       Return tuple.of(v, CUInt(n.range_possibility(v - 1 / 200, v + 1 / 200) * 1000000))
                                   End Function).
                               to_array()
-            assertions.of(confidentor.confident(n, samples)).in_range(44676994614, 1)
+            assertions.of(confidentor.confident(n, samples)).in_range(24859031708, 1)
         End Sub
 
         Private Sub New()
