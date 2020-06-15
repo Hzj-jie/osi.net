@@ -11,6 +11,14 @@ Partial Public NotInheritable Class exponential_distribution
 
     Public ReadOnly lambda As Double
 
+    Shared Sub New()
+        struct(Of exponential_distribution).register()
+    End Sub
+
+    ' For typed_constructor / serialization
+    Private Sub New()
+    End Sub
+
     Public Sub New(ByVal lambda As Double)
         assert(lambda > 0)
         Me.lambda = lambda
