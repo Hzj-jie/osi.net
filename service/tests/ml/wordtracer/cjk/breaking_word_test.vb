@@ -19,7 +19,8 @@ Namespace wordtracer.cjk
         <command_line_specified>
         Private Shared Sub normal_distribution_from_raw()
             Using ms As MemoryStream = New MemoryStream()
-                assert(bytes_serializer.append_to(breaking_word.normal_distribute(model.load("cjk.words.2.raw.bin")), ms))
+                assert(bytes_serializer.append_to(
+                       breaking_word.normal_distribute(model.load("cjk.words.2.raw.bin")), ms))
                 assert(ms.dump_to_file("cjk.words.2.breaking_words.normal_distribute.bin"))
             End Using
         End Sub
@@ -53,7 +54,15 @@ Namespace wordtracer.cjk
                 ms.Position() = 0
                 Dim r As unordered_map(Of Char, ed) = Nothing
                 assert(bytes_serializer.consume_from(ms, r))
-                Console.WriteLine(json_serializer.to_str(r))
+                Console.WriteLine(json_serializer.to_str(
+                    r.stream().
+                      sort(Function(ByVal i As first_const_pair(Of Char, ed),
+                                    ByVal j As first_const_pair(Of Char, ed)) As Int32
+                               assert(Not i Is Nothing)
+                               assert(Not j Is Nothing)
+                               Return i.second.lambda.CompareTo(j.second.lambda)
+                           End Function).
+                      collect(Of vector(Of first_const_pair(Of Char, ed)))()))
             End Using
         End Sub
     End Class
