@@ -194,12 +194,12 @@ Public Module _compare
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function that_to_t(Of T)(ByVal this As T, ByVal that As Object) As Int32
-        Return -direct_cast(Of IComparable(Of T))(that).CompareTo(this)
+        Return comparer.reverse(direct_cast(Of IComparable(Of T))(that).CompareTo(this))
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function that_to_object(ByVal this As Object, ByVal that As Object) As Int32
-        Return -direct_cast(Of IComparable)(that).CompareTo(this)
+        Return comparer.reverse(direct_cast(Of IComparable)(that).CompareTo(this))
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
