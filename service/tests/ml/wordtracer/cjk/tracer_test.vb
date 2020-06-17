@@ -54,8 +54,19 @@ Namespace wordtracer.cjk
         <command_line_specified>
         Private Shared Sub dump_raw()
             model.load("cjk.words.2.raw.bin").
-                  filter(0.1).
                   flat_map().
+                  sort(Function(ByVal i As first_const_pair(Of const_pair(Of Char, Char), Double),
+                                ByVal j As first_const_pair(Of const_pair(Of Char, Char), Double)) As Int32
+                           assert(Not i Is Nothing)
+                           assert(Not j Is Nothing)
+                           If i.first.first <> j.first.first Then
+                               Return i.first.first.CompareTo(j.first.first)
+                           End If
+                           If i.second <> j.second Then
+                               Return i.second.CompareTo(j.second)
+                           End If
+                           Return i.first.second.CompareTo(j.first.second)
+                       End Function).
                   foreach(Sub(ByVal x As first_const_pair(Of const_pair(Of Char, Char), Double))
                               Console.WriteLine(strcat(x.first.first, " ", x.first.second, ", ", x.second))
                           End Sub)

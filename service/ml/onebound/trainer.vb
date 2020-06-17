@@ -122,6 +122,11 @@ Partial Public NotInheritable Class onebound(Of K)
             assert(Not c Is Nothing)
             Me.c = c
             Me.m = New unordered_map(Of K, bind)()
+
+            ' When raw is used, count(a, b) = count(b, a), so the bidirectional is not useful.
+            If c.compare = config.comparison.raw Then
+                c.bidirectional = False
+            End If
         End Sub
 
         Public Function accumulate(ByVal a As K, ByVal b As K, ByVal v As Double) As trainer

@@ -49,6 +49,68 @@ Partial Public NotInheritable Class wordtracer
                          collect(Of unordered_map(Of Char, exponential_distribution))()
             End Function
 
+            Private Shared Function expo_distribute(ByVal m As onebound(Of Char).model,
+                                                    ByVal f As Func(Of exponential_distribution, Double, Double)) _
+                                       As unordered_map(Of Char, unordered_map(Of Char, Double))
+                assert(Not m Is Nothing)
+                assert(Not f Is Nothing)
+                Dim r As unordered_map(Of Char, vector(Of const_pair(Of Char, Double))) = Nothing
+                r = New unordered_map(Of Char, vector(Of const_pair(Of Char, Double)))()
+                m.flat_map().foreach(Sub(ByVal p As first_const_pair(Of const_pair(Of Char, Char), Double))
+                                         r(p.first.first).emplace_back(const_pair.of(p.first.second, p.second))
+                                     End Sub)
+                Return r.stream().
+                         map(r.second_mapper(Function(ByVal v As vector(Of const_pair(Of Char, Double))) _
+                                                 As unordered_map(Of Char, Double)
+                                                 If v.stream().
+                                                      map(Function(ByVal i As const_pair(Of Char, Double)) As Double
+                                                              Return i.second
+                                                          End Function).
+                                                      collect_by(stream(Of Double).collectors.count_unique()).p < 5 Then
+                                                     Return v.stream().
+                                                              map(Function(ByVal i As const_pair(Of Char, Double)) _
+                                                                      As first_const_pair(Of Char, Double)
+                                                                      Return first_const_pair.of(i.first, 1.0)
+                                                                  End Function).
+                                                              collect(Of unordered_map(Of Char, Double))()
+                                                 End If
+                                                 Dim e As exponential_distribution = Nothing
+                                                 e = exponential_distribution.
+                                                     estimator.
+                                                     estimate(v.stream().
+                                                                map(Function(ByVal i As const_pair(Of Char, Double)) _
+                                                                        As Double
+                                                                        Return i.second
+                                                                    End Function).
+                                                                to_array())
+                                                 Return v.stream().
+                                                          map(Function(ByVal i As const_pair(Of Char, Double)) _
+                                                                  As first_const_pair(Of Char, Double)
+                                                                  Return first_const_pair.of(
+                                                                             i.first,
+                                                                             f(e, i.second))
+                                                              End Function).
+                                                          collect(Of unordered_map(Of Char, Double))()
+                                             End Function)).
+                         collect(Of unordered_map(Of Char, unordered_map(Of Char, Double)))()
+            End Function
+
+            Public Shared Function cumulative_distributes(ByVal m As onebound(Of Char).model) _
+                                       As unordered_map(Of Char, unordered_map(Of Char, Double))
+                Return expo_distribute(m,
+                                       Function(ByVal e As exponential_distribution, ByVal c As Double) As Double
+                                           Return e.cumulative_distribute(c)
+                                       End Function)
+            End Function
+
+            Public Shared Function expo_possibilities(ByVal m As onebound(Of Char).model) _
+                                       As unordered_map(Of Char, unordered_map(Of Char, Double))
+                Return expo_distribute(m,
+                                       Function(ByVal e As exponential_distribution, ByVal c As Double) As Double
+                                           Return e.possibility(c)
+                                       End Function)
+            End Function
+
             Private Sub New()
             End Sub
         End Class
