@@ -92,7 +92,7 @@ Namespace wordtracer.cjk
                                                    If i.second = j.second Then
                                                        Return i.first.CompareTo(j.first)
                                                    End If
-                                                   Return -i.second.CompareTo(j.second)
+                                                   Return comparer.reverse(i.second.CompareTo(j.second))
                                                End Function).
                                           foreach(v.on_pair(Sub(ByVal k2 As Char, ByVal p As Double)
                                                                 Console.WriteLine(strcat(k, k2, ": ", p))
@@ -127,7 +127,7 @@ Namespace wordtracer.cjk
                                                    If i.second = j.second Then
                                                        Return i.first.CompareTo(j.first)
                                                    End If
-                                                   Return -i.second.CompareTo(j.second)
+                                                   Return comparer.reverse(i.second.CompareTo(j.second))
                                                End Function).
                                           foreach(v.on_pair(Sub(ByVal k2 As Char, ByVal p As Double)
                                                                 Console.WriteLine(strcat(k, k2, ": ", p))

@@ -17,7 +17,7 @@ Partial Public NotInheritable Class normal_distribution
             assert(samples.array_size() > 1)
             Dim count As UInt32 = 0
             count = streams.of(samples).
-                            map(tuple(Of Double, UInt32).second_selector()).
+                            map(tuple(Of Double, UInt32).second_selector).
                             aggregate(stream(Of UInt32).aggregators.sum)
             Dim mean As Double = 0
             mean = streams.of(samples).

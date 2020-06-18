@@ -130,6 +130,35 @@ Public NotInheritable Class first_const_pair(Of FT, ST)
             Return p.second
         End Function
 
+    Public Shared ReadOnly first_comparer As Func(Of first_const_pair(Of FT, ST), first_const_pair(Of FT, ST), Int32) =
+        Function(ByVal l As first_const_pair(Of FT, ST),
+                 ByVal r As first_const_pair(Of FT, ST)) As Int32
+            assert(Not l Is Nothing)
+            assert(Not r Is Nothing)
+            Return compare(l.first, r.first)
+        End Function
+
+    Public Shared ReadOnly second_comparer As Func(Of first_const_pair(Of FT, ST), first_const_pair(Of FT, ST), Int32) =
+        Function(ByVal l As first_const_pair(Of FT, ST),
+                 ByVal r As first_const_pair(Of FT, ST)) As Int32
+            assert(Not l Is Nothing)
+            assert(Not r Is Nothing)
+            Return compare(l.second, r.second)
+        End Function
+
+    Public Shared ReadOnly second_first_comparer As Func(Of first_const_pair(Of FT, ST), first_const_pair(Of FT, ST), Int32) =
+        Function(ByVal l As first_const_pair(Of FT, ST),
+                 ByVal r As first_const_pair(Of FT, ST)) As Int32
+            assert(Not l Is Nothing)
+            assert(Not r Is Nothing)
+            Dim cmp As Int32 = 0
+            cmp = compare(l.second, r.second)
+            If cmp <> 0 Then
+                Return cmp
+            End If
+            Return compare(l.first, r.first)
+        End Function
+
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](ByVal first As FT, ByVal second As ST) As first_const_pair(Of FT, ST)
         Return New first_const_pair(Of FT, ST)(copy_no_error(first), copy_no_error(second))

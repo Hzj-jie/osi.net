@@ -63,9 +63,7 @@ Partial Public NotInheritable Class wordtracer
                          map(r.second_mapper(Function(ByVal v As vector(Of const_pair(Of Char, Double))) _
                                                  As unordered_map(Of Char, Double)
                                                  If v.stream().
-                                                      map(Function(ByVal i As const_pair(Of Char, Double)) As Double
-                                                              Return i.second
-                                                          End Function).
+                                                      map(const_pair(Of Char, Double).second_getter).
                                                       collect_by(stream(Of Double).collectors.count_unique()).p < 5 Then
                                                      Return v.stream().
                                                               map(Function(ByVal i As const_pair(Of Char, Double)) _
@@ -78,10 +76,7 @@ Partial Public NotInheritable Class wordtracer
                                                  e = exponential_distribution.
                                                      estimator.
                                                      estimate(v.stream().
-                                                                map(Function(ByVal i As const_pair(Of Char, Double)) _
-                                                                        As Double
-                                                                        Return i.second
-                                                                    End Function).
+                                                                map(const_pair(Of Char, Double).second_getter).
                                                                 to_array())
                                                  Return v.stream().
                                                           map(Function(ByVal i As const_pair(Of Char, Double)) _

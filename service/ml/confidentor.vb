@@ -30,13 +30,13 @@ Public NotInheritable Class confidentor
                                      ByVal ParamArray samples() As tuple(Of Double, UInt32)) As Double
         Dim count As UInt32 = 0
         count = streams.of(samples).
-                        map(tuple(Of Double, UInt32).second_selector()).
+                        map(tuple(Of Double, UInt32).second_selector).
                         aggregate(stream(Of UInt32).aggregators.sum)
         Dim result As Double = 0
         Using code_block
             Dim v As vector(Of tuple(Of Double, UInt32)) = Nothing
             v = streams.of(samples).
-                        sort(tuple(Of Double, UInt32).first_comparer()).
+                        sort(tuple(Of Double, UInt32).first_comparer).
                         collect(Of vector(Of tuple(Of Double, UInt32)))()
             Dim i As UInt32 = 0
             While i < v.size()

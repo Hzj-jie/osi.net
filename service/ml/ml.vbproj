@@ -75,11 +75,13 @@
     <Compile Include="onebound\evaluator.vb" />
     <Compile Include="onebound\model.vb" />
     <Compile Include="onebound\trainer.vb" />
+    <Compile Include="percentile\filter.vb" />
     <Compile Include="wordbreaker\cjk\evaluator.vb" />
     <Compile Include="wordbreaker\cjk\trainer.vb" />
     <Compile Include="wordtracer\cjk\breaking_word.vb" />
     <Compile Include="wordtracer\cjk\oneplus.vb" />
     <Compile Include="wordtracer\cjk\tracer.vb" />
+    <Compile Include="wordtracer\cjk\tracerall.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

@@ -13,7 +13,7 @@ Partial Public NotInheritable Class exponential_distribution
             assert(samples.array_size() > 1)
             Dim count As UInt32 = 0
             count = streams.of(samples).
-                            map(tuple(Of Double, UInt32).second_selector()).
+                            map(tuple(Of Double, UInt32).second_selector).
                             aggregate(stream(Of UInt32).aggregators.sum)
             Dim lambda As Double = 0
             lambda = count /
