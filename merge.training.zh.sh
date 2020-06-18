@@ -1,10 +1,11 @@
 #!/bin/sh
 
-rm /cygdrive/c/temp/training.zh.txt2
+rm /cygdrive/c/temp/training.zh.txt
 
 function process_folder {
   pushd "$1"
-  find . -name '*.txt' | xargs -d '\n' cat >> /cygdrive/c/temp/training.zh.txt2
+  find . -name '*.txt' | xargs -d '\n' cat >> /cygdrive/c/temp/training.zh.txt
+  find . -name '*.json' | xargs -d '\n' cat >> /cygdrive/c/temp/training.zh.txt
   popd
 }
 
