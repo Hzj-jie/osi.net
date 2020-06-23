@@ -23,10 +23,10 @@ Partial Public NotInheritable Class wordtracer
             Private Shared Function process(ByVal f As String,
                                             ByVal len As UInt32,
                                             ByVal sel As Func(Of String, String, Boolean)) _
-                                        As unordered_map(Of String, unordered_map(Of String, UInt32))
+                                        As unordered_map(Of String, unordered_map(Of Char, UInt32))
                 assert(len >= uint32_2)
-                Dim v As unordered_map(Of String, unordered_map(Of String, UInt32)) = Nothing
-                v = New unordered_map(Of String, unordered_map(Of String, UInt32))()
+                Dim v As unordered_map(Of String, unordered_map(Of Char, UInt32)) = Nothing
+                v = New unordered_map(Of String, unordered_map(Of Char, UInt32))()
                 assert(Not sel Is Nothing)
                 For Each line As String In IO.File.ReadLines(f)
                     If line.null_or_whitespace() Then
@@ -39,7 +39,7 @@ Partial Public NotInheritable Class wordtracer
                                     End If
                                     For j As UInt32 = start To [end] - len
                                         Dim l As String = Nothing
-                                        Dim r As String = Nothing
+                                        Dim r As Char = Nothing
                                         l = line.strmid(j, len - uint32_1)
                                         r = line.char_at(j + len - uint32_1)
                                         If sel(l, r) Then
@@ -71,23 +71,23 @@ Partial Public NotInheritable Class wordtracer
                     r.emplace_back(New unordered_map(Of String, UInt32)())
                     process(f, i, sel).
                         stream().
-                        map(Function(ByVal e As first_const_pair(Of String, unordered_map(Of String, UInt32))) _
-                                As first_const_pair(Of String, vector(Of tuple(Of String, UInt32)))
+                        map(Function(ByVal e As first_const_pair(Of String, unordered_map(Of Char, UInt32))) _
+                                As first_const_pair(Of String, vector(Of tuple(Of Char, UInt32)))
                                 assert(Not e Is Nothing)
-                                Dim s As vector(Of tuple(Of String, UInt32)) = Nothing
+                                Dim s As vector(Of tuple(Of Char, UInt32)) = Nothing
                                 s = e.second.
                                       stream().
-                                      map(AddressOf tuple(Of String, UInt32).from_first_const_pair).
-                                      collect(Of vector(Of tuple(Of String, UInt32)))()
+                                      map(AddressOf tuple(Of Char, UInt32).from_first_const_pair).
+                                      collect(Of vector(Of tuple(Of Char, UInt32)))()
                                 Return first_const_pair.of(e.first,
                                                            s.stream().
                                                              filter(ml.percentile.descent.filter(s, percentile)).
-                                                             collect(Of vector(Of tuple(Of String, UInt32)))())
+                                                             collect(Of vector(Of tuple(Of Char, UInt32)))())
                             End Function).
-                        foreach(Sub(ByVal e As first_const_pair(Of String, vector(Of tuple(Of String, UInt32))))
+                        foreach(Sub(ByVal e As first_const_pair(Of String, vector(Of tuple(Of Char, UInt32))))
                                     e.second.
                                       stream().
-                                      foreach(Sub(ByVal t As tuple(Of String, UInt32))
+                                      foreach(Sub(ByVal t As tuple(Of Char, UInt32))
                                                   r.back().emplace(strcat(e.first, t.first()), t.second())
                                               End Sub)
                                 End Sub)

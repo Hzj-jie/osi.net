@@ -20,7 +20,7 @@ Namespace wordtracer.cjk
         Private Shared Sub normal_distribution_from_raw()
             Using ms As MemoryStream = New MemoryStream()
                 assert(bytes_serializer.append_to(
-                       breaking_word.normal_distribute(model.load("cjk.words.2.raw.bin")), ms))
+                           breaking_word.normal_distribute(model.load("cjk.words.2.raw.bin")), ms))
                 assert(ms.dump_to_file("cjk.words.2.breaking_words.normal_distribute.bin"))
             End Using
         End Sub
@@ -133,6 +133,42 @@ Namespace wordtracer.cjk
                                                                 Console.WriteLine(strcat(k, k2, ": ", p))
                                                             End Sub))
                                     End Sub))
+            End Using
+        End Sub
+
+        <test>
+        <command_line_specified>
+        Private Shared Sub cumulative_distributes_from_tracerall()
+            Dim e As vector(Of unordered_map(Of String, Double)) = Nothing
+            Using i As MemoryStream = New MemoryStream()
+                assert(i.read_from_file("cjk.tracerall.bin"))
+                i.Position() = 0
+                Dim m As vector(Of unordered_map(Of String, UInt32)) = Nothing
+                assert(bytes_serializer.consume_from(i, m))
+                e = breaking_word.cumulative_distributes(m)
+            End Using
+            Using o As MemoryStream = New MemoryStream()
+                assert(bytes_serializer.append_to(e, o))
+                assert(o.dump_to_file("cjk.tracerall.expo_distribute.bin"))
+            End Using
+        End Sub
+
+        <test>
+        <command_line_specified>
+        Private Shared Sub dump_cumulative_distributes_from_tracerall()
+            Using ms As MemoryStream = New MemoryStream()
+                assert(ms.read_from_file("cjk.tracerall.expo_distribute.bin"))
+                ms.Position() = 0
+                ' Sort
+                Dim r As vector(Of map(Of String, Double)) = Nothing
+                assert(bytes_serializer.consume_from(ms, r))
+                r.stream().
+                  foreach(Sub(ByVal x As map(Of String, Double))
+                              x.stream().
+                                foreach(x.on_pair(Sub(ByVal k As String, ByVal v As Double)
+                                                      Console.WriteLine(strcat(k, ": ", v))
+                                                  End Sub))
+                          End Sub)
             End Using
         End Sub
     End Class

@@ -16,7 +16,7 @@ Namespace wordtracer.cjk
         <command_line_specified>
         Private Shared Sub from_training_file()
             Dim m As vector(Of unordered_map(Of String, UInt32)) = Nothing
-            m = New tracerall(0.3, 6).train("cjk.training.txt")
+            m = New tracerall(0.1, 4).train("cjk.training.txt")
             Using ms As MemoryStream = New MemoryStream()
                 assert(bytes_serializer.append_to(m, ms))
                 assert(ms.dump_to_file("cjk.tracerall.bin"))

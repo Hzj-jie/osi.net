@@ -106,6 +106,29 @@ Partial Public NotInheritable Class wordtracer
                                        End Function)
             End Function
 
+            Public Shared Function cumulative_distributes(
+                                       ByVal m As vector(Of unordered_map(Of String, UInt32))) _
+                                       As vector(Of unordered_map(Of String, Double))
+                Return m.stream().
+                         map(Function(ByVal i As unordered_map(Of String, UInt32)) As unordered_map(Of String, Double)
+                                 Dim e As exponential_distribution = Nothing
+                                 e = exponential_distribution.estimator.estimate(
+                                         i.stream().
+                                           map(i.second_selector).
+                                           map(Function(ByVal x As UInt32) As Double
+                                                   Return x
+                                               End Function).
+                                           to_array())
+                                 Return i.stream().
+                                          map(Function(ByVal x As first_const_pair(Of String, UInt32)) _
+                                                  As first_const_pair(Of String, Double)
+                                                  Return first_const_pair.of(x.first, e.cumulative_distribute(x.second))
+                                              End Function).
+                                          collect(Of unordered_map(Of String, Double))()
+                             End Function).
+                         collect(Of vector(Of unordered_map(Of String, Double)))()
+            End Function
+
             Private Sub New()
             End Sub
         End Class
