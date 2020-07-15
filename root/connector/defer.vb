@@ -3,8 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-' TODO: Rename to defer after util._disposer.defer has been removed.
-Public NotInheritable Class deferring
+Public NotInheritable Class defer
     Private Structure deferrer
         Implements IDisposable
 

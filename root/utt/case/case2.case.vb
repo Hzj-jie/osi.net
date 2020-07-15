@@ -47,7 +47,7 @@ Partial Public NotInheritable Class case2
                        append_method_name(t, method_name, 1),
                        append_method_name(t, method_name, 2))
             ' Allow Me.obj to be null: the test cases can be static methods.
-            Using scoped_atomic_bool(suppress.alloc_error)
+            Using scoped.atomic_bool(suppress.alloc_error)
                 Me.obj = t.allocate()
             End Using
             Me._prepare = prepare

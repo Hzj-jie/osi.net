@@ -43,10 +43,10 @@ Public Class repeat_case_wrapper
         this_round = Function() As UInt64
                          Return i
                      End Function
-        Using defer(Sub()
-                        this = Nothing
-                        this_round = Nothing
-                    End Sub)
+        Using defer.to(Sub()
+                           this = Nothing
+                           this_round = Nothing
+                       End Sub)
             assert(test_size() > 0)
             For i = 0 To test_size() - uint64_1
                 If Not MyBase.run() Then

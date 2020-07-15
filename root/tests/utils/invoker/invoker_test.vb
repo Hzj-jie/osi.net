@@ -148,7 +148,7 @@ Public Class invoker_test
     End Function
 
     Public Overrides Function run() As Boolean
-        Using scoped_atomic_bool(suppress.invoker_error)
+        Using scoped.atomic_bool(suppress.invoker_error)
             Return pre_bind() AndAlso
                    post_bind()
         End Using

@@ -53,7 +53,7 @@ Public NotInheritable Class global_init
                             ex.Message())
             End Try
         Else
-            Using scoped_atomic_bool(suppress.alloc_error)
+            Using scoped.atomic_bool(suppress.alloc_error)
                 If t.allocate() Is Nothing Then
                     ' A public or private class should have an constructor.
                     ' A module may not have a contructor, but nothing else can be done.
