@@ -50,12 +50,12 @@ Public Class multithreading_case_wrapper
         assert(start_are.Set())
         id = direct_cast(Of Int32)(input)
         this = Me
-        Using defer(Sub()
-                        id = npos
-                        this = Nothing
-                        Interlocked.Decrement(running_thread)
-                        assert(finish_are.Set())
-                    End Sub)
+        Using defer.to(Sub()
+                           id = npos
+                           this = Nothing
+                           Interlocked.Decrement(running_thread)
+                           assert(finish_are.Set())
+                       End Sub)
             assert(accept_mre.WaitOne())
             If failed Then
                 Return

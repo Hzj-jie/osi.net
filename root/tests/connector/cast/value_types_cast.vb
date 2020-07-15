@@ -11,7 +11,7 @@ Public Module _value_types_cast
     Private Function cast_case(Of T, T2)(ByVal i As T) As Boolean
         Dim j As T2 = Nothing
         Dim k As T = Nothing
-        Using scoped_atomic_bool(suppress.on("cast(Of T)(Object v)"))
+        Using scoped.atomic_bool(suppress.on("cast(Of T)(Object v)"))
             assertion.is_true(cast(Of T2)(i, j))
             'if T / T2 are cross casting
             If cast(Of T)(j, k) Then

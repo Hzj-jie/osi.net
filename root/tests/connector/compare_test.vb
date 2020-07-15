@@ -50,7 +50,7 @@ Public Class compare_test
     End Function
 
     Public Overrides Function run() As Boolean
-        Using scoped_atomic_bool(suppress.compare_error)
+        Using scoped.atomic_bool(suppress.compare_error)
             Return MyBase.run()
         End Using
     End Function

@@ -156,8 +156,7 @@ Public NotInheritable Class shell_less_process
         If Not proc_started.mark_in_use() Then
             Return False
         End If
-        ce.increment()
-        Using defer(AddressOf ce.decrement)
+        Using scoped.count_event(ce)
             If proc_exited.in_use() Then
                 proc_exited.release()
             End If

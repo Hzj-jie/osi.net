@@ -49,7 +49,7 @@ Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T),
 
     Private Function scoped_lock(ByVal index As UInt32) As IDisposable
         _lock(CInt(index)).wait()
-        Return deferring.to(Sub()
+        Return defer.to(Sub()
                                 _lock(CInt(index)).release()
                             End Sub)
     End Function

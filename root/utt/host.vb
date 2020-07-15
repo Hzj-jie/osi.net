@@ -37,17 +37,17 @@ Partial Friend NotInheritable Class host
     Private NotInheritable Class loader
         Private Shared Function load(ByVal j As Type) As vector(Of case_info)
             If case_type_restriction.accepted_case_type(j) Then
-                Using defer(Sub()
-                                raise_error("loaded case ", j.FullName())
-                            End Sub)
+                Using defer.to(Sub()
+                                   raise_error("loaded case ", j.FullName())
+                               End Sub)
                     Return vector.of(New case_info(j.FullName(), j.allocate(Of [case])()))
                 End Using
             End If
             If case_type_restriction.accepted_case2_type(j) Then
                 Return case2.create(j).map(Function(ByVal i As [case]) As case_info
-                                               Using defer(Sub()
-                                                               raise_error("loaded case ", i.full_name)
-                                                           End Sub)
+                                               Using defer.to(Sub()
+                                                                  raise_error("loaded case ", i.full_name)
+                                                              End Sub)
                                                    Return New case_info(i.full_name, i)
                                                End Using
                                            End Function)

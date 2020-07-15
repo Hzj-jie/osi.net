@@ -90,12 +90,12 @@ Public MustInherit Class rule
             Return False
         End Try
 
-        Using scoped_action(Sub()
-                                  cur_file = rule_file
-                              End Sub,
-                              Sub()
-                                  cur_file = Nothing
-                              End Sub)
+        Dim last_file As String = Nothing
+        last_file = cur_file
+        cur_file = rule_file
+        Using defer.to(Sub()
+                           cur_file = last_file
+                       End Sub)
             Return parse(ls)
         End Using
     End Function

@@ -103,7 +103,7 @@
     <Compile Include="invoker\valuer.recursive.vb" />
     <Compile Include="invoker\valuer.vb" />
     <Compile Include="ipendpoint.vb" />
-    <Compile Include="lifetime_binder\disposer.vb" />
+    <Compile Include="lifetime_binder\scoped.vb" />
     <Compile Include="lifetime_binder\global_instance.vb" />
     <Compile Include="manual_gc.vb" />
     <Compile Include="global_init.vb" />

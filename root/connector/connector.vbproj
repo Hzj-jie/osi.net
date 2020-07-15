@@ -66,7 +66,7 @@
     <Compile Include="bytes\bytes_independent_types.vb" />
     <Compile Include="copy_constructor.vb" />
     <Compile Include="default_new.vb" />
-    <Compile Include="deferring.vb" />
+    <Compile Include="defer.vb" />
     <Compile Include="delegate\delegate_info.vb" />
     <Compile Include="disposable.vb" />
     <Compile Include="endian.vb" />

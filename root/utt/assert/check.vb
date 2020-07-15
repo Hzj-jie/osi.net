@@ -7,7 +7,6 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.lock
 Imports osi.root.template
-Imports osi.root.utils
 
 Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
     Private Const default_assert_async_wait_time_ms As UInt32 = 10 * second_milli
@@ -237,33 +236,33 @@ Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
         Dim exp_l As Int64
         Dim exp_h As Int64
         set_time_range(exp_l, exp_h, low, high)
-        Return defer(Sub()
-                         now_in_time_range(exp_l, exp_h, msg)
-                     End Sub)
+        Return defer.to(Sub()
+                            now_in_time_range(exp_l, exp_h, msg)
+                        End Sub)
     End Function
 
     Public Shared Function equal_after(Of T)(ByVal i As T,
                                              ByVal j As T,
                                              ByVal ParamArray msg() As Object) As IDisposable
-        Return defer(Sub()
-                         equal(i, j, msg)
-                     End Sub)
+        Return defer.to(Sub()
+                            equal(i, j, msg)
+                        End Sub)
     End Function
 
     Public Shared Function more_after(Of T)(ByVal i As T,
                                             ByVal j As T,
                                             ByVal ParamArray msg() As Object) As IDisposable
-        Return defer(Sub()
-                         more(i, j, msg)
-                     End Sub)
+        Return defer.to(Sub()
+                            more(i, j, msg)
+                        End Sub)
     End Function
 
     Public Shared Function less_after(Of T)(ByVal i As T,
                                             ByVal j As T,
                                             ByVal ParamArray msg() As Object) As IDisposable
-        Return defer(Sub()
-                         less(i, j, msg)
-                     End Sub)
+        Return defer.to(Sub()
+                            less(i, j, msg)
+                        End Sub)
     End Function
 
     Protected Sub New()
