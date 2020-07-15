@@ -71,8 +71,8 @@ Public Module _stream
         assert(Not i Is Nothing)
         Dim p As Int64 = 0
         p = i.Position()
-        Return deferring.to(Sub()
-                                i.Position() = p
-                            End Sub)
+        Return defer.to(Sub()
+                            i.Position() = p
+                        End Sub)
     End Function
 End Module
