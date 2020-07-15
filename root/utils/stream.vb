@@ -1,8 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports System.IO
 Imports System.Net.Sockets
-Imports osi.root.constants
+Imports osi.root.connector
 Imports osi.root.formation
 
 Public Module _stream
@@ -52,16 +56,23 @@ Public Module _stream
     <Extension()> Public Function data_available(ByVal i As NetworkStream) As ternary
         If i Is Nothing Then
             Return ternary.unknown
-        Else
-            Try
-                If i.DataAvailable() Then
-                    Return ternary.true
-                Else
-                    Return ternary.false
-                End If
-            Catch
-                Return ternary.unknown
-            End Try
         End If
+        Try
+            If i.DataAvailable() Then
+                Return ternary.true
+            End If
+            Return ternary.false
+        Catch
+            Return ternary.unknown
+        End Try
+    End Function
+
+    <Extension()> Public Function keep_position(ByVal i As Stream) As IDisposable
+        assert(Not i Is Nothing)
+        Dim p As Int64 = 0
+        p = i.Position()
+        Return deferring.to(Sub()
+                                i.Position() = p
+                            End Sub)
     End Function
 End Module

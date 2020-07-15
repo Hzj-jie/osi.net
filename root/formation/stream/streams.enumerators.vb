@@ -41,6 +41,13 @@ Partial Public NotInheritable Class streams
             Return New ranger(start, [end])
         End Function
 
+        Public Shared Function range(ByVal start As UInt32,
+                                     ByVal [end] As UInt32) As container_operator(Of Int32).enumerator
+            assert(start <= max_int32)
+            assert([end] <= max_int32)
+            Return New ranger(CInt(start), CInt([end]))
+        End Function
+
         Private Structure filterer(Of T)
             Implements container_operator(Of T).enumerator
 

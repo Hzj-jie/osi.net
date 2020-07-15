@@ -134,4 +134,9 @@ Partial Public Class stream(Of T)
                stream().
                map(AddressOf tuple(Of T, UInt32).from_first_const_pair)
     End Function
+
+    Public Function with_index() As stream(Of tuple(Of UInt32, T))
+        Return collect_by(collectors.with_index()).
+               stream()
+    End Function
 End Class

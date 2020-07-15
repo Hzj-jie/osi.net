@@ -237,7 +237,7 @@ Public Module _strcat
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function strjoin(Of T)(ByVal sep As String,
-                                  ByVal vs As IEnumerable(Of T)) As String
+                                                ByVal vs As IEnumerable(Of T)) As String
         Dim s As StringBuilder = Nothing
         If Not vs Is Nothing Then
             s = New StringBuilder()
@@ -249,5 +249,26 @@ Public Module _strcat
             Next
         End If
         Return Convert.ToString(s)
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <Extension()> Public Function str_repeat(ByRef s As String, ByVal c As UInt32) As String
+        If c = 0 Then
+            Return empty_string
+        End If
+        If c = 1 Then
+            Return s
+        End If
+        If String.IsNullOrEmpty(s) Then
+            Return s
+        End If
+        Dim r As StringBuilder = Nothing
+        r = New StringBuilder(s.strlen_i() * CInt(c))
+        While c > 0
+            r.Append(s)
+            c -= uint32_1
+        End While
+        s = r.ToString()
+        Return s
     End Function
 End Module

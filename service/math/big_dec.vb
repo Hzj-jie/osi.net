@@ -183,7 +183,7 @@ Partial Public NotInheritable Class big_dec
         Using r As MemoryStream = New MemoryStream(CInt(d.byte_size() + uint32_1))
             r.WriteByte(If(negative(), byte_1, byte_0))
             assert(r.write(d.as_bytes()))
-            Return r.export()
+            Return r.ToArray()
         End Using
     End Function
 End Class

@@ -62,6 +62,12 @@ Partial Public Class stream(Of T)
                    End Sub
         End Function
 
+        Public Shared Function with_index() As Action(Of vector(Of tuple(Of UInt32, T)), T)
+            Return Sub(ByVal r As vector(Of tuple(Of UInt32, T)), ByVal v As T)
+                       r.emplace_back(tuple.emplace_of(r.size() - uint32_1, v))
+                   End Sub
+        End Function
+
         Private Sub New()
         End Sub
     End Class

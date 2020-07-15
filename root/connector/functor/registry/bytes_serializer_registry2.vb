@@ -83,6 +83,31 @@ Friend NotInheritable Class bytes_serializer_registry2
                                                 Return False
                                             End Try
                                         End Function)
+        bytes_serializer.byte_size.register(Function(ByVal i As MemoryStream) As UInt32
+                                                assert(Not i Is Nothing)
+                                                assert(i.Length() <= max_uint32)
+                                                Return CUInt(i.Length())
+                                            End Function,
+                                            Function(ByVal i As MemoryStream, ByVal o As MemoryStream) As Boolean
+                                                assert(Not i Is Nothing)
+                                                i.CopyTo(o)
+                                                Return True
+                                            End Function,
+                                            Function(ByVal l As UInt32,
+                                                     ByVal i As MemoryStream,
+                                                     ByRef o As MemoryStream) As Boolean
+                                                If l = 0 Then
+                                                    o = New MemoryStream()
+                                                    Return True
+                                                End If
+                                                Dim b() As Byte = Nothing
+                                                ReDim b(CInt(l - uint32_1))
+                                                If Not i.read(b) Then
+                                                    Return False
+                                                End If
+                                                o = memory_stream.of(b)
+                                                Return True
+                                            End Function)
     End Sub
 
     Private Shared Sub init()

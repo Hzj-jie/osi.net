@@ -102,6 +102,14 @@ Public Module _memory_stream
         Return False
     End Function
 
+    <Extension()> Public Function read_to_end(ByVal this As MemoryStream) As Byte()
+        this.assert_valid()
+        Dim r() As Byte = Nothing
+        ReDim r(CInt(this.unread_length() - 1))
+        assert(this.read(r))
+        Return r
+    End Function
+
     <Extension()> Public Function write_byte(ByVal this As MemoryStream, ByVal b As Byte) As Boolean
         assert(Not this Is Nothing)
         Try
@@ -119,7 +127,7 @@ Public Module _memory_stream
 
     <Extension()> Public Function dump_to_file(ByVal this As MemoryStream, ByVal o As String) As Boolean
         Try
-            File.WriteAllBytes(o, this.export())
+            File.WriteAllBytes(o, this.ToArray())
             Return True
         Catch
         End Try
@@ -132,6 +140,54 @@ Public Module _memory_stream
         Catch
         End Try
         Return False
+    End Function
+
+    <Extension()> Public Function trim(ByRef this As MemoryStream) As MemoryStream
+        assert(Not this Is Nothing)
+        If this.Position() = 0 Then
+            Return this
+        End If
+        Dim r As MemoryStream = Nothing
+        r = New MemoryStream()
+        this.CopyTo(r)
+        r.Position() = 0
+        this = r
+        Return r
+    End Function
+
+    <Extension()> Public Function clear(ByVal this As MemoryStream) As MemoryStream
+        assert(Not this Is Nothing)
+        this.Position() = 0
+        this.SetLength(0)
+        Return this
+    End Function
+
+    <Extension()> Public Function clone(ByVal this As MemoryStream) As MemoryStream
+        this.assert_valid()
+        Dim r As MemoryStream = Nothing
+        r = New MemoryStream(CInt(this.unread_length()))
+        this.WriteTo(r)
+        r.Position() = this.Position()
+        Return r
+    End Function
+
+    <Extension()> Public Function compare_to(ByVal this As MemoryStream, ByVal that As MemoryStream) As Int32
+        If this Is Nothing AndAlso that Is Nothing Then
+            Return 0
+        End If
+        If this Is Nothing Then
+            Return -1
+        End If
+        If that Is Nothing Then
+            Return 1
+        End If
+        If this.unread_length() < that.unread_length() Then
+            Return -1
+        End If
+        If this.unread_length() > that.unread_length() Then
+            Return 1
+        End If
+        Return memcmp(this.export(), that.export())
     End Function
 End Module
 
