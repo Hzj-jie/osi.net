@@ -17,7 +17,8 @@ Public NotInheritable Class integralor_test
                                           End Function).
                             with_start(0).
                             with_end(1).
-                            with_incremental(0.01).calculate()).
+                            with_incremental(0.01).
+                            calculate()).
                      in_range(0.5)
     End Sub
 
@@ -29,7 +30,8 @@ Public NotInheritable Class integralor_test
                                           End Function).
                             with_start(-1).
                             with_end(1).
-                            with_incremental(0.01).calculate()).
+                            with_incremental(0.001).
+                            calculate()).
                      in_range(0.666666)
     End Sub
 
