@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports System.IO
+Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
@@ -126,18 +127,52 @@ Public Module _memory_stream
     End Function
 
     <Extension()> Public Function dump_to_file(ByVal this As MemoryStream, ByVal o As String) As Boolean
+        assert(Not this Is Nothing)
         Try
             File.WriteAllBytes(o, this.ToArray())
             Return True
-        Catch
+        Catch ex As Exception
+            raise_error(error_type.warning, "failed to write to ", o, ", ex ", ex)
+        End Try
+        Return False
+    End Function
+
+    <Extension()> Public Function zip_to_file(ByVal this As MemoryStream, ByVal o As String) As Boolean
+        assert(Not this Is Nothing)
+        Dim b() As Byte = Nothing
+        b = this.ToArray()
+        Try
+            Using fs As FileStream = New FileStream(o, FileMode.Create),
+                  gz As GZipStream = New GZipStream(fs, CompressionMode.Compress, True)
+                gz.Write(b, 0, b.array_size_i())
+            End Using
+            Return True
+        Catch ex As Exception
+            raise_error(error_type.warning, "failed to write to ", o, ", ex ", ex)
         End Try
         Return False
     End Function
 
     <Extension()> Public Function read_from_file(ByVal this As MemoryStream, ByVal i As String) As Boolean
+        assert(Not this Is Nothing)
         Try
             Return this.write(File.ReadAllBytes(i))
-        Catch
+        Catch ex As Exception
+            raise_error(error_type.warning, "failed to read from ", i, ", ex ", ex)
+        End Try
+        Return False
+    End Function
+
+    <Extension()> Public Function unzip_from_file(ByVal this As MemoryStream, ByVal i As String) As Boolean
+        assert(Not this Is Nothing)
+        Try
+            Using fs As FileStream = New FileStream(i, FileMode.Open),
+                  gz As GZipStream = New GZipStream(fs, CompressionMode.Decompress, True)
+                gz.CopyTo(this)
+            End Using
+            Return True
+        Catch ex As Exception
+            raise_error(error_type.warning, "failed to read from ", i, ", ex ", ex)
         End Try
         Return False
     End Function

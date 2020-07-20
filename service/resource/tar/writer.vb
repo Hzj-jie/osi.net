@@ -16,16 +16,7 @@ Partial Public NotInheritable Class tar
         Private ReadOnly v As vector(Of String)
 
         Public Sub New(ByVal max_size As UInt32, ByVal output_base As String, ByVal files As vector(Of String))
-            Me.New(max_size,
-                   Function(ByVal file As String, ByVal o As MemoryStream) As Boolean
-                       assert(Not o Is Nothing)
-                       Return o.read_from_file(file)
-                   End Function,
-                   Function(ByVal index As UInt32, ByVal i As MemoryStream) As Boolean
-                       assert(Not i Is Nothing)
-                       Return i.dump_to_file(strcat(output_base, index))
-                   End Function,
-                   files)
+            Me.New(max_size, output_base, files, AddressOf _memory_stream.dump_to_file)
         End Sub
 
         Private Sub New(ByVal max_size As UInt32,
@@ -41,10 +32,32 @@ Partial Public NotInheritable Class tar
             Me.v = files
         End Sub
 
+        Private Sub New(ByVal max_size As UInt32,
+                        ByVal output_base As String,
+                        ByVal files As vector(Of String),
+                        ByVal dump As Func(Of MemoryStream, String, Boolean))
+            Me.New(max_size,
+                   Function(ByVal file As String, ByVal o As MemoryStream) As Boolean
+                       assert(Not o Is Nothing)
+                       Return o.read_from_file(file)
+                   End Function,
+                   Function(ByVal index As UInt32, ByVal i As MemoryStream) As Boolean
+                       assert(Not i Is Nothing)
+                       Return dump(i, strcat(output_base, index))
+                   End Function,
+                   files)
+        End Sub
+
         Public Shared Function of_testing(ByVal max_size As UInt32,
                                           ByVal files As vector(Of String),
                                           ByVal output As vector(Of MemoryStream)) As writer
             Return New writer(max_size, AddressOf memory_stream_from_string, dump_to_memory_streams(output), files)
+        End Function
+
+        Public Shared Function zip(ByVal max_size As UInt32,
+                                   ByVal output_base As String,
+                                   ByVal files As vector(Of String)) As writer
+            Return New writer(max_size, output_base, files, AddressOf _memory_stream.zip_to_file)
         End Function
 
         Public Function dump() As Boolean

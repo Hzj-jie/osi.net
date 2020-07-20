@@ -160,7 +160,34 @@ Public NotInheritable Class pather_test
         Return True
     End Function
 
+    Private Shared Function directory_name_cases() As Boolean
+        assertion.equal(p.directory_name("/a/"), "/a/")
+        assertion.equal(p.directory_name("/a"), "/a/")
+        assertion.equal(p.directory_name("a"), "a/")
+        assertion.equal(p.directory_name("\a\"), "\a\")
+        assertion.equal(p.directory_name("\a"), "\a/")
+        assertion.equal(p.directory_name("a"), "a/")
+        Return True
+    End Function
+
+    Private Shared Function relative_path_cases() As Boolean
+        Dim r As Action(Of String, String, String) = Nothing
+        r = Sub(ByVal root As String, ByVal path As String, ByVal exp As String)
+                Dim o As String = Nothing
+                assertion.is_true(p.relative_path(root, path, o))
+                assertion.equal(o, exp)
+            End Sub
+
+        r("c:", "c:\a\b/c.txt", "a/b/c.txt")
+        r("c:/a\", "c:\a\b/c.txt", "b/c.txt")
+        r("c:\", "d:\a\b\c.txt", "d:/a/b/c.txt")
+
+        Return True
+    End Function
+
     Public Overrides Function run() As Boolean
-        Return run_cases()
+        Return run_cases() AndAlso
+               directory_name_cases() AndAlso
+               relative_path_cases()
     End Function
 End Class

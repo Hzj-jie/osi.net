@@ -44,6 +44,14 @@ Partial Public NotInheritable Class tar
                               End Function)
         End Function
 
+        Public Shared Function unzip(ByVal v As vector(Of String)) As reader
+            Return New reader(v,
+                              Function(ByVal f As String, ByVal o As MemoryStream) As Boolean
+                                  assert(Not o Is Nothing)
+                                  Return o.unzip_from_file(f)
+                              End Function)
+        End Function
+
         Public Function [next](ByRef name As String, ByRef o As MemoryStream) As Boolean
             While m.eos() AndAlso i < v.size()
                 m.clear()
@@ -61,6 +69,19 @@ Partial Public NotInheritable Class tar
                    bytes_serializer.consume_from(m, o)
         End Function
 
+        Public Sub foreach(ByVal f As Action(Of String, MemoryStream))
+            assert(Not f Is Nothing)
+            Dim n As String = Nothing
+            Dim m As MemoryStream = Nothing
+            While [next](n, m)
+                Try
+                    f(n, m)
+                Catch ex As break_lambda
+                    Return
+                End Try
+            End While
+        End Sub
+
         Public Function dump() As vector(Of tuple(Of String, MemoryStream))
             Dim v As vector(Of tuple(Of String, MemoryStream)) = Nothing
             v = New vector(Of tuple(Of String, MemoryStream))()
@@ -68,6 +89,17 @@ Partial Public NotInheritable Class tar
             Dim m As MemoryStream = Nothing
             While [next](s, m)
                 v.emplace_back(tuple.emplace_of(s, m))
+            End While
+            Return v
+        End Function
+
+        Public Function index() As vector(Of String)
+            Dim v As vector(Of String) = Nothing
+            v = New vector(Of String)()
+            Dim s As String = Nothing
+            Dim m As MemoryStream = Nothing
+            While [next](s, m)
+                v.emplace_back(s)
             End While
             Return v
         End Function
