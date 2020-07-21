@@ -78,7 +78,6 @@ Partial Public NotInheritable Class tar
                     Return False
                 End If
                 If m.Length() >= max_size Then
-                    m.Position() = 0
                     If Not write(write_index, m) Then
                         Return False
                     End If
@@ -87,6 +86,9 @@ Partial Public NotInheritable Class tar
                 End If
                 it += 1
             End While
+            If Not m.empty() AndAlso Not write(write_index, m) Then
+                Return False
+            End If
             Return True
         End Function
     End Class

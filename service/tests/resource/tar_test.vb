@@ -24,13 +24,14 @@ Public NotInheritable Class tar_test
                       "g".str_repeat(2),
                       "h".str_repeat(3),
                       "i".str_repeat(10),
-                      "z".str_repeat(100))
+                      "y".str_repeat(100),
+                      "z".str_repeat(1))
         Dim w As tar.writer = Nothing
         Dim output As vector(Of MemoryStream) = Nothing
         output = New vector(Of MemoryStream)()
         w = tar.writer.of_testing(36, v, output)
         assertion.is_true(w.dump())
-        assertion.equal(output.size(), CUInt(5))
+        assertion.equal(output.size(), CUInt(6))
         Dim r As tar.reader = Nothing
         r = tar.reader.of_testing(output)
         Dim v2 As vector(Of tuple(Of String, MemoryStream)) = Nothing

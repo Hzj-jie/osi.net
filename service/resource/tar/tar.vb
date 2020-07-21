@@ -19,6 +19,7 @@ Partial Public NotInheritable Class tar
         Return Function(ByVal index As UInt32, ByVal i As MemoryStream) As Boolean
                    assert(v.size() = index)
                    v.emplace_back(i.clone())
+                   v.back().Position() = 0
                    Return True
                End Function
     End Function

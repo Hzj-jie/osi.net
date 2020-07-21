@@ -200,8 +200,7 @@ Public Module _memory_stream
     <Extension()> Public Function clone(ByVal this As MemoryStream) As MemoryStream
         this.assert_valid()
         Dim r As MemoryStream = Nothing
-        r = New MemoryStream(CInt(this.unread_length()))
-        this.WriteTo(r)
+        r = New MemoryStream(this.ToArray())
         r.Position() = this.Position()
         Return r
     End Function
@@ -223,6 +222,11 @@ Public Module _memory_stream
             Return 1
         End If
         Return memcmp(this.export(), that.export())
+    End Function
+
+    <Extension()> Public Function empty(ByVal this As MemoryStream) As Boolean
+        assert(Not this Is Nothing)
+        Return this.Length() = 0
     End Function
 End Module
 

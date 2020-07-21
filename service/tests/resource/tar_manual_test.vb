@@ -51,6 +51,17 @@ Public NotInheritable Class tar_manual_test
 
     <command_line_specified>
     <test>
+    Private Shared Sub unpack_index()
+        Dim r As tar.reader = Nothing
+        r = New tar.reader(vector.emplace_of(
+                               Directory.GetFiles(Environment.CurrentDirectory(), "tar_manual_test.pack_*")))
+        r.index().stream().foreach(Sub(ByVal s As String)
+                                       Console.WriteLine(s)
+                                   End Sub)
+    End Sub
+
+    <command_line_specified>
+    <test>
     Private Shared Sub unpack()
         Dim r As tar.reader = Nothing
         r = New tar.reader(vector.emplace_of(
@@ -70,6 +81,17 @@ Public NotInheritable Class tar_manual_test
                       Console.WriteLine(strcat(s, " ========"))
                       Console.WriteLine(bytes_str(m.ToArray()))
                   End Sub)
+    End Sub
+
+    <command_line_specified>
+    <test>
+    Private Shared Sub unzip_index()
+        Dim r As tar.reader = Nothing
+        r = tar.reader.unzip(vector.emplace_of(
+                                 Directory.GetFiles(Environment.CurrentDirectory(), "tar_manual_test.zip_*")))
+        r.index().stream().foreach(Sub(ByVal s As String)
+                                       Console.WriteLine(s)
+                                   End Sub)
     End Sub
 
     <command_line_specified>
