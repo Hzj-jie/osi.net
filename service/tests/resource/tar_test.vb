@@ -13,29 +13,24 @@ Imports osi.service.resource
 <test>
 Public NotInheritable Class tar_test
     <test>
-    Private Shared Sub run()
-        Dim v As vector(Of String) = Nothing
-        v = vector.of("a".str_repeat(5),
-                      "b".str_repeat(5),
-                      "c".str_repeat(2),
-                      "d".str_repeat(2),
-                      "e".str_repeat(3),
-                      "f".str_repeat(9),
-                      "g".str_repeat(2),
-                      "h".str_repeat(3),
-                      "i".str_repeat(10),
-                      "y".str_repeat(100),
-                      "z".str_repeat(1))
-        Dim w As tar.writer = Nothing
-        Dim output As vector(Of MemoryStream) = Nothing
-        output = New vector(Of MemoryStream)()
-        w = tar.writer.of_testing(36, v, output)
+    Private Shared Sub dump()
+        Dim v As vector(Of String) = vector.of("a".str_repeat(5),
+                                               "b".str_repeat(5),
+                                               "c".str_repeat(2),
+                                               "d".str_repeat(2),
+                                               "e".str_repeat(3),
+                                               "f".str_repeat(9),
+                                               "g".str_repeat(2),
+                                               "h".str_repeat(3),
+                                               "i".str_repeat(10),
+                                               "y".str_repeat(100),
+                                               "z".str_repeat(1))
+        Dim fs As tar.testing_fs = New tar.testing_fs().with(v)
+        Dim w As tar.writer = tar.writer.of_testing(fs, 36)
         assertion.is_true(w.dump())
-        assertion.equal(output.size(), CUInt(6))
-        Dim r As tar.reader = Nothing
-        r = tar.reader.of_testing(output)
-        Dim v2 As vector(Of tuple(Of String, MemoryStream)) = Nothing
-        v2 = r.dump()
+        fs.erase(v)
+        assertion.equal(fs.list_files().size(), CUInt(6))
+        Dim v2 As vector(Of tuple(Of String, MemoryStream)) = tar.reader.of_testing(fs).dump()
         assertion.equal(v,
                         v2.stream().
                            map(Function(ByVal t As tuple(Of String, MemoryStream)) As String

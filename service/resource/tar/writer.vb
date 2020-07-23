@@ -10,58 +10,44 @@ Imports osi.root.formation
 
 Partial Public NotInheritable Class tar
     Public NotInheritable Class writer
+        Private ReadOnly fs As fs
         Private ReadOnly max_size As UInt32
-        Private ReadOnly read As Func(Of String, MemoryStream, Boolean)
-        Private ReadOnly write As Func(Of UInt32, MemoryStream, Boolean)
+        Private readonly output_base As string
         Private ReadOnly v As vector(Of String)
 
         Public Sub New(ByVal max_size As UInt32, ByVal output_base As String, ByVal files As vector(Of String))
-            Me.New(max_size, output_base, files, AddressOf _memory_stream.dump_to_file)
+            Me.New(default_fs.instance, max_size, output_base, files)
         End Sub
 
-        Private Sub New(ByVal max_size As UInt32,
-                        ByVal read As Func(Of String, MemoryStream, Boolean),
-                        ByVal write As Func(Of UInt32, MemoryStream, Boolean),
+        Private Sub New(ByVal fs As fs,
+                        ByVal max_size As UInt32,
+                        ByVal output_base As String,
                         ByVal files As vector(Of String))
+            assert(Not fs Is Nothing)
             assert(max_size > 0)
-            assert(Not read Is Nothing)
-            assert(Not write Is Nothing)
+            assert(Not String.IsNullOrWhiteSpace(output_base))
+            assert(Not files Is Nothing)
+            Me.fs = fs
             Me.max_size = max_size
-            Me.read = read
-            Me.write = write
+            Me.output_base = output_base
             Me.v = files
         End Sub
 
-        Private Sub New(ByVal max_size As UInt32,
-                        ByVal output_base As String,
-                        ByVal files As vector(Of String),
-                        ByVal dump As Func(Of MemoryStream, String, Boolean))
-            Me.New(max_size,
-                   Function(ByVal file As String, ByVal o As MemoryStream) As Boolean
-                       assert(Not o Is Nothing)
-                       Return o.read_from_file(file)
-                   End Function,
-                   Function(ByVal index As UInt32, ByVal i As MemoryStream) As Boolean
-                       assert(Not i Is Nothing)
-                       Return dump(i, strcat(output_base, index))
-                   End Function,
-                   files)
-        End Sub
-
-        Public Shared Function of_testing(ByVal max_size As UInt32,
-                                          ByVal files As vector(Of String),
-                                          ByVal output As vector(Of MemoryStream)) As writer
-            Return New writer(max_size, AddressOf memory_stream_from_string, dump_to_memory_streams(output), files)
+        Public Shared Function of_testing(ByVal fs As testing_fs, ByVal max_size As UInt32) As writer
+            Return New writer(fs, max_size, "testing_output_", fs.list_files())
         End Function
 
         Public Shared Function zip(ByVal max_size As UInt32,
                                    ByVal output_base As String,
                                    ByVal files As vector(Of String)) As writer
-            Return New writer(max_size, output_base, files, AddressOf _memory_stream.zip_to_file)
+            Return New writer(zip_fs.instance, max_size, output_base, files)
         End Function
 
-        Public Function dump() As Boolean
-            Dim write_index As UInt32 = 0
+        Private Function output_file(ByVal write_index As UInt32) As String
+            Return strcat(output_base, write_index)
+        End Function
+
+        Private Function dump(ByVal write_index As UInt32) As Boolean
             Dim m As MemoryStream = Nothing
             m = New MemoryStream()
             Dim it As vector(Of String).iterator = Nothing
@@ -69,7 +55,7 @@ Partial Public NotInheritable Class tar
             While it <> v.end()
                 Dim c As MemoryStream = Nothing
                 c = New MemoryStream()
-                If Not read(+it, c) Then
+                If Not fs.read(+it, c) Then
                     Return False
                 End If
                 c.Position() = 0
@@ -78,7 +64,7 @@ Partial Public NotInheritable Class tar
                     Return False
                 End If
                 If m.Length() >= max_size Then
-                    If Not write(write_index, m) Then
+                    If Not fs.write(output_file(write_index), m) Then
                         Return False
                     End If
                     write_index += uint32_1
@@ -86,10 +72,14 @@ Partial Public NotInheritable Class tar
                 End If
                 it += 1
             End While
-            If Not m.empty() AndAlso Not write(write_index, m) Then
+            If Not m.empty() AndAlso Not fs.write(output_file(write_index), m) Then
                 Return False
             End If
             Return True
+        End Function
+
+        Public Function dump() As Boolean
+            Return dump(0)
         End Function
     End Class
 End Class

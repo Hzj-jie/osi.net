@@ -55,8 +55,8 @@ Public NotInheritable Class tar_manual_test
         Dim r As tar.reader = Nothing
         r = New tar.reader(vector.emplace_of(
                                Directory.GetFiles(Environment.CurrentDirectory(), "tar_manual_test.pack_*")))
-        r.index().stream().foreach(Sub(ByVal s As String)
-                                       Console.WriteLine(s)
+        r.index().stream().foreach(Sub(ByVal s As tuple(Of String, UInt32))
+                                       Console.WriteLine(strcat(s.first(), " -- ", s.second()))
                                    End Sub)
     End Sub
 
@@ -89,8 +89,8 @@ Public NotInheritable Class tar_manual_test
         Dim r As tar.reader = Nothing
         r = tar.reader.unzip(vector.emplace_of(
                                  Directory.GetFiles(Environment.CurrentDirectory(), "tar_manual_test.zip_*")))
-        r.index().stream().foreach(Sub(ByVal s As String)
-                                       Console.WriteLine(s)
+        r.index().stream().foreach(Sub(ByVal s As tuple(Of String, UInt32))
+                                       Console.WriteLine(strcat(s.first(), " -- ", s.second()))
                                    End Sub)
     End Sub
 

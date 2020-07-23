@@ -224,6 +224,25 @@ Public Module _memory_stream
         Return memcmp(this.export(), that.export())
     End Function
 
+    <Extension()> Public Function array_compare_to(ByVal this As MemoryStream, ByVal that As MemoryStream) As Int32
+        If this Is Nothing AndAlso that Is Nothing Then
+            Return 0
+        End If
+        If this Is Nothing Then
+            Return -1
+        End If
+        If that Is Nothing Then
+            Return 1
+        End If
+        If this.Length() < that.Length() Then
+            Return -1
+        End If
+        If this.Length() > that.Length() Then
+            Return 1
+        End If
+        Return memcmp(this.ToArray(), that.ToArray())
+    End Function
+
     <Extension()> Public Function empty(ByVal this As MemoryStream) As Boolean
         assert(Not this Is Nothing)
         Return this.Length() = 0
