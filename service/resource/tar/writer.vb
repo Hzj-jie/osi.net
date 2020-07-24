@@ -12,7 +12,7 @@ Partial Public NotInheritable Class tar
     Public NotInheritable Class writer
         Private ReadOnly fs As fs
         Private ReadOnly max_size As UInt32
-        Private readonly output_base As string
+        Private ReadOnly file_namer As Func(Of UInt32, String)
         Private ReadOnly v As vector(Of String)
 
         Public Sub New(ByVal max_size As UInt32, ByVal output_base As String, ByVal files As vector(Of String))
@@ -21,30 +21,45 @@ Partial Public NotInheritable Class tar
 
         Private Sub New(ByVal fs As fs,
                         ByVal max_size As UInt32,
-                        ByVal output_base As String,
+                        ByVal file_namer As Func(Of UInt32, String),
                         ByVal files As vector(Of String))
             assert(Not fs Is Nothing)
             assert(max_size > 0)
-            assert(Not String.IsNullOrWhiteSpace(output_base))
+            assert(Not file_namer Is Nothing)
             assert(Not files Is Nothing)
             Me.fs = fs
             Me.max_size = max_size
-            Me.output_base = output_base
+            Me.file_namer = file_namer
             Me.v = files
         End Sub
 
+        Private Sub New(ByVal fs As fs,
+                        ByVal max_size As UInt32,
+                        ByVal output_base As String,
+                        ByVal files As vector(Of String))
+            Me.New(fs,
+                   max_size,
+                   Function(ByVal i As UInt32) As String
+                       assert(Not String.IsNullOrWhiteSpace(output_base))
+                       Return strcat(output_base, i)
+                   End Function,
+                   files)
+        End Sub
+
         Public Shared Function of_testing(ByVal fs As testing_fs, ByVal max_size As UInt32) As writer
-            Return New writer(fs, max_size, "testing_output_", fs.list_files())
+            Return of_testing(fs, max_size, fs.list_files())
+        End Function
+
+        Public Shared Function of_testing(ByVal fs As fs,
+                                          ByVal max_size As UInt32,
+                                          ByVal files As vector(Of String)) As writer
+            Return New writer(fs, max_size, "testing_output_", files)
         End Function
 
         Public Shared Function zip(ByVal max_size As UInt32,
                                    ByVal output_base As String,
                                    ByVal files As vector(Of String)) As writer
             Return New writer(zip_fs.instance, max_size, output_base, files)
-        End Function
-
-        Private Function output_file(ByVal write_index As UInt32) As String
-            Return strcat(output_base, write_index)
         End Function
 
         Private Function dump(ByVal write_index As UInt32) As Boolean
@@ -64,7 +79,7 @@ Partial Public NotInheritable Class tar
                     Return False
                 End If
                 If m.Length() >= max_size Then
-                    If Not fs.write(output_file(write_index), m) Then
+                    If Not fs.write(file_namer(write_index), m) Then
                         Return False
                     End If
                     write_index += uint32_1
@@ -72,7 +87,7 @@ Partial Public NotInheritable Class tar
                 End If
                 it += 1
             End While
-            If Not m.empty() AndAlso Not fs.write(output_file(write_index), m) Then
+            If Not m.empty() AndAlso Not fs.write(file_namer(write_index), m) Then
                 Return False
             End If
             Return True
@@ -80,6 +95,14 @@ Partial Public NotInheritable Class tar
 
         Public Function dump() As Boolean
             Return dump(0)
+        End Function
+
+        Public Function append() As Boolean
+            Dim i As UInt32 = 0
+            While fs.exists(file_namer(i))
+                i += uint32_1
+            End While
+            Return dump(i)
         End Function
     End Class
 End Class

@@ -78,6 +78,11 @@ Partial Public NotInheritable Class tar
         ' Use map to keep the order.
         Private ReadOnly m As map(Of String, MemoryStream) = New map(Of String, MemoryStream)()
 
+        Public Function stream_of(ByVal s As String) As MemoryStream
+            assert(Not String.IsNullOrEmpty(s))
+            Return memory_stream.of(s)
+        End Function
+
         Public Function [with](ByVal v As vector(Of MemoryStream)) As testing_fs
             assert(Not v Is Nothing)
             Dim i As UInt32 = 0
@@ -98,6 +103,16 @@ Partial Public NotInheritable Class tar
             Return Me
         End Function
 
+        Public Function [with](ByVal v As vector(Of String),
+                               ByVal ParamArray others() As vector(Of String)) As testing_fs
+            assert(others.array_size() > 0)
+            [with](v)
+            For Each other As vector(Of String) In others
+                [with](other)
+            Next
+            Return Me
+        End Function
+
         Public Function [erase](ByVal v As vector(Of MemoryStream)) As testing_fs
             assert(Not v Is Nothing)
             Return [erase](streams.range(0, v.size()).
@@ -114,6 +129,16 @@ Partial Public NotInheritable Class tar
                 assert(m.erase(v(i)))
                 i += uint32_1
             End While
+            Return Me
+        End Function
+
+        Public Function [erase](ByVal v As vector(Of String),
+                                ByVal ParamArray others() As vector(Of String)) As testing_fs
+            assert(others.array_size() > 0)
+            [erase](v)
+            For Each other As vector(Of String) In others
+                [erase](other)
+            Next
             Return Me
         End Function
 
