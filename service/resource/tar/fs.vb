@@ -173,7 +173,7 @@ Partial Public NotInheritable Class tar
             If it = m.end() Then
                 Return False
             End If
-            Return (+it).second.array_compare_to(i) = 0
+            Return (+it).second.content_compare_to(i) = 0
         End Function
 
         Public Function contains(ByVal file As String) As Boolean

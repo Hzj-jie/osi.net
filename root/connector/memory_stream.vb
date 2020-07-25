@@ -205,7 +205,7 @@ Public Module _memory_stream
         Return r
     End Function
 
-    <Extension()> Public Function compare_to(ByVal this As MemoryStream, ByVal that As MemoryStream) As Int32
+    <Extension()> Public Function unread_compare_to(ByVal this As MemoryStream, ByVal that As MemoryStream) As Int32
         If this Is Nothing AndAlso that Is Nothing Then
             Return 0
         End If
@@ -224,7 +224,7 @@ Public Module _memory_stream
         Return memcmp(this.export(), that.export())
     End Function
 
-    <Extension()> Public Function array_compare_to(ByVal this As MemoryStream, ByVal that As MemoryStream) As Int32
+    <Extension()> Public Function content_compare_to(ByVal this As MemoryStream, ByVal that As MemoryStream) As Int32
         If this Is Nothing AndAlso that Is Nothing Then
             Return 0
         End If

@@ -34,7 +34,7 @@ Public NotInheritable Class tar_test
         assertion.equal(v,
                         v2.stream().
                            map(Function(ByVal t As tuple(Of String, MemoryStream)) As String
-                                   assertion.equal(fs.stream_of(t.first()).compare_to(t.second()), 0)
+                                   assertion.equal(fs.stream_of(t.first()).unread_compare_to(t.second()), 0)
                                    Return t.first()
                                End Function).
                            collect(Of vector(Of String))())
@@ -51,7 +51,7 @@ Public NotInheritable Class tar_test
         assertion.equal(v,
                         v2.stream().
                            map(Function(ByVal t As tuple(Of String, MemoryStream)) As String
-                                   assertion.equal(fs.stream_of(t.first()).compare_to(t.second()), 0)
+                                   assertion.equal(fs.stream_of(t.first()).unread_compare_to(t.second()), 0)
                                    Return t.first()
                                End Function).
                            collect(Of vector(Of String))())
@@ -90,7 +90,7 @@ Public NotInheritable Class tar_test
         Dim v As vector(Of tuple(Of String, MemoryStream)) = tar.reader.of_testing(fs).dump()
         assertion.equal(v.stream().
                           map(Function(ByVal t As tuple(Of String, MemoryStream)) As String
-                                  assertion.equal(fs.stream_of(t.first()).compare_to(t.second()), 0)
+                                  assertion.equal(fs.stream_of(t.first()).unread_compare_to(t.second()), 0)
                                   Return t.first()
                               End Function).
                           collect(Of vector(Of String))(),
