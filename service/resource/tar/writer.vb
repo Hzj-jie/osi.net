@@ -59,7 +59,7 @@ Partial Public NotInheritable Class tar
         Public Shared Function zip(ByVal max_size As UInt32,
                                    ByVal output_base As String,
                                    ByVal files As vector(Of String)) As writer
-            Return New writer(zip_fs.instance, max_size, output_base, files)
+            Return New writer(zip_writer_fs.instance, max_size, output_base, files)
         End Function
 
         Private Function dump(ByVal write_index As UInt32) As Boolean

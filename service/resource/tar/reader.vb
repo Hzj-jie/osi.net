@@ -34,7 +34,7 @@ Partial Public NotInheritable Class tar
         End Function
 
         Public Shared Function unzip(ByVal v As vector(Of String)) As reader
-            Return New reader(zip_fs.instance, v)
+            Return New reader(zip_reader_fs.instance, v)
         End Function
 
         Public Function [next](ByRef name As String, ByRef o As MemoryStream) As Boolean

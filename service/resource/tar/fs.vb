@@ -61,13 +61,23 @@ Partial Public NotInheritable Class tar
         End Sub
     End Class
 
-    Public NotInheritable Class zip_fs
+    Public NotInheritable Class zip_writer_fs
         Inherits file_fs
 
-        Public Shared ReadOnly instance As zip_fs = New zip_fs()
+        Public Shared ReadOnly instance As zip_writer_fs = New zip_writer_fs()
 
         Private Sub New()
-            MyBase.New(AddressOf unzip_from_file, AddressOf zip_to_file)
+            MyBase.New(AddressOf read_from_file, AddressOf zip_to_file)
+        End Sub
+    End Class
+
+    Public NotInheritable Class zip_reader_fs
+        Inherits file_fs
+
+        Public Shared ReadOnly instance As zip_reader_fs = New zip_reader_fs()
+
+        Private Sub New()
+            MyBase.New(AddressOf unzip_from_file, AddressOf dump_to_file)
         End Sub
     End Class
 
