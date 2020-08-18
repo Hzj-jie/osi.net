@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="boolaffinity\model_test.vb" />
+    <Compile Include="combinatorics_test.vb" />
     <Compile Include="exponential_distribution\estimator_confident_test.vb" />
     <Compile Include="exponential_distribution\estimator_estimate_test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -72,6 +73,7 @@
     <Compile Include="onebound\evaluator_test.vb" />
     <Compile Include="onebound\model_test.vb" />
     <Compile Include="onebound\trainer_test.vb" />
+    <Compile Include="permutations_test.vb" />
     <Compile Include="wordbreaker\cjk\evaluator_test.vb" />
     <Compile Include="wordbreaker\cjk\model_test.vb" />
     <Compile Include="wordbreaker\cjk\trainer_test.vb" />

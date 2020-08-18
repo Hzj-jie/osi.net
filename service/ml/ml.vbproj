@@ -51,6 +51,8 @@
     <Compile Include="boolaffinity\evaluator.vb" />
     <Compile Include="boolaffinity\model.vb" />
     <Compile Include="boolaffinity\trainer.vb" />
+    <Compile Include="bool_distribution\bool_distribution.vb" />
+    <Compile Include="combinatorics.vb" />
     <Compile Include="confidentor.vb" />
     <Compile Include="distribution.vb" />
     <Compile Include="exponential_distribution\estimator.vb" />
@@ -76,6 +78,7 @@
     <Compile Include="onebound\model.vb" />
     <Compile Include="onebound\trainer.vb" />
     <Compile Include="percentile\filter.vb" />
+    <Compile Include="permutations.vb" />
     <Compile Include="wordbreaker\cjk\evaluator.vb" />
     <Compile Include="wordbreaker\cjk\trainer.vb" />
     <Compile Include="wordtracer\cjk\breaking_word.vb" />
@@ -106,7 +109,9 @@
     <Content Include="boolaffinity\design.txt" />
     <Content Include="onebound\design.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="affinity\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="ml.dep" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
