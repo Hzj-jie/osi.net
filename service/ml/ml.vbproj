@@ -51,7 +51,7 @@
     <Compile Include="boolaffinity\evaluator.vb" />
     <Compile Include="boolaffinity\model.vb" />
     <Compile Include="boolaffinity\trainer.vb" />
-    <Compile Include="bool_distribution\bool_distribution.vb" />
+    <Compile Include="binomial_distribution\binomial_distribution.vb" />
     <Compile Include="combinatorics.vb" />
     <Compile Include="confidentor.vb" />
     <Compile Include="distribution.vb" />

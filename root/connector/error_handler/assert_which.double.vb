@@ -42,6 +42,11 @@ Partial Public NotInheritable Class assert_which
         End Function
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function can_floor_to_uint64() As UInt64
+            Return assert_which.of(Math.Floor(i)).can_cast_to_uint64()
+        End Function
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function can_truncate_to_uint32() As UInt32
             Try
                 Return CUInt(i)
