@@ -48,6 +48,7 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="bernoulli_distribution\estimator_estimate_test.vb" />
     <Compile Include="boolaffinity\model_test.vb" />
     <Compile Include="combinatorics_test.vb" />
     <Compile Include="exponential_distribution\estimator_confident_test.vb" />

@@ -48,6 +48,8 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="bernoulli_distribution\bernoulli_distribution.vb" />
+    <Compile Include="bernoulli_distribution\estimator.vb" />
     <Compile Include="boolaffinity\evaluator.vb" />
     <Compile Include="boolaffinity\model.vb" />
     <Compile Include="boolaffinity\trainer.vb" />
