@@ -13,15 +13,16 @@ Public Structure one_of(Of T1, T2)
 
     Private ReadOnly t As tuple(Of Boolean, T1, T2)
 
+    ' Just in case T1 == T2
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub New(ByVal v As T1)
-        Me.New(tuple.emplace_of(True, v, [default](Of T2).null))
-    End Sub
+    Public Shared Function of_first(ByVal v As T1) As one_of(Of T1, T2)
+        Return New one_of(Of T1, T2)(tuple.emplace_of(True, v, [default](Of T2).null))
+    End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub New(ByVal v As T2)
-        Me.New(tuple.emplace_of(False, [default](Of T1).null, v))
-    End Sub
+    Public Shared Function of_second(ByVal v As T2) As one_of(Of T1, T2)
+        Return New one_of(Of T1, T2)(tuple.emplace_of(False, [default](Of T1).null, v))
+    End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub New(ByVal t As tuple(Of Boolean, T1, T2))
@@ -64,7 +65,7 @@ Public Structure one_of(Of T1, T2)
     End Function
 
     Public Function CloneT() As one_of(Of T1, T2) Implements ICloneable(Of one_of(Of T1, T2)).Clone
-        Return New one_of(Of T1, T2)(t)
+        Return New one_of(Of T1, T2)(t.CloneT())
     End Function
 
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo

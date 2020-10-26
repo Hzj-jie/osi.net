@@ -24,7 +24,7 @@ Public Module _distribution
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function as_range(ByVal i As tuple(Of Double, Double)) _
                                       As one_of(Of tuple(Of Double, Double), vector(Of Double))
-        Return New one_of(Of tuple(Of Double, Double), vector(Of Double))(i)
+        Return one_of(Of tuple(Of Double, Double), vector(Of Double)).of_first(i)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -43,7 +43,7 @@ Public Module _distribution
     <Extension()> Public Function as_samples(ByVal i As vector(Of Double)) _
                                       As one_of(Of tuple(Of Double, Double), vector(Of Double))
         assert(Not i Is Nothing)
-        Return New one_of(Of tuple(Of Double, Double), vector(Of Double))(i)
+        Return one_of(Of tuple(Of Double, Double), vector(Of Double)).of_second(i)
     End Function
 End Module
 
