@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.formation
 Imports integralor = osi.service.math.integralor
 Imports SysMath = System.Math
 
@@ -53,6 +54,11 @@ Partial Public NotInheritable Class normal_distribution
 
     Public Function cumulative_distribute(ByVal v As Double) As Double Implements distribution.cumulative_distribute
         Return cumulative_distribute(v, default_incremental)
+    End Function
+
+    Public Function parameter_space() As one_of(Of tuple(Of Double, Double), vector(Of Double)) _
+            Implements distribution.parameter_space
+        Return tuple.of(Double.MinValue, Double.MaxValue).as_range()
     End Function
 
     Public Function near_match(ByVal other As normal_distribution, ByVal diff As Double) As Boolean

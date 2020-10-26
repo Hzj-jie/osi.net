@@ -7,27 +7,27 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 
-Public NotInheritable Class confidentor
+Public NotInheritable Class confidence
     Private Const default_ratio As Double = 1000000000
 
-    Public Shared Function confident(ByVal ratio As Double,
-                                     ByVal d As distribution,
-                                     ByVal ParamArray samples() As Double) As Double
-        Return confident(ratio,
-                         d,
-                         streams.of(samples).
-                                 count().
-                                 to_array())
+    Public Shared Function [of](ByVal ratio As Double,
+                                ByVal d As distribution,
+                                ByVal ParamArray samples() As Double) As Double
+        Return [of](ratio,
+                    d,
+                    streams.of(samples).
+                            count().
+                            to_array())
     End Function
 
-    Public Shared Function confident(ByVal d As distribution,
+    Public Shared Function [of](ByVal d As distribution,
                                      ByVal ParamArray samples() As Double) As Double
-        Return confident(default_ratio, d, samples)
+        Return [of](default_ratio, d, samples)
     End Function
 
-    Public Shared Function confident(ByVal ratio As Double,
-                                     ByVal d As distribution,
-                                     ByVal ParamArray samples() As tuple(Of Double, UInt32)) As Double
+    Public Shared Function [of](ByVal ratio As Double,
+                                ByVal d As distribution,
+                                ByVal ParamArray samples() As tuple(Of Double, UInt32)) As Double
         Dim count As UInt32 = 0
         count = streams.of(samples).
                         map(tuple(Of Double, UInt32).second_selector).
@@ -56,9 +56,9 @@ Public NotInheritable Class confidentor
         Return result / samples.array_size()
     End Function
 
-    Public Shared Function confident(ByVal d As distribution,
-                                     ByVal ParamArray samples() As tuple(Of Double, UInt32)) As Double
-        Return confident(default_ratio, d, samples)
+    Public Shared Function [of](ByVal d As distribution,
+                                ByVal ParamArray samples() As tuple(Of Double, UInt32)) As Double
+        Return [of](default_ratio, d, samples)
     End Function
 
     Private Sub New()

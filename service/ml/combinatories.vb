@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 
-Public NotInheritable Class combinatorics
+Public NotInheritable Class combinatories
     Public Shared Function [of](ByVal n As UInt64, ByVal k As UInt64) As UInt64
         assert(k <= n)
         If n = k OrElse k = 0 Then

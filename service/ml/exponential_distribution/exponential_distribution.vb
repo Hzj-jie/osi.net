@@ -4,6 +4,8 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.formation
 Imports SysMath = System.Math
 
 Partial Public NotInheritable Class exponential_distribution
@@ -41,6 +43,11 @@ Partial Public NotInheritable Class exponential_distribution
             Return 0
         End If
         Return 1 - (1 / (SysMath.E ^ (lambda * v)))
+    End Function
+
+    Public Function parameter_space() As one_of(Of tuple(Of Double, Double), vector(Of Double)) _
+            Implements distribution.parameter_space
+        Return tuple.of(double_0, Double.MaxValue).as_range()
     End Function
 
     Public Function near_match(ByVal other As exponential_distribution, ByVal diff As Double) As Boolean

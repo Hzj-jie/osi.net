@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 Imports SysMath = System.Math
 
 Partial Public NotInheritable Class binomial_distribution
@@ -54,12 +55,17 @@ Partial Public NotInheritable Class binomial_distribution
         If v2 > n Then
             Return 0
         End If
-        Return combinatorics.of(v2, n) * (p ^ v2) * (1 - p) ^ (n - v2)
+        Return combinatories.of(v2, n) * (p ^ v2) * (1 - p) ^ (n - v2)
     End Function
 
     Public Function range_possibility(ByVal min As Double,
                                       ByVal max As Double) As Double Implements distribution.range_possibility
         Return cumulative_distribute(max) - cumulative_distribute(min)
+    End Function
+
+    Public Function parameter_space() As one_of(Of tuple(Of Double, Double), vector(Of Double)) _
+            Implements distribution.parameter_space
+        Return tuple.of(double_0, CDbl(n)).as_range()
     End Function
 
     Public Overloads Function Equals(ByVal other As binomial_distribution) As Boolean _

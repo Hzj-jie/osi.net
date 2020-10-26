@@ -24,7 +24,7 @@ Namespace exponential_distribution
                                       Return tuple.of(v, CUInt(n.range_possibility(v - 1 / 20, v + 1 / 20) * 1000))
                                   End Function).
                               to_array()
-            assertions.of(confidentor.confident(n, samples)).in_range(23927697573779, 1)
+            assertions.of(confidence.of(n, samples)).in_range(23927697573779, 1)
         End Sub
 
         <test>
@@ -39,7 +39,7 @@ Namespace exponential_distribution
                                       Return tuple.of(v, CUInt(n.range_possibility(v - 1 / 200, v + 1 / 200) * 1000000))
                                   End Function).
                               to_array()
-            assertions.of(confidentor.confident(n, samples)).in_range(24859031708, 1)
+            assertions.of(confidence.of(n, samples)).in_range(24859031708, 1)
         End Sub
 
         Private Sub New()

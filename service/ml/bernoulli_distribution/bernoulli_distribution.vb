@@ -4,7 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
+Imports osi.root.formation
 Imports SysMath = System.Math
 
 Partial Public NotInheritable Class bernoulli_distribution
@@ -39,6 +39,11 @@ Partial Public NotInheritable Class bernoulli_distribution
     Public Function range_possibility(ByVal min As Double,
                                       ByVal max As Double) As Double Implements distribution.range_possibility
         Return cumulative_distribute(max) - cumulative_distribute(min)
+    End Function
+
+    Public Function parameter_space() As one_of(Of tuple(Of Double, Double), vector(Of Double)) _
+            Implements distribution.parameter_space
+        Return vector.of(0.0, 1.0).as_samples()
     End Function
 
     Public Function near_match(ByVal other As bernoulli_distribution, ByVal diff As Double) As Boolean

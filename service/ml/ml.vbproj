@@ -48,14 +48,16 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="affinity.vb" />
     <Compile Include="bernoulli_distribution\bernoulli_distribution.vb" />
     <Compile Include="bernoulli_distribution\estimator.vb" />
+    <Compile Include="binomial_distribution\estimator.vb" />
     <Compile Include="boolaffinity\evaluator.vb" />
     <Compile Include="boolaffinity\model.vb" />
     <Compile Include="boolaffinity\trainer.vb" />
     <Compile Include="binomial_distribution\binomial_distribution.vb" />
-    <Compile Include="combinatorics.vb" />
-    <Compile Include="confidentor.vb" />
+    <Compile Include="combinatories.vb" />
+    <Compile Include="confidence.vb" />
     <Compile Include="distribution.vb" />
     <Compile Include="exponential_distribution\estimator.vb" />
     <Compile Include="exponential_distribution\exponential_distribution.vb" />
@@ -111,9 +113,7 @@
     <Content Include="boolaffinity\design.txt" />
     <Content Include="onebound\design.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="affinity\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="ml.dep" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
