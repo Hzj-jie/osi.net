@@ -45,11 +45,25 @@ Public Module _distribution
         assert(Not i Is Nothing)
         Return one_of(Of tuple(Of Double, Double), vector(Of Double)).of_second(i)
     End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <Extension()> Public Function union_with(ByVal i As tuple(Of Double, Double),
+                                             ByVal j As tuple(Of Double, Double)) As tuple(Of Double, Double)
+        Return tuple.of(min(i.first(), j.first()), max(i.second(), j.second()))
+    End Function
 End Module
 
 Public Interface distribution
+    ' f(v) = p{x = v}
     Function possibility(ByVal v As Double) As Double
+    ' F(v) = p{x <= v}
     Function cumulative_distribute(ByVal v As Double) As Double
+    ' p{min <= x <= max}
     Function range_possibility(ByVal min As Double, ByVal max As Double) As Double
+    ' x is within range [a, b), or x is within collection (a, b, c, ...).
     Function parameter_space() As one_of(Of tuple(Of Double, Double), vector(Of Double))
+    ' a range covering say 99.9% of range_possibility.
+    ' The "significant" is definited per implementation without a standard rule, but should never less than 99%.
+    ' This range is only used when parameter_space returns a range rather than a collection.
+    Function significant_range() As tuple(Of Double, Double)
 End Interface

@@ -61,6 +61,11 @@ Partial Public NotInheritable Class normal_distribution
         Return tuple.of(Double.MinValue, Double.MaxValue).as_range()
     End Function
 
+    ' phi(3) ~= 0.9987, extremely significant already.
+    Public Function significant_range() As tuple(Of Double, Double) Implements distribution.significant_range
+        Return tuple.of(mean - variance * 3, mean + variance * 3)
+    End Function
+
     Public Function near_match(ByVal other As normal_distribution, ByVal diff As Double) As Boolean
         If other Is Nothing Then
             Return False

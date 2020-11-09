@@ -50,6 +50,11 @@ Partial Public NotInheritable Class exponential_distribution
         Return tuple.of(double_0, Double.MaxValue).as_range()
     End Function
 
+    ' exp(lambda*x) >= 1000 to make 1-exp(-lambda*x) >= 0.999
+    Public Function significant_range() As tuple(Of Double, Double) Implements distribution.significant_range
+        Return tuple.of(double_0, SysMath.Log(1000) / lambda)
+    End Function
+
     Public Function near_match(ByVal other As exponential_distribution, ByVal diff As Double) As Boolean
         If other Is Nothing Then
             Return False

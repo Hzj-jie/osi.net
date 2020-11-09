@@ -13,6 +13,11 @@ Partial Public NotInheritable Class binomial_distribution
 
     Private ReadOnly n As UInt64
     Private ReadOnly p As Double
+    Private ReadOnly sr As lazier(Of tuple(Of Double, Double)) =
+        lazier.of(Function() As tuple(Of Double, Double)
+                      Return tuple.of(p * n - SysMath.Sqrt(p * (1 - p) / n) * 3,
+                                      p * n + SysMath.Sqrt(p * (1 - p) / n) * 3)
+                  End Function)
 
     Shared Sub New()
         struct(Of binomial_distribution).register()
@@ -66,6 +71,11 @@ Partial Public NotInheritable Class binomial_distribution
     Public Function parameter_space() As one_of(Of tuple(Of Double, Double), vector(Of Double)) _
             Implements distribution.parameter_space
         Return tuple.of(double_0, CDbl(n)).as_range()
+    End Function
+
+    ' ~= N(p*n, sqrt(p*(1-p)/n))
+    Public Function significant_range() As tuple(Of Double, Double) Implements distribution.significant_range
+        Return sr
     End Function
 
     Public Overloads Function Equals(ByVal other As binomial_distribution) As Boolean _

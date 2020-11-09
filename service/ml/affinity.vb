@@ -19,11 +19,13 @@ Public NotInheritable Class affinity
         assert(equal(lp, rp))
         Dim d As Double = 0
         If lp.is_first() Then
+            Dim range As tuple(Of Double, Double) = l.significant_range()
+            range.union_with(r.significant_range())
             assert(segment_count > 0)
-            Dim incremental As Double = (lp.first().second() - lp.first().first()) / segment_count
+            Dim incremental As Double = (range.second() - range.first()) / segment_count
             assert(incremental > 0)
-            Dim i As Double = lp.first().first()
-            While i < lp.first().second()
+            Dim i As Double = range.first()
+            While i < range.second()
                 Dim c As Double = l.range_possibility(i, i + incremental) - r.range_possibility(i, i + incremental)
                 d += (c * c)
                 i += incremental

@@ -46,6 +46,11 @@ Partial Public NotInheritable Class bernoulli_distribution
         Return vector.of(0.0, 1.0).as_samples()
     End Function
 
+    Public Function significant_range() As tuple(Of Double, Double) Implements distribution.significant_range
+        assert(False)
+        Return Nothing
+    End Function
+
     Public Function near_match(ByVal other As bernoulli_distribution, ByVal diff As Double) As Boolean
         If other Is Nothing Then
             Return False
