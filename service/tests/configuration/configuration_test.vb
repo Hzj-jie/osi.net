@@ -5,20 +5,22 @@ Option Strict On
 
 Imports System.IO
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.configuration
 Imports envs = osi.root.envs
 Imports c = osi.service.configuration
 
-Public Class configuration_test
+Public NotInheritable Class configuration_test
     Inherits [case]
 
-    Private Class config_writer
+    Private NotInheritable Class config_writer
         Public Shared ReadOnly file As String
         Private Shared write_times As Int32 = 0
 
         Shared Sub New()
-            file = strcat(guid_str(), ".ini")
+            file = Path.Combine(temp_folder, guid_str().with_file_extension("ini"))
         End Sub
 
         Public Shared Sub write()
@@ -79,20 +81,25 @@ Public Class configuration_test
                 o.WriteLine("write_times=" + Convert.ToString(_inc(write_times)))
             End Using
         End Sub
+
+        Private Sub New()
+        End Sub
     End Class
 
     Private Shared Function machine_type() As String
         If Environment.ProcessorCount() > 7 Then
             Return "great"
-        ElseIf Environment.ProcessorCount() > 3 Then
-            Return "powerful"
-        ElseIf Environment.ProcessorCount() > 2 Then
-            Return "strange"
-        ElseIf Environment.ProcessorCount() > 1 Then
-            Return "normal"
-        Else
-            Return "lowend"
         End If
+        If Environment.ProcessorCount() > 3 Then
+            Return "powerful"
+        End If
+        If Environment.ProcessorCount() > 2 Then
+            Return "strange"
+        End If
+        If Environment.ProcessorCount() > 1 Then
+            Return "normal"
+        End If
+        Return "lowend"
     End Function
 
     Private Shared Function s() As sections
@@ -158,9 +165,9 @@ Public Class configuration_test
         c.default().unload(config_writer.file)
         sleep()
         assertion.is_true(do_(Function() As Boolean
-                            IO.File.Delete(config_writer.file)
-                            Return True
-                        End Function,
+                                  IO.File.Delete(config_writer.file)
+                                  Return True
+                              End Function,
                         False))
         Return True
     End Function
