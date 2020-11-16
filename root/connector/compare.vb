@@ -286,8 +286,7 @@ Public Module _compare
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function runtime_compare(ByVal this As Object, ByVal that As Object) As Int32
         Dim o As Int32 = 0
-        o = object_compare(this, that)
-        If o <> object_compare_undetermined Then
+        If object_compare(this, that, o) Then
             Return o
         End If
         assert(non_null_runtime_compare(this, that, o))
@@ -335,8 +334,7 @@ Public Module _compare
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
-        o = object_compare(this, that)
-        If o <> object_compare_undetermined Then
+        If object_compare(this, that, o) Then
             Return True
         End If
         Return non_null_compare(this, that, o)

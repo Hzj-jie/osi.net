@@ -112,9 +112,8 @@ Public Module _equal
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function object_equal(ByVal this As Object, ByVal that As Object, ByRef o As Boolean) As Boolean
-        Dim cmp As Int32 = 0
-        cmp = object_compare(this, that)
-        If cmp <> object_compare_undetermined Then
+        Dim cmp As Int32
+        If object_compare(this, that, cmp) Then
             o = (cmp = 0)
             Return True
         End If
@@ -123,7 +122,7 @@ Public Module _equal
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function compare_equal(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Boolean) As Boolean
-        Dim cmp As Int32 = 0
+        Dim cmp As Int32
         If non_null_compare(this, that, cmp) Then
             o = (cmp = 0)
             Return True
@@ -133,7 +132,7 @@ Public Module _equal
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function runtime_compare_equal(ByVal this As Object, ByVal that As Object, ByRef o As Boolean) As Boolean
-        Dim cmp As Int32 = 0
+        Dim cmp As Int32
         If non_null_runtime_compare(this, that, cmp) Then
             o = (cmp = 0)
             Return True
@@ -143,7 +142,7 @@ Public Module _equal
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function runtime_equal(ByVal this As Object, ByVal that As Object) As Boolean
-        Dim o As Boolean = False
+        Dim o As Boolean
         If object_equal(this, that, o) Then
             Return o
         End If
@@ -161,7 +160,7 @@ Public Module _equal
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function do_non_null_equal(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
-        Dim o As Boolean = False
+        Dim o As Boolean
         If equaler(Of T, T2).defined() Then
             Return equaler.equal(this, that)
         End If
@@ -179,7 +178,7 @@ Public Module _equal
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function do_equal(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
-        Dim o As Boolean = False
+        Dim o As Boolean
         If object_equal(this, that, o) Then
             Return o
         End If
@@ -205,7 +204,7 @@ Public Module _equal
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function non_null_equal(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
-        Dim o As Boolean = False
+        Dim o As Boolean
         assert(non_null_equal(this, that, o))
         Return o
     End Function
@@ -223,7 +222,7 @@ Public Module _equal
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function equal(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
-        Dim o As Boolean = False
+        Dim o As Boolean
         assert(equal(this, that, o))
         Return o
     End Function

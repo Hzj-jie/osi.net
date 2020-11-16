@@ -53,14 +53,13 @@ Partial Public NotInheritable Class first_const_pair
 
         Public Overrides Function at(ByRef i As first_const_pair(Of T1, T2),
                                      ByRef j As first_const_pair(Of T1, T2)) As Boolean
-            Dim c As Int32 = 0
-            c = object_compare(i, j)
-            If c <> object_compare_undetermined Then
+            Dim c As Int32
+            If object_compare(i, j, c) Then
                 Return c = 0
             End If
             assert(Not i Is Nothing)
             assert(Not j Is Nothing)
-            Return equaler.at(i.first, j.first)
+            Return equaler(i.first, j.first)
         End Function
     End Class
 End Class
