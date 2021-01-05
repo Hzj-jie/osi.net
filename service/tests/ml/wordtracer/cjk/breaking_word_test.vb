@@ -171,5 +171,40 @@ Namespace wordtracer.cjk
                           End Sub)
             End Using
         End Sub
+
+        <test>
+        <command_line_specified>
+        Private Shared Sub bi_directional_expo_cumulative_from_raw()
+            Using ms As MemoryStream = New MemoryStream()
+                assert(bytes_serializer.append_to(
+                       breaking_word.bi_directional_expo_cumulative(model.load("cjk.words.2.raw.bin")), ms))
+                assert(ms.dump_to_file("cjk.words.2.breaking_words.bi_directional_expo_cumulative.bin"))
+            End Using
+        End Sub
+
+        <test>
+        <command_line_specified>
+        Private Shared Sub dump_bi_directional_expo_cumulative_from_raw()
+            Using ms As MemoryStream = New MemoryStream()
+                assert(ms.read_from_file("cjk.words.2.breaking_words.bi_directional_expo_cumulative.bin"))
+                ms.Position() = 0
+                Dim r As unordered_map(Of Char, unordered_map(Of Char, Double)) = Nothing
+                assert(bytes_serializer.consume_from(ms, r))
+                r.stream().
+                  foreach(r.on_pair(Sub(ByVal k As Char, ByVal v As unordered_map(Of Char, Double))
+                                        v.stream().
+                                          sort(Function(ByVal i As first_const_pair(Of Char, Double),
+                                                        ByVal j As first_const_pair(Of Char, Double)) As Int32
+                                                   If i.second = j.second Then
+                                                       Return i.first.CompareTo(j.first)
+                                                   End If
+                                                   Return comparer.reverse(i.second.CompareTo(j.second))
+                                               End Function).
+                                          foreach(v.on_pair(Sub(ByVal k2 As Char, ByVal p As Double)
+                                                                Console.WriteLine(strcat(k, k2, ": ", p))
+                                                            End Sub))
+                                    End Sub))
+            End Using
+        End Sub
     End Class
 End Namespace
