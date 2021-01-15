@@ -7,6 +7,7 @@ Imports System.IO
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utt.attributes
+Imports osi.service.resource
 Imports tracerall = osi.service.ml.wordtracer.cjk.tracerall
 
 Namespace wordtracer.cjk
@@ -20,6 +21,19 @@ Namespace wordtracer.cjk
             Using ms As MemoryStream = New MemoryStream()
                 assert(bytes_serializer.append_to(m, ms))
                 assert(ms.dump_to_file("cjk.tracerall.bin"))
+            End Using
+        End Sub
+
+        <test>
+        <command_line_specified>
+        Private Shared Sub from_tar()
+            Dim m As vector(Of unordered_map(Of String, UInt32)) = New tracerall(0.1, 4).train(
+                tar.reader.unzip(vector.emplace_of(Directory.GetFiles(Environment.CurrentDirectory(),
+                                                                      "tar_manual_test.zip_*",
+                                                                      SearchOption.AllDirectories))))
+            Using ms As MemoryStream = New MemoryStream()
+                assert(bytes_serializer.append_to(m, ms))
+                assert(ms.dump_to_file("cjk.tracerall.tar.bin"))
             End Using
         End Sub
 
