@@ -8,6 +8,7 @@ Imports System.Text
 Public NotInheritable Class encodings
     Public Shared ReadOnly gbk As Encoding
     Public Shared ReadOnly gbk_or_default As Encoding
+    Public Shared ReadOnly utf8_nobom As Encoding
 
     Shared Sub New()
         Try
@@ -19,6 +20,7 @@ Public NotInheritable Class encodings
         Else
             gbk_or_default = gbk
         End If
+        utf8_nobom = New UTF8Encoding(False, False)
     End Sub
 
     Private Sub New()

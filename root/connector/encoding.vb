@@ -116,7 +116,13 @@ Public Module _encoding
         Try
             Dim m(CInt(min(5120, this.Length())) - 1) As Byte
             assert(this.Read(m, 0, m.array_size_i()) = m.array_size_i())
-            Dim d() As Byte = e.GetBytes(e.GetString(m))
+            Dim s As String = Nothing
+            If e.GetPreamble().isemptyarray() Then
+                s = e.GetString(m)
+            Else
+                s = e.GetString(m, e.GetPreamble().array_size_i(), m.array_size_i() - e.GetPreamble().array_size_i())
+            End If
+            Dim d() As Byte = e.GetPreamble().concat(e.GetBytes(s))
             Dim equals As UInt32 = 0
             For i As Int32 = 0 To min(m.array_size_i(), d.array_size_i()) - 1
                 If m(i) = d(i) Then
@@ -131,8 +137,8 @@ Public Module _encoding
 
     <Extension()> Public Function guess_encoding(ByVal this As Stream) As Encoding
         Return guess_encoding(this,
-                              Encoding.Default,
                               Encoding.UTF8,
+                              encodings.utf8_nobom,
                               Encoding.Unicode,
                               Encoding.BigEndianUnicode,
                               encodings.gbk_or_default)
@@ -145,6 +151,9 @@ Public Module _encoding
         Dim max As Double = 0
         Dim max_encoding As Encoding = Encoding.Default
         For i As Int32 = 0 To candidates.array_size_i() - 1
+            If Array.IndexOf(candidates, candidates(i)) < i Then
+                Continue For
+            End If
             Dim c As Double = this.encoding_possibility(candidates(i))
             If c > max Then
                 max = c

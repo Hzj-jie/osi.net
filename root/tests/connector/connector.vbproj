@@ -329,6 +329,7 @@
     <Content Include="codegen\gbk.txt" />
     <Content Include="codegen\unicode-be.txt" />
     <Content Include="codegen\unicode.txt" />
+    <Content Include="codegen\utf8-2.txt" />
     <Content Include="codegen\utf8-bom.txt" />
     <Content Include="codegen\utf8.txt" />
     <Content Include="string_null_or_whitespace_perf\string_null_or_whitespace_perf.cs" />

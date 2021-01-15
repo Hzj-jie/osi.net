@@ -36,15 +36,18 @@ Public NotInheritable Class encoding_test
     End Sub
 
     Private Shared Sub guess_encoding_test()
+        assertion.equal(memory_stream.of(utf8).guess_encoding(), encodings.utf8_nobom, utf8.hex_str())
+
         Dim t() As pair(Of Byte(), Encoding) = {
+            pair.of(utf8_2, encodings.utf8_nobom),
             pair.of(unicode_be, Encoding.BigEndianUnicode),
             pair.of(unicode, Encoding.Unicode),
-            pair.of(utf8, Encoding.UTF8),
+            pair.of(utf8, encodings.utf8_nobom),
             pair.of(utf8_bom, Encoding.UTF8),
             pair.of(gbk, encodings.gbk)
         }
         For i As Int32 = 0 To t.array_size_i() - 1
-            assertion.equal(memory_stream.of(t(i).first).guess_encoding(), t(i).second)
+            assertion.equal(memory_stream.of(t(i).first).guess_encoding(), t(i).second, t(i).first.hex_str())
         Next
     End Sub
 

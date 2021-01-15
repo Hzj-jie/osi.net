@@ -17,8 +17,7 @@ Public NotInheritable Class tar_manual_test
     Private Const pack_files As String = "tar_manual_test.pack_*"
     Private Const zip_200m_file As String = "tar_manual_test.zip_200m."
     Private Const zip_files As String = "tar_manual_test.zip_*"
-    Private Const peek_size As UInt32 = 512
-    Private Const peek_lines As UInt32 = 3
+    Private Const peek_size As UInt32 = 128
 
     Private Shared Function list_files() As vector(Of String)
         Return vector.emplace_of(Directory.GetFiles(Environment.CurrentDirectory(), "*", SearchOption.AllDirectories)).
@@ -61,7 +60,7 @@ Public NotInheritable Class tar_manual_test
                            Directory.GetFiles(Environment.CurrentDirectory(), pack_files, SearchOption.AllDirectories)))
         r.foreach(Sub(ByVal s As String, ByVal m As MemoryStream)
                       Console.WriteLine(strcat(s, " ========"))
-                      Using sr As StreamReader = New StreamReader(m, True)
+                      Using sr As StreamReader = New StreamReader(m, m.guess_encoding())
                           Console.WriteLine(sr.ReadToEnd())
                       End Using
                   End Sub)
@@ -86,11 +85,10 @@ Public NotInheritable Class tar_manual_test
                                                Environment.CurrentDirectory(), zip_files, SearchOption.AllDirectories)))
         r.foreach(Sub(ByVal s As String, ByVal m As MemoryStream)
                       Console.WriteLine(strcat(s, " ========"))
-                      m.trim(peek_size * peek_lines)
-                      Using sr As StreamReader = New StreamReader(m, True)
-                          For i As UInt32 = 0 To peek_lines - uint32_1
-                              Console.WriteLine(sr.ReadLine())
-                          Next
+                      Using sr As StreamReader = New StreamReader(m, m.guess_encoding())
+                          Dim c(peek_size - 1) As Char
+                          Dim l As Int32 = sr.Read(c, 0, c.array_size_i())
+                          Console.WriteLine(New String(c, 0, l))
                       End Using
                   End Sub)
     End Sub
@@ -114,7 +112,7 @@ Public NotInheritable Class tar_manual_test
                                                Environment.CurrentDirectory(), zip_files, SearchOption.AllDirectories)))
         r.foreach(Sub(ByVal s As String, ByVal m As MemoryStream)
                       Console.WriteLine(strcat(s, " ========"))
-                      Using sr As StreamReader = New StreamReader(m, True)
+                      Using sr As StreamReader = New StreamReader(m, m.guess_encoding())
                           Console.WriteLine(sr.ReadToEnd())
                       End Using
                   End Sub)
@@ -139,11 +137,10 @@ Public NotInheritable Class tar_manual_test
                                                Environment.CurrentDirectory(), zip_files, SearchOption.AllDirectories)))
         r.foreach(Sub(ByVal s As String, ByVal m As MemoryStream)
                       Console.WriteLine(strcat(s, " ========"))
-                      m.trim(peek_size * peek_lines)
-                      Using sr As StreamReader = New StreamReader(m, True)
-                          For i As UInt32 = 0 To peek_lines - uint32_1
-                              Console.WriteLine(sr.ReadLine())
-                          Next
+                      Using sr As StreamReader = New StreamReader(m, m.guess_encoding())
+                          Dim c(peek_size - 1) As Char
+                          Dim l As Int32 = sr.Read(c, 0, c.array_size_i())
+                          Console.WriteLine(New String(c, 0, l))
                       End Using
                   End Sub)
     End Sub
