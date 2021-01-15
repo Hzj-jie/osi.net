@@ -60,6 +60,7 @@
     <Compile Include="counter.vb" />
     <Compile Include="culture_info.vb" />
     <Compile Include="default.vb" />
+    <Compile Include="encodings.vb" />
     <Compile Include="exit_code.vb" />
     <Compile Include="git.vb" />
     <Compile Include="global_init_attribute.vb" />

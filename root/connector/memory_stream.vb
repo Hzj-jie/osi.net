@@ -177,7 +177,7 @@ Public Module _memory_stream
         Return False
     End Function
 
-    <Extension()> Public Function trim(ByRef this As MemoryStream) As MemoryStream
+    <Extension()> Public Function trim_used(ByRef this As MemoryStream) As MemoryStream
         assert(Not this Is Nothing)
         If this.Position() = 0 Then
             Return this
@@ -188,6 +188,14 @@ Public Module _memory_stream
         r.Position() = 0
         this = r
         Return r
+    End Function
+
+    <Extension()> Public Function trim(ByVal this As MemoryStream, ByVal length As UInt32) As MemoryStream
+        assert(Not this Is Nothing)
+        If this.Length() > length Then
+            this.SetLength(length)
+        End If
+        Return this
     End Function
 
     <Extension()> Public Function clear(ByVal this As MemoryStream) As MemoryStream

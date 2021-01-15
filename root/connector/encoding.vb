@@ -3,21 +3,22 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports osi.root.constants
 
 Public Module _encoding
     Public Function try_get_encoding(ByVal name As String, ByRef o As Encoding) As Boolean
         If String.IsNullOrEmpty(name) Then
             Return False
-        Else
-            Try
-                o = Encoding.GetEncoding(name)
-                Return True
-            Catch
-                Return False
-            End Try
         End If
+        Try
+            o = Encoding.GetEncoding(name)
+            Return True
+        Catch
+            Return False
+        End Try
     End Function
 
     Public Function try_get_encoding(ByVal codepage As Int32, ByRef o As Encoding) As Boolean
@@ -40,14 +41,13 @@ Public Module _encoding
            count < 0 OrElse
            array_size(buff) < offset + count Then
             Return False
-        Else
-            Try
-                o = e.GetString(buff, offset, count)
-                Return True
-            Catch
-                Return False
-            End Try
         End If
+        Try
+            o = e.GetString(buff, offset, count)
+            Return True
+        Catch
+            Return False
+        End Try
     End Function
 
     <Extension()> Public Function try_get_string(ByVal e As Encoding,
@@ -56,14 +56,13 @@ Public Module _encoding
         If e Is Nothing OrElse
            buff Is Nothing Then
             Return False
-        Else
-            Try
-                o = e.GetString(buff)
-                Return True
-            Catch
-                Return False
-            End Try
         End If
+        Try
+            o = e.GetString(buff)
+            Return True
+        Catch
+            Return False
+        End Try
     End Function
 
     <Extension()> Public Function GetBytes(ByVal e As Encoding,
@@ -108,5 +107,50 @@ Public Module _encoding
                                                ByVal s As String,
                                                ByVal length As Int32) As Int32
         Return GetByteCount(e, s, 0, length)
+    End Function
+
+    <Extension()> Public Function encoding_possibility(ByVal this As Stream, ByVal e As Encoding) As Double
+        assert(Not this Is Nothing)
+        assert(Not e Is Nothing)
+        Dim p As Int64 = this.Position()
+        Try
+            Dim m(CInt(min(5120, this.Length())) - 1) As Byte
+            assert(this.Read(m, 0, m.array_size_i()) = m.array_size_i())
+            Dim d() As Byte = e.GetBytes(e.GetString(m))
+            Dim equals As UInt32 = 0
+            For i As Int32 = 0 To min(m.array_size_i(), d.array_size_i()) - 1
+                If m(i) = d(i) Then
+                    equals += uint32_1
+                End If
+            Next
+            Return equals / min(m.array_size_i(), d.array_size_i())
+        Finally
+            this.Position() = p
+        End Try
+    End Function
+
+    <Extension()> Public Function guess_encoding(ByVal this As Stream) As Encoding
+        Return guess_encoding(this,
+                              Encoding.Default,
+                              Encoding.UTF8,
+                              Encoding.Unicode,
+                              Encoding.BigEndianUnicode,
+                              encodings.gbk_or_default)
+    End Function
+
+    <Extension()> Public Function guess_encoding(ByVal this As Stream,
+                                                 ParamArray ByVal candidates() As Encoding) As Encoding
+        assert(Not this Is Nothing)
+        assert(Not candidates.isemptyarray())
+        Dim max As Double = 0
+        Dim max_encoding As Encoding = Encoding.Default
+        For i As Int32 = 0 To candidates.array_size_i() - 1
+            Dim c As Double = this.encoding_possibility(candidates(i))
+            If c > max Then
+                max = c
+                max_encoding = candidates(i)
+            End If
+        Next
+        Return max_encoding
     End Function
 End Module

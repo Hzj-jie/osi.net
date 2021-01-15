@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.IO
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.root.utt.attributes
@@ -16,6 +17,8 @@ Public NotInheritable Class tar_manual_test
     Private Const pack_files As String = "tar_manual_test.pack_*"
     Private Const zip_200m_file As String = "tar_manual_test.zip_200m."
     Private Const zip_files As String = "tar_manual_test.zip_*"
+    Private Const peek_size As UInt32 = 512
+    Private Const peek_lines As UInt32 = 3
 
     Private Shared Function list_files() As vector(Of String)
         Return vector.emplace_of(Directory.GetFiles(Environment.CurrentDirectory(), "*", SearchOption.AllDirectories)).
@@ -54,10 +57,13 @@ Public NotInheritable Class tar_manual_test
     <test>
     Private Shared Sub unpack_console()
         Dim r As tar.reader = Nothing
-        r = New tar.reader(vector.emplace_of(Directory.GetFiles(Environment.CurrentDirectory(), pack_files)))
+        r = New tar.reader(vector.emplace_of(
+                           Directory.GetFiles(Environment.CurrentDirectory(), pack_files, SearchOption.AllDirectories)))
         r.foreach(Sub(ByVal s As String, ByVal m As MemoryStream)
                       Console.WriteLine(strcat(s, " ========"))
-                      Console.WriteLine(bytes_str(m.ToArray()))
+                      Using sr As StreamReader = New StreamReader(m, True)
+                          Console.WriteLine(sr.ReadToEnd())
+                      End Using
                   End Sub)
     End Sub
 
@@ -65,7 +71,8 @@ Public NotInheritable Class tar_manual_test
     <test>
     Private Shared Sub unpack_index()
         Dim r As tar.reader = Nothing
-        r = New tar.reader(vector.emplace_of(Directory.GetFiles(Environment.CurrentDirectory(), pack_files)))
+        r = New tar.reader(vector.emplace_of(Directory.GetFiles(
+                                             Environment.CurrentDirectory(), pack_files, SearchOption.AllDirectories)))
         r.index().stream().foreach(Sub(ByVal s As tuple(Of String, UInt32))
                                        Console.WriteLine(strcat(s.first(), " -- ", s.second()))
                                    End Sub)
@@ -73,9 +80,27 @@ Public NotInheritable Class tar_manual_test
 
     <command_line_specified>
     <test>
+    Private Shared Sub unpack_peek()
+        Dim r As tar.reader = Nothing
+        r = tar.reader.unzip(vector.emplace_of(Directory.GetFiles(
+                                               Environment.CurrentDirectory(), zip_files, SearchOption.AllDirectories)))
+        r.foreach(Sub(ByVal s As String, ByVal m As MemoryStream)
+                      Console.WriteLine(strcat(s, " ========"))
+                      m.trim(peek_size * peek_lines)
+                      Using sr As StreamReader = New StreamReader(m, True)
+                          For i As UInt32 = 0 To peek_lines - uint32_1
+                              Console.WriteLine(sr.ReadLine())
+                          Next
+                      End Using
+                  End Sub)
+    End Sub
+
+    <command_line_specified>
+    <test>
     Private Shared Sub unpack()
         Dim r As tar.reader = Nothing
-        r = New tar.reader(vector.emplace_of(Directory.GetFiles(Environment.CurrentDirectory(), pack_files)))
+        r = New tar.reader(vector.emplace_of(Directory.GetFiles(
+                                             Environment.CurrentDirectory(), pack_files, SearchOption.AllDirectories)))
         r.dump().stream().foreach(Sub(ByVal t As tuple(Of String, MemoryStream))
                                       File.WriteAllBytes(t.first(), t.second().ToArray())
                                   End Sub)
@@ -85,10 +110,13 @@ Public NotInheritable Class tar_manual_test
     <test>
     Private Shared Sub unzip_console()
         Dim r As tar.reader = Nothing
-        r = tar.reader.unzip(vector.emplace_of(Directory.GetFiles(Environment.CurrentDirectory(), zip_files)))
+        r = tar.reader.unzip(vector.emplace_of(Directory.GetFiles(
+                                               Environment.CurrentDirectory(), zip_files, SearchOption.AllDirectories)))
         r.foreach(Sub(ByVal s As String, ByVal m As MemoryStream)
                       Console.WriteLine(strcat(s, " ========"))
-                      Console.WriteLine(bytes_str(m.ToArray()))
+                      Using sr As StreamReader = New StreamReader(m, True)
+                          Console.WriteLine(sr.ReadToEnd())
+                      End Using
                   End Sub)
     End Sub
 
@@ -96,7 +124,8 @@ Public NotInheritable Class tar_manual_test
     <test>
     Private Shared Sub unzip_index()
         Dim r As tar.reader = Nothing
-        r = tar.reader.unzip(vector.emplace_of(Directory.GetFiles(Environment.CurrentDirectory(), zip_files)))
+        r = tar.reader.unzip(vector.emplace_of(Directory.GetFiles(
+                                               Environment.CurrentDirectory(), zip_files, SearchOption.AllDirectories)))
         r.index().stream().foreach(Sub(ByVal s As tuple(Of String, UInt32))
                                        Console.WriteLine(strcat(s.first(), " -- ", s.second()))
                                    End Sub)
@@ -104,9 +133,27 @@ Public NotInheritable Class tar_manual_test
 
     <command_line_specified>
     <test>
+    Private Shared Sub unzip_peek()
+        Dim r As tar.reader = Nothing
+        r = tar.reader.unzip(vector.emplace_of(Directory.GetFiles(
+                                               Environment.CurrentDirectory(), zip_files, SearchOption.AllDirectories)))
+        r.foreach(Sub(ByVal s As String, ByVal m As MemoryStream)
+                      Console.WriteLine(strcat(s, " ========"))
+                      m.trim(peek_size * peek_lines)
+                      Using sr As StreamReader = New StreamReader(m, True)
+                          For i As UInt32 = 0 To peek_lines - uint32_1
+                              Console.WriteLine(sr.ReadLine())
+                          Next
+                      End Using
+                  End Sub)
+    End Sub
+
+    <command_line_specified>
+    <test>
     Private Shared Sub unzip()
         Dim r As tar.reader = Nothing
-        r = tar.reader.unzip(vector.emplace_of(Directory.GetFiles(Environment.CurrentDirectory(), zip_files)))
+        r = tar.reader.unzip(vector.emplace_of(Directory.GetFiles(
+                                               Environment.CurrentDirectory(), zip_files, SearchOption.AllDirectories)))
         r.dump().stream().foreach(Sub(ByVal t As tuple(Of String, MemoryStream))
                                       File.WriteAllBytes(t.first(), t.second().ToArray())
                                   End Sub)

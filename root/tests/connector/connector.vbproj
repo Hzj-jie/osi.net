@@ -125,6 +125,7 @@
     <Compile Include="generic_type_behavior_test.vb" />
     <Compile Include="gettype_perf.vb" />
     <Compile Include="gettype_test.vb" />
+    <Compile Include="guess_encoding_tests.vb" />
     <Compile Include="implement_test.vb" />
     <Compile Include="implicit_conversions.vb" />
     <Compile Include="inherit\base2_perf.vb" />
@@ -325,6 +326,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="codegen\gbk.txt" />
+    <Content Include="codegen\unicode-be.txt" />
+    <Content Include="codegen\unicode.txt" />
+    <Content Include="codegen\utf8-bom.txt" />
+    <Content Include="codegen\utf8.txt" />
     <Content Include="string_null_or_whitespace_perf\string_null_or_whitespace_perf.cs" />
   </ItemGroup>
   <ItemGroup>
