@@ -112,6 +112,10 @@ Public Module _encoding
     <Extension()> Public Function encoding_possibility(ByVal this As Stream, ByVal e As Encoding) As Double
         assert(Not this Is Nothing)
         assert(Not e Is Nothing)
+        If this.Length() < e.GetPreamble().array_size_i() Then
+            Return 0
+        End If
+
         Dim p As Int64 = this.Position()
         Try
             Dim m(CInt(min(5120, this.Length())) - 1) As Byte
