@@ -37,6 +37,11 @@ Partial Public NotInheritable Class tar
             Return New reader(zip_reader_fs.instance, v)
         End Function
 
+        Public Sub reset()
+            i = 0
+            m.clear()
+        End Sub
+
         Public Function [next](ByRef name As String, ByRef o As MemoryStream) As Boolean
             While m.eos() AndAlso i < v.size()
                 m.clear()

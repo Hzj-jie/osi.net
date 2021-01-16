@@ -167,7 +167,9 @@
     <Compile Include="qless\slimheapless_case4.vb" />
     <Compile Include="qless\slimheapless_debug_tests.vb" />
     <Compile Include="qless\slimqless2_case5.vb" />
+    <Compile Include="stream\stream_filter_test.vb" />
     <Compile Include="stream\stream_flat_map_test.vb" />
+    <Compile Include="stream\stream_percentile_test.vb" />
     <Compile Include="stream\stream_sort_test.vb" />
     <Compile Include="threadsafe\object_unique_set_test.vb" />
     <Compile Include="threadsafe\waitable_slimheapless_test.vb" />

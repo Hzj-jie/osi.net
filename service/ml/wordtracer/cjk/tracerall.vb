@@ -24,7 +24,7 @@ Partial Public NotInheritable Class wordtracer
 
             Private Shared Sub train_line(ByVal line As String,
                                           ByVal len As UInt32,
-                                          ByVal sel As Func(Of String, String, Boolean),
+                                          ByVal sel As Func(Of String, Char, Boolean),
                                           ByVal result As unordered_map(Of String, unordered_map(Of Char, UInt32)))
                 assert(Not line Is Nothing)
                 assert(len >= uint32_2)
@@ -51,7 +51,7 @@ Partial Public NotInheritable Class wordtracer
 
             Private Shared Function process(ByVal f As String,
                                             ByVal len As UInt32,
-                                            ByVal sel As Func(Of String, String, Boolean)) _
+                                            ByVal sel As Func(Of String, Char, Boolean)) _
                                            As unordered_map(Of String, unordered_map(Of Char, UInt32))
                 Dim v As unordered_map(Of String, unordered_map(Of Char, UInt32)) =
                     New unordered_map(Of String, unordered_map(Of Char, UInt32))()
@@ -63,9 +63,10 @@ Partial Public NotInheritable Class wordtracer
 
             Private Shared Function process(ByVal t As tar.reader,
                                             ByVal len As UInt32,
-                                            ByVal sel As Func(Of String, String, Boolean)) _
+                                            ByVal sel As Func(Of String, Char, Boolean)) _
                                            As unordered_map(Of String, unordered_map(Of Char, UInt32))
                 assert(Not t Is Nothing)
+                t.reset()
                 Dim v As unordered_map(Of String, unordered_map(Of Char, UInt32)) =
                     New unordered_map(Of String, unordered_map(Of Char, UInt32))()
                 t.foreach(Sub(ByVal name As String, ByVal m As MemoryStream)
@@ -80,21 +81,21 @@ Partial Public NotInheritable Class wordtracer
                 Return v
             End Function
 
-            Private Function train(ByVal process As Func(Of UInt32, Func(Of String, String, Boolean),
+            Private Function train(ByVal process As Func(Of UInt32, Func(Of String, Char, Boolean),
                                    unordered_map(Of String, unordered_map(Of Char, UInt32)))) _
                                   As vector(Of unordered_map(Of String, UInt32))
                 assert(Not process Is Nothing)
                 Dim r As vector(Of unordered_map(Of String, UInt32)) = New vector(Of unordered_map(Of String, UInt32))()
                 For i As UInt32 = 2 To max_len
-                    Dim sel As Func(Of String, String, Boolean) = Nothing
+                    Dim sel As Func(Of String, Char, Boolean) = Nothing
                     If i = 2 Then
-                        sel = Function(ByVal x As String, ByVal y As String) As Boolean
+                        sel = Function(ByVal x As String, ByVal y As Char) As Boolean
                                   Return True
                               End Function
                     Else
                         Dim last As unordered_map(Of String, UInt32) = Nothing
                         last = r.back()
-                        sel = Function(ByVal x As String, ByVal y As String) As Boolean
+                        sel = Function(ByVal x As String, ByVal y As Char) As Boolean
                                   Return last.find(x) <> last.end()
                               End Function
                     End If
@@ -105,8 +106,8 @@ Partial Public NotInheritable Class wordtracer
                         map(Function(ByVal e As first_const_pair(Of String, unordered_map(Of Char, UInt32))) _
                                 As first_const_pair(Of String, vector(Of tuple(Of Char, UInt32)))
                                 assert(Not e Is Nothing)
-                                Dim s As vector(Of tuple(Of Char, UInt32)) = Nothing
-                                s = e.second.
+                                Dim s As vector(Of tuple(Of Char, UInt32)) =
+                                    e.second.
                                       stream().
                                       map(AddressOf tuple(Of Char, UInt32).from_first_const_pair).
                                       collect(Of vector(Of tuple(Of Char, UInt32)))()
@@ -128,7 +129,7 @@ Partial Public NotInheritable Class wordtracer
 
             Public Function train(ByVal f As String) As vector(Of unordered_map(Of String, UInt32))
                 Return train(Function(ByVal len As UInt32,
-                                      ByVal sel As Func(Of String, String, Boolean)) _
+                                      ByVal sel As Func(Of String, Char, Boolean)) _
                                      As unordered_map(Of String, unordered_map(Of Char, UInt32))
                                  Return process(f, len, sel)
                              End Function)
@@ -136,7 +137,7 @@ Partial Public NotInheritable Class wordtracer
 
             Public Function train(ByVal t As tar.reader) As vector(Of unordered_map(Of String, UInt32))
                 Return train(Function(ByVal len As UInt32,
-                                      ByVal sel As Func(Of String, String, Boolean)) _
+                                      ByVal sel As Func(Of String, Char, Boolean)) _
                                      As unordered_map(Of String, unordered_map(Of Char, UInt32))
                                  Return process(t, len, sel)
                              End Function)
