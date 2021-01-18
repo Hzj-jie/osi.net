@@ -68,6 +68,20 @@ Partial Public Class stream(Of T)
                    End Sub
         End Function
 
+        Public Shared Function values(Of V)() _
+                                   As Action(Of unordered_map(Of T, vector(Of V)), first_const_pair(Of T, V))
+            Return Sub(ByVal r As unordered_map(Of T, vector(Of V)), ByVal c As first_const_pair(Of T, V))
+                       r(c.first).emplace_back(c.second)
+                   End Sub
+        End Function
+
+        Public Shared Function ordered_values(Of V)() _
+                                   As Action(Of map(Of T, vector(Of V)), first_const_pair(Of T, V))
+            Return Sub(ByVal r As map(Of T, vector(Of V)), ByVal c As first_const_pair(Of T, V))
+                       r(c.first).emplace_back(c.second)
+                   End Sub
+        End Function
+
         Private Sub New()
         End Sub
     End Class

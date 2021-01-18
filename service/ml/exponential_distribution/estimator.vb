@@ -10,7 +10,11 @@ Partial Public NotInheritable Class exponential_distribution
     Public NotInheritable Class estimator
         Public Shared Function estimate(ByVal ParamArray samples() As tuple(Of Double, UInt32)) _
                                    As exponential_distribution
-            assert(samples.array_size() > 1)
+            assert(samples.array_size() >= 1)
+            If samples.array_size() = 1 Then
+                ' Return a large lambda to ensure everything returns 1 for cumulative possibility.
+                Return New exponential_distribution(100 / samples(0).first())
+            End If
             Dim count As UInt32 = 0
             count = streams.of(samples).
                             map(tuple(Of Double, UInt32).second_selector).

@@ -129,19 +129,43 @@ Partial Public NotInheritable Class wordtracer
                                        As vector(Of unordered_map(Of String, Double))
                 Return m.stream().
                          map(Function(ByVal i As unordered_map(Of String, UInt32)) As unordered_map(Of String, Double)
-                                 Dim e As exponential_distribution = Nothing
-                                 e = exponential_distribution.estimator.estimate(
-                                         i.stream().
-                                           map(i.second_selector).
-                                           map(Function(ByVal x As UInt32) As Double
-                                                   Return x
-                                               End Function).
-                                           to_array())
+                                 Dim es As unordered_map(Of String, exponential_distribution) =
+                                     i.stream().
+                                       map(Function(ByVal p As first_const_pair(Of String, UInt32)) _
+                                               As first_const_pair(Of String, UInt32)
+                                               Return first_const_pair.emplace_of(p.first.remove_last(1), p.second)
+                                           End Function).
+                                       collect_by(stream(Of String).collectors.values(Of UInt32)()).
+                                       stream().
+                                       map(Function(ByVal p As first_const_pair(Of String, vector(Of UInt32))) _
+                                               As first_const_pair(Of String, exponential_distribution)
+                                               Return first_const_pair.emplace_of(
+                                                          p.first,
+                                                          exponential_distribution.estimator.estimate(
+                                                              p.second.
+                                                                stream().
+                                                                map(Function(ByVal x As UInt32) As Double
+                                                                        Return x
+                                                                    End Function).
+                                                                to_array()
+                                                          )
+                                                      )
+                                           End Function).
+                                       collect(Of unordered_map(Of String, exponential_distribution))()
                                  Return i.stream().
                                           map(Function(ByVal x As first_const_pair(Of String, UInt32)) _
                                                   As first_const_pair(Of String, Double)
-                                                  Return first_const_pair.of(x.first, e.cumulative_distribute(x.second))
+                                                  Return first_const_pair.of(x.first,
+                                                                             es(x.first.remove_last(1)).
+                                                                                 cumulative_distribute(x.second))
                                               End Function).
+                                          concat(es.stream().
+                                                    map(Function(
+                                                            ByVal p As _
+                                                                first_const_pair(Of String, exponential_distribution)) _
+                                                                As first_const_pair(Of String, Double)
+                                                            Return first_const_pair.emplace_of(p.first, p.second.lambda)
+                                                        End Function)).
                                           collect(Of unordered_map(Of String, Double))()
                              End Function).
                          collect(Of vector(Of unordered_map(Of String, Double)))()

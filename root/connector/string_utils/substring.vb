@@ -69,4 +69,16 @@ Public Module _substring
     <Extension()> Public Function char_at(ByVal s As String, ByVal pos As UInt32) As Char
         Return s(CInt(pos))
     End Function
+
+    <Extension()> Public Function remove_last(ByVal s As String, ByVal len As UInt32) As String
+        If s Is Nothing Then
+            Return s
+        End If
+
+        If strlen(s) <= len Then
+            Return empty_string
+        End If
+
+        Return s.Substring(0, CInt(strlen(s) - len))
+    End Function
 End Module

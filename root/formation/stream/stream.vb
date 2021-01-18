@@ -139,4 +139,17 @@ Partial Public Class stream(Of T)
         Return collect_by(collectors.with_index()).
                stream()
     End Function
+
+    Public Function concat(ByVal e As container_operator(Of T).enumerator) As stream(Of T)
+        Return New stream(Of T)(streams.enumerators.concat(Me.e, e))
+    End Function
+
+    Public Function concat(ByVal s As stream(Of T)) As stream(Of T)
+        assert(Not s Is Nothing)
+        Return concat(s.e)
+    End Function
+
+    Public Function concat(ByVal ParamArray others() As T) As stream(Of T)
+        Return concat(streams.enumerators.from_array(others))
+    End Function
 End Class

@@ -68,6 +68,10 @@ Partial Public NotInheritable Class tar
                     f(n, m)
                 Catch ex As break_lambda
                     Return
+                Finally
+                    m.Close()
+                    m.Dispose()
+                    m = Nothing
                 End Try
             End While
         End Sub
