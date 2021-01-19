@@ -16,8 +16,7 @@ Partial Public Class hasharray(Of T,
     Public Function find(ByVal value As T) As iterator
         Dim column As UInt32 = 0
         Dim row As UInt32 = 0
-        Dim n As hasher_node(Of T) = Nothing
-        n = new_node(value)
+        Dim n As hasher_node(Of T) = new_node(value)
         column = hash(n)
         If find_first_cell(n, column, row) Then
             Return iterator_at(column, row)
@@ -29,8 +28,7 @@ Partial Public Class hasharray(Of T,
     Public Function emplace(ByVal value As T) As tuple(Of iterator, Boolean)
         Dim column As UInt32 = 0
         Dim row As UInt32 = 0
-        Dim r As Boolean = False
-        r = emplace(value, column, row)
+        Dim r As Boolean = emplace(value, column, row)
         Return tuple.emplace_of(iterator_at(column, row), r)
     End Function
 
@@ -42,12 +40,11 @@ Partial Public Class hasharray(Of T,
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [erase](ByVal value As T) As UInt32
         Dim r As UInt32 = 0
-        Dim column As UInt32 = 0
         Dim row As UInt32 = 0
-        Dim n As hasher_node(Of T) = Nothing
-        n = new_node(value)
-        column = hash(n)
-        While row < row_count(column)
+        Dim n As hasher_node(Of T) = new_node(value)
+        Dim column As UInt32 = hash(n)
+        Dim rc As UInt32 = row_count(column)
+        While row < rc
             If cell_is(column, row, n) Then
                 clear_cell(column, row)
                 r += uint32_1
