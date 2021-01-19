@@ -41,11 +41,11 @@ Public NotInheritable Class event_comb_waitfor_test
     End Function
 
     Private Shared Function waitfor_try_result() As Boolean
-        Dim r As pointer(Of Boolean) = Nothing
+        Dim r As ref(Of Boolean) = Nothing
         If Not waitfor_test(Function(x, y) waitfor(Function() nowadays.milliseconds() - x >= y, r, y)) Then
             Return False
         End If
-        r = New pointer(Of Boolean)()
+        r = New ref(Of Boolean)()
         If Not waitfor_test(Function(x, y) waitfor(Function() nowadays.milliseconds() - x >= y, r, y)) Then
             Return False
         End If
@@ -69,8 +69,8 @@ Public NotInheritable Class event_comb_waitfor_test
 
     Private Shared Function waitfor_do1() As Boolean
         Const v As Int32 = 1000
-        Dim r As pointer(Of Int32) = Nothing
-        r = New pointer(Of Int32)()
+        Dim r As ref(Of Int32) = Nothing
+        r = New ref(Of Int32)()
         assert(+r <> v)
         If waitfor_test(Function(x, y) waitfor(Function() As Int32
                                                    sleep(y)
@@ -86,8 +86,8 @@ Public NotInheritable Class event_comb_waitfor_test
 
     Private Shared Function waitfor_do2() As Boolean
         Const v As Int32 = 1000
-        Dim r As pointer(Of Int32) = Nothing
-        r = New pointer(Of Int32)()
+        Dim r As ref(Of Int32) = Nothing
+        r = New ref(Of Int32)()
         assert(+r <> v)
         If waitfor_test(Function(x, y) waitfor(Function() As Int32
                                                    sleep(max_int32)

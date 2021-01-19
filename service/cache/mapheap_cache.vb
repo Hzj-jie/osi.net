@@ -8,7 +8,7 @@ Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.cache.constants.mapheap_cache
 
-Friend Class mapheap_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
+Friend NotInheritable Class mapheap_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     Implements islimcache2(Of KEY_T, VALUE_T)
 
     Private ReadOnly max_size As UInt64
@@ -58,26 +58,8 @@ Friend Class mapheap_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     Public Function [erase](ByVal key As KEY_T) As Boolean Implements islimcache2(Of KEY_T, VALUE_T).erase
         If m.erase(key) Then
             Return assert(mh.erase(key))
-        Else
-            Return False
         End If
-    End Function
-
-    Public Function foreach(ByVal d As _do(Of KEY_T, VALUE_T, Boolean, Boolean)) As Boolean _
-                           Implements islimcache2(Of KEY_T, VALUE_T).foreach
-        If d Is Nothing Then
-            Return False
-        Else
-            Return m.foreach(Function(ByRef k As KEY_T, ByRef v As VALUE_T, ByRef c As Boolean) As Boolean
-                                 If retired(mh.find(k)) Then
-                                     assert([erase](k))
-                                     c = True
-                                     Return True
-                                 Else
-                                     Return d(k, v, c)
-                                 End If
-                             End Function)
-        End If
+        Return False
     End Function
 
     Public Function [get](ByVal key As KEY_T, ByRef value As VALUE_T) As Boolean _
@@ -89,21 +71,19 @@ Friend Class mapheap_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
                 assert(mh.find(key) = mh.end())
             End If
             Return False
-        Else
-            Dim j As mapheap(Of KEY_T, reverse(Of UInt64)).iterator = Nothing
-            j = mh.find(key)
-            assert(j <> mh.end())
-            If retired(j) Then
-                assert([erase](key))
-                Return False
-            Else
-                copy(value, (+i).second)
-                If update_ticks_when_refer Then
-                    update_refer_ticks(key)
-                End If
-                Return True
-            End If
         End If
+        Dim j As mapheap(Of KEY_T, reverse(Of UInt64)).iterator = Nothing
+        j = mh.find(key)
+        assert(j <> mh.end())
+        If retired(j) Then
+            assert([erase](key))
+            Return False
+        End If
+        copy(value, (+i).second)
+        If update_ticks_when_refer Then
+            update_refer_ticks(key)
+        End If
+        Return True
     End Function
 
     Public Sub [set](ByVal key As KEY_T, ByVal value As VALUE_T) Implements islimcache2(Of KEY_T, VALUE_T).set

@@ -25,13 +25,13 @@ Partial Public NotInheritable Class dispenser_test
                              End Function)
         End Sub
 
-        Public Function sense(ByVal pending As pointer(Of Boolean),
+        Public Function sense(ByVal pending As ref(Of Boolean),
                               ByVal timeout_ms As Int64) As event_comb _
                              Implements T_receiver(Of pair(Of Int32, Int32)).sense
             Return s.sense(pending, timeout_ms)
         End Function
 
-        Public Function receive(ByVal o As pointer(Of pair(Of Int32, Int32))) As event_comb _
+        Public Function receive(ByVal o As ref(Of pair(Of Int32, Int32))) As event_comb _
                                Implements T_receiver(Of pair(Of Int32, Int32)).receive
             Return sync_async(Sub()
                                   If assertion.is_not_null(o) AndAlso assertion.is_true(o.empty()) Then

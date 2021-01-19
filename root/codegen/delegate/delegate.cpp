@@ -30,6 +30,7 @@ void write_temp_para(FILE*& fo, int pc, bool has_rtn)
 
 void write_head(FILE*& fo, int pc, const char* fn, const char* dn, bool has_rtn, bool para_byref, bool has_false_value)
 {
+    fp("    <MethodImpl(method_impl_options.aggressive_inlining)>\n");
     fp("    Public ");
     if(has_rtn) fp("Function");
     else fp("Sub");
@@ -153,6 +154,7 @@ int main(int argc, char* argv[])
               "\nOption Explicit On"
               "\nOption Infer Off"
               "\nOption Strict On\n"
+              "\nImports System.Runtime.CompilerServices"
               "\nImports System.Threading"
               "\nImports osi.root.constants"
               "\nImports osi.root.delegates\n"

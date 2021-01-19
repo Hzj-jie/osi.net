@@ -25,7 +25,6 @@ Namespace counter
             Dim s As snapshot = Nothing
             s = snapshot.[New](instance_count_counter(Of T).c)
             assert(Not s Is Nothing)
-            assert(Not s.count Is Nothing)
             Return +s.count
         End Function
     End Class

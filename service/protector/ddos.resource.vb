@@ -45,7 +45,7 @@ Public Class ddos
             Return q.size()
         End Function
 
-        Public Function insert(ByVal s As String, ByVal r As pointer(Of UInt64)) As event_comb
+        Public Function insert(ByVal s As String, ByVal r As ref(Of UInt64)) As event_comb
             Return New event_comb(Function() As Boolean
                                       If String.IsNullOrEmpty(s) Then
                                           Return False
@@ -100,7 +100,7 @@ Public Class ddos
             l = New ref(Of event_comb_lock)()
         End Sub
 
-        Public Function insert(ByVal s As String, ByVal r As pointer(Of Double)) As event_comb
+        Public Function insert(ByVal s As String, ByVal r As ref(Of Double)) As event_comb
             Return New event_comb(Function() As Boolean
                                       If String.IsNullOrEmpty(s) Then
                                           Return False

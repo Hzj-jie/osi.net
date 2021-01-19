@@ -16,6 +16,7 @@ Option Strict On
 
 
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
 ' Auto-infer is error-prone. E.g.
@@ -61,39 +62,48 @@ Public Class global_resolver(Of T As Class, PROTECTOR)
     End Sub
 
 'finish global_resolver_impl.vbp --------
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Sub register(ByVal i As T)
         r.register(i)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Sub register(ByVal i As Func(Of T))
         r.register(i)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Sub assert_first_register(ByVal i As T)
         r.assert_first_register(i)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Sub assert_first_register(ByVal i As Func(Of T))
         r.assert_first_register(i)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Sub unregister()
         r.unregister()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared sub assert_unregister()
         r.assert_unregister()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function resolve(ByRef o As T) As Boolean
         Return r.resolve(o)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function resolve(Of RT As T)(ByRef r As RT) As Boolean
         Dim o As T = Nothing
         Return resolve(o) AndAlso direct_cast(o, r)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function registered() As Boolean
         Return r.registered()
     End Function
@@ -105,23 +115,25 @@ Public Class global_resolver(Of T As Class, PROTECTOR)
 
 
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function resolve(Of RT As T)() As RT
         Dim o As RT = Nothing
         assert(resolve(o))
         Return o
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function resolve_or_null(Of RT As T)() As RT
         Return resolve_or_default([default](Of RT).null)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function resolve_or_default(Of RT As T)(ByVal [default] As RT) As RT
         Dim o As RT = Nothing
         If resolve(o) Then
             Return o
-        Else
-            Return [default]
         End If
+        Return [default]
     End Function
 
 'finish resolver_wrapper_resolve.vbp --------
@@ -133,32 +145,36 @@ Public Class global_resolver(Of T As Class, PROTECTOR)
 
 
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function resolve() As T
         Dim o As T = Nothing
         assert(resolve(o))
         Return o
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function resolve_or_null() As T
         Return resolve_or_default([default](Of T).null)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function resolve_or_default(ByVal [default] As T) As T
         Dim o As T = Nothing
         If resolve(o) Then
             Return o
-        Else
-            Return [default]
         End If
+        Return [default]
     End Function
 
 'finish resolver_wrapper_resolve.vbp --------
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function scoped_register(ByVal i As T) As IDisposable
         assert_first_register(i)
         Return unregister_delegate.instance
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function scoped_register(ByVal i As Func(Of T)) As IDisposable
         assert_first_register(i)
         Return unregister_delegate.instance

@@ -45,4 +45,10 @@ Public Module _stringbuilder
     <Extension()> Public Function trim_end(ByVal this As StringBuilder) As StringBuilder
         Return trim_end(this, AddressOf space)
     End Function
+
+    <Extension()> Public Function wrap(ByVal this As StringBuilder,
+                                       ByVal start As String,
+                                       ByVal trailing As String) As String
+        Return strcat(start, this, trailing)
+    End Function
 End Module

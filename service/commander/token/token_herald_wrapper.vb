@@ -15,7 +15,7 @@ Public Class token_herald_wrapper
         Me.h = h
     End Sub
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
 
     End Function
@@ -24,7 +24,7 @@ Public Class token_herald_wrapper
 
     End Function
 
-    Public Function receive(ByVal o As pointer(Of command)) As event_comb Implements T_pump(Of command).receive
+    Public Function receive(ByVal o As ref(Of command)) As event_comb Implements T_pump(Of command).receive
 
     End Function
 End Class

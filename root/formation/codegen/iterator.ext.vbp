@@ -1,5 +1,0 @@
-﻿
-##DEFAULT TEMPLATE_TYPE 
-    <Extension()> Public Function null_or_end##TEMPLATE_TYPE##(ByVal this As ##PARENT_CLASS##.iterator) As Boolean
-        Return this.is_null() OrElse this.is_end()
-    End Function

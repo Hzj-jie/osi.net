@@ -161,12 +161,12 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
     Private Class commander_case
         Inherits count_event_comb_case
 
-        Public Shared ReadOnly opp As pointer(Of idevice_pool(Of herald))
-        Public Shared ReadOnly udp_sender As pointer(Of idevice_pool(Of herald))
+        Public Shared ReadOnly opp As ref(Of idevice_pool(Of herald))
+        Public Shared ReadOnly udp_sender As ref(Of idevice_pool(Of herald))
 
         Shared Sub New()
-            opp = New pointer(Of idevice_pool(Of herald))()
-            udp_sender = New pointer(Of idevice_pool(Of herald))()
+            opp = New ref(Of idevice_pool(Of herald))()
+            udp_sender = New ref(Of idevice_pool(Of herald))()
         End Sub
 
         Private ReadOnly tcp_suc As atomic_int
@@ -239,7 +239,7 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
                 udp_q = New questioner(+udp_sender)
             End If
             Dim para As Int32 = 0
-            Dim r As pointer(Of command) = Nothing
+            Dim r As ref(Of command) = Nothing
             Dim ec As event_comb = Nothing
             Dim choice As Int32 = 0
             Return New event_comb(Function() As Boolean
@@ -248,7 +248,7 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
                                       para = rnd_int(min_int32, max_int32)
                                       c.attach(ask_command) _
                                        .attach(ask_para, para)
-                                      r = New pointer(Of command)()
+                                      r = New ref(Of command)()
                                       choice = rnd_int(0, enabled_choices)
                                       For i As Int32 = 0 To enabled_choices - 2
                                           If Not enable_tcp AndAlso choice = 0 Then

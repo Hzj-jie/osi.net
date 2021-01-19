@@ -13,8 +13,8 @@
                 End Function)
         container_operator(Of ##FILENAME##(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).enumerate(
                 Function(ByVal i As ##FILENAME##(Of KEY_T, VALUE_T)) _
-                        As container_operator(Of ##FILENAME##(Of KEY_T, VALUE_T),
-                                                 first_const_pair(Of KEY_T, VALUE_T)).enumerator
+                        As container_operator(Of first_const_pair(Of KEY_T, VALUE_T)).enumerator
+                    assert(Not i Is Nothing)
                     Return New enumerator(i)
                 End Function)
         container_operator(Of ##FILENAME##(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).clear(
@@ -23,33 +23,82 @@
                     i.clear()
                 End Sub)
         bytes_serializer(Of ##FILENAME##(Of KEY_T, VALUE_T)).container(Of first_const_pair(Of KEY_T, VALUE_T)).register()
+        json_serializer(Of ##FILENAME##(Of KEY_T, VALUE_T)).container(Of first_const_pair(Of KEY_T, VALUE_T)).register_as_object()
     End Sub
 
-    Private NotInheritable Class enumerator
-        Implements container_operator(Of ##FILENAME##(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).enumerator
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function on_first(ByVal f As Action(Of KEY_T)) As Action(Of first_const_pair(Of KEY_T, VALUE_T))
+        assert(Not f Is Nothing)
+        Return Sub(ByVal i As first_const_pair(Of KEY_T, VALUE_T))
+                   assert(Not i Is Nothing)
+                   f(i.first)
+               End Sub
+    End Function
 
-        Private it As ##FILENAME##(Of KEY_T, VALUE_T).iterator
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function on_second(ByVal f As Action(Of VALUE_T)) As Action(Of first_const_pair(Of KEY_T, VALUE_T))
+        assert(Not f Is Nothing)
+        Return Sub(ByVal i As first_const_pair(Of KEY_T, VALUE_T))
+                   assert(Not i Is Nothing)
+                   f(i.second)
+               End Sub
+    End Function
 
-        Public Sub New(ByVal m As ##FILENAME##(Of KEY_T, VALUE_T))
-            assert(Not m Is Nothing)
-            it = m.begin()
-        End Sub
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function on_pair(ByVal f As Action(Of KEY_T, VALUE_T)) As Action(Of first_const_pair(Of KEY_T, VALUE_T))
+        assert(Not f Is Nothing)
+        Return Sub(ByVal i As first_const_pair(Of KEY_T, VALUE_T))
+                   assert(Not i Is Nothing)
+                   f(i.first, i.second)
+               End Sub
+    End Function
 
-        Public Sub [next]() Implements container_operator(Of ##FILENAME##(Of KEY_T, VALUE_T),
-                                                             first_const_pair(Of KEY_T, VALUE_T)).enumerator.next
-            it += 1
-        End Sub
+    Public ReadOnly first_selector As Func(Of first_const_pair(Of KEY_T, VALUE_T), KEY_T) =
+        first_const_pair(Of KEY_T, VALUE_T).first_getter
 
-        Public Function current() As first_const_pair(Of KEY_T, VALUE_T) _
-                Implements container_operator(Of ##FILENAME##(Of KEY_T, VALUE_T),
-                                                 first_const_pair(Of KEY_T, VALUE_T)).enumerator.current
-            Return +it
-        End Function
+    Public ReadOnly second_selector As Func(Of first_const_pair(Of KEY_T, VALUE_T), VALUE_T) =
+        first_const_pair(Of KEY_T, VALUE_T).second_getter
 
-        Public Function [end]() As Boolean _
-                Implements container_operator(Of ##FILENAME##(Of KEY_T, VALUE_T),
-                                                 first_const_pair(Of KEY_T, VALUE_T)).enumerator.end
-            Return it.is_end()
-        End Function
-    End Class
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function first_mapper(Of KEY2_T)(ByVal f As Func(Of KEY_T, KEY2_T)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), first_const_pair(Of KEY2_T, VALUE_T))
+        assert(Not f Is Nothing)
+        Return Function(ByVal p As first_const_pair(Of KEY_T, VALUE_T)) As first_const_pair(Of KEY2_T, VALUE_T)
+                   assert(Not p Is Nothing)
+                   Return first_const_pair.of(f(p.first), p.second)
+               End Function
+    End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function second_mapper(Of VALUE2_T)(ByVal f As Func(Of VALUE_T, VALUE2_T)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE2_T))
+        assert(Not f Is Nothing)
+        Return Function(ByVal p As first_const_pair(Of KEY_T, VALUE_T)) As first_const_pair(Of KEY_T, VALUE2_T)
+                   assert(Not p Is Nothing)
+                   Return first_const_pair.of(p.first, f(p.second))
+               End Function
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function first_filter(ByVal f As Func(Of KEY_T, Boolean)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), Boolean)
+        assert(Not f Is Nothing)
+        Return Function(ByVal i As first_const_pair(Of KEY_T, VALUE_T)) As Boolean
+                   assert(Not i Is Nothing)
+                   Return f(i.first)
+               End Function
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function second_filter(ByVal f As Func(Of VALUE_T, Boolean)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), Boolean)
+        assert(Not f Is Nothing)
+        Return Function(ByVal i As first_const_pair(Of KEY_T, VALUE_T)) As Boolean
+                   Return f(i.second)
+               End Function
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function mapper(Of R)(ByVal f As Func(Of KEY_T, VALUE_T, R)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), R)
+        assert(Not f Is Nothing)
+        Return Function(ByVal p As first_const_pair(Of KEY_T, VALUE_T)) As R
+                   assert(Not p Is Nothing)
+                   Return f(p.first, p.second)
+               End Function
+    End Function

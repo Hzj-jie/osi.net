@@ -43,6 +43,11 @@ Partial Public NotInheritable Class assert_which
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function [of](ByVal i As String) As string_assertion
+        Return New string_assertion(i)
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](Of T)(ByVal i As T) As T_assertion(Of T)
         Return New T_assertion(Of T)(i)
     End Function

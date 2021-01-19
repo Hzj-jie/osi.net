@@ -5,11 +5,11 @@
 ##DEFAULT HAS_NPOS True
 ##DEFAULT HAS_INF True
 
-Public Class ##TYPE##_bytes_test
+Public NotInheritable Class ##TYPE##_bytes_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        For i As Int32 = 0 To 1024 * 1024 * 8 - 1
+        For i As Int32 = 0 To 1024 * 32 - 1
             Dim x As ##TYPE## = Nothing
             If rnd_bool() Then
                 x = rnd_int64()

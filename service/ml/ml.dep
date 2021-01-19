@@ -1,5 +1,7 @@
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\root\root.props" Condition="'$(RootProps)'==''" />
+  <Import Project="$(ServicePath)\math\math.props" Condition="'$(MathProps)'==''" />
+  <Import Project="$(ServicePath)\resource\resource.props" Condition="'$(ResourceProps)'==''" />
 </Project>
 

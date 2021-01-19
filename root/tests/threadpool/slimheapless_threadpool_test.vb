@@ -47,14 +47,14 @@ Public Class slimheapless_threadpool_test
         Me.New(16 * 1024 * 1024)
     End Sub
 
-    Private Sub queue_job()
-        t.queue_job(AddressOf execute)
+    Private Sub push()
+        t.push(AddressOf execute)
     End Sub
 
     Private Sub execute()
         executed.increment()
         If inserted.increment() <= round Then
-            queue_job()
+            push()
         End If
     End Sub
 
@@ -76,7 +76,7 @@ Public Class slimheapless_threadpool_test
 
     Public Overrides Function run() As Boolean
         While inserted.increment() <= round
-            queue_job()
+            push()
             If (+inserted) - (+executed) > 1024 * 32 Then
                 Exit While
             End If
@@ -93,7 +93,7 @@ Public Class slimheapless_threadpool_test
                                                    seconds_to_milliseconds(1)))
         End Using
         assertion.is_true(t.[stop]())
-#If False Then
+#If True Then
         t.join()
 #End If
         Return MyBase.finish()

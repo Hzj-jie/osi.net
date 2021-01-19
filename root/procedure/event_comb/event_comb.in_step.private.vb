@@ -25,11 +25,6 @@ Partial Public Class event_comb
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function debug_assert_valid_step(ByVal i As Int32) As Boolean
-        Return debug_assert(valid_working_step(i) OrElse i = end_step OrElse i = not_started_step)
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function in_step(ByVal exp As Int32) As Boolean
         assert_in_lock()
         Return assert_step_is_valid() AndAlso ([step] = exp)

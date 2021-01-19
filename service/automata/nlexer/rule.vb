@@ -38,7 +38,6 @@ Partial Public NotInheritable Class nlexer
             For j As UInt32 = 0 To ms.size() - uint32_1
                 Dim r As [optional](Of UInt32) = Nothing
                 r = ms(j).match(i, pos)
-                assert(Not r Is Nothing)
                 If Not r Then
                     Return [optional].empty(Of UInt32)()
                 End If

@@ -62,16 +62,16 @@ Partial Public Class listener
                              End Function)
         End Sub
 
-        Public Function sense(ByVal pending As pointer(Of Boolean),
+        Public Function sense(ByVal pending As ref(Of Boolean),
                               ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
             Return s.sense(pending, timeout_ms)
         End Function
 
-        Public Function receive(ByVal o As pointer(Of pair(Of Byte(), IPEndPoint))) As event_comb Implements _
+        Public Function receive(ByVal o As ref(Of pair(Of Byte(), IPEndPoint))) As event_comb Implements _
                                T_pump(Of pair(Of Byte(), IPEndPoint)).receive
             Dim ec As event_comb = Nothing
-            Dim result As pointer(Of Byte()) = Nothing
-            Dim source As pointer(Of IPEndPoint) = Nothing
+            Dim result As ref(Of Byte()) = Nothing
+            Dim source As ref(Of IPEndPoint) = Nothing
             Return New event_comb(Function() As Boolean
                                       result.renew()
                                       source.renew()

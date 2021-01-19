@@ -79,16 +79,16 @@ Public Class istrkeyvt_dispatcher
                                  ByVal i As command,
                                  ByVal o As command) As event_comb
         Dim key As String = Nothing
-        Dim buff As pointer(Of Byte()) = Nothing
-        Dim ts As pointer(Of Int64) = Nothing
+        Dim buff As ref(Of Byte()) = Nothing
+        Dim ts As ref(Of Int64) = Nothing
         Return handle(i,
                       o,
                       Function() As Boolean
                           Return i.parameter(parameter.key, key)
                       End Function,
                       Function() As event_comb
-                          buff = New pointer(Of Byte())()
-                          ts = New pointer(Of Int64)()
+                          buff = New ref(Of Byte())()
+                          ts = New ref(Of Int64)()
                           Return a_strkeyvt(strkeyvt).read(key, buff, ts)
                       End Function,
                       Function() As Boolean
@@ -119,12 +119,12 @@ Public Class istrkeyvt_dispatcher
     Private Shared Function list(ByVal strkeyvt As istrkeyvt,
                                  ByVal i As command,
                                  ByVal o As command) As event_comb
-        Dim r As pointer(Of vector(Of String)) = Nothing
+        Dim r As ref(Of vector(Of String)) = Nothing
         Return handle(i,
                       o,
                       Nothing,
                       Function() As event_comb
-                          r = New pointer(Of vector(Of String))()
+                          r = New ref(Of vector(Of String))()
                           Return a_strkeyvt(strkeyvt).list(r)
                       End Function,
                       Function() As Boolean
@@ -150,7 +150,7 @@ Public Class istrkeyvt_dispatcher
                            Function() As Boolean
                                Return i.parameter(parameter.key, key)
                            End Function,
-                           Function(result As pointer(Of Int64)) As event_comb
+                           Function(result As ref(Of Int64)) As event_comb
                                Return a_strkeyvt(strkeyvt).sizeof(key, result)
                            End Function)
     End Function
@@ -161,7 +161,7 @@ Public Class istrkeyvt_dispatcher
         Return result_handle(i,
                              o,
                              Nothing,
-                             Function(result As pointer(Of Boolean)) As event_comb
+                             Function(result As ref(Of Boolean)) As event_comb
                                  Return a_strkeyvt(strkeyvt).full(result)
                              End Function)
     End Function
@@ -172,7 +172,7 @@ Public Class istrkeyvt_dispatcher
         Return result_handle(i,
                              o,
                              Nothing,
-                             Function(result As pointer(Of Boolean)) As event_comb
+                             Function(result As ref(Of Boolean)) As event_comb
                                  Return a_strkeyvt(strkeyvt).empty(result)
                              End Function)
     End Function
@@ -195,7 +195,7 @@ Public Class istrkeyvt_dispatcher
         Return size_handle(i,
                            o,
                            Nothing,
-                           Function(result As pointer(Of Int64)) As event_comb
+                           Function(result As ref(Of Int64)) As event_comb
                                Return a_strkeyvt(strkeyvt).capacity(result)
                            End Function)
     End Function
@@ -206,7 +206,7 @@ Public Class istrkeyvt_dispatcher
         Return size_handle(i,
                            o,
                            Nothing,
-                           Function(result As pointer(Of Int64)) As event_comb
+                           Function(result As ref(Of Int64)) As event_comb
                                Return a_strkeyvt(strkeyvt).valuesize(result)
                            End Function)
     End Function
@@ -217,7 +217,7 @@ Public Class istrkeyvt_dispatcher
         Return size_handle(i,
                            o,
                            Nothing,
-                           Function(result As pointer(Of Int64)) As event_comb
+                           Function(result As ref(Of Int64)) As event_comb
                                Return a_strkeyvt(strkeyvt).keycount(result)
                            End Function)
     End Function

@@ -1,4 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
@@ -17,12 +22,12 @@ Public Class async_getter_dev_T(Of T)
     Public Shared Shadows Function [New](Of IT, DT As dev_T(Of T)) _
                                         (ByVal i As async_getter(Of IT),
                                          ByVal c As Func(Of IT, DT)) As async_getter_dev_T(Of T)
-        Return New async_getter_dev_T(Of T, dev_T(Of T))(async_getter_adapter(Of dev_T(Of T)).convert(i, c))
+        Return New async_getter_dev_T(Of T)(async_getter_adapter(Of dev_T(Of T)).convert(i, c))
     End Function
 
     Public Shared Shadows Function [New](Of IT)(ByVal i As async_getter(Of IT),
                                                 ByVal c As Func(Of IT, dev_T(Of T))) As async_getter_dev_T(Of T)
-        Return New async_getter_dev_T(Of T, dev_T(Of T))(async_getter_adapter(Of dev_T(Of T)).convert(i, c))
+        Return New async_getter_dev_T(Of T)(async_getter_adapter(Of dev_T(Of T)).convert(i, c))
     End Function
 
     Public Shared Shadows Function [New](ByVal i As async_getter(Of dev_T(Of T))) As async_getter_dev_T(Of T)
@@ -57,11 +62,11 @@ Public Class async_getter_dev_T(Of T, DT As dev_T(Of T))
         Return _do(Function(x) x.send(i))
     End Function
 
-    Public Function receive(ByVal result As pointer(Of T)) As event_comb Implements T_pump(Of T).receive
+    Public Function receive(ByVal result As ref(Of T)) As event_comb Implements T_pump(Of T).receive
         Return _do(Function(x) x.receive(result))
     End Function
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
         Return _do(Function(x) x.sense(pending, timeout_ms))
     End Function

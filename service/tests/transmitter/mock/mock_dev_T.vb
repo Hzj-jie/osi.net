@@ -77,7 +77,7 @@ Public Class mock_dev_T(Of T, _RANDOM_SEND_FAILURE As _boolean, _RANDOM_RECEIVE_
         receive_pump.clear()
     End Sub
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements dev_T(Of T).sense
         Return receiver.sense(pending, timeout_ms)
     End Function
@@ -93,7 +93,7 @@ Public Class mock_dev_T(Of T, _RANDOM_SEND_FAILURE As _boolean, _RANDOM_RECEIVE_
                               End Function)
     End Function
 
-    Public Function receive(ByVal o As pointer(Of T)) As event_comb Implements dev_T(Of T).receive
+    Public Function receive(ByVal o As ref(Of T)) As event_comb Implements dev_T(Of T).receive
         Return receiver.receive(o)
     End Function
 

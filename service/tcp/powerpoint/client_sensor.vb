@@ -54,13 +54,13 @@ Public Class client_sensor
             Me.checker = New client_checker(c, p)
         End Sub
 
-        Public Function sense(ByVal pending As pointer(Of Boolean),
+        Public Function sense(ByVal pending As ref(Of Boolean),
                               ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
             Dim ec As event_comb = Nothing
-            Dim result As pointer(Of Int32) = Nothing
+            Dim result As ref(Of Int32) = Nothing
             Return New event_comb(Function() As Boolean
                                       If checker.check() Then
-                                          result = New pointer(Of Int32)()
+                                          result = New ref(Of Int32)()
                                           ec = event_comb_async_operation.ctor(
                                                    Function(ac As AsyncCallback) As IAsyncResult
                                                        Return c.Client().BeginReceive(buff,

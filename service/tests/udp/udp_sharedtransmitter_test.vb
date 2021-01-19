@@ -82,7 +82,7 @@ Public Class udp_sharedtransmitter_test
         Dim ec As event_comb = Nothing
         Dim i As Int32 = 0
         Dim data() As Byte = Nothing
-        Dim r As pointer(Of Byte()) = Nothing
+        Dim r As ref(Of Byte()) = Nothing
         Return New event_comb(Function() As Boolean
                                   sc = sharedtransmitter(Of UInt16, String, UdpClient, Byte(), powerpoint).creator.
                                            [New]().
@@ -92,7 +92,7 @@ Public Class udp_sharedtransmitter_test
                                            with_functor(Of functor)().
                                            create()
                                   If assertion.is_not_null(sc) Then
-                                      r = New pointer(Of Byte())()
+                                      r = New ref(Of Byte())()
                                       Return goto_next()
                                   Else
                                       Return False
@@ -134,10 +134,10 @@ Public Class udp_sharedtransmitter_test
 
     Private Sub echo(ByVal c As sharedtransmitter(Of UInt16, String, UdpClient, Byte(), powerpoint))
         assert(Not c Is Nothing)
-        Dim p As pointer(Of Byte()) = Nothing
+        Dim p As ref(Of Byte()) = Nothing
         Dim ec As event_comb = Nothing
         assert_begin(New event_comb(Function() As Boolean
-                                        p = New pointer(Of Byte())()
+                                        p = New ref(Of Byte())()
                                         Return goto_next()
                                     End Function,
                                     Function() As Boolean

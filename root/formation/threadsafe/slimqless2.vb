@@ -147,21 +147,19 @@ Public NotInheritable Class slimqless2(Of T)
 #End If
             If nf Is e Then
                 Return False
-            Else
-#If DEBUG Then
-                assert(Not nf.next Is Nothing)
-#End If
-                If Interlocked.CompareExchange(f.next, nf.next, nf) Is nf Then
-#If DEBUG Then
-                    assert(nf.vs.not_no_value())
-#End If
-                    wait_written(nf)
-                    o = nf.v
-                    Return True
-                Else
-                    nf = f.next
-                End If
             End If
+#If DEBUG Then
+            assert(Not nf.next Is Nothing)
+#End If
+            If Interlocked.CompareExchange(f.next, nf.next, nf) Is nf Then
+#If DEBUG Then
+                assert(nf.vs.not_no_value())
+#End If
+                wait_written(nf)
+                o = nf.v
+                Return True
+            End If
+            nf = f.next
         End While
         Return assert(False)
     End Function

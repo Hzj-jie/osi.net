@@ -14,13 +14,13 @@ Imports osi.root.procedure
 Imports osi.service.dns
 
 Partial Public NotInheritable Class connector
-    Private Function connect(ByVal add As IPAddress, ByVal r As pointer(Of TcpClient)) As event_comb
+    Private Function connect(ByVal add As IPAddress, ByVal r As ref(Of TcpClient)) As event_comb
         assert(Not add Is Nothing)
         assert(Not p Is Nothing)
         assert(p.is_outgoing)
         Dim ec As event_comb = Nothing
         Dim c As TcpClient = Nothing
-        Dim accepted As pointer(Of Boolean) = Nothing
+        Dim accepted As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
                                   c = New TcpClient(p.address_family)
                                   c.set_no_delay(True)
@@ -30,7 +30,7 @@ Partial Public NotInheritable Class connector
                               End Function,
                               Function() As Boolean
                                   If ec.end_result() Then
-                                      accepted = New pointer(Of Boolean)()
+                                      accepted = New ref(Of Boolean)()
                                       ec = powerpoint.challenger.[New](p, c)(accepted)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -53,13 +53,13 @@ Partial Public NotInheritable Class connector
                               End Function)
     End Function
 
-    Private Function connect(ByVal r As pointer(Of TcpClient)) As event_comb
+    Private Function connect(ByVal r As ref(Of TcpClient)) As event_comb
         assert(Not p Is Nothing)
         assert(p.is_outgoing)
         Dim ec As event_comb = Nothing
-        Dim add As pointer(Of IPAddress) = Nothing
+        Dim add As ref(Of IPAddress) = Nothing
         Return New event_comb(Function() As Boolean
-                                  add = New pointer(Of IPAddress)()
+                                  add = New ref(Of IPAddress)()
                                   ec = If(p.ipv4,
                                           dns_cache.resolve_ipv4(p.host_or_ip, add),
                                           dns_cache.resolve_ipv6(p.host_or_ip, add))
@@ -88,11 +88,11 @@ Partial Public NotInheritable Class connector
                               End Function)
     End Function
 
-    Private Function connect(ByVal r As pointer(Of ref_client)) As event_comb
+    Private Function connect(ByVal r As ref(Of ref_client)) As event_comb
         Dim ec As event_comb = Nothing
-        Dim c As pointer(Of TcpClient) = Nothing
+        Dim c As ref(Of TcpClient) = Nothing
         Return New event_comb(Function() As Boolean
-                                  c = New pointer(Of TcpClient)()
+                                  c = New ref(Of TcpClient)()
                                   ec = connect(c)
                                   Return waitfor(ec) AndAlso
                                          goto_next()

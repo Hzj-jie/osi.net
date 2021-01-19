@@ -100,7 +100,7 @@ Public Class questioner(Of ENABLE_AUTO_PING As _boolean)
     End Sub
 
     Protected NotOverridable Overrides Function communicate(ByVal request As command,
-                                                            ByVal response As pointer(Of command)) As event_comb
+                                                            ByVal response As ref(Of command)) As event_comb
         Return q(request, response)
     End Function
 End Class

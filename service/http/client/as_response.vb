@@ -87,8 +87,8 @@ Partial Public NotInheritable Class client
             Return True
         End Function
 
-        Friend Function eva(ByVal status As pointer(Of HttpStatusCode),
-                            ByVal headers As pointer(Of WebHeaderCollection)) As Boolean
+        Friend Function eva(ByVal status As ref(Of HttpStatusCode),
+                            ByVal headers As ref(Of WebHeaderCollection)) As Boolean
             Return _eva.eva(status, Me.status()) AndAlso
                    _eva.eva(headers, Me.headers())
         End Function
@@ -99,7 +99,7 @@ Partial Public NotInheritable Class client
                                    ByVal request_headers As map(Of String, vector(Of String)),
                                    ByVal request_body As Stream,
                                    ByVal request_length As UInt64,
-                                   ByVal response As pointer(Of HttpWebResponse),
+                                   ByVal response As ref(Of HttpWebResponse),
                                    Optional ByVal request_comm As link_status = Nothing,
                                    Optional ByVal response_comm As link_status = Nothing) As event_comb
         Dim ec As event_comb = Nothing

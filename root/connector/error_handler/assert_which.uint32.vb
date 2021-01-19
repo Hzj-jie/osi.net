@@ -36,5 +36,11 @@ Partial Public NotInheritable Class assert_which
                 Return 0
             End Try
         End Function
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function less_than(ByVal v As UInt32) As UInt32
+            assert(i < v)
+            Return i
+        End Function
     End Structure
 End Class

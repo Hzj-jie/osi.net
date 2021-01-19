@@ -12,7 +12,7 @@ Imports osi.root.utils
 
 Public Module _webrequest
     <Extension()> Public Function get_response(ByVal w As WebRequest,
-                                               ByVal r As pointer(Of WebResponse)) As event_comb
+                                               ByVal r As ref(Of WebResponse)) As event_comb
         Return create(Function() As Boolean
                           Return Not w Is Nothing AndAlso Not r Is Nothing
                       End Function,
@@ -37,11 +37,11 @@ Public Module _webrequest
     End Function
 
     <Extension()> Public Function get_response(ByVal w As HttpWebRequest,
-                                               ByVal r As pointer(Of HttpWebResponse)) As event_comb
+                                               ByVal r As ref(Of HttpWebResponse)) As event_comb
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of WebResponse) = Nothing
+        Dim p As ref(Of WebResponse) = Nothing
         Return New event_comb(Function() As Boolean
-                                  p = New pointer(Of WebResponse)()
+                                  p = New ref(Of WebResponse)()
                                   ec = get_response(w, p)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -62,7 +62,7 @@ Public Module _webrequest
     End Function
 
     <Extension()> Public Function get_request_stream(ByVal w As WebRequest,
-                                                     ByVal r As pointer(Of Stream)) As event_comb
+                                                     ByVal r As ref(Of Stream)) As event_comb
         Return create(Function() As Boolean
                           Return Not w Is Nothing AndAlso Not r Is Nothing
                       End Function,

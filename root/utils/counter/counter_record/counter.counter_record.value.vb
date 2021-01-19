@@ -9,7 +9,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Namespace counter
-    Partial Friend Class counter_record
+    Partial Friend NotInheritable Class counter_record
         Private Shared Sub try_inc(ByRef i As Int64, ByVal j As Int64, ByVal name As String)
             If Not connector.try_inc(i, j) Then
                 raise_error(error_type.warning, "overflow for count ", name, ", the value may not correct.")
@@ -19,22 +19,18 @@ Namespace counter
         Public Function average() As Int64
             If calltimes > 0 Then
                 Return count \ calltimes
-            Else
-                Return npos
             End If
+            Return npos
         End Function
 
         Private Function last_average_count() As Int64
-            If debug_assert(Not last_averages Is Nothing AndAlso last_averages.Length() > 0,
-                           "last_averages is not initialized, the counter may not enabled last_average.") Then
-                Dim c As Int64 = 0
-                For i As Int32 = 0 To CInt(min(last_averages.Length(), calltimes)) - 1
-                    try_inc(c, last_averages(i), name)
-                Next
-                Return c
-            Else
-                Return npos
-            End If
+            assert(Not last_averages Is Nothing AndAlso last_averages.Length() > 0,
+                   "last_averages is not initialized, the counter may not enabled last_average.")
+            Dim c As Int64 = 0
+            For i As Int32 = 0 To CInt(min(last_averages.Length(), calltimes)) - 1
+                try_inc(c, last_averages(i), name)
+            Next
+            Return c
         End Function
 
         Private Function last_averages_length() As Int64
@@ -56,50 +52,46 @@ Namespace counter
         End Function
 
         Public Function last_rate() As Int64
-            If debug_assert(Not last_times_ticks Is Nothing AndAlso last_times_ticks.Length() > 0,
-                           "last_times_ticks is not initialized, the counter may not enabled last_rate.") Then
-                Dim c As Int64 = 0
-                Dim oldest As Int64 = 0
-                oldest = max_int64
-                For i As Int32 = 0 To CInt(min(calltimes, last_times_ticks.Length())) - 1
-                    c = last_times_ticks(i)
-                    If c > 0 Then
-                        If oldest > c Then
-                            oldest = c
-                        End If
+            assert(Not last_times_ticks Is Nothing AndAlso last_times_ticks.Length() > 0,
+                   "last_times_ticks is not initialized, the counter may not enabled last_rate.")
+            Dim c As Int64 = 0
+            Dim oldest As Int64 = 0
+            oldest = max_int64
+            For i As Int32 = 0 To CInt(min(calltimes, last_times_ticks.Length())) - 1
+                c = last_times_ticks(i)
+                If c > 0 Then
+                    If oldest > c Then
+                        oldest = c
                     End If
-                Next
-                If oldest < max_int64 Then
-                    Return CLng(last_average_count() / time_interval(oldest))
-                Else
-                    Return 0
                 End If
-            Else
-                Return npos
+            Next
+            If oldest < max_int64 Then
+                Return CLng(last_average_count() / time_interval(oldest))
             End If
+            Return 0
         End Function
 
         Public Function snapshot() As snapshot
-            Dim count As constant(Of Int64) = Nothing
-            Dim average As constant(Of Int64) = Nothing
-            Dim last_average As constant(Of Int64) = Nothing
-            Dim rate As constant(Of Int64) = Nothing
-            Dim last_rate As constant(Of Int64) = Nothing
+            Dim count As [optional](Of Int64) = Nothing
+            Dim average As [optional](Of Int64) = Nothing
+            Dim last_average As [optional](Of Int64) = Nothing
+            Dim rate As [optional](Of Int64) = Nothing
+            Dim last_rate As [optional](Of Int64) = Nothing
             With Me
                 If count_selected() Then
-                    count = constant.[New](.count)
+                    count = [optional].of(.count)
                 End If
                 If average_selected() Then
-                    average = constant.[New](.average())
+                    average = [optional].of(.average())
                 End If
                 If last_average_selected() Then
-                    last_average = constant.[New](.last_average())
+                    last_average = [optional].of(.last_average())
                 End If
                 If rate_selected() Then
-                    rate = constant.[New](.rate())
+                    rate = [optional].of(.rate())
                 End If
                 If last_rate_selected() Then
-                    last_rate = constant.[New](.last_rate())
+                    last_rate = [optional].of(.last_rate())
                 End If
             End With
             Return New snapshot(name, count, average, last_average, rate, last_rate)

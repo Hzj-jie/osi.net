@@ -52,7 +52,7 @@ Partial Public Class file_key
         Return file_to_key(dr.relative_path(file_full_path), k)
     End Function
 
-    Private Function list_files(ByVal f As pointer(Of String())) As event_comb
+    Private Function list_files(ByVal f As ref(Of String())) As event_comb
         Return _localfile.list_files(dr.base_directory(), f)
     End Function
 

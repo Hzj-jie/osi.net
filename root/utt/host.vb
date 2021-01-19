@@ -37,17 +37,17 @@ Partial Friend NotInheritable Class host
     Private NotInheritable Class loader
         Private Shared Function load(ByVal j As Type) As vector(Of case_info)
             If case_type_restriction.accepted_case_type(j) Then
-                Using defer(Sub()
-                                raise_error("loaded case ", j.FullName())
-                            End Sub)
+                Using defer.to(Sub()
+                                   raise_error("loaded case ", j.FullName())
+                               End Sub)
                     Return vector.of(New case_info(j.FullName(), j.allocate(Of [case])()))
                 End Using
             End If
             If case_type_restriction.accepted_case2_type(j) Then
                 Return case2.create(j).map(Function(ByVal i As [case]) As case_info
-                                               Using defer(Sub()
-                                                               raise_error("loaded case ", i.full_name)
-                                                           End Sub)
+                                               Using defer.to(Sub()
+                                                                  raise_error("loaded case ", i.full_name)
+                                                              End Sub)
                                                    Return New case_info(i.full_name, i)
                                                End Using
                                            End Function)
@@ -131,36 +131,22 @@ Partial Friend NotInheritable Class host
         End If
     End Function
 
-    Public Shared Function foreach(ByVal d As _do(Of case_info, Boolean, Boolean)) As Boolean
-        If d Is Nothing Then
-            Return False
-        Else
-            Return cases.foreach(d)
-        End If
-    End Function
-
-    Public Shared Function foreach(ByVal d As _do(Of case_info, Boolean)) As Boolean
-        Return utils.foreach(AddressOf foreach, d)
-    End Function
-
-    Public Shared Function foreach(ByVal d As void(Of case_info)) As Boolean
-        Return utils.foreach(AddressOf foreach, d)
-    End Function
-
     Public Shared Sub clear_selection()
-        foreach(Sub(ByRef x) x.finished = False)
+        cases.stream().foreach(Sub(ByVal x As case_info)
+                                   x.finished = False
+                               End Sub)
     End Sub
 
     Public Shared Function run(ByVal selector As vector(Of String)) As Int32
         Dim r As Int32 = 0
         clear_selection()
-        foreach(Sub(ByRef x)
-                    If [select](selector, x) Then
-                        r += 1
-                    Else
-                        x.finished = True
-                    End If
-                End Sub)
+        cases.stream().foreach(Sub(ByVal x)
+                                   If [select](selector, x) Then
+                                       r += 1
+                                   Else
+                                       x.finished = True
+                                   End If
+                               End Sub)
 
         host.run()
         Return r

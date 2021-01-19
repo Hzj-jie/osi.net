@@ -134,7 +134,7 @@ public static class Program
 
         if(!a.is_plugin)
         {
-            w(a.class_accessmodifier + " Class " + class_name(a));
+            w(a.class_accessmodifier + " NotInheritable Class " + class_name(a));
         }
         w(strcat(
 "    Implements ICloneable, ICloneable(Of " + class_name(a) + "), IComparable(Of " + class_name(a) + "), IComparable",
@@ -204,17 +204,16 @@ public static class Program
 "        Return d",
 "    End Function",
 "",
-"' Property access is expensive.",
-"#If 0 Then",
 "    Default Public Property at(ByVal p As UInt32) As " + a.type,
+"        <MethodImpl(method_impl_options.aggressive_inlining)>",
 "        Get",
 "            Return [get](p)",
 "        End Get",
+"        <MethodImpl(method_impl_options.aggressive_inlining)>",
 "        Set(ByVal value As " + a.type + ")",
 "            [set](p, value)",
 "        End Set",
 "    End Property",
-"#End If",
 "",
 "    <MethodImpl(method_impl_options.aggressive_inlining)>",
 "    Public Function [get](ByVal p As UInt32) As " + a.type,

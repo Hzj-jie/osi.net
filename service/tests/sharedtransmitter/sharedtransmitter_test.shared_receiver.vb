@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utt
@@ -17,7 +18,7 @@ Partial Public Class sharedtransmitter_test
         End Sub
 
         Public Overrides Function receive(
-                ByVal o As pointer(Of pair(Of Int32, const_pair(Of Byte, Byte)))) As event_comb
+                ByVal o As ref(Of pair(Of Int32, const_pair(Of Byte, Byte)))) As event_comb
             Dim ec As event_comb = Nothing
             Return New event_comb(Function() As Boolean
                                       If assertion.is_true(referred()) Then
@@ -35,7 +36,7 @@ Partial Public Class sharedtransmitter_test
                                   End Function)
         End Function
 
-        Public Overrides Function sense(ByVal pending As pointer(Of Boolean),
+        Public Overrides Function sense(ByVal pending As ref(Of Boolean),
                                         ByVal timeout_ms As Int64) As event_comb
             Dim ec As event_comb = Nothing
             Return New event_comb(Function() As Boolean

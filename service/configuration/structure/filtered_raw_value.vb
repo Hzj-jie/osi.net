@@ -1,6 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.delegates
 Imports osi.root.formation
 
 Friend Class filtered_raw_value(Of T)
@@ -20,16 +23,17 @@ Friend Class filtered_raw_value(Of T)
         m(name).emplace_back(pair.emplace_of(value, filters))
     End Sub
 
-    Public Sub foreach(ByVal d As void(Of String, T, vector(Of pair(Of String, String))))
+    Public Sub foreach(ByVal d As Action(Of String, T, vector(Of pair(Of String, String))))
         assert(Not d Is Nothing)
-        osi.root.utils.foreach(AddressOf m.foreach,
-                               Sub(ByRef k As String,
-                                   ByRef v As vector(Of pair(Of T, vector(Of pair(Of String, String)))))
-                                   If Not v Is Nothing AndAlso Not v.empty() Then
-                                       For i As Int32 = 0 To v.size() - 1
-                                           d(k, v(i).first, v(i).second)
-                                       Next
-                                   End If
-                               End Sub)
+        m.stream().foreach(m.on_pair(Sub(ByVal k As String,
+                                         ByVal v As vector(Of pair(Of T, vector(Of pair(Of String, String)))))
+                                         If Not v.null_or_empty() Then
+                                             v.stream().foreach(
+                                                 Sub(ByVal p As pair(Of T, vector(Of pair(Of String, String))))
+                                                     assert(Not p Is Nothing)
+                                                     d(k, p.first, p.second)
+                                                 End Sub)
+                                         End If
+                                     End Sub))
     End Sub
 End Class

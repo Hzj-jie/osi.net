@@ -16,22 +16,22 @@ Namespace primitive
 
         Private ReadOnly _errors As vector(Of executor.error_type)
         Private ReadOnly _instructions As vector(Of instruction)
-        Private ReadOnly _stack As vector(Of pointer(Of Byte()))
+        Private ReadOnly _stack As vector(Of ref(Of Byte()))
         Private ReadOnly _states As vector(Of executor.state)
         Private ReadOnly _interrupts As interrupts
         Private _carry_over As Boolean
         Private _diviced_by_zero As Boolean
         Private _imaginary_number As Boolean
         Private _halt As Boolean
-        Private _instruction_pointer As UInt64
-        Private _do_not_advance_instruction_pointer As Boolean
+        Private _instruction_ref As UInt64
+        Private _do_not_advance_instruction_ref As Boolean
         Private _stop As Boolean
 
         Public Sub New(ByVal interrupts As interrupts)
             assert(Not interrupts Is Nothing)
             _errors = New vector(Of executor.error_type)()
             _instructions = New vector(Of instruction)()
-            _stack = New vector(Of pointer(Of Byte()))()
+            _stack = New vector(Of ref(Of Byte()))()
             _states = New vector(Of executor.state)()
             _interrupts = interrupts
         End Sub
@@ -76,8 +76,8 @@ Namespace primitive
             Return _stack.size()
         End Function
 
-        Public Function instruction_pointer() As UInt64 Implements executor.instruction_pointer
-            Return _instruction_pointer
+        Public Function instruction_ref() As UInt64 Implements executor.instruction_ref
+            Return _instruction_ref
         End Function
 
         Public Function access_states(ByVal p As UInt64) As executor.state Implements executor.access_states
@@ -98,21 +98,21 @@ Namespace primitive
             Return _interrupts
         End Function
 
-        Public Sub instruction_pointer(ByVal v As Int64) Implements imitation.instruction_pointer
+        Public Sub instruction_ref(ByVal v As Int64) Implements imitation.instruction_ref
             If v < 0 OrElse v >= _instructions.size() Then
-                executor_stop_error.throw(executor.error_type.instruction_pointer_overflow)
+                executor_stop_error.throw(executor.error_type.instruction_ref_overflow)
             Else
-                _instruction_pointer = CULng(v)
+                _instruction_ref = CULng(v)
             End If
         End Sub
 
-        Public Sub advance_instruction_pointer(ByVal v As Int64) Implements imitation.advance_instruction_pointer
-            If v < 0 AndAlso -v > _instruction_pointer Then
-                executor_stop_error.throw(executor.error_type.instruction_pointer_overflow)
+        Public Sub advance_instruction_ref(ByVal v As Int64) Implements imitation.advance_instruction_ref
+            If v < 0 AndAlso -v > _instruction_ref Then
+                executor_stop_error.throw(executor.error_type.instruction_ref_overflow)
             Else
-                _instruction_pointer = CULng(CLng(_instruction_pointer) + v)
-                If _instruction_pointer >= _instructions.size() Then
-                    executor_stop_error.throw(executor.error_type.instruction_pointer_overflow)
+                _instruction_ref = CULng(CLng(_instruction_ref) + v)
+                If _instruction_ref >= _instructions.size() Then
+                    executor_stop_error.throw(executor.error_type.instruction_ref_overflow)
                 End If
             End If
         End Sub
@@ -121,7 +121,7 @@ Namespace primitive
             _stop = True
         End Sub
 
-        Public Function access_stack(ByVal p As data_ref) As pointer(Of Byte()) Implements executor.access_stack
+        Public Function access_stack(ByVal p As data_ref) As ref(Of Byte()) Implements executor.access_stack
             assert(Not p Is Nothing)
             ' data_ref has only 62 bits, so using int64 instead of uint64 is safe.
             Dim l As Int64 = 0
@@ -139,7 +139,7 @@ Namespace primitive
         End Function
 
         Public Sub push_stack() Implements imitation.push_stack
-            _stack.emplace_back(New pointer(Of Byte()))
+            _stack.emplace_back(New ref(Of Byte()))
         End Sub
 
         Public Sub pop_stack() Implements imitation.pop_stack
@@ -163,13 +163,13 @@ Namespace primitive
                 _states.pop_back()
                 assert(r.stack_size <= _stack.size())
                 _stack.resize(CUInt(r.stack_size))
-                instruction_pointer(r.instruction_pointer)
+                instruction_ref(r.instruction_ref)
             End If
         End Sub
 
-        Public Sub do_not_advance_instruction_pointer() Implements imitation.do_not_advance_instruction_pointer
-            assert(_do_not_advance_instruction_pointer = False)
-            _do_not_advance_instruction_pointer = True
+        Public Sub do_not_advance_instruction_ref() Implements imitation.do_not_advance_instruction_ref
+            assert(_do_not_advance_instruction_ref = False)
+            _do_not_advance_instruction_ref = True
         End Sub
 
         Private Sub halt(ByVal ex As executor_stop_error)
@@ -180,25 +180,25 @@ Namespace primitive
 
         Public Sub execute() Implements executor.execute
             If _instructions.empty() Then
-                halt(New executor_stop_error(executor.error_type.instruction_pointer_overflow))
+                halt(New executor_stop_error(executor.error_type.instruction_ref_overflow))
                 Return
             End If
             _stop = False
             While True
-                assert(_instruction_pointer >= 0 AndAlso _instruction_pointer < _instructions.size())
+                assert(_instruction_ref >= 0 AndAlso _instruction_ref < _instructions.size())
                 Try
-                    _instructions(CUInt(_instruction_pointer)).execute(Me)
+                    _instructions(CUInt(_instruction_ref)).execute(Me)
                 Catch ex As executor_stop_error
                     halt(ex)
                 End Try
                 If _stop OrElse _halt Then
                     Exit While
                 End If
-                If _do_not_advance_instruction_pointer Then
-                    _do_not_advance_instruction_pointer = False
+                If _do_not_advance_instruction_ref Then
+                    _do_not_advance_instruction_ref = False
                 Else
-                    ' Detect instruction_pointer_overflow error.
-                    advance_instruction_pointer(int64_1)
+                    ' Detect instruction_ref_overflow error.
+                    advance_instruction_ref(int64_1)
                 End If
             End While
         End Sub

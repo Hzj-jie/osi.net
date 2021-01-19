@@ -7,9 +7,8 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.utt
 Imports osi.service.commander
-Imports osi.service.convertor
 
-Public Class command_test
+Public NotInheritable Class command_test
     Inherits [case]
 
     Private Class constants

@@ -15,7 +15,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 Partial Public Class vector(Of T)
-Private Class adaptive_array_t
+Private NotInheritable Class adaptive_array_t
     Implements ICloneable, ICloneable(Of adaptive_array_t), IComparable(Of adaptive_array_t), IComparable
 
     Private Shared Function expected_capacity(ByVal n As UInt32) As UInt32
@@ -83,17 +83,16 @@ Private Class adaptive_array_t
         Return d
     End Function
 
-' Property access is expensive.
-#If 0 Then
     Default Public Property at(ByVal p As UInt32) As T
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Get
             Return [get](p)
         End Get
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Set(ByVal value As T)
             [set](p, value)
         End Set
     End Property
-#End If
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [get](ByVal p As UInt32) As T

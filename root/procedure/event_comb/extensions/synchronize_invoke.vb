@@ -5,13 +5,13 @@ Option Strict On
 
 Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
-Imports osi.root.formation
+Imports osi.root.connector
 
 Public Module _synchronize_invoke
     <Extension()> Public Function invoke(ByVal si As ISynchronizeInvoke,
                                          ByVal method As [Delegate],
                                          ByVal args() As Object,
-                                         ByVal o As pointer(Of Object)) As event_comb
+                                         ByVal o As ref(Of Object)) As event_comb
         If si Is Nothing Then
             Return event_comb.failed()
         End If

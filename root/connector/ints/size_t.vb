@@ -26,7 +26,7 @@ Imports osi.root.constants
 Imports constants = osi.root.constants
 
 Partial Public Structure size_t
-    Implements IComparable, IComparable(Of size_t), ICloneable
+    Implements IComparable, IComparable(Of size_t), ICloneable, ICloneable(Of size_t)
 
     Public Shared ReadOnly inf As size_t
     Public Shared ReadOnly zero As size_t
@@ -816,8 +816,12 @@ Partial Public Structure size_t
         End If
     End Function
 
-    Public Function Clone() As Object Implements ICloneable.Clone
+    Public Function CloneT() As size_t Implements ICloneable(Of size_t).Clone
         Return New size_t(Me)
+    End Function
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
     End Function
 End Structure
 'finish npos_uint.vbp --------

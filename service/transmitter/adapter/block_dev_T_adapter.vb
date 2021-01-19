@@ -13,18 +13,15 @@ Public Class block_dev_T_adapter(Of T)
     Inherits T_adapter(Of block)
     Implements dev_T(Of T)
 
-    Private ReadOnly T_bytes As bytes_serializer(Of T)
-
-    Public Sub New(ByVal b As block, Optional ByVal T_bytes As bytes_serializer(Of T) = Nothing)
+    Public Sub New(ByVal b As block)
         MyBase.New(b)
-        Me.T_bytes = +T_bytes
     End Sub
 
     Public Function send(ByVal i As T) As event_comb Implements dev_T(Of T).send
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim b() As Byte = Nothing
-                                  b = T_bytes.to_bytes(i)
+                                  b = bytes_serializer.to_bytes(i)
                                   ec = underlying_device.send(b)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -35,24 +32,24 @@ Public Class block_dev_T_adapter(Of T)
                               End Function)
     End Function
 
-    Public Function receive(ByVal o As pointer(Of T)) As event_comb Implements dev_T(Of T).receive
+    Public Function receive(ByVal o As ref(Of T)) As event_comb Implements dev_T(Of T).receive
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of Byte()) = Nothing
+        Dim p As ref(Of Byte()) = Nothing
         Return New event_comb(Function() As Boolean
-                                  p = New pointer(Of Byte())()
+                                  p = New ref(Of Byte())()
                                   ec = underlying_device.receive(p)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
                               End Function,
                               Function() As Boolean
                                   Dim r As T = Nothing
-                                  Return T_bytes.from_bytes(+p, r) AndAlso
+                                  Return bytes_serializer.from_bytes(+p, r) AndAlso
                                          eva(o, r) AndAlso
                                          goto_end()
                               End Function)
     End Function
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements dev_T(Of T).sense
         Return underlying_device.sense(pending, timeout_ms)
     End Function

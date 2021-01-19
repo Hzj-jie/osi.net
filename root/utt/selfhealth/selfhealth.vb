@@ -14,16 +14,12 @@ Public Module selfhealth
     End Function
 
     Private Function set_self_health(ByVal b As Boolean) As Boolean
-        Dim found As Boolean = False
-        Return host.foreach(Function(ByRef x) As Boolean
-                                If TypeOf x.case Is failure_case Then
-                                    If found Then
-                                        Return False
-                                    End If
-                                    found = True
-                                End If
-                                Return True
-                            End Function) AndAlso found
+        Return Not host.cases.stream().
+                              filter(Function(ByVal x As case_info) As Boolean
+                                         Return TypeOf x.case Is failure_case
+                                     End Function).
+                              find_first().
+                              empty()
     End Function
 
     Public Function run() As Boolean

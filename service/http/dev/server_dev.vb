@@ -61,7 +61,7 @@ Public Class server_dev
                after_respond)
     End Sub
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements text.sense
         Return sync_async(Function() As Boolean
                               If finished Then
@@ -105,7 +105,7 @@ Public Class server_dev
                               End Function)
     End Function
 
-    Public Function receive(ByVal r As pointer(Of String)) As event_comb Implements text.receive
+    Public Function receive(ByVal r As ref(Of String)) As event_comb Implements text.receive
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If ctx Is Nothing OrElse finished Then

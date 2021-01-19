@@ -1,8 +1,12 @@
 ﻿
-Imports osi.root.formation
-Imports osi.root.utils
-Imports osi.root.procedure
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.formation
+Imports osi.root.procedure
+Imports osi.root.utils
 Imports osi.service.selector
 Imports osi.service.transmitter
 
@@ -34,15 +38,15 @@ Public Class async_getter_datagram
     Public Function send(ByVal buff() As Byte,
                          ByVal offset As UInt32,
                          ByVal count As UInt32,
-                         ByVal sent As pointer(Of UInt32)) As event_comb Implements flow_injector.send
+                         ByVal sent As ref(Of UInt32)) As event_comb Implements flow_injector.send
         Return _do(Function(x) x.send(buff, offset, count, sent))
     End Function
 
-    Public Function receive(ByVal result As pointer(Of Byte())) As event_comb Implements block_pump.receive
+    Public Function receive(ByVal result As ref(Of Byte())) As event_comb Implements block_pump.receive
         Return _do(Function(x) x.receive(result))
     End Function
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
         Return _do(Function(x) x.sense(pending, timeout_ms))
     End Function

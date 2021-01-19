@@ -18,24 +18,24 @@ Friend Class ikeyvt_true_istrkeyvt
     Public Function append(ByVal key As String,
                            ByVal value() As Byte,
                            ByVal ts As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.append
+                           ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.append
         Return impl.append(str_bytes(key), value, ts, result)
     End Function
 
-    Public Function capacity(ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.capacity
+    Public Function capacity(ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.capacity
         Return impl.capacity(result)
     End Function
 
     Public Function delete(ByVal key As String,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.delete
+                           ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.delete
         Return impl.delete(str_bytes(key), result)
     End Function
 
-    Public Function empty(ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.empty
+    Public Function empty(ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.empty
         Return impl.empty(result)
     End Function
 
-    Public Function full(ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.full
+    Public Function full(ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.full
         Return impl.full(result)
     End Function
 
@@ -43,15 +43,15 @@ Friend Class ikeyvt_true_istrkeyvt
         Return impl.heartbeat()
     End Function
 
-    Public Function keycount(ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.keycount
+    Public Function keycount(ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.keycount
         Return impl.keycount(result)
     End Function
 
-    Public Function list(ByVal result As pointer(Of vector(Of String))) As event_comb Implements istrkeyvt.list
+    Public Function list(ByVal result As ref(Of vector(Of String))) As event_comb Implements istrkeyvt.list
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of vector(Of Byte())) = Nothing
+        Dim r As ref(Of vector(Of Byte())) = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of vector(Of Byte()))()
+                                  r = New ref(Of vector(Of Byte()))()
                                   ec = impl.list(r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -74,13 +74,13 @@ Friend Class ikeyvt_true_istrkeyvt
     Public Function modify(ByVal key As String,
                            ByVal value() As Byte,
                            ByVal ts As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.modify
+                           ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.modify
         Return impl.modify(str_bytes(key), value, ts, result)
     End Function
 
     Public Function read(ByVal key As String,
-                         ByVal result As pointer(Of Byte()),
-                         ByVal ts As pointer(Of Int64)) As event_comb Implements istrkeyvt.read
+                         ByVal result As ref(Of Byte()),
+                         ByVal ts As ref(Of Int64)) As event_comb Implements istrkeyvt.read
         Return impl.read(str_bytes(key), result, ts)
     End Function
 
@@ -89,12 +89,12 @@ Friend Class ikeyvt_true_istrkeyvt
     End Function
 
     Public Function seek(ByVal key As String,
-                         ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.seek
+                         ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.seek
         Return impl.seek(str_bytes(key), result)
     End Function
 
     Public Function sizeof(ByVal key As String,
-                           ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.sizeof
+                           ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.sizeof
         Return impl.sizeof(str_bytes(key), result)
     End Function
 
@@ -105,11 +105,11 @@ Friend Class ikeyvt_true_istrkeyvt
     Public Function unique_write(ByVal key As String,
                                  ByVal value() As Byte,
                                  ByVal ts As Int64,
-                                 ByVal result As pointer(Of Boolean)) As event_comb Implements istrkeyvt.unique_write
+                                 ByVal result As ref(Of Boolean)) As event_comb Implements istrkeyvt.unique_write
         Return impl.unique_write(str_bytes(key), value, ts, result)
     End Function
 
-    Public Function valuesize(ByVal result As pointer(Of Int64)) As event_comb Implements istrkeyvt.valuesize
+    Public Function valuesize(ByVal result As ref(Of Int64)) As event_comb Implements istrkeyvt.valuesize
         Return impl.valuesize(result)
     End Function
 End Class

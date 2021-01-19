@@ -6,6 +6,16 @@ Option Strict On
 Imports System.IO
 Imports osi.root.delegates
 
+Public NotInheritable Class string_serializer_object(Of T)
+    Public Shared Function [of](Of PROTECTOR)(ByVal i As string_serializer(Of T, PROTECTOR)) _
+                                             As string_serializer_object(Of T, PROTECTOR)
+        Return New string_serializer_object(Of T, PROTECTOR)(i)
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
+
 Public NotInheritable Class string_serializer_object(Of T, PROTECTOR)
     Inherits string_serializer(Of Object)
 

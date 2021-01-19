@@ -24,8 +24,6 @@ Public Module _wrapper
     End Function
 
     Public Function multithreading(ByVal c As [case], ByVal threadcount As Int32) As [case]
-        raise_error(error_type.deprecated,
-                    "multithreading([case], int32) is deprecated, use uint32 overloads: ", backtrace())
         assert(threadcount >= 0)
         Return multithreading(c, CUInt(threadcount))
     End Function
@@ -39,8 +37,6 @@ Public Module _wrapper
     End Function
 
     Public Function multi_procedure(ByVal c As event_comb_case, ByVal procedure_count As Int32) As event_comb_case
-        raise_error(error_type.deprecated,
-                    "multi_procedure(event_comb_case, int32) is deprecated, use uint32 overloads: ", backtrace())
         assert(procedure_count >= 0)
         Return multi_procedure(c, CUInt(procedure_count))
     End Function
@@ -73,11 +69,7 @@ Public Module _wrapper
     End Function
 
     Public Function repeat(ByVal c As [case], ByVal testsize As Int64) As [case]
-        raise_error(error_type.deprecated,
-                    "repeat([case], int64) is deprecated, use uint64 overloads: ",
-                    backtrace())
-        assert(testsize >= 0)
-        Return repeat(c, CULng(testsize))
+        Return repeat(c, assert_which.of(testsize).can_cast_to_uint64())
     End Function
 
     Public Function repeat(ByVal c As [case]) As [case]
@@ -85,11 +77,7 @@ Public Module _wrapper
     End Function
 
     Public Function repeat(ByVal c As event_comb_case, ByVal testsize As Int64) As event_comb_case
-        raise_error(error_type.deprecated,
-                    "repeat(event_comb_case, int64) is deprecated, use uint64 overloads: ",
-                    backtrace())
-        assert(testsize >= 0)
-        Return repeat(c, CULng(testsize))
+        Return repeat(c, assert_which.of(testsize).can_cast_to_uint64())
     End Function
 
     Public Function repeat(ByVal c As event_comb_case, ByVal testsize As UInt64) As event_comb_case

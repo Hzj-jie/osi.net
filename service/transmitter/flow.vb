@@ -28,7 +28,7 @@ Public Module _flow
                                                    ByVal buff() As Byte,
                                                    ByVal offset As UInt32,
                                                    ByVal count As UInt32,
-                                                   ByVal result As pointer(Of UInt32)) As event_comb
+                                                   ByVal result As ref(Of UInt32)) As event_comb
         assert(Not this Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -56,7 +56,7 @@ Public Module _flow
                                                    ByVal buff() As Byte,
                                                    ByVal offset As UInt32,
                                                    ByVal count As UInt32,
-                                                   ByVal result As pointer(Of UInt32)) As event_comb
+                                                   ByVal result As ref(Of UInt32)) As event_comb
         Return wait_and_receive(this, npos, buff, offset, count, result)
     End Function
 End Module

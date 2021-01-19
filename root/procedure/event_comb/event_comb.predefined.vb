@@ -52,12 +52,12 @@ Partial Public Class event_comb
 
     ' TODO: Remove event_comb.while
     Public Shared Function [while](ByVal condition As Func(Of event_comb,
-                                                              pointer(Of Boolean),
+                                                              ref(Of Boolean),
                                                               event_comb),
                                    ByVal execution As Func(Of event_comb)) As event_comb
         Dim cec As event_comb = Nothing
         Dim ec As event_comb = Nothing
-        Dim break_error As pointer(Of Boolean) = Nothing
+        Dim break_error As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
                                   If execution Is Nothing Then
                                       Return False
@@ -93,11 +93,11 @@ Partial Public Class event_comb
 
     Public Shared Function [while](ByVal execution As Func(Of event_comb),
                                    ByVal condition As Func(Of event_comb,
-                                                              pointer(Of Boolean),
+                                                              ref(Of Boolean),
                                                               event_comb)) As event_comb
         Dim cec As event_comb = Nothing
         Dim ec As event_comb = Nothing
-        Dim break_error As pointer(Of Boolean) = Nothing
+        Dim break_error As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
                                   If execution Is Nothing Then
                                       Return False
@@ -133,12 +133,12 @@ Partial Public Class event_comb
     End Function
 
     Private Shared Function condition_adapter(ByVal c As _do_val_ref(Of event_comb, Boolean, Boolean)) _
-                                             As Func(Of event_comb, pointer(Of Boolean), event_comb)
+                                             As Func(Of event_comb, ref(Of Boolean), event_comb)
         If c Is Nothing Then
             Return Nothing
         Else
             Return Function(ec As event_comb,
-                            break_error As pointer(Of Boolean)) As event_comb
+                            break_error As ref(Of Boolean)) As event_comb
                        assert(Not c Is Nothing)
                        Return sync_async(Function() As Boolean
                                              Dim b As Boolean = False

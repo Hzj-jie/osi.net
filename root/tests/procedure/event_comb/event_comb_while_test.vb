@@ -1,10 +1,14 @@
 ﻿
-Imports osi.root.formation
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.root.utt
 
-Public Class event_comb_while_test
+Public NotInheritable Class event_comb_while_test
     Inherits [case]
 
     Private Shared Function case1_true() As Boolean
@@ -12,26 +16,26 @@ Public Class event_comb_while_test
         Dim i As Int32 = 0
         Dim j As Int32 = 0
         assertion.is_true(async_sync(event_comb.while(Function(last_ec As event_comb,
-                                                         error_break As pointer(Of Boolean)) As event_comb
-                                                    Return sync_async(Function() As Boolean
-                                                                          If i > 0 Then
-                                                                              If assertion.is_not_null(last_ec) Then
-                                                                                  assertion.is_true(last_ec.end_result())
-                                                                              End If
-                                                                          Else
-                                                                              assertion.is_null(last_ec)
-                                                                          End If
-                                                                          assertion.is_not_null(error_break)
-                                                                          assertion.is_false(+error_break)
-                                                                          i += 1
-                                                                          Return i < round
-                                                                      End Function)
-                                                End Function,
-                                                Function() As event_comb
-                                                    Return sync_async(Sub()
-                                                                          j += 1
-                                                                      End Sub)
-                                                End Function)))
+                                                               error_break As ref(Of Boolean)) As event_comb
+                                                          Return sync_async(Function() As Boolean
+                                                                                If i > 0 Then
+                                                                                    If assertion.is_not_null(last_ec) Then
+                                                                                        assertion.is_true(last_ec.end_result())
+                                                                                    End If
+                                                                                Else
+                                                                                    assertion.is_null(last_ec)
+                                                                                End If
+                                                                                assertion.is_not_null(error_break)
+                                                                                assertion.is_false(+error_break)
+                                                                                i += 1
+                                                                                Return i < round
+                                                                            End Function)
+                                                      End Function,
+                                                      Function() As event_comb
+                                                          Return sync_async(Sub()
+                                                                                j += 1
+                                                                            End Sub)
+                                                      End Function)))
         assertion.equal(i, j + 1)
         assertion.equal(i, round)
         Return True
@@ -42,27 +46,27 @@ Public Class event_comb_while_test
         Dim i As Int32 = 0
         Dim j As Int32 = 0
         assertion.is_false(async_sync(event_comb.while(Function(last_ec As event_comb,
-                                                          error_break As pointer(Of Boolean)) As event_comb
-                                                     Return sync_async(Function() As Boolean
-                                                                           If i > 0 Then
-                                                                               If assertion.is_not_null(last_ec) Then
-                                                                                   assertion.is_true(last_ec.end_result())
-                                                                               End If
-                                                                           Else
-                                                                               assertion.is_null(last_ec)
-                                                                           End If
-                                                                           i += 1
-                                                                           assertion.is_not_null(error_break)
-                                                                           assertion.is_false(+error_break)
-                                                                           eva(error_break, i = round)
-                                                                           Return True
-                                                                       End Function)
-                                                 End Function,
-                                                 Function() As event_comb
-                                                     Return sync_async(Sub()
-                                                                           j += 1
-                                                                       End Sub)
-                                                 End Function)))
+                                                                error_break As ref(Of Boolean)) As event_comb
+                                                           Return sync_async(Function() As Boolean
+                                                                                 If i > 0 Then
+                                                                                     If assertion.is_not_null(last_ec) Then
+                                                                                         assertion.is_true(last_ec.end_result())
+                                                                                     End If
+                                                                                 Else
+                                                                                     assertion.is_null(last_ec)
+                                                                                 End If
+                                                                                 i += 1
+                                                                                 assertion.is_not_null(error_break)
+                                                                                 assertion.is_false(+error_break)
+                                                                                 eva(error_break, i = round)
+                                                                                 Return True
+                                                                             End Function)
+                                                       End Function,
+                                                       Function() As event_comb
+                                                           Return sync_async(Sub()
+                                                                                 j += 1
+                                                                             End Sub)
+                                                       End Function)))
         assertion.equal(i, j + 1)
         assertion.equal(i, round)
         Return True
@@ -78,22 +82,23 @@ Public Class event_comb_while_test
         Dim i As Int32 = 0
         Dim j As Int32 = 0
         assertion.is_true(async_sync(event_comb.while(Function() As event_comb
-                                                    Return sync_async(Sub()
-                                                                          j += 1
-                                                                      End Sub)
-                                                End Function,
-                                                Function(last_ec As event_comb,
-                                                         error_break As pointer(Of Boolean)) As event_comb
-                                                    Return sync_async(Function() As Boolean
-                                                                          If assertion.is_not_null(last_ec) Then
-                                                                              assertion.is_true(last_ec.end_result())
-                                                                          End If
-                                                                          assertion.is_not_null(error_break)
-                                                                          assertion.is_false(+error_break)
-                                                                          i += 1
-                                                                          Return i < round
-                                                                      End Function)
-                                                End Function)))
+                                                          Return sync_async(Sub()
+                                                                                j += 1
+                                                                            End Sub)
+                                                      End Function,
+                                                      Function(last_ec As event_comb,
+                                                               error_break As ref(Of Boolean)) As event_comb
+                                                          Return sync_async(
+                                                              Function() As Boolean
+                                                                  If assertion.is_not_null(last_ec) Then
+                                                                      assertion.is_true(last_ec.end_result())
+                                                                  End If
+                                                                  assertion.is_not_null(error_break)
+                                                                  assertion.is_false(+error_break)
+                                                                  i += 1
+                                                                  Return i < round
+                                                              End Function)
+                                                      End Function)))
         assertion.equal(i, j)
         assertion.equal(i, round)
         Return True
@@ -104,23 +109,24 @@ Public Class event_comb_while_test
         Dim i As Int32 = 0
         Dim j As Int32 = 0
         assertion.is_false(async_sync(event_comb.while(Function() As event_comb
-                                                     Return sync_async(Sub()
-                                                                           j += 1
-                                                                       End Sub)
-                                                 End Function,
-                                                 Function(last_ec As event_comb,
-                                                          error_break As pointer(Of Boolean)) As event_comb
-                                                     Return sync_async(Function() As Boolean
-                                                                           If assertion.is_not_null(last_ec) Then
-                                                                               assertion.is_true(last_ec.end_result())
-                                                                           End If
-                                                                           assertion.is_not_null(error_break)
-                                                                           assertion.is_false(+error_break)
-                                                                           i += 1
-                                                                           eva(error_break, i = round)
-                                                                           Return True
-                                                                       End Function)
-                                                 End Function)))
+                                                           Return sync_async(Sub()
+                                                                                 j += 1
+                                                                             End Sub)
+                                                       End Function,
+                                                       Function(last_ec As event_comb,
+                                                                error_break As ref(Of Boolean)) As event_comb
+                                                           Return sync_async(
+                                                               Function() As Boolean
+                                                                   If assertion.is_not_null(last_ec) Then
+                                                                       assertion.is_true(last_ec.end_result())
+                                                                   End If
+                                                                   assertion.is_not_null(error_break)
+                                                                   assertion.is_false(+error_break)
+                                                                   i += 1
+                                                                   eva(error_break, i = round)
+                                                                   Return True
+                                                               End Function)
+                                                       End Function)))
         assertion.equal(i, j)
         assertion.equal(i, round)
         Return True
@@ -136,23 +142,23 @@ Public Class event_comb_while_test
         Dim i As Int32 = 0
         Dim j As Int32 = 0
         assertion.is_true(async_sync(event_comb.while(Function(last_ec As event_comb,
-                                                         ByRef error_break As Boolean) As Boolean
-                                                    If i > 0 Then
-                                                        If assertion.is_not_null(last_ec) Then
-                                                            assertion.is_true(last_ec.end_result())
-                                                        End If
-                                                    Else
-                                                        assertion.is_null(last_ec)
-                                                    End If
-                                                    assertion.is_false(error_break)
-                                                    i += 1
-                                                    Return i < round
-                                                End Function,
-                                                Function() As event_comb
-                                                    Return sync_async(Sub()
-                                                                          j += 1
-                                                                      End Sub)
-                                                End Function)))
+                                                               ByRef error_break As Boolean) As Boolean
+                                                          If i > 0 Then
+                                                              If assertion.is_not_null(last_ec) Then
+                                                                  assertion.is_true(last_ec.end_result())
+                                                              End If
+                                                          Else
+                                                              assertion.is_null(last_ec)
+                                                          End If
+                                                          assertion.is_false(error_break)
+                                                          i += 1
+                                                          Return i < round
+                                                      End Function,
+                                                      Function() As event_comb
+                                                          Return sync_async(Sub()
+                                                                                j += 1
+                                                                            End Sub)
+                                                      End Function)))
         assertion.equal(i, j + 1)
         assertion.equal(i, round)
         Return True
@@ -163,24 +169,24 @@ Public Class event_comb_while_test
         Dim i As Int32 = 0
         Dim j As Int32 = 0
         assertion.is_false(async_sync(event_comb.while(Function(last_ec As event_comb,
-                                                          ByRef error_break As Boolean) As Boolean
-                                                     If i > 0 Then
-                                                         If assertion.is_not_null(last_ec) Then
-                                                             assertion.is_true(last_ec.end_result())
-                                                         End If
-                                                     Else
-                                                         assertion.is_null(last_ec)
-                                                     End If
-                                                     i += 1
-                                                     assertion.is_false(error_break)
-                                                     error_break = (i = round)
-                                                     Return True
-                                                 End Function,
-                                                 Function() As event_comb
-                                                     Return sync_async(Sub()
-                                                                           j += 1
-                                                                       End Sub)
-                                                 End Function)))
+                                                                ByRef error_break As Boolean) As Boolean
+                                                           If i > 0 Then
+                                                               If assertion.is_not_null(last_ec) Then
+                                                                   assertion.is_true(last_ec.end_result())
+                                                               End If
+                                                           Else
+                                                               assertion.is_null(last_ec)
+                                                           End If
+                                                           i += 1
+                                                           assertion.is_false(error_break)
+                                                           error_break = (i = round)
+                                                           Return True
+                                                       End Function,
+                                                       Function() As event_comb
+                                                           Return sync_async(Sub()
+                                                                                 j += 1
+                                                                             End Sub)
+                                                       End Function)))
         assertion.equal(i, j + 1)
         assertion.equal(i, round)
         Return True
@@ -196,19 +202,19 @@ Public Class event_comb_while_test
         Dim i As Int32 = 0
         Dim j As Int32 = 0
         assertion.is_true(async_sync(event_comb.while(Function() As event_comb
-                                                    Return sync_async(Sub()
-                                                                          j += 1
-                                                                      End Sub)
-                                                End Function,
-                                                Function(last_ec As event_comb,
-                                                         ByRef error_break As Boolean) As Boolean
-                                                    If assertion.is_not_null(last_ec) Then
-                                                        assertion.is_true(last_ec.end_result())
-                                                    End If
-                                                    assertion.is_false(error_break)
-                                                    i += 1
-                                                    Return i < round
-                                                End Function)))
+                                                          Return sync_async(Sub()
+                                                                                j += 1
+                                                                            End Sub)
+                                                      End Function,
+                                                      Function(last_ec As event_comb,
+                                                               ByRef error_break As Boolean) As Boolean
+                                                          If assertion.is_not_null(last_ec) Then
+                                                              assertion.is_true(last_ec.end_result())
+                                                          End If
+                                                          assertion.is_false(error_break)
+                                                          i += 1
+                                                          Return i < round
+                                                      End Function)))
         assertion.equal(i, j)
         assertion.equal(i, round)
         Return True
@@ -219,20 +225,20 @@ Public Class event_comb_while_test
         Dim i As Int32 = 0
         Dim j As Int32 = 0
         assertion.is_false(async_sync(event_comb.while(Function() As event_comb
-                                                     Return sync_async(Sub()
-                                                                           j += 1
-                                                                       End Sub)
-                                                 End Function,
-                                                 Function(last_ec As event_comb,
-                                                          ByRef error_break As Boolean) As Boolean
-                                                     If assertion.is_not_null(last_ec) Then
-                                                         assertion.is_true(last_ec.end_result())
-                                                     End If
-                                                     assertion.is_false(error_break)
-                                                     i += 1
-                                                     error_break = (i = round)
-                                                     Return True
-                                                 End Function)))
+                                                           Return sync_async(Sub()
+                                                                                 j += 1
+                                                                             End Sub)
+                                                       End Function,
+                                                       Function(last_ec As event_comb,
+                                                                ByRef error_break As Boolean) As Boolean
+                                                           If assertion.is_not_null(last_ec) Then
+                                                               assertion.is_true(last_ec.end_result())
+                                                           End If
+                                                           assertion.is_false(error_break)
+                                                           i += 1
+                                                           error_break = (i = round)
+                                                           Return True
+                                                       End Function)))
         assertion.equal(i, j)
         assertion.equal(i, round)
         Return True

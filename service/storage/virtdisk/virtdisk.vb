@@ -200,7 +200,7 @@ Partial Public Class virtdisk
 
     Public Function read(ByVal start As UInt64,
                          ByVal len As UInt32,
-                         ByVal output As pointer(Of Byte())) As event_comb
+                         ByVal output As ref(Of Byte())) As event_comb
         Dim r() As Byte = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean

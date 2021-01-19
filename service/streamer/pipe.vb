@@ -174,21 +174,21 @@ Public Class pipe(Of T)
         Return q.pop(r)
     End Function
 
-    Private Function sync_pop(ByVal r As pointer(Of T)) As Boolean
+    Private Function sync_pop(ByVal r As ref(Of T)) As Boolean
         Dim o As T = Nothing
         Return sync_pop(o) AndAlso
                eva(r, o)
     End Function
 
-    Private Function unlimited_pop(ByVal r As pointer(Of T)) As event_comb
+    Private Function unlimited_pop(ByVal r As ref(Of T)) As event_comb
         Return unlimited(Function() sync_pop(r), output_pending)
     End Function
 
-    Private Function limited_pop(ByVal r As pointer(Of T)) As event_comb
+    Private Function limited_pop(ByVal r As ref(Of T)) As event_comb
         Return limited(Function() sync_pop(r), output_pending)
     End Function
 
-    Public Function pop(ByVal r As pointer(Of T)) As event_comb
+    Public Function pop(ByVal r As ref(Of T)) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = If(limited_retries(), limited_pop(r), unlimited_pop(r))

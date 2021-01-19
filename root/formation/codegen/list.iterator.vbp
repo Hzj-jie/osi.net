@@ -1,18 +1,12 @@
 ﻿
 ##INCLUDE iterator.imports.vbp
 
-Public Module _list_iterator
-##DEFINE PARENT_CLASS list(Of T)
-##DEFINE TEMPLATE_TYPE (Of T)
-##INCLUDE iterator.ext.vbp
-End Module
-
 Partial Public Class list(Of T)
-    Public Structure iterator
 ##DEFINE TYPE node
 ##DEFINE DEFINE_OPERATOR_PLUS False
 ##INCLUDE random_access_iterator.vbp
 
+    Partial Public Structure iterator
         Private Function move_prev(ByVal s As UInt32) As iterator
             assert(s > uint32_0)
             Dim n As node = Nothing

@@ -1,3 +1,2 @@
-﻿
-##DEFINE NAME slimheapless
-##INCLUDE iqless_threadpool.vbp
+##DEFINE TYPE slimheapless
+##INCLUDE slimqless2_threadpool.vbp

@@ -99,20 +99,23 @@ Public Class pather(Of _PATH_SEPARATORS As _strings,
         Return path.Split(path_separators, StringSplitOptions.None)
     End Function
 
+    Public Function path_separator() As String
+        Return path_separators(0)
+    End Function
+
     Public Function combine(ByVal parts() As String, ByRef path As String) As Boolean
         If isemptyarray(parts) Then
             Return False
         End If
 
-        If array_size(parts) = 1 AndAlso
-               is_this_level_path(parts(0)) Then
+        If array_size(parts) = 1 AndAlso is_this_level_path(parts(0)) Then
             If String.IsNullOrEmpty(parts(0)) Then
-                path = path_separators(0)
+                path = path_separator()
             Else
                 path = parts(0)
             End If
         Else
-            path = parts.strjoin(path_separators(0))
+            path = parts.strjoin(path_separator())
         End If
         Return True
     End Function
@@ -230,7 +233,7 @@ Public Class pather(Of _PATH_SEPARATORS As _strings,
         Return r
     End Function
 
-    Default Public ReadOnly Property n(ByVal path As String, ByVal r As pointer(Of String)) As Boolean
+    Default Public ReadOnly Property n(ByVal path As String, ByVal r As ref(Of String)) As Boolean
         Get
             Dim s As String = Nothing
             Return normalize(path, s) AndAlso
@@ -245,7 +248,7 @@ Public Class pather(Of _PATH_SEPARATORS As _strings,
     End Property
 
     Default Public ReadOnly Property n(ByVal path As String,
-                                       ByVal r As pointer(Of vector(Of String))) As Boolean
+                                       ByVal r As ref(Of vector(Of String))) As Boolean
         Get
             Dim v As vector(Of String) = Nothing
             Return split(path, v) AndAlso
@@ -254,7 +257,7 @@ Public Class pather(Of _PATH_SEPARATORS As _strings,
     End Property
 
     Default Public ReadOnly Property n(ByVal parts() As String,
-                                       ByVal r As pointer(Of String)) As Boolean
+                                       ByVal r As ref(Of String)) As Boolean
         Get
             Dim o As String = Nothing
             Return combine(parts, o) AndAlso
@@ -274,7 +277,7 @@ Public Class pather(Of _PATH_SEPARATORS As _strings,
     End Property
 
     Default Public ReadOnly Property n(ByVal parts As vector(Of String),
-                                       ByVal r As pointer(Of String)) As Boolean
+                                       ByVal r As ref(Of String)) As Boolean
         Get
             Dim o As String = Nothing
             Return combine(parts, o) AndAlso
@@ -287,4 +290,38 @@ Public Class pather(Of _PATH_SEPARATORS As _strings,
             Return combine(parts)
         End Get
     End Property
+
+    Public Function directory_name(ByVal p As String) As String
+        If String.IsNullOrEmpty(p) Then
+            Return p
+        End If
+        If path_separators.has(p.last_char()) Then
+            Return p
+        End If
+        Return strcat(p, path_separator())
+    End Function
+
+    Public Function relative_path(ByVal root As String, ByVal p As String, ByRef o As String) As Boolean
+        Dim nr As String = Nothing
+        If Not normalize(root, nr) Then
+            Return False
+        End If
+        Dim np As String = Nothing
+        If Not normalize(p, np) Then
+            Return False
+        End If
+        nr = directory_name((nr))
+        If np.StartsWith(nr) Then
+            o = np.Substring(nr.Length())
+        Else
+            o = np
+        End If
+        Return True
+    End Function
+
+    Public Function relative_path(ByVal root As String, ByVal p As String) As String
+        Dim r As String = Nothing
+        assert(relative_path(root, p, r))
+        Return r
+    End Function
 End Class

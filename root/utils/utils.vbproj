@@ -103,7 +103,7 @@
     <Compile Include="invoker\valuer.recursive.vb" />
     <Compile Include="invoker\valuer.vb" />
     <Compile Include="ipendpoint.vb" />
-    <Compile Include="lifetime_binder\disposer.vb" />
+    <Compile Include="lifetime_binder\scoped.vb" />
     <Compile Include="lifetime_binder\global_instance.vb" />
     <Compile Include="manual_gc.vb" />
     <Compile Include="global_init.vb" />
@@ -124,7 +124,6 @@
     <Compile Include="error_handle\error_counter.vb" />
     <Compile Include="error_handle\file_error_writer.vb" />
     <Compile Include="eva.vb" />
-    <Compile Include="foreach.vb" />
     <Compile Include="lifetime_binder\application_info_writer.vb" />
     <Compile Include="lifetime_binder\streamwriter_auto_disposer.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -144,6 +143,7 @@
     </Compile>
     <Compile Include="pattern_match.vb" />
     <Compile Include="domain_unhandled_exception.vb" />
+    <Compile Include="samples.vb" />
     <Compile Include="thread_checker.vb" />
     <Compile Include="thread_static2.vb" />
     <Compile Include="transceive_timeout.vb" />

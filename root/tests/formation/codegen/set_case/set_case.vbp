@@ -1,13 +1,11 @@
 ﻿
-#Const pair_return_insert = ##PAIR_RETURN_INSERT##
-
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utt
-Imports osi.root.delegates
 
-Friend Class ##TYPE##_case
+Friend NotInheritable Class ##TYPE##_case
     Inherits random_run_case
 
     Private ReadOnly s As [##TYPE##](Of String) = Nothing
@@ -86,8 +84,8 @@ Friend Class ##TYPE##_case
     Private Sub insert()
         Dim k As String = Nothing
         k = rnd_key()
-#If pair_return_insert Then
-        Dim r As pair(Of [##TYPE##](Of String).iterator, Boolean) = Nothing
+#If ##PAIR_RETURN_INSERT## Then
+        Dim r As tuple(Of [##TYPE##](Of String).iterator, Boolean) = Nothing
         r = s.insert(k)
         If assertion.is_not_null(r) Then
             assertion.equal(r.second, s.find(k) <> s.end(), "s.insert(", k, ") <> s.find")
@@ -156,7 +154,7 @@ Friend Class ##TYPE##_case
     End Sub
 End Class
 
-Public Class ##TYPE##_perf
+Public NotInheritable Class ##TYPE##_perf
     Inherits performance_case_wrapper
 
     Private Shared Function round() As Int64
@@ -172,7 +170,7 @@ Public Class ##TYPE##_perf
     End Function
 End Class
 
-Public Class ##TYPE##_test
+Public NotInheritable Class ##TYPE##_test
     Inherits repeat_case_wrapper
 
     Private Shared Function round() As Int64

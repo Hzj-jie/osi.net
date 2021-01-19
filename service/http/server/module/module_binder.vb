@@ -18,7 +18,7 @@ Partial Public NotInheritable Class module_binder
             function_name = "process"
         End If
 
-        Using scoped_atomic_bool(suppress.invoker_error)
+        Using scoped.atomic_bool(suppress.invoker_error)
             Dim m As module_handle.named_module = Nothing
             m = create_module(Of Func(Of server.context, Boolean)) _
                              (type,

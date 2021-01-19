@@ -42,8 +42,8 @@ Public NotInheritable Class bmap(Of KEY_T, VALUE_T)
                 End Function)
         container_operator(Of bmap(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).enumerate(
                 Function(ByVal i As bmap(Of KEY_T, VALUE_T)) _
-                        As container_operator(Of bmap(Of KEY_T, VALUE_T),
-                                                 first_const_pair(Of KEY_T, VALUE_T)).enumerator
+                        As container_operator(Of first_const_pair(Of KEY_T, VALUE_T)).enumerator
+                    assert(Not i Is Nothing)
                     Return New enumerator(i)
                 End Function)
         container_operator(Of bmap(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).clear(
@@ -52,36 +52,85 @@ Public NotInheritable Class bmap(Of KEY_T, VALUE_T)
                     i.clear()
                 End Sub)
         bytes_serializer(Of bmap(Of KEY_T, VALUE_T)).container(Of first_const_pair(Of KEY_T, VALUE_T)).register()
+        json_serializer(Of bmap(Of KEY_T, VALUE_T)).container(Of first_const_pair(Of KEY_T, VALUE_T)).register_as_object()
     End Sub
 
-    Private NotInheritable Class enumerator
-        Implements container_operator(Of bmap(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).enumerator
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function on_first(ByVal f As Action(Of KEY_T)) As Action(Of first_const_pair(Of KEY_T, VALUE_T))
+        assert(Not f Is Nothing)
+        Return Sub(ByVal i As first_const_pair(Of KEY_T, VALUE_T))
+                   assert(Not i Is Nothing)
+                   f(i.first)
+               End Sub
+    End Function
 
-        Private it As bmap(Of KEY_T, VALUE_T).iterator
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function on_second(ByVal f As Action(Of VALUE_T)) As Action(Of first_const_pair(Of KEY_T, VALUE_T))
+        assert(Not f Is Nothing)
+        Return Sub(ByVal i As first_const_pair(Of KEY_T, VALUE_T))
+                   assert(Not i Is Nothing)
+                   f(i.second)
+               End Sub
+    End Function
 
-        Public Sub New(ByVal m As bmap(Of KEY_T, VALUE_T))
-            assert(Not m Is Nothing)
-            it = m.begin()
-        End Sub
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function on_pair(ByVal f As Action(Of KEY_T, VALUE_T)) As Action(Of first_const_pair(Of KEY_T, VALUE_T))
+        assert(Not f Is Nothing)
+        Return Sub(ByVal i As first_const_pair(Of KEY_T, VALUE_T))
+                   assert(Not i Is Nothing)
+                   f(i.first, i.second)
+               End Sub
+    End Function
 
-        Public Sub [next]() Implements container_operator(Of bmap(Of KEY_T, VALUE_T),
-                                                             first_const_pair(Of KEY_T, VALUE_T)).enumerator.next
-            it += 1
-        End Sub
+    Public ReadOnly first_selector As Func(Of first_const_pair(Of KEY_T, VALUE_T), KEY_T) =
+        first_const_pair(Of KEY_T, VALUE_T).first_getter
 
-        Public Function current() As first_const_pair(Of KEY_T, VALUE_T) _
-                Implements container_operator(Of bmap(Of KEY_T, VALUE_T),
-                                                 first_const_pair(Of KEY_T, VALUE_T)).enumerator.current
-            Return +it
-        End Function
+    Public ReadOnly second_selector As Func(Of first_const_pair(Of KEY_T, VALUE_T), VALUE_T) =
+        first_const_pair(Of KEY_T, VALUE_T).second_getter
 
-        Public Function [end]() As Boolean _
-                Implements container_operator(Of bmap(Of KEY_T, VALUE_T),
-                                                 first_const_pair(Of KEY_T, VALUE_T)).enumerator.end
-            Return it.is_end()
-        End Function
-    End Class
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function first_mapper(Of KEY2_T)(ByVal f As Func(Of KEY_T, KEY2_T)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), first_const_pair(Of KEY2_T, VALUE_T))
+        assert(Not f Is Nothing)
+        Return Function(ByVal p As first_const_pair(Of KEY_T, VALUE_T)) As first_const_pair(Of KEY2_T, VALUE_T)
+                   assert(Not p Is Nothing)
+                   Return first_const_pair.of(f(p.first), p.second)
+               End Function
+    End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function second_mapper(Of VALUE2_T)(ByVal f As Func(Of VALUE_T, VALUE2_T)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE2_T))
+        assert(Not f Is Nothing)
+        Return Function(ByVal p As first_const_pair(Of KEY_T, VALUE_T)) As first_const_pair(Of KEY_T, VALUE2_T)
+                   assert(Not p Is Nothing)
+                   Return first_const_pair.of(p.first, f(p.second))
+               End Function
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function first_filter(ByVal f As Func(Of KEY_T, Boolean)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), Boolean)
+        assert(Not f Is Nothing)
+        Return Function(ByVal i As first_const_pair(Of KEY_T, VALUE_T)) As Boolean
+                   assert(Not i Is Nothing)
+                   Return f(i.first)
+               End Function
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function second_filter(ByVal f As Func(Of VALUE_T, Boolean)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), Boolean)
+        assert(Not f Is Nothing)
+        Return Function(ByVal i As first_const_pair(Of KEY_T, VALUE_T)) As Boolean
+                   Return f(i.second)
+               End Function
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function mapper(Of R)(ByVal f As Func(Of KEY_T, VALUE_T, R)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), R)
+        assert(Not f Is Nothing)
+        Return Function(ByVal p As first_const_pair(Of KEY_T, VALUE_T)) As R
+                   assert(Not p Is Nothing)
+                   Return f(p.first, p.second)
+               End Function
+    End Function
 'finish map.container_operator.vbp --------
 
 'the following code is generated by /osi/root/codegen/precompile/precompile.exe
@@ -126,22 +175,10 @@ Public NotInheritable Class bmap(Of KEY_T, VALUE_T)
     End Function
 'finish map.compare.vbp --------
 
-    Public Sub New()
-        MyBase.New(AddressOf first_compare)
-    End Sub
-
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Shared Function first_compare(ByVal this As first_const_pair(Of KEY_T, VALUE_T),
-                                          ByVal that As first_const_pair(Of KEY_T, VALUE_T)) As Int32
-        Dim c As Int32 = 0
-        c = object_compare(this, that)
-        If c <> object_compare_undetermined Then
-            Return c
-        End If
-        assert(Not this Is Nothing)
-        assert(Not that Is Nothing)
-        Return connector.compare(this.first, that.first)
-    End Function
+    Public Sub New()
+        MyBase.New(AddressOf first_const_pair.first_compare(Of KEY_T, VALUE_T))
+    End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Shadows Function move(ByVal v As bmap(Of KEY_T, VALUE_T)) As bmap(Of KEY_T, VALUE_T)
@@ -174,13 +211,13 @@ Public NotInheritable Class bmap(Of KEY_T, VALUE_T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overloads Function emplace(ByVal key As KEY_T,
-                                      ByVal value As VALUE_T) As pair(Of iterator, Boolean)
+                                      ByVal value As VALUE_T) As tuple(Of iterator, Boolean)
         Return MyBase.emplace(first_const_pair.emplace_of(key, value))
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overloads Function insert(ByVal key As KEY_T,
-                                     ByVal value As VALUE_T) As pair(Of iterator, Boolean)
+                                     ByVal value As VALUE_T) As tuple(Of iterator, Boolean)
         Return emplace(copy_no_error(key), copy_no_error(value))
     End Function
 
@@ -211,7 +248,7 @@ Public NotInheritable Class bmap(Of KEY_T, VALUE_T)
         End Get
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Set(ByVal value As VALUE_T)
-            Dim r As pair(Of iterator, Boolean) = Nothing
+            Dim r As tuple(Of iterator, Boolean) = Nothing
             r = insert(key, value)
             If Not r.second Then
                 copy(r.first.value().second, value)

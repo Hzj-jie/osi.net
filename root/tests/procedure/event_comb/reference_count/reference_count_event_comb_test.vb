@@ -8,11 +8,9 @@ Option Strict On
 'so change reference_count_event_comb_test.vbp instead of this file
 
 
-Imports osi.root.formation
 Imports osi.root.connector
-Imports osi.root.utils
-Imports osi.root.procedure
 Imports osi.root.lock
+Imports osi.root.procedure
 Imports osi.root.utt
 
 Public NotInheritable Class reference_count_event_comb_test

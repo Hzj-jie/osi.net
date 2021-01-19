@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports System.DateTime
+Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports osi.root.constants
 Imports osi.root.connector
@@ -22,14 +23,17 @@ Public Structure lock(Of T As {Structure, islimlock})
         assert(Not TypeOf l Is ilock)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function held_in_thread() As Boolean Implements ilock.held_in_thread
         Return owner_tid = current_thread_id()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function held() As Boolean Implements ilock.held
         Return owner_tid <> INVALID_THREAD_ID
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub debug_wait()
         Dim n As Int64 = 0
         n = Now().milliseconds()
@@ -43,6 +47,7 @@ Public Structure lock(Of T As {Structure, islimlock})
         End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub wait() Implements ilock.wait
         Try
             If lock_trace Then
@@ -57,16 +62,19 @@ Public Structure lock(Of T As {Structure, islimlock})
         owner_tid = current_thread_id()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub release() Implements ilock.release
         assert(can_cross_thread() OrElse owner_tid = current_thread_id())
         owner_tid = INVALID_THREAD_ID
         l.release()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function can_thread_owned() As Boolean Implements ilock.can_thread_owned
         Return l.can_thread_owned()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function can_cross_thread() As Boolean Implements ilock.can_cross_thread
         Return l.can_cross_thread()
     End Function

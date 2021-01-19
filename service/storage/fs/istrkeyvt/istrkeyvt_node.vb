@@ -23,7 +23,7 @@ Public Class istrkeyvt_node
     End Sub
 
     Public Function create(ByVal name As String,
-                           ByVal o As pointer(Of iproperty),
+                           ByVal o As ref(Of iproperty),
                            Optional ByVal wait_ms As Int64 = npos) As event_comb Implements inode.create
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -51,7 +51,7 @@ Public Class istrkeyvt_node
     End Function
 
     Public Function open(ByVal name As String,
-                         ByVal o As pointer(Of iproperty)) As event_comb Implements inode.open
+                         ByVal o As ref(Of iproperty)) As event_comb Implements inode.open
         Return sync_async(Function() As Boolean
                               Return valid_name(name) AndAlso
                                      eva(o, New istrkeyvt_property(path(), name, accessor))
@@ -62,11 +62,11 @@ Public Class istrkeyvt_node
         Return p
     End Function
 
-    Public Function properties(ByVal r As pointer(Of vector(Of String))) As event_comb Implements inode.properties
+    Public Function properties(ByVal r As ref(Of vector(Of String))) As event_comb Implements inode.properties
         Return properties_property.read(r)
     End Function
 
-    Public Function subnodes(ByVal r As pointer(Of vector(Of String))) As event_comb Implements inode.subnodes
+    Public Function subnodes(ByVal r As ref(Of vector(Of String))) As event_comb Implements inode.subnodes
         Return subnodes_property.read(r)
     End Function
 End Class

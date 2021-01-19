@@ -1,7 +1,11 @@
 ﻿
-Imports osi.root.procedure
-Imports osi.root.formation
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.formation
+Imports osi.root.procedure
 
 Friend Class isynckeyvalue_ikeyvalue
     Implements ikeyvalue
@@ -15,24 +19,24 @@ Friend Class isynckeyvalue_ikeyvalue
 
     Public Function append(ByVal key() As Byte,
                            ByVal value() As Byte,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.append
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.append
         Return sync_async(Function(ByRef x) i.append(key, value, x), result, +result)
     End Function
 
-    Public Function capacity(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvalue.capacity
+    Public Function capacity(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvalue.capacity
         Return sync_async(Function(ByRef x) i.capacity(x), result, +result)
     End Function
 
     Public Function delete(ByVal key() As Byte,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.delete
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.delete
         Return sync_async(Function(ByRef x) i.delete(key, x), result, +result)
     End Function
 
-    Public Function empty(ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.empty
+    Public Function empty(ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.empty
         Return sync_async(Function(ByRef x) i.empty(x), result, +result)
     End Function
 
-    Public Function full(ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.full
+    Public Function full(ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.full
         Return sync_async(Function(ByRef x) i.full(x), result, +result)
     End Function
 
@@ -40,22 +44,22 @@ Friend Class isynckeyvalue_ikeyvalue
         Return sync_async(AddressOf i.heartbeat)
     End Function
 
-    Public Function keycount(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvalue.keycount
+    Public Function keycount(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvalue.keycount
         Return sync_async(Function(ByRef x) i.keycount(x), result, +result)
     End Function
 
-    Public Function list(ByVal result As pointer(Of vector(Of Byte()))) As event_comb Implements ikeyvalue.list
+    Public Function list(ByVal result As ref(Of vector(Of Byte()))) As event_comb Implements ikeyvalue.list
         Return sync_async(Function(ByRef x) i.list(x), result, +result)
     End Function
 
     Public Function modify(ByVal key() As Byte,
                            ByVal value() As Byte,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.modify
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.modify
         Return sync_async(Function(ByRef x) i.modify(key, value, x), result, +result)
     End Function
 
     Public Function read(ByVal key() As Byte,
-                         ByVal value As pointer(Of Byte())) As event_comb Implements ikeyvalue.read
+                         ByVal value As ref(Of Byte())) As event_comb Implements ikeyvalue.read
         Return sync_async(Function(ByRef x) i.read(key, x), value, +value)
     End Function
 
@@ -64,12 +68,12 @@ Friend Class isynckeyvalue_ikeyvalue
     End Function
 
     Public Function seek(ByVal key() As Byte,
-                         ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvalue.seek
+                         ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvalue.seek
         Return sync_async(Function(ByRef x) i.seek(key, x), result, +result)
     End Function
 
     Public Function sizeof(ByVal key() As Byte,
-                           ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvalue.sizeof
+                           ByVal result As ref(Of Int64)) As event_comb Implements ikeyvalue.sizeof
         Return sync_async(Function(ByRef x) i.sizeof(key, x), result, +result)
     End Function
 
@@ -77,7 +81,7 @@ Friend Class isynckeyvalue_ikeyvalue
         Return sync_async(AddressOf i.stop)
     End Function
 
-    Public Function valuesize(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvalue.valuesize
+    Public Function valuesize(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvalue.valuesize
         Return sync_async(Function(ByRef x) i.valuesize(x), result, +result)
     End Function
 End Class

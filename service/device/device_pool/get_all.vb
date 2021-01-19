@@ -68,8 +68,8 @@ Public Module _get_all
 
     <Extension()> Public Function get_all(Of T) _
                                          (ByVal this As idevice_pool(Of T),
-                                          ByVal v As Func(Of idevice(Of T), 
-                                                             idevice_pool(Of T), 
+                                          ByVal v As Func(Of idevice(Of T),
+                                                             idevice_pool(Of T),
                                                              event_comb),
                                           Optional ByVal stopping As Func(Of Boolean) = Nothing) As Boolean
         If v Is Nothing Then
@@ -84,8 +84,8 @@ Public Module _get_all
 
     <Extension()> Public Function get_all(Of T) _
                                          (ByVal this As idevice_pool(Of T),
-                                          ByVal v As Func(Of idevice(Of T), 
-                                                             idevice_pool(Of T), 
+                                          ByVal v As Func(Of idevice(Of T),
+                                                             idevice_pool(Of T),
                                                              event_comb),
                                           ByVal stopping As ref(Of singleentry)) As Boolean
         Return this.get_all(v, AddressOf stopping.not_null_and_in_use)

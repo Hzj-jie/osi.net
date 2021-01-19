@@ -48,7 +48,19 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="affinity.vb" />
+    <Compile Include="bernoulli_distribution\bernoulli_distribution.vb" />
+    <Compile Include="bernoulli_distribution\estimator.vb" />
+    <Compile Include="binomial_distribution\estimator.vb" />
+    <Compile Include="boolaffinity\evaluator.vb" />
     <Compile Include="boolaffinity\model.vb" />
+    <Compile Include="boolaffinity\trainer.vb" />
+    <Compile Include="binomial_distribution\binomial_distribution.vb" />
+    <Compile Include="combinatories.vb" />
+    <Compile Include="confidence.vb" />
+    <Compile Include="distribution.vb" />
+    <Compile Include="exponential_distribution\estimator.vb" />
+    <Compile Include="exponential_distribution\exponential_distribution.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -64,9 +76,19 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="normal_distribution\estimator.vb" />
+    <Compile Include="normal_distribution\normal_distribution.vb" />
     <Compile Include="onebound\evaluator.vb" />
     <Compile Include="onebound\model.vb" />
     <Compile Include="onebound\trainer.vb" />
+    <Compile Include="percentile\filter.vb" />
+    <Compile Include="permutations.vb" />
+    <Compile Include="wordbreaker\cjk\evaluator.vb" />
+    <Compile Include="wordbreaker\cjk\trainer.vb" />
+    <Compile Include="wordtracer\cjk\breaking_word.vb" />
+    <Compile Include="wordtracer\cjk\oneplus.vb" />
+    <Compile Include="wordtracer\cjk\tracer.vb" />
+    <Compile Include="wordtracer\cjk\tracerall.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -91,6 +113,7 @@
     <Content Include="boolaffinity\design.txt" />
     <Content Include="onebound\design.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="ml.dep" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

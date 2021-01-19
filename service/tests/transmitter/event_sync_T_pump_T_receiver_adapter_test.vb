@@ -27,8 +27,8 @@ Public Class event_sync_T_pump_T_receiver_adapter_test
         Public Overrides Function run() As Boolean
             Dim sp As slimqless2_event_sync_T_pump(Of Int32)
             Dim r As event_sync_T_pump_T_receiver_adapter(Of Int32)
-            Dim b As pointer(Of Boolean) = Nothing
-            Dim p As pointer(Of Int32) = Nothing
+            Dim b As ref(Of Boolean) = Nothing
+            Dim p As ref(Of Int32) = Nothing
             Dim v As Int32 = 0
 
             sp = New slimqless2_event_sync_T_pump(Of Int32)()
@@ -89,8 +89,8 @@ Public Class event_sync_T_pump_T_receiver_adapter_test
 
         Private Sub start()
             Dim ec As event_comb = Nothing
-            Dim b As pointer(Of Boolean) = Nothing
-            Dim p As pointer(Of Int32) = Nothing
+            Dim b As ref(Of Boolean) = Nothing
+            Dim p As ref(Of Int32) = Nothing
             assert_begin(lifetime_event_comb(exp,
                                              Function() As Boolean
                                                  ec = r.sense(b.renew(), sense_timeout_ms)

@@ -42,7 +42,7 @@ Namespace primitive
         Inherits exportable
 
         Enum error_type
-            instruction_pointer_overflow
+            instruction_ref_overflow
             stack_access_out_of_boundary
             undefined_interrupt
             unsupported_feature
@@ -53,18 +53,18 @@ Namespace primitive
 
         Structure state
             Public Shared ReadOnly empty As state
-            Public ReadOnly instruction_pointer As UInt64
+            Public ReadOnly instruction_ref As UInt64
             Public ReadOnly stack_size As UInt64
 
-            Public Sub New(ByVal instruction_pointer As UInt64, ByVal stack_size As UInt64)
-                Me.instruction_pointer = instruction_pointer
+            Public Sub New(ByVal instruction_ref As UInt64, ByVal stack_size As UInt64)
+                Me.instruction_ref = instruction_ref
                 Me.stack_size = stack_size
             End Sub
         End Structure
 
-        Function access_stack(ByVal p As data_ref) As pointer(Of Byte())
+        Function access_stack(ByVal p As data_ref) As ref(Of Byte())
         Function stack_size() As UInt64
-        Function instruction_pointer() As UInt64
+        Function instruction_ref() As UInt64
         Function carry_over() As Boolean
         Function divided_by_zero() As Boolean
         Function imaginary_number() As Boolean
@@ -82,7 +82,7 @@ Namespace primitive
                                                               ByVal p As data_ref,
                                                               ByRef overflow As Boolean) As UInt32
             assert(Not this Is Nothing)
-            Dim d As pointer(Of Byte()) = Nothing
+            Dim d As ref(Of Byte()) = Nothing
             d = this.access_stack(p)
             assert(Not d Is Nothing)
             Dim b As big_uint = Nothing
@@ -94,7 +94,7 @@ Namespace primitive
                                                               ByVal p As data_ref,
                                                               ByRef overflow As Boolean) As UInt64
             assert(Not this Is Nothing)
-            Dim d As pointer(Of Byte()) = Nothing
+            Dim d As ref(Of Byte()) = Nothing
             d = this.access_stack(p)
             assert(Not d Is Nothing)
             Dim b As big_uint = Nothing
@@ -104,7 +104,7 @@ Namespace primitive
 
         <Extension()> Public Function access_stack_as_bool(ByVal this As executor, ByVal p As data_ref) As Boolean
             assert(Not this Is Nothing)
-            Dim d As pointer(Of Byte()) = Nothing
+            Dim d As ref(Of Byte()) = Nothing
             d = this.access_stack(p)
             assert(Not d Is Nothing)
             Dim o As Boolean = False
@@ -115,7 +115,7 @@ Namespace primitive
             Return o
         End Function
 
-        <Extension()> Public Function stack_top(ByVal this As executor) As pointer(Of Byte())
+        <Extension()> Public Function stack_top(ByVal this As executor) As ref(Of Byte())
             assert(Not this Is Nothing)
             Return this.access_stack(data_ref.rel(0))
         End Function
@@ -127,7 +127,7 @@ Namespace primitive
 
         <Extension()> Public Function current_state(ByVal this As executor) As executor.state
             assert(Not this Is Nothing)
-            Return New executor.state(this.instruction_pointer() + uint64_1, this.stack_size())
+            Return New executor.state(this.instruction_ref() + uint64_1, this.stack_size())
         End Function
     End Module
 End Namespace

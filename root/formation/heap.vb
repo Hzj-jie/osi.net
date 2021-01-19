@@ -46,15 +46,15 @@ Public Class heap(Of T As IComparable(Of T))
             If Not (available_index(parent)) Then
                 Exit While
             End If
-            debug_assert(index >= parent, "got an invalid parent ", parent, " index ", index)
+            assert(index >= parent, "got an invalid parent ", parent, " index ", index)
             If index <= parent OrElse compare(d(CUInt(index)), d(CUInt(parent))) <= 0 Then
                 Exit While
             End If
-            debug_assert(swap(index, parent), index, " or ", parent, " is not in heap.")
+            assert(swap(index, parent), index, " or ", parent, " is not in heap.")
             index = parent
         End While
 
-        debug_assert(available_index(index), "up function makes an index not available.")
+        assert(available_index(index), "up function makes an index not available.")
         Return index
     End Function
 
@@ -83,11 +83,11 @@ Public Class heap(Of T As IComparable(Of T))
             If min = index Then
                 Exit While
             End If
-            debug_assert(swap(index, min), index, " or ", min, " is not in heap.")
+            assert(swap(index, min), index, " or ", min, " is not in heap.")
             index = min
         End While
 
-        debug_assert(available_index(index), "down function makes an index not available.")
+        assert(available_index(index), "down function makes an index not available.")
         Return index
     End Function
 
@@ -118,7 +118,7 @@ Public Class heap(Of T As IComparable(Of T))
             Return False
         End If
         value = d(head)
-        debug_assert([erase](head), "erase(head) returns false.")
+        assert([erase](head), "erase(head) returns false.")
         Return True
     End Function
 

@@ -1,12 +1,13 @@
 ﻿
 ##INCLUDE static_iterator.vbp
 
+    Partial Public Structure iterator
         '1. iterator / reverse_iterator are combined together
         '2. do not allow to - from end, it's not must-have
         '3. operator+ / operator- should not impact current instance, considering i = j + 1
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Operator +(ByVal this As iterator, ByVal that As Int32) As iterator
-            If this.null_or_end() OrElse that = 0 Then
+            If this.is_end() OrElse that = 0 Then
                 Return this
             End If
             If that > 0 Then
@@ -16,6 +17,10 @@
             Return this.move_prev(CUInt(-that))
         End Operator
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Operator -(ByVal this As iterator, ByVal that As Int32) As iterator
             Return this + (-that)
         End Operator
+    End Structure
+
+##INCLUDE iterator_to_enumerator.vbp

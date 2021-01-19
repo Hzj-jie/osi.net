@@ -20,7 +20,7 @@ Public MustInherit Class streamreader_dataloader(Of T)
     Protected MustOverride Function load(ByVal s As StreamReader, ByRef result As T) As Boolean
 
     Public Function load(ByVal s As Stream,
-                         ByVal result As pointer(Of T)) As event_comb Implements istreamdataloader(Of T).load
+                         ByVal result As ref(Of T)) As event_comb Implements istreamdataloader(Of T).load
         Dim suc As Boolean = False
         Return New event_comb(Function() As Boolean
                                   Return waitfor(Sub()

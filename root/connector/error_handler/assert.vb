@@ -31,20 +31,6 @@ Public Module _assert
         Return assert_failed("assert", msgs)
     End Function
 
-    Private Function debug_assert_failed(ByVal msgs() As Object) As Boolean
-        Return Not isdebugmode() OrElse assert_failed("debug assert", msgs)
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function debug_assert(ByVal v As Boolean) As Boolean
-        Return v OrElse debug_assert_failed(Nothing)
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function debug_assert(ByVal v As Boolean, ByVal ParamArray msgs() As Object) As Boolean
-        Return v OrElse debug_assert_failed(msgs)
-    End Function
-
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function assert(ByVal v As Boolean) As Boolean
         Return v OrElse assert_failed(Nothing)

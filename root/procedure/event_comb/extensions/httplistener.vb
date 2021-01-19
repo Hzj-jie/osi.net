@@ -1,13 +1,15 @@
 ﻿
-Imports System.IO
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net
 Imports System.Runtime.CompilerServices
-Imports osi.root.constants
-Imports osi.root.formation
+Imports osi.root.connector
 
 Public Module _httplistener
     <Extension()> Public Function get_context(ByVal listener As HttpListener,
-                                              ByVal ctx As pointer(Of HttpListenerContext)) As event_comb
+                                              ByVal ctx As ref(Of HttpListenerContext)) As event_comb
         Return create(Function() As Boolean
                           Return Not listener Is Nothing AndAlso
                                  listener.IsListening() AndAlso

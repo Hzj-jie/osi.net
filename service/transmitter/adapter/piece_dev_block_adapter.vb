@@ -1,4 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
@@ -36,11 +41,11 @@ Public Class piece_dev_block_adapter
                               End Function)
     End Function
 
-    Public Function receive(ByVal result As pointer(Of Byte())) As event_comb Implements block_pump.receive
+    Public Function receive(ByVal result As ref(Of Byte())) As event_comb Implements block_pump.receive
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of piece) = Nothing
+        Dim p As ref(Of piece) = Nothing
         Return New event_comb(Function() As Boolean
-                                  p = New pointer(Of piece)()
+                                  p = New ref(Of piece)()
                                   ec = underlying_device.receive(p)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -55,7 +60,7 @@ Public Class piece_dev_block_adapter
                               End Function)
     End Function
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
         Return underlying_device.sense(pending, timeout_ms)
     End Function

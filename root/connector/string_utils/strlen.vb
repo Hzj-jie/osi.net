@@ -54,6 +54,12 @@ Public Module _strlen
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    <Extension()> Public Function last_char(ByVal input As String) As Char
+        assert(Not String.IsNullOrEmpty(input))
+        Return input(input.last_index())
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function last_index(ByVal input As StringBuilder) As Int32
         Return len_i(input) - 1
     End Function

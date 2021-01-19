@@ -1,4 +1,0 @@
-﻿
-##DEFINE THREADPOOL_TYPE slimheapless_threadpool2
-##DEFINE JOINABLE True
-##INCLUDE threadpool_test.vbp

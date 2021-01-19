@@ -1,13 +1,16 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utils
+Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.procedure
-Imports osi.root.formation
-Imports utils = osi.root.utils
+Imports osi.root.utils
 
 ' TODO: Use ref_map
-Friend Class dataprovider_collection
+Friend NotInheritable Class dataprovider_collection
     Inherits unique_strong_map(Of String, idataprovider)
 
     Private auto_cleanup_enabled As singleentry
@@ -28,16 +31,15 @@ Friend Class dataprovider_collection
                                               End Function,
                                               Function() As Boolean
                                                   ns.clear()
-                                                  utils.foreach(AddressOf foreach,
-                                                                Sub(ByRef k As String, ByRef v As idataprovider)
-                                                                    If out_of_lifetime(lifetime_ms, v) Then
-                                                                        v.expire()
-                                                                    End If
-                                                                    If v.expired() Then
-                                                                        assert(Not k Is Nothing)
-                                                                        ns.push_back(k)
-                                                                    End If
-                                                                End Sub)
+                                                  foreach(Sub(ByVal k As String, ByVal v As idataprovider)
+                                                              If out_of_lifetime(lifetime_ms, v) Then
+                                                                  v.expire()
+                                                              End If
+                                                              If v.expired() Then
+                                                                  assert(Not k Is Nothing)
+                                                                  ns.push_back(k)
+                                                              End If
+                                                          End Sub)
                                                   assert([erase](ns))
                                                   Return (auto_cleanup_enabled.in_use() AndAlso goto_begin()) OrElse
                                                          goto_next()

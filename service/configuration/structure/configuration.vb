@@ -116,7 +116,7 @@ Public Class configuration
     End Function
 
     Private Function [get](ByVal file As String,
-                           ByVal config As pointer(Of config),
+                           ByVal config As ref(Of config),
                            ByVal w As Func(Of Func(Of Boolean), Boolean)) As event_comb
         assert(Not w Is Nothing)
         Dim p As dataprovider(Of config) = Nothing
@@ -135,12 +135,12 @@ Public Class configuration
                               End Function)
     End Function
 
-    Public Function [get](ByVal file As String, ByVal config As pointer(Of config)) As event_comb
+    Public Function [get](ByVal file As String, ByVal config As ref(Of config)) As event_comb
         Return [get](file, config, Function(x) waitfor(x))
     End Function
 
     Public Function [get](ByVal file As String,
-                          ByVal config As pointer(Of config),
+                          ByVal config As ref(Of config),
                           ByVal timeout_ms As Int64) As event_comb
         Return [get](file, config, Function(x) waitfor(x, timeout_ms))
     End Function

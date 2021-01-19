@@ -26,7 +26,7 @@ Imports osi.root.constants
 Imports constants = osi.root.constants
 
 Partial Public Structure timeout_ms_t
-    Implements IComparable, IComparable(Of timeout_ms_t), ICloneable
+    Implements IComparable, IComparable(Of timeout_ms_t), ICloneable, ICloneable(Of timeout_ms_t)
 
     Public Shared ReadOnly inf As timeout_ms_t
     Public Shared ReadOnly zero As timeout_ms_t
@@ -816,8 +816,12 @@ Partial Public Structure timeout_ms_t
         End If
     End Function
 
-    Public Function Clone() As Object Implements ICloneable.Clone
+    Public Function CloneT() As timeout_ms_t Implements ICloneable(Of timeout_ms_t).Clone
         Return New timeout_ms_t(Me)
+    End Function
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
     End Function
 End Structure
 'finish npos_uint.vbp --------

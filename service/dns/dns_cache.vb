@@ -28,17 +28,17 @@ Partial Public NotInheritable Class dns_cache
     End Sub
 
     Public Shared Function query_host_to_ip_cache(ByVal s As String,
-                                                  ByVal result As pointer(Of IPHostEntry)) As event_comb
+                                                  ByVal result As ref(Of IPHostEntry)) As event_comb
         Return h2ip.get(s, result)
     End Function
 
     Public Shared Function query_ip_to_host_cache(ByVal s As String,
-                                                  ByVal result As pointer(Of IPHostEntry)) As event_comb
+                                                  ByVal result As ref(Of IPHostEntry)) As event_comb
         Return ip2h.get(s, result)
     End Function
 
     Private Shared Function operate(ByVal s As String,
-                                    ByVal result As pointer(Of IPHostEntry),
+                                    ByVal result As ref(Of IPHostEntry),
                                     ByVal c As icache2(Of String, IPHostEntry),
                                     ByVal timeout_ms As Int64,
                                     ByVal force_resolve As Boolean) As event_comb
@@ -97,19 +97,19 @@ Partial Public NotInheritable Class dns_cache
     End Function
 
     Public Shared Function resolve(ByVal hostname_or_address As String,
-                                   ByVal result As pointer(Of IPHostEntry),
+                                   ByVal result As ref(Of IPHostEntry),
                                    Optional ByVal timeout_ms As Int64 = default_resolve_timeout_ms) As event_comb
         Return operate(hostname_or_address, result, h2ip, timeout_ms, False)
     End Function
 
     Public Shared Function resolve(ByVal hostname_or_address As String,
-                                   ByVal result As pointer(Of IPAddress),
+                                   ByVal result As ref(Of IPAddress),
                                    Optional ByVal timeout_ms As Int64 = default_resolve_timeout_ms,
                                    Optional ByVal selector As Func(Of IPAddress, Boolean) = Nothing) As event_comb
-        Dim p As pointer(Of IPHostEntry) = Nothing
+        Dim p As ref(Of IPHostEntry) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  p = New pointer(Of IPHostEntry)()
+                                  p = New ref(Of IPHostEntry)()
                                   ec = resolve(hostname_or_address, p, timeout_ms)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -129,25 +129,25 @@ Partial Public NotInheritable Class dns_cache
     End Function
 
     Public Shared Function resolve_ipv4(ByVal hostname_or_address As String,
-                                        ByVal result As pointer(Of IPAddress),
+                                        ByVal result As ref(Of IPAddress),
                                         Optional ByVal timeout_ms As Int64 = default_resolve_timeout_ms) As event_comb
         Return resolve(hostname_or_address, result, timeout_ms, AddressOf ipv4_selector)
     End Function
 
     Public Shared Function resolve_ipv6(ByVal hostname_or_address As String,
-                                        ByVal result As pointer(Of IPAddress),
+                                        ByVal result As ref(Of IPAddress),
                                         Optional ByVal timeout_ms As Int64 = default_resolve_timeout_ms) As event_comb
         Return resolve(hostname_or_address, result, timeout_ms, AddressOf ipv6_selector)
     End Function
 
     Public Shared Function resolve(ByVal hostname_or_address As String,
-                                   ByVal result As pointer(Of String),
+                                   ByVal result As ref(Of String),
                                    Optional ByVal timeout_ms As Int64 = default_resolve_timeout_ms,
                                    Optional ByVal selector As Func(Of IPAddress, Boolean) = Nothing) As event_comb
-        Dim p As pointer(Of IPAddress) = Nothing
+        Dim p As ref(Of IPAddress) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  p = New pointer(Of IPAddress)()
+                                  p = New ref(Of IPAddress)()
                                   ec = resolve(hostname_or_address, p, timeout_ms, selector)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -164,37 +164,37 @@ Partial Public NotInheritable Class dns_cache
     End Function
 
     Public Shared Function resolve_ipv4(ByVal hostname_or_address As String,
-                                        ByVal result As pointer(Of String),
+                                        ByVal result As ref(Of String),
                                         Optional ByVal timeout_ms As Int64 = default_resolve_timeout_ms) As event_comb
         Return resolve(hostname_or_address, result, timeout_ms, AddressOf ipv4_selector)
     End Function
 
     Public Shared Function resolve_ipv6(ByVal hostname_or_address As String,
-                                        ByVal result As pointer(Of String),
+                                        ByVal result As ref(Of String),
                                         Optional ByVal timeout_ms As Int64 = default_resolve_timeout_ms) As event_comb
         Return resolve(hostname_or_address, result, timeout_ms, AddressOf ipv6_selector)
     End Function
 
     Public Shared Function reverse_lookup(ByVal address As String,
-                                          ByVal result As pointer(Of IPHostEntry),
+                                          ByVal result As ref(Of IPHostEntry),
                                           Optional ByVal timeout_ms As Int64 = default_resolve_timeout_ms) As event_comb
         Return operate(address, result, ip2h, timeout_ms, True)
     End Function
 
     Public Shared Function reverse_lookup(ByVal address As IPAddress,
-                                          ByVal result As pointer(Of IPHostEntry),
+                                          ByVal result As ref(Of IPHostEntry),
                                           Optional ByVal timeout_ms As Int64 = default_resolve_timeout_ms) As event_comb
         Return reverse_lookup(Convert.ToString(address), result, timeout_ms)
     End Function
 
     Public Shared Function reverse_lookup(ByVal address As String,
-                                          ByVal result As pointer(Of String),
+                                          ByVal result As ref(Of String),
                                           Optional ByVal timeout_ms As Int64 = default_resolve_timeout_ms,
                                           Optional ByVal selector As Func(Of String, Boolean) = Nothing) As event_comb
-        Dim p As pointer(Of IPHostEntry) = Nothing
+        Dim p As ref(Of IPHostEntry) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  p = New pointer(Of IPHostEntry)()
+                                  p = New ref(Of IPHostEntry)()
                                   ec = reverse_lookup(address, p, timeout_ms)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -219,7 +219,7 @@ Partial Public NotInheritable Class dns_cache
     End Function
 
     Public Shared Function reverse_lookup(ByVal address As IPAddress,
-                                          ByVal result As pointer(Of String),
+                                          ByVal result As ref(Of String),
                                           Optional ByVal timeout_ms As Int64 = default_resolve_timeout_ms,
                                           Optional ByVal selector As Func(Of String, Boolean) = Nothing) As event_comb
         Return reverse_lookup(Convert.ToString(address), result, timeout_ms, selector)

@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Text
 Imports osi.root.constants
 
@@ -15,7 +19,7 @@ Public NotInheritable Class utf8_char
         Next
     End Sub
 
-    Public Shared Function V(ByVal c As Char) As Boolean
+    Public Shared Function v(ByVal c As Char) As Boolean
         Return b(Convert.ToInt32(c))
     End Function
 

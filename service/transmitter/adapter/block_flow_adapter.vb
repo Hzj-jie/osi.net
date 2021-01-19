@@ -24,7 +24,7 @@ Public Class block_flow_adapter
     Public Function send(ByVal buff() As Byte,
                          ByVal offset As UInt32,
                          ByVal count As UInt32,
-                         ByVal sent As pointer(Of UInt32)) As event_comb Implements flow_injector.send
+                         ByVal sent As ref(Of UInt32)) As event_comb Implements flow_injector.send
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = underlying_device.send(buff, offset, count)
@@ -41,11 +41,11 @@ Public Class block_flow_adapter
     Public Function receive(ByVal buff() As Byte,
                             ByVal offset As UInt32,
                             ByVal count As UInt32,
-                            ByVal result As pointer(Of UInt32)) As event_comb Implements flow_pump.receive
+                            ByVal result As ref(Of UInt32)) As event_comb Implements flow_pump.receive
         Return pump.receive(buff, offset, count, result)
     End Function
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
         Return underlying_device.sense(pending, timeout_ms)
     End Function

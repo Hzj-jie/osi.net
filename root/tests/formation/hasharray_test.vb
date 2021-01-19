@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utt
 
-Public Class hasharray_case(Of T)
+Public NotInheritable Class hasharray_case(Of T)
     Inherits random_run_case
 
     Private ReadOnly h As hasharray(Of T)
@@ -44,7 +44,7 @@ Public Class hasharray_case(Of T)
     Private Sub insert_or_emplace(ByVal insert As Boolean)
         Dim n As T = Nothing
         n = rnd(Of T)()
-        Dim p As pair(Of hasharray(Of T).iterator, Boolean) = Nothing
+        Dim p As tuple(Of hasharray(Of T).iterator, Boolean) = Nothing
         p = If(insert, h.insert(n), h.emplace(n))
         assertion.is_not_null(p)
         If p.second Then

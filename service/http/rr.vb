@@ -25,7 +25,7 @@ Public Module _rr
         x.ContentLength() = l
     End Sub
 
-    Public Function fetch_stream(ByVal x As HttpWebRequest, ByVal os As pointer(Of Stream)) As event_comb
+    Public Function fetch_stream(ByVal x As HttpWebRequest, ByVal os As ref(Of Stream)) As event_comb
         assert(Not x Is Nothing)
         Return x.get_request_stream(os)
     End Function
@@ -56,7 +56,7 @@ Public Module _rr
         x.ContentLength64() = l
     End Sub
 
-    Public Function fetch_stream(ByVal x As HttpListenerResponse, ByVal os As pointer(Of Stream)) As event_comb
+    Public Function fetch_stream(ByVal x As HttpListenerResponse, ByVal os As ref(Of Stream)) As event_comb
         assert(Not x Is Nothing)
         Return sync_async(Sub()
                               eva(os, x.OutputStream())
@@ -80,7 +80,7 @@ Public Module _rr
 
 
     Public Function write_to_string(Of T)(ByVal i As T,
-                                          ByVal p As pointer(Of String),
+                                          ByVal p As ref(Of String),
                                           ByVal enc As Text.Encoding,
                                           ByVal buff_size As UInt32,
                                           ByVal receive_rate_sec As UInt32,
@@ -88,10 +88,10 @@ Public Module _rr
                                           ByVal fetch_headers As Func(Of T, WebHeaderCollection),
                                           ByVal fetch_stream As Func(Of T, Stream),
                                           ByVal get_content_length As Func(Of T, Int64)) As event_comb
-        Dim r As pointer(Of Byte()) = Nothing
+        Dim r As ref(Of Byte()) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of Byte())()
+                                  r = New ref(Of Byte())()
                                   ec = write_to_bytes(i,
                                                       r,
                                                       buff_size,
@@ -111,7 +111,7 @@ Public Module _rr
     End Function
 
     Public Function write_to_bytes(Of T)(ByVal i As T,
-                                         ByVal p As pointer(Of Byte()),
+                                         ByVal p As ref(Of Byte()),
                                          ByVal buff_size As UInt32,
                                          ByVal receive_rate_sec As UInt32,
                                          ByVal max_content_length As UInt64,
@@ -119,11 +119,11 @@ Public Module _rr
                                          ByVal fetch_stream As Func(Of T, Stream),
                                          ByVal get_content_length As Func(Of T, Int64)) As event_comb
         Dim o As MemoryStream = Nothing
-        Dim r As pointer(Of UInt64) = Nothing
+        Dim r As ref(Of UInt64) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   o = New MemoryStream()
-                                  r = New pointer(Of UInt64)()
+                                  r = New ref(Of UInt64)()
                                   ec = write_to_stream(i,
                                                        o,
                                                        buff_size,
@@ -151,7 +151,7 @@ Public Module _rr
                                           ByVal receive_rate_sec As UInt32,
                                           ByVal send_rate_sec As UInt32,
                                           ByVal max_content_length As UInt64,
-                                          ByVal result As pointer(Of UInt64),
+                                          ByVal result As ref(Of UInt64),
                                           ByVal fetch_headers As Func(Of T, WebHeaderCollection),
                                           ByVal fetch_stream As Func(Of T, Stream),
                                           ByVal get_content_length As Func(Of T, Int64)) As event_comb
@@ -204,13 +204,13 @@ Public Module _rr
     Public Function send(Of T)(ByVal o As T,
                                ByVal count As UInt64,
                                ByVal set_content_length As Action(Of T, Int64),
-                               ByVal fetch_stream As Func(Of T, pointer(Of Stream), event_comb),
+                               ByVal fetch_stream As Func(Of T, ref(Of Stream), event_comb),
                                ByVal send_to As Func(Of Stream, UInt64, event_comb)) As event_comb
         assert(Not set_content_length Is Nothing)
         assert(Not fetch_stream Is Nothing)
         assert(Not send_to Is Nothing)
         Dim ec As event_comb = Nothing
-        Dim os As pointer(Of Stream) = Nothing
+        Dim os As ref(Of Stream) = Nothing
         Return New event_comb(Function() As Boolean
                                   If o Is Nothing Then
                                       Return False
@@ -219,7 +219,7 @@ Public Module _rr
                                       If count = 0 Then
                                           Return goto_end()
                                       Else
-                                          os = New pointer(Of Stream)()
+                                          os = New ref(Of Stream)()
                                           ec = fetch_stream(o, os)
                                           Return waitfor(ec) AndAlso
                                                  goto_next()
@@ -249,7 +249,7 @@ Public Module _rr
                                            ByVal o As T,
                                            ByVal send_rate_sec As UInt32,
                                            ByVal set_content_length As Action(Of T, Int64),
-                                           ByVal fetch_stream As Func(Of T, pointer(Of Stream), event_comb)) _
+                                           ByVal fetch_stream As Func(Of T, ref(Of Stream), event_comb)) _
                                           As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -275,14 +275,14 @@ Public Module _rr
                                          goto_end()
                               End Function)
     End Function
-    
+
     Public Function read_from_bytes(Of T)(ByVal i() As Byte,
                                           ByVal offset As UInt32,
                                           ByVal count As UInt64,
                                           ByVal o As T,
                                           ByVal send_rate_sec As UInt32,
                                           ByVal set_content_length As Action(Of T, Int64),
-                                          ByVal fetch_stream As Func(Of T, pointer(Of Stream), event_comb)) _
+                                          ByVal fetch_stream As Func(Of T, ref(Of Stream), event_comb)) _
                                          As event_comb
         Return send(o,
                     count,
@@ -304,7 +304,7 @@ Public Module _rr
                                            ByVal receive_rate_sec As UInt32,
                                            ByVal send_rate_sec As UInt32,
                                            ByVal set_content_length As Action(Of T, Int64),
-                                           ByVal fetch_stream As Func(Of T, pointer(Of Stream), event_comb),
+                                           ByVal fetch_stream As Func(Of T, ref(Of Stream), event_comb),
                                            ByVal close_input_stream As Boolean) As event_comb
         Return send(o,
                     count,
@@ -327,19 +327,19 @@ Public Module _rr
                                            ByVal receive_rate_sec As UInt32,
                                            ByVal send_rate_sec As UInt32,
                                            ByVal set_chunked_transfer As Action(Of T),
-                                           ByVal fetch_stream As Func(Of T, pointer(Of Stream), event_comb),
-                                           ByVal result As pointer(Of UInt64),
+                                           ByVal fetch_stream As Func(Of T, ref(Of Stream), event_comb),
+                                           ByVal result As ref(Of UInt64),
                                            ByVal close_input_stream As Boolean) As event_comb
         assert(Not set_chunked_transfer Is Nothing)
         assert(Not fetch_stream Is Nothing)
         Dim ec As event_comb = Nothing
-        Dim os As pointer(Of Stream) = Nothing
+        Dim os As ref(Of Stream) = Nothing
         Return New event_comb(Function() As Boolean
                                   If i Is Nothing OrElse o Is Nothing Then
                                       Return False
                                   Else
                                       set_chunked_transfer(o)
-                                      os = New pointer(Of Stream)()
+                                      os = New ref(Of Stream)()
                                       ec = fetch_stream(o, os)
                                       Return waitfor(ec) AndAlso
                                              goto_next()

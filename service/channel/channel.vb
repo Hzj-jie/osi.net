@@ -81,7 +81,7 @@ Partial Public Class channel
 
     Private Sub receive()
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of command) = Nothing
+        Dim p As ref(Of command) = Nothing
         Dim o As command = Nothing
         assert_begin(New event_comb(Function() As Boolean
                                         If lifetime.marked() Then

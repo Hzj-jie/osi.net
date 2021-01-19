@@ -1,13 +1,16 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.connector
-Imports osi.root.utils
 Imports osi.root.constants
 Imports osi.service.cache.constants.mapheap_cache
 
 'for test only
-Friend Class map_map_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
+Friend NotInheritable Class map_map_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     Implements islimcache2(Of KEY_T, VALUE_T)
 
     Private ReadOnly kv As map(Of KEY_T, VALUE_T)
@@ -54,26 +57,8 @@ Friend Class map_map_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
         If kv.erase(key) Then
             assert(kt.erase(key))
             Return True
-        Else
-            Return False
         End If
-    End Function
-
-    Public Function foreach(ByVal d As _do(Of KEY_T, VALUE_T, Boolean, Boolean)) As Boolean _
-                           Implements islimcache(Of KEY_T, VALUE_T).foreach
-        If d Is Nothing Then
-            Return False
-        Else
-            Return kv.foreach(Function(ByRef k As KEY_T, ByRef v As VALUE_T, ByRef c As Boolean) As Boolean
-                                  If retired(kt.find(k)) Then
-                                      assert([erase](k))
-                                      c = True
-                                      Return True
-                                  Else
-                                      Return d(k, v, c)
-                                  End If
-                              End Function)
-        End If
+        Return False
     End Function
 
     Public Function [get](ByVal key As KEY_T, ByRef value As VALUE_T) As Boolean _
@@ -85,21 +70,19 @@ Friend Class map_map_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
                 assert(kt.find(key) = kt.end())
             End If
             Return False
-        Else
-            Dim j As map(Of KEY_T, Int64).iterator = Nothing
-            j = kt.find(key)
-            assert(j <> kt.end())
-            If retired(j) Then
-                assert([erase](key))
-                Return False
-            Else
-                copy(value, (+i).second)
-                If update_ticks_when_refer Then
-                    update_refer_ticks(key)
-                End If
-                Return True
-            End If
         End If
+        Dim j As map(Of KEY_T, Int64).iterator = Nothing
+        j = kt.find(key)
+        assert(j <> kt.end())
+        If retired(j) Then
+            assert([erase](key))
+            Return False
+        End If
+        copy(value, (+i).second)
+        If update_ticks_when_refer Then
+            update_refer_ticks(key)
+        End If
+        Return True
     End Function
 
     Public Sub [set](ByVal key As KEY_T, ByVal value As VALUE_T) Implements islimcache(Of KEY_T, VALUE_T).set
@@ -108,14 +91,12 @@ Friend Class map_map_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
         If size() > max_size Then
             Dim old_key As KEY_T = Nothing
             Dim old As Int64 = max_int64
-            assert(kt.foreach(Function(ByRef k As KEY_T, ByRef v As Int64, ByRef c As Boolean) As Boolean
-                                  If v < old Then
-                                      old = v
-                                      old_key = k
-                                  End If
-                                  c = True
-                                  Return True
-                              End Function))
+            kt.stream().foreach(kt.on_pair(Sub(ByVal k As KEY_T, ByVal v As Int64)
+                                               If v < old Then
+                                                   old = v
+                                                   old_key = k
+                                               End If
+                                           End Sub))
             assert(Not old_key Is Nothing)
             assert([erase](old_key))
             assert(size() = max_size)

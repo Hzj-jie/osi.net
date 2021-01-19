@@ -33,20 +33,20 @@ Public Class sync_indicator_adapter
 End Class
 
 Public Interface indicator
-    Function indicate(ByVal pending As pointer(Of Boolean)) As event_comb
+    Function indicate(ByVal pending As ref(Of Boolean)) As event_comb
 End Interface
 
 Public Class indicator_adapter
     Implements indicator
 
-    Private ReadOnly f As Func(Of pointer(Of Boolean), event_comb)
+    Private ReadOnly f As Func(Of ref(Of Boolean), event_comb)
 
-    Public Sub New(ByVal f As Func(Of pointer(Of Boolean), event_comb))
+    Public Sub New(ByVal f As Func(Of ref(Of Boolean), event_comb))
         assert(Not f Is Nothing)
         Me.f = f
     End Sub
 
-    Public Function indicate(ByVal pending As pointer(Of Boolean)) As event_comb Implements indicator.indicate
+    Public Function indicate(ByVal pending As ref(Of Boolean)) As event_comb Implements indicator.indicate
         Return f(pending)
     End Function
 End Class
@@ -54,21 +54,21 @@ End Class
 Public Interface sensor
     'pending shows whether there are pending data to read
     'if timeout_ms < 0, the procedure will not return until there is data arrived, i.e. pending = true
-    Function sense(ByVal pending As pointer(Of Boolean),
+    Function sense(ByVal pending As ref(Of Boolean),
                    ByVal timeout_ms As Int64) As event_comb
 End Interface
 
 Public Class sensor_adapter
     Implements sensor
 
-    Private ReadOnly f As Func(Of pointer(Of Boolean), Int64, event_comb)
+    Private ReadOnly f As Func(Of ref(Of Boolean), Int64, event_comb)
 
-    Public Sub New(ByVal f As Func(Of pointer(Of Boolean), Int64, event_comb))
+    Public Sub New(ByVal f As Func(Of ref(Of Boolean), Int64, event_comb))
         assert(Not f Is Nothing)
         Me.f = f
     End Sub
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
         Return f(pending, timeout_ms)
     End Function
@@ -83,7 +83,7 @@ Public Module _sensor
         Return New indicator_sensor_adapter(New sync_indicator_adapter(f))
     End Function
 
-    <Extension()> Public Function as_sensor(ByVal f As Func(Of pointer(Of Boolean), event_comb)) As sensor
+    <Extension()> Public Function as_sensor(ByVal f As Func(Of ref(Of Boolean), event_comb)) As sensor
         Return New indicator_sensor_adapter(New indicator_adapter(f))
     End Function
 
@@ -91,9 +91,9 @@ Public Module _sensor
                                         ByVal timeout_ms As Int64) As event_comb
         assert(Not this Is Nothing)
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of Boolean) = Nothing
+        Dim p As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
-                                  p = New pointer(Of Boolean)()
+                                  p = New ref(Of Boolean)()
                                   ec = this.sense(p, timeout_ms)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -109,9 +109,9 @@ Public Module _sensor
         assert(Not this Is Nothing)
 #If DEBUG Then
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of Boolean) = Nothing
+        Dim p As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
-                                  p = New pointer(Of Boolean)()
+                                  p = New ref(Of Boolean)()
                                   ec = this.sense(p, npos)
                                   Return waitfor(ec) AndAlso
                                          goto_next()

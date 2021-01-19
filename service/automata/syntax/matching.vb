@@ -72,14 +72,14 @@ Partial Public NotInheritable Class syntaxer
             End If
             s(type) = pos
 
-            Using deferring.to(Sub()
-                                   assert(s(type) = pos)
-                                   If previous Then
-                                       s(type) = (+previous)
-                                   Else
-                                       assert(s.erase(type))
-                                   End If
-                               End Sub)
+            Using defer.to(Sub()
+                               assert(s(type) = pos)
+                               If previous Then
+                                   s(type) = (+previous)
+                               Else
+                                   assert(s.erase(type))
+                               End If
+                           End Sub)
                 Return f()
             End Using
         End Function

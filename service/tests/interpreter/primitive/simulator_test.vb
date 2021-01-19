@@ -35,7 +35,7 @@ Namespace primitive
                 If Not execute(cases(i).second, sim) Then
                     Return False
                 End If
-                Dim p As pointer(Of Byte()) = Nothing
+                Dim p As ref(Of Byte()) = Nothing
                 p = sim.access_stack(data_ref.abs(0))
                 assertion.array_equal(+p, cases(i).first)
             Next

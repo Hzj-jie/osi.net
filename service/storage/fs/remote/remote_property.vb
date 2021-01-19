@@ -66,7 +66,7 @@ Public Class remote_property
         Return new_command().attach(action.iproperty_get)
     End Function
 
-    Public Function [get](ByVal i As pointer(Of Byte())) As event_comb Implements iproperty.get
+    Public Function [get](ByVal i As ref(Of Byte())) As event_comb Implements iproperty.get
         Return q(get_command(),
                  Function(c As command) As Boolean
                      Return Not c Is Nothing AndAlso

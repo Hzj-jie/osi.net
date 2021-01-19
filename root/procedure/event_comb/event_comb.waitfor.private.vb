@@ -106,7 +106,7 @@ Partial Public Class event_comb
     End Function
 
     Private Function _waitfor(ByVal [try] As Func(Of Boolean),
-                              ByVal try_result As pointer(Of Boolean),
+                              ByVal try_result As ref(Of Boolean),
                               ByVal timeout_ms As Int64) As Boolean
         If try_result Is Nothing Then
             Return _waitfor([try], timeout_ms)
@@ -135,9 +135,9 @@ Partial Public Class event_comb
                    If se.mark_in_use() Then
                        '1, put it back to selected threadpool
                        '2, no matter how the _wait() called, it would be safe
-                       thread_pool().queue_job(Sub()
-                                                   [resume](Me)
-                                               End Sub)
+                       thread_pool().push(Sub()
+                                              [resume](Me)
+                                          End Sub)
                    End If
                End Sub
     End Function
@@ -149,9 +149,9 @@ Partial Public Class event_comb
         Return Sub()
                    '1, put it back to selected threadpool
                    '2, no matter how the _wait() called, it would be safe
-                   thread_pool().queue_job(Sub()
-                                               [resume](Me)
-                                           End Sub)
+                   thread_pool().push(Sub()
+                                          [resume](Me)
+                                      End Sub)
                End Sub
     End Function
 
@@ -192,7 +192,7 @@ Partial Public Class event_comb
     End Function
 
     Private Shared Function _do_void(Of T)(ByVal d As Func(Of T),
-                                           ByVal r As pointer(Of T),
+                                           ByVal r As ref(Of T),
                                            ByRef v As Action) As Boolean
         If d Is Nothing Then
             Return False
@@ -204,7 +204,7 @@ Partial Public Class event_comb
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function _waitfor(Of T)(ByVal d As Func(Of T), ByVal r As pointer(Of T)) As Boolean
+    Private Function _waitfor(Of T)(ByVal d As Func(Of T), ByVal r As ref(Of T)) As Boolean
         Dim v As Action = Nothing
         If _do_void(d, r, v) Then
             Return _waitfor(v)
@@ -214,7 +214,7 @@ Partial Public Class event_comb
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _waitfor(Of T)(ByVal d As Func(Of T),
-                                    ByVal r As pointer(Of T),
+                                    ByVal r As ref(Of T),
                                     ByVal timeout_ms As Int64) As Boolean
         Dim v As Action = Nothing
         If _do_void(d, r, v) Then
@@ -326,8 +326,8 @@ Partial Public Class event_comb
         If i.marked() Then
             Return True
         End If
-        Dim e As pointer(Of stopwatch.event) = Nothing
-        e = New pointer(Of stopwatch.event)()
+        Dim e As ref(Of stopwatch.event) = Nothing
+        e = New ref(Of stopwatch.event)()
         Dim cb As Action = Nothing
         cb = _multiple_resume_wait()
         e.set(stopwatch.push(timeout_ms, cb))

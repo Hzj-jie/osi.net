@@ -17,7 +17,7 @@ Public Module _synchronize
     <Extension()> Public Function locked(ByVal i As istrkeyvt,
                                          ByVal key As String,
                                          ByVal d As Func(Of event_comb),
-                                         Optional ByVal result As pointer(Of Boolean) = Nothing,
+                                         Optional ByVal result As ref(Of Boolean) = Nothing,
                                          Optional ByVal wait_ms As Int64 = npos) As event_comb
         Dim r As Boolean = False
         Dim ec As event_comb = Nothing
@@ -59,7 +59,7 @@ Public Module _synchronize
 
     <Extension()> Public Function lock(ByVal i As istrkeyvt,
                                        ByVal key As String,
-                                       Optional ByVal result As pointer(Of Boolean) = Nothing,
+                                       Optional ByVal result As ref(Of Boolean) = Nothing,
                                        Optional ByVal wait_ms As Int64 = npos) As event_comb
         Dim start_ms As Int64 = 0
         Dim ec As event_comb = Nothing
@@ -94,7 +94,7 @@ Public Module _synchronize
 
     <Extension()> Public Function release(ByVal i As istrkeyvt,
                                           ByVal key As String,
-                                          Optional ByVal result As pointer(Of Boolean) = Nothing) As event_comb
+                                          Optional ByVal result As ref(Of Boolean) = Nothing) As event_comb
         Return event_comb.chain_before(Function() As Boolean
                                            Return Not i Is Nothing
                                        End Function,

@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Namespace slimlock
     Public Interface islimlock
         Sub wait()

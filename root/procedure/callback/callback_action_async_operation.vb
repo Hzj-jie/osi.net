@@ -49,11 +49,11 @@ Public Class callback_action_async_operation
         Me.new(begin, end_d, Nothing, timeoutticks, 1)
     End Sub
 
-    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)> _
+    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
     Private Overloads Shared Function ctor(Of T)(ByVal begin As _do(Of AsyncCallback, Object, IAsyncResult),
                                                  ByVal end_d As _do(Of IAsyncResult, T),
                                                  ByVal end_rtn As Func(Of Boolean),
-                                                 ByVal result As pointer(Of T),
+                                                 ByVal result As ref(Of T),
                                                  ByVal timeoutticks As Int64,
                                                  ByVal additionalJump As Int64) As callback_action
         Return New callback_action_async_operation(BeginAsyncOperation(begin, end_d, result),
@@ -62,31 +62,31 @@ Public Class callback_action_async_operation
                                                    additionalJump + 1)
     End Function
 
-    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)> _
+    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
     Public Overloads Shared Function ctor(Of T)(ByVal begin As _do(Of AsyncCallback, Object, IAsyncResult),
                                                 ByVal end_d As _do(Of IAsyncResult, T),
                                                 ByVal end_rtn As Func(Of Boolean),
-                                                Optional ByVal result As pointer(Of T) = Nothing,
+                                                Optional ByVal result As ref(Of T) = Nothing,
                                                 Optional ByVal timeoutticks As Int64 = npos) As callback_action
         Return ctor(begin, end_d, end_rtn, result, timeoutticks, 1)
     End Function
 
-    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)> _
+    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
     Public Overloads Shared Function ctor(Of T)(ByVal begin As _do(Of AsyncCallback, Object, IAsyncResult),
                                                 ByVal end_d As _do(Of IAsyncResult, T),
-                                                Optional ByVal result As pointer(Of T) = Nothing,
+                                                Optional ByVal result As ref(Of T) = Nothing,
                                                 Optional ByVal timeoutticks As Int64 = npos) As callback_action
         Return ctor(begin, end_d, Nothing, result, timeoutticks, 1)
     End Function
 
-    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)> _
+    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
     Public Overloads Shared Function ctor(Of T)(ByVal begin As _do(Of AsyncCallback, Object, IAsyncResult),
                                                 ByVal end_d As _do(Of IAsyncResult, T),
                                                 ByVal timeoutticks As Int64) As callback_action
         Return ctor(begin, end_d, Nothing, Nothing, timeoutticks, 1)
     End Function
 
-    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)> _
+    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
     Public Overloads Shared Function ctor(ByVal begin As _do(Of AsyncCallback, Object, IAsyncResult),
                                           ByVal end_d As void(Of IAsyncResult),
                                           Optional ByVal end_rtn As Func(Of Boolean) = Nothing,
@@ -117,7 +117,7 @@ Public Class callback_action_async_operation
     End Property
 
     Private Shared Function BeginAsyncOperation(ByVal begin As _do(Of AsyncCallback,
-                                                                   Object, 
+                                                                   Object,
                                                                    IAsyncResult),
                                                 ByVal end_d As void(Of IAsyncResult)) As Func(Of Boolean)
         If end_d Is Nothing Then
@@ -130,10 +130,10 @@ Public Class callback_action_async_operation
     End Function
 
     Private Shared Function BeginAsyncOperation(Of T)(ByVal begin As _do(Of AsyncCallback,
-                                                                   Object, 
+                                                                   Object,
                                                                    IAsyncResult),
                                                       ByVal end_d As _do(Of IAsyncResult, T),
-                                                      ByVal result As pointer(Of T)) As Func(Of Boolean)
+                                                      ByVal result As ref(Of T)) As Func(Of Boolean)
         If begin Is Nothing OrElse end_d Is Nothing Then
             Return todo(True)
         Else

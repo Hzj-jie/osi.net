@@ -47,15 +47,15 @@ Public NotInheritable Class token2_challenger(Of COLLECTION, CONNECTION)
         Me.s = s
     End Sub
 
-    Protected Overrides Function question(ByVal h As herald, ByVal accepted As pointer(Of Boolean)) As event_comb
+    Protected Overrides Function question(ByVal h As herald, ByVal accepted As ref(Of Boolean)) As event_comb
         assert(Not h Is Nothing)
         assert(Not accepted Is Nothing)
         assert(Not +accepted)
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of command) = Nothing
+        Dim r As ref(Of command) = Nothing
         Dim code As piece = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of command)()
+                                  r = New ref(Of command)()
                                   ec = h.wait_and_receive(info.response_timeout_ms(p), r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()

@@ -14,15 +14,13 @@ Option Strict On
 'so change set_case.vbp instead of this file
 
 
-#Const pair_return_insert = True
-
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utt
-Imports osi.root.delegates
 
-Friend Class oset_case
+Friend NotInheritable Class oset_case
     Inherits random_run_case
 
     Private ReadOnly s As [oset](Of String) = Nothing
@@ -101,8 +99,8 @@ Friend Class oset_case
     Private Sub insert()
         Dim k As String = Nothing
         k = rnd_key()
-#If pair_return_insert Then
-        Dim r As pair(Of [oset](Of String).iterator, Boolean) = Nothing
+#If True Then
+        Dim r As tuple(Of [oset](Of String).iterator, Boolean) = Nothing
         r = s.insert(k)
         If assertion.is_not_null(r) Then
             assertion.equal(r.second, s.find(k) <> s.end(), "s.insert(", k, ") <> s.find")
@@ -171,7 +169,7 @@ Friend Class oset_case
     End Sub
 End Class
 
-Public Class oset_perf
+Public NotInheritable Class oset_perf
     Inherits performance_case_wrapper
 
     Private Shared Function round() As Int64
@@ -187,7 +185,7 @@ Public Class oset_perf
     End Function
 End Class
 
-Public Class oset_test
+Public NotInheritable Class oset_test
     Inherits repeat_case_wrapper
 
     Private Shared Function round() As Int64

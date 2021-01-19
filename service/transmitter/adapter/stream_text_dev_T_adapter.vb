@@ -16,17 +16,13 @@ Public Class stream_text_dev_T_adapter(Of T)
     Implements dev_T(Of T)
 
     Private ReadOnly enc As Encoding
-    Private ReadOnly T_string As string_serializer(Of T)
 
-    Public Sub New(ByVal st As stream_text,
-                   Optional ByVal enc As Encoding = Nothing,
-                   Optional ByVal T_string As string_serializer(Of T) = Nothing)
+    Public Sub New(ByVal st As stream_text, Optional ByVal enc As Encoding = Nothing)
         MyBase.New(st)
         Me.enc = If(enc Is Nothing, default_encoding, enc)
-        Me.T_string = +T_string
     End Sub
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
         Return underlying_device.sense(pending, timeout_ms)
     End Function
@@ -36,7 +32,7 @@ Public Class stream_text_dev_T_adapter(Of T)
         Dim ms As MemoryStream = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim s As String = Nothing
-                                  s = T_string.to_str(i)
+                                  s = string_serializer.to_str(i)
                                   If memory_stream.[New](s, enc, ms) Then
                                       assert(Not ms Is Nothing)
                                       ec = underlying_device.send(ms)
@@ -55,7 +51,7 @@ Public Class stream_text_dev_T_adapter(Of T)
                               End Function)
     End Function
 
-    Public Function receive(ByVal o As pointer(Of T)) As event_comb Implements dev_T(Of T).receive
-        Return underlying_device.receive(o, T_string)
+    Public Function receive(ByVal o As ref(Of T)) As event_comb Implements dev_T(Of T).receive
+        Return underlying_device.receive(o)
     End Function
 End Class

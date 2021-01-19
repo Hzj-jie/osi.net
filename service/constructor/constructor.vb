@@ -12,18 +12,18 @@ Imports osi.service.argument
 
 ' For client to directly construct an instance of T from var. i.e. constructor(Of T).resolve(v, r)
 Public NotInheritable Class constructor(Of T)
-    Private Shared ReadOnly lt As unique_strong_map(Of String, Func(Of var, pointer(Of T), event_comb))
-    Private Shared l As Func(Of var, pointer(Of T), event_comb)
+    Private Shared ReadOnly lt As unique_strong_map(Of String, Func(Of var, ref(Of T), event_comb))
+    Private Shared l As Func(Of var, ref(Of T), event_comb)
 
     Shared Sub New()
-        lt = New unique_strong_map(Of String, Func(Of var, pointer(Of T), event_comb))()
+        lt = New unique_strong_map(Of String, Func(Of var, ref(Of T), event_comb))()
     End Sub
 
     Public Shared Function empty() As Boolean
         Return lt.empty() AndAlso l Is Nothing
     End Function
 
-    Public Shared Function register(ByVal allocator As Func(Of var, pointer(Of T), event_comb)) As Boolean
+    Public Shared Function register(ByVal allocator As Func(Of var, ref(Of T), event_comb)) As Boolean
         If allocator Is Nothing Then
             Return False
         Else
@@ -41,7 +41,7 @@ Public NotInheritable Class constructor(Of T)
     End Function
 
     Public Shared Function register(ByVal type As String,
-                                    ByVal allocator As Func(Of var, pointer(Of T), event_comb)) As Boolean
+                                    ByVal allocator As Func(Of var, ref(Of T), event_comb)) As Boolean
         If String.IsNullOrEmpty(type) OrElse allocator Is Nothing Then
             Return False
         Else
@@ -58,13 +58,13 @@ Public NotInheritable Class constructor(Of T)
         lt.clear()
     End Sub
 
-    Public Shared Function resolve(ByVal v As var, ByVal o As pointer(Of T)) As event_comb
+    Public Shared Function resolve(ByVal v As var, ByVal o As ref(Of T)) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If v Is Nothing Then
                                       Return False
                                   End If
-                                  Dim allocator As Func(Of var, pointer(Of T), event_comb) = Nothing
+                                  Dim allocator As Func(Of var, ref(Of T), event_comb) = Nothing
                                   If lt.get(v("type"), allocator) OrElse
                                      (Not l Is Nothing AndAlso eva(allocator, l)) Then
                                       assert(Not allocator Is Nothing)
@@ -85,11 +85,11 @@ Public NotInheritable Class constructor(Of T)
                               End Function)
     End Function
 
-    Public Shared Function resolve(Of DT As T)(ByVal v As var, ByVal o As pointer(Of T)) As event_comb
+    Public Shared Function resolve(Of DT As T)(ByVal v As var, ByVal o As ref(Of T)) As event_comb
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of DT) = Nothing
+        Dim r As ref(Of DT) = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of DT)()
+                                  r = New ref(Of DT)()
                                   ec = constructor(Of DT).resolve(v, r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -101,11 +101,11 @@ Public NotInheritable Class constructor(Of T)
                               End Function)
     End Function
 
-    Public Shared Function resolve(Of RT As T)(ByVal v As var, ByVal o As pointer(Of RT)) As event_comb
+    Public Shared Function resolve(Of RT As T)(ByVal v As var, ByVal o As ref(Of RT)) As event_comb
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of T) = Nothing
+        Dim r As ref(Of T) = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of T)()
+                                  r = New ref(Of T)()
                                   ec = resolve(v, r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()

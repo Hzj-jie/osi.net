@@ -44,7 +44,7 @@ Partial Public Class accepter
 
         Private Sub accept(ByVal c As TcpClient)
             assert(Not c Is Nothing)
-            Dim tp As pointer(Of powerpoint) = Nothing
+            Dim tp As ref(Of powerpoint) = Nothing
             Dim ec As event_comb = Nothing
             assert_begin(New event_comb(Function() As Boolean
                                             If d.empty() Then

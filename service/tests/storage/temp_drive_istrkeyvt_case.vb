@@ -44,7 +44,7 @@ Public MustInherit Class temp_drive_istrkeyvt_case
         Return Nothing
     End Function
 
-    Protected Overridable Function create_valid_istrkeyvt(ByVal p As pointer(Of istrkeyvt)) As event_comb
+    Protected Overridable Function create_valid_istrkeyvt(ByVal p As ref(Of istrkeyvt)) As event_comb
         Return New event_comb(Function() As Boolean
                                   Return eva(p, create_valid_istrkeyvt()) AndAlso
                                          goto_end()
@@ -55,7 +55,7 @@ Public MustInherit Class temp_drive_istrkeyvt_case
         Return valid
     End Function
 
-    Protected NotOverridable Overrides Function create_istrkeyvt(ByVal p As pointer(Of istrkeyvt)) As event_comb
+    Protected NotOverridable Overrides Function create_istrkeyvt(ByVal p As ref(Of istrkeyvt)) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   assert(valid)

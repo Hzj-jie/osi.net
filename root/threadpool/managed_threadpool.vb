@@ -3,16 +3,13 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports System.Threading
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports tp = System.Threading.ThreadPool
 
-Public Class managed_threadpool
-    Inherits threadpool
-
+Public NotInheritable Class managed_threadpool
     Private Sub New(Optional ByVal thread_count As UInt32 = uint32_0)
-        MyBase.New()
 #If 0 Then
         If thread_count = 0 Then
             thread_count = default_thread_count
@@ -21,60 +18,93 @@ Public Class managed_threadpool
 #End If
     End Sub
 
-    Public Overrides Property thread_count() As UInt32
-        Get
-            Dim ft As Int32 = 0
-            Dim bt As Int32 = 0
-            tp.GetMaxThreads(ft, bt)
-
-            Dim aft As Int32 = 0
-            Dim abt As Int32 = 0
-            tp.GetAvailableThreads(aft, abt)
-
-            Dim mft As Int32 = 0
-            Dim mbt As Int32 = 0
-            tp.GetMinThreads(mft, mbt)
-
-            Dim r As Int32 = 0
-            r = ft + bt - aft - abt
-            r = max(r, mft + mbt)
-            If r <= 0 Then
-                Return 0
-            Else
-                Return CUInt(r)
-            End If
-        End Get
-        Set(ByVal value As UInt32)
-            ' No effect for .net managed thread pool
-#If 0 Then
-            Dim bt As Int32 = 0
-            tp.GetMaxThreads(Nothing, bt)
-            tp.SetMaxThreads(value, bt)
-            tp.GetMinThreads(Nothing, bt)
-            tp.SetMinThreads(value, bt)
-#End If
-        End Set
-    End Property
-
-    Protected Overrides Function managed_threads() As Thread()
-        Return Nothing
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function in_managed_thread() As Boolean
+        Return True
     End Function
 
-    Protected Overrides Sub queue_job(ByVal wi As work_info)
-        queue_in_managed_threadpool(AddressOf work_on, wi)
-    End Sub
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function running_in_current_thread() As Boolean
+        Return True
+    End Function
 
-    Protected Overrides Function stoppable() As Boolean
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function thread_count() As UInt32
+        Dim ft As Int32 = 0
+        Dim bt As Int32 = 0
+        tp.GetMaxThreads(ft, bt)
+
+        Dim aft As Int32 = 0
+        Dim abt As Int32 = 0
+        tp.GetAvailableThreads(aft, abt)
+
+        Dim mft As Int32 = 0
+        Dim mbt As Int32 = 0
+        tp.GetMinThreads(mft, mbt)
+
+        Dim r As Int32 = 0
+        r = ft + bt - aft - abt
+        r = max(r, mft + mbt)
+        If r <= 0 Then
+            Return 0
+        End If
+        Return CUInt(r)
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function stopping() As Boolean
         Return False
     End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function [stop]() As Boolean
+        Return True
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function idle() As Boolean
+        Return True
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function wait(ByVal ms As Int64) As Boolean
+        Return False
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Sub wait()
+    End Sub
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function execute() As Boolean
+        Return False
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function push(ByVal v As Action) As Boolean
+        queue_in_managed_threadpool(v)
+        Return True
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function join(ByVal ms As Int64) As Boolean
+        Return False
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Sub join()
+    End Sub
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Operator +(ByVal this As managed_threadpool, ByVal that As Action) As managed_threadpool
+        assert(Not this Is Nothing)
+        this.push(that)
+        Return this
+    End Operator
 
     Public Shared ReadOnly [global] As managed_threadpool = Nothing
 
     Shared Sub New()
         [global] = New managed_threadpool()
-    End Sub
-
-    Public Shared Shadows Sub register()
-        threadpool.register([global])
     End Sub
 End Class

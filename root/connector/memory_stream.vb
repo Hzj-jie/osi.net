@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports System.IO
+Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
@@ -102,6 +103,14 @@ Public Module _memory_stream
         Return False
     End Function
 
+    <Extension()> Public Function read_to_end(ByVal this As MemoryStream) As Byte()
+        this.assert_valid()
+        Dim r() As Byte = Nothing
+        ReDim r(CInt(this.unread_length() - 1))
+        assert(this.read(r))
+        Return r
+    End Function
+
     <Extension()> Public Function write_byte(ByVal this As MemoryStream, ByVal b As Byte) As Boolean
         assert(Not this Is Nothing)
         Try
@@ -118,20 +127,133 @@ Public Module _memory_stream
     End Function
 
     <Extension()> Public Function dump_to_file(ByVal this As MemoryStream, ByVal o As String) As Boolean
+        assert(Not this Is Nothing)
         Try
-            File.WriteAllBytes(o, this.export())
+            File.WriteAllBytes(o, this.ToArray())
             Return True
-        Catch
+        Catch ex As Exception
+            raise_error(error_type.warning, "failed to write to ", o, ", ex ", ex)
+        End Try
+        Return False
+    End Function
+
+    <Extension()> Public Function zip_to_file(ByVal this As MemoryStream, ByVal o As String) As Boolean
+        assert(Not this Is Nothing)
+        Dim b() As Byte = Nothing
+        b = this.ToArray()
+        Try
+            Using fs As FileStream = New FileStream(o, FileMode.Create),
+                  gz As GZipStream = New GZipStream(fs, CompressionMode.Compress, True)
+                gz.Write(b, 0, b.array_size_i())
+            End Using
+            Return True
+        Catch ex As Exception
+            raise_error(error_type.warning, "failed to write to ", o, ", ex ", ex)
         End Try
         Return False
     End Function
 
     <Extension()> Public Function read_from_file(ByVal this As MemoryStream, ByVal i As String) As Boolean
+        assert(Not this Is Nothing)
         Try
             Return this.write(File.ReadAllBytes(i))
-        Catch
+        Catch ex As Exception
+            raise_error(error_type.warning, "failed to read from ", i, ", ex ", ex)
         End Try
         Return False
+    End Function
+
+    <Extension()> Public Function unzip_from_file(ByVal this As MemoryStream, ByVal i As String) As Boolean
+        assert(Not this Is Nothing)
+        Try
+            Using fs As FileStream = New FileStream(i, FileMode.Open),
+                  gz As GZipStream = New GZipStream(fs, CompressionMode.Decompress, True)
+                gz.CopyTo(this)
+            End Using
+            Return True
+        Catch ex As Exception
+            raise_error(error_type.warning, "failed to read from ", i, ", ex ", ex)
+        End Try
+        Return False
+    End Function
+
+    <Extension()> Public Function trim_used(ByRef this As MemoryStream) As MemoryStream
+        assert(Not this Is Nothing)
+        If this.Position() = 0 Then
+            Return this
+        End If
+        Dim r As MemoryStream = Nothing
+        r = New MemoryStream()
+        this.CopyTo(r)
+        r.Position() = 0
+        this = r
+        Return r
+    End Function
+
+    <Extension()> Public Function trim(ByVal this As MemoryStream, ByVal length As UInt32) As MemoryStream
+        assert(Not this Is Nothing)
+        If this.Length() > length Then
+            this.SetLength(length)
+        End If
+        Return this
+    End Function
+
+    <Extension()> Public Function clear(ByVal this As MemoryStream) As MemoryStream
+        assert(Not this Is Nothing)
+        this.Position() = 0
+        this.SetLength(0)
+        Return this
+    End Function
+
+    <Extension()> Public Function clone(ByVal this As MemoryStream) As MemoryStream
+        this.assert_valid()
+        Dim r As MemoryStream = Nothing
+        r = New MemoryStream(this.ToArray())
+        r.Position() = this.Position()
+        Return r
+    End Function
+
+    <Extension()> Public Function unread_compare_to(ByVal this As MemoryStream, ByVal that As MemoryStream) As Int32
+        If this Is Nothing AndAlso that Is Nothing Then
+            Return 0
+        End If
+        If this Is Nothing Then
+            Return -1
+        End If
+        If that Is Nothing Then
+            Return 1
+        End If
+        If this.unread_length() < that.unread_length() Then
+            Return -1
+        End If
+        If this.unread_length() > that.unread_length() Then
+            Return 1
+        End If
+        Return memcmp(this.export(), that.export())
+    End Function
+
+    <Extension()> Public Function content_compare_to(ByVal this As MemoryStream, ByVal that As MemoryStream) As Int32
+        If this Is Nothing AndAlso that Is Nothing Then
+            Return 0
+        End If
+        If this Is Nothing Then
+            Return -1
+        End If
+        If that Is Nothing Then
+            Return 1
+        End If
+        If this.Length() < that.Length() Then
+            Return -1
+        End If
+        If this.Length() > that.Length() Then
+            Return 1
+        End If
+        Return memcmp(this.ToArray(), that.ToArray())
+    End Function
+
+    <Extension()> Public Function empty(ByVal this As MemoryStream) As Boolean
+        assert(Not this Is Nothing)
+        Return this.Length() = 0
     End Function
 End Module
 

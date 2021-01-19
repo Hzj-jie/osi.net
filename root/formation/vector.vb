@@ -12,14 +12,17 @@ Public NotInheritable Class vector(Of T)
 
     Private ReadOnly v As adaptive_array_t
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New()
-        v = New adaptive_array_t()
+        Me.New(New adaptive_array_t())
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal n As UInt32)
-        v = New adaptive_array_t(n)
+        Me.New(New adaptive_array_t(n))
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub New(ByVal v As adaptive_array_t)
         Me.v = v
     End Sub
@@ -67,6 +70,27 @@ Public NotInheritable Class vector(Of T)
             End If
         End Set
     End Property
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function begin() As iterator
+        If empty() Then
+            Return [end]()
+        End If
+        Return New iterator(New ref(Me, 0))
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function rbegin() As iterator
+        If empty() Then
+            Return [end]()
+        End If
+        Return New iterator(New ref(Me, size() - uint32_1))
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function [end]() As iterator
+        Return iterator.end
+    End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function back() As T

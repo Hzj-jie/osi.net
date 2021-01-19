@@ -22,8 +22,8 @@ Partial Public Class command
                                                    bytes_serializer.append_to(i.ps, o)
                                         End Function,
                                         Function(ByVal i As MemoryStream, ByRef o As command) As Boolean
-                                            Dim a As array_pointer(Of Byte) = Nothing
-                                            Dim ps As map(Of array_pointer(Of Byte), Byte()) = Nothing
+                                            Dim a As array_ref(Of Byte) = Nothing
+                                            Dim ps As map(Of array_ref(Of Byte), Byte()) = Nothing
                                             If bytes_serializer.consume_from(i, a) AndAlso
                                                bytes_serializer.consume_from(i, ps) Then
                                                 o = New command(a, ps)

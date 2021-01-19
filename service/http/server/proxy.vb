@@ -51,15 +51,15 @@ Public Module _proxy
     Private Function sync_response(ByVal i As HttpWebRequest,
                                    ByVal o As HttpListenerContext,
                                    ByVal comm As link_status) As event_comb
-        Dim r As pointer(Of HttpWebResponse) = Nothing
-        Dim cl As pointer(Of Int64) = Nothing
+        Dim r As ref(Of HttpWebResponse) = Nothing
+        Dim cl As ref(Of Int64) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(
                         Function() As Boolean
                             If i Is Nothing OrElse o Is Nothing OrElse comm Is Nothing Then
                                 Return False
                             Else
-                                r = New pointer(Of HttpWebResponse)()
+                                r = New ref(Of HttpWebResponse)()
                                 ec = i.get_response(r)
                                 Return waitfor(ec, comm.timeout_ms) AndAlso
                                        goto_next()

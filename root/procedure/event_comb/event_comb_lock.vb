@@ -187,11 +187,11 @@ Public Structure unlimited_event_comb_lock
     Private Const IN_USE As Boolean = Not NOT_IN_USE
     Private l As lock_t
     Private inuse As Boolean
-    Private q As queue(Of pointer(Of Action))
+    Private q As queue(Of ref(Of Action))
 
     Shared Sub New()
         assert(DirectCast(Nothing, Boolean) = NOT_IN_USE)
-        assert(DirectCast(Nothing, queue(Of pointer(Of Action))) Is Nothing)
+        assert(DirectCast(Nothing, queue(Of ref(Of Action))) Is Nothing)
     End Sub
 
     Public Sub wait() Implements islimlock.wait
@@ -201,7 +201,7 @@ Public Structure unlimited_event_comb_lock
         assert(Not v Is Nothing)
         l.wait()
         If inuse = IN_USE Then
-            assert(q.push(pointer.of(v)))
+            assert(q.push(ref.of(v)))
         Else
             inuse = IN_USE
             v()

@@ -1,5 +1,5 @@
 ﻿
 ##DEFINE CLASS_NAME weak_dispose_ptr
-##DEFINE BASE_NAME weak_pointer
+##DEFINE BASE_NAME weak_ref
 ##DEFINE DO_DISPOSE_IMPL weak_dispose_ptr_do_dispose.vbp
 ##INCLUDE dispose_ptr.vbp

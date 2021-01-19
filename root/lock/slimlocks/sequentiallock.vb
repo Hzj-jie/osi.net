@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports System.Runtime.CompilerServices
 Imports System.Threading
-Imports osi.root.envs
-Imports osi.root.connector
+Imports osi.root.constants
 
 Namespace slimlock
     Public Structure sequentiallock
@@ -11,6 +15,7 @@ Namespace slimlock
         Private token As Int32
         Private are As AutoResetEvent
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub wait() Implements islimlock.wait
             atomic.create_if_nothing(are, False)
             Dim tokengot As Int32 = 0
@@ -24,15 +29,18 @@ Namespace slimlock
             End While
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub release() Implements islimlock.release
             Interlocked.Increment(token)
             are.Set()
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function can_thread_owned() As Boolean Implements islimlock.can_thread_owned
             Return True
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function can_cross_thread() As Boolean Implements islimlock.can_cross_thread
             Return True
         End Function

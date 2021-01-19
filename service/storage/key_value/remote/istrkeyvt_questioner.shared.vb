@@ -36,12 +36,12 @@ Partial Public Class istrkeyvt_questioner
         Return r
     End Function
 
-    Private Function response(ByVal c As command, ByVal result As pointer(Of Boolean)) As Boolean
+    Private Function response(ByVal c As command, ByVal result As ref(Of Boolean)) As Boolean
         Return Not c Is Nothing AndAlso
                c.parameter(Of parameter, Boolean)(parameter.result, result)
     End Function
 
-    Private Function response(ByVal c As command, ByVal result As pointer(Of Int64)) As Boolean
+    Private Function response(ByVal c As command, ByVal result As ref(Of Int64)) As Boolean
         Return Not c Is Nothing AndAlso
                c.parameter(Of parameter, Int64)(parameter.size, result)
     End Function

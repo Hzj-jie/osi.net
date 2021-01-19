@@ -2,7 +2,7 @@
 Entire memory space is separated into three parts,
 1. Instructions, readonly, contains only instructions.
 2. Stack, data, managed as data slot, each slot has zero or more bytes, which can be initialized by certain commands.
-3. States Stack, stores states, such as Instruction Pointer and Stack Size to maintain call stack.
+3. States Stack, stores states, such as Instruction ref and Stack Size to maintain call stack.
 
 Data slot,
 Each data slot stores zero or more bytes, so for certain commands, the bytes will be converted to other data types.
@@ -16,12 +16,12 @@ Registers
 -- RBNI, reset by next <similar or related> instruction
 -- WRITE_ONLY, this register can only be written by instructions. RAEI usually means WRITE_ONLY.
 -- READ_ONLY, this register can only be read by instructions.
-1. Instruction Pointer, IP, uint64, the location of current instruction. It is increased by 1 after each instruction,
+1. Instruction ref, IP, uint64, the location of current instruction. It is increased by 1 after each instruction,
    if no DNAIP set. But some instructions, such as jump, can change its value.
 2. Carry Over, CO, boolean, RBNI, last operation caused a carry over.
 3. Divided By Zero, DBZ, boolean, RBNI, last operation caused a divided by zero error.
 4. Imaginary Number, IN, boolean, RBNI, last operation casued an imaginary number error.
-5. Do not advance instruction pointer, WRITE_ONLY, boolean, RAEI(false), do not increase IP after this instruction.
+5. Do not advance instruction ref, WRITE_ONLY, boolean, RAEI(false), do not increase IP after this instruction.
 
 Data reference
 Data is always in stack, there are two ways to refer a data,

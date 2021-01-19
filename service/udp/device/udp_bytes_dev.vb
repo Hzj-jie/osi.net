@@ -52,17 +52,17 @@ Public Class udp_bytes_dev
         Me.s = New indicator_sensor_adapter(New sync_indicator_indicator_adapter(New indicator(d)))
     End Sub
 
-    Public Function receive(ByVal o As pointer(Of pair(Of Byte(), const_pair(Of String, UInt16)))) As event_comb _
+    Public Function receive(ByVal o As ref(Of pair(Of Byte(), const_pair(Of String, UInt16)))) As event_comb _
                            Implements T_pump(Of pair(Of Byte(), const_pair(Of String, UInt16))).receive
         Dim ec As event_comb = Nothing
-        Dim buff As pointer(Of Byte()) = Nothing
-        Dim remote As pointer(Of IPEndPoint) = Nothing
+        Dim buff As ref(Of Byte()) = Nothing
+        Dim remote As ref(Of IPEndPoint) = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim udp_client As UdpClient = Nothing
                                   If d.get(udp_client) Then
                                       assert(Not udp_client Is Nothing)
-                                      buff = New pointer(Of Byte())()
-                                      remote = New pointer(Of IPEndPoint)()
+                                      buff = New ref(Of Byte())()
+                                      remote = New ref(Of IPEndPoint)()
                                       ec = udp_client.receive(buff, remote)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -96,7 +96,7 @@ Public Class udp_bytes_dev
                                                              array_size(i.first),
                                                              Function(ByVal buff() As Byte,
                                                                       ByVal count As UInt32,
-                                                                      ByVal result As pointer(Of UInt32)) As event_comb
+                                                                      ByVal result As ref(Of UInt32)) As event_comb
                                                                  Return udp_client.send(buff,
                                                                                         count,
                                                                                         i.second.first,
@@ -116,7 +116,7 @@ Public Class udp_bytes_dev
                               End Function)
     End Function
 
-    Public Function sense(ByVal pending As pointer(Of Boolean), ByVal timeout_ms As Int64) As event_comb _
+    Public Function sense(ByVal pending As ref(Of Boolean), ByVal timeout_ms As Int64) As event_comb _
                          Implements sensor.sense
         Return s.sense(pending, timeout_ms)
     End Function

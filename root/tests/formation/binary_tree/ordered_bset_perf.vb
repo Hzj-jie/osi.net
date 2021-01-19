@@ -1,9 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utt
 
-Public Class ordered_bset_perf
+Public NotInheritable Class ordered_bset_perf
     Inherits performance_case_wrapper
 
     Public Sub New()
@@ -20,7 +24,7 @@ Public Class ordered_bset_perf
             Dim s As bset(Of Int32) = Nothing
             s = New bset(Of Int32)()
             For i As Int32 = min To max - 1
-                Dim r As pair(Of bset(Of Int32).iterator, Boolean) = Nothing
+                Dim r As tuple(Of bset(Of Int32).iterator, Boolean) = Nothing
                 r = s.insert(i)
                 If assertion.is_not_null(r) Then
                     assertion.is_true(r.second)

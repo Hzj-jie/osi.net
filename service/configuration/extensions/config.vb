@@ -24,16 +24,15 @@ Public Module _config
                                           As vector(Of section)
         If c Is Nothing Then
             Return Nothing
-        Else
-            Dim r As vector(Of section) = Nothing
-            r = New vector(Of section)()
-            Dim s As section = Nothing
-            While gs(c, strcat(base_section, base_index), s, variants)
-                r.push_back(s)
-                base_index += 1
-            End While
-            Return r
         End If
+        Dim r As vector(Of section) = Nothing
+        r = New vector(Of section)()
+        Dim s As section = Nothing
+        While gs(c, strcat(base_section, base_index), s, variants)
+            r.push_back(s)
+            base_index += 1
+        End While
+        Return r
     End Function
 
     <Extension()> Public Function sections(ByVal c As config,
@@ -51,22 +50,21 @@ Public Module _config
                                        As vector(Of section)
         If s Is Nothing Then
             Return Nothing
-        Else
-            Dim ss As vector(Of String) = Nothing
-            If Not ss.split_from(parameter(c, s, key, variants)) Then
-                Return Nothing
-            End If
-            assert(Not ss.null_or_empty())
-            Dim r As vector(Of section) = Nothing
-            r = New vector(Of section)()
-            For i As UInt32 = 0 To ss.size() - uint32_1
-                Dim t As section = Nothing
-                If gs(c, ss(i), t, variants) Then
-                    r.push_back(t)
-                End If
-            Next
-            Return r
         End If
+        Dim ss As vector(Of String) = Nothing
+        If Not ss.split_from(parameter(c, s, key, variants)) Then
+            Return Nothing
+        End If
+        assert(Not ss.null_or_empty())
+        Dim r As vector(Of section) = Nothing
+        r = New vector(Of section)()
+        For i As UInt32 = 0 To ss.size() - uint32_1
+            Dim t As section = Nothing
+            If gs(c, ss(i), t, variants) Then
+                r.push_back(t)
+            End If
+        Next
+        Return r
     End Function
 
     <Extension()> Public Function parameter(ByVal c As config,
@@ -84,20 +82,18 @@ Public Module _config
         Dim s As section = Nothing
         If gs(c, section, s, variants) Then
             Return s(key, variants, default_value)
-        Else
-            Return default_value
         End If
+        Return default_value
     End Function
 
     Private Function secondary_array(Of T)(ByVal c As config,
                                            ByVal section As String,
                                            ByVal key As String,
-                                           Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing,
-                                           Optional ByVal str_T As string_serializer(Of T) = Nothing) _
+                                           Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) _
                                           As vector(Of T)
         Dim s As section = Nothing
         If gs(c, section, s, variants) Then
-            Return _section.secondary_array(s, key, variants, str_T)
+            Return s.secondary_array(Of T)(key, variants)
         End If
         Return Nothing
     End Function
@@ -106,12 +102,11 @@ Public Module _config
                                          ByVal section As String,
                                          ByVal base_key As String,
                                          ByVal base_index As Int32,
-                                         Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing,
-                                         Optional ByVal str_T As string_serializer(Of T) = Nothing) _
+                                         Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) _
                                         As vector(Of T)
         Dim s As section = Nothing
         If gs(c, section, s, variants) Then
-            Return _section.parameter_list(s, base_key, base_index, variants, str_T)
+            Return s.parameter_list(Of T)(base_key, base_index, variants)
         End If
         Return Nothing
     End Function
@@ -119,9 +114,8 @@ Public Module _config
     Public Function parameter_list(Of T)(ByVal c As config,
                                          ByVal section As String,
                                          ByVal base_key As String,
-                                         Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing,
-                                         Optional ByVal str_T As string_serializer(Of T) = Nothing) _
+                                         Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) _
                                         As vector(Of T)
-        Return parameter_list(c, section, base_key, 0, variants, str_T)
+        Return parameter_list(Of T)(c, section, base_key, 0, variants)
     End Function
 End Module

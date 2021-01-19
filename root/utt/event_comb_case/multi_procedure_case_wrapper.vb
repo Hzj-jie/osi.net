@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.procedure
 
 Public Class multi_procedure_case_wrapper
@@ -19,9 +18,6 @@ Public Class multi_procedure_case_wrapper
 
     Public Sub New(ByVal c As event_comb_case, ByVal procedure_count As Int32)
         Me.New(c, CUInt(assert_return(procedure_count >= 0, procedure_count)))
-        raise_error(error_type.deprecated,
-                    "multi_procedure_case_wrapper(event_comb_case, int32) is deprecated, use uint32 overloads: ",
-                    backtrace())
     End Sub
 
     Protected Overridable Function procedure_count() As UInt32

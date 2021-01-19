@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utt
 
-Public Class map_test2
+Public NotInheritable Class map_test2
     Inherits [case]
 
     Private Shared ReadOnly first_round() As pair(Of String, String) =
@@ -27,7 +27,7 @@ Public Class map_test2
         Dim m As map(Of String, String) = Nothing
         m = New map(Of String, String)()
         For i As Int32 = 0 To array_size_i(first_round) - 1
-            Dim p As pair(Of map(Of String, String).iterator, Boolean) = Nothing
+            Dim p As tuple(Of map(Of String, String).iterator, Boolean) = Nothing
             p = m.emplace(first_round(i).first, first_round(i).second)
             assertion.is_true(p.second)
             assertion.is_not_null(p.first)
@@ -37,7 +37,7 @@ Public Class map_test2
             assertion.is_true(m.erase(second_round(i).first))
         Next
         For i As Int32 = 0 To array_size_i(second_round) - 1
-            Dim p As pair(Of map(Of String, String).iterator, Boolean) = Nothing
+            Dim p As tuple(Of map(Of String, String).iterator, Boolean) = Nothing
             p = m.emplace(second_round(i).first, second_round(i).second)
             assertion.is_true(p.second)
             assertion.is_not_null(p.first)
@@ -64,7 +64,7 @@ Public Class map_test2
         copy(m2, m)
         For i As Int32 = 0 To array_size_i(first_round) - 1
             assertion.is_true(m2.erase(first_round(i).first))
-            Dim p As pair(Of map(Of String, String).iterator, Boolean) = Nothing
+            Dim p As tuple(Of map(Of String, String).iterator, Boolean) = Nothing
             p = m2.emplace(first_round(i).first, first_round(i).second)
             assertion.is_true(p.second)
             assertion.is_not_null(p.first)
@@ -72,7 +72,7 @@ Public Class map_test2
         Next
         For i As Int32 = 0 To array_size_i(second_round) - 1
             assertion.is_true(m2.erase(second_round(i).first))
-            Dim p As pair(Of map(Of String, String).iterator, Boolean) = Nothing
+            Dim p As tuple(Of map(Of String, String).iterator, Boolean) = Nothing
             p = m2.emplace(second_round(i).first, second_round(i).second)
             assertion.is_true(p.second)
             assertion.is_not_null(p.first)

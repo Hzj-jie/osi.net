@@ -14,11 +14,11 @@ Public MustInherit Class size_time_datawatcher
 
     Protected NotOverridable Overrides Function run_watch() As event_comb
         Dim ec As event_comb = Nothing
-        Dim sz As pointer(Of UInt64) = Nothing
-        Dim tm As pointer(Of UInt64) = Nothing
+        Dim sz As ref(Of UInt64) = Nothing
+        Dim tm As ref(Of UInt64) = Nothing
         Return New event_comb(Function() As Boolean
-                                  sz = New pointer(Of UInt64)()
-                                  tm = New pointer(Of UInt64)()
+                                  sz = New ref(Of UInt64)()
+                                  tm = New ref(Of UInt64)()
                                   ec = info(sz, tm)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -34,5 +34,5 @@ Public MustInherit Class size_time_datawatcher
                               End Function)
     End Function
 
-    Protected MustOverride Function info(ByVal sz As pointer(Of UInt64), ByVal tm As pointer(Of UInt64)) As event_comb
+    Protected MustOverride Function info(ByVal sz As ref(Of UInt64), ByVal tm As ref(Of UInt64)) As event_comb
 End Class

@@ -19,7 +19,7 @@ Public NotInheritable Class connectivity_test
     End Sub
 
     Public Overrides Function create() As event_comb
-        Dim r As pointer(Of connectivity.result_t) = Nothing
+        Dim r As ref(Of connectivity.result_t) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   r.renew()

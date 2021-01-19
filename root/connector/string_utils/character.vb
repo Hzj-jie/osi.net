@@ -48,7 +48,7 @@ Public Module _character
     End Function
 
     <Extension()> Public Function utf8_supported(ByVal c As Char) As Boolean
-        Return utf8_char.V(c)
+        Return utf8_char.v(c)
     End Function
 
 #If 0 Then
@@ -79,6 +79,15 @@ Public Module _character
 
     <Extension()> Public Function extended_ascii(ByVal c As Char) As Boolean
         Return c.big_endian_bytes()(0) = 0
+    End Function
+
+    <Extension()> Public Function cjk(ByVal c As Char) As Boolean
+        If Not c.utf8_supported() Then
+            Return False
+        End If
+        Dim v As UInt16 = 0
+        v = char_uint16(c)
+        Return v >= &H4E00 AndAlso v <= &H9FFF
     End Function
 
     Public Function uint16_char(ByVal i As UInt16) As Char

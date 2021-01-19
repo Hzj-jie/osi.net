@@ -3,8 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.envs
-
 Public NotInheritable Class unordered_set_uint_perf
     Inherits unordered_set_perf(Of UInt32, unordered_set_perf_templates.small_range_uint)
 
@@ -13,7 +11,7 @@ Public NotInheritable Class unordered_set_uint_perf
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-        Return loosen_bound({322, 298, 1413}, i, j)
+        Return loosen_bound({2431, 16575}, i, j)
     End Function
 End Class
 
@@ -25,7 +23,7 @@ Public NotInheritable Class unordered_set_uint_large_range_perf
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-        Return loosen_bound({247, 249, 1515}, i, j)
+        Return loosen_bound({1468, 12350}, i, j)
     End Function
 End Class
 
@@ -37,7 +35,7 @@ Public NotInheritable Class unordered_set_string_perf
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-        Return loosen_bound({745, 471, 1488}, i, j)
+        Return loosen_bound({7249, 22101}, i, j)
     End Function
 End Class
 
@@ -49,7 +47,7 @@ Public NotInheritable Class unordered_set_string_large_range_perf
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-        Return loosen_bound({595, 595, 1165}, i, j)
+        Return loosen_bound({8641, 17946}, i, j)
     End Function
 End Class
 
@@ -61,7 +59,7 @@ Public NotInheritable Class unordered_set_more_items_uint_perf
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-        Return loosen_bound({770, 544, 2730}, i, j)
+        Return loosen_bound({4840, 33151}, i, j)
     End Function
 End Class
 
@@ -73,7 +71,7 @@ Public NotInheritable Class unordered_set_more_items_uint_large_range_perf
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-        Return loosen_bound({1042, 843, 3302}, i, j)
+        Return loosen_bound({5525, 41439}, i, j)
     End Function
 End Class
 
@@ -85,7 +83,7 @@ Public NotInheritable Class unordered_set_more_items_string_perf
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-        Return loosen_bound({1315, 1389, 2532}, i, j)
+        Return loosen_bound({7934, 27626}, i, j)
     End Function
 End Class
 
@@ -97,6 +95,6 @@ Public NotInheritable Class unordered_set_more_items_string_large_range_perf
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-        Return loosen_bound({1637, 1490, 2457}, i, j)
+        Return loosen_bound({1518, 37638}, i, j)
     End Function
 End Class

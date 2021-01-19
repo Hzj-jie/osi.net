@@ -26,7 +26,7 @@ Public Class reference_count_event_comb_2
 
         Me.r = New ref(Of singleentry)()
         Me.b = New atomic_int()
-        start(weak_pointer.of(Me))
+        start(weak_ref.of(Me))
     End Sub
 
     Protected Sub New()
@@ -63,7 +63,7 @@ Public Class reference_count_event_comb_2
         Return binding_count() > 0
     End Function
 
-    Private Shared Sub start(ByVal wp As weak_pointer(Of reference_count_event_comb_2))
+    Private Shared Sub start(ByVal wp As weak_ref(Of reference_count_event_comb_2))
         assert(Not wp Is Nothing)
         assert_begin(New event_comb(Function() As Boolean
                                         Return waitfor(Function() As Boolean

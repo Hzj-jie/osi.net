@@ -58,7 +58,7 @@ Public Class mock_flow_dev
     Public Function send(ByVal buff() As Byte,
                          ByVal offset As UInt32,
                          ByVal count As UInt32,
-                         ByVal sent As pointer(Of UInt32)) As event_comb Implements flow.send
+                         ByVal sent As ref(Of UInt32)) As event_comb Implements flow.send
         Return sync_async(Function() As Boolean
                               If random_zero AndAlso
                                  rnd_bool_trues(3) Then
@@ -88,7 +88,7 @@ Public Class mock_flow_dev
     Public Function receive(ByVal buff() As Byte,
                             ByVal offset As UInt32,
                             ByVal count As UInt32,
-                            ByVal result As pointer(Of UInt32)) As event_comb Implements flow.receive
+                            ByVal result As ref(Of UInt32)) As event_comb Implements flow.receive
         Return sync_async(Function() As Boolean
                               If random_zero AndAlso
                                  rnd_bool_trues(3) Then
@@ -116,7 +116,7 @@ Public Class mock_flow_dev
                           End Function)
     End Function
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements flow.sense
         Return sync_async(Sub()
                               eva(pending, receive_position < array_size(receive_buff))

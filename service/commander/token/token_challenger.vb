@@ -23,15 +23,15 @@ Public NotInheritable Class token_challenger(Of COLLECTION, CONNECTION)
         MyBase.New(info, p, c)
     End Sub
 
-    Protected Overrides Function question(ByVal h As herald, ByVal accepted As pointer(Of Boolean)) As event_comb
+    Protected Overrides Function question(ByVal h As herald, ByVal accepted As ref(Of Boolean)) As event_comb
         assert(Not h Is Nothing)
         assert(Not accepted Is Nothing)
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of Byte()) = Nothing
+        Dim r As ref(Of Byte()) = Nothing
         Dim code() As Byte = Nothing
         Return New event_comb(Function() As Boolean
                                   code = array_concat(constants.token1_prefix, info.token(p))
-                                  r = New pointer(Of Byte())()
+                                  r = New ref(Of Byte())()
                                   ec = (New questioner(h, info.response_timeout_ms(p)))(code, r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()

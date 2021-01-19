@@ -20,7 +20,7 @@ Imports osi.root.constants
 Imports constants = osi.root.constants
 
 Partial Public Structure positive_npos_uint
-    Implements IComparable, IComparable(Of positive_npos_uint), ICloneable
+    Implements IComparable, IComparable(Of positive_npos_uint), ICloneable, ICloneable(Of positive_npos_uint)
 
     Public Shared ReadOnly inf As positive_npos_uint
     Public Shared ReadOnly zero As positive_npos_uint
@@ -810,8 +810,12 @@ Partial Public Structure positive_npos_uint
         End If
     End Function
 
-    Public Function Clone() As Object Implements ICloneable.Clone
+    Public Function CloneT() As positive_npos_uint Implements ICloneable(Of positive_npos_uint).Clone
         Return New positive_npos_uint(Me)
+    End Function
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
     End Function
 End Structure
 'finish npos_uint.vbp --------

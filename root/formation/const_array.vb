@@ -24,6 +24,7 @@ Public NotInheritable Class const_array
         Return New const_array(Of T)(v)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function compare(Of T, __SIZE As _int64)(ByVal this As const_array(Of T, __SIZE),
                                                            ByVal that As const_array(Of T, __SIZE)) As Int32
         If this Is Nothing AndAlso that Is Nothing Then
@@ -109,13 +110,17 @@ Public Class const_array(Of T, __SIZE As _int64)
         Return move(Of const_array(Of T, __SIZE))(i)
     End Function
 
-    Default Public ReadOnly Property [get](ByVal i As UInt32) As T
+    Default Public ReadOnly Property data(ByVal i As UInt32) As T
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Get
+#If DEBUG Then
             assert(i < size())
+#End If
             Return v(CInt(i))
         End Get
     End Property
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function size() As UInt32
         If _size < 0 Then
             Return array_size(v)
@@ -123,10 +128,12 @@ Public Class const_array(Of T, __SIZE As _int64)
         Return CUInt(_size)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function empty() As Boolean
         Return size() = uint32_0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function as_array() As T()
         Dim r() As T = Nothing
         ReDim r(CInt(size() - uint32_1))
@@ -134,6 +141,7 @@ Public Class const_array(Of T, __SIZE As _int64)
         Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Widening Operator CType(ByVal this As const_array(Of T, __SIZE)) As T()
         If this Is Nothing Then
             Return Nothing
@@ -141,6 +149,7 @@ Public Class const_array(Of T, __SIZE As _int64)
         Return this.as_array()
     End Operator
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Widening Operator CType(ByVal this() As T) As const_array(Of T, __SIZE)
         If isemptyarray(this) Then
             Return Nothing
@@ -152,18 +161,22 @@ Public Class const_array(Of T, __SIZE As _int64)
         Return copy_constructor(Of R).invoke(deep_clone(v))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CloneT() As const_array(Of T, __SIZE) Implements ICloneable(Of const_array(Of T, __SIZE)).Clone
         Return clone(Of const_array(Of T, __SIZE))()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
         Return CompareTo(cast(Of const_array(Of T, __SIZE))().from(obj, False))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal other As const_array(Of T, __SIZE)) As Int32 _
             Implements IComparable(Of const_array(Of T, __SIZE)).CompareTo
         If other Is Nothing Then
@@ -173,6 +186,7 @@ Public Class const_array(Of T, __SIZE As _int64)
         Return memcmp(Me.v, other.v)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overloads Function Equals(ByVal other As const_array(Of T, __SIZE)) As Boolean _
             Implements IEquatable(Of const_array(Of T, __SIZE)).Equals
         Return CompareTo(other) = 0
@@ -204,14 +218,17 @@ Public Class const_array(Of T)
         Return MyBase.clone(Of R)()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function CloneT() As const_array(Of T) Implements ICloneable(Of const_array(Of T)).Clone
         Return clone(Of const_array(Of T))()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Shadows Widening Operator CType(ByVal this() As T) As const_array(Of T)
         If isemptyarray(this) Then
             Return Nothing

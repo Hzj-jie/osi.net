@@ -25,7 +25,7 @@ Public Class block_pump_flow_pump_adapter
     Private Function receive_from_buffer(ByVal buff() As Byte,
                                          ByVal offset As UInt32,
                                          ByVal count As UInt32,
-                                         ByVal result As pointer(Of UInt32)) As Boolean
+                                         ByVal result As ref(Of UInt32)) As Boolean
         If buffered Is Nothing Then
             Return False
         Else
@@ -47,14 +47,14 @@ Public Class block_pump_flow_pump_adapter
     Public Function receive(ByVal buff() As Byte,
                             ByVal offset As UInt32,
                             ByVal count As UInt32,
-                            ByVal result As pointer(Of UInt32)) As event_comb Implements flow_pump.receive
+                            ByVal result As ref(Of UInt32)) As event_comb Implements flow_pump.receive
         Dim ec As event_comb = Nothing
-        Dim b As pointer(Of Byte()) = Nothing
+        Dim b As ref(Of Byte()) = Nothing
         Return New event_comb(Function() As Boolean
                                   If receive_from_buffer(buff, offset, count, result) Then
                                       Return goto_end()
                                   Else
-                                      b = New pointer(Of Byte())()
+                                      b = New ref(Of Byte())()
                                       ec = block_pump_dev.receive(b)
                                       Return waitfor(ec) AndAlso
                                              goto_next()

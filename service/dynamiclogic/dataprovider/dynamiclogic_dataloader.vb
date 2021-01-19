@@ -29,7 +29,7 @@ Public NotInheritable Class dynamiclogic_dataloader
     End Sub
 
     Public Function load(ByVal localfile As String,
-                         ByVal result As pointer(Of Func(Of Object(), Object))) As event_comb _
+                         ByVal result As ref(Of Func(Of Object(), Object))) As event_comb _
                         Implements idataloader(Of Func(Of Object(), Object)).load
         Return sync_async(Function() As Boolean
                               Dim se As source_executor = Nothing

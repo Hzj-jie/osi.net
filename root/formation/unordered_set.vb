@@ -8,13 +8,13 @@ Option Strict On
 'so change unordered_set.vbp instead of this file
 
 
-
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.template
 
-Public Class unordered_set(Of _
+
+Partial Public Class unordered_set(Of _
                  T,
                  _HASHER As _to_uint32(Of T),
                  _EQUALER As _equaler(Of T))
@@ -36,56 +36,9 @@ Public Class unordered_set(Of _
 
 'finish hasharray.copy_constructor.vbp --------
 
-    Public Sub New()
-        MyBase.New()
-    End Sub
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Protected Shadows Function clone(Of R As unordered_set(Of T, _HASHER, _EQUALER))() As R
-        Return MyBase.clone(Of R)()
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shadows Function Clone() As Object Implements ICloneable.Clone
-        Return CloneT()
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shadows Function CloneT() As unordered_set(Of T, _HASHER, _EQUALER) _
-            Implements ICloneable(Of unordered_set(Of T, _HASHER, _EQUALER)).Clone
-        Return clone(Of unordered_set(Of T, _HASHER, _EQUALER))()
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Shadows Function move(ByVal v As unordered_set(Of T, _HASHER, _EQUALER)) _
-                                       As unordered_set(Of T, _HASHER, _EQUALER)
-        Return hasharray(Of T, _true, _HASHER, _EQUALER) _
-                   .move(Of unordered_set(Of T, _HASHER, _EQUALER))(v)
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Protected Shared Shadows Function move(Of R As unordered_set(Of T, _HASHER, _EQUALER))(ByVal v As R) As R
-        Return hasharray(Of T, _true, _HASHER, _EQUALER).move(Of R)(v)
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Shadows Function swap(ByVal this As unordered_set(Of T, _HASHER, _EQUALER),
-                                        ByVal that As unordered_set(Of T, _HASHER, _EQUALER)) As Boolean
-        Return hasharray(Of T, _true, _HASHER, _EQUALER).swap(this, that)
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shadows Function [erase](ByVal it As iterator) As Boolean
-        Return MyBase.erase(it)
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shadows Function [erase](ByVal value As T) As Boolean
-        Return MyBase.erase(value) = uint32_1
-    End Function
 End Class
 
-Public Class unordered_set(Of T)
+Partial Public NotInheritable Class unordered_set(Of T)
     Inherits unordered_set(Of T, fast_to_uint32(Of T), default_equaler(Of T))
     Implements ICloneable, ICloneable(Of unordered_set(Of T)), IEquatable(Of unordered_set(Of T))
 
@@ -122,8 +75,8 @@ Public Class unordered_set(Of T)
                     Return i.emplace(j).second
                 End Function)
         container_operator(Of [unordered_set](Of T), T).enumerate(
-                Function(ByVal i As [unordered_set](Of T)) _
-                        As container_operator(Of [unordered_set](Of T), T).enumerator
+                Function(ByVal i As [unordered_set](Of T)) As container_operator(Of T).enumerator
+                    assert(Not i Is Nothing)
                     Return New enumerator(i)
                 End Function)
         container_operator(Of [unordered_set](Of T), T).clear(
@@ -133,29 +86,6 @@ Public Class unordered_set(Of T)
                 End Sub)
         bytes_serializer(Of [unordered_set](Of T)).container(Of T).register()
     End Sub
-
-    Private NotInheritable Class enumerator
-        Implements container_operator(Of [unordered_set](Of T), T).enumerator
-
-        Private it As iterator
-
-        Public Sub New(ByVal s As [unordered_set](Of T))
-            assert(Not s Is Nothing)
-            it = s.begin()
-        End Sub
-
-        Public Sub [next]() Implements container_operator(Of [unordered_set](Of T), T).enumerator.next
-            it += 1
-        End Sub
-
-        Public Function current() As T Implements container_operator(Of [unordered_set](Of T), T).enumerator.current
-            Return +it
-        End Function
-
-        Public Function [end]() As Boolean Implements container_operator(Of [unordered_set](Of T), T).enumerator.end
-            Return it.is_end()
-        End Function
-    End Class
 
 'finish ..\binary_tree\codegen\set.container_operator.vbp --------
 
@@ -199,37 +129,5 @@ Public Class unordered_set(Of T)
 
 'finish ..\binary_tree\codegen\set.compare.vbp --------
 
-    Public Sub New()
-        MyBase.New()
-    End Sub
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Protected Shadows Function clone(Of R As unordered_set(Of T))() As R
-        Return MyBase.clone(Of R)()
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shadows Function Clone() As Object Implements ICloneable.Clone
-        Return CloneT()
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shadows Function CloneT() As unordered_set(Of T) _
-            Implements ICloneable(Of unordered_set(Of T)).Clone
-        Return MyBase.clone(Of unordered_set(Of T))()
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Shadows Function move(ByVal v As unordered_set(Of T)) _
-                                       As unordered_set(Of T)
-        Return unordered_set(Of T, fast_to_uint32(Of T), default_equaler(Of T)) _
-                  .move(Of unordered_set(Of T))(v)
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Shadows Function swap(ByVal this As unordered_set(Of T),
-                                        ByVal that As unordered_set(Of T)) As Boolean
-        Return unordered_set(Of T, fast_to_uint32(Of T), default_equaler(Of T)).swap(this, that)
-    End Function
 End Class
 'finish unordered_set.vbp --------

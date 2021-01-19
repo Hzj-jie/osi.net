@@ -1,11 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.formation
 
 Public Class ms_timing_counter
     Inherits timing_counter
 
-    Public Sub New(ByVal p As pointer(Of Int64))
+    Public Sub New(ByVal p As ref(Of Int64))
         MyBase.New(p)
     End Sub
 

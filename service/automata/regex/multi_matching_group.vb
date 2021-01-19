@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.connector
 
 Partial Public Class rlexer
     Public Class multi_matching_group
@@ -31,7 +35,7 @@ Partial Public Class rlexer
                     Next
                 End If
             End While
-            Return r.emplace_to_vector()
+            Return r.stream().collect(Of vector(Of UInt32))()
         End Function
     End Class
 End Class

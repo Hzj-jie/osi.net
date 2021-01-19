@@ -105,6 +105,10 @@ Public NotInheritable Class endian
         Return r
     End Function
 
+    Public Shared Function reverse(ByVal i As Char) As Char
+        Return uint16_char(reverse(char_uint16(i)))
+    End Function
+
     Public Shared Function reverse(ByVal i As Int32) As Int32
         Dim r As Int32 = 0
         For j As Int32 = 0 To CInt(sizeof_int32) - 1
@@ -199,6 +203,8 @@ Public NotInheritable Class endian
                 f = c(Of Single)(AddressOf reverse)
             ElseIf type_info(Of T, type_info_operators.equal, Double).v Then
                 f = c(Of Double)(AddressOf reverse)
+            ElseIf type_info(Of T, type_info_operators.equal, Char).v Then
+                f = c(Of Char)(AddressOf reverse)
             Else
                 assert(False)
             End If

@@ -19,7 +19,7 @@ Public MustInherit Class convector_test
     Protected MustOverride Function create_convector(ByVal dev1 As mock_dev_int,
                                                      ByVal dev2 As mock_dev_int) As convector(Of Int32)
 
-    Private Sub execute(ByVal c As convector(Of Int32), ByVal ended As pointer(Of Boolean))
+    Private Sub execute(ByVal c As convector(Of Int32), ByVal ended As ref(Of Boolean))
         Dim ec As event_comb = Nothing
         assert_begin(New event_comb(Function() As Boolean
                                         ec = (+c)
@@ -40,8 +40,8 @@ Public MustInherit Class convector_test
         dev2 = New mock_dev_int()
         Dim c As convector(Of Int32) = Nothing
         c = create_convector(dev1, dev2)
-        Dim ended As pointer(Of Boolean) = Nothing
-        ended = New pointer(Of Boolean)()
+        Dim ended As ref(Of Boolean) = Nothing
+        ended = New ref(Of Boolean)()
         execute(c, ended)
         Dim v1() As Int32 = Nothing
         v1 = rnd_ints(rnd_int(16384, 32768))

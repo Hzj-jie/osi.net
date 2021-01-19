@@ -2,27 +2,23 @@
 ##INCLUDE ..\..\codegen\iterator.imports.vbp
 Imports osi.root.template
 
-Public Module _hasharray_iterator
-##DEFINE PARENT_CLASS hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)
-##DEFINE TEMPLATE_TYPE (Of T, _UNIQUE As _boolean, _HASHER As _to_uint32(Of T), _EQUALER As _equaler(Of T))
-##INCLUDE ..\..\codegen\iterator.ext.vbp
-End Module
-
 Partial Public Class hasharray(Of T,
                                   _UNIQUE As _boolean,
                                   _HASHER As _to_uint32(Of T),
                                   _EQUALER As _equaler(Of T))
-    Public Structure iterator
 ##DEFINE TYPE ref
+##DEFINE TEMPLATE_TYPES T, _UNIQUE, _HASHER, _EQUALER
+##DEFINE VALUE_TYPE T
 ##DEFINE DEFINE_OPERATOR_PLUS False
 ##DEFINE FRIEND_CONSTRUCTOR False
 ##DEFINE DEFAULT_COMPARER False
-##DEFINE TYPE_IS_STRUCT True
+##DEFINE USE_P_END True
 ##INCLUDE ..\..\codegen\random_access_iterator.single_step.vbp
 
+    Partial Public Structure iterator
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Friend Sub New(ByVal owner As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER), ByVal column As UInt32, ByVal row As UInt32)
-            Me.New(assert_not_nothing_return(owner).ref_at(column, row))
+            Me.New(assert_which.of(owner).is_not_null().ref_at(column, row))
         End Sub
 
         Private Function move_next() As iterator
@@ -70,7 +66,6 @@ Partial Public Class hasharray(Of T,
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Function is_equal(ByVal this As ##TYPE##, ByVal that As ##TYPE##) As Boolean
-            assert(Not this Is Nothing AndAlso Not that Is Nothing)
             Return this.is_equal_to(that)
         End Function
 

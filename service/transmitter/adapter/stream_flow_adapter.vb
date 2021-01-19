@@ -54,7 +54,7 @@ Public Module _stream_flow_adapter
                                           Optional ByVal send_rate_sec As UInt32 = 0,
                                           Optional ByVal close_input_stream As Boolean = True,
                                           Optional ByVal close_output_stream As Boolean = False,
-                                          Optional ByVal result As pointer(Of UInt64) = Nothing) As event_comb
+                                          Optional ByVal result As ref(Of UInt64) = Nothing) As event_comb
         assert(Not this Is Nothing)
         assert(Not that Is Nothing)
         Dim i As stream_flow_adapter = Nothing
@@ -137,7 +137,7 @@ Public Module _stream_flow_adapter
                                           ByVal buff() As Byte,
                                           ByVal offset As UInt32,
                                           ByVal count As UInt32,
-                                          ByVal result As pointer(Of UInt32),
+                                          ByVal result As ref(Of UInt32),
                                           Optional ByVal rate_sec As UInt32 = 0,
                                           Optional ByVal close_stream As Boolean = False) As event_comb
         Dim ec As event_comb = Nothing
@@ -233,7 +233,7 @@ Public Class stream_flow_adapter
     Public Function send(ByVal buff() As Byte,
                          ByVal offset As UInt32,
                          ByVal count As UInt32,
-                         ByVal sent As pointer(Of UInt32)) As event_comb Implements flow.send
+                         ByVal sent As ref(Of UInt32)) As event_comb Implements flow.send
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = stream().send(buff, offset, count, send_rate_sec, False, True)
@@ -250,11 +250,11 @@ Public Class stream_flow_adapter
     Public Function receive(ByVal buff() As Byte,
                             ByVal offset As UInt32,
                             ByVal count As UInt32,
-                            ByVal result As pointer(Of UInt32)) As event_comb Implements flow.receive
+                            ByVal result As ref(Of UInt32)) As event_comb Implements flow.receive
         Return stream().receive(buff, offset, count, result, receive_rate_sec, False, True)
     End Function
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements flow.sense
         'usually this function should not be called
         Return sensor.sense(pending, timeout_ms)

@@ -8,15 +8,15 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
-Imports store_t = osi.root.formation.hashmap(Of osi.root.formation.array_pointer(Of Byte),
-                                                osi.root.formation.pair(Of System.Int64, System.Int64))
+Imports store_t = osi.root.formation.unordered_map(Of osi.root.connector.array_ref(Of Byte),
+                                                      osi.root.formation.pair(Of System.Int64, System.Int64))
 
-Partial Public Class fces
+Partial Public NotInheritable Class fces
     Implements ikeyvalue2(Of store_t.iterator)
 
     Public Function append_existing(ByVal it As store_t.iterator,
                                     ByVal value() As Byte,
-                                    ByVal result As pointer(Of Boolean)) As event_comb _
+                                    ByVal result As ref(Of Boolean)) As event_comb _
                                    Implements ikeyvalue2(Of store_t.iterator).append_existing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -35,7 +35,7 @@ Partial Public Class fces
                               End Function)
     End Function
 
-    Public Function capacity(ByVal result As pointer(Of Int64)) As event_comb _
+    Public Function capacity(ByVal result As ref(Of Int64)) As event_comb _
                             Implements ikeyvalue2(Of store_t.iterator).capacity
         Return sync_async(Function() As Int64
                               Dim r As UInt64 = 0
@@ -51,18 +51,18 @@ Partial Public Class fces
     End Function
 
     Public Function delete_existing(ByVal it As store_t.iterator,
-                                    ByVal result As pointer(Of Boolean)) As event_comb _
+                                    ByVal result As ref(Of Boolean)) As event_comb _
                                    Implements ikeyvalue2(Of store_t.iterator).delete_existing
         Dim ec1 As event_comb = Nothing
         Dim ec2 As event_comb = Nothing
-        Dim r1 As pointer(Of Boolean) = Nothing
-        Dim r2 As pointer(Of Boolean) = Nothing
+        Dim r1 As ref(Of Boolean) = Nothing
+        Dim r2 As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim iid As Int64 = 0
                                   Dim cid As Int64 = 0
                                   If find_cluster_id(it, iid, cid) Then
-                                      r1 = New pointer(Of Boolean)()
-                                      r2 = New pointer(Of Boolean)()
+                                      r1 = New ref(Of Boolean)()
+                                      r2 = New ref(Of Boolean)()
                                       ec1 = index.delete(iid, r1)
                                       ec2 = content.delete(cid, r2)
                                       Return waitfor(ec1, ec2) AndAlso
@@ -81,7 +81,7 @@ Partial Public Class fces
                               End Function)
     End Function
 
-    Public Function empty(ByVal result As pointer(Of Boolean)) As event_comb _
+    Public Function empty(ByVal result As ref(Of Boolean)) As event_comb _
                          Implements ikeyvalue2(Of store_t.iterator).empty
         Return sync_async(Function() As Boolean
                               Return m.empty()
@@ -90,7 +90,7 @@ Partial Public Class fces
                           +result)
     End Function
 
-    Public Function full(ByVal result As pointer(Of Boolean)) As event_comb _
+    Public Function full(ByVal result As ref(Of Boolean)) As event_comb _
                         Implements ikeyvalue2(Of store_t.iterator).full
         Return sync_async(Function() As Boolean
                               Return m.size() >= max_key_count
@@ -103,7 +103,7 @@ Partial Public Class fces
         Return open()
     End Function
 
-    Public Function keycount(ByVal result As pointer(Of Int64)) As event_comb _
+    Public Function keycount(ByVal result As ref(Of Int64)) As event_comb _
                             Implements ikeyvalue2(Of store_t.iterator).keycount
         Return sync_async(Function() As Int64
                               Return m.size()
@@ -112,7 +112,7 @@ Partial Public Class fces
                           +result)
     End Function
 
-    Public Function list(ByVal result As pointer(Of vector(Of Byte()))) As event_comb _
+    Public Function list(ByVal result As ref(Of vector(Of Byte()))) As event_comb _
                         Implements ikeyvalue2(Of store_t.iterator).list
         Return sync_async(Function() As vector(Of Byte())
                               Dim r As vector(Of Byte()) = Nothing
@@ -130,7 +130,7 @@ Partial Public Class fces
     End Function
 
     Public Function read_existing(ByVal it As store_t.iterator,
-                                  ByVal value As pointer(Of Byte())) As event_comb _
+                                  ByVal value As ref(Of Byte())) As event_comb _
                                  Implements ikeyvalue2(Of store_t.iterator).read_existing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -173,8 +173,8 @@ Partial Public Class fces
     End Function
 
     Public Function seek(ByVal key() As Byte,
-                         ByVal it As pointer(Of store_t.iterator),
-                         ByVal result As pointer(Of Boolean)) As event_comb _
+                         ByVal it As ref(Of store_t.iterator),
+                         ByVal result As ref(Of Boolean)) As event_comb _
                         Implements ikeyvalue2(Of store_t.iterator).seek
         Return New event_comb(Function() As Boolean
                                   Dim t As store_t.iterator = Nothing
@@ -185,7 +185,7 @@ Partial Public Class fces
     End Function
 
     Public Function sizeof_existing(ByVal it As store_t.iterator,
-                                    ByVal result As pointer(Of Int64)) As event_comb _
+                                    ByVal result As ref(Of Int64)) As event_comb _
                                    Implements ikeyvalue2(Of store_t.iterator).sizeof_existing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -211,10 +211,10 @@ Partial Public Class fces
                           End Sub)
     End Function
 
-    Public Function valuesize(ByVal result As pointer(Of Int64)) As event_comb _
+    Public Function valuesize(ByVal result As ref(Of Int64)) As event_comb _
                              Implements ikeyvalue2(Of store_t.iterator).valuesize
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of UInt64) = Nothing
+        Dim p As ref(Of UInt64) = Nothing
         Return New event_comb(Function() As Boolean
                                   _new(p)
                                   ec = content.valuesize(p)
@@ -231,21 +231,21 @@ Partial Public Class fces
 
     Public Function write_new(ByVal key() As Byte,
                               ByVal value() As Byte,
-                              ByVal result As pointer(Of Boolean)) As event_comb _
+                              ByVal result As ref(Of Boolean)) As event_comb _
                              Implements ikeyvalue2(Of store_t.iterator).write_new
         Dim ec1 As event_comb = Nothing
         Dim ec2 As event_comb = Nothing
-        Dim iid As pointer(Of Int64) = Nothing
-        Dim cid As pointer(Of Int64) = Nothing
-        Dim r1 As pointer(Of Boolean) = Nothing
-        Dim r2 As pointer(Of Boolean) = Nothing
+        Dim iid As ref(Of Int64) = Nothing
+        Dim cid As ref(Of Int64) = Nothing
+        Dim r1 As ref(Of Boolean) = Nothing
+        Dim r2 As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
                                   If m.size() >= max_key_count Then
                                       Return eva(result, False) AndAlso
                                              goto_end()
                                   Else
-                                      iid = New pointer(Of Int64)()
-                                      cid = New pointer(Of Int64)()
+                                      iid = New ref(Of Int64)()
+                                      cid = New ref(Of Int64)()
                                       ec1 = index.alloc(array_size(key) + sizeof_int64, iid)
                                       ec2 = content.alloc(array_size(value), cid)
                                       Return waitfor(ec1, ec2) AndAlso
@@ -257,8 +257,8 @@ Partial Public Class fces
                                   If ec1.end_result() AndAlso
                                      ec2.end_result() AndAlso
                                      generate_index(key, +cid, kb) Then
-                                      r1 = New pointer(Of Boolean)()
-                                      r2 = New pointer(Of Boolean)()
+                                      r1 = New ref(Of Boolean)()
+                                      r2 = New ref(Of Boolean)()
                                       ec1 = index.append(+iid, kb, r1)
                                       ec2 = content.append(+cid, value, r2)
                                       Return waitfor(ec1, ec2) AndAlso

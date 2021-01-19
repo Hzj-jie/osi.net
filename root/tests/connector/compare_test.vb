@@ -50,7 +50,7 @@ Public Class compare_test
     End Function
 
     Public Overrides Function run() As Boolean
-        Using scoped_atomic_bool(suppress.compare_error)
+        Using scoped.atomic_bool(suppress.compare_error)
             Return MyBase.run()
         End Using
     End Function
@@ -225,8 +225,8 @@ Public Class compare_test
             cc2 = New comparable_class(rnd_int(min_int32, max_int32))
             Return compare_case(cc, nc, cc.v.CompareTo(nc.v)) AndAlso
                    compare_case(cc, nc, cc.CompareTo(nc)) AndAlso
-                   compare_case(nc, cc, -cc.v.CompareTo(nc.v)) AndAlso
-                   compare_case(nc, cc, -cc.CompareTo(nc)) AndAlso
+                   compare_case(nc, cc, comparer.reverse(cc.v.CompareTo(nc.v))) AndAlso
+                   compare_case(nc, cc, comparer.reverse(cc.CompareTo(nc))) AndAlso
                    compare_case(cc, cc2, cc.v.CompareTo(cc2.v)) AndAlso
                    compare_case(cc, cc2, cc.CompareTo(cc2)) AndAlso
                    compare_case(cc, cc, 0) AndAlso
@@ -246,14 +246,14 @@ Public Class compare_test
 
             Return compare_case(cc, nc, cc.v.CompareTo(nc.v)) AndAlso
                    compare_case(cc, nc, cc.CompareTo(nc)) AndAlso
-                   compare_case(nc, cc, -cc.v.CompareTo(nc.v)) AndAlso
-                   compare_case(nc, cc, -cc.CompareTo(nc)) AndAlso
+                   compare_case(nc, cc, comparer.reverse(cc.v.CompareTo(nc.v))) AndAlso
+                   compare_case(nc, cc, comparer.reverse(cc.CompareTo(nc))) AndAlso
                    compare_case(cc, cc2, cc.v.CompareTo(cc2.v)) AndAlso
                    compare_case(cc, cc2, cc.CompareTo(cc2)) AndAlso
                    compare_case(cc, cc, 0) AndAlso
                    compare_case(cc, n, cc.v.CompareTo(n.v)) AndAlso
-                   compare_case(cc, n, -n.v.CompareTo(cc.v)) AndAlso
-                   compare_case(n, cc, -cc.v.CompareTo(n.v)) AndAlso
+                   compare_case(cc, n, comparer.reverse(n.v.CompareTo(cc.v))) AndAlso
+                   compare_case(n, cc, comparer.reverse(cc.v.CompareTo(n.v))) AndAlso
                    compare_case(n, cc, n.v.CompareTo(cc.v))
         End Function
 
@@ -278,8 +278,8 @@ Public Class compare_test
             cc2 = New comparable_class(rnd_int(min_int32, max_int32))
             Return compare_case(Of Object, Object)(cc, nc, cc.v.CompareTo(nc.v)) AndAlso
                    compare_case(Of Object, Object)(cc, nc, cc.CompareTo(nc)) AndAlso
-                   compare_case(Of Object, Object)(nc, cc, -cc.v.CompareTo(nc.v)) AndAlso
-                   compare_case(Of Object, Object)(nc, cc, -cc.CompareTo(nc)) AndAlso
+                   compare_case(Of Object, Object)(nc, cc, comparer.reverse(cc.v.CompareTo(nc.v))) AndAlso
+                   compare_case(Of Object, Object)(nc, cc, comparer.reverse(cc.CompareTo(nc))) AndAlso
                    compare_case(Of Object, Object)(cc, cc2, cc.v.CompareTo(cc2.v)) AndAlso
                    compare_case(Of Object, Object)(cc, cc2, cc.CompareTo(cc2)) AndAlso
                    compare_case(Of Object, Object)(cc, cc, 0) AndAlso
@@ -288,8 +288,8 @@ Public Class compare_test
  _
                    compare_case(Of comparable_class, Object)(cc, nc, cc.v.CompareTo(nc.v)) AndAlso
                    compare_case(Of comparable_class, Object)(cc, nc, cc.CompareTo(nc)) AndAlso
-                   compare_case(Of not_comparable, Object)(nc, cc, -cc.v.CompareTo(nc.v)) AndAlso
-                   compare_case(Of not_comparable, Object)(nc, cc, -cc.CompareTo(nc)) AndAlso
+                   compare_case(Of not_comparable, Object)(nc, cc, comparer.reverse(cc.v.CompareTo(nc.v))) AndAlso
+                   compare_case(Of not_comparable, Object)(nc, cc, comparer.reverse(cc.CompareTo(nc))) AndAlso
                    compare_case(Of comparable_class, Object)(cc, cc2, cc.v.CompareTo(cc2.v)) AndAlso
                    compare_case(Of comparable_class, Object)(cc, cc2, cc.CompareTo(cc2)) AndAlso
                    compare_case(Of comparable_class, Object)(cc, cc, 0) AndAlso
@@ -299,8 +299,8 @@ Public Class compare_test
  _
                    compare_case(Of Object, not_comparable)(cc, nc, cc.v.CompareTo(nc.v)) AndAlso
                    compare_case(Of Object, not_comparable)(cc, nc, cc.CompareTo(nc)) AndAlso
-                   compare_case(Of Object, comparable_class)(nc, cc, -cc.v.CompareTo(nc.v)) AndAlso
-                   compare_case(Of Object, comparable_class)(nc, cc, -cc.CompareTo(nc)) AndAlso
+                   compare_case(Of Object, comparable_class)(nc, cc, comparer.reverse(cc.v.CompareTo(nc.v))) AndAlso
+                   compare_case(Of Object, comparable_class)(nc, cc, comparer.reverse(cc.CompareTo(nc))) AndAlso
                    compare_case(Of Object, comparable_class)(cc, cc2, cc.v.CompareTo(cc2.v)) AndAlso
                    compare_case(Of Object, comparable_class)(cc, cc2, cc.CompareTo(cc2)) AndAlso
                    compare_case(Of Object, comparable_class)(cc, cc, 0) AndAlso

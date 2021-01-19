@@ -11,9 +11,7 @@ Partial Public Class event_comb
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _goto(ByVal [step] As Int32) As Boolean
         assert_in_lock()
-        If Not debug_assert_valid_step([step]) Then
-            Return False
-        End If
+        assert(valid_step([step]))
         Me.step = [step]
         Return True
     End Function

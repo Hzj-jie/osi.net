@@ -26,8 +26,8 @@ Imports osi.root.lock
 'finish disposer_imports.vbp --------
 
 Public Class weak_dispose_ptr(Of T)
-    Inherits weak_pointer(Of T)
-    
+    Inherits weak_ref(Of T)
+
     Private ReadOnly _disposer As Action(Of T)
 
 #If 0 Then

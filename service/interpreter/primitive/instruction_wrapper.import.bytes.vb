@@ -40,10 +40,6 @@ Namespace primitive
                         Me.i = New instructions.ext()
                     Case command.pow
                         Me.i = New instructions.pow()
-                    Case command.lfs
-                        Me.i = New instructions.lfs()
-                    Case command.rfs
-                        Me.i = New instructions.rfs()
                     Case command.jumpif
                         Me.i = New instructions.jumpif()
                     Case command.cpco
@@ -102,6 +98,10 @@ Namespace primitive
                         Me.i = New instructions.fequal()
                     Case command.fless
                         Me.i = New instructions.fless()
+                    Case command.lfs
+                        Me.i = New instructions.lfs()
+                    Case command.rfs
+                        Me.i = New instructions.rfs()
                     Case Else
                         Return False
                 End Select

@@ -32,10 +32,6 @@ Namespace primitive
         [ext]
         ' (*A big_uint) = pow((*B big_uint), (*C big_uint)) 
         [pow]
-        ' (*A big_uint) = left_shift((*B big_uint), (*C big_uint)) 
-        [lfs]
-        ' (*A big_uint) = left_shift((*B big_uint), (*C big_uint)) 
-        [rfs]
         ' jump to instruction @A, if (*B bool) is true 
         [jumpif]
         ' (*A) = CO 
@@ -94,6 +90,10 @@ Namespace primitive
         [fequal]
         ' (*A) = ((*B big_udec) < (*C big_udec)) 
         [fless]
+        ' (*A big_uint) = left_shift((*B big_uint), (*C big_uint)) 
+        [lfs]
+        ' (*A big_uint) = left_shift((*B big_uint), (*C big_uint)) 
+        [rfs]
 
         COUNT
     End Enum

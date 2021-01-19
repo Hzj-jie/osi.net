@@ -8,23 +8,31 @@ Imports osi.root.delegates
 
 ' A functor to implement T to string and string to T operations.
 Partial Public Class string_serializer(Of T, PROTECTOR)
-    Public Shared ReadOnly [default] As string_serializer(Of T, PROTECTOR)
 
     Shared Sub New()
         ' To allow T to register its own serializer in the static constructor.
         static_constructor(Of T).execute()
-        [default] = New string_serializer(Of T, PROTECTOR)()
     End Sub
 
     Private Shared Function is_string() As Boolean
         Return type_info(Of T, type_info_operators.equal, String).v
     End Function
 
-    Private NotInheritable Class object_register(Of P)
+    Private NotInheritable Class object_register
         Shared Sub New()
-            type_resolver(Of string_serializer(Of Object), P).assert_first_register(
-                GetType(T),
-                New string_serializer_object(Of T, PROTECTOR)([default]))
+            If string_serializer.protector(Of PROTECTOR).is_global Then
+                type_resolver(Of string_serializer(Of Object), string_serializer).assert_first_register(
+                    GetType(T),
+                    string_serializer_object(Of T).of(string_serializer(Of T).r))
+            ElseIf string_serializer.protector(Of PROTECTOR).is_json Then
+                type_resolver(Of string_serializer(Of Object), json_serializer).assert_first_register(
+                    GetType(T),
+                    string_serializer_object(Of T).of(json_serializer(Of T).r))
+            ElseIf string_serializer.protector(Of PROTECTOR).is_uri Then
+                type_resolver(Of string_serializer(Of Object), uri_serializer).assert_first_register(
+                    GetType(T),
+                    string_serializer_object(Of T).of(uri_serializer(Of T).r))
+            End If
         End Sub
 
         Public Shared Sub init()
@@ -34,24 +42,14 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
         End Sub
     End Class
 
-    Private Shared Sub register_object()
-        If string_serializer.protector(Of PROTECTOR).is_global Then
-            object_register(Of string_serializer).init()
-        ElseIf string_serializer.protector(Of PROTECTOR).is_json Then
-            object_register(Of json_serializer).init()
-        ElseIf string_serializer.protector(Of PROTECTOR).is_uri Then
-            object_register(Of uri_serializer).init()
-        End If
-    End Sub
-
     Public Shared Sub register(ByVal to_str As Func(Of T, StringWriter, Boolean))
         global_resolver(Of Func(Of T, StringWriter, Boolean), PROTECTOR).assert_first_register(to_str)
-        register_object()
+        object_register.init()
     End Sub
 
     Public Shared Sub register(ByVal from_str As _do_val_ref(Of StringReader, T, Boolean))
         global_resolver(Of _do_val_ref(Of StringReader, T, Boolean), PROTECTOR).assert_first_register(from_str)
-        register_object()
+        object_register.init()
     End Sub
 
     Protected Overridable Function to_str() As Func(Of T, StringWriter, Boolean)
@@ -64,11 +62,6 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
             Return False
         End If
 
-        If is_string() Then
-            o.Write(direct_cast(Of String)(i))
-            Return True
-        End If
-
         Dim f As Func(Of T, StringWriter, Boolean) = Nothing
         f = to_str()
         If Not f Is Nothing Then
@@ -76,7 +69,7 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
         End If
 
         Dim f2 As Func(Of T, StringWriter, Boolean) = Nothing
-        f2 = uri_serializer(Of T).default.to_str()
+        f2 = uri_serializer(Of T).r.to_str()
         assert(object_compare(f, f2) <> 0)
         assert(Not f2 Is Nothing)
         f2(i, o)
@@ -90,11 +83,6 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
     Private Function do_from_str(ByVal i As StringReader, ByRef o As T) As Boolean
         assert(Not i Is Nothing)
 
-        If is_string() Then
-            o = direct_cast(Of T)(i.ReadToEnd())
-            Return True
-        End If
-
         Dim f As _do_val_ref(Of StringReader, T, Boolean) = Nothing
         f = from_str()
         If Not f Is Nothing Then
@@ -102,7 +90,7 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
         End If
 
         Dim f2 As _do_val_ref(Of StringReader, T, Boolean) = Nothing
-        f2 = uri_serializer(Of T).default.from_str()
+        f2 = uri_serializer(Of T).r.from_str()
         assert(object_compare(f, f2) <> 0)
         assert(Not f2 Is Nothing)
         Return f2(i, o)
@@ -122,13 +110,6 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
         i.position(p)
         Return False
     End Function
-
-    Public Shared Operator +(ByVal this As string_serializer(Of T, PROTECTOR)) As string_serializer(Of T, PROTECTOR)
-        If this Is Nothing Then
-            Return [default]
-        End If
-        Return this
-    End Operator
 
     Protected Sub New()
     End Sub
@@ -159,18 +140,11 @@ End Class
 Public Class string_serializer(Of T)
     Inherits string_serializer(Of T, string_serializer(Of T))
 
-    Public Shared Shadows ReadOnly [default] As string_serializer(Of T)
+    Public Shared ReadOnly r As string_serializer(Of T)
 
     Shared Sub New()
-        [default] = New string_serializer(Of T)()
+        r = New string_serializer(Of T)()
     End Sub
-
-    Public Shared Shadows Operator +(ByVal this As string_serializer(Of T)) As string_serializer(Of T)
-        If this Is Nothing Then
-            Return [default]
-        End If
-        Return this
-    End Operator
 
     Protected Sub New()
     End Sub

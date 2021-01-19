@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.IO
 Imports System.Net
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
@@ -31,9 +32,9 @@ Partial Public NotInheritable Class client
                     (this.ms.Seek(0, SeekOrigin.Begin) = 0))
         End Function
 
-        Friend Shadows Function eva(ByVal status As pointer(Of HttpStatusCode),
-                                    ByVal headers As pointer(Of WebHeaderCollection),
-                                    ByVal result As pointer(Of MemoryStream)) As Boolean
+        Friend Shadows Function eva(ByVal status As ref(Of HttpStatusCode),
+                                    ByVal headers As ref(Of WebHeaderCollection),
+                                    ByVal result As ref(Of MemoryStream)) As Boolean
             Return MyBase.eva(status, headers) AndAlso
                    _eva.eva(result, Me.ms)
         End Function
@@ -79,9 +80,9 @@ Partial Public NotInheritable Class client
                                    ByVal request_headers As map(Of String, vector(Of String)),
                                    ByVal request_body As Stream,
                                    ByVal request_length As UInt64,
-                                   ByVal status As pointer(Of HttpStatusCode),
-                                   ByVal headers As pointer(Of WebHeaderCollection),
-                                   ByVal result As pointer(Of MemoryStream),
+                                   ByVal status As ref(Of HttpStatusCode),
+                                   ByVal headers As ref(Of WebHeaderCollection),
+                                   ByVal result As ref(Of MemoryStream),
                                    Optional ByVal request_comm As link_status = Nothing,
                                    Optional ByVal response_comm As link_status = Nothing) As event_comb
         Dim ec As event_comb = Nothing
@@ -127,9 +128,9 @@ Partial Public NotInheritable Class client
                                    ByVal request_headers As map(Of String, vector(Of String)),
                                    ByVal request_body As Stream,
                                    ByVal request_length As UInt64,
-                                   ByVal status As pointer(Of HttpStatusCode),
-                                   ByVal headers As pointer(Of WebHeaderCollection),
-                                   ByVal result As pointer(Of MemoryStream),
+                                   ByVal status As ref(Of HttpStatusCode),
+                                   ByVal headers As ref(Of WebHeaderCollection),
+                                   ByVal result As ref(Of MemoryStream),
                                    Optional ByVal request_comm As link_status = Nothing,
                                    Optional ByVal response_comm As link_status = Nothing) As event_comb
         Return request(url,
@@ -162,9 +163,9 @@ Partial Public NotInheritable Class client
     Public Shared Function request(ByVal url As String,
                                    ByVal request_body As Stream,
                                    ByVal request_length As UInt64,
-                                   ByVal status As pointer(Of HttpStatusCode),
-                                   ByVal headers As pointer(Of WebHeaderCollection),
-                                   ByVal result As pointer(Of MemoryStream),
+                                   ByVal status As ref(Of HttpStatusCode),
+                                   ByVal headers As ref(Of WebHeaderCollection),
+                                   ByVal result As ref(Of MemoryStream),
                                    Optional ByVal request_comm As link_status = Nothing,
                                    Optional ByVal response_comm As link_status = Nothing) As event_comb
         Return request(url,
@@ -196,9 +197,9 @@ Partial Public NotInheritable Class client
     Public Shared Function request(ByVal url As String,
                                    ByVal request_headers As map(Of String, vector(Of String)),
                                    ByVal request_body As Stream,
-                                   ByVal status As pointer(Of HttpStatusCode),
-                                   ByVal headers As pointer(Of WebHeaderCollection),
-                                   ByVal result As pointer(Of MemoryStream),
+                                   ByVal status As ref(Of HttpStatusCode),
+                                   ByVal headers As ref(Of WebHeaderCollection),
+                                   ByVal result As ref(Of MemoryStream),
                                    Optional ByVal request_comm As link_status = Nothing,
                                    Optional ByVal response_comm As link_status = Nothing) As event_comb
         Return request(url,
@@ -227,9 +228,9 @@ Partial Public NotInheritable Class client
 
     Public Shared Function request(ByVal url As String,
                                    ByVal request_body As Stream,
-                                   ByVal status As pointer(Of HttpStatusCode),
-                                   ByVal headers As pointer(Of WebHeaderCollection),
-                                   ByVal result As pointer(Of MemoryStream),
+                                   ByVal status As ref(Of HttpStatusCode),
+                                   ByVal headers As ref(Of WebHeaderCollection),
+                                   ByVal result As ref(Of MemoryStream),
                                    Optional ByVal request_comm As link_status = Nothing,
                                    Optional ByVal response_comm As link_status = Nothing) As event_comb
         Return request(url,
@@ -257,9 +258,9 @@ Partial Public NotInheritable Class client
 
     Public Shared Function request(ByVal url As String,
                                    ByVal request_headers As map(Of String, vector(Of String)),
-                                   ByVal status As pointer(Of HttpStatusCode),
-                                   ByVal headers As pointer(Of WebHeaderCollection),
-                                   ByVal result As pointer(Of MemoryStream),
+                                   ByVal status As ref(Of HttpStatusCode),
+                                   ByVal headers As ref(Of WebHeaderCollection),
+                                   ByVal result As ref(Of MemoryStream),
                                    Optional ByVal request_comm As link_status = Nothing,
                                    Optional ByVal response_comm As link_status = Nothing) As event_comb
         Return request(url,
@@ -284,9 +285,9 @@ Partial Public NotInheritable Class client
     End Function
 
     Public Shared Function request(ByVal url As String,
-                                   ByVal status As pointer(Of HttpStatusCode),
-                                   ByVal headers As pointer(Of WebHeaderCollection),
-                                   ByVal result As pointer(Of MemoryStream),
+                                   ByVal status As ref(Of HttpStatusCode),
+                                   ByVal headers As ref(Of WebHeaderCollection),
+                                   ByVal result As ref(Of MemoryStream),
                                    Optional ByVal request_comm As link_status = Nothing,
                                    Optional ByVal response_comm As link_status = Nothing) As event_comb
         Return request(url,
@@ -299,8 +300,8 @@ Partial Public NotInheritable Class client
     End Function
 
     Public Shared Function request(ByVal url As String,
-                                   ByVal status As pointer(Of HttpStatusCode),
-                                   ByVal result As pointer(Of MemoryStream),
+                                   ByVal status As ref(Of HttpStatusCode),
+                                   ByVal result As ref(Of MemoryStream),
                                    Optional ByVal request_comm As link_status = Nothing,
                                    Optional ByVal response_comm As link_status = Nothing) As event_comb
         Return request(url,
@@ -312,7 +313,7 @@ Partial Public NotInheritable Class client
     End Function
 
     Public Shared Function request(ByVal url As String,
-                                   ByVal result As pointer(Of MemoryStream),
+                                   ByVal result As ref(Of MemoryStream),
                                    Optional ByVal request_comm As link_status = Nothing,
                                    Optional ByVal response_comm As link_status = Nothing) As event_comb
         Return request(url,

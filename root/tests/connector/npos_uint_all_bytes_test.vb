@@ -19,11 +19,11 @@ Imports osi.root.utt
 
 
 
-Public Class npos_uint_bytes_test
+Public NotInheritable Class npos_uint_bytes_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        For i As Int32 = 0 To 1024 * 1024 * 8 - 1
+        For i As Int32 = 0 To 1024 * 32 - 1
             Dim x As npos_uint = Nothing
             If rnd_bool() Then
                 x = rnd_int64()
@@ -75,11 +75,11 @@ End Class
 
 
 
-Public Class npos_uint32_bytes_test
+Public NotInheritable Class npos_uint32_bytes_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        For i As Int32 = 0 To 1024 * 1024 * 8 - 1
+        For i As Int32 = 0 To 1024 * 32 - 1
             Dim x As npos_uint32 = Nothing
             If rnd_bool() Then
                 x = rnd_int64()
@@ -131,11 +131,11 @@ End Class
 
 
 
-Public Class npos_uint64_bytes_test
+Public NotInheritable Class npos_uint64_bytes_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        For i As Int32 = 0 To 1024 * 1024 * 8 - 1
+        For i As Int32 = 0 To 1024 * 32 - 1
             Dim x As npos_uint64 = Nothing
             If rnd_bool() Then
                 x = rnd_int64()
@@ -187,11 +187,11 @@ End Class
 
 
 
-Public Class positive_npos_uint_bytes_test
+Public NotInheritable Class positive_npos_uint_bytes_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        For i As Int32 = 0 To 1024 * 1024 * 8 - 1
+        For i As Int32 = 0 To 1024 * 32 - 1
             Dim x As positive_npos_uint = Nothing
             If rnd_bool() Then
                 x = rnd_int64()
@@ -243,11 +243,11 @@ End Class
 
 
 
-Public Class positive_npos_uint32_bytes_test
+Public NotInheritable Class positive_npos_uint32_bytes_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        For i As Int32 = 0 To 1024 * 1024 * 8 - 1
+        For i As Int32 = 0 To 1024 * 32 - 1
             Dim x As positive_npos_uint32 = Nothing
             If rnd_bool() Then
                 x = rnd_int64()
@@ -299,11 +299,11 @@ End Class
 
 
 
-Public Class positive_npos_uint64_bytes_test
+Public NotInheritable Class positive_npos_uint64_bytes_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        For i As Int32 = 0 To 1024 * 1024 * 8 - 1
+        For i As Int32 = 0 To 1024 * 32 - 1
             Dim x As positive_npos_uint64 = Nothing
             If rnd_bool() Then
                 x = rnd_int64()
@@ -355,11 +355,11 @@ End Class
 
 
 
-Public Class positive_size_t_bytes_test
+Public NotInheritable Class positive_size_t_bytes_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        For i As Int32 = 0 To 1024 * 1024 * 8 - 1
+        For i As Int32 = 0 To 1024 * 32 - 1
             Dim x As positive_size_t = Nothing
             If rnd_bool() Then
                 x = rnd_int64()
@@ -411,11 +411,11 @@ End Class
 
 
 
-Public Class positive_size_t_32_bytes_test
+Public NotInheritable Class positive_size_t_32_bytes_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        For i As Int32 = 0 To 1024 * 1024 * 8 - 1
+        For i As Int32 = 0 To 1024 * 32 - 1
             Dim x As positive_size_t_32 = Nothing
             If rnd_bool() Then
                 x = rnd_int64()
@@ -467,11 +467,11 @@ End Class
 
 
 
-Public Class positive_size_t_64_bytes_test
+Public NotInheritable Class positive_size_t_64_bytes_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        For i As Int32 = 0 To 1024 * 1024 * 8 - 1
+        For i As Int32 = 0 To 1024 * 32 - 1
             Dim x As positive_size_t_64 = Nothing
             If rnd_bool() Then
                 x = rnd_int64()
@@ -523,11 +523,11 @@ End Class
 
 
 
-Public Class retry_times_t_bytes_test
+Public NotInheritable Class retry_times_t_bytes_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        For i As Int32 = 0 To 1024 * 1024 * 8 - 1
+        For i As Int32 = 0 To 1024 * 32 - 1
             Dim x As retry_times_t = Nothing
             If rnd_bool() Then
                 x = rnd_int64()
@@ -579,11 +579,11 @@ End Class
 
 
 
-Public Class size_t_bytes_test
+Public NotInheritable Class size_t_bytes_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        For i As Int32 = 0 To 1024 * 1024 * 8 - 1
+        For i As Int32 = 0 To 1024 * 32 - 1
             Dim x As size_t = Nothing
             If rnd_bool() Then
                 x = rnd_int64()
@@ -635,11 +635,11 @@ End Class
 
 
 
-Public Class size_t_32_bytes_test
+Public NotInheritable Class size_t_32_bytes_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        For i As Int32 = 0 To 1024 * 1024 * 8 - 1
+        For i As Int32 = 0 To 1024 * 32 - 1
             Dim x As size_t_32 = Nothing
             If rnd_bool() Then
                 x = rnd_int64()
@@ -691,11 +691,11 @@ End Class
 
 
 
-Public Class size_t_64_bytes_test
+Public NotInheritable Class size_t_64_bytes_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        For i As Int32 = 0 To 1024 * 1024 * 8 - 1
+        For i As Int32 = 0 To 1024 * 32 - 1
             Dim x As size_t_64 = Nothing
             If rnd_bool() Then
                 x = rnd_int64()
@@ -747,11 +747,11 @@ End Class
 
 
 
-Public Class timeout_ms_t_bytes_test
+Public NotInheritable Class timeout_ms_t_bytes_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        For i As Int32 = 0 To 1024 * 1024 * 8 - 1
+        For i As Int32 = 0 To 1024 * 32 - 1
             Dim x As timeout_ms_t = Nothing
             If rnd_bool() Then
                 x = rnd_int64()

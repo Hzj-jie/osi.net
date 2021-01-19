@@ -2,18 +2,13 @@
 ##INCLUDE iterator.imports.vbp
 Imports osi.root.template
 
-Public Module _trie_iterator
-##DEFINE PARENT_CLASS trie(Of KEY_T, VALUE_T, _CHILD_COUNT, _KEY_TO_INDEX)
-##DEFINE TEMPLATE_TYPE (Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_INDEX As _to_uint32(Of KEY_T))
-##INCLUDE iterator.ext.vbp
-End Module
-
 Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_INDEX As _to_uint32(Of KEY_T))
-    Public Structure iterator
 ##DEFINE TYPE node
-##DEFINE TYPE_IS_STRUCT True
+##DEFINE TEMPLATE_TYPES KEY_T, VALUE_T, _CHILD_COUNT, _KEY_TO_INDEX
+##DEFINE VALUE_TYPE node
 ##INCLUDE random_access_iterator.single_step.vbp
 
+    Partial Public Structure iterator
         Private Function move_next() As iterator
             Dim p As node = Nothing
             p = Me.p

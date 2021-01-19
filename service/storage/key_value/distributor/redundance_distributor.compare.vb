@@ -35,8 +35,8 @@ Public Class redundance_distributor
     'in this case, array_size(nodes_results) == array_size(ts), and at least one element in the array is true
     'best_value and best_ts are set
     Private Shared Function compare(ByVal ecs() As event_comb,
-                                    ByVal values() As pointer(Of Byte()),
-                                    ByVal tss() As pointer(Of Int64),
+                                    ByVal values() As ref(Of Byte()),
+                                    ByVal tss() As ref(Of Int64),
                                     ByRef nodes_results() As Boolean,
                                     ByRef best_value() As Byte,
                                     ByRef best_ts As Int64) As Boolean

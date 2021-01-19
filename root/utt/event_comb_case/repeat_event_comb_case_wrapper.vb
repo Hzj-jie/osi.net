@@ -18,10 +18,7 @@ Public Class repeat_event_comb_case_wrapper
     End Sub
 
     Public Sub New(ByVal c As event_comb_case, ByVal test_size As Int64)
-        Me.New(c, assert_return(test_size >= 0, CULng(test_size)))
-        raise_error(error_type.deprecated,
-                    "repeat_event_comb_case_wrapper([case], int64) is deprecated, use uint64 overloads: ",
-                    backtrace())
+        Me.New(c, assert_which.of(test_size).can_cast_to_uint64())
     End Sub
 
     Protected Overridable Function test_size() As UInt64

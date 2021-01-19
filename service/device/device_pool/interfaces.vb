@@ -45,7 +45,7 @@ Public Module _device_pool
     End Function
 
     <Extension()> Public Function [get](Of T)(ByVal d As idevice_pool(Of T),
-                                              ByVal r As pointer(Of idevice(Of T)),
+                                              ByVal r As ref(Of idevice(Of T)),
                                               ByVal timeout_ms As Int64) As event_comb
         Dim p As pending_io_punishment = Nothing
         Dim ec As event_comb = Nothing

@@ -263,21 +263,16 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         Private NotInheritable Class run_case
             Inherits [case]
 
-            Private Shared ReadOnly samples As vector(Of big_int)
-            Private Shared ReadOnly samples_BigInteger As vector(Of BigInteger)
+            Private Shared ReadOnly big_ints As samples(Of big_int)
+            Private Shared ReadOnly BigIntegers As samples(Of BigInteger)
             Private ReadOnly e1 As Action(Of big_int, big_int)
             Private ReadOnly e2 As Action(Of BigInteger, BigInteger)
-            Private ReadOnly tc As debug_thread_checker
-            Private index As Int64
 
             Shared Sub New()
-                samples = New vector(Of big_int)()
-                For i As Int32 = 0 To 792
-                    samples.emplace_back(big_int.random())
-                Next
-                samples_BigInteger = samples.map(Function(ByVal i As big_int) As BigInteger
-                                                     Return i.as_BigInteger()
-                                                 End Function)
+                big_ints = samples.of(AddressOf big_int.random, 792)
+                BigIntegers = big_ints.map(Function(ByVal i As big_int) As BigInteger
+                                               Return i.as_BigInteger()
+                                           End Function)
             End Sub
 
             Private Sub New(ByVal e1 As Action(Of big_int, big_int), ByVal e2 As Action(Of BigInteger, BigInteger))
@@ -285,8 +280,6 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
                 assert(e1 Is Nothing OrElse e2 Is Nothing)
                 Me.e1 = e1
                 Me.e2 = e2
-                tc = New debug_thread_checker()
-                index = 0
             End Sub
 
             Public Sub New(ByVal e As Action(Of big_int, big_int))
@@ -301,30 +294,18 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
                 If e1 Is Nothing Then
                     Dim i As BigInteger = Nothing
                     Dim j As BigInteger = Nothing
-                    i = next_random_BigInteger()
-                    j = next_random_BigInteger()
+                    i = BigIntegers.next()
+                    j = BigIntegers.next()
                     e2(i, j)
                 Else
                     Dim i As big_int = Nothing
                     Dim j As big_int = Nothing
-                    i = next_random()
-                    j = next_random()
+                    i = big_ints.next()
+                    j = big_ints.next()
                     e1(i, j)
                 End If
 
                 Return True
-            End Function
-
-            Private Function next_random() As big_int
-                tc.assert()
-                index += 1
-                Return samples.modget(index)
-            End Function
-
-            Private Function next_random_BigInteger() As BigInteger
-                tc.assert()
-                index += 1
-                Return samples_BigInteger.modget(index)
             End Function
         End Class
     End Class

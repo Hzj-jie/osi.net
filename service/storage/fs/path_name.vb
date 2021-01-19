@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 Imports osi.root.template
@@ -9,7 +13,7 @@ Public Module _path_name
     Public Const path_separator As Char = character.left_slash
     Public Const magic_char As Char = character.dollar
     Public Const this_level_path As Char = character.dot
-    Public Const parent_level_path As Char = character.dot + character.dot
+    Public Const parent_level_path As String = character.dot + character.dot
     Public Const subnode_property_name As String = magic_char + this_level_path
     Public Const properties_property_name As String = magic_char
     Public Const lock_property_name As String = magic_char

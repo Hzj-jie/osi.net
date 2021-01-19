@@ -54,7 +54,7 @@ Public Class remote_node
     End Function
 
     Public Function create(ByVal name As String,
-                           ByVal o As pointer(Of iproperty),
+                           ByVal o As ref(Of iproperty),
                            Optional ByVal wait_ms As Int64 = npos) As event_comb Implements inode.create
         Return q(create_command(name, wait_ms),
                  Function() As Boolean
@@ -68,7 +68,7 @@ Public Class remote_node
     End Function
 
     Public Function open(ByVal name As String,
-                         ByVal o As pointer(Of iproperty)) As event_comb Implements inode.open
+                         ByVal o As ref(Of iproperty)) As event_comb Implements inode.open
         Return q(open_command(name),
                  Function() As Boolean
                      Return eva(o, remote_property.ctor(target, +q, path(), name))
@@ -83,7 +83,7 @@ Public Class remote_node
         Return new_command().attach(action.inode_properties)
     End Function
 
-    Public Function properties(ByVal r As pointer(Of vector(Of String))) As event_comb Implements inode.properties
+    Public Function properties(ByVal r As ref(Of vector(Of String))) As event_comb Implements inode.properties
         Return q(properties_command(),
                  Function(c As command) As Boolean
                      Return Not c Is Nothing AndAlso
@@ -95,7 +95,7 @@ Public Class remote_node
         Return new_command().attach(action.inode_subnodes)
     End Function
 
-    Public Function subnodes(ByVal r As pointer(Of vector(Of String))) As event_comb Implements inode.subnodes
+    Public Function subnodes(ByVal r As ref(Of vector(Of String))) As event_comb Implements inode.subnodes
         Return q(subnodes_command(),
                  Function(c As command) As Boolean
                      Return Not c Is Nothing AndAlso

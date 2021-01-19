@@ -23,10 +23,9 @@ Public Class cache_case2
 
         insert_call(0.3, AddressOf [set])
         insert_call(0.3, AddressOf [get])
-        insert_call(0.1, AddressOf size)
+        insert_call(0.125, AddressOf size)
         insert_call(0.0001, AddressOf clear)
-        insert_call(0.1, AddressOf [erase])
-        insert_call(0.05, AddressOf foreach)
+        insert_call(0.125, AddressOf [erase])
         insert_call(0.1, AddressOf have)
         insert_call(0.0499, AddressOf empty)
     End Sub
@@ -78,14 +77,6 @@ Public Class cache_case2
         Dim key As Int32 = 0
         key = random_key()
         assertion.equal(c.erase(key), m.erase(key))
-    End Sub
-
-    Private Sub foreach()
-        c.foreach(Function(ByRef key As Int32, ByRef value As Int32, ByRef [continue] As Boolean) As Boolean
-                      assert_key_value(key, value)
-                      [continue] = True
-                      Return True
-                  End Function)
     End Sub
 
     Private Sub have()

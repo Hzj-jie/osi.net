@@ -49,7 +49,7 @@ Partial Public Class client_flow_adapter
     Public Function send(ByVal buff() As Byte,
                          ByVal offset As UInt32,
                          ByVal count As UInt32,
-                         ByVal sent As pointer(Of UInt32)) As event_comb Implements flow.send
+                         ByVal sent As ref(Of UInt32)) As event_comb Implements flow.send
         c.update_refer_ms()
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -69,7 +69,7 @@ Partial Public Class client_flow_adapter
     Public Function receive(ByVal buff() As Byte,
                             ByVal offset As UInt32,
                             ByVal count As UInt32,
-                            ByVal result As pointer(Of UInt32)) As event_comb _
+                            ByVal result As ref(Of UInt32)) As event_comb _
                            Implements flow.receive
         c.update_refer_ms()
         Dim ec As event_comb = Nothing
@@ -86,7 +86,7 @@ Partial Public Class client_flow_adapter
                               End Function)
     End Function
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements flow.sense
         c.update_refer_ms()
         Return f.sense(pending, timeout_ms)

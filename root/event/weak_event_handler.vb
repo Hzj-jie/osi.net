@@ -28,14 +28,14 @@ End Class
 Public Class weak_reference_handler(Of T, AT)
     Implements idelegate
     Protected ReadOnly a As AT
-    Private ReadOnly v As weak_pointer(Of T)
+    Private ReadOnly v As weak_ref(Of T)
 
     Shared Sub New()
         assert(GetType(AT).is(GetType([Delegate])))
     End Sub
 
     Protected Sub New(ByVal v As T, ByVal a As AT, ByVal o As [Delegate])
-        Me.v = weak_pointer.of(v)
+        Me.v = weak_ref.of(v)
         Me.a = a
         weak_event_handler.assert_not_pinning_delegate(v, o)
     End Sub

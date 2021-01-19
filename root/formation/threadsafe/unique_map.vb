@@ -7,7 +7,6 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.lock
 
@@ -16,19 +15,15 @@ Imports lock_t = osi.root.lock.slimlock.monitorlock
 #End If
 
 Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, VALUE_T)
-    Private ReadOnly m As hashmap(Of KEY_T, STORE_T)
+    Private ReadOnly m As unordered_map(Of KEY_T, STORE_T)
 #If USE_DUALLOCK Then
     Private l As duallock
 #Else
     Private l As lock_t
 #End If
 
-    Public Sub New(ByVal hash_size As UInt32)
-        m = New hashmap(Of KEY_T, STORE_T)(hash_size)
-    End Sub
-
     Public Sub New()
-        m = New hashmap(Of KEY_T, STORE_T)()
+        m = New unordered_map(Of KEY_T, STORE_T)()
     End Sub
 
     Protected MustOverride Function store_value(ByVal i As STORE_T, ByRef o As VALUE_T) As Boolean
@@ -84,16 +79,14 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
     Private Function unlocked_erase(ByVal key As KEY_T, ByRef v As VALUE_T) As Boolean
         If key Is Nothing Then
             Return False
-        Else
-            Dim it As hashmap(Of KEY_T, STORE_T).iterator = Nothing
-            it = m.find(key)
-            If it = m.end() Then
-                Return False
-            Else
-                store_value((+it).second, v)
-                Return assert(m.erase(it))
-            End If
         End If
+        Dim it As unordered_map(Of KEY_T, STORE_T).iterator = Nothing
+        it = m.find(key)
+        If it = m.end() Then
+            Return False
+        End If
+        store_value((+it).second, v)
+        Return assert(m.erase(it))
     End Function
 
     Public Function [erase](ByVal key As KEY_T, Optional ByRef v As VALUE_T = Nothing) As Boolean
@@ -103,67 +96,63 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
                          End Function) Then
             v = t
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 
     Public Function [erase](ByVal keys As vector(Of KEY_T),
                             Optional ByVal vs As vector(Of VALUE_T) = Nothing) As Boolean
         If keys Is Nothing Then
             Return False
-        ElseIf keys.empty() Then
-            Return True
-        Else
-            If Not vs Is Nothing Then
-                vs.clear()
-            End If
-            Return writer_locked(Function() As Boolean
-                                     Dim r As Boolean = False
-                                     r = True
-                                     For i As UInt32 = uint32_0 To keys.size() - uint32_1
-                                         Dim v As VALUE_T = Nothing
-                                         If unlocked_erase(keys(i), v) Then
-                                             If Not vs Is Nothing Then
-                                                 vs.emplace_back(v)
-                                             End If
-                                         Else
-                                             r = False
-                                         End If
-                                     Next
-                                     Return r
-                                 End Function)
         End If
+        If keys.empty() Then
+            Return True
+        End If
+        If Not vs Is Nothing Then
+            vs.clear()
+        End If
+        Return writer_locked(Function() As Boolean
+                                 Dim r As Boolean = False
+                                 r = True
+                                 For i As UInt32 = uint32_0 To keys.size() - uint32_1
+                                     Dim v As VALUE_T = Nothing
+                                     If unlocked_erase(keys(i), v) Then
+                                         If Not vs Is Nothing Then
+                                             vs.emplace_back(v)
+                                         End If
+                                     Else
+                                         r = False
+                                     End If
+                                 Next
+                                 Return r
+                             End Function)
     End Function
 
     Public Function [get](Of T)(ByVal key As KEY_T, ByVal action As Func(Of VALUE_T, T)) As T
         If action Is Nothing OrElse key Is Nothing Then
             Return Nothing
-        Else
-            Return reader_locked(Function() As T
-                                     Dim v As VALUE_T = Nothing
-                                     Dim it As hashmap(Of KEY_T, STORE_T).iterator = Nothing
-                                     it = m.find(key)
-                                     If it <> m.end() AndAlso
-                                        store_value((+it).second, v) Then
-                                         Return action(v)
-                                     Else
-                                         Return Nothing
-                                     End If
-                                 End Function)
         End If
+        Return reader_locked(Function() As T
+                                 Dim v As VALUE_T = Nothing
+                                 Dim it As unordered_map(Of KEY_T, STORE_T).iterator = Nothing
+                                 it = m.find(key)
+                                 If it <> m.end() AndAlso
+                                    store_value((+it).second, v) Then
+                                     Return action(v)
+                                 End If
+                                 Return Nothing
+                             End Function)
     End Function
 
     Public Function [get](ByVal key As KEY_T, ByVal action As Action(Of VALUE_T)) As Boolean
         If action Is Nothing Then
             Return False
-        Else
-            Return [get](key,
-                         Function(x As VALUE_T) As Boolean
-                             action(x)
-                             Return True
-                         End Function)
         End If
+        Return [get](key,
+                     Function(ByVal x As VALUE_T) As Boolean
+                         action(x)
+                         Return True
+                     End Function)
     End Function
 
     Public Function [get](ByVal key As KEY_T, ByRef v As VALUE_T) As Boolean
@@ -171,9 +160,8 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
         If [get](key, Sub(x) v2 = x) Then
             v = v2
             Return True
-        Else
-            Return False
         End If
+        Return False
     End Function
 
     Public Function [get](ByVal key As KEY_T) As VALUE_T
@@ -210,25 +198,23 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
     Private Function get_set(ByVal k As KEY_T, ByRef v As VALUE_T) As Boolean
         If k Is Nothing Then
             Return False
-        Else
-            Dim o As VALUE_T = Nothing
-            o = v
-            Dim result As Boolean = False
-            result = writer_locked(Function() As Boolean
-                                       Dim it As hashmap(Of KEY_T, STORE_T).iterator = Nothing
-                                       Dim r As VALUE_T = Nothing
-                                       it = m.find(k)
-                                       If it = m.end() OrElse Not store_value((+it).second, r) Then
-                                           m.insert(k, value_store(o))
-                                           Return True
-                                       Else
-                                           o = r
-                                           Return False
-                                       End If
-                                   End Function)
-            v = o
-            Return result
         End If
+        Dim o As VALUE_T = Nothing
+        o = v
+        Dim result As Boolean = False
+        result = writer_locked(Function() As Boolean
+                                   Dim it As unordered_map(Of KEY_T, STORE_T).iterator = Nothing
+                                   Dim r As VALUE_T = Nothing
+                                   it = m.find(k)
+                                   If it = m.end() OrElse Not store_value((+it).second, r) Then
+                                       m.insert(k, value_store(o))
+                                       Return True
+                                   End If
+                                   o = r
+                                   Return False
+                               End Function)
+        v = o
+        Return result
     End Function
 
     Public Function [set](ByVal key As KEY_T, ByVal v As VALUE_T) As Boolean
@@ -238,12 +224,11 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
     Public Function replace(ByVal key As KEY_T, ByVal v As VALUE_T) As Boolean
         If key Is Nothing Then
             Return False
-        Else
-            Return writer_locked(Function() As Boolean
-                                     m(key) = value_store(v)
-                                     Return True
-                                 End Function)
         End If
+        Return writer_locked(Function() As Boolean
+                                 m(key) = value_store(v)
+                                 Return True
+                             End Function)
     End Function
 
     Public Function exist(ByVal key As KEY_T) As Boolean
@@ -257,11 +242,10 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
         Dim v As VALUE_T = Nothing
         If [get](key, v) Then
             Return v
-        Else
-            v = ctor()
-            get_set(key, v)
-            Return v
         End If
+        v = ctor()
+        get_set(key, v)
+        Return v
     End Function
 
     Public Function generate(ByVal key As KEY_T) As VALUE_T
@@ -272,20 +256,15 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
         Return generate(key, Function() New VT())
     End Function
 
-    Public Function foreach(ByVal d As _do(Of KEY_T, VALUE_T, Boolean, Boolean)) As Boolean
-        If d Is Nothing Then
-            Return False
-        Else
-            Return reader_locked(Function() m.foreach(
-                                     Function(ByRef x As KEY_T, ByRef y As STORE_T, ByRef c As Boolean) As Boolean
-                                         Dim v As VALUE_T = Nothing
-                                         If store_value(y, v) Then
-                                             Return d(x, v, c)
-                                         Else
-                                             c = True
-                                             Return True
-                                         End If
-                                     End Function))
-        End If
-    End Function
+    Public Sub foreach(ByVal f As Action(Of KEY_T, VALUE_T))
+        assert(Not f Is Nothing)
+        reader_locked(Sub()
+                          m.stream().foreach(m.on_pair(Sub(ByVal k As KEY_T, ByVal s As STORE_T)
+                                                           Dim v As VALUE_T = Nothing
+                                                           If store_value(s, v) Then
+                                                               f(k, v)
+                                                           End If
+                                                       End Sub))
+                      End Sub)
+    End Sub
 End Class

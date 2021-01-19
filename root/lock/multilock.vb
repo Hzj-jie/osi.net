@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 
@@ -19,20 +20,23 @@ Public Class multilock(Of lock_t As {Structure, slimlock.islimlock})
         Me.New(default_lock_count)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function lock_signing(Of T)(ByVal i As T) As UInt32
         Return signing(i) Mod array_size(locks)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub lock(Of T)(ByVal i As T)
         locks(CInt(lock_signing(i))).wait()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub release(Of T)(ByVal i As T)
         locks(CInt(lock_signing(i))).release()
     End Sub
 End Class
 
-Public Class multilock
+Public NotInheritable Class multilock
     Inherits multilock(Of slimlock.monitorlock)
 
     Public Sub New(ByVal lock_count As UInt32)

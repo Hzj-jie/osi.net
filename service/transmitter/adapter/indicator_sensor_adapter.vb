@@ -17,7 +17,7 @@ Public Class indicator_sensor_adapter
         Me.New(New sync_indicator_indicator_adapter(i))
     End Sub
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
         Dim end_ms As Int64 = 0
         Dim ec As event_comb = Nothing

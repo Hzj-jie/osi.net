@@ -19,17 +19,19 @@ Partial Public Class bt(Of T)
         Private r As node
         Private p As node
 
-        Public Sub New(ByVal b As box,
-                       Optional ByVal cmp As Func(Of T, T, Int32) = Nothing)
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Sub New(ByVal b As box)
+            Me.New(b, AddressOf connector.compare)
+        End Sub
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Sub New(ByVal b As box, ByVal cmp As Func(Of T, T, Int32))
+            assert(Not cmp Is Nothing)
+            Me.cmp = cmp
             Me.b = b
             Me.hb = TryCast(b, heighted_box)
             Me.wb = TryCast(b, weighted_box)
             Me.rb = TryCast(b, range_box)
-            If cmp Is Nothing Then
-                Me.cmp = AddressOf connector.compare
-            Else
-                Me.cmp = cmp
-            End If
         End Sub
 
         <MethodImpl(method_impl_options.aggressive_inlining)>

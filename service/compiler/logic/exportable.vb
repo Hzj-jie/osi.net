@@ -40,7 +40,7 @@ Namespace logic
             If debug_dump Then
                 raise_error(error_type.user, "Debug dump of primitive ", r)
             End If
-            Return debug_assert(e.import(r))
+            Return assert(e.import(r))
         End Function
 
         <Extension()> Public Function import(ByVal e As interpreter.primitive.exportable,

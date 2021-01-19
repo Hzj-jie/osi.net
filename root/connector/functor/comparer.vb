@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
 Public NotInheritable Class comparer
@@ -12,6 +13,14 @@ Public NotInheritable Class comparer
 
     Public Shared Function compare(Of T, T2)(ByVal i As T, ByVal j As T2) As Int32
         Return comparer(Of T, T2).compare(i, j)
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function reverse(ByVal i As Int32) As Int32
+        If i = min_int32 Then
+            Return max_int32
+        End If
+        Return -i
     End Function
 
     Private Sub New()

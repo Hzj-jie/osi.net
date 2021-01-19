@@ -25,7 +25,7 @@ Public Module _block
     <Extension()> Public Function wait_and_receive(Of T As {block_pump, sensor}) _
                                                   (ByVal this As T,
                                                    ByVal timeout_ms As Int64,
-                                                   ByVal r As pointer(Of Byte())) As event_comb
+                                                   ByVal r As ref(Of Byte())) As event_comb
         assert(Not this Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -50,7 +50,7 @@ Public Module _block
 
     <Extension()> Public Function wait_and_receive(Of T As {block_pump, sensor}) _
                                                   (ByVal this As T,
-                                                   ByVal r As pointer(Of Byte())) As event_comb
+                                                   ByVal r As ref(Of Byte())) As event_comb
         Return wait_and_receive(this, npos, r)
     End Function
 End Module

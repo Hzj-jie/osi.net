@@ -49,7 +49,7 @@ Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T),
 
     Private Function scoped_lock(ByVal index As UInt32) As IDisposable
         _lock(CInt(index)).wait()
-        Return deferring.to(Sub()
+        Return defer.to(Sub()
                                 _lock(CInt(index)).release()
                             End Sub)
     End Function
@@ -133,7 +133,7 @@ Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T),
     End Property
 
     ' Returning iterator is not reasonable, as it may be invalidated by operations in other threads.
-    Public Function insert(ByVal k As KEY_T, ByVal f As Func(Of VALUE_T)) As fast_pair(Of VALUE_T, Boolean)
+    Public Function insert(ByVal k As KEY_T, ByVal f As Func(Of VALUE_T)) As pair(Of VALUE_T, Boolean)
         assert(Not f Is Nothing)
         Dim index As UInt32 = 0
         index = index_of_key(k)
@@ -146,8 +146,8 @@ Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T),
                 If work = d.end() Then
                     Exit While
                 End If
-                Dim r As fast_pair(Of VALUE_T, Boolean) = Nothing
-                r = fast_pair.emplace_of((+work).second, False)
+                Dim r As pair(Of VALUE_T, Boolean) = Nothing
+                r = pair.emplace_of((+work).second, False)
                 Return r
             End Using
         End While
@@ -155,21 +155,21 @@ Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T),
     End Function
 
     ' Insert() with function always uses emplace to avoid unnecessary copy.
-    Public Function emplace(ByVal k As KEY_T, ByVal f As Func(Of VALUE_T)) As fast_pair(Of VALUE_T, Boolean)
+    Public Function emplace(ByVal k As KEY_T, ByVal f As Func(Of VALUE_T)) As pair(Of VALUE_T, Boolean)
         Return insert(k, f)
     End Function
 
-    Public Function emplace(ByVal k As KEY_T, ByVal v As VALUE_T) As fast_pair(Of VALUE_T, Boolean)
+    Public Function emplace(ByVal k As KEY_T, ByVal v As VALUE_T) As pair(Of VALUE_T, Boolean)
         Dim index As UInt32 = 0
         index = index_of_key(k)
         Using scoped_lock(index)
-            Dim w As fast_pair(Of unordered_map(Of KEY_T, VALUE_T).iterator, Boolean) = Nothing
+            Dim w As tuple(Of unordered_map(Of KEY_T, VALUE_T).iterator, Boolean) = Nothing
             w = data(CInt(index)).emplace(k, v)
-            Return fast_pair.emplace_of((+w.first).second, w.second)
+            Return pair.emplace_of((+w.first).second, w.second)
         End Using
     End Function
 
-    Public Function insert(ByVal k As KEY_T, ByVal v As VALUE_T) As fast_pair(Of VALUE_T, Boolean)
+    Public Function insert(ByVal k As KEY_T, ByVal v As VALUE_T) As pair(Of VALUE_T, Boolean)
         Return emplace(copy_no_error(k), copy_no_error(v))
     End Function
 

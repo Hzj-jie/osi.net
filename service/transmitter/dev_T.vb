@@ -25,7 +25,7 @@ Public Module _dev_T
     Public Function wait_and_receive(Of T1, T2 As {T_pump(Of T1), sensor}) _
                                     (ByVal this As T2,
                                      ByVal timeout_ms As Int64,
-                                     ByVal r As pointer(Of T1)) As event_comb
+                                     ByVal r As ref(Of T1)) As event_comb
         assert(Not this Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -50,7 +50,7 @@ Public Module _dev_T
 
     Public Function wait_and_receive(Of T1, T2 As {T_pump(Of T1), sensor}) _
                                     (ByVal this As T2,
-                                     ByVal r As pointer(Of T1)) As event_comb
+                                     ByVal r As ref(Of T1)) As event_comb
         Return wait_and_receive(this, npos, r)
     End Function
 End Module

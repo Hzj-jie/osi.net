@@ -10,18 +10,34 @@ Partial Public Class struct(Of T)
     Private Shared Function serialize(Of S)(ByVal op As struct(Of T),
                                             ByVal i As T,
                                             ByVal o As S,
-                                            ByVal f As Func(Of Type, Object, S, Boolean)) As Boolean
+                                            ByVal f As Func(Of UInt32, Type, Object, S, Boolean)) As Boolean
         assert(Not f Is Nothing)
         Dim vs() As struct.variable = Nothing
         If Not (+op).disassemble(i, vs) Then
             Return False
         End If
         For j As Int32 = 0 To array_size_i(vs) - 1
-            If Not f(vs(j).type, vs(j).value, o) Then
+            If Not f(CUInt(j), vs(j).type, vs(j).value, o) Then
                 Return False
             End If
         Next
         Return True
+    End Function
+
+    Private Shared Function serialize(Of S)(ByVal op As struct(Of T),
+                                            ByVal i As T,
+                                            ByVal o As S,
+                                            ByVal f As Func(Of Type, Object, S, Boolean)) As Boolean
+        assert(Not f Is Nothing)
+        Return serialize(op,
+                         i,
+                         o,
+                         Function(ByVal index As UInt32,
+                                  ByVal type As Type,
+                                  ByVal obj As Object,
+                                  ByVal writer As S) As Boolean
+                             Return f(type, obj, writer)
+                         End Function)
     End Function
 
     Private Shared Function deserialize(Of S)(ByVal op As struct(Of T),
@@ -128,12 +144,31 @@ Partial Public Class struct(Of T)
 #If TODO Then
         ' This implementation does not work, concating multiple strings into one is not right.
         string_serializer.register(Function(ByVal i As T, ByVal o As StringWriter) As Boolean
-                                       Return serialize(op, i, o, AddressOf type_string_serializer.to_str)
+                                       Return serialize(op, i, o, AddressOf type_string_serializer.default.to_str)
                                    End Function,
                                    Function(ByVal i As StringReader, ByRef o As T) As Boolean
-                                       Return deserialize(op, i, o, AddressOf type_string_serializer.from_str)
+                                       Return deserialize(op, i, o, AddressOf type_string_serializer.default.from_str)
                                    End Function)
 #End If
+        json_serializer.register(Function(ByVal i As T, ByVal o As StringWriter) As Boolean
+                                     o.Write("{")
+                                     If Not serialize(op,
+                                                      i,
+                                                      o,
+                                                      Function(ByVal index As UInt32,
+                                                               ByVal type As Type,
+                                                               ByVal x As Object,
+                                                               ByVal s As StringWriter) As Boolean
+                                                          If index > 0 Then
+                                                              o.Write(",")
+                                                          End If
+                                                          Return type_json_serializer.r.to_str(type, x, s)
+                                                      End Function) Then
+                                         Return False
+                                     End If
+                                     o.Write("}")
+                                     Return True
+                                 End Function)
     End Sub
 
     Public Shared Sub register()

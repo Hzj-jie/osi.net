@@ -22,8 +22,8 @@ Public Class system_perf_test
         Dim max As Int64 = min_int64
         Dim total As Int64 = 0
         For i As Int32 = 0 To round - 1
-            Dim p As pointer(Of Int64) = Nothing
-            p = New pointer(Of Int64)()
+            Dim p As ref(Of Int64) = Nothing
+            p = New ref(Of Int64)()
             Using New hires_ticks_timing_counter(p)
                 d()
             End Using

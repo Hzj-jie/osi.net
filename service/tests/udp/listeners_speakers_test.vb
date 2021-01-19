@@ -39,7 +39,7 @@ Public NotInheritable Class listeners_speakers_test
         Dim ec As event_comb = Nothing
         Dim i As Int32 = 0
         Dim accepter As listener.one_accepter = Nothing
-        Dim sent As pointer(Of UInt32) = Nothing
+        Dim sent As ref(Of UInt32) = Nothing
         Dim send_data As vector(Of Byte()) = Nothing
         Dim receive_data As vector(Of Byte()) = Nothing
         Dim waited As Boolean = False

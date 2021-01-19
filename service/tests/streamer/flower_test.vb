@@ -20,7 +20,7 @@ Public MustInherit Class flower_test
     Protected MustOverride Function create_flower(ByVal first As T_receiver(Of Int32),
                                                   ByVal last As T_sender(Of Int32)) As flower(Of Int32)
 
-    Private Shared Sub execute(ByVal f As flower(Of Int32), ByVal ended As pointer(Of Boolean))
+    Private Shared Sub execute(ByVal f As flower(Of Int32), ByVal ended As ref(Of Boolean))
         Dim ec As event_comb = Nothing
         assert_begin(New event_comb(Function() As Boolean
                                         ec = (+f)
@@ -45,8 +45,8 @@ Public MustInherit Class flower_test
         last = New mock_dev_int()
         Dim f As flower(Of Int32) = Nothing
         f = create_flower(first, last)
-        Dim ended As pointer(Of Boolean) = Nothing
-        ended = New pointer(Of Boolean)()
+        Dim ended As ref(Of Boolean) = Nothing
+        ended = New ref(Of Boolean)()
         execute(f, ended)
         Dim v() As Int32 = Nothing
         v = rnd_ints(rnd_int(16384, 32768))

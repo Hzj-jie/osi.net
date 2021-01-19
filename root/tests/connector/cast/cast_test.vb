@@ -14,7 +14,7 @@ Public NotInheritable Class cast_test
 
     Public Shared Function failed_case(Of T, T2)(ByVal i As T) As Boolean
         Dim j As T2 = Nothing
-        Using scoped_atomic_bool(suppress.on("cast(Of T)(Object v)"))
+        Using scoped.atomic_bool(suppress.on("cast(Of T)(Object v)"))
             assertion.is_false(cast(Of T2)(i, j))
         End Using
         Return True
@@ -45,11 +45,11 @@ Public NotInheritable Class cast_test
     Private Shared Function implicit_case() As Boolean
         Dim a() As Byte = Nothing
         a = rnd_bytes(rnd_uint(10, 20))
-        Dim r As array_pointer(Of Byte) = Nothing
+        Dim r As array_ref(Of Byte) = Nothing
         assertion.is_true(cast(a, r))
         assertion.array_equal(+r, a)
 
-        Dim r2 As pointer(Of Byte) = Nothing
+        Dim r2 As ref(Of Byte) = Nothing
         assertion.is_true(cast(a(0), r2))
         assertion.equal(+r2, a(0))
 
@@ -57,7 +57,7 @@ Public NotInheritable Class cast_test
     End Function
 
     Private Shared Function from_objects() As Boolean
-        Using scoped_atomic_bool(suppress.on("cast(Of T)(Object v)"))
+        Using scoped.atomic_bool(suppress.on("cast(Of T)(Object v)"))
             assertion.equal(cast(Of String)("abc"), "abc")
             assertion.equal(cast(Of Int32)(100), 100)
             assertion.equal(cast(Of Double)(100.0), 100.0)
@@ -80,7 +80,7 @@ Public NotInheritable Class cast_test
     End Function
 
     Public Overrides Function run() As Boolean
-        Using scoped_atomic_bool(suppress.compare_error)
+        Using scoped.atomic_bool(suppress.compare_error)
             Return failed_case(Of String, Int32)("abc") AndAlso
                    failed_case(Of String, ValueType)("abc") AndAlso
                    failed_case(Of Double, Int32)(Double.MaxValue) AndAlso

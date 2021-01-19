@@ -33,7 +33,8 @@ Public Class bst(Of T)
             c = n.compare(v)
             If c = 0 Then
                 Return New iterator(n)
-            ElseIf c < 0 Then
+            End If
+            If c < 0 Then
                 If n.has_right_child() Then
                     n = n.right_child()
                 Else
@@ -64,17 +65,19 @@ Public Class bst(Of T)
             assert(Not n Is Nothing)
             Dim c As Int32 = 0
             c = n.compare(v)
+            If c = 0 Then
+                Return New iterator(n)
+            End If
             If c < 0 Then
-                assert(Not isdebugmode() OrElse
-                             l Is Nothing OrElse
-                             n.compare(l) > 0)
+                assert(l Is Nothing OrElse n.compare(l) > 0)
                 l = n
                 If n.has_right_child() Then
                     n = n.right_child()
                 Else
                     Return New iterator(n)
                 End If
-            ElseIf c > 0 Then
+            Else
+                assert(c > 0)
                 If n.has_left_child() Then
                     n = n.left_child()
                 ElseIf l Is Nothing Then
@@ -82,8 +85,6 @@ Public Class bst(Of T)
                 Else
                     Return New iterator(l)
                 End If
-            Else
-                Return New iterator(n)
             End If
         End While
         assert(False)
@@ -112,9 +113,7 @@ Public Class bst(Of T)
                 End If
             Else
                 assert(c > 0)
-                assert(Not isdebugmode() OrElse
-                       l Is Nothing OrElse
-                       n.compare(l) < 0)
+                assert(l Is Nothing OrElse n.compare(l) < 0)
                 l = n
                 If n.has_left_child() Then
                     n = n.left_child()

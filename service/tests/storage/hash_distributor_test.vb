@@ -23,14 +23,14 @@ Public Class hash_distributor_test
         Return strcat(istrkeyvt_name_base, i)
     End Function
 
-    Protected Overrides Function create_istrkeyvt(ByVal p As pointer(Of istrkeyvt)) As event_comb
+    Protected Overrides Function create_istrkeyvt(ByVal p As ref(Of istrkeyvt)) As event_comb
         Dim ecs() As event_comb = Nothing
-        Dim fs() As pointer(Of istrkeyvt) = Nothing
+        Dim fs() As ref(Of istrkeyvt) = Nothing
         Return New event_comb(Function() As Boolean
                                   ReDim ecs(strkeyvt_count - 1)
                                   ReDim fs(strkeyvt_count - 1)
                                   For i As Int32 = 0 To strkeyvt_count - 1
-                                      fs(i) = New pointer(Of istrkeyvt)()
+                                      fs(i) = New ref(Of istrkeyvt)()
                                       ecs(i) = fces.memory_fces(fs(i))
                                   Next
                                   Return waitfor(ecs) AndAlso

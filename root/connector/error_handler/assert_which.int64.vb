@@ -16,11 +16,23 @@ Partial Public NotInheritable Class assert_which
         End Sub
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function can_cast_to_int32() As Int32
+            Try
+                Return CInt(i)
+            Catch ex As OverflowException
+                assert(i >= min_int32, ex)
+                assert(i <= max_int32, ex)
+                assert(False, ex)
+                Return 0
+            End Try
+        End Function
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function can_cast_to_uint32() As UInt32
             Try
                 Return CUInt(i)
             Catch ex As OverflowException
-                assert(i >= 0, ex)
+                assert(i >= min_uint32, ex)
                 assert(i <= max_uint32, ex)
                 assert(False, ex)
                 Return 0
@@ -44,7 +56,7 @@ Partial Public NotInheritable Class assert_which
             Try
                 Return CULng(i)
             Catch ex As OverflowException
-                assert(i >= 0, ex)
+                assert(i >= min_uint64, ex)
                 assert(False, ex)
                 Return 0
             End Try

@@ -19,6 +19,7 @@ Friend NotInheritable Class rnd_register_internal_types
         rnd_register(Of Int64).register(Function() rnd_int64())
         rnd_register(Of Double).register(Function() rnd_double())
         rnd_register(Of String).register(Function() rnd_utf8_chars(rnd_int(100, 200)))
+        rnd_register(Of Char).register(Function() rnd_char())
     End Sub
 
     Private Sub New()

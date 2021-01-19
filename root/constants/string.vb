@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Text
 
 Public Module _string
@@ -33,16 +37,17 @@ Public Module _string
             End If
         Next
 
-        stringbuilder_default_capacity = (New StringBuilder()).Capacity()
+        stringbuilder_default_capacity = CUInt((New StringBuilder()).Capacity())
     End Sub
 End Module
 
-Namespace newline
-    Public Module _newline
-        Private ReadOnly _incode As String = Console.Out().NewLine()
+Public NotInheritable Class newline
+    Private Shared ReadOnly _incode As String = Console.Out().NewLine()
 
-        Public Function incode() As String
-            Return _incode
-        End Function
-    End Module
-End Namespace
+    Public Shared Function incode() As String
+        Return _incode
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class

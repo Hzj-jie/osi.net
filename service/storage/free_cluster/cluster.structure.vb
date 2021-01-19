@@ -44,11 +44,11 @@ Partial Public Class cluster
     End Function
 
     Private Shared Function parse_structure(ByVal buff() As Byte,
-                                            ByVal id As pointer(Of Int64),
-                                            ByVal used As pointer(Of Int64),
-                                            ByVal length As pointer(Of UInt64),
-                                            ByVal next_id As pointer(Of Int64),
-                                            ByVal prev_id As pointer(Of Int64)) As Boolean
+                                            ByVal id As ref(Of Int64),
+                                            ByVal used As ref(Of Int64),
+                                            ByVal length As ref(Of UInt64),
+                                            ByVal next_id As ref(Of Int64),
+                                            ByVal prev_id As ref(Of Int64)) As Boolean
         Dim i As Int64 = 0
         Dim u As Int64 = 0
         Dim l As UInt64 = 0
@@ -80,11 +80,11 @@ Partial Public Class cluster
 
     Private Shared Function read_structure(ByVal vd As virtdisk,
                                            ByVal offset As UInt64,
-                                           ByVal id As pointer(Of Int64),
-                                           ByVal used As pointer(Of Int64),
-                                           ByVal length As pointer(Of UInt64),
-                                           ByVal next_id As pointer(Of Int64),
-                                           ByVal prev_id As pointer(Of Int64)) As event_comb
+                                           ByVal id As ref(Of Int64),
+                                           ByVal used As ref(Of Int64),
+                                           ByVal length As ref(Of UInt64),
+                                           ByVal next_id As ref(Of Int64),
+                                           ByVal prev_id As ref(Of Int64)) As event_comb
         Dim r() As Byte = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean

@@ -84,17 +84,17 @@ Partial Public MustInherit Class auto_device_exporter(Of T)
         Me.count.add(CInt(c))
     End Sub
 
-    Protected MustOverride Function create_device(ByVal p As pointer(Of idevice(Of T))) As event_comb
+    Protected MustOverride Function create_device(ByVal p As ref(Of idevice(Of T))) As event_comb
 
     Private Function create_devices(ByVal expected As Int32) As event_comb
         assert(expected > 0)
         Dim ecs() As event_comb = Nothing
-        Dim p() As pointer(Of idevice(Of T)) = Nothing
+        Dim p() As ref(Of idevice(Of T)) = Nothing
         Return New event_comb(Function() As Boolean
                                   ReDim ecs(expected - 1)
                                   ReDim p(expected - 1)
                                   For i As Int32 = 0 To expected - 1
-                                      p(i) = New pointer(Of idevice(Of T))()
+                                      p(i) = New ref(Of idevice(Of T))()
                                       ecs(i) = create_device(p(i))
                                   Next
                                   Return waitfor(ecs) AndAlso

@@ -10,7 +10,7 @@ Imports osi.root.envs
 Imports osi.root.lock
 
 Public Module _threadpool
-    Public Sub evaluate_in_managed_threadpool(Of T)(ByVal d As Func(Of T), ByVal r As pointer(Of T))
+    Public Sub evaluate_in_managed_threadpool(Of T)(ByVal d As Func(Of T), ByVal r As ref(Of T))
         assert(Not d Is Nothing)
         queue_in_managed_threadpool(Sub()
                                         Dim i As T = Nothing
@@ -21,7 +21,7 @@ Public Module _threadpool
 
     Public Sub evaluate_in_managed_threadpool(Of T, RT)(ByVal d As _do(Of T, RT),
                                                         ByVal a As T,
-                                                        ByVal r As pointer(Of RT))
+                                                        ByVal r As ref(Of RT))
         assert(Not d Is Nothing)
         queue_in_managed_threadpool(Sub()
                                         Dim i As RT = Nothing
@@ -32,7 +32,7 @@ Public Module _threadpool
 
     Public Sub evaluate_in_managed_threadpool(Of T, RT)(ByVal d As Func(Of T, RT),
                                                         ByVal a As T,
-                                                        ByVal r As pointer(Of RT))
+                                                        ByVal r As ref(Of RT))
         assert(Not d Is Nothing)
         queue_in_managed_threadpool(Sub()
                                         Dim i As RT = Nothing

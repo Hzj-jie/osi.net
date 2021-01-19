@@ -22,7 +22,8 @@ Public Module _number
     Public Const min_uint64 As UInt64 = UInt64.MinValue
     Public Const min_double As Double = Double.MinValue
     Public Const max_double As Double = Double.MaxValue
-    Public Const max_array_size As UInt32 = 2147483591
+    ' https://docs.microsoft.com/en-us/dotnet/framework/configure-apps/file-schema/runtime/gcallowverylargeobjects-element?redirectedfrom=MSDN
+    Public Const max_array_size As UInt32 = 2146435071
 
     Public Const bit_shift_in_byte As Byte = 3
     Public Const bit_count_in_byte As Byte = (1 << bit_shift_in_byte)

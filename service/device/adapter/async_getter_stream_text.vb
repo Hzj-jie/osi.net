@@ -1,5 +1,10 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
@@ -35,11 +40,11 @@ Public Class async_getter_stream_text
         Return _do(Function(x) x.send(s, len))
     End Function
 
-    Public Function receive(ByVal result As pointer(Of String)) As event_comb Implements text_pump.receive
+    Public Function receive(ByVal result As ref(Of String)) As event_comb Implements text_pump.receive
         Return _do(Function(x) x.receive(result))
     End Function
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
         Return _do(Function(x) x.sense(pending, timeout_ms))
     End Function

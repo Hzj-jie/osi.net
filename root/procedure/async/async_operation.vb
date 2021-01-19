@@ -18,7 +18,7 @@ End Interface
 Public NotInheritable Class async_operation
     Private NotInheritable Class async_state_t(Of T)
         Implements async_state_t
-        Public ReadOnly result As pointer(Of T) = Nothing
+        Public ReadOnly result As ref(Of T) = Nothing
         Public ReadOnly callstack As String = Nothing
         Private ReadOnly [end] As _do(Of IAsyncResult, T) = Nothing
         Private ReadOnly after_set_result As void(Of Boolean) = Nothing
@@ -27,7 +27,7 @@ Public NotInheritable Class async_operation
 
         Public Sub New(ByVal [end] As _do(Of IAsyncResult, T),
                        ByVal after_set_result As void(Of Boolean),
-                       ByVal result As pointer(Of T),
+                       ByVal result As ref(Of T),
                        ByVal callstack As String)
             assert(Not [end] Is Nothing)
             Me.end = [end]
@@ -78,7 +78,7 @@ Public NotInheritable Class async_operation
     Private Sub _new(Of T)(ByVal begin As _do(Of AsyncCallback, Object, IAsyncResult),
                            ByVal [end] As _do(Of IAsyncResult, T),
                            ByVal after_set_result As void(Of Boolean),
-                           ByVal result As pointer(Of T),
+                           ByVal result As ref(Of T),
                            Optional ByVal callstack As String = Nothing)
         assert(Not begin Is Nothing)
         Me.callstack = callstack
@@ -111,7 +111,7 @@ Public NotInheritable Class async_operation
     Public Shared Function ctor(Of T)(ByVal begin As _do(Of AsyncCallback, Object, IAsyncResult),
                                       ByVal [end] As _do(Of IAsyncResult, T),
                                       ByVal after_set_result As void(Of Boolean),
-                                      ByVal result As pointer(Of T),
+                                      ByVal result As ref(Of T),
                                       Optional ByVal callstack As String = Nothing) As async_operation
         Dim rtn As async_operation = Nothing
         rtn = New async_operation()

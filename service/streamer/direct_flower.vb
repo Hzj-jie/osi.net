@@ -111,15 +111,15 @@ Public Class direct_flower(Of T)
     End Function
 
     Private Function flow_once(ByVal sense_timeout_ms As Int64,
-                               ByVal transfered As pointer(Of Boolean),
-                               ByVal eos As pointer(Of Boolean)) As event_comb
+                               ByVal transfered As ref(Of Boolean),
+                               ByVal eos As ref(Of Boolean)) As event_comb
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of Boolean) = Nothing
-        Dim p As pointer(Of T) = Nothing
+        Dim r As ref(Of Boolean) = Nothing
+        Dim p As ref(Of T) = Nothing
         Return New event_comb(Function() As Boolean
                                   eva(transfered, False)
                                   eva(eos, False)
-                                  r = New pointer(Of Boolean)()
+                                  r = New ref(Of Boolean)()
                                   ec = input.sense(r, sense_timeout_ms)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -127,7 +127,7 @@ Public Class direct_flower(Of T)
                               Function() As Boolean
                                   If ec.end_result() Then
                                       If (+r) Then
-                                          p = New pointer(Of T)()
+                                          p = New ref(Of T)()
                                           ec = input.receive(p)
                                           Return waitfor(ec) AndAlso
                                                  goto_next()
@@ -162,20 +162,20 @@ Public Class direct_flower(Of T)
                               End Function)
     End Function
 
-    Private Function flow_once(ByVal transfered As pointer(Of Boolean),
-                               ByVal eos As pointer(Of Boolean)) As event_comb
+    Private Function flow_once(ByVal transfered As ref(Of Boolean),
+                               ByVal eos As ref(Of Boolean)) As event_comb
         Return flow_once(sense_timeout_ms, transfered, eos)
     End Function
 
     Protected Overrides Function flow() As event_comb
         Dim ec As event_comb = Nothing
-        Dim transfered As pointer(Of Boolean) = Nothing
+        Dim transfered As ref(Of Boolean) = Nothing
         Dim transfered_times As UInt32 = 0
-        Dim eos As pointer(Of Boolean) = Nothing
+        Dim eos As ref(Of Boolean) = Nothing
         Dim last_active_ms As Int64 = 0
         Return New event_comb(Function() As Boolean
-                                  transfered = New pointer(Of Boolean)()
-                                  eos = New pointer(Of Boolean)()
+                                  transfered = New ref(Of Boolean)()
+                                  eos = New ref(Of Boolean)()
                                   last_active_ms = nowadays.milliseconds()
                                   Return goto_next()
                               End Function,

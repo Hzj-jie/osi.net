@@ -4,13 +4,12 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.procedure
-Imports action_map = osi.root.formation.map(Of _
-                            osi.root.formation.array_pointer(Of Byte), _
-                            System.Func(Of osi.service.commander.command, _
-                                           osi.service.commander.command, _
+Imports action_map = osi.root.formation.map(Of
+                            osi.root.connector.array_ref(Of Byte),
+                            System.Func(Of osi.service.commander.command,
+                                           osi.service.commander.command,
                                            osi.root.procedure.event_comb))
 
 Public NotInheritable Class dispatcher
@@ -34,13 +33,12 @@ Public NotInheritable Class dispatcher
                                    If isemptyarray(action) Then
                                        Return False
                                    End If
-                                   Return m.erase(array_pointer.of(action))
+                                   Return m.erase(array_ref.of(action))
                                End Function)
     End Function
 
-    Public Function [erase](Of T)(ByVal action As T,
-                                  Optional ByVal T_bytes As bytes_serializer(Of T) = Nothing) As Boolean
-        Return [erase]((+T_bytes).to_bytes(action))
+    Public Function [erase](Of T)(ByVal action As T) As Boolean
+        Return [erase](bytes_serializer.to_bytes(action))
     End Function
 
     Public Function register(ByVal action() As Byte,
@@ -49,8 +47,8 @@ Public NotInheritable Class dispatcher
         Return Not isemptyarray(action) AndAlso
                Not act Is Nothing AndAlso
                l.writer_locked(Function() As Boolean
-                                   Dim ap As array_pointer(Of Byte) = Nothing
-                                   ap = array_pointer.of(action)
+                                   Dim ap As array_ref(Of Byte) = Nothing
+                                   ap = array_ref.of(action)
                                    Dim it As action_map.iterator = Nothing
                                    it = m.find(ap)
                                    If it = m.end() OrElse replace Then
@@ -63,9 +61,8 @@ Public NotInheritable Class dispatcher
 
     Public Function register(Of T)(ByVal action As T,
                                    ByVal act As Func(Of command, command, event_comb),
-                                   Optional ByVal replace As Boolean = False,
-                                   Optional ByVal T_bytes As bytes_serializer(Of T) = Nothing) As Boolean
-        Return register((+T_bytes).to_bytes(action), act, replace)
+                                   Optional ByVal replace As Boolean = False) As Boolean
+        Return register(bytes_serializer.to_bytes(action), act, replace)
     End Function
 
     Public Function execute(ByVal i As command, ByVal o As command) As event_comb Implements executor.execute
@@ -75,8 +72,8 @@ Public NotInheritable Class dispatcher
                                   If i Is Nothing OrElse
                                      o Is Nothing OrElse
                                      Not l.reader_locked(Function() As Boolean
-                                                             Dim action As array_pointer(Of Byte) = Nothing
-                                                             action = array_pointer.of(i.action())
+                                                             Dim action As array_ref(Of Byte) = Nothing
+                                                             action = array_ref.of(i.action())
                                                              Dim it As action_map.iterator = Nothing
                                                              it = m.find(action)
                                                              If it = m.end() Then

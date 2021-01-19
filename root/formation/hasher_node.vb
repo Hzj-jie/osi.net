@@ -10,17 +10,19 @@ Imports osi.root.template
 
 ' An internal implementation for hashtable / hasharray / hashset.
 Public NotInheritable Class hasher_node(Of T)
-    Private Shared ReadOnly uninitialized_hash_value As UInt32 = max_uint32
+    Private Const uninitialized_hash_value As UInt32 = max_uint32
     Private ReadOnly v As T
     Private ReadOnly hasher As _to_uint32(Of T)
+    Private ReadOnly equaler As _equaler(Of T)
     Private hash_value As UInt32
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub New(ByVal v As T, ByVal hasher As _to_uint32(Of T))
+    Public Sub New(ByVal v As T, ByVal hasher As _to_uint32(Of T), ByVal equaler As _equaler(Of T))
         assert(Not hasher Is Nothing)
         Me.v = v
         Me.hasher = hasher
         Me.hash_value = uninitialized_hash_value
+        Me.equaler = equaler
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -42,5 +44,14 @@ Public NotInheritable Class hasher_node(Of T)
             hash_value = hasher(v)
         End If
         Return hash_value
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function equal_to(ByVal o As hasher_node(Of T)) As Boolean
+        assert(Not o Is Nothing)
+        If hash_code() <> o.hash_code() Then
+            Return False
+        End If
+        Return equaler([get](), o.get())
     End Function
 End Class

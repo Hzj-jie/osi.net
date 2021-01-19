@@ -77,7 +77,7 @@ Partial Public NotInheritable Class connector
     End Function
 
     Public Function sources(ByVal result As vector(Of IPEndPoint)) As event_comb
-        Dim e As pointer(Of IPHostEntry) = Nothing
+        Dim e As ref(Of IPHostEntry) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   result.clear()
@@ -89,7 +89,7 @@ Partial Public NotInheritable Class connector
                                       Return eva(result, r) AndAlso
                                              goto_end()
                                   Else
-                                      e = New pointer(Of IPHostEntry)()
+                                      e = New ref(Of IPHostEntry)()
                                       ec = dns_cache.resolve(p.host_or_ip, e, p.response_timeout_ms)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -109,7 +109,7 @@ Partial Public NotInheritable Class connector
                               End Function)
     End Function
 
-    Public Function multiple_accepter(ByVal o As pointer(Of listener.multiple_accepter)) As event_comb
+    Public Function multiple_accepter(ByVal o As ref(Of listener.multiple_accepter)) As event_comb
         Dim e As vector(Of IPEndPoint) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -128,7 +128,7 @@ Partial Public NotInheritable Class connector
                               End Function)
     End Function
 
-    Public Function udp_dev(ByVal o As pointer(Of udp_dev)) As event_comb
+    Public Function udp_dev(ByVal o As ref(Of udp_dev)) As event_comb
         Dim e As vector(Of IPEndPoint) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -147,16 +147,16 @@ Partial Public NotInheritable Class connector
                               End Function)
     End Function
 
-    Public Function connect(ByVal r As pointer(Of delegator)) As event_comb
+    Public Function connect(ByVal r As ref(Of delegator)) As event_comb
         assert(Not p Is Nothing)
         Dim ec As event_comb = Nothing
-        Dim result As pointer(Of IPHostEntry) = Nothing
+        Dim result As ref(Of IPHostEntry) = Nothing
         Return New event_comb(Function() As Boolean
                                   If String.IsNullOrEmpty(p.host_or_ip) Then
                                       Return eva(r, New delegator(Nothing, new_client(Nothing))) AndAlso
                                              goto_end()
                                   Else
-                                      result = New pointer(Of IPHostEntry)()
+                                      result = New ref(Of IPHostEntry)()
                                       ec = dns_cache.resolve(p.host_or_ip, result, p.response_timeout_ms)
                                       Return waitfor(ec) AndAlso
                                              goto_next()

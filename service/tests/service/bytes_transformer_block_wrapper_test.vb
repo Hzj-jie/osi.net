@@ -64,12 +64,12 @@ Public Class bytes_transformer_block_wrapper_test
                 Return Nothing
             End Function
 
-            Public Function receive(ByVal result As pointer(Of Byte())) As event_comb Implements block.receive
+            Public Function receive(ByVal result As ref(Of Byte())) As event_comb Implements block.receive
                 assert(False)
                 Return Nothing
             End Function
 
-            Public Function sense(ByVal pending As pointer(Of Boolean),
+            Public Function sense(ByVal pending As ref(Of Boolean),
                                   ByVal timeout_ms As Int64) As event_comb Implements block.sense
                 assert(False)
                 Return Nothing

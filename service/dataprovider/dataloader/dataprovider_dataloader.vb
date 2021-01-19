@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
 
@@ -12,13 +11,13 @@ Public Class dataprovider_dataloader(Of T)
     Implements idataloader(Of T)
 
     Private ReadOnly loader As Func(Of idataprovider(), T)
-    Private ReadOnly dps() As weak_pointer(Of idataprovider)
+    Private ReadOnly dps() As weak_ref(Of idataprovider)
 
     Public Sub New(ByVal loader As Func(Of idataprovider(), T),
                    ByVal ParamArray dps() As idataprovider)
         assert(Not isemptyarray(dps))
         Me.loader = loader
-        Me.dps = weak_pointers.of(dps)
+        Me.dps = weak_refs.of(dps)
     End Sub
 
     Public Sub New(ByVal ParamArray dps() As idataprovider)
@@ -31,7 +30,7 @@ Public Class dataprovider_dataloader(Of T)
     End Function
 
     Public Function load(ByVal localfile As String,
-                         ByVal result As pointer(Of T)) As event_comb Implements idataloader(Of T).load
+                         ByVal result As ref(Of T)) As event_comb Implements idataloader(Of T).load
         Return New event_comb(Function() As Boolean
                                   Dim v() As idataprovider = Nothing
                                   ReDim v(array_size_i(dps) - 1)

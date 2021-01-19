@@ -27,10 +27,10 @@ Public MustInherit Class iquestioner(Of _ENABLE_AUTO_PING As _boolean)
     End Sub
 
     Protected MustOverride Function communicate(ByVal request As command,
-                                                ByVal response As pointer(Of command)) As event_comb
+                                                ByVal response As ref(Of command)) As event_comb
 
     Default ReadOnly Property question(ByVal request As command,
-                                       ByVal response As pointer(Of command)) As event_comb _
+                                       ByVal response As ref(Of command)) As event_comb _
                                       Implements iquestioner.question
         Get
             Dim ec As event_comb = Nothing
@@ -47,7 +47,7 @@ Public MustInherit Class iquestioner(Of _ENABLE_AUTO_PING As _boolean)
                                           Return goto_end()
                                       Else
                                           If enable_auto_ping AndAlso last_error.increment() = last_error_count Then
-                                              start_ping(weak_pointer.of(Me))
+                                              start_ping(weak_ref.of(Me))
                                           End If
                                           Return False
                                       End If
@@ -56,7 +56,7 @@ Public MustInherit Class iquestioner(Of _ENABLE_AUTO_PING As _boolean)
     End Property
 
     Default Public ReadOnly Property question(ByVal request() As Byte,
-                                              ByVal response As pointer(Of Byte())) As event_comb _
+                                              ByVal response As ref(Of Byte())) As event_comb _
                                              Implements iquestioner.question
         Get
             Return question_redirect(Me, request, response)
@@ -87,9 +87,9 @@ Public MustInherit Class iquestioner(Of _ENABLE_AUTO_PING As _boolean)
 
     Private Function ping_once() As event_comb
         Dim ec As event_comb = Nothing
-        Dim o As pointer(Of command) = Nothing
+        Dim o As ref(Of command) = Nothing
         Return New event_comb(Function() As Boolean
-                                  o = New pointer(Of command)()
+                                  o = New ref(Of command)()
                                   ec = communicate(command.[New](action.ping), o)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -102,7 +102,7 @@ Public MustInherit Class iquestioner(Of _ENABLE_AUTO_PING As _boolean)
                               End Function)
     End Function
 
-    Private Shared Sub start_ping(ByVal p As weak_pointer(Of iquestioner(Of _ENABLE_AUTO_PING)))
+    Private Shared Sub start_ping(ByVal p As weak_ref(Of iquestioner(Of _ENABLE_AUTO_PING)))
         assert(enable_auto_ping)
         Dim ec As event_comb = Nothing
         assert_begin(New event_comb(Function() As Boolean

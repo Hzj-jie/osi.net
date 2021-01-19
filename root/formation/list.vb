@@ -3,53 +3,93 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
 
+Public Module _list
+    <Extension()> Public Function stream(Of T)(ByVal this As list(Of T)) As stream(Of T)
+        Return New stream(Of T).container(Of list(Of T))(this)
+    End Function
+End Module
+
+Public NotInheritable Class list
+    Private Shared Function create(Of T)(ByVal vs() As T, ByVal require_copy As Boolean) As list(Of T)
+        Dim r As list(Of T) = Nothing
+        r = New list(Of T)()
+        If require_copy Then
+            For i As Int32 = 0 To array_size_i(vs) - 1
+                r.push_back(vs(i))
+            Next
+        Else
+            For i As Int32 = 0 To array_size_i(vs) - 1
+                r.emplace_back(vs(i))
+            Next
+        End If
+        Return r
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function [of](Of T)(ByVal ParamArray v() As T) As list(Of T)
+        Return create(v, True)
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function emplace_of(Of T)(ByVal ParamArray v() As T) As list(Of T)
+        Return create(v, False)
+    End Function
+
+    Private Sub New()
+    End Sub
+End Class
+
 Partial Public NotInheritable Class list(Of T)
     Implements IComparable(Of list(Of T)), IComparable, ICloneable
 
-    Friend Class node
-        Inherits pointernode(Of T)
+    Friend NotInheritable Class node
+        Inherits ref_node(Of T)
 
-        Private Const _pointer_count As UInt32 = 2
+        Private Const _ref_count As UInt32 = 2
 
-        Private Enum pointer_index As UInt32
+        Private Enum ref_index As UInt32
             last = 0
             [next] = 1
         End Enum
 
         Public Function last() As node
-            Return direct_cast(Of node)(pointer(pointer_index.last))
+            Return direct_cast(Of node)(ref(ref_index.last))
         End Function
 
         Public Function [next]() As node
-            Return direct_cast(Of node)(pointer(pointer_index.next))
+            Return direct_cast(Of node)(ref(ref_index.next))
         End Function
 
         Public Sub appendlast(ByVal that As node)
-            debug_assert(Not Object.ReferenceEquals(Me, that), "should not append last to a node itself.")
-            pointer(pointer_index.last) = that
+            assert(Not Object.ReferenceEquals(Me, that), "should not append last to a node itself.")
+            ref(ref_index.last) = that
             If Not that Is Nothing Then
-                that.pointer(pointer_index.next) = Me
+                that.ref(ref_index.next) = Me
             End If
         End Sub
 
         Public Sub appendnext(ByVal that As node)
-            debug_assert(Not Object.ReferenceEquals(Me, that), "should not append next to a node itself.")
-            pointer(pointer_index.next) = that
+            assert(Not Object.ReferenceEquals(Me, that), "should not append next to a node itself.")
+            ref(ref_index.next) = that
             If Not that Is Nothing Then
-                that.pointer(pointer_index.last) = Me
+                that.ref(ref_index.last) = Me
             End If
         End Sub
 
-        Public Sub New()
-            MyBase.New(_pointer_count)
-        End Sub
+        Public Shared Function [of](ByVal new_data As T) As node
+            Dim r As node = Nothing
+            r = New node()
+            r.emplace(new_data)
+            Return r
+        End Function
 
-        Public Sub New(ByVal new_data As T)
-            MyBase.New(_pointer_count, new_data)
+        Private Sub New()
+            MyBase.New(_ref_count)
         End Sub
     End Class
 
@@ -61,17 +101,15 @@ Partial Public NotInheritable Class list(Of T)
     Public Function begin() As iterator
         If empty() Then
             Return _end
-        Else
-            Return New iterator(_front)
         End If
+        Return New iterator(_front)
     End Function
 
     Public Function rbegin() As iterator
         If empty() Then
             Return _end
-        Else
-            Return New iterator(_back)
         End If
+        Return New iterator(_back)
     End Function
 
     Public Function [end]() As iterator
@@ -103,24 +141,23 @@ Partial Public NotInheritable Class list(Of T)
     End Property
 
     Private Function find(ByVal index As UInt32) As node
-        Dim rtn As node = Nothing
         If Not available_index(index) Then
-            rtn = Nothing
+            Return Nothing
+        End If
+        Dim rtn As node = Nothing
+        If index <= (_size >> 1) Then
+            rtn = _front
+            While index > uint32_0
+                rtn = rtn.next
+                index -= uint32_1
+            End While
         Else
-            If index <= (_size >> 1) Then
-                rtn = _front
-                While index > uint32_0
-                    rtn = rtn.next
-                    index -= uint32_1
-                End While
-            Else
-                rtn = _back
-                index = _size - index - uint32_1
-                While index > uint32_0
-                    rtn = rtn.last
-                    index -= uint32_1
-                End While
-            End If
+            rtn = _back
+            index = _size - index - uint32_1
+            While index > uint32_0
+                rtn = rtn.last
+                index -= uint32_1
+            End While
         End If
 
         Return rtn
@@ -185,9 +222,9 @@ Partial Public NotInheritable Class list(Of T)
         Return size() = 0
     End Function
 
-    Public Function push_back(ByVal new_data As T) As Boolean
+    Public Function emplace_back(ByVal new_data As T) As Boolean
         Dim add As node = Nothing
-        add = New node(new_data)
+        add = node.of(new_data)
         If Not _back Is Nothing Then
             _back.appendnext(add)
         Else
@@ -199,9 +236,13 @@ Partial Public NotInheritable Class list(Of T)
         Return True
     End Function
 
-    Public Function push_front(ByVal new_data As T) As Boolean
+    Public Function push_back(ByVal new_data As T) As Boolean
+        Return emplace_back(copy_no_error(new_data))
+    End Function
+
+    Public Function emplace_front(ByVal new_data As T) As Boolean
         Dim add As node = Nothing
-        add = New node(new_data)
+        add = node.of(new_data)
         If Not _front Is Nothing Then
             _front.appendlast(add)
         Else
@@ -213,82 +254,94 @@ Partial Public NotInheritable Class list(Of T)
         Return True
     End Function
 
+    Public Function push_front(ByVal new_data As T) As Boolean
+        Return emplace_front(copy_no_error(new_data))
+    End Function
+
     Public Function pop_back() As Boolean
         If empty() Then
             Return False
-        Else
-            [erase](_back)
-            Return True
         End If
+        [erase](_back)
+        Return True
     End Function
 
     Public Function pop_front() As Boolean
         If empty() Then
             Return False
-        Else
-            [erase](_front)
-            Return True
         End If
+        [erase](_front)
+        Return True
+    End Function
+
+    Public Function emplace(ByVal it As iterator, ByVal newdata As T) As iterator
+        Return emplace(it.node(), newdata)
     End Function
 
     Public Function insert(ByVal it As iterator, ByVal newdata As T) As iterator
-        Return insert(it.node(), newdata)
+        Return emplace(it.node(), copy_no_error(newdata))
     End Function
 
-    Private Function insert(ByVal it As node, ByVal newData As T) As iterator
+    Private Function emplace(ByVal it As node, ByVal newdata As T) As iterator
         Dim work As node = Nothing
         If it Is Nothing Then
             Return [end]()
-        Else
-            work = New node(newData)
-            'it.next will be changed after work.appendlast(it)
-            work.appendnext(it.next)
-            work.appendlast(it)
-            If Object.ReferenceEquals(it, _back) Then
-                _back = work
-            End If
-            _size += uint32_1
-            it = it.next()
-            debug_assert(Not it Is Nothing, "it.next() is nothing after insert.")
-
-            Return New iterator(it)
         End If
+        work = node.of(newdata)
+        'it.next will be changed after work.appendlast(it)
+        work.appendnext(it.next)
+        work.appendlast(it)
+        If Object.ReferenceEquals(it, _back) Then
+            _back = work
+        End If
+        _size += uint32_1
+        it = it.next()
+        assert(Not it Is Nothing, "it.next() is nothing after insert.")
+
+        Return New iterator(it)
+    End Function
+
+    Public Function emplace(ByVal index As UInt32, ByVal new_data As T) As iterator
+        Return emplace(find(index), new_data)
     End Function
 
     Public Function insert(ByVal index As UInt32, ByVal new_data As T) As iterator
-        Return insert(find(index), new_data)
+        Return emplace(find(index), copy_no_error(new_data))
     End Function
 
-    Public Function insert(ByVal newData As T) As iterator
-        push_back(newData)
+    Public Function emplace(ByVal newdata As T) As iterator
+        emplace_back(newdata)
+        Return rbegin()
+    End Function
+
+    Public Function insert(ByVal newdata As T) As iterator
+        push_back(newdata)
         Return rbegin()
     End Function
 
     Private Function [erase](ByVal it As node) As iterator
         If it Is Nothing Then
             Return [end]()
-        Else
-            Dim del As node = it
-            If Not it.last Is Nothing Then
-                it.last.appendnext(it.next)
-            ElseIf Not it.next Is Nothing Then
-                it.next.appendlast(it.last)
-            End If
-            If Object.ReferenceEquals(it, _front) Then
-                _front = it.next
-            End If
-            If Object.ReferenceEquals(it, _back) Then
-                _back = it.last
-            End If
-            _size -= uint32_1
-            del.appendlast(Nothing)
-            del.appendnext(Nothing)
-            If it.next Is Nothing Then
-                Return [end]()
-            Else
-                Return New iterator(it.next)
-            End If
         End If
+        Dim del As node = it
+        If Not it.last Is Nothing Then
+            it.last.appendnext(it.next)
+        ElseIf Not it.next Is Nothing Then
+            it.next.appendlast(it.last)
+        End If
+        If Object.ReferenceEquals(it, _front) Then
+            _front = it.next
+        End If
+        If Object.ReferenceEquals(it, _back) Then
+            _back = it.last
+        End If
+        _size -= uint32_1
+        del.appendlast(Nothing)
+        del.appendnext(Nothing)
+        If it.next Is Nothing Then
+            Return [end]()
+        End If
+        Return New iterator(it.next)
     End Function
 
     Public Function [erase](ByVal it As iterator) As iterator
@@ -356,11 +409,11 @@ Partial Public NotInheritable Class list(Of T)
 
         If i = [end]() AndAlso j = that.end() Then
             Return 0
-        ElseIf i = [end]() Then
-            Return -1
-        Else
-            Return 1
         End If
+        If i = [end]() Then
+            Return -1
+        End If
+        Return 1
     End Function
 
     Public Function CompareTo(ByVal that As Object) As Int32 Implements IComparable.CompareTo

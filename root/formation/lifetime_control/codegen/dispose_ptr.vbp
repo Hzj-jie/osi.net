@@ -1,13 +1,13 @@
 ﻿
 ##DEFAULT CLASS_NAME dispose_ptr
-##DEFAULT BASE_NAME pointer
+##DEFAULT BASE_NAME ref
 ##DEFAULT DO_DISPOSE_IMPL dispose_ptr_do_dispose.vbp
 
 ##INCLUDE disposer_imports.vbp
 
 Public Class ##CLASS_NAME##(Of T)
     Inherits ##BASE_NAME##(Of T)
-    
+
     Private ReadOnly _disposer As Action(Of T)
 
 #If 0 Then

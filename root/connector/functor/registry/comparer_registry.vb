@@ -32,175 +32,175 @@ Friend Module _comparer_registry
                               Return CShort(i).CompareTo(j)
                           End Function)
         comparer.register(Function(ByVal i As SByte, ByVal j As Int16) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As SByte, ByVal j As UInt16) As Int32
                               Return CInt(i).CompareTo(j)
                           End Function)
         comparer.register(Function(ByVal i As SByte, ByVal j As Int32) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As SByte, ByVal j As UInt32) As Int32
                               Return CInt(i).CompareTo(j)
                           End Function)
         comparer.register(Function(ByVal i As SByte, ByVal j As Int64) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As SByte, ByVal j As UInt64) As Int32
                               Return CDec(i).CompareTo(j)
                           End Function)
         comparer.register(Function(ByVal i As SByte, ByVal j As Single) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As SByte, ByVal j As Double) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As SByte, ByVal j As Decimal) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
 
         comparer.register(Function(ByVal i As Byte, ByVal j As Int16) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As Byte, ByVal j As UInt16) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As Byte, ByVal j As Int32) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As Byte, ByVal j As UInt32) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As Byte, ByVal j As Int64) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As Byte, ByVal j As UInt64) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As Byte, ByVal j As Single) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As Byte, ByVal j As Double) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As Byte, ByVal j As Decimal) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
 
         comparer.register(Function(ByVal i As Int16, ByVal j As UInt16) As Int32
                               Return CInt(i).CompareTo(j)
                           End Function)
         comparer.register(Function(ByVal i As Int16, ByVal j As Int32) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As Int16, ByVal j As UInt32) As Int32
                               Return CLng(i).CompareTo(j)
                           End Function)
         comparer.register(Function(ByVal i As Int16, ByVal j As Int64) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As Int16, ByVal j As UInt64) As Int32
                               Return CDec(i).CompareTo(j)
                           End Function)
         comparer.register(Function(ByVal i As Int16, ByVal j As Single) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As Int16, ByVal j As Double) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As Int16, ByVal j As Decimal) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
 
         comparer.register(Function(ByVal i As UInt16, ByVal j As Int32) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As UInt16, ByVal j As UInt32) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As UInt16, ByVal j As Int64) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As UInt16, ByVal j As UInt64) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As UInt16, ByVal j As Single) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As UInt16, ByVal j As Double) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As UInt16, ByVal j As Decimal) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
 
         comparer.register(Function(ByVal i As Int32, ByVal j As UInt32) As Int32
                               Return CLng(i).CompareTo(j)
                           End Function)
         comparer.register(Function(ByVal i As Int32, ByVal j As Int64) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As Int32, ByVal j As UInt64) As Int32
                               Return CDec(i).CompareTo(j)
                           End Function)
         comparer.register(Function(ByVal i As Int32, ByVal j As Single) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As Int32, ByVal j As Double) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As Int32, ByVal j As Decimal) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
 
         comparer.register(Function(ByVal i As UInt32, ByVal j As Int64) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As UInt32, ByVal j As UInt64) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As UInt32, ByVal j As Single) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As UInt32, ByVal j As Double) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As UInt32, ByVal j As Decimal) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
 
         comparer.register(Function(ByVal i As Int64, ByVal j As UInt64) As Int32
                               Return CDec(i).CompareTo(j)
                           End Function)
         comparer.register(Function(ByVal i As Int64, ByVal j As Single) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As Int64, ByVal j As Double) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As Int64, ByVal j As Decimal) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
 
         comparer.register(Function(ByVal i As UInt64, ByVal j As Single) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As UInt64, ByVal j As Double) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As UInt64, ByVal j As Decimal) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
 
         comparer.register(Function(ByVal i As Single, ByVal j As Double) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
         comparer.register(Function(ByVal i As Single, ByVal j As Decimal) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
 
         comparer.register(Function(ByVal i As Double, ByVal j As Decimal) As Int32
-                              Return -j.CompareTo(i)
+                              Return comparer.reverse(j.CompareTo(i))
                           End Function)
     End Sub
 

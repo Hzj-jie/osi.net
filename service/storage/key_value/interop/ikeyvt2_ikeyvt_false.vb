@@ -22,11 +22,11 @@ Public Class ikeyvt2_ikeyvt_false(Of SEEK_RESULT)
         assert(Not existing_do Is Nothing)
         assert(Not not_existing_do Is Nothing)
         Dim ec As event_comb = Nothing
-        Dim sr As pointer(Of SEEK_RESULT) = Nothing
-        Dim r As pointer(Of Boolean) = Nothing
+        Dim sr As ref(Of SEEK_RESULT) = Nothing
+        Dim r As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
-                                  sr = New pointer(Of SEEK_RESULT)()
-                                  r = New pointer(Of Boolean)()
+                                  sr = New ref(Of SEEK_RESULT)()
+                                  r = New ref(Of Boolean)()
                                   ec = impl.seek(key, sr, r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -54,20 +54,20 @@ Public Class ikeyvt2_ikeyvt_false(Of SEEK_RESULT)
     Private Shared Function delete_then_write(Of VT)(ByVal sr As SEEK_RESULT,
                                                      ByVal key() As Byte,
                                                      ByVal v As VT,
-                                                     ByVal result As pointer(Of Boolean),
-                                                     ByVal delete_existing As Func(Of SEEK_RESULT, 
-                                                                                      pointer(Of Boolean), 
+                                                     ByVal result As ref(Of Boolean),
+                                                     ByVal delete_existing As Func(Of SEEK_RESULT,
+                                                                                      ref(Of Boolean),
                                                                                       event_comb),
-                                                     ByVal write_new As Func(Of Byte(), 
-                                                                                VT, 
-                                                                                pointer(Of Boolean), 
+                                                     ByVal write_new As Func(Of Byte(),
+                                                                                VT,
+                                                                                ref(Of Boolean),
                                                                                 event_comb)) As event_comb
         assert(Not delete_existing Is Nothing)
         assert(Not write_new Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If result Is Nothing Then
-                                      result = New pointer(Of Boolean)()
+                                      result = New ref(Of Boolean)()
                                   End If
                                   ec = delete_existing(sr, result)
                                   Return waitfor(ec) AndAlso
@@ -91,7 +91,7 @@ Public Class ikeyvt2_ikeyvt_false(Of SEEK_RESULT)
     Private Function delete_then_write(ByVal sr As SEEK_RESULT,
                                        ByVal key() As Byte,
                                        ByVal ts As Int64,
-                                       ByVal result As pointer(Of Boolean)) As event_comb
+                                       ByVal result As ref(Of Boolean)) As event_comb
         Return delete_then_write(sr,
                                  key,
                                  ts,
@@ -103,7 +103,7 @@ Public Class ikeyvt2_ikeyvt_false(Of SEEK_RESULT)
     Private Function delete_then_write(ByVal sr As SEEK_RESULT,
                                        ByVal key() As Byte,
                                        ByVal value() As Byte,
-                                       ByVal result As pointer(Of Boolean)) As event_comb
+                                       ByVal result As ref(Of Boolean)) As event_comb
         Return delete_then_write(sr,
                                  key,
                                  value,
@@ -116,17 +116,17 @@ Public Class ikeyvt2_ikeyvt_false(Of SEEK_RESULT)
                                    ByVal key() As Byte,
                                    ByVal value() As Byte,
                                    ByVal ts As Int64,
-                                   ByVal result As pointer(Of Boolean),
+                                   ByVal result As ref(Of Boolean),
                                    ByVal existing_do As Func(Of SEEK_RESULT,
                                                                 Byte(),
-                                                                Byte(), 
-                                                                pointer(Of Boolean), 
+                                                                Byte(),
+                                                                ref(Of Boolean),
                                                                 event_comb)) As event_comb
         assert(Not existing_do Is Nothing)
-        Dim r As pointer(Of Boolean) = Nothing
+        Dim r As ref(Of Boolean) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of Boolean)()
+                                  r = New ref(Of Boolean)()
                                   ec = existing_do(sr, key, value, r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -155,11 +155,11 @@ Public Class ikeyvt2_ikeyvt_false(Of SEEK_RESULT)
     Private Function amuw_new(ByVal key() As Byte,
                               ByVal value() As Byte,
                               ByVal ts As Int64,
-                              ByVal result As pointer(Of Boolean)) As event_comb
-        Dim r As pointer(Of Boolean) = Nothing
+                              ByVal result As ref(Of Boolean)) As event_comb
+        Dim r As ref(Of Boolean) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of Boolean)()
+                                  r = New ref(Of Boolean)()
                                   ec = impl.write_new(key, value, r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -188,11 +188,11 @@ Public Class ikeyvt2_ikeyvt_false(Of SEEK_RESULT)
     Private Function amuw(ByVal key() As Byte,
                           ByVal value() As Byte,
                           ByVal ts As Int64,
-                          ByVal result As pointer(Of Boolean),
+                          ByVal result As ref(Of Boolean),
                           ByVal existing_do As Func(Of SEEK_RESULT,
                                                        Byte(),
-                                                       Byte(), 
-                                                       pointer(Of Boolean), 
+                                                       Byte(),
+                                                       ref(Of Boolean),
                                                        event_comb)) As event_comb
         Return if_existing(key,
                            Function(sr As SEEK_RESULT) As event_comb
@@ -206,20 +206,20 @@ Public Class ikeyvt2_ikeyvt_false(Of SEEK_RESULT)
     Public Function append(ByVal key() As Byte,
                            ByVal value() As Byte,
                            ByVal ts As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of _false).append
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of _false).append
         Return amuw(key, value, ts, result, Function(sr, k, v, r) impl.append_existing(sr, v, r))
     End Function
 
-    Public Function capacity(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvt(Of _false).capacity
+    Public Function capacity(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvt(Of _false).capacity
         Return impl.capacity(result)
     End Function
 
     Private Function delete_existing(ByVal sr As SEEK_RESULT,
-                                     ByVal result As pointer(Of Boolean)) As event_comb
-        Dim r As pointer(Of Boolean) = Nothing
+                                     ByVal result As ref(Of Boolean)) As event_comb
+        Dim r As ref(Of Boolean) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of Boolean)()
+                                  r = New ref(Of Boolean)()
                                   ec = impl.delete_existing(sr, r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -246,7 +246,7 @@ Public Class ikeyvt2_ikeyvt_false(Of SEEK_RESULT)
     End Function
 
     Public Function delete(ByVal key() As Byte,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of _false).delete
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of _false).delete
         Return if_existing(key,
                            Function(sr As SEEK_RESULT) As event_comb
                                Return delete_existing(sr, result)
@@ -257,11 +257,11 @@ Public Class ikeyvt2_ikeyvt_false(Of SEEK_RESULT)
                            End Function)
     End Function
 
-    Public Function empty(ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of _false).empty
+    Public Function empty(ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of _false).empty
         Return impl.empty(result)
     End Function
 
-    Public Function full(ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of _false).full
+    Public Function full(ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of _false).full
         Return impl.full(result)
     End Function
 
@@ -269,18 +269,18 @@ Public Class ikeyvt2_ikeyvt_false(Of SEEK_RESULT)
         Return impl.heartbeat()
     End Function
 
-    Public Function keycount(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvt(Of _false).keycount
+    Public Function keycount(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvt(Of _false).keycount
         Return impl.keycount(result)
     End Function
 
-    Public Function list(ByVal result As pointer(Of vector(Of Byte()))) As event_comb Implements ikeyvt(Of _false).list
+    Public Function list(ByVal result As ref(Of vector(Of Byte()))) As event_comb Implements ikeyvt(Of _false).list
         Return impl.list(result)
     End Function
 
     Public Function modify(ByVal key() As Byte,
                            ByVal value() As Byte,
                            ByVal ts As Int64,
-                           ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of _false).modify
+                           ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of _false).modify
         Return amuw(key,
                     value,
                     ts,
@@ -289,8 +289,8 @@ Public Class ikeyvt2_ikeyvt_false(Of SEEK_RESULT)
     End Function
 
     Private Function read_existing(ByVal sr As SEEK_RESULT,
-                                   ByVal result As pointer(Of Byte()),
-                                   ByVal ts As pointer(Of Int64)) As event_comb
+                                   ByVal result As ref(Of Byte()),
+                                   ByVal ts As ref(Of Int64)) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = impl.read_existing(sr, result)
@@ -313,8 +313,8 @@ Public Class ikeyvt2_ikeyvt_false(Of SEEK_RESULT)
     End Function
 
     Public Function read(ByVal key() As Byte,
-                         ByVal result As pointer(Of Byte()),
-                         ByVal ts As pointer(Of Int64)) As event_comb Implements ikeyvt(Of _false).read
+                         ByVal result As ref(Of Byte()),
+                         ByVal ts As ref(Of Int64)) As event_comb Implements ikeyvt(Of _false).read
         Return if_existing(key,
                            Function(sr As SEEK_RESULT) As event_comb
                                Return read_existing(sr, result, ts)
@@ -331,12 +331,12 @@ Public Class ikeyvt2_ikeyvt_false(Of SEEK_RESULT)
     End Function
 
     Public Function seek(ByVal key() As Byte,
-                         ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of _false).seek
-        Return impl.seek(key, New pointer(Of SEEK_RESULT)(), result)
+                         ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of _false).seek
+        Return impl.seek(key, New ref(Of SEEK_RESULT)(), result)
     End Function
 
     Public Function sizeof(ByVal key() As Byte,
-                           ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvt(Of _false).sizeof
+                           ByVal result As ref(Of Int64)) As event_comb Implements ikeyvt(Of _false).sizeof
         Return if_existing(key,
                            Function(sr As SEEK_RESULT) As event_comb
                                Return impl.sizeof_existing(sr, result)
@@ -354,12 +354,12 @@ Public Class ikeyvt2_ikeyvt_false(Of SEEK_RESULT)
     Public Function unique_write(ByVal key() As Byte,
                                  ByVal value() As Byte,
                                  ByVal ts As Int64,
-                                 ByVal result As pointer(Of Boolean)) As event_comb Implements ikeyvt(Of _false).unique_write
+                                 ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt(Of _false).unique_write
         Return amuw(key,
                     value,
                     ts,
                     result,
-                    Function(sr As SEEK_RESULT, k() As Byte, v() As Byte, r As pointer(Of Boolean)) As event_comb
+                    Function(sr As SEEK_RESULT, k() As Byte, v() As Byte, r As ref(Of Boolean)) As event_comb
                         Return New event_comb(Function() As Boolean
                                                   Return eva(r, False) AndAlso
                                                          goto_end()
@@ -367,7 +367,7 @@ Public Class ikeyvt2_ikeyvt_false(Of SEEK_RESULT)
                     End Function)
     End Function
 
-    Public Function valuesize(ByVal result As pointer(Of Int64)) As event_comb Implements ikeyvt(Of _false).valuesize
+    Public Function valuesize(ByVal result As ref(Of Int64)) As event_comb Implements ikeyvt(Of _false).valuesize
         Return impl.valuesize(result)
     End Function
 End Class

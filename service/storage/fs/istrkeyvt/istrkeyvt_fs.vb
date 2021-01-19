@@ -1,8 +1,11 @@
 ﻿
-Imports osi.root.constants
-Imports osi.root.formation
-Imports osi.root.procedure
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.procedure
 Imports osi.root.utils
 
 Public Class istrkeyvt_fs
@@ -16,11 +19,11 @@ Public Class istrkeyvt_fs
     End Sub
 
     Public Function create(ByVal path As String,
-                           ByVal o As pointer(Of inode),
+                           ByVal o As ref(Of inode),
                            Optional ByVal wait_ms As Int64 = npos) As event_comb Implements ifs.create
         Dim ec As event_comb = Nothing
         Dim pp As istrkeyvt_node = Nothing
-        Dim r As pointer(Of Boolean) = Nothing
+        Dim r As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
                                   normalize_path(path)
                                   If valid_path(path) Then
@@ -43,7 +46,7 @@ Public Class istrkeyvt_fs
                               End Function)
     End Function
 
-    Public Function exist(ByVal path As String, ByVal r As pointer(Of Boolean)) As event_comb Implements ifs.exist
+    Public Function exist(ByVal path As String, ByVal r As ref(Of Boolean)) As event_comb Implements ifs.exist
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   normalize_path(path)
@@ -61,7 +64,7 @@ Public Class istrkeyvt_fs
                               End Function)
     End Function
 
-    Public Function open(ByVal path As String, ByVal r As pointer(Of inode)) As event_comb Implements ifs.open
+    Public Function open(ByVal path As String, ByVal r As ref(Of inode)) As event_comb Implements ifs.open
         Return sync_async(Function() As Boolean
                               normalize_path(path)
                               Return valid_path(path) AndAlso

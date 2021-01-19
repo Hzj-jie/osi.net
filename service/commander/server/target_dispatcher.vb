@@ -4,13 +4,10 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
-Imports osi.root.delegates
-Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.service.device
 
-Public Class target_dispatcher(Of T)
+Public NotInheritable Class target_dispatcher(Of T)
     Private ReadOnly dispatcher As dispatcher
 
     Public Sub New(ByVal dispatcher As dispatcher)
@@ -79,36 +76,31 @@ Public Class target_dispatcher(Of T)
     Public Shared Function register(Of AT)(ByVal dispatcher As dispatcher,
                                            ByVal action As AT,
                                            ByVal act As Func(Of T, command, command, event_comb),
-                                           Optional ByVal replace As Boolean = False,
-                                           Optional ByVal T_bytes As bytes_serializer(Of AT) = Nothing) _
+                                           Optional ByVal replace As Boolean = False) _
                                           As Boolean
         Return Not dispatcher Is Nothing AndAlso
-               dispatcher.register(action, handle(act), replace, T_bytes)
+               dispatcher.register(action, handle(act), replace)
     End Function
 
     Public Function register(Of AT)(ByVal action As AT,
                                     ByVal act As Func(Of T, command, command, event_comb),
-                                    Optional ByVal replace As Boolean = False,
-                                    Optional ByVal T_bytes As bytes_serializer(Of AT) = Nothing) _
+                                    Optional ByVal replace As Boolean = False) _
                                    As Boolean
-        Return register(dispatcher, action, act, replace, T_bytes)
+        Return register(dispatcher, action, act, replace)
     End Function
 
     Public Function [erase](ByVal action() As Byte) As Boolean
         Return dispatcher.erase(action)
     End Function
 
-    Public Function [erase](Of AT)(ByVal action As AT,
-                                   Optional ByVal T_bytes As bytes_serializer(Of AT) = Nothing) _
-                                  As Boolean
-        Return dispatcher.erase(action, T_bytes)
+    Public Function [erase](Of AT)(ByVal action As AT) As Boolean
+        Return dispatcher.erase(action)
     End Function
 
     Public Shared Operator +(ByVal this As target_dispatcher(Of T)) As dispatcher
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return this.dispatcher
         End If
+        Return this.dispatcher
     End Operator
 End Class

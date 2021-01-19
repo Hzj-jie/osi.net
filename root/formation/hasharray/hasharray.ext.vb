@@ -11,7 +11,7 @@ Public Module _hasharray_ext
     Private Function insert(Of T, UNIQUE As _boolean) _
                            (ByVal this As hasharray(Of T, UNIQUE),
                             ByVal that As hasharray(Of T, UNIQUE),
-                            ByVal f As Func(Of T, fast_pair(Of hasharray(Of T, UNIQUE).iterator, Boolean))) As Boolean
+                            ByVal f As Func(Of T, tuple(Of hasharray(Of T, UNIQUE).iterator, Boolean))) As Boolean
         assert(Not f Is Nothing)
         If this Is Nothing OrElse that Is Nothing Then
             Return False

@@ -194,12 +194,12 @@ Public Module _compare
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function that_to_t(Of T)(ByVal this As T, ByVal that As Object) As Int32
-        Return -direct_cast(Of IComparable(Of T))(that).CompareTo(this)
+        Return comparer.reverse(direct_cast(Of IComparable(Of T))(that).CompareTo(this))
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function that_to_object(ByVal this As Object, ByVal that As Object) As Int32
-        Return -direct_cast(Of IComparable)(that).CompareTo(this)
+        Return comparer.reverse(direct_cast(Of IComparable)(that).CompareTo(this))
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -286,16 +286,15 @@ Public Module _compare
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function runtime_compare(ByVal this As Object, ByVal that As Object) As Int32
         Dim o As Int32 = 0
-        o = object_compare(this, that)
-        If o <> object_compare_undetermined Then
+        If object_compare(this, that, o) Then
             Return o
         End If
-        assert(not_null_runtime_compare(this, that, o))
+        assert(non_null_runtime_compare(this, that, o))
         Return o
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function not_null_runtime_compare(ByVal this As Object, ByVal that As Object, ByRef o As Int32) As Boolean
+    Public Function non_null_runtime_compare(ByVal this As Object, ByVal that As Object, ByRef o As Int32) As Boolean
         Return runtime_this_to_object(this, that, o) OrElse
                runtime_that_to_object(this, that, o)
     End Function
@@ -335,8 +334,7 @@ Public Module _compare
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
-        o = object_compare(this, that)
-        If o <> object_compare_undetermined Then
+        If object_compare(this, that, o) Then
             Return True
         End If
         Return non_null_compare(this, that, o)

@@ -19,15 +19,15 @@ Partial Public Class redundance_distributor
                           Implements iredundance_distributor.modify
         assert(array_size(excluded_nodes) = container.size())
         Dim ecs As vector(Of event_comb) = Nothing
-        Dim rs As vector(Of pointer(Of Boolean)) = Nothing
+        Dim rs As vector(Of ref(Of Boolean)) = Nothing
         Return New event_comb(Function() As Boolean
                                   ecs = New vector(Of event_comb)()
-                                  rs = New vector(Of pointer(Of Boolean))()
+                                  rs = New vector(Of ref(Of Boolean))()
                                   For i As Int32 = 0 To container.size() - 1
                                       If Not excluded_nodes(i) Then
                                           Dim ec As event_comb = Nothing
-                                          Dim r As pointer(Of Boolean) = Nothing
-                                          r = New pointer(Of Boolean)()
+                                          Dim r As ref(Of Boolean) = Nothing
+                                          r = New ref(Of Boolean)()
                                           ec = container(i).modify(key, value, ts, r)
                                           ecs.emplace_back(ec)
                                           rs.emplace_back(r)
@@ -52,20 +52,20 @@ Partial Public Class redundance_distributor
     End Function
 
     Public Function read(ByVal key As String,
-                         ByVal result As pointer(Of Byte()),
-                         ByVal ts As pointer(Of Int64),
-                         ByVal nodes_result As pointer(Of Boolean())) As event_comb _
+                         ByVal result As ref(Of Byte()),
+                         ByVal ts As ref(Of Int64),
+                         ByVal nodes_result As ref(Of Boolean())) As event_comb _
                         Implements iredundance_distributor.read
-        Dim bs() As pointer(Of Byte()) = Nothing
-        Dim tss() As pointer(Of Int64) = Nothing
+        Dim bs() As ref(Of Byte()) = Nothing
+        Dim tss() As ref(Of Int64) = Nothing
         Dim ecs() As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ReDim bs(container.size() - 1)
                                   ReDim tss(container.size() - 1)
                                   ReDim ecs(container.size() - 1)
                                   For i As Int32 = 0 To container.size() - 1
-                                      bs(i) = New pointer(Of Byte())()
-                                      tss(i) = New pointer(Of Int64)()
+                                      bs(i) = New ref(Of Byte())()
+                                      tss(i) = New ref(Of Int64)()
                                       ecs(i) = container(i).read(key, bs(i), tss(i))
                                   Next
                                   Return waitfor(ecs) AndAlso

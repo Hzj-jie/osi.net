@@ -21,7 +21,7 @@ Public Class flow_block_adapter
         Return New flow_block_adapter(f)
     End Function
 
-    Public Function receive(ByVal result As pointer(Of Byte())) As event_comb _
+    Public Function receive(ByVal result As ref(Of Byte())) As event_comb _
                            Implements block.receive
         Dim ec As event_comb = Nothing
         Dim exp_len As UInt32 = 0
@@ -69,7 +69,7 @@ Public Class flow_block_adapter
                               End Function)
     End Function
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements block.sense
         Return underlying_device.sense(pending, timeout_ms)
     End Function

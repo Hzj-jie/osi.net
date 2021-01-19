@@ -1,19 +1,23 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
-Imports osi.root.formation
+Imports osi.root.connector
 Imports osi.root.procedure
 
 Public Module _no_timestamp
-    Private ReadOnly read_ts As pointer(Of Int64)
+    Private ReadOnly read_ts As ref(Of Int64)
 
     Sub New()
-        read_ts = New pointer(Of Int64)()
+        read_ts = New ref(Of Int64)()
     End Sub
 
     <Extension()> Public Function append(ByVal this As istrkeyvt,
                                          ByVal key As String,
                                          ByVal value() As Byte,
-                                         ByVal result As pointer(Of Boolean)) As event_comb
+                                         ByVal result As ref(Of Boolean)) As event_comb
         If this Is Nothing Then
             Return Nothing
         Else
@@ -24,7 +28,7 @@ Public Module _no_timestamp
     <Extension()> Public Function modify(ByVal this As istrkeyvt,
                                          ByVal key As String,
                                          ByVal value() As Byte,
-                                         ByVal result As pointer(Of Boolean)) As event_comb
+                                         ByVal result As ref(Of Boolean)) As event_comb
         If this Is Nothing Then
             Return Nothing
         Else
@@ -35,7 +39,7 @@ Public Module _no_timestamp
     <Extension()> Public Function unique_write(ByVal this As istrkeyvt,
                                                ByVal key As String,
                                                ByVal value() As Byte,
-                                               ByVal result As pointer(Of Boolean)) As event_comb
+                                               ByVal result As ref(Of Boolean)) As event_comb
         If this Is Nothing Then
             Return Nothing
         Else
@@ -45,7 +49,7 @@ Public Module _no_timestamp
 
     <Extension()> Public Function read(ByVal this As istrkeyvt,
                                        ByVal key As String,
-                                       ByVal result As pointer(Of Byte())) As event_comb
+                                       ByVal result As ref(Of Byte())) As event_comb
         If this Is Nothing Then
             Return Nothing
         Else

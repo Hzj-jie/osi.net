@@ -76,9 +76,8 @@ Partial Public NotInheritable Class syntaxer
             For i As UInt32 = 0 To v.size() - uint32_1
                 Dim j As UInt32 = 0
                 If collection.token_type(v(i), j) Then
-                    Dim p As pair(Of [set](Of UInt32).iterator, Boolean) = Nothing
+                    Dim p As tuple(Of [set](Of UInt32).iterator, Boolean) = Nothing
                     p = ignores.emplace(j)
-                    assert(Not p Is Nothing)
                     If Not p.second Then
                         raise_error(error_type.user, "failed to add type ", j)
                         Return False

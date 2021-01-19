@@ -40,7 +40,7 @@ Public Class dev_piece_datagram_adapter(Of _PACKET_SIZE As _int64)
     Public Function send(ByVal buff() As Byte,
                          ByVal offset As UInt32,
                          ByVal count As UInt32,
-                         ByVal result As pointer(Of UInt32)) As event_comb Implements flow_injector.send
+                         ByVal result As ref(Of UInt32)) As event_comb Implements flow_injector.send
         Dim p As piece = Nothing
         Dim ec As event_comb = Nothing
         Dim sent As UInt32 = 0
@@ -65,11 +65,11 @@ Public Class dev_piece_datagram_adapter(Of _PACKET_SIZE As _int64)
                               End Function)
     End Function
 
-    Public Function receive(ByVal result As pointer(Of Byte())) As event_comb Implements block_pump.receive
-        Dim p As pointer(Of piece) = Nothing
+    Public Function receive(ByVal result As ref(Of Byte())) As event_comb Implements block_pump.receive
+        Dim p As ref(Of piece) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  p = New pointer(Of piece)()
+                                  p = New ref(Of piece)()
                                   ec = underlying_device.receive(p)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -84,7 +84,7 @@ Public Class dev_piece_datagram_adapter(Of _PACKET_SIZE As _int64)
                               End Function)
     End Function
 
-    Public Function sense(ByVal pending As pointer(Of Boolean),
+    Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
         Return underlying_device.sense(pending, timeout_ms)
     End Function

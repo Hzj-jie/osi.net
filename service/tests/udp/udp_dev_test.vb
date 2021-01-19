@@ -17,8 +17,8 @@ Public Class udp_dev_test
         assert(Not sender Is Nothing)
         assert(Not receiver Is Nothing)
         Dim v() As Byte = Nothing
-        Dim p As pointer(Of Boolean) = Nothing
-        Dim r As pointer(Of Byte()) = Nothing
+        Dim p As ref(Of Boolean) = Nothing
+        Dim r As ref(Of Byte()) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   v = rnd_bytes(rnd_uint(100, 500))
@@ -28,7 +28,7 @@ Public Class udp_dev_test
                               End Function,
                               Function() As Boolean
                                   If assertion.is_true(ec.end_result()) Then
-                                      p = New pointer(Of Boolean)()
+                                      p = New ref(Of Boolean)()
                                       ec = receiver.sense(p, seconds_to_milliseconds(1))
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -38,7 +38,7 @@ Public Class udp_dev_test
                               End Function,
                               Function() As Boolean
                                   If assertion.is_true(ec.end_result()) AndAlso assertion.is_true(+p) Then
-                                      r = New pointer(Of Byte())()
+                                      r = New ref(Of Byte())()
                                       ec = receiver.receive(r)
                                       Return waitfor(ec, seconds_to_milliseconds(1)) AndAlso
                                              goto_next()
@@ -109,18 +109,18 @@ Public Class udp_dev_test
     End Function
 
     Public Overrides Function create() As event_comb
-        Dim u1 As pointer(Of udp_dev) = Nothing
-        Dim u2 As pointer(Of udp_dev) = Nothing
+        Dim u1 As ref(Of udp_dev) = Nothing
+        Dim u2 As ref(Of udp_dev) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  u1 = New pointer(Of udp_dev)()
+                                  u1 = New ref(Of udp_dev)()
                                   ec = p1.udp_dev_device().get().get(u1)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
                               End Function,
                               Function() As Boolean
                                   If assertion.is_true(ec.end_result()) AndAlso assertion.is_false(u1.empty()) Then
-                                      u2 = New pointer(Of udp_dev)()
+                                      u2 = New ref(Of udp_dev)()
                                       ec = p2.udp_dev_device().get().get(u2)
                                       Return waitfor(ec) AndAlso
                                              goto_next()

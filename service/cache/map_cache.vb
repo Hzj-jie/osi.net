@@ -1,10 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.delegates
 Imports osi.root.formation
 
 'for test only
-Friend Class map_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
+Friend NotInheritable Class map_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     Implements islimcache2(Of KEY_T, VALUE_T)
 
     Private ReadOnly m As map(Of KEY_T, VALUE_T)
@@ -21,21 +24,15 @@ Friend Class map_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
         Return m.erase(key)
     End Function
 
-    Public Function foreach(ByVal d As _do(Of KEY_T, VALUE_T, Boolean, Boolean)) As Boolean _
-                           Implements islimcache2(Of KEY_T, VALUE_T).foreach
-        Return m.foreach(d)
-    End Function
-
     Public Function [get](ByVal key As KEY_T, ByRef value As VALUE_T) As Boolean _
                          Implements islimcache2(Of KEY_T, VALUE_T).get
         Dim it As map(Of KEY_T, VALUE_T).iterator = Nothing
         it = m.find(key)
         If it = m.end() Then
             Return False
-        Else
-            copy(value, (+it).second)
-            Return True
         End If
+        copy(value, (+it).second)
+        Return True
     End Function
 
     Public Sub [set](ByVal key As KEY_T, ByVal value As VALUE_T) Implements islimcache2(Of KEY_T, VALUE_T).set

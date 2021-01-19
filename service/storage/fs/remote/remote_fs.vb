@@ -50,7 +50,7 @@ Public Class remote_fs
     End Function
 
     Public Function create(ByVal path As String,
-                           ByVal r As pointer(Of inode),
+                           ByVal r As ref(Of inode),
                            Optional ByVal wait_ms As Int64 = npos) As event_comb Implements ifs.create
         Return q(create_command(path, wait_ms),
                  Function() As Boolean
@@ -63,7 +63,7 @@ Public Class remote_fs
                               .attach(parameter.path, path)
     End Function
 
-    Public Function exist(ByVal path As String, ByVal r As pointer(Of Boolean)) As event_comb Implements ifs.exist
+    Public Function exist(ByVal path As String, ByVal r As ref(Of Boolean)) As event_comb Implements ifs.exist
         Return q(exist_command(path),
                  Function(c As command) As Boolean
                      Return Not c Is Nothing AndAlso
@@ -76,7 +76,7 @@ Public Class remote_fs
                               .attach(parameter.path, path)
     End Function
 
-    Public Function open(ByVal path As String, ByVal o As pointer(Of inode)) As event_comb Implements ifs.open
+    Public Function open(ByVal path As String, ByVal o As ref(Of inode)) As event_comb Implements ifs.open
         Return q(open_command(path),
                  Function() As Boolean
                      Return eva(o, remote_node.ctor(target, +q, path))

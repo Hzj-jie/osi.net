@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.connector
@@ -32,7 +36,7 @@ Partial Public Class rlexer
                 End If
             End While
             r.insert(pos)
-            Return r.emplace_to_vector()
+            Return r.stream().collect(Of vector(Of UInt32))()
         End Function
     End Class
 End Class

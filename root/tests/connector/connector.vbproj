@@ -117,6 +117,7 @@
     <Compile Include="finalizer_test.vb" />
     <Compile Include="functor\bytes_serializer_container_test.vb" />
     <Compile Include="functor\bytes_serializer_test.vb" />
+    <Compile Include="functor\json_serializer_test.vb" />
     <Compile Include="gc_behavior_test.vb" />
     <Compile Include="generic_perf.vb" />
     <Compile Include="compress_test.vb" />
@@ -124,6 +125,7 @@
     <Compile Include="generic_type_behavior_test.vb" />
     <Compile Include="gettype_perf.vb" />
     <Compile Include="gettype_test.vb" />
+    <Compile Include="guess_encoding_tests.vb" />
     <Compile Include="implement_test.vb" />
     <Compile Include="implicit_conversions.vb" />
     <Compile Include="inherit\base2_perf.vb" />
@@ -139,6 +141,7 @@
     <Compile Include="inlinable_perf.vb" />
     <Compile Include="int32_bytes_perf_test.vb" />
     <Compile Include="inherit_test2.vb" />
+    <Compile Include="int_loop_uint_loop_perf.vb" />
     <Compile Include="istype_perf.vb" />
     <Compile Include="istype_test.vb" />
     <Compile Include="kick_between_test.vb" />
@@ -160,6 +163,7 @@
     <Compile Include="object_extensions_test.vb" />
     <Compile Include="out_generic_behavior_test.vb" />
     <Compile Include="overload_behavior_test.vb" />
+    <Compile Include="ref_test.vb" />
     <Compile Include="rate_timeout_test.vb" />
     <Compile Include="resolver_test.vb" />
     <Compile Include="rnd\guid_strs_test.vb" />
@@ -239,6 +243,8 @@
     <Compile Include="virtual_key_test.vb" />
     <Compile Include="wait_handle_behavior_test.vb" />
     <Compile Include="weakreference_behavior_test.vb" />
+    <Compile Include="weak_ref_test.vb" />
+    <Compile Include="weak_ref_ref_test.vb" />
     <Compile Include="windows_hook\lowlevel_keyboard_hook_test.vb" />
     <Compile Include="native_window_test\native_window_test.vb" />
     <Compile Include="native_window_test\native_window_test_form.Designer.vb">
@@ -320,6 +326,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="codegen\gbk.txt" />
+    <Content Include="codegen\unicode-be.txt" />
+    <Content Include="codegen\unicode.txt" />
+    <Content Include="codegen\utf8-2.txt" />
+    <Content Include="codegen\utf8-bom.txt" />
+    <Content Include="codegen\utf8.txt" />
     <Content Include="string_null_or_whitespace_perf\string_null_or_whitespace_perf.cs" />
   </ItemGroup>
   <ItemGroup>

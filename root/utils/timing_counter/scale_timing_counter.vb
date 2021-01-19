@@ -1,5 +1,8 @@
 ﻿
-Imports osi.root.formation
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 
 Public MustInherit Class scale_timing_counter
@@ -8,7 +11,7 @@ Public MustInherit Class scale_timing_counter
     Private ReadOnly scale As Int64
     Private l As Int64
 
-    Public Sub New(ByVal p As pointer(Of Int64), ByVal scale As Int64)
+    Public Sub New(ByVal p As ref(Of Int64), ByVal scale As Int64)
         MyBase.New(p)
         Me.scale = scale
     End Sub

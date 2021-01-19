@@ -1,11 +1,14 @@
 ﻿
-Imports osi.root.formation
-Imports osi.root.procedure
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
+Imports osi.root.procedure
 Imports osi.service.streamer
 Imports osi.service.transmitter
-Imports utils = osi.root.utils
 
 Public Class agents(Of T)
     Inherits pipe_dev(Of T)
@@ -61,15 +64,14 @@ Public Class receivers(Of T As Class)
         Dim ecs As vector(Of event_comb) = Nothing
         Return New event_comb(Function() As Boolean
                                   ecs = New vector(Of event_comb)()
-                                  Return utils.foreach(AddressOf s.foreach,
-                                                       Sub(ByRef r As ireceiver(Of T))
-                                                           Dim ec As event_comb = Nothing
-                                                           ec = r.receive(c)
-                                                           If Not ec Is Nothing Then
-                                                               ecs.emplace_back(ec)
-                                                           End If
-                                                       End Sub) AndAlso
-                                         If(Not ecs.empty(),
+                                  s.foreach(Sub(ByVal r As ireceiver(Of T))
+                                                Dim ec As event_comb = Nothing
+                                                ec = r.receive(c)
+                                                If Not ec Is Nothing Then
+                                                    ecs.emplace_back(ec)
+                                                End If
+                                            End Sub)
+                                  Return If(Not ecs.empty(),
                                             waitfor(+ecs) AndAlso goto_next(),
                                             goto_end())
                               End Function,

@@ -22,7 +22,7 @@ Public Module _sync_async
     End Function
 
     Public Function sync_async(Of T)(ByVal d As _do(Of T, Boolean),
-                                     ByVal p As pointer(Of T),
+                                     ByVal p As ref(Of T),
                                      ByRef ec As event_comb,
                                      Optional ByVal default_value As T = Nothing) As Boolean
         If d Is Nothing OrElse p Is Nothing Then
@@ -50,7 +50,7 @@ Public Module _sync_async
     End Function
 
     Public Function sync_async(Of T)(ByVal d As Func(Of T),
-                                     ByVal p As pointer(Of T),
+                                     ByVal p As ref(Of T),
                                      ByRef ec As event_comb,
                                      Optional ByVal default_value As T = Nothing) As Boolean
         If d Is Nothing Then
@@ -67,7 +67,7 @@ Public Module _sync_async
     End Function
 
     Public Function sync_async(Of T)(ByVal d As void(Of T),
-                                     ByVal p As pointer(Of T),
+                                     ByVal p As ref(Of T),
                                      ByRef ec As event_comb,
                                      Optional ByVal default_value As T = Nothing) As Boolean
         If d Is Nothing Then
@@ -94,7 +94,7 @@ Public Module _sync_async
     End Function
 
     Public Function sync_async(Of T)(ByVal d As _do(Of T, Boolean),
-                                     ByVal p As pointer(Of T),
+                                     ByVal p As ref(Of T),
                                      Optional ByVal default_value As T = Nothing) As event_comb
         Return sync_async(Function(ByRef r) sync_async(d, p, r, default_value))
     End Function
@@ -104,13 +104,13 @@ Public Module _sync_async
     End Function
 
     Public Function sync_async(Of T)(ByVal d As Func(Of T),
-                                     ByVal p As pointer(Of T),
+                                     ByVal p As ref(Of T),
                                      Optional ByVal default_value As T = Nothing) As event_comb
         Return sync_async(Function(ByRef r) sync_async(d, p, r, default_value))
     End Function
 
     Public Function sync_async(Of T)(ByVal d As void(Of T),
-                                     ByVal p As pointer(Of T),
+                                     ByVal p As ref(Of T),
                                      Optional ByVal default_value As T = Nothing) As event_comb
         Return sync_async(Function(ByRef r) sync_async(d, p, r, default_value))
     End Function

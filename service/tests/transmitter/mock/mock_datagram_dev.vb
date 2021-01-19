@@ -67,14 +67,14 @@ Public Class mock_datagram_dev(Of RANDOM_SEND_FAILURE As _boolean, RANDOM_RECEIV
         Return New mock_datagram_dev(Of RANDOM_SEND_FAILURE, RANDOM_RECEIVE_FAILURE)(receive_pump, send_pump)
     End Function
 
-    Public Overloads Function receive(ByVal result As pointer(Of Byte())) As event_comb Implements block_pump.receive
+    Public Overloads Function receive(ByVal result As ref(Of Byte())) As event_comb Implements block_pump.receive
         Return datagram_dev.receive(result)
     End Function
 
     Public Overloads Function send(ByVal buff() As Byte,
                                    ByVal offset As UInt32,
                                    ByVal count As UInt32,
-                                   ByVal sent As pointer(Of UInt32)) As event_comb Implements flow_injector.send
+                                   ByVal sent As ref(Of UInt32)) As event_comb Implements flow_injector.send
         Return datagram_dev.send(buff, offset, count, sent)
     End Function
 End Class

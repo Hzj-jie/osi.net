@@ -28,7 +28,7 @@ Partial Public MustInherit Class auto_device_exporter(Of T)
             Me.c = c
         End Sub
 
-        Protected Overrides Function create_device(ByVal p As pointer(Of idevice(Of T))) As event_comb
+        Protected Overrides Function create_device(ByVal p As ref(Of idevice(Of T))) As event_comb
             Return sync_async(Function() As Boolean
                                   Dim o As idevice(Of T) = Nothing
                                   Return c.create(o) AndAlso

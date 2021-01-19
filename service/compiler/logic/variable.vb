@@ -21,7 +21,6 @@ Namespace logic
             assert(Not scope Is Nothing)
             assert(Not name.null_or_whitespace())
             assert(Not type.null_or_whitespace())
-            assert(Not size Is Nothing)
             Me.scope = scope
             Me.name = name
             Me.type = type

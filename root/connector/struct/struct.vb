@@ -3,8 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports System.Text
-
 Partial Public Class struct(Of T)
     Public Shared Function [default]() As struct(Of T)
         Return reflector.instance

@@ -3,7 +3,9 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+Imports osi.root.constants
 Imports lock_t = osi.root.lock.slimlock.monitorlock
 
 ' Read-Write lock, allows multiple concurrent reads or single write.
@@ -19,6 +21,7 @@ Public NotInheritable Class rwlock
 
     ' Claims a read operation.
     ' Returns the count of concurrent read operations currently performing.
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function read_lock() As UInt32
         Dim r As UInt32 = 0
         l.wait()
@@ -30,6 +33,7 @@ Public NotInheritable Class rwlock
 
     ' Finishes a read operation.
     ' Returns the count of concurrent read operations currently performing.
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function read_unlock() As UInt32
         Dim r As UInt32 = 0
         l.wait()
@@ -39,6 +43,7 @@ Public NotInheritable Class rwlock
     End Function
 
     ' Claims a write operation.
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub write_lock()
         While True
             l.wait()
@@ -51,6 +56,7 @@ Public NotInheritable Class rwlock
     End Sub
 
     ' Finishes a write operation.
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub write_unlock()
         l.release()
     End Sub
@@ -59,10 +65,12 @@ Public NotInheritable Class rwlock
         zre.Dispose()
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function scoped_read_lock() As IDisposable
         Return New auto_read_unlock(Me)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function scoped_write_lock() As IDisposable
         Return New auto_write_unlock(Me)
     End Function

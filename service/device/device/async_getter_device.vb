@@ -77,9 +77,9 @@ Public MustInherit Class async_getter_device(Of T)
                 close(r)
             End If
         Else
-            Dim p As pointer(Of T) = Nothing
+            Dim p As ref(Of T) = Nothing
             assert_begin(New event_comb(Function() As Boolean
-                                            p = New pointer(Of T)()
+                                            p = New ref(Of T)()
                                             Return waitfor(c.get(p)) AndAlso
                                                    goto_next()
                                         End Function,

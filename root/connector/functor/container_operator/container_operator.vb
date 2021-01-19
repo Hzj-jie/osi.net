@@ -6,19 +6,20 @@ Option Strict On
 Imports osi.root.constants
 
 ' A functor to implement operators of CONTAINER, the container of T.
-Partial Public Class container_operator(Of CONTAINER, T)
-    Public Shared ReadOnly [default] As container_operator(Of CONTAINER, T)
+Partial Public NotInheritable Class container_operator(Of CONTAINER, T)
+    Public Shared ReadOnly r As container_operator(Of CONTAINER, T)
 
     Shared Sub New()
-        [default] = New container_operator(Of CONTAINER, T)()
+        r = New container_operator(Of CONTAINER, T)()
     End Sub
 
     Public Shared Sub emplace(ByVal f As Func(Of CONTAINER, T, Boolean))
         global_resolver(Of Func(Of CONTAINER, T, Boolean), container_operator(Of CONTAINER, T)).assert_first_register(f)
     End Sub
 
-    Public Shared Sub enumerate(ByVal f As Func(Of CONTAINER, enumerator))
-        global_resolver(Of Func(Of CONTAINER, enumerator), container_operator(Of CONTAINER, T)).assert_first_register(f)
+    Public Shared Sub enumerate(ByVal f As Func(Of CONTAINER, container_operator(Of T).enumerator))
+        global_resolver(Of Func(Of CONTAINER, container_operator(Of T).enumerator),
+                           container_operator(Of CONTAINER, T)).assert_first_register(f)
     End Sub
 
     Public Shared Sub size(ByVal f As Func(Of CONTAINER, UInt32))
@@ -29,17 +30,13 @@ Partial Public Class container_operator(Of CONTAINER, T)
         global_resolver(Of Action(Of CONTAINER), container_operator(Of CONTAINER, T)).assert_first_register(f)
     End Sub
 
-    Protected Overridable Function emplace() As Func(Of CONTAINER, T, Boolean)
-        Return global_resolver(Of Func(Of CONTAINER, T, Boolean), container_operator(Of CONTAINER, T)).resolve_or_null()
-    End Function
-
     Public Function emplace(ByVal i As CONTAINER, ByVal j As T) As Boolean
         If i Is Nothing Then
             Return False
         End If
 
         Dim f As Func(Of CONTAINER, T, Boolean) = Nothing
-        f = emplace()
+        f = global_resolver(Of Func(Of CONTAINER, T, Boolean), container_operator(Of CONTAINER, T)).resolve_or_null()
         assert(Not f Is Nothing)
         Return f(i, j)
     End Function
@@ -48,23 +45,13 @@ Partial Public Class container_operator(Of CONTAINER, T)
         Return Not i Is Nothing AndAlso emplace(i, copy_no_error(j))
     End Function
 
-    Protected Overridable Function enumerate() As Func(Of CONTAINER, enumerator)
-        Return global_resolver(Of Func(Of CONTAINER, enumerator), container_operator(Of CONTAINER, T)).resolve_or_null()
-    End Function
-
-    Public Function enumerate(ByVal i As CONTAINER) As enumerator
+    Public Function enumerate(ByVal i As CONTAINER) As container_operator(Of T).enumerator
         If i Is Nothing Then
             Return Nothing
         End If
 
-        Dim f As Func(Of CONTAINER, enumerator) = Nothing
-        f = enumerate()
-        assert(Not f Is Nothing)
-        Return f(i)
-    End Function
-
-    Protected Overridable Function size() As Func(Of CONTAINER, UInt32)
-        Return global_resolver(Of Func(Of CONTAINER, UInt32), container_operator(Of CONTAINER, T)).resolve_or_null()
+        Return global_resolver(Of Func(Of CONTAINER, container_operator(Of T).enumerator),
+                                  container_operator(Of CONTAINER, T)).resolve()(i)
     End Function
 
     Public Function size(ByVal i As CONTAINER) As UInt32
@@ -73,12 +60,12 @@ Partial Public Class container_operator(Of CONTAINER, T)
         End If
 
         Dim f As Func(Of CONTAINER, UInt32) = Nothing
-        f = size()
+        f = global_resolver(Of Func(Of CONTAINER, UInt32), container_operator(Of CONTAINER, T)).resolve_or_null()
         If Not f Is Nothing Then
             Return f(i)
         End If
 
-        Dim it As enumerator = Nothing
+        Dim it As container_operator(Of T).enumerator = Nothing
         it = enumerate(i)
         Dim r As UInt32 = 0
         While Not it Is Nothing AndAlso Not it.end()
@@ -93,21 +80,17 @@ Partial Public Class container_operator(Of CONTAINER, T)
         Return size(i) = uint32_0
     End Function
 
-    Protected Overridable Function clear() As Action(Of CONTAINER)
-        Return global_resolver(Of Action(Of CONTAINER), container_operator(Of CONTAINER, T)).resolve_or_null()
-    End Function
-
     Public Sub clear(ByVal i As CONTAINER)
         If i Is Nothing Then
             Return
         End If
 
         Dim f As Action(Of CONTAINER) = Nothing
-        f = clear()
+        f = global_resolver(Of Action(Of CONTAINER), container_operator(Of CONTAINER, T)).resolve_or_null()
         assert(Not f Is Nothing)
         f(i)
     End Sub
 
-    Protected Sub New()
+    Private Sub New()
     End Sub
 End Class

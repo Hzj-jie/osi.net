@@ -7,7 +7,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
-Imports cc = osi.root.connector
 
 Friend Module binary_tree
     Public Const binary_tree_debug As Boolean = False
@@ -36,6 +35,15 @@ Partial Public Class bt(Of T)
         [to].root = from.root
         from.root = Nothing
     End Sub
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function swap(ByVal i As bt(Of T), ByVal j As bt(Of T)) As Boolean
+        If i Is Nothing OrElse j Is Nothing Then
+            Return False
+        End If
+        _swap.swap(i.root, j.root)
+        Return True
+    End Function
 
     'make sure the tree from root <r> is not a graph
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -200,7 +208,7 @@ Partial Public Class bt(Of T)
                                      (ByVal this As BTT,
                                       ByVal that As BTT,
                                       ByVal size As Func(Of BTT, UInt32)) As Int32
-        Return compare(Of BTT)(this, that, size, AddressOf cc.compare)
+        Return compare(Of BTT)(this, that, size, AddressOf _compare.compare)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -215,7 +223,7 @@ Partial Public Class bt(Of T)
     Protected Shared Function compare(Of BTT As bt(Of T)) _
                                      (ByVal this As BTT,
                                       ByVal that As BTT) As Int32
-        Return compare(Of BTT)(this, that, Nothing, AddressOf cc.compare)
+        Return compare(Of BTT)(this, that, Nothing, AddressOf _compare.compare)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

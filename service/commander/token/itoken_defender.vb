@@ -1,10 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 #Const bypass_empty_token = False
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.procedure
-Imports osi.root.formation
 Imports osi.root.utils
 
 Public MustInherit Class itoken_defender(Of COLLECTION As Class, CONNECTION)
@@ -61,7 +65,7 @@ Public MustInherit Class itoken_defender(Of COLLECTION As Class, CONNECTION)
 
     Protected Overridable Function verify_token(ByVal h As herald,
                                                 ByVal p As COLLECTION,
-                                                ByVal r As pointer(Of COLLECTION)) As event_comb
+                                                ByVal r As ref(Of COLLECTION)) As event_comb
         assert(False)
         Return Nothing
     End Function
@@ -69,13 +73,13 @@ Public MustInherit Class itoken_defender(Of COLLECTION As Class, CONNECTION)
     Protected Overridable Function verify_token(ByVal c As CONNECTION,
                                                 ByVal h As herald,
                                                 ByVal p As COLLECTION,
-                                                ByVal r As pointer(Of COLLECTION)) As event_comb
+                                                ByVal r As ref(Of COLLECTION)) As event_comb
         Return verify_token(h, p, r)
     End Function
 
     Protected Overridable Function verify_token(ByVal c As CONNECTION,
                                                 ByVal p As COLLECTION,
-                                                ByVal r As pointer(Of COLLECTION)) As event_comb
+                                                ByVal r As ref(Of COLLECTION)) As event_comb
         Dim ec As event_comb = Nothing
         Dim h As herald = Nothing
         Return New event_comb(Function() As Boolean
@@ -96,25 +100,21 @@ Public MustInherit Class itoken_defender(Of COLLECTION As Class, CONNECTION)
     End Function
 
     Protected Function search_for_token(ByVal match As Func(Of COLLECTION, Boolean),
-                                        ByVal c As pointer(Of COLLECTION)) As Boolean
+                                        ByVal c As ref(Of COLLECTION)) As Boolean
         assert(Not match Is Nothing)
         Dim selected As COLLECTION = Nothing
-        assert(powerpoints.foreach(Function(ByRef current As COLLECTION,
-                                            ByRef [continue] As Boolean) As Boolean
-                                       assert(Not current Is Nothing)
-                                       If match(current) Then
-                                           selected = current
-                                           [continue] = False
-                                       Else
-                                           [continue] = True
-                                       End If
-                                       Return True
-                                   End Function))
+        powerpoints.foreach(Sub(ByVal current As COLLECTION)
+                                assert(Not current Is Nothing)
+                                If match(current) Then
+                                    selected = current
+                                    break_lambda.at_here()
+                                End If
+                            End Sub)
         eva(c, selected)
         Return Not selected Is Nothing
     End Function
 
-    Protected Function search_for_token(ByVal challenge As piece, ByVal c As pointer(Of COLLECTION)) As Boolean
+    Protected Function search_for_token(ByVal challenge As piece, ByVal c As ref(Of COLLECTION)) As Boolean
         Return search_for_token(Function(current As COLLECTION) As Boolean
                                     Return challenge.compare(info.token(current)) = 0
                                 End Function,
@@ -129,7 +129,7 @@ Public MustInherit Class itoken_defender(Of COLLECTION As Class, CONNECTION)
 #End If
     End Function
 
-    Private Function accepting(ByVal c As CONNECTION, ByVal r As pointer(Of COLLECTION)) As event_comb
+    Private Function accepting(ByVal c As CONNECTION, ByVal r As ref(Of COLLECTION)) As event_comb
         assert(Not r Is Nothing)
         Dim p As COLLECTION = Nothing
         Dim ec As event_comb = Nothing
@@ -160,7 +160,7 @@ Public MustInherit Class itoken_defender(Of COLLECTION As Class, CONNECTION)
                               End Function)
     End Function
 
-    Default Public ReadOnly Property accept(ByVal c As CONNECTION, ByVal r As pointer(Of COLLECTION)) As event_comb
+    Default Public ReadOnly Property accept(ByVal c As CONNECTION, ByVal r As ref(Of COLLECTION)) As event_comb
         Get
             assert(Not c Is Nothing)
             Dim ec As event_comb = Nothing

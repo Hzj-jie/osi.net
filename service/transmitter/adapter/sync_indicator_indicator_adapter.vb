@@ -1,5 +1,9 @@
 ﻿
-Imports osi.root.formation
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.procedure
 Imports osi.root.utils
 
@@ -12,7 +16,7 @@ Public Class sync_indicator_indicator_adapter
         Me.i = i
     End Sub
 
-    Public Function indicate(ByVal pending As pointer(Of Boolean)) As event_comb Implements indicator.indicate
+    Public Function indicate(ByVal pending As ref(Of Boolean)) As event_comb Implements indicator.indicate
         Return sync_async(Function() As Boolean
                               If i Is Nothing Then
                                   Return False

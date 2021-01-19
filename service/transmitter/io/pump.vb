@@ -22,22 +22,22 @@ End Interface
 
 ' All the following pumps should block the procedure until data received.
 Public Interface block_pump
-    Function receive(ByVal result As pointer(Of Byte())) As event_comb
+    Function receive(ByVal result As ref(Of Byte())) As event_comb
 End Interface
 
 Public Interface flow_pump
     Function receive(ByVal buff() As Byte,
                      ByVal offset As UInt32,
                      ByVal count As UInt32,
-                     ByVal result As pointer(Of UInt32)) As event_comb
+                     ByVal result As ref(Of UInt32)) As event_comb
 End Interface
 
 Public Interface text_pump
-    Function receive(ByVal r As pointer(Of String)) As event_comb
+    Function receive(ByVal r As ref(Of String)) As event_comb
 End Interface
 
 Public Interface T_pump(Of T)
-    Function receive(ByVal o As pointer(Of T)) As event_comb
+    Function receive(ByVal o As ref(Of T)) As event_comb
 End Interface
 
 Public Module _pump
@@ -62,35 +62,31 @@ Public Module _pump
     <Extension()> Public Function receive(ByVal f As flow_pump,
                                           ByVal buff() As Byte,
                                           ByVal count As UInt32,
-                                          ByVal result As pointer(Of UInt32)) As event_comb
+                                          ByVal result As ref(Of UInt32)) As event_comb
         assert(Not f Is Nothing)
         Return f.receive(buff, uint32_0, count, result)
     End Function
 
     <Extension()> Public Function receive(ByVal f As flow_pump,
                                           ByVal buff() As Byte,
-                                          ByVal result As pointer(Of UInt32)) As event_comb
+                                          ByVal result As ref(Of UInt32)) As event_comb
         assert(Not f Is Nothing)
         Return f.receive(buff, array_size(buff), result)
     End Function
 
-    <Extension()> Public Function receive(Of T) _
-                                         (ByVal i As text_pump,
-                                          ByVal o As pointer(Of T),
-                                          ByVal string_T As string_serializer(Of T)) _
-                                         As event_comb
+    <Extension()> Public Function receive(Of T)(ByVal i As text_pump, ByVal o As ref(Of T)) As event_comb
         assert(Not i Is Nothing)
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of String) = Nothing
+        Dim p As ref(Of String) = Nothing
         Return New event_comb(Function() As Boolean
-                                  p = New pointer(Of String)()
+                                  p = New ref(Of String)()
                                   ec = i.receive(p)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
                               End Function,
                               Function() As Boolean
                                   Dim r As T = Nothing
-                                  Return (+string_T).from_str(+p, r) AndAlso
+                                  Return string_serializer.from_str(+p, r) AndAlso
                                          eva(o, r) AndAlso
                                          goto_end()
                               End Function)

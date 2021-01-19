@@ -3,12 +3,12 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.formation
+Imports osi.root.connector
 Imports osi.root.procedure
 
 ' Create one instance of T per create() request.
 Public Interface icreator(Of T)
-    Function create(ByVal o As pointer(Of T)) As event_comb
+    Function create(ByVal o As ref(Of T)) As event_comb
 End Interface
 
 ' Automatically create and export instances of T.

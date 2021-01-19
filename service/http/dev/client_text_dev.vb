@@ -47,7 +47,7 @@ Public MustInherit Class client_text_dev
         MyBase.New(host, port, connect_timeout_ms, response_timeout_ms, buff_size, rate_sec, max_content_length)
     End Sub
 
-    Public Shadows Function sense(ByVal pending As pointer(Of Boolean),
+    Public Shadows Function sense(ByVal pending As ref(Of Boolean),
                                   ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
         Return sync_async(Sub()
                               eva(pending, True)
@@ -68,7 +68,7 @@ Public MustInherit Class client_text_dev
 
     Protected MustOverride Function issue_request(ByVal r As client.string_response) As event_comb
 
-    Public Function receive(ByVal result As pointer(Of String)) As event_comb Implements text_pump.receive
+    Public Function receive(ByVal result As ref(Of String)) As event_comb Implements text_pump.receive
         Return question(Function(ByVal r As client.string_response) As event_comb
                             assert(Not r Is Nothing)
                             Dim ec As event_comb = Nothing

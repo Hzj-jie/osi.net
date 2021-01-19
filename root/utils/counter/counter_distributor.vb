@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.DateTime
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.envs
 
@@ -39,11 +43,10 @@ Namespace counter
         End Function
 
         Friend Sub distribute(ByVal startticks As Int64, ByVal msg As String)
-            utils.foreach(AddressOf writers.foreach,
-                          Sub(ByRef writer As icounter_writer)
-                              assert(Not writer Is Nothing)
-                              writer.write(msg)
-                          End Sub)
+            writers.foreach(Sub(ByVal writer As icounter_writer)
+                                assert(Not writer Is Nothing)
+                                writer.write(msg)
+                            End Sub)
             If envs.counter_selfhealth Then
                 selfhealth.record_write_latency(startticks)
             End If

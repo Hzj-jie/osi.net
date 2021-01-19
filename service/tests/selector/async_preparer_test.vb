@@ -28,7 +28,7 @@ Public Class async_preparer_test
         Private f As String
 
         Public Overrides Function prepare() As Boolean
-            l = New async_preparer(Of String)(Function(r As pointer(Of String)) As event_comb
+            l = New async_preparer(Of String)(Function(r As ref(Of String)) As event_comb
                                                   Return sync_async(Sub()
                                                                         eva(r, guid_str())
                                                                     End Sub)
@@ -39,10 +39,10 @@ Public Class async_preparer_test
 
         Public Overrides Function create() As event_comb
             assert(Not l Is Nothing)
-            Dim s As pointer(Of String) = Nothing
+            Dim s As ref(Of String) = Nothing
             Dim ec As event_comb = Nothing
             Return New event_comb(Function() As Boolean
-                                      s = New pointer(Of String)()
+                                      s = New ref(Of String)()
                                       ec = l.get(s)
                                       Return waitfor(ec) AndAlso
                                              goto_next()

@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.constants
 Imports osi.root.template
 
-Public Class fast_to_uint32(Of T)
+Public NotInheritable Class fast_to_uint32(Of T)
     Inherits _to_uint32(Of T)
 
     Private Shared ReadOnly f As Func(Of T, UInt32)
@@ -20,9 +20,8 @@ Public Class fast_to_uint32(Of T)
             f = Function(i As T) As UInt32
                     If i Is Nothing Then
                         Return 0
-                    Else
-                        Return int32_uint32(i.GetHashCode())
                     End If
+                    Return int32_uint32(i.GetHashCode())
                 End Function
         End If
     End Sub

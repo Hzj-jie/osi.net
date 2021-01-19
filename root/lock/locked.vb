@@ -1,8 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.lock.slimlock
-Imports osi.root.delegates
 
 Public Module _locked
     <Extension()> Public Sub reader_locked(ByRef this As duallock, ByVal d As Action)

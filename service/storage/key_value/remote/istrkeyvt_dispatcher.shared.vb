@@ -65,22 +65,22 @@ Partial Public Class istrkeyvt_dispatcher
     Private Shared Function amuw(ByVal i As command,
                                  ByVal o As command,
                                  ByVal d As Func(Of String,
-                                                    Byte(), 
-                                                    Int64, 
-                                                    pointer(Of Boolean), 
+                                                    Byte(),
+                                                    Int64,
+                                                    ref(Of Boolean),
                                                     event_comb)) As event_comb
         assert(Not d Is Nothing)
         Dim key As String = Nothing
         Dim buff() As Byte = Nothing
         Dim ts As Int64 = 0
-        Dim result As pointer(Of Boolean) = Nothing
+        Dim result As ref(Of Boolean) = Nothing
         Return handle(i,
                       o,
                       Function() As Boolean
                           Return parse_key_buff_timestamp(i, key, buff, ts)
                       End Function,
                       Function() As event_comb
-                          result = New pointer(Of Boolean)()
+                          result = New ref(Of Boolean)()
                           Return d(key, buff, ts, result)
                       End Function,
                       Function() As Boolean
@@ -91,7 +91,7 @@ Partial Public Class istrkeyvt_dispatcher
 
     Private Shared Function key_handle(ByVal i As command,
                                        ByVal o As command,
-                                       ByVal d As Func(Of String, 
+                                       ByVal d As Func(Of String,
                                                           event_comb),
                                        ByVal r As Func(Of Boolean)) As event_comb
         assert(Not d Is Nothing)
@@ -110,16 +110,16 @@ Partial Public Class istrkeyvt_dispatcher
     Private Shared Function result_handle(ByVal i As command,
                                           ByVal o As command,
                                           ByVal p As Func(Of Boolean),
-                                          ByVal d As Func(Of pointer(Of Boolean), 
+                                          ByVal d As Func(Of ref(Of Boolean),
                                                              event_comb)) As event_comb
         assert(Not d Is Nothing)
         assert(Not d Is Nothing)
-        Dim r As pointer(Of Boolean) = Nothing
+        Dim r As ref(Of Boolean) = Nothing
         Return handle(i,
                       o,
                       p,
                       Function() As event_comb
-                          r = New pointer(Of Boolean)()
+                          r = New ref(Of Boolean)()
                           Return d(r)
                       End Function,
                       Function() As Boolean
@@ -131,16 +131,16 @@ Partial Public Class istrkeyvt_dispatcher
     Private Shared Function size_handle(ByVal i As command,
                                         ByVal o As command,
                                         ByVal p As Func(Of Boolean),
-                                        ByVal d As Func(Of pointer(Of Int64), 
+                                        ByVal d As Func(Of ref(Of Int64),
                                                            event_comb)) As event_comb
         assert(Not d Is Nothing)
         assert(Not d Is Nothing)
-        Dim r As pointer(Of Int64) = Nothing
+        Dim r As ref(Of Int64) = Nothing
         Return handle(i,
                       o,
                       p,
                       Function() As event_comb
-                          r = New pointer(Of Int64)()
+                          r = New ref(Of Int64)()
                           Return d(r)
                       End Function,
                       Function() As Boolean
@@ -151,19 +151,19 @@ Partial Public Class istrkeyvt_dispatcher
 
     Private Shared Function key_result_handle(ByVal i As command,
                                               ByVal o As command,
-                                              ByVal d As Func(Of String, 
-                                                                 pointer(Of Boolean), 
+                                              ByVal d As Func(Of String,
+                                                                 ref(Of Boolean),
                                                                  event_comb)) As event_comb
         assert(Not d Is Nothing)
         Dim key As String = Nothing
-        Dim r As pointer(Of Boolean) = Nothing
+        Dim r As ref(Of Boolean) = Nothing
         Return handle(i,
                       o,
                       Function() As Boolean
                           Return i.parameter(parameter.key, key)
                       End Function,
                       Function() As event_comb
-                          r = New pointer(Of Boolean)()
+                          r = New ref(Of Boolean)()
                           Return d(key, r)
                       End Function,
                       Function() As Boolean

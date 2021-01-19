@@ -1,19 +1,12 @@
 ﻿
 ##INCLUDE ..\..\codegen\iterator.imports.vbp
 
-Public Module _bt_iterator
-##DEFINE PARENT_CLASS bt(Of T)
-##DEFINE TEMPLATE_TYPE (Of T)
-##INCLUDE ..\..\codegen\iterator.ext.vbp
-End Module
-
 Partial Public Class bt(OF T)
-    Public Structure iterator
 ##DEFINE TYPE node
 ##DEFINE DEFINE_OPERATOR_PLUS False
-##DEFINE TYPE_IS_STRUCT True
 ##INCLUDE ..\..\codegen\random_access_iterator.vbp
 
+    Partial Public Structure iterator
         Private Function move_next(ByVal that As UInt32) As iterator
             assert(that > 0)
             Dim n As node = Nothing

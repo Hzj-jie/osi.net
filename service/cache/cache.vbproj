@@ -58,7 +58,7 @@
     <Compile Include="cache.vb" />
     <Compile Include="cache2.vb" />
     <Compile Include="constants.vb" />
-    <Compile Include="hashmap_cache.vb" />
+    <Compile Include="unordered_map_cache.vb" />
     <Compile Include="hash_based.vb" />
     <Compile Include="hash_cache.vb" />
     <Compile Include="hash_cache2.vb" />

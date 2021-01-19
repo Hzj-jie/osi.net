@@ -1,4 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
@@ -38,7 +43,7 @@ Public NotInheritable Class bypass_token_defender(Of COLLECTION As Class, CONNEC
 
     Protected Overrides Function verify_token(ByVal c As CONNECTION,
                                               ByVal p As COLLECTION,
-                                              ByVal r As pointer(Of COLLECTION)) As event_comb
+                                              ByVal r As ref(Of COLLECTION)) As event_comb
         Return sync_async(Sub()
                               eva(r, p)
                           End Sub)

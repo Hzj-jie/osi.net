@@ -7,10 +7,10 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
-Imports store_t = osi.root.formation.hashmap(Of osi.root.formation.array_pointer(Of Byte),
-                                                osi.root.formation.pair(Of System.Int64, System.Int64))
+Imports store_t = osi.root.formation.unordered_map(Of osi.root.connector.array_ref(Of Byte),
+                                                      osi.root.formation.pair(Of System.Int64, System.Int64))
 
-Partial Public Class fces
+Partial Public NotInheritable Class fces
     Private ReadOnly index As free_cluster
     Private ReadOnly content As free_cluster
     Private ReadOnly max_key_count As Int64
@@ -42,9 +42,9 @@ Partial Public Class fces
 
     Private Function inject_index(ByVal iid As Int64) As event_comb
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of Byte()) = Nothing
+        Dim r As ref(Of Byte()) = Nothing
         Return New event_comb(Function() As Boolean
-                                  r = New pointer(Of Byte())()
+                                  r = New ref(Of Byte())()
                                   ec = index.read(iid, r)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -108,7 +108,7 @@ Partial Public Class fces
     End Function
 
     Private Sub inject_index(ByVal key() As Byte, ByVal iid As Int64, ByVal cid As Int64)
-        If m.find(array_pointer.of(key)) <> m.end() Then
+        If m.find(array_ref.of(key)) <> m.end() Then
             raise_error(error_type.warning,
                         "duplicate key ",
                         bytes_str(key),
@@ -116,24 +116,23 @@ Partial Public Class fces
                         index.file_name(),
                         ", over-written")
         End If
-        m(array_pointer.of(key)) = pair.of(iid, cid)
+        m(array_ref.of(key)) = pair.of(iid, cid)
     End Sub
 
     Private Function find_cluster_id(ByVal key() As Byte,
                                      ByRef it As store_t.iterator,
                                      ByRef iid As Int64,
                                      ByRef cid As Int64) As Boolean
-        it = m.find(array_pointer.of(key))
+        it = m.find(array_ref.of(key))
         Return find_cluster_id(it, iid, cid)
     End Function
 
     Private Function find_cluster_id(ByVal it As store_t.iterator, ByRef iid As Int64, ByRef cid As Int64) As Boolean
-        If it Is Nothing OrElse it = m.end() Then
+        If it = m.end() Then
             Return False
-        Else
-            iid = (+it).second.first
-            cid = (+it).second.second
-            Return True
         End If
+        iid = (+it).second.first
+        cid = (+it).second.second
+        Return True
     End Function
 End Class

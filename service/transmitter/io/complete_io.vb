@@ -13,7 +13,7 @@ Public Module _complete_io
     Private Function copy_once(ByVal r As Func(Of Byte(),
                                                   UInt32,
                                                   UInt32,
-                                                  pointer(Of UInt32),
+                                                  ref(Of UInt32),
                                                   event_comb),
                                ByVal w As Func(Of Byte(),
                                                   UInt32,
@@ -21,7 +21,7 @@ Public Module _complete_io
                                                   event_comb),
                                ByVal buff() As Byte,
                                ByVal max_copy As UInt32,
-                               ByVal p As pointer(Of UInt32)) As event_comb
+                               ByVal p As ref(Of UInt32)) As event_comb
         assert(Not r Is Nothing)
         assert(Not w Is Nothing)
         assert(array_size(buff) >= max_copy)
@@ -68,20 +68,20 @@ Public Module _complete_io
     Public Function until_pending(ByVal r As Func(Of Byte(),
                                                      UInt32,
                                                      UInt32,
-                                                     pointer(Of UInt32),
+                                                     ref(Of UInt32),
                                                      event_comb),
                                   ByVal w As Func(Of Byte(),
                                                      UInt32,
                                                      UInt32,
                                                      event_comb),
                                   Optional ByVal buff_size As UInt32 = 0,
-                                  Optional ByVal result As pointer(Of UInt64) = Nothing) As event_comb
+                                  Optional ByVal result As ref(Of UInt64) = Nothing) As event_comb
         Dim buff() As Byte = Nothing
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of UInt32) = Nothing
+        Dim p As ref(Of UInt32) = Nothing
         Return New event_comb(Function() As Boolean
                                   buff = prepare_buff(buff_size)
-                                  p = New pointer(Of UInt32)()
+                                  p = New ref(Of UInt32)()
                                   ec = event_comb.while(Function() As event_comb
                                                             Return copy_once(r, w, buff, buff_size, p)
                                                         End Function,
@@ -110,7 +110,7 @@ Public Module _complete_io
     Private Function count_condition(ByVal last_ec As event_comb,
                                      ByRef break_error As Boolean,
                                      ByRef count As UInt32,
-                                     ByVal p As pointer(Of UInt32),
+                                     ByVal p As ref(Of UInt32),
                                      ByVal pending_counter As pending_io_punishment) As Boolean
         Dim x As UInt64 = 0
         x = count
@@ -126,7 +126,7 @@ Public Module _complete_io
     Private Function count_condition(ByVal last_ec As event_comb,
                                      ByRef break_error As Boolean,
                                      ByRef count As UInt64,
-                                     ByVal p As pointer(Of UInt32),
+                                     ByVal p As ref(Of UInt32),
                                      ByVal pending_counter As pending_io_punishment) As Boolean
         assert(Not pending_counter Is Nothing)
         If last_ec Is Nothing Then
@@ -151,7 +151,7 @@ Public Module _complete_io
     Public Function complete_io(ByVal r As Func(Of Byte(),
                                                    UInt32,
                                                    UInt32,
-                                                   pointer(Of UInt32),
+                                                   ref(Of UInt32),
                                                    event_comb),
                                 ByVal w As Func(Of Byte(),
                                                    UInt32,
@@ -166,8 +166,8 @@ Public Module _complete_io
                                       Return goto_end()
                                   Else
                                       buff = prepare_buff(buff_size, count)
-                                      Dim p As pointer(Of UInt32) = Nothing
-                                      p = New pointer(Of UInt32)()
+                                      Dim p As ref(Of UInt32) = Nothing
+                                      p = New ref(Of UInt32)()
                                       Dim pending_counter As pending_io_punishment = Nothing
                                       pending_counter = New pending_io_punishment()
                                       ec = event_comb.while(
@@ -192,14 +192,14 @@ Public Module _complete_io
                               End Function)
     End Function
 
-    Public Function complete_io(ByVal r As Func(Of pointer(Of Byte()),
+    Public Function complete_io(ByVal r As Func(Of ref(Of Byte()),
                                                    event_comb),
                                 ByVal w As Func(Of Byte(),
                                                    event_comb)) _
                                As event_comb
         assert(Not r Is Nothing)
         assert(Not w Is Nothing)
-        Dim p As pointer(Of Byte()) = Nothing
+        Dim p As ref(Of Byte()) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   p.renew()
@@ -228,7 +228,7 @@ Public Module _complete_io
                                   ByVal partial_io As Func(Of Byte(),
                                                               UInt32,
                                                               UInt32,
-                                                              pointer(Of UInt32),
+                                                              ref(Of UInt32),
                                                               event_comb)) As event_comb
         Return complete_io(buff, offset, count, partial_io)
     End Function
@@ -239,7 +239,7 @@ Public Module _complete_io
                                 ByVal partial_io As Func(Of Byte(),
                                                             UInt32,
                                                             UInt32,
-                                                            pointer(Of UInt32),
+                                                            ref(Of UInt32),
                                                             event_comb)) _
                                As event_comb
         assert(Not partial_io Is Nothing)
@@ -250,8 +250,8 @@ Public Module _complete_io
                                   ElseIf count = 0 Then
                                       Return goto_end()
                                   Else
-                                      Dim p As pointer(Of UInt32) = Nothing
-                                      p = New pointer(Of UInt32)()
+                                      Dim p As ref(Of UInt32) = Nothing
+                                      p = New ref(Of UInt32)()
                                       Dim pending_counter As pending_io_punishment = Nothing
                                       pending_counter = New pending_io_punishment()
                                       ec = event_comb.while(
@@ -293,7 +293,7 @@ Public Module _complete_io
                                   ByVal count As UInt32,
                                   ByVal partial_io As Func(Of Byte(),
                                                               UInt32,
-                                                              pointer(Of UInt32),
+                                                              ref(Of UInt32),
                                                               event_comb)) _
                                  As event_comb
         Return complete_io(buff, offset, count, partial_io)
@@ -304,7 +304,7 @@ Public Module _complete_io
                                 ByVal count As UInt32,
                                 ByVal partial_io As Func(Of Byte(),
                                                             UInt32,
-                                                            pointer(Of UInt32),
+                                                            ref(Of UInt32),
                                                             event_comb)) _
                                As event_comb
         assert(Not partial_io Is Nothing)
@@ -314,7 +314,7 @@ Public Module _complete_io
                            Function(ByVal b() As Byte,
                                     ByVal o As UInt32,
                                     ByVal c As UInt32,
-                                    ByVal r As pointer(Of UInt32)) As event_comb
+                                    ByVal r As ref(Of UInt32)) As event_comb
                                Dim ec As event_comb = Nothing
                                Return New event_comb(Function() As Boolean
                                                          Dim p As piece = Nothing

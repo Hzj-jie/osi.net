@@ -1,10 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.constants.filesystem
-Imports osi.root.connector
 
 Public Module _assembly
     <Extension()> Public Sub load_all(ByVal this As AppDomain,
@@ -40,7 +44,7 @@ Public Module _assembly
         If isemptyarray(file_patterns) Then
             load_all(this, path)
         Else
-            For i As Int32 = 0 To array_size(file_patterns) - 1
+            For i As Int32 = 0 To array_size_i(file_patterns) - 1
                 load_all(this, path, file_patterns(i))
             Next
         End If
@@ -49,7 +53,7 @@ Public Module _assembly
     <Extension()> Public Sub load_all(ByVal this As AppDomain,
                                       ByVal paths() As String,
                                       Optional ByVal file_patterns() As String = Nothing)
-        For i As Int32 = 0 To array_size(paths) - 1
+        For i As Int32 = 0 To array_size_i(paths) - 1
             load_all(this, paths(i), file_patterns)
         Next
     End Sub

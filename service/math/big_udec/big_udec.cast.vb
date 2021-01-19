@@ -13,7 +13,7 @@ Partial Public NotInheritable Class big_udec
             assert(r.Position() = byte_count_in_uint32)
             assert(r.write(n.as_bytes()))
             assert(r.write(d.as_bytes()))
-            Return r.export()
+            Return r.ToArray()
         End Using
     End Function
 

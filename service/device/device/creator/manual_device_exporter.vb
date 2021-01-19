@@ -55,7 +55,7 @@ Public NotInheritable Class manual_device_exporter(Of T)
     Public Function inject(ByVal d As idevice(Of async_getter(Of T))) As event_comb _
                           Implements imanual_device_exporter(Of T).inject
         Dim ec As event_comb = Nothing
-        Dim p As pointer(Of T) = Nothing
+        Dim p As ref(Of T) = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim a As async_getter(Of T) = Nothing
                                   If d Is Nothing Then
@@ -65,7 +65,7 @@ Public NotInheritable Class manual_device_exporter(Of T)
                                       If a Is Nothing Then
                                           Return False
                                       Else
-                                          p = New pointer(Of T)()
+                                          p = New ref(Of T)()
                                           ec = a.get(p)
                                           Return waitfor(ec) AndAlso
                                                  goto_next()

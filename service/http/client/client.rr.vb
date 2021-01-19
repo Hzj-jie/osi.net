@@ -43,7 +43,7 @@ Public Module _client_rr
         ServicePointManager.MaxServicePointIdleTime() = 0
     End Sub
 
-    <Extension()> Public Sub close(ByVal this As pointer(Of HttpWebResponse))
+    <Extension()> Public Sub close(ByVal this As ref(Of HttpWebResponse))
         If Not (+this) Is Nothing Then
             this.get().Close()
         End If
@@ -53,25 +53,24 @@ Public Module _client_rr
                                                          Optional ByVal e As Text.Encoding = Nothing) As String
         If i Is Nothing Then
             Return Nothing
-        Else
-            If e Is Nothing Then
-                e = default_encoding
+        End If
+        If e Is Nothing Then
+            e = default_encoding
+        End If
+        Dim it As map(Of String, String).iterator = Nothing
+        it = i.begin()
+        Dim r As StringBuilder = Nothing
+        r = New StringBuilder()
+        While it <> i.end()
+            If r.Length() > 0 Then
+                r.Append(constants.uri.argument_separator)
             End If
-            Dim it As map(Of String, String).iterator = Nothing
-            it = i.begin()
-            Dim r As StringBuilder = Nothing
-            r = New StringBuilder()
-            While it <> i.end()
-                If r.Length() > 0 Then
-                    r.Append(constants.uri.argument_separator)
-                End If
-                r.Append(HttpUtility.UrlEncode((+it).first, e)) _
+            r.Append(HttpUtility.UrlEncode((+it).first, e)) _
                  .Append(constants.uri.argument_name_value_separator) _
                  .Append(HttpUtility.UrlEncode((+it).second, e))
-                it += 1
-            End While
-            Return Convert.ToString(r)
-        End If
+            it += 1
+        End While
+        Return Convert.ToString(r)
     End Function
 
     'always start from /, so it can be used directly in http request
@@ -79,15 +78,14 @@ Public Module _client_rr
                                                    Optional ByVal e As Encoding = Nothing) As String
         If i.null_or_empty() Then
             Return constants.uri.path_separator
-        Else
-            Dim o As StringWriter = Nothing
-            o = New StringWriter()
-            For j As UInt32 = 0 To i.size() - uint32_1
-                o.Write(constants.uri.path_separator)
-                uri.path_encoder.encode(i(j), o, e)
-            Next
-            Return Convert.ToString(o)
         End If
+        Dim o As StringWriter = Nothing
+        o = New StringWriter()
+        For j As UInt32 = 0 To i.size() - uint32_1
+            o.Write(constants.uri.path_separator)
+            uri.path_encoder.encode(i(j), o, e)
+        Next
+        Return Convert.ToString(o)
     End Function
 
     <Extension()> Public Function write_request_body(ByVal o As HttpWebRequest,
@@ -154,7 +152,7 @@ Public Module _client_rr
                                            ByVal send_link_status As link_status,
                                            ByVal receive_link_status As link_status,
                                            ByVal close_input_stream As Boolean,
-                                           Optional ByVal result As pointer(Of UInt64) = Nothing) As event_comb
+                                           Optional ByVal result As ref(Of UInt64) = Nothing) As event_comb
         Return write_request_body(o,
                                   i,
                                   send_link_status.this_or_unlimited().buff_size,
@@ -171,7 +169,7 @@ Public Module _client_rr
                                            ByVal send_rate_sec As UInt32,
                                            ByVal receive_rate_sec As UInt32,
                                            ByVal close_input_stream As Boolean,
-                                           Optional ByVal result As pointer(Of UInt64) = Nothing) As event_comb
+                                           Optional ByVal result As ref(Of UInt64) = Nothing) As event_comb
         Return read_from_stream(i,
                                 o,
                                 buff_size,
@@ -217,7 +215,7 @@ Public Module _client_rr
     End Function
 
     <Extension()> Public Function read_response_body(ByVal i As HttpWebResponse,
-                                                     ByVal o As pointer(Of String),
+                                                     ByVal o As ref(Of String),
                                                      ByVal enc As Text.Encoding,
                                                      ByVal buff_size As UInt32,
                                                      ByVal receive_rate_sec As UInt32,
@@ -234,7 +232,7 @@ Public Module _client_rr
     End Function
 
     <Extension()> Public Function read_response_body(ByVal i As HttpWebResponse,
-                                                     ByVal o As pointer(Of String),
+                                                     ByVal o As ref(Of String),
                                                      ByVal enc As Text.Encoding,
                                                      ByVal ls As link_status) As event_comb
         Return read_response_body(i,
@@ -246,7 +244,7 @@ Public Module _client_rr
     End Function
 
     <Extension()> Public Function read_response_body(ByVal i As HttpWebResponse,
-                                                     ByVal o As pointer(Of Byte()),
+                                                     ByVal o As ref(Of Byte()),
                                                      ByVal buff_size As UInt32,
                                                      ByVal receive_rate_sec As UInt32,
                                                      ByVal max_content_length As UInt64) As event_comb
@@ -261,7 +259,7 @@ Public Module _client_rr
     End Function
 
     <Extension()> Public Function read_response_body(ByVal i As HttpWebResponse,
-                                                     ByVal o As pointer(Of Byte()),
+                                                     ByVal o As ref(Of Byte()),
                                                      ByVal ls As link_status) As event_comb
         Return read_response_body(i,
                                   o,
@@ -274,7 +272,7 @@ Public Module _client_rr
                                                      ByVal o As Stream,
                                                      ByVal receive_link_status As link_status,
                                                      ByVal send_link_status As link_status,
-                                                     Optional ByVal result As pointer(Of UInt64) = Nothing) As event_comb
+                                                     Optional ByVal result As ref(Of UInt64) = Nothing) As event_comb
         Return read_response_body(i,
                                   o,
                                   receive_link_status.this_or_unlimited().buff_size,
@@ -290,7 +288,7 @@ Public Module _client_rr
                                                      ByVal receive_rate_sec As UInt32,
                                                      ByVal send_rate_sec As UInt32,
                                                      ByVal max_content_length As UInt64,
-                                                     Optional ByVal result As pointer(Of UInt64) = Nothing) As event_comb
+                                                     Optional ByVal result As ref(Of UInt64) = Nothing) As event_comb
         Return write_to_stream(i,
                                o,
                                buff_size,
@@ -307,11 +305,10 @@ Public Module _client_rr
                                                           ByRef o As Encoding) As Boolean
         If h Is Nothing Then
             Return False
-        Else
-            debug_assert(Not h.gzip())
-            Return try_get_encoding(h(HttpResponseHeader.ContentEncoding), o) OrElse
-                   parse_encoding(h(HttpResponseHeader.ContentType), o)
         End If
+        assert(Not h.gzip())
+        Return try_get_encoding(h(HttpResponseHeader.ContentEncoding), o) OrElse
+               parse_encoding(h(HttpResponseHeader.ContentType), o)
     End Function
 
     Private Function parse_response_encoding_from_meta(ByVal s As String,
@@ -349,17 +346,16 @@ Public Module _client_rr
         Const readsize As Int32 = 512
         If i Is Nothing OrElse Not i.CanRead() OrElse Not i.CanSeek() Then
             Return False
-        Else
-            Dim readcount As Int32 = 0
-            Dim buff(readsize - 1) As Byte
-            assert(i.Seek(0, SeekOrigin.Begin) = 0)
-            readcount = i.Read(buff, 0, readsize)
-            Dim s As String = Nothing
-            Return Encoding.ASCII().try_get_string(buff, 0, readcount, s) AndAlso
-                   assert(i.Seek(0, SeekOrigin.Begin) = 0) AndAlso
-                   (parse_response_encoding_from_meta(s, o) OrElse
-                    parse_response_encoding_from_pseduo(s, o))
         End If
+        Dim readcount As Int32 = 0
+        Dim buff(readsize - 1) As Byte
+        assert(i.Seek(0, SeekOrigin.Begin) = 0)
+        readcount = i.Read(buff, 0, readsize)
+        Dim s As String = Nothing
+        Return Encoding.ASCII().try_get_string(buff, 0, readcount, s) AndAlso
+               assert(i.Seek(0, SeekOrigin.Begin) = 0) AndAlso
+               (parse_response_encoding_from_meta(s, o) OrElse
+                parse_response_encoding_from_pseduo(s, o))
     End Function
 
     Public Function parse_response_encoding(ByVal h As WebHeaderCollection,
@@ -368,15 +364,13 @@ Public Module _client_rr
                                             ByRef gziped As Boolean) As Boolean
         If h Is Nothing Then
             Return False
-        Else
-            gziped = h.gzip()
-            If gziped Then
-                Return parse_response_encoding_from_body(i, o)
-            Else
-                Return parse_response_encoding_from_headers(h, o) OrElse
-                       parse_response_encoding_from_body(i, o)
-            End If
         End If
+        gziped = h.gzip()
+        If gziped Then
+            Return parse_response_encoding_from_body(i, o)
+        End If
+        Return parse_response_encoding_from_headers(h, o) OrElse
+               parse_response_encoding_from_body(i, o)
     End Function
 
     Public Function parse_response_body(ByVal h As WebHeaderCollection,
@@ -384,29 +378,28 @@ Public Module _client_rr
                                         ByRef o As String) As Boolean
         If h Is Nothing OrElse i Is Nothing Then
             Return False
-        Else
-            Dim e As Encoding = Nothing
-            Dim gzip As Boolean = False
-            If Not parse_response_encoding(h, i, e, gzip) Then
-                e = default_encoding
-                gzip = False
-            End If
-
-            Dim s As Stream = Nothing
-            If gzip Then
-                s = New GZipStream(i, CompressionMode.Decompress, True)
-            Else
-                s = i
-            End If
-            Using r As TextReader = New StreamReader(s, e, False)
-                o = r.ReadToEnd()
-            End Using
-            If gzip Then
-                s.Close()
-                s.Dispose()
-            End If
-            Return True
         End If
+        Dim e As Encoding = Nothing
+        Dim gzip As Boolean = False
+        If Not parse_response_encoding(h, i, e, gzip) Then
+            e = default_encoding
+            gzip = False
+        End If
+
+        Dim s As Stream = Nothing
+        If gzip Then
+            s = New GZipStream(i, CompressionMode.Decompress, True)
+        Else
+            s = i
+        End If
+        Using r As TextReader = New StreamReader(s, e, False)
+            o = r.ReadToEnd()
+        End Using
+        If gzip Then
+            s.Close()
+            s.Dispose()
+        End If
+        Return True
     End Function
 
     Public Function generate_url(ByVal host As String,
@@ -418,9 +411,8 @@ Public Module _client_rr
         End If
         If port = constants.default_value.port Then
             Return strcat(constants.protocol_address_head.http, host, extra, path_query)
-        Else
-            Return strcat(constants.protocol_address_head.http, host, constants.uri.port_mark, port, extra, path_query)
         End If
+        Return strcat(constants.protocol_address_head.http, host, constants.uri.port_mark, port, extra, path_query)
     End Function
 
     Public Function try_create_web_request(ByVal uri As String, ByRef o As WebRequest) As Boolean
@@ -439,37 +431,34 @@ Public Module _client_rr
 
     Public Function try_create_http_web_request(ByVal uri As String, ByRef o As HttpWebRequest) As Boolean
         Dim r As WebRequest = Nothing
-        If try_create_web_request(uri, r) Then
-            If cast(Of HttpWebRequest)(r, o) Then
-                Return True
-            Else
-                raise_error(error_type.warning, "uri ", uri, " is not an http url")
-                r.Abort()
-                Return False
-            End If
-        Else
+        If Not try_create_web_request(uri, r) Then
             Return False
         End If
+        If cast(Of HttpWebRequest)(r, o) Then
+            Return True
+        End If
+        raise_error(error_type.warning, "uri ", uri, " is not an http url")
+        r.Abort()
+        Return False
     End Function
 
     <Extension()> Public Function to_http_headers(ByVal this(,) As String,
                                                   ByRef o As map(Of String, vector(Of String))) As Boolean
         If isemptyarray(this) OrElse this.GetLength(1) <> 2 Then
             Return False
-        Else
-            If o Is Nothing Then
-                o = New map(Of String, vector(Of String))()
-            Else
-                o.clear()
-            End If
-            For i As Int32 = 0 To CInt(array_size(this)) - 1
-                If String.IsNullOrEmpty(this(i, 0)) Then
-                    Return False
-                End If
-                o(this(i, 0)).push_back(this(i, 1))
-            Next
-            Return True
         End If
+        If o Is Nothing Then
+            o = New map(Of String, vector(Of String))()
+        Else
+            o.clear()
+        End If
+        For i As Int32 = 0 To CInt(array_size(this)) - 1
+            If String.IsNullOrEmpty(this(i, 0)) Then
+                Return False
+            End If
+            o(this(i, 0)).push_back(this(i, 1))
+        Next
+        Return True
     End Function
 
     <Extension()> Public Function to_http_headers(ByVal this(,) As String) As map(Of String, vector(Of String))

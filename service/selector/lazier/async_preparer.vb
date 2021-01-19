@@ -8,12 +8,12 @@ Imports osi.root.procedure
 Imports osi.root.utils
 
 Public NotInheritable Class async_preparer
-    Public Shared Function [New](Of T)(ByVal d As Func(Of pointer(Of T), event_comb)) As async_preparer(Of T)
+    Public Shared Function [New](Of T)(ByVal d As Func(Of ref(Of T), event_comb)) As async_preparer(Of T)
         Return New async_preparer(Of T)(d)
     End Function
 
     Public Shared Function new_sync(Of T)(ByVal d As T) As async_preparer(Of T)
-        Return New async_preparer(Of T)(Function(p As pointer(Of T)) As event_comb
+        Return New async_preparer(Of T)(Function(p As ref(Of T)) As event_comb
                                             Return sync_async(Sub() eva(p, d))
                                         End Function)
     End Function
@@ -26,12 +26,12 @@ Public Class async_preparer(Of T)
     Implements async_getter(Of T)
 
     Private ReadOnly finish_get As signal_event
-    Private ReadOnly d As Func(Of pointer(Of T), event_comb)
+    Private ReadOnly d As Func(Of ref(Of T), event_comb)
     Private ReadOnly inited As ManualResetEvent
     Private state As ternary
     Private v As T
 
-    Public Sub New(ByVal d As Func(Of pointer(Of T), event_comb))
+    Public Sub New(ByVal d As Func(Of ref(Of T), event_comb))
         assert(Not d Is Nothing)
         Me.finish_get = New signal_event()
         Me.d = d
@@ -45,7 +45,7 @@ Public Class async_preparer(Of T)
         Return inited
     End Function
 
-    Protected Overridable Function prepare(ByVal p As pointer(Of T)) As event_comb
+    Protected Overridable Function prepare(ByVal p As ref(Of T)) As event_comb
         assert(Not d Is Nothing)
         Return d(p)
     End Function
@@ -55,9 +55,9 @@ Public Class async_preparer(Of T)
         assert(Not finish_get Is Nothing)
         assert(v Is Nothing OrElse type_info(Of T).is_valuetype)
         Dim ec As event_comb = Nothing
-        Dim r As pointer(Of T) = Nothing
+        Dim r As ref(Of T) = Nothing
         assert_begin(New event_comb(Function() As Boolean
-                                        r = New pointer(Of T)()
+                                        r = New ref(Of T)()
                                         ec = prepare(r)
                                         Return waitfor(ec) AndAlso
                                                goto_next()
@@ -86,7 +86,7 @@ Public Class async_preparer(Of T)
         End If
     End Function
 
-    Public Function [get](ByVal r As pointer(Of T)) As event_comb Implements async_getter(Of T).get
+    Public Function [get](ByVal r As ref(Of T)) As event_comb Implements async_getter(Of T).get
         Return New event_comb(Function() As Boolean
                                   If initialized() Then
                                       Return initialization_succeeded() AndAlso

@@ -8,10 +8,10 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
-Imports clusters_t = osi.root.formation.hashmap(Of System.Int64, osi.service.storage.cluster)
+Imports clusters_t = osi.root.formation.unordered_map(Of System.Int64, osi.service.storage.cluster)
 
-Partial Public Class free_cluster
-    Public Function read(ByVal id As Int64, ByVal r As pointer(Of Byte())) As event_comb
+Partial Public NotInheritable Class free_cluster
+    Public Function read(ByVal id As Int64, ByVal r As ref(Of Byte())) As event_comb
         Dim buff() As Byte = Nothing
         Dim ecs() As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -55,7 +55,7 @@ Partial Public Class free_cluster
 
     Public Function append(ByVal id As Int64,
                            ByVal buff() As Byte,
-                           ByVal result As pointer(Of Boolean)) As event_comb
+                           ByVal result As ref(Of Boolean)) As event_comb
         Dim offsets As vector(Of UInt64) = Nothing
         Dim cs As vector(Of cluster) = Nothing
         Dim hr As UInt64 = 0
@@ -140,7 +140,7 @@ Partial Public Class free_cluster
                               End Function)
     End Function
 
-    Public Function delete(ByVal id As Int64, ByVal result As pointer(Of Boolean)) As event_comb
+    Public Function delete(ByVal id As Int64, ByVal result As ref(Of Boolean)) As event_comb
         Dim cs As vector(Of cluster) = Nothing
         Dim ecs() As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -183,7 +183,7 @@ Partial Public Class free_cluster
     End Function
 
     Public Function seek(ByVal id As Int64,
-                     ByVal result As pointer(Of Boolean)) As event_comb
+                     ByVal result As ref(Of Boolean)) As event_comb
         Return sync_async(Sub()
                               eva(result, seek(id))
                           End Sub)
@@ -193,13 +193,13 @@ Partial Public Class free_cluster
         Return vd.size()
     End Function
 
-    Public Function valuesize(ByVal result As pointer(Of UInt64)) As event_comb
+    Public Function valuesize(ByVal result As ref(Of UInt64)) As event_comb
         Return sync_async(Sub()
                               eva(result, valuesize())
                           End Sub)
     End Function
 
-    Public Function sizeof(ByVal id As Int64, ByVal result As pointer(Of Int64)) As event_comb
+    Public Function sizeof(ByVal id As Int64, ByVal result As ref(Of Int64)) As event_comb
         Dim cs As vector(Of cluster) = Nothing
         Return sync_async(Function() As Boolean
                               Dim h As cluster = Nothing
@@ -221,11 +221,11 @@ Partial Public Class free_cluster
                           End Function)
     End Function
 
-    Public Function alloc(ByVal exp_size As UInt64, ByVal id As pointer(Of Int64)) As event_comb
+    Public Function alloc(ByVal exp_size As UInt64, ByVal id As ref(Of Int64)) As event_comb
         Dim ec As event_comb = Nothing
-        Dim c As pointer(Of cluster) = Nothing
+        Dim c As ref(Of cluster) = Nothing
         Return New event_comb(Function() As Boolean
-                                  c = New pointer(Of cluster)()
+                                  c = New ref(Of cluster)()
                                   ec = free_cluster(exp_size, c)
                                   Return waitfor(ec) AndAlso
                                          goto_next()

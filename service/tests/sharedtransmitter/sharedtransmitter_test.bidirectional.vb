@@ -48,10 +48,10 @@ Partial Public Class sharedtransmitter_test
                 ByVal self_increment As Boolean) As event_comb
             assert(Not sc Is Nothing)
             Dim ec As event_comb = Nothing
-            Dim p As pointer(Of Int32) = Nothing
+            Dim p As ref(Of Int32) = Nothing
             Dim c As Int32 = 0
             Return New event_comb(Function() As Boolean
-                                      p = New pointer(Of Int32)()
+                                      p = New ref(Of Int32)()
                                       ec = sc.receiver.receive(p)
                                       Return waitfor(ec) AndAlso
                                              goto_next()

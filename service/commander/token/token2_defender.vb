@@ -54,11 +54,11 @@ Public NotInheritable Class token2_defender(Of COLLECTION As Class, CONNECTION)
     Protected Overrides Function verify_token(ByVal c As CONNECTION,
                                               ByVal h As herald,
                                               ByVal p As COLLECTION,
-                                              ByVal r As pointer(Of COLLECTION)) As event_comb
+                                              ByVal r As ref(Of COLLECTION)) As event_comb
         assert(Not h Is Nothing)
         assert(Not r Is Nothing)
         assert(r.empty())
-        Dim cmd As pointer(Of command) = Nothing
+        Dim cmd As ref(Of command) = Nothing
         Dim code As piece = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -70,7 +70,7 @@ Public NotInheritable Class token2_defender(Of COLLECTION As Class, CONNECTION)
                               End Function,
                               Function() As Boolean
                                   If ec.end_result() Then
-                                      cmd = New pointer(Of command)()
+                                      cmd = New ref(Of command)()
                                       ec = h.wait_and_receive(info.response_timeout_ms(p), cmd)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
