@@ -54,11 +54,9 @@ Public NotInheritable Class hasher_node(Of T)
 #If DEBUG Then
         assert(Not o Is Nothing)
 #End If
-#If 0 Then
         If hash_code() <> o.hash_code() Then
             Return False
         End If
-#End If
         Return equaler([get](), o.get())
     End Function
 End Class
