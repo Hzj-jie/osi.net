@@ -19,6 +19,7 @@ Public NotInheritable Class hasher_node(Of T)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal v As T, ByVal hasher As _to_uint32(Of T), ByVal equaler As _equaler(Of T))
         assert(Not hasher Is Nothing)
+        assert(Not equaler Is Nothing)
         Me.v = v
         Me.hasher = hasher
         Me.hash_value = uninitialized_hash_value
