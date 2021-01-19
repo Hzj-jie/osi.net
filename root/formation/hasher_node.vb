@@ -9,7 +9,7 @@ Imports osi.root.constants
 Imports osi.root.template
 
 ' An internal implementation for hashtable / hasharray / hashset.
-Public NotInheritable Class hasher_node(Of T)
+Public Structure hasher_node(Of T)
     Private Const uninitialized_hash_value As UInt32 = max_uint32
     Private ReadOnly v As T
     Private ReadOnly hasher As _to_uint32(Of T)
@@ -29,15 +29,20 @@ Public NotInheritable Class hasher_node(Of T)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function uninitialized() As Boolean
+#If DEBUG Then
+        assert((hasher Is Nothing) = (equaler Is Nothing))
+#End If
+        Return hasher Is Nothing
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [get]() As T
         Return v
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator +(ByVal this As hasher_node(Of T)) As T
-        If this Is Nothing Then
-            Return Nothing
-        End If
         Return this.get()
     End Operator
 
@@ -51,12 +56,9 @@ Public NotInheritable Class hasher_node(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function equal_to(ByVal o As hasher_node(Of T)) As Boolean
-#If DEBUG Then
-        assert(Not o Is Nothing)
-#End If
         If hash_code() <> o.hash_code() Then
             Return False
         End If
         Return equaler([get](), o.get())
     End Function
-End Class
+End Structure

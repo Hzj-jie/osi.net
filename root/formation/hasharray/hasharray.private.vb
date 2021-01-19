@@ -14,9 +14,6 @@ Partial Public Class hasharray(Of T,
                                   _EQUALER As _equaler(Of T))
     <MethodImpl(method_impl_options.no_inlining)>
     Private Function hash(ByVal v As hasher_node(Of T)) As UInt32
-#If DEBUG Then
-        assert(Not v Is Nothing)
-#End If
         Return v.hash_code() Mod column_count()
     End Function
 
@@ -80,9 +77,6 @@ Partial Public Class hasharray(Of T,
 
     <MethodImpl(method_impl_options.no_inlining)>
     Private Sub emplace_back(ByVal column As UInt32, ByVal value As hasher_node(Of T))
-#If DEBUG Then
-        assert(Not value Is Nothing)
-#End If
         v(column).emplace_back(value)
         s += uint32_1
     End Sub
@@ -142,7 +136,7 @@ Partial Public Class hasharray(Of T,
 
     <MethodImpl(method_impl_options.no_inlining)>
     Private Function cell_is_empty(ByVal column As UInt32, ByVal row As UInt32) As Boolean
-        Return v(column)(row) Is Nothing
+        Return v(column)(row).uninitialized()
     End Function
 
     <MethodImpl(method_impl_options.no_inlining)>
@@ -210,9 +204,6 @@ Partial Public Class hasharray(Of T,
 
     <MethodImpl(method_impl_options.no_inlining)>
     Private Sub rehash_move_in(ByVal c As hasher_node(Of T))
-#If DEBUG Then
-        assert(Not c Is Nothing)
-#End If
         Dim column As UInt32 = hash(c)
 #If DEBUG Then
         assert(Not find_first_cell(c, column, uint32_0))
