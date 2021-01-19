@@ -143,8 +143,8 @@ Partial Public Class hasharray(Of T,
     Private Function find_first_cell(ByVal value As hasher_node(Of T),
                                      ByVal column As UInt32,
                                      ByRef row As UInt32) As Boolean
-        Dim rc As UInt32 = row_count(column)
         row = 0
+        Dim rc As UInt32 = row_count(column)
         While row < rc
             If cell_is(column, row, value) Then
                 Return True
