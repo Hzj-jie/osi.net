@@ -144,7 +144,8 @@ Partial Public Class hasharray(Of T,
                                      ByVal column As UInt32,
                                      ByRef row As UInt32) As Boolean
         row = 0
-        While row < row_count(column)
+        Dim rc As UInt32 = row_count(column)
+        While row < rc
             If cell_is(column, row, value) Then
                 Return True
             End If
