@@ -71,7 +71,6 @@ Partial Public NotInheritable Class tar
                 Finally
                     m.Close()
                     m.Dispose()
-                    m = Nothing
                 End Try
             End While
         End Sub
