@@ -12,14 +12,17 @@ Public NotInheritable Class vector(Of T)
 
     Private ReadOnly v As adaptive_array_t
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New()
-        v = New adaptive_array_t()
+        Me.New(New adaptive_array_t())
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal n As UInt32)
-        v = New adaptive_array_t(n)
+        Me.New(New adaptive_array_t(n))
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub New(ByVal v As adaptive_array_t)
         Me.v = v
     End Sub

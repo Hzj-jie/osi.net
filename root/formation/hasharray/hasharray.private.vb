@@ -24,8 +24,8 @@ Partial Public Class hasharray(Of T,
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function row_count_upper_bound() As UInt32
-        Return 3
+    Private Function row_count_upper_bound() As Double
+        Return Math.E
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -37,8 +37,8 @@ Partial Public Class hasharray(Of T,
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function average_row_count() As UInt32
-        Return size() \ column_count()
+    Private Function average_row_count() As Double
+        Return size() / column_count()
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -177,7 +177,7 @@ Partial Public Class hasharray(Of T,
             Return True
         End If
 
-        If should_rehash() AndAlso rehash() Then
+        If rehash() Then
             Return emplace(value, column, row)
         End If
 
@@ -189,11 +189,6 @@ Partial Public Class hasharray(Of T,
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function emplace(ByVal value As T, ByRef column As UInt32, ByRef row As UInt32) As Boolean
         Return emplace(new_node(value), column, row)
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function should_rehash() As Boolean
-        Return average_row_count() >= row_count_upper_bound()
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -209,8 +204,29 @@ Partial Public Class hasharray(Of T,
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function rehash() As Boolean
-        If c = predefined_column_counts.size() - uint32_1 Then
+        ' Discard 1.4G
+        If c = predefined_column_counts.size() - uint32_2 Then
             Return False
+        End If
+
+        If average_row_count() < row_count_upper_bound() Then
+            Return False
+        End If
+
+        If envs.hasharray_trace.log_rehash Then
+            Dim e As UInt32 = 0
+            Dim l As UInt32 = 0
+            For i As UInt32 = 0 To v.size() - uint32_1
+                If v(i).empty Then
+                    e += uint32_1
+                ElseIf v(i).size() < row_count_upper_bound() Then
+                    l += uint32_1
+                End If
+            Next
+            raise_error(error_type.performance,
+                        "hasharray.rehash to ", predefined_column_counts(c + uint32_1),
+                        ", empty ", e,
+                        ", less than row_count_upper_bound ", l)
         End If
 
         Dim r As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER) = Nothing
