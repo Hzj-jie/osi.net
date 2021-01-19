@@ -15,6 +15,8 @@ Public NotInheritable Class method_impl_options
 
     Public Const zero As MethodImplOptions = DirectCast(0, MethodImplOptions)
 
+    Public Const no_inlining As MethodImplOptions = MethodImplOptions.NoInlining
+
     Private Sub New()
     End Sub
 End Class
