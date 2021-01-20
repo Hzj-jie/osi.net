@@ -64,10 +64,7 @@ Public NotInheritable Class vector(Of T)
         End Get
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Set(ByVal value As T)
-            assert(p < size())
-            If object_compare(v.get(p), value) <> 0 Then
-                v.set(p, copy_no_error(value))
-            End If
+            replace(p, copy_no_error(value))
         End Set
     End Property
 
@@ -304,4 +301,12 @@ Public NotInheritable Class vector(Of T)
         this.shrink_to_fit()
         Return this.data()
     End Operator
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Sub replace(ByVal i As UInt32, ByVal value As T)
+        assert(i < size())
+        If object_compare(v.get(i), value) <> 0 Then
+            v.set(i, value)
+        End If
+    End Sub
 End Class
