@@ -34,8 +34,8 @@ Partial Public Class hasharray(Of T,
         If v Is Nothing Then
             Return Nothing
         End If
-        Dim o As R = Nothing
-        o = copy_constructor(Of R).invoke(array(Of vector(Of hasher_node(Of T))).move(v.v), v.s, v.c)
+        Dim o As R =
+            copy_constructor(Of R).invoke(array(Of vector(Of hasher_node(Of T, _HASHER, _EQUALER))).move(v.v), v.s, v.c)
         v.clear()
         Return o
     End Function
