@@ -178,6 +178,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="send_input_test\send_input_test.vb" />
+    <Compile Include="shared_ctor_access_shared_perf.vb" />
     <Compile Include="shared_ctor_callstack_behavior_test.vb" />
     <Compile Include="shared_ctor_perf.vb" />
     <Compile Include="static_constructor_test.vb" />
