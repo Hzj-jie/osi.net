@@ -57,9 +57,6 @@ Partial Public NotInheritable Class gitver
         End Sub
     End Class
 
-    Public Shared ReadOnly latest As commit_info = parse(latest_commit_raw)
-    Public Shared ReadOnly current As commit_info = parse(current_commit_raw)
-    Public Shared ReadOnly diff As String = calculate_diff()
     Private Const separator As String = "  |-+-|  "
     Private Const field_count As Int32 = 10
     Private Shared ReadOnly titles() As String = {"CommitHash:",
@@ -72,6 +69,9 @@ Partial Public NotInheritable Class gitver
                                                   "CommitterDate:",
                                                   "Subject:",
                                                   "Body:"}
+    Public Shared ReadOnly latest As commit_info = parse(latest_commit_raw)
+    Public Shared ReadOnly current As commit_info = parse(current_commit_raw)
+    Public Shared ReadOnly diff As String = calculate_diff()
 
     Private Shared Function calculate_diff() As String
         Dim diff As String = bytes_str(Convert.FromBase64String(diff_base64))
@@ -91,9 +91,8 @@ Partial Public NotInheritable Class gitver
         If parse(commit_str, r) Then
             assert(Not r Is Nothing)
             Return r
-        Else
-            Return New commit_info()
         End If
+        Return New commit_info()
     End Function
 
     Private Shared Function parse(ByVal commit_str As String, ByRef commit As commit_info) As Boolean

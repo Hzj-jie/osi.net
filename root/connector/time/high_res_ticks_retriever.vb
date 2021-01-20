@@ -21,13 +21,14 @@ Public NotInheritable Class high_res_ticks_retriever
             perf_freq /= milli_tick
             perf_freq /= second_milli
             assert(perf_freq <> 0)
-            ticks()
         Else
             perf_freq = 0
             raise_error(error_type.system, "high-resolution performance counter is not supported.")
         End If
         Return perf_freq
     End Function
+
+    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(AddressOf ticks)
 
     'force revise the distance during next high_res_ticks() call.
     Public Shared Sub force_revise()
