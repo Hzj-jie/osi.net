@@ -39,6 +39,32 @@ Public Class static_constructor_test
         End Sub
     End Class
 
+    Private NotInheritable Class F_holder
+        Public Shared v As Boolean
+    End Class
+
+    Private NotInheritable Class F
+        Private Shared ReadOnly instance As F = New F()
+
+        Private Sub New()
+            F_holder.v = True
+        End Sub
+    End Class
+
+    Private NotInheritable Class G_holder
+        Public Shared v As Boolean
+    End Class
+
+    Private NotInheritable Class G_executor
+        Public Sub New()
+            G_holder.v = True
+        End Sub
+    End Class
+
+    Private NotInheritable Class G
+        Private Shared ReadOnly instance As G_executor = New G_executor()
+    End Class
+
     Public Overrides Function run() As Boolean
         Dim c As C = Nothing
         assertion.equal(v, def)
@@ -63,6 +89,14 @@ Public Class static_constructor_test
 
         static_constructor(Of E).execute()
         static_constructor(Of E).execute()
+
+        assertion.is_false(F_holder.v)
+        static_constructor(Of F).execute()
+        assertion.is_true(F_holder.v)
+
+        assertion.is_false(G_holder.v)
+        static_constructor(Of G).execute()
+        assertion.is_true(G_holder.v)
         Return True
     End Function
 End Class
