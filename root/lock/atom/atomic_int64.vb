@@ -36,10 +36,11 @@ Partial Public Class atomic_int64(Of LOCK_T As {islimlock, Structure})
     Private l As LOCK_T
 
 #If GENERIC_TYPE Then
-    Shared Sub New()
-        raise_error(error_type.performance,
-                    "atomic_int64(Of LOCK_T) cannot use interlocked operations. Its performance is low.")
-    End Sub
+    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
+        Sub()
+            raise_error(error_type.performance,
+                        "atomic_int64(Of LOCK_T) cannot use interlocked operations. Its performance is low.")
+        End Sub)
 #End If
 
     Public Sub New()

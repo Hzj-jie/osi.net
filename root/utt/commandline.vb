@@ -7,13 +7,8 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Friend NotInheritable Class commandline
-    Private Shared ReadOnly s As [set](Of String)
-    Private Shared ReadOnly v As vector(Of String)
-
-    Shared Sub New()
-        s = New [set](Of String)()
-        v = New vector(Of String)()
-    End Sub
+    Private Shared ReadOnly s As [set](Of String) = New [set](Of String)()
+    Private Shared ReadOnly v As vector(Of String) = New vector(Of String)()
 
     Public Shared Sub initialize(ByVal args() As String)
         For i As Int32 = 0 To array_size_i(args) - 1

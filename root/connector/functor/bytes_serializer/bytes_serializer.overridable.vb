@@ -32,11 +32,12 @@ Partial Public Class bytes_serializer(Of T)
     Private NotInheritable Class default_functor
         Public NotInheritable Class register
             Private NotInheritable Class object_register
-                Shared Sub New()
-                    type_resolver(Of bytes_serializer(Of Object)).default.assert_first_register(
-                        GetType(T),
-                        New bytes_serializer_object(r))
-                End Sub
+                Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
+                    Sub()
+                        type_resolver(Of bytes_serializer(Of Object)).default.assert_first_register(
+                            GetType(T),
+                            New bytes_serializer_object(r))
+                    End Sub)
 
                 Public Shared Sub init()
                 End Sub
@@ -69,10 +70,11 @@ Partial Public Class bytes_serializer(Of T)
             End Sub
         End Class
 
-        Shared Sub New()
-            static_constructor(Of T).execute()
-            delayed_init(Of bytes_serializer(Of T)).execute()
-        End Sub
+        Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
+            Sub()
+                static_constructor(Of T).execute()
+                delayed_init(Of bytes_serializer(Of T)).execute()
+            End Sub)
 
         Public Shared Function append_to() As Func(Of T, MemoryStream, Boolean)
             Return global_resolver(Of Func(Of T, MemoryStream, Boolean), consume_append).resolve_or_null()

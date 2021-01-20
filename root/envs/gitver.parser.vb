@@ -57,9 +57,9 @@ Partial Public NotInheritable Class gitver
         End Sub
     End Class
 
-    Public Shared ReadOnly latest As commit_info
-    Public Shared ReadOnly current As commit_info
-    Public Shared ReadOnly diff As String
+    Public Shared ReadOnly latest As commit_info = parse(latest_commit_raw)
+    Public Shared ReadOnly current As commit_info = parse(current_commit_raw)
+    Public Shared ReadOnly diff As String = calculate_diff()
     Private Const separator As String = "  |-+-|  "
     Private Const field_count As Int32 = 10
     Private Shared ReadOnly titles() As String = {"CommitHash:",
@@ -73,15 +73,18 @@ Partial Public NotInheritable Class gitver
                                                   "Subject:",
                                                   "Body:"}
 
-    Shared Sub New()
-        latest = parse(latest_commit_raw)
-        current = parse(current_commit_raw)
-        diff = bytes_str(Convert.FromBase64String(diff_base64))
+    Private Shared Function calculate_diff() As String
+        Dim diff As String = bytes_str(Convert.FromBase64String(diff_base64))
         If diff.null_or_whitespace() Then
             diff = "<identical>"
         End If
-        assert(array_size(titles) = field_count)
-    End Sub
+        Return diff
+    End Function
+
+    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
+        Sub()
+            assert(array_size(titles) = field_count)
+        End Sub)
 
     Private Shared Function parse(ByVal commit_str As String) As commit_info
         Dim r As commit_info = Nothing

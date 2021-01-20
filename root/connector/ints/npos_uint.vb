@@ -16,74 +16,82 @@ Imports constants = osi.root.constants
 Partial Public Structure npos_uint
     Implements IComparable, IComparable(Of npos_uint), ICloneable, ICloneable(Of npos_uint)
 
-    Public Shared ReadOnly inf As npos_uint
-    Public Shared ReadOnly zero As npos_uint
-    Public Shared ReadOnly sizeof_value As UInt32
+    Public Shared ReadOnly inf As npos_uint = calculate_inf()
+    Public Shared ReadOnly zero As npos_uint = calculate_zero()
+    Public Shared ReadOnly sizeof_value As UInt32 = CUInt(sizeof(Of UInt32)())
 
-    Shared Sub New()
-        assert(constants.npos < 0)
-        sizeof_value = CUInt(sizeof(Of UInt32)())
-        Dim x As npos_uint = Nothing
-        assert(Not x.npos())
-        assert(x.raw_value() = uint32_0)
-        inf = New npos_uint(constants.npos)
+    Private Shared Function calculate_inf() As npos_uint
+        Dim inf As npos_uint = New npos_uint(constants.npos)
         assert(inf.npos())
-        zero = New npos_uint(uint32_0)
+        Return inf
+    End Function
+
+    Private Shared Function calculate_zero() As npos_uint
+        Dim zero As npos_uint = New npos_uint(uint32_0)
         If True Then
             assert(Not zero.npos())
         Else
             assert(zero.npos())
         End If
+        Return zero
+    End Function
 
-        bytes_serializer.fixed.register(
-                Function(ByVal i As npos_uint, ByVal o As MemoryStream) As Boolean
-                    #If Not True Then
-                        If i.npos() Then
-                            Return bytes_serializer.append_to(uint32_0, o)
-                        Else
-                            Return bytes_serializer.append_to(i.raw_value(), o)
-                        End If
-                    #ElseIf Not True Then
-                        If i.npos() Then
-                            Return bytes_serializer.append_to(max_uint32, o)
-                        Else
-                            Return bytes_serializer.append_to(i.raw_value(), o)
-                        End If
-                    #Else
-                        If i.npos() Then
-                            Return bytes_serializer.append_to(True, o)
-                        Else
-                            Return bytes_serializer.append_to(False, o) AndAlso
-                                   bytes_serializer.append_to(i.raw_value(), o)
-                        End If
-                    #End If
-                End Function,
-                Function(ByVal i As MemoryStream, ByRef o As npos_uint) As Boolean
-                    #If Not True OrElse Not True Then
-                        Dim u As UInt32 = uint32_0
-                        If Not bytes_serializer.consume_from(i, u) Then
-                            Return False
-                        End If
-                        o = New npos_uint(u)
-                        Return True
-                    #Else
-                        Dim n As Boolean = False
-                        If Not bytes_serializer.consume_from(i, n) Then
-                            Return False
-                        End If
-                        If n Then
-                            o = inf
+    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
+        Sub()
+            assert(constants.npos < 0)
+            Dim x As npos_uint = Nothing
+            assert(Not x.npos())
+            assert(x.raw_value() = uint32_0)
+
+            bytes_serializer.fixed.register(
+                    Function(ByVal i As npos_uint, ByVal o As MemoryStream) As Boolean
+                        #If Not True Then
+                            If i.npos() Then
+                                Return bytes_serializer.append_to(uint32_0, o)
+                            Else
+                                Return bytes_serializer.append_to(i.raw_value(), o)
+                            End If
+                        #ElseIf Not True Then
+                            If i.npos() Then
+                                Return bytes_serializer.append_to(max_uint32, o)
+                            Else
+                                Return bytes_serializer.append_to(i.raw_value(), o)
+                            End If
+                        #Else
+                            If i.npos() Then
+                                Return bytes_serializer.append_to(True, o)
+                            Else
+                                Return bytes_serializer.append_to(False, o) AndAlso
+                                       bytes_serializer.append_to(i.raw_value(), o)
+                            End If
+                        #End If
+                    End Function,
+                    Function(ByVal i As MemoryStream, ByRef o As npos_uint) As Boolean
+                        #If Not True OrElse Not True Then
+                            Dim u As UInt32 = uint32_0
+                            If Not bytes_serializer.consume_from(i, u) Then
+                                Return False
+                            End If
+                            o = New npos_uint(u)
                             Return True
-                        End If
-                        Dim u As UInt32 = uint32_0
-                        If Not bytes_serializer.consume_from(i, u) Then
-                            Return False
-                        End If
-                        o = New npos_uint(u)
-                        Return True
-                    #End If
-                End Function)
-    End Sub
+                        #Else
+                            Dim n As Boolean = False
+                            If Not bytes_serializer.consume_from(i, n) Then
+                                Return False
+                            End If
+                            If n Then
+                                o = inf
+                                Return True
+                            End If
+                            Dim u As UInt32 = uint32_0
+                            If Not bytes_serializer.consume_from(i, u) Then
+                                Return False
+                            End If
+                            o = New npos_uint(u)
+                            Return True
+                        #End If
+                    End Function)
+        End Sub)
 
     Private ReadOnly i As UInt32
     Private ReadOnly n As Boolean

@@ -4,11 +4,7 @@ Option Infer Off
 Option Strict On
 
 Partial Public Class implementation_of(Of T)
-    Public Shared ReadOnly [default] As implementation_of(Of T)
-
-    Shared Sub New()
-        [default] = New implementation_of(Of T)()
-    End Sub
+    Public Shared ReadOnly [default] As implementation_of(Of T) = New implementation_of(Of T)()
 
     Public Shared Sub register(ByVal f As Func(Of T))
         global_resolver(Of Func(Of T), implementation_of(Of T)).assert_first_register(f)

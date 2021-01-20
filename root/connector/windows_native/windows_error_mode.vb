@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 
 Public NotInheritable Class windows_error_mode
@@ -37,12 +41,13 @@ End Class
 
 <global_init(global_init_level.foundamental)>
 Public NotInheritable Class disable_windows_error_popup
-    Shared Sub New()
-        windows_error_mode.[set](windows_error_mode.SEM_FAILCRITICALERRORS Or
-                                 windows_error_mode.SEM_NOALIGNMENTFAULTEXCEPT Or
-                                 windows_error_mode.SEM_NOGPFAULTERRORBOX Or
-                                 windows_error_mode.SEM_NOOPENFILEERRORBOX)
-    End Sub
+    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
+        Sub()
+            windows_error_mode.[set](windows_error_mode.SEM_FAILCRITICALERRORS Or
+                                     windows_error_mode.SEM_NOALIGNMENTFAULTEXCEPT Or
+                                     windows_error_mode.SEM_NOGPFAULTERRORBOX Or
+                                     windows_error_mode.SEM_NOOPENFILEERRORBOX)
+        End Sub)
 
     Private Shared Sub init()
     End Sub

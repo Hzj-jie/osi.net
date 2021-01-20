@@ -39,11 +39,7 @@ End Class
 Partial Public NotInheritable Class json_serializer(Of T)
     Inherits string_serializer(Of T, json_serializer(Of T))
 
-    Public Shared ReadOnly r As json_serializer(Of T)
-
-    Shared Sub New()
-        r = New json_serializer(Of T)()
-    End Sub
+    Public Shared ReadOnly r As json_serializer(Of T) = New json_serializer(Of T)()
 
     Protected Overrides Function to_str() As Func(Of T, StringWriter, Boolean)
         If type_info(Of T).can_cast_to_array_type Then

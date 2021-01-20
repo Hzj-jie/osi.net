@@ -15,10 +15,11 @@ Namespace uri
                 Private ReadOnly separators() As Char = {separator}
                 Private Const escape As Char = character.dollar
 
-                Shared Sub New()
-                    assert(separator.unreserved())
-                    assert(escape.unreserved())
-                End Sub
+                Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
+                    Sub()
+                        assert(separator.unreserved())
+                        assert(escape.unreserved())
+                    End Sub)
 
                 ' Return false when o is nothing.
                 Public Shared Function encode(ByVal b() As Byte, ByVal o As StringWriter) As Boolean

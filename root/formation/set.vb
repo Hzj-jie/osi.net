@@ -29,29 +29,30 @@ Public NotInheritable Class [set](Of T)
 
 
 
-    Shared Sub New()
-        container_operator(Of [set](Of T), T).size(
-                Function(ByVal i As [set](Of T)) As UInt32
-                    assert(Not i Is Nothing)
-                    Return i.size()
-                End Function)
-        container_operator(Of [set](Of T), T).emplace(
-                Function(ByVal i As [set](Of T), ByVal j As T) As Boolean
-                    assert(Not i Is Nothing)
-                    Return i.emplace(j).second
-                End Function)
-        container_operator(Of [set](Of T), T).enumerate(
-                Function(ByVal i As [set](Of T)) As container_operator(Of T).enumerator
-                    assert(Not i Is Nothing)
-                    Return New enumerator(i)
-                End Function)
-        container_operator(Of [set](Of T), T).clear(
-                Sub(ByVal i As [set](Of T))
-                    assert(Not i Is Nothing)
-                    i.clear()
-                End Sub)
-        bytes_serializer(Of [set](Of T)).container(Of T).register()
-    End Sub
+    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
+        Sub()
+            container_operator(Of [set](Of T), T).size(
+                    Function(ByVal i As [set](Of T)) As UInt32
+                        assert(Not i Is Nothing)
+                        Return i.size()
+                    End Function)
+            container_operator(Of [set](Of T), T).emplace(
+                    Function(ByVal i As [set](Of T), ByVal j As T) As Boolean
+                        assert(Not i Is Nothing)
+                        Return i.emplace(j).second
+                    End Function)
+            container_operator(Of [set](Of T), T).enumerate(
+                    Function(ByVal i As [set](Of T)) As container_operator(Of T).enumerator
+                        assert(Not i Is Nothing)
+                        Return New enumerator(i)
+                    End Function)
+            container_operator(Of [set](Of T), T).clear(
+                    Sub(ByVal i As [set](Of T))
+                        assert(Not i Is Nothing)
+                        i.clear()
+                    End Sub)
+            bytes_serializer(Of [set](Of T)).container(Of T).register()
+        End Sub)
 
 'finish set.container_operator.vbp --------
 

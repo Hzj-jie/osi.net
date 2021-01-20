@@ -67,28 +67,29 @@ Public NotInheritable Class control_c
         Return _exit_code
     End Function
 
-    Shared Sub New()
-        AddHandler Console.CancelKeyPress,
-                   Sub(ByVal sender As Object, ByVal arg As ConsoleCancelEventArgs)
-                       If Not enabled() Then
-                           Return
-                       End If
-                       _pressed = True
-                       RaiseEvent press(arg.Cancel())
-                       If Not arg.Cancel() Then
-                           While blocking()
-                               sleep()
-                           End While
-                           If process_will_exit() Then
-                               ' Trigger normal exit process
-                               Environment.Exit(exit_code())
-                           Else
-                               arg.Cancel() = True
+    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
+        Sub()
+            AddHandler Console.CancelKeyPress,
+                       Sub(ByVal sender As Object, ByVal arg As ConsoleCancelEventArgs)
+                           If Not enabled() Then
+                               Return
                            End If
-                       End If
-                       _pressed = False
-                   End Sub
-    End Sub
+                           _pressed = True
+                           RaiseEvent press(arg.Cancel())
+                           If Not arg.Cancel() Then
+                               While blocking()
+                                   sleep()
+                               End While
+                               If process_will_exit() Then
+                                   ' Trigger normal exit process
+                                   Environment.Exit(exit_code())
+                               Else
+                                   arg.Cancel() = True
+                               End If
+                           End If
+                           _pressed = False
+                       End Sub
+        End Sub)
 
     Private Shared Sub init()
     End Sub

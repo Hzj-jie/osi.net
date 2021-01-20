@@ -1,15 +1,15 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
 
 ' An already passed WaitHandle.
 Public NotInheritable Class null_wait_handle
     Inherits WaitHandle
 
-    Public Shared ReadOnly instance As null_wait_handle
-
-    Shared Sub New()
-        instance = New null_wait_handle()
-    End Sub
+    Public Shared ReadOnly instance As null_wait_handle = New null_wait_handle()
 
     Private Sub New()
         MyBase.New()

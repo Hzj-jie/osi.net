@@ -69,12 +69,8 @@ Public Class const_array(Of T, __SIZE As _int64)
                IComparable(Of const_array(Of T, __SIZE)),
                IEquatable(Of const_array(Of T, __SIZE))
 
-    Private Shared ReadOnly _size As Int64
+    Private Shared ReadOnly _size As Int64 = +alloc(Of __SIZE)()
     Protected ReadOnly v() As T
-
-    Shared Sub New()
-        _size = +alloc(Of __SIZE)()
-    End Sub
 
     Protected Sub New()
         Me.New(_size)

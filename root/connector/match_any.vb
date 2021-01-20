@@ -6,11 +6,7 @@ Option Strict On
 Public NotInheritable Class match_any
     Implements IEquatable(Of match_any), IComparable, IComparable(Of match_any)
 
-    Public Shared ReadOnly instance As match_any
-
-    Shared Sub New()
-        instance = New match_any()
-    End Sub
+    Public Shared ReadOnly instance As match_any = New match_any()
 
     Private Sub New()
     End Sub

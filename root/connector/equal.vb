@@ -28,9 +28,10 @@ Imports osi.root.delegates
 ' equal() fails only when exceptions have been thrown when executing various Equals() function.
 Public Module _equal
     Private NotInheritable Class equal_cache(Of T, T2)
-        Private Shared ReadOnly f As _do_val_val_ref(Of T, T2, Boolean, Boolean)
+        Private Shared ReadOnly f As _do_val_val_ref(Of T, T2, Boolean, Boolean) = calculate_f()
 
-        Shared Sub New()
+        Private Shared Function calculate_f() As _do_val_val_ref(Of T, T2, Boolean, Boolean)
+            Dim f As _do_val_val_ref(Of T, T2, Boolean, Boolean) = Nothing
             If type_info(Of T, type_info_operators.implement, IEquatable(Of T2)).v Then
                 f = always_succeed(AddressOf this_to_t2(Of T2))
             ElseIf type_info(Of T2, type_info_operators.implement, IEquatable(Of T)).v Then
@@ -53,7 +54,8 @@ Public Module _equal
             Else
                 f = Nothing
             End If
-        End Sub
+            Return f
+        End Function
 
         Private Shared Function always_succeed(ByVal f As Func(Of T, T2, Boolean)) _
                                               As _do_val_val_ref(Of T, T2, Boolean, Boolean)

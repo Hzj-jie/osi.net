@@ -68,19 +68,19 @@ Partial Public Class struct(Of T)
             End Function
         End Class
 
-        Public Shared ReadOnly instance As reflector
-        Private Shared ReadOnly defs() As definition
+        Public Shared ReadOnly instance As reflector = New reflector()
+        Private Shared ReadOnly defs() As definition = calculate_defs()
 
         ' Do not initialize until the default implementation is used.
-        Shared Sub New()
+        Private Shared Function calculate_defs() As definition()
             Dim fs() As FieldInfo = Nothing
             fs = GetType(T).GetFields()
-            ReDim defs(array_size_i(fs) - 1)
+            Dim defs(array_size_i(fs) - 1) As definition
             For i As Int32 = 0 To array_size_i(fs) - 1
                 defs(i) = New definition(fs(i))
             Next
-            instance = New reflector()
-        End Sub
+            Return defs
+        End Function
 
         Public Overrides Function definitions() As struct.definition()
             Return defs

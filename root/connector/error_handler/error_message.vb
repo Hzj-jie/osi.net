@@ -24,16 +24,17 @@ Public NotInheritable Class error_message
                                                                 "_"}
     Public Const seperator As String = character.comma + character.blank
 
-    Shared Sub New()
-        If error_type_char.Length() <> error_type_count Then
-            Console.Error().WriteLine("error_type_char length <> error_type count")
-            assert_break()
-        End If
-        If error_type_defination.Length() <> error_type_count Then
-            Console.Error().WriteLine("error_type_defination length <> error_type count")
-            assert_break()
-        End If
-    End Sub
+    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
+        Sub()
+            If error_type_char.Length() <> error_type_count Then
+                Console.Error().WriteLine("error_type_char length <> error_type count")
+                assert_break()
+            End If
+            If error_type_defination.Length() <> error_type_count Then
+                Console.Error().WriteLine("error_type_defination length <> error_type count")
+                assert_break()
+            End If
+        End Sub)
 
     <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
     Public Shared Function p(ByVal err_type As error_type,

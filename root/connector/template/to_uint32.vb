@@ -9,22 +9,21 @@ Imports osi.root.template
 Public NotInheritable Class fast_to_uint32(Of T)
     Inherits _to_uint32(Of T)
 
-    Private Shared ReadOnly f As Func(Of T, UInt32)
+    Private Shared ReadOnly f As Func(Of T, UInt32) = calculate_f()
 
-    Shared Sub New()
+    Private Shared Function calculate_f() As Func(Of T, UInt32)
         If type_info(Of T).is_valuetype Then
-            f = Function(i As T) As UInt32
-                    Return int32_uint32(i.GetHashCode())
-                End Function
-        Else
-            f = Function(i As T) As UInt32
-                    If i Is Nothing Then
-                        Return 0
-                    End If
-                    Return int32_uint32(i.GetHashCode())
-                End Function
+            Return Function(i As T) As UInt32
+                       Return int32_uint32(i.GetHashCode())
+                   End Function
         End If
-    End Sub
+        Return Function(i As T) As UInt32
+                   If i Is Nothing Then
+                       Return 0
+                   End If
+                   Return int32_uint32(i.GetHashCode())
+               End Function
+    End Function
 
     Public Shared Function [on](ByVal i As T) As UInt32
         Return f(i)

@@ -9,13 +9,14 @@ Public NotInheritable Class delayed_init(Of PROTECTOR)
     End Sub
 
     Private NotInheritable Class once
-        Shared Sub New()
-            Dim f As Action = Nothing
-            f = global_resolver(Of Action, delayed_init(Of PROTECTOR)).resolve_or_null()
-            If Not f Is Nothing Then
-                f()
-            End If
-        End Sub
+        Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
+            Sub()
+                Dim f As Action = Nothing
+                f = global_resolver(Of Action, delayed_init(Of PROTECTOR)).resolve_or_null()
+                If Not f Is Nothing Then
+                    f()
+                End If
+            End Sub)
 
         Public Shared Sub init()
         End Sub

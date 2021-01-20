@@ -16,12 +16,12 @@ Friend Module lang_parser_test_cases
     Public ReadOnly lang_parser_test_case1() As Byte
 
     Sub New()
-        lang_parser_test_case0 = Convert.FromBase64String(strcat_hint(CUInt(196), _
-        "H4sIAAAAAAAEAG2OQQoCMQxF94Hc4S9bmEXqtuBdBmyHglZoO9JBvLspOihoNknIf48w3a7phMucsqmtpLxgLku1uKOEtpYM8XgwMaXcXrEx9AmjbZrTS4TpOI6thLUp0z1TONewOzZ4fCzR/XMYDIfYnflxfP0RD8YyKQat912tTmSCE6ukRp+OMfvg2wAAAA=="))
+        lang_parser_test_case0 = Convert.FromBase64String(strcat_hint(CUInt(188), _
+        "H4sIAAAAAAAEAG2NsQrDMAxEd33FjTZkkLsa+i+B2kHQuiA7xSHk32uTukOpljuheyd6PeWGxyzJ5KKSFsy6ZIsdGsqqCexxEEkqZ6ibOqHL1lIkEabi2hcNa2lA9RTuOQx+g8doiO4Pb9B5tgP45b//48VY2gltPrfW55gnOLaeDnoDPWq/tcwAAAA="))
 
         assert(lang_parser_test_case0.ungzip(lang_parser_test_case0))
-        lang_parser_test_case1 = Convert.FromBase64String(strcat_hint(CUInt(572), _
-        "H4sIAAAAAAAEAIVT7YqDMBD8L/gOS+HAcDlp4i9p7auUJI2HYG1Re2iPe/fbmKSNVu78wE12Ms5uJnHU9W3VfEJ5axRL3GCgAC6EkcB3HAFeVQkGoM7XBAEbIdWGQFHA9oEwV6v7W9vAsLNTP6DrTq8ARg+II3ziqGp6kLXAJzFh14u2p2BC3ZxIHHkROOG5TexpBiiAbbduNBYsZbuA+SyGiVZYShkQYlUCDjjllQlHMgl3c9KTrdPZj1pjteOg/qqcMoo8p4Js0CGv49nG/1aocMWjvb6WFSWQyEMoJOCSAVfYCbXYtz8bYj/B9jkSAzevoJIqQk9k3l7rA56srmMUOIUszSiwPGd4k3Cnlej0sWo63XRVX33po7qcr6LV3tuo0EXyhd64G5cbhyNMkrmDqiYQZM8LuozCB0s5inlnacbznJPd0wKYx61GAHv1wRVF9GWyeavrcoO1IGZ+ZhaAD4eYFJ0uN1lrp2I6E7bVIwWXus/NOMC+MP9gZOmAEfbAU87J0lQmeYdDYbLZ43TcX1zpMxzr54tj73PmzztrmV9J7VXscwQAAA=="))
+        lang_parser_test_case1 = Convert.FromBase64String(strcat_hint(CUInt(556), _
+        "H4sIAAAAAAAEAH1T246CMBB95ysmJJvQbCW2PBnEXzFtLZsmiAZwA278953SAhWNXGQ6Z+bMtHOM2q4x9Q+Ut1qxxC96CuBNGAj8RYCXKcHi6nxNEI+FVDGBooDtFGCvRne3poY+Hz0P0FWrX+HBw9EjikzdgawEPok12040HQVr6vpEIl8bl57Tmj6/hwLYdusWQ8FSlk+MZ9GPdMJRyZkINyHggI6pF+HSx0a9S440b3ncR73Sjctlo6Yc/YrMngULDsIXX87qc7gKwqPld04M60MiD0H5gEUuLOGuVTCUT3t3n3k0PtsG21dQSRWhJ7KcoZsuT95kMAqcQpZmFNhux/Am8wiVaPXR1K2uW9OZX31Ul/NVNHoSKbblLblitirFZKtUDJIkUIWp5zac4lE0FDYs5djCN0szvttxks/DRRjHiDhbT/iKpbsyib+qqoyxfYx4Ev0K37gAbOR0uclK+/KjsN2JDhQ8dA/l1cO+sOyMrMY7wB54yjlZacVidzgUFsxmmd/XSpsAjnvmz3/XCbJVc6uHf3xrGXQlBAAA"))
 
         assert(lang_parser_test_case1.ungzip(lang_parser_test_case1))
     End Sub

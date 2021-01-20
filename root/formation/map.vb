@@ -28,32 +28,33 @@ Public NotInheritable Class map(Of KEY_T, VALUE_T)
 'so change map.container_operator.vbp instead of this file
 
 
-    Shared Sub New()
-        container_operator(Of map(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).size(
-                Function(ByVal i As map(Of KEY_T, VALUE_T)) As UInt32
-                    assert(Not i Is Nothing)
-                    Return i.size()
-                End Function)
-        container_operator(Of map(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).emplace(
-                Function(ByVal i As map(Of KEY_T, VALUE_T),
-                         ByVal j As first_const_pair(Of KEY_T, VALUE_T)) As Boolean
-                    assert(Not i Is Nothing)
-                    Return i.emplace(j).second
-                End Function)
-        container_operator(Of map(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).enumerate(
-                Function(ByVal i As map(Of KEY_T, VALUE_T)) _
-                        As container_operator(Of first_const_pair(Of KEY_T, VALUE_T)).enumerator
-                    assert(Not i Is Nothing)
-                    Return New enumerator(i)
-                End Function)
-        container_operator(Of map(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).clear(
-                Sub(ByVal i As map(Of KEY_T, VALUE_T))
-                    assert(Not i Is Nothing)
-                    i.clear()
-                End Sub)
-        bytes_serializer(Of map(Of KEY_T, VALUE_T)).container(Of first_const_pair(Of KEY_T, VALUE_T)).register()
-        json_serializer(Of map(Of KEY_T, VALUE_T)).container(Of first_const_pair(Of KEY_T, VALUE_T)).register_as_object()
-    End Sub
+    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
+        Sub()
+            container_operator(Of map(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).size(
+                    Function(ByVal i As map(Of KEY_T, VALUE_T)) As UInt32
+                        assert(Not i Is Nothing)
+                        Return i.size()
+                    End Function)
+            container_operator(Of map(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).emplace(
+                    Function(ByVal i As map(Of KEY_T, VALUE_T),
+                             ByVal j As first_const_pair(Of KEY_T, VALUE_T)) As Boolean
+                        assert(Not i Is Nothing)
+                        Return i.emplace(j).second
+                    End Function)
+            container_operator(Of map(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).enumerate(
+                    Function(ByVal i As map(Of KEY_T, VALUE_T)) _
+                            As container_operator(Of first_const_pair(Of KEY_T, VALUE_T)).enumerator
+                        assert(Not i Is Nothing)
+                        Return New enumerator(i)
+                    End Function)
+            container_operator(Of map(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).clear(
+                    Sub(ByVal i As map(Of KEY_T, VALUE_T))
+                        assert(Not i Is Nothing)
+                        i.clear()
+                    End Sub)
+            bytes_serializer(Of map(Of KEY_T, VALUE_T)).container(Of first_const_pair(Of KEY_T, VALUE_T)).register()
+            json_serializer(Of map(Of KEY_T, VALUE_T)).container(Of first_const_pair(Of KEY_T, VALUE_T)).register_as_object()
+        End Sub)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function on_first(ByVal f As Action(Of KEY_T)) As Action(Of first_const_pair(Of KEY_T, VALUE_T))

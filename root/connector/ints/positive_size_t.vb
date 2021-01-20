@@ -28,74 +28,82 @@ Imports constants = osi.root.constants
 Partial Public Structure positive_size_t
     Implements IComparable, IComparable(Of positive_size_t), ICloneable, ICloneable(Of positive_size_t)
 
-    Public Shared ReadOnly inf As positive_size_t
-    Public Shared ReadOnly zero As positive_size_t
-    Public Shared ReadOnly sizeof_value As UInt32
+    Public Shared ReadOnly inf As positive_size_t = calculate_inf()
+    Public Shared ReadOnly zero As positive_size_t = calculate_zero()
+    Public Shared ReadOnly sizeof_value As UInt32 = CUInt(sizeof(Of UInt32)())
 
-    Shared Sub New()
-        assert(constants.npos < 0)
-        sizeof_value = CUInt(sizeof(Of UInt32)())
-        Dim x As positive_size_t = Nothing
-        assert(Not x.npos())
-        assert(x.raw_value() = uint32_0)
-        inf = New positive_size_t(constants.npos)
+    Private Shared Function calculate_inf() As positive_size_t
+        Dim inf As positive_size_t = New positive_size_t(constants.npos)
         assert(inf.npos())
-        zero = New positive_size_t(uint32_0)
+        Return inf
+    End Function
+
+    Private Shared Function calculate_zero() As positive_size_t
+        Dim zero As positive_size_t = New positive_size_t(uint32_0)
         If False Then
             assert(Not zero.npos())
         Else
             assert(zero.npos())
         End If
+        Return zero
+    End Function
 
-        bytes_serializer.fixed.register(
-                Function(ByVal i As positive_size_t, ByVal o As MemoryStream) As Boolean
-                    #If Not False Then
-                        If i.npos() Then
-                            Return bytes_serializer.append_to(uint32_0, o)
-                        Else
-                            Return bytes_serializer.append_to(i.raw_value(), o)
-                        End If
-                    #ElseIf Not True Then
-                        If i.npos() Then
-                            Return bytes_serializer.append_to(max_uint32, o)
-                        Else
-                            Return bytes_serializer.append_to(i.raw_value(), o)
-                        End If
-                    #Else
-                        If i.npos() Then
-                            Return bytes_serializer.append_to(True, o)
-                        Else
-                            Return bytes_serializer.append_to(False, o) AndAlso
-                                   bytes_serializer.append_to(i.raw_value(), o)
-                        End If
-                    #End If
-                End Function,
-                Function(ByVal i As MemoryStream, ByRef o As positive_size_t) As Boolean
-                    #If Not False OrElse Not True Then
-                        Dim u As UInt32 = uint32_0
-                        If Not bytes_serializer.consume_from(i, u) Then
-                            Return False
-                        End If
-                        o = New positive_size_t(u)
-                        Return True
-                    #Else
-                        Dim n As Boolean = False
-                        If Not bytes_serializer.consume_from(i, n) Then
-                            Return False
-                        End If
-                        If n Then
-                            o = inf
+    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
+        Sub()
+            assert(constants.npos < 0)
+            Dim x As positive_size_t = Nothing
+            assert(Not x.npos())
+            assert(x.raw_value() = uint32_0)
+
+            bytes_serializer.fixed.register(
+                    Function(ByVal i As positive_size_t, ByVal o As MemoryStream) As Boolean
+                        #If Not False Then
+                            If i.npos() Then
+                                Return bytes_serializer.append_to(uint32_0, o)
+                            Else
+                                Return bytes_serializer.append_to(i.raw_value(), o)
+                            End If
+                        #ElseIf Not True Then
+                            If i.npos() Then
+                                Return bytes_serializer.append_to(max_uint32, o)
+                            Else
+                                Return bytes_serializer.append_to(i.raw_value(), o)
+                            End If
+                        #Else
+                            If i.npos() Then
+                                Return bytes_serializer.append_to(True, o)
+                            Else
+                                Return bytes_serializer.append_to(False, o) AndAlso
+                                       bytes_serializer.append_to(i.raw_value(), o)
+                            End If
+                        #End If
+                    End Function,
+                    Function(ByVal i As MemoryStream, ByRef o As positive_size_t) As Boolean
+                        #If Not False OrElse Not True Then
+                            Dim u As UInt32 = uint32_0
+                            If Not bytes_serializer.consume_from(i, u) Then
+                                Return False
+                            End If
+                            o = New positive_size_t(u)
                             Return True
-                        End If
-                        Dim u As UInt32 = uint32_0
-                        If Not bytes_serializer.consume_from(i, u) Then
-                            Return False
-                        End If
-                        o = New positive_size_t(u)
-                        Return True
-                    #End If
-                End Function)
-    End Sub
+                        #Else
+                            Dim n As Boolean = False
+                            If Not bytes_serializer.consume_from(i, n) Then
+                                Return False
+                            End If
+                            If n Then
+                                o = inf
+                                Return True
+                            End If
+                            Dim u As UInt32 = uint32_0
+                            If Not bytes_serializer.consume_from(i, u) Then
+                                Return False
+                            End If
+                            o = New positive_size_t(u)
+                            Return True
+                        #End If
+                    End Function)
+        End Sub)
 
     Private ReadOnly i As UInt32
     Private ReadOnly n As Boolean

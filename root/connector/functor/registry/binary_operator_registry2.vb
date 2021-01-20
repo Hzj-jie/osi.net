@@ -7,11 +7,12 @@ Imports osi.root.constants
 
 <global_init(global_init_level.functor)>
 Friend NotInheritable Class binary_operator_registry2
-    Shared Sub New()
-        binary_operator.register_add(Function(x As String, y As String) As String
-                                         Return x + y
-                                     End Function)
-    End Sub
+    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
+        Sub()
+            binary_operator.register_add(Function(x As String, y As String) As String
+                                             Return x + y
+                                         End Function)
+        End Sub)
 
     Private Shared Sub init()
     End Sub

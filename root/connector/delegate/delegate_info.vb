@@ -7,13 +7,14 @@ Imports System.Reflection
 Imports osi.root.constants
 
 Public NotInheritable Class delegate_info(Of T)
-    Private Shared ReadOnly invoke As MethodInfo
+    Private Shared ReadOnly invoke As MethodInfo = calculate_invoke()
 
-    Shared Sub New()
+    Private Shared Function calculate_invoke() As MethodInfo
         assert(GetType(T).is(GetType([Delegate])))
-        invoke = GetType(T).GetMethod("Invoke", binding_flags.instance_public_method)
+        Dim invoke As MethodInfo = GetType(T).GetMethod("Invoke", binding_flags.instance_public_method)
         assert(Not invoke Is Nothing)
-    End Sub
+        Return invoke
+    End Function
 
     ' Return true if one delegate of T can be created from mi.
     Public Shared Function match(ByVal mi As MethodInfo) As Boolean

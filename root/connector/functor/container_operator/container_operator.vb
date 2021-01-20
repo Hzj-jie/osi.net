@@ -7,11 +7,7 @@ Imports osi.root.constants
 
 ' A functor to implement operators of CONTAINER, the container of T.
 Partial Public NotInheritable Class container_operator(Of CONTAINER, T)
-    Public Shared ReadOnly r As container_operator(Of CONTAINER, T)
-
-    Shared Sub New()
-        r = New container_operator(Of CONTAINER, T)()
-    End Sub
+    Public Shared ReadOnly r As container_operator(Of CONTAINER, T) = New container_operator(Of CONTAINER, T)()
 
     Public Shared Sub emplace(ByVal f As Func(Of CONTAINER, T, Boolean))
         global_resolver(Of Func(Of CONTAINER, T, Boolean), container_operator(Of CONTAINER, T)).assert_first_register(f)
