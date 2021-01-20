@@ -16,7 +16,7 @@ Partial Public NotInheritable Class assert_which
         End Sub
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
-        Public Function is_positive() As Int32
+        Public Function is_larger_than_zero() As Int32
             assert(i > 0)
             Return i
         End Function
