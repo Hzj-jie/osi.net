@@ -18,6 +18,7 @@ Partial Public Class ##FILENAME##( _
                     first_const_pair.first_equaler(Of KEY_T, VALUE_T, _EQUALER))
     Implements ICloneable, ICloneable(Of ##FILENAME##(Of KEY_T, VALUE_T, _HASHER, _EQUALER))
 
+##DEFINE OTHER_TEMPLATE_PARAMETERS , first_const_pair.first_hasher(Of KEY_T, VALUE_T, _HASHER), first_const_pair.first_equaler(Of KEY_T, VALUE_T, _EQUALER)
 ##INCLUDE hasharray.copy_constructor.vbp
 
 End Class
@@ -26,6 +27,7 @@ Partial Public NotInheritable Class ##FILENAME##(Of KEY_T, VALUE_T)
     Inherits ##FILENAME##(Of KEY_T, VALUE_T, fast_to_uint32(Of KEY_T), default_equaler(Of KEY_T))
     Implements ICloneable, ICloneable(Of ##FILENAME##(Of KEY_T, VALUE_T)), IEquatable(Of ##FILENAME##(Of KEY_T, VALUE_T))
 
+##DEFINE OTHER_TEMPLATE_PARAMETERS , first_const_pair.first_hasher(Of KEY_T, VALUE_T, fast_to_uint32(Of KEY_T)), first_const_pair.first_equaler(Of KEY_T, VALUE_T, default_equaler(Of KEY_T))
 ##INCLUDE hasharray.copy_constructor.vbp
 
 ##INCLUDE ..\binary_tree\codegen\map.container_operator.vbp

@@ -26,6 +26,10 @@ Public NotInheritable Class fast_to_uint32(Of T)
         End If
     End Sub
 
+    Public Shared Function [on](ByVal i As T) As UInt32
+        Return f(i)
+    End Function
+
     Public Overrides Function at(ByRef k As T) As UInt32
         Return f(k)
     End Function

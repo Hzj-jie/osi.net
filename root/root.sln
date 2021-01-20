@@ -258,11 +258,11 @@ Global
 		SccAuxPath15 = https://tfs.codeplex.com/tfs/tfs02
 		SccLocalPath15 = tests\\utils
 		SccProvider15 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccProjectUniqueName16 = tests\\connector\\connector.vbproj
+		SccProjectUniqueName16 = tests\\utils\\utils.vbproj
 		SccProjectTopLevelParentUniqueName16 = root.sln
-		SccProjectName16 = tests/connector
+		SccProjectName16 = tests/utils
 		SccAuxPath16 = https://tfs.codeplex.com/tfs/tfs02
-		SccLocalPath16 = tests\\connector
+		SccLocalPath16 = tests\\utils
 		SccProvider16 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccProjectUniqueName17 = tests\\procedure\\procedure.vbproj
 		SccProjectTopLevelParentUniqueName17 = root.sln
