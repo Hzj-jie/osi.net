@@ -13,7 +13,6 @@ Partial Public Class ##FILENAME##(Of _
     Inherits hasharray(Of T, _true, _HASHER, _EQUALER)
     Implements ICloneable, ICloneable(Of ##FILENAME##(Of T, _HASHER, _EQUALER))
 
-##DEFINE OTHER_TEMPLATE_PARAMETERS , _HASHER, _EQUALER
 ##INCLUDE hasharray.copy_constructor.vbp
 
 End Class
@@ -22,9 +21,7 @@ Partial Public NotInheritable Class ##FILENAME##(Of T)
     Inherits ##FILENAME##(Of T, fast_to_uint32(Of T), default_equaler(Of T))
     Implements ICloneable, ICloneable(Of ##FILENAME##(Of T)), IEquatable(Of ##FILENAME##(Of T))
 
-##DEFINE OTHER_TEMPLATE_PARAMETERS , fast_to_uint32(Of T), default_equaler(Of T)
 ##INCLUDE hasharray.copy_constructor.vbp
-
 ##INCLUDE ..\binary_tree\codegen\set.container_operator.vbp
 ##INCLUDE ..\binary_tree\codegen\set.compare.vbp
 
