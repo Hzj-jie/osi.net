@@ -28,3 +28,5 @@ Rule of Thumb
 1. Leave a vertical space at the top of the file to avoid introducing BOM issue.
 
 1. Avoid using optional argument, consider to use overload instead.
+
+1. Do not use cctor / shared new, see shared\_ctor\_perf.

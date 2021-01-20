@@ -119,6 +119,7 @@
     <Compile Include="functor\bytes_serializer_test.vb" />
     <Compile Include="functor\json_serializer_test.vb" />
     <Compile Include="gc_behavior_test.vb" />
+    <Compile Include="generic_ctor_perf.vb" />
     <Compile Include="generic_perf.vb" />
     <Compile Include="compress_test.vb" />
     <Compile Include="generic_object_perf.vb" />
@@ -178,6 +179,7 @@
     </Compile>
     <Compile Include="send_input_test\send_input_test.vb" />
     <Compile Include="shared_ctor_callstack_behavior_test.vb" />
+    <Compile Include="shared_ctor_perf.vb" />
     <Compile Include="static_constructor_test.vb" />
     <Compile Include="strindexof_test.vb" />
     <Compile Include="stringbuilder_perf_test.vb" />
