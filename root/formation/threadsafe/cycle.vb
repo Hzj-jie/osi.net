@@ -1,8 +1,5 @@
 ﻿
-Option Explicit On
-Option Infer Off
-Option Strict On
-
+Imports osi.root.delegates
 Imports osi.root.connector
 Imports osi.root.lock
 Imports osi.root.template
@@ -14,11 +11,10 @@ Public Class cycle(Of T)
         Private written As singleentry
         Private read As singleentry
 
-        Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
-            Sub()
-                Dim s As singleentry
-                assert(s.not_in_use())
-            End Sub)
+        Shared Sub New()
+            Dim s As singleentry
+            assert(s.not_in_use())
+        End Sub
 
         Public Function [set](ByVal v As T) As Boolean
             If hv.mark_in_use() Then
@@ -146,8 +142,12 @@ End Class
 
 Public Class cycle(Of T, SIZE As _int64, RETRY_TIMES As _int64)
     Inherits cycle(Of T)
-    Private Shared ReadOnly default_size As Int64 = +alloc(Of SIZE)()
-    Private Shared ReadOnly default_retry_times As Int64 = +alloc(Of RETRY_TIMES)()
+    Private Shared ReadOnly default_size As Int64
+    Private Shared ReadOnly default_retry_times As Int64
+
+    Shared Sub New()
+        default_size = +alloc(Of SIZE)()
+    End Sub
 
     Public Sub New(ByVal size As Int64, ByVal retry_times As Int64)
         MyBase.New(size, retry_times)
@@ -178,11 +178,10 @@ Public Class cycle(Of T)
         Private r As singleentry
         Private hv As singleentry
 
-        Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
-            Sub()
-                Dim s As singleentry
-                assert(s.not_in_use())
-            End Sub)
+        Shared Sub New()
+            Dim s As singleentry
+            assert(s.not_in_use())
+        End Sub
 
         Public Sub [set](ByVal v As T)
             wait_when(Function(ByRef x As singleentry) As Boolean

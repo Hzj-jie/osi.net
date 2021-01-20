@@ -55,8 +55,9 @@ Public Class ref(Of T)
     Implements IComparable, IComparable(Of ref(Of T)), IComparable(Of T),
                ICloneable, ICloneable(Of ref(Of T))
 
-    Private Shared ReadOnly run_shared_sub_new As cctor_delegator =
-        New cctor_delegator(AddressOf bytes_serializer(Of ref(Of T)).forward_registration.from(Of T))
+    Shared Sub New()
+        bytes_serializer(Of ref(Of T)).forward_registration.from(Of T)()
+    End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function move(ByVal that As ref(Of T)) As ref(Of T)

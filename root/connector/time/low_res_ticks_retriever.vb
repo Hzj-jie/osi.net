@@ -12,7 +12,9 @@ Public Class low_res_ticks_retriever
     Private Shared last_revise_ms As UInt32
     Private Shared offset As Int64
 
-    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(AddressOf milliseconds)
+    Shared Sub New()
+        milliseconds()
+    End Sub
 
     'force revise the offset during next high_res_ticks() call.
     Public Shared Sub force_revise()

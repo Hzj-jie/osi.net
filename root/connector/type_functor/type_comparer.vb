@@ -6,8 +6,11 @@ Option Strict On
 Imports osi.root.constants
 
 Public NotInheritable Class type_comparer
-    Private Shared ReadOnly ss As type_resolver(Of Func(Of Object, Object, Int32)) =
-        type_resolver(Of Func(Of Object, Object, Int32)).default
+    Private Shared ReadOnly ss As type_resolver(Of Func(Of Object, Object, Int32))
+
+    Shared Sub New()
+        ss = type_resolver(Of Func(Of Object, Object, Int32)).default
+    End Sub
 
     Public Shared Function defined(ByVal i As Type, ByVal j As Type) As Boolean
         Return ss.registered(typed(i, j))

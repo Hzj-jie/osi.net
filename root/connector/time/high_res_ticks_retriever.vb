@@ -10,12 +10,11 @@ Imports osi.root.constants
 
 Public NotInheritable Class high_res_ticks_retriever
     Private Const revise_interval_ticks As Int64 = CLng(15) * minute_second * second_milli * milli_tick
-    Private Shared ReadOnly perf_freq As Double = calculate_pref_freq()
+    Private Shared ReadOnly perf_freq As Double
     Private Shared distance As Int64
     Private Shared last_revise_ticks As Int64
 
-    Private Shared Function calculate_pref_freq() As Double
-        Dim perf_freq As Double = 0
+    Shared Sub New()
         If Stopwatch.IsHighResolution Then
             perf_freq = Stopwatch.Frequency
             perf_freq /= milli_tick
@@ -25,8 +24,7 @@ Public NotInheritable Class high_res_ticks_retriever
             perf_freq = 0
             raise_error(error_type.system, "high-resolution performance counter is not supported.")
         End If
-        Return perf_freq
-    End Function
+    End Sub
 
     Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(AddressOf ticks)
 

@@ -17,11 +17,10 @@ Partial Public Class ##BASE_TYPE##
     Private l As ##DEFAULT_LOCK##
 
 #If GENERIC_TYPE Then
-    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
-        Sub()
-            raise_error(error_type.performance,
-                        "##BASE_TYPE## cannot use interlocked operations. Its performance is low.")
-        End Sub)
+    Shared Sub New()
+        raise_error(error_type.performance,
+                    "##BASE_TYPE## cannot use interlocked operations. Its performance is low.")
+    End Sub
 #End If
 
     Public Sub New()

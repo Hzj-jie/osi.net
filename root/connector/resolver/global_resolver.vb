@@ -35,7 +35,11 @@ Public Class global_resolver(Of T As Class, PROTECTOR)
     Private NotInheritable Class unregister_delegate
         Implements IDisposable
 
-        Public Shared ReadOnly instance As unregister_delegate = New unregister_delegate()
+        Public Shared ReadOnly instance As unregister_delegate
+
+        Shared Sub New()
+            instance = New unregister_delegate()
+        End Sub
 
         Private Sub New()
         End Sub
@@ -51,7 +55,11 @@ Public Class global_resolver(Of T As Class, PROTECTOR)
 'so change global_resolver_impl.vbp instead of this file
 
 
-    Private Shared ReadOnly r As thread_safe_resolver(Of T) = New thread_safe_resolver(Of T)()
+    Private Shared ReadOnly r As thread_safe_resolver(Of T)
+
+    Shared Sub New()
+        r = New thread_safe_resolver(Of T)()
+    End Sub
 
 'finish global_resolver_impl.vbp --------
     <MethodImpl(method_impl_options.aggressive_inlining)>

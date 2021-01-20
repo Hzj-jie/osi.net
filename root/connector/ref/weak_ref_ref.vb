@@ -61,8 +61,9 @@ Public Class weak_ref_ref(Of T)
     Implements IComparable, IComparable(Of weak_ref_ref(Of T)), IComparable(Of T),
                ICloneable, ICloneable(Of weak_ref_ref(Of T))
 
-    Private Shared ReadOnly run_shared_sub_new As cctor_delegator =
-        New cctor_delegator(AddressOf bytes_serializer(Of weak_ref_ref(Of T)).forward_registration.from(Of T))
+    Shared Sub New()
+        bytes_serializer(Of weak_ref_ref(Of T)).forward_registration.from(Of T)()
+    End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function move(ByVal that As weak_ref_ref(Of T)) As weak_ref_ref(Of T)

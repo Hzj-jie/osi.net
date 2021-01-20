@@ -46,7 +46,11 @@ Partial Public Class hasharray(Of T,
     Partial Public Structure iterator
         Implements IComparable(Of iterator), IComparable
 
-        Public Shared ReadOnly [end] As iterator = New iterator()
+        Public Shared ReadOnly [end] As iterator
+
+        Shared Sub New()
+            [end] = New iterator()
+        End Sub
 
         Private ReadOnly p As ref
 

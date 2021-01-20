@@ -30,8 +30,8 @@ Friend Module syntaxer_test_rules
         "H4sIAAAAAAAEAJ1Ty2rDMBC8C/wPey7WN+QUSik0JQ2UYkxRHMUR0SOV5Pb3q6ctO0kPvdjSrDQ7O6ut0NPjy2a7/tx9vK7fYM+JPFdou9nsEnIcZGeZkhWqUF6DJILGj7FEW7zXpDtTC82FaCI4M7ZdAZWHMSAGbhk2VFoqO4r9sV6Ty6lC4410Gf8we8KdEoK0DxCgdKiIRBzCOkUnTREI9NDklPVdCW2FMjgdj7kMFcwl5ErWMIuowS6CeV2wLTmg+SZ8oPhAj0wy72MNEek4GYyTqKkdtBy32W7cEc7bIskix1wNNJ2Sh8DvxNyrOjXuhlPOdd+5okVL2aXVZQGxGiDGsF4KRxeBCo2C4Pkds+Pi0cRb5WspVFFuHP1Y0KpCc8QzegSWer0NwoMmGD3zsg7ia2Cu4p5qF+WK2Br2SrmYsZrJvvWyR4LUqOx2GWk4NQbbE3FZek2JTesAK43p10B4Dk378GuzQ3/Q/0f57M7NQY0Jryc1S4kTOckaJ/JKcJrIaHqayNlD9i2KQCL0XfwFjNeLGXgEAAA="))
 
         assert(syntaxer_rule.ungzip(syntaxer_rule))
-        cycle_dependency_syntaxer_rule = Convert.FromBase64String(strcat_hint(CUInt(140), _
-        "H4sIAAAAAAAEAHu/ez9XkL9/SHxIZIBrsEJZYk5pKhcXmFKILihK1c0vSC1KLMnMz9MFC+ooFOQXl2CKliUWZSYm5aTq5iXmpsZyYdGpUJyak6abmZcMtQSbOQqoKgEME9PbnQAAAA=="))
+        cycle_dependency_syntaxer_rule = Convert.FromBase64String(strcat_hint(CUInt(144), _
+        "H4sIAAAAAAAEAHu/ez8vV5C/f0h8SGSAa7BCWWJOaSovFy8XmKEQXVCUqptfkFqUWJKZn6cLFtRRKMgvLsEULUssykxMyknVzUvMTY3l5cKiVaE4NSdNNzMvGWYPNpMUUJUCAEzbweqiAAAA"))
 
         assert(cycle_dependency_syntaxer_rule.ungzip(cycle_dependency_syntaxer_rule))
     End Sub

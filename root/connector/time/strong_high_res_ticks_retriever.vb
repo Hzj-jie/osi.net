@@ -14,8 +14,13 @@ Imports osi.root.constants
 ' long b_v = strong_high_res_ticks_retriever.ticks();
 ' assert(b_v >= a_v);
 Public NotInheritable Class strong_high_res_ticks_retriever
-    Private Shared ReadOnly my_type As Type = GetType(strong_high_res_ticks_retriever)
-    Private Shared last As Int64 = min_int64
+    Private Shared ReadOnly my_type As Type
+    Private Shared last As Int64
+
+    Shared Sub New()
+        my_type = GetType(strong_high_res_ticks_retriever)
+        last = min_int64
+    End Sub
 
     Public Shared Function ticks() As Int64
         SyncLock my_type

@@ -16,12 +16,12 @@ Friend Module nlp_test_rules
     Public ReadOnly syntaxer_rule() As Byte
 
     Sub New()
-        nlexer_rule = Convert.FromBase64String(strcat_hint(CUInt(396), _
-        "H4sIAAAAAAAEAF2QQU7DMBBF93OKUVYQYg4ATXsADsAiidCkmaRWHLsdO+oCOBkLjsQVsJMCFQt///f9pRn56+MTnp6V7lH3ybDxjEkS9E4wnmTPB20YF03YOexcMsa5IyZJIBxmsbheKWiFacRFAVpDdsSqbpu7CM4ZrILMXPQUxzWgbeCBBau7QjW7qu5irTeOwlWS36+5D6LtgFlVZ0X+ljV5BmDYe+VE8Wkmg5sShjg2/CXbElZTlms3HMji5lJbYAvkvR7sxDZgCXs3TYR1EY1xFh/gNLMP2lk1kYy4i2uQBHUkoUHoeMBXYNtd8ful0QrtRw54s7z/0O3l1cethH/julpa/9MGwfOk1brLI4ClieNvnouXJmndRZPDN9usIojQAQAA"))
+        nlexer_rule = Convert.FromBase64String(strcat_hint(CUInt(412), _
+        "H4sIAAAAAAAEAF1QS07DMBDdW/IdRllBGnMA6OcAHIBFEqFJM0mtOHZqO+oCOBkLjsQVsJ0GKhZ+fu/Ns2c0359fnD2/CNmB7BIj5QgiJNUZC+EkfjlJRZAw6dZAaxJTxkwQISlLfrYalis5jSUcICFnnDUK9QBl1dSbJI1RUHo7U9FhaFxzJrWnniyUm0LUh7JqY7JTBv2NlT9cC85bqXvIyior8veszrP4rSLnhLGCzjMq2O4468MA/s/aB2thu9017k+oYbsmk9pzhs7JXo+kPYTg0YwjQlVEpoyGR87OMzkvjRYj2gEOcSK0Xkxosbc4neAtdNLtjfGxZhqLx4E83C2JVd6vdRcGtPTrV+WS+2/XEB7QKMUy01NcgMaRwpYvxWsdsWoDyTn7AYcJqfTzAQAA"))
 
         assert(nlexer_rule.ungzip(nlexer_rule))
-        syntaxer_rule = Convert.FromBase64String(strcat_hint(CUInt(552), _
-        "H4sIAAAAAAAEAJ1TS07DMBDd+xSzRvEZukIIIVFUKiEURWiauqlVf4rtwOFYcCSugB3b+ZjCgk3rvOeZefPG8/XxSW5v7teb65ft88P1I+wEqhPZrNfbBBx61TquFSH5BAoliz/WoXF0Z7A9MQf1GQ1Kwa1rVsDUfiRkLxynlinHVMtouNYZPB/JGJBi6Tt3R9pqKbG5ggEiJRFhGM6RnASRMTXUuVz1a/mGZGy6HQtZJrmvJrSqYMHo3hVkPk/JyhRQv6HoGd2zA1c8OFhBRFqBvfUCDXO9UeNnNpq2KEQFd0/eSIanZlaN/KEK6lar/VCoIb/1nkZ3wS9vfJjdNKRS/czueRuxJ0BreaekTxYBMooJjfBD8WZi0PyxzCQxYX32sZkVWQIhYUCg0BoMkAGzg9eFnUF4Bdw32zHjWaHRVbDT2nPWGa66hszi06iyzXOmFsxa6o7oi3R+Qi6dB1gbyl57FJmavoe/JrnzR/Z/6F6EXFzRWO/njpKJyJcWu1iqTbsY/Y67uHjFYTYRSOn89L4BHP0IZG0EAAA="))
+        syntaxer_rule = Convert.FromBase64String(strcat_hint(CUInt(572), _
+        "H4sIAAAAAAAEAJ1TS27DIBDdI3EH1pU5Q1dRVVVqqjRSVVlWNXGIg8InBdweroseqVcoGHCwk3TRjQ1v4M2bN8zP1zdG93ePy9Xibf36tHgmGwHqgNFquVwnZNer1nGtMMIor4kCyeLHOjCObgy0B+ZIfQQDUnDrmlvC1HYMyF44Ti1TjqmW0XCsM3DcYzTeSJfpJ3d72mopobkhA5QOFZGIk2GdoidNERjoSZ1TVlclNBhl8HQ85rJMcp9QaFWRSUT3bhbM64JtzkHqDxA9o1u244oHHysSkVZAb71Ew1xv1LjNdtMWhKjIw4u3k8GhKdLNsk11kbrVajtk8rKu1Z9aeMEz73/oYdGseQGl6WUpsS4C1vJOSU8XAYxGQaEavps9n3irfDeFKiaspx8LusVoigTGgJC53mCDDKAdLJ+5GsRXhPuKO2Z8VGhwFdlo7WPWGa66JsgeCVLLsttlpBbMWur24LN0vlMurQdYG8reexA5dNoPvyY79Af9f5RP7lwc2ZjwfGazlDibJ1njbJ4JTrMZTU+zOXnSoUURSIShi798xJU3hQQAAA=="))
 
         assert(syntaxer_rule.ungzip(syntaxer_rule))
     End Sub

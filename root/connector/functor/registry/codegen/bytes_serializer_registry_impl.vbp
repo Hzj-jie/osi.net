@@ -1,24 +1,24 @@
 
 ##DEFAULT TYPE Byte
-            bytes_serializer.fixed.register(Function(ByVal i As ##TYPE##, ByVal o As MemoryStream) As Boolean
-                                                assert(Not o Is Nothing)
-                                                Return o.write(BitConverter.GetBytes(endian.to_little_endian(i)))
-                                            End Function,
-                                            Function(ByVal i As MemoryStream, ByRef o As ##TYPE##) As Boolean
-                                                assert(Not i Is Nothing)
-                                                If i.Length() - i.Position() < type_info(Of ##TYPE##).size_uint32() Then
-                                                    Return False
-                                                End If
-                                                #If "##TYPE##" = "Byte" Then
-                                                    o = CByte(i.ReadByte())
-                                                #ElseIf "##TYPE##" = "SByte" Then
-                                                    o = byte_sbyte(CByte(i.ReadByte()))
-                                                #Else
-                                                    Dim b() As Byte = Nothing
-                                                    Dim offset As UInt32 = 0
-                                                    i.get_buffer(b, offset)
-                                                    o = endian.to_little_endian(BitConverter.To##TYPE##(b, CInt(offset)))
-                                                    i.Position() += type_info(Of ##TYPE##).size()
-                                                #End If
-                                                Return True
-                                            End Function)
+        bytes_serializer.fixed.register(Function(ByVal i As ##TYPE##, ByVal o As MemoryStream) As Boolean
+                                            assert(Not o Is Nothing)
+                                            Return o.write(BitConverter.GetBytes(endian.to_little_endian(i)))
+                                        End Function,
+                                        Function(ByVal i As MemoryStream, ByRef o As ##TYPE##) As Boolean
+                                            assert(Not i Is Nothing)
+                                            If i.Length() - i.Position() < type_info(Of ##TYPE##).size_uint32() Then
+                                                Return False
+                                            End If
+                                            #If "##TYPE##" = "Byte" Then
+                                                o = CByte(i.ReadByte())
+                                            #ElseIf "##TYPE##" = "SByte" Then
+                                                o = byte_sbyte(CByte(i.ReadByte()))
+                                            #Else
+                                                Dim b() As Byte = Nothing
+                                                Dim offset As UInt32 = 0
+                                                i.get_buffer(b, offset)
+                                                o = endian.to_little_endian(BitConverter.To##TYPE##(b, CInt(offset)))
+                                                i.Position() += type_info(Of ##TYPE##).size()
+                                            #End If
+                                            Return True
+                                        End Function)

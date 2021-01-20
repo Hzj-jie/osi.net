@@ -8,7 +8,11 @@ Imports osi.root.delegates
 
 ' A functor to implement T to bytes and bytes to T operations.
 Partial Public Class bytes_serializer(Of T)
-    Public Shared ReadOnly r As bytes_serializer(Of T) = New bytes_serializer(Of T)()
+    Public Shared ReadOnly r As bytes_serializer(Of T)
+
+    Shared Sub New()
+        r = New bytes_serializer(Of T)()
+    End Sub
 
     ' Write i into a MemoryStream.
     Private Function to_bytes(ByVal i As T, ByVal o As MemoryStream, ByVal append As Boolean) As Boolean

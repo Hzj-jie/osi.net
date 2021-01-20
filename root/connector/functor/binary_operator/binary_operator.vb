@@ -7,7 +7,11 @@ Imports osi.root.constants
 
 ' A functor to implement binary operators between T and T2, and return RT.
 Public Class binary_operator(Of T, T2, RT)
-    Public Shared ReadOnly r As binary_operator(Of T, T2, RT) = New binary_operator(Of T, T2, RT)()
+    Public Shared ReadOnly r As binary_operator(Of T, T2, RT)
+
+    Shared Sub New()
+        r = New binary_operator(Of T, T2, RT)()
+    End Sub
 
     Public Shared Sub register_add(ByVal f As Func(Of T, T2, RT))
         global_resolver(Of Func(Of T, T2, RT), add_protector).assert_first_register(f)

@@ -22,12 +22,21 @@ Public NotInheritable Class error_event
     Public Shared Event r6(ByVal err_type As error_type, ByVal err_type_char As Char, ByVal msg As String)
     Public Shared Event a1()
 
-    Private Shared ReadOnly r1lock As Object = New Object()
-    Private Shared ReadOnly r2lock As Object = New Object()
-    Private Shared ReadOnly r3lock As Object = New Object()
-    Private Shared ReadOnly r4lock As Object = New Object()
-    Private Shared ReadOnly r5lock As Object = New Object()
-    Private Shared ReadOnly r6lock As Object = New Object()
+    Private Shared ReadOnly r1lock As Object
+    Private Shared ReadOnly r2lock As Object
+    Private Shared ReadOnly r3lock As Object
+    Private Shared ReadOnly r4lock As Object
+    Private Shared ReadOnly r5lock As Object
+    Private Shared ReadOnly r6lock As Object
+
+    Shared Sub New()
+        r1lock = New Object()
+        r2lock = New Object()
+        r3lock = New Object()
+        r4lock = New Object()
+        r5lock = New Object()
+        r6lock = New Object()
+    End Sub
 
     Public Shared Sub a()
         static_constructor(Of colorful_console_error_writer).execute()

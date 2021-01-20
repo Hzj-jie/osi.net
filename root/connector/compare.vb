@@ -41,14 +41,13 @@ Public Module _compare
     End Sub
 
     Private NotInheritable Class compare_cache(Of T, T2)
-        Private Shared ReadOnly always_fail As _do_val_val_ref(Of T, T2, Int32, Boolean) =
-            Function(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
-                Return False
-            End Function
-        Private Shared ReadOnly c As _do_val_val_ref(Of T, T2, Int32, Boolean) = select_c()
+        Private Shared ReadOnly always_fail As _do_val_val_ref(Of T, T2, Int32, Boolean)
+        Private Shared ReadOnly c As _do_val_val_ref(Of T, T2, Int32, Boolean)
 
-        Private Shared Function select_c() As _do_val_val_ref(Of T, T2, Int32, Boolean)
-            Dim c As _do_val_val_ref(Of T, T2, Int32, Boolean) = Nothing
+        Shared Sub New()
+            always_fail = Function(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
+                              Return False
+                          End Function
             If comparer_for_specific_types(c) Then
                 '
             ElseIf type_info(Of T, type_info_operators.is, IComparable(Of T2)).v Then
@@ -88,8 +87,7 @@ Public Module _compare
                                 type_info(Of T2).fullname)
                 End If
             End If
-            Return c
-        End Function
+        End Sub
 
         Private Shared Function always_succeed(ByVal i As Func(Of T, T2, Int32)) _
                                               As _do_val_val_ref(Of T, T2, Int32, Boolean)

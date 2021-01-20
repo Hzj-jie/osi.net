@@ -26,23 +26,36 @@ Public Structure nice
         lowest
     End Enum
 
-    Public Shared ReadOnly realtime As nice = New nice(process_priority.realtime, thread_priority.highest)
-    Public Shared ReadOnly boost As nice = New nice(process_priority.high, thread_priority.highest)
-    Public Shared ReadOnly moderate As nice = New nice(process_priority.normal, thread_priority.normal)
-    Public Shared ReadOnly lazy As nice = New nice(process_priority.idle, thread_priority.lowest)
-    Public Shared ReadOnly process_realtime As nice = New nice(process_priority.realtime)
-    Public Shared ReadOnly process_boost As nice = New nice(process_priority.high)
-    Public Shared ReadOnly process_moderate As nice = New nice(process_priority.normal)
-    Public Shared ReadOnly process_lazy As nice = New nice(process_priority.idle)
-    Public Shared ReadOnly thread_boost As nice = New nice(thread_priority.highest)
-    Public Shared ReadOnly thread_moderate As nice = New nice(thread_priority.normal)
-    Public Shared ReadOnly thread_lazy As nice = New nice(thread_priority.lowest)
+    Public Shared ReadOnly realtime As nice
+    Public Shared ReadOnly boost As nice
+    Public Shared ReadOnly moderate As nice
+    Public Shared ReadOnly lazy As nice
+    Public Shared ReadOnly process_realtime As nice
+    Public Shared ReadOnly process_boost As nice
+    Public Shared ReadOnly process_moderate As nice
+    Public Shared ReadOnly process_lazy As nice
+    Public Shared ReadOnly thread_boost As nice
+    Public Shared ReadOnly thread_moderate As nice
+    Public Shared ReadOnly thread_lazy As nice
 
-    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
-        Sub()
-            assert(DirectCast(Nothing, process_priority) = process_priority.keep)
-            assert(DirectCast(Nothing, thread_priority) = thread_priority.keep)
-        End Sub)
+    Shared Sub New()
+        assert(DirectCast(Nothing, process_priority) = process_priority.keep)
+        assert(DirectCast(Nothing, thread_priority) = thread_priority.keep)
+
+        realtime = New nice(process_priority.realtime, thread_priority.highest)
+        boost = New nice(process_priority.high, thread_priority.highest)
+        moderate = New nice(process_priority.normal, thread_priority.normal)
+        lazy = New nice(process_priority.idle, thread_priority.lowest)
+
+        process_realtime = New nice(process_priority.realtime)
+        process_boost = New nice(process_priority.high)
+        process_moderate = New nice(process_priority.normal)
+        process_lazy = New nice(process_priority.idle)
+
+        thread_boost = New nice(thread_priority.highest)
+        thread_moderate = New nice(thread_priority.normal)
+        thread_lazy = New nice(thread_priority.lowest)
+    End Sub
 
     Private ReadOnly pp As process_priority
     Private ReadOnly tp As thread_priority

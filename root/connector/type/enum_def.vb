@@ -7,19 +7,23 @@ Imports System.IO
 
 ' Use instance to allow extension methods in other projects.
 Public NotInheritable Class enum_definition(Of T)
-    Public Shared ReadOnly instance As enum_definition(Of T) = New enum_definition(Of T)()
-    Private Shared ReadOnly type As Type = GetType(T)
-    Private Shared ReadOnly _underlying_type As Type = type.GetEnumUnderlyingType()
-    Private Shared ReadOnly values As Array = [Enum].GetValues(type)
-    Private Shared ReadOnly _width As Byte = CByte(sizeof(_underlying_type))
+    Public Shared ReadOnly instance As enum_definition(Of T)
+    Private Shared ReadOnly type As Type
+    Private Shared ReadOnly _underlying_type As Type
+    Private Shared ReadOnly values As Array
+    Private Shared ReadOnly _width As Byte
 
-    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
-        Sub()
-            assert(type_info(Of T).is_enum)
-            assert(Not values Is Nothing AndAlso values.Length() >= 0)
-            bytes_serializer.fixed.register(Of T)(AddressOf instance.append_to, AddressOf instance.consume_from)
-            string_serializer.register(Of T)(AddressOf instance.write_to, AddressOf instance.read_from)
-        End Sub)
+    Shared Sub New()
+        assert(type_info(Of T).is_enum)
+        instance = New enum_definition(Of T)()
+        type = GetType(T)
+        _underlying_type = type.GetEnumUnderlyingType()
+        values = [Enum].GetValues(type)
+        assert(Not values Is Nothing AndAlso values.Length() >= 0)
+        _width = CByte(sizeof(_underlying_type))
+        bytes_serializer.fixed.register(Of T)(AddressOf instance.append_to, AddressOf instance.consume_from)
+        string_serializer.register(Of T)(AddressOf instance.write_to, AddressOf instance.read_from)
+    End Sub
 
     Public Function count() As UInt32
         Return CUInt(count_i())

@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.delegates
+Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.utils
 Imports error_type = osi.root.constants.error_type
@@ -65,10 +66,14 @@ Public NotInheritable Class async_operation
         End Function
     End Class
 
-    Private Shared ReadOnly ASYNC_OPERATION_COUNT As Int64 = counter.register_counter("ASYNC_OPERATION_COUNT")
+    Private Shared ReadOnly ASYNC_OPERATION_COUNT As Int64
     Private ar As IAsyncResult = Nothing
     Private state As async_state_t = Nothing
     Private callstack As String = Nothing
+
+    Shared Sub New()
+        ASYNC_OPERATION_COUNT = counter.register_counter("ASYNC_OPERATION_COUNT")
+    End Sub
 
     Private Sub _new(Of T)(ByVal begin As _do(Of AsyncCallback, Object, IAsyncResult),
                            ByVal [end] As _do(Of IAsyncResult, T),

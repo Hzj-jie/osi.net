@@ -36,12 +36,12 @@ Public NotInheritable Class os
         _unknown
     End Enum
 
-    Public Shared ReadOnly full_name As String = computer.Info().OSFullName()
-    Public Shared ReadOnly platform As String = computer.Info().OSPlatform()
-    Public Shared ReadOnly version As String = computer.Info().OSVersion()
-    Public Shared ReadOnly family As family_t = detect_family()
-    Public Shared ReadOnly windows_major As windows_major_t = detect_windows_major()
-    Public Shared ReadOnly windows_ver As windows_ver_t = detect_windows_ver()
+    Public Shared ReadOnly full_name As String
+    Public Shared ReadOnly platform As String
+    Public Shared ReadOnly version As String
+    Public Shared ReadOnly family As family_t
+    Public Shared ReadOnly windows_major As windows_major_t
+    Public Shared ReadOnly windows_ver As windows_ver_t
 
     Private Shared Function detect_family() As family_t
         Dim p As PlatformID = Nothing
@@ -134,6 +134,16 @@ Public NotInheritable Class os
         End If
         Return windows_ver_t._unknown
     End Function
+
+    Shared Sub New()
+        full_name = computer.Info().OSFullName()
+        platform = computer.Info().OSPlatform()
+        version = computer.Info().OSVersion()
+
+        family = detect_family()
+        windows_major = detect_windows_major()
+        windows_ver = detect_windows_ver()
+    End Sub
 
     Private Sub New()
     End Sub

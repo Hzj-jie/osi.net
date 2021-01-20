@@ -27,10 +27,9 @@ Public NotInheritable Class bit_array
 #End If
     Private _size As UInt32
 
-    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
-        Sub()
-            assert(sizeof_uint32 = sizeof_int32)
-        End Sub)
+    Shared Sub New()
+        assert(sizeof_uint32 = sizeof_int32)
+    End Sub
 
     Public Sub New()
         Me.New(0)
