@@ -32,10 +32,16 @@ Partial Public Class hasharray(Of T,
 
     <MethodImpl(method_impl_options.no_inlining)>
     Private Sub reset_array()
-        v = New array(Of vector(Of hasher_node(Of T)))(column_count())
-        For i As UInt32 = 0 To v.size() - uint32_1
-            v(i) = New vector(Of hasher_node(Of T))()
-        Next
+        If Not v Is Nothing AndAlso v.size() = column_count() Then
+            For i As UInt32 = 0 To v.size() - uint32_1
+                v(i).renew()
+            Next
+        Else
+            v = New array(Of vector(Of hasher_node(Of T)))(column_count())
+            For i As UInt32 = 0 To v.size() - uint32_1
+                v(i) = New vector(Of hasher_node(Of T))()
+            Next
+        End If
     End Sub
 
     <MethodImpl(method_impl_options.no_inlining)>
@@ -66,7 +72,7 @@ Partial Public Class hasharray(Of T,
 #If DEBUG Then
         assert(row <= max_int32)
 #End If
-        v(column).data()(CInt(row)) = value
+        v(column).replace(row, value)
     End Sub
 
     <MethodImpl(method_impl_options.no_inlining)>

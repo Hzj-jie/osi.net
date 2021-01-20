@@ -132,6 +132,11 @@ Public Class array(Of T)
     End Property
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shadows Function as_array() As T()
+        Return v
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function CloneT() As array(Of T) Implements ICloneable(Of array(Of T)).Clone
         Return MyBase.clone(Of array(Of T))()
     End Function
