@@ -61,7 +61,7 @@ Public Class cycle(Of T)
 
     Public Sub New(ByVal size As Int64, Optional ByVal try_times As Int64 = 0)
         assert(size > 0)
-        ReDim a(size - 1)
+        ReDim a(CInt(size - 1))
         If try_times <= 0 Then
             Me.try_times = size
         Else
@@ -79,7 +79,7 @@ Public Class cycle(Of T)
                 Dim p As Int64 = 0
                 p = rnd_int64(0, array_size(a))
                 For i As Int64 = 0 To try_times - 1
-                    If a(p).set(v) Then
+                    If a(CInt(p)).set(v) Then
                         Return True
                     Else
                         p += 1
@@ -90,7 +90,7 @@ Public Class cycle(Of T)
                 Next
             Else
                 For i As Int64 = 0 To try_times - 1
-                    If a(rnd_int64(0, array_size(a))).set(v) Then
+                    If a(CInt(rnd_int64(0, array_size(a)))).set(v) Then
                         s.increment()
                         Return True
                     End If
@@ -111,7 +111,7 @@ Public Class cycle(Of T)
             Dim p As Int64 = 0
             p = rnd_int64(0, array_size(a))
             For i As Int64 = 0 To array_size(a) - 1
-                If a(p).get(o) Then
+                If a(CInt(p)).get(o) Then
                     Return True
                 Else
                     p += 1
