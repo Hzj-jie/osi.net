@@ -138,7 +138,7 @@ Public NotInheritable Class map_unordered_map_perf_test
         Inherits commandline_specified_case_wrapper
 
         Public Sub New()
-            MyBase.New(repeat(New unordered_map_case(), manual_case_rounds))
+            MyBase.New(rinne(repeat(New unordered_map_case(), 100000), 200))
         End Sub
     End Class
 

@@ -13,13 +13,9 @@ Partial Public Class hasharray(Of T,
                                   _HASHER As _to_uint32(Of T),
                                   _EQUALER As _equaler(Of T))
 
-    Private Shared ReadOnly predefined_column_counts As const_array(Of UInt32)
-    Private Shared ReadOnly unique As Boolean
-
-    Shared Sub New()
-        predefined_column_counts = New const_array(Of UInt32)(doubled_prime_sequence_int32())
-        unique = +(alloc(Of _UNIQUE)())
-    End Sub
+    Private Shared ReadOnly predefined_column_counts As const_array(Of UInt32) =
+        New const_array(Of UInt32)(doubled_prime_sequence_int32())
+    Private Shared ReadOnly unique As Boolean = +(alloc(Of _UNIQUE)())
 
     Private v As array(Of vector(Of hasher_node(Of T, _HASHER, _EQUALER)))
     Private c As UInt32

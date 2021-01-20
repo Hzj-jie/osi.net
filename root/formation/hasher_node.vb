@@ -13,15 +13,10 @@ Public NotInheritable Class hasher_node(Of T,
                                            _HASHER As _to_uint32(Of T),
                                            _EQUALER As _equaler(Of T))
     Private Const uninitialized_hash_value As UInt32 = max_uint32
-    Private Shared ReadOnly hasher As _HASHER
-    Private Shared ReadOnly equaler As _equaler(Of T)
+    Private Shared ReadOnly hasher As _HASHER = alloc(Of _HASHER)()
+    Private Shared ReadOnly equaler As _equaler(Of T) = alloc(Of _EQUALER)()
     Private ReadOnly v As T
     Private hash_value As UInt32
-
-    Shared Sub New()
-        hasher = alloc(Of _HASHER)()
-        equaler = alloc(Of _EQUALER)()
-    End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal v As T)
