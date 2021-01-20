@@ -13,7 +13,7 @@ Public Class hasharray(Of T, UNIQUE As _boolean)
     Implements ICloneable, ICloneable(Of hasharray(Of T, UNIQUE))
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As array(Of vector(Of hasher_node(Of T, fast_to_uint32(Of T), default_equaler(Of T)))),
+    Protected Sub New(ByVal v As array(Of vector(Of hasher_node(Of T))),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
         MyBase.New(v, s, c)
@@ -55,7 +55,7 @@ Public Class hasharray(Of T)
     Implements ICloneable, ICloneable(Of hasharray(Of T))
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As array(Of vector(Of hasher_node(Of T, fast_to_uint32(Of T), default_equaler(Of T)))),
+    Protected Sub New(ByVal v As array(Of vector(Of hasher_node(Of T))),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
         MyBase.New(v, s, c)
@@ -93,7 +93,7 @@ Public Class multi_hasharray(Of T)
     Implements ICloneable, ICloneable(Of multi_hasharray(Of T))
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As array(Of vector(Of hasher_node(Of T, fast_to_uint32(Of T), default_equaler(Of T)))),
+    Protected Sub New(ByVal v As array(Of vector(Of hasher_node(Of T))),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
         MyBase.New(v, s, c)
