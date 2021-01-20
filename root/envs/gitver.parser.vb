@@ -88,8 +88,9 @@ Partial Public NotInheritable Class gitver
         If parse(commit_str, r) Then
             assert(Not r Is Nothing)
             Return r
+        Else
+            Return New commit_info()
         End If
-        Return New commit_info()
     End Function
 
     Private Shared Function parse(ByVal commit_str As String, ByRef commit As commit_info) As Boolean

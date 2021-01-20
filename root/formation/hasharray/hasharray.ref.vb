@@ -23,15 +23,11 @@ Partial Public Class hasharray(Of T,
                        ByVal row As UInt32)
 #If DEBUG Then
             assert(Not owner Is Nothing)
-#End If
-            Me.owner = owner
-#If DEBUG Then
             assert(column < column_count())
-#End If
-            Me.column = column
-#If DEBUG Then
             assert(row < row_count(column))
 #End If
+            Me.owner = owner
+            Me.column = column
             Me.row = row
         End Sub
 
