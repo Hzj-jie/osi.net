@@ -6,21 +6,20 @@ Option Strict On
 Imports osi.root.constants
 
 Public NotInheritable Class colorful_console_error_writer
-    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
-        Sub()
-            error_writer_ignore_types(Of colorful_console_error_writer).ignore(
+    Shared Sub New()
+        error_writer_ignore_types(Of colorful_console_error_writer).ignore(
             error_type.performance, error_type.information, error_type.deprecated)
-            AddHandler error_event.r3,
-                       Sub(err_type As error_type, s As String)
-                           If error_writer_ignore_types(Of colorful_console_error_writer).valued(err_type) Then
+        AddHandler error_event.r3,
+                   Sub(err_type As error_type, s As String)
+                       If error_writer_ignore_types(Of colorful_console_error_writer).valued(err_type) Then
 #If PocketPC OrElse Smartphone Then
-                               write(s)
+                           write(s)
 #Else
-                               colorful_write(err_type, s)
+                           colorful_write(err_type, s)
 #End If
-                           End If
-                       End Sub
-        End Sub)
+                       End If
+                   End Sub
+    End Sub
 
     Private Sub New()
     End Sub

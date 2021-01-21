@@ -38,11 +38,10 @@ Public Structure nice
     Public Shared ReadOnly thread_moderate As nice = New nice(thread_priority.normal)
     Public Shared ReadOnly thread_lazy As nice = New nice(thread_priority.lowest)
 
-    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
-        Sub()
-            assert(DirectCast(Nothing, process_priority) = process_priority.keep)
-            assert(DirectCast(Nothing, thread_priority) = thread_priority.keep)
-        End Sub)
+    Shared Sub New()
+        assert(DirectCast(Nothing, process_priority) = process_priority.keep)
+        assert(DirectCast(Nothing, thread_priority) = thread_priority.keep)
+    End Sub
 
     Private ReadOnly pp As process_priority
     Private ReadOnly tp As thread_priority

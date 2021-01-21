@@ -14,11 +14,10 @@ Public Class cycle(Of T)
         Private written As singleentry
         Private read As singleentry
 
-        Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
-            Sub()
-                Dim s As singleentry
-                assert(s.not_in_use())
-            End Sub)
+        Shared Sub New()
+            Dim s As singleentry
+            assert(s.not_in_use())
+        End Sub
 
         Public Function [set](ByVal v As T) As Boolean
             If hv.mark_in_use() Then

@@ -31,44 +31,43 @@ Public NotInheritable Class disposable
     Private Shared ReadOnly td As List(Of type_disposer) = New List(Of type_disposer)()
 
     ' The order is important.
-    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
-        Sub()
-            register_base_type(Sub(ByVal s As Stream)
-                                   If Not s Is Nothing Then
-                                       s.Flush()
-                                       s.Close()
-                                       s.Dispose()
-                                   End If
-                               End Sub)
-            register_base_type(Sub(ByVal s As WaitHandle)
-                                   If Not s Is Nothing Then
-                                       s.Close()
-                                       s.Dispose()
-                                   End If
-                               End Sub)
-            register_base_type(Sub(ByVal s As TcpClient)
-                                   If Not s Is Nothing Then
-                                       s.Close()
-                                   End If
-                               End Sub)
-            register_base_type(Sub(ByVal s As UdpClient)
-                                   If Not s Is Nothing Then
-                                       s.Close()
-                                   End If
-                               End Sub)
-            register_base_type(Sub(ByVal s As Socket)
-                                   If Not s Is Nothing Then
-                                       s.Close()
-                                       s.Dispose()
-                                   End If
-                               End Sub)
-            register_base_type(Sub(ByVal s As TextWriter)
-                                   close_writer(s)
-                               End Sub)
-            register_base_type(Sub(ByVal s As IDisposable)
-                                   s.not_null_and_dispose()
-                               End Sub)
-        End Sub)
+    Shared Sub New()
+        register_base_type(Sub(ByVal s As Stream)
+                               If Not s Is Nothing Then
+                                   s.Flush()
+                                   s.Close()
+                                   s.Dispose()
+                               End If
+                           End Sub)
+        register_base_type(Sub(ByVal s As WaitHandle)
+                               If Not s Is Nothing Then
+                                   s.Close()
+                                   s.Dispose()
+                               End If
+                           End Sub)
+        register_base_type(Sub(ByVal s As TcpClient)
+                               If Not s Is Nothing Then
+                                   s.Close()
+                               End If
+                           End Sub)
+        register_base_type(Sub(ByVal s As UdpClient)
+                               If Not s Is Nothing Then
+                                   s.Close()
+                               End If
+                           End Sub)
+        register_base_type(Sub(ByVal s As Socket)
+                               If Not s Is Nothing Then
+                                   s.Close()
+                                   s.Dispose()
+                               End If
+                           End Sub)
+        register_base_type(Sub(ByVal s As TextWriter)
+                               close_writer(s)
+                           End Sub)
+        register_base_type(Sub(ByVal s As IDisposable)
+                               s.not_null_and_dispose()
+                           End Sub)
+    End Sub
 
     ' By registering with a Type, some disposer(Of T) may be initialized with the d, so unregister usually won't take
     ' effect.

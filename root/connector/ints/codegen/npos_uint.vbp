@@ -37,62 +37,61 @@ Partial Public Structure ##TYPE##
         Return zero
     End Function
 
-    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
-        Sub()
-            assert(constants.npos < 0)
-            Dim x As ##TYPE## = Nothing
-            assert(Not x.npos())
-            assert(x.raw_value() = ##ZERO##)
+    Shared Sub New()
+        assert(constants.npos < 0)
+        Dim x As ##TYPE## = Nothing
+        assert(Not x.npos())
+        assert(x.raw_value() = ##ZERO##)
 
-            bytes_serializer.fixed.register(
-                    Function(ByVal i As ##TYPE##, ByVal o As MemoryStream) As Boolean
-                        #If Not ##ACCEPT_ZERO## Then
-                            If i.npos() Then
-                                Return bytes_serializer.append_to(##ZERO##, o)
-                            Else
-                                Return bytes_serializer.append_to(i.raw_value(), o)
-                            End If
-                        #ElseIf Not ##ACCEPT_MAX## Then
-                            If i.npos() Then
-                                Return bytes_serializer.append_to(##MAX##, o)
-                            Else
-                                Return bytes_serializer.append_to(i.raw_value(), o)
-                            End If
-                        #Else
-                            If i.npos() Then
-                                Return bytes_serializer.append_to(True, o)
-                            Else
-                                Return bytes_serializer.append_to(False, o) AndAlso
-                                       bytes_serializer.append_to(i.raw_value(), o)
-                            End If
-                        #End If
-                    End Function,
-                    Function(ByVal i As MemoryStream, ByRef o As ##TYPE##) As Boolean
-                        #If Not ##ACCEPT_ZERO## OrElse Not ##ACCEPT_MAX## Then
-                            Dim u As U##SIGNED_TYPE## = ##ZERO##
-                            If Not bytes_serializer.consume_from(i, u) Then
-                                Return False
-                            End If
-                            o = New ##TYPE##(u)
+        bytes_serializer.fixed.register(
+                Function(ByVal i As ##TYPE##, ByVal o As MemoryStream) As Boolean
+                    #If Not ##ACCEPT_ZERO## Then
+                        If i.npos() Then
+                            Return bytes_serializer.append_to(##ZERO##, o)
+                        Else
+                            Return bytes_serializer.append_to(i.raw_value(), o)
+                        End If
+                    #ElseIf Not ##ACCEPT_MAX## Then
+                        If i.npos() Then
+                            Return bytes_serializer.append_to(##MAX##, o)
+                        Else
+                            Return bytes_serializer.append_to(i.raw_value(), o)
+                        End If
+                    #Else
+                        If i.npos() Then
+                            Return bytes_serializer.append_to(True, o)
+                        Else
+                            Return bytes_serializer.append_to(False, o) AndAlso
+                                   bytes_serializer.append_to(i.raw_value(), o)
+                        End If
+                    #End If
+                End Function,
+                Function(ByVal i As MemoryStream, ByRef o As ##TYPE##) As Boolean
+                    #If Not ##ACCEPT_ZERO## OrElse Not ##ACCEPT_MAX## Then
+                        Dim u As U##SIGNED_TYPE## = ##ZERO##
+                        If Not bytes_serializer.consume_from(i, u) Then
+                            Return False
+                        End If
+                        o = New ##TYPE##(u)
+                        Return True
+                    #Else
+                        Dim n As Boolean = False
+                        If Not bytes_serializer.consume_from(i, n) Then
+                            Return False
+                        End If
+                        If n Then
+                            o = inf
                             Return True
-                        #Else
-                            Dim n As Boolean = False
-                            If Not bytes_serializer.consume_from(i, n) Then
-                                Return False
-                            End If
-                            If n Then
-                                o = inf
-                                Return True
-                            End If
-                            Dim u As U##SIGNED_TYPE## = ##ZERO##
-                            If Not bytes_serializer.consume_from(i, u) Then
-                                Return False
-                            End If
-                            o = New ##TYPE##(u)
-                            Return True
-                        #End If
-                    End Function)
-        End Sub)
+                        End If
+                        Dim u As U##SIGNED_TYPE## = ##ZERO##
+                        If Not bytes_serializer.consume_from(i, u) Then
+                            Return False
+                        End If
+                        o = New ##TYPE##(u)
+                        Return True
+                    #End If
+                End Function)
+    End Sub
 
     Private ReadOnly i As U##SIGNED_TYPE##
     Private ReadOnly n As Boolean

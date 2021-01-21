@@ -28,7 +28,9 @@ Public NotInheritable Class high_res_ticks_retriever
         Return perf_freq
     End Function
 
-    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(AddressOf ticks)
+    Shared Sub New()
+        ticks()
+    End Sub
 
     'force revise the distance during next high_res_ticks() call.
     Public Shared Sub force_revise()

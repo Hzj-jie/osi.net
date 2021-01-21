@@ -57,33 +57,32 @@ Public NotInheritable Class pair(Of FT, ST)
     Public second As ST
 #End If
 
-    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
-        Sub()
-            bytes_serializer.fixed.register(Function(ByVal i As pair(Of FT, ST), ByVal o As MemoryStream) As Boolean
-                                                Return bytes_serializer.append_to(i.first_or_null(), o) AndAlso
-                                                       bytes_serializer.append_to(i.second_or_null(), o)
-                                            End Function,
-                                            Function(ByVal i As MemoryStream, ByRef o As pair(Of FT, ST)) As Boolean
-                                                Dim f As FT = Nothing
-                                                Dim s As ST = Nothing
-                                                If bytes_serializer.consume_from(i, f) AndAlso
-                                                   bytes_serializer.consume_from(i, s) Then
-                                                    o = New pair(Of FT, ST)(f, s)
-                                                    Return True
-                                                End If
-                                                Return False
-                                            End Function)
-            json_serializer.register(Function(ByVal i As pair(Of FT, ST), ByVal o As StringWriter) As Boolean
-                                         If Not json_serializer.to_str(i.first_or_null(), o) Then
-                                             Return False
-                                         End If
-                                         o.Write(":")
-                                         If Not json_serializer.to_str(i.second_or_null(), o) Then
-                                             Return False
-                                         End If
-                                         Return True
-                                     End Function)
-        End Sub)
+    Shared Sub New()
+        bytes_serializer.fixed.register(Function(ByVal i As pair(Of FT, ST), ByVal o As MemoryStream) As Boolean
+                                            Return bytes_serializer.append_to(i.first_or_null(), o) AndAlso
+                                                   bytes_serializer.append_to(i.second_or_null(), o)
+                                        End Function,
+                                        Function(ByVal i As MemoryStream, ByRef o As pair(Of FT, ST)) As Boolean
+                                            Dim f As FT = Nothing
+                                            Dim s As ST = Nothing
+                                            If bytes_serializer.consume_from(i, f) AndAlso
+                                               bytes_serializer.consume_from(i, s) Then
+                                                o = New pair(Of FT, ST)(f, s)
+                                                Return True
+                                            End If
+                                            Return False
+                                        End Function)
+        json_serializer.register(Function(ByVal i As pair(Of FT, ST), ByVal o As StringWriter) As Boolean
+                                     If Not json_serializer.to_str(i.first_or_null(), o) Then
+                                         Return False
+                                     End If
+                                     o.Write(":")
+                                     If Not json_serializer.to_str(i.second_or_null(), o) Then
+                                         Return False
+                                     End If
+                                     Return True
+                                 End Function)
+    End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub New(ByVal first As FT, ByVal second As ST)

@@ -8,34 +8,31 @@ Imports osi.root.delegates
 
 ' A functor to implement T to string and string to T operations.
 Partial Public Class string_serializer(Of T, PROTECTOR)
-
-    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
-        Sub()
-            ' To allow T to register its own serializer in the static constructor.
-            static_constructor(Of T).execute()
-        End Sub)
+    Shared Sub New()
+        ' To allow T to register its own serializer in the static constructor.
+        static_constructor(Of T).execute()
+    End Sub
 
     Private Shared Function is_string() As Boolean
         Return type_info(Of T, type_info_operators.equal, String).v
     End Function
 
     Private NotInheritable Class object_register
-        Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
-            Sub()
-                If string_serializer.protector(Of PROTECTOR).is_global Then
-                    type_resolver(Of string_serializer(Of Object), string_serializer).assert_first_register(
-                        GetType(T),
-                        string_serializer_object(Of T).of(string_serializer(Of T).r))
-                ElseIf string_serializer.protector(Of PROTECTOR).is_json Then
-                    type_resolver(Of string_serializer(Of Object), json_serializer).assert_first_register(
-                        GetType(T),
-                        string_serializer_object(Of T).of(json_serializer(Of T).r))
-                ElseIf string_serializer.protector(Of PROTECTOR).is_uri Then
-                    type_resolver(Of string_serializer(Of Object), uri_serializer).assert_first_register(
-                        GetType(T),
-                        string_serializer_object(Of T).of(uri_serializer(Of T).r))
-                End If
-            End Sub)
+        Shared Sub New()
+            If string_serializer.protector(Of PROTECTOR).is_global Then
+                type_resolver(Of string_serializer(Of Object), string_serializer).assert_first_register(
+                    GetType(T),
+                    string_serializer_object(Of T).of(string_serializer(Of T).r))
+            ElseIf string_serializer.protector(Of PROTECTOR).is_json Then
+                type_resolver(Of string_serializer(Of Object), json_serializer).assert_first_register(
+                    GetType(T),
+                    string_serializer_object(Of T).of(json_serializer(Of T).r))
+            ElseIf string_serializer.protector(Of PROTECTOR).is_uri Then
+                type_resolver(Of string_serializer(Of Object), uri_serializer).assert_first_register(
+                    GetType(T),
+                    string_serializer_object(Of T).of(uri_serializer(Of T).r))
+            End If
+        End Sub
 
         Private Sub New()
         End Sub

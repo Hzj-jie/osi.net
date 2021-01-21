@@ -13,13 +13,12 @@ Public NotInheritable Class enum_definition(Of T)
     Private Shared ReadOnly values As Array = [Enum].GetValues(type)
     Private Shared ReadOnly _width As Byte = CByte(sizeof(_underlying_type))
 
-    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
-        Sub()
-            assert(type_info(Of T).is_enum)
-            assert(Not values Is Nothing AndAlso values.Length() >= 0)
-            bytes_serializer.fixed.register(Of T)(AddressOf instance.append_to, AddressOf instance.consume_from)
-            string_serializer.register(Of T)(AddressOf instance.write_to, AddressOf instance.read_from)
-        End Sub)
+    Shared Sub New()
+        assert(type_info(Of T).is_enum)
+        assert(Not values Is Nothing AndAlso values.Length() >= 0)
+        bytes_serializer.fixed.register(Of T)(AddressOf instance.append_to, AddressOf instance.consume_from)
+        string_serializer.register(Of T)(AddressOf instance.write_to, AddressOf instance.read_from)
+    End Sub
 
     Public Function count() As UInt32
         Return CUInt(count_i())

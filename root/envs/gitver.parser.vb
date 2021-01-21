@@ -81,10 +81,9 @@ Partial Public NotInheritable Class gitver
         Return diff
     End Function
 
-    Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
-        Sub()
-            assert(array_size(titles) = field_count)
-        End Sub)
+    Shared Sub New()
+        assert(array_size(titles) = field_count)
+    End Sub
 
     Private Shared Function parse(ByVal commit_str As String) As commit_info
         Dim r As commit_info = Nothing
