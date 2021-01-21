@@ -22,7 +22,7 @@ Public NotInheritable Class utt
     End Function
 
     Private Shared Function calculate_file_pattern() As String
-        Dim file_pattern As String
+        Dim file_pattern As String = Nothing
         If Not env_value(env_keys("utt", "file", "pattern"), file_pattern) OrElse
            file_pattern.null_or_whitespace() Then
             file_pattern = "osi.*.dll"

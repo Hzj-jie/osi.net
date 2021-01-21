@@ -15,7 +15,7 @@ Public Class file_error_writer
         Inherits application_info_writer
 
         Private Shared Function calculate_log_file() As String
-            Dim log_file As String
+            Dim log_file As String = Nothing
             If Not envs.env_value(envs.env_keys("log", "file"), log_file) Then
                 log_file = Nothing
             End If

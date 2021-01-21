@@ -48,33 +48,33 @@ Public Module _threadpool
     Public Function execute_in_managed_threadpool(ByVal d As Action, ByVal timeout_ms As Int64) As Boolean
         If d Is Nothing Then
             Return False
-        ElseIf timeout_ms < 0 OrElse timeout_ms > max_int32 Then
+        End If
+        If timeout_ms < 0 OrElse timeout_ms > max_int32 Then
             d()
             Return True
-        Else
-            Using are As AutoResetEvent = New AutoResetEvent(False)
-                Dim t As Thread = Nothing
-                queue_in_managed_threadpool(Sub()
-                                                Try
-                                                    t = current_thread()
-                                                    d()
-                                                    assert(are.Set())
-                                                Catch ex As ThreadAbortException
-                                                    If application_lifetime.running() Then
-                                                        Thread.ResetAbort()
-                                                    End If
-                                                End Try
-                                            End Sub)
-                If are.WaitOne(timeout_ms) Then
-                    Return True
-                Else
-                    timeslice_sleep_wait_when(Function() t Is Nothing)
-                    assert(t.ManagedThreadId() <> current_thread_id())
-                    t.Abort()
-                    Return False
-                End If
-            End Using
         End If
+        Using are As AutoResetEvent = New AutoResetEvent(False)
+            Dim t As Thread = Nothing
+            queue_in_managed_threadpool(Sub()
+                                            Try
+                                                t = current_thread()
+                                                d()
+                                                assert(are.Set())
+                                            Catch ex As ThreadAbortException
+                                                If application_lifetime.running() Then
+                                                    Thread.ResetAbort()
+                                                End If
+                                            End Try
+                                        End Sub)
+            If are.WaitOne(CInt(timeout_ms)) Then
+                Return True
+            Else
+                timeslice_sleep_wait_when(Function() t Is Nothing)
+                assert(t.ManagedThreadId() <> current_thread_id())
+                t.Abort()
+                Return False
+            End If
+        End Using
     End Function
 
     Public Function execute_in_managed_threadpool(Of T)(ByVal d As Func(Of T),

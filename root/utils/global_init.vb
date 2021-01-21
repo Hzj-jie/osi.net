@@ -28,7 +28,7 @@ Public NotInheritable Class global_init
 
     Private Shared Sub execute_init(ByVal t As Type)
         assert(Not t Is Nothing)
-        assert(Not t.is_unspecified_generic_type())
+        assert(Not t.is_unspecified_generic_type(), t)
         Dim m As invoker(Of Action) = Nothing
         invoker.of(m).
             with_type(t).
