@@ -61,7 +61,7 @@ Friend NotInheritable Class bytes_serializer_registry2
                                             ' The Decimal.GetBits() always uses little endian.
                                             For j As Int32 = 0 To array_size_i(b) - 1
                                                 If Not o.write(BitConverter.GetBytes(
-                                                               endian.to_little_endian(b(j)))) Then
+                                                                   endian.to_little_endian(b(j)))) Then
                                                     Return False
                                                 End If
                                             Next
