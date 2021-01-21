@@ -181,6 +181,7 @@
     <Compile Include="shared_ctor_access_shared_perf.vb" />
     <Compile Include="shared_ctor_callstack_behavior_test.vb" />
     <Compile Include="shared_ctor_perf.vb" />
+    <Compile Include="shared_ctor_behavior_test.vb" />
     <Compile Include="static_constructor_test.vb" />
     <Compile Include="strindexof_test.vb" />
     <Compile Include="stringbuilder_perf_test.vb" />
