@@ -8,7 +8,11 @@ Imports System.IO
 Public NotInheritable Class type_string_serializer
     Inherits type_string_serializer(Of string_serializer)
 
-    Public Shared ReadOnly r As type_string_serializer = New type_string_serializer()
+    Public Shared ReadOnly r As type_string_serializer
+
+    Shared Sub New()
+        r = New type_string_serializer()
+    End Sub
 
     Private Sub New()
     End Sub
@@ -26,17 +30,24 @@ Public NotInheritable Class type_json_serializer
         Return MyBase.serializer(type, o)
     End Function
 
-    Public Shared ReadOnly r As type_json_serializer = New type_json_serializer()
-    Private Shared ReadOnly array_serializer As string_serializer_object(Of Array, json_serializer(Of Array)) =
-        string_serializer_object(Of Array).of(json_serializer(Of Array).r)
+    Public Shared ReadOnly r As type_json_serializer
+    Private Shared ReadOnly array_serializer As string_serializer_object(Of Array, json_serializer(Of Array))
+
+    Shared Sub New()
+        r = New type_json_serializer()
+        array_serializer = string_serializer_object(Of Array).of(json_serializer(Of Array).r)
+    End Sub
 
     Private Sub New()
     End Sub
 End Class
 
 Public Class type_string_serializer(Of PROTECTOR)
-    Private Shared ReadOnly ss As type_resolver(Of string_serializer(Of Object)) =
-        type_resolver(Of string_serializer(Of Object), PROTECTOR).r
+    Private Shared ReadOnly ss As type_resolver(Of string_serializer(Of Object))
+
+    Shared Sub New()
+        ss = type_resolver(Of string_serializer(Of Object), PROTECTOR).r
+    End Sub
 
     Public Overridable Function serializer(ByVal type As Type, ByRef o As string_serializer(Of Object)) As Boolean
         Return ss.from_type(type, o)

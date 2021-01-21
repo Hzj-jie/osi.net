@@ -9,13 +9,11 @@ Imports osi.root.constants
 
 Public NotInheritable Class chunk
     Public Shared ReadOnly head_size As UInt32 = (sizeof_uint32 << 1)
-    Private Shared ReadOnly checksum As UInt32 = calculate_checksum()
+    Private Shared ReadOnly checksum As UInt32
 
-    Private Shared Function calculate_checksum() As UInt32
-        Dim checksum As UInt32
+    Shared Sub New()
         assert(bytes_serializer.from_bytes(Text.Encoding.Unicode().GetBytes("HH"), checksum))
-        Return checksum
-    End Function
+    End Sub
 
     Public Shared Function append_to(ByVal v() As Byte, ByVal ms As MemoryStream) As Boolean
         If Not bytes_serializer.append_to(array_size(v), ms) OrElse

@@ -43,7 +43,11 @@ Public NotInheritable Class thread_static_implementation_of(Of T)
     Private NotInheritable Class impl
         Inherits implementation_of(Of T)
 
-        Public Shared Shadows ReadOnly [default] As impl = New impl()
+        Public Shared Shadows ReadOnly [default] As impl
+
+        Shared Sub New()
+            [default] = New impl()
+        End Sub
 
         Public Overrides Function resolver(ByRef r As Func(Of T)) As Boolean
             Return thread_static_resolver(Of Func(Of T), impl).resolve(r)

@@ -6,8 +6,11 @@ Option Strict On
 Imports osi.root.constants
 
 Public NotInheritable Class type_equaler
-    Private Shared ReadOnly ss As type_resolver(Of Func(Of Object, Object, Boolean)) =
-        type_resolver(Of Func(Of Object, Object, Boolean)).default
+    Private Shared ReadOnly ss As type_resolver(Of Func(Of Object, Object, Boolean))
+
+    Shared Sub New()
+        ss = type_resolver(Of Func(Of Object, Object, Boolean)).default
+    End Sub
 
     Public Shared Function defined(ByVal i As Type, ByVal j As Type) As Boolean
         Return ss.registered(typed(i, j))

@@ -112,7 +112,7 @@ Public Module _cast
 
 #If cached_cast Then
     Private Structure runtime_casting_cache(Of T, IT)
-        Private Shared ReadOnly c As _do_val_ref(Of IT, T, Boolean) = create_delegate()
+        Private Shared ReadOnly c As _do_val_ref(Of IT, T, Boolean)
 
         Private Shared Function select_casting(ByVal ms() As MethodInfo,
                                                ByVal itt As Type,
@@ -194,15 +194,13 @@ Public Module _cast
             Return True
         End Function
 
-        Private Shared Function create_delegate() As _do_val_ref(Of IT, T, Boolean)
-            Dim c As _do_val_ref(Of IT, T, Boolean) = Nothing
+        Shared Sub New()
             Dim t As Boolean = False
             t = select_casting(Of IT)(c) OrElse
-                    select_casting(Of T)(c) OrElse
-                    select_casting(c)
+                select_casting(Of T)(c) OrElse
+                select_casting(c)
             assert(Not c Is Nothing)
-            Return c
-        End Function
+        End Sub
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Function cast(ByVal i As IT, ByRef o As T) As Boolean
@@ -285,7 +283,11 @@ Public Module _cast
     End Function
 
     Public NotInheritable Class cast_type_inferrer(Of T)
-        Public Shared ReadOnly instance As cast_type_inferrer(Of T) = New cast_type_inferrer(Of T)()
+        Public Shared ReadOnly instance As cast_type_inferrer(Of T)
+
+        Shared Sub New()
+            instance = New cast_type_inferrer(Of T)()
+        End Sub
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function from(Of IT)(ByVal i As IT, Optional ByVal require_assert As Boolean = True) As T

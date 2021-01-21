@@ -61,11 +61,5 @@ Partial Public NotInheritable Class assert_which
                 Return 0
             End Try
         End Function
-
-        <MethodImpl(method_impl_options.aggressive_inlining)>
-        Public Function is_non_negative() As Int64
-            assert(i >= 0)
-            Return i
-        End Function
     End Structure
 End Class

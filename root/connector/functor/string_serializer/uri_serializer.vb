@@ -40,7 +40,11 @@ End Class
 Public NotInheritable Class uri_serializer(Of T)
     Inherits string_serializer(Of T, uri_serializer(Of T))
 
-    Public Shared ReadOnly r As uri_serializer(Of T) = New uri_serializer(Of T)()
+    Public Shared ReadOnly r As uri_serializer(Of T)
+
+    Shared Sub New()
+        r = New uri_serializer(Of T)()
+    End Sub
 
     ' TODO: Test
     Protected Overrides Function to_str() As Func(Of T, StringWriter, Boolean)

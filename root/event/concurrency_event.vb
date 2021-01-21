@@ -1,12 +1,9 @@
 ﻿
-Option Explicit On
-Option Infer Off
-Option Strict On
-
+Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.template
 Imports osi.root.delegates
 Imports osi.root.lock
-Imports osi.root.template
 
 Public Class auto_reset_concurrency_event
     Inherits concurrency_event(Of _true)
@@ -29,10 +26,14 @@ End Class
 Public Class concurrency_event(Of AutoReset As _boolean)
     Implements attachable_event
 
-    Private Shared ReadOnly ar As Boolean = +(alloc(Of AutoReset)())
+    Private Shared ReadOnly ar As Boolean
     Public ReadOnly concurrency As UInt32
     Private ReadOnly e As action_event(Of _true)
     Private ReadOnly i As atomic_int
+
+    Shared Sub New()
+        ar = +(alloc(Of AutoReset)())
+    End Sub
 
     Public Sub New(Optional ByVal concurrency As UInt32 = 1)
         assert(concurrency > 0)

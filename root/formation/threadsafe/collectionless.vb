@@ -4,9 +4,14 @@ Imports osi.root.connector
 Imports lock_t = osi.root.lock.slimlock.monitorlock
 
 Public Class collectionless(Of T)
+    Private Shared ReadOnly null As T
     Private ReadOnly v As vector(Of T)
     Private ReadOnly f As [set](Of UInt32)
     Private l As lock_t
+
+    Shared Sub New()
+        null = Nothing
+    End Sub
 
     Public Sub New()
         v = New vector(Of T)()
@@ -50,7 +55,7 @@ Public Class collectionless(Of T)
 
     Public Sub [erase](ByVal p As UInt32)
         l.wait()
-        v(p) = [default](Of T).null
+        v(p) = null
         f.emplace(p)
         l.release()
     End Sub

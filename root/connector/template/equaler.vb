@@ -41,8 +41,13 @@ End Class
 Public NotInheritable Class equaler_comparer(Of T, EQUALER As _equaler(Of T))
     Implements IEqualityComparer(Of T)
 
-    Public Shared ReadOnly instance As equaler_comparer(Of T, EQUALER) = New equaler_comparer(Of T, EQUALER)()
-    Private Shared ReadOnly e As EQUALER = alloc(Of EQUALER)()
+    Public Shared ReadOnly instance As equaler_comparer(Of T, EQUALER)
+    Private Shared ReadOnly e As EQUALER
+
+    Shared Sub New()
+        instance = New equaler_comparer(Of T, EQUALER)()
+        e = alloc(Of EQUALER)()
+    End Sub
 
     Private Sub New()
     End Sub

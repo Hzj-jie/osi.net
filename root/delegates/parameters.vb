@@ -4,14 +4,18 @@ Option Infer Off
 Option Strict On
 
 'placeholder
-Public NotInheritable Class parameters
-    Public Shared ReadOnly null As parameters = New parameters()
+Public Class parameters
+    Public Shared ReadOnly null As parameters
+
+    Shared Sub New()
+        null = New parameters()
+    End Sub
 
     Private Sub New()
     End Sub
 End Class
 
-Public NotInheritable Class parameters(Of T)
+Public Class parameters(Of T)
     Public ReadOnly v As T
 
     Public Sub New(ByVal v As T)
@@ -19,7 +23,7 @@ Public NotInheritable Class parameters(Of T)
     End Sub
 End Class
 
-Public NotInheritable Class parameters(Of T1, T2)
+Public Class parameters(Of T1, T2)
     Public ReadOnly v1 As T1
     Public ReadOnly v2 As T2
 
@@ -29,7 +33,7 @@ Public NotInheritable Class parameters(Of T1, T2)
     End Sub
 End Class
 
-Public NotInheritable Class parameters(Of T1, T2, T3)
+Public Class parameters(Of T1, T2, T3)
     Public ReadOnly v1 As T1
     Public ReadOnly v2 As T2
     Public ReadOnly v3 As T3

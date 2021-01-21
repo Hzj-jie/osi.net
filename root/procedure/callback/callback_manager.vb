@@ -7,7 +7,11 @@ Imports osi.root.connector
 Imports osi.root.threadpool
 
 Partial Public NotInheritable Class callback_manager
-    Public Shared ReadOnly [global] As callback_manager = New callback_manager()
+    Public Shared ReadOnly [global] As callback_manager = Nothing
+
+    Shared Sub New()
+        [global] = New callback_manager()
+    End Sub
 
     Public Shared Function current_callback_action() As callback_action
         Return callback_action.current()

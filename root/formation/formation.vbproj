@@ -210,6 +210,7 @@
     <None Include="codegen\first_const_fast_pair.vbp" />
     <None Include="codegen\first_const_pair.vbp" />
     <None Include="codegen\hasharray.copy_constructor.vbp" />
+    <None Include="codegen\hashtable.copy_constructor.vbp" />
     <None Include="codegen\iterator.ext.vbp" />
     <None Include="codegen\iterator.imports.vbp" />
     <None Include="codegen\iterator_to_enumerator.vbp" />

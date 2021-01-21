@@ -8,11 +8,18 @@ Imports osi.root.constants
 ' A class to retrieve ticks. The public functions should not be expected to return data which can be converted to a
 ' human readable format. All the public functions are thread-safe.
 Partial Public Class tick_clock
-    Public Shared ReadOnly low_resolution As tick_clock = New low_res_tick_clock()
-    Public Shared ReadOnly normal_resolution As tick_clock = New normal_res_tick_clock()
-    Public Shared ReadOnly high_resolution As tick_clock = New high_res_tick_clock()
-    Public Shared ReadOnly [default] As tick_clock = low_resolution
+    Public Shared ReadOnly low_resolution As tick_clock
+    Public Shared ReadOnly normal_resolution As tick_clock
+    Public Shared ReadOnly high_resolution As tick_clock
+    Public Shared ReadOnly [default] As tick_clock
     Private ReadOnly type_name As String
+
+    Shared Sub New()
+        low_resolution = New low_res_tick_clock()
+        normal_resolution = New normal_res_tick_clock()
+        high_resolution = New high_res_tick_clock()
+        [default] = low_resolution
+    End Sub
 
     Protected Sub New()
         type_name = Me.GetType().Name()

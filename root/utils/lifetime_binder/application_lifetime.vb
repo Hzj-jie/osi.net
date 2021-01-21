@@ -6,8 +6,11 @@ Imports osi.root.lock
 Public Class application_lifetime_binder(Of T As Class)
     Inherits lifetime_binder(Of T)
 
-    Public Shared Shadows ReadOnly instance As application_lifetime_binder(Of T) =
-        New application_lifetime_binder(Of T)()
+    Public Shared Shadows ReadOnly instance As application_lifetime_binder(Of T)
+
+    Shared Sub New()
+        instance = New application_lifetime_binder(Of T)()
+    End Sub
 
     Protected Sub New()
         MyBase.New()
@@ -15,15 +18,12 @@ Public Class application_lifetime_binder(Of T As Class)
     End Sub
 End Class
 
-Public NotInheritable Class application_lifetime_binder
+Public Class application_lifetime_binder
     Inherits application_lifetime_binder(Of IDisposable)
-
-    Private Sub New()
-    End Sub
 End Class
 
-Public NotInheritable Class application_lifetime
-    Private Shared ReadOnly e As expiration_controller.settable = create_settable()
+Public Class application_lifetime
+    Private Shared ReadOnly e As expiration_controller.settable
 
     Public Shared Function expiration_controller() As expiration_controller
         Return e
@@ -45,10 +45,9 @@ Public NotInheritable Class application_lifetime
         application_lifetime_binder.instance.insert(make_disposer(Function() 0, disposer:=Sub(i) v()))
     End Sub
 
-    Private Shared Function create_settable() As expiration_controller.settable
-        Dim r As expiration_controller.settable = lock.expiration_controller.settable.[New]()
-        assert(r.alive())
-        stopping_handle(Sub() r.stop())
-        Return r
-    End Function
+    Shared Sub New()
+        e = lock.expiration_controller.settable.[New]()
+        assert(e.alive())
+        stopping_handle(Sub() e.stop())
+    End Sub
 End Class

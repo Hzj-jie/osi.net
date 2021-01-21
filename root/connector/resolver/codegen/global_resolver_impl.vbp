@@ -1,3 +1,7 @@
 
-    Private Shared ReadOnly r As thread_safe_resolver(Of T) = New thread_safe_resolver(Of T)()
+    Private Shared ReadOnly r As thread_safe_resolver(Of T)
+
+    Shared Sub New()
+        r = New thread_safe_resolver(Of T)()
+    End Sub
 

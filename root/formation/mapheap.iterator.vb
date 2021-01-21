@@ -30,7 +30,11 @@ Partial Public Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY), HEAP_KEY As 
     Partial Public Structure iterator
         Implements IComparable(Of iterator), IComparable
 
-        Public Shared ReadOnly [end] As iterator = New iterator()
+        Public Shared ReadOnly [end] As iterator
+
+        Shared Sub New()
+            [end] = New iterator()
+        End Sub
 
         Private ReadOnly p As pair(Of HEAP_KEY, MAP_KEY)
 

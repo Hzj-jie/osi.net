@@ -168,18 +168,20 @@ Public NotInheritable Class endian
     End Function
 
     Private NotInheritable Class reverse_supported_cache(Of T)
-        Public Shared ReadOnly v As Boolean =
-            type_info(Of T).is_number AndAlso Not type_info(Of T, type_info_operators.equal, Decimal).v
+        Public Shared ReadOnly v As Boolean
+
+        Shared Sub New()
+            v = type_info(Of T).is_number AndAlso Not type_info(Of T, type_info_operators.equal, Decimal).v
+        End Sub
 
         Private Sub New()
         End Sub
     End Class
 
     Private NotInheritable Class reverse_cache(Of T)
-        Public Shared ReadOnly f As Func(Of T, T) = calculate_f()
+        Public Shared ReadOnly f As Func(Of T, T)
 
-        Private Shared Function calculate_f() As Func(Of T, T)
-            Dim f As Func(Of T, T) = Nothing
+        Shared Sub New()
             assert(supported(Of T)())
             If type_info(Of T, type_info_operators.equal, SByte).v Then
                 f = c(Of SByte)(AddressOf reverse)
@@ -206,9 +208,7 @@ Public NotInheritable Class endian
             Else
                 assert(False)
             End If
-            assert(Not f Is Nothing)
-            Return f
-        End Function
+        End Sub
 
         Private Shared Function c(Of VT)(ByVal f As Func(Of VT, VT)) As Func(Of T, T)
             assert(Not f Is Nothing)
