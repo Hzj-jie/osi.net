@@ -58,6 +58,72 @@ Public NotInheritable Class shared_ctor_behavior_test
         assertion.is_true(B_holder.v)
     End Sub
 
+    Private NotInheritable Class C_holder
+        Public Shared v As Boolean
+    End Class
+
+    Private NotInheritable Class C_executor
+        Public Shared Function execute() As Int32
+            C_holder.v = True
+            Return 10
+        End Function
+
+        Private Sub New()
+        End Sub
+    End Class
+
+    Private NotInheritable Class C
+        Private Shared ReadOnly executor As Int32 = C_executor.execute()
+
+        Public Shared Sub init()
+        End Sub
+    End Class
+
+    <test>
+    Private Shared Sub wont_trigger_shared_variable_if_not_using_constructor()
+        assertion.is_false(C_holder.v)
+        C.init()
+        ' If init() is inlining, the executor construction will be ignored.
+#If DEBUG Then
+        assertion.is_true(C_holder.v)
+#Else
+        assertion.is_false(C_holder.v)
+#End If
+    End Sub
+
+    Private NotInheritable Class D_holder
+        Public Shared v As Boolean
+    End Class
+
+    Private NotInheritable Class D_executor
+        Public Shared Function execute() As Int32
+            D_holder.v = True
+            Return 0
+        End Function
+
+        Private Sub New()
+        End Sub
+    End Class
+
+    Private NotInheritable Class D
+        Private Shared ReadOnly executor As Int32 = D_executor.execute()
+
+        Public Shared Sub init()
+        End Sub
+    End Class
+
+    <test>
+    Private Shared Sub wont_trigger_shared_variable_if_return_default()
+        assertion.is_false(D_holder.v)
+        D.init()
+        ' If init() is inlining, the executor construction will be ignored.
+#If DEBUG Then
+        assertion.is_true(D_holder.v)
+#Else
+        assertion.is_false(D_holder.v)
+#End If
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
