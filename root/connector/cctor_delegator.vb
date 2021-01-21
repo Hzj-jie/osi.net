@@ -8,4 +8,7 @@ Public NotInheritable Class cctor_delegator
         assert(Not v Is Nothing)
         v()
     End Sub
+
+    Public Sub init()
+    End Sub
 End Class
