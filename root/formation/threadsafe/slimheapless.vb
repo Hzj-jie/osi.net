@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.Threading
 Imports osi.root.connector
+Imports osi.root.envs
 Imports osi.root.lock
 
 Public NotInheritable Class slimheapless(Of T)

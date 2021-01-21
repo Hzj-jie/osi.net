@@ -1,12 +1,16 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Diagnostics
 Imports System.Runtime.CompilerServices
 Imports System.Threading
-Imports osi.root.delegates
-Imports osi.root.formation
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.envs
+Imports osi.root.formation
 Imports osi.root.lock
 
 Public Module _threadpool
