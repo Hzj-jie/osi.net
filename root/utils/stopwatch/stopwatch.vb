@@ -7,11 +7,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 Partial Public Class stopwatch
-    Private Shared ReadOnly DELAY As Int64 = 0
-
-    Shared Sub New()
-        DELAY = counter.register_average_and_last_average("STOPWATCH_DELAY_MS")
-    End Sub
+    Private Shared ReadOnly DELAY As Int64 = counter.register_average_and_last_average("STOPWATCH_DELAY_MS")
 
     Private Shared Function push(ByVal p As Func(Of Func(Of Boolean), Boolean), ByVal e As [event]) As Boolean
         assert(Not p Is Nothing)

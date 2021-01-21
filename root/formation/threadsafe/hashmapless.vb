@@ -42,7 +42,7 @@ Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T),
                             KEY_TO_INDEX As _to_uint32(Of KEY_T))
     Implements ICloneable, ICloneable(Of hashmapless(Of KEY_T, VALUE_T, KEY_TO_INDEX))
 
-    Private Shared ReadOnly _KEY_TO_INDEX As KEY_TO_INDEX = Nothing
+    Private Shared ReadOnly _KEY_TO_INDEX As KEY_TO_INDEX = alloc(Of KEY_TO_INDEX)()
     Private ReadOnly hash_size As UInt32 = 0
     Private ReadOnly data() As unordered_map(Of KEY_T, VALUE_T)
     Private ReadOnly _lock() As lock_t
@@ -71,10 +71,6 @@ Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T),
         For i As Int32 = 0 To CInt(hash_size) - 1
             data(i).clear()
         Next
-    End Sub
-
-    Shared Sub New()
-        _KEY_TO_INDEX = alloc(Of KEY_TO_INDEX)()
     End Sub
 
     Public Sub New(ByVal hash_size As UInt32)

@@ -10,8 +10,8 @@ Imports osi.root.constants
 Partial Public NotInheritable Class invoker(Of delegate_t)
     Inherits invocable(Of delegate_t)
 
-    Private Shared ReadOnly dt As Type
-    Private Shared ReadOnly is_delegate_undefined As Boolean
+    Private Shared ReadOnly dt As Type = GetType(delegate_t)
+    Private Shared ReadOnly is_delegate_undefined As Boolean = (dt Is GetType(invoker.undefined_delegate_type))
     Private ReadOnly mi As MethodInfo
     Private ReadOnly m As delegate_t
     Private ReadOnly match_d As Boolean
@@ -24,12 +24,6 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
     ' provided.
     ' !pre_binding && !post_binding: The delegate_t is undefined_delegate_type or the delegate_t does not match the
     ' signature, only invoke() can be used.
-
-    Shared Sub New()
-        assert(GetType(delegate_t).is(GetType([Delegate])))
-        dt = GetType(delegate_t)
-        is_delegate_undefined = (dt Is GetType(invoker.undefined_delegate_type))
-    End Sub
 
     Public Shared Function [New](ByVal t As Type,
                                  ByVal binding_flags As BindingFlags,
@@ -103,6 +97,7 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
                     ByVal m As delegate_t,
                     ByVal match_d As Boolean,
                     ByVal obj As Object)
+        assert(GetType(delegate_t).is(GetType([Delegate])))
         assert(Not mi Is Nothing)
         If is_delegate_undefined Then
             assert(m Is Nothing)

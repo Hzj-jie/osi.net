@@ -92,11 +92,9 @@ Partial Public NotInheritable Class streams
             Private ReadOnly i As container_operator(Of T).enumerator
             Private ReadOnly f As Func(Of T, R)
 
-            Shared Sub New()
-                assert(Not GetType(R).generic_type_is(GetType(container_operator(Of ))))
-            End Sub
-
             Public Sub New(ByVal i As container_operator(Of T).enumerator, ByVal f As Func(Of T, R))
+                assert(Not GetType(R).generic_type_is(GetType(container_operator(Of ))))
+
                 assert(Not i Is Nothing)
                 assert(Not f Is Nothing)
                 Me.i = i

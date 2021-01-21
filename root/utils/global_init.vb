@@ -13,14 +13,9 @@ Imports global_init_attribute = osi.root.constants.global_initAttribute
 Imports lock_t = osi.root.lock.slimlock.monitorlock
 
 Public NotInheritable Class global_init
-    Private Shared ReadOnly times As atomic_int
-    Private Shared ReadOnly inited As [set](Of comparable_type)
+    Private Shared ReadOnly times As atomic_int = New atomic_int()
+    Private Shared ReadOnly inited As [set](Of comparable_type) = New [set](Of comparable_type)()
     Private Shared initiating As lock_t
-
-    Shared Sub New()
-        times = New atomic_int()
-        inited = New [set](Of comparable_type)()
-    End Sub
 
     Public Shared Function init_times() As Int32
         Return (+times)

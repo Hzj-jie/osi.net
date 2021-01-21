@@ -11,24 +11,15 @@ Imports osi.root.formation
 Imports osi.root.lock
 
 Partial Public NotInheritable Class queue_runner
-    Public Shared ReadOnly thread_count As UInt32
-    Private Shared ReadOnly LENGTH As Int64
-    Private Shared ReadOnly INTERVAL As Int64
-    Private Shared ReadOnly USED As Int64
-    Private Shared ReadOnly q As qless2(Of Func(Of Boolean))
-    Private Shared ReadOnly are As AutoResetEvent
+    Public Shared ReadOnly thread_count As UInt32 = determine_thread_count()
+    Private Shared ReadOnly LENGTH As Int64 = counter.register_average_and_last_average("QUEUE_RUNNER_LENGTH")
+    Private Shared ReadOnly INTERVAL As Int64 = counter.register_average_and_last_average("QUEUE_RUNNER_INTERVAL_TICKS")
+    Private Shared ReadOnly USED As Int64 = counter.register_average_and_last_average("QUEUE_RUNNER_USED_TICKS")
+    Private Shared ReadOnly q As qless2(Of Func(Of Boolean)) = New qless2(Of Func(Of Boolean))()
+    Private Shared ReadOnly are As AutoResetEvent = If(busy_wait, Nothing, New AutoResetEvent(False))
     <ThreadStatic()> Private Shared current_thread As Boolean
 
     Shared Sub New()
-        thread_count = determine_thread_count()
-        assert(thread_count > 0)
-        LENGTH = counter.register_average_and_last_average("QUEUE_RUNNER_LENGTH")
-        INTERVAL = counter.register_average_and_last_average("QUEUE_RUNNER_INTERVAL_TICKS")
-        USED = counter.register_average_and_last_average("QUEUE_RUNNER_USED_TICKS")
-        q = New qless2(Of Func(Of Boolean))()
-        If Not busy_wait Then
-            are = New AutoResetEvent(False)
-        End If
         start()
         application_lifetime.stopping_handle(Sub()
                                                  If Not are Is Nothing Then

@@ -3,12 +3,8 @@ Imports osi.root.connector
 Imports System.Threading
 
 Public Structure forks
-    Private Const f As Int32 = 0
+    Private Const f As Int32 = DirectCast(Nothing, Int32)
     Private state As Int32
-
-    Shared Sub New()
-        assert(f = DirectCast(Nothing, Int32))
-    End Sub
 
     Public Function free() As Boolean
         Return state = f

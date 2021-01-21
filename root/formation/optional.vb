@@ -35,11 +35,7 @@ Public NotInheritable Class [optional]
     End Sub
 
     Private NotInheritable Class empty_cache(Of T)
-        Public Shared ReadOnly v As [optional](Of T)
-
-        Shared Sub New()
-            v = New [optional](Of T)()
-        End Sub
+        Public Shared ReadOnly v As [optional](Of T) = New [optional](Of T)()
 
         Private Sub New()
         End Sub
@@ -50,15 +46,13 @@ Public Structure [optional](Of T)
     Private ReadOnly b As Boolean
     Private ReadOnly v As T
 
-    Shared Sub New()
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Sub New(ByVal b As Boolean, ByVal v As T)
         assert(Not (New [optional](Of T)()).b)
         If Not type_info(Of T).is_valuetype Then
             assert((New [optional](Of T)()).v Is Nothing)
         End If
-    End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Sub New(ByVal b As Boolean, ByVal v As T)
         Me.b = b
         Me.v = v
         assert(Not b OrElse Not v Is Nothing)

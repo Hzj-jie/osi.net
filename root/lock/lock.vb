@@ -6,8 +6,8 @@ Option Strict On
 Imports System.DateTime
 Imports System.Runtime.CompilerServices
 Imports System.Threading
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.lock.slimlock
 
@@ -16,12 +16,17 @@ Public Structure lock(Of T As {Structure, islimlock})
     Private owner_tid As Int32
     Private l As T
 
-    Shared Sub New()
-        assert(INVALID_THREAD_ID = DirectCast(Nothing, Int32))
-        Dim l As T = Nothing
-        assert(l.can_thread_owned())
-        assert(Not TypeOf l Is ilock)
-    End Sub
+    <global_init(global_init_level.foundamental)>
+    Private NotInheritable Class assertions
+        Private Shared Sub init()
+            Dim l As T = Nothing
+            assert(l.can_thread_owned())
+            assert(Not TypeOf l Is ilock)
+        End Sub
+
+        Private Sub New()
+        End Sub
+    End Class
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function held_in_thread() As Boolean Implements ilock.held_in_thread

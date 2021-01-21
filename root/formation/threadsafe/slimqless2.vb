@@ -11,20 +11,12 @@ Imports osi.root.envs
 Imports osi.root.lock
 
 Public NotInheritable Class slimqless2(Of T)
-    Shared Sub New()
-        should_yield()
-    End Sub
-
     Private Structure value_status
-        Private Const nv As Int32 = 0
-        Private Const bw As Int32 = 1
-        Private Const aw As Int32 = 2
+        Private Const nv As Int32 = DirectCast(Nothing, Int32)
+        Private Const bw As Int32 = nv + 1
+        Private Const aw As Int32 = bw + 1
 
         Private v As Int32
-
-        Shared Sub New()
-            assert(DirectCast(Nothing, Int32) = nv)
-        End Sub
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function mark_value_writting() As Boolean

@@ -9,7 +9,7 @@ Imports osi.root.envs
 
 <global_init(global_init_level.other)>
 Friend NotInheritable Class application_info_logging
-    Shared Sub New()
+    Private Shared Sub init()
         raise_error(error_type.application,
                     "start error_handle for process ",
                     application_name,
@@ -80,9 +80,6 @@ Friend NotInheritable Class application_info_logging
                     os.platform,
                     ", version ",
                     os.version)
-    End Sub
-
-    Private Shared Sub init()
     End Sub
 
     Private Sub New()

@@ -13,11 +13,7 @@ Public NotInheritable Class pather
                        default_this_level_paths,
                        default_parent_level_paths)
 
-    Public Shared Shadows ReadOnly [default] As pather
-
-    Shared Sub New()
-        [default] = New pather()
-    End Sub
+    Public Shared Shadows ReadOnly [default] As pather = New pather()
 
     Private Sub New()
     End Sub
@@ -25,13 +21,9 @@ Public NotInheritable Class pather
     Public NotInheritable Class default_path_separators
         Inherits _strings
 
-        Private Shared ReadOnly r() As String
-
-        Shared Sub New()
-            'do not use DirectorySeparatorChar to avoid difference between platforms
-            'and windows can support c:/windows/
-            r = {character.left_slash, character.right_slash}
-        End Sub
+        'do not use DirectorySeparatorChar to avoid difference between platforms
+        'and windows can support c:/windows/
+        Private Shared ReadOnly r() As String = {character.left_slash, character.right_slash}
 
         Protected Overrides Function at() As String()
             Return r
@@ -41,11 +33,7 @@ Public NotInheritable Class pather
     Public NotInheritable Class default_this_level_paths
         Inherits _strings
 
-        Private Shared ReadOnly r() As String
-
-        Shared Sub New()
-            r = {filesystem.this_level_path_mark}
-        End Sub
+        Private Shared ReadOnly r() As String = {filesystem.this_level_path_mark}
 
         Protected Overrides Function at() As String()
             Return r
@@ -55,11 +43,7 @@ Public NotInheritable Class pather
     Public NotInheritable Class default_parent_level_paths
         Inherits _strings
 
-        Private Shared ReadOnly r() As String
-
-        Shared Sub New()
-            r = {filesystem.parent_level_path_mark}
-        End Sub
+        Private Shared ReadOnly r() As String = {filesystem.parent_level_path_mark}
 
         Protected Overrides Function at() As String()
             Return r
@@ -70,23 +54,17 @@ End Class
 Public Class pather(Of _PATH_SEPARATORS As _strings,
                        _THIS_LEVEL_PATHS As _strings,
                        _PARENT_LEVEL_PATHS As _strings)
-    Private Shared ReadOnly path_separators() As String
-    Private Shared ReadOnly this_level_paths() As String
-    Private Shared ReadOnly parent_level_paths() As String
+    Private Shared ReadOnly path_separators() As String = +(alloc(Of _PATH_SEPARATORS)())
+    Private Shared ReadOnly this_level_paths() As String = +(alloc(Of _THIS_LEVEL_PATHS)())
+    Private Shared ReadOnly parent_level_paths() As String = +(alloc(Of _PARENT_LEVEL_PATHS)())
 
-    Public Shared ReadOnly [default] As pather(Of _PATH_SEPARATORS, _THIS_LEVEL_PATHS, _PARENT_LEVEL_PATHS)
-
-    Shared Sub New()
-        path_separators = +(alloc(Of _PATH_SEPARATORS)())
-        assert(Not isemptyarray(path_separators))
-        this_level_paths = +(alloc(Of _THIS_LEVEL_PATHS)())
-        assert(Not isemptyarray(this_level_paths))
-        parent_level_paths = +(alloc(Of _PARENT_LEVEL_PATHS)())
-        assert(Not isemptyarray(parent_level_paths))
-        [default] = New pather(Of _PATH_SEPARATORS, _THIS_LEVEL_PATHS, _PARENT_LEVEL_PATHS)()
-    End Sub
+    Public Shared ReadOnly [default] As pather(Of _PATH_SEPARATORS, _THIS_LEVEL_PATHS, _PARENT_LEVEL_PATHS) =
+        New pather(Of _PATH_SEPARATORS, _THIS_LEVEL_PATHS, _PARENT_LEVEL_PATHS)()
 
     Protected Sub New()
+        assert(Not isemptyarray(path_separators))
+        assert(Not isemptyarray(this_level_paths))
+        assert(Not isemptyarray(parent_level_paths))
     End Sub
 
     Private Shared Function is_this_level_path(ByVal s As String) As Boolean

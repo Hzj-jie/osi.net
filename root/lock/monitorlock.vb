@@ -5,18 +5,14 @@ Option Strict On
 
 Imports System.Runtime.CompilerServices
 Imports System.Threading
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 
 Public Structure monitorlock
     Implements ilock
 
     Private obj As Object
     Private in_use As Int32
-
-    Shared Sub New()
-        assert(DirectCast(Nothing, Object) Is Nothing)
-    End Sub
 
     Public Sub New(ByVal i As Object)
         assert(Not i Is Nothing)

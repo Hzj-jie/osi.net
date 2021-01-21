@@ -8,15 +8,11 @@ Imports osi.root.formation
 
 Partial Public Class type_attribute
     Private NotInheritable Class store
-        Public Shared ReadOnly m As unique_strong_map(Of comparable_type, store)
-        Private Shared ReadOnly ctor As Func(Of store)
-
-        Shared Sub New()
-            m = New unique_strong_map(Of comparable_type, store)()
-            ctor = Function() As store
-                       Return New store()
-                   End Function
-        End Sub
+        Public Shared ReadOnly m As unique_strong_map(Of comparable_type, store) =
+            New unique_strong_map(Of comparable_type, store)()
+        Private Shared ReadOnly ctor As Func(Of store) = Function() As store
+                                                             Return New store()
+                                                         End Function
 
         Public Shared Function exist(ByVal t As Type) As Boolean
             Return m.exist(New comparable_type(t))

@@ -17,12 +17,8 @@ End Module
 Public Class to_string_shadower(Of T)
     Implements IComparable(Of to_string_shadower(Of T)), IComparable, IComparable(Of T)
 
-    Private Shared ReadOnly type_name As String
+    Private Shared ReadOnly type_name As String = strcat("to_string_shadower(Of ", type_info(Of T).name, ")")
     Private ReadOnly x As T
-
-    Shared Sub New()
-        type_name = strcat("to_string_shadower(Of ", type_info(Of T).name, ")")
-    End Sub
 
     Public Sub New(ByVal x As T)
         Me.x = x

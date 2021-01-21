@@ -4,15 +4,10 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.delegates
 
 Public Class lifetime_binder(Of T As Class)
-    Public Shared ReadOnly instance As lifetime_binder(Of T) = Nothing
-    Private ReadOnly s As object_unique_ref_set(Of T) = Nothing
-
-    Shared Sub New()
-        instance = New lifetime_binder(Of T)()
-    End Sub
+    Public Shared ReadOnly instance As lifetime_binder(Of T) = New lifetime_binder(Of T)()
+    Private ReadOnly s As object_unique_ref_set(Of T)
 
     Protected Sub New()
         s = New object_unique_ref_set(Of T)()

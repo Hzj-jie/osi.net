@@ -10,11 +10,11 @@ Imports osi.root.template
 Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_INDEX As _to_uint32(Of KEY_T))
     Implements ICloneable
 
-    Private Shared ReadOnly child_count As UInt32 = Nothing
-    Private Shared ReadOnly key_to_index As _KEY_TO_INDEX = Nothing
-    Private ReadOnly root As node = Nothing
+    Private Shared ReadOnly child_count As UInt32 = assert_which.of(+(alloc(Of _CHILD_COUNT)())).can_cast_to_uint32()
+    Private Shared ReadOnly key_to_index As _KEY_TO_INDEX = assert_not_nothing_return(alloc(Of _KEY_TO_INDEX)())
+    Private ReadOnly root As node
 
-    Public Class node
+    Public NotInheritable Class node
         Implements ICloneable
 
         Public has_value As Boolean
@@ -89,7 +89,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
         End Function
     End Class
 
-    Protected Shared _end As iterator = Nothing
+    Protected Shared ReadOnly _end As iterator = iterator.end
 
     Public Function begin() As iterator
         Return New iterator(root)
@@ -148,16 +148,6 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
 
         Return True
     End Function
-
-    Shared Sub New()
-        _end = iterator.end
-        Dim __CHILD_COUNT As Int64 = 0
-        __CHILD_COUNT = +(alloc(Of _CHILD_COUNT)())
-        assert(__CHILD_COUNT > 0 AndAlso __CHILD_COUNT <= max_uint32)
-        child_count = CUInt(__CHILD_COUNT)
-        key_to_index = alloc(Of _KEY_TO_INDEX)()
-        assert(Not key_to_index Is Nothing)
-    End Sub
 
     Public Sub New()
         root = New node(child_count)

@@ -15,10 +15,6 @@ Namespace slimlock
         'the obj is created in atomic.create_if_nothing
         Private obj As Object
 
-        Shared Sub New()
-            assert(DirectCast(Nothing, Object) Is Nothing)
-        End Sub
-
         Public Sub New(ByVal i As Object)
             assert(Not i Is Nothing)
             Me.obj = i

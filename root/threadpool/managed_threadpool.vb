@@ -102,9 +102,5 @@ Public NotInheritable Class managed_threadpool
         Return this
     End Operator
 
-    Public Shared ReadOnly [global] As managed_threadpool = Nothing
-
-    Shared Sub New()
-        [global] = New managed_threadpool()
-    End Sub
+    Public Shared ReadOnly [global] As managed_threadpool = New managed_threadpool()
 End Class

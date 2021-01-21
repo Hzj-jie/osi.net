@@ -12,26 +12,23 @@ Imports osi.root.lock
 ' Control behavior in program level, without changing environment variables
 <global_init(global_init_level.foundamental)>
 Public NotInheritable Class suppress
-    Public Shared ReadOnly compare_error As atomic_bool
-    Public Shared ReadOnly invoker_error As atomic_bool
-    Public Shared ReadOnly valuer_error As atomic_bool
-    Public Shared ReadOnly pending_io_punishment As atomic_bool
-    Public Shared ReadOnly rebind_global_value_error As atomic_bool
-    Public Shared ReadOnly alloc_error As atomic_bool
-    Private Shared ReadOnly m As hashmapless(Of String, atomic_bool)
+    Public Shared ReadOnly compare_error As atomic_bool =
+        New atomic_bool(env_bool(env_keys("suppress", "compare", "error")))
+    Public Shared ReadOnly invoker_error As atomic_bool =
+        New atomic_bool(env_bool(env_keys("suppress", "invoker", "error")))
+    Public Shared ReadOnly valuer_error As atomic_bool =
+        New atomic_bool(env_bool(env_keys("suppress", "valuer", "error")))
+    Public Shared ReadOnly pending_io_punishment As atomic_bool =
+        New atomic_bool(env_bool(env_keys("suppress", "pending", "io", "punishment")) OrElse
+                        env_bool(env_keys("disable", "pending", "io", "punishment")))
+    Public Shared ReadOnly rebind_global_value_error As atomic_bool =
+        New atomic_bool(env_bool(env_keys("suppress", "rebind", "global", "value", "error")) OrElse
+                        env_bool(env_keys("suppress", "rebind", "error")))
+    Public Shared ReadOnly alloc_error As atomic_bool =
+        New atomic_bool(env_bool(env_keys("suppress", "alloc", "error")))
+    Private Shared ReadOnly m As hashmapless(Of String, atomic_bool) = hashmapless(Of String, atomic_bool).tiny()
 
     Shared Sub New()
-        compare_error = New atomic_bool(env_bool(env_keys("suppress", "compare", "error")))
-        invoker_error = New atomic_bool(env_bool(env_keys("suppress", "invoker", "error")))
-        valuer_error = New atomic_bool(env_bool(env_keys("suppress", "valuer", "error")))
-        pending_io_punishment = New atomic_bool(env_bool(env_keys("suppress", "pending", "io", "punishment")) OrElse
-                                                env_bool(env_keys("disable", "pending", "io", "punishment")))
-        rebind_global_value_error =
-            New atomic_bool(env_bool(env_keys("suppress", "rebind", "global", "value", "error")) OrElse
-                            env_bool(env_keys("suppress", "rebind", "error")))
-        alloc_error = New atomic_bool(env_bool(env_keys("suppress", "alloc", "error")))
-        m = hashmapless(Of String, atomic_bool).tiny()
-
         register(Of is_suppressed.compare_error_protector)(compare_error)
         register(Of is_suppressed.rebind_global_value_protector)(rebind_global_value_error)
         register(Of is_suppressed.alloc_error_protector)(alloc_error)

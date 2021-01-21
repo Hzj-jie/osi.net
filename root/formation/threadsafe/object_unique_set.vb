@@ -14,13 +14,9 @@ Public NotInheritable Class object_unique_set(Of T As Class)
 End Class
 
 Public Class object_unique_set(Of T As Class, THREADSAFE As _boolean)
-    Private Shared ReadOnly thread_safe As Boolean
+    Private Shared ReadOnly thread_safe As Boolean = +(alloc(Of THREADSAFE)())
     Private ReadOnly v As vector(Of T)
     Private l As duallock
-
-    Shared Sub New()
-        thread_safe = +(alloc(Of THREADSAFE)())
-    End Sub
 
     Public Sub New()
         v = New vector(Of T)()

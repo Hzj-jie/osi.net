@@ -45,11 +45,7 @@ Partial Public NotInheritable Class first_const_pair
     Public NotInheritable Class first_equaler(Of T1, T2, _EQUALER As _equaler(Of T1))
         Inherits _equaler(Of first_const_pair(Of T1, T2))
 
-        Private Shared ReadOnly equaler As _EQUALER
-
-        Shared Sub New()
-            equaler = alloc(Of _EQUALER)()
-        End Sub
+        Private Shared ReadOnly equaler As _EQUALER = alloc(Of _EQUALER)()
 
         Public Overrides Function at(ByRef i As first_const_pair(Of T1, T2),
                                      ByRef j As first_const_pair(Of T1, T2)) As Boolean

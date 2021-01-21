@@ -54,15 +54,9 @@ Public Module _fixed_stack_wrapper
 End Module
 
 Public Structure fixed_stack(Of T, _MAX_SIZE As _int64)
-    Private Shared ReadOnly MAX_SIZE As Int64 = 0
+    Private Shared ReadOnly MAX_SIZE As Int64 = +(alloc(Of _MAX_SIZE)())
     Private index As Int64
     Private q() As T
-
-    Shared Sub New()
-        MAX_SIZE = +(alloc(Of _MAX_SIZE)())
-        assert(DirectCast(Nothing, T()) Is Nothing)
-        assert(DirectCast(Nothing, Int64) = 0)
-    End Sub
 
     Private Sub create()
         If q Is Nothing Then

@@ -11,11 +11,8 @@ Imports osi.root.delegates
 Public Module _threadpool
     ' DISABLED <global_init(global_init_level.foundamental)>
     Private NotInheritable Class min_thread_count
-        Shared Sub New()
-            assert(ThreadPool.SetMinThreads(Environment.ProcessorCount() >> 1, Environment.ProcessorCount() >> 1))
-        End Sub
-
         Private Shared Sub init()
+            assert(ThreadPool.SetMinThreads(Environment.ProcessorCount() >> 1, Environment.ProcessorCount() >> 1))
         End Sub
 
         Private Sub New()

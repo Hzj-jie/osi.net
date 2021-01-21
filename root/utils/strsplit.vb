@@ -10,38 +10,37 @@ Imports osi.root.constants
 Imports osi.root.formation
 
 Public NotInheritable Class strsplitter
-    Private Shared ReadOnly default_separators() As String
-    Private Shared ReadOnly default_surround_strs() As pair(Of String, String)
+    Private Shared ReadOnly default_separators() As String = calculate_default_separators()
+    Private Shared ReadOnly default_surround_strs() As pair(Of String, String) =
+        {pair.emplace_of(Convert.ToString(character.quote),
+                         Convert.ToString(character.quote)),
+         pair.emplace_of(Convert.ToString(character.single_quotation),
+                         Convert.ToString(character.single_quotation)),
+         pair.emplace_of(Convert.ToString(character.backquote),
+                         Convert.ToString(character.backquote))}
 
-    Shared Sub New()
+    Private Shared Function calculate_default_separators() As String()
         assert(npos < 0)
-        ReDim default_separators(strlen_i(space_chars) - 1)
+        Dim default_separators(strlen_i(space_chars) - 1) As String
         For i As Int32 = 0 To strlen_i(space_chars) - 1
             default_separators(i) = Convert.ToString(space_chars(i))
         Next
-        default_surround_strs = {pair.emplace_of(Convert.ToString(character.quote),
-                                                   Convert.ToString(character.quote)),
-                                 pair.emplace_of(Convert.ToString(character.single_quotation),
-                                                   Convert.ToString(character.single_quotation)),
-                                 pair.emplace_of(Convert.ToString(character.backquote),
-                                                   Convert.ToString(character.backquote))}
-    End Sub
+        Return default_separators
+    End Function
 
     Public Shared Function with_default_separators(ParamArray ByVal separators() As String) As String()
         If isemptyarray(separators) Then
             Return default_separators
-        Else
-            Return array_concat(separators, default_separators)
         End If
+        Return array_concat(separators, default_separators)
     End Function
 
     Public Shared Function with_default_surround_strs(ByVal ParamArray surround_strs() As pair(Of String, String)) _
                                                      As pair(Of String, String)()
         If isemptyarray(surround_strs) Then
             Return default_surround_strs
-        Else
-            Return array_concat(surround_strs, default_surround_strs)
         End If
+        Return array_concat(surround_strs, default_surround_strs)
     End Function
 
     Private Shared Function is_inarray(ByVal s As String,

@@ -7,11 +7,7 @@ Imports osi.root.connector
 
 Namespace counter
     Public Class instance_count_counter(Of T)
-        Private Shared ReadOnly c As Int64
-
-        Shared Sub New()
-            c = register_counter(strcat(strtoupper(GetType(T).Name()), "_INSTANCE_COUNT"))
-        End Sub
+        Private Shared ReadOnly c As Int64 = register_counter(strcat(strtoupper(GetType(T).Name()), "_INSTANCE_COUNT"))
 
         Public Shared Sub alloc()
             increase(c)

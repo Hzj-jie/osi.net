@@ -47,12 +47,6 @@ Partial Public Class event_comb
         End Set
     End Property
 
-    Shared Sub New()
-        If event_comb_alloc_trace Then
-            callstack_alloc = New map(Of String, Int64)()
-        End If
-    End Sub
-
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub New(ByVal d() As Func(Of Boolean), ByVal callstack As String)
         assert(Not callstack Is Nothing)

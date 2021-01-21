@@ -81,14 +81,14 @@ Partial Friend NotInheritable Class host
         End Sub
     End Class
 
-    Public Shared ReadOnly cases As vector(Of case_info) = Nothing
+    Public Shared ReadOnly cases As vector(Of case_info) = calculate_cases()
 
-    Shared Sub New()
+    Private Shared Function calculate_cases() As vector(Of case_info)
         assert((envs.utt.concurrency >= 0 AndAlso envs.utt.concurrency <= Environment.ProcessorCount()) OrElse
                envs.utt.concurrency = npos)
 
         assert(Not strstartwith(extensions.dynamic_link_library, extension_prefix, False))
-        cases = New vector(Of case_info)()
+        Dim cases As vector(Of case_info) = New vector(Of case_info)()
         AppDomain.CurrentDomain().load_all(Environment.CurrentDirectory(), envs.utt.file_pattern)
         If Not Environment.CurrentDirectory().path_same(application_directory) Then
             AppDomain.CurrentDomain().load_all(application_directory, envs.utt.file_pattern)
@@ -97,7 +97,8 @@ Partial Friend NotInheritable Class host
         global_init.execute()
         loader.load(cases)
         assert(cases.size() > 0)
-    End Sub
+        Return cases
+    End Function
 
     Private Shared Function [select](ByVal selector As vector(Of String), ByVal c As case_info) As Boolean
         If selector Is Nothing OrElse selector.empty() Then

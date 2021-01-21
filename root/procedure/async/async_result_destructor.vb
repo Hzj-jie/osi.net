@@ -45,15 +45,14 @@ Public NotInheritable Class async_result_destructor
         th.IsBackground() = True
         th.Name() = "ASYNC_RESULT_DESTRUCTOR_THREAD"
         th.Start()
-        application_lifetime_binder.instance.insert(
-                        New disposer(Of Thread)(th, disposer:=Sub(x) x.Abort()))
+        application_lifetime_binder.instance.insert(New disposer(Of Thread)(th, disposer:=Sub(x) x.Abort()))
 
         stopwatch.repeat(timeslice_length_ms,
-                                     Sub()
-                                         If ready_to_abort.mark_in_use() Then
-                                             th.Abort()
-                                         End If
-                                     End Sub)
+                         Sub()
+                             If ready_to_abort.mark_in_use() Then
+                                 th.Abort()
+                             End If
+                         End Sub)
     End Sub
 
     Public Shared Sub queue(ByVal state As async_state_t, ByVal ar As IAsyncResult)

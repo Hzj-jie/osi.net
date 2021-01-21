@@ -24,15 +24,11 @@ End Class
 'partial thread-safe,
 'the push is thread-safe, but the pop is not, so if multi-threads are poping together, it needs a lock
 Public Class qless2_stream(Of T, MAX_COUNT As _int64)
-    Public Shared ReadOnly max_size As Int64
+    Public Shared ReadOnly max_size As Int64 = +(alloc(Of MAX_COUNT)())
     Private ReadOnly q As qless2(Of ref(Of T()))
     Private len As Int64
     Private last() As T
     Private last_index As Int64
-
-    Shared Sub New()
-        max_size = +(alloc(Of MAX_COUNT)())
-    End Sub
 
     Public Sub New()
         q = New qless2(Of ref(Of T()))()

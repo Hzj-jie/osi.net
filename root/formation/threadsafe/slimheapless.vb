@@ -1,10 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
 Imports osi.root.connector
-Imports osi.root.envs
 Imports osi.root.lock
 
-Public Class slimheapless(Of T)
+Public NotInheritable Class slimheapless(Of T)
     Private Class node
         Public ReadOnly v As T
         Public [next] As node
@@ -15,10 +18,6 @@ Public Class slimheapless(Of T)
     End Class
 
     Private ReadOnly f As node
-
-    Shared Sub New()
-        should_yield()
-    End Sub
 
     Public Sub New()
         f = New node(Nothing)

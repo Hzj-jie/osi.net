@@ -12,10 +12,6 @@ Namespace slimlock
 
         Private se As singleentry
 
-        Shared Sub New()
-            yield()
-        End Sub
-
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub release() Implements islimlock.release
             se.release()

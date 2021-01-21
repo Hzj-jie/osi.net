@@ -10,19 +10,14 @@ Public NotInheritable Class global_instance(Of T, _new As _new(Of T))
     Private NotInheritable Class initialized
         Public Shared v As Boolean
 
-        Shared Sub New()
-            assert(Not v)
-        End Sub
-
         Private Sub New()
         End Sub
     End Class
 
     Private NotInheritable Class instance
-        Public Shared ReadOnly v As T
+        Public Shared ReadOnly v As T = +alloc(Of _new)()
 
         Shared Sub New()
-            v = +alloc(Of _new)()
             application_lifetime.stopping_handle(Sub()
                                                      disposable.dispose(v)
                                                  End Sub)

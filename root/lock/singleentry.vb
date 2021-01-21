@@ -8,13 +8,9 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 Public Structure singleentry
-    Private Const free As Int32 = 0
-    Private Const inuse As Int32 = 1
+    Private Const free As Int32 = DirectCast(Nothing, Int32)
+    Private Const inuse As Int32 = free + 1
     Private state As Int32
-
-    Shared Sub New()
-        assert(free = DirectCast(Nothing, Int32))
-    End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function in_use() As Boolean

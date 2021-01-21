@@ -91,16 +91,15 @@ End Class
 Public Class segment_tree(Of T As IComparable(Of T), is_acc As _boolean)
     Inherits bt(Of segment)
 
-    Private Shared ReadOnly acc As Boolean
+    Private Shared ReadOnly acc As Boolean = +(alloc(Of is_acc)())
 
+#If DEBUG Then
     Shared Sub New()
-        acc = +(alloc(Of is_acc)())
         If acc Then
-            If isdebugmode() Then
-                binary_operator(Of T).log_addable()
-            End If
+            binary_operator(Of T).log_addable()
         End If
     End Sub
+#End If
 
     Public Class segment
         Implements IComparable(Of segment), IComparable, ICloneable

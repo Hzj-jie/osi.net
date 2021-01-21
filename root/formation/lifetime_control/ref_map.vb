@@ -107,11 +107,7 @@ End Class
 
 Public NotInheritable Class ref_map
     Private NotInheritable Class global_instance(Of KEY_T, VALUE_T)
-        Public Shared ReadOnly m As ref_map(Of KEY_T, VALUE_T)
-
-        Shared Sub New()
-            m = New ref_map(Of KEY_T, VALUE_T)()
-        End Sub
+        Public Shared ReadOnly m As ref_map(Of KEY_T, VALUE_T) = New ref_map(Of KEY_T, VALUE_T)()
 
         Private Sub New()
         End Sub

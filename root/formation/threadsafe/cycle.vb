@@ -14,11 +14,6 @@ Public Class cycle(Of T)
         Private written As singleentry
         Private read As singleentry
 
-        Shared Sub New()
-            Dim s As singleentry
-            assert(s.not_in_use())
-        End Sub
-
         Public Function [set](ByVal v As T) As Boolean
             If hv.mark_in_use() Then
                 wait_when(Function(ByRef x As singleentry) As Boolean

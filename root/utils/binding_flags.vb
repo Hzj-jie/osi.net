@@ -12,10 +12,10 @@ Imports osi.root.formation
 
 <global_init(global_init_level.functor)>
 Public Module _binding_flags
-    Private ReadOnly m As map(Of String, BindingFlags)
+    Private ReadOnly m As map(Of String, BindingFlags) = calculate_m()
 
-    Sub New()
-        m = New map(Of String, BindingFlags)()
+    Private Function calculate_m() As map(Of String, BindingFlags)
+        Dim m As map(Of String, BindingFlags) = New map(Of String, BindingFlags)()
         Dim it As unordered_map(Of String, BindingFlags).iterator = Nothing
         it = enum_def(Of BindingFlags).string_map().begin()
         While it <> enum_def(Of BindingFlags).string_map().end()
@@ -25,20 +25,8 @@ Public Module _binding_flags
 
         assert(m.emplace("private", BindingFlags.NonPublic).second)
         assert(m.emplace("protected", BindingFlags.NonPublic).second)
-
-        ' Trigger bytes_serializer registering.
-        enum_def(Of BindingFlags)()
-        string_serializer.register(Function(ByVal i As StringReader, ByRef o As method_binding_flags) As Boolean
-                                       assert(Not i Is Nothing)
-                                       Dim bf As BindingFlags = Nothing
-                                       If string_serializer.from_str(i, bf) Then
-                                           o = New method_binding_flags(bf)
-                                           Return True
-                                       Else
-                                           Return False
-                                       End If
-                                   End Function)
-    End Sub
+        Return m
+    End Function
 
     <Extension()> Public Function from_str(ByRef bf As BindingFlags, ByVal s As String) As Boolean
         If String.IsNullOrEmpty(s) Then
@@ -77,5 +65,17 @@ Public Module _binding_flags
     End Function
 
     Private Sub init()
+        ' Trigger bytes_serializer registering.
+        enum_def(Of BindingFlags)()
+        string_serializer.register(Function(ByVal i As StringReader, ByRef o As method_binding_flags) As Boolean
+                                       assert(Not i Is Nothing)
+                                       Dim bf As BindingFlags = Nothing
+                                       If string_serializer.from_str(i, bf) Then
+                                           o = New method_binding_flags(bf)
+                                           Return True
+                                       Else
+                                           Return False
+                                       End If
+                                   End Function)
     End Sub
 End Module

@@ -8,18 +8,14 @@ Imports osi.root.connector
 Public Structure ternary
     Implements IComparable(Of ternary), IComparable, ICloneable(Of ternary), ICloneable
 
-    Private Const _unknown As Byte = 0
-    Private Const _true As Byte = 1
-    Private Const _false As Byte = 2
+    Private Const _unknown As Byte = DirectCast(Nothing, Byte)
+    Private Const _true As Byte = _unknown + 1
+    Private Const _false As Byte = _true + 1
     Public Shared ReadOnly unknown As ternary = New ternary(_unknown)
     Public Shared ReadOnly [true] As ternary = New ternary(_true)
     Public Shared ReadOnly [false] As ternary = New ternary(_false)
 
     Private d As Int32
-
-    Shared Sub New()
-        assert(DirectCast(Nothing, Int32) = _unknown)
-    End Sub
 
     Public Shared Operator =(ByVal this As ternary, ByVal that As ternary) As Boolean
         Return this.d = that.d

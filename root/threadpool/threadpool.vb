@@ -9,16 +9,13 @@ Imports osi.root.constants
 Imports osi.root.utils
 
 Public NotInheritable Class threadpool
-    Public Shared ReadOnly default_thread_count As UInt32
-
-    Shared Sub New()
-        default_thread_count = If(envs.thread_count <> npos,
-                                  CUInt(envs.thread_count),
-                                  CUInt(max(If(envs.busy_wait,
-                                               Environment.ProcessorCount() - CInt(queue_runner.thread_count),
-                                               Environment.ProcessorCount()),
-                                            1)))
-    End Sub
+    Public Shared ReadOnly default_thread_count As UInt32 =
+        If(envs.thread_count <> npos,
+           CUInt(envs.thread_count),
+           CUInt(max(If(envs.busy_wait,
+                        Environment.ProcessorCount() - CInt(queue_runner.thread_count),
+                        Environment.ProcessorCount()),
+                     1)))
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function in_restricted_threadpool_thread() As Boolean

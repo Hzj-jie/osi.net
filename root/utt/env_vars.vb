@@ -7,21 +7,17 @@ Imports osi.root.constants
 Imports osi.root.envs
 
 Friend NotInheritable Class env_vars
-    Public Shared ReadOnly run_flaky_tests As Boolean
-    Public Shared ReadOnly utt_report_case_name As Boolean
-    Public Shared ReadOnly utt_report_background_worker_status As Boolean
-    Public Shared ReadOnly utt_report_memory_status As Boolean
-    Public Shared ReadOnly repeat_per_case As UInt32
-
-    Shared Sub New()
-        run_flaky_tests = env_bool(env_keys("run", "flaky", "tests")) OrElse
-                          env_bool(env_keys("run", "flaky", "cases"))
-        utt_report_case_name = env_bool(env_keys("utt", "report", "case", "name"))
-        utt_report_background_worker_status = env_bool(env_keys("utt", "report", "background", "worker", "status"))
-        utt_report_memory_status = env_bool(env_keys("utt", "report", "memory", "status")) OrElse
-                                   env_bool(env_keys("utt", "report", "memory"))
-        repeat_per_case = utt_repeat_per_case()
-    End Sub
+    Public Shared ReadOnly run_flaky_tests As Boolean =
+        env_bool(env_keys("run", "flaky", "tests")) OrElse
+        env_bool(env_keys("run", "flaky", "cases"))
+    Public Shared ReadOnly utt_report_case_name As Boolean =
+        env_bool(env_keys("utt", "report", "case", "name"))
+    Public Shared ReadOnly utt_report_background_worker_status As Boolean =
+        env_bool(env_keys("utt", "report", "background", "worker", "status"))
+    Public Shared ReadOnly utt_report_memory_status As Boolean =
+        env_bool(env_keys("utt", "report", "memory", "status")) OrElse
+        env_bool(env_keys("utt", "report", "memory"))
+    Public Shared ReadOnly repeat_per_case As UInt32 = utt_repeat_per_case()
 
     Private Shared Function utt_repeat_per_case() As UInt32
         Dim r As Int32 = 0

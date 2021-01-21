@@ -14,10 +14,6 @@ Namespace slimlock
 
         Private se As singleentry
 
-        Shared Sub New()
-            yield()
-        End Sub
-
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub wait() Implements islimlock.wait
             wait_when(Function(ByRef x) Not x.mark_in_use(), se)

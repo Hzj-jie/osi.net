@@ -41,19 +41,14 @@ Public Class reference_count_runner(Of AUTO_MARK_STARTED As _boolean, AUTO_MARK_
 
     Public Event after_start()
     Public Event after_stop()
-    Private Shared ReadOnly _auto_mark_started As Boolean
-    Private Shared ReadOnly _auto_mark_stopped As Boolean
+    Private Shared ReadOnly _auto_mark_started As Boolean = +alloc(Of AUTO_MARK_STARTED)()
+    Private Shared ReadOnly _auto_mark_stopped As Boolean = +alloc(Of AUTO_MARK_STOPPED)()
     Private ReadOnly _started As ManualResetEvent
     Private ReadOnly _stopped As ManualResetEvent
     Private ReadOnly _start_process As Action(Of reference_count_runner(Of AUTO_MARK_STARTED, AUTO_MARK_STOPPED))
     Private ReadOnly _stop_process As Action(Of reference_count_runner(Of AUTO_MARK_STARTED, AUTO_MARK_STOPPED))
     Private b As Int32
     Private l As lock_t
-
-    Shared Sub New()
-        _auto_mark_started = +alloc(Of AUTO_MARK_STARTED)()
-        _auto_mark_stopped = +alloc(Of AUTO_MARK_STOPPED)()
-    End Sub
 
     Public Sub New(Optional ByVal start_process As  _
                                   Action(Of reference_count_runner(Of AUTO_MARK_STARTED, AUTO_MARK_STOPPED)) = Nothing,

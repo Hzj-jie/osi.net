@@ -9,19 +9,12 @@ Imports osi.root.connector
 'the queue will fail if the count of elements is over _MAX_SIZE
 'so only for a critical performance requirement
 Public Structure fixed_queue(Of T, _MAX_SIZE As _int64)
-    Private Shared ReadOnly MAX_SIZE As Int32 = 0
-    Private Shared ReadOnly MAX_SIZE_D_1 As Int32 = 0
+    Private Shared ReadOnly MAX_SIZE_D_1 As Int32 = CInt(+(alloc(Of _MAX_SIZE)()))
+    Private Shared ReadOnly MAX_SIZE As Int32 = MAX_SIZE_D_1 + 1
 
     Private q() As T
     Private start As Int32
     Private last As Int32
-
-    Shared Sub New()
-        MAX_SIZE_D_1 = CInt(+(alloc(Of _MAX_SIZE)()))
-        MAX_SIZE = MAX_SIZE_D_1 + 1
-        assert(DirectCast(Nothing, T()) Is Nothing)
-        assert(DirectCast(Nothing, Int32) = 0)
-    End Sub
 
     Private Sub create()
         If q Is Nothing Then

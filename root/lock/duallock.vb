@@ -1,7 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 #Const USE_CROSS_THREAD_LOCK = False
 Imports System.Threading
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.envs
 Imports lock_t = osi.root.lock.slimlock.monitorlock
 #If USE_CROSS_THREAD_LOCK Then
@@ -21,12 +26,17 @@ Public Structure duallock
     Private sz As cross_thread_lock_t
 #End If
 
-    Shared Sub New()
-        assert(DirectCast(Nothing, Int32) = 0)
+    <global_init(global_init_level.foundamental)>
+    Private NotInheritable Class assertions
+        Private Shared Sub init()
 #If USE_CROSS_THREAD_LOCK Then
-        assert(New cross_thread_lock_t().can_cross_thread())
+            assert(New cross_thread_lock_t().can_cross_thread())
 #End If
-    End Sub
+        End Sub
+
+        Private Sub New()
+        End Sub
+    End Class
 
     Public Sub lock()
         fl.wait()

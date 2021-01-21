@@ -9,42 +9,39 @@ Imports osi.root.formation
 
 Public Module _enum_def_extension
     Private NotInheritable Class enum_definition2(Of T)
-        Public Shared ReadOnly strings As lazier(Of String())
-        Public Shared ReadOnly string_pairs As lazier(Of pair(Of T, String)())
-        Public Shared ReadOnly string_T As lazier(Of unordered_map(Of String, T))
-
-        Shared Sub New()
-            strings = lazier.of(Function() As String()
-                                    Dim i As Int32 = 0
-                                    Dim r() As String = Nothing
-                                    ReDim r(enum_def(Of T).count_i() - 1)
-                                    assert(enum_def(Of T).foreach(Sub(ByVal x As T, ByVal s As String)
-                                                                      r(i) = s
-                                                                      i += 1
-                                                                  End Sub))
-                                    Return r
-                                End Function)
-            string_pairs = lazier.of(Function() As pair(Of T, String)()
-                                         Dim i As Int32 = 0
-                                         Dim r() As pair(Of T, String) = Nothing
-                                         ReDim r(enum_def(Of T).count_i() - 1)
-                                         assert(enum_def(Of T).foreach(Sub(ByVal x As T, ByVal s As String)
-                                                                           r(i) = pair.emplace_of(x, s)
-                                                                           i += 1
-                                                                       End Sub))
-                                         Return r
-                                     End Function)
-            string_T = lazier.of(Function() As unordered_map(Of String, T)
-                                     Dim r As unordered_map(Of String, T) = Nothing
-                                     r = New unordered_map(Of String, T)()
-                                     For i As Int32 = 0 To array_size_i(+string_pairs) - 1
-                                         assert(r.emplace(strtolower((+string_pairs)(i).second),
+        Public Shared ReadOnly strings As lazier(Of String()) =
+            lazier.of(Function() As String()
+                          Dim i As Int32 = 0
+                          Dim r() As String = Nothing
+                          ReDim r(enum_def(Of T).count_i() - 1)
+                          assert(enum_def(Of T).foreach(Sub(ByVal x As T, ByVal s As String)
+                                                            r(i) = s
+                                                            i += 1
+                                                        End Sub))
+                          Return r
+                      End Function)
+        Public Shared ReadOnly string_pairs As lazier(Of pair(Of T, String)()) =
+            lazier.of(Function() As pair(Of T, String)()
+                          Dim i As Int32 = 0
+                          Dim r() As pair(Of T, String) = Nothing
+                          ReDim r(enum_def(Of T).count_i() - 1)
+                          assert(enum_def(Of T).foreach(Sub(ByVal x As T, ByVal s As String)
+                                                            r(i) = pair.emplace_of(x, s)
+                                                            i += 1
+                                                        End Sub))
+                          Return r
+                      End Function)
+        Public Shared ReadOnly string_T As lazier(Of unordered_map(Of String, T)) =
+            lazier.of(Function() As unordered_map(Of String, T)
+                          Dim r As unordered_map(Of String, T) = Nothing
+                          r = New unordered_map(Of String, T)()
+                          For i As Int32 = 0 To array_size_i(+string_pairs) - 1
+                              assert(r.emplace(strtolower((+string_pairs)(i).second),
                                                           (+string_pairs)(i).first).second)
-                                         r.emplace((+string_pairs)(i).second, (+string_pairs)(i).first)
-                                     Next
-                                     Return r
-                                 End Function)
-        End Sub
+                              r.emplace((+string_pairs)(i).second, (+string_pairs)(i).first)
+                          Next
+                          Return r
+                      End Function)
     End Class
 
     <Extension()>

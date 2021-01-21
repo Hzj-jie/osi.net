@@ -67,7 +67,7 @@ Partial Public NotInheritable Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY
         End Function
     End Class
 
-    Private Shared ReadOnly _end As iterator = Nothing
+    Private Shared ReadOnly _end As iterator = iterator.end
     Private ReadOnly h As heap2
     Private ReadOnly m As map(Of MAP_KEY, Int64) = Nothing
 
@@ -87,13 +87,11 @@ Partial Public NotInheritable Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY
         Return _end
     End Function
 
+#If DEBUG Then
     Shared Sub New()
-        _end = iterator.end
-
-        If isdebugmode() Then
-            binary_operator(Of HEAP_KEY).log_addable()
-        End If
+        binary_operator(Of HEAP_KEY).log_addable()
     End Sub
+#End If
 
     Public Sub New()
         Me.m = New map(Of MAP_KEY, Int64)

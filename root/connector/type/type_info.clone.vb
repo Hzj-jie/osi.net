@@ -9,95 +9,99 @@ Imports osi.root.delegates
 Partial Public NotInheritable Class type_info(Of T)
     Private NotInheritable Class clone_cache
         ' DirectCast(ICloneable.Clone(), T)
-        Public Shared ReadOnly clone As _do_val_ref(Of T, T, Boolean)
+        Public Shared ReadOnly clone As _do_val_ref(Of T, T, Boolean) =
+            If(is_cloneable,
+               Function(ByVal i As T, ByRef o As T) As Boolean
+                   assert(Not i Is Nothing)
+                   Try
+                       o = direct_cast(Of T)(direct_cast(Of ICloneable)(i).Clone())
+                       Return True
+                   Catch ex As Exception
+                       copy_error(ex)
+                       Return False
+                   End Try
+               End Function,
+               Nothing)
         ' ICloneable(Of T).Clone()
-        Public Shared ReadOnly clone_t As _do_val_ref(Of T, T, Boolean)
+        Public Shared ReadOnly clone_t As _do_val_ref(Of T, T, Boolean) =
+            If(is_cloneable_T,
+               Function(ByVal i As T, ByRef o As T) As Boolean
+                   assert(Not i Is Nothing)
+                   Try
+                       o = (direct_cast(Of ICloneable(Of T))(i).Clone())
+                       Return True
+                   Catch ex As Exception
+                       copy_error(ex)
+                       Return False
+                   End Try
+               End Function,
+               Nothing)
         ' DirectCast(i, ICloneable(Of T)).Clone() or DirectCast(i, ICloneable).Clone()
-        Public Shared ReadOnly runtime_clone As _do_val_ref(Of T, T, Boolean)
+        Public Shared ReadOnly runtime_clone As _do_val_ref(Of T, T, Boolean) = calculate_runtime_clone()
         ' o = i
-        Public Shared ReadOnly assignment_clone As _do_val_ref(Of T, T, Boolean)
+        Public Shared ReadOnly assignment_clone As _do_val_ref(Of T, T, Boolean) =
+            Function(ByVal i As T, ByRef o As T) As Boolean
+                o = i
+                Return True
+            End Function
         ' This function ensures a new object is always created.
-        Public Shared ReadOnly new_object_clone As _do_val_ref(Of T, T, Boolean)
+        Public Shared ReadOnly new_object_clone As _do_val_ref(Of T, T, Boolean) = calculate_new_object_clone()
         ' The best clone function implemented by T.
-        Public Shared ReadOnly dominated_clone As _do_val_ref(Of T, T, Boolean)
+        Public Shared ReadOnly dominated_clone As _do_val_ref(Of T, T, Boolean) =
+            If(Not new_object_clone Is Nothing, new_object_clone, assignment_clone)
 
-        Shared Sub New()
-            If is_cloneable Then
-                clone = Function(ByVal i As T, ByRef o As T) As Boolean
-                            assert(Not i Is Nothing)
-                            Try
-                                o = direct_cast(Of T)(direct_cast(Of ICloneable)(i).Clone())
-                                Return True
-                            Catch ex As Exception
-                                copy_error(ex)
-                                Return False
-                            End Try
-                        End Function
-            End If
-            If is_cloneable_T Then
-                clone_t = Function(ByVal i As T, ByRef o As T) As Boolean
-                              assert(Not i Is Nothing)
-                              Try
-                                  o = (direct_cast(Of ICloneable(Of T))(i).Clone())
-                                  Return True
-                              Catch ex As Exception
-                                  copy_error(ex)
-                                  Return False
-                              End Try
-                          End Function
-            End If
+        Private Shared Function calculate_runtime_clone() As _do_val_ref(Of T, T, Boolean)
             If is_object Then
                 raise_error(error_type.performance, "copy(Of Object) impacts performance seriously.")
-                runtime_clone = Function(ByVal i As T, ByRef o As T) As Boolean
-                                    assert(Not i Is Nothing)
-                                    Using code_block
-                                        Dim c As ICloneable(Of T) = Nothing
-                                        c = TryCast(i, ICloneable(Of T))
-                                        If Not c Is Nothing Then
-                                            Try
-                                                o = c.Clone()
-                                                Return True
-                                            Catch ex As Exception
-                                                copy_error(ex)
-                                                Return False
-                                            End Try
-                                        End If
-                                    End Using
-                                    Using code_block
-                                        Dim c As ICloneable = Nothing
-                                        c = TryCast(i, ICloneable)
-                                        If Not c Is Nothing Then
-                                            Try
-                                                o = DirectCast(c.Clone(), T)
-                                                Return True
-                                            Catch ex As Exception
-                                                copy_error(ex)
-                                                Return False
-                                            End Try
-                                        End If
-                                    End Using
-                                    Return False
-                                End Function
+                Return Function(ByVal i As T, ByRef o As T) As Boolean
+                           assert(Not i Is Nothing)
+                           Using code_block
+                               Dim c As ICloneable(Of T) = Nothing
+                               c = TryCast(i, ICloneable(Of T))
+                               If Not c Is Nothing Then
+                                   Try
+                                       o = c.Clone()
+                                       Return True
+                                   Catch ex As Exception
+                                       copy_error(ex)
+                                       Return False
+                                   End Try
+                               End If
+                           End Using
+                           Using code_block
+                               Dim c As ICloneable = Nothing
+                               c = TryCast(i, ICloneable)
+                               If Not c Is Nothing Then
+                                   Try
+                                       o = DirectCast(c.Clone(), T)
+                                       Return True
+                                   Catch ex As Exception
+                                       copy_error(ex)
+                                       Return False
+                                   End Try
+                               End If
+                           End Using
+                           Return False
+                       End Function
             End If
-            assignment_clone = Function(ByVal i As T, ByRef o As T) As Boolean
-                                   o = i
-                                   Return True
-                               End Function
+            Return Nothing
+        End Function
+
+        Private Shared Function calculate_new_object_clone() As _do_val_ref(Of T, T, Boolean)
             If Not clone_t Is Nothing Then
-                new_object_clone = clone_t
-            ElseIf Not clone Is Nothing Then
-                new_object_clone = clone
-            ElseIf Not runtime_clone Is Nothing Then
-                new_object_clone = runtime_clone
-            ElseIf is_valuetype Then
-                new_object_clone = assignment_clone
+                Return clone_t
             End If
-            If Not new_object_clone Is Nothing Then
-                dominated_clone = new_object_clone
-            Else
-                dominated_clone = assignment_clone
+            If Not clone Is Nothing Then
+                Return clone
             End If
-        End Sub
+            If Not runtime_clone Is Nothing Then
+                Return runtime_clone
+            End If
+            If is_valuetype Then
+                Return assignment_clone
+            End If
+            Return Nothing
+        End Function
 
         Private Shared Sub copy_error(ByVal ex As Exception)
             raise_error(error_type.exclamation,

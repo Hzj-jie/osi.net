@@ -5,11 +5,7 @@ Imports osi.root.formation
 Imports osi.root.template
 
 Friend Class event_queue(Of PARA_T, _ONCE As _boolean)
-    Private Shared ReadOnly attach_after As Boolean
-
-    Shared Sub New()
-        attach_after = Not (+(alloc(Of _ONCE)()))
-    End Sub
+    Private Shared ReadOnly attach_after As Boolean = Not (+(alloc(Of _ONCE)()))
 
     Private ReadOnly q As qless2(Of iparameter_action(Of PARA_T))
 

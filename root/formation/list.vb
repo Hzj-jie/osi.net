@@ -93,7 +93,7 @@ Partial Public NotInheritable Class list(Of T)
         End Sub
     End Class
 
-    Private Shared ReadOnly _end As iterator = Nothing
+    Private Shared ReadOnly _end As iterator = iterator.end
     Private _front As node
     Private _back As node
     Private _size As UInt32
@@ -374,10 +374,6 @@ Partial Public NotInheritable Class list(Of T)
 
         Return rtn
     End Function
-
-    Shared Sub New()
-        _end = iterator.end
-    End Sub
 
     Public Sub New()
         clear()

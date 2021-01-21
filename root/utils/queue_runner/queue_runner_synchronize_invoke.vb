@@ -13,14 +13,13 @@ Imports osi.root.constants
 Public NotInheritable Class queue_runner_synchronize_invoke
     Inherits synchronize_invoke
 
-    Public Shared ReadOnly instance As queue_runner_synchronize_invoke
+    Public Shared ReadOnly instance As queue_runner_synchronize_invoke = New queue_runner_synchronize_invoke()
 
-    Shared Sub New()
-        instance = New queue_runner_synchronize_invoke()
 #If DEPRECATED Then
+    Shared Sub New()
         implementation_of(Of ISynchronizeInvoke).register(instance)
-#End If
     End Sub
+#End If
 
     Private Sub New()
         MyBase.New()

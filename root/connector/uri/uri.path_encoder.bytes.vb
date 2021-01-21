@@ -15,10 +15,16 @@ Namespace uri
                 Private ReadOnly separators() As Char = {separator}
                 Private Const escape As Char = character.dollar
 
-                Shared Sub New()
-                    assert(separator.unreserved())
-                    assert(escape.unreserved())
-                End Sub
+                <global_init(global_init_level.foundamental)>
+                Private NotInheritable Class assertions
+                    Private Shared Sub init()
+                        assert(separator.unreserved())
+                        assert(escape.unreserved())
+                    End Sub
+
+                    Private Sub New()
+                    End Sub
+                End Class
 
                 ' Return false when o is nothing.
                 Public Shared Function encode(ByVal b() As Byte, ByVal o As StringWriter) As Boolean

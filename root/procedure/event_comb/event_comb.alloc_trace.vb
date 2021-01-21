@@ -13,7 +13,8 @@ Imports monitorlock = osi.root.lock.slimlock.monitorlock
 
 Partial Public Class event_comb
     Private Shared callstack_alloc_lock As monitorlock
-    Private Shared ReadOnly callstack_alloc As map(Of String, Int64)
+    Private Shared ReadOnly callstack_alloc As map(Of String, Int64) =
+        If(event_comb_alloc_trace, New map(Of String, Int64)(), Nothing)
 
     Private Shared Sub callstack_alloc_change(ByVal n As String, ByVal c As Int64)
         assert(Not callstack_alloc Is Nothing)

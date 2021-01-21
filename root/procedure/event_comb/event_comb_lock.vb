@@ -81,15 +81,11 @@ End Module
 
 Public Structure event_comb_lock
     Implements islimlock
-    Private Const NOT_IN_USE As Boolean = False
+    Private Const NOT_IN_USE As Boolean = DirectCast(Nothing, Boolean)
     Private Const IN_USE As Boolean = Not NOT_IN_USE
     Private l As lock_t
     Private inuse As Boolean
     Private q As fixed_queue(Of Action, _max_uint16)
-
-    Shared Sub New()
-        assert(DirectCast(Nothing, Boolean) = NOT_IN_USE)
-    End Sub
 
     Public Sub wait() Implements islimlock.wait
         Dim v As Action = Nothing
@@ -132,15 +128,11 @@ End Structure
 
 Public Structure event_comb_lock(Of SIZE As _int64)
     Implements islimlock
-    Private Const NOT_IN_USE As Boolean = False
+    Private Const NOT_IN_USE As Boolean = DirectCast(Nothing, Boolean)
     Private Const IN_USE As Boolean = Not NOT_IN_USE
     Private l As lock_t
     Private inuse As Boolean
     Private q As fixed_queue(Of Action, SIZE)
-
-    Shared Sub New()
-        assert(DirectCast(Nothing, Boolean) = NOT_IN_USE)
-    End Sub
 
     Public Sub wait() Implements islimlock.wait
         Dim v As Action = Nothing
@@ -183,16 +175,11 @@ End Structure
 
 Public Structure unlimited_event_comb_lock
     Implements islimlock
-    Private Const NOT_IN_USE As Boolean = False
+    Private Const NOT_IN_USE As Boolean = DirectCast(Nothing, Boolean)
     Private Const IN_USE As Boolean = Not NOT_IN_USE
     Private l As lock_t
     Private inuse As Boolean
     Private q As queue(Of ref(Of Action))
-
-    Shared Sub New()
-        assert(DirectCast(Nothing, Boolean) = NOT_IN_USE)
-        assert(DirectCast(Nothing, queue(Of ref(Of Action))) Is Nothing)
-    End Sub
 
     Public Sub wait() Implements islimlock.wait
         create_if_nothing(q)

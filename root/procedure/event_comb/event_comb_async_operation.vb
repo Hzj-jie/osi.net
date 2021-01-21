@@ -13,13 +13,9 @@ Imports error_type = osi.root.constants.error_type
 Public Class event_comb_async_operation
     Inherits event_comb
 
-    Private Shared ReadOnly UNFINISHED_IASYNCRESULT As Int64
+    Private Shared ReadOnly UNFINISHED_IASYNCRESULT As Int64 = counter.register_counter("UNFINISHED_IASYNCRESULT")
     Private finished As singleentry
     Private end_suc As Boolean = False
-
-    Shared Sub New()
-        UNFINISHED_IASYNCRESULT = counter.register_counter("UNFINISHED_IASYNCRESULT")
-    End Sub
 
     Private Shared Shadows Function current() As event_comb_async_operation
         Dim o As event_comb_async_operation = Nothing
