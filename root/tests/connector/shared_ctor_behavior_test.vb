@@ -36,7 +36,6 @@ Public NotInheritable Class shared_ctor_behavior_test
 #Else
         assertion.is_false(A_holder.v)
 #End If
-        assertion.is_false(A_holder.v)
     End Sub
 
     Private NotInheritable Class B_holder
