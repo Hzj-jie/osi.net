@@ -17,12 +17,15 @@ Public NotInheritable Class delayed_init(Of PROTECTOR)
             End If
         End Sub
 
+        Public Shared Sub init()
+        End Sub
+
         Private Sub New()
         End Sub
     End Class
 
     Public Shared Sub execute()
-        static_constructor(Of once).execute()
+        once.init()
     End Sub
 
     Private Sub New()

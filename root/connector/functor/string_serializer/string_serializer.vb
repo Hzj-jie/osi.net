@@ -34,18 +34,21 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
             End If
         End Sub
 
+        Public Shared Sub init()
+        End Sub
+
         Private Sub New()
         End Sub
     End Class
 
     Public Shared Sub register(ByVal to_str As Func(Of T, StringWriter, Boolean))
         global_resolver(Of Func(Of T, StringWriter, Boolean), PROTECTOR).assert_first_register(to_str)
-        static_constructor(Of object_register).execute()
+        object_register.init()
     End Sub
 
     Public Shared Sub register(ByVal from_str As _do_val_ref(Of StringReader, T, Boolean))
         global_resolver(Of _do_val_ref(Of StringReader, T, Boolean), PROTECTOR).assert_first_register(from_str)
-        static_constructor(Of object_register).execute()
+        object_register.init()
     End Sub
 
     Protected Overridable Function to_str() As Func(Of T, StringWriter, Boolean)
