@@ -116,24 +116,23 @@ Public NotInheritable Class disposable
 End Class
 
 Public NotInheritable Class disposable(Of T)
-    Private Shared ReadOnly [default] As Action(Of T)
+    Private Shared ReadOnly [default] As Action(Of T) = create_default()
 
-    Shared Sub New()
+    Private Shared Function create_default() As Action(Of T)
         If type_info(Of T).is_object Then
             raise_error(error_type.performance, "disposable(Of Object) is definitely a performance destroyer.")
-            [default] = Sub(ByVal i As T)
-                            If Not i Is Nothing Then
-                                Dim a As Action(Of T) = Nothing
-                                If disposable.find(i.GetType(), a) Then
-                                    assert(Not a Is Nothing)
-                                    a(i)
-                                End If
-                            End If
-                        End Sub
-        Else
-            [default] = disposable.find(Of T)()
+            Return Sub(ByVal i As T)
+                       If Not i Is Nothing Then
+                           Dim a As Action(Of T) = Nothing
+                           If disposable.find(i.GetType(), a) Then
+                               assert(Not a Is Nothing)
+                               a(i)
+                           End If
+                       End If
+                   End Sub
         End If
-    End Sub
+        Return disposable.find(Of T)()
+    End Function
 
     Public Shared Sub register(ByVal d As Action(Of T))
         global_resolver(Of Action(Of T), disposable(Of T)).assert_first_register(d)
