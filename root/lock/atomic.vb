@@ -10,40 +10,34 @@ Imports osi.root.constants
 Imports osi.root.envs
 
 Public NotInheritable Class atomic
-    Private Shared ReadOnly x86 As Boolean = False
-    Private Shared ReadOnly amd64 As Boolean = False
-    Private Shared ReadOnly create_auto_reset_event_true As Func(Of AutoResetEvent)
-    Private Shared ReadOnly create_auto_reset_event_false As Func(Of AutoResetEvent)
-    Private Shared ReadOnly create_manual_reset_event_true As Func(Of ManualResetEvent)
-    Private Shared ReadOnly create_manual_reset_event_false As Func(Of ManualResetEvent)
-    Private Shared ReadOnly destroy_auto_reset_event As Action(Of AutoResetEvent)
-    Private Shared ReadOnly destroy_manual_reset_event As Action(Of ManualResetEvent)
-
-    Shared Sub New()
-        x86 = x32_cpu
-        amd64 = x64_cpu
-
-        create_auto_reset_event_true = Function() As AutoResetEvent
-                                           Return New AutoResetEvent(True)
-                                       End Function
-        create_auto_reset_event_false = Function() As AutoResetEvent
-                                            Return New AutoResetEvent(False)
-                                        End Function
-        create_manual_reset_event_true = Function() As ManualResetEvent
-                                             Return New ManualResetEvent(True)
-                                         End Function
-        create_manual_reset_event_false = Function() As ManualResetEvent
-                                              Return New ManualResetEvent(False)
-                                          End Function
-        destroy_auto_reset_event = Sub(x As AutoResetEvent)
-                                       assert(Not x Is Nothing)
-                                       x.Close()
-                                   End Sub
-        destroy_manual_reset_event = Sub(x As ManualResetEvent)
-                                         assert(Not x Is Nothing)
-                                         x.Close()
-                                     End Sub
-    End Sub
+    Private Shared ReadOnly x86 As Boolean = x32_cpu
+    Private Shared ReadOnly amd64 As Boolean = x64_cpu
+    Private Shared ReadOnly create_auto_reset_event_true As Func(Of AutoResetEvent) =
+        Function() As AutoResetEvent
+            Return New AutoResetEvent(True)
+        End Function
+    Private Shared ReadOnly create_auto_reset_event_false As Func(Of AutoResetEvent) =
+        Function() As AutoResetEvent
+            Return New AutoResetEvent(False)
+        End Function
+    Private Shared ReadOnly create_manual_reset_event_true As Func(Of ManualResetEvent) =
+        Function() As ManualResetEvent
+            Return New ManualResetEvent(True)
+        End Function
+    Private Shared ReadOnly create_manual_reset_event_false As Func(Of ManualResetEvent) =
+        Function() As ManualResetEvent
+            Return New ManualResetEvent(False)
+        End Function
+    Private Shared ReadOnly destroy_auto_reset_event As Action(Of AutoResetEvent) =
+        Sub(ByVal x As AutoResetEvent)
+            assert(Not x Is Nothing)
+            x.Close()
+        End Sub
+    Private Shared ReadOnly destroy_manual_reset_event As Action(Of ManualResetEvent) =
+        Sub(ByVal x As ManualResetEvent)
+            assert(Not x Is Nothing)
+            x.Close()
+        End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Sub eva(ByRef i As Single, ByVal j As Single)

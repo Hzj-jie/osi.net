@@ -7,12 +7,8 @@ Imports System.Collections.Concurrent
 Imports System.Collections.Generic
 
 Public NotInheritable Class type_resolver(Of T)
-    Public Shared ReadOnly [default] As type_resolver(Of T)
+    Public Shared ReadOnly [default] As type_resolver(Of T) = New type_resolver(Of T)()
     Private ReadOnly d As ConcurrentDictionary(Of Type, T)
-
-    Shared Sub New()
-        [default] = New type_resolver(Of T)()
-    End Sub
 
     Public Sub New()
         d = New ConcurrentDictionary(Of Type, T)()

@@ -34,11 +34,7 @@ Public Class thread_static_resolver(Of T As Class, PROTECTOR)
     Private NotInheritable Class unregister_delegate
         Implements IDisposable
 
-        Public Shared ReadOnly instance As unregister_delegate
-
-        Shared Sub New()
-            instance = New unregister_delegate()
-        End Sub
+        Public Shared ReadOnly instance As unregister_delegate = New unregister_delegate()
 
         Private Sub New()
         End Sub

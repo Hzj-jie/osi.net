@@ -6,11 +6,7 @@ Option Strict On
 Imports osi.root.template
 
 Public NotInheritable Class boolean_cache(Of b As _boolean)
-    Public Shared ReadOnly v As Boolean
-
-    Shared Sub New()
-        v = +(alloc(Of b)())
-    End Sub
+    Public Shared ReadOnly v As Boolean = +(alloc(Of b)())
 
     Private Sub New()
     End Sub

@@ -8,15 +8,9 @@ Imports osi.root.lock
 Public Class cd_object(Of T)
     Implements IDisposable
 
-    Private Shared ReadOnly c As atomic_int
-    Private Shared ReadOnly d As atomic_int
-    Private Shared ReadOnly f As atomic_int
-
-    Shared Sub New()
-        c = New atomic_int()
-        d = New atomic_int()
-        f = New atomic_int()
-    End Sub
+    Private Shared ReadOnly c As atomic_int = New atomic_int()
+    Private Shared ReadOnly d As atomic_int = New atomic_int()
+    Private Shared ReadOnly f As atomic_int = New atomic_int()
 
     Public Shared Sub reset()
         c.set(0)

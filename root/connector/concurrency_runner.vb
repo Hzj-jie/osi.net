@@ -8,11 +8,7 @@ Imports osi.root.constants
 Imports osi.root.template
 
 Public NotInheritable Class concurrency_runner
-    Public Shared ReadOnly instance As concurrency_runner(Of _NPOS)
-
-    Shared Sub New()
-        instance = New concurrency_runner(Of _NPOS)()
-    End Sub
+    Public Shared ReadOnly instance As concurrency_runner(Of _NPOS) = New concurrency_runner(Of _NPOS)()
 
     Public Shared Sub execute(ByVal ParamArray v() As Action)
         instance.execute(v)
@@ -29,10 +25,11 @@ End Class
 ' An executor to concurrently execute processor-count tasks in managed threadpool. To maximize processor usage, one
 ' should not queue a sleep or wait or io operation in a concurrency_runner.
 Public NotInheritable Class concurrency_runner(Of _SIZE As _int64)
-    Private Shared ReadOnly size As UInt32
+    Private Shared ReadOnly size As UInt32 = calculate_size()
     <ThreadStatic> Private Shared is_concurrency_runner_thread As Boolean
 
-    Shared Sub New()
+    Private Shared Function calculate_size() As UInt32
+        Dim size As UInt32 = 0
         Dim c As Int64 = 0
         c = +(alloc(Of _SIZE)())
         If c = npos Then
@@ -44,7 +41,8 @@ Public NotInheritable Class concurrency_runner(Of _SIZE As _int64)
         Else
             assert(False)
         End If
-    End Sub
+        Return size
+    End Function
 
     Public Shared Function in_concurrency_runner_thread() As Boolean
         Return is_concurrency_runner_thread

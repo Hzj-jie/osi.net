@@ -105,12 +105,7 @@ Public NotInheritable Class send_input
         Public hardware_input As hardware_input
     End Structure
 
-    Public Shared ReadOnly size_of_input As Int32
-
-    Shared Sub New()
-        size_of_input = sizeof(Of input)()
-        assert(size_of_input > 0)
-    End Sub
+    Public Shared ReadOnly size_of_input As Int32 = assert_which.of(sizeof(Of input)()).is_positive()
 
     Private Declare Function SendInput Lib "user32.dll" (ByVal input_count As UInt32,
                                                          ByVal inputs() As input,

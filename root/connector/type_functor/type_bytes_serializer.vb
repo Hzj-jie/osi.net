@@ -6,11 +6,8 @@ Option Strict On
 Imports System.IO
 
 Public NotInheritable Class type_bytes_serializer
-    Private Shared ReadOnly ss As type_resolver(Of bytes_serializer(Of Object))
-
-    Shared Sub New()
-        ss = type_resolver(Of bytes_serializer(Of Object)).default
-    End Sub
+    Private Shared ReadOnly ss As type_resolver(Of bytes_serializer(Of Object)) =
+        type_resolver(Of bytes_serializer(Of Object)).default
 
     Public Shared Function serializer(ByVal type As Type, ByRef o As bytes_serializer(Of Object)) As Boolean
         Return ss.from_type(type, o)

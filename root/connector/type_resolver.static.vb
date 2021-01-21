@@ -4,11 +4,7 @@ Option Infer Off
 Option Strict On
 
 Public NotInheritable Class type_resolver(Of T, PROTECTOR)
-    Public Shared ReadOnly r As type_resolver(Of T)
-
-    Shared Sub New()
-        r = New type_resolver(Of T)()
-    End Sub
+    Public Shared ReadOnly r As type_resolver(Of T) = New type_resolver(Of T)()
 
     Public Shared Function registered(ByVal type As Type) As Boolean
         Return r.registered(type)

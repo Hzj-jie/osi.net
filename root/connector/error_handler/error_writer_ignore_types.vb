@@ -1,12 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 
 Public NotInheritable Class error_writer_ignore_types(Of T)
-    Private Shared ReadOnly s() As Boolean
-
-    Shared Sub New()
-        ReDim s(255)
-    End Sub
+    Private Shared ReadOnly s(255) As Boolean
 
     Private Shared Function to_int32(ByVal e As Char) As Int32
         Dim x As Int32 = 0
@@ -21,51 +21,39 @@ Public NotInheritable Class error_writer_ignore_types(Of T)
     End Function
 
     Public Shared Sub ignore_all()
-        Dim i As UInt32 = 0
-        While i < array_size(s)
+        For i As Int32 = 0 To s.array_size_i() - 1
             s(i) = True
-            i += uint32_1
-        End While
+        Next
     End Sub
 
     Public Shared Sub value_all()
-        Dim i As UInt32 = 0
-        While i < array_size(s)
+        For i As Int32 = 0 To s.array_size_i() - 1
             s(i) = False
-            i += uint32_1
-        End While
+        Next
     End Sub
 
     Public Shared Sub ignore(ByVal ParamArray e() As error_type)
-        Dim i As UInt32 = 0
-        While i < array_size(e)
+        For i As Int32 = 0 To e.array_size_i() - 1
             s(to_int32(e(i))) = True
-            i += 1
-        End While
+        Next
     End Sub
 
     Public Shared Sub ignore(ByVal ParamArray e() As Char)
-        Dim i As UInt32 = 0
-        While i < array_size(e)
+        For i As Int32 = 0 To e.array_size_i() - 1
             s(to_int32(e(i))) = True
-            i += 1
-        End While
+        Next
     End Sub
 
     Public Shared Sub value(ByVal ParamArray e() As error_type)
-        Dim i As UInt32 = 0
-        While i < array_size(e)
+        For i As Int32 = 0 To e.array_size_i() - 1
             s(to_int32(e(i))) = False
-            i += 1
-        End While
+        Next
     End Sub
 
     Public Shared Sub value(ByVal ParamArray e() As Char)
-        Dim i As UInt32 = 0
-        While i < array_size(e)
+        For i As Int32 = 0 To e.array_size_i() - 1
             s(to_int32(e(i))) = False
-            i += 1
-        End While
+        Next
     End Sub
 
     Public Shared Function valued(ByVal e As error_type, ByVal c As Char) As Boolean

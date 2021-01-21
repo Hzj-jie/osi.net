@@ -16,6 +16,12 @@ Partial Public NotInheritable Class assert_which
         End Sub
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function is_positive() As Int32
+            assert(i > 0)
+            Return i
+        End Function
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function can_cast_to_uint32() As UInt32
             Try
                 Return CUInt(i)

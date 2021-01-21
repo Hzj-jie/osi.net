@@ -36,11 +36,7 @@ Partial Public Class list(Of T)
     Partial Public Structure iterator
         Implements IComparable(Of iterator), IComparable
 
-        Public Shared ReadOnly [end] As iterator
-
-        Shared Sub New()
-            [end] = New iterator()
-        End Sub
+        Public Shared ReadOnly [end] As iterator = New iterator()
 
         Private ReadOnly p As node
 

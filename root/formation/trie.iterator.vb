@@ -43,11 +43,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
     Partial Public Structure iterator
         Implements IComparable(Of iterator), IComparable
 
-        Public Shared ReadOnly [end] As iterator
-
-        Shared Sub New()
-            [end] = New iterator()
-        End Sub
+        Public Shared ReadOnly [end] As iterator = New iterator()
 
         Private ReadOnly p As node
 

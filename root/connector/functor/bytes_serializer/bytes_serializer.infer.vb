@@ -89,11 +89,7 @@ Partial Public NotInheritable Class bytes_serializer
     End Function
 
     Public NotInheritable Class container_from(Of ELEMENT)
-        Public Shared ReadOnly instance As container_from(Of ELEMENT)
-
-        Shared Sub New()
-            instance = New container_from(Of ELEMENT)()
-        End Sub
+        Public Shared ReadOnly instance As container_from(Of ELEMENT) = New container_from(Of ELEMENT)()
 
         Public Function [of](Of CONTAINER)(ByVal i As CONTAINER) As container_from_to(Of CONTAINER, ELEMENT)
             Return New container_from_to(Of CONTAINER, ELEMENT)(i)
@@ -116,11 +112,7 @@ Partial Public NotInheritable Class bytes_serializer
     End Class
 
     Public NotInheritable Class container_to(Of ELEMENT)
-        Public Shared ReadOnly instance As container_to(Of ELEMENT)
-
-        Shared Sub New()
-            instance = New container_to(Of ELEMENT)()
-        End Sub
+        Public Shared ReadOnly instance As container_to(Of ELEMENT) = New container_to(Of ELEMENT)()
 
         Public Function from(Of T)(ByVal i As T) As container_to_to(Of T, ELEMENT)
             Return New container_to_to(Of T, ELEMENT)(i)
