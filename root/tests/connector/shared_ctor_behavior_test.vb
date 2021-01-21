@@ -25,6 +25,7 @@ Public NotInheritable Class shared_ctor_behavior_test
         End Sub
     End Class
 
+    ' Do not use empty init to trigger shared ctor or variable.
     <test>
     Private Shared Sub wont_trigger_shared_variable()
         assertion.is_false(A_holder.v)
@@ -49,7 +50,7 @@ Public NotInheritable Class shared_ctor_behavior_test
     Private Shared Sub trigger_shared_ctor()
         assertion.is_false(B_holder.v)
         B.init()
-        assertion.is_false(B_holder.v)
+        assertion.is_true(B_holder.v)
     End Sub
 
     Private Sub New()
