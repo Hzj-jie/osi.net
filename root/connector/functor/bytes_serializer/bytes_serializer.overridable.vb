@@ -39,31 +39,28 @@ Partial Public Class bytes_serializer(Of T)
                             New bytes_serializer_object(r))
                     End Sub)
 
-                Public Shared Sub init()
-                End Sub
-
                 Private Sub New()
                 End Sub
             End Class
 
             Public Shared Sub append_to(ByVal f As Func(Of T, MemoryStream, Boolean))
                 global_resolver(Of Func(Of T, MemoryStream, Boolean), consume_append).assert_first_register(f)
-                object_register.init()
+                static_constructor(Of object_register).execute()
             End Sub
 
             Public Shared Sub write_to(ByVal f As Func(Of T, MemoryStream, Boolean))
                 global_resolver(Of Func(Of T, MemoryStream, Boolean), read_write).assert_first_register(f)
-                object_register.init()
+                static_constructor(Of object_register).execute()
             End Sub
 
             Public Shared Sub consume_from(ByVal f As _do_val_ref(Of MemoryStream, T, Boolean))
                 global_resolver(Of _do_val_ref(Of MemoryStream, T, Boolean), consume_append).assert_first_register(f)
-                object_register.init()
+                static_constructor(Of object_register).execute()
             End Sub
 
             Public Shared Sub read_from(ByVal f As _do_val_ref(Of MemoryStream, T, Boolean))
                 global_resolver(Of _do_val_ref(Of MemoryStream, T, Boolean), read_write).assert_first_register(f)
-                object_register.init()
+                static_constructor(Of object_register).execute()
             End Sub
 
             Private Sub New()

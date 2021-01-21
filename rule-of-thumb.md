@@ -30,3 +30,6 @@ Rule of Thumb
 1. Avoid using optional argument, consider to use overload instead.
 
 1. Do not use cctor / shared new, see shared\_ctor\_perf.
+
+1. Do not use empty init() function to trigger shared ctor, it won't cover
+   shared variable, see shared\_ctor\_behavior\_test.

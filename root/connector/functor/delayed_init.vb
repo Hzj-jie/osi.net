@@ -9,7 +9,7 @@ Public NotInheritable Class delayed_init(Of PROTECTOR)
     End Sub
 
     Private NotInheritable Class once
-        Public Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
+        Private Shared ReadOnly run_shared_sub_new As cctor_delegator = New cctor_delegator(
             Sub()
                 Dim f As Action = Nothing
                 f = global_resolver(Of Action, delayed_init(Of PROTECTOR)).resolve_or_null()
@@ -23,8 +23,7 @@ Public NotInheritable Class delayed_init(Of PROTECTOR)
     End Class
 
     Public Shared Sub execute()
-        ' shared function does not trigger the construction of shared readonly instance.
-        once.run_shared_sub_new.init()
+        static_constructor(Of once).execute()
     End Sub
 
     Private Sub New()
