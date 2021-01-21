@@ -1,8 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.utt
 
-Public Class static_constructor_test
+Public NotInheritable Class static_constructor_test
     Inherits [case]
 
     Private Shared ReadOnly def As Int32
