@@ -30,7 +30,12 @@ Public NotInheritable Class shared_ctor_behavior_test
     Private Shared Sub wont_trigger_shared_variable()
         assertion.is_false(A_holder.v)
         A.init()
+        ' If init() is inlining, the executor construction will be ignored.
+#If DEBUG Then
+        assertion.is_true(A_holder.v)
+#Else
         assertion.is_false(A_holder.v)
+#End If
     End Sub
 
     Private NotInheritable Class B_holder
