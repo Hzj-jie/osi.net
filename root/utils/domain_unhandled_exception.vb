@@ -13,6 +13,7 @@ Imports osi.root.formation
 Public Module _domain_unhandled_exception
     'do not set it to true unless you know what you are doing
     Public suspend_unhandled_exception As Boolean
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Event domain_unhandled_exception(ByVal ex As Exception)
     Private ReadOnly handler As UnhandledExceptionEventHandler
     Private ReadOnly suspended_threads As vector(Of Thread)

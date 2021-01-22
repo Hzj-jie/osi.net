@@ -8,6 +8,7 @@ Imports osi.root.connector
 Public Class chained_case_wrapper
     Inherits [case]
 
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Protected Event finished(ByRef finish_result As Boolean)
     Private ReadOnly cs() As [case]
     Private ReadOnly pp As Int16

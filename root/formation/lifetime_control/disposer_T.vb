@@ -36,6 +36,7 @@ Public Module _disposer
     End Function
 End Module
 
+<Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly")>
 Public Class disposer(Of T)
     Inherits dispose_ptr(Of T)
     Implements IDisposable

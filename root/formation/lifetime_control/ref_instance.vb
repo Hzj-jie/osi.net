@@ -24,8 +24,11 @@ Public NotInheritable Class ref_instance
     End Sub
 End Class
 
+<Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
 Public NotInheritable Class ref_instance(Of T)
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Event created()
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Event disposed()
     Private ReadOnly [New] As Func(Of T)
     Private ReadOnly p As disposer(Of T)

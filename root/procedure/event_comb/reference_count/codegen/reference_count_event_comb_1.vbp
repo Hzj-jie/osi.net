@@ -7,6 +7,7 @@ Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.utils
 
+<Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly")>
 Public Class reference_count_event_comb_1
     Public Shared Function start_after_trigger() As Boolean
         Return True

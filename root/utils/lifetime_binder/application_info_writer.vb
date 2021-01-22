@@ -8,6 +8,7 @@ Imports osi.root.connector
 Imports osi.root.envs
 Imports osi.root.constants
 
+<Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
 Public Class application_info_writer
     Private ReadOnly w As streamwriter_auto_disposer
 

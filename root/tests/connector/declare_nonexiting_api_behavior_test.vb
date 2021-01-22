@@ -12,7 +12,8 @@ Public Class declare_nonexiting_api_behavior_test
     End Class
 
     Private Class container2
-        <DllImport("this_should_not_exist.not_exist")> _
+        <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass")>
+        <DllImport("this_should_not_exist.not_exist")>
         Public Shared Function THIS_SHOULD_NOT_EXIST(ByVal i As Int32) As Boolean
         End Function
     End Class
@@ -32,7 +33,8 @@ Public Class declare_nonexiting_api_behavior_test
     End Class
 
     Private Class container4
-        <DllImport("this_should_not_exist.not_exist")> _
+        <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass")>
+        <DllImport("this_should_not_exist.not_exist")>
         Private Shared Function THIS_SHOULD_NOT_EXIST(ByVal i As Int32) As Boolean
         End Function
 

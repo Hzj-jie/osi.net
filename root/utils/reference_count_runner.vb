@@ -38,7 +38,9 @@ End Class
 Public Class reference_count_runner(Of AUTO_MARK_STARTED As _boolean, AUTO_MARK_STOPPED As _boolean)
     Inherits disposer
 
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Event after_start()
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Event after_stop()
     Private Shared ReadOnly _auto_mark_started As Boolean = +alloc(Of AUTO_MARK_STARTED)()
     Private Shared ReadOnly _auto_mark_stopped As Boolean = +alloc(Of AUTO_MARK_STOPPED)()

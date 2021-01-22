@@ -15,6 +15,7 @@ End Class
 
 ' An EventWaitHandle, which releases exact count of threads set function has been called, up to _MAX_COUNT.
 ' If _MAX_COUNT = 1, this class has a same behavior as AutoResetEvent, which is unnecessary.
+<Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly")>
 Public Class count_reset_event(Of _MAX_COUNT As _int64)
     Implements IDisposable
 
@@ -108,11 +109,13 @@ Public Class count_reset_event(Of _MAX_COUNT As _int64)
         l.release()
     End Sub
 
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly")>
     Public Sub Dispose() Implements IDisposable.Dispose
         m.Close()
         GC.SuppressFinalize(Me)
     End Sub
 
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly")>
     Protected Overrides Sub Finalize()
         m.Close()
         MyBase.Finalize()

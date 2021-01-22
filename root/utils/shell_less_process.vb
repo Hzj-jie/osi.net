@@ -23,8 +23,11 @@ Public NotInheritable Class shell_less_process
     Private ReadOnly p As disposer(Of Process)
     Private proc_started As singleentry
     Private proc_exited As singleentry
+    <CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Event receive_output(ByVal s As String)
+    <CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Event receive_error(ByVal s As String)
+    <CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Event process_exit()
     Private ReadOnly enable_raise_event As Boolean
     ' This does not resolve the issue of unreliable output event, but only to reduce the possibility.

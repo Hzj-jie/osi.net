@@ -8,6 +8,7 @@ Imports osi.root.lock
 
 ' A ref-counted based map to return or create an instance from the key and predefined allocator function. It always
 ' returns a ref_ptr, calling ref_ptr.unref and reaching 0 will remove the reference in the ref_map itself.
+<Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
 Public NotInheritable Class ref_map(Of KEY_T, VALUE_T)
     Private ReadOnly allocators As unordered_map(Of KEY_T, Func(Of VALUE_T))
     Private ReadOnly instances As unordered_map(Of KEY_T, ref_ptr(Of VALUE_T))

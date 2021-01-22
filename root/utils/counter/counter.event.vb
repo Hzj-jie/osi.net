@@ -4,9 +4,13 @@ Option Infer Off
 Option Strict On
 
 Public NotInheritable Class counter_event
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Shared Event write_counter(ByVal name As String, ByVal count As Int64)
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Shared Event increase_counter(ByVal id As Int64, ByVal c As Int64)
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Shared Event decrease_counter(ByVal id As Int64, ByVal c As Int64)
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Shared Event change_counter(ByVal id As Int64, ByVal c As Int64)
 
     Public Shared Sub raise_write_counter(ByVal name As String, ByVal count As Int64)

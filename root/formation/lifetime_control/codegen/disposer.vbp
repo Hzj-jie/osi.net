@@ -3,6 +3,7 @@
 
 ##INCLUDE disposer_imports.vbp
 
+<Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly")>
 Public Class ##TYPE_NAME##
     Implements IDisposable
 

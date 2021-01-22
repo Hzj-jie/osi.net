@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.lock
 
+<Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly")>
 Public Class cd_object(Of T)
     Implements IDisposable
 
@@ -44,10 +45,12 @@ Public Class cd_object(Of T)
         id = CUInt(c.increment() - 1)
     End Sub
 
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly")>
     Public Sub Dispose() Implements IDisposable.Dispose
         d.increment()
     End Sub
 
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly")>
     Protected Overrides Sub Finalize()
         f.increment()
         MyBase.Finalize()

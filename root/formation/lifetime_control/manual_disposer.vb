@@ -27,6 +27,7 @@ Imports osi.root.connector
 Imports osi.root.lock
 'finish disposer_imports.vbp --------
 
+<Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly")>
 Public Class manual_disposer
     Implements IDisposable
 

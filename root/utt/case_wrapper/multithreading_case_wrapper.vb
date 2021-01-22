@@ -7,6 +7,7 @@ Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.constants
 
+<Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
 Public Class multithreading_case_wrapper
     Inherits case_wrapper
 

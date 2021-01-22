@@ -29,6 +29,7 @@ Public Module _##CLASS_NAME##
     End Function
 End Module
 
+<Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly")>
 Public Class ##CLASS_NAME##(Of T)
     Inherits ##BASE_NAME##(Of T)
     Implements IDisposable

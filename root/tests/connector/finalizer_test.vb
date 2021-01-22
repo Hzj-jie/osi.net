@@ -23,6 +23,7 @@ Public Class finalizer_test
         Protected ReadOnly content As T = Nothing
         Protected ReadOnly p As atomic_int = Nothing
 
+        <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")>
         Protected Sub New(ByVal p As atomic_int)
             Me.content = initialize()
             assert(Not p Is Nothing)

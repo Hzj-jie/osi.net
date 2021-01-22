@@ -25,6 +25,7 @@ Partial Public Class event_comb
     Private ReadOnly ds() As Func(Of Boolean)
     Private ReadOnly _callstack As String
     Private ReadOnly ds_len As UInt32    'for perf concern
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Protected Event suspending()
     Private _end_result As ternary
     Private cb As event_comb

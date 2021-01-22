@@ -23,7 +23,9 @@ Public Class exec_case
     Protected ReadOnly process_name As String
     Protected ReadOnly expected_return As Int32
     Protected ReadOnly timeout_ms As Int64
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Protected Event receive_output(ByVal s As String)
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Protected Event receive_error(ByVal s As String)
 
     Public Sub New(ByVal file As String,

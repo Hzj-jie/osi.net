@@ -42,6 +42,7 @@ Public Module _weak_disposer
     End Function
 End Module
 
+<Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly")>
 Public Class weak_disposer(Of T)
     Inherits weak_dispose_ptr(Of T)
     Implements IDisposable
