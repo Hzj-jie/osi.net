@@ -45,8 +45,15 @@ End Class
 
 <SuppressMessage("Microsoft.Design", "BC42333")>
 Public Class ##TYPE##(Of T)
-    Implements IComparable, IComparable(Of ##TYPE##(Of T)), IComparable(Of ##INNER_TYPE##),
-               ICloneable, ICloneable(Of ##TYPE##(Of T))
+#Disable Warning BC42333
+    Implements IComparable,
+               IComparable(Of ##TYPE##(Of T)),
+               IComparable(Of ##INNER_TYPE##),
+               ICloneable,
+               ICloneable(Of ##TYPE##(Of T)),
+               IEquatable(Of ##TYPE##(Of T)),
+               IEquatable(Of ##INNER_TYPE##)
+#Enable Warning BC42333
 
     Shared Sub New()
         bytes_serializer(Of ##TYPE##(Of T)).forward_registration.from(Of ##INNER_TYPE##)()
@@ -94,6 +101,18 @@ Public Class ##TYPE##(Of T)
     Public Function CompareTo(ByVal that As ##INNER_TYPE##) As Int32 _
                              Implements IComparable(Of ##INNER_TYPE##).CompareTo
         Return compare([get](), that)
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Overloads Function Equals(ByVal that As ##TYPE##(Of T)) As Boolean _
+                                    Implements IEquatable(Of ##TYPE##(Of T)).Equals
+        Return CompareTo(that) = 0
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Overloads Function Equals(ByVal that As ##INNER_TYPE##) As Boolean _
+                                    Implements IEquatable(Of ##INNER_TYPE##).Equals
+        Return CompareTo(that) = 0
     End Function
 
 #If Not (PocketPC OrElse Smartphone) Then

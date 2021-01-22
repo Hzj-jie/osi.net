@@ -77,6 +77,7 @@ Public NotInheritable Class qless_threadpool
                 r = False
             End If
         Next
+        q.Dispose()
         Return r
     End Function
 

@@ -9,7 +9,7 @@ Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.utt
 
-Public Class ref_ptr_test
+Public NotInheritable Class ref_ptr_test
     Inherits multithreading_case_wrapper
 
     Private Const repeat_count As Int64 = 32
@@ -23,7 +23,7 @@ Public Class ref_ptr_test
         Return 1
     End Function
 
-    Private Class ref_ptr_case
+    Private NotInheritable Class ref_ptr_case
         Inherits [case]
 
         Private i As ref_ptr(Of atomic_int)

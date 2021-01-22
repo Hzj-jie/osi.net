@@ -1,11 +1,15 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.event
 Imports osi.root.formation
 Imports osi.root.utt
 
-Public Class count_down_event_test
+Public NotInheritable Class count_down_event_test
     Inherits multithreading_case_wrapper
 
     Private Const thread_count As Int32 = 16
@@ -14,7 +18,7 @@ Public Class count_down_event_test
         MyBase.New(New count_down_event_case(), thread_count)
     End Sub
 
-    Private Class count_down_event_case
+    Private NotInheritable Class count_down_event_case
         Inherits [case]
 
         Private ReadOnly e As count_down_event

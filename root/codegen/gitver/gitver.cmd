@@ -34,7 +34,7 @@ set gitver="%gitver:"=""%"
 echo         %gitver%.Trim()
 
 echo     Public Shared ReadOnly diff_base64 As String = _
-git diff > gitdiff.txt
+git diff --ignore-all-space > gitdiff.txt
 certutil -encode gitdiff.txt gitdiff.b64 > nul
 for /F "delims=" %%i in ('findstr /v /c:- gitdiff.b64') do (
   echo         "%%i" +

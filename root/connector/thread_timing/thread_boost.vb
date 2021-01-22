@@ -1,5 +1,9 @@
 ﻿
-Public Class thread_boost
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Public NotInheritable Class thread_boost
     Inherits priority
 
     Public Sub New()
@@ -7,7 +11,7 @@ Public Class thread_boost
     End Sub
 End Class
 
-Public Class thread_moderate
+Public NotInheritable Class thread_moderate
     Inherits priority
 
     Public Sub New()
@@ -15,7 +19,7 @@ Public Class thread_moderate
     End Sub
 End Class
 
-Public Class thread_lazy
+Public NotInheritable Class thread_lazy
     Inherits priority
 
     Public Sub New()

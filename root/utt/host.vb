@@ -83,7 +83,7 @@ Partial Friend NotInheritable Class host
 
     Public Shared ReadOnly cases As vector(Of case_info)
 
-    ' Ensure cases is always initialized after main. Debug mode uses eager static variable initialization.
+    ' Ensure "cases" is always initialized after main. Debug mode uses eager static variable initialization.
     Shared Sub New()
         assert((envs.utt.concurrency >= 0 AndAlso envs.utt.concurrency <= Environment.ProcessorCount()) OrElse
                envs.utt.concurrency = npos)

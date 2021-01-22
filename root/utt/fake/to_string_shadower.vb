@@ -15,7 +15,9 @@ End Module
 
 <SuppressMessage("Microsoft.Design", "BC42333")>
 Public Class to_string_shadower(Of T)
+#Disable Warning BC42333
     Implements IComparable(Of to_string_shadower(Of T)), IComparable, IComparable(Of T)
+#Enable Warning BC42333
 
     Private Shared ReadOnly type_name As String = strcat("to_string_shadower(Of ", type_info(Of T).name, ")")
     Private ReadOnly x As T

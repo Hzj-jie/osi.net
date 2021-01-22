@@ -36,6 +36,7 @@ Partial Public Structure npos_uint
         Return zero
     End Function
 
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2207:InitializeValueTypeStaticFieldsInline")>
     Shared Sub New()
         assert(constants.npos < 0)
         Dim x As npos_uint = Nothing
@@ -47,22 +48,19 @@ Partial Public Structure npos_uint
                     #If Not True Then
                         If i.npos() Then
                             Return bytes_serializer.append_to(uint32_0, o)
-                        Else
-                            Return bytes_serializer.append_to(i.raw_value(), o)
                         End If
+                        Return bytes_serializer.append_to(i.raw_value(), o)
                     #ElseIf Not True Then
                         If i.npos() Then
                             Return bytes_serializer.append_to(max_uint32, o)
-                        Else
-                            Return bytes_serializer.append_to(i.raw_value(), o)
                         End If
+                        Return bytes_serializer.append_to(i.raw_value(), o)
                     #Else
                         If i.npos() Then
                             Return bytes_serializer.append_to(True, o)
-                        Else
-                            Return bytes_serializer.append_to(False, o) AndAlso
-                                   bytes_serializer.append_to(i.raw_value(), o)
                         End If
+                        Return bytes_serializer.append_to(False, o) AndAlso
+                               bytes_serializer.append_to(i.raw_value(), o)
                     #End If
                 End Function,
                 Function(ByVal i As MemoryStream, ByRef o As npos_uint) As Boolean
@@ -564,12 +562,10 @@ Partial Public Structure npos_uint
         If this.npos() = that.npos() Then
             If this.npos() Then
                 Return True
-            Else
-                Return this.raw_value() = that.raw_value()
             End If
-        Else
-            Return False
+            Return this.raw_value() = that.raw_value()
         End If
+        Return False
     End Operator
 
     Public Shared Operator <>(ByVal this As npos_uint, ByVal that As npos_uint) As Boolean
@@ -579,9 +575,8 @@ Partial Public Structure npos_uint
     Public Shared Operator =(ByVal this As npos_uint, ByVal that As Int32) As Boolean
         If that < 0 AndAlso this.npos() Then
             Return True
-        Else
-            Return this.raw_value() = CUInt(that)
         End If
+        Return this.raw_value() = CUInt(that)
     End Operator
 
     Public Shared Operator <>(ByVal this As npos_uint, ByVal that As Int32) As Boolean
@@ -599,9 +594,8 @@ Partial Public Structure npos_uint
     Public Shared Operator =(ByVal this As npos_uint, ByVal that As UInt32) As Boolean
         If this.npos() Then
             Return False
-        Else
-            Return this.raw_value() = that
         End If
+        Return this.raw_value() = that
     End Operator
 
     Public Shared Operator <>(ByVal this As npos_uint, ByVal that As UInt32) As Boolean
@@ -619,21 +613,21 @@ Partial Public Structure npos_uint
     Public Shared Operator <(ByVal this As npos_uint, ByVal that As npos_uint) As Boolean
         If this.npos() Then
             Return False
-        ElseIf that.npos() Then
-            Return True
-        Else
-            Return this.raw_value() < that.raw_value()
         End If
+        If that.npos() Then
+            Return True
+        End If
+        Return this.raw_value() < that.raw_value()
     End Operator
 
     Public Shared Operator >(ByVal this As npos_uint, ByVal that As npos_uint) As Boolean
         If that.npos() Then
             Return False
-        ElseIf this.npos() Then
-            Return True
-        Else
-            Return this.raw_value() > that.raw_value()
         End If
+        If this.npos() Then
+            Return True
+        End If
+        Return this.raw_value() > that.raw_value()
     End Operator
 
     Public Shared Operator <(ByVal this As npos_uint, ByVal that As Int32) As Boolean
@@ -641,19 +635,18 @@ Partial Public Structure npos_uint
            this.npos() OrElse
            this.raw_value() >= max_int32 Then
             Return False
-        Else
-            Return this.raw_value() < CUInt(that)
         End If
+        Return this.raw_value() < CUInt(that)
     End Operator
 
     Public Shared Operator >(ByVal this As npos_uint, ByVal that As Int32) As Boolean
         If that < 0 Then
             Return False
-        ElseIf this.npos() OrElse this.raw_value() > max_int32 Then
-            Return True
-        Else
-            Return this.raw_value() > CUInt(that)
         End If
+        If this.npos() OrElse this.raw_value() > max_int32 Then
+            Return True
+        End If
+        Return this.raw_value() > CUInt(that)
     End Operator
 
     Public Shared Operator <(ByVal this As Int32, ByVal that As npos_uint) As Boolean
@@ -667,17 +660,15 @@ Partial Public Structure npos_uint
     Public Shared Operator <(ByVal this As npos_uint, ByVal that As UInt32) As Boolean
         If this.npos() Then
             Return False
-        Else
-            Return this.raw_value() < that
         End If
+        Return this.raw_value() < that
     End Operator
 
     Public Shared Operator >(ByVal this As npos_uint, ByVal that As UInt32) As Boolean
         If this.npos() Then
             Return True
-        Else
-            Return this.raw_value() > that
         End If
+        Return this.raw_value() > that
     End Operator
 
     Public Shared Operator <(ByVal this As UInt32, ByVal that As npos_uint) As Boolean
@@ -691,21 +682,21 @@ Partial Public Structure npos_uint
     Public Shared Operator <=(ByVal this As npos_uint, ByVal that As npos_uint) As Boolean
         If that.npos() Then
             Return True
-        ElseIf this.npos() Then
-            Return False
-        Else
-            Return this.raw_value() <= that.raw_value()
         End If
+        If this.npos() Then
+            Return False
+        End If
+        Return this.raw_value() <= that.raw_value()
     End Operator
 
     Public Shared Operator >=(ByVal this As npos_uint, ByVal that As npos_uint) As Boolean
         If this.npos() Then
             Return True
-        ElseIf that.npos() Then
-            Return False
-        Else
-            Return this.raw_value() >= that.raw_value()
         End If
+        If that.npos() Then
+            Return False
+        End If
+        Return this.raw_value() >= that.raw_value()
     End Operator
 
     Public Shared Operator <=(ByVal this As npos_uint, ByVal that As Int32) As Boolean
@@ -713,21 +704,21 @@ Partial Public Structure npos_uint
            this.npos() OrElse
            this.raw_value() > max_int32 Then
             Return False
-        Else
-            Return this.raw_value() <= CUInt(that)
         End If
+        Return this.raw_value() <= CUInt(that)
     End Operator
 
     Public Shared Operator >=(ByVal this As npos_uint, ByVal that As Int32) As Boolean
         If this.npos() Then
             Return True
-        ElseIf that < 0 Then
-            Return False
-        ElseIf this.raw_value() >= max_int32 Then
-            Return True
-        Else
-            Return this.raw_value() >= CUInt(that)
         End If
+        If that < 0 Then
+            Return False
+        End If
+        If this.raw_value() >= max_int32 Then
+            Return True
+        End If
+        Return this.raw_value() >= CUInt(that)
     End Operator
 
     Public Shared Operator <=(ByVal this As Int32, ByVal that As npos_uint) As Boolean
@@ -741,17 +732,15 @@ Partial Public Structure npos_uint
     Public Shared Operator <=(ByVal this As npos_uint, ByVal that As UInt32) As Boolean
         If this.npos() Then
             Return False
-        Else
-            Return this.raw_value() <= that
         End If
+        Return this.raw_value() <= that
     End Operator
 
     Public Shared Operator >=(ByVal this As npos_uint, ByVal that As UInt32) As Boolean
         If this.npos() Then
             Return True
-        Else
-            Return this.raw_value() >= that
         End If
+        Return this.raw_value() >= that
     End Operator
 
     Public Shared Operator <=(ByVal this As UInt32, ByVal that As npos_uint) As Boolean
@@ -765,10 +754,9 @@ Partial Public Structure npos_uint
     Public Shared Widening Operator CType(ByVal this As npos_uint) As Int32
         If this.npos() Then
             Return constants.npos
-        Else
-            assert(this.raw_value() <= max_int32)
-            Return CInt(this.raw_value())
         End If
+        assert(this.raw_value() <= max_int32)
+        Return CInt(this.raw_value())
     End Operator
 
     Public Shared Widening Operator CType(ByVal this As npos_uint) As UInt32
@@ -785,30 +773,29 @@ Partial Public Structure npos_uint
     Public Overrides Function ToString() As String
         If npos() Then
             Return Convert.ToString(constants.npos)
-        Else
-            Return Convert.ToString(raw_value())
         End If
+        Return Convert.ToString(raw_value())
     End Function
 
     Public Function CompareTo(ByVal that As npos_uint) As Int32 Implements IComparable(Of npos_uint).CompareTo
         If npos() = that.npos() Then
             Return 0
-        ElseIf npos() Then
-            Return 1
-        ElseIf that.npos() Then
-            Return -1
-        Else
-            Return raw_value().CompareTo(that.raw_value())
         End If
+        If npos() Then
+            Return 1
+        End If
+        If that.npos() Then
+            Return -1
+        End If
+        Return raw_value().CompareTo(that.raw_value())
     End Function
 
     Public Function CompareTo(ByVal that As Object) As Int32 Implements IComparable.CompareTo
         Dim other As npos_uint = Nothing
         If cast(Of npos_uint)(that, other) Then
             Return CompareTo(other)
-        Else
-            Return CompareTo(zero)
         End If
+        Return CompareTo(zero)
     End Function
 
     Public Function CloneT() As npos_uint Implements ICloneable(Of npos_uint).Clone

@@ -34,6 +34,7 @@ Public Class flip_event
     End Class
 
     Public Delegate Function [New](Of T As flip_event)(ByVal e As events) As T
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Event cancelled()
 
     Protected Sub New(ByVal e As events)

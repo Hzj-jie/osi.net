@@ -7,14 +7,16 @@ Imports System.Diagnostics.CodeAnalysis
 Imports osi.root.connector
 Imports osi.root.constants
 
-<SuppressMessage("Microsoft.Design", "BC42333")>
+<SuppressMessage("", "BC42333")>
 Public Class ref_node(Of T)
+#Disable Warning BC42333
     Implements ICloneable,
                IComparable(Of ref_node(Of T)),
                IComparable(Of T),
                IComparable,
                IEquatable(Of ref_node(Of T)),
                ICloneable(Of ref_node(Of T))
+#Enable Warning BC42333
 
     Private _data As T
     Private _p() As ref_node(Of T)

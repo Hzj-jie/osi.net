@@ -7,19 +7,26 @@ Imports osi.root.constants
 
 Public NotInheritable Class error_event
     ' additional_jump is not accurate.
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Shared Event r1(ByVal err_type As error_type,
                            ByVal err_type_char As Char,
                            ByVal msg() As Object,
                            ByVal additional_jump As Int32)
     ' additional_jump is not accurate.
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Shared Event r2(ByVal err_type As error_type,
                            ByVal err_type_char As Char,
                            ByVal msg As String,
                            ByVal additional_jump As Int32)
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Shared Event r3(ByVal err_type As error_type, ByVal msg As String)
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Shared Event r4(ByVal msg As String)
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Shared Event r5(ByVal err_type As error_type)
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Shared Event r6(ByVal err_type As error_type, ByVal err_type_char As Char, ByVal msg As String)
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Shared Event a1()
 
     Private Shared ReadOnly r1lock As Object = New Object()

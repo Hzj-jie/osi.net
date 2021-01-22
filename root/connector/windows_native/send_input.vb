@@ -31,7 +31,7 @@ Public NotInheritable Class send_input
         Public mouse_data As UInt32
         Public flags As UInt32
         Public time As UInt32
-        Public extra_info As UIntPtr
+        Private extra_info As UIntPtr
     End Structure
 
     <StructLayout(LayoutKind.Sequential)>
@@ -73,7 +73,7 @@ Public NotInheritable Class send_input
         Public scan_code As UShort
         Public flags As UInt32
         Public time As UInt32
-        Public extra_info As UIntPtr
+        Private extra_info As UIntPtr
     End Structure
 
     <StructLayout(LayoutKind.Sequential)>

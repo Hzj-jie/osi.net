@@ -30,6 +30,7 @@ Public NotInheritable Class lowlevel_keyboard_hook
         Public scanCode As UInt32
         Public flags As UInt32
         Public time As UInt32
+        <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")>
         Public dwExtraInfo As UIntPtr
     End Structure
 

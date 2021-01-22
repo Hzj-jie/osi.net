@@ -17,14 +17,13 @@ Public Class reference_count_runner
                                  As Action(Of reference_count_runner(Of _false, _false))
         If v Is Nothing Then
             Return Nothing
-        Else
-            Return Sub(x As reference_count_runner(Of _false, _false))
-                       Dim y As reference_count_runner = Nothing
-                       y = DirectCast(x, reference_count_runner)
-                       assert(Not y Is Nothing)
-                       v(y)
-                   End Sub
         End If
+        Return Sub(x As reference_count_runner(Of _false, _false))
+                   Dim y As reference_count_runner = Nothing
+                   y = DirectCast(x, reference_count_runner)
+                   assert(Not y Is Nothing)
+                   v(y)
+               End Sub
     End Function
 
     Public Sub New(Optional ByVal start_process As Action(Of reference_count_runner) = Nothing,

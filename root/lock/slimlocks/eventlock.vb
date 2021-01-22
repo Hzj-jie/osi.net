@@ -35,6 +35,7 @@ Namespace slimlock
             Return True
         End Function
 
+        <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2220:FinalizersShouldCallBaseClassFinalizer")>
         Protected Overrides Sub Finalize()
             are.Close()
         End Sub

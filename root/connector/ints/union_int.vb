@@ -29,6 +29,8 @@ Public Structure union_int16
     Public second_s8 As Byte
 End Structure
 
+<Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Portability", "CA1900:ValueTypeFieldsShouldBePortable", MessageId:="second_u16")>
+<Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Portability", "CA1900:ValueTypeFieldsShouldBePortable", MessageId:="second_s16")>
 <StructLayout(LayoutKind.Explicit)>
 Public Structure union_int32
     <FieldOffset(0)>

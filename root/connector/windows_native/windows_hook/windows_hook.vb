@@ -27,6 +27,7 @@ Public NotInheritable Class windows_hook
 
     Public Delegate Function HOOKPROC(ByVal nCode As Int32, ByVal wParam As UIntPtr, ByVal lParam As IntPtr) As IntPtr
 
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass")>
     <DllImport("user32.dll", CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.StdCall, SetLastError:=True)>
     Private Shared Function SetWindowsHookEx(ByVal idHook As Int32,
                                              ByVal lpfn As HOOKPROC,
@@ -34,10 +35,12 @@ Public NotInheritable Class windows_hook
                                              ByVal dwThreadId As UInt32) As IntPtr
     End Function
 
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass")>
     <DllImport("user32.dll", CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.StdCall, SetLastError:=True)>
     Private Shared Function UnhookWindowsHookEx(ByVal hhk As IntPtr) As Int32
     End Function
 
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass")>
     <DllImport("user32.dll", CharSet:=CharSet.Auto, CallingConvention:=CallingConvention.StdCall, SetLastError:=True)>
     Private Shared Function CallNextHookEx(ByVal hhk As IntPtr,
                                            ByVal nCode As Int32,

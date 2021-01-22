@@ -8,6 +8,7 @@ Imports osi.root.constants
 
 <global_init(global_init_level.foundamental)>
 Public NotInheritable Class control_c
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Shared Event press(ByRef cancel As Boolean)
     Private Shared _pressed As Boolean = False
     Private Shared _enabled As Boolean = True

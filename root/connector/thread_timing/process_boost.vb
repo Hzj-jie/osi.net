@@ -1,5 +1,9 @@
 ﻿
-Public Class realtime
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Public NotInheritable Class realtime
     Inherits priority
 
     Public Sub New()
@@ -7,7 +11,7 @@ Public Class realtime
     End Sub
 End Class
 
-Public Class boost
+Public NotInheritable Class boost
     Inherits priority
 
     Public Sub New()
@@ -15,7 +19,7 @@ Public Class boost
     End Sub
 End Class
 
-Public Class lazy
+Public NotInheritable Class lazy
     Inherits priority
 
     Public Sub New()
@@ -23,7 +27,7 @@ Public Class lazy
     End Sub
 End Class
 
-Public Class moderate
+Public NotInheritable Class moderate
     Inherits priority
 
     Public Sub New()
@@ -31,7 +35,7 @@ Public Class moderate
     End Sub
 End Class
 
-Public Class process_realtime
+Public NotInheritable Class process_realtime
     Inherits priority
 
     Public Sub New()
@@ -39,7 +43,7 @@ Public Class process_realtime
     End Sub
 End Class
 
-Public Class process_boost
+Public NotInheritable Class process_boost
     Inherits priority
 
     Public Sub New()
@@ -47,7 +51,7 @@ Public Class process_boost
     End Sub
 End Class
 
-Public Class process_lazy
+Public NotInheritable Class process_lazy
     Inherits priority
 
     Public Sub New()
@@ -55,7 +59,7 @@ Public Class process_lazy
     End Sub
 End Class
 
-Public Class process_moderate
+Public NotInheritable Class process_moderate
     Inherits priority
 
     Public Sub New()

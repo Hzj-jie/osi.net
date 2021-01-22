@@ -52,6 +52,7 @@ Public Class manual_disposer
 
 
 
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Event dispose_exception(ByVal ex As Exception)
     Private exp As singleentry
 
@@ -89,13 +90,14 @@ Public Class manual_disposer
 
 
 #If True Then
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly")>
     Public Sub IDisposable_Dispose() Implements IDisposable.Dispose
         dispose()
     End Sub
-
 #End If
 
 #If False Then
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly")>
     Protected NotOverridable Overrides Sub Finalize()
         dispose()
         GC.KeepAlive(Me)

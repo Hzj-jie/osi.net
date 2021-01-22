@@ -9,8 +9,8 @@ Imports System.Threading
 Public MustInherit Class synchronize_invoke
     Implements ISynchronizeInvoke
 
-    Private Class async_result
-        Implements IAsyncResult
+    Private NotInheritable Class async_result
+        Implements IAsyncResult, IDisposable
 
         Private ReadOnly method As [Delegate]
         Private ReadOnly args() As Object
@@ -51,9 +51,8 @@ Public MustInherit Class synchronize_invoke
             Get
                 If sync Then
                     Return null_wait_handle.instance
-                Else
-                    Return mre
                 End If
+                Return mre
             End Get
         End Property
 
@@ -69,10 +68,17 @@ Public MustInherit Class synchronize_invoke
             End Get
         End Property
 
-        Protected Overrides Sub Finalize()
+        Public Sub Dispose() Implements IDisposable.Dispose
             If Not sync Then
                 mre.Close()
+                mre.Dispose()
             End If
+            GC.SuppressFinalize(Me)
+        End Sub
+
+        Protected Overrides Sub Finalize()
+            Dispose()
+            GC.KeepAlive(Me)
             MyBase.Finalize()
         End Sub
     End Class
@@ -87,28 +93,26 @@ Public MustInherit Class synchronize_invoke
                                 ByVal args() As Object) As IAsyncResult Implements ISynchronizeInvoke.BeginInvoke
         If method Is Nothing Then
             Return Nothing
-        Else
-            If synchronously() Then
-                Return New async_result(method, args, True)
-            Else
-                Dim r As async_result = Nothing
-                r = New async_result(method, args, False)
-                push(AddressOf r.execute)
-                Return r
-            End If
         End If
+        If synchronously() Then
+            Return New async_result(method, args, True)
+        End If
+        Dim r As async_result = Nothing
+        r = New async_result(method, args, False)
+        push(AddressOf r.execute)
+        Return r
     End Function
 
     Public Function EndInvoke(ByVal result As IAsyncResult) As Object Implements ISynchronizeInvoke.EndInvoke
         If result Is Nothing Then
             Return Nothing
-        Else
-            Dim r As async_result = Nothing
-            r = direct_cast(Of async_result)(result)
-            assert(Not r Is Nothing)
-            assert(r.AsyncWaitHandle().wait())
-            Return r.result()
         End If
+        Dim r As async_result = Nothing
+        r = direct_cast(Of async_result)(result)
+        assert(Not r Is Nothing)
+        assert(r.AsyncWaitHandle().wait())
+        r.AsyncWaitHandle().Dispose()
+        Return r.result()
     End Function
 
     Public Function Invoke(ByVal method As [Delegate],
@@ -119,17 +123,16 @@ Public MustInherit Class synchronize_invoke
     Public Function async_invoke(ByVal method As [Delegate], ByVal args() As Object) As Boolean
         If method Is Nothing Then
             Return False
-        Else
-            If synchronously() Then
-                method.safe_invoke(args)
-            Else
-                push(Sub()
-                         ' The underlying runner should take care of the exceptions.
-                         method.DynamicInvoke(args)
-                     End Sub)
-            End If
-            Return True
         End If
+        If synchronously() Then
+            method.safe_invoke(args)
+        Else
+            push(Sub()
+                     ' The underlying runner should take care of the exceptions.
+                     method.DynamicInvoke(args)
+                 End Sub)
+        End If
+        Return True
     End Function
 
     Protected MustOverride Sub push(ByVal v As Action)

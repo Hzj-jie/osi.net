@@ -6,7 +6,6 @@ Option Strict On
 Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.utils
 
 Public Class multithreading_case_wrapper
     Inherits case_wrapper
@@ -126,8 +125,11 @@ Public Class multithreading_case_wrapper
 
     Protected Overrides Sub Finalize()
         start_are.Close()
+        start_are.Dispose()
         accept_mre.Close()
+        accept_mre.Dispose()
         finish_are.Close()
+        finish_are.Dispose()
         MyBase.Finalize()
     End Sub
 End Class

@@ -1,11 +1,15 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
 Imports osi.root.connector
 Imports osi.root.envs
 Imports osi.root.constants
 
 Public Class application_info_writer
-    Private ReadOnly w As streamwriter_auto_disposer = Nothing
+    Private ReadOnly w As streamwriter_auto_disposer
 
     Protected Sub New(ByVal folder As String, ByVal file As String, ByVal extension As String)
         assert(Not String.IsNullOrEmpty(folder))

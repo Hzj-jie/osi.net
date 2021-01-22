@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+<Serializable>
 Public NotInheritable Class break_lambda
     Inherits Exception
 

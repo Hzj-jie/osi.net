@@ -24,7 +24,7 @@ Public NotInheritable Class ref_instance
     End Sub
 End Class
 
-Public Class ref_instance(Of T)
+Public NotInheritable Class ref_instance(Of T)
     Public Event created()
     Public Event disposed()
     Private ReadOnly [New] As Func(Of T)
@@ -110,9 +110,8 @@ Public Class ref_instance(Of T)
     Public Shared Operator +(ByVal this As ref_instance(Of T)) As T
         If this Is Nothing Then
             Return Nothing
-        Else
-            Return this.get()
         End If
+        Return this.get()
     End Operator
 
     Public Function assert_getter() As getter(Of T)
@@ -154,9 +153,8 @@ Public Class ref_instance(Of T)
             If r.referred() Then
                 k = r.get()
                 Return True
-            Else
-                Return False
             End If
+            Return False
         End Function
     End Class
 End Class

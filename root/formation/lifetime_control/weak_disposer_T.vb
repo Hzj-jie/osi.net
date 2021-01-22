@@ -87,13 +87,14 @@ Public Class weak_disposer(Of T)
 
 
 #If True Then
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly")>
     Public Sub IDisposable_Dispose() Implements IDisposable.Dispose
         dispose()
     End Sub
-
 #End If
 
 #If True Then
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly")>
     Protected NotOverridable Overrides Sub Finalize()
         dispose()
         GC.KeepAlive(Me)

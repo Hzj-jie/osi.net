@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Diagnostics
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
@@ -22,8 +26,8 @@ Public Module _process_thread
                              (ByVal dwDesiredAccess As ThreadAccess,
                               ByVal bInheritHandle As Boolean,
                               ByVal dwThreadId As UInt32) As IntPtr
-    Private Declare Function SuspendThread Lib "kernel32.dll" (ByVal hThread As IntPtr) As UInteger
-    Private Declare Function ResumeThread Lib "kernel32.dll" (ByVal hThread As IntPtr) As UInteger
+    Private Declare Function SuspendThread Lib "kernel32.dll" (ByVal hThread As IntPtr) As UInt32
+    Private Declare Function ResumeThread Lib "kernel32.dll" (ByVal hThread As IntPtr) As UInt32
 
     Public Function open_thread(ByVal access As ThreadAccess,
                                 ByVal inherit_handle As Boolean,
@@ -43,9 +47,8 @@ Public Module _process_thread
         Dim r As IntPtr = Nothing
         If open_thread(access, inherit_handle, thread_id, r) Then
             Return r
-        Else
-            Return IntPtr.Zero
         End If
+        Return IntPtr.Zero
     End Function
 
     Public Function open_thread(ByVal access As ThreadAccess,
@@ -58,9 +61,8 @@ Public Module _process_thread
         Dim r As IntPtr = Nothing
         If open_thread(access, thread_id, r) Then
             Return r
-        Else
-            Return IntPtr.Zero
         End If
+        Return IntPtr.Zero
     End Function
 
     Public Function suspend_thread(ByVal h As IntPtr) As UInt32
@@ -89,19 +91,17 @@ Public Module _process_thread
                                               ByRef o As IntPtr) As Boolean
         If t Is Nothing Then
             Return False
-        Else
-            Return open_thread(access, inherit_handle, t.dw_thread_id(), o)
         End If
+        Return open_thread(access, inherit_handle, t.dw_thread_id(), o)
     End Function
 
     <Extension()> Public Function open_thread(ByVal t As ProcessThread,
                                               ByVal access As ThreadAccess,
                                               ByVal inherit_handle As Boolean) As IntPtr
         If t Is Nothing Then
-            Return False
-        Else
-            Return open_thread(access, inherit_handle, t.dw_thread_id())
+            Return IntPtr.Zero
         End If
+        Return open_thread(access, inherit_handle, t.dw_thread_id())
     End Function
 
     <Extension()> Public Function open_thread(ByVal t As ProcessThread,
@@ -109,17 +109,15 @@ Public Module _process_thread
                                               ByRef o As IntPtr) As Boolean
         If t Is Nothing Then
             Return False
-        Else
-            Return open_thread(access, t.dw_thread_id(), o)
         End If
+        Return open_thread(access, t.dw_thread_id(), o)
     End Function
 
     <Extension()> Public Function open_thread(ByVal t As ProcessThread, ByVal access As ThreadAccess) As IntPtr
         If t Is Nothing Then
-            Return False
-        Else
-            Return open_thread(access,  t.dw_thread_id())
+            Return IntPtr.Zero
         End If
+        Return open_thread(access, t.dw_thread_id())
     End Function
 
     <Extension()> Public Function suspend_thread(ByVal t As ProcessThread) As Boolean
@@ -128,9 +126,8 @@ Public Module _process_thread
             Dim r As Boolean = False
             r = (SuspendThread(handle) <> max_uint32)
             Return handle.close_as_handle() AndAlso r
-        Else
-            Return False
         End If
+        Return False
     End Function
 
     <Extension()> Public Function resume_thread(ByVal t As ProcessThread) As Boolean
@@ -139,20 +136,18 @@ Public Module _process_thread
             Dim r As Boolean = False
             r = (resume_thread(handle) <> max_uint32)
             Return handle.close_as_handle() AndAlso r
-        Else
-            Return False
         End If
+        Return False
     End Function
 
     <Extension()> Public Function dispose(ByVal p As ProcessThreadCollection) As Boolean
         If p Is Nothing Then
             Return False
-        Else
-            Dim r As Boolean = True
-            For i As Int32 = 0 To p.Count() - 1
-                r = r And p(i).not_null_and_dispose()
-            Next
-            Return r
         End If
+        Dim r As Boolean = True
+        For i As Int32 = 0 To p.Count() - 1
+            r = r And p(i).not_null_and_dispose()
+        Next
+        Return r
     End Function
 End Module

@@ -9,11 +9,11 @@ Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.utt
 
-Public Class one_off_test
+Public NotInheritable Class one_off_test
     Inherits [case]
 
     Private ReadOnly x As one_off(Of Object)
-    Private ReadOnly are As EventWaitHandle
+    Private ReadOnly mre As ManualResetEvent
     Private ReadOnly suc_times As atomic_int
     Private ReadOnly read_thread_count As atomic_int
     Private running As Boolean
@@ -21,7 +21,7 @@ Public Class one_off_test
 
     Public Sub New()
         x = New one_off(Of Object)()
-        are = New ManualResetEvent(False)
+        mre = New ManualResetEvent(False)
         suc_times = New atomic_int()
         read_thread_count = New atomic_int()
     End Sub
@@ -29,7 +29,7 @@ Public Class one_off_test
     Private Sub read_thread()
         read_thread_count.increment()
         While running
-            assert(are.WaitOne())
+            assert(mre.WaitOne())
             If is_get Then
                 If x.get(Nothing) Then
                     suc_times.increment()
@@ -50,8 +50,8 @@ Public Class one_off_test
             start_thread(AddressOf read_thread)
         Next
         assertion.is_true(timeslice_sleep_wait_until(Function() As Boolean
-                                                   Return (+read_thread_count) > 1
-                                               End Function,
+                                                         Return (+read_thread_count) > 1
+                                                     End Function,
                                                seconds_to_milliseconds(10)))
         Const times As Int32 = 1024
         suc_times.exchange(0)
@@ -64,7 +64,7 @@ Public Class one_off_test
             Else
                 assertion.is_true(x.get(Nothing))
             End If
-            assert(are.Set())
+            assert(mre.Set())
             lazy_wait_when(Function() As Boolean
                                If is_get Then
                                    Return x.has()
@@ -72,23 +72,23 @@ Public Class one_off_test
                                    Return Not x.has()
                                End If
                            End Function)
-            assert(are.Reset())
+            assert(mre.Reset())
         Next
         assertion.is_true(timeslice_sleep_wait_until(Function() As Boolean
-                                                   Return ((+suc_times) = times)
-                                               End Function,
+                                                         Return ((+suc_times) = times)
+                                                     End Function,
                                                seconds_to_milliseconds(10)))
         assertion.equal(+suc_times, times)
         If Not is_get Then
             assertion.is_true(x.get(Nothing))
         End If
         running = False
-        assert(are.Set())
+        assert(mre.Set())
         assertion.is_true(timeslice_sleep_wait_when(Function() As Boolean
-                                                  Return (+read_thread_count) > 0
-                                              End Function,
+                                                        Return (+read_thread_count) > 0
+                                                    End Function,
                                               seconds_to_milliseconds(10)))
-        assert(are.Reset())
+        assert(mre.Reset())
     End Sub
 
     Public Overrides Function run() As Boolean
@@ -98,4 +98,10 @@ Public Class one_off_test
         run_case()
         Return True
     End Function
+
+    Protected Overrides Sub Finalize()
+        mre.Close()
+        mre.Dispose()
+        MyBase.Finalize()
+    End Sub
 End Class

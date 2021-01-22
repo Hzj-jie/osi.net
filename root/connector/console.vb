@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Diagnostics.CodeAnalysis
 Imports System.Drawing
 Imports System.Threading
 Imports osi.root.constants
@@ -20,10 +21,12 @@ Public Module _console
         End Try
     End Sub
 
+    <SuppressMessage("Microsoft.Reliability", "CA2002:DoNotLockOnObjectsWithWeakIdentity")>
     Public Sub lock_console_output()
         Monitor.Enter(Console.Out)
     End Sub
 
+    <SuppressMessage("Microsoft.Reliability", "CA2002:DoNotLockOnObjectsWithWeakIdentity")>
     Public Sub release_console_output()
         Monitor.Exit(Console.Out)
     End Sub

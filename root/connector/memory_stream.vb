@@ -137,6 +137,7 @@ Public Module _memory_stream
         Return False
     End Function
 
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")>
     <Extension()> Public Function zip_to_file(ByVal this As MemoryStream, ByVal o As String) As Boolean
         assert(Not this Is Nothing)
         Dim b() As Byte = Nothing
@@ -163,6 +164,7 @@ Public Module _memory_stream
         Return False
     End Function
 
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")>
     <Extension()> Public Function unzip_from_file(ByVal this As MemoryStream, ByVal i As String) As Boolean
         assert(Not this Is Nothing)
         Try

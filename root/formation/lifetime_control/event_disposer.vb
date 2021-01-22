@@ -11,6 +11,7 @@ Public Class event_disposer(Of T)
     Inherits ref(Of T)
     Implements IComparable(Of event_disposer(Of T)), IDisposable
 
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Event disposing()
 
     Public Sub New()
@@ -57,6 +58,7 @@ Public Class weak_event_disposer(Of T)
     Inherits weak_ref(Of T)
     Implements IComparable(Of event_disposer(Of T)), IDisposable
 
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Event disposing()
 
     Public Sub New()

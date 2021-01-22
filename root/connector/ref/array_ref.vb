@@ -58,8 +58,15 @@ End Class
 
 <SuppressMessage("Microsoft.Design", "BC42333")>
 Public Class array_ref(Of T)
-    Implements IComparable, IComparable(Of array_ref(Of T)), IComparable(Of T()),
-               ICloneable, ICloneable(Of array_ref(Of T))
+#Disable Warning BC42333
+    Implements IComparable,
+               IComparable(Of array_ref(Of T)),
+               IComparable(Of T()),
+               ICloneable,
+               ICloneable(Of array_ref(Of T)),
+               IEquatable(Of array_ref(Of T)),
+               IEquatable(Of T())
+#Enable Warning BC42333
 
     Shared Sub New()
         bytes_serializer(Of array_ref(Of T)).forward_registration.from(Of T())()
@@ -163,6 +170,18 @@ Public Class array_ref(Of T)
     Public Function CompareTo(ByVal that As T()) As Int32 _
                              Implements IComparable(Of T()).CompareTo
         Return compare([get](), that)
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Overloads Function Equals(ByVal that As array_ref(Of T)) As Boolean _
+                                    Implements IEquatable(Of array_ref(Of T)).Equals
+        Return CompareTo(that) = 0
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Overloads Function Equals(ByVal that As T()) As Boolean _
+                                    Implements IEquatable(Of T()).Equals
+        Return CompareTo(that) = 0
     End Function
 
 #If Not (PocketPC OrElse Smartphone) Then

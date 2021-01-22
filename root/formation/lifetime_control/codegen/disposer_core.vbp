@@ -2,6 +2,7 @@
 ##DEFAULT IMPLEMENT_DISPOSE True
 ##DEFAULT IMPLEMENT_FINALIZER ##IMPLEMENT_DISPOSE##
 
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Event dispose_exception(ByVal ex As Exception)
     Private exp As singleentry
 

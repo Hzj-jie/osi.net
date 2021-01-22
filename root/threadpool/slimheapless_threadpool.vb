@@ -76,6 +76,7 @@ Public NotInheritable Class slimheapless_threadpool
                 r = False
             End If
         Next
+        q.Dispose()
         Return r
     End Function
 

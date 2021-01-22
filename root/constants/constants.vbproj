@@ -63,6 +63,7 @@
     <Compile Include="encodings.vb" />
     <Compile Include="exit_code.vb" />
     <Compile Include="git.vb" />
+    <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="global_init_attribute.vb" />
     <Compile Include="joint_type.vb" />
     <Compile Include="math.vb" />

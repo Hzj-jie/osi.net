@@ -116,6 +116,7 @@
     <Compile Include="functor\string_serializer\string_serializer.vb" />
     <Compile Include="functor\string_serializer\uri_serializer.vb" />
     <Compile Include="garbage_collector.vb" />
+    <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="mono.vb" />
     <Compile Include="ref\array_ref.vb" />
     <Compile Include="ref\ref.vb" />

@@ -22,6 +22,7 @@ End Enum
 
 ' Follow .net naming rules: using global_init as attribute name will be accepted. It also avoids conflict with
 ' osi.root.utils.global_init class.
+<AttributeUsage(AttributeTargets.Class Or AttributeTargets.Struct)>
 Public NotInheritable Class global_initAttribute
     Inherits Attribute
 

@@ -7,6 +7,7 @@ Imports System.Runtime.InteropServices
 Imports osi.root.constants
 
 Public NotInheritable Class windows_native_error
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1060:MovePInvokesToNativeMethodsClass")>
     <DllImport("kernel32.dll", CharSet:=CharSet.Auto)>
     Private Shared Function GetLastError() As UInt32
     End Function

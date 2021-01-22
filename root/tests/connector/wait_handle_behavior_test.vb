@@ -1,11 +1,15 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Diagnostics.CodeAnalysis
 Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.lock
 Imports osi.root.utt
 
-Public Class wait_handle_behavior_test
+Public NotInheritable Class wait_handle_behavior_test
     Inherits [case]
 
     Private Shared Function multiple_closes_in_multiple_threads(ByVal e As EventWaitHandle) As Boolean
@@ -65,6 +69,7 @@ Public Class wait_handle_behavior_test
         Return True
     End Function
 
+#Disable Warning BC40000
     <SuppressMessage("", "BC40000")>
     Private Shared Function a_valid_handle_after_close(ByVal e As WaitHandle) As Boolean
         assert(Not e Is Nothing)
@@ -75,6 +80,7 @@ Public Class wait_handle_behavior_test
         assertion.is_false(e.Handle() = IntPtr.Zero)
         Return True
     End Function
+#Enable Warning BC40000
 
     Public Overrides Function run() As Boolean
         Return a_valid_handle_after_close(New AutoResetEvent(False)) AndAlso

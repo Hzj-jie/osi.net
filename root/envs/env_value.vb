@@ -83,7 +83,7 @@ Public Module _env_value
     End Function
 End Module
 
-Public Class scoped_environments
+Public NotInheritable Class scoped_environments
     Implements IDisposable
 
     Private ReadOnly envs() As String

@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.Diagnostics
 Imports System.Threading
+Imports osi.root.constants
 
 Public Structure nice
     Public Enum process_priority
@@ -38,10 +39,16 @@ Public Structure nice
     Public Shared ReadOnly thread_moderate As nice = New nice(thread_priority.normal)
     Public Shared ReadOnly thread_lazy As nice = New nice(thread_priority.lowest)
 
-    Shared Sub New()
-        assert(DirectCast(Nothing, process_priority) = process_priority.keep)
-        assert(DirectCast(Nothing, thread_priority) = thread_priority.keep)
-    End Sub
+    <global_init(global_init_level.foundamental)>
+    Private NotInheritable Class assertions
+        Private Shared Sub init()
+            assert(DirectCast(Nothing, process_priority) = process_priority.keep)
+            assert(DirectCast(Nothing, thread_priority) = thread_priority.keep)
+        End Sub
+
+        Private Sub New()
+        End Sub
+    End Class
 
     Private ReadOnly pp As process_priority
     Private ReadOnly tp As thread_priority
@@ -109,6 +116,7 @@ Public Structure nice
     End Function
 End Structure
 
+<CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly")>
 Public Class priority
     Implements IDisposable
 
@@ -143,6 +151,7 @@ Public Class priority
         End If
     End Sub
 
+    <CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly")>
     Public Sub Dispose() Implements IDisposable.Dispose
         If Not n.keep_process_priority() Then
             assert(Not p Is Nothing)
