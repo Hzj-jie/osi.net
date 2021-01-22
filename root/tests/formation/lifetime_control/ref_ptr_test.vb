@@ -23,6 +23,7 @@ Public NotInheritable Class ref_ptr_test
         Return 1
     End Function
 
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
     Private NotInheritable Class ref_ptr_case
         Inherits [case]
 

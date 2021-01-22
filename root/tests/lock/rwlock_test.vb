@@ -11,6 +11,7 @@ Imports osi.root.utt.attributes
 
 <test>
 Public NotInheritable Class rwlock_test
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
     Private NotInheritable Class test_class
         Private ReadOnly l As rwlock
         Private ReadOnly rac As atomic_int

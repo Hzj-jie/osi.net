@@ -18,6 +18,7 @@ Public MustInherit Class atomic_uint_test
 
         Public MustOverride Function initial_value() As UInt32
 
+        <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")>
         Public Sub New()
             a = New atomic_uint(initial_value())
         End Sub

@@ -9,6 +9,7 @@ Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.utt
 
+<Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
 Public NotInheritable Class one_off_test
     Inherits [case]
 

@@ -23,6 +23,7 @@ Public NotInheritable Class reference_count_event_comb_test
         Public ReadOnly c1 As atomic_int
         Public ReadOnly c2 As ref(Of unchecked_int)
 
+        <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")>
         Public Sub New()
             c1 = New atomic_int()
             c2 = New ref(Of unchecked_int)()

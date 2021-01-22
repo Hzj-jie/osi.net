@@ -1,19 +1,24 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.lock
-Imports osi.root.connector
 Imports osi.root.utt
 
-Public Class gc_behavior_test
+Public NotInheritable Class gc_behavior_test
     Inherits [case]
 
-    Private Class cc
+    Private NotInheritable Class cc
         Public finialized As Boolean
 
         Public Sub New()
             finialized = False
         End Sub
 
+        <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1821:RemoveEmptyFinalizers")>
         Protected Overrides Sub Finalize()
             finialized = True
             MyBase.Finalize()
@@ -31,9 +36,9 @@ Public Class gc_behavior_test
         Public Sub New(ByVal e As atomic_int)
             assert(Not e Is Nothing)
             Me.a = gc_behavior_test.a
-            Me.b = gc_behavior_test.b.Clone()
+            Me.b = direct_cast(Of String)(gc_behavior_test.b.Clone())
             Me.c = New Object()
-            Me.d = gc_behavior_test.d.Clone()
+            Me.d = direct_cast(Of Version)(gc_behavior_test.d.Clone())
             Me.e = e
             Me.f = New cc()
         End Sub
@@ -68,7 +73,7 @@ Public Class gc_behavior_test
     End Sub
 
     Private Shared Function rnd_uint_int() As Int32
-        Return rnd_uint(uint32_0, CUInt(max_int32) + 1)
+        Return CInt(rnd_uint(uint32_0, CUInt(max_int32) + uint32_1))
     End Function
 
     Public Overrides Function run() As Boolean

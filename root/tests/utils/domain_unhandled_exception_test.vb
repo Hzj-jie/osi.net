@@ -1,23 +1,27 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
-Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.envs
-Imports osi.root.utt
-Imports osi.root.utils
 Imports osi.root.lock
+Imports osi.root.utils
+Imports osi.root.utt
 
-Public Class domain_unhandled_exception_test
+Public NotInheritable Class domain_unhandled_exception_test
     Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New domain_unhandled_exception_case())
     End Sub
 
-    Private Class domain_unhandled_exception_case
+    Private NotInheritable Class domain_unhandled_exception_case
         Inherits [case]
 
-        Private Class an_exception
+        <Serializable>
+        Private NotInheritable Class an_exception
             Inherits Exception
         End Class
 

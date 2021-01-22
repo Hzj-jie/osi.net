@@ -50,6 +50,7 @@ Public NotInheritable Class wait_handle_behavior_test
         Return True
     End Function
 
+    <SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")>
     Private Shared Function multiple_closes(ByVal e As EventWaitHandle) As Boolean
         assert(Not e Is Nothing)
         For i As Int32 = 0 To 100

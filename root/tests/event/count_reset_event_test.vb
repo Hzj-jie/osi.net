@@ -16,6 +16,7 @@ Public Class count_reset_event_basic_test
         MyBase.New(repeat(New executor(), 1024 * 1024), 8)
     End Sub
 
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
     Private Class executor
         Inherits [case]
 
@@ -70,6 +71,7 @@ Public Class count_reset_event_concurrently_release_test
         MyBase.New(repeat(New executor(), test_size), 8)
     End Sub
 
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
     Private Class executor
         Inherits [case]
 

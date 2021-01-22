@@ -1,18 +1,22 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.lock
 Imports osi.root.utt
 
-Public Class manual_reset_event_dead_lock_test
+Public NotInheritable Class manual_reset_event_dead_lock_test
     Inherits commandline_specified_case_wrapper
 
     Public Sub New()
         MyBase.New(New manual_reset_event_dead_lock_case())
     End Sub
 
-    Private Class manual_reset_event_dead_lock_case
+    Private NotInheritable Class manual_reset_event_dead_lock_case
         Inherits multithreading_case_wrapper
 
         Private Const thread_count As Int32 = 8
@@ -21,7 +25,8 @@ Public Class manual_reset_event_dead_lock_test
             MyBase.New(New executor(), thread_count)
         End Sub
 
-        Private Class executor
+        <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
+        Private NotInheritable Class executor
             Inherits [case]
 
             Private ReadOnly stage1 As ManualResetEvent
@@ -61,16 +66,15 @@ Public Class manual_reset_event_dead_lock_test
                         assertion.equal(+passed2, thread_count - 1)
                     Next
                     Return True
-                Else
-                    While multithreading_case_wrapper.running_thread_count() = thread_count
-                        assert(stage1.wait())
-                        passed1.increment()
-                        assert(stage2.wait())
-                        passed2.increment()
-                    End While
-                    Return True
                 End If
+                While multithreading_case_wrapper.running_thread_count() = thread_count
+                    assert(stage1.wait())
+                    passed1.increment()
+                    assert(stage2.wait())
+                    passed2.increment()
+                End While
+                Return True
             End Function
         End Class
     End Class
-    End Class
+End Class

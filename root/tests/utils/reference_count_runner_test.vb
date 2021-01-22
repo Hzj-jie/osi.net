@@ -9,7 +9,7 @@ Imports osi.root.template
 Imports osi.root.utils
 Imports osi.root.utt
 
-Public Class reference_count_runner_test
+Public NotInheritable Class reference_count_runner_test
     Inherits case_wrapper
 
     Public Sub New()
@@ -18,7 +18,7 @@ Public Class reference_count_runner_test
                            New event_case()))
     End Sub
 
-    Private Class event_case
+    Private NotInheritable Class event_case
         Inherits [case]
 
         Public Overrides Function run() As Boolean
@@ -46,7 +46,7 @@ Public Class reference_count_runner_test
         End Function
     End Class
 
-    Private Class auto_stop_case
+    Private NotInheritable Class auto_stop_case
         Inherits [case]
 
         Private Class RC
@@ -76,12 +76,13 @@ Public Class reference_count_runner_test
         End Function
     End Class
 
-    Private Class multi_threading_case
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
+    Private NotInheritable Class multi_threading_case
         Inherits [case]
 
         Private ReadOnly r As RC
 
-        Private Class RC
+        Private NotInheritable Class RC
             Inherits reference_count_runner
 
             Private v As Int32

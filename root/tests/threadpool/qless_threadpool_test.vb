@@ -20,7 +20,7 @@ Imports osi.root.lock
 Imports osi.root.threadpool
 Imports osi.root.utt
 
-Public Class qless_threadpool_manual_test
+Public NotInheritable Class qless_threadpool_manual_test
     Inherits commandline_specified_case_wrapper
 
     Public Sub New()
@@ -28,7 +28,8 @@ Public Class qless_threadpool_manual_test
     End Sub
 End Class
 
-Public Class qless_threadpool_test
+<Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
+Public NotInheritable Class qless_threadpool_test
     Inherits [case]
 
     Private ReadOnly round As Int64

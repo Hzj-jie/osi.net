@@ -8,7 +8,7 @@ Imports osi.root.lock
 Imports osi.root.threadpool
 Imports osi.root.utt
 
-Public Class ##THREADPOOL_TYPE##_manual_test
+Public NotInheritable Class ##THREADPOOL_TYPE##_manual_test
     Inherits commandline_specified_case_wrapper
 
     Public Sub New()
@@ -16,7 +16,8 @@ Public Class ##THREADPOOL_TYPE##_manual_test
     End Sub
 End Class
 
-Public Class ##THREADPOOL_TYPE##_test
+<Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
+Public NotInheritable Class ##THREADPOOL_TYPE##_test
     Inherits [case]
 
     Private ReadOnly round As Int64

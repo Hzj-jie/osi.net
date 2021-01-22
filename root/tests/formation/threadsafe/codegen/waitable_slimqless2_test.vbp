@@ -12,6 +12,7 @@ Public NotInheritable Class waitable_##TYPE##_test
         MyBase.New(New waitable_##TYPE##_case(), waitable_##TYPE##_case.push_threads << 1)
     End Sub
 
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
     Private NotInheritable Class waitable_##TYPE##_case
         Inherits [case]
 
