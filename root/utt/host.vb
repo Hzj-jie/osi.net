@@ -81,14 +81,15 @@ Partial Friend NotInheritable Class host
         End Sub
     End Class
 
-    Public Shared ReadOnly cases As vector(Of case_info) = calculate_cases()
+    Public Shared ReadOnly cases As vector(Of case_info)
 
-    Private Shared Function calculate_cases() As vector(Of case_info)
+    ' Ensure cases is always initialized after main. Debug mode uses eager static variable initialization.
+    Shared Sub New()
         assert((envs.utt.concurrency >= 0 AndAlso envs.utt.concurrency <= Environment.ProcessorCount()) OrElse
                envs.utt.concurrency = npos)
 
         assert(Not strstartwith(extensions.dynamic_link_library, extension_prefix, False))
-        Dim cases As vector(Of case_info) = New vector(Of case_info)()
+        cases = New vector(Of case_info)()
         AppDomain.CurrentDomain().load_all(Environment.CurrentDirectory(), envs.utt.file_pattern)
         If Not Environment.CurrentDirectory().path_same(application_directory) Then
             AppDomain.CurrentDomain().load_all(application_directory, envs.utt.file_pattern)
@@ -97,39 +98,37 @@ Partial Friend NotInheritable Class host
         global_init.execute()
         loader.load(cases)
         assert(cases.size() > 0)
-        Return cases
-    End Function
+    End Sub
 
     Private Shared Function [select](ByVal selector As vector(Of String), ByVal c As case_info) As Boolean
         If selector Is Nothing OrElse selector.empty() Then
             Return True
-        Else
-            assert(Not c Is Nothing)
-            Dim has_fit_true As Boolean = False
-            Dim r As Byte = 0
-            r = fit_patterns(c.name(), selector)
-            If r = pattern_match.fit_true Then
-                has_fit_true = True
-            ElseIf r = pattern_match.fit_false Then
-                Return False
-            End If
-
-            r = fit_patterns(c.full_name(), selector)
-            If r = pattern_match.fit_true Then
-                has_fit_true = True
-            ElseIf r = pattern_match.fit_false Then
-                Return False
-            End If
-
-            r = fit_patterns(c.assembly_qualified_name(), selector)
-            If r = pattern_match.fit_true Then
-                has_fit_true = True
-            ElseIf r = pattern_match.fit_false Then
-                Return False
-            End If
-
-            Return has_fit_true
         End If
+        assert(Not c Is Nothing)
+        Dim has_fit_true As Boolean = False
+        Dim r As Byte = 0
+        r = fit_patterns(c.name(), selector)
+        If r = pattern_match.fit_true Then
+            has_fit_true = True
+        ElseIf r = pattern_match.fit_false Then
+            Return False
+        End If
+
+        r = fit_patterns(c.full_name(), selector)
+        If r = pattern_match.fit_true Then
+            has_fit_true = True
+        ElseIf r = pattern_match.fit_false Then
+            Return False
+        End If
+
+        r = fit_patterns(c.assembly_qualified_name(), selector)
+        If r = pattern_match.fit_true Then
+            has_fit_true = True
+        ElseIf r = pattern_match.fit_false Then
+            Return False
+        End If
+
+        Return has_fit_true
     End Function
 
     Public Shared Sub clear_selection()
