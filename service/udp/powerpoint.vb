@@ -98,7 +98,7 @@ Partial Public Class powerpoint
             _datagram_creator = device_creator_adapter.[New](_udp_dev_creator, AddressOf udp_dev_to_datagram)
             _herald_creator = device_creator_adapter.[New](_udp_dev_creator, AddressOf udp_dev_to_herald)
             ' Do nothing
-            closer = New empty_idisposable()
+            closer = empty_idisposable.instance
         Else
             assert(False)
         End If
