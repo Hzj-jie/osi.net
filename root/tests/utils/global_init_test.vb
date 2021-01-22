@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.lock
 Imports osi.root.utils
@@ -73,11 +77,11 @@ Namespace global_init_test_private_namespace
     End Module
 End Namespace
 
-Public Class global_init_test
+Public NotInheritable Class global_init_test
     Inherits [case]
 
     <global_init(True)>
-    Public Class global_init_case_1
+    Public NotInheritable Class global_init_case_1
         Private Shared ReadOnly i As atomic_int
 
         Shared Sub New()
@@ -97,7 +101,7 @@ Public Class global_init_test
     End Class
 
     <global_init(False)>
-    Public Class global_init_case_2
+    Public NotInheritable Class global_init_case_2
         Private Shared ReadOnly i As atomic_int
 
         Shared Sub New()
@@ -116,7 +120,7 @@ Public Class global_init_test
         End Sub
     End Class
 
-    Private Class global_init_case_3_holder
+    Private NotInheritable Class global_init_case_3_holder
         Private Shared ReadOnly i As atomic_int
 
         Shared Sub New()
@@ -136,7 +140,7 @@ Public Class global_init_test
     End Class
 
     <global_init(True)>
-    Public Class global_init_case_3
+    Public NotInheritable Class global_init_case_3
 
         Shared Sub New()
             global_init_case_3_holder.execute()
@@ -147,7 +151,7 @@ Public Class global_init_test
     End Class
 
     <global_init(True)>
-    Public Class global_init_case_4
+    Public NotInheritable Class global_init_case_4
         Private Shared ReadOnly i As atomic_int
 
         Shared Sub New()
@@ -165,7 +169,7 @@ Public Class global_init_test
     End Class
 
     <global_init(True)>
-    Private Class global_init_case_5
+    Private NotInheritable Class global_init_case_5
         Private Shared ReadOnly i As atomic_int
 
         Shared Sub New()
@@ -182,7 +186,7 @@ Public Class global_init_test
     End Class
 
     <global_init(False, global_init_level.other)>
-    Private Class global_init_case_9
+    Private NotInheritable Class global_init_case_9
         Private Shared ReadOnly i As atomic_int
 
         Shared Sub New()
