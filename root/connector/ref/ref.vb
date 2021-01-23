@@ -149,7 +149,7 @@ Public Class ref(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
-        Return CompareTo(cast(Of ref(Of T))(obj, False))
+        Return CompareTo(cast(Of ref(Of T))().from(obj, False))
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -167,13 +167,13 @@ Public Class ref(Of T)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overloads Function Equals(ByVal that As ref(Of T)) As Boolean _
                                     Implements IEquatable(Of ref(Of T)).Equals
-        Return CompareTo(that) = 0
+        Return Me = that
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overloads Function Equals(ByVal that As T) As Boolean _
                                     Implements IEquatable(Of T).Equals
-        Return CompareTo(that) = 0
+        Return Me = that
     End Function
 
 #If Not (PocketPC OrElse Smartphone) Then
@@ -185,7 +185,7 @@ Public Class ref(Of T)
         Dim jumps As Int64 = 0
         jumps = CLng(Math.Truncate(ji))
         While jumps > 0
-            p2 = +(cast(Of ref(Of T))(p2, False))
+            p2 = +(cast(Of ref(Of T))().from(p2, False))
             jumps -= 1
         End While
 finish:
@@ -248,10 +248,10 @@ finish:
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As ref(Of T), ByVal obj As Object) As Boolean
         Dim that As ref(Of T) = Nothing
-        If cast(Of ref(Of T))(obj, that) Then
+        If cast(Of ref(Of T))().from(obj, that) Then
             Return this = that
         End If
-        Return this = cast(Of T)(obj, False)
+        Return this = cast(Of T)().from(obj, False)
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
