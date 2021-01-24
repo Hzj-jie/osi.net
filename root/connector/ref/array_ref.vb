@@ -231,16 +231,16 @@ finish:
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Operator <>(ByVal this As array_ref(Of T), ByVal that As T) As Boolean
+    Public Shared Operator <>(ByVal this As array_ref(Of T), ByVal that As T()) As Boolean
         Return Not this = that
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Operator =(ByVal this As array_ref(Of T), ByVal that As T) As Boolean
+    Public Shared Operator =(ByVal this As array_ref(Of T), ByVal that As T()) As Boolean
         If this Is Nothing Then
             Return that Is Nothing
         End If
-        Return object_compare(this.get(), that) = 0
+        Return this.CompareTo(that) = 0
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

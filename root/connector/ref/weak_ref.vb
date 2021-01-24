@@ -270,7 +270,7 @@ finish:
         If this Is Nothing Then
             Return that Is Nothing
         End If
-        Return object_compare(this.get(), that) = 0
+        Return this.CompareTo(that) = 0
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
