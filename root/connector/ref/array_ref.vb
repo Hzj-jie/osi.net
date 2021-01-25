@@ -110,7 +110,7 @@ Public Class array_ref(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function equal(ByVal i As T(), ByVal j As T()) As Boolean
-        Return compare(i, j) = 0
+        Return mem_equal(i, j)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

@@ -243,4 +243,48 @@ Public Module _array_ext
     <Extension()> Public Function preserve(Of T)(ByRef i() As T, ByVal size As UInt64) As Boolean
         Return resize(i, size, True)
     End Function
+
+    ' Unlike determined types, T may not have compariable implementations and cause compare to fail. But equal() always
+    ' returns a result.
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function mem_equal(Of T)(ByVal first() As T,
+                                    ByVal first_start As UInt32,
+                                    ByVal second() As T,
+                                    ByVal second_start As UInt32,
+                                    ByVal len As UInt32) As Boolean
+        assert(array_size(first) >= first_start + len)
+        assert(array_size(second) >= second_start + len)
+        Dim fs As Int32 = 0
+        fs = CInt(first_start)
+        Dim ss As Int32 = 0
+        ss = CInt(second_start)
+        For i As Int32 = 0 To CInt(len) - 1
+            If Not equal(first(i + fs), second(i + ss)) Then
+                Return False
+            End If
+        Next
+        Return True
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function mem_equal(Of T)(ByVal first() As T,
+                                    ByVal second() As T,
+                                    ByVal len As UInt32) As Boolean
+        Return mem_equal(first, uint32_0, second, uint32_0, len)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function mem_equal(Of T)(ByVal first() As T, ByVal second() As T) As Boolean
+        Dim ll As UInt32 = 0
+        Dim rl As UInt32 = 0
+        ll = array_size(first)
+        rl = array_size(second)
+        If ll <> rl Then
+            Return False
+        End If
+        Return mem_equal(first, second, ll)
+    End Function
 End Module
