@@ -109,6 +109,11 @@ Public Class array_ref(Of T)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Shared Function equal(ByVal i As T(), ByVal j As T()) As Boolean
+        Return compare(i, j) = 0
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function hash(ByVal i As T()) As Int32
         'WTF, the Array.GetHashCode returns some random number in .net 3.5
         Dim r As Int32 = 0
@@ -175,13 +180,13 @@ Public Class array_ref(Of T)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overloads Function Equals(ByVal that As array_ref(Of T)) As Boolean _
                                     Implements IEquatable(Of array_ref(Of T)).Equals
-        Return Me = that
+        Return Equals(+that)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overloads Function Equals(ByVal that As T()) As Boolean _
                                     Implements IEquatable(Of T()).Equals
-        Return Me = that
+        Return equal([get](), that)
     End Function
 
 #If Not (PocketPC OrElse Smartphone) Then
@@ -224,10 +229,10 @@ finish:
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As array_ref(Of T), ByVal that As array_ref(Of T)) As Boolean
-        If that Is Nothing OrElse that.get() Is Nothing Then
-            Return this Is Nothing OrElse this.get() Is Nothing
+        If this Is Nothing Then
+            Return that Is Nothing
         End If
-        Return this = that.get()
+        Return this.Equals(that)
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -240,7 +245,7 @@ finish:
         If this Is Nothing Then
             Return that Is Nothing
         End If
-        Return this.CompareTo(that) = 0
+        Return this.Equals(that)
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -259,7 +264,7 @@ finish:
         If cast(Of array_ref(Of T))().from(obj, that) Then
             Return this = that
         End If
-        Return this = cast(Of T)().from(obj, False)
+        Return this = cast(Of T())().from(obj, False)
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -322,7 +327,7 @@ finish:
     End Operator
 
     Public NotOverridable Overrides Function Equals(ByVal that As Object) As Boolean
-        Return Me = that
+        Return Equals(cast(Of array_ref(Of T))().from(that, False))
     End Function
 
     'open for array_ref

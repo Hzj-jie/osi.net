@@ -5,6 +5,11 @@
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Shared Function equal(ByVal i As T(), ByVal j As T()) As Boolean
+        Return compare(i, j) = 0
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function hash(ByVal i As T()) As Int32
         'WTF, the Array.GetHashCode returns some random number in .net 3.5
         Dim r As Int32 = 0

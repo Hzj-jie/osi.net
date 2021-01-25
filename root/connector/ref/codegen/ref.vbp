@@ -106,13 +106,13 @@ Public Class ##TYPE##(Of T)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overloads Function Equals(ByVal that As ##TYPE##(Of T)) As Boolean _
                                     Implements IEquatable(Of ##TYPE##(Of T)).Equals
-        Return Me = that
+        Return Equals(+that)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overloads Function Equals(ByVal that As ##INNER_TYPE##) As Boolean _
                                     Implements IEquatable(Of ##INNER_TYPE##).Equals
-        Return Me = that
+        Return equal([get](), that)
     End Function
 
 #If Not (PocketPC OrElse Smartphone) Then
@@ -155,10 +155,10 @@ finish:
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As ##TYPE##(Of T), ByVal that As ##TYPE##(Of T)) As Boolean
-        If that Is Nothing OrElse that.get() Is Nothing Then
-            Return this Is Nothing OrElse this.get() Is Nothing
+        If this Is Nothing Then
+            Return that Is Nothing
         End If
-        Return this = that.get()
+        Return this.Equals(that)
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -171,7 +171,7 @@ finish:
         If this Is Nothing Then
             Return that Is Nothing
         End If
-        Return this.CompareTo(that) = 0
+        Return this.Equals(that)
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -190,7 +190,7 @@ finish:
         If cast(Of ##TYPE##(Of T))().from(obj, that) Then
             Return this = that
         End If
-        Return this = cast(Of T)().from(obj, False)
+        Return this = cast(Of ##INNER_TYPE##)().from(obj, False)
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -253,7 +253,7 @@ finish:
     End Operator
 
     Public NotOverridable Overrides Function Equals(ByVal that As Object) As Boolean
-        Return Me = that
+        Return Equals(cast(Of ##TYPE##(Of T))().from(that, False))
     End Function
 
     'open for array_ref

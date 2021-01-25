@@ -122,6 +122,11 @@ Public Class weak_ref_ref(Of T)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Shared Function equal(ByVal this As T, ByVal that As T) As Boolean
+        Return connector.equal(this, that)
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function hash(ByVal i As T) As Int32
         assert(Not i Is Nothing)
         Return i.GetHashCode()
@@ -227,13 +232,13 @@ Public Class weak_ref_ref(Of T)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overloads Function Equals(ByVal that As weak_ref_ref(Of T)) As Boolean _
                                     Implements IEquatable(Of weak_ref_ref(Of T)).Equals
-        Return Me = that
+        Return Equals(+that)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overloads Function Equals(ByVal that As T) As Boolean _
                                     Implements IEquatable(Of T).Equals
-        Return Me = that
+        Return equal([get](), that)
     End Function
 
 #If Not (PocketPC OrElse Smartphone) Then
@@ -276,10 +281,10 @@ finish:
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As weak_ref_ref(Of T), ByVal that As weak_ref_ref(Of T)) As Boolean
-        If that Is Nothing OrElse that.get() Is Nothing Then
-            Return this Is Nothing OrElse this.get() Is Nothing
+        If this Is Nothing Then
+            Return that Is Nothing
         End If
-        Return this = that.get()
+        Return this.Equals(that)
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -292,7 +297,7 @@ finish:
         If this Is Nothing Then
             Return that Is Nothing
         End If
-        Return this.CompareTo(that) = 0
+        Return this.Equals(that)
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -374,7 +379,7 @@ finish:
     End Operator
 
     Public NotOverridable Overrides Function Equals(ByVal that As Object) As Boolean
-        Return Me = that
+        Return Equals(cast(Of weak_ref_ref(Of T))().from(that, False))
     End Function
 
     'open for array_ref

@@ -55,7 +55,7 @@ Partial Public NotInheritable Class wordtracer
                                            As unordered_map(Of String, unordered_map(Of Char, UInt32))
                 Dim v As unordered_map(Of String, unordered_map(Of Char, UInt32)) =
                     New unordered_map(Of String, unordered_map(Of Char, UInt32))()
-                For Each line As String In IO.File.ReadLines(f)
+                For Each line As String In File.ReadLines(f)
                     train_line(line, len, sel, v)
                 Next
                 Return v
