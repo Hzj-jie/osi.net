@@ -246,11 +246,11 @@ Global
 		SccAuxPath13 = https://tfs.codeplex.com/tfs/tfs02
 		SccLocalPath13 = tests\\envs
 		SccProvider13 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccProjectUniqueName14 = tests\\formation\\formation.vbproj
+		SccProjectUniqueName14 = tests\\lock\\lock.vbproj
 		SccProjectTopLevelParentUniqueName14 = root.sln
-		SccProjectName14 = tests/formation
+		SccProjectName14 = tests/lock
 		SccAuxPath14 = https://tfs.codeplex.com/tfs/tfs02
-		SccLocalPath14 = tests\\formation
+		SccLocalPath14 = tests\\lock
 		SccProvider14 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccProjectUniqueName15 = tests\\connector\\connector.vbproj
 		SccProjectTopLevelParentUniqueName15 = root.sln
