@@ -13,7 +13,6 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.template
 
-
 Partial Public Class unordered_map( _
                          Of KEY_T,
                             VALUE_T,
@@ -33,7 +32,7 @@ Partial Public Class unordered_map( _
 
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As array(Of vector(Of hasher_node(Of first_const_pair(Of KEY_T, VALUE_T) , first_const_pair.first_hasher(Of KEY_T, VALUE_T, _HASHER), first_const_pair.first_equaler(Of KEY_T, VALUE_T, _EQUALER)))),
+    Protected Sub New(ByVal v As array(Of vector(Of hasher_node)),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
         MyBase.New(v, s, c)
@@ -54,7 +53,7 @@ Partial Public NotInheritable Class unordered_map(Of KEY_T, VALUE_T)
 
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As array(Of vector(Of hasher_node(Of first_const_pair(Of KEY_T, VALUE_T) , first_const_pair.first_hasher(Of KEY_T, VALUE_T, fast_to_uint32(Of KEY_T)), first_const_pair.first_equaler(Of KEY_T, VALUE_T, default_equaler(Of KEY_T))))),
+    Protected Sub New(ByVal v As array(Of vector(Of hasher_node)),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
         MyBase.New(v, s, c)

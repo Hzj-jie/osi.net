@@ -17,7 +17,7 @@ Partial Public Class hasharray(Of T,
         New const_array(Of UInt32)(doubled_prime_sequence_int32())
     Private Shared ReadOnly unique As Boolean = +(alloc(Of _UNIQUE)())
 
-    Private v As array(Of vector(Of hasher_node(Of T, _HASHER, _EQUALER)))
+    Private v As array(Of vector(Of hasher_node))
     Private c As UInt32
     Private s As UInt32
 
@@ -30,7 +30,7 @@ Partial Public Class hasharray(Of T,
     End Sub
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As array(Of vector(Of hasher_node(Of T, _HASHER, _EQUALER))),
+    Protected Sub New(ByVal v As array(Of vector(Of hasher_node)),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
 #If DEBUG Then

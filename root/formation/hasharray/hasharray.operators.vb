@@ -16,7 +16,7 @@ Partial Public Class hasharray(Of T,
     Public Function find(ByVal value As T) As iterator
         Dim column As UInt32 = 0
         Dim row As UInt32 = 0
-        Dim n As hasher_node(Of T, _HASHER, _EQUALER) = new_node(value)
+        Dim n As hasher_node = new_node(value)
         column = hash(n)
         If find_first_cell(n, column, row) Then
             Return iterator_at(column, row)
@@ -41,7 +41,7 @@ Partial Public Class hasharray(Of T,
     Public Function [erase](ByVal value As T) As UInt32
         Dim r As UInt32 = 0
         Dim row As UInt32 = 0
-        Dim n As hasher_node(Of T, _HASHER, _EQUALER) = new_node(value)
+        Dim n As hasher_node = new_node(value)
         Dim column As UInt32 = hash(n)
         Dim rc As UInt32 = row_count(column)
         While row < rc
