@@ -58,13 +58,13 @@ Partial Public Class hasharray(Of T,
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function [erase](ByVal it As iterator) As Boolean
+    Public Function [erase](ByVal it As iterator) As iterator
         If it = [end]() OrElse object_compare(it.ref().owner, Me) <> 0 OrElse it.ref().empty() Then
-            Return False
+            Return [end]()
         End If
 
         clear_cell(it.ref().column, it.ref().row)
-        Return True
+        Return it + 1
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

@@ -68,13 +68,18 @@ Partial Public Class unordered_map( _
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shadows Function [erase](ByVal it As iterator) As Boolean
+    Public Shadows Function [erase](ByVal it As iterator) As iterator
         Return MyBase.erase(it)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function [erase](ByVal key As KEY_T) As Boolean
-        Return MyBase.erase(find(key))
+        Dim it As iterator = find(key)
+        If it = [end]() Then
+            Return False
+        End If
+        MyBase.[erase](it)
+        Return True
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

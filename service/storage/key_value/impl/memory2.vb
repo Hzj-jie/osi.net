@@ -62,7 +62,8 @@ Public NotInheritable Class memory2
     Public Function delete_existing(ByVal it As store_t.iterator,
                                     ByRef result As Boolean) As Boolean _
                                    Implements isynckeyvalue2(Of store_t.iterator).delete_existing
-        result = assert(m.erase(it))
+        result = assert(it <> m.end())
+        m.erase(it)
         Return True
     End Function
 
