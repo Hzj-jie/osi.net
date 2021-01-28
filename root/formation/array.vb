@@ -6,7 +6,6 @@ Option Strict On
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.template
 
 Public NotInheritable Class array
     Public Shared Function [of](Of T)(ByVal v() As T) As array(Of T)
@@ -41,66 +40,7 @@ Public NotInheritable Class array
     End Sub
 End Class
 
-Public Class array(Of T, SIZE As _int64)
-    Inherits const_array(Of T, SIZE)
-    Implements ICloneable(Of array(Of T, SIZE)), ICloneable
-
-    Public Sub New()
-        MyBase.New()
-    End Sub
-
-    Public Sub New(ByVal size As Int64)
-        MyBase.New(size)
-    End Sub
-
-    <copy_constructor>
-    Public Sub New(ByVal v() As T)
-        MyBase.New(v)
-    End Sub
-
-    Public Shared Shadows Function move(ByVal i As array(Of T, SIZE)) As array(Of T, SIZE)
-        Return const_array(Of T, SIZE).move(Of array(Of T, SIZE))(i)
-    End Function
-
-    Default Public Shadows Property data(ByVal i As UInt32) As T
-        <MethodImpl(method_impl_options.aggressive_inlining)>
-        Get
-            Return MyBase.data(i)
-        End Get
-        <MethodImpl(method_impl_options.aggressive_inlining)>
-        Set(ByVal v As T)
-#If DEBUG Then
-            assert(i < size())
-#End If
-            Me.v(CInt(i)) = v
-        End Set
-    End Property
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shadows Function as_array() As T()
-        Return v
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shadows Function CloneT() As array(Of T, SIZE) Implements ICloneable(Of array(Of T, SIZE)).Clone
-        Return MyBase.clone(Of array(Of T, SIZE))()
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shadows Function Clone() As Object Implements ICloneable.Clone
-        Return CloneT()
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Shadows Widening Operator CType(ByVal this As array(Of T, SIZE)) As T()
-        If this Is Nothing Then
-            Return Nothing
-        End If
-        Return this.as_array()
-    End Operator
-End Class
-
-Public Class array(Of T)
+Public NotInheritable Class array(Of T)
     Inherits const_array(Of T)
     Implements ICloneable(Of array(Of T)), ICloneable
 
@@ -114,7 +54,7 @@ Public Class array(Of T)
     End Sub
 
     Public Shared Shadows Function move(ByVal i As array(Of T)) As array(Of T)
-        Return const_array(Of T, _NPOS).move(Of array(Of T))(i)
+        Return const_array(Of T).move(Of array(Of T))(i)
     End Function
 
     Default Public Shadows Property data(ByVal i As UInt32) As T
@@ -147,7 +87,10 @@ Public Class array(Of T)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Overloads Shared Widening Operator CType(ByVal this() As T) As array(Of T)
-        Return New array(Of T)(this)
+    Public Shared Shadows Widening Operator CType(ByVal this As array(Of T)) As T()
+        If this Is Nothing Then
+            Return Nothing
+        End If
+        Return this.as_array()
     End Operator
 End Class
