@@ -62,6 +62,26 @@ Partial Public NotInheritable Class wordtracer
                 Return v
             End Function
 
+            Private Shared Sub clean_low_usage(ByVal v As unordered_map(Of String, unordered_map(Of Char, UInt32)))
+                If workingset_bytes_usage() <= (total_physical_memory() / 2) Then
+                    Return
+                End If
+                Dim it As unordered_map(Of String, unordered_map(Of Char, UInt32)).iterator = v.begin()
+                While it <> v.end()
+                    Dim it2 As unordered_map(Of Char, UInt32).iterator = (+it).second.begin()
+                    While it2 <> (+it).second.end()
+                        If (+it2).second = 1 Then
+                            it2 = (+it).second.erase(it2)
+                        Else
+                            it2 += 1
+                        End If
+                    End While
+                    it.value().second.shrink_to_fit()
+                    it += 1
+                End While
+                assert(workingset_bytes_usage() <= (total_physical_memory() * 3 / 4))
+            End Sub
+
             Private Shared Function process(ByVal t As tar.reader,
                                             ByVal len As UInt32,
                                             ByVal sel As Func(Of String, Char, Boolean)) _
@@ -71,30 +91,19 @@ Partial Public NotInheritable Class wordtracer
                 Dim v As unordered_map(Of String, unordered_map(Of Char, UInt32)) =
                     New unordered_map(Of String, unordered_map(Of Char, UInt32))()
                 t.foreach(Sub(ByVal name As String, ByVal m As MemoryStream)
-                              Using r As StreamReader = New StreamReader(m, m.guess_encoding())
+                              Dim p As Double
+                              Using r As StreamReader = New StreamReader(m, m.guess_encoding(p))
+                                  If p < 0.8 Then
+                                      raise_error(error_type.user, "ignroe ", name, ", the encoding possibility is ", p)
+                                      Return
+                                  End If
                                   Dim line As String = r.ReadLine()
                                   While Not line Is Nothing
                                       train_line(line, len, sel, v)
                                       line = r.ReadLine()
                                   End While
+                                  'clean_low_usage(v)
                               End Using
-                              If workingset_bytes_usage() > (total_physical_memory() / 2) Then
-                                  Dim it As unordered_map(Of String, unordered_map(Of Char, UInt32)).iterator =
-                                      v.begin()
-                                  While it <> v.end()
-                                      Dim it2 As unordered_map(Of Char, UInt32).iterator = (+it).second.begin()
-                                      While it2 <> (+it).second.end()
-                                          If (+it2).second = 1 Then
-                                              it2 = (+it).second.erase(it2)
-                                          Else
-                                              it2 += 1
-                                          End If
-                                      End While
-                                      it.value().second.shrink_to_fit()
-                                      it += 1
-                                  End While
-                                  assert(workingset_bytes_usage() <= (total_physical_memory() * 3 / 4))
-                              End If
                           End Sub)
                 Return v
             End Function
