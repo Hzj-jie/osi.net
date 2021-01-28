@@ -31,6 +31,7 @@ Private NotInheritable Class adaptive_array_uint32
     Private s As UInt32
 
     Public Sub New()
+        ReDim d(-1)
     End Sub
 
     Public Sub New(ByVal n As UInt32)
@@ -172,16 +173,19 @@ Private NotInheritable Class adaptive_array_uint32
         s = n
     End Sub
 
-    Public Sub shrink_to_fit()
+    Public Function shrink_to_fit() As Boolean
+        assert(capacity() >= size())
+        If capacity() = size() Then
+            Return False
+        End If
         If empty() Then
             ReDim d(-1)
-        ElseIf capacity() > size() Then
+        Else
             assert(size() >= uint32_1)
             ReDim Preserve d(CInt(size() - uint32_1))
-        Else
-            assert(capacity() = size())
         End If
-    End Sub
+        Return True
+    End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function Clone() As Object Implements ICloneable.Clone

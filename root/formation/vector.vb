@@ -197,9 +197,9 @@ Public NotInheritable Class vector(Of T)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub shrink_to_fit()
-        v.shrink_to_fit()
-    End Sub
+    Public Function shrink_to_fit() As Boolean
+        Return v.shrink_to_fit()
+    End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function size() As UInt32
