@@ -184,8 +184,9 @@ Partial Public Class hasharray(Of T,
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function find_empty_cell(ByVal column As UInt32, ByRef row As UInt32) As Boolean
+        Dim rc As UInt32 = row_count(column)
         row = 0
-        While row < row_count(column)
+        While row < rc
             If cell_is_empty(column, row) Then
                 Return True
             End If
@@ -238,8 +239,9 @@ Partial Public Class hasharray(Of T,
     Private Sub rehash(ByVal c As UInt32)
         Dim r As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER) = New hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)(c)
         For i As UInt32 = 0 To v.size() - uint32_1
+            Dim rc As UInt32 = row_count(i)
             Dim j As UInt32 = 0
-            While j < row_count(i)
+            While j < rc
                 If Not cell_is_empty(i, j) Then
                     r.rehash_move_in(v(i)(j))
                 End If
