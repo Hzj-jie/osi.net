@@ -37,10 +37,10 @@ Partial Public Class hasharray(Of T,
                 v(i).renew()
             Next
         Else
-            v = New array(Of vector(Of hasher_node))(column_count())
-            For i As UInt32 = 0 To v.size() - uint32_1
-                v(i) = New vector(Of hasher_node)()
-            Next
+            v = const_array.alloc_of(Function() As vector(Of hasher_node)
+                                         Return New vector(Of hasher_node)()
+                                     End Function,
+                                     column_count())
         End If
     End Sub
 

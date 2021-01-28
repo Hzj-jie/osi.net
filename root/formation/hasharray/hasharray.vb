@@ -17,10 +17,11 @@ Partial Public Class hasharray(Of T,
         New const_array(Of UInt32)(doubled_prime_sequence_int32())
     Private Shared ReadOnly unique As Boolean = +(alloc(Of _UNIQUE)())
 
-    Private v As array(Of vector(Of hasher_node))
+    Private v As const_array(Of vector(Of hasher_node))
     Private c As UInt32
     Private s As UInt32
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub New(ByVal c As UInt32)
 #If DEBUG Then
         assert(c < predefined_column_counts.size())
@@ -30,7 +31,8 @@ Partial Public Class hasharray(Of T,
     End Sub
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As array(Of vector(Of hasher_node)),
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Protected Sub New(ByVal v As const_array(Of vector(Of hasher_node)),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
 #If DEBUG Then
@@ -43,6 +45,7 @@ Partial Public Class hasharray(Of T,
         Me.c = c
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New()
         Me.New(0)
     End Sub

@@ -14,10 +14,12 @@ Public Module _const_array
 End Module
 
 Public NotInheritable Class const_array
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](Of T)(ByVal v() As T) As const_array(Of T)
         Return New const_array(Of T)(v)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function elements(Of T)(ByVal ParamArray v() As T) As const_array(Of T)
         assert(array_size(v) > 1 OrElse Not type_info(Of T).is_array)
         Return New const_array(Of T)(v)
@@ -38,6 +40,7 @@ Public NotInheritable Class const_array
         Return this.CompareTo(that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function alloc_of(Of T)(ByVal f As Func(Of T), ByVal size As UInt32) As const_array(Of T)
         assert(Not f Is Nothing)
         assert(size > 0)
@@ -50,6 +53,7 @@ Public NotInheritable Class const_array
         Return [of](r)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function repeat_of(Of T)(ByVal v As T, ByVal size As UInt32) As const_array(Of T)
         Return alloc_of(Function() As T
                             Return v
@@ -69,16 +73,19 @@ Public Class const_array(Of T)
                IEquatable(Of const_array(Of T))
     Protected ReadOnly v() As T
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Sub New(ByVal size As Int64)
         assert(size > 0)
         ReDim v(CInt(size) - 1)
     End Sub
 
     <copy_constructor>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal v() As T)
         Me.v = v
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Shared Function move(Of R As const_array(Of T))(ByVal i As R) As R
         If i Is Nothing Then
             Return Nothing
@@ -93,6 +100,7 @@ Public Class const_array(Of T)
         Return o
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function move(ByVal i As const_array(Of T)) As const_array(Of T)
         Return move(Of const_array(Of T))(i)
     End Function
@@ -176,6 +184,7 @@ Public Class const_array(Of T)
         Return CompareTo(other) = 0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public NotOverridable Overrides Function Equals(ByVal other As Object) As Boolean
         Return Equals(cast(Of const_array(Of T)()).from(other, False))
     End Function

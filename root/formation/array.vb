@@ -8,15 +8,18 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 Public NotInheritable Class array
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](Of T)(ByVal v() As T) As array(Of T)
         Return New array(Of T)(v)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function elements(Of T)(ByVal ParamArray v() As T) As array(Of T)
         assert(array_size(v) > 1 OrElse Not type_info(Of T).is_array)
         Return New array(Of T)(v)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function alloc_of(Of T)(ByVal f As Func(Of T), ByVal size As UInt32) As const_array(Of T)
         assert(Not f Is Nothing)
         assert(size > 0)
@@ -29,6 +32,7 @@ Public NotInheritable Class array
         Return [of](r)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function repeat_of(Of T)(ByVal v As T, ByVal size As UInt32) As const_array(Of T)
         Return alloc_of(Function() As T
                             Return v
@@ -44,15 +48,18 @@ Public NotInheritable Class array(Of T)
     Inherits const_array(Of T)
     Implements ICloneable(Of array(Of T)), ICloneable
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal size As Int64)
         MyBase.New(size)
     End Sub
 
     <copy_constructor>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal v() As T)
         MyBase.New(v)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Shadows Function move(ByVal i As array(Of T)) As array(Of T)
         Return const_array(Of T).move(Of array(Of T))(i)
     End Function

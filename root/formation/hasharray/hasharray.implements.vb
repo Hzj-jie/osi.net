@@ -30,21 +30,23 @@ Partial Public Class hasharray(Of T,
         Return copy_constructor(Of R).invoke(v.CloneT(), s, c)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Shared Function move(Of R As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER))(ByVal v As R) As R
         If v Is Nothing Then
             Return Nothing
         End If
-        Dim o As R =
-            copy_constructor(Of R).invoke(array(Of vector(Of hasher_node)).move(v.v), v.s, v.c)
+        Dim o As R = copy_constructor(Of R).invoke(const_array(Of vector(Of hasher_node)).move(v.v), v.s, v.c)
         v.clear()
         Return o
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function move(ByVal v As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)) _
                                As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)
         Return move(Of hasharray(Of T, _UNIQUE, _HASHER, _EQUALER))(v)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function swap(ByVal this As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER),
                                 ByVal that As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)) As Boolean
         If this Is Nothing OrElse that Is Nothing Then
