@@ -154,8 +154,7 @@ Friend Class omap_case
 
     Private Sub clear()
         If validate() Then
-            Dim it As omap(Of String, UInt32).iterator = Nothing
-            it = m.begin()
+            Dim it As omap(Of String, UInt32).iterator = m.begin()
             Dim c As Int64 = 0
             While it <> m.end()
                 assertion.not_equal(v.find((+it).first), v.end())
@@ -166,7 +165,17 @@ Friend Class omap_case
             assertion.equal(c, v.size())
             assertion.equal(c, m.size())
         End If
-        m.clear()
+        If rnd_bool() Then
+            m.clear()
+        Else
+            Dim it As omap(Of String, UInt32).iterator = m.begin()
+            Dim c As Int64 = 0
+            While it <> m.end()
+                c += 1
+                it = m.erase(it)
+            End While
+            assertion.equal(c, v.size())
+        End If
         assertion.equal(CUInt(m.size()), uint32_0)
         assertion.is_true(m.empty())
         If validate() Then
@@ -211,7 +220,7 @@ Friend Class omap_case
     End Sub
 End Class
 
-Public Class omap_test
+Public NotInheritable Class omap_test
     Inherits repeat_case_wrapper
 
     Private Shared Function round() As Int64
@@ -223,7 +232,7 @@ Public Class omap_test
     End Sub
 End Class
 
-Public Class omap_perf
+Public NotInheritable Class omap_perf
     Inherits performance_case_wrapper
 
     Private Shared Function round() As Int64

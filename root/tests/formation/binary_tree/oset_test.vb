@@ -149,9 +149,8 @@ Friend NotInheritable Class oset_case
 
     Private Sub clear()
         If validate() Then
-            Dim it As [oset](Of String).iterator = Nothing
+            Dim it As [oset](Of String).iterator = s.begin()
             Dim c As Int64 = 0
-            it = s.begin()
             While it <> s.end()
                 assertion.not_equal(keys.find(+it), npos)
                 c += 1
@@ -160,7 +159,17 @@ Friend NotInheritable Class oset_case
             assertion.equal(c, keys.size())
             assertion.equal(c, s.size())
         End If
-        s.clear()
+        If rnd_bool() Then
+            s.clear()
+        Else
+            Dim it As [oset](Of String).iterator = s.begin()
+            Dim c As Int64 = 0
+            While it <> s.end()
+                c += 1
+                it = s.erase(it)
+            End While
+            assertion.equal(c, keys.size())
+        End If
         assertion.equal(CUInt(s.size()), uint32_0, "s.size()<>0 after clear.")
         assertion.is_true(s.empty())
         If validate() Then

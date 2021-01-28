@@ -17,7 +17,7 @@ Partial Public Class hasharray(Of T,
         New const_array(Of UInt32)(doubled_prime_sequence_int32())
     Private Shared ReadOnly unique As Boolean = +(alloc(Of _UNIQUE)())
 
-    Private v As array(Of vector(Of hasher_node(Of T, _HASHER, _EQUALER)))
+    Private v As array(Of vector(Of hasher_node))
     Private c As UInt32
     Private s As UInt32
 
@@ -30,7 +30,7 @@ Partial Public Class hasharray(Of T,
     End Sub
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As array(Of vector(Of hasher_node(Of T, _HASHER, _EQUALER))),
+    Protected Sub New(ByVal v As array(Of vector(Of hasher_node)),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
 #If DEBUG Then
@@ -62,8 +62,7 @@ Partial Public Class hasharray(Of T,
         If empty() Then
             Return [end]()
         End If
-        Dim it As iterator = Nothing
-        it = iterator_at(first_non_empty_column(), 0)
+        Dim it As iterator = iterator_at(first_non_empty_column(), 0)
         If it.ref().empty() Then
             it += 1
         End If
@@ -80,10 +79,8 @@ Partial Public Class hasharray(Of T,
         If empty() Then
             Return rend()
         End If
-        Dim it As iterator = Nothing
-        Dim c As UInt32 = 0
-        c = last_non_empty_column()
-        it = iterator_at(c, last_row(c))
+        Dim c As UInt32 = last_non_empty_column()
+        Dim it As iterator = iterator_at(c, last_row(c))
         If it.ref().empty() Then
             it -= 1
         End If
@@ -93,5 +90,19 @@ Partial Public Class hasharray(Of T,
     <MethodImpl(method_impl_options.no_inlining)>
     Public Function rend() As iterator
         Return iterator.end
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function shrink_to_fit() As Boolean
+        If c = 0 Then
+            Return False
+        End If
+        For i As UInt32 = 0 To c - uint32_1
+            If predefined_column_counts(i) >= size() / row_count_upper_bound() Then
+                rehash(i)
+                Return True
+            End If
+        Next
+        Return False
     End Function
 End Class

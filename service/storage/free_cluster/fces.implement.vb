@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
@@ -67,16 +68,18 @@ Partial Public NotInheritable Class fces
                                       ec2 = content.delete(cid, r2)
                                       Return waitfor(ec1, ec2) AndAlso
                                              goto_next()
-                                  Else
-                                      Return False
                                   End If
+                                  Return False
                               End Function,
                               Function() As Boolean
                                   Return ec1.end_result() AndAlso
                                          ec2.end_result() AndAlso
                                          eva(result, (+r1) AndAlso
                                                      (+r2) AndAlso
-                                                     m.erase(it)) AndAlso
+                                                     true_(Sub()
+                                                               assert(it <> m.end())
+                                                               m.erase(it)
+                                                           End Sub)()) AndAlso
                                          goto_end()
                               End Function)
     End Function

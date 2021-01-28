@@ -63,6 +63,7 @@
     <Compile Include="binary_tree\set_test2.vb" />
     <Compile Include="bit_array_thread_safe_test2.vb" />
     <Compile Include="chunk_test.vb" />
+    <Compile Include="hasharray_test2.vb" />
     <Compile Include="hasharray_test.vb" />
     <Compile Include="lifetime_control\ref_instance_test2.vb" />
     <Compile Include="lifetime_control\ref_map_test.vb" />

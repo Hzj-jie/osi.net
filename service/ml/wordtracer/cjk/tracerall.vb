@@ -6,6 +6,7 @@ Option Strict On
 Imports System.IO
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.service.resource
 
@@ -32,7 +33,7 @@ Partial Public NotInheritable Class wordtracer
                 If line.null_or_whitespace() Then
                     Return
                 End If
-                line.strsep(AddressOf _character.cjk,
+                line.strsep(AddressOf _character.not_cjk,
                             Sub(ByVal start As UInt32, ByVal [end] As UInt32)
                                 If [end] - start < len Then
                                     Return
@@ -77,6 +78,23 @@ Partial Public NotInheritable Class wordtracer
                                       line = r.ReadLine()
                                   End While
                               End Using
+                              If workingset_bytes_usage() > (total_physical_memory() / 2) Then
+                                  Dim it As unordered_map(Of String, unordered_map(Of Char, UInt32)).iterator =
+                                      v.begin()
+                                  While it <> v.end()
+                                      Dim it2 As unordered_map(Of Char, UInt32).iterator = (+it).second.begin()
+                                      While it2 <> (+it).second.end()
+                                          If (+it2).second = 1 Then
+                                              it2 = (+it).second.erase(it2)
+                                          Else
+                                              it2 += 1
+                                          End If
+                                      End While
+                                      it.value().second.shrink_to_fit()
+                                      it += 1
+                                  End While
+                                  assert(workingset_bytes_usage() <= (total_physical_memory() * 3 / 4))
+                              End If
                           End Sub)
                 Return v
             End Function

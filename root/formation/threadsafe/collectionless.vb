@@ -1,9 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.connector
 Imports lock_t = osi.root.lock.slimlock.monitorlock
 
-Public Class collectionless(Of T)
+Public NotInheritable Class collectionless(Of T)
     Private ReadOnly v As vector(Of T)
     Private ReadOnly f As [set](Of UInt32)
     Private l As lock_t
@@ -37,7 +41,7 @@ Public Class collectionless(Of T)
             r = v.size() - uint32_1
         Else
             r = +(f.begin())
-            assert(f.erase(f.begin()))
+            f.erase(f.begin())
             v(r) = d
         End If
         l.release()

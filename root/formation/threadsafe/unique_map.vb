@@ -86,7 +86,8 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
             Return False
         End If
         store_value((+it).second, v)
-        Return assert(m.erase(it))
+        m.erase(it)
+        Return True
     End Function
 
     Public Function [erase](ByVal key As KEY_T, Optional ByRef v As VALUE_T = Nothing) As Boolean
@@ -101,27 +102,22 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
     End Function
 
     Public Function [erase](ByVal keys As vector(Of KEY_T),
-                            Optional ByVal vs As vector(Of VALUE_T) = Nothing) As Boolean
-        If keys Is Nothing Then
-            Return False
-        End If
-        If keys.empty() Then
-            Return True
+                            Optional ByVal vs As vector(Of VALUE_T) = Nothing) As UInt32
+        If keys.null_Or_empty() Then
+            Return 0
         End If
         If Not vs Is Nothing Then
             vs.clear()
         End If
-        Return writer_locked(Function() As Boolean
-                                 Dim r As Boolean = False
-                                 r = True
+        Return writer_locked(Function() As UInt32
+                                 Dim r As UInt32 = 0
                                  For i As UInt32 = uint32_0 To keys.size() - uint32_1
                                      Dim v As VALUE_T = Nothing
                                      If unlocked_erase(keys(i), v) Then
                                          If Not vs Is Nothing Then
                                              vs.emplace_back(v)
                                          End If
-                                     Else
-                                         r = False
+                                         r += uint32_1
                                      End If
                                  Next
                                  Return r

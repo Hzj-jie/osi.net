@@ -10,13 +10,13 @@ Imports osi.root.procedure
 Imports osi.root.formation
 Imports osi.root.utils
 
-Public Class ddos
-    Private Shared ReadOnly fake_insert_string As String = _
+Public NotInheritable Class ddos
+    Private Shared ReadOnly fake_insert_string As String =
                                 ":_""/\<>[]{}?&^%" + guid_str() + guid_str() + ":_""/\<>[]{}?&^%"
 
-    Private Class count_resource
+    Private NotInheritable Class count_resource
         Private ReadOnly m As map(Of String, UInt64)
-        Private ReadOnly q As Queue(Of String)
+        Private ReadOnly q As queue(Of String)
         Private ReadOnly l As ref(Of event_comb_lock)
         Private ReadOnly exp As ref(Of singleentry)
 
@@ -74,7 +74,7 @@ Public Class ddos
                                       With +it
                                           .second -= uint64_1
                                           If .second = 0 Then
-                                              assert(m.erase(it))
+                                              m.erase(it)
                                           End If
                                       End With
                                       l.release()
@@ -143,7 +143,7 @@ Public Class ddos
                                           With +it
                                               .second -= uint64_1
                                               If .second = 0 Then
-                                                  assert(m.erase(it))
+                                                  m.erase(it)
                                               End If
                                           End With
                                       End If

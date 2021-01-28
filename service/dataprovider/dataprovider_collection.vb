@@ -23,8 +23,7 @@ Friend NotInheritable Class dataprovider_collection
         assert(auto_cleanup_enabled.mark_in_use())
         waitfor_auto_cleanup_stop()
         assert(auto_cleanup_running.mark_in_use())
-        Dim ns As vector(Of String) = Nothing
-        ns = New vector(Of String)()
+        Dim ns As vector(Of String) = New vector(Of String)()
         begin_application_lifetime_event_comb(Function() As Boolean
                                                   Return waitfor(lifetime_ms >> 1) AndAlso
                                                          goto_next()
@@ -40,7 +39,7 @@ Friend NotInheritable Class dataprovider_collection
                                                                   ns.push_back(k)
                                                               End If
                                                           End Sub)
-                                                  assert([erase](ns))
+                                                  assert([erase](ns) = ns.size())
                                                   Return (auto_cleanup_enabled.in_use() AndAlso goto_begin()) OrElse
                                                          goto_next()
                                               End Function,

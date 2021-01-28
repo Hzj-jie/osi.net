@@ -171,6 +171,8 @@
     <Compile Include="type\type_info.static_constructor.vb" />
     <Compile Include="type\type_info.typed_constructor.vb" />
     <Compile Include="int64_uint32.vb" />
+    <Compile Include="unimplemented_comparer.vb" />
+    <Compile Include="unimplemented_equaler.vb" />
     <Compile Include="uri\uri.path_encoder.bytes.vb" />
     <Compile Include="uri\uri.path_encoder.string.vb" />
     <Compile Include="uri\uri.path_encoder.vb" />

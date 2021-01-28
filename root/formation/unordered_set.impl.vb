@@ -54,7 +54,7 @@ Partial Public Class unordered_set(Of
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shadows Function [erase](ByVal it As iterator) As Boolean
+    Public Shadows Function [erase](ByVal it As iterator) As iterator
         Return MyBase.erase(it)
     End Function
 
@@ -96,4 +96,3 @@ Partial Public NotInheritable Class unordered_set(Of T)
         Return unordered_set(Of T, fast_to_uint32(Of T), default_equaler(Of T)).swap(this, that)
     End Function
 End Class
-'finish unordered_set.vbp --------

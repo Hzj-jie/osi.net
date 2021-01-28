@@ -56,7 +56,7 @@ Public Module _strsep
 
         Dim l As Int32 = 0
         For i As Int32 = 0 To s.Length() - 1
-            If Not s(i).cjk() Then
+            If sep(s(i)) Then
                 f(CUInt(l), CUInt(i))
                 l = i + 1
             End If

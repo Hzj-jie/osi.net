@@ -13,8 +13,7 @@ Partial Public NotInheritable Class first_const_pair
     Public Shared Function first_compare(Of T1, T2)(ByVal this As first_const_pair(Of T1, T2),
                                                     ByVal that As first_const_pair(Of T1, T2)) As Int32
         Dim c As Int32 = 0
-        c = object_compare(this, that)
-        If c <> object_compare_undetermined Then
+        If object_compare(this, that, c) Then
             Return c
         End If
         assert(Not this Is Nothing)
@@ -25,11 +24,7 @@ Partial Public NotInheritable Class first_const_pair
     Public NotInheritable Class first_hasher(Of T1, T2, _HASHER As _to_uint32(Of T1))
         Inherits _to_uint32(Of first_const_pair(Of T1, T2))
 
-        Private Shared ReadOnly hasher As _HASHER
-
-        Shared Sub New()
-            hasher = alloc(Of _HASHER)()
-        End Sub
+        Private Shared ReadOnly hasher As _HASHER = alloc(Of _HASHER)()
 
         Public Overrides Function at(ByRef k As first_const_pair(Of T1, T2)) As UInt32
             assert(Not k Is Nothing)
@@ -56,6 +51,23 @@ Partial Public NotInheritable Class first_const_pair
             assert(Not i Is Nothing)
             assert(Not j Is Nothing)
             Return equaler(i.first, j.first)
+        End Function
+    End Class
+
+    Public NotInheritable Class first_comparer(Of T1, T2, _COMPARER As _comparer(Of T1))
+        Inherits _comparer(Of first_const_pair(Of T1, T2))
+
+        Private Shared ReadOnly comparer As _COMPARER = alloc(Of _COMPARER)()
+
+        Public Overrides Function at(ByRef i As first_const_pair(Of T1, T2),
+                                     ByRef j As first_const_pair(Of T1, T2)) As Int32
+            Dim c As Int32
+            If object_compare(i, j, c) Then
+                Return c
+            End If
+            assert(Not i Is Nothing)
+            assert(Not j Is Nothing)
+            Return comparer(i.first, j.first)
         End Function
     End Class
 End Class

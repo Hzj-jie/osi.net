@@ -106,10 +106,15 @@ Public NotInheritable Class configuration_test
         Return c.default()(config_writer.file)("section")
     End Function
 
-    Public Overrides Function run() As Boolean
+    Public Overrides Function prepare() As Boolean
+        If Not MyBase.prepare() Then
+            Return False
+        End If
         config_writer.write()
-        assert_load(seconds_to_milliseconds(100), config_writer.file)
+        Return [default]().load(seconds_to_milliseconds(100), config_writer.file)
+    End Function
 
+    Public Overrides Function run() As Boolean
         assertion.equal(s()("buildmode"), envs.build)
 
         assertion.equal(s()("machine_type"), machine_type())
@@ -165,7 +170,7 @@ Public NotInheritable Class configuration_test
         c.default().unload(config_writer.file)
         sleep()
         assertion.is_true(do_(Function() As Boolean
-                                  IO.File.Delete(config_writer.file)
+                                  File.Delete(config_writer.file)
                                   Return True
                               End Function,
                         False))

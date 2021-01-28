@@ -74,7 +74,7 @@ Public NotInheritable Class memory
             result = False
         Else
             vs -= array_size((+it).second)
-            assert(m.erase(it))
+            m.erase(it)
             result = True
         End If
         Return True

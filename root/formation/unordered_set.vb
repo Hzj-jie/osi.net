@@ -13,7 +13,6 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.template
 
-
 Partial Public Class unordered_set(Of _
                  T,
                  _HASHER As _to_uint32(Of T),
@@ -28,7 +27,7 @@ Partial Public Class unordered_set(Of _
 
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As array(Of vector(Of hasher_node(Of T , _HASHER, _EQUALER))),
+    Protected Sub New(ByVal v As array(Of vector(Of hasher_node)),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
         MyBase.New(v, s, c)
@@ -49,7 +48,7 @@ Partial Public NotInheritable Class unordered_set(Of T)
 
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As array(Of vector(Of hasher_node(Of T , fast_to_uint32(Of T), default_equaler(Of T)))),
+    Protected Sub New(ByVal v As array(Of vector(Of hasher_node)),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
         MyBase.New(v, s, c)

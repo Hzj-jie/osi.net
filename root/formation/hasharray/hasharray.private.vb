@@ -13,7 +13,7 @@ Partial Public Class hasharray(Of T,
                                   _HASHER As _to_uint32(Of T),
                                   _EQUALER As _equaler(Of T))
     <MethodImpl(method_impl_options.no_inlining)>
-    Private Function hash(ByVal v As hasher_node(Of T, _HASHER, _EQUALER)) As UInt32
+    Private Function hash(ByVal v As hasher_node(Of T, _HASHER, _EQUALER, unimplemented_comparer(Of T))) As UInt32
 #If DEBUG Then
         assert(Not v Is Nothing)
 #End If
@@ -37,9 +37,9 @@ Partial Public Class hasharray(Of T,
                 v(i).renew()
             Next
         Else
-            v = New array(Of vector(Of hasher_node(Of T, _HASHER, _EQUALER)))(column_count())
+            v = New array(Of vector(Of hasher_node))(column_count())
             For i As UInt32 = 0 To v.size() - uint32_1
-                v(i) = New vector(Of hasher_node(Of T, _HASHER, _EQUALER))()
+                v(i) = New vector(Of hasher_node)()
             Next
         End If
     End Sub
@@ -70,7 +70,7 @@ Partial Public Class hasharray(Of T,
     <MethodImpl(method_impl_options.no_inlining)>
     Private Sub set_cell(ByVal column As UInt32,
                          ByVal row As UInt32,
-                         ByVal value As hasher_node(Of T, _HASHER, _EQUALER))
+                         ByVal value As hasher_node)
 #If DEBUG Then
         assert(row <= max_int32)
 #End If
@@ -80,7 +80,7 @@ Partial Public Class hasharray(Of T,
     <MethodImpl(method_impl_options.no_inlining)>
     Private Sub add_cell(ByVal column As UInt32,
                          ByVal row As UInt32,
-                         ByVal value As hasher_node(Of T, _HASHER, _EQUALER))
+                         ByVal value As hasher_node)
 #If DEBUG Then
         assert(cell_is_empty(column, row))
 #End If
@@ -89,7 +89,7 @@ Partial Public Class hasharray(Of T,
     End Sub
 
     <MethodImpl(method_impl_options.no_inlining)>
-    Private Sub emplace_back(ByVal column As UInt32, ByVal value As hasher_node(Of T, _HASHER, _EQUALER))
+    Private Sub emplace_back(ByVal column As UInt32, ByVal value As hasher_node)
 #If DEBUG Then
         assert(Not value Is Nothing)
 #End If
@@ -98,8 +98,8 @@ Partial Public Class hasharray(Of T,
     End Sub
 
     <MethodImpl(method_impl_options.no_inlining)>
-    Private Function new_node(ByVal value As T) As hasher_node(Of T, _HASHER, _EQUALER)
-        Return New hasher_node(Of T, _HASHER, _EQUALER)(value)
+    Private Function new_node(ByVal value As T) As hasher_node
+        Return New hasher_node(value)
     End Function
 
     <MethodImpl(method_impl_options.no_inlining)>
@@ -107,7 +107,7 @@ Partial Public Class hasharray(Of T,
 #If DEBUG Then
         assert(Not cell_is_empty(column, row))
 #End If
-        set_cell(column, row, [default](Of hasher_node(Of T, _HASHER, _EQUALER)).null)
+        set_cell(column, row, [default](Of hasher_node).null)
         s -= uint32_1
     End Sub
 
@@ -145,7 +145,7 @@ Partial Public Class hasharray(Of T,
     <MethodImpl(method_impl_options.no_inlining)>
     Private Function cell_is(ByVal column As UInt32,
                              ByVal row As UInt32,
-                             ByVal value As hasher_node(Of T, _HASHER, _EQUALER)) As Boolean
+                             ByVal value As hasher_node) As Boolean
         If cell_is_empty(column, row) Then
             Return False
         End If
@@ -168,7 +168,7 @@ Partial Public Class hasharray(Of T,
     End Function
 
     <MethodImpl(method_impl_options.no_inlining)>
-    Private Function find_first_cell(ByVal value As hasher_node(Of T, _HASHER, _EQUALER),
+    Private Function find_first_cell(ByVal value As hasher_node,
                                      ByVal column As UInt32,
                                      ByRef row As UInt32) As Boolean
         row = 0
@@ -195,7 +195,7 @@ Partial Public Class hasharray(Of T,
     End Function
 
     <MethodImpl(method_impl_options.no_inlining)>
-    Private Function emplace(ByVal value As hasher_node(Of T, _HASHER, _EQUALER),
+    Private Function emplace(ByVal value As hasher_node,
                              ByRef column As UInt32,
                              ByRef row As UInt32) As Boolean
         column = hash(value)
@@ -223,7 +223,7 @@ Partial Public Class hasharray(Of T,
     End Function
 
     <MethodImpl(method_impl_options.no_inlining)>
-    Private Sub rehash_move_in(ByVal c As hasher_node(Of T, _HASHER, _EQUALER))
+    Private Sub rehash_move_in(ByVal c As hasher_node)
 #If DEBUG Then
         assert(Not c Is Nothing)
 #End If
@@ -232,6 +232,21 @@ Partial Public Class hasharray(Of T,
         assert(Not find_first_cell(c, column, uint32_0))
 #End If
         emplace_back(column, c)
+    End Sub
+
+    <MethodImpl(method_impl_options.no_inlining)>
+    Private Sub rehash(ByVal c As UInt32)
+        Dim r As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER) = New hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)(c)
+        For i As UInt32 = 0 To v.size() - uint32_1
+            Dim j As UInt32 = 0
+            While j < row_count(i)
+                If Not cell_is_empty(i, j) Then
+                    r.rehash_move_in(v(i)(j))
+                End If
+                j += uint32_1
+            End While
+        Next
+        swap(r, Me)
     End Sub
 
     <MethodImpl(method_impl_options.no_inlining)>
@@ -261,18 +276,7 @@ Partial Public Class hasharray(Of T,
                         ", less than row_count_upper_bound ", l)
         End If
 
-        Dim r As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER) = Nothing
-        r = New hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)(c + uint32_1)
-        For i As UInt32 = 0 To v.size() - uint32_1
-            Dim j As UInt32 = 0
-            While j < row_count(i)
-                If Not cell_is_empty(i, j) Then
-                    r.rehash_move_in(v(i)(j))
-                End If
-                j += uint32_1
-            End While
-        Next
-        swap(r, Me)
+        rehash(c + uint32_1)
         Return True
     End Function
 End Class

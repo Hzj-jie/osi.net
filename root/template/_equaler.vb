@@ -8,5 +8,5 @@ Public MustInherit Class _equaler(Of T1, T2)
 End Class
 
 Public MustInherit Class _equaler(Of T)
-    Inherits __do(Of T, T, Boolean)
+    Inherits _equaler(Of T, T)
 End Class

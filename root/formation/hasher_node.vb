@@ -9,12 +9,14 @@ Imports osi.root.constants
 Imports osi.root.template
 
 ' An internal implementation for hashtable / hasharray / hashset.
-Public NotInheritable Class hasher_node(Of T,
-                                           _HASHER As _to_uint32(Of T),
-                                           _EQUALER As _equaler(Of T))
+Public Class hasher_node(Of T,
+                            _HASHER As _to_uint32(Of T),
+                            _EQUALER As _equaler(Of T),
+                            _COMPARER As _comparer(Of T))
     Private Const uninitialized_hash_value As UInt32 = max_uint32
     Private Shared ReadOnly hasher As _HASHER = alloc(Of _HASHER)()
     Private Shared ReadOnly equaler As _equaler(Of T) = alloc(Of _EQUALER)()
+    Private Shared ReadOnly comparer As _comparer(Of T) = alloc(Of _COMPARER)()
     Private ReadOnly v As T
     Private hash_value As UInt32
 
@@ -30,7 +32,7 @@ Public NotInheritable Class hasher_node(Of T,
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Operator +(ByVal this As hasher_node(Of T, _HASHER, _EQUALER)) As T
+    Public Shared Operator +(ByVal this As hasher_node(Of T, _HASHER, _EQUALER, _COMPARER)) As T
         If this Is Nothing Then
             Return Nothing
         End If
@@ -46,7 +48,7 @@ Public NotInheritable Class hasher_node(Of T,
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function equal_to(ByVal o As hasher_node(Of T, _HASHER, _EQUALER)) As Boolean
+    Public Function equal_to(ByVal o As hasher_node(Of T, _HASHER, _EQUALER, _COMPARER)) As Boolean
 #If DEBUG Then
         assert(Not o Is Nothing)
 #End If
@@ -54,5 +56,16 @@ Public NotInheritable Class hasher_node(Of T,
             Return False
         End If
         Return equaler([get](), o.get())
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function comparer_to(ByVal o As hasher_node(Of T, _HASHER, _EQUALER, _COMPARER)) As Int32
+#If DEBUG Then
+        assert(Not o Is Nothing)
+#End If
+        If hash_code() <> o.hash_code() Then
+            Return hash_code().CompareTo(o.hash_code())
+        End If
+        Return comparer([get](), o.get())
     End Function
 End Class
