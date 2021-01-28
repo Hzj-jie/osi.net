@@ -71,9 +71,7 @@ Public NotInheritable Class array(Of T)
         End Get
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Set(ByVal v As T)
-#If DEBUG Then
             assert(i < size())
-#End If
             Me.v(CInt(i)) = v
         End Set
     End Property

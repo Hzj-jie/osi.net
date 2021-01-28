@@ -24,9 +24,7 @@ Public NotInheritable Class instance_stack(Of T)
         Get
             Dim s As stack(Of T) = Nothing
             s = thread_stack()
-#If DEBUG Then
             assert(Not s Is Nothing)
-#End If
             Return s.back()
         End Get
         Set(ByVal value As T)

@@ -49,9 +49,7 @@ Public Class hasher_node(Of T,
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function equal_to(ByVal o As hasher_node(Of T, _HASHER, _EQUALER, _COMPARER)) As Boolean
-#If DEBUG Then
         assert(Not o Is Nothing)
-#End If
         If hash_code() <> o.hash_code() Then
             Return False
         End If
@@ -60,9 +58,7 @@ Public Class hasher_node(Of T,
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function comparer_to(ByVal o As hasher_node(Of T, _HASHER, _EQUALER, _COMPARER)) As Int32
-#If DEBUG Then
         assert(Not o Is Nothing)
-#End If
         If hash_code() <> o.hash_code() Then
             Return hash_code().CompareTo(o.hash_code())
         End If

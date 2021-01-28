@@ -174,7 +174,9 @@ Friend Class unordered_map_case
                 c += 1
                 it = m.erase(it)
             End While
-            assertion.equal(c, v.size())
+            If validate() Then
+                assertion.equal(c, v.size())
+            End If
         End If
         assertion.equal(CUInt(m.size()), uint32_0)
         assertion.is_true(m.empty())

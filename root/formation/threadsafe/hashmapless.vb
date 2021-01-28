@@ -88,11 +88,9 @@ Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T),
         ReDim _lock(CInt(hash_size) - 1)
         assert(array_size(data) = hash_size)
         Me.data = data
-#If DEBUG Then
         For i As Int32 = 0 To array_size_i(data) - 1
             assert(Not data(i) Is Nothing)
         Next
-#End If
     End Sub
 
     Private Function index_of_key(ByVal k As KEY_T) As UInt32

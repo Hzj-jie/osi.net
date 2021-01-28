@@ -14,7 +14,7 @@ Public Class hasharray(Of T, UNIQUE As _boolean)
 
     <copy_constructor()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Protected Sub New(ByVal v As array(Of vector(Of hasher_node)),
+    Protected Sub New(ByVal v As const_array(Of vector(Of hasher_node)),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
         MyBase.New(v, s, c)
@@ -58,7 +58,7 @@ Public Class hasharray(Of T)
 
     <copy_constructor()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Protected Sub New(ByVal v As array(Of vector(Of hasher_node)),
+    Protected Sub New(ByVal v As const_array(Of vector(Of hasher_node)),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
         MyBase.New(v, s, c)
@@ -103,7 +103,7 @@ Public Class multi_hasharray(Of T)
 
     <copy_constructor()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Protected Sub New(ByVal v As array(Of vector(Of hasher_node)),
+    Protected Sub New(ByVal v As const_array(Of vector(Of hasher_node)),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
         MyBase.New(v, s, c)
