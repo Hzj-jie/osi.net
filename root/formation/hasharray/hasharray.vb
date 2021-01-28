@@ -62,8 +62,7 @@ Partial Public Class hasharray(Of T,
         If empty() Then
             Return [end]()
         End If
-        Dim it As iterator = Nothing
-        it = iterator_at(first_non_empty_column(), 0)
+        Dim it As iterator = iterator_at(first_non_empty_column(), 0)
         If it.ref().empty() Then
             it += 1
         End If
@@ -80,10 +79,8 @@ Partial Public Class hasharray(Of T,
         If empty() Then
             Return rend()
         End If
-        Dim it As iterator = Nothing
-        Dim c As UInt32 = 0
-        c = last_non_empty_column()
-        it = iterator_at(c, last_row(c))
+        Dim c As UInt32 = last_non_empty_column()
+        Dim it As iterator = iterator_at(c, last_row(c))
         If it.ref().empty() Then
             it -= 1
         End If
