@@ -13,7 +13,7 @@ Partial Public Class hasharray(Of T,
                                   _HASHER As _to_uint32(Of T),
                                   _EQUALER As _equaler(Of T))
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function hash(ByVal v As hasher_node(Of T, _HASHER, _EQUALER, unimplemented_comparer(Of T))) As UInt32
+    Private Function hash(ByVal v As hasher_node) As UInt32
 #If DEBUG Then
         assert(Not v Is Nothing)
 #End If
