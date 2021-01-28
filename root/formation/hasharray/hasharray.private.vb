@@ -12,7 +12,7 @@ Partial Public Class hasharray(Of T,
                                   _UNIQUE As _boolean,
                                   _HASHER As _to_uint32(Of T),
                                   _EQUALER As _equaler(Of T))
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function hash(ByVal v As hasher_node(Of T, _HASHER, _EQUALER, unimplemented_comparer(Of T))) As UInt32
 #If DEBUG Then
         assert(Not v Is Nothing)
@@ -20,17 +20,17 @@ Partial Public Class hasharray(Of T,
         Return v.hash_code() Mod column_count()
     End Function
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function column_count() As UInt32
         Return predefined_column_counts(c)
     End Function
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function row_count_upper_bound() As Double
         Return Math.E
     End Function
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub reset_array()
         If Not v Is Nothing AndAlso v.size() = column_count() Then
             For i As UInt32 = 0 To v.size() - uint32_1
@@ -44,22 +44,22 @@ Partial Public Class hasharray(Of T,
         End If
     End Sub
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function average_row_count() As Double
         Return size() / column_count()
     End Function
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function row_count(ByVal column As UInt32) As UInt32
         Return v(column).size()
     End Function
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function empty_column(ByVal column As UInt32) As Boolean
         Return row_count(column) = uint32_0
     End Function
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function last_row(ByVal column As UInt32) As UInt32
 #If DEBUG Then
         assert(Not empty_column(column))
@@ -67,7 +67,7 @@ Partial Public Class hasharray(Of T,
         Return row_count(column) - uint32_1
     End Function
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub set_cell(ByVal column As UInt32,
                          ByVal row As UInt32,
                          ByVal value As hasher_node)
@@ -77,7 +77,7 @@ Partial Public Class hasharray(Of T,
         v(column).replace(row, value)
     End Sub
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub add_cell(ByVal column As UInt32,
                          ByVal row As UInt32,
                          ByVal value As hasher_node)
@@ -88,7 +88,7 @@ Partial Public Class hasharray(Of T,
         s += uint32_1
     End Sub
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub emplace_back(ByVal column As UInt32, ByVal value As hasher_node)
 #If DEBUG Then
         assert(Not value Is Nothing)
@@ -97,12 +97,12 @@ Partial Public Class hasharray(Of T,
         s += uint32_1
     End Sub
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function new_node(ByVal value As T) As hasher_node
         Return New hasher_node(value)
     End Function
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub clear_cell(ByVal column As UInt32, ByVal row As UInt32)
 #If DEBUG Then
         assert(Not cell_is_empty(column, row))
@@ -111,7 +111,7 @@ Partial Public Class hasharray(Of T,
         s -= uint32_1
     End Sub
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function first_non_empty_column() As UInt32
 #If DEBUG Then
         assert(Not empty())
@@ -125,7 +125,7 @@ Partial Public Class hasharray(Of T,
         Return max_uint32
     End Function
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function last_non_empty_column() As UInt32
 #If DEBUG Then
         assert(Not empty())
@@ -142,7 +142,7 @@ Partial Public Class hasharray(Of T,
         Return max_uint32
     End Function
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function cell_is(ByVal column As UInt32,
                              ByVal row As UInt32,
                              ByVal value As hasher_node) As Boolean
@@ -152,22 +152,22 @@ Partial Public Class hasharray(Of T,
         Return v(column)(row).equal_to(value)
     End Function
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function cell_is_empty(ByVal column As UInt32, ByVal row As UInt32) As Boolean
         Return v(column)(row) Is Nothing
     End Function
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function iterator_at(ByVal column As UInt32, ByVal row As UInt32) As iterator
         Return New iterator(Me, column, row)
     End Function
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function ref_at(ByVal column As UInt32, ByVal row As UInt32) As ref
         Return New ref(Me, column, row)
     End Function
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function find_first_cell(ByVal value As hasher_node,
                                      ByVal column As UInt32,
                                      ByRef row As UInt32) As Boolean
@@ -182,7 +182,7 @@ Partial Public Class hasharray(Of T,
         Return False
     End Function
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function find_empty_cell(ByVal column As UInt32, ByRef row As UInt32) As Boolean
         Dim rc As UInt32 = row_count(column)
         row = 0
@@ -195,7 +195,7 @@ Partial Public Class hasharray(Of T,
         Return False
     End Function
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function emplace(ByVal value As hasher_node,
                              ByRef column As UInt32,
                              ByRef row As UInt32) As Boolean
@@ -218,12 +218,12 @@ Partial Public Class hasharray(Of T,
         Return True
     End Function
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function emplace(ByVal value As T, ByRef column As UInt32, ByRef row As UInt32) As Boolean
         Return emplace(new_node(value), column, row)
     End Function
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub rehash_move_in(ByVal c As hasher_node)
 #If DEBUG Then
         assert(Not c Is Nothing)
@@ -235,7 +235,7 @@ Partial Public Class hasharray(Of T,
         emplace_back(column, c)
     End Sub
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub rehash(ByVal c As UInt32)
         Dim r As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER) = New hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)(c)
         For i As UInt32 = 0 To v.size() - uint32_1
@@ -251,7 +251,7 @@ Partial Public Class hasharray(Of T,
         swap(r, Me)
     End Sub
 
-    <MethodImpl(method_impl_options.no_inlining)>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function rehash() As Boolean
         ' Discard 1.4G
         If c = predefined_column_counts.size() - uint32_2 Then
