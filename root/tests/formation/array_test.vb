@@ -1,39 +1,24 @@
 ﻿
-Imports osi.root.template
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.formation
 Imports osi.root.utt
 
-Public Class array_test
+Public NotInheritable Class array_test
     Inherits [case]
 
-    Private Shared Function fixed_size_array() As Boolean
-        Dim a As array(Of Int32, _100) = Nothing
-        a = New array(Of Int32, _100)()
-        assertion.equal(a.size(), CUInt(100))
-        For i As Int32 = 0 To 100 - 1
-            a(i) = i
-        Next
-        For i As Int32 = 0 To 100 - 1
-            assertion.equal(a(i), i)
-        Next
-        Return True
-    End Function
-
-    Private Shared Function dynamic_size_array() As Boolean
+    Public Overrides Function run() As Boolean
         Dim a As array(Of Int32) = Nothing
         a = New array(Of Int32)(100)
         assertion.equal(a.size(), CUInt(100))
         For i As Int32 = 0 To 100 - 1
-            a(i) = i
+            a(CUInt(i)) = i
         Next
         For i As Int32 = 0 To 100 - 1
-            assertion.equal(a(i), i)
+            assertion.equal(a(CUInt(i)), i)
         Next
         Return True
-    End Function
-
-    Public Overrides Function run() As Boolean
-        Return fixed_size_array() AndAlso
-               dynamic_size_array()
     End Function
 End Class

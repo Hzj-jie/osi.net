@@ -3,18 +3,12 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports Microsoft.VisualBasic
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 
-Partial Public Class var
-    Public Shared ReadOnly [default] As var
-
-    Shared Sub New()
-        [default] = New var()
-        [default].parse(Command())
-    End Sub
+Partial Public NotInheritable Class var
+    Public Shared ReadOnly [default] As var = New var(Microsoft.VisualBasic.Command())
 
     Private ReadOnly raw As map(Of String, vector(Of String))
     Private ReadOnly binded As map(Of String, vector(Of String))

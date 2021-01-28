@@ -69,7 +69,6 @@ Partial Public Class hasharray(Of T,
 
     <MethodImpl(method_impl_options.no_inlining)>
     Public Sub clear()
-        c = 0
         reset_array()
         s = 0
     End Sub

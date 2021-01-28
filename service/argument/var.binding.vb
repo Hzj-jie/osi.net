@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.formation
 
-Partial Public Class var
+Partial Public NotInheritable Class var
     Private Function bind(ByVal i As String) As Boolean
         If String.IsNullOrEmpty(i) Then
             Return False

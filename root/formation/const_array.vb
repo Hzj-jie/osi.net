@@ -6,27 +6,28 @@ Option Strict On
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.template
 
 Public Module _const_array
-    <Extension()> Public Function null_or_empty(Of T, SIZE As _int64)(ByVal this As const_array(Of T, SIZE)) As Boolean
+    <Extension()> Public Function null_or_empty(Of T)(ByVal this As const_array(Of T)) As Boolean
         Return this Is Nothing OrElse this.empty()
     End Function
 End Module
 
 Public NotInheritable Class const_array
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](Of T)(ByVal v() As T) As const_array(Of T)
         Return New const_array(Of T)(v)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function elements(Of T)(ByVal ParamArray v() As T) As const_array(Of T)
         assert(array_size(v) > 1 OrElse Not type_info(Of T).is_array)
         Return New const_array(Of T)(v)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Function compare(Of T, __SIZE As _int64)(ByVal this As const_array(Of T, __SIZE),
-                                                           ByVal that As const_array(Of T, __SIZE)) As Int32
+    Public Shared Function compare(Of T)(ByVal this As const_array(Of T),
+                                         ByVal that As const_array(Of T)) As Int32
         If this Is Nothing AndAlso that Is Nothing Then
             Return 0
         End If
@@ -39,6 +40,7 @@ Public NotInheritable Class const_array
         Return this.CompareTo(that)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function alloc_of(Of T)(ByVal f As Func(Of T), ByVal size As UInt32) As const_array(Of T)
         assert(Not f Is Nothing)
         assert(size > 0)
@@ -51,6 +53,7 @@ Public NotInheritable Class const_array
         Return [of](r)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function repeat_of(Of T)(ByVal v As T, ByVal size As UInt32) As const_array(Of T)
         Return alloc_of(Function() As T
                             Return v
@@ -62,33 +65,28 @@ Public NotInheritable Class const_array
     End Sub
 End Class
 
-Public Class const_array(Of T, __SIZE As _int64)
+Public Class const_array(Of T)
     Implements ICloneable,
-               ICloneable(Of const_array(Of T, __SIZE)),
+               ICloneable(Of const_array(Of T)),
                IComparable,
-               IComparable(Of const_array(Of T, __SIZE)),
-               IEquatable(Of const_array(Of T, __SIZE))
-
-    Private Shared ReadOnly _size As Int64 = +alloc(Of __SIZE)()
+               IComparable(Of const_array(Of T)),
+               IEquatable(Of const_array(Of T))
     Protected ReadOnly v() As T
 
-    Protected Sub New()
-        Me.New(_size)
-    End Sub
-
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Sub New(ByVal size As Int64)
         assert(size > 0)
-        assert(size = _size OrElse _size = npos)
         ReDim v(CInt(size) - 1)
     End Sub
 
     <copy_constructor>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal v() As T)
-        assert(array_size(v) = _size OrElse _size = npos)
         Me.v = v
     End Sub
 
-    Protected Shared Function move(Of R As const_array(Of T, __SIZE))(ByVal i As R) As R
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Protected Shared Function move(Of R As const_array(Of T))(ByVal i As R) As R
         If i Is Nothing Then
             Return Nothing
         End If
@@ -102,8 +100,9 @@ Public Class const_array(Of T, __SIZE As _int64)
         Return o
     End Function
 
-    Public Shared Function move(ByVal i As const_array(Of T, __SIZE)) As const_array(Of T, __SIZE)
-        Return move(Of const_array(Of T, __SIZE))(i)
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function move(ByVal i As const_array(Of T)) As const_array(Of T)
+        Return move(Of const_array(Of T))(i)
     End Function
 
     Default Public ReadOnly Property data(ByVal i As UInt32) As T
@@ -118,10 +117,7 @@ Public Class const_array(Of T, __SIZE As _int64)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function size() As UInt32
-        If _size < 0 Then
-            Return array_size(v)
-        End If
-        Return CUInt(_size)
+        Return array_size(v)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -138,7 +134,7 @@ Public Class const_array(Of T, __SIZE As _int64)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Widening Operator CType(ByVal this As const_array(Of T, __SIZE)) As T()
+    Public Shared Widening Operator CType(ByVal this As const_array(Of T)) As T()
         If this Is Nothing Then
             Return Nothing
         End If
@@ -146,14 +142,14 @@ Public Class const_array(Of T, __SIZE As _int64)
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Widening Operator CType(ByVal this() As T) As const_array(Of T, __SIZE)
+    Public Shared Widening Operator CType(ByVal this() As T) As const_array(Of T)
         If isemptyarray(this) Then
             Return Nothing
         End If
-        Return New const_array(Of T, __SIZE)(this)
+        Return New const_array(Of T)(this)
     End Operator
 
-    Protected Function clone(Of R As const_array(Of T, __SIZE))() As R
+    Protected Function clone(Of R As const_array(Of T))() As R
         Return copy_constructor(Of R).invoke(deep_clone(v))
     End Function
 
@@ -163,18 +159,18 @@ Public Class const_array(Of T, __SIZE As _int64)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function CloneT() As const_array(Of T, __SIZE) Implements ICloneable(Of const_array(Of T, __SIZE)).Clone
-        Return clone(Of const_array(Of T, __SIZE))()
+    Public Function CloneT() As const_array(Of T) Implements ICloneable(Of const_array(Of T)).Clone
+        Return clone(Of const_array(Of T))()
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
-        Return CompareTo(cast(Of const_array(Of T, __SIZE))().from(obj, False))
+        Return CompareTo(cast(Of const_array(Of T))().from(obj, False))
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function CompareTo(ByVal other As const_array(Of T, __SIZE)) As Int32 _
-            Implements IComparable(Of const_array(Of T, __SIZE)).CompareTo
+    Public Function CompareTo(ByVal other As const_array(Of T)) As Int32 _
+            Implements IComparable(Of const_array(Of T)).CompareTo
         If other Is Nothing Then
             Return 1
         End If
@@ -183,53 +179,13 @@ Public Class const_array(Of T, __SIZE As _int64)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Overloads Function Equals(ByVal other As const_array(Of T, __SIZE)) As Boolean _
-            Implements IEquatable(Of const_array(Of T, __SIZE)).Equals
+    Public Overloads Function Equals(ByVal other As const_array(Of T)) As Boolean _
+            Implements IEquatable(Of const_array(Of T)).Equals
         Return CompareTo(other) = 0
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public NotOverridable Overrides Function Equals(ByVal other As Object) As Boolean
-        Return Equals(cast(Of const_array(Of T, __SIZE)()).from(other, False))
+        Return Equals(cast(Of const_array(Of T)()).from(other, False))
     End Function
-End Class
-
-Public Class const_array(Of T)
-    Inherits const_array(Of T, _NPOS)
-    Implements ICloneable(Of const_array(Of T)), ICloneable
-
-    Public Sub New(ByVal size As Int64)
-        MyBase.New(size)
-    End Sub
-
-    <copy_constructor>
-    Public Sub New(ByVal v() As T)
-        MyBase.New(v)
-    End Sub
-
-    Public Shared Shadows Function move(ByVal i As const_array(Of T)) As const_array(Of T)
-        Return const_array(Of T, _NPOS).move(Of const_array(Of T))(i)
-    End Function
-
-    Protected Shadows Function clone(Of R As const_array(Of T))() As R
-        Return MyBase.clone(Of R)()
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shadows Function CloneT() As const_array(Of T) Implements ICloneable(Of const_array(Of T)).Clone
-        Return clone(Of const_array(Of T))()
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shadows Function Clone() As Object Implements ICloneable.Clone
-        Return CloneT()
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Shadows Widening Operator CType(ByVal this() As T) As const_array(Of T)
-        If isemptyarray(this) Then
-            Return Nothing
-        End If
-
-        Return New const_array(Of T)(this)
-    End Operator
 End Class

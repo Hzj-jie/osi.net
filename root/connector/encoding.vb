@@ -139,8 +139,29 @@ Public Module _encoding
         End Try
     End Function
 
-    <Extension()> Public Function guess_encoding(ByVal this As Stream) As Encoding
+    <Extension()> Public Function guess_encoding(ByVal this As Stream,
+                                                 ByRef max_possibility As Double,
+                                                 ParamArray ByVal candidates() As Encoding) As Encoding
+        assert(Not this Is Nothing)
+        assert(Not candidates.isemptyarray())
+        max_possibility = 0
+        Dim max_encoding As Encoding = Encoding.Default
+        For i As Int32 = 0 To candidates.array_size_i() - 1
+            If Array.IndexOf(candidates, candidates(i)) < i Then
+                Continue For
+            End If
+            Dim c As Double = this.encoding_possibility(candidates(i))
+            If c > max_possibility Then
+                max_possibility = c
+                max_encoding = candidates(i)
+            End If
+        Next
+        Return max_encoding
+    End Function
+
+    <Extension()> Public Function guess_encoding(ByVal this As Stream, ByRef max_possibility As Double) As Encoding
         Return guess_encoding(this,
+                              max_possibility,
                               Encoding.UTF8,
                               encodings.utf8_nobom,
                               Encoding.Unicode,
@@ -148,22 +169,12 @@ Public Module _encoding
                               encodings.gbk_or_default)
     End Function
 
+    <Extension()> Public Function guess_encoding(ByVal this As Stream) As Encoding
+        Return guess_encoding(this, 0)
+    End Function
+
     <Extension()> Public Function guess_encoding(ByVal this As Stream,
                                                  ParamArray ByVal candidates() As Encoding) As Encoding
-        assert(Not this Is Nothing)
-        assert(Not candidates.isemptyarray())
-        Dim max As Double = 0
-        Dim max_encoding As Encoding = Encoding.Default
-        For i As Int32 = 0 To candidates.array_size_i() - 1
-            If Array.IndexOf(candidates, candidates(i)) < i Then
-                Continue For
-            End If
-            Dim c As Double = this.encoding_possibility(candidates(i))
-            If c > max Then
-                max = c
-                max_encoding = candidates(i)
-            End If
-        Next
-        Return max_encoding
+        Return guess_encoding(this, 0, candidates)
     End Function
 End Module

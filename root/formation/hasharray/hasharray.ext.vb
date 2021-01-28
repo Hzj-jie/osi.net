@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.template
 
 Public Module _hasharray_ext
@@ -25,11 +26,13 @@ Public Module _hasharray_ext
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function insert(Of T, UNIQUE As _boolean)(ByVal this As hasharray(Of T, UNIQUE),
                                                                    ByVal that As hasharray(Of T, UNIQUE)) As Boolean
         Return insert(this, that, AddressOf this.insert)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function emplace(Of T, UNIQUE As _boolean)(ByVal this As hasharray(Of T, UNIQUE),
                                                                     ByVal that As hasharray(Of T, UNIQUE)) As Boolean
         Return insert(this, that, AddressOf this.emplace)
