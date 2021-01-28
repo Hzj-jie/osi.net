@@ -1,7 +1,7 @@
 ﻿
 Option Explicit On
 Option Infer Off
-Option Strict Off
+Option Strict On
 
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
@@ -39,57 +39,41 @@ Public Module _non_integer_overflow
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function byte_sbyte(ByVal i As Byte) As SByte
-        Dim x As union_byte
-        x.u_value = i
-        Return x.s_value
+        Return New union_byte() With {.u_value = i}.s_value
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function sbyte_byte(ByVal i As SByte) As Byte
-        Dim x As union_byte
-        x.s_value = i
-        Return x.u_value
+        Return New union_byte() With {.s_value = i}.u_value
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function uint16_int16(ByVal i As UInt16) As Int16
-        Dim x As union_int16
-        x.u_value = i
-        Return x.s_value
+        Return New union_int16() With {.u_value = i}.s_value
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function int16_uint16(ByVal i As Int16) As UInt16
-        Dim x As union_int16
-        x.s_value = i
-        Return x.u_value
+        Return New union_int16() With {.s_value = i}.u_value
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function uint32_int32(ByVal i As UInt32) As Int32
-        Dim x As union_int32
-        x.u_value = i
-        Return x.s_value
+        Return New union_int32() With {.u_value = i}.s_value
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function int32_uint32(ByVal i As Int32) As UInt32
-        Dim x As union_int32
-        x.s_value = i
-        Return x.u_value
+        Return New union_int32() With {.s_value = i}.u_value
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function uint64_int64(ByVal i As UInt64) As Int64
-        Dim x As union_int64
-        x.u_value = i
-        Return x.s_value
+        Return New union_int64() With {.u_value = i}.s_value
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function int64_uint64(ByVal i As Int64) As UInt64
-        Dim x As union_int64
-        x.s_value = i
-        Return x.u_value
+        Return New union_int64() With {.s_value = i}.u_value
     End Function
 End Module

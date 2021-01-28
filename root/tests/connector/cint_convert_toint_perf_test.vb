@@ -16,17 +16,18 @@ Public NotInheritable Class cint_convert_toint_perf_test
     Public Sub New()
         MyBase.New(New delegate_case(AddressOf cint_run),
                    New delegate_case(AddressOf convert_toint_run),
-                   New delegate_case(AddressOf implicit_convert_run))
+                   New delegate_case(AddressOf implicit_convert_run),
+                   New delegate_case(AddressOf uint_int_run))
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
         If os.windows_major <= os.windows_major_t._5 Then
-            Return loosen_bound({448, 973, 447}, i, j)
+            Return loosen_bound({448, 973, 447, 447}, i, j)
         End If
         If os.windows_major <= os.windows_major_t._6 Then
-            Return loosen_bound({306, 817, 310}, i, j)
+            Return loosen_bound({306, 817, 310, 410}, i, j)
         End If
-        Return loosen_bound({150, 778, 173}, i, j)
+        Return loosen_bound({150, 778, 173, 370}, i, j)
     End Function
 
     Private Shared Sub cint_run()
@@ -53,6 +54,15 @@ Public NotInheritable Class cint_convert_toint_perf_test
         Dim k As Int32 = 0
         For j As UInt64 = 0 To CULng(size - 1)
             implicit_conversions.cint_convert_toint_perf_test_implicit_convert_run(k, i)
+        Next
+    End Sub
+
+    Private Shared Sub uint_int_run()
+        Dim i As UInt32 = 0
+        i = rnd_uint(0, max_int32)
+        Dim k As Int32 = 0
+        For j As UInt64 = 0 To CULng(size - 1)
+            k = uint32_int32(i)
         Next
     End Sub
 End Class
