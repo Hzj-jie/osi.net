@@ -9,19 +9,15 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports cc = osi.root.connector
 
-Partial Public Class var
+Partial Public NotInheritable Class var
     Implements ICloneable, ICloneable(Of var), IComparable, IComparable(Of var)
-
-    Protected Function clone(Of R As var)() As R
-        Return copy_constructor(Of R).copy_from(c, raw, binded, others)
-    End Function
 
     Public Function Clone() As Object Implements ICloneable.Clone
         Return CloneT()
     End Function
 
     Public Function CloneT() As var Implements ICloneable(Of var).Clone
-        Return clone(Of var)()
+        Return copy_constructor(Of var).copy_from(c, raw, binded, others)
     End Function
 
     Public Shared Function compare(ByVal this As var, ByVal that As var) As Int32
@@ -55,7 +51,7 @@ Partial Public Class var
         Return compare(Me, other)
     End Function
 
-    Public NotOverridable Overrides Function ToString() As String
+    Public Overrides Function ToString() As String
         Dim s As StringBuilder = Nothing
         s = New StringBuilder()
         Dim it As map(Of String, vector(Of String)).iterator = Nothing

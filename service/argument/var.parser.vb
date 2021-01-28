@@ -7,7 +7,7 @@ Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
 
-Partial Public Class var
+Partial Public NotInheritable Class var
     Private Sub parse_one(ByVal s As String)
         If Not String.IsNullOrEmpty(s) Then
             Dim a As String = Nothing
