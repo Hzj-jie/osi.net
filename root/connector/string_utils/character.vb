@@ -90,6 +90,10 @@ Public Module _character
         Return v >= &H4E00 AndAlso v <= &H9FFF
     End Function
 
+    <Extension()> Public Function not_cjk(ByVal c As Char) As Boolean
+        Return Not c.cjk()
+    End Function
+
     Public Function uint16_char(ByVal i As UInt16) As Char
         Return Convert.ToChar(i)
     End Function
