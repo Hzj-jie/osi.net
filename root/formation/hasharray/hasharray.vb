@@ -94,4 +94,18 @@ Partial Public Class hasharray(Of T,
     Public Function rend() As iterator
         Return iterator.end
     End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function shrink_to_fit() As Boolean
+        If c = 0 Then
+            Return False
+        End If
+        For i As UInt32 = 0 To c - uint32_1
+            If predefined_column_counts(i) >= size() / row_count_upper_bound() Then
+                rehash(i)
+                Return True
+            End If
+        Next
+        Return False
+    End Function
 End Class

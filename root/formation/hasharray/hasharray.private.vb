@@ -235,6 +235,21 @@ Partial Public Class hasharray(Of T,
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Sub rehash(ByVal c As UInt32)
+        Dim r As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER) = New hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)(c)
+        For i As UInt32 = 0 To v.size() - uint32_1
+            Dim j As UInt32 = 0
+            While j < row_count(i)
+                If Not cell_is_empty(i, j) Then
+                    r.rehash_move_in(v(i)(j))
+                End If
+                j += uint32_1
+            End While
+        Next
+        swap(r, Me)
+    End Sub
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function rehash() As Boolean
         ' Discard 1.4G
         If c = predefined_column_counts.size() - uint32_2 Then
@@ -261,18 +276,7 @@ Partial Public Class hasharray(Of T,
                         ", less than row_count_upper_bound ", l)
         End If
 
-        Dim r As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER) = Nothing
-        r = New hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)(c + uint32_1)
-        For i As UInt32 = 0 To v.size() - uint32_1
-            Dim j As UInt32 = 0
-            While j < row_count(i)
-                If Not cell_is_empty(i, j) Then
-                    r.rehash_move_in(v(i)(j))
-                End If
-                j += uint32_1
-            End While
-        Next
-        swap(r, Me)
+        rehash(c + uint32_1)
         Return True
     End Function
 End Class
