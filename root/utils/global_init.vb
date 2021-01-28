@@ -89,9 +89,9 @@ Public NotInheritable Class global_init
                     Dim gi As global_init_attribute = Nothing
                     If is_global_init_type(j, gi) AndAlso
                        assert(Not gi Is Nothing) AndAlso
+                       gi.level <= level AndAlso
                        (Not gi.init_once OrElse
-                        not_initialized(j)) AndAlso
-                       gi.level <= level Then
+                        not_initialized(j)) Then
                         If its(gi.level) Is Nothing Then
                             its(gi.level) = New vector(Of Type)()
                         End If
