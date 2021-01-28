@@ -84,16 +84,22 @@ Public Class sbst(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function [erase](ByVal v As T) As Boolean
-        Return [erase](find(v))
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shadows Function [erase](ByVal it As iterator) As Boolean
+        Dim it As iterator = find(v)
         If it = [end]() Then
             Return False
         End If
+        [erase](it)
+        Return True
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shadows Function [erase](ByVal it As iterator) As iterator
+        If it = [end]() Then
+            Return [end]()
+        End If
+        Dim result As iterator = it + 1
         splay(it.node())
         MyBase.[erase](root)
-        Return True
+        Return result
     End Function
 End Class

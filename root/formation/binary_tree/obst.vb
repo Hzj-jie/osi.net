@@ -169,8 +169,7 @@ Public Class obst(Of T)
                                ByVal select_left As Boolean,
                                ByRef parent_of_removed_node As node) As node
         assert(Not n Is Nothing)
-        Dim r As node = Nothing
-        r = n.erase(select_left, parent_of_removed_node)
+        Dim r As node = n.erase(select_left, parent_of_removed_node)
         If n.is_root() Then
             root = r
             If Not root Is Nothing Then
@@ -188,16 +187,22 @@ Public Class obst(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [erase](ByVal v As T) As Boolean
-        Return [erase](find(v))
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function [erase](ByVal it As iterator) As Boolean
+        Dim it As iterator = find(v)
         If it = [end]() Then
             Return False
         End If
-        [erase](it.node())
+        [erase](it)
         Return True
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function [erase](ByVal it As iterator) As iterator
+        If it = [end]() Then
+            Return [end]()
+        End If
+        Dim result As iterator = it + 1
+        [erase](it.node())
+        Return result
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

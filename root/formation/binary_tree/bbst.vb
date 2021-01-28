@@ -31,15 +31,13 @@ Public Class bbst(Of T)
         If v Is Nothing Then
             Return Nothing
         End If
-        Dim r As bbst(Of T) = Nothing
-        r = New bbst(Of T)()
+        Dim r As bbst(Of T) = New bbst(Of T)()
         move_to(v, r)
         Return r
     End Function
 
     Public Shadows Function clone() As bbst(Of T)
-        Dim r As bbst(Of T) = Nothing
-        r = New bbst(Of T)()
+        Dim r As bbst(Of T) = New bbst(Of T)()
         clone_to(Me, r)
         Return r
     End Function
@@ -47,8 +45,7 @@ Public Class bbst(Of T)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function left_rotate(ByVal n As node) As node
         assert(Not n Is Nothing)
-        Dim l As node = Nothing
-        l = n.left_rotate()
+        Dim l As node = n.left_rotate()
         n.revise_or_clear_right_subtree_height()
         l.revise_left_subtree_height()
         Return l
@@ -57,8 +54,7 @@ Public Class bbst(Of T)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function right_rotate(ByVal n As node) As node
         assert(Not n Is Nothing)
-        Dim r As node = Nothing
-        r = n.right_rotate()
+        Dim r As node = n.right_rotate()
         n.revise_or_clear_left_subtree_height()
         r.revise_right_subtree_height()
         Return r
@@ -88,8 +84,7 @@ Public Class bbst(Of T)
         While Not n.is_root()
             assert(Not n Is Nothing)
             n.debug_assert_structure()
-            Dim p As node = Nothing
-            p = n.parent()
+            Dim p As node = n.parent()
             assert(Not p Is Nothing)
             If n.is_left_subtree() Then
                 p.revise_left_subtree_height()
@@ -141,8 +136,7 @@ Public Class bbst(Of T)
             End If
             If n.balance_factor() = 2 Then
                 assert(n.has_left_child())
-                Dim l As node = Nothing
-                l = n.left_child()
+                Dim l As node = n.left_child()
                 If l.balance_factor() = -1 Then
                     left_rotate(l)
                 End If
@@ -150,8 +144,7 @@ Public Class bbst(Of T)
                 debug_assert_balance(n)
             ElseIf n.balance_factor() = -2 Then
                 assert(n.has_right_child())
-                Dim r As node = Nothing
-                r = n.right_child()
+                Dim r As node = n.right_child()
                 If r.balance_factor() = 1 Then
                     right_rotate(r)
                 End If
@@ -233,13 +226,13 @@ Public Class bbst(Of T)
         Return r
     End Function
 
-    Public Shadows Function [erase](ByVal it As iterator) As Boolean
+    Public Shadows Function [erase](ByVal it As iterator) As iterator
         If it = [end]() Then
-            Return False
+            Return [end]()
         End If
+        Dim result As iterator = it + 1
         Dim p As node = Nothing
-        Dim r As node = Nothing
-        r = MyBase.[erase](it.node(), it.node().balance_factor() > 0, p)
+        Dim r As node = MyBase.[erase](it.node(), it.node().balance_factor() > 0, p)
         If Not r Is Nothing Then
             r.revise_or_clear_left_subtree_height()
             r.revise_or_clear_right_subtree_height()
@@ -263,11 +256,16 @@ Public Class bbst(Of T)
             End If
 #End If
         End If
-        Return True
+        Return result
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function [erase](ByVal v As T) As Boolean
-        Return [erase](find(v))
+        Dim it As iterator = find(v)
+        If it = [end]() Then
+            Return False
+        End If
+        [erase](it)
+        Return True
     End Function
 End Class
