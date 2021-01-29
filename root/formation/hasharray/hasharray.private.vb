@@ -211,7 +211,7 @@ Partial Public Class hasharray(Of T,
     Private Sub rehash_move_in(ByVal c As hasher_node)
         assert(Not c Is Nothing)
         Dim column As UInt32 = hash(c)
-        assert(Not find_first_cell(c, column, uint32_0))
+        assert(Not unique OrElse Not find_first_cell(c, column, uint32_0))
         emplace_back(column, c)
     End Sub
 
