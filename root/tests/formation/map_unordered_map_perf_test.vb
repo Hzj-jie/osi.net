@@ -160,6 +160,14 @@ Public NotInheritable Class map_unordered_map_perf_test
         End Sub
     End Class
 
+    Public NotInheritable Class unordered_set_tuple_manual_perf
+        Inherits commandline_specified_case_wrapper
+
+        Public Sub New()
+            MyBase.New(repeat(New unordered_set_tuple_case(), manual_case_rounds))
+        End Sub
+    End Class
+
     Private NotInheritable Class unordered_set_tuple_case
         Inherits run_case
 
