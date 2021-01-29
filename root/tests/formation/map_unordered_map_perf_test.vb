@@ -26,11 +26,12 @@ Public NotInheritable Class map_unordered_map_perf_test
     Public Sub New()
         MyBase.New(r(New map_case()),
                    r(New dictionary_case()),
-                   r(New unordered_map_case()))
+                   r(New unordered_map_case()),
+                   r(New unordered_set_tuple_case()))
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-        Return loosen_bound({19713, 1155, 5559}, i, j)
+        Return loosen_bound({19713, 1155, 5559, 5559}, i, j)
     End Function
 
     Private Shared Function r(ByVal c As [case]) As [case]
@@ -79,12 +80,7 @@ Public NotInheritable Class map_unordered_map_perf_test
     Private NotInheritable Class map_case
         Inherits run_case
 
-        Private ReadOnly m As map(Of String, String)
-
-        Public Sub New()
-            MyBase.New()
-            m = New map(Of String, String)()
-        End Sub
+        Private ReadOnly m As New map(Of String, String)()
 
         Protected Overrides Sub insert()
             m.emplace(strs.next(), strs.next())
@@ -114,7 +110,7 @@ Public NotInheritable Class map_unordered_map_perf_test
     Private NotInheritable Class dictionary_case
         Inherits run_case
 
-        Private m As Dictionary(Of String, String)
+        Private m As New Dictionary(Of String, String)()
 
         Protected Overrides Sub insert()
             m(strs.next()) = strs.next()
@@ -145,12 +141,7 @@ Public NotInheritable Class map_unordered_map_perf_test
     Private NotInheritable Class unordered_map_case
         Inherits run_case
 
-        Private ReadOnly m As unordered_map(Of String, String) = Nothing
-
-        Public Sub New()
-            MyBase.New()
-            m = New unordered_map(Of String, String)()
-        End Sub
+        Private ReadOnly m As New unordered_map(Of String, String)()
 
         Protected Overrides Sub clear()
             m.clear()
@@ -166,6 +157,30 @@ Public NotInheritable Class map_unordered_map_perf_test
 
         Protected Overrides Sub insert()
             m.emplace(strs.next(), strs.next())
+        End Sub
+    End Class
+
+    Private NotInheritable Class unordered_set_tuple_case
+        Inherits run_case
+
+        Private ReadOnly m As New unordered_set(Of tuple(Of String, String),
+                                                   tuple(Of String, String)._first_hasher,
+                                                   tuple(Of String, String)._first_equaler)()
+
+        Protected Overrides Sub clear()
+            m.clear()
+        End Sub
+
+        Protected Overrides Sub [erase]()
+            m.erase(tuple.emplace_of(strs.next(), ""))
+        End Sub
+
+        Protected Overrides Sub find()
+            m.find(tuple.emplace_of(strs.next(), ""))
+        End Sub
+
+        Protected Overrides Sub insert()
+            m.emplace(tuple.emplace_of(strs.next(), strs.next()))
         End Sub
     End Class
 End Class

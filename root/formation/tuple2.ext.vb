@@ -4,6 +4,8 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.formation
+Imports osi.root.template
 
 Partial Public Structure tuple(Of T1, T2)
     Public Function first() As T1
@@ -70,4 +72,37 @@ Partial Public Structure tuple(Of T1, T2)
             End If
             Return compare(l.first(), r.first())
         End Function
+
+    Public Class _first_hasher(Of _HASHER As _to_uint32(Of T1))
+        Inherits _to_uint32(Of tuple(Of T1, T2))
+
+        Private Shared ReadOnly hasher As _HASHER = alloc(Of _HASHER)()
+
+        Public Overrides Function at(ByRef k As tuple(Of T1, T2)) As UInt32
+            Return hasher(k.first())
+        End Function
+
+        Public Overrides Function reverse(ByVal i As UInt32) As tuple(Of T1, T2)
+            assert(False)
+            Return Nothing
+        End Function
+    End Class
+
+    Public NotInheritable Class _first_hasher
+        Inherits _first_hasher(Of default_to_uint32(Of T1))
+    End Class
+
+    Public Class _first_equaler(Of _EQUALER As _equaler(Of T1))
+        Inherits _equaler(Of tuple(Of T1, T2))
+
+        Private Shared ReadOnly equaler As _EQUALER = alloc(Of _EQUALER)()
+
+        Public Overrides Function at(ByRef i As tuple(Of T1, T2), ByRef j As tuple(Of T1, T2)) As Boolean
+            Return equaler(i.first(), j.first())
+        End Function
+    End Class
+
+    Public NotInheritable Class _first_equaler
+        Inherits _first_equaler(Of default_equaler(Of T1))
+    End Class
 End Structure
