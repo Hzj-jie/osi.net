@@ -66,18 +66,14 @@ Public Structure fixed_stack(Of T, _MAX_SIZE As _int64)
     End Sub
 
     Public Function back() As T
-#If DEBUG Then
         assert(Not empty())
-#End If
         Dim r As T = Nothing
         r = q(CInt(index) - 1)
         Return r
     End Function
 
     Public Sub pop()
-#If DEBUG Then
         assert(Not empty())
-#End If
         index -= 1
         q(CInt(index)) = Nothing
     End Sub
@@ -88,9 +84,7 @@ Public Structure fixed_stack(Of T, _MAX_SIZE As _int64)
 
     Public Sub emplace(ByVal i As T)
         create()
-#If DEBUG Then
         assert(Not full())
-#End If
         q(CInt(index)) = i
         index += 1
     End Sub

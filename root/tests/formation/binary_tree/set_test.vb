@@ -168,7 +168,9 @@ Friend NotInheritable Class set_case
                 c += 1
                 it = s.erase(it)
             End While
-            assertion.equal(c, keys.size())
+            If validate() Then
+                assertion.equal(c, keys.size())
+            End If
         End If
         assertion.equal(CUInt(s.size()), uint32_0, "s.size()<>0 after clear.")
         assertion.is_true(s.empty())

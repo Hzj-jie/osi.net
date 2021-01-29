@@ -25,17 +25,13 @@ Public NotInheritable Class slimqless2(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub mark_value_written()
-#If DEBUG Then
             assert(v = bw)
-#End If
             atomic.eva(v, aw)
         End Sub
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function value_written() As Boolean
-#If DEBUG Then
             assert(not_no_value())
-#End If
             Return v = aw
         End Function
 
@@ -106,9 +102,7 @@ Public NotInheritable Class slimqless2(Of T)
     End Sub
 
     Private Sub wait_written(ByVal nf As node)
-#If DEBUG Then
         assert(Not nf Is Nothing)
-#End If
         'wait_when(Function() Not nf.vs.value_written())
         'almost copy from spinwait, since it will give a better performance
         If should_yield() Then
@@ -134,19 +128,13 @@ Public NotInheritable Class slimqless2(Of T)
         Dim nf As node = Nothing
         nf = f.next
         While True
-#If DEBUG Then
             assert(Not nf Is Nothing)
-#End If
             If nf Is e Then
                 Return False
             End If
-#If DEBUG Then
             assert(Not nf.next Is Nothing)
-#End If
             If Interlocked.CompareExchange(f.next, nf.next, nf) Is nf Then
-#If DEBUG Then
                 assert(nf.vs.not_no_value())
-#End If
                 wait_written(nf)
                 o = nf.v
                 Return True

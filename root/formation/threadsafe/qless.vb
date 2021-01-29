@@ -47,10 +47,8 @@ Public Class qless(Of T, lock_t As islimlock)
         n.emplace(d)
         l.wait()
         If e Is Nothing Then
-#If DEBUG Then
             assert(f Is Nothing)
             assert(_size = 0)
-#End If
             f = n
         Else
             e.ref(0) = n
@@ -74,10 +72,8 @@ Public Class qless(Of T, lock_t As islimlock)
         Dim rtn As Boolean = False
         l.wait()
         If f Is Nothing Then
-#If DEBUG Then
             assert(e Is Nothing)
             assert(_size = 0)
-#End If
             rtn = False
         Else
             o = +f
@@ -85,9 +81,7 @@ Public Class qless(Of T, lock_t As islimlock)
             If f Is Nothing Then
                 e = Nothing
             End If
-#If DEBUG Then
             assert(_size > 0)
-#End If
             _size -= uint32_1
             rtn = True
         End If

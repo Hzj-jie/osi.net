@@ -21,17 +21,11 @@ Partial Public Class hasharray(Of T,
         Public Sub New(ByVal owner As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER),
                        ByVal column As UInt32,
                        ByVal row As UInt32)
-#If DEBUG Then
             assert(Not owner Is Nothing)
-#End If
             Me.owner = owner
-#If DEBUG Then
             assert(column < column_count())
-#End If
             Me.column = column
-#If DEBUG Then
             assert(row < row_count(column))
-#End If
             Me.row = row
         End Sub
 

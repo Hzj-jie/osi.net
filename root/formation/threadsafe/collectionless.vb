@@ -62,15 +62,11 @@ Public NotInheritable Class collectionless(Of T)
     Public Function size() As UInt32
         l.wait()
         Dim r As UInt32 = uint32_0
-#If DEBUG Then
         Dim x As Int64 = 0
         x = CLng(v.size()) - f.size()
         assert(x >= 0)
         assert(x <= max_uint32)
         r = CUInt(x)
-#Else
-        r = v.size() - f.size()
-#End If
         l.release()
         Return r
     End Function
