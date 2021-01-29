@@ -28,8 +28,7 @@ Public Module _callstack
 
     Public Function callstack(Optional ByVal remove_blanks As Boolean = False,
                               Optional ByVal separator As Char = character.colon) As String
-        Dim rtn As String = Nothing
-        rtn = Environment.StackTrace()
+        Dim rtn As String = Environment.StackTrace()
         If remove_blanks Then
             rtn = rtn.Replace("   ", empty_string) _
                      .Replace(newline.incode(), separator)
