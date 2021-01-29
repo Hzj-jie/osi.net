@@ -32,7 +32,7 @@ Partial Public Class unordered_map( _
 
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As array(Of vector(Of hasher_node)),
+    Protected Sub New(ByVal v As const_array(Of vector(Of hasher_node)),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
         MyBase.New(v, s, c)
@@ -53,7 +53,7 @@ Partial Public NotInheritable Class unordered_map(Of KEY_T, VALUE_T)
 
 
     <copy_constructor()>
-    Protected Sub New(ByVal v As array(Of vector(Of hasher_node)),
+    Protected Sub New(ByVal v As const_array(Of vector(Of hasher_node)),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
         MyBase.New(v, s, c)
