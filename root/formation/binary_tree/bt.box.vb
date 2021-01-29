@@ -23,7 +23,9 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Function copy_node(ByVal n As node, ByVal cmp As Func(Of T, T, Int32)) As node
+#If Not Performance Then
             assert(Not n Is Nothing)
+#End If
             Return create_node(n.value(), cmp)
         End Function
 
@@ -34,7 +36,9 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Function copy_node(ByVal n As node) As node
+#If Not Performance Then
             assert(Not n Is Nothing)
+#End If
             Return create_node(n.value())
         End Function
 
@@ -101,7 +105,9 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Shadows Function copy_node(ByVal n As node, ByVal cmp As Func(Of T, T, Int32)) As node
+#If Not Performance Then
             assert(Not n Is Nothing)
+#End If
             Return New node(New heighted_box(n), cmp)
         End Function
 
@@ -112,7 +118,9 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Shadows Function copy_node(ByVal n As node) As node
+#If Not Performance Then
             assert(Not n Is Nothing)
+#End If
             Return New node(New heighted_box(n))
         End Function
 
@@ -132,9 +140,11 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Sub debug_assert_height(ByVal r As node)
+#If Not Performance Then
             If binary_tree_debug Then
                 assert_height(r)
             End If
+#End If
         End Sub
 
         <MethodImpl(method_impl_options.aggressive_inlining)>

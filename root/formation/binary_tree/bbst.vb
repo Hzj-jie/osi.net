@@ -44,7 +44,9 @@ Public Class bbst(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function left_rotate(ByVal n As node) As node
+#If Not Performance Then
         assert(Not n Is Nothing)
+#End If
         Dim l As node = n.left_rotate()
         n.revise_or_clear_right_subtree_height()
         l.revise_left_subtree_height()
@@ -53,7 +55,9 @@ Public Class bbst(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function right_rotate(ByVal n As node) As node
+#If Not Performance Then
         assert(Not n Is Nothing)
+#End If
         Dim r As node = n.right_rotate()
         n.revise_or_clear_left_subtree_height()
         r.revise_right_subtree_height()
@@ -62,9 +66,11 @@ Public Class bbst(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Sub debug_assert_balance(ByVal n As node)
+#If Not Performance Then
         If binary_tree_debug Then
             assert_balance(n)
         End If
+#End If
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -80,20 +86,30 @@ Public Class bbst(Of T)
     End Sub
 
     Private Shared Sub rebalance(ByVal n As node, ByRef root As node)
+#If Not Performance Then
         assert(Not n Is Nothing)
+#End If
         While Not n.is_root()
+#If Not Performance Then
             assert(Not n Is Nothing)
+#End If
             n.debug_assert_structure()
             Dim p As node = n.parent()
+#If Not Performance Then
             assert(Not p Is Nothing)
+#End If
             If n.is_left_subtree() Then
                 p.revise_left_subtree_height()
             Else
+#If Not Performance Then
                 assert(n.is_right_subtree())
+#End If
                 p.revise_right_subtree_height()
             End If
             If p.balance_factor() = 2 Then
+#If Not Performance Then
                 assert(p.has_left_child())
+#End If
                 Dim l As node = Nothing
                 l = p.left_child()
                 If l.balance_factor() = -1 Then
@@ -102,7 +118,9 @@ Public Class bbst(Of T)
                 n = right_rotate(p)
                 debug_assert_balance(n)
             ElseIf p.balance_factor() = -2 Then
+#If Not Performance Then
                 assert(p.has_right_child())
+#End If
                 Dim r As node = Nothing
                 r = p.right_child()
                 If r.balance_factor() = 1 Then
@@ -111,7 +129,9 @@ Public Class bbst(Of T)
                 n = left_rotate(p)
                 debug_assert_balance(n)
             Else
+#If Not Performance Then
                 assert(Math.Abs(p.balance_factor()) <= 1)
+#End If
                 n = p
                 debug_assert_balance(n)
             End If
@@ -123,11 +143,15 @@ Public Class bbst(Of T)
     End Sub
 
     Private Shared Sub rebalance2(ByVal n As node, ByRef root As node)
+#If Not Performance Then
         assert(Not n Is Nothing)
+#End If
         n.debug_assert_structure()
         Dim c As node = Nothing
         While True
+#If Not Performance Then
             assert(Not n Is Nothing)
+#End If
             n.debug_assert_structure()
             If Not c Is Nothing Then
                 If Not c.revise_parent_subtree_height() Then
@@ -135,7 +159,9 @@ Public Class bbst(Of T)
                 End If
             End If
             If n.balance_factor() = 2 Then
+#If Not Performance Then
                 assert(n.has_left_child())
+#End If
                 Dim l As node = n.left_child()
                 If l.balance_factor() = -1 Then
                     left_rotate(l)
@@ -143,7 +169,9 @@ Public Class bbst(Of T)
                 n = right_rotate(n)
                 debug_assert_balance(n)
             ElseIf n.balance_factor() = -2 Then
+#If Not Performance Then
                 assert(n.has_right_child())
+#End If
                 Dim r As node = n.right_child()
                 If r.balance_factor() = 1 Then
                     right_rotate(r)
@@ -151,11 +179,15 @@ Public Class bbst(Of T)
                 n = left_rotate(n)
                 debug_assert_balance(n)
             Else
+#If Not Performance Then
                 assert(Math.Abs(n.balance_factor()) <= 1)
+#End If
                 debug_assert_balance(n)
             End If
 
+#If Not Performance Then
             assert(Not n Is Nothing)
+#End If
             If n.has_parent() Then
                 c = n
                 n = n.parent()
@@ -165,7 +197,9 @@ Public Class bbst(Of T)
                 Exit While
             End If
         End While
+#If Not Performance Then
         assert(Not root Is Nothing)
+#End If
         heighted_box.debug_assert_height(root)
         debug_assert_balance(root)
     End Sub
@@ -196,32 +230,28 @@ Public Class bbst(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function emplace_hint(ByVal it As iterator, ByVal v As T) As tuple(Of iterator, Boolean)
-        Dim r As tuple(Of iterator, Boolean) = Nothing
-        r = MyBase.emplace_hint(it, v)
+        Dim r As tuple(Of iterator, Boolean) = MyBase.emplace_hint(it, v)
         rebalance(r)
         Return r
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function emplace(ByVal v As T) As tuple(Of iterator, Boolean)
-        Dim r As tuple(Of iterator, Boolean) = Nothing
-        r = MyBase.emplace(v)
+        Dim r As tuple(Of iterator, Boolean) = MyBase.emplace(v)
         rebalance(r)
         Return r
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function insert_hint(ByVal it As iterator, ByVal v As T) As tuple(Of iterator, Boolean)
-        Dim r As tuple(Of iterator, Boolean) = Nothing
-        r = MyBase.insert_hint(it, v)
+        Dim r As tuple(Of iterator, Boolean) = MyBase.insert_hint(it, v)
         rebalance(r)
         Return r
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function insert(ByVal v As T) As tuple(Of iterator, Boolean)
-        Dim r As tuple(Of iterator, Boolean) = Nothing
-        r = MyBase.insert(v)
+        Dim r As tuple(Of iterator, Boolean) = MyBase.insert(v)
         rebalance(r)
         Return r
     End Function

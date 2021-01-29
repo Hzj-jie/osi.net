@@ -26,7 +26,9 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub New(ByVal b As box, ByVal cmp As Func(Of T, T, Int32))
+#If Not Performance Then
             assert(Not cmp Is Nothing)
+#End If
             Me.cmp = cmp
             Me.b = b
             Me.hb = TryCast(b, heighted_box)
@@ -71,13 +73,17 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub append_to_min(ByVal n As node)
+#If Not Performance Then
             assert(Not n Is Nothing)
+#End If
             min().replace_left(n)
         End Sub
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub append_to_max(ByVal n As node)
+#If Not Performance Then
             assert(Not n Is Nothing)
+#End If
             max().replace_right(n)
         End Sub
 
@@ -115,24 +121,26 @@ Partial Public Class bt(Of T)
         'return the min node of the subtree rooted by this node
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function min() As node
-            Dim n As node = Nothing
-            n = Me
+            Dim n As node = Me
             While n.has_left_child()
                 n = n.left_child()
             End While
+#If Not Performance Then
             assert(Not n Is Nothing)
+#End If
             Return n
         End Function
 
         'return the max node of the subtree rooted by this node
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function max() As node
-            Dim n As node = Nothing
-            n = Me
+            Dim n As node = Me
             While n.has_right_child()
                 n = n.right_child()
             End While
+#If Not Performance Then
             assert(Not n Is Nothing)
+#End If
             Return n
         End Function
 
@@ -142,7 +150,9 @@ Partial Public Class bt(Of T)
                 If is_left_subtree() Then
                     parent().replace_left(c)
                 Else
+#If Not Performance Then
                     assert(is_right_subtree())
+#End If
                     parent().replace_right(c)
                 End If
             ElseIf Not c Is Nothing Then
@@ -158,13 +168,16 @@ Partial Public Class bt(Of T)
             If is_left_subtree() Then
                 parent().clear_left()
             Else
+#If Not Performance Then
                 assert(is_right_subtree())
+#End If
                 parent().clear_right()
             End If
         End Sub
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Function replace_by(ByVal a As node, ByVal b As node) As node
+#If Not Performance Then
             assert(Not a Is Nothing)
             assert(Not b Is Nothing)
             If binary_tree_debug Then
@@ -175,6 +188,7 @@ Partial Public Class bt(Of T)
                     assert(a.right_child().min().compare(b) > 0)
                 End If
             End If
+#End If
             b.replace_left(a.left_child())
             b.replace_right(a.right_child())
             a.replace_parent_subtree(b)
@@ -186,11 +200,12 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Function replace_by_left_subtree(ByVal a As node) As node
+#If Not Performance Then
             assert(Not a Is Nothing)
             assert(a.has_left_child())
             assert(Not a.has_right_child() OrElse Not a.left_child().has_right_child())
-            Dim b As node = Nothing
-            b = a.left_child()
+#End If
+            Dim b As node = a.left_child()
             a.replace_parent_subtree(b)
             If a.has_right_child() Then
                 b.replace_right(a.right_child())
@@ -203,11 +218,12 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Function replace_by_right_subtree(ByVal a As node) As node
+#If Not Performance Then
             assert(Not a Is Nothing)
             assert(a.has_right_child())
             assert(Not a.has_left_child() OrElse Not a.right_child().has_left_child())
-            Dim b As node = Nothing
-            b = a.right_child()
+#End If
+            Dim b As node = a.right_child()
             a.replace_parent_subtree(b)
             If a.has_left_child() Then
                 b.replace_left(a.left_child())
@@ -221,16 +237,20 @@ Partial Public Class bt(Of T)
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Function replace_by_left_max(ByVal a As node,
                                                     ByRef parent_of_replaced_node As node) As node
+#If Not Performance Then
             assert(Not a Is Nothing)
             assert(a.has_left_child())
+#End If
             Dim b As node = Nothing
             If a.left_child().has_right_child() Then
                 b = a.left_child().max()
+#If Not Performance Then
                 assert(Not b Is Nothing)
                 assert(Not b.has_right_child())
                 assert(object_compare(b, a.left_child()) <> 0)
                 assert(b.has_parent())
                 assert(b.is_right_subtree())
+#End If
                 parent_of_replaced_node = b.parent()
                 If b.has_left_child() Then
                     b.replace_by_left_subtree()
@@ -253,16 +273,20 @@ Partial Public Class bt(Of T)
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Function replace_by_right_min(ByVal a As node,
                                                      ByRef parent_of_replaced_node As node) As node
+#If Not Performance Then
             assert(Not a Is Nothing)
             assert(a.has_right_child())
+#End If
             Dim b As node = Nothing
             If a.right_child().has_left_child() Then
                 b = a.right_child().min()
+#If Not Performance Then
                 assert(Not b Is Nothing)
                 assert(Not b.has_left_child())
                 assert(object_compare(b, a.right_child()) <> 0)
                 assert(b.has_parent())
                 assert(b.is_left_subtree())
+#End If
                 parent_of_replaced_node = b.parent()
                 If b.has_right_child() Then
                     b.replace_by_right_subtree()
@@ -287,7 +311,9 @@ Partial Public Class bt(Of T)
         Private Shared Function [erase](ByVal n As node,
                                         ByVal select_left As Boolean,
                                         ByRef parent_of_removed_node As node) As node
+#If Not Performance Then
             assert(Not n Is Nothing)
+#End If
             Dim r As node = Nothing
             If n.has_left_child() AndAlso n.has_right_child() Then
                 If select_left Then
@@ -323,11 +349,15 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function revise_parent_subtree_height() As Boolean
+#If Not Performance Then
             assert(has_parent())
+#End If
             If is_left_subtree() Then
                 Return parent().revise_left_subtree_height()
             End If
+#If Not Performance Then
             assert(is_right_subtree())
+#End If
             Return parent().revise_right_subtree_height()
         End Function
 
@@ -355,49 +385,65 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function revise_left_subtree_height() As Boolean
+#If Not Performance Then
             assert(has_left_child())
+#End If
             Return revise_or_clear_left_subtree_height()
         End Function
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function clear_left_subtree_height() As Boolean
+#If Not Performance Then
             assert(Not has_left_child())
+#End If
             Return revise_or_clear_left_subtree_height()
         End Function
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function revise_right_subtree_height() As Boolean
+#If Not Performance Then
             assert(has_right_child())
+#End If
             Return revise_or_clear_right_subtree_height()
         End Function
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function clear_right_subtree_height() As Boolean
+#If Not Performance Then
             assert(Not has_right_child())
+#End If
             Return revise_or_clear_right_subtree_height()
         End Function
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Sub begin_child_node(ByVal s As StringBuilder)
+#If Not Performance Then
             assert(Not s Is Nothing)
+#End If
             s.Append("{")
         End Sub
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Sub seperate_child_node(ByVal s As StringBuilder)
+#If Not Performance Then
             assert(Not s Is Nothing)
+#End If
             s.Append(", ")
         End Sub
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Sub end_child_node(ByVal s As StringBuilder)
+#If Not Performance Then
             assert(Not s Is Nothing)
+#End If
             s.Append("}")
         End Sub
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub preorder_traversal(ByVal s As StringBuilder)
+#If Not Performance Then
             assert(Not s Is Nothing)
+#End If
             s.Append(Convert.ToString(Me))
             begin_child_node(s)
             If has_left_child() Then
@@ -412,15 +458,16 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function preorder_traversal() As String
-            Dim s As StringBuilder = Nothing
-            s = New StringBuilder()
+            Dim s As StringBuilder = New StringBuilder()
             preorder_traversal(s)
             Return Convert.ToString(s)
         End Function
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub inorder_traversal(ByVal s As StringBuilder)
+#If Not Performance Then
             assert(Not s Is Nothing)
+#End If
             begin_child_node(s)
             If has_left_child() Then
                 left_child().inorder_traversal(s)
@@ -436,15 +483,16 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function inorder_traversal() As String
-            Dim s As StringBuilder = Nothing
-            s = New StringBuilder()
+            Dim s As StringBuilder = New StringBuilder()
             inorder_traversal(s)
             Return Convert.ToString(s)
         End Function
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub postorder_traversal(ByVal s As StringBuilder)
+#If Not Performance Then
             assert(Not s Is Nothing)
+#End If
             begin_child_node(s)
             If has_left_child() Then
                 left_child().postorder_traversal(s)
@@ -459,8 +507,7 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function postorder_traversal() As String
-            Dim s As StringBuilder = Nothing
-            s = New StringBuilder()
+            Dim s As StringBuilder = New StringBuilder()
             postorder_traversal(s)
             Return Convert.ToString(s)
         End Function

@@ -30,8 +30,10 @@ Partial Public Class bt(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Shared Sub move_to(ByVal from As bt(Of T), ByVal [to] As bt(Of T))
+#If Not Performance Then
         assert(Not from Is Nothing)
         assert(Not [to] Is Nothing)
+#End If
         [to].root = from.root
         from.root = Nothing
     End Sub
@@ -158,14 +160,17 @@ Partial Public Class bt(Of T)
                                       ByVal that As BTT,
                                       ByVal size As Func(Of BTT, UInt32),
                                       ByVal cmp As Func(Of T, T, Int32)) As Int32
+#If Not Performance Then
         assert(Not cmp Is Nothing)
-        Dim c As Int32 = 0
-        c = object_compare(this, that)
+#End If
+        Dim c As Int32 = object_compare(this, that)
         If c <> object_compare_undetermined Then
             Return c
         End If
+#If Not Performance Then
         assert(Not this Is Nothing)
         assert(Not that Is Nothing)
+#End If
         If Not size Is Nothing Then
             Dim l As UInt32 = 0
             Dim r As UInt32 = 0

@@ -21,7 +21,9 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function heighted_box() As heighted_box
+#If Not Performance Then
             assert(is_heighted_box())
+#End If
             Return hb
         End Function
 
@@ -32,7 +34,9 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function weighted_box() As weighted_box
+#If Not Performance Then
             assert(is_weighted_box())
+#End If
             Return wb
         End Function
 
@@ -43,7 +47,9 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function range_box() As range_box
+#If Not Performance Then
             assert(is_range_box())
+#End If
             Return rb
         End Function
 
@@ -139,9 +145,11 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub debug_assert_structure()
+#If Not Performance Then
             If binary_tree_debug Then
                 assert_structure()
             End If
+#End If
         End Sub
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
