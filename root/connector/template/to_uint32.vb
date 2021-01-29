@@ -39,7 +39,7 @@ Public NotInheritable Class fast_to_uint32(Of T)
     End Function
 End Class
 
-Public Class default_to_uint32(Of T)
+Public NotInheritable Class default_to_uint32(Of T)
     Inherits _to_uint32(Of T)
 
     Public Overrides Function at(ByRef k As T) As UInt32
@@ -108,19 +108,14 @@ Public NotInheritable Class _uint16_to_uint32
     End Function
 End Class
 
-Public NotInheritable Class _string_to_uint32
-    Inherits default_to_uint32(Of String)
-End Class
-
 Public NotInheritable Class _int64_to_uint32
     Inherits _to_uint32(Of Int64)
 
     Public Overrides Function at(ByRef k As Int64) As UInt32
         If k < 0 Then
             Return CUInt((k Mod max_uint32) + max_uint32)
-        Else
-            Return CUInt(k Mod max_uint32)
         End If
+        Return CUInt(k Mod max_uint32)
     End Function
 
     Public Overrides Function reverse(ByVal i As UInt32) As Int64
