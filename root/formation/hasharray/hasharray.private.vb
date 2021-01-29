@@ -81,13 +81,6 @@ Partial Public Class hasharray(Of T,
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Sub emplace_back(ByVal column As UInt32, ByVal value As hasher_node)
-        assert(Not value Is Nothing)
-        v(column).emplace_back(value)
-        s += uint32_1
-    End Sub
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function new_node(ByVal value As T) As hasher_node
         Return New hasher_node(value)
     End Function
@@ -197,8 +190,9 @@ Partial Public Class hasharray(Of T,
             Return emplace(value, column, row)
         End If
 
-        emplace_back(column, value)
+        v(column).emplace_back(value)
         row = last_row(column)
+        s += uint32_1
         Return True
     End Function
 
@@ -208,16 +202,13 @@ Partial Public Class hasharray(Of T,
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Sub rehash_move_in(ByVal c As hasher_node)
-        assert(Not c Is Nothing)
-        Dim column As UInt32 = hash(c)
-        assert(Not unique OrElse Not find_first_cell(c, column, uint32_0))
-        emplace_back(column, c)
+    Private Sub rehash_move_in(ByVal value As hasher_node)
+        v(hash(value)).emplace_back(value)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub rehash(ByVal c As UInt32)
-        Dim r As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER) = New hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)(c)
+        Dim r As New hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)(c) With {.s = s}
         For i As UInt32 = 0 To v.size() - uint32_1
             Dim rc As UInt32 = row_count(i)
             Dim j As UInt32 = 0
