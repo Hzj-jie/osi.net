@@ -21,7 +21,9 @@ Public NotInheritable Class const_array
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function elements(Of T)(ByVal ParamArray v() As T) As const_array(Of T)
+#If Not Performance Then
         assert(array_size(v) > 1 OrElse Not type_info(Of T).is_array)
+#End If
         Return New const_array(Of T)(v)
     End Function
 
@@ -42,9 +44,11 @@ Public NotInheritable Class const_array
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function alloc_of(Of T)(ByVal f As Func(Of T), ByVal size As UInt32) As const_array(Of T)
+#If Not Performance Then
         assert(Not f Is Nothing)
         assert(size > 0)
         assert(size <= max_int32)
+#End If
         Dim r() As T = Nothing
         ReDim r(CInt(size - uint32_1))
         For i As Int32 = 0 To CInt(size) - 1
@@ -75,7 +79,9 @@ Public Class const_array(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Sub New(ByVal size As Int64)
+#If Not Performance Then
         assert(size > 0)
+#End If
         ReDim v(CInt(size) - 1)
     End Sub
 
@@ -108,7 +114,9 @@ Public Class const_array(Of T)
     Default Public ReadOnly Property data(ByVal i As UInt32) As T
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Get
+#If Not Performance Then
             assert(i < size())
+#End If
             Return v(CInt(i))
         End Get
     End Property

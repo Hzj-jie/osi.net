@@ -28,7 +28,6 @@ Public Module _callstack
 
     Public Function callstack(Optional ByVal remove_blanks As Boolean = False,
                               Optional ByVal separator As Char = character.colon) As String
-#If Not PocketPC AndAlso Not Smartphone Then
         Dim rtn As String = Nothing
         rtn = Environment.StackTrace()
         If remove_blanks Then
@@ -36,9 +35,6 @@ Public Module _callstack
                      .Replace(newline.incode(), separator)
         End If
         Return rtn
-#Else
-        Return "##CANNOTTRACE##"
-#End If
     End Function
 
     Private Function build_stack_trace(ByVal s As StackFrame) As String

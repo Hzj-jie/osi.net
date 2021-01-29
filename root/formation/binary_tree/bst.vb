@@ -41,7 +41,9 @@ Public Class bst(Of T)
                     Return [end]()
                 End If
             Else
+#If Not Performance Then
                 assert(c > 0)
+#End If
                 If n.has_left_child() Then
                     n = n.left_child()
                 Else
@@ -62,14 +64,18 @@ Public Class bst(Of T)
         n = root
         Dim l As node = Nothing
         While True
+#If Not Performance Then
             assert(Not n Is Nothing)
+#End If
             Dim c As Int32 = 0
             c = n.compare(v)
             If c = 0 Then
                 Return New iterator(n)
             End If
             If c < 0 Then
+#If Not Performance Then
                 assert(l Is Nothing OrElse n.compare(l) > 0)
+#End If
                 l = n
                 If n.has_right_child() Then
                     n = n.right_child()
@@ -77,7 +83,9 @@ Public Class bst(Of T)
                     Return New iterator(n)
                 End If
             Else
+#If Not Performance Then
                 assert(c > 0)
+#End If
                 If n.has_left_child() Then
                     n = n.left_child()
                 ElseIf l Is Nothing Then
@@ -100,9 +108,10 @@ Public Class bst(Of T)
         n = root
         Dim l As node = Nothing
         While True
+#If Not Performance Then
             assert(Not n Is Nothing)
-            Dim c As Int32 = 0
-            c = n.compare(v)
+#End If
+            Dim c As Int32 = n.compare(v)
             If c <= 0 Then
                 If n.has_right_child() Then
                     n = n.right_child()
@@ -112,8 +121,10 @@ Public Class bst(Of T)
                     Return New iterator(l)
                 End If
             Else
+#If Not Performance Then
                 assert(c > 0)
                 assert(l Is Nothing OrElse n.compare(l) < 0)
+#End If
                 l = n
                 If n.has_left_child() Then
                     n = n.left_child()

@@ -14,7 +14,9 @@ Partial Public Class hasharray(Of T,
                                   _EQUALER As _equaler(Of T))
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function hash(ByVal v As hasher_node) As UInt32
+#If Not Performance Then
         assert(Not v Is Nothing)
+#End If
         Return v.hash_code() Mod column_count()
     End Function
 
@@ -59,7 +61,9 @@ Partial Public Class hasharray(Of T,
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function last_row(ByVal column As UInt32) As UInt32
+#If Not Performance Then
         assert(Not empty_column(column))
+#End If
         Return row_count(column) - uint32_1
     End Function
 
@@ -67,7 +71,9 @@ Partial Public Class hasharray(Of T,
     Private Sub set_cell(ByVal column As UInt32,
                          ByVal row As UInt32,
                          ByVal value As hasher_node)
+#If Not Performance Then
         assert(row <= max_int32)
+#End If
         v(column).replace(row, value)
     End Sub
 
@@ -75,7 +81,9 @@ Partial Public Class hasharray(Of T,
     Private Sub add_cell(ByVal column As UInt32,
                          ByVal row As UInt32,
                          ByVal value As hasher_node)
+#If Not Performance Then
         assert(cell_is_empty(column, row))
+#End If
         set_cell(column, row, value)
         s += uint32_1
     End Sub
@@ -87,14 +95,18 @@ Partial Public Class hasharray(Of T,
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub clear_cell(ByVal column As UInt32, ByVal row As UInt32)
+#If Not Performance Then
         assert(Not cell_is_empty(column, row))
+#End If
         set_cell(column, row, [default](Of hasher_node).null)
         s -= uint32_1
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function first_non_empty_column() As UInt32
+#If Not Performance Then
         assert(Not empty())
+#End If
         For i As UInt32 = 0 To v.size() - uint32_1
             If Not v(i).empty() Then
                 Return i
@@ -106,7 +118,9 @@ Partial Public Class hasharray(Of T,
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function last_non_empty_column() As UInt32
+#If Not Performance Then
         assert(Not empty())
+#End If
         Dim i As UInt32 = 0
         i = v.size()
         While i > uint32_0

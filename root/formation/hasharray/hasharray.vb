@@ -23,7 +23,9 @@ Partial Public Class hasharray(Of T,
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub New(ByVal c As UInt32)
+#If Not Performance Then
         assert(c < predefined_column_counts.size())
+#End If
         Me.c = c
         reset_array()
     End Sub
@@ -33,9 +35,11 @@ Partial Public Class hasharray(Of T,
     Protected Sub New(ByVal v As const_array(Of vector(Of hasher_node)),
                       ByVal s As UInt32,
                       ByVal c As UInt32)
+#If Not Performance Then
         assert(Not v.null_or_empty())
         assert(v.size() = predefined_column_counts(c))
         assert(c < predefined_column_counts.size())
+#End If
         Me.v = v
         Me.s = s
         Me.c = c
