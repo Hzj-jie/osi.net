@@ -76,9 +76,6 @@
     <Compile Include="bit_array_thread_safe.vb" />
     <Compile Include="chunk.vb" />
     <Compile Include="hasharray\hasharray.hasher_node.vb" />
-    <Compile Include="hashset\hashset.hasher_node.vb" />
-    <Compile Include="hashset\hashset.private.vb" />
-    <Compile Include="hashset\hashset.vb" />
     <Compile Include="one_of.vb" />
     <Compile Include="stream\double_stream.vb" />
     <Compile Include="stream\stream.compare_node.vb" />
