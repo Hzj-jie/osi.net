@@ -261,6 +261,19 @@ Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
                         End Sub)
     End Function
 
+    Public Shared Function near_match(ByVal v As Double,
+                                      ByVal exp As Double,
+                                      ByVal diff As Double,
+                                      ByVal ParamArray msg() As Object) As Boolean
+        Return less(Math.Abs(v - exp), diff, left_right_msg("near match", v, exp, msg))
+    End Function
+
+    Public Shared Function near_match(ByVal v As Double,
+                                      ByVal exp As Double,
+                                      ByVal ParamArray msg() As Object) As Boolean
+        Return near_match(v, exp, 0.001, msg)
+    End Function
+
     Protected Sub New()
     End Sub
 End Class

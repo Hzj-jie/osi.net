@@ -136,5 +136,12 @@ Partial Public NotInheritable Class onebound(Of K)
                                                            End Function)).
                                               collect(Of unordered_map(Of R, unordered_map(Of R, Double)))())
         End Function
+
+        Public Function map_each(Of R)(ByVal f As Func(Of unordered_map(Of K, Double), R)) As unordered_map(Of K, R)
+            assert(Not f Is Nothing)
+            Return m.stream().
+                     map(m.second_mapper(f)).
+                     collect(Of unordered_map(Of K, R))()
+        End Function
     End Class
 End Class

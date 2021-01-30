@@ -80,6 +80,7 @@
     <Compile Include="normal_distribution\normal_distribution.vb" />
     <Compile Include="onebound\evaluator.vb" />
     <Compile Include="onebound\model.vb" />
+    <Compile Include="onebound\selector.vb" />
     <Compile Include="onebound\trainer.vb" />
     <Compile Include="percentile\filter.vb" />
     <Compile Include="permutations.vb" />

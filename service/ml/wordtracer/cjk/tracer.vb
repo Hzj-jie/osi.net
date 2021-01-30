@@ -4,8 +4,11 @@ Option Infer Off
 Option Strict On
 
 Imports System.Collections.Generic
+Imports System.IO
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.service.resource
 
 Partial Public NotInheritable Class wordtracer
     Partial Public NotInheritable Class cjk
@@ -37,7 +40,7 @@ Partial Public NotInheritable Class wordtracer
                     If s.null_or_whitespace() Then
                         Continue For
                     End If
-                    s.strsep(AddressOf _character.cjk,
+                    s.strsep(AddressOf _character.not_cjk,
                              Sub(ByVal l As UInt32, ByVal i As UInt32)
                                  sentence(s, l, i, t)
                              End Sub)
@@ -45,8 +48,40 @@ Partial Public NotInheritable Class wordtracer
                 Return t.dump()
             End Function
 
+            Public Shared Function train(ByVal config As onebound(Of Char).trainer.config,
+                                         ByVal reader As tar.reader) As onebound(Of Char).model
+                assert(Not reader Is Nothing)
+                Dim t As onebound(Of Char).trainer = New onebound(Of Char).trainer(config)
+                reader.foreach(Sub(ByVal name As String, ByVal m As MemoryStream)
+                                   Dim p As Double
+                                   Using r As StreamReader = New StreamReader(m, m.guess_encoding(p))
+                                       If p < 0.8 Then
+                                           raise_error(error_type.user,
+                                                       "ignroe ",
+                                                       name,
+                                                       ", the encoding possibility is ",
+                                                       p)
+                                           Return
+                                       End If
+                                       Dim line As String = r.ReadLine()
+                                       While Not line Is Nothing
+                                           line.strsep(AddressOf _character.not_cjk,
+                                                       Sub(ByVal l As UInt32, ByVal i As UInt32)
+                                                           sentence(line, l, i, t)
+                                                       End Sub)
+                                           line = r.ReadLine()
+                                       End While
+                                   End Using
+                               End Sub)
+                Return t.dump()
+            End Function
+
             Public Shared Function train(ByVal ss As IEnumerable(Of String)) As onebound(Of Char).model
                 Return train(New onebound(Of Char).trainer.config(), ss)
+            End Function
+
+            Public Shared Function train(ByVal reader As tar.reader) As onebound(Of Char).model
+                Return train(New onebound(Of Char).trainer.config(), reader)
             End Function
 
             Public Shared Function flat_map(ByVal i As onebound(Of Char).model) As unordered_map(Of String, Double)

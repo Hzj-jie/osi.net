@@ -75,6 +75,7 @@
     <Compile Include="normal_distribution\possibility_test.vb" />
     <Compile Include="onebound\evaluator_test.vb" />
     <Compile Include="onebound\model_test.vb" />
+    <Compile Include="onebound\selector_test.vb" />
     <Compile Include="onebound\trainer_test.vb" />
     <Compile Include="percentile\filter_test.vb" />
     <Compile Include="permutations_test.vb" />

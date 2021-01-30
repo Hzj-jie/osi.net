@@ -102,13 +102,15 @@ Partial Public NotInheritable Class onebound(Of K)
                 raw
             End Enum
 
-            Public compare As comparison
-            Public bidirectional As Boolean
+            Public compare As comparison = comparison.raw
+            Public bidirectional As Boolean = False
 
+#If 0 Then
             Public Sub New()
                 compare = comparison.with_average
                 bidirectional = True
             End Sub
+#End If
         End Class
 
         Private ReadOnly m As unordered_map(Of K, bind)

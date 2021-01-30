@@ -3,10 +3,12 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.IO
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utt.attributes
 Imports osi.service.ml.onebound(Of Char)
+Imports osi.service.resource
 Imports tracer = osi.service.ml.wordtracer.cjk.tracer
 
 Namespace wordtracer.cjk
@@ -18,6 +20,16 @@ Namespace wordtracer.cjk
             Dim m As model = Nothing
             m = tracer.train(IO.File.ReadLines("cjk.training.txt"))
             m.dump("cjk.words.2.bin")
+        End Sub
+
+        <test>
+        <command_line_specified>
+        Private Shared Sub from_tar()
+            tracer.train(tar.reader.unzip(
+                             vector.emplace_of(Directory.GetFiles(Environment.CurrentDirectory(),
+                                                                  "tar_manual_test.zip_*",
+                                                                  SearchOption.AllDirectories)))).
+                   dump("cjk.words.2.bin")
         End Sub
 
         <test>
