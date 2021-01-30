@@ -1,23 +1,28 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 
 Public Module _build_running
-    Public ReadOnly build As String
-    Public ReadOnly running_mode As String
+    Public ReadOnly build As String = calculate_build()
+    Public ReadOnly running_mode As String = calculate_running_mode()
 
-    Sub New()
+    Private Function calculate_build() As String
         If isdebugbuild() Then
-            build = "debugbuild"
-        ElseIf isreleasebuild() Then
-            build = "releasebuild"
-        Else
-            build = "unknownbuild"
+            Return "debugbuild"
         End If
+        If isreleasebuild() Then
+            Return "releasebuild"
+        End If
+        Return "unknownbuild"
+    End Function
 
+    Private Function calculate_running_mode() As String
         If isdebugmode() Then
-            running_mode = "debugmode"
-        Else
-            running_mode = "normalmode"
+            Return "debugmode"
         End If
-    End Sub
+        Return "normalmode"
+    End Function
 End Module

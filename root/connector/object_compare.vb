@@ -6,13 +6,14 @@ Option Strict On
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
+<global_init(global_init_level.foundamental)>
 Public Module _object_compare
     Public Const object_compare_undetermined As Int32 = 2
     Private Const object_compare_equal As Int32 = 0
     Private Const object_compare_larger As Int32 = 1
     Private Const object_compare_less As Int32 = -1
 
-    Sub New()
+    Private Sub init()
         assert(object_compare_less = npos)
         assert(object_compare_larger = 1)
         assert(object_compare_equal = 0)

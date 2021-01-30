@@ -46,7 +46,7 @@ Public Module _piece
         Return New piece(this.to_bytes(i))
     End Function
 
-    Sub New()
+    Private Sub init()
         ' Do not convert from byte() to avoid performance impacts.
         bytes_serializer.byte_size.register(AddressOf size,
                                             Function(ByVal i As piece, ByVal o As MemoryStream) As Boolean
@@ -65,9 +65,6 @@ Public Module _piece
                                                 End If
                                                 Return False
                                             End Function)
-    End Sub
-
-    Private Sub init()
     End Sub
 End Module
 

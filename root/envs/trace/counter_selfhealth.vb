@@ -1,8 +1,8 @@
 ﻿
-Public Module _counter_selfhealth
-    Public ReadOnly counter_selfhealth As Boolean
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-    Sub New()
-        counter_selfhealth = env_bool(env_keys({"counter", "selfhealth"}))
-    End Sub
+Public Module _counter_selfhealth
+    Public ReadOnly counter_selfhealth As Boolean = env_bool(env_keys("counter", "selfhealth"))
 End Module

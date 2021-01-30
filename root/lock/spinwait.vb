@@ -11,8 +11,9 @@ Imports osi.root.delegates
 Imports osi.root.envs
 #Const USE_MEASURE_YIELD_WAIT = False
 
+<global_init(global_init_level.foundamental)>
 Public Module spinwait
-    Sub New()
+    Private Sub init()
         Dim i As Int32 = loops_per_yield
         Dim b As Boolean = single_cpu
         assert(Timeout.Infinite = -1)

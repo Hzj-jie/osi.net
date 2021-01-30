@@ -5,18 +5,15 @@ Option Strict On
 
 Imports osi.root.constants
 
+<global_init(global_init_level.log_and_counter_services)>
 Public NotInheritable Class colorful_console_error_writer
-    Shared Sub New()
+    Private Shared Sub init()
         error_writer_ignore_types(Of colorful_console_error_writer).ignore(
             error_type.performance, error_type.information, error_type.deprecated)
         AddHandler error_event.r3,
                    Sub(err_type As error_type, s As String)
                        If error_writer_ignore_types(Of colorful_console_error_writer).valued(err_type) Then
-#If PocketPC OrElse Smartphone Then
-                           write(s)
-#Else
                            colorful_write(err_type, s)
-#End If
                        End If
                    End Sub
     End Sub
@@ -24,11 +21,6 @@ Public NotInheritable Class colorful_console_error_writer
     Private Sub New()
     End Sub
 
-    Private Shared Sub write(ByVal s As String)
-        Console.WriteLine(s)
-    End Sub
-
-#If Not (PocketPC OrElse Smartphone) Then
     Private Shared Sub colorful_write(ByVal errtype As error_type, ByVal s As String)
         Dim oldcolor As ConsoleColor = Nothing
         oldcolor = Console.ForegroundColor()
@@ -57,5 +49,4 @@ Public NotInheritable Class colorful_console_error_writer
             Console.ForegroundColor() = oldcolor
         End Try
     End Sub
-#End If
 End Class

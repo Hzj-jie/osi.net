@@ -7,6 +7,8 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
 Public Module _console_key_info_mapping
+    Public ReadOnly console_key_info_mapping_height As Int32 = array_size_i(console_key_info_mapping)
+    Public ReadOnly console_key_info_mapping_width As Int32 = console_key_info_mapping.GetLength(1)
     Public ReadOnly console_key_min As ConsoleKey
     Public ReadOnly console_key_min_str As String
     Public ReadOnly console_key_max As ConsoleKey
@@ -15,13 +17,8 @@ Public Module _console_key_info_mapping
     Public ReadOnly console_key_max_char_int As Int32
     Public ReadOnly console_key_min_char As Char
     Public ReadOnly console_key_min_char_int As Int32
-    Public ReadOnly console_key_info_mapping_height As Int32
-    Public ReadOnly console_key_info_mapping_width As Int32
 
     Sub New()
-        console_key_info_mapping_height = array_size_i(console_key_info_mapping)
-        console_key_info_mapping_width = console_key_info_mapping.GetLength(1)
-
         Dim cmin As ConsoleKey = Nothing
         Dim cmins As String = Nothing
         Dim cmax As ConsoleKey = Nothing

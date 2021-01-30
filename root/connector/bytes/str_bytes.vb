@@ -7,11 +7,7 @@ Imports System.Text
 Imports osi.root.constants
 
 Public Module _str_bytes
-    Public ReadOnly default_encoding As Encoding
-
-    Sub New()
-        default_encoding = Encoding.UTF8()
-    End Sub
+    Public ReadOnly default_encoding As Encoding = Encoding.UTF8()
 
     Private Function valid_input_parameters(ByVal s As String,
                                             ByVal start As UInt32,

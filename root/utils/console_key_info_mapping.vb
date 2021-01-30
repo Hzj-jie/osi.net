@@ -36,10 +36,10 @@ Public Module _console_key_info_mapping
         End Function
     End Structure
 
-    Private ReadOnly m() As vector(Of keyinfo)
+    Private ReadOnly m() As vector(Of keyinfo) = calculate_m()
 
-    Sub New()
-        ReDim m(console_key_max_char_int)
+    Private Function calculate_m() As vector(Of keyinfo)()
+        Dim m(console_key_max_char_int) As vector(Of keyinfo)
         assert(console_key_min >= 0)
         assert(console_key_max < console_key_info_mapping_height)
         For i As Int32 = console_key_min To console_key_max
@@ -60,7 +60,8 @@ Public Module _console_key_info_mapping
                 m(ci).emplace_back(k)
             Next
         Next
-    End Sub
+        Return m
+    End Function
 
     <Extension()> Public Function keycode(ByVal c As Char,
                                           ByRef o As vector(Of keyinfo)) As Boolean

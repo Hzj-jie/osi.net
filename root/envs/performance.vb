@@ -27,7 +27,7 @@ Public Module _performance
         End Sub
     End Class
 
-    Private Class recent_processor_usage_record_implementation
+    Private NotInheritable Class recent_processor_usage_record_implementation
         Inherits recent_processor_usage_record
 
         Public last_usage_ticks As Int64 = 0
@@ -50,7 +50,7 @@ Public Module _performance
         Return rtn
     End Function
 
-    Private ReadOnly default_recent_processor_usage_record As recent_processor_usage_record_implementation
+    Private ReadOnly default_recent_processor_usage_record As New recent_processor_usage_record_implementation()
 
     ' Return the processor neutral usage between now and the timestamp when last recent_processor_usage() is called.
     ' The resource usage does not depend on how many processors are installed on the system. The range of the return of
@@ -197,8 +197,4 @@ Public Module _performance
     Public Function gc_total_memory() As Int64
         Return GC.GetTotalMemory(False)
     End Function
-
-    Sub New()
-        default_recent_processor_usage_record = New recent_processor_usage_record_implementation()
-    End Sub
 End Module

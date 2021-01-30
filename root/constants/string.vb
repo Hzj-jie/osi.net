@@ -9,7 +9,7 @@ Public Module _string
     Public Const empty_string As String = ""
     Public Const newline_chars As String = character.newline +
                                            character.return
-    Public ReadOnly space_chars As String
+    Public ReadOnly space_chars As String = calculate_space_chars()
     Public Const left_brackets As String = "（｛［《＜〔〈【({[<"
     Public Const right_brackets As String = "）｝］》＞〕〉】)}]>"
     Public Const brackets As String = left_brackets + right_brackets
@@ -26,19 +26,19 @@ Public Module _string
     Public Const upper_english_characters As String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     Public Const english_characters As String = lower_english_characters + upper_english_characters
 
-    Public ReadOnly stringbuilder_default_capacity As UInt32
+    Public ReadOnly stringbuilder_default_capacity As UInt32 = CUInt((New StringBuilder()).Capacity())
 
     Public Const npos As Int32 = -1
 
-    Sub New()
+    Private Function calculate_space_chars() As String
+        Dim space_chars As String = Nothing
         For i As Int32 = Convert.ToInt32(Char.MinValue) To Convert.ToInt32(Char.MaxValue)
             If Char.IsWhiteSpace(Convert.ToChar(i)) Then
                 space_chars += Convert.ToChar(i)
             End If
         Next
-
-        stringbuilder_default_capacity = CUInt((New StringBuilder()).Capacity())
-    End Sub
+        Return space_chars
+    End Function
 End Module
 
 Public NotInheritable Class newline

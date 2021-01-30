@@ -7,45 +7,25 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
 Public Module _bit
-    Private ReadOnly jump_size As Byte
-    Private ReadOnly jump1() As UInt64
-    Private ReadOnly jump0() As UInt64
+    Private ReadOnly jump_size As Byte = CByte(bit_count_in_byte * sizeof_uint64)
+    Private ReadOnly jump1() As UInt64 = calculate_jump1()
+    Private ReadOnly jump0() As UInt64 = calculate_jump0()
 
-    Private ReadOnly rjump1() As UInt64
-    Private ReadOnly rjump0() As UInt64
+    Private ReadOnly rjump1() As UInt64 = jump1.Reverse()
+    Private ReadOnly rjump0() As UInt64 = jump0.Reverse()
 
-    Private ReadOnly bit_count_in_int8 As Byte
-    Private ReadOnly bit_count_in_int16 As Byte
-    Private ReadOnly bit_count_in_int32 As Byte
-    Private ReadOnly bit_count_in_int64 As Byte
+    Private ReadOnly bit_count_in_int8 As Byte = CByte(bit_count_in_byte * sizeof_int8)
+    Private ReadOnly bit_count_in_int16 As Byte = CByte(bit_count_in_byte * sizeof_int16)
+    Private ReadOnly bit_count_in_int32 As Byte = CByte(bit_count_in_byte * sizeof_int32)
+    Private ReadOnly bit_count_in_int64 As Byte = CByte(bit_count_in_byte * sizeof_int64)
 
-    Private ReadOnly int8_offset As Int32
-    Private ReadOnly int16_offset As Int32
-    Private ReadOnly int32_offset As Int32
-    Private ReadOnly int64_offset As Int32
+    Private ReadOnly int8_offset As Int32 = bit_count_in_int64 - bit_count_in_int8
+    Private ReadOnly int16_offset As Int32 = bit_count_in_int64 - bit_count_in_int16
+    Private ReadOnly int32_offset As Int32 = bit_count_in_int64 - bit_count_in_int32
+    Private ReadOnly int64_offset As Int32 = bit_count_in_int64 - bit_count_in_int64
 
-    Sub New()
-        jump_size = CByte(bit_count_in_byte * sizeof_uint64)
-        ReDim jump1(jump_size - 1)
-        ReDim jump0(jump_size - 1)
-        set_jump1()
-        set_jump0()
-
-        rjump1 = jump1.reverse()
-        rjump0 = jump0.reverse()
-
-        bit_count_in_int8 = CByte(bit_count_in_byte * sizeof_int8)
-        bit_count_in_int16 = CByte(bit_count_in_byte * sizeof_int16)
-        bit_count_in_int32 = CByte(bit_count_in_byte * sizeof_int32)
-        bit_count_in_int64 = CByte(bit_count_in_byte * sizeof_int64)
-
-        int8_offset = bit_count_in_int64 - bit_count_in_int8
-        int16_offset = bit_count_in_int64 - bit_count_in_int16
-        int32_offset = bit_count_in_int64 - bit_count_in_int32
-        int64_offset = bit_count_in_int64 - bit_count_in_int64
-    End Sub
-
-    Private Sub set_jump1()
+    Private Function calculate_jump1() As UInt64()
+        Dim jump1(jump_size - 1) As UInt64
         Dim t As UInt64 = 0
         t = int64_uint64(min_int64)
         For i As Int32 = 0 To jump_size - 1
@@ -53,13 +33,16 @@ Public Module _bit
             t >>= 1
         Next
         assert(t = 0)
-    End Sub
+        Return jump1
+    End Function
 
-    Private Sub set_jump0()
+    Private Function calculate_jump0() As UInt64()
+        Dim jump0(jump_size - 1) As UInt64
         For i As Int32 = 0 To jump_size - 1
             jump0(i) = Not jump1(i)
         Next
-    End Sub
+        Return jump0
+    End Function
 
     Private Sub assert_index_int8(ByVal i As Byte)
         assert(i < bit_count_in_int8)

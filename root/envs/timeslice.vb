@@ -7,25 +7,26 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 ' TODO: Constants here should be uint32.
+<global_init(global_init_level.max)>
 Public Module _timeslice
-    Public ReadOnly timeslice_length_ticks As Int64
-    Public ReadOnly timeslice_length_ms As Int64
-    Public ReadOnly half_timeslice_length_ticks As Int64
-    Public ReadOnly half_timeslice_length_ms As Int64
-    Public ReadOnly quarter_timeslice_length_ticks As Int64
-    Public ReadOnly quarter_timeslice_length_ms As Int64
-    Public ReadOnly eighth_timeslice_length_ticks As Int64
-    Public ReadOnly eighth_timeslice_length_ms As Int64
-    Public ReadOnly sixteenth_timeslice_length_ticks As Int64
-    Public ReadOnly sixteenth_timeslice_length_ms As Int64
-    Public ReadOnly two_timeslice_length_ticks As Int64
-    Public ReadOnly two_timeslice_length_ms As Int64
-    Public ReadOnly four_timeslice_length_ticks As Int64
-    Public ReadOnly four_timeslice_length_ms As Int64
-    Public ReadOnly eight_timeslice_length_ticks As Int64
-    Public ReadOnly eight_timeslice_length_ms As Int64
-    Public ReadOnly sixteen_timeslice_length_ticks As Int64
-    Public ReadOnly sixteen_timeslice_length_ms As Int64
+    Public ReadOnly timeslice_length_ticks As Int64 = decide_timeslice_length_ticks()
+    Public ReadOnly timeslice_length_ms As Int64 = to_ms(timeslice_length_ticks)
+    Public ReadOnly half_timeslice_length_ticks As Int64 = sr(1)
+    Public ReadOnly half_timeslice_length_ms As Int64 = to_ms(half_timeslice_length_ticks)
+    Public ReadOnly quarter_timeslice_length_ticks As Int64 = sr(2)
+    Public ReadOnly quarter_timeslice_length_ms As Int64 = to_ms(quarter_timeslice_length_ticks)
+    Public ReadOnly eighth_timeslice_length_ticks As Int64 = sr(3)
+    Public ReadOnly eighth_timeslice_length_ms As Int64 = to_ms(eighth_timeslice_length_ticks)
+    Public ReadOnly sixteenth_timeslice_length_ticks As Int64 = sr(4)
+    Public ReadOnly sixteenth_timeslice_length_ms As Int64 = to_ms(sixteenth_timeslice_length_ticks)
+    Public ReadOnly two_timeslice_length_ticks As Int64 = sl(1)
+    Public ReadOnly two_timeslice_length_ms As Int64 = to_ms(two_timeslice_length_ticks)
+    Public ReadOnly four_timeslice_length_ticks As Int64 = sl(2)
+    Public ReadOnly four_timeslice_length_ms As Int64 = to_ms(four_timeslice_length_ticks)
+    Public ReadOnly eight_timeslice_length_ticks As Int64 = sl(3)
+    Public ReadOnly eight_timeslice_length_ms As Int64 = to_ms(eight_timeslice_length_ticks)
+    Public ReadOnly sixteen_timeslice_length_ticks As Int64 = sl(4)
+    Public ReadOnly sixteen_timeslice_length_ms As Int64 = to_ms(sixteen_timeslice_length_ticks)
 
     Private Function to_ms(ByVal ticks As Int64) As Int64
         Return max(ticks_to_milliseconds(ticks), 1)
@@ -68,29 +69,7 @@ Public Module _timeslice
         Return timeslice_length_ticks
     End Function
 
-    Sub New()
-        timeslice_length_ticks = decide_timeslice_length_ticks()
-        half_timeslice_length_ticks = sr(1)
-        quarter_timeslice_length_ticks = sr(2)
-        eighth_timeslice_length_ticks = sr(3)
-        sixteenth_timeslice_length_ticks = sr(4)
-        two_timeslice_length_ticks = sl(1)
-        four_timeslice_length_ticks = sl(2)
-        eight_timeslice_length_ticks = sl(3)
-        sixteen_timeslice_length_ticks = sl(4)
-
-        timeslice_length_ms = to_ms(timeslice_length_ticks)
-        half_timeslice_length_ms = to_ms(half_timeslice_length_ticks)
-        quarter_timeslice_length_ms = to_ms(quarter_timeslice_length_ticks)
-        eighth_timeslice_length_ms = to_ms(eighth_timeslice_length_ticks)
-        sixteenth_timeslice_length_ms = to_ms(sixteenth_timeslice_length_ticks)
-        two_timeslice_length_ms = to_ms(two_timeslice_length_ticks)
-        four_timeslice_length_ms = to_ms(four_timeslice_length_ticks)
-        eight_timeslice_length_ms = to_ms(eight_timeslice_length_ticks)
-        sixteen_timeslice_length_ms = to_ms(sixteen_timeslice_length_ticks)
-
-        ' This function is usually executed before global_init(), so using raise_error() does not output the result to
-        ' file.
+    Private Sub init()
         If env_bool(env_keys("report", "timeslice", "length")) Then
             raise_error("timeslice length in ticks = ", timeslice_length_ticks)
         End If

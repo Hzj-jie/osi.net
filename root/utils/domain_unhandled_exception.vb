@@ -15,12 +15,10 @@ Public Module _domain_unhandled_exception
     Public suspend_unhandled_exception As Boolean
     <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Event domain_unhandled_exception(ByVal ex As Exception)
-    Private ReadOnly handler As UnhandledExceptionEventHandler
-    Private ReadOnly suspended_threads As vector(Of Thread)
+    Private ReadOnly handler As UnhandledExceptionEventHandler = AddressOf handle
+    Private ReadOnly suspended_threads As vector(Of Thread) = New vector(Of Thread)()
 
-    Sub New()
-        handler = AddressOf handle
-        suspended_threads = New vector(Of Thread)()
+    Private Sub init()
         application_lifetime.stopping_handle(Sub()
                                                  Dim i As UInt32 = 0
                                                  While i < suspended_threads.size()
@@ -29,9 +27,6 @@ Public Module _domain_unhandled_exception
                                                  End While
                                              End Sub)
         AddHandler AppDomain.CurrentDomain.UnhandledException, handler
-    End Sub
-
-    Private Sub init()
     End Sub
 
     'do not set suspend_unhandled_exception to true, unless you know what you are doing
