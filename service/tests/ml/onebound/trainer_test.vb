@@ -34,7 +34,7 @@ Namespace onebound
         <test>
         Private Shared Sub case3()
             Dim m As model = Nothing
-            m = New trainer().
+            m = New trainer(New trainer.config() With {.compare = trainer.config.comparison.with_average}).
                         accumulate("a", "b", 2).
                         accumulate("a", "c").
                         dump()
