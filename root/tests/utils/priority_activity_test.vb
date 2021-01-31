@@ -52,7 +52,7 @@ Public Class priority_activity_test
                                                      While True
                                                          Dim l As String = Nothing
                                                          l = p.stdout().ReadLine()
-                                                         If strsame(l, "Finished global_init.execute(0)") Then
+                                                         If strsame(l, "Finished global_init.execute(1)") Then
                                                              Exit While
                                                          End If
                                                      End While

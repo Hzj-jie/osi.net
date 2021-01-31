@@ -14,8 +14,8 @@ public static class priority_activity
         else
             priority = args[0];
         _env_value.set_env("priority", priority);
-        global_init.execute(0);
-        Console.WriteLine("Finished global_init.execute(0)");
+        global_init.execute(1);
+        Console.WriteLine("Finished global_init.execute(1)");
         Console.Read();
     }
 }
