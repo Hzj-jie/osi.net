@@ -9,7 +9,7 @@ Imports osi.root.constants
 
 <global_init(global_init_level.functor)>
 Friend NotInheritable Class bytes_serializer_registry2
-    Shared Sub New()
+    Private Shared Sub init()
         bytes_serializer.byte_size.register(Function(ByVal i As String) As UInt32
                                                 Return str_byte_count(i)
                                             End Function,
@@ -108,9 +108,6 @@ Friend NotInheritable Class bytes_serializer_registry2
                                                 o = memory_stream.of(b)
                                                 Return True
                                             End Function)
-    End Sub
-
-    Private Shared Sub init()
     End Sub
 
     Private Sub New()

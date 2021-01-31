@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 
-<global_init(global_init_level.foundamental)>
+<global_init(global_init_level.other)>
 Public Module _manual_gc
     Private Sub init()
         If envs.env_bool(envs.env_keys("enable", "manual", "gc")) Then

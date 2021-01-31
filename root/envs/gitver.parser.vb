@@ -58,7 +58,6 @@ Partial Public NotInheritable Class gitver
     End Class
 
     Private Const separator As String = "  |-+-|  "
-    Private Const field_count As Int32 = 10
     Private Shared ReadOnly titles() As String = {"CommitHash:",
                                                   "ShortCommitHash:",
                                                   "Author:",
@@ -69,6 +68,7 @@ Partial Public NotInheritable Class gitver
                                                   "CommitterDate:",
                                                   "Subject:",
                                                   "Body:"}
+    Private Shared ReadOnly field_count As Int32 = array_size_i(titles)
     Public Shared ReadOnly latest As commit_info = parse(latest_commit_raw)
     Public Shared ReadOnly current As commit_info = parse(current_commit_raw)
     Public Shared ReadOnly diff As String = calculate_diff()
@@ -80,10 +80,6 @@ Partial Public NotInheritable Class gitver
         End If
         Return diff
     End Function
-
-    Shared Sub New()
-        assert(array_size(titles) = field_count)
-    End Sub
 
     Private Shared Function parse(ByVal commit_str As String) As commit_info
         Dim r As commit_info = Nothing

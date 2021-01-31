@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Diagnostics
 Imports System.Diagnostics.CodeAnalysis
 Imports System.Threading
@@ -6,15 +10,16 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 Public Module _thread
-    Private Class _thread
+    <global_init(global_init_level.runtime_assertions)>
+    Private NotInheritable Class _thread
         <ThreadStatic()> Private Shared _current_thread As Thread
         <ThreadStatic()> Private Shared _current_thread_id As Int32
         <ThreadStatic()> Private Shared _current_process_thread As ProcessThread
         <ThreadStatic()> Private Shared _current_process_thread_id As Int32
 
-        Shared Sub New()
-            assert(Nothing Is DirectCast(Nothing, Thread))
-            assert(INVALID_THREAD_ID = DirectCast(Nothing, Int32))
+        Private Shared Sub init()
+            Assert(Nothing Is DirectCast(Nothing, Thread))
+            Assert(INVALID_THREAD_ID = DirectCast(Nothing, Int32))
         End Sub
 
         Public Shared Function current_thread() As Thread
@@ -46,15 +51,15 @@ Public Module _thread
                 Thread.BeginThreadAffinity()
                 Dim tps As ProcessThreadCollection = Nothing
                 tps = this_process.ref.Threads()
-                assert(Not tps.null_or_empty())
+                Assert(Not tps.null_or_empty())
                 For i As Int32 = 0 To tps.Count() - 1
-                    assert(Not tps(i) Is Nothing)
+                    Assert(Not tps(i) Is Nothing)
                     If tps(i).Id() = current_process_thread_id() Then
                         r = tps(i)
                         Exit For
                     End If
                 Next
-                assert(Not r Is Nothing)
+                Assert(Not r Is Nothing)
                 _current_process_thread = r
                 For i As Int32 = 0 To tps.Count() - 1
                     Dim c As Int32 = 0
@@ -62,7 +67,7 @@ Public Module _thread
                     If c = object_compare_undetermined Then
                         tps(i).Dispose()
                     Else
-                        assert(c = 0)
+                        Assert(c = 0)
                     End If
                 Next
             End If

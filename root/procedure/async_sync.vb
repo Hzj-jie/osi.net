@@ -8,7 +8,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.threadpool
 
-<global_init(global_init_level.foundamental)>
+<global_init(global_init_level.runtime_assertions)>
 Public Module _async_sync
     Private Sub init()
         assert(npos < 0)

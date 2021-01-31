@@ -23,9 +23,17 @@ Public Module deploys
                                                  Directory.Delete(temp_folder, True)
                                              End Sub)
         assert(set_env("temp_folder", temp_folder))
-
-        If report_deploys_folder Then
-            raise_error("temp_folder ", temp_folder)
-        End If
     End Sub
+
+    <global_init(global_init_level.other)>
+    Private NotInheritable Class report
+        Private Shared Sub init()
+            If report_deploys_folder Then
+                raise_error("temp_folder ", temp_folder)
+            End If
+        End Sub
+
+        Private Sub New()
+        End Sub
+    End Class
 End Module

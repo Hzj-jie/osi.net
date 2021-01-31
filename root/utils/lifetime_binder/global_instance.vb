@@ -15,14 +15,16 @@ Public NotInheritable Class global_instance(Of T, _new As _new(Of T))
     End Class
 
     Private NotInheritable Class instance
-        Public Shared ReadOnly v As T = +alloc(Of _new)()
+        Public Shared ReadOnly v As T = alloc_v()
 
-        Shared Sub New()
+        Private Shared Function alloc_v() As T
+            Dim v As T = +alloc(Of _new)()
             application_lifetime.stopping_handle(Sub()
                                                      disposable.dispose(v)
                                                  End Sub)
             initialized.v = True
-        End Sub
+            Return v
+        End Function
 
         Private Sub New()
         End Sub

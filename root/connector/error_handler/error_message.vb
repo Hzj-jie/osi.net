@@ -6,6 +6,7 @@ Option Strict On
 Imports System.Text
 Imports osi.root.constants
 
+<global_init(global_init_level.log_and_counter_services)>
 Public NotInheritable Class error_message
     Public Const error_type_count As Int64 = error_type.last - error_type.first + 1
     Public Const error_type_char As String = "_aceiswuptod_"
@@ -24,7 +25,7 @@ Public NotInheritable Class error_message
                                                                 "_"}
     Public Const seperator As String = character.comma + character.blank
 
-    Shared Sub New()
+    Private Shared Sub init()
         If error_type_char.Length() <> error_type_count Then
             Console.Error().WriteLine("error_type_char length <> error_type count")
             assert_break()

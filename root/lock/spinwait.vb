@@ -11,13 +11,27 @@ Imports osi.root.delegates
 Imports osi.root.envs
 #Const USE_MEASURE_YIELD_WAIT = False
 
-<global_init(global_init_level.foundamental)>
 Public Module spinwait
-    Private Sub init()
-        Dim i As Int32 = loops_per_yield
-        Dim b As Boolean = single_cpu
-        assert(Timeout.Infinite = -1)
-    End Sub
+    <global_init(global_init_level.runtime_assertions)>
+    Private NotInheritable Class assertions
+        Private Shared Sub init()
+            assert(Timeout.Infinite = -1)
+        End Sub
+
+        Private Sub New()
+        End Sub
+    End Class
+
+    <global_init(global_init_level.foundamental)>
+    Private NotInheritable Class triggers
+        Private Shared Sub init()
+            Dim i As Int32 = loops_per_yield
+            Dim b As Boolean = single_cpu
+        End Sub
+
+        Private Sub New()
+        End Sub
+    End Class
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function should_yield() As Boolean

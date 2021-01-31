@@ -9,16 +9,12 @@ Imports osi.root.procedure
 Public NotInheritable Class isolate_case_wrapper_test
     Inherits [case]
 
-    Private Shared ReadOnly suc_cases() As [case]
-    Private Shared ReadOnly fail_cases() As [case]
-
-    Shared Sub New()
-        suc_cases = {New success_case(), New success_event_comb_case()}
-        fail_cases = {New failure_case(),
-                      New failure_case2(),
-                      New failure_event_comb_case(),
-                      New failure_event_comb_case2()}
-    End Sub
+    Private Shared ReadOnly suc_cases() As [case] = {New success_case(), New success_event_comb_case()}
+    Private Shared ReadOnly fail_cases() As [case] = {
+        New failure_case(),
+        New failure_case2(),
+        New failure_event_comb_case(),
+        New failure_event_comb_case2()}
 
     Private Shared Function exec_case(ByVal c As [case], ByVal exp As Boolean) As Boolean
         Dim i As [case] = Nothing

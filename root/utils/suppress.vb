@@ -10,7 +10,7 @@ Imports osi.root.formation
 Imports osi.root.lock
 
 ' Control behavior in program level, without changing environment variables
-<global_init(global_init_level.foundamental)>
+<global_init(global_init_level.functor)>
 Public NotInheritable Class suppress
     Public Shared ReadOnly compare_error As atomic_bool =
         New atomic_bool(env_bool(env_keys("suppress", "compare", "error")))
@@ -27,21 +27,6 @@ Public NotInheritable Class suppress
     Public Shared ReadOnly alloc_error As atomic_bool =
         New atomic_bool(env_bool(env_keys("suppress", "alloc", "error")))
     Private Shared ReadOnly m As hashmapless(Of String, atomic_bool) = hashmapless(Of String, atomic_bool).tiny()
-
-    Shared Sub New()
-        register(Of is_suppressed.compare_error_protector)(compare_error)
-        register(Of is_suppressed.rebind_global_value_protector)(rebind_global_value_error)
-        register(Of is_suppressed.alloc_error_protector)(alloc_error)
-        global_resolver(Of Func(Of String, Boolean), is_suppressed).assert_first_register(
-            Function(ByVal key As String) As Boolean
-                Dim a As atomic_bool = Nothing
-                If Not m.get(key, a) Then
-                    Return False
-                End If
-                assert(Not a Is Nothing)
-                Return +a
-            End Function)
-    End Sub
 
     Private Shared Sub register(Of PROTECTOR)(ByVal i As atomic_bool)
         assert(Not i Is Nothing)
@@ -76,9 +61,21 @@ Public NotInheritable Class suppress
                m_init_state()
     End Function
 
-    Private Sub New()
+    Private Shared Sub init()
+        register(Of is_suppressed.compare_error_protector)(compare_error)
+        register(Of is_suppressed.rebind_global_value_protector)(rebind_global_value_error)
+        register(Of is_suppressed.alloc_error_protector)(alloc_error)
+        global_resolver(Of Func(Of String, Boolean), is_suppressed).assert_first_register(
+            Function(ByVal key As String) As Boolean
+                Dim a As atomic_bool = Nothing
+                If Not m.get(key, a) Then
+                    Return False
+                End If
+                assert(Not a Is Nothing)
+                Return +a
+            End Function)
     End Sub
 
-    Private Shared Sub init()
+    Private Sub New()
     End Sub
 End Class

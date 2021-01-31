@@ -17,17 +17,10 @@ Public Class case2_test
 
         Public Const multi_threading_case_thread_count As UInt32 = 4
         Public Const multi_threading_case_repeat_count As UInt32 = 1000
-        Private Shared ReadOnly _prepare_runs As atomic_int
-        Private Shared ReadOnly _finish_runs As atomic_int
-        Private Shared ReadOnly _d_runs As atomic_int
-        Private Shared ReadOnly _multi_threading_case_runs As atomic_int
-
-        Shared Sub New()
-            _prepare_runs = New atomic_int()
-            _finish_runs = New atomic_int()
-            _d_runs = New atomic_int()
-            _multi_threading_case_runs = New atomic_int()
-        End Sub
+        Private Shared ReadOnly _prepare_runs As New atomic_int()
+        Private Shared ReadOnly _finish_runs As New atomic_int()
+        Private Shared ReadOnly _d_runs As New atomic_int()
+        Private Shared ReadOnly _multi_threading_case_runs As New atomic_int()
 
         Public Shared Function prepare_runs() As UInt32
             Return CUInt(+_prepare_runs)
