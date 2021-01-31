@@ -7,7 +7,7 @@ Imports System.Management
 Imports osi.root.connector
 Imports osi.root.constants
 
-<global_init(global_init_level.max)>
+<global_init(global_init_level.other)>
 Public Module _hardware
     Public ReadOnly hardware_manufacturer As String = calculate_hardware_manufacturer()
     Public ReadOnly hardware_model As String = calculate_hardware_model()

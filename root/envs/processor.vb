@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.template
 
-Public Class processor_count
+Public NotInheritable Class processor_count
     Inherits _int64
 
     Protected Overrides Function at() As Int64
@@ -15,7 +15,7 @@ Public Class processor_count
     End Function
 End Class
 
-<global_init(global_init_level.max)>
+<global_init(global_init_level.other)>
 Public Module _processor
     Public ReadOnly single_cpu As Boolean = (Environment.ProcessorCount() = 1)
     Public ReadOnly cpu_address_width As Int32 = IntPtr.Size() * bit_count_in_byte

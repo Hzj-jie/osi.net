@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 ' TODO: Constants here should be uint32.
-<global_init(global_init_level.max)>
+<global_init(global_init_level.other)>
 Public Module _timeslice
     Public ReadOnly timeslice_length_ticks As Int64 = decide_timeslice_length_ticks()
     Public ReadOnly timeslice_length_ms As Int64 = to_ms(timeslice_length_ticks)

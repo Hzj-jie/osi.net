@@ -8,10 +8,10 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 <global_init(global_init_level.log_and_counter_services)>
-Public Class file_error_writer
+Public NotInheritable Class file_error_writer
     Private Shared ReadOnly writer As log_writer = New log_writer()
 
-    Private Class log_writer
+    Private NotInheritable Class log_writer
         Inherits application_info_writer
 
         Private Shared Function calculate_log_file() As String

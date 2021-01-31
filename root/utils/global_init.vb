@@ -3,7 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-' TODO: Remove inited and times, move to connector.
 Imports System.Reflection
 Imports osi.root.connector
 Imports osi.root.constants

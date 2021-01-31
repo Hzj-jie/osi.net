@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.constants.system_perf
 
-<global_init(global_init_level.max)>
+<global_init(global_init_level.other)>
 Public Module _system_perf
     Public ReadOnly perf_run_ms As Int64 = calculate_perf_run_ms()
     Public ReadOnly loops_per_ms As Int64 = ratio \ perf_run_ms

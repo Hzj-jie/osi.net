@@ -44,7 +44,7 @@ Public Module deploys
         End Sub
     End Class
 
-    <global_init(global_init_level.max)>
+    <global_init(global_init_level.other)>
     Private NotInheritable Class report_deploys_folder_delegator
         Private Shared Sub init()
             If report_deploys_folder Then
