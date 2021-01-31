@@ -72,7 +72,7 @@ Public NotInheritable Class error_event
                         ByVal err_type_char As Char,
                         ByVal msg() As Object,
                         ByVal additional_jump As Int32)
-        If Not when_log_and_counter_service.executed Then
+        If Not when_log_and_counter_services.executed Then
             replay_logs.add(Sub()
                                 r(err_type, err_type_char, msg, additional_jump)
                             End Sub)
