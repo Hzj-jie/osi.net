@@ -67,6 +67,16 @@ Partial Public NotInheritable Class onebound(Of K)
             Return m(a)(b)
         End Function
 
+        Public Function reverse() As model
+            Dim r As New unordered_map(Of K, unordered_map(Of K, Double))()
+            m.stream().foreach(m.on_pair(Sub(ByVal a As K, ByVal b As unordered_map(Of K, Double))
+                                             b.stream().foreach(b.on_pair(Sub(ByVal c As K, ByVal d As Double)
+                                                                              r(c)(a) = d
+                                                                          End Sub))
+                                         End Sub))
+            Return New model(r)
+        End Function
+
         Public Overloads Function Equals(ByVal other As model) As Boolean Implements IEquatable(Of model).Equals
             Dim cmp As Int32 = 0
             cmp = object_compare(Me, other)

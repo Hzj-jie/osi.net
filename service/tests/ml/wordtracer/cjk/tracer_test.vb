@@ -95,6 +95,46 @@ Namespace wordtracer.cjk
                           End Sub)
         End Sub
 
+        <test>
+        <command_line_specified>
+        Private Shared Sub from_tracer_0_9()
+            selector.exponential(model.load("cjk.words.2.bin"), 0.9).dump("cjk.words.2.bin.e0.9")
+        End Sub
+
+        <test>
+        <command_line_specified>
+        Private Shared Sub dump_from_tracer_0_9()
+            model.
+                load("cjk.words.2.bin.e0.9").
+                flat_map().
+                foreach(Sub(ByVal x As first_const_pair(Of const_pair(Of Char, Char), Double))
+                            Console.WriteLine(strcat(x.first.first, " ", x.first.second, ", ", x.second))
+                        End Sub)
+        End Sub
+
+        <test>
+        <command_line_specified>
+        Private Shared Sub reverse()
+            model.load("cjk.words.2.bin").reverse().dump("cjk.words.2.bin.reverse")
+        End Sub
+
+        <test>
+        <command_line_specified>
+        Private Shared Sub from_reverse_0_9()
+            selector.exponential(model.load("cjk.words.2.bin.reverse"), 0.9).dump("cjk.words.2.bin.reverse.e0.9")
+        End Sub
+
+        <test>
+        <command_line_specified>
+        Private Shared Sub dump_from_reverse_0_9()
+            model.
+                load("cjk.words.2.bin.reverse.e0.9").
+                flat_map().
+                foreach(Sub(ByVal x As first_const_pair(Of const_pair(Of Char, Char), Double))
+                            Console.WriteLine(strcat(x.first.first, " ", x.first.second, ", ", x.second))
+                        End Sub)
+        End Sub
+
         Private Sub New()
         End Sub
     End Class

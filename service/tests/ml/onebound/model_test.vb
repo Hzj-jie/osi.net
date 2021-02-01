@@ -35,6 +35,22 @@ Namespace onebound
             End Using
         End Sub
 
+        <test>
+        Private Shared Sub reverse_test()
+            Dim m As model = New trainer().
+                                 accumulate("a", "b").
+                                 accumulate("a", "c").
+                                 accumulate("a", "c").
+                                 accumulate("a", "d").
+                                 accumulate("a", "d").
+                                 accumulate("a", "d").
+                                 dump().
+                                 reverse()
+            assertion.equal(m.affinity("d", "a"), 3)
+            assertion.equal(m.affinity("c", "a"), 2)
+            assertion.equal(m.affinity("b", "a"), 1)
+        End Sub
+
         Private Sub New()
         End Sub
     End Class
