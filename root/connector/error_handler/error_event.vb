@@ -58,7 +58,9 @@ Public NotInheritable Class error_event
 
         Private Shared Sub init()
             SyncLock replays
-
+                For Each a As Action In replays
+                    a()
+                Next
             End SyncLock
         End Sub
     End Class
