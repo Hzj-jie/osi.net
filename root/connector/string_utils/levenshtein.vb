@@ -6,7 +6,7 @@ Option Strict On
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
-<global_init(global_init_level.runtime_assertions)>
+<global_init(global_init_level.runtime_checkers)>
 Public Module _levenshtein
     Private Sub init()
         assert(npos < 0)

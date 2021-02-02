@@ -12,21 +12,10 @@ Imports osi.root.envs
 #Const USE_MEASURE_YIELD_WAIT = False
 
 Public Module spinwait
-    <global_init(global_init_level.runtime_assertions)>
+    <global_init(global_init_level.runtime_checkers)>
     Private NotInheritable Class assertions
         Private Shared Sub init()
             assert(Timeout.Infinite = -1)
-        End Sub
-
-        Private Sub New()
-        End Sub
-    End Class
-
-    <global_init(global_init_level.foundamental)>
-    Private NotInheritable Class triggers
-        Private Shared Sub init()
-            Dim i As Int32 = loops_per_yield
-            Dim b As Boolean = single_cpu
         End Sub
 
         Private Sub New()

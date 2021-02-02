@@ -9,7 +9,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 
-<global_init(global_init_level.runtime_assertions)>
+<global_init(global_init_level.runtime_checkers)>
 Public Module _ipendpoint
     Private Sub init()
         assert(Not type_info(Of IPAddress).is_cloneable AndAlso Not type_info(Of IPAddress).is_cloneable_T)

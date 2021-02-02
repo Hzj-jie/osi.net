@@ -10,7 +10,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 Public Module _thread
-    <global_init(global_init_level.runtime_assertions)>
+    <global_init(global_init_level.runtime_checkers)>
     Private NotInheritable Class _thread
         <ThreadStatic()> Private Shared _current_thread As Thread
         <ThreadStatic()> Private Shared _current_thread_id As Int32

@@ -5,10 +5,10 @@ Option Strict On
 
 ' global_init is helping to decouple the dependencies between stopwatch / event / bind, etc.
 Public Enum global_init_level As Byte
-    runtime_assertions = 0
+    runtime_checkers = 0
+    debugging
     foundamental
     functor
-    debugging
     log_and_counter_services
     threading_and_procedure
     services

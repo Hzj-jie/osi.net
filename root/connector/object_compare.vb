@@ -6,7 +6,7 @@ Option Strict On
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
-<global_init(global_init_level.runtime_assertions)>
+<global_init(global_init_level.runtime_checkers)>
 Public Module _object_compare
     Public Const object_compare_undetermined As Int32 = 2
     Private Const object_compare_equal As Int32 = 0

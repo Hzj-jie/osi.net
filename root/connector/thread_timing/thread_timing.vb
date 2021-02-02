@@ -39,7 +39,7 @@ Public Structure nice
     Public Shared ReadOnly thread_moderate As nice = New nice(thread_priority.normal)
     Public Shared ReadOnly thread_lazy As nice = New nice(thread_priority.lowest)
 
-    <global_init(global_init_level.runtime_assertions)>
+    <global_init(global_init_level.runtime_checkers)>
     Private NotInheritable Class assertions
         Private Shared Sub init()
             assert(DirectCast(Nothing, process_priority) = process_priority.keep)

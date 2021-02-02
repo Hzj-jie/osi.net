@@ -250,6 +250,6 @@ Public NotInheritable Class shell_less_process
         If this Is Nothing Then
             Return Nothing
         End If
-        Return this.p.get()
+        Return this.proc()
     End Operator
 End Class

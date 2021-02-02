@@ -7,7 +7,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports osi.root.constants
 
-<global_init(global_init_level.runtime_assertions)>
+<global_init(global_init_level.runtime_checkers)>
 Public Module _byte
     Private ReadOnly empty_bytes(-1) As Byte
 

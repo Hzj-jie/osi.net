@@ -15,7 +15,7 @@ Namespace uri
                 Private ReadOnly separators() As Char = {separator}
                 Private Const escape As Char = character.dollar
 
-                <global_init(global_init_level.runtime_assertions)>
+                <global_init(global_init_level.runtime_checkers)>
                 Private NotInheritable Class assertions
                     Private Shared Sub init()
                         assert(separator.unreserved())

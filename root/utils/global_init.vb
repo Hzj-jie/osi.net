@@ -60,15 +60,13 @@ Public NotInheritable Class global_init
     End Sub
 
     Private Shared Function not_initialized(ByVal t As Type) As Boolean
-        Dim ct As comparable_type = Nothing
-        ct = New comparable_type(t)
+        Dim ct As comparable_type = New comparable_type(t)
         SyncLock inited
             If inited.find(ct) = inited.end() Then
                 assert(inited.insert(ct).second)
                 Return True
-            Else
-                Return False
             End If
+            Return False
         End SyncLock
     End Function
 

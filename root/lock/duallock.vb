@@ -26,7 +26,7 @@ Public Structure duallock
     Private sz As cross_thread_lock_t
 #End If
 
-    <global_init(global_init_level.runtime_assertions)>
+    <global_init(global_init_level.runtime_checkers)>
     Private NotInheritable Class assertions
         Private Shared Sub init()
 #If USE_CROSS_THREAD_LOCK Then
