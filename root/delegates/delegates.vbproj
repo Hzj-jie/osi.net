@@ -52,6 +52,7 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="argument.vb" />
     <Compile Include="default.vb" />
     <Compile Include="definition.vb" />
     <Compile Include="func_t.vb" />

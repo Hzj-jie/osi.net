@@ -96,6 +96,14 @@ Public Structure [optional](Of T)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Sub if_present(ByVal a As Action(Of T))
+        assert(Not a Is Nothing)
+        If Not empty() Then
+            a(+Me)
+        End If
+    End Sub
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Widening Operator CType(ByVal this As [optional](Of T)) As Boolean
         Return this.b
     End Operator

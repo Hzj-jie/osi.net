@@ -9,7 +9,7 @@ Imports System.ComponentModel
 Imports osi.root.connector
 Imports osi.root.constants
 
-<global_init(global_init_level.foundamental)>
+'DEPRECATED <global_init(global_init_level.foundamental)>
 Public NotInheritable Class queue_runner_synchronize_invoke
     Inherits synchronize_invoke
 

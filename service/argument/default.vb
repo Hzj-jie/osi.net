@@ -1,13 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.formation
 Imports osi.root.constants
 
 Public Module _default
-    Public ReadOnly [default] As var
-
-    Sub New()
-        [default] = New var()
-    End Sub
+    Public ReadOnly [default] As var = New var()
 
     Public Function value(ByVal n As String, ByRef o As vector(Of String)) As Boolean
         Return [default].value(n, o)

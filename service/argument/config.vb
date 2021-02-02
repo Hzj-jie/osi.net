@@ -87,42 +87,38 @@ Public Class config
     End Function
 
     Friend Function is_switcher(ByVal i As String, ByRef o As String) As Boolean
-        If is_switcher_prefix(i) Then
-            o = strmid(i, 1)
-            If Not case_sensitive Then
-                strtolower(o)
-            End If
-            Return True
-        Else
+        If Not is_switcher_prefix(i) Then
             Return False
         End If
+        o = strmid(i, 1)
+        If Not case_sensitive Then
+            strtolower(o)
+        End If
+        Return True
     End Function
 
     Friend Function is_full_switcher(ByVal i As String, ByRef o As String) As Boolean
-        If is_full_switcher_prefix(i) Then
-            o = strmid(i, 1)
-            If Not case_sensitive Then
-                strtolower(o)
-            End If
-            Return True
-        Else
+        If Not is_full_switcher_prefix(i) Then
             Return False
         End If
+        o = strmid(i, 1)
+        If Not case_sensitive Then
+            strtolower(o)
+        End If
+        Return True
     End Function
 
     Friend Function is_arg(ByVal i As String, ByRef k As String, ByRef v As String) As Boolean
-        If is_arg_prefix(i) Then
-            If strsep(strmid(i, strlen(arg_prefix)), k, v, arg_key_value_separator, case_sensitive) Then
-                If Not case_sensitive Then
-                    strtolower(k)
-                End If
-                Return True
-            Else
-                Return False
-            End If
-        Else
+        If Not is_arg_prefix(i) Then
             Return False
         End If
+        If Not strsep(strmid(i, strlen(arg_prefix)), k, v, arg_key_value_separator, case_sensitive) Then
+            Return False
+        End If
+        If Not case_sensitive Then
+            strtolower(k)
+        End If
+        Return True
     End Function
 
     Public Function Clone() As Object Implements ICloneable.Clone

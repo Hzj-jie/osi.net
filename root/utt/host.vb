@@ -59,12 +59,15 @@ Partial Friend NotInheritable Class host
         Public Shared Sub load(ByVal cases As vector(Of case_info))
             ' Cannot use event_comb, allocators of some cases may use async_sync.
             assert(Not cases Is Nothing)
-            concurrency_runner.execute(Sub(i As Assembly)
+            concurrency_runner.execute(Sub(ByVal i As Assembly)
                                            Try
                                                For Each j As Type In i.GetTypes()
-                                                   SyncLock cases
-                                                       cases.emplace_back(load(j))
-                                                   End SyncLock
+                                                   Dim c As vector(Of case_info) = load(j)
+                                                   If Not c.null_or_empty() Then
+                                                       SyncLock cases
+                                                           cases.emplace_back(c)
+                                                       End SyncLock
+                                                   End If
                                                Next
                                            Catch ex As Exception
                                                raise_error(error_type.warning,

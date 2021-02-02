@@ -35,9 +35,11 @@ Public NotInheritable Class string_serializer_object(Of T, PROTECTOR)
     Protected Overrides Function from_str() As _do_val_ref(Of StringReader, Object, Boolean)
         Return Function(ByVal i As StringReader, ByRef o As Object) As Boolean
                    Dim x As T = Nothing
-                   assert(s.from_str(i, x))
-                   o = x
-                   Return True
+                   If s.from_str(i, x) Then
+                       o = x
+                       Return True
+                   End If
+                   Return False
                End Function
     End Function
 End Class

@@ -9,6 +9,7 @@ Public Enum global_init_level As Byte
     debugging
     foundamental
     functor
+    arguments
     log_and_counter_services
     threading_and_procedure
     services

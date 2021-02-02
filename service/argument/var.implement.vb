@@ -21,26 +21,21 @@ Partial Public NotInheritable Class var
     End Function
 
     Public Shared Function compare(ByVal this As var, ByVal that As var) As Int32
-        Dim c As Int32 = 0
-        c = object_compare(this, that)
-        If c = object_compare_undetermined Then
-            assert(Not this Is Nothing)
-            assert(Not that Is Nothing)
-            c = cc.compare(this.raw, that.raw)
-            If c = 0 Then
-                c = cc.compare(this.binded, that.binded)
-                If c = 0 Then
-                    c = cc.compare(this.others, that.others)
-                    Return c
-                Else
-                    Return c
-                End If
-            Else
-                Return c
-            End If
-        Else
+        Dim c As Int32 = object_compare(this, that)
+        If c <> object_compare_undetermined Then
             Return c
         End If
+        assert(Not this Is Nothing)
+        assert(Not that Is Nothing)
+        c = cc.compare(this.raw, that.raw)
+        If c <> 0 Then
+            Return c
+        End If
+        c = cc.compare(this.binded, that.binded)
+        If c <> 0 Then
+            Return c
+        End If
+        Return cc.compare(this.others, that.others)
     End Function
 
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo

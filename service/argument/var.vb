@@ -53,26 +53,27 @@ Partial Public NotInheritable Class var
                           ByRef o As vector(Of String)) As Boolean
         assert(Not m Is Nothing)
         assert(Not String.IsNullOrEmpty(n))
-        Dim it As map(Of String, vector(Of String)).iterator = Nothing
-        it = m.find(n)
+        Dim it As map(Of String, vector(Of String)).iterator = m.find(n)
         If it = m.end() Then
             Return False
-        Else
-            o = (+it).second
-            Return True
         End If
+        o = (+it).second
+        Return True
     End Function
 
     Public Function value(ByVal n As String, ByRef o As vector(Of String)) As Boolean
         If String.IsNullOrEmpty(n) Then
             Return False
-        Else
-            If Not c.case_sensitive Then
-                strtolower(n)
-            End If
-            Return find(raw, n, o) OrElse
-                   find(binded, n, o)
         End If
+        If Not c.case_sensitive Then
+            strtolower(n)
+        End If
+        Return find(raw, n, o) OrElse
+               find(binded, n, o)
+    End Function
+
+    Public Function defined(ByVal n As String) As Boolean
+        Return value(n, direct_cast(Of vector(Of String))(Nothing))
     End Function
 
     Public Function value(ByVal i As String,
@@ -80,22 +81,22 @@ Partial Public NotInheritable Class var
                           Optional ByVal select_first As Boolean = False,
                           Optional ByVal separator As String = character.blank) As Boolean
         Dim v As vector(Of String) = Nothing
-        If value(i, v) Then
-            If Not v Is Nothing Then
-                If select_first Then
-                    If v.empty() Then
-                        o = Nothing
-                    Else
-                        o = v(0)
-                    End If
-                Else
-                    o = v.str(separator)
-                End If
-            End If
-            Return True
-        Else
+        If Not value(i, v) Then
             Return False
         End If
+        If v Is Nothing Then
+            Return True
+        End If
+        If select_first Then
+            If v.empty() Then
+                o = Nothing
+            Else
+                o = v(0)
+            End If
+        Else
+            o = v.str(separator)
+        End If
+        Return True
     End Function
 
     Public Function value(ByVal i As String, ByRef o As SByte) As Boolean
@@ -170,34 +171,31 @@ Partial Public NotInheritable Class var
 
     Public Function switch(ByVal i As String, ByRef o As Boolean) As Boolean
         Dim s As String = Nothing
-        If value(i, s, True) Then
-            If s Is Nothing Then
-                o = True
-            Else
-                o = s.to(Of Boolean)()
-            End If
-            Return True
-        Else
+        If Not value(i, s, True) Then
             Return False
         End If
+        If s Is Nothing Then
+            o = True
+        Else
+            o = s.to(Of Boolean)()
+        End If
+        Return True
     End Function
 
     Public Function switch(ByVal i As String) As Boolean
         Dim o As Boolean = False
         If switch(i, o) Then
             Return o
-        Else
-            Return False
         End If
+        Return False
     End Function
 
     Public Function reverse_switch(ByVal i As String) As Boolean
         Dim o As Boolean = False
         If switch(i, o) Then
             Return Not o
-        Else
-            Return False
         End If
+        Return False
     End Function
 
     Public Function other_values() As vector(Of String)
