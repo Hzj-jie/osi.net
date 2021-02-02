@@ -17,6 +17,7 @@ Public NotInheritable Class argument_setter_test
 #If TODO Then
     Private Shared map_arg As argument(Of map(Of String, Int32))
 #End If
+    Private Shared others As argument(Of vector(Of String))
 
     <test>
     Private Shared Sub set_different_types()
@@ -26,12 +27,16 @@ Public NotInheritable Class argument_setter_test
 #If TODO Then
         map_arg = Nothing
 #End If
+        others = Nothing
 
         argument_setter.process_type(GetType(argument_setter_test), New var({
             "~argument_setter_test.bool_arg",
             "--argument_setter_test.int_arg=100",
             "--argument_setter_test.str_arg=abc",
-            "--argument_setter_test.map_arg={a:1, b:2, c:3}"
+            "--argument_setter_test.map_arg={a:1, b:2, c:3}",
+            "others1",
+            "others2",
+            "others3"
         }))
         If assertion.is_not_null(bool_arg) Then
             assertion.is_true(+bool_arg)
@@ -47,6 +52,9 @@ Public NotInheritable Class argument_setter_test
             assertion.equal(+map_arg, map.of(pair.of("a", 1), pair.of("b", 2), pair.of("c", 3)))
         End If
 #End If
+        If assertion.is_not_null(others) Then
+            assertion.equal(+others, vector.of("others1", "others2", "others3"))
+        End If
     End Sub
 
     Private NotInheritable Class argument_holder
@@ -61,18 +69,19 @@ Public NotInheritable Class argument_setter_test
         argument_holder.arg = Nothing
         argument_setter.process_type(GetType(argument_holder), New var("--argument_holder.arg=1"))
         If assertion.is_not_null(argument_holder.arg) Then
-            assertion.equal(+(argument_holder.arg), 1)
+            assertion.equal(+argument_holder.arg, 1)
         End If
         Dim last As argument(Of Int32) = argument_holder.arg
         argument_setter.process_type(GetType(argument_holder), New var("--argument_holder.arg=2"))
         If assertion.is_not_null(argument_holder.arg) Then
-            assertion.equal(+(argument_holder.arg), 1)
+            assertion.equal(+argument_holder.arg, 1)
         End If
         assertion.reference_equal(last, argument_holder.arg)
     End Sub
 
     Private NotInheritable Class argument_holder2
         Public Shared arg As argument(Of Int32)
+        Public Shared others As argument(Of vector(Of String))
 
         Private Sub New()
         End Sub
@@ -81,8 +90,11 @@ Public NotInheritable Class argument_setter_test
     <test>
     Private Shared Sub global_init_should_cover_all_arguments()
         If assertion.is_not_null(argument_holder2.arg) Then
-            assertion.equal(+(argument_holder2.arg), 0)
+            assertion.equal(+argument_holder2.arg, 0)
             assertion.equal(argument_holder2.arg Or 100, 100)
+        End If
+        If assertion.is_not_null(argument_holder2.others) Then
+            assertion.is_not_null(+argument_holder2.others)
         End If
     End Sub
 
@@ -98,7 +110,7 @@ Public NotInheritable Class argument_setter_test
         argument_holder3.arg = Nothing
         argument_setter.process_type(GetType(argument_holder3), New var("--argument-holder3.arg=1"))
         If assertion.is_not_null(argument_holder3.arg) Then
-            assertion.equal(+(argument_holder3.arg), 1)
+            assertion.equal(+argument_holder3.arg, 1)
         End If
     End Sub
 

@@ -17,7 +17,7 @@ Public NotInheritable Class argument_setter
 
     Private Shared Sub process_assembly(ByVal assembly As Assembly)
         For Each type As Type In assembly.GetTypes()
-            process_type(type, [default])
+            process_type(type, var.[default])
         Next
     End Sub
 
@@ -43,6 +43,10 @@ Public NotInheritable Class argument_setter
                                [default].switch(arg_name.strrplc("_"c, "-"c), o) Then
                                 v = o
                             End If
+                        ElseIf t.Equals(GetType(vector(Of String))) AndAlso
+                               (field.Name().Equals("others") OrElse
+                                field.Name().Equals("other_values")) Then
+                            v = [default].other_values()
                         Else
                             Dim o As String = Nothing
                             If [default].value(arg_name, o) OrElse

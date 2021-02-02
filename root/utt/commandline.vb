@@ -4,26 +4,30 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 
+<global_init(global_init_level.other)>
 Friend NotInheritable Class commandline
     Private Shared ReadOnly s As [set](Of String) = New [set](Of String)()
-    Private Shared ReadOnly v As vector(Of String) = New vector(Of String)()
+    Private Shared others As argument(Of vector(Of String))
 
-    Public Shared Sub initialize(ByVal args() As String)
-        For i As Int32 = 0 To array_size_i(args) - 1
-            v.emplace_back(args(i))
-            assert(s.insert(args(i)).first <> s.end())
-        Next
+    Private Shared Sub init()
+        With (+others)
+            .stream().foreach(Sub(ByVal arg As String)
+                                  assert(s.insert(arg).first <> s.end())
+                              End Sub)
+        End With
     End Sub
 
     Public Shared Function args() As vector(Of String)
-        Return v
+        Return +others
     End Function
 
     Public Shared Function has_specified_selections() As Boolean
-        assert(v.empty() = s.empty())
-        Return Not v.empty()
+        assert((+others).empty() = s.empty())
+        Return Not (+others).empty()
     End Function
 
     Private Shared Function specified(ByVal c As String) As Boolean

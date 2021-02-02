@@ -13,16 +13,14 @@ Imports this_process = osi.root.envs.this_process
 Public Module _app
     Public Sub main(ByVal args() As String)
         debugpause()
-        global_init.execute()
-        Dim start_ms As Int64 = 0
-        start_ms = Now().milliseconds()
+        global_init.execute(load_assemblies:=True)
+        Dim start_ms As Int64 = Now().milliseconds()
         If envs.utt_no_assert Then
             error_writer_ignore_types(Of file_error_writer).ignore(constants.utt.errortype_char)
         End If
         If envs.utt_no_debug_mode Then
             set_not_debug_mode()
         End If
-        commandline.initialize(args)
 
         Dim run_case_count As Int32 = 0
         If Not selfhealth.run() Then

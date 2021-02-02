@@ -61,7 +61,6 @@
     <Compile Include="var.vb" />
     <Compile Include="var.binding.vb" />
     <Compile Include="config.vb" />
-    <Compile Include="default.vb" />
     <Compile Include="var.parser.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
