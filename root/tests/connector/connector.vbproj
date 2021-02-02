@@ -163,6 +163,7 @@
     <Compile Include="npos_uint_perf_test.vb" />
     <Compile Include="npos_uint_test.vb" />
     <Compile Include="object_extensions_test.vb" />
+    <Compile Include="optional_parameter_perf_test.vb" />
     <Compile Include="out_generic_behavior_test.vb" />
     <Compile Include="overload_behavior_test.vb" />
     <Compile Include="ref_test.vb" />
