@@ -11,46 +11,46 @@ Imports osi.service.argument
 
 <test>
 Public NotInheritable Class argument_setter_test
-    Private Shared argument_setter_test_bool_arg As argument(Of Boolean)
-    Private Shared argument_setter_test_int_arg As argument(Of Int32)
-    Private Shared argument_setter_test_str_arg As argument(Of String)
+    Private Shared bool_arg As argument(Of Boolean)
+    Private Shared int_arg As argument(Of Int32)
+    Private Shared str_arg As argument(Of String)
 #If TODO Then
-    Private Shared argument_setter_test_map_arg As argument(Of map(Of String, Int32))
+    Private Shared map_arg As argument(Of map(Of String, Int32))
 #End If
 
     <test>
     Private Shared Sub set_different_types()
-        argument_setter_test_bool_arg = Nothing
-        argument_setter_test_int_arg = Nothing
-        argument_setter_test_str_arg = Nothing
+        bool_arg = Nothing
+        int_arg = Nothing
+        str_arg = Nothing
 #If TODO Then
-        argument_setter_test_map_arg = Nothing
+        map_arg = Nothing
 #End If
 
         argument_setter.process_type(GetType(argument_setter_test), New var({
-            "~argument_setter_test_bool_arg",
-            "--argument_setter_test_int_arg=100",
-            "--argument_setter_test_str_arg=abc",
-            "--argument_setter_test_map_arg={a:1, b:2, c:3}"
+            "~argument_setter_test.bool_arg",
+            "--argument_setter_test.int_arg=100",
+            "--argument_setter_test.str_arg=abc",
+            "--argument_setter_test.map_arg={a:1, b:2, c:3}"
         }))
-        If assertion.is_not_null(argument_setter_test_bool_arg) Then
-            assertion.is_true(+argument_setter_test_bool_arg)
+        If assertion.is_not_null(bool_arg) Then
+            assertion.is_true(+bool_arg)
         End If
-        If assertion.is_not_null(argument_setter_test_int_arg) Then
-            assertion.equal(+argument_setter_test_int_arg, 100)
+        If assertion.is_not_null(int_arg) Then
+            assertion.equal(+int_arg, 100)
         End If
-        If assertion.is_not_null(argument_setter_test_str_arg) Then
-            assertion.equal(+argument_setter_test_str_arg, "abc")
+        If assertion.is_not_null(str_arg) Then
+            assertion.equal(+str_arg, "abc")
         End If
 #If TODO Then
-        If assertion.is_not_null(argument_setter_test_map_arg) Then
-            assertion.equal(+argument_setter_test_map_arg, map.of(pair.of("a", 1), pair.of("b", 2), pair.of("c", 3)))
+        If assertion.is_not_null(map_arg) Then
+            assertion.equal(+map_arg, map.of(pair.of("a", 1), pair.of("b", 2), pair.of("c", 3)))
         End If
 #End If
     End Sub
 
     Private NotInheritable Class argument_holder
-        Public Shared argument_setter_test_argument_holder_arg As argument(Of Int32)
+        Public Shared arg As argument(Of Int32)
 
         Private Sub New()
         End Sub
@@ -58,21 +58,21 @@ Public NotInheritable Class argument_setter_test
 
     <test>
     Private Shared Sub should_not_reset_values()
-        argument_holder.argument_setter_test_argument_holder_arg = Nothing
-        argument_setter.process_type(GetType(argument_holder), New var("--argument_setter_test_argument_holder_arg=1"))
-        If assertion.is_not_null(argument_holder.argument_setter_test_argument_holder_arg) Then
-            assertion.equal(+(argument_holder.argument_setter_test_argument_holder_arg), 1)
+        argument_holder.arg = Nothing
+        argument_setter.process_type(GetType(argument_holder), New var("--argument_holder.arg=1"))
+        If assertion.is_not_null(argument_holder.arg) Then
+            assertion.equal(+(argument_holder.arg), 1)
         End If
-        Dim last As argument(Of Int32) = argument_holder.argument_setter_test_argument_holder_arg
-        argument_setter.process_type(GetType(argument_holder), New var("--argument_setter_test_argument_holder_arg=2"))
-        If assertion.is_not_null(argument_holder.argument_setter_test_argument_holder_arg) Then
-            assertion.equal(+(argument_holder.argument_setter_test_argument_holder_arg), 1)
+        Dim last As argument(Of Int32) = argument_holder.arg
+        argument_setter.process_type(GetType(argument_holder), New var("--argument_holder.arg=2"))
+        If assertion.is_not_null(argument_holder.arg) Then
+            assertion.equal(+(argument_holder.arg), 1)
         End If
-        assertion.reference_equal(last, argument_holder.argument_setter_test_argument_holder_arg)
+        assertion.reference_equal(last, argument_holder.arg)
     End Sub
 
     Private NotInheritable Class argument_holder2
-        Public Shared argument_setter_test_argument_holder2_arg As argument(Of Int32)
+        Public Shared arg As argument(Of Int32)
 
         Private Sub New()
         End Sub
@@ -80,8 +80,25 @@ Public NotInheritable Class argument_setter_test
 
     <test>
     Private Shared Sub global_init_should_cover_all_arguments()
-        If assertion.is_not_null(argument_holder2.argument_setter_test_argument_holder2_arg) Then
-            assertion.equal(+(argument_holder2.argument_setter_test_argument_holder2_arg), 0)
+        If assertion.is_not_null(argument_holder2.arg) Then
+            assertion.equal(+(argument_holder2.arg), 0)
+            assertion.equal(argument_holder2.arg Or 100, 100)
+        End If
+    End Sub
+
+    Private NotInheritable Class argument_holder3
+        Public Shared arg As argument(Of Int32)
+
+        Private Sub New()
+        End Sub
+    End Class
+
+    <test>
+    Private Shared Sub use_dash_instead_of_underscore()
+        argument_holder3.arg = Nothing
+        argument_setter.process_type(GetType(argument_holder3), New var("--argument-holder3.arg=1"))
+        If assertion.is_not_null(argument_holder3.arg) Then
+            assertion.equal(+(argument_holder3.arg), 1)
         End If
     End Sub
 

@@ -21,6 +21,10 @@ Public NotInheritable Class argument_setter
         Next
     End Sub
 
+    Private Shared Function argument_name(ByVal type As Type, ByVal field As FieldInfo) As String
+        Return strcat(type.Name(), ".", field.Name()).strrplc("+", ".")
+    End Function
+
     ' VisibleForTesting
     Public Shared Sub process_type(ByVal type As Type, ByVal [default] As var)
         If type.IsGenericType() OrElse type.IsGenericTypeDefinition() Then
@@ -31,17 +35,18 @@ Public NotInheritable Class argument_setter
             get_argument_type(field).if_present(
                     Sub(ByVal t As Type)
                         static_constructor.once_execute(t)
+                        Dim arg_name As String = argument_name(type, field)
                         Dim v As Object = Nothing
                         If t.Equals(GetType(Boolean)) Then
                             Dim o As Boolean = False
-                            If [default].switch(field.Name(), o) OrElse
-                               [default].switch(field.Name().Replace("_"c, "-"c), o) Then
+                            If [default].switch(arg_name, o) OrElse
+                               [default].switch(arg_name.strrplc("_"c, "-"c), o) Then
                                 v = o
                             End If
                         Else
                             Dim o As String = Nothing
-                            If [default].value(field.Name(), o) OrElse
-                               [default].value(field.Name().Replace("_"c, "-"c), o) Then
+                            If [default].value(arg_name, o) OrElse
+                               [default].value(arg_name.strrplc("_"c, "-"c), o) Then
                                 assert(type_string_serializer.r.from_str(t, False, o, v) OrElse
                                        type_json_serializer.r.from_str(t, False, o, v))
                             End If
