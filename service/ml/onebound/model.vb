@@ -69,17 +69,30 @@ Partial Public NotInheritable Class onebound(Of K)
 
         Public Function reverse() As model
             Dim r As New unordered_map(Of K, unordered_map(Of K, Double))()
-            m.stream().foreach(m.on_pair(Sub(ByVal a As K, ByVal b As unordered_map(Of K, Double))
-                                             b.stream().foreach(b.on_pair(Sub(ByVal c As K, ByVal d As Double)
-                                                                              r(c)(a) = d
-                                                                          End Sub))
-                                         End Sub))
+            flat_map().foreach(Sub(ByVal v As first_const_pair(Of const_pair(Of K, K), Double))
+                                   r(v.first.second)(v.first.first) = v.second
+                               End Sub)
+            Return New model(r)
+        End Function
+
+        Public Function merge(ByVal other As model) As model
+            assert(Not other Is Nothing)
+            Dim r As New unordered_map(Of K, unordered_map(Of K, Double))()
+            flat_map().foreach(Sub(ByVal v As first_const_pair(Of const_pair(Of K, K), Double))
+                                   If v.second <= 0 Then
+                                       Return
+                                   End If
+                                   Dim o As Double = other.affinity(v.first.first, v.first.second)
+                                   If o <= 0 Then
+                                       Return
+                                   End If
+                                   r(v.first.first)(v.first.second) = o * v.second
+                               End Sub)
             Return New model(r)
         End Function
 
         Public Overloads Function Equals(ByVal other As model) As Boolean Implements IEquatable(Of model).Equals
-            Dim cmp As Int32 = 0
-            cmp = object_compare(Me, other)
+            Dim cmp As Int32 = object_compare(Me, other)
             If cmp <> object_compare_undetermined Then
                 Return cmp = 0
             End If
@@ -87,7 +100,7 @@ Partial Public NotInheritable Class onebound(Of K)
         End Function
 
         Public Overrides Function Equals(ByVal other As Object) As Boolean
-            Return Equals(cast(Of model)(other, False))
+            Return Equals(cast(Of model)().from(other, False))
         End Function
 
         Public Overrides Function ToString() As String

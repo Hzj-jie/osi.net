@@ -11,6 +11,21 @@ Imports osi.root.formation
 ' It's safe to execute this global_init multiple times, especially for newly loaded modules.
 <global_init(False, global_init_level.arguments)>
 Public NotInheritable Class argument_setter
+    ' init once.
+    <global_init(global_init_level.arguments)>
+    Private NotInheritable Class argument_reporter
+        Private Shared Sub init()
+            raise_error(error_type.user,
+                        "process arguments from ",
+                        Microsoft.VisualBasic.Command(),
+                        ", parsed arguments ",
+                        var.[default])
+        End Sub
+
+        Private Sub New()
+        End Sub
+    End Class
+
     Private Shared Sub init()
         concurrency_runner.execute(AddressOf process_assembly, AppDomain.CurrentDomain().GetAssemblies())
     End Sub
