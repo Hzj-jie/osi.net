@@ -1,9 +1,11 @@
-﻿
-Option Explicit On
+﻿Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Collections.Generic
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.utils
 
@@ -18,7 +20,7 @@ Public Class isolate_case_wrapper
 
     Private Sub New(ByVal c As [case], ByVal timeout_ms As Int64)
         MyBase.New(envs.application_full_path,
-                   strcat("""", assert_not_nothing_return(c).assembly_qualified_name, """"),
+                   strcat("""", assert_not_nothing_return(c).full_name, """"),
                    ignore_error:=True,
                    timeout_ms:=timeout_ms,
                    expected_return:=If(envs.os.windows_major = envs.os.windows_major_t._5, 128, 0))
@@ -69,10 +71,14 @@ Public Class isolate_case_wrapper
         Return MyBase.init_process(p)
     End Function
 
+    Protected Overrides Function inputs() As IEnumerable(Of String)
+        Return const_array.elements(newline.incode(), newline.incode()).as_array()
+    End Function
+
     Public Overrides Function finish() As Boolean
         Return assertion.is_true(case_started) AndAlso
                assertion.is_true(case_finished) AndAlso
-               _assertion_failures.get() = 0 AndAlso
+               assertion.equal(_assertion_failures.get(), 0) AndAlso
                MyBase.finish()
     End Function
 

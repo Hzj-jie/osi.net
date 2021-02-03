@@ -17,16 +17,9 @@ Public NotInheritable Class isolate_case_wrapper_test
         New failure_event_comb_case2()}
 
     Private Shared Function exec_case(ByVal c As [case], ByVal exp As Boolean) As Boolean
-        Dim i As [case] = Nothing
         Dim cc As commandline_specified_case_wrapper = Nothing
-        If cast(c, cc) AndAlso i Is Nothing Then
-            i = isolated(cc)
-        End If
-        Dim ce As commandline_specified_case_wrapper = Nothing
-        If cast(c, ce) AndAlso i Is Nothing Then
-            i = isolated(ce)
-        End If
-        assert(Not i Is Nothing)
+        assert(cast(c, cc))
+        Dim i As [case] = isolated(cc)
         assertion.is_true(i.prepare())
         assertion.is_true(i.run())
         assertion.equal(i.finish(), exp)
@@ -34,7 +27,6 @@ Public NotInheritable Class isolate_case_wrapper_test
     End Function
 
     Public Overrides Function run() As Boolean
-        Dim c As isolate_case_wrapper = Nothing
         For i As Int32 = 0 To array_size_i(suc_cases) - 1
             If Not exec_case(suc_cases(i), True) Then
                 Return False

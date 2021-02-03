@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 
 Partial Public NotInheritable Class var
-    Public Shared ReadOnly [default] As var = New var(Microsoft.VisualBasic.Command())
+    Public Shared ReadOnly [default] As var = New var(streams.of(Environment.GetCommandLineArgs()).skip(1).to_array())
 
     Private ReadOnly raw As map(Of String, vector(Of String))
     Private ReadOnly binded As map(Of String, vector(Of String))

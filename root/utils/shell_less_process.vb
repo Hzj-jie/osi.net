@@ -167,6 +167,7 @@ Public NotInheritable Class shell_less_process
             start_info().RedirectStandardOutput() = True
             start_info().RedirectStandardError() = True
             start_info().RedirectStandardInput() = True
+            raise_error("start process ", start_info().FileName(), " ", start_info().Arguments())
             Try
                 If Not proc().Start() Then
                     Return False
