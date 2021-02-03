@@ -47,10 +47,8 @@ Partial Public NotInheritable Class var
     End Function
 
     Public Overrides Function ToString() As String
-        Dim s As StringBuilder = Nothing
-        s = New StringBuilder()
-        Dim it As map(Of String, vector(Of String)).iterator = Nothing
-        it = raw.begin()
+        Dim s As StringBuilder = New StringBuilder()
+        Dim it As map(Of String, vector(Of String)).iterator = raw.begin()
         While it <> raw.end()
             If (+it).second Is Nothing Then
                 s.Append(c.create_full_switcher((+it).first))
