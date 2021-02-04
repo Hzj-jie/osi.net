@@ -25,36 +25,39 @@ Namespace wordtracer.cjk
         <test>
         <command_line_specified>
         Private Shared Sub from_training_file()
-            Dim t As New oneplus(onebound(Of Char).model.load(model_file Or "cjk.words.2.bin.e0.9.bidirectional").
+            With New oneplus(onebound(Of Char).model.load(model_file Or "cjk.words.2.bin.e0.9.bidirectional").
                                                          filter(filter Or 0),
-                                 sample_rate Or 1)
-            t.train(File.ReadLines(input Or "cjk.training.txt")).dump(output Or "cjk.words.3.bin")
+                             sample_rate Or 1)
+                .train(File.ReadLines(input Or "cjk.training.txt")).dump(output Or "cjk.words.3.bin")
+            End With
         End Sub
 
         <test>
         <command_line_specified>
         Private Shared Sub from_tar()
-            Dim t As New oneplus(onebound(Of Char).model.load(model_file Or "cjk.words.2.bin.e0.9.bidirectional").
+            With New oneplus(onebound(Of Char).model.load(model_file Or "cjk.words.2.bin.e0.9.bidirectional").
                                                          filter(filter Or 0),
                                  sample_rate Or 1)
-            t.train(tar.reader.unzip(
-                        vector.of(Directory.GetFiles(Environment.CurrentDirectory(),
-                                                     input Or "tar_manual_test.zip_*",
-                                                     SearchOption.AllDirectories)))).
-              dump(output Or "cjk.words.3.bin")
+                .train(tar.reader.unzip(
+                           vector.of(Directory.GetFiles(Environment.CurrentDirectory(),
+                                                        input Or "tar_manual_test.zip_*",
+                                                        SearchOption.AllDirectories)))).
+                 dump(output Or "cjk.words.3.bin")
+            End With
         End Sub
 
         <test>
         <command_line_specified>
         Private Shared Sub from_tar2()
-            Dim t As New oneplus(onebound(Of String).model.load(model_file Or "cjk.words.3.bin.e0.9.bidirectional").
+            With New oneplus(onebound(Of String).model.load(model_file Or "cjk.words.3.bin.e0.9.bidirectional").
                                                            filter(filter Or 0),
-                                 sample_rate Or 1)
-            t.train(tar.reader.unzip(
-                        vector.of(Directory.GetFiles(Environment.CurrentDirectory(),
-                                                     input Or "tar_manual_test.zip_*",
-                                                     SearchOption.AllDirectories)))).
-              dump(output Or "cjk.words.4.bin")
+                             sample_rate Or 1)
+                .train(tar.reader.unzip(
+                           vector.of(Directory.GetFiles(Environment.CurrentDirectory(),
+                                                        input Or "tar_manual_test.zip_*",
+                                                        SearchOption.AllDirectories)))).
+                 dump(output Or "cjk.words.4.bin")
+            End With
         End Sub
 
         <test>
