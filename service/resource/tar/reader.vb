@@ -75,6 +75,16 @@ Partial Public NotInheritable Class tar
             End While
         End Sub
 
+        Public Sub foreach(ByVal f As Action(Of String, Double, StreamReader))
+            assert(Not f Is Nothing)
+            foreach(Sub(ByVal name As String, ByVal m As MemoryStream)
+                        Dim p As Double
+                        Using r As New StreamReader(m, m.guess_encoding(p))
+                            f(name, p, r)
+                        End Using
+                    End Sub)
+        End Sub
+
         Public Function dump() As vector(Of tuple(Of String, MemoryStream))
             Dim v As vector(Of tuple(Of String, MemoryStream)) = Nothing
             v = New vector(Of tuple(Of String, MemoryStream))()

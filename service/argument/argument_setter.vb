@@ -51,11 +51,14 @@ Public NotInheritable Class argument_setter
                     Sub(ByVal t As Type)
                         static_constructor.once_execute(t)
                         Dim arg_name As String = argument_name(type, field)
+                        Dim arg_name2 As String = field.Name()
                         Dim v As Object = Nothing
                         If t.Equals(GetType(Boolean)) Then
                             Dim o As Boolean = False
                             If [default].switch(arg_name, o) OrElse
-                               [default].switch(arg_name.strrplc("_"c, "-"c), o) Then
+                               [default].switch(arg_name.strrplc("_"c, "-"c), o) OrElse
+                               [default].switch(arg_name2, o) OrElse
+                               [default].switch(arg_name2.strrplc("_"c, "-"c), o) Then
                                 v = o
                             End If
                         ElseIf t.Equals(GetType(vector(Of String))) AndAlso
@@ -65,7 +68,9 @@ Public NotInheritable Class argument_setter
                         Else
                             Dim o As String = Nothing
                             If [default].value(arg_name, o) OrElse
-                               [default].value(arg_name.strrplc("_"c, "-"c), o) Then
+                               [default].value(arg_name.strrplc("_"c, "-"c), o) OrElse
+                               [default].value(arg_name2, o) OrElse
+                               [default].value(arg_name2.strrplc("_"c, "-"c), o) Then
                                 assert(type_string_serializer.r.from_str(t, False, o, v) OrElse
                                        type_json_serializer.r.from_str(t, False, o, v))
                             End If

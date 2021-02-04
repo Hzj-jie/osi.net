@@ -166,5 +166,34 @@ Partial Public NotInheritable Class onebound(Of K)
                      map(m.second_mapper(f)).
                      collect(Of unordered_map(Of K, R))()
         End Function
+
+        Public Function to_map(Of K2)() As unordered_map(Of K2, Double)
+            Return to_map(AddressOf binary_operator(Of K, K, K2).r.add)
+        End Function
+
+        Public Function to_map(Of K2)(ByVal f As Func(Of K, K, K2)) As unordered_map(Of K2, Double)
+            assert(Not f Is Nothing)
+            Return flat_map().map(Function(ByVal v As first_const_pair(Of const_pair(Of K, K), Double)) As first_const_pair(Of K2, Double)
+                                      Return first_const_pair.emplace_of(f(v.first.first, v.first.second), v.second)
+                                  End Function).
+                              collect(Of unordered_map(Of K2, Double))()
+        End Function
+
+        Public Sub to_console()
+            m.stream().
+              foreach(m.on_pair(Sub(ByVal key As K, ByVal value As unordered_map(Of K, Double))
+                                    value.stream().
+                                          sort(Function(ByVal i As first_const_pair(Of K, Double),
+                                                        ByVal j As first_const_pair(Of K, Double)) As Int32
+                                                   If i.second <> j.second Then
+                                                       Return i.second.CompareTo(j.second)
+                                                   End If
+                                                   Return compare(i.first, j.first)
+                                               End Function).
+                                          foreach(Sub(ByVal i As first_const_pair(Of K, Double))
+                                                      Console.WriteLine(strcat(key, " ", i.first, ", ", i.second))
+                                                  End Sub)
+                                End Sub))
+        End Sub
     End Class
 End Class

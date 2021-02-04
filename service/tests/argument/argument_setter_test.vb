@@ -114,6 +114,28 @@ Public NotInheritable Class argument_setter_test
         End If
     End Sub
 
+    Private NotInheritable Class argument_holder4
+        Public Shared arg As argument(Of Int32)
+        Public Shared arg2 As argument(Of Int32)
+
+        Private Sub New()
+        End Sub
+    End Class
+
+    <test>
+    Private Shared Sub prefer_long_name()
+        argument_holder4.arg = Nothing
+        argument_holder4.arg2 = Nothing
+        argument_setter.process_type(GetType(argument_holder4),
+                                     New var({"--argument-holder4.arg=1", "--arg=2", "--arg2=3"}))
+        If assertion.is_not_null(argument_holder4.arg) Then
+            assertion.equal(+argument_holder4.arg, 1)
+        End If
+        If assertion.is_not_null(argument_holder4.arg2) Then
+            assertion.equal(+argument_holder4.arg2, 3)
+        End If
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

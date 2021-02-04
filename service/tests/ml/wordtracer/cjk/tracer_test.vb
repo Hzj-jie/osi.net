@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports System.IO
-Imports osi.root.connector
 Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utt.attributes
@@ -38,39 +37,8 @@ Namespace wordtracer.cjk
 
         <test>
         <command_line_specified>
-        Private Shared Sub raw_from_training_file()
-            tracer.train(New trainer.config() With {.compare = trainer.config.comparison.raw},
-                         File.ReadLines(input Or "cjk.training.txt")).
-                   dump(output Or "cjk.words.2.raw.bin")
-        End Sub
-
-        <test>
-        <command_line_specified>
-        Private Shared Sub from_small_training_file()
-            tracer.train(File.ReadLines(input Or "cjk.training.small.txt")).
-                   dump(output Or "cjk.words.2.small.bin")
-        End Sub
-
-        <test>
-        <command_line_specified>
         Private Shared Sub dump()
-            model.load(input Or "cjk.words.2.bin").
-                  flat_map().
-                  sort(Function(ByVal i As first_const_pair(Of const_pair(Of Char, Char), Double),
-                                ByVal j As first_const_pair(Of const_pair(Of Char, Char), Double)) As Int32
-                           assert(Not i Is Nothing)
-                           assert(Not j Is Nothing)
-                           If i.first.first <> j.first.first Then
-                               Return i.first.first.CompareTo(j.first.first)
-                           End If
-                           If i.second <> j.second Then
-                               Return i.second.CompareTo(j.second)
-                           End If
-                           Return i.first.second.CompareTo(j.first.second)
-                       End Function).
-                  foreach(Sub(ByVal x As first_const_pair(Of const_pair(Of Char, Char), Double))
-                              Console.WriteLine(strcat(x.first.first, " ", x.first.second, ", ", x.second))
-                          End Sub)
+            model.load(input Or "cjk.words.2.bin").to_console()
         End Sub
 
         <test>

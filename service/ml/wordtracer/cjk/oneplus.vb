@@ -4,9 +4,11 @@ Option Infer Off
 Option Strict On
 
 Imports System.Collections.Generic
+Imports System.IO
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.service.resource
 
 Partial Public NotInheritable Class wordtracer
     Partial Public NotInheritable Class cjk
@@ -26,8 +28,24 @@ Partial Public NotInheritable Class wordtracer
                 Me.sample_rate = sample_rate
             End Sub
 
+            Public Sub New(ByVal m As onebound(Of Char).model, ByVal sample_rate As Double)
+                Me.New(m.to_map(Of String)(), sample_rate)
+            End Sub
+
+            Public Sub New(ByVal m As onebound(Of String).model, ByVal sample_rate As Double)
+                Me.New(m.to_map(Of String)(), sample_rate)
+            End Sub
+
             Public Sub New(ByVal m As unordered_map(Of String, Double))
                 Me.New(m, 1.0)
+            End Sub
+
+            Public Sub New(ByVal m As onebound(Of Char).model)
+                Me.New(m.to_map(Of String)())
+            End Sub
+
+            Public Sub New(ByVal m As onebound(Of String).model)
+                Me.New(m.to_map(Of String)())
             End Sub
 
             Private Sub sentence(ByVal s As String, ByVal start As UInt32, ByVal [end] As UInt32)
@@ -39,8 +57,7 @@ Partial Public NotInheritable Class wordtracer
                     Return
                 End If
                 For i As UInt32 = start To [end] - l - uint32_1
-                    Dim it As unordered_map(Of String, Double).iterator = Nothing
-                    it = m.find(s.strmid(i, l))
+                    Dim it As unordered_map(Of String, Double).iterator = m.find(s.strmid(i, l))
                     If it = m.end() Then
                         Continue For
                     End If
@@ -53,16 +70,40 @@ Partial Public NotInheritable Class wordtracer
                 Return train({s})
             End Function
 
-            Public Function train(ByVal ss As IEnumerable(Of String)) As onebound(Of String).model
-                For Each s As String In ss
-                    If s.null_or_whitespace() Then
-                        Continue For
-                    End If
-                    s.strsep(AddressOf _character.cjk,
+            Private Sub one_str(ByVal s As String)
+                If s.null_or_whitespace() Then
+                    Return
+                End If
+                s.strsep(AddressOf _character.not_cjk,
                              Sub(ByVal l As UInt32, ByVal i As UInt32)
                                  sentence(s, l, i)
                              End Sub)
+            End Sub
+
+            Public Function train(ByVal ss As IEnumerable(Of String)) As onebound(Of String).model
+                For Each s As String In ss
+                    one_str(s)
                 Next
+                Return t.dump()
+            End Function
+
+            Public Function train(ByVal reader As tar.reader) As onebound(Of String).model
+                assert(Not reader Is Nothing)
+                reader.foreach(Sub(ByVal name As String, ByVal p As Double, ByVal r As StreamReader)
+                                   If p < 0.8 Then
+                                       raise_error(error_type.user,
+                                                   "ignroe ",
+                                                   name,
+                                                   ", the encoding possibility is ",
+                                                   p)
+                                       Return
+                                   End If
+                                   Dim line As String = r.ReadLine()
+                                   While Not line Is Nothing
+                                       one_str(line)
+                                       line = r.ReadLine()
+                                   End While
+                               End Sub)
                 Return t.dump()
             End Function
         End Class
