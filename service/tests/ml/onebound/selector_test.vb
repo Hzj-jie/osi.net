@@ -21,9 +21,9 @@ Namespace onebound
                                                       accumulate("a", "d").
                                                       dump(),
                                                   0)
-            assertion.near_match(m.affinity("a", "b"), 0.3935)
-            assertion.near_match(m.affinity("a", "c"), 0.6321)
-            assertion.near_match(m.affinity("a", "d"), 0.7769)
+            assertion.near_match(m.affinity("a", "b"), 0.4866)
+            assertion.near_match(m.affinity("a", "c"), 0.7364)
+            assertion.near_match(m.affinity("a", "d"), 0.8647)
         End Sub
 
         <test>
@@ -38,8 +38,8 @@ Namespace onebound
                                                       dump(),
                                                   0.5)
             assertion.near_match(m.affinity("a", "b"), 0)
-            assertion.near_match(m.affinity("a", "c"), 0.6321)
-            assertion.near_match(m.affinity("a", "d"), 0.7769)
+            assertion.near_match(m.affinity("a", "c"), 0.7364)
+            assertion.near_match(m.affinity("a", "d"), 0.8647)
         End Sub
 
         Private Sub New()

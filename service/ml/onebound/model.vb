@@ -12,12 +12,27 @@ Partial Public NotInheritable Class onebound(Of K)
         Implements IEquatable(Of model)
 
         Private ReadOnly m As unordered_map(Of K, unordered_map(Of K, Double))
+        Private ReadOnly s As UInt32
 
         <copy_constructor>
         Public Sub New(ByVal m As unordered_map(Of K, unordered_map(Of K, Double)))
             assert(Not m Is Nothing)
             Me.m = m
+            Me.s = calculate_size(m)
         End Sub
+
+        Private Shared Function calculate_size(ByVal m As unordered_map(Of K, unordered_map(Of K, Double))) As UInt32
+            Dim s As New unordered_set(Of K)()
+            m.stream().
+              foreach(m.on_pair(Sub(ByVal x As K, ByVal y As unordered_map(Of K, Double))
+                                    s.emplace(x)
+                                    y.stream().
+                                      foreach(y.on_pair(Sub(ByVal z As K, ByVal niu As Double)
+                                                            s.emplace(z)
+                                                        End Sub))
+                                End Sub))
+            Return s.size()
+        End Function
 
         Public Function dump(ByVal o As MemoryStream) As Boolean
             Return bytes_serializer.append_to(m, o)
@@ -206,7 +221,7 @@ Partial Public NotInheritable Class onebound(Of K)
         End Sub
 
         Public Function size() As UInt32
-            Return m.size()
+            Return s
         End Function
     End Class
 End Class
