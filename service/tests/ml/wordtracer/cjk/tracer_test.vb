@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports System.IO
+Imports osi.root.connector
 Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utt.attributes
@@ -39,6 +40,12 @@ Namespace wordtracer.cjk
         <command_line_specified>
         Private Shared Sub dump()
             model.load(input Or "cjk.words.2.bin").to_console()
+        End Sub
+
+        <test>
+        <command_line_specified>
+        Private Shared Sub exponential_distributions()
+            model.load(input Or "cjk.words.2.bin").exponential_distributions_to_consle()
         End Sub
 
         <test>

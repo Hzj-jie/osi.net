@@ -195,5 +195,18 @@ Partial Public NotInheritable Class onebound(Of K)
                                                   End Sub)
                                 End Sub))
         End Sub
+
+        Public Sub exponential_distributions_to_consle()
+            selector.exponential_distributions(Me).
+                     stream().
+                     sort(first_const_pair(Of K, Double).second_first_comparer).
+                     foreach(Sub(ByVal x As first_const_pair(Of K, Double))
+                                 Console.WriteLine(strcat(x.first, ": ", x.second))
+                             End Sub)
+        End Sub
+
+        Public Function size() As UInt32
+            Return m.size()
+        End Function
     End Class
 End Class

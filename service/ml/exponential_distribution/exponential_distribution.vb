@@ -55,11 +55,19 @@ Partial Public NotInheritable Class exponential_distribution
         Return tuple.of(double_0, SysMath.Log(1000) / lambda)
     End Function
 
+    Public Function near_match(ByVal lambda As Double, ByVal diff As Double) As Boolean
+        Return SysMath.Abs(Me.lambda - lambda) <= diff
+    End Function
+
     Public Function near_match(ByVal other As exponential_distribution, ByVal diff As Double) As Boolean
         If other Is Nothing Then
             Return False
         End If
-        Return SysMath.Abs(lambda - other.lambda) <= diff
+        Return near_match(other.lambda, diff)
+    End Function
+
+    Public Function near_match(ByVal lambda As Double) As Boolean
+        Return near_match(lambda, 0.001)
     End Function
 
     Public Function near_match(ByVal other As exponential_distribution) As Boolean
