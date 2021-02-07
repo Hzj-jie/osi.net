@@ -162,6 +162,7 @@ Public Module _memory_stream
             Using fs As New FileStream(i, FileMode.Open, FileAccess.Read)
                 fs.CopyTo(this)
             End Using
+            Return True
         Catch ex As Exception
             raise_error(error_type.warning, "failed to read from ", i, ", ex ", ex)
         End Try
