@@ -129,7 +129,9 @@ Public Module _memory_stream
     <Extension()> Public Function dump_to_file(ByVal this As MemoryStream, ByVal o As String) As Boolean
         assert(Not this Is Nothing)
         Try
-            File.WriteAllBytes(o, this.ToArray())
+            Using fs As New FileStream(o, FileMode.Create)
+                this.WriteTo(fs)
+            End Using
             Return True
         Catch ex As Exception
             raise_error(error_type.warning, "failed to write to ", o, ", ex ", ex)
@@ -157,7 +159,9 @@ Public Module _memory_stream
     <Extension()> Public Function read_from_file(ByVal this As MemoryStream, ByVal i As String) As Boolean
         assert(Not this Is Nothing)
         Try
-            Return this.write(File.ReadAllBytes(i))
+            Using fs As New FileStream(i, FileMode.Open, FileAccess.Read)
+                fs.CopyTo(this)
+            End Using
         Catch ex As Exception
             raise_error(error_type.warning, "failed to read from ", i, ", ex ", ex)
         End Try
