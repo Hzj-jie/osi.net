@@ -39,8 +39,12 @@ Partial Public NotInheritable Class onebound(Of K)
         End Function
 
         Public Function dump(ByVal o As String) As Boolean
-            Using ms As MemoryStream = New MemoryStream()
-                Return dump(ms) AndAlso ms.dump_to_file(o)
+            Dim ms As MemoryStream = Nothing
+            If Not memory_stream.write_file_wrapped(o, ms) Then
+                Return False
+            End If
+            Using ms
+                Return dump(ms)
             End Using
         End Function
 
