@@ -5,7 +5,6 @@ Option Strict On
 
 Imports System.IO
 Imports osi.root.delegates
-Imports osi.root.formation
 Imports osi.root.utt.attributes
 Imports osi.service.ml
 Imports osi.service.resource
@@ -38,11 +37,8 @@ Namespace wordtracer.cjk
             With New oneplus(onebound(Of Char).model.load(model_file Or "cjk.words.2.bin.e0.9.bidirectional").
                                                          filter(filter Or 0),
                                  sample_rate Or 1)
-                .train(tar.reader.unzip(
-                           vector.of(Directory.GetFiles(Environment.CurrentDirectory(),
-                                                        input Or "tar_manual_test.zip_*",
-                                                        SearchOption.AllDirectories)))).
-                 dump(output Or "cjk.words.3.bin")
+                .train(tar.reader.unzip(New tar.selector() With {.pattern = input Or "tar_manual_test.zip_*"})).
+                dump(output Or "cjk.words.3.bin")
             End With
         End Sub
 
@@ -52,10 +48,7 @@ Namespace wordtracer.cjk
             With New oneplus(onebound(Of String).model.load(model_file Or "cjk.words.3.bin.e0.9.bidirectional").
                                                            filter(filter Or 0),
                              sample_rate Or 1)
-                .train(tar.reader.unzip(
-                           vector.of(Directory.GetFiles(Environment.CurrentDirectory(),
-                                                        input Or "tar_manual_test.zip_*",
-                                                        SearchOption.AllDirectories)))).
+                .train(tar.reader.unzip(New tar.selector() With {.pattern = input Or "tar_manual_test.zip_*"})).
                  dump(output Or "cjk.words.4.bin")
             End With
         End Sub

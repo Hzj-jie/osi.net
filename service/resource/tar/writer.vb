@@ -19,6 +19,10 @@ Partial Public NotInheritable Class tar
             Me.New(default_fs.instance, max_size, output_base, files)
         End Sub
 
+        Public Sub New(ByVal max_size As UInt32, ByVal output_base As String, ByVal files As selector)
+            Me.New(max_size, output_base, assert_which.of(files).is_not_null().relative())
+        End Sub
+
         Private Sub New(ByVal fs As fs,
                         ByVal max_size As UInt32,
                         ByVal file_namer As Func(Of UInt32, String),
@@ -56,10 +60,22 @@ Partial Public NotInheritable Class tar
             Return New writer(fs, max_size, "testing_output_", files)
         End Function
 
+        Public Shared Function of_testing(ByVal fs As fs,
+                                          ByVal max_size As UInt32,
+                                          ByVal files As selector) As writer
+            Return of_testing(fs, max_size, assert_which.of(files).is_not_null().relative())
+        End Function
+
         Public Shared Function zip(ByVal max_size As UInt32,
                                    ByVal output_base As String,
                                    ByVal files As vector(Of String)) As writer
             Return New writer(zip_writer_fs.instance, max_size, output_base, files)
+        End Function
+
+        Public Shared Function zip(ByVal max_size As UInt32,
+                                   ByVal output_base As String,
+                                   ByVal files As selector) As writer
+            Return zip(max_size, output_base, assert_which.of(files).is_not_null().relative())
         End Function
 
         Private Function dump(ByVal write_index As UInt32) As Boolean

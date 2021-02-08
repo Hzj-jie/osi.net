@@ -20,6 +20,10 @@ Partial Public NotInheritable Class tar
             Me.New(default_fs.instance, v)
         End Sub
 
+        Public Sub New(ByVal files As selector)
+            Me.New(assert_which.of(files).is_not_null().absolute())
+        End Sub
+
         Private Sub New(ByVal fs As fs, ByVal v As vector(Of String))
             assert(Not fs Is Nothing)
             assert(Not v Is Nothing)
@@ -35,6 +39,10 @@ Partial Public NotInheritable Class tar
 
         Public Shared Function unzip(ByVal v As vector(Of String)) As reader
             Return New reader(zip_reader_fs.instance, v)
+        End Function
+
+        Public Shared Function unzip(ByVal files As selector) As reader
+            Return unzip(assert_which.of(files).is_not_null().absolute())
         End Function
 
         Public Sub reset()
