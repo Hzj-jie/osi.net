@@ -434,8 +434,7 @@ Public NotInheritable Class memory_stream
 
     Public Shared Function write_file_wrapped(ByVal i As String, ByRef o As MemoryStream) As Boolean
         Try
-            Dim fs As New FileStream(i, FileMode.Create, FileAccess.Write)
-            o = wrap(fs)
+            o = wrap(New FileStream(i, FileMode.Create, FileAccess.Write))
             Return True
         Catch ex As Exception
             raise_error(error_type.warning, "failed to write to ", o, ", ex ", ex)
