@@ -84,6 +84,14 @@ Namespace wordtracer.cjk
                                       dump(output Or "cjk.words.3.bin.e0.9.bidirectional")
         End Sub
 
+        <test>
+        <command_line_specified>
+        Private Shared Sub filter_out_1()
+            onebound(Of String).model.load(input Or "cjk.words.3.bin").
+                                      filter(2).
+                                      dump(output Or "cjk.words.3.bin.gt1")
+        End Sub
+
         Private Sub New()
         End Sub
     End Class
