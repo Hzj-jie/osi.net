@@ -41,19 +41,17 @@ Partial Public NotInheritable Class wordtracer
                 Return train({s})
             End Function
 
-            Public Shared Function train(ByVal config As onebound(Of Char).trainer.config,
-                                         ByVal ss As IEnumerable(Of String)) As onebound(Of Char).model
-                Dim t As onebound(Of Char).trainer = New onebound(Of Char).trainer(config)
+            Public Shared Function train(ByVal ss As IEnumerable(Of String)) As onebound(Of Char).model
+                Dim t As New onebound(Of Char).trainer()
                 For Each s As String In ss
                     one_str(s, t)
                 Next
                 Return t.dump()
             End Function
 
-            Public Shared Function train(ByVal config As onebound(Of Char).trainer.config,
-                                         ByVal reader As tar.reader) As onebound(Of Char).model
+            Public Shared Function train(ByVal reader As tar.reader) As onebound(Of Char).model
                 assert(Not reader Is Nothing)
-                Dim t As onebound(Of Char).trainer = New onebound(Of Char).trainer(config)
+                Dim t As New onebound(Of Char).trainer()
                 reader.foreach(Sub(ByVal name As String, ByVal p As Double, ByVal r As StreamReader)
                                    If p < 0.8 Then
                                        raise_error(error_type.user,
@@ -70,14 +68,6 @@ Partial Public NotInheritable Class wordtracer
                                    End While
                                End Sub)
                 Return t.dump()
-            End Function
-
-            Public Shared Function train(ByVal ss As IEnumerable(Of String)) As onebound(Of Char).model
-                Return train(New onebound(Of Char).trainer.config(), ss)
-            End Function
-
-            Public Shared Function train(ByVal reader As tar.reader) As onebound(Of Char).model
-                Return train(New onebound(Of Char).trainer.config(), reader)
             End Function
 
             Private Sub New()
