@@ -11,7 +11,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
     Implements ICloneable
 
     Private Shared ReadOnly child_count As UInt32 = assert_which.of(+(alloc(Of _CHILD_COUNT)())).can_cast_to_uint32()
-    Private Shared ReadOnly key_to_index As _KEY_TO_INDEX = assert_not_nothing_return(alloc(Of _KEY_TO_INDEX)())
+    Private Shared ReadOnly key_to_index As _KEY_TO_INDEX = assert_which.of(alloc(Of _KEY_TO_INDEX)()).is_not_null()
     Private ReadOnly root As node
 
     Public NotInheritable Class node

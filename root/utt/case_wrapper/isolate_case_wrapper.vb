@@ -1,4 +1,5 @@
-﻿Option Explicit On
+﻿
+Option Explicit On
 Option Infer Off
 Option Strict On
 
@@ -20,7 +21,7 @@ Public Class isolate_case_wrapper
 
     Private Sub New(ByVal c As [case], ByVal timeout_ms As Int64)
         MyBase.New(envs.application_full_path,
-                   strcat("""", assert_not_nothing_return(c).full_name, """"),
+                   strcat("""", assert_which.of(c).is_not_null().full_name, """"),
                    ignore_error:=True,
                    timeout_ms:=timeout_ms,
                    expected_return:=If(envs.os.windows_major = envs.os.windows_major_t._5, 128, 0))

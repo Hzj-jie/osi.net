@@ -94,7 +94,7 @@ Public Class convector(Of T)
                                                     dev2,
                                                     sense_timeout_ms,
                                                     broken_pipe,
-                                                    assert_return(object_compare(pipe1, pipe2) <> 0, pipe1),
+                                                    assert_which.of(pipe1).not_reference_equal_to(pipe2),
                                                     idle_timeout_ms,
                                                     result,
                                                     treat_no_flow_as_failure)
@@ -104,7 +104,7 @@ Public Class convector(Of T)
                                                     dev1,
                                                     sense_timeout_ms,
                                                     broken_pipe,
-                                                    assert_return(object_compare(pipe1, pipe2) <> 0, pipe2),
+                                                    assert_which.of(pipe2).not_reference_equal_to(pipe1),
                                                     idle_timeout_ms,
                                                     result,
                                                     treat_no_flow_as_failure)

@@ -42,5 +42,11 @@ Partial Public NotInheritable Class assert_which
             assert(i < v)
             Return i
         End Function
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function greater_than(ByVal v As UInt32) As UInt32
+            assert(i > v)
+            Return i
+        End Function
     End Structure
 End Class

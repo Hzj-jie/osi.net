@@ -11,7 +11,7 @@ Imports osi.root.template
 Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
     Private Const default_assert_async_wait_time_ms As UInt32 = 10 * second_milli
     Private Shared ReadOnly _is_true As __void(Of Boolean, Object()) =
-        assert_not_nothing_return(alloc(Of IS_TRUE_FUNC)())
+        assert_which.of(alloc(Of IS_TRUE_FUNC)()).is_not_null()
 
     Private Shared Function left_right_msg(Of T)(ByVal cmp As String,
                                                  ByVal i As T,

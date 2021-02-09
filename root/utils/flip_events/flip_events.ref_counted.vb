@@ -24,7 +24,7 @@ Partial Public NotInheritable Class flip_events
         End Sub
 
         Public Sub New(ByVal e As events, ByVal init_value As UInt32)
-            Me.New(e, New atomic_int(CInt(assert_return(init_value <= max_int32, init_value))))
+            Me.New(e, New atomic_int(assert_which.of(init_value).can_cast_to_int32()))
         End Sub
 
         Public Sub New(ByVal e As events)

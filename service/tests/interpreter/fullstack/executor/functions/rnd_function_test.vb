@@ -1,12 +1,15 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utils
+Imports osi.root.constants
 Imports osi.root.utt
 Imports osi.service.interpreter.fullstack.executor
 
 Namespace fullstack.executor
-    Public Class rnd_function_test
+    Public NotInheritable Class rnd_function_test
         Inherits [case]
 
         Private Shared Function assert_return(ByVal d As domain,

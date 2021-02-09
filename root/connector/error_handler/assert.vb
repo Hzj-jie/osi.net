@@ -40,16 +40,4 @@ Public Module _assert
     Public Function assert(ByVal v As Boolean, ByVal ParamArray msgs() As Object) As Boolean
         Return v OrElse assert_failed(msgs)
     End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function assert_not_nothing_return(Of T)(ByVal i As T, ByVal ParamArray msgs() As Object) As T
-        assert(Not i Is Nothing, msgs)
-        Return i
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function assert_return(Of T)(ByVal v As Boolean, ByVal i As T, ByVal ParamArray msgs() As Object) As T
-        assert(v, msgs)
-        Return i
-    End Function
 End Module

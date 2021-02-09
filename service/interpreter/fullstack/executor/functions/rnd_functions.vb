@@ -1,10 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.utils
 
 Namespace fullstack.executor
-    Public Class rnd_int_function
+    Public NotInheritable Class rnd_int_function
         Inherits [function]
 
         Public Sub New(ByVal input_count As Int32)
@@ -15,7 +18,7 @@ Namespace fullstack.executor
                           New type() {type.int},
                        If(input_count = 2,
                           New type() {type.int, type.int},
-                       assert_return(Of type())(False, Nothing)))))
+                       assert_which.of(Of type())(Nothing).is_not_null()))))
         End Sub
 
         Protected Overrides Function execute(ByVal inputs() As Object) As Object

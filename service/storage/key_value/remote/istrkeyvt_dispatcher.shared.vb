@@ -1,16 +1,18 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.service.commander
 Imports osi.service.commander.constants
-Imports osi.service.storage.constants.remote
 Imports parameter = osi.service.storage.constants.remote.parameter
 
 Partial Public Class istrkeyvt_dispatcher
     Private Shared Function a_strkeyvt(ByVal strkeyvt As istrkeyvt) As istrkeyvt
-        Return assert_return(Not strkeyvt Is Nothing, strkeyvt)
+        Return assert_which.of(strkeyvt).is_not_null()
     End Function
 
     Private Shared Function handle(ByVal i As command,

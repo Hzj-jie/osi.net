@@ -34,9 +34,9 @@ Public Class pipe(Of T)
     End Sub
 
     Public Sub New(ByVal pipe As pipe(Of T))
-        Me.New(assert_return(Not pipe Is Nothing, pipe.max_size),
-               assert_return(Not pipe Is Nothing, pipe.retries),
-               assert_return(Not pipe Is Nothing, pipe.enable_io_pending_punishment()))
+        Me.New(assert_which.of(pipe).is_not_null().max_size,
+               assert_which.of(pipe).is_not_null().retries,
+               assert_which.of(pipe).is_not_null().enable_io_pending_punishment())
     End Sub
 
     Public Sub New()

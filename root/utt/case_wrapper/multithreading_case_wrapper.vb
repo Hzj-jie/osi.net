@@ -34,7 +34,7 @@ Public Class multithreading_case_wrapper
     End Sub
 
     Public Sub New(ByVal c As [case], ByVal threadcount As Int32)
-        Me.New(c, CUInt(assert_return(threadcount >= 0, threadcount)))
+        Me.New(c, assert_which.of(threadcount).can_cast_to_uint32())
     End Sub
 
     Public Overrides Function reserved_processors() As Int16

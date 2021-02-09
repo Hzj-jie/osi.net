@@ -57,7 +57,6 @@
     <Compile Include="alloc_test.vb" />
     <Compile Include="array_behavior_test.vb" />
     <Compile Include="array_test.vb" />
-    <Compile Include="assert_test.vb" />
     <Compile Include="character_test.vb" />
     <Compile Include="comparable_behavior_test.vb" />
     <Compile Include="convert_tostring_behavior_test.vb" />
