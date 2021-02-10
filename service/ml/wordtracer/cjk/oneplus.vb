@@ -61,6 +61,9 @@ Partial Public NotInheritable Class wordtracer
                     If it = m.end() Then
                         Continue For
                     End If
+                    If m.find(s.strmid(i + uint32_1, l)) = m.end() Then
+                        Continue For
+                    End If
                     t.accumulate(s.strmid(i, l), s.strmid(i + l, uint32_1), (+it).second)
                 Next
             End Sub
