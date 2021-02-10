@@ -70,6 +70,10 @@ Public NotInheritable Class shell_less_process
         If e Is Nothing OrElse e.Data() Is Nothing Then
             Return
         End If
+        raise_error("shell_less_process received output: ",
+                    e.Data(),
+                    " from ",
+                    If(output, "output", "error"))
         If output Then
             RaiseEvent receive_output(e.Data())
         Else

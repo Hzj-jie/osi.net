@@ -53,13 +53,16 @@ Public Class isolate_case_wrapper
     End Function
 
     Private Sub received(ByVal s As String)
-        If strcontains(s, strcat("start running ", c.full_name)) Then
+        If Not s.StartsWith("u, ") Then
+            Return
+        End If
+        If s.Contains(strcat(", start running ", c.full_name)) Then
             case_started = True
-        ElseIf strcontains(s, strcat("finish running ", c.full_name)) Then
+        ElseIf s.Contains(strcat(", finish running ", c.full_name)) Then
             case_finished = True
-        ElseIf strcontains(s, "assertion failure, ") Then
+        ElseIf s.Contains(", assertion failure, ") Then
             _assertion_failures.increment()
-        ElseIf strcontains(s, "unsatisfied expectation, ") Then
+        ElseIf s.Contains(", unsatisfied expectation, ") Then
             _unsatisfied_expectations.increment()
         End If
     End Sub
@@ -79,7 +82,7 @@ Public Class isolate_case_wrapper
     Public Overrides Function finish() As Boolean
         Return assertion.is_true(case_started) AndAlso
                assertion.is_true(case_finished) AndAlso
-               assertion.equal(_assertion_failures.get(), 0) AndAlso
+               _assertion_failures.get() = 0 AndAlso
                MyBase.finish()
     End Function
 

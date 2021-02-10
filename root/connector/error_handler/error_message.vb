@@ -69,8 +69,7 @@ Public NotInheritable Class error_message
         If m.Length() = 1 AndAlso TypeOf m(0) Is String Then
             Return Convert.ToString(m(0))
         End If
-        Dim s As StringBuilder = Nothing
-        s = New StringBuilder()
+        Dim s As New StringBuilder()
         process_obj_array(m, s)
         Return Convert.ToString(s)
     End Function
