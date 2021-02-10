@@ -24,13 +24,12 @@ Partial Public NotInheritable Class onebound(Of K)
         Private Shared Function calculate_size(ByVal m As unordered_map(Of K, unordered_map(Of K, Double))) As UInt32
             Dim s As New unordered_set(Of K)()
             m.stream().
-              foreach(m.on_pair(Sub(ByVal x As K, ByVal y As unordered_map(Of K, Double))
-                                    s.emplace(x)
-                                    y.stream().
-                                      foreach(y.on_pair(Sub(ByVal z As K, ByVal niu As Double)
-                                                            s.emplace(z)
-                                                        End Sub))
-                                End Sub))
+              foreach(m.on_second(Sub(ByVal x As unordered_map(Of K, Double))
+                                      x.stream().
+                                        foreach(x.on_first(Sub(ByVal y As K)
+                                                               s.emplace(y)
+                                                           End Sub))
+                                  End Sub))
             Return s.size()
         End Function
 
