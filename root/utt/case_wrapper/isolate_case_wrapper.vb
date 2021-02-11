@@ -61,8 +61,10 @@ Public Class isolate_case_wrapper
         ElseIf s.Contains(strcat(", finish running ", c.full_name)) Then
             case_finished = True
         ElseIf s.Contains(", assertion failure, ") Then
+            utt_raise_error("isolate_case_wrapper received assertion failure: ", s)
             _assertion_failures.increment()
         ElseIf s.Contains(", unsatisfied expectation, ") Then
+            utt_raise_error("isolate_case_wrapper received unsatisfied expectation: ", s)
             _unsatisfied_expectations.increment()
         End If
     End Sub
