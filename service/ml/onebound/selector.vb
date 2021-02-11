@@ -17,7 +17,6 @@ Partial Public NotInheritable Class onebound(Of K)
                                                 x.stream().
                                                   map(x.second_selector).
                                                   collect_by(stream(Of Double).collectors.frequency())
-            m(0) = i.size() - x.size()
             Return exponential_distribution.estimator.estimate(m)
         End Function
 
