@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.utt
 
-' type_info(Of T1, equal, T2) is 100% faster than GetType(T1).Equals(GetType(T2)).
+' type_info(Of T1, equal, T2) is over 30x faster than GetType(T1).Equals(GetType(T2)).
 Public NotInheritable Class type_info_equal_perf
     Inherits performance_comparison_case_wrapper
 
