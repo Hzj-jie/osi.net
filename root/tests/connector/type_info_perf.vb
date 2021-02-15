@@ -1,9 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.utt
 
 ' type_info(Of T1, equal, T2) is 100% faster than GetType(T1).Equals(GetType(T2)).
-Public Class type_info_equal_perf
+Public NotInheritable Class type_info_equal_perf
     Inherits performance_comparison_case_wrapper
 
     Private Const size As Int64 = 1024 * 1024 * 64
@@ -12,12 +16,11 @@ Public Class type_info_equal_perf
         MyBase.New(repeat(New type_info_equal(), size), repeat(New equal(), size))
     End Sub
 
-    Protected Overrides Function min_rate_table() As Double(,)
-        Return {{0, 0.8},
-                {3, 0}}
+    Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+        Return loosen_bound({34, 1286}, i, j)
     End Function
 
-    Private Class type_info_equal
+    Private NotInheritable Class type_info_equal
         Inherits [case]
 
         Public Overrides Function run() As Boolean
@@ -34,7 +37,7 @@ Public Class type_info_equal_perf
         End Function
     End Class
 
-    Private Class equal
+    Private NotInheritable Class equal
         Inherits [case]
 
         Public Overrides Function run() As Boolean

@@ -185,6 +185,7 @@ Partial Public NotInheritable Class onebound(Of K)
 
         Public Sub to_console()
             m.stream().
+              sort(AddressOf first_const_pair.first_compare).
               foreach(m.on_pair(Sub(ByVal key As K, ByVal value As unordered_map(Of K, Double))
                                     value.stream().
                                           sort(Function(ByVal i As first_const_pair(Of K, Double),
