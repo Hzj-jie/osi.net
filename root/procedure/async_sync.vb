@@ -18,8 +18,7 @@ Public Module _async_sync
                                 ByVal end_result As Func(Of Boolean)) As Boolean
         assert(Not waitfor Is Nothing)
         assert(Not end_result Is Nothing)
-        Dim w As AutoResetEvent = Nothing
-        w = New AutoResetEvent(False)
+        Dim w As AutoResetEvent = New AutoResetEvent(False)
         Dim r As Boolean = False
         assert_begin(New event_comb(Function() As Boolean
                                         r = waitfor()

@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 
 Public Module _callback_action_extensions
