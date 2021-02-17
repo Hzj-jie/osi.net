@@ -54,7 +54,7 @@ Public Module spinwait
         Else
             sleep(0)
         End If
-        Return (environment_milliseconds() - start_ms) >= eighth_timeslice_length_ms
+        Return (environment_milliseconds() - start_ms) >= 8 * timeslice_length_ms
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -198,7 +198,7 @@ Public Module _sleep_wait
         Try
             Return CLng(timeslice_length_ms * Math.Pow(2, min(this_process.ref.Threads().Count() \ 10, 5) + 2))
         Catch
-            Return sixteen_timeslice_length_ms
+            Return 16 * timeslice_length_ms
         End Try
     End Function
 

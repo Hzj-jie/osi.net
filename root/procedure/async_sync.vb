@@ -34,7 +34,7 @@ Public Module _async_sync
         If threadpool.threadpool.in_restricted_threadpool_thread() Then
             While Not w.WaitOne(0)
                 If Not thread_pool().execute() Then
-                    thread_pool().wait(envs.two_timeslice_length_ms)
+                    thread_pool().wait(2 * envs.timeslice_length_ms)
                 End If
             End While
         Else

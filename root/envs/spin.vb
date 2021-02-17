@@ -8,7 +8,7 @@ Imports osi.root.constants
 
 <global_init(global_init_level.other)>
 Public Module _spin
-    Public ReadOnly suggest_try_wait_length_ms As Int32 = If(single_cpu, 0, CInt(sixteenth_timeslice_length_ms))
+    Public ReadOnly suggest_try_wait_length_ms As Int32 = If(single_cpu, 0, CInt(max(timeslice_length_ms \ 16, 1)))
     Public ReadOnly loops_per_yield As Int32 = decide_loops_per_yield()
     Private Const default_loops_per_yield As Int32 = 512
 

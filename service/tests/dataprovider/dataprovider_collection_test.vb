@@ -6,7 +6,6 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
-Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.utils
@@ -36,7 +35,7 @@ Public NotInheritable Class dataprovider_collection_test
                                   If first Then
                                       first = False
                                   Else
-                                      assert_waitfor(two_timeslice_length_ms)
+                                      assert_waitfor(2 * timeslice_length_ms)
                                   End If
                               End Sub)
         End Function

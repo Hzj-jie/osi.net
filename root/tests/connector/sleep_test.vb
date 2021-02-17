@@ -1,12 +1,16 @@
 ﻿
-Imports osi.root.connector
-Imports osi.root.utt
-Imports osi.root.delegates
-Imports osi.root.utils
-Imports osi.root.constants
-Imports osi.root.envs
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Public Class sleep_test
+Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.delegates
+Imports osi.root.envs
+Imports osi.root.utils
+Imports osi.root.utt
+
+Public NotInheritable Class sleep_test
     Inherits [case]
 
     Private Shared Function succ(ByVal w1 As Func(Of Func(Of Boolean), Int64, Boolean),
@@ -108,7 +112,7 @@ Public Class sleep_test
         assert(Not d Is Nothing)
         Const timeout_ms As Int64 = second_milli
         Using New boost()
-            Using assertion.timelimited_operation(timeout_ms, timeout_ms + four_timeslice_length_ms)
+            Using assertion.timelimited_operation(timeout_ms, timeout_ms + 4 * timeslice_length_ms)
                 assertion.is_false(d(timeout_ms))
             End Using
         End Using

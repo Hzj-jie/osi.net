@@ -1,14 +1,15 @@
 ﻿
-Imports osi.root.procedure
-Imports osi.root.utt
-Imports osi.root.lock
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.threadpool
 Imports osi.root.constants
 Imports osi.root.envs
-Imports osi.root.delegates
+Imports osi.root.procedure
+Imports osi.root.utt
 
-Friend Class event_comb_case
+Friend NotInheritable Class event_comb_case
     Inherits count_case
 
     Private ReadOnly busy_wait_ms As Int32
@@ -49,32 +50,29 @@ Friend Class event_comb_case
     Private Function normalize(ByVal i As Int64) As Int64
         If i < 0 Then
             Return 0
-        ElseIf i = 0 Then
-            Return timeslice_length_ms
-        Else
-            Return Math.Ceiling(CDbl(i) / timeslice_length_ms) * timeslice_length_ms
         End If
+        If i = 0 Then
+            Return timeslice_length_ms
+        End If
+        Return CLng(Math.Ceiling(CDbl(i) / timeslice_length_ms) * timeslice_length_ms)
     End Function
 
     Private Function timeout_ms() As Int64
         If strict_time_limited Then
-            Return normalize(busy_wait_ms) + normalize(sleep_wait_ms) + sixteen_timeslice_length_ms
-        Else
-            Return max_int64
+            Return normalize(busy_wait_ms) + normalize(sleep_wait_ms) + 16 * timeslice_length_ms
         End If
+        Return max_int64
     End Function
 
     Public Overrides Function reserved_processors() As Int16
         If strict_time_limited Then
-            Return Environment.ProcessorCount()
-        Else
-            Return 1
+            Return CShort(Environment.ProcessorCount())
         End If
+        Return 1
     End Function
 
     Protected Overrides Function run_case() As Boolean
-        Dim this As Int32 = 0
-        this = trigger_times()
+        Dim this As Int32 = trigger_times()
         assertion.is_true(async_sync(create_event_comb(), timeout_ms()))
         assertion.more(trigger_times(), this)
         Return True
