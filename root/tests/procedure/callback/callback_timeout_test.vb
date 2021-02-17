@@ -13,8 +13,8 @@ Public NotInheritable Class callback_timeout_test
     Inherits case_wrapper
 
     Private Shared ReadOnly timeout_ms As Int64 = 1
-    Private Shared ReadOnly test_size As Int64 = 1024 * If(isdebugbuild(), 1, 8)
-    Private Shared ReadOnly thread_count As UInt32 = CUInt(8 * If(isdebugbuild(), 1, 4))
+    Private Shared ReadOnly test_size As Int64 = 1024
+    Private Shared ReadOnly thread_count As UInt32 = CUInt(2 * Environment.ProcessorCount())
 
     Public Sub New()
         MyBase.New(multithreading(repeat(New callback_timeout_case(), test_size), thread_count))
