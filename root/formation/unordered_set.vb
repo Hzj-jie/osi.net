@@ -85,6 +85,8 @@ Partial Public NotInheritable Class unordered_set(Of T)
                     i.clear()
                 End Sub)
         bytes_serializer(Of [unordered_set](Of T)).container(Of T).register()
+        json_serializer(Of [unordered_set](Of T)).container(Of T).register_as_array()
+        string_serializer(Of [unordered_set](Of T)).container(Of T).register()
     End Sub
 
 'finish ..\binary_tree\codegen\set.container_operator.vbp --------

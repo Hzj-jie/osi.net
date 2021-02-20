@@ -110,6 +110,7 @@
     <Compile Include="functor\registry\caster_registry.vb" />
     <Compile Include="functor\registry\string_serializer_registry.vb" />
     <Compile Include="functor\registry\string_serializer_registry2.vb" />
+    <Compile Include="functor\string_serializer\string_serializer.container.vb" />
     <Compile Include="functor\string_serializer\string_serializer.shortcuts.vb" />
     <Compile Include="functor\string_serializer\string_serializer.infer.vb" />
     <Compile Include="functor\string_serializer\string_serializer.object.vb" />

@@ -51,6 +51,8 @@ Public NotInheritable Class [set](Of T)
                     i.clear()
                 End Sub)
         bytes_serializer(Of [set](Of T)).container(Of T).register()
+        json_serializer(Of [set](Of T)).container(Of T).register_as_array()
+        string_serializer(Of [set](Of T)).container(Of T).register()
     End Sub
 
 'finish set.container_operator.vbp --------

@@ -92,6 +92,7 @@ Partial Public NotInheritable Class unordered_map(Of KEY_T, VALUE_T)
                 End Sub)
         bytes_serializer(Of unordered_map(Of KEY_T, VALUE_T)).container(Of first_const_pair(Of KEY_T, VALUE_T)).register()
         json_serializer(Of unordered_map(Of KEY_T, VALUE_T)).container(Of first_const_pair(Of KEY_T, VALUE_T)).register_as_object()
+        string_serializer(Of unordered_map(Of KEY_T, VALUE_T)).container(Of first_const_pair(Of KEY_T, VALUE_T)).register()
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

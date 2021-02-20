@@ -22,5 +22,7 @@
                     i.clear()
                 End Sub)
         bytes_serializer(Of [##FILENAME##](Of T)).container(Of T).register()
+        json_serializer(Of [##FILENAME##](Of T)).container(Of T).register_as_array()
+        string_serializer(Of [##FILENAME##](Of T)).container(Of T).register()
     End Sub
 

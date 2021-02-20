@@ -88,6 +88,32 @@ Public NotInheritable Class first_const_pair(Of FT, ST)
                                      End If
                                      Return True
                                  End Function)
+        string_serializer.register(Function(ByVal i As first_const_pair(Of FT, ST), ByVal o As StringWriter) As Boolean
+                                       If Not string_serializer.to_str(i.first_or_null(), o) Then
+                                           Return False
+                                       End If
+                                       o.Write(":")
+                                       If Not string_serializer.to_str(i.second_or_null(), o) Then
+                                           Return False
+                                       End If
+                                       Return True
+                                   End Function,
+                                   Function(ByVal sr As StringReader, ByRef o As first_const_pair(Of FT, ST)) As Boolean
+                                       assert(Not sr Is Nothing)
+                                       Dim i As String = sr.ReadToEnd()
+                                       Dim pos As Int32 = i.strindexof(":")
+                                       If pos = npos Then
+                                           Return False
+                                       End If
+                                       Dim f As FT = Nothing
+                                       Dim s As ST = Nothing
+                                       If Not string_serializer.from_str(i.strleft(CUInt(pos)), f) OrElse
+                                          Not string_serializer.from_str(i.strmid(CUInt(pos + 1)), s) Then
+                                           Return False
+                                       End If
+                                       o = New first_const_pair(Of FT, ST)(f, s)
+                                       Return True
+                                   End Function)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

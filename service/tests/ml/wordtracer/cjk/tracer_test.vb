@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports System.IO
-Imports osi.root.connector
 Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utt.attributes
@@ -34,6 +33,16 @@ Namespace wordtracer.cjk
                                                           input Or "tar_manual_test.zip_*",
                                                           SearchOption.AllDirectories)))).
                    dump(output Or "cjk.words.2.bin")
+        End Sub
+
+        <test>
+        <command_line_specified>
+        Private Shared Sub char_to_str()
+            model.load(input Or "cjk.words.2.bin").
+                  map(Function(ByVal i As Char) As String
+                          Return i
+                      End Function).
+                  dump(output Or "cjk.words.2.str.bin")
         End Sub
 
         <test>

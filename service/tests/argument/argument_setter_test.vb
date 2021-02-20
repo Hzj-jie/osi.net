@@ -14,9 +14,8 @@ Public NotInheritable Class argument_setter_test
     Private Shared bool_arg As argument(Of Boolean)
     Private Shared int_arg As argument(Of Int32)
     Private Shared str_arg As argument(Of String)
-#If TODO Then
+    Private Shared vector_arg As argument(Of vector(Of Int32))
     Private Shared map_arg As argument(Of map(Of String, Int32))
-#End If
     Private Shared others As argument(Of vector(Of String))
 
     <test>
@@ -24,16 +23,16 @@ Public NotInheritable Class argument_setter_test
         bool_arg = Nothing
         int_arg = Nothing
         str_arg = Nothing
-#If TODO Then
+        vector_arg = Nothing
         map_arg = Nothing
-#End If
         others = Nothing
 
         argument_setter.process_type(GetType(argument_setter_test), New var({
             "~argument_setter_test.bool_arg",
             "--argument_setter_test.int_arg=100",
             "--argument_setter_test.str_arg=abc",
-            "--argument_setter_test.map_arg={a:1, b:2, c:3}",
+            "--argument_setter_test.vector_arg=1,2,3",
+            "--argument_setter_test.map_arg=a:1,b:2,c:3",
             "others1",
             "others2",
             "others3"
@@ -47,11 +46,12 @@ Public NotInheritable Class argument_setter_test
         If assertion.is_not_null(str_arg) Then
             assertion.equal(+str_arg, "abc")
         End If
-#If TODO Then
+        If assertion.is_not_null(vector_arg) Then
+            assertion.equal(+vector_arg, vector.of(1, 2, 3))
+        End If
         If assertion.is_not_null(map_arg) Then
             assertion.equal(+map_arg, map.of(pair.of("a", 1), pair.of("b", 2), pair.of("c", 3)))
         End If
-#End If
         If assertion.is_not_null(others) Then
             assertion.equal(+others, vector.of("others1", "others2", "others3"))
         End If

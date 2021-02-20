@@ -61,14 +61,12 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
             Return False
         End If
 
-        Dim f As Func(Of T, StringWriter, Boolean) = Nothing
-        f = to_str()
+        Dim f As Func(Of T, StringWriter, Boolean) = to_str()
         If Not f Is Nothing Then
             Return f(i, o)
         End If
 
-        Dim f2 As Func(Of T, StringWriter, Boolean) = Nothing
-        f2 = uri_serializer(Of T).r.to_str()
+        Dim f2 As Func(Of T, StringWriter, Boolean) = uri_serializer(Of T).r.to_str()
         assert(object_compare(f, f2) <> 0)
         assert(Not f2 Is Nothing)
         f2(i, o)
@@ -82,14 +80,12 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
     Private Function do_from_str(ByVal i As StringReader, ByRef o As T) As Boolean
         assert(Not i Is Nothing)
 
-        Dim f As _do_val_ref(Of StringReader, T, Boolean) = Nothing
-        f = from_str()
+        Dim f As _do_val_ref(Of StringReader, T, Boolean) = from_str()
         If Not f Is Nothing Then
             Return f(i, o)
         End If
 
-        Dim f2 As _do_val_ref(Of StringReader, T, Boolean) = Nothing
-        f2 = uri_serializer(Of T).r.from_str()
+        Dim f2 As _do_val_ref(Of StringReader, T, Boolean) = uri_serializer(Of T).r.from_str()
         assert(object_compare(f, f2) <> 0)
         assert(Not f2 Is Nothing)
         Return f2(i, o)
@@ -101,8 +97,7 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
             Return False
         End If
 
-        Dim p As UInt32 = 0
-        p = i.position()
+        Dim p As UInt32 = i.position()
         If do_from_str(i, o) Then
             Return True
         End If
@@ -130,7 +125,7 @@ End Class
 
 ' Raw string operations without type information or conversions. I.e. Int 100 from or to String "100".
 ' This serializer works for simple types only, complex structures should support bytes_serializer or json_serializer.
-Public Class string_serializer(Of T)
+Partial Public Class string_serializer(Of T)
     Inherits string_serializer(Of T, string_serializer(Of T))
 
     Public Shared ReadOnly r As string_serializer(Of T) = New string_serializer(Of T)()
