@@ -3,6 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utt
@@ -135,6 +137,48 @@ Public NotInheritable Class argument_setter_test
             assertion.equal(+argument_holder4.arg2, 3)
         End If
     End Sub
+
+    Public NotInheritable Class argument_setter_crash_if_type_mismatches
+        Inherits isolate_case_wrapper
+
+        Public Sub New()
+            MyBase.New(New crash_if_type_mismatches_case(), minutes_to_milliseconds(1))
+        End Sub
+
+        Protected Overrides Function expected_return() As Int32
+            Return exit_code.assertion_failure
+        End Function
+
+        Protected Overrides Function check_results() As Boolean
+            assertion.is_true(case_started())
+            assertion.is_false(case_finished())
+            assertion.is_true(assert_death_msg().contains_all("argument_setter.vb",
+                                                              "argument_setter_test.vb",
+                                                              "crash_if_type_mismatches_runner"))
+            Return True
+        End Function
+
+        Public NotInheritable Class crash_if_type_mismatches_case
+            Inherits commandline_specified_case_wrapper
+
+            Public Sub New()
+                MyBase.New(New crash_if_type_mismatches_runner())
+            End Sub
+
+            Private NotInheritable Class crash_if_type_mismatches_runner
+                Inherits [case]
+
+                Private Shared arg As argument(Of Int32)
+
+                Public Overrides Function run() As Boolean
+                    arg = Nothing
+                    argument_setter.process_type(GetType(crash_if_type_mismatches_runner),
+                                                 New var({"--crash_if_type_mismatches_runner.arg=x"}))
+                    Return True
+                End Function
+            End Class
+        End Class
+    End Class
 
     Private Sub New()
     End Sub

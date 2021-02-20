@@ -9,7 +9,7 @@ Imports System.Threading
 Imports osi.root.constants
 
 Public Module _console
-    Public ReadOnly console_output_redirected As Boolean
+    Public ReadOnly console_output_redirected As Boolean = calculate_console_output_redirected()
 
     Private Function calculate_console_output_redirected() As Boolean
         Try
@@ -63,10 +63,8 @@ Public Module _console
             lock_console_output()
         End If
 
-        Dim l As Int32 = 0
-        Dim t As Int32 = 0
-        l = Console.CursorLeft()
-        t = Console.CursorTop()
+        Dim l As Int32 = Console.CursorLeft()
+        Dim t As Int32 = Console.CursorTop()
         If err Then
             write_console_error(s)
         Else

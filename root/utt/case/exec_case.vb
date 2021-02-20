@@ -21,13 +21,14 @@ Public Class exec_case
     Protected ReadOnly exec_file As String
     Protected ReadOnly exec_arg As String
     Protected ReadOnly process_name As String
-    Protected ReadOnly expected_return As Int32
+    Protected ReadOnly _expected_return As Int32
     Protected ReadOnly timeout_ms As Int64
     <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Protected Event receive_output(ByVal s As String)
     <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Protected Event receive_error(ByVal s As String)
 
+    ' TODO: Remove constructor parameters, use overridable functions instead.
     Public Sub New(ByVal file As String,
                    Optional ByVal arg As String = default_arg,
                    Optional ByVal ignore_output As Boolean = default_ignore_output,
@@ -39,7 +40,7 @@ Public Class exec_case
         Me.exec_arg = arg
         Me.ignore_output = ignore_output
         Me.ignore_error = ignore_error
-        Me.expected_return = expected_return
+        Me._expected_return = expected_return
         Me.timeout_ms = timeout_ms
         Me.process_name = strcat("process ",
                                  exec_file,
@@ -89,6 +90,10 @@ Public Class exec_case
         received(s, False)
     End Sub
 
+    Protected Overridable Function expected_return() As Int32
+        Return _expected_return
+    End Function
+
     Public NotOverridable Overrides Function run() As Boolean
         If Not File.Exists(exec_file) Then
             Return False
@@ -123,7 +128,7 @@ Public Class exec_case
                     utt_raise_error("failed to stop ", process_name)
                 End If
             End If
-            assertion.equal(p.exit_code(), expected_return)
+            assertion.equal(p.exit_code(), expected_return())
             Return True
         End Using
     End Function
