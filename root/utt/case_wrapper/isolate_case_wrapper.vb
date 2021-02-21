@@ -59,15 +59,9 @@ Public Class isolate_case_wrapper
             raise_error("isolate_case_wrapper received: ", s)
         End If
         If Not _assert_death_msg.empty() Then
-            If Not commandline.specified(Me) Then
-                utt_raise_error(s)
-            End If
             _assert_death_msg.AppendLine(s)
         End If
         If s.StartsWith("c, ") AndAlso s.Contains(", assert failed.") Then
-            If Not commandline.specified(Me) Then
-                utt_raise_error("isolate_case_wrapper received assert death: ", s)
-            End If
             _assert_death_msg.AppendLine(s)
             Return
         End If
@@ -79,14 +73,8 @@ Public Class isolate_case_wrapper
         ElseIf s.Contains(strcat(", finish running ", c.full_name)) Then
             _case_finished = True
         ElseIf s.Contains(", assertion failure, ") Then
-            If Not commandline.specified(Me) Then
-                utt_raise_error("isolate_case_wrapper received assertion failure: ", s)
-            End If
             _assertion_failures.increment()
         ElseIf s.Contains(", unsatisfied expectation, ") Then
-            If Not commandline.specified(Me) Then
-                utt_raise_error("isolate_case_wrapper received unsatisfied expectation: ", s)
-            End If
             _unsatisfied_expectations.increment()
         End If
     End Sub
