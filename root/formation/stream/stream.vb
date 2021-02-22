@@ -48,7 +48,7 @@ Partial Public Class stream(Of T)
 
     Public Function collect_to(Of CT)(ByVal c As CT) As CT
         Return collect(Sub(ByVal i As CT, ByVal v As T)
-                           container_operator.insert(i, v)
+                           assert(container_operator.insert(i, v))
                        End Sub,
                        c)
     End Function
