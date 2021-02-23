@@ -9,6 +9,7 @@ Public NotInheritable Class ##FILENAME##(Of KEY_T, VALUE_T)
 
 ##INCLUDE map.container_operator.vbp
 ##INCLUDE map.compare.vbp
+##INCLUDE map.operators.vbp
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New()

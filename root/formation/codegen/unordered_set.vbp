@@ -23,5 +23,6 @@ Partial Public NotInheritable Class ##FILENAME##(Of T)
 
 ##INCLUDE ..\binary_tree\codegen\set.container_operator.vbp
 ##INCLUDE ..\binary_tree\codegen\set.compare.vbp
+##INCLUDE ..\binary_tree\codegen\set.operators.vbp
 
 End Class

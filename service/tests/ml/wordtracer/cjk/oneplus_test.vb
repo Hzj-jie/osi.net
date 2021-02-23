@@ -77,9 +77,9 @@ Namespace wordtracer.cjk
 
         <test>
         <command_line_specified>
-        Private Shared Sub merge()
+        Private Shared Sub multiply()
             onebound(Of String).model.load(input Or "cjk.words.3.bin.e0.9").
-                                      merge(onebound(Of String).model.load(input2 Or "cjk.words.3.bin.reverse.e0.9").
+                                      multiply(onebound(Of String).model.load(input2 Or "cjk.words.3.bin.reverse.e0.9").
                                                                       reverse()).
                                       dump(output Or "cjk.words.3.bin.e0.9.bidirectional")
         End Sub

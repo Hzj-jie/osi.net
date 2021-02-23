@@ -28,5 +28,6 @@ Partial Public NotInheritable Class ##FILENAME##(Of KEY_T, VALUE_T)
 
 ##INCLUDE ..\binary_tree\codegen\map.container_operator.vbp
 ##INCLUDE ..\binary_tree\codegen\map.compare.vbp
+##INCLUDE ..\binary_tree\codegen\map.operators.vbp
 
 End Class

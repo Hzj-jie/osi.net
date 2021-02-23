@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.IO
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 
 Partial Public NotInheritable Class onebound(Of K)
@@ -64,6 +65,33 @@ Partial Public NotInheritable Class onebound(Of K)
             Return o
         End Function
 
+        Public Shared Function combo_load(ByRef o As model, ByVal ParamArray files() As String) As Boolean
+            If files.isemptyarray() Then
+                Return False
+            End If
+
+            If Not load(files(0), o) Then
+                Return False
+            End If
+
+            For i As Int32 = 1 To files.array_size_i() - 1
+                Dim m As model = Nothing
+                If Not load(files(i), m) Then
+                    Return False
+                End If
+                If Not o.add(m) Then
+                    Return False
+                End If
+            Next
+            Return True
+        End Function
+
+        Public Shared Function combo_load(ByVal ParamArray files() As String) As model
+            Dim o As model = Nothing
+            assert(combo_load(o, files))
+            Return o
+        End Function
+
         Public Function affinity(ByVal a As K, ByVal b As K) As Double
             If m.find(a) = m.end() OrElse m(a).find(b) = m(a).end() Then
                 Return 0
@@ -79,7 +107,7 @@ Partial Public NotInheritable Class onebound(Of K)
             Return New model(r)
         End Function
 
-        Public Function merge(ByVal other As model) As model
+        Public Function multiply(ByVal other As model) As model
             assert(Not other Is Nothing)
             Dim r As New unordered_map(Of K, unordered_map(Of K, Double))()
             flat_map().foreach(Sub(ByVal v As first_const_pair(Of const_pair(Of K, K), Double))
@@ -93,6 +121,22 @@ Partial Public NotInheritable Class onebound(Of K)
                                    r(v.first.first)(v.first.second) = o * v.second
                                End Sub)
             Return New model(r)
+        End Function
+
+        Public Function add(ByVal other As model) As Boolean
+            assert(Not other Is Nothing)
+            Try
+                other.m.
+                      stream().
+                      foreach(Sub(ByVal p As first_const_pair(Of K, unordered_map(Of K, Double)))
+                                  If Not m.emplace(p).second Then
+                                      break_lambda.at_here()
+                                  End If
+                              End Sub)
+                Return True
+            Catch ex As break_lambda
+                Return False
+            End Try
         End Function
 
         Public Overloads Function Equals(ByVal other As model) As Boolean Implements IEquatable(Of model).Equals
