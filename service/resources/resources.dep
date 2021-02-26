@@ -19,6 +19,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Link>resources\math\pi-1m.txt</Link>
     </Content>
+    <Content Include="$(ServicePath)\resources\zh\codegen\words.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Link>resources\zh\words.txt</Link>
+    </Content>
   </ItemGroup>
 </Project>
 

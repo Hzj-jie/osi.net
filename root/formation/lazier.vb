@@ -3,6 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
+
 Public NotInheritable Class lazier
     Public Shared Function [of](Of T)(ByVal d As Func(Of T)) As lazier(Of T)
         Return New lazier(Of T)(d)
@@ -33,6 +35,13 @@ Public NotInheritable Class lazier(Of T)
 
     Public Overrides Function ToString() As String
         Return Convert.ToString(+Me)
+    End Function
+
+    Public Function map(Of R)(ByVal f As Func(Of T, R)) As lazier(Of R)
+        assert(Not f Is Nothing)
+        Return lazier.of(Function() As R
+                             Return f(+Me)
+                         End Function)
     End Function
 
     Public Shared Widening Operator CType(ByVal this As lazier(Of T)) As T

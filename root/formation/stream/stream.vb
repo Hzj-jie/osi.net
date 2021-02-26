@@ -29,7 +29,10 @@ Partial Public Class stream(Of T)
     End Function
 
     Public Function aggregate(ByVal f As Func(Of T, T, T)) As T
-        Return aggregate(f, alloc(Of T)())
+        assert(Not e.end())
+        Dim r As T = e.current()
+        e.next()
+        Return aggregate(f, r)
     End Function
 
     ' A + A + ... => B
