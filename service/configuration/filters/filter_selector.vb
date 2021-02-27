@@ -1,13 +1,15 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.formation
-Imports osi.root.delegates
 Imports osi.root.constants
-Imports osi.root.utils
+Imports osi.root.formation
 Imports osi.service.configuration.constants.filter_selector
 
 Public NotInheritable Class filter_selector
-    Implements ICloneable
+    Implements ICloneable(Of filter_selector), ICloneable
 
     Private Shared ReadOnly types As map(Of String, Func(Of String, ifilter))
     Private Shared ReadOnly [default] As Func(Of String, ifilter)
@@ -54,10 +56,9 @@ Public NotInheritable Class filter_selector
     Public Shared Function register_filter(ByVal name As String, ByVal ctor As Func(Of String, ifilter)) As Boolean
         If String.IsNullOrEmpty(name) OrElse ctor Is Nothing Then
             Return False
-        Else
-            types(name) = ctor
-            Return True
         End If
+        types(name) = ctor
+        Return True
     End Function
 
     Public Shared Sub assert_register_filter(ByVal name As String, ByVal ctor As Func(Of String, ifilter))
@@ -67,7 +68,7 @@ Public NotInheritable Class filter_selector
     Private ReadOnly m As map(Of String, Func(Of String, ifilter))
 
     Public Sub New()
-        m = New map(Of String, Func(Of String, ifilter))()
+        Me.New(New map(Of String, Func(Of String, ifilter))())
     End Sub
 
     Public Sub New(ByVal m As map(Of String, Func(Of String, ifilter)))
@@ -97,12 +98,15 @@ Public NotInheritable Class filter_selector
         i = m.find(name)
         If i = m.end() Then
             Return [default](value)
-        Else
-            Return (+i).second(value)
         End If
+        Return (+i).second(value)
+    End Function
+
+    Public Function CloneT() As filter_selector Implements ICloneable(Of filter_selector).Clone
+        Return New filter_selector(copy(m))
     End Function
 
     Public Function Clone() As Object Implements ICloneable.Clone
-        Return New filter_selector(m)
+        Return CloneT()
     End Function
 End Class
