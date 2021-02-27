@@ -109,13 +109,12 @@ Public NotInheritable Class registry(Of T)
         End If
     End Sub
 
-    Public Shared ReadOnly bypass As Boolean
+    Public Shared ReadOnly bypass As Boolean = GetType(T).is(GetType(idevice_creator(Of ))) OrElse
+                                               GetType(T).is(GetType(idevice_exporter(Of ))) OrElse
+                                               GetType(T).is(GetType(idevice(Of ))) OrElse
+                                               GetType(T).is(GetType(idevice_pool(Of )))
 
     Shared Sub New()
-        bypass = GetType(T).is(GetType(idevice_creator(Of ))) OrElse
-                 GetType(T).is(GetType(idevice_exporter(Of ))) OrElse
-                 GetType(T).is(GetType(idevice(Of ))) OrElse
-                 GetType(T).is(GetType(idevice_pool(Of )))
         If Not bypass Then
             assert(wrapper.register(
                        Function(v As var, i As idevice(Of T), ByRef o As idevice(Of T)) As Boolean
@@ -134,44 +133,42 @@ Public NotInheritable Class registry(Of T)
                                If constructor.resolve(v, c) Then
                                    o = device_creator_adapter.[New](c, async_device_device_converter(Of T).[default]())
                                    Return True
-                               Else
-                                   Return False
                                End If
+                               Return False
                            End Function))
             End If
             assert(constructor.register(
-                       Function(v As var, ByRef o As iauto_device_exporter(Of T)) As Boolean
+                       Function(ByVal v As var, ByRef o As iauto_device_exporter(Of T)) As Boolean
                            If v Is Nothing Then
                                Return False
                            End If
 
                            Dim x As idevice_creator(Of T) = Nothing
                            Dim y As iasync_device_creator(Of T) = Nothing
-                           If constructor.resolve(v, x) OrElse constructor.resolve(v, y) Then
-                               Const check_interval_ms As String = "check-interval-ms"
-                               Const failure_wait_ms As String = "failure-wait-ms"
-                               Const max_concurrent_generations As String = "max-concurrent-generations"
-                               v.bind(check_interval_ms, failure_wait_ms, max_concurrent_generations)
-                               Dim cms As Int64 = uint64_0
-                               Dim fms As Int64 = uint64_0
-                               Dim mc As Int32 = 0
-                               cms = v(check_interval_ms).to(Of Int64) _
-                                                            (constants.default_auto_generation_check_interval_ms)
-                               fms = v(failure_wait_ms).to(Of Int64)(constants.default_auto_generation_failure_wait_ms)
-                               mc = v(max_concurrent_generations).to(Of Int32)(
-                                        constants.default_auto_generation_max_concurrent_generations)
-                               If Not x Is Nothing Then
-                                   o = auto_device_exporter.[New](x, cms, fms, mc)
-                               ElseIf Not y Is Nothing Then
-                                   o = auto_device_exporter.[New](y, cms, fms, mc)
-                               Else
-                                   assert(False)
-                                   Return False
-                               End If
-                               Return True
-                           Else
+                           If Not constructor.resolve(v, x) OrElse Not constructor.resolve(v, y) Then
                                Return False
                            End If
+                           Const check_interval_ms As String = "check-interval-ms"
+                           Const failure_wait_ms As String = "failure-wait-ms"
+                           Const max_concurrent_generations As String = "max-concurrent-generations"
+                           v.bind(check_interval_ms, failure_wait_ms, max_concurrent_generations)
+                           Dim cms As Int64 = uint64_0
+                           Dim fms As Int64 = uint64_0
+                           Dim mc As Int32 = 0
+                           cms = v(check_interval_ms).to(Of Int64) _
+                                                        (constants.default_auto_generation_check_interval_ms)
+                           fms = v(failure_wait_ms).to(Of Int64)(constants.default_auto_generation_failure_wait_ms)
+                           mc = v(max_concurrent_generations).to(Of Int32)(
+                                    constants.default_auto_generation_max_concurrent_generations)
+                           If Not x Is Nothing Then
+                               o = auto_device_exporter.[New](x, cms, fms, mc)
+                           ElseIf Not y Is Nothing Then
+                               o = auto_device_exporter.[New](y, cms, fms, mc)
+                           Else
+                               assert(False)
+                               Return False
+                           End If
+                           Return True
                        End Function))
 
             assert(constructor.register(
@@ -181,13 +178,12 @@ Public NotInheritable Class registry(Of T)
                            End If
 
                            Dim d As iauto_device_exporter(Of T) = Nothing
-                           If constructor.resolve(v, d) Then
-                               o = auto_pre_generated_device_pool.[New](d, max_count(v), identity(v))
-                               attach_checker(v, o)
-                               Return True
-                           Else
+                           If Not constructor.resolve(v, d) Then
                                Return False
                            End If
+                           o = auto_pre_generated_device_pool.[New](d, max_count(v), identity(v))
+                           attach_checker(v, o)
+                           Return True
                        End Function))
 
             assert(constructor.register(
@@ -197,13 +193,12 @@ Public NotInheritable Class registry(Of T)
                            End If
 
                            Dim d As idevice_creator(Of T) = Nothing
-                           If constructor.resolve(v, d) Then
-                               o = delay_generate_device_pool.[New](d, max_count(v), identity(v))
-                               attach_checker(v, o)
-                               Return True
-                           Else
+                           If Not constructor.resolve(v, d) Then
                                Return False
                            End If
+                           o = delay_generate_device_pool.[New](d, max_count(v), identity(v))
+                           attach_checker(v, o)
+                           Return True
                        End Function))
 
             assert(constructor.register(
@@ -213,13 +208,11 @@ Public NotInheritable Class registry(Of T)
                            End If
 
                            Dim i As imanual_device_exporter(Of T) = Nothing
-                           If constructor.resolve(v, i) Then
-                               o = New manual_pre_generated_device_pool(Of T)(i, max_count(v), identity(v))
-                               attach_checker(v, o)
-                               Return True
-                           Else
+                           If Not constructor.resolve(v, i) Then
                                Return False
                            End If
+                           o = New manual_pre_generated_device_pool(Of T)(i, max_count(v), identity(v))
+                           attach_checker(v, o)
                            Return True
                        End Function))
 
@@ -230,12 +223,11 @@ Public NotInheritable Class registry(Of T)
                            End If
 
                            Dim d As idevice_creator(Of T) = Nothing
-                           If constructor.resolve(v, d) Then
-                               o = one_off_device_pool.[New](d, max_count(v), identity(v))
-                               Return True
-                           Else
+                           If Not constructor.resolve(v, d) Then
                                Return False
                            End If
+                           o = one_off_device_pool.[New](d, max_count(v), identity(v))
+                           Return True
                        End Function))
 
             assert(constructor.register(
@@ -245,12 +237,11 @@ Public NotInheritable Class registry(Of T)
                            End If
 
                            Dim d As idevice(Of T) = Nothing
-                           If constructor.resolve(v, d) Then
-                               o = singleton_device_pool.[New](d, identity(v))
-                               Return True
-                           Else
+                           If Not constructor.resolve(v, d) Then
                                Return False
                            End If
+                           o = singleton_device_pool.[New](d, identity(v))
+                           Return True
                        End Function))
 
             assert(constructor.register(
@@ -266,20 +257,23 @@ Public NotInheritable Class registry(Of T)
 
                            If strsame(pt, "auto-pre-generated", False) Then
                                Return constructor(Of idevice_pool(Of T)) _
-                                          .resolve(Of auto_pre_generated_device_pool(Of T))(v, o)
-                           ElseIf strsame(pt, "delay-generate", False) Then
-                               Return constructor(Of idevice_pool(Of T)) _
-                                          .resolve(Of delay_generate_device_pool(Of T))(v, o)
-                           ElseIf strsame(pt, "manual-pre-generated", False) Then
-                               Return constructor(Of idevice_pool(Of T)) _
-                                          .resolve(Of manual_pre_generated_device_pool(Of T))(v, o)
-                           ElseIf strsame(pt, "one-off", False) Then
-                               Return constructor(Of idevice_pool(Of T)).resolve(Of one_off_device_pool(Of T))(v, o)
-                           ElseIf strsame(pt, "singleton", False) Then
-                               Return constructor(Of idevice_pool(Of T)).resolve(Of singleton_device_pool(Of T))(v, o)
-                           Else
-                               Return False
+                                      .resolve(Of auto_pre_generated_device_pool(Of T))(v, o)
                            End If
+                           If strsame(pt, "delay-generate", False) Then
+                               Return constructor(Of idevice_pool(Of T)) _
+                                      .resolve(Of delay_generate_device_pool(Of T))(v, o)
+                           End If
+                           If strsame(pt, "manual-pre-generated", False) Then
+                               Return constructor(Of idevice_pool(Of T)) _
+                                      .resolve(Of manual_pre_generated_device_pool(Of T))(v, o)
+                           End If
+                           If strsame(pt, "one-off", False) Then
+                               Return constructor(Of idevice_pool(Of T)).resolve(Of one_off_device_pool(Of T))(v, o)
+                           End If
+                           If strsame(pt, "singleton", False) Then
+                               Return constructor(Of idevice_pool(Of T)).resolve(Of singleton_device_pool(Of T))(v, o)
+                           End If
+                           Return False
                        End Function))
         End If
     End Sub

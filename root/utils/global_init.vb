@@ -122,7 +122,11 @@ Public NotInheritable Class global_init
                                        +its(k))
             If global_init_trace.log_time_consumption Then
                 raise_error(error_type.performance,
-                            "global_init_level.", k, " used ", nowadays.milliseconds() - s, " milliseconds.")
+                            "global_init_level.",
+                            enum_def(Of global_init_level).from(k),
+                            " used ",
+                            nowadays.milliseconds() - s,
+                            " milliseconds.")
             End If
         Next
         initiating.release()
