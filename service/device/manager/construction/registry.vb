@@ -145,7 +145,7 @@ Public NotInheritable Class registry(Of T)
 
                            Dim x As idevice_creator(Of T) = Nothing
                            Dim y As iasync_device_creator(Of T) = Nothing
-                           If Not constructor.resolve(v, x) OrElse Not constructor.resolve(v, y) Then
+                           If Not constructor.resolve(v, x) AndAlso Not constructor.resolve(v, y) Then
                                Return False
                            End If
                            Const check_interval_ms As String = "check-interval-ms"
