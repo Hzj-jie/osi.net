@@ -85,6 +85,8 @@
     <Compile Include="percentile\filter.vb" />
     <Compile Include="permutations.vb" />
     <Compile Include="wordbreaker\cjk\evaluator.vb" />
+    <Compile Include="wordbreaker\cjk\golden_words.vb" />
+    <Compile Include="wordbreaker\cjk\onebound_model.vb" />
     <Compile Include="wordbreaker\cjk\trainer.vb" />
     <Compile Include="wordtracer\cjk\breaking_word.vb" />
     <Compile Include="wordtracer\cjk\oneplus.vb" />
