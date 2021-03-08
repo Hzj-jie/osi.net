@@ -12,23 +12,21 @@ Public Module _enum_def_extension
         Public Shared ReadOnly strings As lazier(Of String()) =
             lazier.of(Function() As String()
                           Dim i As Int32 = 0
-                          Dim r() As String = Nothing
-                          ReDim r(enum_def(Of T).count_i() - 1)
-                          assert(enum_def(Of T).foreach(Sub(ByVal x As T, ByVal s As String)
-                                                            r(i) = s
-                                                            i += 1
-                                                        End Sub))
+                          Dim r(enum_def(Of T).count_i() - 1) As String
+                          enum_def(Of T).foreach(Sub(ByVal x As T, ByVal s As String)
+                                                     r(i) = s
+                                                     i += 1
+                                                 End Sub)
                           Return r
                       End Function)
         Public Shared ReadOnly string_pairs As lazier(Of pair(Of T, String)()) =
             lazier.of(Function() As pair(Of T, String)()
                           Dim i As Int32 = 0
-                          Dim r() As pair(Of T, String) = Nothing
-                          ReDim r(enum_def(Of T).count_i() - 1)
-                          assert(enum_def(Of T).foreach(Sub(ByVal x As T, ByVal s As String)
-                                                            r(i) = pair.emplace_of(x, s)
-                                                            i += 1
-                                                        End Sub))
+                          Dim r(enum_def(Of T).count_i() - 1) As pair(Of T, String)
+                          enum_def(Of T).foreach(Sub(ByVal x As T, ByVal s As String)
+                                                     r(i) = pair.emplace_of(x, s)
+                                                     i += 1
+                                                 End Sub)
                           Return r
                       End Function)
         Public Shared ReadOnly string_T As lazier(Of unordered_map(Of String, T)) =

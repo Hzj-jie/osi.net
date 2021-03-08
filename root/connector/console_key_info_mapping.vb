@@ -19,22 +19,20 @@ Public Module _console_key_info_mapping
     Public ReadOnly console_key_min_char_int As Int32
 
     Sub New()
-        Dim cmin As ConsoleKey = Nothing
+        Dim cmin As ConsoleKey = ConsoleKey.A
         Dim cmins As String = Nothing
-        Dim cmax As ConsoleKey = Nothing
+        Dim cmax As ConsoleKey = ConsoleKey.A
         Dim cmaxs As String = Nothing
-        cmin = ConsoleKey.A
-        cmax = ConsoleKey.A
-        assert(enum_def(Of ConsoleKey).foreach(Sub(x As ConsoleKey, y As String)
-                                                   If x.as_int32() < cmin.as_int32() Then
-                                                       cmin = x
-                                                       cmins = y
-                                                   End If
-                                                   If x.as_int32() > cmax.as_int32() Then
-                                                       cmax = x
-                                                       cmaxs = y
-                                                   End If
-                                               End Sub))
+        enum_def(Of ConsoleKey).foreach(Sub(ByVal x As ConsoleKey, ByVal y As String)
+                                            If x.as_int32() < cmin.as_int32() Then
+                                                cmin = x
+                                                cmins = y
+                                            End If
+                                            If x.as_int32() > cmax.as_int32() Then
+                                                cmax = x
+                                                cmaxs = y
+                                            End If
+                                        End Sub)
         assert(Not String.IsNullOrEmpty(cmins) AndAlso Not String.IsNullOrEmpty(cmaxs))
         console_key_min = cmin
         console_key_min_str = cmins

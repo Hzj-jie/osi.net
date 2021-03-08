@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports System.IO
+Imports osi.root.constants
 
 ' Use instance to allow extension methods in other projects.
 Public NotInheritable Class enum_definition(Of T)
@@ -18,6 +19,10 @@ Public NotInheritable Class enum_definition(Of T)
         assert(Not values Is Nothing AndAlso values.Length() >= 0)
         bytes_serializer.fixed.register(Of T)(AddressOf instance.append_to, AddressOf instance.consume_from)
         string_serializer.register(Of T)(AddressOf instance.write_to, AddressOf instance.read_from)
+    End Sub
+
+    Public Shared Sub register()
+        ' Trigger cctor.
     End Sub
 
     Public Function count() As UInt32
@@ -36,48 +41,30 @@ Public NotInheritable Class enum_definition(Of T)
         Return _width
     End Function
 
-    ' TODO: Return the count of enumerations iterated as int (npos for error).
-    Public Function foreach(ByVal d As Func(Of T, String, Boolean)) As Boolean
-        If d Is Nothing Then
-            Return False
-        End If
+    Public Sub foreach(ByVal d As Action(Of T, String))
+        assert(Not d Is Nothing)
         For Each value As T In values
-            If Not d(value, [Enum].GetName(type, value)) Then
+            Try
+                d(value, [Enum].GetName(type, value))
+            Catch ex As break_lambda
                 Exit For
-            End If
+            End Try
         Next
+    End Sub
 
-        Return True
-    End Function
+    Public Sub foreach(ByVal d As Action(Of T))
+        assert(Not d Is Nothing)
+        foreach(Sub(ByVal i As T, ByVal name As String)
+                    d(i)
+                End Sub)
+    End Sub
 
-    Public Function foreach(ByVal d As Action(Of T, String)) As Boolean
-        If d Is Nothing Then
-            Return False
-        End If
-        Return foreach(Function(ByVal i As T, ByVal s As String) As Boolean
-                           d(i, s)
-                           Return True
-                       End Function)
-    End Function
-
-    Public Function foreach(ByVal d As Func(Of T, Boolean)) As Boolean
-        If d Is Nothing Then
-            Return False
-        End If
-        Return foreach(Function(ByVal i As T, ByVal s As String) As Boolean
-                           Return d(i)
-                       End Function)
-    End Function
-
-    Public Function foreach(ByVal d As Action(Of T)) As Boolean
-        If d Is Nothing Then
-            Return False
-        End If
-        Return foreach(Function(ByVal i As T) As Boolean
-                           d(i)
-                           Return True
-                       End Function)
-    End Function
+    Public Sub foreach(ByVal d As Action(Of String))
+        assert(Not d Is Nothing)
+        foreach(Sub(ByVal i As T, ByVal name As String)
+                    d(name)
+                End Sub)
+    End Sub
 
     Public Function has(Of VT)(ByVal i As VT) As Boolean
         If Not type_info(Of VT).is_integral Then
@@ -88,25 +75,23 @@ Public NotInheritable Class enum_definition(Of T)
             Return False
         End If
         Dim r As Boolean = False
-        assert(foreach(Function(ByVal x As T, ByVal y As String) As Boolean
-                           If compare(x, i2) = 0 Then
-                               r = True
-                               Return False
-                           End If
-                           Return True
-                       End Function))
+        foreach(Sub(ByVal x As T)
+                    If compare(x, i2) = 0 Then
+                        r = True
+                        break_lambda.at_here()
+                    End If
+                End Sub)
         Return r
     End Function
 
     Public Function has(ByVal i As String) As Boolean
         Dim r As Boolean = False
-        assert(foreach(Function(ByVal x As T, ByVal y As String) As Boolean
-                           If strsame(y, i) Then
-                               r = True
-                               Return False
-                           End If
-                           Return True
-                       End Function))
+        foreach(Sub(ByVal x As String)
+                    If strsame(x, i) Then
+                        r = True
+                        break_lambda.at_here()
+                    End If
+                End Sub)
         Return r
     End Function
 

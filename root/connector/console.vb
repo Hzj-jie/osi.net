@@ -136,25 +136,22 @@ Public Module _console
     End Sub
 
     Public Function closest_console_color(ByVal r As Byte, ByVal g As Byte, ByVal b As Byte) As ConsoleColor
-        Dim min_d As Int32 = 0
-        min_d = max_int32
+        Dim min_d As Int32 = max_int32
         Dim min_c As ConsoleColor = Nothing
-        assert(enum_def(Of ConsoleColor).foreach(Function(ByVal cc As ConsoleColor, ByVal n As String) As Boolean
-                                                     Dim c As Color = Nothing
-                                                     'no dark yellow in knowncolor enumeration
-                                                     c = Color.FromName(
-                                                             If(strsame(n, "DarkYellow", False), "Orange", n))
-                                                     Dim d As Int32 = 0
-                                                     d = (CShort(c.R) - r).power_2() +
-                                                         (CShort(c.G) - g).power_2() +
-                                                         (CShort(c.B) - b).power_2()
-                                                     If d = 0 OrElse
-                                                        d < min_d Then
-                                                         min_c = cc
-                                                         Return d <> 0
-                                                     End If
-                                                     Return True
-                                                 End Function))
+        enum_def(Of ConsoleColor).foreach(Sub(ByVal cc As ConsoleColor, ByVal n As String)
+                                              Dim c As Color = Nothing
+                                              'no dark yellow in knowncolor enumeration
+                                              c = Color.FromName(If(strsame(n, "DarkYellow", False), "Orange", n))
+                                              Dim d As Int32 = (CShort(c.R) - r).power_2() +
+                                                               (CShort(c.G) - g).power_2() +
+                                                               (CShort(c.B) - b).power_2()
+                                              If d = 0 OrElse d < min_d Then
+                                                  min_c = cc
+                                                  If d = 0 Then
+                                                      break_lambda.at_here()
+                                                  End If
+                                              End If
+                                          End Sub)
         Return min_c
     End Function
 End Module
