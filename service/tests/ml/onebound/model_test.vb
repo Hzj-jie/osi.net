@@ -71,20 +71,30 @@ Namespace onebound
             model.load(+input).filter(+lower_bound).dump(+output)
         End Sub
 
+        Private Shared Function load_to_pairs() As stream(Of first_const_pair(Of String, Double))
+            Return model.load(+input).
+                         filter(lower_bound Or 0).
+                         flat_map().
+                         map(Function(ByVal p As first_const_pair(Of const_pair(Of String, String), Double)) _
+                                 As first_const_pair(Of String, Double)
+                                 Return first_const_pair.emplace_of(strcat(p.first.first, p.first.second), p.second)
+                             End Function)
+        End Function
+
+        <command_line_specified>
+        <test>
+        Private Shared Sub dump_to_console()
+            load_to_pairs().foreach(Sub(ByVal p As first_const_pair(Of String, Double))
+                                        Console.WriteLine(strcat(p.first, " ", p.second))
+                                    End Sub)
+        End Sub
+
         <command_line_specified>
         <test>
         Private Shared Sub sort_to_console()
-            model.load(+input).
-                  filter(lower_bound Or 0).
-                  flat_map().
-                  map(Function(ByVal p As first_const_pair(Of const_pair(Of String, String), Double)) _
-                          As first_const_pair(Of String, Double)
-                          Return first_const_pair.emplace_of(strcat(p.first.first, p.first.second), p.second)
-                      End Function).
-                  sort().
-                  foreach(Sub(ByVal p As first_const_pair(Of String, Double))
-                              Console.WriteLine(strcat(p.first, " ", p.second))
-                          End Sub)
+            load_to_pairs().sort().foreach(Sub(ByVal p As first_const_pair(Of String, Double))
+                                               Console.WriteLine(strcat(p.first, " ", p.second))
+                                           End Sub)
         End Sub
 
         <command_line_specified>

@@ -217,9 +217,8 @@ Partial Public NotInheritable Class fces
     Public Function valuesize(ByVal result As ref(Of Int64)) As event_comb _
                              Implements ikeyvalue2(Of store_t.iterator).valuesize
         Dim ec As event_comb = Nothing
-        Dim p As ref(Of UInt64) = Nothing
+        Dim p As New ref(Of UInt64)()
         Return New event_comb(Function() As Boolean
-                                  _new(p)
                                   ec = content.valuesize(p)
                                   Return waitfor(ec) AndAlso
                                          goto_next()

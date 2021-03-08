@@ -60,8 +60,7 @@ Public NotInheritable Class ref_map_test
 
     <test>
     Private Shared Sub wont_create_two_instances()
-        Dim m As ref_map(Of Int32, cd_object(Of joint_type(Of ref_map_test, _0))) = Nothing
-        m.[New]()
+        Dim m As New ref_map(Of Int32, cd_object(Of joint_type(Of ref_map_test, _0)))()
         Dim r As ref_ptr(Of cd_object(Of joint_type(Of ref_map_test, _0))) = Nothing
         r = m.get(100, Function() As cd_object(Of joint_type(Of ref_map_test, _0))
                            Return New cd_object(Of joint_type(Of ref_map_test, _0))()
@@ -81,8 +80,7 @@ Public NotInheritable Class ref_map_test
 
     <test>
     Private Shared Sub create_different_instances_with_different_keys()
-        Dim m As ref_map(Of Int32, cd_object(Of joint_type(Of ref_map_test, _1))) = Nothing
-        m.[New]()
+        Dim m As New ref_map(Of Int32, cd_object(Of joint_type(Of ref_map_test, _1)))()
         Dim r As ref_ptr(Of cd_object(Of joint_type(Of ref_map_test, _1))) = Nothing
         r = m.get(1, Function() As cd_object(Of joint_type(Of ref_map_test, _1))
                          Return New cd_object(Of joint_type(Of ref_map_test, _1))()
@@ -109,8 +107,8 @@ Public NotInheritable Class ref_map_test
 
     <test>
     Private NotInheritable Class multi_threading_get_should_succeed_case
-        Private ReadOnly m As ref_map(Of Int32, cd_object(Of joint_type(Of ref_map_test, _2)))
-        Private ReadOnly s As [set](Of Int32)
+        Private ReadOnly m As New ref_map(Of Int32, cd_object(Of joint_type(Of ref_map_test, _2)))()
+        Private ReadOnly s As New [set](Of Int32)()
 
         <test>
         <multi_threading(4)>
@@ -130,11 +128,6 @@ Public NotInheritable Class ref_map_test
         Private Sub check_created_instances()
             assertion.equal(s.size(), m.created_size())
             assertion.equal(s.size(), cd_object(Of joint_type(Of ref_map_test, _2)).constructed())
-        End Sub
-
-        Private Sub New()
-            m.[New]()
-            s.[New]()
         End Sub
     End Class
 

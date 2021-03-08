@@ -40,6 +40,14 @@ Public NotInheritable Class argument_setter
         Return strcat(type.Name(), ".", field.Name()).strrplc("+", ".")
     End Function
 
+    Private Shared Function extend_arg_names(ByVal v As vector(Of String)) As vector(Of String)
+        assert(Not v.null_or_empty())
+        For i As UInt32 = 0 To v.size() - uint32_1
+            v.emplace_back(v(i).strrplc("_"c, "-"c))
+        Next
+        Return v
+    End Function
+
     ' VisibleForTesting
     Public Shared Sub process_type(ByVal type As Type, ByVal [default] As var)
         If type.IsGenericType() OrElse type.IsGenericTypeDefinition() Then
@@ -50,30 +58,30 @@ Public NotInheritable Class argument_setter
             get_argument_type(field).if_present(
                     Sub(ByVal t As Type)
                         static_constructor.once_execute(t)
-                        Dim arg_name As String = argument_name(type, field)
-                        Dim arg_name2 As String = field.Name()
+                        Dim arg_names As vector(Of String) =
+                            extend_arg_names(vector.emplace_of(argument_name(type, field), field.Name()))
                         Dim v As Object = Nothing
                         If t.Equals(GetType(Boolean)) Then
                             Dim o As Boolean = False
-                            If [default].switch(arg_name, o) OrElse
-                               [default].switch(arg_name.strrplc("_"c, "-"c), o) OrElse
-                               [default].switch(arg_name2, o) OrElse
-                               [default].switch(arg_name2.strrplc("_"c, "-"c), o) Then
-                                v = o
-                            End If
+                            For i As UInt32 = 0 To arg_names.size() - uint32_1
+                                If [default].switch(arg_names(i), o) Then
+                                    v = o
+                                    Exit For
+                                End If
+                            Next
                         ElseIf t.Equals(GetType(vector(Of String))) AndAlso
                                (field.Name().Equals("others") OrElse
                                 field.Name().Equals("other_values")) Then
                             v = [default].other_values()
                         Else
                             Dim o As String = Nothing
-                            If [default].value(arg_name, o) OrElse
-                               [default].value(arg_name.strrplc("_"c, "-"c), o) OrElse
-                               [default].value(arg_name2, o) OrElse
-                               [default].value(arg_name2.strrplc("_"c, "-"c), o) Then
-                                assert(type_string_serializer.r.from_str(t, False, o, v) OrElse
-                                       type_json_serializer.r.from_str(t, False, o, v))
-                            End If
+                            For i As UInt32 = 0 To arg_names.size() - uint32_1
+                                If [default].value(arg_names(i), o) Then
+                                    assert(type_string_serializer.r.from_str(t, False, o, v) OrElse
+                                           type_json_serializer.r.from_str(t, False, o, v))
+                                    Exit For
+                                End If
+                            Next
                         End If
                         Try
                             field.SetValue(Nothing, field.FieldType().parameters_constructor()({v}))

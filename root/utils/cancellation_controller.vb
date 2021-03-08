@@ -10,15 +10,9 @@ Imports osi.root.lock
 
 ' A combination of mutual excluded flip_event implementations.
 Public NotInheritable Class cancellation_controller
-    Private ReadOnly manual_ref As atomic_ref(Of flip_events.manual_flip_event)
-    Private ReadOnly ref_counted_ref As atomic_ref(Of flip_events.ref_counted_flip_event)
-    Private ReadOnly timeout_ref As atomic_ref(Of flip_event)
-
-    Public Sub New()
-        manual_ref.[New]()
-        ref_counted_ref.[New]()
-        timeout_ref.[New]()
-    End Sub
+    Private ReadOnly manual_ref As New atomic_ref(Of flip_events.manual_flip_event)()
+    Private ReadOnly ref_counted_ref As New atomic_ref(Of flip_events.ref_counted_flip_event)()
+    Private ReadOnly timeout_ref As New atomic_ref(Of flip_event)()
 
     ' Prefers a weak_ref_delegate to avoid binding object.
     Public Function manual(Of T)(ByVal obj As T, ByVal when_cancel As Action(Of T)) As flip_events.manual_flip_event

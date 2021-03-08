@@ -16,23 +16,16 @@ Partial Public Class sharedtransmitter_test
         Inherits [case]
 
         Private Const iteration_count As Int32 = 100
-        Private ReadOnly ic As collection
-        Private ReadOnly oc As collection
-        Private ReadOnly f As functor
-        Private ReadOnly ins As vector(Of sharedtransmitter(Of Byte, Byte, component, Int32, parameter))
-        Private ReadOnly outs As vector(Of sharedtransmitter(Of Byte, Byte, component, Int32, parameter))
+        Private ReadOnly ic As New collection()
+        Private ReadOnly oc As New collection()
+        Private ReadOnly f As New functor()
+        Private ReadOnly ins As New vector(Of sharedtransmitter(Of Byte, Byte, component, Int32, parameter))()
+        Private ReadOnly outs As New vector(Of sharedtransmitter(Of Byte, Byte, component, Int32, parameter))()
         Private ReadOnly inp As parameter
         Private ReadOnly outp As parameter
 
         Public Sub New()
-            MyBase.New()
-            ic = New collection()
-            oc = New collection()
-            f = New functor()
-            ins = _new(ins)
-            outs = _new(outs)
-            While inp Is Nothing OrElse
-                  Not component.is_valid_port(inp.local_port)
+            While inp Is Nothing OrElse Not component.is_valid_port(inp.local_port)
                 inp = New parameter(rnd_uint8(), True)
             End While
             While outp Is Nothing OrElse

@@ -18,10 +18,8 @@ Partial Public NotInheritable Class dispenser_test
     Public Overrides Function run() As Boolean
         Const accepter_count As Int32 = 10
         Const data_size As Int32 = 1000
-        Dim q As qless2(Of pair(Of Int32, Int32)) = Nothing
-        q = _new(q)
-        Dim d As dispenser(Of Int32, Int32) = Nothing
-        d = New dispenser(Of Int32, Int32)(New receiver(q))
+        Dim q As New qless2(Of pair(Of Int32, Int32))()
+        Dim d As New dispenser(Of Int32, Int32)(New receiver(q))
         Dim accepters() As accepter = Nothing
         ReDim accepters(accepter_count - 1)
         For i As Int32 = 0 To accepter_count - 1

@@ -17,7 +17,7 @@ Partial Public Class sharedtransmitter_test
         Public ReadOnly receiver As event_sync_T_pump_T_receiver_adapter(Of pair(Of Int32, const_pair(Of Byte, Byte)))
         Public ReadOnly address As Byte
         Public ReadOnly local_port As Byte
-        Private ReadOnly pump As slimqless2_event_sync_T_pump(Of pair(Of Int32, const_pair(Of Byte, Byte)))
+        Private ReadOnly pump As New slimqless2_event_sync_T_pump(Of pair(Of Int32, const_pair(Of Byte, Byte)))()
 
         Shared Sub New()
             ReDim instances(max_uint8 - min_uint8)
@@ -38,7 +38,6 @@ Partial Public Class sharedtransmitter_test
             assertion.is_null(instances(Me.address)(Me.local_port))
             instances(Me.address)(Me.local_port) = Me
             instances_lock.release()
-            _new(Me.pump)
             Me.receiver = event_sync_T_pump_T_receiver_adapter.[New](pump)
         End Sub
 

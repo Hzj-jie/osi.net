@@ -28,8 +28,8 @@ Public Class pipe(Of T)
         Me.retries = retries
         q = New qless2(Of T)()
         If enable_io_pending_punishment Then
-            _new(input_pending)
-            _new(output_pending)
+            input_pending = New pending_io_punishment(Of _true)()
+            output_pending = New pending_io_punishment(Of _true)()
         End If
     End Sub
 
