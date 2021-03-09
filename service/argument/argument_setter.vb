@@ -73,11 +73,25 @@ Public NotInheritable Class argument_setter
                                 For i As UInt32 = 0 To arg_names.size() - uint32_1
                                     Dim o As String = Nothing
                                     If [default].value(arg_names(i), o) Then
+                                        Dim assert_msgs() As Object = {
+                                            arg_names(i),
+                                            ": ",
+                                            o,
+                                            " for ",
+                                            type.AssemblyQualifiedName(),
+                                            ".",
+                                            field.Name()
+                                        }
                                         If t.IsEnum() Then
-                                            v = [Enum].Parse(t, o)
+                                            Try
+                                                v = [Enum].Parse(t, o, True)
+                                            Catch ex As Exception
+                                                assert(False, assert_msgs, ", ex ", ex)
+                                            End Try
                                         Else
                                             assert(type_string_serializer.r.from_str(t, False, o, v) OrElse
-                                                   type_json_serializer.r.from_str(t, False, o, v))
+                                                   type_json_serializer.r.from_str(t, False, o, v),
+                                                   assert_msgs)
                                         End If
                                         Exit For
                                     End If

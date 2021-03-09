@@ -161,6 +161,45 @@ Public NotInheritable Class argument_setter_test
         End If
     End Sub
 
+    Private NotInheritable Class argument_holder6
+        Public Enum e
+            a
+            b
+        End Enum
+
+        Public Shared arg As argument(Of UInt32)
+        Public Shared arg2 As argument(Of e)
+    End Class
+
+    <test>
+    Private Shared Sub crash_if_type_mismatches()
+        argument_holder6.arg = Nothing
+        expect_assertion_failure(Sub()
+                                     argument_setter.process_type(GetType(argument_holder6),
+                                     New var({"--argument_holder6.arg=x"}))
+                                 End Sub,
+                                 AddressOf assertion.not_reach,
+                                 Sub(ByVal msg As String)
+                                     assertion.is_true(msg.contains_all(
+                                                           "argument_holder6.arg",
+                                                           "x",
+                                                           GetType(argument_holder6).AssemblyQualifiedName()))
+                                 End Sub)
+
+        argument_holder6.arg2 = Nothing
+        expect_assertion_failure(Sub()
+                                     argument_setter.process_type(GetType(argument_holder6),
+                                     New var({"--argument_holder6.arg2=x"}))
+                                 End Sub,
+                                 AddressOf assertion.not_reach,
+                                 Sub(ByVal msg As String)
+                                     assertion.is_true(msg.contains_all(
+                                                           "argument_holder6.arg2",
+                                                           "x",
+                                                           GetType(argument_holder6).AssemblyQualifiedName()))
+                                 End Sub)
+    End Sub
+
     Public NotInheritable Class argument_setter_crash_if_type_mismatches
         Inherits isolate_case_wrapper
 

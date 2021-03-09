@@ -36,7 +36,7 @@ Public NotInheritable Class enum_def_test
                                      enum_def(Of test_enum).
                                          foreach(direct_cast(Of Action(Of test_enum, String))(Nothing))
                                  End Sub,
-                                 AddressOf assertion.is_true)
+                                 AddressOf assertion.not_reach)
 
         Dim i As Int32 = 0
         Const target As test_enum = test_enum.d

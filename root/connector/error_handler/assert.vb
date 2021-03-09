@@ -7,39 +7,50 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
 Public Module _assert
+    ' The message should carry the stack trace, no reason to expose the exception type.
     Private NotInheritable Class assertion_break
         Inherits Exception
 
-        Private Shared ReadOnly instance As New assertion_break()
-
-        Public Shared Sub at_here()
-            Throw instance
+        Public Shared Sub at_here(ByVal msg As String)
+            Throw New assertion_break(msg)
         End Sub
 
-        Private Sub New()
+        Private Sub New(ByVal msg As String)
+            MyBase.New(msg)
         End Sub
     End Class
 
     <ThreadStatic>
     Private ignore_assertion_failure As Boolean
 
-    Public Sub expect_assertion_failure(ByVal d As Action, ByVal check As Action(Of Boolean))
+    Public Sub expect_assertion_failure(ByVal d As Action, ByVal not_reach As Action)
+        expect_assertion_failure(d,
+                                 not_reach,
+                                 Sub(ByVal msg As String)
+                                 End Sub)
+    End Sub
+
+    Public Sub expect_assertion_failure(ByVal d As Action,
+                                        ByVal not_reach As Action,
+                                        ByVal check_exception As Action(Of String))
         If ignore_assertion_failure Then
             ' assert(Not ignore_assertion_failure)
             ' won't work here.
             assert_break()
         End If
         assert(Not d Is Nothing)
-        assert(Not check Is Nothing)
+        assert(Not not_reach Is Nothing)
+        assert(Not check_exception Is Nothing)
         ignore_assertion_failure = True
         Try
             d()
         Catch ex As assertion_break
+            check_exception(ex.Message())
             Return
         Finally
             ignore_assertion_failure = False
         End Try
-        check(False)
+        not_reach()
     End Sub
 
     Public Sub assert_break()
@@ -52,19 +63,19 @@ Public Module _assert
     End Sub
 
     Private Function assert_failed(ByVal assertlevel As String, ByVal msg() As Object) As Boolean
+        Dim msgs() As Object = {assertlevel,
+                                If(isemptyarray(msg), " failed.", " failed, "),
+                                msg,
+                                newline.incode(),
+                                callstack()}
         ' This function should be rearly reached, the performance is less critical.
         If ignore_assertion_failure Then
-            assertion_break.at_here()
+            assertion_break.at_here(error_message.p(msgs))
             ' Never reach
             Return False
         End If
 
-        raise_error(error_type.critical,
-                    assertlevel,
-                    If(isemptyarray(msg), " failed.", " failed, "),
-                    msg,
-                    newline.incode(),
-                    callstack())
+        raise_error(error_type.critical, msgs)
         assert_break()
         Return False
     End Function
