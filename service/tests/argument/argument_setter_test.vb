@@ -144,10 +144,6 @@ Public NotInheritable Class argument_setter_test
             b = 3
         End Enum
 
-        Shared Sub New()
-            enum_definition(Of e).register()
-        End Sub
-
         Public Shared arg As argument(Of e)
     End Class
 

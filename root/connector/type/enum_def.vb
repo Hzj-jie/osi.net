@@ -21,10 +21,6 @@ Public NotInheritable Class enum_definition(Of T)
         string_serializer.register(Of T)(AddressOf instance.write_to, AddressOf instance.read_from)
     End Sub
 
-    Public Shared Sub register()
-        ' Trigger cctor.
-    End Sub
-
     Public Function count() As UInt32
         Return CUInt(count_i())
     End Function

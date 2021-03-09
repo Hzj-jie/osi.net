@@ -49,34 +49,40 @@ Public NotInheritable Class argument_setter
         For Each field As FieldInfo In type.GetFields(binding_flags.static_all)
             get_argument_type(field).if_present(
                     Sub(ByVal t As Type)
-                        static_constructor.once_execute(t)
-                        Dim arg_names As vector(Of String) = vector.emplace_of(
+                        Dim v As Object = Nothing
+                        If t.Equals(GetType(vector(Of String))) AndAlso
+                                                       (field.Name().Equals("others") OrElse
+                                                        field.Name().Equals("other_values")) Then
+                            v = [default].other_values()
+                        Else
+                            static_constructor.once_execute(t)
+                            Dim arg_names As vector(Of String) = vector.emplace_of(
                                 argument_name(type, field),
                                 argument_name(type, field).Replace("_"c, "-"c),
                                 field.Name(),
                                 field.Name().Replace("_"c, "-"c))
-                        Dim v As Object = Nothing
-                        If t.Equals(GetType(Boolean)) Then
-                            For i As UInt32 = 0 To arg_names.size() - uint32_1
-                                Dim o As Boolean = False
-                                If [default].switch(arg_names(i), o) Then
-                                    v = o
-                                    Exit For
-                                End If
-                            Next
-                        ElseIf t.Equals(GetType(vector(Of String))) AndAlso
-                               (field.Name().Equals("others") OrElse
-                                field.Name().Equals("other_values")) Then
-                            v = [default].other_values()
-                        Else
-                            For i As UInt32 = 0 To arg_names.size() - uint32_1
-                                Dim o As String = Nothing
-                                If [default].value(arg_names(i), o) Then
-                                    assert(type_string_serializer.r.from_str(t, False, o, v) OrElse
-                                           type_json_serializer.r.from_str(t, False, o, v))
-                                    Exit For
-                                End If
-                            Next
+                            If t.Equals(GetType(Boolean)) Then
+                                For i As UInt32 = 0 To arg_names.size() - uint32_1
+                                    Dim o As Boolean = False
+                                    If [default].switch(arg_names(i), o) Then
+                                        v = o
+                                        Exit For
+                                    End If
+                                Next
+                            Else
+                                For i As UInt32 = 0 To arg_names.size() - uint32_1
+                                    Dim o As String = Nothing
+                                    If [default].value(arg_names(i), o) Then
+                                        If t.IsEnum() Then
+                                            v = [Enum].Parse(t, o)
+                                        Else
+                                            assert(type_string_serializer.r.from_str(t, False, o, v) OrElse
+                                                   type_json_serializer.r.from_str(t, False, o, v))
+                                        End If
+                                        Exit For
+                                    End If
+                                Next
+                            End If
                         End If
                         Try
                             field.SetValue(Nothing, field.FieldType().parameters_constructor()({v}))
