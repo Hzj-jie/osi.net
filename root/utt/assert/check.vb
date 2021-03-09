@@ -274,6 +274,27 @@ Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
         Return near_match(v, exp, 0.001, msg)
     End Function
 
+    Public Shared Function death(ByVal d As Action, ByVal check_exception As Action(Of String)) As Boolean
+        assert(Not check_exception Is Nothing)
+        Dim r As Boolean = True
+        expect_assertion_failure(d,
+                                 Sub()
+                                     not_reach()
+                                     r = False
+                                 End Sub,
+                                 Sub(ByVal msg As String)
+                                     check_exception(msg)
+                                     r = False
+                                 End Sub)
+        Return r
+    End Function
+
+    Public Shared Function death(ByVal d As Action) As Boolean
+        Return death(d,
+                     Sub(ByVal msg As String)
+                     End Sub)
+    End Function
+
     Protected Sub New()
     End Sub
 End Class

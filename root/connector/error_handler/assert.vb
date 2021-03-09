@@ -23,13 +23,6 @@ Public Module _assert
     <ThreadStatic>
     Private ignore_assertion_failure As Boolean
 
-    Public Sub expect_assertion_failure(ByVal d As Action, ByVal not_reach As Action)
-        expect_assertion_failure(d,
-                                 not_reach,
-                                 Sub(ByVal msg As String)
-                                 End Sub)
-    End Sub
-
     Public Sub expect_assertion_failure(ByVal d As Action,
                                         ByVal not_reach As Action,
                                         ByVal check_exception As Action(Of String))

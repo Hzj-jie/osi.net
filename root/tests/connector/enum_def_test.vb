@@ -32,11 +32,10 @@ Public NotInheritable Class enum_def_test
 
         assertion.is_false(type_info(Of String).is_enum)
 
-        expect_assertion_failure(Sub()
-                                     enum_def(Of test_enum).
-                                         foreach(direct_cast(Of Action(Of test_enum, String))(Nothing))
-                                 End Sub,
-                                 AddressOf assertion.not_reach)
+        assertion.death(Sub()
+                            enum_def(Of test_enum).
+                                 foreach(direct_cast(Of Action(Of test_enum, String))(Nothing))
+                        End Sub)
 
         Dim i As Int32 = 0
         Const target As test_enum = test_enum.d
