@@ -40,14 +40,6 @@ Public NotInheritable Class argument_setter
         Return strcat(type.Name(), ".", field.Name()).strrplc("+", ".")
     End Function
 
-    Private Shared Function extend_arg_names(ByVal v As vector(Of String)) As vector(Of String)
-        assert(Not v.null_or_empty())
-        For i As UInt32 = 0 To v.size() - uint32_1
-            v.emplace_back(v(i).strrplc("_"c, "-"c))
-        Next
-        Return v
-    End Function
-
     ' VisibleForTesting
     Public Shared Sub process_type(ByVal type As Type, ByVal [default] As var)
         If type.IsGenericType() OrElse type.IsGenericTypeDefinition() Then
@@ -58,12 +50,15 @@ Public NotInheritable Class argument_setter
             get_argument_type(field).if_present(
                     Sub(ByVal t As Type)
                         static_constructor.once_execute(t)
-                        Dim arg_names As vector(Of String) =
-                            extend_arg_names(vector.emplace_of(argument_name(type, field), field.Name()))
+                        Dim arg_names As vector(Of String) = vector.emplace_of(
+                                argument_name(type, field),
+                                argument_name(type, field).Replace("_"c, "-"c),
+                                field.Name(),
+                                field.Name().Replace("_"c, "-"c))
                         Dim v As Object = Nothing
                         If t.Equals(GetType(Boolean)) Then
-                            Dim o As Boolean = False
                             For i As UInt32 = 0 To arg_names.size() - uint32_1
+                                Dim o As Boolean = False
                                 If [default].switch(arg_names(i), o) Then
                                     v = o
                                     Exit For
@@ -74,8 +69,8 @@ Public NotInheritable Class argument_setter
                                 field.Name().Equals("other_values")) Then
                             v = [default].other_values()
                         Else
-                            Dim o As String = Nothing
                             For i As UInt32 = 0 To arg_names.size() - uint32_1
+                                Dim o As String = Nothing
                                 If [default].value(arg_names(i), o) Then
                                     assert(type_string_serializer.r.from_str(t, False, o, v) OrElse
                                            type_json_serializer.r.from_str(t, False, o, v))

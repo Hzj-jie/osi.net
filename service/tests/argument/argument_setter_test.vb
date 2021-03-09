@@ -138,6 +138,33 @@ Public NotInheritable Class argument_setter_test
         End If
     End Sub
 
+    Private NotInheritable Class argument_holder5
+        Public Enum e
+            a = 1
+            b = 3
+        End Enum
+
+        Shared Sub New()
+            enum_definition(Of e).register()
+        End Sub
+
+        Public Shared arg As argument(Of e)
+    End Class
+
+    <test>
+    Private Shared Sub enum_tests()
+        argument_holder5.arg = Nothing
+        argument_setter.process_type(GetType(argument_holder5), New var({"--arg=a"}))
+        If assertion.is_not_null(argument_holder5.arg) Then
+            assertion.equal(+argument_holder5.arg, argument_holder5.e.a)
+        End If
+        argument_holder5.arg = Nothing
+        argument_setter.process_type(GetType(argument_holder5), New var({"--arg=b"}))
+        If assertion.is_not_null(argument_holder5.arg) Then
+            assertion.equal(+argument_holder5.arg, argument_holder5.e.b)
+        End If
+    End Sub
+
     Public NotInheritable Class argument_setter_crash_if_type_mismatches
         Inherits isolate_case_wrapper
 
