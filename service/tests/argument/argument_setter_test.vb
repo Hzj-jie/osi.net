@@ -182,7 +182,7 @@ Public NotInheritable Class argument_setter_test
                             assertion.is_true(msg.contains_all(
                                                   "argument_holder6.arg",
                                                   "x",
-                                                  GetType(argument_holder6).AssemblyQualifiedName()))
+                                                  type_info(Of argument_holder6).assembly_qualified_name))
                         End Sub)
 
         argument_holder6.arg2 = Nothing
@@ -194,7 +194,7 @@ Public NotInheritable Class argument_setter_test
                             assertion.is_true(msg.contains_all(
                                                   "argument_holder6.arg2",
                                                   "x",
-                                                  GetType(argument_holder6).AssemblyQualifiedName()))
+                                                  type_info(Of argument_holder6).assembly_qualified_name))
                         End Sub)
     End Sub
 
