@@ -77,8 +77,10 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
 
     Public Sub New()
         MyBase.New(If(connection_count > 1,
-                      multi_procedure(repeat(New commander_case(), If(isdebugbuild(), 1, 2) * test_size), connection_count),
-                      repeat(New commander_case(), If(isdebugbuild(), 1, 2) * test_size)))
+                      direct_cast(Of [case])(multi_procedure(repeat(New commander_case(),
+                                                                    If(isdebugbuild(), 1, 2) * test_size),
+                                                             connection_count)),
+                      direct_cast(Of [case])(repeat(New commander_case(), If(isdebugbuild(), 1, 2) * test_size))))
         dispatcher = New dispatcher()
     End Sub
 
