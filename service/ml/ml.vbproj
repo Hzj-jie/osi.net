@@ -61,6 +61,7 @@
     <Compile Include="distribution.vb" />
     <Compile Include="exponential_distribution\estimator.vb" />
     <Compile Include="exponential_distribution\exponential_distribution.vb" />
+    <Compile Include="mean.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

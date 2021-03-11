@@ -14,6 +14,12 @@ Partial Public NotInheritable Class double_stream
                        Return (l * c + r) / (c + uint32_1)
                    End Function
         End Function
+
+        ' Likely this function should be moved to stream(Of T).aggregators.
+        Public Shared ReadOnly product As Func(Of Double, Double, Double) =
+             Function(ByVal l As Double, ByVal r As Double) As Double
+                 Return l * r
+             End Function
     End Class
 
     Private Sub New()
