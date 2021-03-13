@@ -61,7 +61,7 @@ Public Module _assert
                                 msg,
                                 newline.incode(),
                                 callstack()}
-        ' This function should be rearly reached, the performance is less critical.
+        ' This function should be rarely reached, the performance is less critical.
         If ignore_assertion_failure Then
             assertion_break.at_here(error_message.p(msgs))
             ' Never reach
