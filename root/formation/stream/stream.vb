@@ -139,8 +139,11 @@ Partial Public Class stream(Of T)
     End Function
 
     Public Function with_index() As stream(Of tuple(Of UInt32, T))
-        Return collect_by(collectors.with_index()).
-               stream()
+        Return collect_by(collectors.with_index()).stream()
+    End Function
+
+    Public Function samples(ByVal sample_count As UInt32) As stream(Of T)
+        Return collect_by(collectors.samples(sample_count)).stream()
     End Function
 
     Public Function concat(ByVal e As container_operator(Of T).enumerator) As stream(Of T)

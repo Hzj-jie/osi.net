@@ -59,6 +59,7 @@
     <Compile Include="array.ext.vb" />
     <Compile Include="array.vb" />
     <Compile Include="arrays.vb" />
+    <Compile Include="delegate\icomparer_delegator.vb" />
     <Compile Include="error_handler\assert.vb" />
     <Compile Include="bit.vb" />
     <Compile Include="bytes\byte.vb" />

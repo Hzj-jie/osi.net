@@ -108,6 +108,25 @@ Partial Public Class stream(Of T)
                    End Sub
         End Function
 
+        Public Shared Function samples(ByVal sample_count As UInt32) As Action(Of vector(Of T), T)
+            Dim count As UInt32 = sample_count
+            Return Sub(ByVal r As vector(Of T), ByVal v As T)
+                       assert(Not r Is Nothing)
+                       If r.size() < sample_count Then
+                           r.emplace_back(v)
+                           Return
+                       End If
+
+                       count += uint32_1
+                       Dim rand As UInt32 = rnd_uint(0, count)
+                       If rand >= sample_count Then
+                           Return
+                       End If
+
+                       r.replace(rnd_uint(0, sample_count), v)
+                   End Sub
+        End Function
+
         Private Sub New()
         End Sub
     End Class

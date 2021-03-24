@@ -84,6 +84,7 @@
     <Compile Include="onebound\selector.vb" />
     <Compile Include="onebound\trainer.vb" />
     <Compile Include="percentile\filter.vb" />
+    <Compile Include="percentile\ranking.vb" />
     <Compile Include="permutations.vb" />
     <Compile Include="wordbreaker\cjk\coupling_ratio.vb" />
     <Compile Include="wordbreaker\cjk\evaluator.vb" />

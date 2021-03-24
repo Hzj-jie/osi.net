@@ -17,7 +17,7 @@ Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
                                                  ByVal i As T,
                                                  ByVal j As T,
                                                  ByVal msg() As Object) As Object()
-        Return New Object() {"left ", i, ", right ", j, ", expected left is ", cmp, " right, ", msg}
+        Return New Object() {"expected left ", i, " is ", cmp, " right ", j, ", ", msg}
     End Function
 
     Public Shared Function is_true(ByVal v As Boolean, ByVal ParamArray msg() As Object) As Boolean

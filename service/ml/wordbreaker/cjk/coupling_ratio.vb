@@ -7,7 +7,15 @@ Imports osi.root.connector
 Imports osi.root.delegates
 
 Public NotInheritable Class coupling_ratio
+    Public Enum mean_type
+        quadratic
+        arithmetic
+        geometric
+        harmonic
+    End Enum
+
     Private Shared percentile_ratio As argument(Of Double)
+    Private Shared mean As argument(Of mean_type)
 
     Private Shared Function perc_ratio() As Double
         Dim v As Double = (percentile_ratio Or 0.5)
