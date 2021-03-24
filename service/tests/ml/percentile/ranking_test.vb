@@ -15,7 +15,7 @@ Public NotInheritable Class ranking_test
         assertion.near_match(p.ascent.ranking(streams.range(0, 100).collect(Of vector(Of Int32))(), 79), 0.8, 0.00001)
         assertion.near_match(p.ascent.ranking(streams.range(0, 100).collect(Of vector(Of Int32))(), 99), 1, 0.00001)
         assertion.near_match(p.ascent.ranking(streams.range(0, 100).collect(Of vector(Of Int32))(), 0), 0.01, 0.00001)
-        assertion.near_match(p.ascent.ranking(streams.range(0, 100).collect(Of vector(Of Int32))(), 1), 0.05, 0.00001)
+        assertion.near_match(p.ascent.ranking(streams.range(0, 100).collect(Of vector(Of Int32))(), 1), 0.02, 0.00001)
     End Sub
 
     <test>
