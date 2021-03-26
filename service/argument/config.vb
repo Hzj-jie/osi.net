@@ -112,8 +112,10 @@ Public Class config
         If Not is_arg_prefix(i) Then
             Return False
         End If
-        If Not strsep(strmid(i, strlen(arg_prefix)), k, v, arg_key_value_separator, case_sensitive) Then
-            Return False
+        i = i.strmid(arg_prefix.strlen())
+        If Not strsep(i, k, v, arg_key_value_separator, case_sensitive) Then
+            k = i
+            v = Nothing
         End If
         If Not case_sensitive Then
             strtolower(k)

@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utt
@@ -56,6 +55,25 @@ Public NotInheritable Class argument_setter_test
         End If
         If assertion.is_not_null(others) Then
             assertion.equal(+others, vector.of("others1", "others2", "others3"))
+        End If
+    End Sub
+
+    <test>
+    Private Shared Sub different_types_of_boolean()
+        bool_arg = Nothing
+        argument_setter.process_type(GetType(argument_setter_test), New var({
+            "~argument_setter_test.bool_arg"
+        }))
+        If assertion.is_not_null(bool_arg) Then
+            assertion.is_true(+bool_arg)
+        End If
+
+        bool_arg = Nothing
+        argument_setter.process_type(GetType(argument_setter_test), New var({
+            "--argument_setter_test.bool_arg"
+        }))
+        If assertion.is_not_null(bool_arg) Then
+            assertion.is_true(+bool_arg)
         End If
     End Sub
 

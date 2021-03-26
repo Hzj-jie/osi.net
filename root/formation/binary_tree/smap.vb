@@ -99,11 +99,29 @@ Public NotInheritable Class smap(Of KEY_T, VALUE_T)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function first_mapper(Of KEY2_T)(ByVal f As Func(Of KEY_T, VALUE_T, KEY2_T)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), first_const_pair(Of KEY2_T, VALUE_T))
+        assert(Not f Is Nothing)
+        Return Function(ByVal p As first_const_pair(Of KEY_T, VALUE_T)) As first_const_pair(Of KEY2_T, VALUE_T)
+                   assert(Not p Is Nothing)
+                   Return first_const_pair.of(f(p.first, p.second), p.second)
+               End Function
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function second_mapper(Of VALUE2_T)(ByVal f As Func(Of VALUE_T, VALUE2_T)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE2_T))
         assert(Not f Is Nothing)
         Return Function(ByVal p As first_const_pair(Of KEY_T, VALUE_T)) As first_const_pair(Of KEY_T, VALUE2_T)
                    assert(Not p Is Nothing)
                    Return first_const_pair.of(p.first, f(p.second))
+               End Function
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function second_mapper(Of VALUE2_T)(ByVal f As Func(Of KEY_T, VALUE_T, VALUE2_T)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE2_T))
+        assert(Not f Is Nothing)
+        Return Function(ByVal p As first_const_pair(Of KEY_T, VALUE_T)) As first_const_pair(Of KEY_T, VALUE2_T)
+                   assert(Not p Is Nothing)
+                   Return first_const_pair.of(p.first, f(p.first, p.second))
                End Function
     End Function
 

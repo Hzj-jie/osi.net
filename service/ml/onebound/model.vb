@@ -208,6 +208,26 @@ Partial Public NotInheritable Class onebound(Of K)
                                               collect(Of unordered_map(Of R, unordered_map(Of R, Double)))())
         End Function
 
+        Public Function map(ByVal f As Func(Of K, K, Double, Double)) As onebound(Of K).model
+            assert(Not f Is Nothing)
+            Return New onebound(Of K).model(
+                       m.stream().
+                         map(m.mapper(Function(ByVal k As K,
+                                               ByVal v As unordered_map(Of K, Double)) _
+                                              As first_const_pair(Of K,
+                                                                     unordered_map(Of K, Double))
+                                          Return first_const_pair.emplace_of(
+                                                     k,
+                                                     v.stream().
+                                                       map(v.second_mapper(
+                                                               Function(ByVal x As K, ByVal y As Double) As Double
+                                                                   Return f(k, x, y)
+                                                               End Function)).
+                                                       collect(Of unordered_map(Of K, Double))())
+                                      End Function)).
+                                      collect(Of unordered_map(Of K, unordered_map(Of K, Double)))())
+        End Function
+
         Public Function map_each(Of R)(ByVal f As Func(Of unordered_map(Of K, Double), R)) As unordered_map(Of K, R)
             assert(Not f Is Nothing)
             Return m.stream().
