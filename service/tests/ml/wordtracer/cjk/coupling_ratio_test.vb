@@ -12,6 +12,7 @@ Public NotInheritable Class coupling_ratio_test
     Private Shared input As argument(Of String)
     Private Shared output As argument(Of String)
 
+    <command_line_specified>
     <test>
     Private Shared Sub run()
         coupling_ratio.execute(onebound(Of String).model.load(input Or "cjk.words.2.str.bin")).
