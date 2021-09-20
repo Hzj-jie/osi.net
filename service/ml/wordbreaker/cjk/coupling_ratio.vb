@@ -19,9 +19,9 @@ Public NotInheritable Class coupling_ratio
     Private Shared mean As argument(Of mean_type)
     Private Shared use_percentile_ranking As argument(Of Boolean)
 
-    Private Shared Function perc_ratio() As Double
-        Dim v As Double = (prefix_ratio Or 0.5)
-        assert(v <= 1 AndAlso v >= 0)
+    Private Shared Function pre_ratio() As Double
+        Dim v As Double = (prefix_ratio Or 1)
+        assert(v >= 0)
         Return v
     End Function
 
@@ -33,6 +33,10 @@ Public NotInheritable Class coupling_ratio
         Return Function(ByVal a As T, ByVal b As T, ByVal c As Double) As Double
                    Dim l As Double = all(c)
                    Dim r As Double = prefixes(a, c)
+                   If pre_ratio() <> 1 Then
+                       l /= pre_ratio()
+                       r *= pre_ratio()
+                   End If
                    Select Case mean Or mean_type.arithmetic
                        Case mean_type.arithmetic
                            Return ml.mean.arithmetic(l, r)
