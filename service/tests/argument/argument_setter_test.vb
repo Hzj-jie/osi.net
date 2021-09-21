@@ -58,22 +58,29 @@ Public NotInheritable Class argument_setter_test
         End If
     End Sub
 
+    Private NotInheritable Class argument_holder7
+        Public Shared bool_arg As argument(Of Boolean)
+
+        Private Sub New()
+        End Sub
+    End Class
+
     <test>
     Private Shared Sub different_types_of_boolean()
-        bool_arg = Nothing
-        argument_setter.process_type(GetType(argument_setter_test), New var({
-            "~argument_setter_test.bool_arg"
+        argument_holder7.bool_arg = Nothing
+        argument_setter.process_type(GetType(argument_holder7), New var({
+            "~argument_holder7.bool_arg"
         }))
-        If assertion.is_not_null(bool_arg) Then
-            assertion.is_true(+bool_arg)
+        If assertion.is_not_null(argument_holder7.bool_arg) Then
+            assertion.is_true(+argument_holder7.bool_arg)
         End If
 
-        bool_arg = Nothing
-        argument_setter.process_type(GetType(argument_setter_test), New var({
-            "--argument_setter_test.bool_arg"
+        argument_holder7.bool_arg = Nothing
+        argument_setter.process_type(GetType(argument_holder7), New var({
+            "--argument_holder7.bool_arg"
         }))
-        If assertion.is_not_null(bool_arg) Then
-            assertion.is_true(+bool_arg)
+        If assertion.is_not_null(argument_holder7.bool_arg) Then
+            assertion.is_true(+argument_holder7.bool_arg)
         End If
     End Sub
 
