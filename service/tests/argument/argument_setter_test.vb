@@ -223,6 +223,22 @@ Public NotInheritable Class argument_setter_test
                         End Sub)
     End Sub
 
+    Private NotInheritable Class argument_holder8
+        Public Shared arg As argument(Of UInt32)
+    End Class
+
+    <test>
+    Private Shared Sub use_full_argument_name()
+        argument_holder8.arg = Nothing
+        argument_setter.process_type(GetType(argument_holder8),
+                                     New var({
+                                         "--osi.tests.service.argument.argument_setter_test.argument_holder8.arg=100"
+                                     }))
+        If assertion.is_not_null(argument_holder8.arg) Then
+            assertion.equal(+argument_holder8.arg, CUInt(100))
+        End If
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

@@ -36,8 +36,12 @@ Public NotInheritable Class argument_setter
         Next
     End Sub
 
+    Private Shared Function full_argument_name(ByVal type As Type, ByVal field As FieldInfo) As String
+        Return strcat(type.full_name(), ".", field.Name()).Replace("+"c, "."c)
+    End Function
+
     Private Shared Function argument_name(ByVal type As Type, ByVal field As FieldInfo) As String
-        Return strcat(type.Name(), ".", field.Name()).strrplc("+", ".")
+        Return strcat(type.Name(), ".", field.Name()).Replace("+"c, "."c)
     End Function
 
     Private Shared Function get_argument_value(ByVal class_type As Type,
@@ -51,6 +55,8 @@ Public NotInheritable Class argument_setter
         End If
 
         Dim arg_names As vector(Of String) = vector.emplace_of(
+            full_argument_name(class_type, field),
+            full_argument_name(class_type, field).Replace("_"c, "-"c),
             argument_name(class_type, field),
             argument_name(class_type, field).Replace("_"c, "-"c),
             field.Name(),
