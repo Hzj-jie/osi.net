@@ -57,10 +57,7 @@ Public NotInheritable Class error_message
             errmsg.append(seperator, backtrace(additional_jump + 1))
         End If
 
-        'keep one \r\n
-        strrplc(errmsg, newline.incode(), character.newline)
-
-        Return errmsg
+        Return errmsg.Replace(newline.incode(), character.newline)
     End Function
 
     Public Shared Function p(ByVal m() As Object) As String

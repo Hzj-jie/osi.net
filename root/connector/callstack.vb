@@ -13,9 +13,8 @@ Public Module _callstack
     Public Function in_shared_constructor_of(ByVal stack_trace As String, ByVal t As Type) As Boolean
         If t Is Nothing Then
             Return False
-        Else
-            Return strcontains(stack_trace, strcat("   at ", strrplc(t.FullName(), "+", "."), "..cctor()"))
         End If
+        Return strcontains(stack_trace, strcat("   at ", t.FullName().Replace("+"c, "."c), "..cctor()"))
     End Function
 
     Public Function in_shared_constructor_of(ByVal t As Type) As Boolean

@@ -1,7 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.DateTime
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.constants.counter
 
 Namespace counter
@@ -16,7 +20,7 @@ Namespace counter
                        ByVal last_rate_length As Int64,
                        ByVal interval_scale As Int64,
                        ByVal sample_rate As Double)
-            strrplc(name, separator, character.underline)
+            name = name.Replace(separator, character.underline)
             If last_average_length <= 0 Then
                 last_average_length = default_last_average_length
             End If
@@ -40,7 +44,7 @@ Namespace counter
             End If
             If write_last_average OrElse write_last_rate Then
                 last_average_length = max(last_average_length, last_rate_length)
-                ReDim Me.last_averages(last_average_length - 1)
+                ReDim Me.last_averages(CInt(last_average_length - 1))
             End If
             If write_rate Then
                 select_rate(Me.type)
@@ -48,7 +52,7 @@ Namespace counter
             End If
             If write_last_rate Then
                 select_last_rate(Me.type)
-                ReDim Me.last_times_ticks(last_average_length - 1)
+                ReDim Me.last_times_ticks(CInt(last_average_length - 1))
             End If
             If can_sample() Then
                 Me.sample_rate = sample_rate

@@ -1,8 +1,11 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.utils
 
 Partial Public Class rlexer
     Public Class macros
@@ -41,8 +44,8 @@ Partial Public Class rlexer
         Public Sub define(ByVal pairs()() As String)
             assert(Not isemptyarray(pairs))
             For i As UInt32 = 0 To array_size(pairs) - uint32_1
-                assert(array_size(pairs(i)) = CUInt(2))
-                define(pairs(i)(0), pairs(i)(1))
+                assert(array_size(pairs(CInt(i))) = CUInt(2))
+                define(pairs(CInt(i))(0), pairs(CInt(i))(1))
             Next
         End Sub
 
@@ -54,7 +57,7 @@ Partial Public Class rlexer
         Public Sub define(ByVal pairs() As pair(Of String, String))
             assert(Not isemptyarray(pairs))
             For i As UInt32 = 0 To array_size(pairs) - uint32_1
-                define(pairs(i))
+                define(pairs(CInt(i)))
             Next
         End Sub
 
@@ -63,57 +66,56 @@ Partial Public Class rlexer
         End Sub
 
         Public Function expand(ByVal s As String) As String
-            If Not String.IsNullOrEmpty(s) AndAlso Not vs.empty() Then
-                Dim matched As Int32 = 0
-                While True
-                    matched = npos
-                    Dim id As UInt32 = 0
-                    For i As UInt32 = 0 To vs.size() - uint32_1
-                        Dim x As Int32 = 0
-                        x = strindexof(s, vs(i).first)
-                        If x <> npos AndAlso (matched = npos OrElse x < matched) Then
-                            matched = x
-                            id = i
-                        End If
-                    Next
-                    If matched = npos Then
-                        Exit While
-                    Else
-                        strrplc(s, CUInt(matched), strlen(vs(id).first), vs(id).second)
-                    End If
-                End While
+            If String.IsNullOrEmpty(s) OrElse vs.empty() Then
+                Return s
             End If
+            Dim matched As Int32 = 0
+            While True
+                matched = npos
+                Dim id As UInt32 = 0
+                For i As UInt32 = 0 To vs.size() - uint32_1
+                    Dim x As Int32 = 0
+                    x = strindexof(s, vs(i).first)
+                    If x <> npos AndAlso (matched = npos OrElse x < matched) Then
+                        matched = x
+                        id = i
+                    End If
+                Next
+                If matched = npos Then
+                    Exit While
+                End If
+                strrplc(s, CUInt(matched), strlen(vs(id).first), vs(id).second)
+            End While
             Return s
         End Function
 
         Public Function export() As vector(Of pair(Of String, String))
-            Dim r As vector(Of pair(Of String, String)) = Nothing
-            r = New vector(Of pair(Of String, String))()
-            If Not vs.empty() Then
-                For i As UInt32 = 0 To vs.size() - uint32_1
-                    assert(vs(i).first(0) = characters.macro_escape)
-                    r.emplace_back(pair.emplace_of(strmid(vs(i).first, uint32_1), vs(i).second))
-                Next
+            Dim r As New vector(Of pair(Of String, String))()
+            If vs.empty() Then
+                Return r
             End If
+            For i As UInt32 = 0 To vs.size() - uint32_1
+                assert(vs(i).first(0) = characters.macro_escape)
+                r.emplace_back(pair.emplace_of(strmid(vs(i).first, uint32_1), vs(i).second))
+            Next
             Return r
         End Function
 
         Public Function defined(ByVal macro As String) As Boolean
             If String.IsNullOrEmpty(macro) Then
                 Return False
-            Else
-                If strlen(macro) = uint32_1 OrElse Not macro.StartsWith(characters.macro_escape) Then
-                    macro = strcat(characters.macro_escape, macro)
-                End If
-                Dim i As UInt32 = 0
-                While i < vs.size()
-                    If strsame(vs(i).first, macro) Then
-                        Return True
-                    End If
-                    i += 1
-                End While
-                Return False
             End If
+            If strlen(macro) = uint32_1 OrElse Not macro.StartsWith(characters.macro_escape) Then
+                macro = strcat(characters.macro_escape, macro)
+            End If
+            Dim i As UInt32 = 0
+            While i < vs.size()
+                If strsame(vs(i).first, macro) Then
+                    Return True
+                End If
+                i += uint32_1
+            End While
+            Return False
         End Function
     End Class
 End Class

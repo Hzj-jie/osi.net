@@ -26,29 +26,24 @@ Public Module _environment_transform
         assert(Not String.IsNullOrEmpty(end_str))
         If String.IsNullOrEmpty(i) Then
             Return i
-        Else
-            Dim s As Int32 = 0
-            s = strindexof(i, start_str)
-            While s <> npos
-                Dim e As Int32 = 0
-                e = strindexof(i, end_str, CUInt(s) + strlen(start_str), uint32_1)
-                If e <> npos Then
-                    Dim r As String = Nothing
-                    If env_value(strmid(i, CUInt(s) + strlen(start_str), CUInt(e) - CUInt(s) - strlen(start_str)),
-                                 r) Then
-                        strrplc(i, strmid(i, CUInt(s), CUInt(e) - CUInt(s) + strlen(end_str)), r)
-                        s += strlen_i(r)
-                    Else
-                        s += strlen_i(start_str)
-                    End If
-                    s = strindexof(i, start_str, CUInt(s), uint32_1)
-                Else
-                    Exit While
-                End If
-            End While
-
-            Return i
         End If
+        Dim s As Int32 = strindexof(i, start_str)
+        While s <> npos
+            Dim e As Int32 = strindexof(i, end_str, CUInt(s) + strlen(start_str), uint32_1)
+            If e = npos Then
+                Exit While
+            End If
+            Dim r As String = Nothing
+            If env_value(i.Substring(s + start_str.Length(), e - s - start_str.Length()), r) Then
+                i.strrplc(CUInt(s), CUInt(e - s + end_str.Length()), r)
+                s += r.strlen_i()
+            Else
+                s += start_str.strlen_i()
+            End If
+            s = i.IndexOf(start_str, s)
+        End While
+
+        Return i
     End Function
 
     <Extension()> Public Function env_transform(ByVal i() As String,
