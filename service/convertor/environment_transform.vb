@@ -73,7 +73,7 @@ Public Module _environment_transform
         For j As Int32 = 0 To array_size_i(i) - 1
             If Not i(j) Is Nothing Then
                 r(j) = pair.emplace_of(i(j).first.env_transform(start_str, end_str),
-                                         i(j).second.env_transform(start_str, end_str))
+                                       i(j).second.env_transform(start_str, end_str))
             End If
         Next
         Return r
@@ -91,7 +91,7 @@ Public Module _environment_transform
         For j As UInt32 = 0 To i.size() - uint32_1
             If Not i(j) Is Nothing Then
                 r.emplace_back(pair.emplace_of(i(j).first.env_transform(start_str, end_str),
-                                                 i(j).second.env_transform(start_str, end_str)))
+                                               i(j).second.env_transform(start_str, end_str)))
             End If
         Next
         Return r
