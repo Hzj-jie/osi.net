@@ -9,7 +9,7 @@ Public NotInheritable Class argument(Of T)
     Private ReadOnly v As T
 
     ' Use reflection to create the element, the constructor accepts only object.
-    Public Sub New(ByVal v As Object)
+    Private Sub New(ByVal v As Object)
         ' A shortcut for most of the cases.
         If v Is Nothing Then
             Me.defined = False

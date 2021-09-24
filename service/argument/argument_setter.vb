@@ -40,10 +40,10 @@ Public NotInheritable Class argument_setter
         Return strcat(type.Name(), ".", field.Name()).strrplc("+", ".")
     End Function
 
-    Private Shared Function read_argument_value(ByVal class_type As Type,
-                                                ByVal field_type As Type,
-                                                ByVal field As FieldInfo,
-                                                ByVal [default] As var) As Object
+    Private Shared Function get_argument_value(ByVal class_type As Type,
+                                               ByVal field_type As Type,
+                                               ByVal field As FieldInfo,
+                                               ByVal [default] As var) As Object
         If field_type.Equals(GetType(vector(Of String))) AndAlso
            (field.Name().Equals("others") OrElse
             field.Name().Equals("other_values")) Then
@@ -106,9 +106,11 @@ Public NotInheritable Class argument_setter
         For Each field As FieldInfo In class_type.GetFields(binding_flags.static_all)
             get_argument_type(field).if_present(
                 Sub(ByVal field_type As Type)
-                    Dim v As Object = read_argument_value(class_type, field_type, field, [default])
                     Try
-                        field.SetValue(Nothing, field.FieldType().parameters_constructor()({v}))
+                        field.SetValue(Nothing,
+                                       field.FieldType().parameters_constructor()({
+                                           get_argument_value(class_type, field_type, field, [default])
+                                       }))
                     Catch ex As TargetInvocationException
                         assert(False, ex)
                     End Try
