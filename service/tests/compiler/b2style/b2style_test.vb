@@ -21,8 +21,7 @@ Public NotInheritable Class b2style_test
 
     <test>
     Private Shared Sub case1()
-        Dim io As console_io.test_wrapper = Nothing
-        io = New console_io.test_wrapper()
+        Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).parse(_b2style_test_data.case1.as_text(), e))
         assertion.is_not_null(e)
@@ -32,8 +31,7 @@ Public NotInheritable Class b2style_test
 
     <test>
     Private Shared Sub case2()
-        Dim io As console_io.test_wrapper = Nothing
-        io = New console_io.test_wrapper()
+        Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).parse(_b2style_test_data.case2.as_text(), e))
         assertion.is_not_null(e)
@@ -43,8 +41,7 @@ Public NotInheritable Class b2style_test
 
     <test>
     Private Shared Sub bool_and_bool()
-        Dim io As console_io.test_wrapper = Nothing
-        io = New console_io.test_wrapper()
+        Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).
                           parse(_b2style_test_data.bool_and_bool.as_text(), e))
@@ -55,8 +52,7 @@ Public NotInheritable Class b2style_test
 
     <test>
     Private Shared Sub str_unescape()
-        Dim io As console_io.test_wrapper = Nothing
-        io = New console_io.test_wrapper()
+        Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).
                           parse(_b2style_test_data.str_unescape.as_text(), e))
@@ -67,8 +63,7 @@ Public NotInheritable Class b2style_test
 
     <test>
     Private Shared Sub _1_to_100()
-        Dim io As console_io.test_wrapper = Nothing
-        io = New console_io.test_wrapper()
+        Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).parse(_b2style_test_data._1_to_100.as_text(), e))
         assertion.is_not_null(e)
@@ -78,8 +73,7 @@ Public NotInheritable Class b2style_test
 
     <test>
     Private Shared Sub self_add()
-        Dim io As console_io.test_wrapper = Nothing
-        io = New console_io.test_wrapper()
+        Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).parse(_b2style_test_data.self_add.as_text(), e))
         assertion.is_not_null(e)
@@ -89,8 +83,7 @@ Public NotInheritable Class b2style_test
 
     <test>
     Private Shared Sub biguint()
-        Dim io As console_io.test_wrapper = Nothing
-        io = New console_io.test_wrapper()
+        Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).parse(_b2style_test_data.biguint.as_text(), e))
         assertion.is_not_null(e)
@@ -100,8 +93,7 @@ Public NotInheritable Class b2style_test
 
     <test>
     Private Shared Sub negative_int()
-        Dim io As console_io.test_wrapper = Nothing
-        io = New console_io.test_wrapper()
+        Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).
                           parse(_b2style_test_data.negative_int.as_text(), e))
@@ -112,8 +104,7 @@ Public NotInheritable Class b2style_test
 
     <test>
     Private Shared Sub another_1_to_100()
-        Dim io As console_io.test_wrapper = Nothing
-        io = New console_io.test_wrapper()
+        Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).
                           parse(_b2style_test_data.another_1_to_100.as_text(), e))
@@ -124,8 +115,7 @@ Public NotInheritable Class b2style_test
 
     <test>
     Private Shared Sub loaded_method()
-        Dim io As console_io.test_wrapper = Nothing
-        io = New console_io.test_wrapper()
+        Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).
                                   parse(_b2style_test_data.loaded_method.as_text(), e))
@@ -136,8 +126,7 @@ Public NotInheritable Class b2style_test
 
     <test>
     Private Shared Sub ufloat_std_out()
-        Dim io As console_io.test_wrapper = Nothing
-        io = New console_io.test_wrapper()
+        Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).
                                   parse(_b2style_test_data.ufloat_std_out.as_text(), e))
@@ -148,8 +137,7 @@ Public NotInheritable Class b2style_test
 
     <test>
     Private Shared Sub ufloat_operators()
-        Dim io As console_io.test_wrapper = Nothing
-        io = New console_io.test_wrapper()
+        Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).
                                   parse(_b2style_test_data.ufloat_operators.as_text(), e))
@@ -160,8 +148,7 @@ Public NotInheritable Class b2style_test
 
     <test>
     Private Shared Sub while_1_to_100()
-        Dim io As console_io.test_wrapper = Nothing
-        io = New console_io.test_wrapper()
+        Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).
                           parse(_b2style_test_data.while_1_to_100.as_text(), e))
@@ -172,8 +159,7 @@ Public NotInheritable Class b2style_test
 
     <test>
     Private Shared Sub while_0_to_1()
-        Dim io As console_io.test_wrapper = Nothing
-        io = New console_io.test_wrapper()
+        Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).
                           parse(_b2style_test_data.while_0_to_1.as_text(), e))
@@ -185,8 +171,7 @@ Public NotInheritable Class b2style_test
     <command_line_specified>
     <test>
     Private Shared Sub pi_integral_0_1()
-        Dim io As console_io.test_wrapper = Nothing
-        io = New console_io.test_wrapper()
+        Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).
                           parse(_b2style_test_data.pi_integral_0_1.as_text(), e))
@@ -198,8 +183,7 @@ Public NotInheritable Class b2style_test
 
     <test>
     Private Shared Sub shift()
-        Dim io As console_io.test_wrapper = Nothing
-        io = New console_io.test_wrapper()
+        Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).
                           parse(_b2style_test_data.shift.as_text(), e))
@@ -210,8 +194,7 @@ Public NotInheritable Class b2style_test
 
     <test>
     Private Shared Sub calculate_pi_bbp()
-        Dim io As console_io.test_wrapper = Nothing
-        io = New console_io.test_wrapper()
+        Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).
                           parse(_b2style_test_data.calculate_pi_bbp.as_text(), e))
@@ -223,8 +206,7 @@ Public NotInheritable Class b2style_test
 
     <test>
     Private Shared Sub order_of_operators()
-        Dim io As console_io.test_wrapper = Nothing
-        io = New console_io.test_wrapper()
+        Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).
                           parse(_b2style_test_data.order_of_operators.as_text(), e))
@@ -240,6 +222,28 @@ Public NotInheritable Class b2style_test
         ' =1 + (2 * (3 + 4))
         ' =15
         ' But it may not be handled by b2style.
+    End Sub
+
+    <test>
+    Private Shared Sub include()
+        Dim io As New console_io.test_wrapper("abc")
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                          parse(_b2style_test_data.include.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), "abcEOF")
+    End Sub
+
+    <test>
+    Private Shared Sub include2()
+        Dim io As New console_io.test_wrapper("def")
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                          parse(_b2style_test_data.include2.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), "defEoF")
     End Sub
 
     Private Sub New()
