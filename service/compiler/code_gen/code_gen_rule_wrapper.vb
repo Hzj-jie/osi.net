@@ -21,6 +21,14 @@ Public Class code_gen_rule_wrapper(Of WRITER,
                                       _code_gens As __do(Of vector(Of Action(Of CODE_GENS_IMPL, PARAMETERS))))
     Inherits rule_wrapper(Of _nlexer_rule, _syntaxer_rule)
 
+    Public NotInheritable Class empty_fixes
+        Inherits __do(Of vector(Of Action(Of STATEMENTS_IMPL, PARAMETERS)))
+
+        Protected Overrides Function at() As vector(Of Action(Of STATEMENTS_IMPL, PARAMETERS))
+            Return New vector(Of Action(Of STATEMENTS_IMPL, PARAMETERS))()
+        End Function
+    End Class
+
     ' Used by vector.of
     Protected Shared Function registerer(ByVal i As Action(Of STATEMENTS_IMPL, PARAMETERS)) _
                                   As Action(Of STATEMENTS_IMPL, PARAMETERS)
@@ -108,8 +116,7 @@ Public Class code_gen_rule_wrapper(Of WRITER,
 
         Private Sub init_statements(Of T As __do(Of vector(Of Action(Of STATEMENTS_IMPL, PARAMETERS)))) _
                                    (ByVal p As STATEMENTS_IMPL)
-            Dim v As vector(Of Action(Of STATEMENTS_IMPL, PARAMETERS)) = Nothing
-            v = +alloc(Of T)()
+            Dim v As vector(Of Action(Of STATEMENTS_IMPL, PARAMETERS)) = +alloc(Of T)()
             Dim i As UInt32 = 0
             While i < v.size()
                 v(i)(p, w)
@@ -160,20 +167,17 @@ Public Class code_gen_rule_wrapper(Of WRITER,
 
         Public Function parse(ByVal input As String, ByVal e As exportable) As Boolean
             assert(Not e Is Nothing)
-            Dim o As WRITER = Nothing
-            o = alloc(Of WRITER)()
-            If Not code_gen_rule_wrapper(Of WRITER,
-                                            PARAMETERS,
-                                            CODE_GENS_IMPL,
-                                            STATEMENTS_IMPL,
-                                            _nlexer_rule,
-                                            _syntaxer_rule,
-                                            _prefixes,
-                                            _suffixes,
-                                            _code_gens).parse(input, o) Then
-                Return False
-            End If
-            Return import(e, o)
+            Dim o As WRITER = alloc(Of WRITER)()
+            Return code_gen_rule_wrapper(Of WRITER,
+                                        PARAMETERS,
+                                        CODE_GENS_IMPL,
+                                        STATEMENTS_IMPL,
+                                        _nlexer_rule,
+                                        _syntaxer_rule,
+                                        _prefixes,
+                                        _suffixes,
+                                        _code_gens).parse(input, o) AndAlso
+                   import(e, o)
         End Function
 
         Protected MustOverride Function import(ByVal e As exportable, ByVal o As WRITER) As Boolean
