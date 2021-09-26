@@ -1,10 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Text
 Imports System.Web
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.service.xml.constants
 
 Public Module _component_generation
@@ -14,32 +17,28 @@ Public Module _component_generation
                                      ByVal ParamArray attrs() As pair(Of String, String)) As Boolean
         If String.IsNullOrEmpty(tag) Then
             Return False
-        Else
-            Dim r As StringBuilder = Nothing
-            r = New StringBuilder()
-            r.Append(tag_leading)
-            r.Append(HttpUtility.HtmlEncode(tag))
-            If Not isemptyarray(attrs) Then
-                For i As Int32 = 0 To array_size(attrs) - 1
-                    If String.IsNullOrEmpty(attrs(i).first) Then
-                        Return False
-                    Else
-                        r.Append(attributes_separator)
-                        r.Append(HttpUtility.HtmlEncode(attrs(i).first))
-                        r.Append(attribute_separator)
-                        r.Append(value_leading)
-                        r.Append(HttpUtility.HtmlEncode(attrs(i).second))
-                        r.Append(value_final)
-                    End If
-                Next
-            End If
-            If self_close Then
-                r.Append(tag_close_mark)
-            End If
-            r.Append(tag_final)
-            output = Convert.ToString(r)
-            Return True
         End If
+        Dim r As New StringBuilder()
+        r.Append(tag_leading).Append(HttpUtility.HtmlEncode(tag))
+        If Not isemptyarray(attrs) Then
+            For i As Int32 = 0 To attrs.array_size_i() - 1
+                If String.IsNullOrEmpty(attrs(i).first) Then
+                    Return False
+                End If
+                r.Append(attributes_separator).
+                  Append(HttpUtility.HtmlEncode(attrs(i).first)).
+                  Append(attribute_separator).
+                  Append(value_leading).
+                  Append(HttpUtility.HtmlEncode(attrs(i).second)).
+                  Append(value_final)
+            Next
+        End If
+        If self_close Then
+            r.Append(tag_close_mark)
+        End If
+        r.Append(tag_final)
+        output = Convert.ToString(r)
+        Return True
     End Function
 
     Public Function create_start_tag(ByVal tag As String,
@@ -153,7 +152,7 @@ Public Module _component_generation
     End Function
 
     Public Function create_loosen_comment(ByVal i As String, ByRef o As String) As Boolean
-        Return create_comment(strrplc(i, invalid_comment_text, invalid_comment_text_replacement), o)
+        Return create_comment(i.Replace(invalid_comment_text, invalid_comment_text_replacement), o)
     End Function
 
     Public Function create_loosen_comment(ByVal i As String) As String
@@ -180,7 +179,7 @@ Public Module _component_generation
     End Function
 
     Public Function create_loosen_cdata(ByVal i As String, ByRef o As String) As Boolean
-        Return create_cdata(strrplc(i, invalid_cdata_text, invalid_cdata_text_replacement), o)
+        Return create_cdata(i.Replace(invalid_cdata_text, invalid_cdata_text_replacement), o)
     End Function
 
     Public Function create_loosen_cdata(ByVal i As String) As String

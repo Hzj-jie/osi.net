@@ -39,7 +39,7 @@ Partial Public NotInheritable Class b2style
         End Function
 
         Public Function bstyle_format(ByVal i As String) As String
-            Return strmid(format(i).Replace(namespace_separator, namespace_replacer), strlen(namespace_replacer))
+            Return format(i).Replace(namespace_separator, namespace_replacer).Substring(namespace_replacer.Length())
         End Function
 
         Public Function build(ByVal n As typed_node,
