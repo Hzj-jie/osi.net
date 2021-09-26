@@ -34,14 +34,5 @@ Namespace primitive
         Public Function execute_loaded_method(ByVal i() As Byte) As Byte()
             Return lm.execute(i)
         End Function
-
-        Public Function getchar(ByVal i() As Byte) As Byte()
-            Return int32_bytes(io.input().Read())
-        End Function
-
-        Public Function putchar(ByVal i() As Byte) As Byte()
-            io.output().Write(Convert.ToChar(bytes_int32(i)))
-            Return Nothing
-        End Function
     End Class
 End Namespace

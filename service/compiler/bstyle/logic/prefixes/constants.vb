@@ -20,7 +20,6 @@ Partial Public NotInheritable Class bstyle
         Public Shared ReadOnly size_of_bool As String = unique_name("size_of_bool")
         Public Shared ReadOnly size_of_byte As String = unique_name("size_of_byte")
         Public Shared ReadOnly size_of_float As String = unique_name("size_of_float")
-        Public Shared ReadOnly eof As String = unique_name("eof")
 
         Private Shared ReadOnly v As vector(Of def)
         Private ReadOnly ta As type_alias
@@ -33,8 +32,7 @@ Partial Public NotInheritable Class bstyle
                 New def(types.int, size_of_long, New data_block(8)),
                 New def(types.int, size_of_bool, New data_block(1)),
                 New def(types.int, size_of_byte, New data_block(1)),
-                New def(types.int, size_of_float, New data_block(16)),
-                New def(types.int, eof, New data_block(-1))
+                New def(types.int, size_of_float, New data_block(16))
             )
         End Sub
 

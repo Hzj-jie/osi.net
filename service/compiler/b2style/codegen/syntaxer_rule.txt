@@ -1,6 +1,6 @@
 
 IGNORE_TYPES blank
-ROOT_TYPES function, value-definition-with-semi-colon, namespace, include
+ROOT_TYPES function, value-definition-with-semi-colon, namespace
 
 # No struct support.
 
@@ -56,7 +56,3 @@ return-clause kw-return [value]?
 
 # Embed a logic statement directly, like logic "int stdout a_string"
 logic kw-logic string
-
-include-with-string kw-include string
-include-with-file kw-include include-file
-include [include-with-string, include-with-file]

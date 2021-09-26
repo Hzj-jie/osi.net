@@ -71,8 +71,5 @@ self-left-shift <<=
 self-right-shift >>=
 
 kw-namespace namespace
-kw-include #include
-
-include-file <[*|>]+>
 
 name [\w,_,::][\w,\d,_,::]*

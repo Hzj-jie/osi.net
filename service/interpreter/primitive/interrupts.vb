@@ -3,17 +3,21 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.connector
 Imports osi.root.formation
 
 Namespace primitive
     Partial Public NotInheritable Class interrupts
-        Public Shared ReadOnly [default] As New interrupts()
+        Public Shared ReadOnly [default] As interrupts
         Private ReadOnly io As console_io
         Private ReadOnly v As vector(Of Func(Of Byte(), Byte()))
         Private ReadOnly m As map(Of String, UInt32)
         Private ReadOnly lm As loaded_method
+
+        Shared Sub New()
+            [default] = New interrupts()
+        End Sub
 
         Public Sub New(ByVal io As console_io)
             assert(Not io Is Nothing)
@@ -25,8 +29,6 @@ Namespace primitive
             v.emplace_back(AddressOf current_ms)
             v.emplace_back(AddressOf load_method)
             v.emplace_back(AddressOf execute_loaded_method)
-            v.emplace_back(AddressOf getchar)
-            v.emplace_back(AddressOf putchar)
 
             m = New map(Of String, UInt32)()
             For i As UInt32 = 0 To v.size() - uint32_1
@@ -51,7 +53,8 @@ Namespace primitive
         End Function
 
         Public Function [of](ByVal name As String, ByRef o As UInt32) As Boolean
-            Dim it As map(Of String, UInt32).iterator = m.find(name)
+            Dim it As map(Of String, UInt32).iterator = Nothing
+            it = m.find(name)
             If it = m.end() Then
                 Return False
             End If

@@ -11,13 +11,6 @@ Imports statements = osi.service.compiler.rewriters.statements
 Public NotInheritable Class b2style
     Inherits rewriter_rule_wrapper(Of nlexer_rule_t, syntaxer_rule_t, prefixes_t, suffixes_t, rewriter_gens_t)
 
-    Public NotInheritable Class no_fixes
-        Inherits rewriter_rule_wrapper(Of nlexer_rule_t, syntaxer_rule_t, empty_fixes, empty_fixes, rewriter_gens_t)
-
-        Private Sub New()
-        End Sub
-    End Class
-
     Public NotInheritable Class nlexer_rule_t
         Inherits __do(Of Byte())
 
@@ -151,11 +144,7 @@ Public NotInheritable Class b2style
                        default_registerer("variable-name"),
                        default_registerer("function-call"),
                        default_registerer("value-list"),
-                       default_registerer("value-with-comma"),
- _
-                       default_registerer("include"),
-                       ignore_parameters(AddressOf include_with_string.register),
-                       ignore_parameters(AddressOf include_with_file.register)
+                       default_registerer("value-with-comma")
                    )
         End Function
     End Class
