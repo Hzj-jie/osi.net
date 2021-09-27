@@ -1,5 +1,5 @@
 
-IGNORE_TYPES blank
+IGNORE_TYPES blank, single-line-comment, multi-line-comment
 ROOT_TYPES function, value-definition-with-semi-colon, namespace-, include, define, ifndef-wrapped
 
 # No struct support.

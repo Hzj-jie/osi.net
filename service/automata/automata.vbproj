@@ -88,6 +88,7 @@
     <Compile Include="nlexer\escape.vb" />
     <Compile Include="nlexer\group\group.vb" />
     <Compile Include="nlexer\group\groups.vb" />
+    <Compile Include="nlexer\matcher\newline_matcher.vb" />
     <Compile Include="nlexer\matcher\or_matcher.vb" />
     <Compile Include="nlexer\matcher\matcher.vb" />
     <Compile Include="nlexer\matcher\matchers.vb" />

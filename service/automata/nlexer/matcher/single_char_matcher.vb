@@ -11,11 +11,7 @@ Partial Public NotInheritable Class nlexer
     Public Class single_char_matcher
         Implements matcher
 
-        Private Shared ReadOnly instance As single_char_matcher
-
-        Shared Sub New()
-            instance = New single_char_matcher()
-        End Sub
+        Private Shared ReadOnly instance As New single_char_matcher()
 
         Protected Sub New()
         End Sub

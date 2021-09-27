@@ -286,6 +286,17 @@ Public NotInheritable Class b2style_test
                                             "    d"))
     End Sub
 
+    <test>
+    Private Shared Sub comments()
+        Dim io As New console_io.test_wrapper("good")
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                          parse(_b2style_test_data.comments.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), "good")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

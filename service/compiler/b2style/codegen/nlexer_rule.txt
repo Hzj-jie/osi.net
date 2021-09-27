@@ -79,4 +79,7 @@ kw-ifndef #ifndef
 kw-define #define
 kw-endif #endif
 
+single-line-comment //[*|\n]*[\n]
+multi-line-comment /\*[*|\*/]*\*/
+
 name [\w,_,::][\w,\d,_,::]*

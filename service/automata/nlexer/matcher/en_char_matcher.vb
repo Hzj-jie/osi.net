@@ -9,13 +9,8 @@ Partial Public NotInheritable Class nlexer
     Public NotInheritable Class en_char_matcher
         Inherits single_char_matcher
 
-        Private Shared ReadOnly instance As en_char_matcher
-        Private Shared ReadOnly reverse As reverse_matcher
-
-        Shared Sub New()
-            instance = New en_char_matcher()
-            reverse = New reverse_matcher(instance)
-        End Sub
+        Private Shared ReadOnly instance As New en_char_matcher()
+        Private Shared ReadOnly reverse As New reverse_matcher(instance)
 
         Public Shared Shadows Sub register()
             matchers.register("\w", Function() As matcher

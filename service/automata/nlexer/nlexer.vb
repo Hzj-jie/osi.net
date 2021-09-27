@@ -90,8 +90,7 @@ Partial Public NotInheritable Class nlexer
         o.renew()
         Dim pos As UInt32 = 0
         While pos < strlen(i)
-            Dim r As [optional](Of result) = Nothing
-            r = match(i, pos)
+            Dim r As [optional](Of result) = match(i, pos)
             If Not r Then
                 raise_error(error_type.user, no_match_str(i, pos))
                 Return False
@@ -129,8 +128,9 @@ Partial Public NotInheritable Class nlexer
 
     Private Shared Function no_match_str(ByVal i As String, ByVal pos As UInt32) As String
         Static half_short_str_len As UInt32 = 10
-        Dim short_str As String = Nothing
-        short_str = strmid(i, If(pos > half_short_str_len, pos - half_short_str_len, uint32_0), half_short_str_len << 1)
+        Dim short_str As String = strmid(i,
+                                         If(pos > half_short_str_len, pos - half_short_str_len, uint32_0),
+                                         half_short_str_len << 1)
         Return strcat("No match in ", i, " at pos ", pos, " -> ", short_str, " >> [" + i.char_at(pos), "]")
     End Function
 

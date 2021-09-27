@@ -173,14 +173,11 @@ Partial Public NotInheritable Class syntaxer
             Return disallow_cycle_dependency(type,
                                              p,
                                              Function() As [optional](Of result)
-                                                 Dim nodes As vector(Of typed_node) = Nothing
-                                                 nodes = New vector(Of typed_node)()
-                                                 Dim op As UInt32 = 0
-                                                 op = p
+                                                 Dim nodes As New vector(Of typed_node)()
+                                                 Dim op As UInt32 = p
                                                  For i As Int32 = 0 To array_size_i(ms) - 1
                                                      jump_over_ignore_types(v, p)
-                                                     Dim r As [optional](Of result) = Nothing
-                                                     r = ms(i).match(v, p)
+                                                     Dim r As [optional](Of result) = ms(i).match(v, p)
                                                      If Not r Then
                                                          log_unmatched(v, p, ms(i))
                                                          Return r
@@ -188,8 +185,7 @@ Partial Public NotInheritable Class syntaxer
                                                      p = (+r).pos
                                                      nodes.emplace_back((+r).nodes)
                                                  Next
-                                                 Dim root As typed_node = Nothing
-                                                 root = create_node(v, type, op, p)
+                                                 Dim root As typed_node = create_node(v, type, op, p)
                                                  root.attach(nodes)
                                                  jump_over_ignore_types(v, p)
                                                  log_matching(v, op, p, Me)
