@@ -97,31 +97,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="b2style\codegen\another_1_to_100.b2" />
-    <None Include="b2style\codegen\biguint.b2" />
-    <None Include="b2style\codegen\bool_and_bool.b2" />
-    <None Include="b2style\codegen\calculate_pi_bbp.b2" />
-    <None Include="b2style\codegen\case1.b2" />
-    <None Include="b2style\codegen\case2.b2" />
-    <None Include="b2style\codegen\comments.b2" />
-    <None Include="b2style\codegen\ifndef.b2" />
-    <None Include="b2style\codegen\include.b2" />
-    <None Include="b2style\codegen\include2.b2" />
-    <None Include="b2style\codegen\loaded_method.b2" />
-    <None Include="b2style\codegen\multiline_string.b2" />
-    <None Include="b2style\codegen\namespaces.b2" />
-    <None Include="b2style\codegen\negative_int.b2" />
-    <None Include="b2style\codegen\order_of_operators.b2" />
-    <None Include="b2style\codegen\pi_integral_0_1.b2" />
     <None Include="b2style\codegen\run.cmd" />
-    <None Include="b2style\codegen\self_add.b2" />
-    <None Include="b2style\codegen\shift.b2" />
-    <None Include="b2style\codegen\str_unescape.b2" />
-    <None Include="b2style\codegen\ufloat_operators.b2" />
-    <None Include="b2style\codegen\ufloat_std_out.b2" />
-    <None Include="b2style\codegen\while_0_to_1.b2" />
-    <None Include="b2style\codegen\while_1_to_100.b2" />
-    <None Include="b2style\codegen\_1_to_100.b2" />
     <None Include="bstyle\codegen\run.cmd" />
     <None Include="dotnet\codegen\run.cmd" />
     <None Include="logic\codegen\run.cmd" />
@@ -140,6 +116,30 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="b2style\codegen\another_1_to_100.txt" />
+    <Content Include="b2style\codegen\biguint.txt" />
+    <Content Include="b2style\codegen\calculate_pi_bbp.txt" />
+    <Content Include="b2style\codegen\comments.txt" />
+    <Content Include="b2style\codegen\ifndef.txt" />
+    <Content Include="b2style\codegen\include.txt" />
+    <Content Include="b2style\codegen\include2.txt" />
+    <Content Include="b2style\codegen\loaded_method.txt" />
+    <Content Include="b2style\codegen\multiline_string.txt" />
+    <Content Include="b2style\codegen\namespaces.txt" />
+    <Content Include="b2style\codegen\negative_int.txt" />
+    <Content Include="b2style\codegen\order_of_operators.txt" />
+    <Content Include="b2style\codegen\pi_integral_0_1.txt" />
+    <Content Include="b2style\codegen\self_add.txt" />
+    <Content Include="b2style\codegen\shift.txt" />
+    <Content Include="b2style\codegen\ufloat_operators.txt" />
+    <Content Include="b2style\codegen\ufloat_std_out.txt" />
+    <Content Include="b2style\codegen\while_0_to_1.txt" />
+    <Content Include="b2style\codegen\while_1_to_100.txt" />
+    <Content Include="b2style\codegen\_1_to_100.txt" />
+    <Content Include="b2style\codegen\case1.txt" />
+    <Content Include="b2style\codegen\case2.txt" />
+    <Content Include="b2style\codegen\bool_and_bool.txt" />
+    <Content Include="b2style\codegen\str_unescape.txt" />
     <Content Include="bstyle\codegen\case1.txt" />
     <Content Include="bstyle\codegen\case2.txt" />
     <Content Include="bstyle\codegen\global_variable.txt" />
