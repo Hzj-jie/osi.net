@@ -272,6 +272,20 @@ Public NotInheritable Class b2style_test
                                             "a::c::f4", character.newline))
     End Sub
 
+    <test>
+    Private Shared Sub multiline_string()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                          parse(_b2style_test_data.multiline_string.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), strcat("a", character.newline,
+                                            "    b", character.newline,
+                                            "    c", character.newline,
+                                            "    d"))
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
