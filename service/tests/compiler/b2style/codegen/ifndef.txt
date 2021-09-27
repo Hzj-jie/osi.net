@@ -1,0 +1,9 @@
+﻿
+#include <stdio.h>
+#include "stdio.h"
+#include <cstdio>
+#include "cstdio"
+
+void main () {
+  b2style::std_out("good");
+}

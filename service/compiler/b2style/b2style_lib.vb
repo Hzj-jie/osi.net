@@ -16,12 +16,12 @@ Friend Module b2style_lib
     Public ReadOnly cstdio() As Byte
 
     Sub New()
-        stdio_h = Convert.FromBase64String(strcat_hint(CUInt(132), _
-        "H4sIAAAAAAAEAHu/ez8vV2ZeiYKrv5uCrUKSUXFJZU6qlVVqfpqGpjUvF0QyPbUkOSOxSENToZqXS0GhKLWktCgPoRguDdRQC9NTUAoRBLEzcWiEqwHrBADtu7A5jAAAAA=="))
+        stdio_h = Convert.FromBase64String(strcat_hint(CUInt(188), _
+        "H4sIAAAAAAAEAHu/ez8vl3JmWl5KapqCk1FwSKSPa7yPp1N8cIiLp3+8B1ASKJOZl4pdkpcrM69EwdXfTcFWIcmouKQyJ9XKKjU/TUPTGiaZnlqSnJFYpKGpUM3LpaBQlFpSWpSHUAyXBmqohekpKIUIgtiZODTC1cB1KqfmpWSmAQD0TlPi0gAAAA=="))
 
         assert(stdio_h.ungzip(stdio_h))
-        cstdio = Convert.FromBase64String(strcat_hint(CUInt(60), _
-        "H4sIAAAAAAAEAHu/ez8vl3JmXnJOaUqqgk1xSUpmvl6GHQBW1mjsFwAAAA=="))
+        cstdio = Convert.FromBase64String(strcat_hint(CUInt(116), _
+        "H4sIAAAAAAAEAHu/ez8vl3JmWl5KapqCk1FwSKSPa7yPp1O8c3CIi6c/UA4okZmXilUOpDMvOac0JVXBprgkJTNfL8MOLJqal5KZBgC7HAy0WwAAAA=="))
 
         assert(cstdio.ungzip(cstdio))
     End Sub

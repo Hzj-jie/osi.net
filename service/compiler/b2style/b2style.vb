@@ -3,19 +3,22 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.template
+Imports osi.service.compiler
 Imports osi.service.interpreter.primitive
 Imports statements = osi.service.compiler.rewriters.statements
 
 Public NotInheritable Class b2style
-    Inherits rewriter_rule_wrapper(Of nlexer_rule_t, syntaxer_rule_t, prefixes_t, suffixes_t, rewriter_gens_t)
-
-    Public NotInheritable Class no_fixes
-        Inherits rewriter_rule_wrapper(Of nlexer_rule_t, syntaxer_rule_t, empty_fixes, empty_fixes, rewriter_gens_t)
-
-        Private Sub New()
-        End Sub
+    Inherits rewriter_rule_wrapper(Of parameters_t,
+                                      nlexer_rule_t,
+                                      syntaxer_rule_t,
+                                      prefixes_t,
+                                      suffixes_t,
+                                      rewriter_gens_t)
+    Public NotInheritable Class parameters_t
+        Public ReadOnly defines As New [set](Of String)()
     End Class
 
     Public NotInheritable Class nlexer_rule_t
@@ -35,26 +38,26 @@ Public NotInheritable Class b2style
     End Class
 
     Public NotInheritable Class prefixes_t
-        Inherits __do(Of vector(Of Action(Of statements, rewriter_rule_wrapper)))
+        Inherits __do(Of vector(Of Action(Of statements, parameters_t)))
 
-        Protected Overrides Function at() As vector(Of Action(Of statements, rewriter_rule_wrapper))
+        Protected Overrides Function at() As vector(Of Action(Of statements, parameters_t))
             Return vector.of(
                        ignore_parameters(AddressOf prefix.register))
         End Function
     End Class
 
     Public NotInheritable Class suffixes_t
-        Inherits __do(Of vector(Of Action(Of statements, rewriter_rule_wrapper)))
+        Inherits __do(Of vector(Of Action(Of statements, parameters_t)))
 
-        Protected Overrides Function at() As vector(Of Action(Of statements, rewriter_rule_wrapper))
-            Return New vector(Of Action(Of statements, rewriter_rule_wrapper))()
+        Protected Overrides Function at() As vector(Of Action(Of statements, parameters_t))
+            Return New vector(Of Action(Of statements, parameters_t))()
         End Function
     End Class
 
     Public NotInheritable Class rewriter_gens_t
-        Inherits __do(Of vector(Of Action(Of rewriters, rewriter_rule_wrapper)))
+        Inherits __do(Of vector(Of Action(Of rewriters, parameters_t)))
 
-        Protected Overrides Function at() As vector(Of Action(Of rewriters, rewriter_rule_wrapper))
+        Protected Overrides Function at() As vector(Of Action(Of rewriters, parameters_t))
             Return vector.of(
                        default_registerer("less-or-equal"),
                        default_registerer("greater-or-equal"),
@@ -155,7 +158,10 @@ Public NotInheritable Class b2style
  _
                        default_registerer("include"),
                        ignore_parameters(AddressOf include_with_string.register),
-                       ignore_parameters(AddressOf include_with_file.register)
+                       ignore_parameters(AddressOf include_with_file.register),
+ _
+                       AddressOf ifndef_wrapped.register,
+                       AddressOf define.register
                    )
         End Function
     End Class
@@ -169,7 +175,8 @@ Public NotInheritable Class b2style
     End Function
 
     Public NotInheritable Shadows Class parse_wrapper
-        Inherits rewriter_rule_wrapper(Of nlexer_rule_t,
+        Inherits rewriter_rule_wrapper(Of parameters_t,
+                                          nlexer_rule_t,
                                           syntaxer_rule_t,
                                           prefixes_t,
                                           suffixes_t,
@@ -180,8 +187,7 @@ Public NotInheritable Class b2style
         End Sub
 
         Protected Overrides Function logic_parse(ByVal s As String, ByRef e() As logic.exportable) As Boolean
-            Dim w As logic.writer = Nothing
-            w = New logic.writer()
+            Dim w As New logic.writer()
             Dim v As vector(Of logic.exportable) = Nothing
             If bstyle.parse(s, w) AndAlso w.dump(functions, v.renew()) Then
                 e = +v

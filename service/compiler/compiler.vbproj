@@ -60,7 +60,8 @@
     <Compile Include="b2style\b2style_rules.vb" />
     <Compile Include="b2style\rewriter\b2style_statements.vb" />
     <Compile Include="b2style\rewriter\nodes\binary_operation_value.vb" />
-    <Compile Include="b2style\rewriter\nodes\include.vb" />
+    <Compile Include="b2style\rewriter\nodes\defines.vb" />
+    <Compile Include="b2style\rewriter\nodes\includes.vb" />
     <Compile Include="b2style\rewriter\nodes\name.vb" />
     <Compile Include="b2style\rewriter\nodes\kw_namespace.vb" />
     <Compile Include="b2style\rewriter\nodes\operations.vb" />

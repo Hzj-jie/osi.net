@@ -1,6 +1,6 @@
 
 IGNORE_TYPES blank
-ROOT_TYPES function, value-definition-with-semi-colon, namespace, include
+ROOT_TYPES function, value-definition-with-semi-colon, namespace, include, define, ifndef-wrapped
 
 # No struct support.
 
@@ -59,3 +59,6 @@ logic kw-logic string
 
 include-with-string kw-include string
 include [include-with-string, include-with-file]
+
+ifndef-wrapped kw-ifndef name [function, value-definition-with-semi-colon, namespace, include, define]* kw-endif
+define kw-define name

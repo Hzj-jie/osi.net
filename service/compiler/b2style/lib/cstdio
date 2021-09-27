@@ -1,2 +1,7 @@
 ﻿
+#ifndef B2STYLE_LIB_CSTDIO
+#define B2STYLE_LIB_CSTDIO
+
 #include <stdio.h>
+
+#endif

@@ -15,8 +15,8 @@ Imports osi.service.constructor
 Imports osi.service.resource
 
 Partial Public NotInheritable Class b2style
-    Private Shared includes As argument(Of vector(Of String))
-    Private Shared ignore_default_includes As argument(Of Boolean)
+    Private Shared include_folders As argument(Of vector(Of String))
+    Private Shared ignore_default_include As argument(Of Boolean)
 
     Private NotInheritable Class default_includes
         Public Shared ReadOnly folder As String = Path.Combine(temp_folder, "b2style-inc")
@@ -31,26 +31,26 @@ Partial Public NotInheritable Class b2style
         End Sub
     End Class
 
-    Public MustInherit Class include
+    Public MustInherit Class includes
         Private Shared Function include_file(ByVal p As String,
                                              ByVal s As String,
                                              ByVal o As typed_node_writer) As Boolean
             Dim f As String = Path.Combine(p, s)
             If File.Exists(f) Then
-                Return no_fixes.parse(File.ReadAllText(f), o)
+                Return b2style.internal_parse(File.ReadAllText(f), o)
             End If
             Return False
         End Function
 
         Protected Shared Function include_file(ByVal s As String, ByVal o As typed_node_writer) As Boolean
             Dim i As UInt32 = 0
-            While i < (+includes).size_or_0()
-                If include_file((+includes)(i), o) Then
+            While i < (+include_folders).size_or_0()
+                If include_file((+include_folders)(i), o) Then
                     Return True
                 End If
                 i += uint32_1
             End While
-            If Not (ignore_default_includes Or False) AndAlso include_file(default_includes.folder, s, o) Then
+            If Not (ignore_default_include Or False) AndAlso include_file(default_includes.folder, s, o) Then
                 Return True
             End If
             raise_error(error_type.user, "Cannot find or include file ", s)
@@ -59,7 +59,7 @@ Partial Public NotInheritable Class b2style
     End Class
 
     Public NotInheritable Class include_with_string
-        Inherits include
+        Inherits includes
         Implements rewriter
 
         <inject_constructor>
@@ -81,7 +81,7 @@ Partial Public NotInheritable Class b2style
     End Class
 
     Public NotInheritable Class include_with_file
-        Inherits include
+        Inherits includes
         Implements rewriter
 
         <inject_constructor>

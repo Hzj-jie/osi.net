@@ -26,16 +26,14 @@ Partial Public NotInheritable Class rewriters
     End Class
 End Class
 
-Public NotInheritable Class rewriter_rule_wrapper
-End Class
-
-Public Class rewriter_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
+Public Class rewriter_rule_wrapper(Of PARAMETERS,
+                                      _nlexer_rule As __do(Of Byte()),
                                       _syntaxer_rule As __do(Of Byte()),
-                                      _prefixes As __do(Of vector(Of Action(Of statements, rewriter_rule_wrapper))),
-                                      _suffixes As __do(Of vector(Of Action(Of statements, rewriter_rule_wrapper))),
-                                      _rewriter_gens As __do(Of vector(Of Action(Of rewriters, rewriter_rule_wrapper))))
+                                      _prefixes As __do(Of vector(Of Action(Of statements, PARAMETERS))),
+                                      _suffixes As __do(Of vector(Of Action(Of statements, PARAMETERS))),
+                                      _rewriter_gens As __do(Of vector(Of Action(Of rewriters, PARAMETERS))))
     Inherits code_gen_rule_wrapper(Of typed_node_writer,
-                                      rewriter_rule_wrapper,
+                                      PARAMETERS,
                                       rewriters,
                                       statements,
                                       _nlexer_rule,
@@ -45,8 +43,7 @@ Public Class rewriter_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
                                       _rewriter_gens)
 
     Public Overloads Shared Function parse(ByVal input As String, ByRef o As String) As Boolean
-        Dim w As typed_node_writer = Nothing
-        w = New typed_node_writer()
+        Dim w As New typed_node_writer()
         If Not parse(input, w) Then
             Return False
         End If
@@ -56,7 +53,7 @@ Public Class rewriter_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
 
     Public MustInherit Shadows Class parse_wrapper
         Inherits code_gen_rule_wrapper(Of typed_node_writer,
-                                          rewriter_rule_wrapper,
+                                          PARAMETERS,
                                           rewriters,
                                           statements,
                                           _nlexer_rule,
@@ -80,8 +77,7 @@ Public Class rewriter_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
         Protected MustOverride Function logic_parse(ByVal s As String, ByRef e() As exportable) As Boolean
     End Class
 
-    Protected Shared Function default_registerer(ByVal node_name As String) _
-                                  As Action(Of rewriters, rewriter_rule_wrapper)
+    Protected Shared Function default_registerer(ByVal node_name As String) As Action(Of rewriters, PARAMETERS)
         assert(Not node_name.null_or_whitespace())
         Return ignore_parameters(Sub(ByVal i As rewriters)
                                      [default].register(i, node_name)
