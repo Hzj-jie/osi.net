@@ -1,6 +1,6 @@
 
 IGNORE_TYPES blank
-ROOT_TYPES function, value-definition-with-semi-colon, namespace, include, define, ifndef-wrapped
+ROOT_TYPES function, value-definition-with-semi-colon, namespace-, include, define, ifndef-wrapped
 
 # No struct support.
 
@@ -11,7 +11,8 @@ param name name
 
 value-definition-with-semi-colon value-definition semi-colon
 
-namespace kw-namespace name start-paragraph [function, value-definition-with-semi-colon]* end-paragraph
+namespace- kw-namespace name start-paragraph [namespace-, namespace-content]* end-paragraph
+namespace-content [function, value-definition-with-semi-colon]
 
 paragraph [sentence, multi-sentence-paragraph]
 sentence [sentence-with-semi-colon, sentence-without-semi-colon]
@@ -60,5 +61,5 @@ logic kw-logic string
 include-with-string kw-include string
 include [include-with-string, include-with-file]
 
-ifndef-wrapped kw-ifndef name [function, value-definition-with-semi-colon, namespace, include, define]* kw-endif
+ifndef-wrapped kw-ifndef name [function, value-definition-with-semi-colon, namespace-, include, define]* kw-endif
 define kw-define name

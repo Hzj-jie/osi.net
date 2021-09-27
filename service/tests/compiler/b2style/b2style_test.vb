@@ -78,7 +78,7 @@ Public NotInheritable Class b2style_test
         assertion.is_true(b2style.with_functions(New interrupts(+io)).parse(_b2style_test_data.self_add.as_text(), e))
         assertion.is_not_null(e)
         e.execute()
-        assertion.equal(io.output(), strcat("101"))
+        assertion.equal(io.output(), "101")
     End Sub
 
     <test>
@@ -88,7 +88,7 @@ Public NotInheritable Class b2style_test
         assertion.is_true(b2style.with_functions(New interrupts(+io)).parse(_b2style_test_data.biguint.as_text(), e))
         assertion.is_not_null(e)
         e.execute()
-        assertion.equal(io.output(), strcat("429496729642949672961"))
+        assertion.equal(io.output(), "429496729642949672961")
     End Sub
 
     <test>
@@ -99,7 +99,7 @@ Public NotInheritable Class b2style_test
                           parse(_b2style_test_data.negative_int.as_text(), e))
         assertion.is_not_null(e)
         e.execute()
-        assertion.equal(io.output(), strcat("-1-2-3"))
+        assertion.equal(io.output(), "-1-2-3")
     End Sub
 
     <test>
@@ -255,6 +255,21 @@ Public NotInheritable Class b2style_test
         assertion.is_not_null(e)
         e.execute()
         assertion.equal(io.output(), "good")
+    End Sub
+
+    <test>
+    Private Shared Sub namespaces()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                          parse(_b2style_test_data.namespaces.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), strcat("a::b::f1", character.newline,
+                                            "a::f2", character.newline,
+                                            "a::b::f2", character.newline,
+                                            "a::f3", character.newline,
+                                            "a::c::f4", character.newline))
     End Sub
 
     Private Sub New()

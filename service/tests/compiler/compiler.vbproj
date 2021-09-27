@@ -123,6 +123,7 @@
     <Content Include="b2style\codegen\include.txt" />
     <Content Include="b2style\codegen\include2.txt" />
     <Content Include="b2style\codegen\loaded_method.txt" />
+    <Content Include="b2style\codegen\namespaces.txt" />
     <Content Include="b2style\codegen\negative_int.txt" />
     <Content Include="b2style\codegen\order_of_operators.txt" />
     <Content Include="b2style\codegen\pi_integral_0_1.txt" />

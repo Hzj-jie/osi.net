@@ -18,7 +18,7 @@ Partial Public NotInheritable Class b2style
 
         Private Function function_name(ByVal type_name As String) As String
             assert(Not type_name.null_or_whitespace())
-            Return l.code_gen_of(Of kw_namespace)().bstyle_format(strcat("::b2style::", type_name.Replace("-"c, "_"c)))
+            Return l.code_gen_of(Of namespace_)().bstyle_format(strcat("::b2style::", type_name.Replace("-"c, "_"c)))
         End Function
 
         Public Function function_name(ByVal n As typed_node) As String
