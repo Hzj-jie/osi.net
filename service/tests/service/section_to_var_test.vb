@@ -1,15 +1,18 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.argument
 Imports osi.service.configuration
 Imports config = osi.service.configuration.config
 
-Public Class section_to_var_test
+Public NotInheritable Class section_to_var_test
     Inherits [case]
 
     Private Class config_writer
@@ -46,11 +49,9 @@ Public Class section_to_var_test
 
     Public Overrides Function run() As Boolean
         config_writer.write()
-        assert_load(seconds_to_milliseconds(100), config_writer.file)
-        Dim c As config = Nothing
-        c = configuration.default(config_writer.file)
-        Dim ss As vector(Of section) = Nothing
-        ss = c.sections("section")
+        assert_load(seconds_to_milliseconds(300), config_writer.file)
+        Dim c As config = configuration.default(config_writer.file)
+        Dim ss As vector(Of section) = c.sections("section")
         If assertion.is_not_null(ss) AndAlso
            assertion.equal(ss.size(), CUInt(3)) Then
             Dim v As var = Nothing
@@ -102,10 +103,10 @@ Public Class section_to_var_test
         configuration.default.unload(config_writer.file)
         sleep()
         assertion.is_true(do_(Function() As Boolean
-                            File.Delete(config_writer.file)
-                            Return True
-                        End Function,
-                        False))
+                                  File.Delete(config_writer.file)
+                                  Return True
+                              End Function,
+                              False))
         Return True
     End Function
 End Class
