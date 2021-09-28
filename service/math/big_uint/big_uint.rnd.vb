@@ -33,7 +33,7 @@ Partial Public NotInheritable Class big_uint
         Dim c As Char = Nothing
         Do
             c = rnd_ascii_display_char()
-        Loop While support_str_char(c, base)
+        Loop While support_str_char(c, base) OrElse space_chars.Contains(c)
         Return c
     End Function
 
