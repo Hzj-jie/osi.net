@@ -63,6 +63,7 @@
     <Compile Include="assert\check.array.vb" />
     <Compile Include="assert\check.optional.vb" />
     <Compile Include="assert\check.vb" />
+    <Compile Include="assert\checks_of.string.vb" />
     <Compile Include="assert\checks_of.T.vb" />
     <Compile Include="assert\expectation.vb" />
     <Compile Include="assert\expectations.vb" />

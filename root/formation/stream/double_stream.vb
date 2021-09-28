@@ -20,6 +20,9 @@ Partial Public NotInheritable Class double_stream
              Function(ByVal l As Double, ByVal r As Double) As Double
                  Return l * r
              End Function
+
+        Private Sub New()
+        End Sub
     End Class
 
     Private Sub New()

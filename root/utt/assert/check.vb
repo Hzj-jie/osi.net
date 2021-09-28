@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.template
 
@@ -293,6 +294,25 @@ Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
         Return death(d,
                      Sub(ByVal msg As String)
                      End Sub)
+    End Function
+
+    Public Shared Function str_contains(ByVal origin As String,
+                                        ByVal exp As String,
+                                        ByVal ParamArray msg() As Object) As Boolean
+        Return is_not_null(origin, "origin", msg) AndAlso
+               is_not_null(exp, "exp", msg) AndAlso
+               is_true(origin.Contains(exp), left_right_msg("containing", origin, exp, msg))
+    End Function
+
+    Public Shared Function str_contains(ByVal origin As String,
+                                        ByVal exps() As String,
+                                        ByVal ParamArray msg() As Object) As Boolean
+        Return is_not_null(exps, "exps", msg) AndAlso
+               streams.of(exps).
+                       map(Function(ByVal exp As String) As Boolean
+                               Return str_contains(origin, exp, msg)
+                           End Function).
+                       aggregate(bool_stream.aggregators.all_true)
     End Function
 
     Protected Sub New()

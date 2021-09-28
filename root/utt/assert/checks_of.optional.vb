@@ -11,7 +11,7 @@ Partial Public Class checks(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
         Return New optional_subject(Of T)(i)
     End Function
 
-    Public Class optional_subject(Of T)
+    Public NotInheritable Class optional_subject(Of T)
         Inherits T_subject(Of [optional](Of T))
 
         Public Sub New(ByVal i As [optional](Of T))

@@ -11,7 +11,7 @@ Imports osi.root.connector
 Imports osi.service.math
 
 Namespace primitive
-    Public Class executor_stop_error
+    Public NotInheritable Class executor_stop_error
         Inherits Exception
 
         Public ReadOnly error_types() As executor.error_type
@@ -25,16 +25,10 @@ Namespace primitive
         End Sub
 
         Public Overrides Function ToString() As String
-            Dim r As StringBuilder = Nothing
-            r = New StringBuilder()
-            r.Append("executor_stop_error: ")
-            For i As Int32 = 0 To array_size_i(error_types) - 1
-                If i > 0 Then
-                    r.Append(", ")
-                End If
-                r.Append(error_types(i))
-            Next
-            Return Convert.ToString(r)
+            Return streams.of(error_types).
+                           collect(stream(Of executor.error_type).collectors.to_str(),
+                                   New StringBuilder("executor_stop_error: ")).
+                           ToString()
         End Function
     End Class
 
