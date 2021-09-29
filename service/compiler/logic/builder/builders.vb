@@ -50,6 +50,6 @@ Namespace logic
         End Function
 
         Private Sub New()
-            End Sub
-        End Class
+        End Sub
+    End Class
 End Namespace

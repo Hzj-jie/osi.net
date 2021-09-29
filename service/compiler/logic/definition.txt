@@ -110,6 +110,10 @@ copy_const	string	data_block
 #  define variable uint
 define	string	string
 
+# define an array with name, type and size
+#  define_array my_array uint my_size
+define_array	string	string	string
+
 # execute the paragraph until the variable is true:
 #  do_until a-bool-value { }
 do_until	string	paragraph

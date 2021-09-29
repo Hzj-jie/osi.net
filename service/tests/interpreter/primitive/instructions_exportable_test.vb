@@ -453,5 +453,24 @@ Namespace primitive
             End Function
         End Class
 
+        Public Class alloc_exportable_test
+            Inherits exportable_test(Of [alloc])
+
+            Protected Overrides Function create() As [alloc]
+                Return New [alloc]( _
+                        data_ref.random(),
+                        data_ref.random())
+            End Function
+        End Class
+
+        Public Class dealloc_exportable_test
+            Inherits exportable_test(Of [dealloc])
+
+            Protected Overrides Function create() As [dealloc]
+                Return New [dealloc]( _
+                        data_ref.random())
+            End Function
+        End Class
+
     End Namespace
 End Namespace

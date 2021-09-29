@@ -102,6 +102,10 @@ Namespace primitive
                         Me.i = New instructions.lfs()
                     Case command.rfs
                         Me.i = New instructions.rfs()
+                    Case command.alloc
+                        Me.i = New instructions.alloc()
+                    Case command.dealloc
+                        Me.i = New instructions.dealloc()
                     Case Else
                         Return False
                 End Select

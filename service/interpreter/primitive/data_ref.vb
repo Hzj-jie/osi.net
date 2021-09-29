@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 
 Namespace primitive
-    Public Class data_ref
+    Public NotInheritable Class data_ref
         Implements exportable, IComparable(Of data_ref), IComparable
 
         Public Const max_value As Int64 = (max_int64 >> 1)
@@ -38,8 +38,7 @@ Namespace primitive
         End Sub
 
         Public Shared Function [New](ByVal i As Int64, ByRef o As data_ref) As Boolean
-            Dim x As data_ref = Nothing
-            x = New data_ref()
+            Dim x As New data_ref()
             If x.[set](i) Then
                 o = x
                 Return True
@@ -104,24 +103,24 @@ Namespace primitive
         End Function
 
         Public Function [set](ByVal i As Int64) As Boolean
-            Dim r As Boolean = False
-            Dim o As Int64 = 0
-            r = ((i And int64_1) <> 0)
-            o = (i >> 1)
+            Dim r As Boolean = ((i And int64_1) <> 0)
+            Dim o As Int64 = (i >> 1)
+
             If r Then
-                If o >= rel_min_value AndAlso o <= max_value Then
-                    Me.r = r
-                    Me.o = o
-                    Return True
+                If o < rel_min_value OrElse o > max_value Then
+                    Return False
                 End If
-            Else
-                If o >= abs_min_value AndAlso o <= max_value Then
-                    Me.r = r
-                    Me.o = o
-                    Return True
-                End If
+                Me.r = r
+                Me.o = o
+                Return True
             End If
-            Return False
+
+            If o < abs_min_value OrElse o > max_value Then
+                Return False
+            End If
+            Me.r = r
+            Me.o = o
+            Return True
         End Function
 
         Public Function relative() As Boolean
@@ -207,16 +206,13 @@ Namespace primitive
         End Function
 
         Public Function CompareTo(ByVal other As data_ref) As Int32 Implements IComparable(Of data_ref).CompareTo
-            Dim c As Int32 = 0
-            c = object_compare(Me, other)
+            Dim c As Int32 = object_compare(Me, other)
             If c <> object_compare_undetermined Then
                 Return c
             End If
             assert(Not other Is Nothing)
-            Dim x As Int64 = 0
-            Dim y As Int64 = 0
-            x = export()
-            y = other.export()
+            Dim x As Int64 = export()
+            Dim y As Int64 = other.export()
             If x > y Then
                 Return 1
             End If
@@ -226,7 +222,7 @@ Namespace primitive
             Return 0
         End Function
 
-        Public NotOverridable Overrides Function ToString() As String
+        Public Overrides Function ToString() As String
             Dim s As String = Nothing
             assert(export(s))
             Return s
