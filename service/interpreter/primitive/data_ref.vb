@@ -11,13 +11,22 @@ Namespace primitive
     Public NotInheritable Class data_ref
         Implements exportable, IComparable(Of data_ref), IComparable
 
-        Public Const max_value As Int64 = (max_int64 >> 1)
-        Public Const rel_min_value As Int64 = (min_int64 >> 1)
+        Public Const max_value As Int64 = (max_int64 >> 2)
+        Public Const rel_min_value As Int64 = (min_int64 >> 2)
         Public Const abs_min_value As Int64 = 0
+        Public Const heap_min_value As Int64 = 0
         Private Const rel_str As String = "rel"
         Private Const abs_str As String = "abs"
-        Private Shared ReadOnly ref_types() As String = {rel_str, abs_str}
-        Private r As Boolean
+        Private Const heap_str As String = "heap"
+        Private Shared ReadOnly ref_types() As String = {rel_str, abs_str, heap_str}
+
+        Private Enum location As Long
+            absolute = 0 'in stack
+            relative = 1 'in stack
+            heap = 2     'in heap
+        End Enum
+
+        Private l As location
         Private o As Int64
 
         Public Shared Function random(Optional ByRef r As Int64 = 0) As data_ref
@@ -48,7 +57,7 @@ Namespace primitive
 
         Public Shared Function rel(ByVal i As Int64, ByRef o As data_ref) As Boolean
             If i <= max_value AndAlso i >= rel_min_value Then
-                o = New data_ref() With {.r = True, .o = i}
+                o = New data_ref() With {.l = location.relative, .o = i}
                 Return True
             End If
             Return False
@@ -62,7 +71,7 @@ Namespace primitive
 
         Public Shared Function abs(ByVal i As Int64, ByRef o As data_ref) As Boolean
             If i <= max_value AndAlso i >= abs_min_value Then
-                o = New data_ref() With {.r = False, .o = i}
+                o = New data_ref() With {.l = location.absolute, .o = i}
                 Return True
             End If
             Return False
@@ -71,6 +80,20 @@ Namespace primitive
         Public Shared Function abs(ByVal i As Int64) As data_ref
             Dim o As data_ref = Nothing
             assert(abs(i, o))
+            Return o
+        End Function
+
+        Public Shared Function heap(ByVal i As Int64, ByRef o As data_ref) As Boolean
+            If i <= max_value AndAlso i >= heap_min_value Then
+                o = New data_ref() With {.l = location.heap, .o = i}
+                Return True
+            End If
+            Return False
+        End Function
+
+        Public Shared Function heap(ByVal i As Int64) As data_ref
+            Dim o As data_ref = Nothing
+            assert(heap(i, o))
             Return o
         End Function
 
@@ -103,32 +126,43 @@ Namespace primitive
         End Function
 
         Public Function [set](ByVal i As Int64) As Boolean
-            Dim r As Boolean = ((i And int64_1) <> 0)
-            Dim o As Int64 = (i >> 1)
-
-            If r Then
-                If o < rel_min_value OrElse o > max_value Then
-                    Return False
-                End If
-                Me.r = r
-                Me.o = o
-                Return True
-            End If
-
-            If o < abs_min_value OrElse o > max_value Then
+            Dim v As Int64 = (i And 3)
+            If Not [Enum].IsDefined(GetType(location), v) Then
                 Return False
             End If
-            Me.r = r
+            Dim l As location = CType(v, location)
+            Dim o As Int64 = (i >> 2)
+            Select Case l
+                Case location.relative
+                    If o < rel_min_value OrElse o > max_value Then
+                        Return False
+                    End If
+                Case location.absolute
+                    If o < abs_min_value OrElse o > max_value Then
+                        Return False
+                    End If
+                Case location.heap
+                    If o < heap_min_value OrElse o > max_value Then
+                        Return False
+                    End If
+                Case Else
+                    Return assert(False)
+            End Select
+            Me.l = l
             Me.o = o
             Return True
         End Function
 
         Public Function relative() As Boolean
-            Return r
+            Return l = location.relative
         End Function
 
         Public Function absolute() As Boolean
-            Return Not r
+            Return l = location.absolute
+        End Function
+
+        Public Function heap() As Boolean
+            Return l = location.heap
         End Function
 
         Public Function offset() As Int64
@@ -136,10 +170,7 @@ Namespace primitive
         End Function
 
         Public Function export() As Int64
-            If r Then
-                Return (o << 1) + int64_1
-            End If
-            Return (o << 1)
+            Return (o << 2) + l
         End Function
 
         Public Function bytes_size() As UInt32 Implements exportable.bytes_size
@@ -152,7 +183,7 @@ Namespace primitive
         End Function
 
         Public Function export(ByRef s As String) As Boolean Implements exportable.export
-            s = strcat(If(r, rel_str, abs_str), o)
+            s = strcat(If(heap(), heap_str, If(relative(), rel_str, abs_str)), o)
             Return True
         End Function
 
@@ -189,10 +220,13 @@ Namespace primitive
             If Not separate(s(p), ref_type, offset) Then
                 Return False
             End If
-            If strsame(ref_type, rel_str) Then
-                r = True
-            ElseIf strsame(ref_type, abs_str) Then
-                r = False
+
+            If ref_type.Equals(heap_str) Then
+                l = location.heap
+            ElseIf ref_type.Equals(rel_str) Then
+                l = location.relative
+            ElseIf ref_type.Equals(abs_sTR) Then
+                l = location.absolute
             Else
                 Return False
             End If
@@ -211,15 +245,7 @@ Namespace primitive
                 Return c
             End If
             assert(Not other Is Nothing)
-            Dim x As Int64 = export()
-            Dim y As Int64 = other.export()
-            If x > y Then
-                Return 1
-            End If
-            If x < y Then
-                Return -1
-            End If
-            Return 0
+            Return export().CompareTo(other.export())
         End Function
 
         Public Overrides Function ToString() As String
