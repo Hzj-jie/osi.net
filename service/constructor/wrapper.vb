@@ -103,10 +103,9 @@ Public NotInheritable Class wrapper(Of T)
         o = i
         Dim j As UInt32 = uint32_0
         While j < vs.pool_size()
-            Dim x As _do_val_val_ref(Of var, T, T, Boolean) = Nothing
-            x = vs(j)
-            If Not x Is Nothing Then
-                If x(v, i, o) Then
+            Dim x As [optional](Of _do_val_val_ref(Of var, T, T, Boolean)) = vs.optional(j)
+            If x Then
+                If (+x)(v, i, o) Then
                     i = o
                 Else
                     Return False
