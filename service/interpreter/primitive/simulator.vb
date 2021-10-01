@@ -14,11 +14,13 @@ Namespace primitive
     Public NotInheritable Class simulator
         Implements imitation
 
-        Private ReadOnly _errors As vector(Of executor.error_type)
-        Private ReadOnly _instructions As vector(Of instruction)
-        Private ReadOnly _stack As vector(Of ref(Of Byte()))
-        Private ReadOnly _states As vector(Of executor.state)
+        Private ReadOnly _errors As New vector(Of executor.error_type)()
+        Private ReadOnly _instructions As New vector(Of instruction)()
+        Private ReadOnly _stack As New vector(Of ref(Of Byte()))()
+        Private ReadOnly _states As New vector(Of executor.state)()
+        Private ReadOnly _heap As New free_list(Of vector(Of ref(Of Byte())))()
         Private ReadOnly _interrupts As interrupts
+
         Private _carry_over As Boolean
         Private _diviced_by_zero As Boolean
         Private _imaginary_number As Boolean
@@ -29,10 +31,6 @@ Namespace primitive
 
         Public Sub New(ByVal interrupts As interrupts)
             assert(Not interrupts Is Nothing)
-            _errors = New vector(Of executor.error_type)()
-            _instructions = New vector(Of instruction)()
-            _stack = New vector(Of ref(Of Byte()))()
-            _states = New vector(Of executor.state)()
             _interrupts = interrupts
         End Sub
 
@@ -124,7 +122,7 @@ Namespace primitive
 
         Public Function access_stack(ByVal p As data_ref) As ref(Of Byte()) Implements executor.access_stack
             assert(Not p Is Nothing)
-            ' data_ref has only 62 bits, so using int64 instead of uint64 is safe.
+            ' data_ref has only 63 bits, so using int64 instead of uint64 is safe.
             Dim l As Int64 = 0
             If p.relative() Then
                 l = _stack.size() - p.offset() - 1
@@ -139,6 +137,22 @@ Namespace primitive
             Return _stack(CUInt(l))
         End Function
 
+        Public Function access_heap(ByVal p As UInt64) As ref(Of Byte()) Implements imitation.access_heap
+            Dim fi As UInt32 = CUInt(p >> CInt(bit_count_in_byte * sizeof_uint32))
+            Dim vi As UInt32 = CUInt(p And max_uint32)
+            If Not _heap.has(fi) Then
+                executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
+                assert(False)
+                Return Nothing
+            End If
+            If Not _heap(fi).available_index(vi) Then
+                executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
+                assert(False)
+                Return Nothing
+            End If
+            Return _heap(fi)(vi)
+        End Function
+
         Public Sub push_stack() Implements imitation.push_stack
             _stack.emplace_back(New ref(Of Byte()))
         End Sub
@@ -150,6 +164,32 @@ Namespace primitive
                 Return
             End If
             _stack.pop_back()
+        End Sub
+
+        Public Function alloc(ByVal size As UInt64) As UInt64 Implements imitation.alloc
+            If size > max_uint32 Then
+                executor_stop_error.throw(executor.error_type.out_of_heap_memory)
+                assert(False)
+                Return Nothing
+            End If
+            Dim v As New vector(Of ref(Of Byte()))()
+            v.resize(CUInt(size), New ref(Of Byte())())
+            Return CULng(_heap.emplace(v)) << CInt(bit_count_in_byte * sizeof_uint32)
+        End Function
+
+        Public Sub dealloc(ByVal pos As UInt64) Implements imitation.dealloc
+            If (pos And max_uint32) <> 0 Then
+                executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
+                assert(False)
+                Return
+            End If
+            Dim fi As UInt32 = CUInt(pos >> CInt(bit_count_in_byte * sizeof_uint32))
+            If Not _heap.has(fi) Then
+                executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
+                assert(False)
+                Return
+            End If
+            _heap.erase(fi)
         End Sub
 
         Public Sub store_state() Implements imitation.store_state

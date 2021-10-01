@@ -11,22 +11,14 @@ Namespace primitive
     Public NotInheritable Class data_ref
         Implements exportable, IComparable(Of data_ref), IComparable
 
-        Public Const max_value As Int64 = (max_int64 >> 2)
-        Public Const rel_min_value As Int64 = (min_int64 >> 2)
+        Public Const max_value As Int64 = (max_int64 >> 1)
+        Public Const rel_min_value As Int64 = (min_int64 >> 1)
         Public Const abs_min_value As Int64 = 0
-        Public Const heap_min_value As Int64 = 0
         Private Const rel_str As String = "rel"
         Private Const abs_str As String = "abs"
-        Private Const heap_str As String = "heap"
-        Private Shared ReadOnly ref_types() As String = {rel_str, abs_str, heap_str}
+        Private Shared ReadOnly ref_types() As String = {rel_str, abs_str}
 
-        Private Enum location As Long
-            absolute = 0 'in stack
-            relative = 1 'in stack
-            heap = 2     'in heap
-        End Enum
-
-        Private l As location
+        Private r As Boolean
         Private o As Int64
 
         Public Shared Function random(Optional ByRef r As Int64 = 0) As data_ref
@@ -57,7 +49,7 @@ Namespace primitive
 
         Public Shared Function rel(ByVal i As Int64, ByRef o As data_ref) As Boolean
             If i <= max_value AndAlso i >= rel_min_value Then
-                o = New data_ref() With {.l = location.relative, .o = i}
+                o = New data_ref() With {.r = True, .o = i}
                 Return True
             End If
             Return False
@@ -71,7 +63,7 @@ Namespace primitive
 
         Public Shared Function abs(ByVal i As Int64, ByRef o As data_ref) As Boolean
             If i <= max_value AndAlso i >= abs_min_value Then
-                o = New data_ref() With {.l = location.absolute, .o = i}
+                o = New data_ref() With {.r = False, .o = i}
                 Return True
             End If
             Return False
@@ -80,20 +72,6 @@ Namespace primitive
         Public Shared Function abs(ByVal i As Int64) As data_ref
             Dim o As data_ref = Nothing
             assert(abs(i, o))
-            Return o
-        End Function
-
-        Public Shared Function heap(ByVal i As Int64, ByRef o As data_ref) As Boolean
-            If i <= max_value AndAlso i >= heap_min_value Then
-                o = New data_ref() With {.l = location.heap, .o = i}
-                Return True
-            End If
-            Return False
-        End Function
-
-        Public Shared Function heap(ByVal i As Int64) As data_ref
-            Dim o As data_ref = Nothing
-            assert(heap(i, o))
             Return o
         End Function
 
@@ -126,43 +104,28 @@ Namespace primitive
         End Function
 
         Public Function [set](ByVal i As Int64) As Boolean
-            Dim v As Int64 = (i And 3)
-            If Not [Enum].IsDefined(GetType(location), v) Then
-                Return False
+            Dim r As Boolean = ((i And 1) = 1)
+            Dim o As Int64 = (i >> 1)
+            If r Then
+                If o < rel_min_value OrElse o > max_value Then
+                    Return False
+                End If
+            Else
+                If o < abs_min_value OrElse o > max_value Then
+                    Return False
+                End If
             End If
-            Dim l As location = CType(v, location)
-            Dim o As Int64 = (i >> 2)
-            Select Case l
-                Case location.relative
-                    If o < rel_min_value OrElse o > max_value Then
-                        Return False
-                    End If
-                Case location.absolute
-                    If o < abs_min_value OrElse o > max_value Then
-                        Return False
-                    End If
-                Case location.heap
-                    If o < heap_min_value OrElse o > max_value Then
-                        Return False
-                    End If
-                Case Else
-                    Return assert(False)
-            End Select
-            Me.l = l
+            Me.r = r
             Me.o = o
             Return True
         End Function
 
         Public Function relative() As Boolean
-            Return l = location.relative
+            Return r
         End Function
 
         Public Function absolute() As Boolean
-            Return l = location.absolute
-        End Function
-
-        Public Function heap() As Boolean
-            Return l = location.heap
+            Return Not r
         End Function
 
         Public Function offset() As Int64
@@ -170,7 +133,7 @@ Namespace primitive
         End Function
 
         Public Function export() As Int64
-            Return (o << 2) + l
+            Return (o << 1) + If(r, 1, 0)
         End Function
 
         Public Function bytes_size() As UInt32 Implements exportable.bytes_size
@@ -183,7 +146,7 @@ Namespace primitive
         End Function
 
         Public Function export(ByRef s As String) As Boolean Implements exportable.export
-            s = strcat(If(heap(), heap_str, If(relative(), rel_str, abs_str)), o)
+            s = strcat(If(relative(), rel_str, abs_str), o)
             Return True
         End Function
 
@@ -221,12 +184,10 @@ Namespace primitive
                 Return False
             End If
 
-            If ref_type.Equals(heap_str) Then
-                l = location.heap
-            ElseIf ref_type.Equals(rel_str) Then
-                l = location.relative
-            ElseIf ref_type.Equals(abs_sTR) Then
-                l = location.absolute
+            If ref_type.Equals(rel_str) Then
+                r = True
+            ElseIf ref_type.Equals(abs_str) Then
+                r = False
             Else
                 Return False
             End If

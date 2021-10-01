@@ -26,8 +26,7 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.push))
                 s = Convert.ToString(b)
                 Return True
@@ -50,14 +49,12 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [push]) As Int32 Implements IComparable(Of [push]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -80,8 +77,7 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.pop))
                 s = Convert.ToString(b)
                 Return True
@@ -104,14 +100,12 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [pop]) As Int32 Implements IComparable(Of [pop]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -151,15 +145,13 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.jump))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -184,19 +176,17 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [jump]) As Int32 Implements IComparable(Of [jump]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -207,8 +197,7 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -254,22 +243,19 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.cpc))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -296,24 +282,22 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [cpc]) As Int32 Implements IComparable(Of [cpc]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -324,8 +308,7 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -371,22 +354,19 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.mov))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -413,24 +393,22 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [mov]) As Int32 Implements IComparable(Of [mov]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -441,16 +419,14 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -496,22 +472,19 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.cp))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -538,24 +511,22 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [cp]) As Int32 Implements IComparable(Of [cp]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -566,16 +537,14 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -631,29 +600,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.add))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -682,29 +647,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [add]) As Int32 Implements IComparable(Of [add]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -715,24 +678,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -788,29 +748,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.sub))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -839,29 +795,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [sub]) As Int32 Implements IComparable(Of [sub]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -872,24 +826,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -945,29 +896,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.mul))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -996,29 +943,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [mul]) As Int32 Implements IComparable(Of [mul]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -1029,24 +974,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -1112,36 +1054,31 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.div))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d3.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -1172,34 +1109,32 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [div]) As Int32 Implements IComparable(Of [div]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d3.CompareTo(other.d3)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d3.CompareTo(other.d3)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -1210,32 +1145,28 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p3(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d3)
+                Dim p As ref(Of Byte()) = imi.access_stack(d3)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -1301,36 +1232,31 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.ext))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d3.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -1361,34 +1287,32 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [ext]) As Int32 Implements IComparable(Of [ext]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d3.CompareTo(other.d3)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d3.CompareTo(other.d3)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -1399,32 +1323,28 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p3(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d3)
+                Dim p As ref(Of Byte()) = imi.access_stack(d3)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -1480,29 +1400,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.pow))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -1531,29 +1447,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [pow]) As Int32 Implements IComparable(Of [pow]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -1564,24 +1478,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -1627,22 +1538,19 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.jumpif))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -1669,24 +1577,22 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [jumpif]) As Int32 Implements IComparable(Of [jumpif]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -1697,16 +1603,14 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -1742,15 +1646,13 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.cpco))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -1775,19 +1677,17 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [cpco]) As Int32 Implements IComparable(Of [cpco]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -1798,8 +1698,7 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -1835,15 +1734,13 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.cpdbz))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -1868,19 +1765,17 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [cpdbz]) As Int32 Implements IComparable(Of [cpdbz]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -1891,8 +1786,7 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -1928,15 +1822,13 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.cpin))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -1961,19 +1853,17 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [cpin]) As Int32 Implements IComparable(Of [cpin]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -1984,8 +1874,7 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -2004,8 +1893,7 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.stop))
                 s = Convert.ToString(b)
                 Return True
@@ -2028,14 +1916,12 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [stop]) As Int32 Implements IComparable(Of [stop]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -2095,29 +1981,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.equal))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -2146,29 +2028,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [equal]) As Int32 Implements IComparable(Of [equal]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -2179,24 +2059,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -2252,29 +2129,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.less))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -2303,29 +2176,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [less]) As Int32 Implements IComparable(Of [less]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -2336,24 +2207,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -2399,22 +2267,19 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.app))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -2441,24 +2306,22 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [app]) As Int32 Implements IComparable(Of [app]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -2469,16 +2332,14 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -2524,22 +2385,19 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.sapp))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -2566,24 +2424,22 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [sapp]) As Int32 Implements IComparable(Of [sapp]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -2594,16 +2450,14 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -2659,29 +2513,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.cut))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -2710,29 +2560,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [cut]) As Int32 Implements IComparable(Of [cut]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -2743,24 +2591,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -2826,36 +2671,31 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.cutl))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d3.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -2886,34 +2726,32 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [cutl]) As Int32 Implements IComparable(Of [cutl]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d3.CompareTo(other.d3)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d3.CompareTo(other.d3)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -2924,32 +2762,28 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p3(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d3)
+                Dim p As ref(Of Byte()) = imi.access_stack(d3)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -3005,29 +2839,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.int))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -3056,29 +2886,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [int]) As Int32 Implements IComparable(Of [int]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -3089,24 +2917,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -3142,15 +2967,13 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.clr))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -3175,19 +2998,17 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [clr]) As Int32 Implements IComparable(Of [clr]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -3198,8 +3019,7 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -3255,29 +3075,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.scut))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -3306,29 +3122,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [scut]) As Int32 Implements IComparable(Of [scut]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -3339,24 +3153,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -3402,22 +3213,19 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.sizeof))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -3444,24 +3252,22 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [sizeof]) As Int32 Implements IComparable(Of [sizeof]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -3472,16 +3278,14 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -3527,22 +3331,19 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.empty))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -3569,24 +3370,22 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [empty]) As Int32 Implements IComparable(Of [empty]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -3597,16 +3396,14 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -3662,29 +3459,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.and))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -3713,29 +3506,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [and]) As Int32 Implements IComparable(Of [and]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -3746,24 +3537,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -3819,29 +3607,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.or))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -3870,29 +3654,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [or]) As Int32 Implements IComparable(Of [or]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -3903,24 +3685,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -3966,22 +3745,19 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.not))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -4008,24 +3784,22 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [not]) As Int32 Implements IComparable(Of [not]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -4036,16 +3810,14 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -4064,8 +3836,7 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.stst))
                 s = Convert.ToString(b)
                 Return True
@@ -4088,14 +3859,12 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [stst]) As Int32 Implements IComparable(Of [stst]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -4118,8 +3887,7 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.rest))
                 s = Convert.ToString(b)
                 Return True
@@ -4142,14 +3910,12 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [rest]) As Int32 Implements IComparable(Of [rest]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -4209,29 +3975,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.fadd))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -4260,29 +4022,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [fadd]) As Int32 Implements IComparable(Of [fadd]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -4293,24 +4053,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -4366,29 +4123,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.fsub))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -4417,29 +4170,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [fsub]) As Int32 Implements IComparable(Of [fsub]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -4450,24 +4201,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -4523,29 +4271,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.fmul))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -4574,29 +4318,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [fmul]) As Int32 Implements IComparable(Of [fmul]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -4607,24 +4349,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -4680,29 +4419,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.fdiv))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -4731,29 +4466,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [fdiv]) As Int32 Implements IComparable(Of [fdiv]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -4764,24 +4497,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -4837,29 +4567,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.fext))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -4888,29 +4614,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [fext]) As Int32 Implements IComparable(Of [fext]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -4921,24 +4645,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -4994,29 +4715,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.fpow))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -5045,29 +4762,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [fpow]) As Int32 Implements IComparable(Of [fpow]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -5078,24 +4793,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -5151,29 +4863,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.fequal))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -5202,29 +4910,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [fequal]) As Int32 Implements IComparable(Of [fequal]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -5235,24 +4941,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -5308,29 +5011,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.fless))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -5359,29 +5058,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [fless]) As Int32 Implements IComparable(Of [fless]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -5392,24 +5089,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -5465,29 +5159,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.lfs))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -5516,29 +5206,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [lfs]) As Int32 Implements IComparable(Of [lfs]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -5549,24 +5237,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -5622,29 +5307,25 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.rfs))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d2.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -5673,29 +5354,27 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [rfs]) As Int32 Implements IComparable(Of [rfs]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d2.CompareTo(other.d2)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d2.CompareTo(other.d2)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -5706,24 +5385,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access_stack(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -5769,22 +5445,19 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.alloc))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 If d1.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -5811,24 +5484,22 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [alloc]) As Int32 Implements IComparable(Of [alloc]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    c = Me.d1.CompareTo(other.d1)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -5839,16 +5510,14 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -5884,15 +5553,13 @@ Namespace primitive
             End Function
 
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As StringBuilder = Nothing
-                b = New StringBuilder()
+                Dim b As New StringBuilder()
                 b.Append(command_str(command.dealloc))
                 If d0.export(s) Then
                     b.Append(character.blank)
                     b.Append(s)
-                Else
-                    Return False
                 End If
+                Return False
 
                 s = Convert.ToString(b)
                 Return True
@@ -5917,19 +5584,17 @@ Namespace primitive
             End Function
 
             Public Function CompareTo(ByVal other As [dealloc]) As Int32 Implements IComparable(Of [dealloc]).CompareTo
-                Dim c As Int32 = 0
-                c = object_compare(Me, other)
-                If c = object_compare_undetermined Then
-                    assert(Not other Is Nothing)
-                    c = Me.d0.CompareTo(other.d0)
-                    If c <> 0 Then
-                        Return c
-                    End If
-
-                    Return 0
-                Else
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
                     Return c
                 End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
             End Function
 
             Public Overrides Function ToString() As String
@@ -5940,8 +5605,243 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = Nothing
-                p = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                assert(Not p Is Nothing)
+                Return p
+            End Function
+        End Class
+
+        Partial Public NotInheritable Class [hmovin]
+            Implements instruction, IComparable, IComparable(Of [hmovin])
+
+            Private ReadOnly d0 As data_ref
+            Private ReadOnly d1 As data_ref
+
+            Public Sub New()
+                d0 = New data_ref()
+                d1 = New data_ref()
+            End Sub
+
+            Public Sub New( _
+                       ByVal d0 As data_ref,
+                       ByVal d1 As data_ref)
+                Me.d0 = d0
+                Me.d1 = d1
+            End Sub
+
+            Public Function bytes_size() As UInt32 Implements exportable.bytes_size
+                Return sizeof_uint32 +
+                       d0.bytes_size() +
+                       d1.bytes_size()
+            End Function
+
+            Public Function export(ByRef b() As Byte) As Boolean Implements exportable.export
+                Dim b0() As Byte = Nothing
+                If Not d0.export(b0) Then
+                    Return False
+                End If
+                Dim b1() As Byte = Nothing
+                If Not d1.export(b1) Then
+                    Return False
+                End If
+                b = array_concat(uint32_bytes(command.hmovin),
+                                 b0,
+                                 b1)
+                Return True
+            End Function
+
+            Public Function export(ByRef s As String) As Boolean Implements exportable.export
+                Dim b As New StringBuilder()
+                b.Append(command_str(command.hmovin))
+                If d0.export(s) Then
+                    b.Append(character.blank)
+                    b.Append(s)
+                End If
+                Return False
+
+                If d1.export(s) Then
+                    b.Append(character.blank)
+                    b.Append(s)
+                End If
+                Return False
+
+                s = Convert.ToString(b)
+                Return True
+            End Function
+
+            Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import
+                Dim o As UInt32 = 0
+                Return assert(bytes_uint32(i, o, p) AndAlso o = command.hmovin) AndAlso
+                       d0.import(i, p) AndAlso
+                       d1.import(i, p)
+            End Function
+
+            Public Function import(s As vector(Of String), ByRef p As UInt32) As Boolean Implements exportable.import
+                assert(Not s.null_or_empty() AndAlso s.size() > p)
+                assert(s(p) = command_str(command.hmovin))
+                p += uint32_1
+                Return True AndAlso
+                       d0.import(s, p) AndAlso
+                       d1.import(s, p)
+            End Function
+
+            Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
+                Return CompareTo(cast(Of [hmovin])(obj, False))
+            End Function
+
+            Public Function CompareTo(ByVal other As [hmovin]) As Int32 Implements IComparable(Of [hmovin]).CompareTo
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
+                    Return c
+                End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
+            End Function
+
+            Public Overrides Function ToString() As String
+                Dim s As String = Nothing
+                assert(export(s))
+                Return s
+            End Function
+
+            Private Function p0(ByVal imi As imitation) As ref(Of Byte())
+                assert(Not imi Is Nothing)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                assert(Not p Is Nothing)
+                Return p
+            End Function
+
+            Private Function p1(ByVal imi As imitation) As ref(Of Byte())
+                assert(Not imi Is Nothing)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                assert(Not p Is Nothing)
+                Return p
+            End Function
+        End Class
+
+        Partial Public NotInheritable Class [hmovout]
+            Implements instruction, IComparable, IComparable(Of [hmovout])
+
+            Private ReadOnly d0 As data_ref
+            Private ReadOnly d1 As data_ref
+
+            Public Sub New()
+                d0 = New data_ref()
+                d1 = New data_ref()
+            End Sub
+
+            Public Sub New( _
+                       ByVal d0 As data_ref,
+                       ByVal d1 As data_ref)
+                Me.d0 = d0
+                Me.d1 = d1
+            End Sub
+
+            Public Function bytes_size() As UInt32 Implements exportable.bytes_size
+                Return sizeof_uint32 +
+                       d0.bytes_size() +
+                       d1.bytes_size()
+            End Function
+
+            Public Function export(ByRef b() As Byte) As Boolean Implements exportable.export
+                Dim b0() As Byte = Nothing
+                If Not d0.export(b0) Then
+                    Return False
+                End If
+                Dim b1() As Byte = Nothing
+                If Not d1.export(b1) Then
+                    Return False
+                End If
+                b = array_concat(uint32_bytes(command.hmovout),
+                                 b0,
+                                 b1)
+                Return True
+            End Function
+
+            Public Function export(ByRef s As String) As Boolean Implements exportable.export
+                Dim b As New StringBuilder()
+                b.Append(command_str(command.hmovout))
+                If d0.export(s) Then
+                    b.Append(character.blank)
+                    b.Append(s)
+                End If
+                Return False
+
+                If d1.export(s) Then
+                    b.Append(character.blank)
+                    b.Append(s)
+                End If
+                Return False
+
+                s = Convert.ToString(b)
+                Return True
+            End Function
+
+            Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import
+                Dim o As UInt32 = 0
+                Return assert(bytes_uint32(i, o, p) AndAlso o = command.hmovout) AndAlso
+                       d0.import(i, p) AndAlso
+                       d1.import(i, p)
+            End Function
+
+            Public Function import(s As vector(Of String), ByRef p As UInt32) As Boolean Implements exportable.import
+                assert(Not s.null_or_empty() AndAlso s.size() > p)
+                assert(s(p) = command_str(command.hmovout))
+                p += uint32_1
+                Return True AndAlso
+                       d0.import(s, p) AndAlso
+                       d1.import(s, p)
+            End Function
+
+            Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
+                Return CompareTo(cast(Of [hmovout])(obj, False))
+            End Function
+
+            Public Function CompareTo(ByVal other As [hmovout]) As Int32 Implements IComparable(Of [hmovout]).CompareTo
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
+                    Return c
+                End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                c = Me.d1.CompareTo(other.d1)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
+            End Function
+
+            Public Overrides Function ToString() As String
+                Dim s As String = Nothing
+                assert(export(s))
+                Return s
+            End Function
+
+            Private Function p0(ByVal imi As imitation) As ref(Of Byte())
+                assert(Not imi Is Nothing)
+                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                assert(Not p Is Nothing)
+                Return p
+            End Function
+
+            Private Function p1(ByVal imi As imitation) As ref(Of Byte())
+                assert(Not imi Is Nothing)
+                Dim p As ref(Of Byte()) = imi.access_stack(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function

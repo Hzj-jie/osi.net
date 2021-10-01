@@ -1,13 +1,17 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.service.interpreter.primitive
 Imports osi.service.resource
 
 Namespace primitive
-    Public Class simulator_test
+    Public NotInheritable Class simulator_test
         Inherits [case]
 
         Private Shared ReadOnly cases() As pair(Of Byte(), String) = {
@@ -32,12 +36,12 @@ Namespace primitive
         Private Shared Function case1() As Boolean
             For i As UInt32 = 0 To array_size(cases) - uint32_1
                 Dim sim As simulator = Nothing
-                If Not execute(cases(i).second, sim) Then
+                If Not execute(cases(CInt(i)).second, sim) Then
                     Return False
                 End If
                 Dim p As ref(Of Byte()) = Nothing
                 p = sim.access_stack(data_ref.abs(0))
-                assertion.array_equal(+p, cases(i).first)
+                assertion.array_equal(+p, cases(CInt(i)).first)
             Next
             Return True
         End Function
@@ -55,9 +59,47 @@ Namespace primitive
             Return True
         End Function
 
+        Private Shared Function access_heap_case() As Boolean
+            Dim sim As simulator = Nothing
+            If Not execute(access_heap.as_text(), sim) Then
+                Return False
+            End If
+
+            assertion.equal(sim.access_stack_as_uint32(data_ref.abs(0)), CUInt(1))
+            assertion.equal(sim.access_stack_as_uint32(data_ref.abs(1)), CUInt(104))
+            assertion.equal(sim.access_heap_as_uint32(sim.access_stack_as_uint64(data_ref.abs(2)) - CULng(4)),
+                            CUInt(100))
+            assertion.equal(sim.access_heap_as_uint32(sim.access_stack_as_uint64(data_ref.abs(2)) - CULng(3)),
+                            CUInt(101))
+            assertion.equal(sim.access_heap_as_uint32(sim.access_stack_as_uint64(data_ref.abs(2)) - CULng(2)),
+                            CUInt(102))
+            assertion.equal(sim.access_heap_as_uint32(sim.access_stack_as_uint64(data_ref.abs(2)) - CULng(1)),
+                            CUInt(103))
+            assertion.equal(sim.access_heap_as_uint32(sim.access_stack_as_uint64(data_ref.abs(2)) - CULng(0)),
+                            CUInt(104))
+            Return True
+        End Function
+
+        Private Shared Function dealloc_case() As Boolean
+            Dim sim As simulator = Nothing
+            If Not execute(dealloc.as_text(), sim) Then
+                Return False
+            End If
+
+            assertion.equal(sim.access_stack_as_uint32(data_ref.abs(0)), CUInt(100))
+            assertion.array_equal(assertion.catch_thrown(Of executor_stop_error) _
+                                                        (Sub()
+                                                             sim.access_heap(data_ref.abs(1))
+                                                         End Sub).error_types,
+                                  {executor.error_type.heap_access_out_of_boundary})
+            Return True
+        End Function
+
         Public Overrides Function run() As Boolean
             Return case1() AndAlso
-                   case2()
+                   case2() AndAlso
+                   access_heap_case() AndAlso
+                   dealloc_case()
         End Function
     End Class
 End Namespace

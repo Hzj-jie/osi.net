@@ -114,6 +114,8 @@
     <None Include="primitive\cases\run.cmd" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="primitive\cases\access_heap.txt" />
+    <Content Include="primitive\cases\dealloc.txt" />
     <Content Include="primitive\cases\sim1.txt" />
     <Content Include="primitive\cases\sim2.txt" />
     <Content Include="primitive\cases\sim3.txt" />

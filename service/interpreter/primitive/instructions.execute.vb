@@ -243,6 +243,8 @@ Namespace primitive
                 Dim b() As Byte = Nothing
                 If Not chunk.from_bytes(+p1(imi), b) Then
                     executor_stop_error.throw(executor.error_type.invalid_buffer_size)
+                    assert(False)
+                    Return
                 End If
                 p0.set(array_concat(+p0, b))
             End Sub
@@ -475,7 +477,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public NotInheritable Class lfs
+        Partial Public NotInheritable Class [lfs]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -486,7 +488,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public NotInheritable Class rfs
+        Partial Public NotInheritable Class [rfs]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -497,19 +499,47 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public NotInheritable Class alloc
+        Partial Public NotInheritable Class [alloc]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(False)
+                Dim s As UInt32 = imi.access_stack_as_uint32(d1)
+                If imi.carry_over() Then
+                    executor_stop_error.throw(executor.error_type.out_of_heap_memory)
+                    assert(False)
+                    Return
+                End If
+                p0(imi).set(uint64_bytes(imi.alloc(s)))
             End Sub
         End Class
 
-        Partial Public NotInheritable Class dealloc
+        Partial Public NotInheritable Class [dealloc]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(False)
+                Dim p As UInt64 = imi.access_stack_as_uint64(d0)
+                If imi.carry_over() Then
+                    executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
+                    assert(False)
+                    Return
+                End If
+                imi.dealloc(p)
+            End Sub
+        End Class
+
+        Partial Public NotInheritable Class [hmovin]
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                imi.access_heap(imi.access_stack_as_uint64(d0)).set(p1(imi).get())
+            End Sub
+        End Class
+
+        Partial Public NotInheritable Class [hmovout]
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                p0(imi).set(imi.access_heap(imi.access_stack_as_uint64(d1)).get())
             End Sub
         End Class
     End Namespace
