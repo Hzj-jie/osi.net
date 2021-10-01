@@ -88,4 +88,12 @@ Public NotInheritable Class free_list(Of T)
     Public Function has(ByVal p As UInt32) As Boolean
         Return v.available_index(p) AndAlso f.find(p) = f.end()
     End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function optionally(ByVal p As UInt32) As [optional](Of T)
+        If has(p) Then
+            Return [optional].of(v(p))
+        End If
+        Return [optional].empty(Of T)()
+    End Function
 End Class
