@@ -90,10 +90,10 @@ Public NotInheritable Class free_list(Of T)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function optionally(ByVal p As UInt32) As [optional](Of T)
+    Public Function [optional](ByVal p As UInt32) As [optional](Of T)
         If has(p) Then
-            Return [optional].of(v(p))
+            Return formation.[optional].of(v(p))
         End If
-        Return [optional].empty(Of T)()
+        Return formation.[optional].empty(Of T)()
     End Function
 End Class

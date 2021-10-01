@@ -100,10 +100,10 @@ Public NotInheritable Class collectionless(Of T)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function optionally(ByVal p As UInt32) As [optional](Of T)
+    Public Function [optional](ByVal p As UInt32) As [optional](Of T)
         Dim r As [optional](Of T) = Nothing
         l.wait()
-        r = f.optionally(p)
+        r = f.optional(p)
         l.release()
         Return r
     End Function

@@ -37,9 +37,9 @@ Partial Public Class device_pool(Of T)
             While i < c.pool_size()
                 ' TODO: do not need to call c.erase (Added by AddHandler d.closing ...), we do not need to add the
                 ' index to free-list anymore, c.clear() should be more efficient.
-                c.optionally(i).if_present(Sub(d)
-                                               d.close()
-                                           End Sub)
+                c.optional(i).if_present(Sub(d)
+                                             d.close()
+                                         End Sub)
                 i += uint32_1
             End While
             ' Cannot clear. If d.closing is raised concurrently with p.closing, assertion will fail in
