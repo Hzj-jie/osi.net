@@ -107,6 +107,7 @@
     <Compile Include="bstyle\logic\nodes\value_with_bracket.vb" />
     <Compile Include="bstyle\logic\nodes\while.vb" />
     <Compile Include="logic\define_array.vb" />
+    <Compile Include="logic\delete_array.vb" />
     <Compile Include="logic\logic_gen\scoped\read_scoped.vb" />
     <Compile Include="logic\logic_gen\scoped\write_scoped.vb" />
     <Compile Include="logic\builder\builders.implementation.vb" />

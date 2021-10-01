@@ -118,8 +118,11 @@ Namespace logic
         End Function
 
         Private Function new_define_array(ByVal p1 As String, ByVal p2 As String, ByVal p3 As String) As define_array
-            assert(False)
-            Return Nothing
+            Return New define_array(anchors, types, p1, p2, p3)
+        End Function
+
+        Private Function new_delete_array(ByVal p1 As String) As delete_array
+            Return New delete_array(anchors, p1)
         End Function
 
         Private Function new_do_until(ByVal p1 As String, ByVal p2 As paragraph) As do_until

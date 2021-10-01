@@ -147,11 +147,11 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.jump))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -245,17 +245,17 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.cpc))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -356,17 +356,17 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.mov))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -474,17 +474,17 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.cp))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -602,23 +602,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.add))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -750,23 +750,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.sub))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -898,23 +898,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.mul))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -1056,29 +1056,29 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.div))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d3.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d3.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -1234,29 +1234,29 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.ext))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d3.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d3.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -1402,23 +1402,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.pow))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -1540,17 +1540,17 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.jumpif))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -1648,11 +1648,11 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.cpco))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -1736,11 +1736,11 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.cpdbz))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -1824,11 +1824,11 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.cpin))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -1983,23 +1983,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.equal))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -2131,23 +2131,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.less))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -2269,17 +2269,17 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.app))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -2387,17 +2387,17 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.sapp))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -2515,23 +2515,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.cut))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -2673,29 +2673,29 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.cutl))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d3.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d3.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -2841,23 +2841,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.int))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -2969,11 +2969,11 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.clr))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -3077,23 +3077,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.scut))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -3215,17 +3215,17 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.sizeof))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -3333,17 +3333,17 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.empty))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -3461,23 +3461,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.and))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -3609,23 +3609,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.or))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -3747,17 +3747,17 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.not))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -3977,23 +3977,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.fadd))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -4125,23 +4125,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.fsub))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -4273,23 +4273,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.fmul))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -4421,23 +4421,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.fdiv))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -4569,23 +4569,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.fext))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -4717,23 +4717,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.fpow))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -4865,23 +4865,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.fequal))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -5013,23 +5013,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.fless))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -5161,23 +5161,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.lfs))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -5309,23 +5309,23 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.rfs))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d2.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d2.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -5447,17 +5447,17 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.alloc))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -5555,11 +5555,11 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.dealloc))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -5653,17 +5653,17 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.hmovin))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True
@@ -5771,17 +5771,17 @@ Namespace primitive
             Public Function export(ByRef s As String) As Boolean Implements exportable.export
                 Dim b As New StringBuilder()
                 b.Append(command_str(command.hmovout))
-                If d0.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d0.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
-                If d1.export(s) Then
-                    b.Append(character.blank)
-                    b.Append(s)
+                If Not d1.export(s) Then
+                    Return False
                 End If
-                Return False
+                b.Append(character.blank)
+                b.Append(s)
 
                 s = Convert.ToString(b)
                 Return True

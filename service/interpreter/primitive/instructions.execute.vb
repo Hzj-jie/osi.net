@@ -509,7 +509,7 @@ Namespace primitive
                     assert(False)
                     Return
                 End If
-                p0(imi).set(uint64_bytes(imi.alloc(s)))
+                p0(imi).set(uint64_bytes(imi.alloc(s).address()))
             End Sub
         End Class
 
@@ -517,7 +517,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                Dim p As UInt64 = imi.access_stack_as_uint64(d0)
+                Dim p As heap_ref = imi.access_stack_as_heap_ref(d0)
                 If imi.carry_over() Then
                     executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
                     assert(False)
@@ -531,7 +531,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                imi.access_heap(imi.access_stack_as_uint64(d0)).set(p1(imi).get())
+                imi.access_heap(d0).set(p1(imi).get())
             End Sub
         End Class
 
@@ -539,7 +539,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                p0(imi).set(imi.access_heap(imi.access_stack_as_uint64(d1)).get())
+                p0(imi).set(imi.access_heap(d1).get())
             End Sub
         End Class
     End Namespace

@@ -3,16 +3,16 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public NotInheritable Class scope
         Private ReadOnly parent As scope
-        Private ReadOnly m As map(Of String, variable_ref)
-        Private child As scope
+        Private ReadOnly m As New unordered_map(Of String, variable_ref)()
+        Private child As scope = Nothing
 
         Private NotInheritable Class variable_ref
             Public ReadOnly offset As UInt64
@@ -31,8 +31,6 @@ Namespace logic
 
         Public Sub New(ByVal parent As scope)
             Me.parent = parent
-            Me.m = New map(Of String, variable_ref)()
-            Me.child = Nothing
         End Sub
 
         Public Function start_scope() As scope
@@ -82,8 +80,7 @@ Namespace logic
         End Function
 
         Public Function type(ByVal name As String, ByRef o As String) As Boolean
-            Dim s As scope = Nothing
-            s = Me
+            Dim s As scope = Me
             While Not s Is Nothing
                 Dim r As variable_ref = Nothing
                 If s.m.find(name, r) Then
@@ -104,8 +101,7 @@ Namespace logic
         Public Function export(ByVal name As String, ByRef o As data_ref) As Boolean
             Dim offset As UInt64 = 0
             Dim size As UInt64 = 0
-            Dim s As scope = Nothing
-            s = Me
+            Dim s As scope = Me
             While Not s Is Nothing
                 If s.find(name, offset) Then
                     If s.is_root() Then

@@ -137,20 +137,19 @@ Namespace primitive
             Return _stack(CUInt(l))
         End Function
 
-        Public Function access_heap(ByVal p As UInt64) As ref(Of Byte()) Implements imitation.access_heap
-            Dim fi As UInt32 = CUInt(p >> CInt(bit_count_in_byte * sizeof_uint32))
-            Dim vi As UInt32 = CUInt(p And max_uint32)
-            If Not _heap.has(fi) Then
+        Public Function access_heap(ByVal p As heap_ref) As ref(Of Byte()) Implements imitation.access_heap
+            assert(Not p Is Nothing)
+            If Not _heap.has(p.high) Then
                 executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
                 assert(False)
                 Return Nothing
             End If
-            If Not _heap(fi).available_index(vi) Then
+            If Not _heap(p.high).available_index(p.low) Then
                 executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
                 assert(False)
                 Return Nothing
             End If
-            Return _heap(fi)(vi)
+            Return _heap(p.high)(p.low)
         End Function
 
         Public Sub push_stack() Implements imitation.push_stack
@@ -166,7 +165,7 @@ Namespace primitive
             _stack.pop_back()
         End Sub
 
-        Public Function alloc(ByVal size As UInt64) As UInt64 Implements imitation.alloc
+        Public Function alloc(ByVal size As UInt64) As heap_ref Implements imitation.alloc
             If size > max_uint32 Then
                 executor_stop_error.throw(executor.error_type.out_of_heap_memory)
                 assert(False)
@@ -174,22 +173,21 @@ Namespace primitive
             End If
             Dim v As New vector(Of ref(Of Byte()))()
             v.resize(CUInt(size), New ref(Of Byte())())
-            Return CULng(_heap.emplace(v)) << CInt(bit_count_in_byte * sizeof_uint32)
+            Return heap_ref.of_high(_heap.emplace(v))
         End Function
 
-        Public Sub dealloc(ByVal pos As UInt64) Implements imitation.dealloc
-            If (pos And max_uint32) <> 0 Then
+        Public Sub dealloc(ByVal pos As heap_ref) Implements imitation.dealloc
+            If Not pos.head_of_alloc() Then
                 executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
                 assert(False)
                 Return
             End If
-            Dim fi As UInt32 = CUInt(pos >> CInt(bit_count_in_byte * sizeof_uint32))
-            If Not _heap.has(fi) Then
+            If Not _heap.has(pos.high) Then
                 executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
                 assert(False)
                 Return
             End If
-            _heap.erase(fi)
+            _heap.erase(pos.high)
         End Sub
 
         Public Sub store_state() Implements imitation.store_state

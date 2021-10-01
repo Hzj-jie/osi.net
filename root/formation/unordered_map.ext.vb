@@ -54,4 +54,19 @@ Public Module _unordered_map
                                         (ByVal this As unordered_map(Of K, V)) As stream(Of first_const_pair(Of K, V))
         Return New stream(Of first_const_pair(Of K, V)).container(Of unordered_map(Of K, V))(this)
     End Function
+
+    <Extension()> Public Function find(Of KT, VT) _
+                                      (ByVal this As unordered_map(Of KT, VT),
+                                       ByVal key As KT,
+                                       ByRef o As VT) As Boolean
+        If this Is Nothing Then
+            Return False
+        End If
+        Dim it As unordered_map(Of KT, VT).iterator = this.find(key)
+        If it = this.end() Then
+            Return False
+        End If
+        o = (+it).second
+        Return True
+    End Function
 End Module

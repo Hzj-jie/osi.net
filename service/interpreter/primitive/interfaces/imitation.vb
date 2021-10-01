@@ -15,8 +15,8 @@ Namespace primitive
         Sub pop_stack()
         Sub store_state()
         Sub restore_state()
-        Function alloc(ByVal size As UInt64) As UInt64
-        Sub dealloc(ByVal pos As UInt64)
+        Function alloc(ByVal size As UInt64) As heap_ref
+        Sub dealloc(ByVal pos As heap_ref)
         Overloads Sub instruction_ref(ByVal v As Int64)  ' data_ref.offset() returns int64
         Overloads Sub carry_over(ByVal v As Boolean)
         Overloads Sub divided_by_zero(ByVal v As Boolean)
@@ -56,11 +56,15 @@ Namespace primitive
             Return this.access_stack_as_uint64(data_ref.rel(0))
         End Function
 
-        <Extension()> Public Function access_heap(ByVal this As imitation, ByVal p As data_ref) As ref(Of Byte())
-            Return this.access_heap(this.access_stack_as_uint64(p))
+        <Extension()> Public Function access_stack_as_heap_ref(ByVal this As imitation, ByVal p As data_ref) As heap_ref
+            Return heap_ref.of_address(this.access_stack_as_uint64(p))
         End Function
 
-        <Extension()> Public Function access_heap_as_uint32(ByVal this As imitation, ByVal p As UInt64) As UInt32
+        <Extension()> Public Function access_heap(ByVal this As imitation, ByVal p As data_ref) As ref(Of Byte())
+            Return this.access_heap(this.access_stack_as_heap_ref(p))
+        End Function
+
+        <Extension()> Public Function access_heap_as_uint32(ByVal this As imitation, ByVal p As heap_ref) As UInt32
             assert(Not this Is Nothing)
             Dim o As Boolean = False
             Dim r As UInt32 = this.convert_heap_to_uint32(p, o)
@@ -68,7 +72,7 @@ Namespace primitive
             Return r
         End Function
 
-        <Extension()> Public Function access_heap_as_uint64(ByVal this As imitation, ByVal p As UInt64) As UInt64
+        <Extension()> Public Function access_heap_as_uint64(ByVal this As imitation, ByVal p As heap_ref) As UInt64
             assert(Not this Is Nothing)
             Dim o As Boolean = False
             Dim r As UInt64 = this.convert_heap_to_uint64(p, o)

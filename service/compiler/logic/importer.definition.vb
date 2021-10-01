@@ -895,7 +895,31 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_do_until_27(
+        Private Function parse_delete_array_27(
+                ByVal v As vector(Of String),
+                ByRef p As UInt32,
+                ByRef o As exportable) As Boolean
+            assert(Not v Is Nothing)
+            assert(v.size() > p)
+            If Not strsame(v(p), "delete_array") Then
+                Return False
+            End If
+            Dim start As UInt32
+            start = p
+            p += uint32_1
+            Dim p1 As String = Nothing
+            p1 = v(p)
+            p += uint32_1
+            o = new_delete_array(
+                p1
+            )
+            If isdebugmode() Then
+                o = New exportable_source_wrapper(v, start, p, o)
+            End If
+            Return True
+        End Function
+
+        Private Function parse_do_until_28(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -926,7 +950,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_do_while_28(
+        Private Function parse_do_while_29(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -957,7 +981,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_interrupt_29(
+        Private Function parse_interrupt_30(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -989,7 +1013,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_move_30(
+        Private Function parse_move_31(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1017,7 +1041,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_return_31(
+        Private Function parse_return_32(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1047,7 +1071,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_return_32(
+        Private Function parse_return_33(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1075,7 +1099,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_append_33(
+        Private Function parse_append_34(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1103,7 +1127,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_not_34(
+        Private Function parse_not_35(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1131,7 +1155,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_sizeof_35(
+        Private Function parse_sizeof_36(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1159,7 +1183,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_empty_36(
+        Private Function parse_empty_37(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1187,7 +1211,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_while_then_37(
+        Private Function parse_while_then_38(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1218,7 +1242,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_stop_38(
+        Private Function parse_stop_39(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1238,7 +1262,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_add_39(
+        Private Function parse_float_add_40(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1270,7 +1294,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_subtract_40(
+        Private Function parse_float_subtract_41(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1302,7 +1326,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_multiply_41(
+        Private Function parse_float_multiply_42(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1334,7 +1358,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_divide_42(
+        Private Function parse_float_divide_43(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1366,7 +1390,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_extract_43(
+        Private Function parse_float_extract_44(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1398,7 +1422,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_power_44(
+        Private Function parse_float_power_45(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1430,7 +1454,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_less_45(
+        Private Function parse_float_less_46(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1462,7 +1486,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_more_46(
+        Private Function parse_float_more_47(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1494,7 +1518,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_equal_47(
+        Private Function parse_float_equal_48(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1526,7 +1550,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_less_or_equal_48(
+        Private Function parse_float_less_or_equal_49(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1558,7 +1582,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_more_or_equal_49(
+        Private Function parse_float_more_or_equal_50(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1590,7 +1614,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_left_shift_50(
+        Private Function parse_left_shift_51(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1622,7 +1646,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_right_shift_51(
+        Private Function parse_right_shift_52(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1879,7 +1903,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_do_until_27(v, pos, o) Then
+                If parse_delete_array_27(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1887,7 +1911,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_do_while_28(v, pos, o) Then
+                If parse_do_until_28(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1895,7 +1919,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_interrupt_29(v, pos, o) Then
+                If parse_do_while_29(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1903,7 +1927,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_move_30(v, pos, o) Then
+                If parse_interrupt_30(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1911,7 +1935,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_return_31(v, pos, o) Then
+                If parse_move_31(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1927,7 +1951,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_append_33(v, pos, o) Then
+                If parse_return_33(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1935,7 +1959,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_not_34(v, pos, o) Then
+                If parse_append_34(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1943,7 +1967,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_sizeof_35(v, pos, o) Then
+                If parse_not_35(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1951,7 +1975,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_empty_36(v, pos, o) Then
+                If parse_sizeof_36(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1959,7 +1983,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_while_then_37(v, pos, o) Then
+                If parse_empty_37(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1967,7 +1991,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_stop_38(v, pos, o) Then
+                If parse_while_then_38(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1975,7 +1999,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_float_add_39(v, pos, o) Then
+                If parse_stop_39(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1983,7 +2007,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_float_subtract_40(v, pos, o) Then
+                If parse_float_add_40(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1991,7 +2015,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_float_multiply_41(v, pos, o) Then
+                If parse_float_subtract_41(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1999,7 +2023,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_float_divide_42(v, pos, o) Then
+                If parse_float_multiply_42(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -2007,7 +2031,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_float_extract_43(v, pos, o) Then
+                If parse_float_divide_43(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -2015,7 +2039,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_float_power_44(v, pos, o) Then
+                If parse_float_extract_44(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -2023,7 +2047,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_float_less_45(v, pos, o) Then
+                If parse_float_power_45(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -2031,7 +2055,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_float_more_46(v, pos, o) Then
+                If parse_float_less_46(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -2039,7 +2063,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_float_equal_47(v, pos, o) Then
+                If parse_float_more_47(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -2047,7 +2071,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_float_less_or_equal_48(v, pos, o) Then
+                If parse_float_equal_48(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -2055,7 +2079,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_float_more_or_equal_49(v, pos, o) Then
+                If parse_float_less_or_equal_49(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -2063,7 +2087,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_left_shift_50(v, pos, o) Then
+                If parse_float_more_or_equal_50(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -2071,7 +2095,15 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_right_shift_51(v, pos, o) Then
+                If parse_left_shift_51(v, pos, o) Then
+                    p = pos
+                    Return True
+                End If
+            End Using
+            Using code_block
+                Dim pos As UInt32 = 0
+                pos = p
+                If parse_right_shift_52(v, pos, o) Then
                     p = pos
                     Return True
                 End If

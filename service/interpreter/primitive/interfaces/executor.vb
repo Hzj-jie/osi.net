@@ -59,7 +59,7 @@ Namespace primitive
         End Structure
 
         Function access_stack(ByVal p As data_ref) As ref(Of Byte())
-        Function access_heap(ByVal p As UInt64) As ref(Of Byte())
+        Function access_heap(ByVal p As heap_ref) As ref(Of Byte())
         Function stack_size() As UInt64
         Function instruction_ref() As UInt64
         Function carry_over() As Boolean
@@ -96,7 +96,7 @@ Namespace primitive
         End Function
 
         <Extension()> Public Function convert_heap_to_uint32(ByVal this As executor,
-                                                             ByVal p As UInt64,
+                                                             ByVal p As heap_ref,
                                                              ByRef overflow As Boolean) As UInt32
             assert(Not this Is Nothing)
             Dim d As ref(Of Byte()) = this.access_heap(p)
@@ -106,7 +106,7 @@ Namespace primitive
         End Function
 
         <Extension()> Public Function convert_heap_to_uint64(ByVal this As executor,
-                                                             ByVal p As UInt64,
+                                                             ByVal p As heap_ref,
                                                              ByRef overflow As Boolean) As UInt64
             assert(Not this Is Nothing)
             Dim d As ref(Of Byte()) = this.access_heap(p)

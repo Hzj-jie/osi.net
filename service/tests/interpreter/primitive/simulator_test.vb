@@ -67,15 +67,15 @@ Namespace primitive
 
             assertion.equal(sim.access_stack_as_uint32(data_ref.abs(0)), CUInt(1))
             assertion.equal(sim.access_stack_as_uint32(data_ref.abs(1)), CUInt(104))
-            assertion.equal(sim.access_heap_as_uint32(sim.access_stack_as_uint64(data_ref.abs(2)) - CULng(4)),
+            assertion.equal(sim.access_heap_as_uint32(sim.access_stack_as_heap_ref(data_ref.abs(2)).shift(-4)),
                             CUInt(100))
-            assertion.equal(sim.access_heap_as_uint32(sim.access_stack_as_uint64(data_ref.abs(2)) - CULng(3)),
+            assertion.equal(sim.access_heap_as_uint32(sim.access_stack_as_heap_ref(data_ref.abs(2)).shift(-3)),
                             CUInt(101))
-            assertion.equal(sim.access_heap_as_uint32(sim.access_stack_as_uint64(data_ref.abs(2)) - CULng(2)),
+            assertion.equal(sim.access_heap_as_uint32(sim.access_stack_as_heap_ref(data_ref.abs(2)).shift(-2)),
                             CUInt(102))
-            assertion.equal(sim.access_heap_as_uint32(sim.access_stack_as_uint64(data_ref.abs(2)) - CULng(1)),
+            assertion.equal(sim.access_heap_as_uint32(sim.access_stack_as_heap_ref(data_ref.abs(2)).shift(-1)),
                             CUInt(103))
-            assertion.equal(sim.access_heap_as_uint32(sim.access_stack_as_uint64(data_ref.abs(2)) - CULng(0)),
+            assertion.equal(sim.access_heap_as_uint32(sim.access_stack_as_heap_ref(data_ref.abs(2)).shift(0)),
                             CUInt(104))
             Return True
         End Function

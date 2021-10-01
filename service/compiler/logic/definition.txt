@@ -114,6 +114,10 @@ define	string	string
 #  define_array my_array uint my_size
 define_array	string	string	string
 
+# delete an array allocated before by define_array with its name
+#  delete_array my_array
+delete_array	string
+
 # execute the paragraph until the variable is true:
 #  do_until a-bool-value { }
 do_until	string	paragraph

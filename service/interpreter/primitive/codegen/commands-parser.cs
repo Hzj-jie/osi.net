@@ -196,11 +196,11 @@ public class commands_parser {
                                       "                Dim b As New StringBuilder()\r\n" +
                                       "                b.Append(command_str(command." + cmd.str + "))");
         for (int i = 0; i < cmd.args.Count; i++) {
-            instructions_writer.WriteLine("                If d" + i.ToString() + ".export(s) Then\r\n" +
-                                          "                    b.Append(character.blank)\r\n" +
-                                          "                    b.Append(s)\r\n" +
+            instructions_writer.WriteLine("                If Not d" + i.ToString() + ".export(s) Then\r\n" +
+                                          "                    Return False\r\n" +
                                           "                End If\r\n" +
-                                          "                Return False\r\n");
+                                          "                b.Append(character.blank)\r\n" +
+                                          "                b.Append(s)\r\n");
         }
         instructions_writer.WriteLine("                s = Convert.ToString(b)\r\n" +
                                       "                Return True\r\n" +
@@ -260,7 +260,7 @@ public class commands_parser {
     }
 
     private static void write_exportable_test(command cmd) {
-        exportable_test_writer.WriteLine("        Public Class " + cmd.str + "_exportable_test\r\n" +
+        exportable_test_writer.WriteLine("        Public NotInheritable Class " + cmd.str + "_exportable_test\r\n" +
                                          "            Inherits exportable_test(Of [" + cmd.str + "])\r\n\r\n" +
                                          "            Protected Overrides Function create() As [" + cmd.str + "]");
         if (cmd.args.Count > 0) {
