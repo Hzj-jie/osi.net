@@ -105,11 +105,10 @@ Public NotInheritable Class wrapper(Of T)
         While j < vs.pool_size()
             Dim x As [optional](Of _do_val_val_ref(Of var, T, T, Boolean)) = vs.optional(j)
             If x Then
-                If (+x)(v, i, o) Then
-                    i = o
-                Else
+                If Not (+x)(v, i, o) Then
                     Return False
                 End If
+                i = o
             End If
             j += uint32_1
         End While
