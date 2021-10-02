@@ -34,8 +34,7 @@ Namespace logic
             assert(Not scope Is Nothing)
             assert(Not name.null_or_whitespace())
             Dim type As String = Nothing
-            Dim ref As String = Nothing
-            If Not scope.export(name, ref) OrElse Not assert(scope.type(name, type)) Then
+            If Not scope.defined(name) OrElse Not assert(scope.type(name, type)) Then
                 errors.variable_undefined(name)
                 Return False
             End If
@@ -159,9 +158,9 @@ Namespace logic
         End Function
 
         Public Function ref() As String
-            Dim r As String = Nothing
+            Dim r As scope.exported_var_ref = Nothing
             assert(scope.export(name, r))
-            Return r
+            Return r.ref
         End Function
 
         Public Overrides Function ToString() As String

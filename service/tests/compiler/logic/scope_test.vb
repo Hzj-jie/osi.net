@@ -11,13 +11,12 @@ Imports osi.service.compiler.logic
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public Class scope_test
+    Public NotInheritable Class scope_test
         Inherits [case]
 
         Private Shared Function rnd_name() As String
             While True
-                Dim s As String = Nothing
-                s = rnd_chars(rnd_int(1, 10))
+                Dim s As String = rnd_chars(rnd_int(1, 10))
                 If Not s.empty_or_whitespace() Then
                     Return s
                 End If
@@ -31,8 +30,7 @@ Namespace logic
                                    ByVal depth As Int32)
             assert(Not s Is Nothing)
             assert(Not stack Is Nothing)
-            Dim c As Int32 = 0
-            c = rnd_int(0, 100)
+            Dim c As Int32 = rnd_int(0, 100)
             For i As Int32 = 0 To c - 1
                 Dim name As String = Nothing
                 Dim type As String = Nothing
@@ -44,16 +42,21 @@ Namespace logic
             Next
 
             For i As Int32 = 0 To CInt(stack.size()) - 1
-                Dim offset As data_ref = Nothing
+                Dim var As scope.var_ref = Nothing
+                If Not assertion.is_true(s.export(stack(CUInt(i)).first, var)) Then
+                    Continue For
+                End If
+                ' This test covers only stack access.
+                assertion.is_false(var.heap)
                 Dim type As String = Nothing
-                If assertion.is_true(s.export(stack(CUInt(i)).first, offset)) AndAlso
-                   assertion.is_true(offset.to_rel(stack.size(), offset)) AndAlso
+                Dim offset As data_ref = var.data_ref
+                If assertion.is_true(offset.to_rel(stack.size(), offset)) AndAlso
                    assertion.more_or_equal(offset.offset(), uint32_0) AndAlso
                    assertion.less(offset.offset(), stack.size()) AndAlso
                    assertion.is_true(s.type(stack(CUInt(i)).first, type)) Then
                     If stack.size() - i - 1 > offset.offset() Then
                         assertion.equal(stack(stack.size() - CUInt(offset.offset()) - uint32_1).first,
-                                     stack(CUInt(i)).first)
+                                        stack(CUInt(i)).first)
                         assertion.equal(type, stack(stack.size() - CUInt(offset.offset()) - uint32_1).second)
                     Else
                         assertion.equal(offset.offset(), stack.size() - i - uint32_1)
@@ -63,12 +66,16 @@ Namespace logic
             Next
 
             For i As Int32 = 0 To 1000
-                Dim name As String = Nothing
-                name = rnd_name()
-                Dim offset As data_ref = Nothing
+                Dim name As String = rnd_name()
+                Dim var As scope.var_ref = Nothing
+                If Not s.export(name, var) Then
+                    Continue For
+                End If
+                ' This test covers only stack access.
+                assertion.is_false(var.heap)
+                Dim offset As data_ref = var.data_ref
                 Dim type As String = Nothing
-                If s.export(name, offset) AndAlso
-                   offset.to_rel(stack.size(), offset) AndAlso
+                If offset.to_rel(stack.size(), offset) AndAlso
                    assertion.less(offset.offset(), stack.size()) AndAlso
                    assertion.is_true(s.type(name, type)) Then
                     assertion.equal(stack(stack.size() - CUInt(offset.offset()) - uint32_1).first, name)
@@ -77,8 +84,7 @@ Namespace logic
             Next
 
             If depth < 100 Then
-                Dim new_scope As scope = Nothing
-                new_scope = s.start_scope()
+                Dim new_scope As scope = s.start_scope()
                 execute(new_scope, stack, depth + 1)
 #If 0 Then
                 assertion.reference_equal(new_scope.end_scope(), s)
@@ -88,10 +94,8 @@ Namespace logic
         End Sub
 
         Public Overrides Function run() As Boolean
-            Dim stack As vector(Of pair(Of String, String)) = Nothing
-            stack = New vector(Of pair(Of String, String))()
-            Dim scope As scope = Nothing
-            scope = New scope()
+            Dim stack As New vector(Of pair(Of String, String))()
+            Dim scope As New scope()
             execute(scope, stack, 0)
             Return True
         End Function
