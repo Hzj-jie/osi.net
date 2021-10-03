@@ -13,18 +13,21 @@ Namespace logic
         Public ReadOnly name As String
         Public ReadOnly type As String
         Public ReadOnly size As [optional](Of UInt32)
+        Public ReadOnly heap As Boolean
 
         Private Sub New(ByVal scope As scope,
                         ByVal name As String,
-                        ByVal type As String,
+                        ByVal v As scope.var_ref,
                         ByVal size As [optional](Of UInt32))
             assert(Not scope Is Nothing)
             assert(Not name.null_or_whitespace())
-            assert(Not type.null_or_whitespace())
+            assert(Not v Is Nothing)
+            assert(Not v.type.null_or_whitespace())
             Me.scope = scope
             Me.name = name
-            Me.type = type
+            Me.type = v.type
             Me.size = size
+            Me.heap = v.heap
         End Sub
 
         Public Shared Function [New](ByVal scope As scope,
@@ -33,22 +36,22 @@ Namespace logic
                                      ByRef o As variable) As Boolean
             assert(Not scope Is Nothing)
             assert(Not name.null_or_whitespace())
-            Dim type As String = Nothing
-            If Not scope.defined(name) OrElse Not assert(scope.type(name, type)) Then
+            Dim v As scope.var_ref = Nothing
+            If Not scope.export(name, v) Then
                 errors.variable_undefined(name)
                 Return False
             End If
 
             If types Is Nothing Then
-                o = New variable(scope, name, type, [optional].empty(Of UInt32)())
+                o = New variable(scope, name, v, [optional].empty(Of UInt32)())
                 Return True
             End If
             Dim size As UInt32 = 0
-            If Not types.retrieve(type, size) Then
-                errors.type_undefined(type, name)
+            If Not types.retrieve(v.type, size) Then
+                errors.type_undefined(v.type, name)
                 Return False
             End If
-            o = New variable(scope, name, type, [optional].of(size))
+            o = New variable(scope, name, v, [optional].of(size))
             Return True
         End Function
 

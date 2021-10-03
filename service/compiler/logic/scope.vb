@@ -39,42 +39,16 @@ Namespace logic
 
         Public NotInheritable Class var_ref
             Public ReadOnly data_ref As data_ref
+            Public ReadOnly type As String
             Public ReadOnly heap As Boolean
 
-            Private Sub New(ByVal data_ref As data_ref, ByVal heap As Boolean)
+            Public Sub New(ByVal data_ref As data_ref, ByVal type As String, ByVal heap As Boolean)
                 assert(Not data_ref Is Nothing)
+                assert(Not String.IsNullOrWhiteSpace(type))
                 Me.data_ref = data_ref
+                Me.type = type
                 Me.heap = heap
             End Sub
-
-            Private Shared Function [of](ByVal f As _do_val_ref(Of Int64, data_ref, Boolean),
-                                         ByVal offset As Int64,
-                                         ByVal heap As Boolean,
-                                         ByRef o As var_ref) As Boolean
-                assert(Not f Is Nothing)
-                Dim d As data_ref = Nothing
-                If Not f(offset, d) Then
-                    Return False
-                End If
-                o = New var_ref(d, heap)
-                Return True
-            End Function
-
-            Public Shared Function of_heap_abs(ByVal offset As Int64, ByRef o As var_ref) As Boolean
-                Return [of](AddressOf data_ref.abs, offset, True, o)
-            End Function
-
-            Public Shared Function of_stack_abs(ByVal offset As Int64, ByRef o As var_ref) As Boolean
-                Return [of](AddressOf data_ref.abs, offset, False, o)
-            End Function
-
-            Public Shared Function of_heap_rel(ByVal offset As Int64, ByRef o As var_ref) As Boolean
-                Return [of](AddressOf data_ref.rel, offset, True, o)
-            End Function
-
-            Public Shared Function of_stack_rel(ByVal offset As Int64, ByRef o As var_ref) As Boolean
-                Return [of](AddressOf data_ref.rel, offset, False, o)
-            End Function
         End Class
 
         Public NotInheritable Class exported_var_ref
@@ -172,34 +146,34 @@ Namespace logic
             Return o
         End Function
 
-        Public Function defined(ByVal name As String) As Boolean
-            Dim o As var_ref = Nothing
-            Return export(name, o)
-        End Function
-
         Public Function export(ByVal name As String, ByRef o As var_ref) As Boolean
             Dim size As UInt64 = 0
             Dim s As scope = Me
             While Not s Is Nothing
                 Dim r As variable_ref = Nothing
-                If s.m.find(name, r) Then
-                    Dim offset As Int64
-                    If s.is_root() Then
-                        ' To allow a callee to access global variables.
-                        offset = CLng(r.offset - 1)
-                        If r.heap Then
-                            Return var_ref.of_heap_abs(offset, o)
-                        End If
-                        Return var_ref.of_stack_abs(offset, o)
-                    End If
-                    offset = CLng(s.size() - r.offset + size)
-                    If r.heap Then
-                        Return var_ref.of_heap_rel(offset, o)
-                    End If
-                    Return var_ref.of_stack_rel(offset, o)
+                If Not s.m.find(name, r) Then
+                    size += s.size()
+                    s = s.parent
+                    Continue While
                 End If
-                size += s.size()
-                s = s.parent
+                Dim offset As Int64
+                Dim f As _do_val_ref(Of _do_val_ref(Of Int64, data_ref, Boolean), var_ref, Boolean) =
+                    Function(ByVal c As _do_val_ref(Of Int64, data_ref, Boolean), ByRef x As var_ref) As Boolean
+                        assert(Not c Is Nothing)
+                        Dim d As data_ref = Nothing
+                        If Not c(offset, d) Then
+                            Return False
+                        End If
+                        x = New var_ref(d, r.type, r.heap)
+                        Return True
+                    End Function
+                If s.is_root() Then
+                    ' To allow a callee to access global variables.
+                    offset = CLng(r.offset - 1)
+                    Return f(AddressOf data_ref.abs, o)
+                End If
+                offset = CLng(s.size() - r.offset + size)
+                Return f(AddressOf data_ref.rel, o)
             End While
             Return False
         End Function
