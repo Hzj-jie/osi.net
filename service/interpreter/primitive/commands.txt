@@ -49,5 +49,5 @@ rfs	data_ref	data_ref	data_ref	#(*A big_uint) = left_shift((*B big_uint), (*C bi
 
 alloc	data_ref	data_ref	#allocate a block of memory with size (*B big_uint) and store its reference into (*A), each one is a data slot
 dealloc	data_ref	#de-allocate a block of memory identified by its reference (*A)
-hmovin	data_ref	data_ref	#move (*B) in stack to (**A) in heap
-hmovout	data_ref	data_ref	#move (**B) in heap to (*A) in stack
+hcpin	data_ref	data_ref	#copy (*B) in stack to (**A) in heap
+hcpout	data_ref	data_ref	#copy (**B) in heap to (*A) in stack

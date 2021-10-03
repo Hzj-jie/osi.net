@@ -6,22 +6,22 @@ cpc rel0 i100
 push
 alloc rel0 rel1
 
-hmovin rel0	rel1
+hcpin rel0	rel1
 
 add rel0 rel0 rel2
 add rel1 rel1 rel2
-hmovin rel0 rel1
+hcpin rel0 rel1
 
 add rel0 rel0 rel2
 add rel1 rel1 rel2
-hmovin rel0 rel1
+hcpin rel0 rel1
 
 add rel0 rel0 rel2
 add rel1 rel1 rel2
-hmovin rel0 rel1
+hcpin rel0 rel1
 
 add rel0 rel0 rel2
 add rel1 rel1 rel2
-hmovin rel0 rel1
+hcpin rel0 rel1
 
 stop

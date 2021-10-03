@@ -527,7 +527,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public NotInheritable Class [hmovin]
+        Partial Public NotInheritable Class [hcpin]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
@@ -535,7 +535,7 @@ Namespace primitive
             End Sub
         End Class
 
-        Partial Public NotInheritable Class [hmovout]
+        Partial Public NotInheritable Class [hcpout]
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute

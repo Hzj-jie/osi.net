@@ -35,9 +35,9 @@ Friend Module _simulator_cases
         "DQpyZXN0DQo="))
         sim7 = Convert.FromBase64String(strcat_hint(CUInt(88), _
         "DQpwdXNoDQpzdHN0DQpqdW1wIHJlbDINCnN0b3ANCmNwYyByZWwwIEVoZWxsb1x4MjB3b3JsZFxuDQpyZXN0DQo="))
-        access_heap = Convert.FromBase64String(strcat_hint(CUInt(448), _
-        "77u/DQpwdXNoDQpjcGMgcmVsMCBpMQ0KcHVzaA0KY3BjIHJlbDAgaTEwMA0KcHVzaA0KYWxsb2MgcmVsMCByZWwxDQoNCmhtb3ZpbiByZWwwCXJlbDENCg0KYWRkIHJlbDAgcmVsMCByZWwyDQphZGQgcmVsMSByZWwxIHJlbDINCmhtb3ZpbiByZWwwIHJlbDENCg0KYWRkIHJlbDAgcmVsMCByZWwyDQphZGQgcmVsMSByZWwxIHJlbDINCmhtb3ZpbiByZWwwIHJlbDENCg0KYWRkIHJlbDAgcmVsMCByZWwyDQphZGQgcmVsMSByZWwxIHJlbDINCmhtb3ZpbiByZWwwIHJlbDENCg0KYWRkIHJlbDAgcmVsMCByZWwyDQphZGQgcmVsMSByZWwxIHJlbDINCmhtb3ZpbiByZWwwIHJlbDENCg0Kc3RvcA0K"))
-        dealloc = Convert.FromBase64String(strcat_hint(CUInt(168), _
-        "77u/DQpwdXNoDQpjcGMgcmVsMCBpMTAwDQpwdXNoDQphbGxvYyByZWwwIHJlbDENCmhtb3ZpbiByZWwwCXJlbDENCg0KY3BjIHJlbDEgaTANCmhtb3ZvdXQgcmVsMSByZWwwDQoNCmRlYWxsb2MJcmVsMA0KDQpzdG9wDQo="))
+        access_heap = Convert.FromBase64String(strcat_hint(CUInt(444), _
+        "77u/DQpwdXNoDQpjcGMgcmVsMCBpMQ0KcHVzaA0KY3BjIHJlbDAgaTEwMA0KcHVzaA0KYWxsb2MgcmVsMCByZWwxDQoNCmhjcGluIHJlbDAJcmVsMQ0KDQphZGQgcmVsMCByZWwwIHJlbDINCmFkZCByZWwxIHJlbDEgcmVsMg0KaGNwaW4gcmVsMCByZWwxDQoNCmFkZCByZWwwIHJlbDAgcmVsMg0KYWRkIHJlbDEgcmVsMSByZWwyDQpoY3BpbiByZWwwIHJlbDENCg0KYWRkIHJlbDAgcmVsMCByZWwyDQphZGQgcmVsMSByZWwxIHJlbDINCmhjcGluIHJlbDAgcmVsMQ0KDQphZGQgcmVsMCByZWwwIHJlbDINCmFkZCByZWwxIHJlbDEgcmVsMg0KaGNwaW4gcmVsMCByZWwxDQoNCnN0b3ANCg=="))
+        dealloc = Convert.FromBase64String(strcat_hint(CUInt(164), _
+        "77u/DQpwdXNoDQpjcGMgcmVsMCBpMTAwDQpwdXNoDQphbGxvYyByZWwwIHJlbDENCmhjcGluIHJlbDAJcmVsMQ0KDQpjcGMgcmVsMSBpMA0KaGNwb3V0IHJlbDEgcmVsMA0KDQpkZWFsbG9jCXJlbDANCg0Kc3RvcA0K"))
     End Sub
 End Module
