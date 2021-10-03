@@ -4,8 +4,8 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.delegates
 Imports osi.root.formation
-Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public MustInherit Class copy_move
@@ -14,17 +14,21 @@ Namespace logic
         Private ReadOnly types As types
         Private ReadOnly target As String
         Private ReadOnly source As String
+        Private ReadOnly variable_operation As out_bool(Of variable, variable, String)
 
-        Public Sub New(ByVal types As types, ByVal target As String, ByVal source As String)
+        Public Sub New(ByVal types As types,
+                       ByVal target As String,
+                       ByVal source As String,
+                       ByVal variable_operation As out_bool(Of variable, variable, String))
             assert(Not types Is Nothing)
             assert(Not String.IsNullOrEmpty(target))
             assert(Not String.IsNullOrEmpty(source))
+            assert(Not variable_operation Is Nothing)
             Me.types = types
             Me.target = target
             Me.source = source
+            Me.variable_operation = variable_operation
         End Sub
-
-        Protected MustOverride Function instruction() As command
 
         Public Function export(ByVal scope As scope,
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
@@ -35,7 +39,7 @@ Namespace logic
             Dim c As String = Nothing
             If variable.[New](scope, types, target, t) AndAlso
                variable.[New](scope, types, source, s) AndAlso
-               t.copy_or_move_from(s, instruction(), c) Then
+               variable_operation(t, s, c) Then
                 o.emplace_back(c)
                 Return True
             End If

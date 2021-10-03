@@ -52,6 +52,19 @@ Public Module _definition
                                                          ByRef o As T6) As RT
     Public Delegate Sub void_val_ref_val(Of T1, T2, T3)(ByVal i1 As T1, ByRef i2 As T2, ByVal i3 As T3)
 
+    Public Delegate Function out_bool(Of R)(ByRef o As R) As Boolean
+    Public Delegate Function out_bool(Of T, R)(ByVal v As T, ByRef o As R) As Boolean
+    Public Delegate Function out_bool(Of T, T2, R)(ByVal v As T, ByVal v2 As T2, ByRef o As R) As Boolean
+    Public Delegate Function out_bool(Of T, T2, T3, R)(ByVal v As T,
+                                                       ByVal v2 As T2,
+                                                       ByVal v3 As T3,
+                                                       ByRef o As R) As Boolean
+    Public Delegate Function out_bool(Of T, T2, T3, T4, R)(ByVal v As T,
+                                                           ByVal v2 As T2,
+                                                           ByVal v3 As T3,
+                                                           ByVal v4 As T4,
+                                                           ByRef o As R) As Boolean
+
     '.net 3.5 does not have delegates with more than 4 parameters
     Public Delegate Function _func(Of T, T2, T3, T4, T5, RT)(ByVal i As T,
                                                              ByVal j As T2,
