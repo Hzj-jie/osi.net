@@ -835,13 +835,13 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_copy_array_out_25(
+        Private Function parse_copy_heap_out_25(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "copy_array_out") Then
+            If Not strsame(v(p), "copy_heap_out") Then
                 Return False
             End If
             Dim start As UInt32
@@ -856,7 +856,7 @@ Namespace logic
             Dim p3 As String = Nothing
             p3 = v(p)
             p += uint32_1
-            o = new_copy_array_out(
+            o = new_copy_heap_out(
                 p1,
                 p2,
                 p3
@@ -867,13 +867,13 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_copy_array_in_26(
+        Private Function parse_copy_heap_in_26(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "copy_array_in") Then
+            If Not strsame(v(p), "copy_heap_in") Then
                 Return False
             End If
             Dim start As UInt32
@@ -888,7 +888,7 @@ Namespace logic
             Dim p3 As String = Nothing
             p3 = v(p)
             p += uint32_1
-            o = new_copy_array_in(
+            o = new_copy_heap_in(
                 p1,
                 p2,
                 p3
@@ -927,13 +927,13 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_define_array_28(
+        Private Function parse_define_heap_28(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "define_array") Then
+            If Not strsame(v(p), "define_heap") Then
                 Return False
             End If
             Dim start As UInt32
@@ -948,7 +948,7 @@ Namespace logic
             Dim p3 As String = Nothing
             p3 = v(p)
             p += uint32_1
-            o = new_define_array(
+            o = new_define_heap(
                 p1,
                 p2,
                 p3
@@ -959,13 +959,13 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_delete_array_29(
+        Private Function parse_delete_heap_29(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "delete_array") Then
+            If Not strsame(v(p), "delete_heap") Then
                 Return False
             End If
             Dim start As UInt32
@@ -974,7 +974,7 @@ Namespace logic
             Dim p1 As String = Nothing
             p1 = v(p)
             p += uint32_1
-            o = new_delete_array(
+            o = new_delete_heap(
                 p1
             )
             If isdebugmode() Then
@@ -1951,7 +1951,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_copy_array_out_25(v, pos, o) Then
+                If parse_copy_heap_out_25(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1959,7 +1959,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_copy_array_in_26(v, pos, o) Then
+                If parse_copy_heap_in_26(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1975,7 +1975,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_define_array_28(v, pos, o) Then
+                If parse_define_heap_28(v, pos, o) Then
                     p = pos
                     Return True
                 End If
@@ -1983,7 +1983,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_delete_array_29(v, pos, o) Then
+                If parse_delete_heap_29(v, pos, o) Then
                     p = pos
                     Return True
                 End If

@@ -5,12 +5,13 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.delegates
 Imports osi.root.formation
+Imports osi.root.lock
 Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public NotInheritable Class scope
+        Private Shared ReadOnly unique_name_index As New atomic_uint()
         Private ReadOnly parent As scope
         Private ReadOnly m As New unordered_map(Of String, variable_ref)()
         Private child As scope = Nothing
@@ -58,6 +59,10 @@ Namespace logic
                 parent.child = Nothing
             End If
             Return parent
+        End Function
+
+        Public Function unique_name() As String
+            Return strcat("@scope_", GetHashCode(), "_unique_name_", unique_name_index.increment())
         End Function
 
         Public Function define(ByVal name As String, ByVal type As String) As Boolean

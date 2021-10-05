@@ -5,26 +5,30 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.service.interpreter.primitive
 
 Namespace logic
     ' Delete an array with @name
-    Public NotInheritable Class delete_array
+    Public NotInheritable Class delete_heap
         Implements exportable
 
-        Private ReadOnly anchors As anchors
         Private ReadOnly name As String
 
-        Public Sub New(ByVal anchors As anchors,
-                       ByVal name As String)
-            assert(Not anchors Is Nothing)
+        Public Sub New(ByVal name As String)
             assert(Not name.null_or_whitespace())
-            Me.anchors = anchors
             Me.name = name
         End Sub
 
         Public Function export(ByVal scope As scope,
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
-            Return assert(False)
+            assert(Not scope Is Nothing)
+            assert(Not o Is Nothing)
+            Dim v As variable = Nothing
+            If Not variable.[New](scope, name, v) Then
+                Return False
+            End If
+            o.emplace_back(instruction_builder.str(command.dealloc, v))
+            Return True
         End Function
     End Class
 End Namespace

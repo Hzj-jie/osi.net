@@ -69,7 +69,7 @@ Namespace logic
                 errors.anchor_undefined(anchor.name)
                 Return False
             End If
-            If Not return_value_of.export(anchors, types, name, result_type, scope, o) Then
+            If Not return_value.export(anchors, types, name, result_type, scope, o) Then
                 Return False
             End If
             Return True
@@ -135,7 +135,7 @@ Namespace logic
                 Return False
             End If
             Dim return_value_var As variable = Nothing
-            assert(return_value_of.retrieve(scope, types, name, return_value_var))
+            assert(return_value.retrieve(scope, types, name, return_value_var))
             Dim s As String = Nothing
             If Not result_var.move_from(return_value_var, s) Then
                 Return False

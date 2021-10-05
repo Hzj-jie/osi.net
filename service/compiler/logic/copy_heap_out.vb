@@ -7,8 +7,8 @@ Imports osi.root.connector
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public NotInheritable Class copy_array_out
-        Inherits copy_array
+    Public NotInheritable Class copy_heap_out
+        Inherits copy_heap
 
         Public Sub New(ByVal anchors As anchors,
                        ByVal types As types,
@@ -20,6 +20,9 @@ Namespace logic
                        source,
                        source_index,
                        target,
+                       Function(ByVal stack_var As variable, ByVal heap_var As variable) As Boolean
+                           Return stack_var.is_assignable_from(heap_var)
+                       End Function,
                        Function(ByVal array_ptr As String, ByVal stack_ptr As String, ByRef o As String) As Boolean
                            assert(Not array_ptr.null_or_whitespace())
                            assert(Not stack_ptr.null_or_whitespace())

@@ -83,7 +83,7 @@ Namespace logic
             Return False
         End Function
 
-        Private Function is_assignable_from(ByVal source As variable) As Boolean
+        Public Function is_assignable_from(ByVal source As variable) As Boolean
             assert(Not source Is Nothing)
             assert(source.size)
             If is_assignable_from_size(+(source.size)) Then

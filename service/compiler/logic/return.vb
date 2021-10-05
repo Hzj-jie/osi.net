@@ -34,7 +34,7 @@ Namespace logic
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             Dim r As variable = Nothing
-            If Not return_value_of.retrieve(scope, types, name, r) Then
+            If Not logic.return_value.retrieve(scope, types, name, r) Then
                 Return False
             End If
             assert(r.size)

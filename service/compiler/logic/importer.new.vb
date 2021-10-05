@@ -3,7 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
@@ -113,28 +112,28 @@ Namespace logic
             Return New copy_const(types, p1, unique_ptr.[New](p2))
         End Function
 
-        Private Function new_copy_array_out(ByVal p1 As String,
+        Private Function new_copy_heap_out(ByVal p1 As String,
                                             ByVal p2 As String,
-                                            ByVal p3 As String) As copy_array_out
-            Return New copy_array_out(anchors, types, p1, p2, p3)
+                                            ByVal p3 As String) As copy_heap_out
+            Return New copy_heap_out(anchors, types, p1, p2, p3)
         End Function
 
-        Private Function new_copy_array_in(ByVal p1 As String,
+        Private Function new_copy_heap_in(ByVal p1 As String,
                                            ByVal p2 As String,
-                                           ByVal p3 As String) As copy_array_in
-            Return New copy_array_in(anchors, types, p1, p2, p3)
+                                           ByVal p3 As String) As copy_heap_in
+            Return New copy_heap_in(anchors, types, p1, p2, p3)
         End Function
 
         Private Function new_define(ByVal p1 As String, ByVal p2 As String) As define
             Return New define(anchors, types, p1, p2)
         End Function
 
-        Private Function new_define_array(ByVal p1 As String, ByVal p2 As String, ByVal p3 As String) As define_array
-            Return New define_array(anchors, types, p1, p2, p3)
+        Private Function new_define_heap(ByVal p1 As String, ByVal p2 As String, ByVal p3 As String) As define_heap
+            Return New define_heap(anchors, types, p1, p2, p3)
         End Function
 
-        Private Function new_delete_array(ByVal p1 As String) As delete_array
-            Return New delete_array(anchors, p1)
+        Private Function new_delete_heap(ByVal p1 As String) As delete_heap
+            Return New delete_heap(p1)
         End Function
 
         Private Function new_do_until(ByVal p1 As String, ByVal p2 As paragraph) As do_until

@@ -715,11 +715,11 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_copy_array_out(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As copy_array_out_builder_26
-            Return New copy_array_out_builder_26(string_1, string_2, string_3)
+        Public Shared Function of_copy_heap_out(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As copy_heap_out_builder_26
+            Return New copy_heap_out_builder_26(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class copy_array_out_builder_26
+        Public NotInheritable Class copy_heap_out_builder_26
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -735,7 +735,7 @@ Namespace logic
             End Sub
 
             Public Sub [to](ByVal o As writer)
-                o.append("copy_array_out")
+                o.append("copy_heap_out")
                 o.append(string_1)
                 o.append(string_2)
                 o.append(string_3)
@@ -743,11 +743,11 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_copy_array_in(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As copy_array_in_builder_27
-            Return New copy_array_in_builder_27(string_1, string_2, string_3)
+        Public Shared Function of_copy_heap_in(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As copy_heap_in_builder_27
+            Return New copy_heap_in_builder_27(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class copy_array_in_builder_27
+        Public NotInheritable Class copy_heap_in_builder_27
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -763,7 +763,7 @@ Namespace logic
             End Sub
 
             Public Sub [to](ByVal o As writer)
-                o.append("copy_array_in")
+                o.append("copy_heap_in")
                 o.append(string_1)
                 o.append(string_2)
                 o.append(string_3)
@@ -795,11 +795,11 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_define_array(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As define_array_builder_29
-            Return New define_array_builder_29(string_1, string_2, string_3)
+        Public Shared Function of_define_heap(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As define_heap_builder_29
+            Return New define_heap_builder_29(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class define_array_builder_29
+        Public NotInheritable Class define_heap_builder_29
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -815,7 +815,7 @@ Namespace logic
             End Sub
 
             Public Sub [to](ByVal o As writer)
-                o.append("define_array")
+                o.append("define_heap")
                 o.append(string_1)
                 o.append(string_2)
                 o.append(string_3)
@@ -823,11 +823,11 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_delete_array(ByVal string_1 As String) As delete_array_builder_30
-            Return New delete_array_builder_30(string_1)
+        Public Shared Function of_delete_heap(ByVal string_1 As String) As delete_heap_builder_30
+            Return New delete_heap_builder_30(string_1)
         End Function
 
-        Public NotInheritable Class delete_array_builder_30
+        Public NotInheritable Class delete_heap_builder_30
 
             Private ReadOnly string_1 As String
 
@@ -837,7 +837,7 @@ Namespace logic
             End Sub
 
             Public Sub [to](ByVal o As writer)
-                o.append("delete_array")
+                o.append("delete_heap")
                 o.append(string_1)
                 o.append(newline.incode())
             End Sub

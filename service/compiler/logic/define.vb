@@ -41,17 +41,6 @@ Namespace logic
             Return New define(anchors, types, name, type).export(scope, o)
         End Function
 
-        ' Create a temporary variable with an unique name, caller needs to access it directly with data_ref(rel0).
-        Public Shared Function export_random(ByVal anchors As anchors,
-                                             ByVal types As types,
-                                             ByVal type As String,
-                                             ByVal scope As scope,
-                                             ByVal o As vector(Of String),
-                                             ByRef name As String) As Boolean
-            name = strcat("@temp_define_", o.size())
-            Return export(anchors, types, name, type, scope, o)
-        End Function
-
         Public Function export(ByVal scope As scope,
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not scope Is Nothing)

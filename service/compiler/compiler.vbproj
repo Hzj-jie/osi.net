@@ -106,11 +106,12 @@
     <Compile Include="bstyle\logic\nodes\value_without_bracket.vb" />
     <Compile Include="bstyle\logic\nodes\value_with_bracket.vb" />
     <Compile Include="bstyle\logic\nodes\while.vb" />
-    <Compile Include="logic\copy_array.vb" />
-    <Compile Include="logic\copy_array_in.vb" />
-    <Compile Include="logic\copy_array_out.vb" />
-    <Compile Include="logic\define_array.vb" />
-    <Compile Include="logic\delete_array.vb" />
+    <Compile Include="logic\heaps.vb" />
+    <Compile Include="logic\copy_heap.vb" />
+    <Compile Include="logic\copy_heap_in.vb" />
+    <Compile Include="logic\copy_heap_out.vb" />
+    <Compile Include="logic\define_heap.vb" />
+    <Compile Include="logic\delete_heap.vb" />
     <Compile Include="logic\logic_gen\scoped\read_scoped.vb" />
     <Compile Include="logic\logic_gen\scoped\write_scoped.vb" />
     <Compile Include="logic\builder\builders.implementation.vb" />
@@ -151,7 +152,7 @@
     <Compile Include="logic\pair_result_binary_operators.vb" />
     <Compile Include="logic\paragraph.vb" />
     <Compile Include="logic\return.vb" />
-    <Compile Include="logic\return_value_of.vb" />
+    <Compile Include="logic\return_value.vb" />
     <Compile Include="logic\scope.vb" />
     <Compile Include="logic\move.vb" />
     <Compile Include="logic\array_operators.vb" />

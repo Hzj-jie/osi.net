@@ -107,24 +107,24 @@ copy	string	string
 copy_const	string	data_block
 
 # copy a data from heap to stack
-#  copy_array_out target source source_index
-copy_array_out	string	string	string
+#  copy_heap_out target source source_index
+copy_heap_out	string	string	string
 
 # copy a data from stack to heap
-#  copy_array_in target target_index source
-copy_array_in	string	string	string
+#  copy_heap_in target target_index source
+copy_heap_in	string	string	string
 
 # define a variable with type:
 #  define variable uint
 define	string	string
 
-# define an array with name, type and size
-#  define_array my_array uint my_size
-define_array	string	string	string
+# define a heap memory block with name, type and size
+#  define_heap my_heap_ptr uint my_size
+define_heap	string	string	string
 
-# delete an array allocated before by define_array with its name
-#  delete_array my_array
-delete_array	string
+# delete a heap memory block allocated before by define_heap with its name
+#  delete_heap my_heap_ptr
+delete_heap	string
 
 # execute the paragraph until the variable is true:
 #  do_until a-bool-value { }

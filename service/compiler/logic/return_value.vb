@@ -8,7 +8,7 @@ Imports osi.root.formation
 
 Namespace logic
     ' Shared between callee, caller and return.
-    Public NotInheritable Class return_value_of
+    Public NotInheritable Class return_value
         Public Shared Function define(ByVal scope As scope,
                                       ByVal name As String,
                                       ByVal type As String) As Boolean

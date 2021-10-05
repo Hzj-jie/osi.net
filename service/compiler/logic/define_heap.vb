@@ -5,10 +5,11 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.service.interpreter.primitive
 
 Namespace logic
     ' Define an array with @name, @type and @size
-    Public NotInheritable Class define_array
+    Public NotInheritable Class define_heap
         Implements exportable
 
         Private ReadOnly anchors As anchors
@@ -46,6 +47,16 @@ Namespace logic
             If Not variable.[New](scope, types, Me.size, size) Then
                 Return False
             End If
+            If Not define.export(anchors, types, name, type, scope, o) Then
+                Return False
+            End If
+            Dim v As variable = Nothing
+            assert(variable.[New](scope, types, name, v))
+            If Not scope.define(heaps.name_of(name), type) Then
+                Return False
+            End If
+            o.emplace_back(instruction_builder.str(command.alloc, v, size))
+            Return True
         End Function
     End Class
 End Namespace
