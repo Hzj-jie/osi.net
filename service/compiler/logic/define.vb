@@ -17,20 +17,11 @@ Namespace logic
         Private ReadOnly types As types
         Private ReadOnly name As String
         Private ReadOnly type As String
-        Private ReadOnly with_comment As Boolean
 
         Public Sub New(ByVal anchors As anchors,
                        ByVal types As types,
                        ByVal name As String,
                        ByVal type As String)
-            Me.New(anchors, types, name, type, False)
-        End Sub
-
-        Private Sub New(ByVal anchors As anchors,
-                        ByVal types As types,
-                        ByVal name As String,
-                        ByVal type As String,
-                        ByVal with_comment As Boolean)
             assert(Not anchors Is Nothing)
             assert(Not types Is Nothing)
             assert(Not name.null_or_whitespace())
@@ -39,7 +30,6 @@ Namespace logic
             Me.types = types
             Me.name = name
             Me.type = type
-            Me.with_comment = with_comment
         End Sub
 
         Public Shared Function export(ByVal anchors As anchors,
@@ -48,9 +38,18 @@ Namespace logic
                                       ByVal type As String,
                                       ByVal scope As scope,
                                       ByVal o As vector(Of String)) As Boolean
-            Dim d As define = Nothing
-            d = New define(anchors, types, name, type, True)
-            Return d.export(scope, o)
+            Return New define(anchors, types, name, type).export(scope, o)
+        End Function
+
+        ' Create a temporary variable with an unique name, caller needs to access it directly with data_ref(rel0).
+        Public Shared Function export_random(ByVal anchors As anchors,
+                                             ByVal types As types,
+                                             ByVal type As String,
+                                             ByVal scope As scope,
+                                             ByVal o As vector(Of String),
+                                             ByRef name As String) As Boolean
+            name = strcat("@temp_define_", o.size())
+            Return export(anchors, types, name, type, scope, o)
         End Function
 
         Public Function export(ByVal scope As scope,
@@ -62,12 +61,9 @@ Namespace logic
                 Return False
             End If
             If scope.define(name, type) Then
-                Dim s As String = Nothing
-                s = command_str(command.push)
-                If with_comment Then
-                    s = strcat(s, character.tab, comment_builder.str("+++ define ", name, type))
-                End If
-                o.emplace_back(s)
+                o.emplace_back(strcat(command_str(command.push),
+                                      character.tab,
+                                      comment_builder.str("+++ define ", name, type)))
                 Return True
             End If
             Return False

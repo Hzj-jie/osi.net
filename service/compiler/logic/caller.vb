@@ -16,7 +16,6 @@ Namespace logic
         Private ReadOnly name As String
         Private ReadOnly result As [optional](Of String)
         Private ReadOnly parameters() As String
-        Private ReadOnly return_value_place_holder_name As String
 
         Public Sub New(ByVal anchors As anchors,
                        ByVal types As types,
@@ -35,7 +34,6 @@ Namespace logic
             For Each parameter As String In Me.parameters
                 assert(Not parameter.null_or_whitespace())
             Next
-            Me.return_value_place_holder_name = strcat("@return_value_of_", name, "_place_holder")
         End Sub
 
         Public Sub New(ByVal anchors As anchors,
@@ -71,7 +69,7 @@ Namespace logic
                 errors.anchor_undefined(anchor.name)
                 Return False
             End If
-            If Not define.export(anchors, types, return_value_place_holder_name, result_type, scope, o) Then
+            If Not return_value_of.export(anchors, types, name, result_type, scope, o) Then
                 Return False
             End If
             Return True
@@ -137,7 +135,7 @@ Namespace logic
                 Return False
             End If
             Dim return_value_var As variable = Nothing
-            assert(variable.[New](scope, types, return_value_place_holder_name, return_value_var))
+            assert(return_value_of.retrieve(scope, types, name, return_value_var))
             Dim s As String = Nothing
             If Not result_var.move_from(return_value_var, s) Then
                 Return False

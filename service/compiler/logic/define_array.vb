@@ -36,7 +36,16 @@ Namespace logic
 
         Public Function export(ByVal scope As scope,
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
-            Return assert(False)
+            assert(Not scope Is Nothing)
+            assert(Not o Is Nothing)
+            Dim type As String = Nothing
+            If Not macros.decode(anchors, scope, types, Me.type, type) Then
+                Return False
+            End If
+            Dim size As variable = Nothing
+            If Not variable.[New](scope, types, Me.size, size) Then
+                Return False
+            End If
         End Function
     End Class
 End Namespace

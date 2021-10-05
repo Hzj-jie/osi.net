@@ -19,57 +19,24 @@ Namespace logic
             'Starts from 1 to allow size()-top.offset=0.
             Public ReadOnly offset As UInt64
             Public ReadOnly type As String
-            Public ReadOnly heap As Boolean
 
-            Private Sub New(ByVal offset As UInt64, ByVal type As String, ByVal heap As Boolean)
+            Public Sub New(ByVal offset As UInt64, ByVal type As String)
                 assert(Not type.null_or_whitespace())
                 Me.offset = offset
                 Me.type = type
-                Me.heap = heap
             End Sub
-
-            Public Shared Function of_stack(ByVal offset As UInt64, ByVal type As String) As variable_ref
-                Return New variable_ref(offset, type, False)
-            End Function
-
-            Public Shared Function of_heap(ByVal offset As UInt64, ByVal type As String) As variable_ref
-                Return New variable_ref(offset, type, True)
-            End Function
         End Class
 
-        Public NotInheritable Class var_ref
+        Public NotInheritable Class exported_ref
             Public ReadOnly data_ref As data_ref
             Public ReadOnly type As String
-            Public ReadOnly heap As Boolean
 
-            Public Sub New(ByVal data_ref As data_ref, ByVal type As String, ByVal heap As Boolean)
+            Public Sub New(ByVal data_ref As data_ref, ByVal type As String)
                 assert(Not data_ref Is Nothing)
-                assert(Not String.IsNullOrWhiteSpace(type))
+                assert(Not type.null_or_whitespace())
                 Me.data_ref = data_ref
                 Me.type = type
-                Me.heap = heap
             End Sub
-        End Class
-
-        Public NotInheritable Class exported_var_ref
-            Public ReadOnly ref As String
-            Public ReadOnly heap As Boolean
-
-            Private Sub New(ByVal ref As String, ByVal heap As Boolean)
-                assert(Not String.IsNullOrWhiteSpace(ref))
-                Me.ref = ref
-                Me.heap = heap
-            End Sub
-
-            Public Shared Function [of](ByVal i As var_ref, ByRef o As exported_var_ref) As Boolean
-                assert(Not i Is Nothing)
-                Dim ref As String = Nothing
-                If Not i.data_ref.export(ref) Then
-                    Return False
-                End If
-                o = New exported_var_ref(ref, i.heap)
-                Return True
-            End Function
         End Class
 
         Public Sub New()
@@ -93,26 +60,15 @@ Namespace logic
             Return parent
         End Function
 
-        Private Function define(ByVal name As String,
-                                ByVal type As String,
-                                ByVal f As Func(Of UInt32, String, variable_ref)) As Boolean
+        Public Function define(ByVal name As String, ByVal type As String) As Boolean
             assert(Not name.null_or_whitespace())
             assert(Not type.null_or_whitespace())
-            assert(Not f Is Nothing)
             If m.find(name) <> m.end() Then
                 errors.redefine(name, type, Me.type(name))
                 Return False
             End If
-            m.emplace(name, f(size() + uint32_1, type))
+            m.emplace(name, New variable_ref(size() + uint32_1, type))
             Return True
-        End Function
-
-        Public Function define(ByVal name As String, ByVal type As String) As Boolean
-            Return define(name, type, AddressOf variable_ref.of_stack)
-        End Function
-
-        Public Function define_array(ByVal name As String, ByVal type As String) As Boolean
-            Return define(name, type, AddressOf variable_ref.of_heap)
         End Function
 
         Public Function is_root() As Boolean
@@ -146,7 +102,7 @@ Namespace logic
             Return o
         End Function
 
-        Public Function export(ByVal name As String, ByRef o As var_ref) As Boolean
+        Public Function export(ByVal name As String, ByRef o As exported_ref) As Boolean
             Dim size As UInt64 = 0
             Dim s As scope = Me
             While Not s Is Nothing
@@ -156,34 +112,29 @@ Namespace logic
                     s = s.parent
                     Continue While
                 End If
-                Dim offset As Int64
-                Dim f As _do_val_ref(Of _do_val_ref(Of Int64, data_ref, Boolean), var_ref, Boolean) =
-                    Function(ByVal c As _do_val_ref(Of Int64, data_ref, Boolean), ByRef x As var_ref) As Boolean
-                        assert(Not c Is Nothing)
-                        Dim d As data_ref = Nothing
-                        If Not c(offset, d) Then
-                            Return False
-                        End If
-                        x = New var_ref(d, r.type, r.heap)
-                        Return True
-                    End Function
+                Dim d As data_ref = Nothing
                 If s.is_root() Then
                     ' To allow a callee to access global variables.
-                    offset = CLng(r.offset - 1)
-                    Return f(AddressOf data_ref.abs, o)
+                    If Not data_ref.abs(CLng(r.offset - 1), d) Then
+                        Return False
+                    End If
+                Else
+                    If Not data_ref.rel(CLng(s.size() - r.offset + size), d) Then
+                        Return False
+                    End If
                 End If
-                offset = CLng(s.size() - r.offset + size)
-                Return f(AddressOf data_ref.rel, o)
+                o = New exported_ref(d, r.type)
+                Return True
             End While
             Return False
         End Function
 
-        Public Function export(ByVal name As String, ByRef o As exported_var_ref) As Boolean
-            Dim ref As var_ref = Nothing
+        Public Function export(ByVal name As String, ByRef o As String) As Boolean
+            Dim ref As exported_ref = Nothing
             If Not export(name, ref) Then
                 Return False
             End If
-            Return exported_var_ref.of(ref, o)
+            Return ref.data_ref.export(o)
         End Function
     End Class
 End Namespace

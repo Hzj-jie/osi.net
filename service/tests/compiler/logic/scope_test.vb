@@ -42,12 +42,10 @@ Namespace logic
             Next
 
             For i As Int32 = 0 To CInt(stack.size()) - 1
-                Dim var As scope.var_ref = Nothing
+                Dim var As scope.exported_ref = Nothing
                 If Not assertion.is_true(s.export(stack(CUInt(i)).first, var)) Then
                     Continue For
                 End If
-                ' This test covers only stack access.
-                assertion.is_false(var.heap)
                 Dim type As String = Nothing
                 Dim offset As data_ref = var.data_ref
                 If assertion.is_true(offset.to_rel(stack.size(), offset)) AndAlso
@@ -67,12 +65,10 @@ Namespace logic
 
             For i As Int32 = 0 To 1000
                 Dim name As String = rnd_name()
-                Dim var As scope.var_ref = Nothing
+                Dim var As scope.exported_ref = Nothing
                 If Not s.export(name, var) Then
                     Continue For
                 End If
-                ' This test covers only stack access.
-                assertion.is_false(var.heap)
                 Dim offset As data_ref = var.data_ref
                 Dim type As String = Nothing
                 If offset.to_rel(stack.size(), offset) AndAlso

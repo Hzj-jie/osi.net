@@ -17,7 +17,7 @@ Namespace logic
 
         Public Shared Function of_define(ByVal ta As type_alias,
                                          ByVal name As String,
-                                         ByVal type As String) As define_builder_26
+                                         ByVal type As String) As define_builder_28
             assert(Not ta Is Nothing)
             Return of_define(name, ta(type))
         End Function

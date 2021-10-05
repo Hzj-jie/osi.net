@@ -8,26 +8,24 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
+    ' A variable in stack.
     Public NotInheritable Class variable
         Private ReadOnly scope As scope
         Public ReadOnly name As String
         Public ReadOnly type As String
         Public ReadOnly size As [optional](Of UInt32)
-        Public ReadOnly heap As Boolean
 
         Private Sub New(ByVal scope As scope,
                         ByVal name As String,
-                        ByVal v As scope.var_ref,
+                        ByVal type As String,
                         ByVal size As [optional](Of UInt32))
             assert(Not scope Is Nothing)
             assert(Not name.null_or_whitespace())
-            assert(Not v Is Nothing)
-            assert(Not v.type.null_or_whitespace())
+            assert(Not type.null_or_whitespace())
             Me.scope = scope
             Me.name = name
-            Me.type = v.type
+            Me.type = type
             Me.size = size
-            Me.heap = v.heap
         End Sub
 
         Public Shared Function [New](ByVal scope As scope,
@@ -36,14 +34,14 @@ Namespace logic
                                      ByRef o As variable) As Boolean
             assert(Not scope Is Nothing)
             assert(Not name.null_or_whitespace())
-            Dim v As scope.var_ref = Nothing
+            Dim v As scope.exported_ref = Nothing
             If Not scope.export(name, v) Then
                 errors.variable_undefined(name)
                 Return False
             End If
 
             If types Is Nothing Then
-                o = New variable(scope, name, v, [optional].empty(Of UInt32)())
+                o = New variable(scope, name, v.type, [optional].empty(Of UInt32)())
                 Return True
             End If
             Dim size As UInt32 = 0
@@ -51,7 +49,7 @@ Namespace logic
                 errors.type_undefined(v.type, name)
                 Return False
             End If
-            o = New variable(scope, name, v, [optional].of(size))
+            o = New variable(scope, name, v.type, [optional].of(size))
             Return True
         End Function
 
@@ -143,27 +141,27 @@ Namespace logic
             Return False
         End Function
 
-        Public Function copy_or_move_from(ByVal i As variable, ByVal ins As command, ByRef o As String) As Boolean
+        Private Function copy_move_from(ByVal cmd As command, ByVal i As variable, ByRef o As String) As Boolean
             assert(Not i Is Nothing)
-            If is_assignable_from(i) Then
-                o = instruction_builder.str(ins, Me, i)
-                Return True
+            If Not is_assignable_from(i) Then
+                Return False
             End If
-            Return False
+            o = instruction_builder.str(cmd, Me, i)
+            Return True
         End Function
 
         Public Function copy_from(ByVal i As variable, ByRef o As String) As Boolean
-            Return copy_or_move_from(i, command.cp, o)
+            Return copy_move_from(command.cp, i, o)
         End Function
 
         Public Function move_from(ByVal i As variable, ByRef o As String) As Boolean
-            Return copy_or_move_from(i, command.mov, o)
+            Return copy_move_from(command.mov, i, o)
         End Function
 
         Public Function ref() As String
-            Dim r As scope.exported_var_ref = Nothing
+            Dim r As String = Nothing
             assert(scope.export(name, r))
-            Return r.ref
+            Return r
         End Function
 
         Public Overrides Function ToString() As String

@@ -4,14 +4,24 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.formation
 
 Namespace logic
-    ' Shared between callee and return.
+    ' Shared between callee, caller and return.
     Public NotInheritable Class return_value_of
         Public Shared Function define(ByVal scope As scope,
                                       ByVal name As String,
                                       ByVal type As String) As Boolean
             Return scope.define(variable_name(name), type)
+        End Function
+
+        Public Shared Function export(ByVal anchors As anchors,
+                                      ByVal types As types,
+                                      ByVal name As String,
+                                      ByVal type As String,
+                                      ByVal scope As scope,
+                                      ByRef o As vector(Of String)) As Boolean
+            Return logic.define.export(anchors, types, variable_name(name), type, scope, o)
         End Function
 
         Public Shared Function retrieve(ByVal scope As scope,

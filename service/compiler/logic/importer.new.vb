@@ -113,6 +113,18 @@ Namespace logic
             Return New copy_const(types, p1, unique_ptr.[New](p2))
         End Function
 
+        Private Function new_copy_array_out(ByVal p1 As String,
+                                            ByVal p2 As String,
+                                            ByVal p3 As String) As copy_array_out
+            Return New copy_array_out(anchors, types, p1, p2, p3)
+        End Function
+
+        Private Function new_copy_array_in(ByVal p1 As String,
+                                           ByVal p2 As String,
+                                           ByVal p3 As String) As copy_array_in
+            Return New copy_array_in(anchors, types, p1, p2, p3)
+        End Function
+
         Private Function new_define(ByVal p1 As String, ByVal p2 As String) As define
             Return New define(anchors, types, p1, p2)
         End Function
