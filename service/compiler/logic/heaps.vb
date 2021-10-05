@@ -14,7 +14,7 @@ Namespace logic
         End Function
 
         ' TODO: If a dedicated type is better.
-        Public Shared ReadOnly type As String = types.variable_type
+        Public Shared ReadOnly ptr_type As String = types.variable_type
 
         Private Sub New()
         End Sub

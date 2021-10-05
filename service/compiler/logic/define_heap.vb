@@ -47,7 +47,7 @@ Namespace logic
             If Not variable.[New](scope, types, Me.size, size) Then
                 Return False
             End If
-            If Not define.export(anchors, types, name, type, scope, o) Then
+            If Not define.export(anchors, types, name, heaps.ptr_type, scope, o) Then
                 Return False
             End If
             Dim v As variable = Nothing

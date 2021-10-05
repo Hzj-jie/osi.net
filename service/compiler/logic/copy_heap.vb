@@ -47,7 +47,7 @@ Namespace logic
             assert(Not scope Is Nothing)
             assert(Not o Is Nothing)
             Dim array_ptr As String = scope.unique_name()
-            If Not define.export(anchors, types, array_ptr, types.variable_type, scope, o) Then
+            If Not define.export(anchors, types, array_ptr, heaps.ptr_type, scope, o) Then
                 Return False
             End If
             If Not New add(types, array_ptr, array, array_index).export(scope, o) Then
