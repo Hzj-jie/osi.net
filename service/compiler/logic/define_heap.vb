@@ -44,15 +44,15 @@ Namespace logic
                 Return False
             End If
             Dim size As variable = Nothing
-            If Not variable.[New](scope, types, Me.size, size) Then
+            If Not variable.of_stack(scope, types, Me.size, size) Then
                 Return False
             End If
             If Not define.export(anchors, types, name, heaps.ptr_type, scope, o) Then
                 Return False
             End If
             Dim v As variable = Nothing
-            assert(variable.[New](scope, types, name, v))
-            If Not scope.define(heaps.name_of(name), type) Then
+            assert(variable.of_stack(scope, types, name, v))
+            If Not scope.define_heap(name, type) Then
                 Return False
             End If
             o.emplace_back(instruction_builder.str(command.alloc, v, size))

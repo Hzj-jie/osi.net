@@ -49,7 +49,7 @@ Namespace logic
             If Not macros.decode(anchors, scope, types, Me.type, type) Then
                 Return False
             End If
-            If scope.define(name, type) Then
+            If scope.define_stack(name, type) Then
                 o.emplace_back(strcat(command_str(command.push),
                                       character.tab,
                                       comment_builder.str("+++ define ", name, type)))

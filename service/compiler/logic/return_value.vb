@@ -12,7 +12,7 @@ Namespace logic
         Public Shared Function define(ByVal scope As scope,
                                       ByVal name As String,
                                       ByVal type As String) As Boolean
-            Return scope.define(variable_name(name), type)
+            Return scope.define_stack(variable_name(name), type)
         End Function
 
         Public Shared Function export(ByVal anchors As anchors,
@@ -28,7 +28,7 @@ Namespace logic
                                         ByVal types As types,
                                         ByVal name As String,
                                         ByRef o As variable) As Boolean
-            Return variable.[New](scope, types, variable_name(name), o)
+            Return variable.of_stack(scope, types, variable_name(name), o)
         End Function
 
         Private Shared Function variable_name(ByVal name As String) As String

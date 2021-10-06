@@ -31,7 +31,7 @@ Namespace logic
             assert(Not scope Is Nothing)
             assert(Not o Is Nothing)
             Dim var As variable = Nothing
-            If Not variable.[New](scope, v, var) Then
+            If Not variable.of_stack(scope, v, var) Then
                 Return False
             End If
 

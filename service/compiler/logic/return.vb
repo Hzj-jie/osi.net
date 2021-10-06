@@ -40,14 +40,12 @@ Namespace logic
             assert(r.size)
             If return_value Then
                 Dim var As variable = Nothing
-                If Not variable.[New](scope, types, +return_value, var) Then
+                If Not variable.of_stack(scope, types, +return_value, var) Then
                     Return False
                 End If
-                Dim c As String = Nothing
-                If Not r.move_from(var, c) Then
+                If Not move.export(r, var, o) Then
                     Return False
                 End If
-                o.emplace_back(c)
             Else
                 If Not types.is_zero_size(+(r.size)) Then
                     errors.no_return_value_provided(r)

@@ -24,7 +24,7 @@ Namespace logic
             assert(Not scope Is Nothing)
             assert(Not o Is Nothing)
             Dim v As variable = Nothing
-            If Not variable.[New](scope, name, v) Then
+            If Not variable.of_stack(scope, name, v) Then
                 Return False
             End If
             o.emplace_back(instruction_builder.str(command.dealloc, v))

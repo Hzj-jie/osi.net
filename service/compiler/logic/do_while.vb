@@ -32,7 +32,7 @@ Namespace logic
             End If
 
             Dim var As variable = Nothing
-            If Not variable.[New](scope, v, var) Then
+            If Not variable.of_stack(scope, v, var) Then
                 Return False
             End If
 

@@ -54,11 +54,11 @@ Namespace logic
                 Return False
             End If
             Dim stack_var As variable = Nothing
-            If Not variable.[New](scope, types, stack, stack_var) Then
+            If Not variable.of_stack(scope, types, stack, stack_var) Then
                 Return False
             End If
             Dim heap_var As variable = Nothing
-            If Not variable.[New](scope, types, heaps.name_of(array), heap_var) Then
+            If Not variable.of_stack(scope, types, heaps.name_of(array), heap_var) Then
                 Return False
             End If
             If Not type_match(stack_var, heap_var) Then

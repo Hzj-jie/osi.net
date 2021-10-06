@@ -103,20 +103,18 @@ Namespace logic
                 End If
 
                 Dim target As variable = Nothing
-                If Not variable.[New](scope, types, parameter_name_place_holder, target) Then
+                If Not variable.of_stack(scope, types, parameter_name_place_holder, target) Then
                     Return False
                 End If
 
                 Dim var As variable = Nothing
-                If Not variable.[New](scope, types, parameters(i), var) Then
+                If Not variable.of_stack(scope, types, parameters(i), var) Then
                     Return False
                 End If
 
-                Dim ins As String = Nothing
-                If Not target.copy_from(var, ins) Then
+                If Not copy.export(target, var, o) Then
                     Return False
                 End If
-                o.emplace_back(ins)
             Next
             Return True
         End Function
@@ -130,18 +128,13 @@ Namespace logic
                 Return True
             End If
             Dim result_var As variable = Nothing
-            If Not variable.[New](scope, types, +result, result_var) Then
+            If Not variable.of_stack(scope, types, +result, result_var) Then
                 errors.variable_undefined(+result)
                 Return False
             End If
             Dim return_value_var As variable = Nothing
             assert(return_value.retrieve(scope, types, name, return_value_var))
-            Dim s As String = Nothing
-            If Not result_var.move_from(return_value_var, s) Then
-                Return False
-            End If
-            o.emplace_back(s)
-            Return True
+            Return move.export(result_var, return_value_var, o)
         End Function
 
         Public Function export(ByVal scope As scope,

@@ -4,8 +4,8 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.delegates
 Imports osi.root.formation
+Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public MustInherit Class copy_move
@@ -14,36 +14,43 @@ Namespace logic
         Private ReadOnly types As types
         Private ReadOnly target As String
         Private ReadOnly source As String
-        Private ReadOnly variable_operation As out_bool(Of variable, variable, String)
+        Private ReadOnly cmd As command
 
         Public Sub New(ByVal types As types,
                        ByVal target As String,
                        ByVal source As String,
-                       ByVal variable_operation As out_bool(Of variable, variable, String))
+                       ByVal cmd As command)
             assert(Not types Is Nothing)
             assert(Not String.IsNullOrEmpty(target))
             assert(Not String.IsNullOrEmpty(source))
-            assert(Not variable_operation Is Nothing)
             Me.types = types
             Me.target = target
             Me.source = source
-            Me.variable_operation = variable_operation
+            Me.cmd = cmd
         End Sub
+
+        Protected Shared Function export(ByVal cmd As command,
+                                         ByVal target As variable,
+                                         ByVal source As variable,
+                                         ByVal o As vector(Of String)) As Boolean
+            assert(Not target Is Nothing)
+            assert(Not source Is Nothing)
+            assert(Not o Is Nothing)
+            If target.is_assignable_from(source) Then
+                o.emplace_back(instruction_builder.str(cmd, target, source))
+                Return True
+            End If
+            Return False
+        End Function
 
         Public Function export(ByVal scope As scope,
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not scope Is Nothing)
-            assert(Not o Is Nothing)
             Dim t As variable = Nothing
             Dim s As variable = Nothing
-            Dim c As String = Nothing
-            If variable.[New](scope, types, target, t) AndAlso
-               variable.[New](scope, types, source, s) AndAlso
-               variable_operation(t, s, c) Then
-                o.emplace_back(c)
-                Return True
-            End If
-            Return False
+            Return variable.of_stack(scope, types, target, t) AndAlso
+                   variable.of_stack(scope, types, source, s) AndAlso
+                   export(cmd, t, s, o)
         End Function
     End Class
 End Namespace

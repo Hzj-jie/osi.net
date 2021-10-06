@@ -3,7 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.connector
+Imports osi.root.formation
+Imports osi.service.interpreter.primitive
 
 Namespace logic
     ' Move a variable from @source to @target.
@@ -11,13 +12,13 @@ Namespace logic
         Inherits copy_move
 
         Public Sub New(ByVal types As types, ByVal target As String, ByVal source As String)
-            MyBase.New(types,
-                       target,
-                       source,
-                       Function(ByVal x As variable, ByVal y As variable, ByRef o As String) As Boolean
-                           assert(Not x Is Nothing)
-                           Return x.move_from(y, o)
-                       End Function)
+            MyBase.New(types, target, source, command.mov)
         End Sub
+
+        Public Overloads Shared Function export(ByVal target As variable,
+                                                ByVal source As variable,
+                                                ByVal o As vector(Of String)) As Boolean
+            Return copy_move.export(command.mov, target, source, o)
+        End Function
     End Class
 End Namespace
