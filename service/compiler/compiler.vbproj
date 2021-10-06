@@ -111,7 +111,6 @@
     <Compile Include="logic\copy_heap_in.vb" />
     <Compile Include="logic\copy_heap_out.vb" />
     <Compile Include="logic\define_heap.vb" />
-    <Compile Include="logic\delete_heap.vb" />
     <Compile Include="logic\logic_gen\scoped\read_scoped.vb" />
     <Compile Include="logic\logic_gen\scoped\write_scoped.vb" />
     <Compile Include="logic\builder\builders.implementation.vb" />

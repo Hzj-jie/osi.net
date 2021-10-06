@@ -122,10 +122,6 @@ define	string	string
 #  define_heap my_heap_ptr uint my_size
 define_heap	string	string	string
 
-# delete a heap memory block allocated before by define_heap with its name
-#  delete_heap my_heap_ptr
-delete_heap	string
-
 # execute the paragraph until the variable is true:
 #  do_until a-bool-value { }
 do_until	string	paragraph

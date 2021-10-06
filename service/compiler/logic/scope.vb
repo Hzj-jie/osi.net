@@ -15,6 +15,7 @@ Namespace logic
         Private ReadOnly stack As New unordered_map(Of String, stack_ref)()
         ' Heap allocations need no offset, but only type to check assignability.
         Private ReadOnly heap As New unordered_map(Of String, String)()
+        ' This variable has no functionality, but only ensures the start_scope() won't be executed multiple times.
         Private child As scope = Nothing
 
         Private NotInheritable Class stack_ref
@@ -56,14 +57,19 @@ Namespace logic
         End Function
 
         Public Function end_scope() As scope
+            assert(heap.empty())
             If Not parent Is Nothing Then
                 parent.child = Nothing
             End If
             Return parent
         End Function
 
+        Public Function move_heap() As unordered_map(Of String, String)
+            Return unordered_map(Of String, String).move(heap)
+        End Function
+
         Public Function unique_name() As String
-            Return strcat("@scope_", GetHashCode(), "_unique_name_", size() + uint32_1)
+            Return strcat("@scope_", GetHashCode(), "_unique_name_", stack_size() + uint32_1)
         End Function
 
         Private Function find_duplication(ByVal name As String, ByVal type As String) As Boolean
@@ -82,7 +88,7 @@ Namespace logic
             If find_duplication(name, type) Then
                 Return False
             End If
-            stack.emplace(name, New stack_ref(size() + uint32_1, type))
+            stack.emplace(name, New stack_ref(stack_size() + uint32_1, type))
             Return True
         End Function
 
@@ -101,11 +107,11 @@ Namespace logic
             Return parent Is Nothing
         End Function
 
-        Public Function empty() As Boolean
-            Return size() = uint32_0
+        Public Function stack_empty() As Boolean
+            Return stack_size() = uint32_0
         End Function
 
-        Public Function size() As UInt32
+        Public Function stack_size() As UInt32
             Return stack.size()
         End Function
 
@@ -143,7 +149,7 @@ Namespace logic
             While Not s Is Nothing
                 Dim r As stack_ref = Nothing
                 If Not s.stack.find(name, r) Then
-                    size += s.size()
+                    size += s.stack_size()
                     s = s.parent
                     Continue While
                 End If
@@ -154,7 +160,7 @@ Namespace logic
                         Return False
                     End If
                 Else
-                    If Not data_ref.rel(CLng(s.size() - r.offset + size), d) Then
+                    If Not data_ref.rel(CLng(s.stack_size() - r.offset + size), d) Then
                         Return False
                     End If
                 End If

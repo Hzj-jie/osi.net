@@ -28,10 +28,21 @@ Namespace logic
 
         Public Sub Dispose() Implements IDisposable.Dispose
             Dim i As UInt32 = 0
-            While i < new_scope.size()
+            While i < new_scope.stack_size()
                 o.emplace_back(instruction_builder.str(command.pop))
                 i += uint32_1
             End While
+            new_scope.move_heap().
+                      stream().
+                      map(Function(ByVal x As first_const_pair(Of String, String)) As String
+                              assert(Not x Is Nothing)
+                              Return x.first
+                          End Function).
+                      foreach(Sub(ByVal name As String)
+                                  Dim v As variable = Nothing
+                                  assert(variable.of_stack(new_scope, heaps.original_name_of(name), v))
+                                  o.emplace_back(instruction_builder.str(command.dealloc, v))
+                              End Sub)
             new_scope.end_scope()
         End Sub
     End Class

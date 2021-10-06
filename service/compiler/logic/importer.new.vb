@@ -132,10 +132,6 @@ Namespace logic
             Return New define_heap(anchors, types, p1, p2, p3)
         End Function
 
-        Private Function new_delete_heap(ByVal p1 As String) As delete_heap
-            Return New delete_heap(p1)
-        End Function
-
         Private Function new_do_until(ByVal p1 As String, ByVal p2 As paragraph) As do_until
             Return New do_until(p1, unique_ptr.[New](p2))
         End Function
