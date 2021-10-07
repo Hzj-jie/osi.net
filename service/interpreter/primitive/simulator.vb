@@ -18,7 +18,7 @@ Namespace primitive
         Private ReadOnly _instructions As New vector(Of instruction)()
         Private ReadOnly _stack As New vector(Of ref(Of Byte()))()
         Private ReadOnly _states As New vector(Of executor.state)()
-        Private ReadOnly _heap As New free_list(Of vector(Of ref(Of Byte())))()
+        Private ReadOnly _heap As New free_list(Of ref(Of Byte())())()
         Private ReadOnly _interrupts As interrupts
 
         Private _carry_over As Boolean
@@ -144,12 +144,12 @@ Namespace primitive
                 assert(False)
                 Return Nothing
             End If
-            If Not _heap(p.high).available_index(p.low) Then
+            If _heap(p.high).Length() <= p.low Then
                 executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
                 assert(False)
                 Return Nothing
             End If
-            Return _heap(p.high)(p.low)
+            Return _heap(p.high)(CInt(p.low))
         End Function
 
         Public Sub push_stack() Implements imitation.push_stack
@@ -166,13 +166,13 @@ Namespace primitive
         End Sub
 
         Public Function alloc(ByVal size As UInt64) As heap_ref Implements imitation.alloc
-            If size > max_uint32 Then
+            If size > max_int32 Then
                 executor_stop_error.throw(executor.error_type.out_of_heap_memory)
                 assert(False)
                 Return Nothing
             End If
-            Dim v As New vector(Of ref(Of Byte()))()
-            v.resize(CUInt(size), New ref(Of Byte())())
+            Dim v(CInt(size) - 1) As ref(Of Byte())
+            arrays.fill(v, New ref(Of Byte()))
             Return heap_ref.of_high(_heap.emplace(v))
         End Function
 

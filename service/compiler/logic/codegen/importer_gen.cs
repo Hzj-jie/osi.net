@@ -51,14 +51,15 @@ public static class Program {
       wl("            If Not strsame(v(p), \"" + ss[0] + "\") Then");
       wl("                Return False");
       wl("            End If");
-      wl("            Dim start As UInt32");
-      wl("            start = p");
+      wl("            Dim start As UInt32 = p");
       wl("            p += uint32_1");
       for (int i = 1; i < ss.Length; i++) {
+        wl("            If Not v.available_index(p) Then");
+        wl("                Return False");
+        wl("            End If");
         switch(ss[i]) {
           case "string":
-            wl("            Dim p" + i.ToString() + " As String = Nothing");
-            wl("            p" + i.ToString() + " = v(p)");
+            wl("            Dim p" + i.ToString() + " As String = v(p)");
             break;
           case "uint":
             wl("            Dim p" + i.ToString() + " As UInt32 = 0");
@@ -67,26 +68,22 @@ public static class Program {
             wl("            End If");
             break;
           case "data_block":
-            wl("            Dim p" + i.ToString() + " As data_block = Nothing");
-            wl("            p" + i.ToString() + " = New data_block()");
-            wl("            Dim new_pos As UInt32 = 0");
-            wl("            new_pos = p");
+            wl("            Dim p" + i.ToString() + " As New data_block()");
+            wl("            Dim new_pos As UInt32 = p");
             wl("            If Not p" + i.ToString() + ".import(v, new_pos) Then");
             wl("                Return False");
             wl("            End If");
             wl("            assert(new_pos = p + uint32_1)");
             break;
           case "parameters":
-            wl("            Dim p" + i.ToString() + " As vector(Of String) = Nothing");
-            wl("            p" + i.ToString() + " = New vector(Of String)()");
+            wl("            Dim p" + i.ToString() + " As New vector(Of String)()");
             wl("            If Not parse_parameters(p" + i.ToString() + ", v, p) Then");
             wl("                Return False");
             wl("            End If");
             wl("            p -= uint32_1");
             break;
           case "typed_parameters":
-            wl("            Dim p" + i.ToString() + " As vector(Of pair(Of String, String)) = Nothing");
-            wl("            p" + i.ToString() + " = New vector(Of pair(Of String, String))()");
+            wl("            Dim p" + i.ToString() + " As New vector(Of pair(Of String, String))()");
             wl("            If Not parse_typed_parameters(p" + i.ToString() + ", v, p) Then");
             wl("                Return False");
             wl("            End If");

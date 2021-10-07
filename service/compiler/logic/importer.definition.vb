@@ -22,12 +22,16 @@ Namespace logic
             If Not strsame(v(p), "type") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
+            If Not v.available_index(p) Then
+                Return False
+            End If
             Dim p2 As UInt32 = 0
             If Not UInt32.TryParse(v(p), p2) Then
                 Return False
@@ -52,14 +56,17 @@ Namespace logic
             If Not strsame(v(p), "append_slice") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
             o = new_append_slice(
                 p1,
@@ -80,17 +87,22 @@ Namespace logic
             If Not strsame(v(p), "cut") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_cut(
                 p1,
@@ -112,20 +124,27 @@ Namespace logic
             If Not strsame(v(p), "cut_slice") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
-            Dim p4 As String = Nothing
-            p4 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p4 As String = v(p)
             p += uint32_1
             o = new_cut_slice(
                 p1,
@@ -148,11 +167,12 @@ Namespace logic
             If Not strsame(v(p), "clear") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
             o = new_clear(
                 p1
@@ -172,17 +192,22 @@ Namespace logic
             If Not strsame(v(p), "add") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_add(
                 p1,
@@ -204,17 +229,22 @@ Namespace logic
             If Not strsame(v(p), "subtract") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_subtract(
                 p1,
@@ -236,17 +266,22 @@ Namespace logic
             If Not strsame(v(p), "multiply") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_multiply(
                 p1,
@@ -268,20 +303,27 @@ Namespace logic
             If Not strsame(v(p), "divide") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
-            Dim p4 As String = Nothing
-            p4 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p4 As String = v(p)
             p += uint32_1
             o = new_divide(
                 p1,
@@ -304,20 +346,27 @@ Namespace logic
             If Not strsame(v(p), "extract") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
-            Dim p4 As String = Nothing
-            p4 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p4 As String = v(p)
             p += uint32_1
             o = new_extract(
                 p1,
@@ -340,17 +389,22 @@ Namespace logic
             If Not strsame(v(p), "power") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_power(
                 p1,
@@ -372,17 +426,22 @@ Namespace logic
             If Not strsame(v(p), "and") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_and(
                 p1,
@@ -404,17 +463,22 @@ Namespace logic
             If Not strsame(v(p), "or") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_or(
                 p1,
@@ -436,22 +500,30 @@ Namespace logic
             If Not strsame(v(p), "callee") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As vector(Of pair(Of String, String)) = Nothing
-            p3 = New vector(Of pair(Of String, String))()
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As New vector(Of pair(Of String, String))()
             If Not parse_typed_parameters(p3, v, p) Then
                 Return False
             End If
             p -= uint32_1
             p += uint32_1
+            If Not v.available_index(p) Then
+                Return False
+            End If
             Dim p4 As paragraph = Nothing
             If Not parse_paragraph(p4, v, p) Then
                 Return False
@@ -479,17 +551,22 @@ Namespace logic
             If Not strsame(v(p), "caller") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As vector(Of String) = Nothing
-            p3 = New vector(Of String)()
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As New vector(Of String)()
             If Not parse_parameters(p3, v, p) Then
                 Return False
             End If
@@ -515,14 +592,17 @@ Namespace logic
             If Not strsame(v(p), "caller") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As vector(Of String) = Nothing
-            p2 = New vector(Of String)()
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As New vector(Of String)()
             If Not parse_parameters(p2, v, p) Then
                 Return False
             End If
@@ -547,17 +627,22 @@ Namespace logic
             If Not strsame(v(p), "less") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_less(
                 p1,
@@ -579,17 +664,22 @@ Namespace logic
             If Not strsame(v(p), "more") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_more(
                 p1,
@@ -611,17 +701,22 @@ Namespace logic
             If Not strsame(v(p), "equal") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_equal(
                 p1,
@@ -643,17 +738,22 @@ Namespace logic
             If Not strsame(v(p), "less_or_equal") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_less_or_equal(
                 p1,
@@ -675,17 +775,22 @@ Namespace logic
             If Not strsame(v(p), "more_or_equal") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_more_or_equal(
                 p1,
@@ -707,23 +812,33 @@ Namespace logic
             If Not strsame(v(p), "if") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
+            If Not v.available_index(p) Then
+                Return False
+            End If
             Dim p2 As paragraph = Nothing
             If Not parse_paragraph(p2, v, p) Then
                 Return False
             End If
             p -= uint32_1
             p += uint32_1
+            If Not v.available_index(p) Then
+                Return False
+            End If
             Dim p3 As place_holder = Nothing
             If Not strsame(v(p), "else") Then
                 Return False
             End If
             p += uint32_1
+            If Not v.available_index(p) Then
+                Return False
+            End If
             Dim p4 As paragraph = Nothing
             If Not parse_paragraph(p4, v, p) Then
                 Return False
@@ -751,12 +866,16 @@ Namespace logic
             If Not strsame(v(p), "if") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
+            If Not v.available_index(p) Then
+                Return False
+            End If
             Dim p2 As paragraph = Nothing
             If Not parse_paragraph(p2, v, p) Then
                 Return False
@@ -782,14 +901,17 @@ Namespace logic
             If Not strsame(v(p), "copy") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
             o = new_copy(
                 p1,
@@ -810,16 +932,18 @@ Namespace logic
             If Not strsame(v(p), "copy_const") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As data_block = Nothing
-            p2 = New data_block()
-            Dim new_pos As UInt32 = 0
-            new_pos = p
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As New data_block()
+            Dim new_pos As UInt32 = p
             If Not p2.import(v, new_pos) Then
                 Return False
             End If
@@ -844,17 +968,22 @@ Namespace logic
             If Not strsame(v(p), "copy_heap_out") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_copy_heap_out(
                 p1,
@@ -876,17 +1005,22 @@ Namespace logic
             If Not strsame(v(p), "copy_heap_in") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_copy_heap_in(
                 p1,
@@ -908,14 +1042,17 @@ Namespace logic
             If Not strsame(v(p), "define") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
             o = new_define(
                 p1,
@@ -936,17 +1073,22 @@ Namespace logic
             If Not strsame(v(p), "define_heap") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_define_heap(
                 p1,
@@ -968,12 +1110,16 @@ Namespace logic
             If Not strsame(v(p), "do_until") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
+            If Not v.available_index(p) Then
+                Return False
+            End If
             Dim p2 As paragraph = Nothing
             If Not parse_paragraph(p2, v, p) Then
                 Return False
@@ -999,12 +1145,16 @@ Namespace logic
             If Not strsame(v(p), "do_while") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
+            If Not v.available_index(p) Then
+                Return False
+            End If
             Dim p2 As paragraph = Nothing
             If Not parse_paragraph(p2, v, p) Then
                 Return False
@@ -1030,17 +1180,22 @@ Namespace logic
             If Not strsame(v(p), "interrupt") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_interrupt(
                 p1,
@@ -1062,14 +1217,17 @@ Namespace logic
             If Not strsame(v(p), "move") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
             o = new_move(
                 p1,
@@ -1090,12 +1248,16 @@ Namespace logic
             If Not strsame(v(p), "return") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
+            If Not v.available_index(p) Then
+                Return False
+            End If
             Dim p2 As place_holder = Nothing
             If Not strsame(v(p), "*") Then
                 Return False
@@ -1120,14 +1282,17 @@ Namespace logic
             If Not strsame(v(p), "return") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
             o = new_return(
                 p1,
@@ -1148,14 +1313,17 @@ Namespace logic
             If Not strsame(v(p), "append") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
             o = new_append(
                 p1,
@@ -1176,14 +1344,17 @@ Namespace logic
             If Not strsame(v(p), "not") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
             o = new_not(
                 p1,
@@ -1204,14 +1375,17 @@ Namespace logic
             If Not strsame(v(p), "sizeof") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
             o = new_sizeof(
                 p1,
@@ -1232,14 +1406,17 @@ Namespace logic
             If Not strsame(v(p), "empty") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
             o = new_empty(
                 p1,
@@ -1260,12 +1437,16 @@ Namespace logic
             If Not strsame(v(p), "while_then") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
+            If Not v.available_index(p) Then
+                Return False
+            End If
             Dim p2 As paragraph = Nothing
             If Not parse_paragraph(p2, v, p) Then
                 Return False
@@ -1291,8 +1472,7 @@ Namespace logic
             If Not strsame(v(p), "stop") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
             o = new_stop(
             )
@@ -1311,17 +1491,22 @@ Namespace logic
             If Not strsame(v(p), "float_add") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_float_add(
                 p1,
@@ -1343,17 +1528,22 @@ Namespace logic
             If Not strsame(v(p), "float_subtract") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_float_subtract(
                 p1,
@@ -1375,17 +1565,22 @@ Namespace logic
             If Not strsame(v(p), "float_multiply") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_float_multiply(
                 p1,
@@ -1407,17 +1602,22 @@ Namespace logic
             If Not strsame(v(p), "float_divide") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_float_divide(
                 p1,
@@ -1439,17 +1639,22 @@ Namespace logic
             If Not strsame(v(p), "float_extract") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_float_extract(
                 p1,
@@ -1471,17 +1676,22 @@ Namespace logic
             If Not strsame(v(p), "float_power") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_float_power(
                 p1,
@@ -1503,17 +1713,22 @@ Namespace logic
             If Not strsame(v(p), "float_less") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_float_less(
                 p1,
@@ -1535,17 +1750,22 @@ Namespace logic
             If Not strsame(v(p), "float_more") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_float_more(
                 p1,
@@ -1567,17 +1787,22 @@ Namespace logic
             If Not strsame(v(p), "float_equal") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_float_equal(
                 p1,
@@ -1599,17 +1824,22 @@ Namespace logic
             If Not strsame(v(p), "float_less_or_equal") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_float_less_or_equal(
                 p1,
@@ -1631,17 +1861,22 @@ Namespace logic
             If Not strsame(v(p), "float_more_or_equal") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_float_more_or_equal(
                 p1,
@@ -1663,17 +1898,22 @@ Namespace logic
             If Not strsame(v(p), "left_shift") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_left_shift(
                 p1,
@@ -1695,17 +1935,22 @@ Namespace logic
             If Not strsame(v(p), "right_shift") Then
                 Return False
             End If
-            Dim start As UInt32
-            start = p
+            Dim start As UInt32 = p
             p += uint32_1
-            Dim p1 As String = Nothing
-            p1 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
             p += uint32_1
-            Dim p2 As String = Nothing
-            p2 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
             p += uint32_1
-            Dim p3 As String = Nothing
-            p3 = v(p)
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As String = v(p)
             p += uint32_1
             o = new_right_shift(
                 p1,
