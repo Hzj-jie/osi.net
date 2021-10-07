@@ -25,9 +25,8 @@ Namespace logic
             If scope Is Nothing Then
                 Return False
             End If
-            Dim o As vector(Of String) = Nothing
-            o = New vector(Of String)()
-            For i As Int32 = 0 To array_size_i(es) - 1
+            Dim o As New vector(Of String)()
+            For i As Int32 = 0 To es.Length() - 1
                 If es(i) Is Nothing Then
                     Return False
                 End If
@@ -35,8 +34,7 @@ Namespace logic
                     Return False
                 End If
             Next
-            Dim r As String = Nothing
-            r = o.str(character.newline)
+            Dim r As String = o.str(character.newline)
             If debug_dump Then
                 raise_error(error_type.user, "Debug dump of primitive ", character.newline, r)
             End If
