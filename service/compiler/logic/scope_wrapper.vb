@@ -27,11 +27,6 @@ Namespace logic
         End Function
 
         Public Sub Dispose() Implements IDisposable.Dispose
-            Dim i As UInt32 = 0
-            While i < new_scope.stack_size()
-                o.emplace_back(instruction_builder.str(command.pop))
-                i += uint32_1
-            End While
             new_scope.move_heap().
                       stream().
                       map(Function(ByVal x As first_const_pair(Of String, String)) As String
@@ -43,6 +38,11 @@ Namespace logic
                                   assert(variable.of_stack(new_scope, heaps.original_name_of(name), v))
                                   o.emplace_back(instruction_builder.str(command.dealloc, v))
                               End Sub)
+            Dim i As UInt32 = 0
+            While i < new_scope.stack_size()
+                o.emplace_back(instruction_builder.str(command.pop))
+                i += uint32_1
+            End While
             new_scope.end_scope()
         End Sub
     End Class

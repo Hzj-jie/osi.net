@@ -19,7 +19,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "type") Then
+            If Not v(p).Equals("type") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -41,9 +41,7 @@ Namespace logic
                 p1,
                 p2
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -53,7 +51,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "append_slice") Then
+            If Not v(p).Equals("append_slice") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -72,9 +70,7 @@ Namespace logic
                 p1,
                 p2
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -84,7 +80,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "cut") Then
+            If Not v(p).Equals("cut") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -109,9 +105,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -121,7 +115,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "cut_slice") Then
+            If Not v(p).Equals("cut_slice") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -152,9 +146,7 @@ Namespace logic
                 p3,
                 p4
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -164,7 +156,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "clear") Then
+            If Not v(p).Equals("clear") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -177,9 +169,7 @@ Namespace logic
             o = new_clear(
                 p1
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -189,7 +179,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "add") Then
+            If Not v(p).Equals("add") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -214,9 +204,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -226,7 +214,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "subtract") Then
+            If Not v(p).Equals("subtract") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -251,9 +239,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -263,7 +249,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "multiply") Then
+            If Not v(p).Equals("multiply") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -288,9 +274,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -300,7 +284,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "divide") Then
+            If Not v(p).Equals("divide") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -331,9 +315,7 @@ Namespace logic
                 p3,
                 p4
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -343,7 +325,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "extract") Then
+            If Not v(p).Equals("extract") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -374,9 +356,7 @@ Namespace logic
                 p3,
                 p4
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -386,7 +366,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "power") Then
+            If Not v(p).Equals("power") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -411,9 +391,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -423,7 +401,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "and") Then
+            If Not v(p).Equals("and") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -448,9 +426,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -460,7 +436,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "or") Then
+            If Not v(p).Equals("or") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -485,9 +461,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -497,7 +471,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "callee") Then
+            If Not v(p).Equals("callee") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -536,9 +510,7 @@ Namespace logic
                 p3,
                 p4
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -548,7 +520,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "caller") Then
+            If Not v(p).Equals("caller") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -577,9 +549,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -589,7 +559,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "caller") Then
+            If Not v(p).Equals("caller") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -612,9 +582,7 @@ Namespace logic
                 p1,
                 p2
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -624,7 +592,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "less") Then
+            If Not v(p).Equals("less") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -649,9 +617,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -661,7 +627,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "more") Then
+            If Not v(p).Equals("more") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -686,9 +652,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -698,7 +662,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "equal") Then
+            If Not v(p).Equals("equal") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -723,9 +687,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -735,7 +697,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "less_or_equal") Then
+            If Not v(p).Equals("less_or_equal") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -760,9 +722,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -772,7 +732,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "more_or_equal") Then
+            If Not v(p).Equals("more_or_equal") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -797,9 +757,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -809,7 +767,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "if") Then
+            If Not v(p).Equals("if") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -832,7 +790,7 @@ Namespace logic
                 Return False
             End If
             Dim p3 As place_holder = Nothing
-            If Not strsame(v(p), "else") Then
+            If Not v(p).Equals("else") Then
                 Return False
             End If
             p += uint32_1
@@ -851,9 +809,7 @@ Namespace logic
                 p3,
                 p4
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -863,7 +819,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "if") Then
+            If Not v(p).Equals("if") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -886,9 +842,7 @@ Namespace logic
                 p1,
                 p2
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -898,7 +852,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "copy") Then
+            If Not v(p).Equals("copy") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -917,9 +871,7 @@ Namespace logic
                 p1,
                 p2
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -929,7 +881,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "copy_const") Then
+            If Not v(p).Equals("copy_const") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -953,9 +905,7 @@ Namespace logic
                 p1,
                 p2
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -965,7 +915,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "copy_heap_out") Then
+            If Not v(p).Equals("copy_heap_out") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -990,9 +940,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1002,7 +950,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "copy_heap_in") Then
+            If Not v(p).Equals("copy_heap_in") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1027,9 +975,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1039,7 +985,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "define") Then
+            If Not v(p).Equals("define") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1058,9 +1004,7 @@ Namespace logic
                 p1,
                 p2
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1070,7 +1014,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "define_heap") Then
+            If Not v(p).Equals("define_heap") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1095,9 +1039,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1107,7 +1049,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "do_until") Then
+            If Not v(p).Equals("do_until") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1130,9 +1072,7 @@ Namespace logic
                 p1,
                 p2
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1142,7 +1082,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "do_while") Then
+            If Not v(p).Equals("do_while") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1165,9 +1105,7 @@ Namespace logic
                 p1,
                 p2
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1177,7 +1115,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "interrupt") Then
+            If Not v(p).Equals("interrupt") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1202,9 +1140,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1214,7 +1150,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "move") Then
+            If Not v(p).Equals("move") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1233,9 +1169,7 @@ Namespace logic
                 p1,
                 p2
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1245,7 +1179,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "return") Then
+            If Not v(p).Equals("return") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1259,7 +1193,7 @@ Namespace logic
                 Return False
             End If
             Dim p2 As place_holder = Nothing
-            If Not strsame(v(p), "*") Then
+            If Not v(p).Equals("*") Then
                 Return False
             End If
             p += uint32_1
@@ -1267,9 +1201,7 @@ Namespace logic
                 p1,
                 p2
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1279,7 +1211,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "return") Then
+            If Not v(p).Equals("return") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1298,9 +1230,7 @@ Namespace logic
                 p1,
                 p2
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1310,7 +1240,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "append") Then
+            If Not v(p).Equals("append") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1329,9 +1259,7 @@ Namespace logic
                 p1,
                 p2
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1341,7 +1269,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "not") Then
+            If Not v(p).Equals("not") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1360,9 +1288,7 @@ Namespace logic
                 p1,
                 p2
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1372,7 +1298,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "sizeof") Then
+            If Not v(p).Equals("sizeof") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1391,9 +1317,7 @@ Namespace logic
                 p1,
                 p2
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1403,7 +1327,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "empty") Then
+            If Not v(p).Equals("empty") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1422,9 +1346,7 @@ Namespace logic
                 p1,
                 p2
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1434,7 +1356,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "while_then") Then
+            If Not v(p).Equals("while_then") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1457,9 +1379,7 @@ Namespace logic
                 p1,
                 p2
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1469,16 +1389,14 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "stop") Then
+            If Not v(p).Equals("stop") Then
                 Return False
             End If
             Dim start As UInt32 = p
             p += uint32_1
             o = new_stop(
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1488,7 +1406,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "float_add") Then
+            If Not v(p).Equals("float_add") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1513,9 +1431,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1525,7 +1441,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "float_subtract") Then
+            If Not v(p).Equals("float_subtract") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1550,9 +1466,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1562,7 +1476,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "float_multiply") Then
+            If Not v(p).Equals("float_multiply") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1587,9 +1501,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1599,7 +1511,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "float_divide") Then
+            If Not v(p).Equals("float_divide") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1624,9 +1536,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1636,7 +1546,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "float_extract") Then
+            If Not v(p).Equals("float_extract") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1661,9 +1571,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1673,7 +1581,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "float_power") Then
+            If Not v(p).Equals("float_power") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1698,9 +1606,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1710,7 +1616,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "float_less") Then
+            If Not v(p).Equals("float_less") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1735,9 +1641,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1747,7 +1651,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "float_more") Then
+            If Not v(p).Equals("float_more") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1772,9 +1676,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1784,7 +1686,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "float_equal") Then
+            If Not v(p).Equals("float_equal") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1809,9 +1711,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1821,7 +1721,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "float_less_or_equal") Then
+            If Not v(p).Equals("float_less_or_equal") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1846,9 +1746,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1858,7 +1756,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "float_more_or_equal") Then
+            If Not v(p).Equals("float_more_or_equal") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1883,9 +1781,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1895,7 +1791,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "left_shift") Then
+            If Not v(p).Equals("left_shift") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1920,9 +1816,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
@@ -1932,7 +1826,7 @@ Namespace logic
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not strsame(v(p), "right_shift") Then
+            If Not v(p).Equals("right_shift") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1957,9 +1851,7 @@ Namespace logic
                 p2,
                 p3
             )
-            If isdebugmode() Then
-                o = New exportable_source_wrapper(v, start, p, o)
-            End If
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 

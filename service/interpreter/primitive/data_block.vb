@@ -8,10 +8,10 @@ Imports osi.root.constants
 Imports osi.root.formation
 
 Namespace primitive
-    Public Class data_block
+    Public NotInheritable Class data_block
         Implements exportable, IComparable(Of data_block), IComparable, ICloneable(Of data_block), ICloneable
 
-        Public Class prefix
+        Public NotInheritable Class prefix
             Public Const [int] As Char = "i"c
             Public Const [long] As Char = "l"c
             Public Const [double] As Char = "d"c
@@ -19,6 +19,9 @@ Namespace primitive
             Public Const [array] As Char = "a"c
             Public Const [c_escaped_string] As Char = "E"c
             Public Const [string] As Char = "s"c
+
+            Private Sub New()
+            End Sub
         End Class
 
         Private buff() As Byte
@@ -312,7 +315,7 @@ Namespace primitive
             Return c
         End Function
 
-        Public NotOverridable Overrides Function ToString() As String
+        Public Overrides Function ToString() As String
             Dim o As String = Nothing
             assert(str(prefix.array, o))
             Return o

@@ -48,7 +48,7 @@ public static class Program {
       wl("                ByRef o As exportable) As Boolean");
       wl("            assert(Not v Is Nothing)");
       wl("            assert(v.size() > p)");
-      wl("            If Not strsame(v(p), \"" + ss[0] + "\") Then");
+      wl("            If Not v(p).Equals(\"" + ss[0] + "\") Then");
       wl("                Return False");
       wl("            End If");
       wl("            Dim start As UInt32 = p");
@@ -98,7 +98,7 @@ public static class Program {
             break;
           default:
             wl("            Dim p" + i.ToString() + " As place_holder = Nothing");
-            wl("            If Not strsame(v(p), \"" + ss[i] + "\") Then");
+            wl("            If Not v(p).Equals(\"" + ss[i] + "\") Then");
             wl("                Return False");
             wl("            End If");
             break;
@@ -115,9 +115,7 @@ public static class Program {
         }
       }
       wl("            )");
-      wl("            If isdebugmode() Then");
-      wl("                o = New exportable_source_wrapper(v, start, p, o)");
-      wl("            End If");
+      wl("            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)");
       wl("            Return True");
       wl("        End Function");
       wl();

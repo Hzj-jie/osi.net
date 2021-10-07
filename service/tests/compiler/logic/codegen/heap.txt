@@ -2,7 +2,8 @@
 type uint 4
 type bool 1
 
-define true i1
+define true bool
+copy_const true b1
 
 ## Always use a new scope to ensure the heap allocation can be freed.
 if true {

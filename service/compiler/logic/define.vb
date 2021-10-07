@@ -49,6 +49,10 @@ Namespace logic
             If Not macros.decode(anchors, scope, types, Me.type, type) Then
                 Return False
             End If
+            If Not types.retrieve(type, Nothing) Then
+                errors.type_undefined(type, name)
+                Return False
+            End If
             If scope.define_stack(name, type) Then
                 o.emplace_back(strcat(command_str(command.push),
                                       character.tab,

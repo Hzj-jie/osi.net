@@ -12,11 +12,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public Module _exportable
-        Private ReadOnly debug_dump As Boolean
-
-        Sub New()
-            debug_dump = env_bool(env_keys("logic", "debug", "dump"))
-        End Sub
+        Private ReadOnly debug_dump As Boolean = env_bool(env_keys("logic", "debug", "dump"))
 
         <Extension()> Public Function import(ByVal e As interpreter.primitive.exportable,
                                              ByVal scope As scope,
