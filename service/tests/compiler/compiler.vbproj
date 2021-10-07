@@ -149,6 +149,7 @@
     <Content Include="logic\codegen\case2.txt" />
     <Content Include="logic\codegen\case3.txt" />
     <Content Include="logic\codegen\case4.txt" />
+    <Content Include="logic\codegen\heap.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\..\..\root\root.utt.props" Condition="'$(RootUttProps)'==''" />

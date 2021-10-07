@@ -104,11 +104,7 @@ Namespace logic
     Public NotInheritable Class import_executor_test4
         Inherits import_executor_case
 
-        Private Shared ReadOnly io As console_io.test_wrapper
-
-        Shared Sub New()
-            io = New console_io.test_wrapper()
-        End Sub
+        Private Shared ReadOnly io As New console_io.test_wrapper()
 
         Public Sub New()
             MyBase.New(case4.as_text(), New interrupts(+io))
@@ -118,6 +114,21 @@ Namespace logic
             MyBase.check_result(e)
             assertion.equal(io.output(), "hello world")
             assertion.equal(io.error(), "hello world")
+        End Sub
+    End Class
+
+    Public NotInheritable Class import_executor_heap
+        Inherits import_executor_case
+
+        Private Shared ReadOnly io As New console_io.test_wrapper()
+
+        Public Sub New()
+            MyBase.New(heap.as_text(), New interrupts(+io))
+        End Sub
+
+        Protected Overrides Sub check_result(ByVal e As not_null(Of simulator))
+            MyBase.check_result(e)
+            assertion.equal(io.output(), Convert.ToChar(99))
         End Sub
     End Class
 End Namespace

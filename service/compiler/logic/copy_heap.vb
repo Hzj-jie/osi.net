@@ -64,8 +64,10 @@ Namespace logic
             If Not type_match(stack_var, heap_var) Then
                 Return False
             End If
+            Dim array_ptr_var As variable = Nothing
+            assert(variable.of_stack(scope, types, array_ptr, array_ptr_var))
             Dim operation_str As String = Nothing
-            If Not operation(array_ptr, stack_var.ref(), operation_str) Then
+            If Not operation(array_ptr_var.ref(), stack_var.ref(), operation_str) Then
                 Return False
             End If
             o.emplace_back(operation_str)

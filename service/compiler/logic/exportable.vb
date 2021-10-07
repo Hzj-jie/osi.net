@@ -38,7 +38,7 @@ Namespace logic
             Dim r As String = Nothing
             r = o.str(character.newline)
             If debug_dump Then
-                raise_error(error_type.user, "Debug dump of primitive ", r)
+                raise_error(error_type.user, "Debug dump of primitive ", character.newline, r)
             End If
             Return assert(e.import(r))
         End Function
