@@ -10,11 +10,11 @@ Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class value
-        Inherits logic_gen_wrapper
+        Inherits logic_gen_wrapper_with_parameters
         Implements logic_gen
 
-        Private ReadOnly read_targets As read_scoped(Of String)
-        Private ReadOnly defined_temp_targets As [set](Of String)
+        Private ReadOnly read_targets As New read_scoped(Of String)()
+        Private ReadOnly defined_temp_targets As New unordered_set(Of String)
 
         Public Function read_target() As read_scoped(Of String).ref
             assert(read_targets.size() > 0)

@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.interpreter.primitive
@@ -24,6 +25,22 @@ Partial Public NotInheritable Class rewriters
             MyBase.New(i)
         End Sub
     End Class
+End Class
+
+Public Class rewriter_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
+                                      _syntaxer_rule As __do(Of Byte()),
+                                      _prefixes As __do(Of vector(Of Action(Of statements, parameters))),
+                                      _suffixes As __do(Of vector(Of Action(Of statements, parameters))),
+                                      _rewriter_gens As __do(Of vector(Of Action(Of rewriters, parameters))))
+    Inherits rewriter_rule_wrapper(Of parameters,
+                                      _nlexer_rule,
+                                      _syntaxer_rule,
+                                      _prefixes,
+                                      _suffixes,
+                                      _rewriter_gens)
+
+    Protected Sub New()
+    End Sub
 End Class
 
 Public Class rewriter_rule_wrapper(Of PARAMETERS,

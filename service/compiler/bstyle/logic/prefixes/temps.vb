@@ -15,21 +15,17 @@ Partial Public NotInheritable Class bstyle
         Public Shared ReadOnly biguint As String = unique_name("biguint")
         Public Shared ReadOnly [string] As String = unique_name("string")
 
-        Private Shared ReadOnly v As vector(Of pair(Of String, String))
+        Private Shared ReadOnly v As vector(Of pair(Of String, String)) = vector.of(
+            pair.emplace_of(biguint, types.biguint),
+            pair.emplace_of([string], types.string)
+        )
         Private ReadOnly ta As type_alias
-
-        Shared Sub New()
-            v = vector.of(
-                pair.emplace_of(biguint, types.biguint),
-                pair.emplace_of([string], types.string)
-            )
-        End Sub
 
         Private Shared Function unique_name(ByVal name As String) As String
             Return "@@prefixes@temps@" + name
         End Function
 
-        Public Shared Sub register(ByVal p As statements, ByVal l As logic_rule_wrapper)
+        Public Shared Sub register(ByVal p As statements, ByVal l As parameters_t)
             assert(Not p Is Nothing)
             assert(Not l Is Nothing)
             p.register(New temps(l.type_alias))

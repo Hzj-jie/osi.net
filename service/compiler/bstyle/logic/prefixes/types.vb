@@ -22,23 +22,17 @@ Partial Public NotInheritable Class bstyle
         Public Const ufloat As String = "ufloat"
         Public Const void As String = "void"
 
-        Private Shared ReadOnly v As vector(Of pair(Of String, UInt32))
-        Private Shared ReadOnly type_0_s As vector(Of String)
-        Private Shared ReadOnly type_asterisk_s As vector(Of String)
-
-        Shared Sub New()
-            v = vector.of(
-                    type_of(int, 4),
-                    type_of([long], 8),
-                    type_of(bool, 1),
-                    type_of([byte], 1),
-                    type_of(biguint, max_uint32 - 1),
-                    type_of(ufloat, max_uint32 - 2),
-                    type_of([string], max_uint32 - 3)
-                )
-            type_0_s = vector.of(void)
-            type_asterisk_s = vector.of(Of String)()
-        End Sub
+        Private Shared ReadOnly v As vector(Of pair(Of String, UInt32)) = vector.of(
+            type_of(int, 4),
+            type_of([long], 8),
+            type_of(bool, 1),
+            type_of([byte], 1),
+            type_of(biguint, max_uint32 - 1),
+            type_of(ufloat, max_uint32 - 2),
+            type_of([string], max_uint32 - 3)
+        )
+        Private Shared ReadOnly type_0_s As vector(Of String) = vector.of(void)
+        Private Shared ReadOnly type_asterisk_s As vector(Of String) = vector.of(Of String)()
 
         Private Shared Function type_of(ByVal name As String, ByVal size As UInt32) As pair(Of String, UInt32)
             Return pair.emplace_of(name, size)
@@ -52,7 +46,7 @@ Partial Public NotInheritable Class bstyle
             Return type_of(name, assert_which.of(size).can_cast_to_uint32())
         End Function
 
-        Public Shared Sub register(ByVal p As statements, ByVal l As logic_rule_wrapper)
+        Public Shared Sub register(ByVal p As statements, ByVal l As parameters_t)
             assert(Not p Is Nothing)
             assert(Not l Is Nothing)
             p.register(New types(l.type_alias))

@@ -1,6 +1,6 @@
 
-IGNORE_TYPES blank
-ROOT_TYPES function, value-definition-with-semi-colon
+IGNORE_TYPES blank, single-line-comment, multi-line-comment
+ROOT_TYPES function, value-definition-with-semi-colon, include, define, ifndef-wrapped
 
 function name name start-bracket [paramlist]? end-bracket multi-sentence-paragraph
 paramlist [param-with-comma]* param
@@ -43,3 +43,9 @@ return-clause kw-return [value]?
 
 # Embed a logic statement directly, like logic "int stdout a_string"
 logic kw-logic string
+
+include-with-string kw-include string
+include [include-with-string, include-with-file]
+
+ifndef-wrapped kw-ifndef name [function, value-definition-with-semi-colon, include, define]* kw-endif
+define kw-define name

@@ -8,7 +8,13 @@ Imports osi.root.template
 Imports osi.service.compiler.logic
 
 Public NotInheritable Class bstyle
-    Inherits logic_rule_wrapper(Of nlexer_rule_t, syntaxer_rule_t, prefixes_t, suffixes_t, logic_gens_t)
+    Inherits logic_rule_wrapper(Of parameters_t, nlexer_rule_t, syntaxer_rule_t, prefixes_t, suffixes_t, logic_gens_t)
+
+    Public NotInheritable Class parameters_t
+        Inherits osi.service.compiler.logic.parameters_t
+
+        Public ReadOnly defines As New unordered_set(Of String)()
+    End Class
 
     Public NotInheritable Class nlexer_rule_t
         Inherits __do(Of Byte())
@@ -27,9 +33,9 @@ Public NotInheritable Class bstyle
     End Class
 
     Public NotInheritable Class prefixes_t
-        Inherits __do(Of vector(Of Action(Of statements, logic_rule_wrapper)))
+        Inherits __do(Of vector(Of Action(Of statements, parameters_t)))
 
-        Protected Overrides Function at() As vector(Of Action(Of statements, logic_rule_wrapper))
+        Protected Overrides Function at() As vector(Of Action(Of statements, parameters_t))
             Return vector.of(
                        registerer(AddressOf types.register),
                        registerer(AddressOf constants.register),
@@ -38,18 +44,18 @@ Public NotInheritable Class bstyle
     End Class
 
     Public NotInheritable Class suffixes_t
-        Inherits __do(Of vector(Of Action(Of statements, logic_rule_wrapper)))
+        Inherits __do(Of vector(Of Action(Of statements, parameters_t)))
 
-        Protected Overrides Function at() As vector(Of Action(Of statements, logic_rule_wrapper))
+        Protected Overrides Function at() As vector(Of Action(Of statements, parameters_t))
             Return vector.of(
                        ignore_parameters(AddressOf main.register))
         End Function
     End Class
 
     Public NotInheritable Class logic_gens_t
-        Inherits __do(Of vector(Of Action(Of logic_gens, logic_rule_wrapper)))
+        Inherits __do(Of vector(Of Action(Of logic_gens, parameters_t)))
 
-        Protected Overrides Function at() As vector(Of Action(Of logic_gens, logic_rule_wrapper))
+        Protected Overrides Function at() As vector(Of Action(Of logic_gens, parameters_t))
             Return vector.of(
                 ignore_parameters(AddressOf bool.register),
                 ignore_parameters(AddressOf condition.register),
@@ -83,7 +89,12 @@ Public NotInheritable Class bstyle
                 ignore_parameters(AddressOf value_with_comma.register),
                 ignore_parameters(AddressOf value_without_bracket.register),
                 ignore_parameters(AddressOf variable_name.register),
-                ignore_parameters(AddressOf [while].register))
+                ignore_parameters(AddressOf [while].register),
+                ignore_parameters(AddressOf include.register),
+                ignore_parameters(AddressOf include_with_string.register),
+                ignore_parameters(AddressOf include_with_file.register),
+                registerer(AddressOf ifndef_wrapped.register),
+                registerer(AddressOf define.register))
         End Function
     End Class
 

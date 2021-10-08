@@ -22,21 +22,17 @@ Partial Public NotInheritable Class bstyle
         Public Shared ReadOnly size_of_float As String = unique_name("size_of_float")
         Public Shared ReadOnly eof As String = unique_name("eof")
 
-        Private Shared ReadOnly v As vector(Of def)
+        Private Shared ReadOnly v As vector(Of def) = vector.of(
+            New def(types.int, int_0, New data_block(0)),
+            New def(types.int, int_1, New data_block(1)),
+            New def(types.int, size_of_int, New data_block(4)),
+            New def(types.int, size_of_long, New data_block(8)),
+            New def(types.int, size_of_bool, New data_block(1)),
+            New def(types.int, size_of_byte, New data_block(1)),
+            New def(types.int, size_of_float, New data_block(16)),
+            New def(types.int, eof, New data_block(-1))
+        )
         Private ReadOnly ta As type_alias
-
-        Shared Sub New()
-            v = vector.of(
-                New def(types.int, int_0, New data_block(0)),
-                New def(types.int, int_1, New data_block(1)),
-                New def(types.int, size_of_int, New data_block(4)),
-                New def(types.int, size_of_long, New data_block(8)),
-                New def(types.int, size_of_bool, New data_block(1)),
-                New def(types.int, size_of_byte, New data_block(1)),
-                New def(types.int, size_of_float, New data_block(16)),
-                New def(types.int, eof, New data_block(-1))
-            )
-        End Sub
 
         Private Shared Function unique_name(ByVal name As String) As String
             Return "@@prefixes@constants@" + name
@@ -57,7 +53,7 @@ Partial Public NotInheritable Class bstyle
             End Sub
         End Class
 
-        Public Shared Sub register(ByVal p As statements, ByVal l As logic_rule_wrapper)
+        Public Shared Sub register(ByVal p As statements, ByVal l As parameters_t)
             assert(Not p Is Nothing)
             assert(Not l Is Nothing)
             p.register(New constants(l.type_alias))

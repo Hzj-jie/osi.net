@@ -157,12 +157,16 @@ Public NotInheritable Class b2style
                        default_registerer("value-list"),
                        default_registerer("value-with-comma"),
  _
+                       default_registerer("kw-include"),
                        default_registerer("include"),
-                       ignore_parameters(AddressOf include_with_string.register),
-                       ignore_parameters(AddressOf include_with_file.register),
+                       default_registerer("include-with-string"),
+                       default_registerer("include-with-file"),
  _
-                       AddressOf ifndef_wrapped.register,
-                       AddressOf define.register
+                       default_registerer("kw-ifndef"),
+                       default_registerer("kw-define"),
+                       default_registerer("kw-endif"),
+                       default_registerer("ifndef_wrapped"),
+                       default_registerer("define")
                    )
         End Function
     End Class

@@ -487,20 +487,3 @@ long b2style__right_shift(long i, long j) {
                            b2style__to_biguint(j))
   );
 }
-
-int b2style__getchar() {
-  int r;
-  logic "interrupt getchar @@prefixes@temps@string r";
-  return r;
-}
-
-int b2style__putchar(int i) {
-  logic "interrupt putchar i @@prefixes@temps@string";
-  return i;
-}
-
-int b2style__eof() {
-  int r;
-  logic "copy r @@prefixes@constants@eof";
-  return r;
-}
