@@ -56,8 +56,10 @@ Public NotInheritable Class b2style
     Public NotInheritable Class rewriter_gens_t
         Inherits __do(Of vector(Of Action(Of rewriters, parameters_t)))
 
+        ' TODO: Remove unexpected types.
         Protected Overrides Function at() As vector(Of Action(Of rewriters, parameters_t))
             Return vector.of(
+                       default_registerer("root-type"),
                        default_registerer("less-or-equal"),
                        default_registerer("greater-or-equal"),
                        default_registerer("equal"),
@@ -139,6 +141,7 @@ Public NotInheritable Class b2style
                        default_registerer("return-clause"),
                        default_registerer("ignore-result-function-call"),
                        default_registerer("logic"),
+                       default_registerer("logic-with-semi-colon"),
                        default_registerer("condition"),
                        default_registerer("while"),
                        default_registerer("for-loop"),
@@ -158,7 +161,7 @@ Public NotInheritable Class b2style
                        default_registerer("value-with-comma"),
  _
                        default_registerer("kw-include"),
-                       default_registerer("include"),
+                       default_registerer("include"),  ' implement include for b2style to cover b2style code.
                        default_registerer("include-with-string"),
                        default_registerer("include-with-file"),
  _
@@ -166,7 +169,12 @@ Public NotInheritable Class b2style
                        default_registerer("kw-define"),
                        default_registerer("kw-endif"),
                        default_registerer("ifndef_wrapped"),
-                       default_registerer("define")
+                       default_registerer("define"),
+ _
+                       default_registerer("kw-typedef"),
+                       default_registerer("typedef-type"),
+                       default_registerer("typedef"),
+                       default_registerer("typedef-with-semi-colon")
                    )
         End Function
     End Class

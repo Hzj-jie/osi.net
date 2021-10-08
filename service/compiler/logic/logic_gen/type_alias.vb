@@ -7,23 +7,19 @@ Imports osi.root.formation
 
 Namespace logic
     Public NotInheritable Class type_alias
-        Private ReadOnly m As map(Of String, String)
-
-        Public Sub New()
-            m = New map(Of String, String)()
-        End Sub
+        Private ReadOnly m As New unordered_map(Of String, String)()
 
         Public Function define(ByVal [alias] As String, ByVal canonical As String) As Boolean
-            Return m.emplace([alias], canonical).second
-        End Function
-
-        Public Function canonical_type(ByVal [alias] As String) As String
-            Return m.find_or([alias], [alias])
+            If m.emplace([alias], canonical).second Then
+                Return True
+            End If
+            errors.type_alias_redefined([alias], canonical, m([alias]))
+            Return False
         End Function
 
         Default Public ReadOnly Property _D(ByVal [alias] As String) As String
             Get
-                Return canonical_type([alias])
+                Return m.find_or([alias], [alias])
             End Get
         End Property
     End Class

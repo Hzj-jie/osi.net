@@ -69,4 +69,36 @@ Public Module _unordered_map
         o = (+it).second
         Return True
     End Function
+
+    <Extension()> Public Function find_or_default(Of KT, VT) _
+                                                 (ByVal this As unordered_map(Of KT, VT),
+                                                  ByVal key As KT,
+                                                  ByRef o As VT,
+                                                  Optional ByVal default_value As VT = Nothing) As Boolean
+        If find(this, key, o) Then
+            Return True
+        End If
+        o = default_value
+        Return False
+    End Function
+
+    <Extension()> Public Function find_or(Of KT, VT) _
+                                         (ByVal this As unordered_map(Of KT, VT),
+                                          ByVal key As KT,
+                                          ByVal default_value As VT) As VT
+        Dim o As VT = Nothing
+        If find(this, key, o) Then
+            Return o
+        End If
+        Return default_value
+    End Function
+
+    <Extension()> Public Function find_opt(Of KT, VT)(ByVal this As unordered_map(Of KT, VT),
+                                                      ByVal key As KT) As [optional](Of VT)
+        Dim o As VT = Nothing
+        If find(this, key, o) Then
+            Return [optional].of_nullable(o)
+        End If
+        Return [optional].empty(Of VT)()
+    End Function
 End Module

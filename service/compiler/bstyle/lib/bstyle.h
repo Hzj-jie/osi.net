@@ -2,6 +2,9 @@
 #ifndef BSTYLE_LIB_BSTYLE_H
 #define BSTYLE_LIB_BSTYLE_H
 
+#include <bstyle_types.h>
+#include <bstyle_constants.h>
+
 // Use double-underscore to allow b2style to access these functions with bstyle:: namespace format.
 int bstyle__getchar() {
   int r;

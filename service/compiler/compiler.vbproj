@@ -71,6 +71,8 @@
     <Compile Include="b2style\rewriter\statements.vb" />
     <Compile Include="bstyle\bstyle.vb" />
     <Compile Include="bstyle\bstyle_rules.vb" />
+    <Compile Include="bstyle\logic\nodes\root_type.vb" />
+    <Compile Include="bstyle\logic\nodes\typedef.vb" />
     <Compile Include="bstyle\logic\nodes\ufloat.vb" />
     <Compile Include="bstyle\logic\nodes\biguint.vb" />
     <Compile Include="bstyle\logic\nodes\bool.vb" />
@@ -82,13 +84,12 @@
     <Compile Include="bstyle\logic\nodes\return_clause.vb" />
     <Compile Include="bstyle\logic\nodes\string.vb" />
     <Compile Include="bstyle\logic\nodes\value_definition_with_semi_colon.vb" />
+    <Compile Include="bstyle\logic\prefixes\code_types.vb" />
     <Compile Include="bstyle\logic\suffixes\main.vb" />
     <Compile Include="bstyle\logic\nodes\condition.vb" />
     <Compile Include="bstyle\logic\nodes\function_call.vb" />
     <Compile Include="bstyle\logic\nodes\value_list.vb" />
     <Compile Include="bstyle\logic\nodes\value_with_comma.vb" />
-    <Compile Include="bstyle\logic\prefixes\constants.vb" />
-    <Compile Include="bstyle\logic\prefixes\types.vb" />
     <Compile Include="bstyle\logic\nodes\else_condition.vb" />
     <Compile Include="bstyle\logic\nodes\function.vb" />
     <Compile Include="bstyle\logic\nodes\multi_sentence_paragraph.vb" />
@@ -206,7 +207,6 @@
     <None Include="compiler.props" />
     <None Include="bstyle\codegen\run.cmd" />
     <Compile Include="bstyle\logic\nodes\value.target.vb" />
-    <Compile Include="bstyle\logic\prefixes\temps.vb" />
     <None Include="logic\codegen\run.cmd" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -225,6 +225,8 @@
     <Content Include="b2style\codegen\nlexer_rule.txt" />
     <Content Include="b2style\codegen\syntaxer_rule.txt" />
     <Content Include="bstyle\lib\bstyle.h" />
+    <Content Include="bstyle\lib\bstyle_constants.h" />
+    <Content Include="bstyle\lib\bstyle_types.h" />
     <Content Include="bstyle\lib\stdio.h" />
     <Content Include="b2style\rewriter\codegen\prefix.txt" />
     <Content Include="b2style\rewriter\codegen\ufloat.txt" />

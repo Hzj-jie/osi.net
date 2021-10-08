@@ -11,7 +11,7 @@ Public NotInheritable Class bstyle
     Inherits logic_rule_wrapper(Of parameters_t, nlexer_rule_t, syntaxer_rule_t, prefixes_t, suffixes_t, logic_gens_t)
 
     Public NotInheritable Class parameters_t
-        Inherits osi.service.compiler.logic.parameters_t
+        Inherits compiler.logic.parameters_t
 
         Public ReadOnly defines As New unordered_set(Of String)()
     End Class
@@ -36,10 +36,7 @@ Public NotInheritable Class bstyle
         Inherits __do(Of vector(Of Action(Of statements, parameters_t)))
 
         Protected Overrides Function at() As vector(Of Action(Of statements, parameters_t))
-            Return vector.of(
-                       registerer(AddressOf types.register),
-                       registerer(AddressOf constants.register),
-                       registerer(AddressOf temps.register))
+            Return vector.of(registerer(AddressOf code_types.register))
         End Function
     End Class
 
@@ -57,6 +54,7 @@ Public NotInheritable Class bstyle
 
         Protected Overrides Function at() As vector(Of Action(Of logic_gens, parameters_t))
             Return vector.of(
+                ignore_parameters(AddressOf root_type.register),
                 ignore_parameters(AddressOf bool.register),
                 ignore_parameters(AddressOf condition.register),
                 ignore_parameters(AddressOf else_condition.register),
@@ -68,6 +66,7 @@ Public NotInheritable Class bstyle
                 ignore_parameters(AddressOf [integer].register),
                 ignore_parameters(AddressOf biguint.register),
                 ignore_parameters(AddressOf logic.register),
+                ignore_parameters(AddressOf logic_with_semi_colon.register),
                 ignore_parameters(AddressOf multi_sentence_paragraph.register),
                 ignore_parameters(AddressOf variable_name.register),
                 ignore_parameters(AddressOf paragraph.register),
@@ -94,7 +93,9 @@ Public NotInheritable Class bstyle
                 ignore_parameters(AddressOf include_with_string.register),
                 ignore_parameters(AddressOf include_with_file.register),
                 registerer(AddressOf ifndef_wrapped.register),
-                registerer(AddressOf define.register))
+                registerer(AddressOf define.register),
+                registerer(AddressOf typedef.register),
+                ignore_parameters(AddressOf typedef_with_semi_colon.register))
         End Function
     End Class
 

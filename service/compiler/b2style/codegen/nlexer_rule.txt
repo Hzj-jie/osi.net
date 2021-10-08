@@ -82,4 +82,6 @@ kw-endif #endif
 single-line-comment //[*|\n]*
 multi-line-comment /\*[*|\*/]*\*/
 
+kw-typedef typedef
+
 name [\w,_,::][\w,\d,_,::]*

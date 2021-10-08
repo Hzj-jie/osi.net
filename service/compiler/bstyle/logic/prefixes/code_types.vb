@@ -10,28 +10,23 @@ Imports osi.service.compiler.logic
 Imports logic_builder = osi.service.compiler.logic.builders
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class types
+    ' Must supported types used in logic/nodes code generation.
+    Public NotInheritable Class code_types
         Implements statement
 
-        Public Const int As String = "int"
-        Public Const biguint As String = "biguint"
-        Public Const [long] As String = "long"
-        Public Const bool As String = "bool"
-        Public Const [byte] As String = "byte"
-        Public Const [string] As String = "string"
-        Public Const ufloat As String = "ufloat"
-        Public Const void As String = "void"
+        Public Const int As String = "Integer"
+        Public Const biguint As String = "BigUnsignedInteger"
+        Public Const bool As String = "Boolean"
+        Public Const [string] As String = "String"
+        Public Const ufloat As String = "BigUnsignedFloat"
 
         Private Shared ReadOnly v As vector(Of pair(Of String, UInt32)) = vector.of(
             type_of(int, 4),
-            type_of([long], 8),
             type_of(bool, 1),
-            type_of([byte], 1),
             type_of(biguint, max_uint32 - 1),
             type_of(ufloat, max_uint32 - 2),
             type_of([string], max_uint32 - 3)
         )
-        Private Shared ReadOnly type_0_s As vector(Of String) = vector.of(void)
         Private Shared ReadOnly type_asterisk_s As vector(Of String) = vector.of(Of String)()
 
         Private Shared Function type_of(ByVal name As String, ByVal size As UInt32) As pair(Of String, UInt32)
@@ -49,7 +44,7 @@ Partial Public NotInheritable Class bstyle
         Public Shared Sub register(ByVal p As statements, ByVal l As parameters_t)
             assert(Not p Is Nothing)
             assert(Not l Is Nothing)
-            p.register(New types(l.type_alias))
+            p.register(New code_types(l.type_alias))
         End Sub
 
         Public Sub export(ByVal o As writer) Implements statement.export
@@ -64,11 +59,6 @@ Partial Public NotInheritable Class bstyle
         Private Sub New(ByVal ta As type_alias)
             assert(Not ta Is Nothing)
             Dim i As UInt32 = 0
-            While i < type_0_s.size()
-                assert(ta.define(type_0_s(i), "type0"))
-                i += uint32_1
-            End While
-            i = 0
             While i < type_asterisk_s.size()
                 assert(ta.define(type_asterisk_s(i), "type*"))
                 i += uint32_1

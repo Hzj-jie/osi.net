@@ -1,6 +1,8 @@
 
 IGNORE_TYPES blank, single-line-comment, multi-line-comment
-ROOT_TYPES function, value-definition-with-semi-colon, include, define, ifndef-wrapped
+ROOT_TYPES root-type
+
+root-type [function, value-definition-with-semi-colon, include, define, ifndef-wrapped, logic-with-semi-colon, typedef-with-semi-colon]
 
 function name name start-bracket [paramlist]? end-bracket multi-sentence-paragraph
 paramlist [param-with-comma]* param
@@ -11,7 +13,7 @@ value-definition-with-semi-colon value-definition semi-colon
 
 paragraph [sentence, multi-sentence-paragraph]
 sentence [sentence-with-semi-colon, sentence-without-semi-colon]
-sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, ignore-result-function-call, kw-break, logic]? semi-colon
+sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, ignore-result-function-call, kw-break, logic, typedef]? semi-colon
 sentence-without-semi-colon [condition, while, for-loop]
 
 multi-sentence-paragraph start-paragraph [sentence]* end-paragraph
@@ -43,9 +45,15 @@ return-clause kw-return [value]?
 
 # Embed a logic statement directly, like logic "int stdout a_string"
 logic kw-logic string
+logic-with-semi-colon logic semi-colon
 
 include-with-string kw-include string
 include [include-with-string, include-with-file]
 
-ifndef-wrapped kw-ifndef name [function, value-definition-with-semi-colon, include, define]* kw-endif
+ifndef-wrapped kw-ifndef name [root-type]* kw-endif
 define kw-define name
+
+# Allow type* to be used as a string.
+typedef-type [name, string]
+typedef kw-typedef typedef-type typedef-type
+typedef-with-semi-colon typedef semi-colon

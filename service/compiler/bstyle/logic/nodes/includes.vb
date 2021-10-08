@@ -26,6 +26,8 @@ Partial Public NotInheritable Class bstyle
             assert(bstyle_lib.stdio_h.sync_export(Path.Combine(folder, "stdio.h"), True))
             assert(bstyle_lib.cstdio.sync_export(Path.Combine(folder, "cstdio"), True))
             assert(bstyle_lib.bstyle_h.sync_export(Path.Combine(folder, "bstyle.h"), True))
+            assert(bstyle_lib.bstyle_types_h.sync_export(Path.Combine(folder, "bstyle_types.h"), True))
+            assert(bstyle_lib.bstyle_constants_h.sync_export(Path.Combine(folder, "bstyle_constants.h"), True))
         End Sub
 
         Private Sub New()
@@ -84,7 +86,7 @@ Partial Public NotInheritable Class bstyle
         Inherits includes
         Implements logic_gen
 
-        Private Shared ReadOnly kw_include As String = "#include"
+        Private Const kw_include As String = "#include"
 
         <inject_constructor>
         Public Sub New(ByVal i As logic_gens)

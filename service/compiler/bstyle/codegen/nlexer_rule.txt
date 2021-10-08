@@ -19,6 +19,8 @@ kw-endif #endif
 single-line-comment //[*|\n]*
 multi-line-comment /\*[*|\*/]*\*/
 
+kw-typedef typedef
+
 blank [\b]+
 
 bool [true,false]

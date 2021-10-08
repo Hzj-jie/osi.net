@@ -43,7 +43,7 @@ Partial Public NotInheritable Class bstyle
             End Sub
 
             Public Function allow_return_value() As Boolean
-                Return Not strsame(n.child(0).word().str(), types.void)
+                Return Not strsame(ta(n.child(0).word().str()), types.zero_type)
             End Function
 
             Public Function name() As String

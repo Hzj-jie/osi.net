@@ -1,4 +1,6 @@
 ﻿
+#include <bstyle.h>
+
 bool equal(int i, int j) {
   bool result;
   logic "equal result i j";
