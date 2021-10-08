@@ -6,7 +6,6 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.template
-Imports osi.service.compiler
 Imports osi.service.interpreter.primitive
 Imports statements = osi.service.compiler.rewriters.statements
 
@@ -138,7 +137,7 @@ Public NotInheritable Class b2style
                        default_registerer("value-clause"),
                        ignore_parameters(AddressOf self_value_clause.register),
                        default_registerer("return-clause"),
-                       default_registerer("ignore-return-function-call"),
+                       default_registerer("ignore-result-function-call"),
                        default_registerer("logic"),
                        default_registerer("condition"),
                        default_registerer("while"),

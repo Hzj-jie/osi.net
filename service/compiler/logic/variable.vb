@@ -39,7 +39,7 @@ Namespace logic
                 Return True
             End If
             Dim size As UInt32 = 0
-            ' type should be checked when a variable is defined.
+            ' type should be checked when a variable is defined in the scope.
             assert(types.retrieve(type, size))
             o = New variable(scope, name, type, [optional].of(size))
             Return True

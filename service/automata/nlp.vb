@@ -62,6 +62,12 @@ Public NotInheritable Class nlp
                       o)
     End Function
 
+    Public Shared Function of_file(ByVal n As String, ByVal s As String) As nlp
+        Dim o As nlp = Nothing
+        assert(of_file(n, s, o))
+        Return o
+    End Function
+
     Public Shared Function [of](ByVal n As String, ByVal s As String, ByRef o As nlp) As Boolean
         Return create(Function(ByRef i As nlexer) As Boolean
                           Return nlexer.of(n, i)
@@ -72,6 +78,12 @@ Public NotInheritable Class nlp
                     o)
     End Function
 
+    Public Shared Function [of](ByVal n As String, ByVal s As String) As nlp
+        Dim o As nlp = Nothing
+        assert([of](n, s, o))
+        Return o
+    End Function
+
     Public Shared Function [of](ByVal n() As String, ByVal s() As String, ByRef o As nlp) As Boolean
         Return create(Function(ByRef i As nlexer) As Boolean
                           Return nlexer.of(n, i)
@@ -80,5 +92,11 @@ Public NotInheritable Class nlp
                           Return i.parse(s)
                       End Function,
                       o)
+    End Function
+
+    Public Shared Function [of](ByVal n() As String, ByVal s() As String) As nlp
+        Dim o As nlp = Nothing
+        assert([of](n, s, o))
+        Return o
     End Function
 End Class

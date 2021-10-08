@@ -11,14 +11,9 @@ Partial Public NotInheritable Class nlexer
     Public NotInheritable Class rule_file
         Inherits configuration.rule
 
-        Private ReadOnly commands As map(Of String, Func(Of String, Boolean))
-        Private ReadOnly rules As vector(Of pair(Of String, rule))
-
-        Public Sub New()
-            ' TODO: Implement macros
-            commands = New map(Of String, Func(Of String, Boolean))()
-            rules = New vector(Of pair(Of String, rule))()
-        End Sub
+        ' TODO: Implement macros
+        Private ReadOnly commands As New map(Of String, Func(Of String, Boolean))()
+        Private ReadOnly rules As New vector(Of pair(Of String, rule))()
 
         Protected Overrides Function command_mapping() As map(Of String, Func(Of String, Boolean))
             Return commands

@@ -16,7 +16,7 @@ namespace-content [function, value-definition-with-semi-colon]
 
 paragraph [sentence, multi-sentence-paragraph]
 sentence [sentence-with-semi-colon, sentence-without-semi-colon]
-sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, ignore-return-function-call, kw-break, logic, self-value-clause]? semi-colon
+sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, ignore-result-function-call, kw-break, logic, self-value-clause]? semi-colon
 sentence-without-semi-colon [condition, while, for-loop]
 
 multi-sentence-paragraph start-paragraph [sentence]* end-paragraph
@@ -47,7 +47,7 @@ binary-operation-value raw-value [add, minus, multiply, divide, mod, power, bit-
 
 variable-name name
 
-ignore-return-function-call function-call
+ignore-result-function-call function-call
 
 function-call name start-bracket [value-list]? end-bracket
 value-list [value-with-comma]* value
