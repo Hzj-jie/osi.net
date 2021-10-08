@@ -39,10 +39,8 @@ Namespace logic
                 Return True
             End If
             Dim size As UInt32 = 0
-            If Not types.retrieve(type, size) Then
-                errors.type_undefined(type, name)
-                Return False
-            End If
+            ' type should be checked when a variable is defined.
+            assert(types.retrieve(type, size))
             o = New variable(scope, name, type, [optional].of(size))
             Return True
         End Function
