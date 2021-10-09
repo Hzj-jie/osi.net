@@ -10,8 +10,7 @@ Public NotInheritable Class method_impl_options
     Public Const aggressive_inlining As MethodImplOptions = zero
 #Else
     'aggressive-inline + aggressive-optimization
-    'Public Const aggressive_inlining As MethodImplOptions = DirectCast(256 Or 512, MethodImplOptions)
-    Public Const aggressive_inlining As MethodImplOptions = MethodImplOptions.NoInlining Or DirectCast(512, MethodImplOptions)
+    Public Const aggressive_inlining As MethodImplOptions = DirectCast(256 Or 512, MethodImplOptions)
 #End If
 
     Public Const zero As MethodImplOptions = DirectCast(0, MethodImplOptions)
