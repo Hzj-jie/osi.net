@@ -89,7 +89,6 @@ Partial Public NotInheritable Class b2style
                        default_registerer("param"),
                        default_registerer("value-definition-with-semi-colon"),
                        ignore_parameters(AddressOf namespace_.register),
-                       ignore_parameters(AddressOf namespace_content.register),
                        default_registerer("paragraph"),
                        default_registerer("sentence"),
                        default_registerer("sentence-with-semi-colon"),

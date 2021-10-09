@@ -56,26 +56,4 @@ Partial Public NotInheritable Class b2style
             Return True
         End Function
     End Class
-
-    Public NotInheritable Class namespace_content
-        Inherits rewriter_wrapper
-        Implements rewriter
-
-        <inject_constructor>
-        Public Sub New(ByVal i As rewriters)
-            MyBase.New(i)
-        End Sub
-
-        Public Shared Sub register(ByVal b As rewriters)
-            assert(Not b Is Nothing)
-            b.register(Of namespace_content)()
-        End Sub
-
-        Public Function build(ByVal n As typed_node,
-                              ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
-            assert(Not n Is Nothing)
-            assert(n.child_count() = 1)
-            Return l.of(n.child()).build(o)
-        End Function
-    End Class
 End Class

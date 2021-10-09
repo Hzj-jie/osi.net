@@ -13,8 +13,7 @@ param name name
 
 value-definition-with-semi-colon value-definition semi-colon
 
-namespace- kw-namespace name start-paragraph [namespace-, namespace-content]* end-paragraph
-namespace-content [function, value-definition-with-semi-colon]
+namespace- kw-namespace name start-paragraph [root-type]* end-paragraph
 
 paragraph [sentence, multi-sentence-paragraph]
 sentence [sentence-with-semi-colon, sentence-without-semi-colon]
