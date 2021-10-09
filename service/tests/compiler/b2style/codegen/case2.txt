@@ -1,4 +1,6 @@
 ﻿
+#include <b2style.h>
+
 bool is_even(long i) {
   long _2 = 2;
   long _0 = 0;

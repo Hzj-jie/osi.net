@@ -1,4 +1,6 @@
 ﻿
+#include <b2style.h>
+
 #include <cstdio>
 
 int main() {

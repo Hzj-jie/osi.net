@@ -36,52 +36,52 @@ Friend Module _b2style_test_data
     Public ReadOnly comments() As Byte
 
     Sub New()
-        case1 = Convert.FromBase64String(strcat_hint(CUInt(72), _
-        "77u/CnZvaWQgbWFpbigpIHsKICBiMnN0eWxlOjpzdGRfb3V0KCJIZWxsbyBXb3JsZCIpOwp9"))
-        case2 = Convert.FromBase64String(strcat_hint(CUInt(392), _
-        "77u/CmJvb2wgaXNfZXZlbihsb25nIGkpIHsKICBsb25nIF8yID0gMjsKICBsb25nIF8wID0gMDsKICByZXR1cm4gYjJzdHlsZTo6ZXF1YWwoYjJzdHlsZTo6bW9kKGksIF8yKSwgXzApOwp9Cgp2b2lkIG1haW4oKSB7CiAgZm9yIChpbnQgaSA9IDA7IGkgPCAxMDA7IGkgPSBpKyspIHsKICAgIGxvbmcgeDsKICAgIHggPSBiMnN0eWxlOjpjdXJyZW50X21zKCk7CiAgICBpZiAoaXNfZXZlbih4KSkgewogICAgICB4ID0geC0tOwogICAgfQogICAgYjJzdHlsZTo6Ym9vbF9zdGRfb3V0KGlzX2V2ZW4oeCkpOwogIH0KfQo="))
-        bool_and_bool = Convert.FromBase64String(strcat_hint(CUInt(456), _
-        "77u/CnZvaWQgbWFpbigpIHsKICBiMnN0eWxlOjpib29sX3N0ZF9vdXQodHJ1ZSAmJiB0cnVlKTsKICBiMnN0eWxlOjpib29sX3N0ZF9vdXQodHJ1ZSAmJiBmYWxzZSk7CiAgYjJzdHlsZTo6Ym9vbF9zdGRfb3V0KGZhbHNlICYmIHRydWUpOwogIGIyc3R5bGU6OmJvb2xfc3RkX291dChmYWxzZSAmJiBmYWxzZSk7CiAgYjJzdHlsZTo6Ym9vbF9zdGRfb3V0KHRydWUgfHwgdHJ1ZSk7CiAgYjJzdHlsZTo6Ym9vbF9zdGRfb3V0KHRydWUgfHwgZmFsc2UpOwogIGIyc3R5bGU6OmJvb2xfc3RkX291dChmYWxzZSB8fCB0cnVlKTsKICBiMnN0eWxlOjpib29sX3N0ZF9vdXQoZmFsc2UgfHwgZmFsc2UpOwp9Cg=="))
-        str_unescape = Convert.FromBase64String(strcat_hint(CUInt(72), _
-        "77u/CnZvaWQgbWFpbigpIHsKICBiMnN0eWxlOjpzdGRfb3V0KCJhYmNcdGRlZlxuIik7Cn0="))
-        _1_to_100 = Convert.FromBase64String(strcat_hint(CUInt(196), _
-        "77u/CnZvaWQgbWFpbigpIHsKICBpbnQgeCA9IDA7CiAgZm9yIChpbnQgaSA9IDA7IGkgPCAxMDA7IGkgPSBpKyspIHsKICAgIHggPSB4ICsgaSArIDE7CiAgfQogIGIyc3R5bGU6OmludF9zdGRfb3V0KHgpOwogIGIyc3R5bGU6OnN0ZF9vdXQoIlxuIik7Cn0="))
-        self_add = Convert.FromBase64String(strcat_hint(CUInt(96), _
-        "77u/CnZvaWQgbWFpbigpIHsKICBpbnQgaSA9IDEwMDsKICBpICs9IDE7CiAgYjJzdHlsZTo6aW50X3N0ZF9vdXQoaSk7Cn0="))
-        biguint = Convert.FromBase64String(strcat_hint(CUInt(248), _
-        "77u/CnZvaWQgbWFpbigpIHsKICBiaWd1aW50IGkgPSA0Mjk0OTY3Mjk2TDsKICBiaWd1aW50IGogPSA0Mjk0OTY3Mjk2bDsKICBiaWd1aW50IGsgPSAxTDsKICBiMnN0eWxlOjpiaWd1aW50X3N0ZF9vdXQoaSk7CiAgYjJzdHlsZTo6YmlndWludF9zdGRfb3V0KGopOwogIGIyc3R5bGU6OmJpZ3VpbnRfc3RkX291dChrKTsKfQ=="))
-        negative_int = Convert.FromBase64String(strcat_hint(CUInt(140), _
-        "77u/CnZvaWQgbWFpbigpIHsKICBiMnN0eWxlOjppbnRfc3RkX291dCgtMSk7CiAgYjJzdHlsZTo6aW50X3N0ZF9vdXQoLTIpOwogIGIyc3R5bGU6OmludF9zdGRfb3V0KC0zKTsKfQ=="))
-        another_1_to_100 = Convert.FromBase64String(strcat_hint(CUInt(188), _
-        "77u/CnZvaWQgbWFpbigpIHsKICBpbnQgeCA9IDA7CiAgZm9yIChpbnQgaSA9IDE7IGkgPD0gMTAwOyBpICs9IDEpIHsKICAgIHggKz0gaTsKICB9CiAgYjJzdHlsZTo6aW50X3N0ZF9vdXQoeCk7CiAgYjJzdHlsZTo6c3RkX291dCgiXG4iKTsKfQ=="))
-        loaded_method = Convert.FromBase64String(strcat_hint(CUInt(740), _
-        "77u/CmxvbmcgbG9hZGVkX2N1cnJlbnRfbXMoKSB7CiAgc3RyaW5nIG1ldGhvZF9uYW1lID0gYjJzdHlsZTo6bG9hZGVkX21ldGhvZHMoImN1cnJlbnRfbXMiKTsKICBsb2dpYyAiaW50ZXJydXB0IGxvYWRfbWV0aG9kIG1ldGhvZF9uYW1lIEBAcHJlZml4ZXNAdGVtcHNAc3RyaW5nIjsKICBsb25nIHJlc3VsdDsKICBsb2dpYyAiaW50ZXJydXB0IGV4ZWN1dGVfbG9hZGVkX21ldGhvZCBAQHByZWZpeGVzQHRlbXBzQHN0cmluZyByZXN1bHQiOwogIHJldHVybiByZXN1bHQ7Cn0KCmJvb2wgaXNfZXZlbihsb25nIGkpIHsKICBsb25nIF8yID0gMjsKICBsb25nIF8wID0gMDsKICByZXR1cm4gYjJzdHlsZTo6ZXF1YWwoYjJzdHlsZTo6bW9kKGksIF8yKSwgXzApOwp9Cgp2b2lkIG1haW4oKSB7CiAgZm9yIChpbnQgaSA9IDA7IGkgPCAxMDA7IGkgPSBpKyspIHsKICAgIGxvbmcgeDsKICAgIHggPSBsb2FkZWRfY3VycmVudF9tcygpOwogICAgaWYgKGlzX2V2ZW4oeCkpIHsKCSAgeCA9IHgtLTsKCX0KICAgIGIyc3R5bGU6OmJvb2xfc3RkX291dChpc19ldmVuKHgpKTsKICB9Cn0gCg=="))
-        ufloat_std_out = Convert.FromBase64String(strcat_hint(CUInt(80), _
-        "77u/CnZvaWQgbWFpbigpIHsKICB1ZmxvYXQgZiA9IDEuMTsKICBiMnN0eWxlOjpzdGRfb3V0KGYpOwp9"))
-        ufloat_operators = Convert.FromBase64String(strcat_hint(CUInt(212), _
-        "77u/CnZvaWQgbWFpbigpIHsKICB1ZmxvYXQgaSA9IDIuMjsKICBpICs9IDMuMDsKICBpIC09IDMuMDsKICBpIC89IDIuMDsKICBiMnN0eWxlOjpzdGRfb3V0KGkpOwogIGkgPSBiMnN0eWxlOjp1ZmxvYXQ6OmZyYWN0aW9uKDEsIDIpOwogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7Cn0="))
-        while_1_to_100 = Convert.FromBase64String(strcat_hint(CUInt(192), _
-        "77u/CnZvaWQgbWFpbigpIHsKICBpbnQgeCA9IDA7CiAgaW50IGkgPSAwOwogIHdoaWxlIChpIDwgMTAwKSB7CiAgICBpICs9IDE7Cgl4ICs9IGk7CiAgfQogIGIyc3R5bGU6OmludF9zdGRfb3V0KHgpOwogIGIyc3R5bGU6OnN0ZF9vdXQoIlxuIik7Cn0="))
-        while_0_to_1 = Convert.FromBase64String(strcat_hint(CUInt(204), _
-        "77u/CnZvaWQgbWFpbigpIHsKICB1ZmxvYXQgeCA9IDAuMDsKICB1ZmxvYXQgaSA9IDAuMDsKICB3aGlsZSAoaSA8IDEuMCkgewogICAgaSArPSAwLjAxOwoJeCArPSBpOwogIH0KICBiMnN0eWxlOjpzdGRfb3V0KHgpOwogIGIyc3R5bGU6OnN0ZF9vdXQoIlxuIik7Cn0K"))
-        pi_integral_0_1 = Convert.FromBase64String(strcat_hint(CUInt(268), _
-        "77u/CnZvaWQgbWFpbigpIHsKICB1ZmxvYXQgZHggPSAwLjE7CiAgdWZsb2F0IHggPSAwLjA7CiAgdWZsb2F0IHMgPSAwLjA7CiAgd2hpbGUgKHggPCAxLjApIHsKICAgIHVmbG9hdCBjID0gMS4wIC0gKHggXiAyLjApOwoJYyBePSAwLjU7CgljICo9IGR4OwoJcyArPSBjOwoJeCArPSBkeDsKICB9CgogIGIyc3R5bGU6OnN0ZF9vdXQocyAqIDQuMCk7Cn0="))
-        calculate_pi_bbp = Convert.FromBase64String(strcat_hint(CUInt(512), _
-        "77u/CnZvaWQgbWFpbigpIHsKICB1ZmxvYXQgcyA9IDAuMDsKICBmb3IgKGludCBpID0gMDsgaSA8IDU1OyBpID0gaSsrKSB7CiAgICB1ZmxvYXQgYyA9IGIyc3R5bGU6OnVmbG9hdDo6ZnJhY3Rpb24oNCwgMSArICg4ICogaSkpOwoJYyAtPSBiMnN0eWxlOjp1ZmxvYXQ6OmZyYWN0aW9uKDIsIDQgKyAoOCAqIGkpKTsKCWMgLT0gYjJzdHlsZTo6dWZsb2F0OjpmcmFjdGlvbigxLCA1ICsgKDggKiBpKSk7CgljIC09IGIyc3R5bGU6OnVmbG9hdDo6ZnJhY3Rpb24oMSwgNiArICg4ICogaSkpOwoJYmlndWludCBiID0gMTsKCWMgKj0gYjJzdHlsZTo6dWZsb2F0OjpmcmFjdGlvbigxLCBiIDw8ICg0ICogaSkpOwoJcyArPSBjOwogIH0KICBiMnN0eWxlOjpzdGRfb3V0KHMpOwp9Cg=="))
-        shift = Convert.FromBase64String(strcat_hint(CUInt(188), _
-        "77u/CnZvaWQgbWFpbigpIHsKICBpbnQgaSA9IDEwMDsKICBpIDw8PSAyOwogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7CiAgaW50IGogPSAwOwogIGogPSBpID4+IDU7CiAgYjJzdHlsZTo6c3RkX291dChpKTsKICBiMnN0eWxlOjpzdGRfb3V0KGopOwp9"))
-        order_of_operators = Convert.FromBase64String(strcat_hint(CUInt(124), _
-        "77u/CnZvaWQgbWFpbigpIHsKICBiMnN0eWxlOjpzdGRfb3V0KDEgKyAyICogMyArIDQgLSA1ICogNiAqIDcgKiA4ICogOSAvIDEwICogKDExICsgMTIpKTsKfQ=="))
-        include = Convert.FromBase64String(strcat_hint(CUInt(288), _
-        "77u/DQojaW5jbHVkZSA8Y3N0ZGlvPg0KDQppbnQgbWFpbigpIHsNCiAgaW50IHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIGlmICh4ID09IEVPRikgew0KICAgIGIyc3R5bGU6OnN0ZF9vdXQoIkVPRiIpOw0KICB9DQp9"))
-        include2 = Convert.FromBase64String(strcat_hint(CUInt(292), _
-        "77u/DQojaW5jbHVkZSAiY3N0ZGlvIg0KDQppbnQgbWFpbigpIHsNCiAgaW50IHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIGlmICh4ID09IEVPRikgew0KICAgIGIyc3R5bGU6OnN0ZF9vdXQoIkVvRiIpOw0KICB9DQp9DQo="))
-        ifndef = Convert.FromBase64String(strcat_hint(CUInt(180), _
-        "77u/DQojaW5jbHVkZSA8c3RkaW8uaD4NCiNpbmNsdWRlICJzdGRpby5oIg0KI2luY2x1ZGUgPGNzdGRpbz4NCiNpbmNsdWRlICJjc3RkaW8iDQoNCnZvaWQgbWFpbiAoKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoImdvb2QiKTsNCn0NCg=="))
-        namespaces = Convert.FromBase64String(strcat_hint(CUInt(688), _
-        "77u/DQpuYW1lc3BhY2UgYSB7DQogIG5hbWVzcGFjZSBiIHsNCiAgICA6OnZvaWQgZjIoKSB7DQogICAgICA6OmIyc3R5bGU6OnN0ZF9vdXQoImE6OmI6OmYyXG4iKTsNCiAgICB9DQogIH0NCg0KICA6OnZvaWQgZjMoKSB7DQogICAgOjpiMnN0eWxlOjpzdGRfb3V0KCJhOjpmM1xuIik7DQogIH0NCg0KICBuYW1lc3BhY2UgYiB7DQogICAgOjp2b2lkIGYxKCkgew0KICAgICAgOjpiMnN0eWxlOjpzdGRfb3V0KCJhOjpiOjpmMVxuIik7DQogICAgfQ0KICB9DQoNCiAgOjp2b2lkIGYyKCkgew0KICAgIDo6YjJzdHlsZTo6c3RkX291dCgiYTo6ZjJcbiIpOw0KICB9DQoNCiAgbmFtZXNwYWNlIGMgew0KICAgIDo6dm9pZCBmNCgpIHsNCiAgICAgIDo6YjJzdHlsZTo6c3RkX291dCgiYTo6Yzo6ZjRcbiIpOw0KICAgIH0NCiAgfQ0KfQ0KDQo6OnZvaWQgbWFpbigpIHsNCiAgYTo6Yjo6ZjEoKTsNCiAgYTo6ZjIoKTsNCg0KICA6OmE6OmI6OmYyKCk7DQogIDo6YTo6ZjMoKTsNCiAgOjphOjpjOjpmNCgpOw0KfQ0KDQo="))
-        multiline_string = Convert.FromBase64String(strcat_hint(CUInt(84), _
-        "77u/CnZvaWQgbWFpbigpIHsKICBiMnN0eWxlOjpzdGRfb3V0KCJhCiAgICBiCiAgICBjCiAgICBkIik7Cn0K"))
+        case1 = Convert.FromBase64String(strcat_hint(CUInt(104), _
+        "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgYjJzdHlsZTo6c3RkX291dCgiSGVsbG8gV29ybGQiKTsKfQ=="))
+        case2 = Convert.FromBase64String(strcat_hint(CUInt(420), _
+        "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgpib29sIGlzX2V2ZW4obG9uZyBpKSB7CiAgbG9uZyBfMiA9IDI7CiAgbG9uZyBfMCA9IDA7CiAgcmV0dXJuIGIyc3R5bGU6OmVxdWFsKGIyc3R5bGU6Om1vZChpLCBfMiksIF8wKTsKfQoKdm9pZCBtYWluKCkgewogIGZvciAoaW50IGkgPSAwOyBpIDwgMTAwOyBpID0gaSsrKSB7CiAgICBsb25nIHg7CiAgICB4ID0gYjJzdHlsZTo6Y3VycmVudF9tcygpOwogICAgaWYgKGlzX2V2ZW4oeCkpIHsKICAgICAgeCA9IHgtLTsKICAgIH0KICAgIGIyc3R5bGU6OmJvb2xfc3RkX291dChpc19ldmVuKHgpKTsKICB9Cn0K"))
+        bool_and_bool = Convert.FromBase64String(strcat_hint(CUInt(484), _
+        "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgYjJzdHlsZTo6Ym9vbF9zdGRfb3V0KHRydWUgJiYgdHJ1ZSk7CiAgYjJzdHlsZTo6Ym9vbF9zdGRfb3V0KHRydWUgJiYgZmFsc2UpOwogIGIyc3R5bGU6OmJvb2xfc3RkX291dChmYWxzZSAmJiB0cnVlKTsKICBiMnN0eWxlOjpib29sX3N0ZF9vdXQoZmFsc2UgJiYgZmFsc2UpOwogIGIyc3R5bGU6OmJvb2xfc3RkX291dCh0cnVlIHx8IHRydWUpOwogIGIyc3R5bGU6OmJvb2xfc3RkX291dCh0cnVlIHx8IGZhbHNlKTsKICBiMnN0eWxlOjpib29sX3N0ZF9vdXQoZmFsc2UgfHwgdHJ1ZSk7CiAgYjJzdHlsZTo6Ym9vbF9zdGRfb3V0KGZhbHNlIHx8IGZhbHNlKTsKfQo="))
+        str_unescape = Convert.FromBase64String(strcat_hint(CUInt(100), _
+        "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgYjJzdHlsZTo6c3RkX291dCgiYWJjXHRkZWZcbiIpOwp9"))
+        _1_to_100 = Convert.FromBase64String(strcat_hint(CUInt(224), _
+        "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgaW50IHggPSAwOwogIGZvciAoaW50IGkgPSAwOyBpIDwgMTAwOyBpID0gaSsrKSB7CiAgICB4ID0geCArIGkgKyAxOwogIH0KICBiMnN0eWxlOjppbnRfc3RkX291dCh4KTsKICBiMnN0eWxlOjpzdGRfb3V0KCJcbiIpOwp9"))
+        self_add = Convert.FromBase64String(strcat_hint(CUInt(124), _
+        "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgaW50IGkgPSAxMDA7CiAgaSArPSAxOwogIGIyc3R5bGU6OmludF9zdGRfb3V0KGkpOwp9"))
+        biguint = Convert.FromBase64String(strcat_hint(CUInt(276), _
+        "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgYmlndWludCBpID0gNDI5NDk2NzI5Nkw7CiAgYmlndWludCBqID0gNDI5NDk2NzI5Nmw7CiAgYmlndWludCBrID0gMUw7CiAgYjJzdHlsZTo6YmlndWludF9zdGRfb3V0KGkpOwogIGIyc3R5bGU6OmJpZ3VpbnRfc3RkX291dChqKTsKICBiMnN0eWxlOjpiaWd1aW50X3N0ZF9vdXQoayk7Cn0="))
+        negative_int = Convert.FromBase64String(strcat_hint(CUInt(168), _
+        "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgYjJzdHlsZTo6aW50X3N0ZF9vdXQoLTEpOwogIGIyc3R5bGU6OmludF9zdGRfb3V0KC0yKTsKICBiMnN0eWxlOjppbnRfc3RkX291dCgtMyk7Cn0="))
+        another_1_to_100 = Convert.FromBase64String(strcat_hint(CUInt(216), _
+        "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgaW50IHggPSAwOwogIGZvciAoaW50IGkgPSAxOyBpIDw9IDEwMDsgaSArPSAxKSB7CiAgICB4ICs9IGk7CiAgfQogIGIyc3R5bGU6OmludF9zdGRfb3V0KHgpOwogIGIyc3R5bGU6OnN0ZF9vdXQoIlxuIik7Cn0="))
+        loaded_method = Convert.FromBase64String(strcat_hint(CUInt(768), _
+        "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgpsb25nIGxvYWRlZF9jdXJyZW50X21zKCkgewogIHN0cmluZyBtZXRob2RfbmFtZSA9IGIyc3R5bGU6OmxvYWRlZF9tZXRob2RzKCJjdXJyZW50X21zIik7CiAgbG9naWMgImludGVycnVwdCBsb2FkX21ldGhvZCBtZXRob2RfbmFtZSBAQHByZWZpeGVzQHRlbXBzQHN0cmluZyI7CiAgbG9uZyByZXN1bHQ7CiAgbG9naWMgImludGVycnVwdCBleGVjdXRlX2xvYWRlZF9tZXRob2QgQEBwcmVmaXhlc0B0ZW1wc0BzdHJpbmcgcmVzdWx0IjsKICByZXR1cm4gcmVzdWx0Owp9Cgpib29sIGlzX2V2ZW4obG9uZyBpKSB7CiAgbG9uZyBfMiA9IDI7CiAgbG9uZyBfMCA9IDA7CiAgcmV0dXJuIGIyc3R5bGU6OmVxdWFsKGIyc3R5bGU6Om1vZChpLCBfMiksIF8wKTsKfQoKdm9pZCBtYWluKCkgewogIGZvciAoaW50IGkgPSAwOyBpIDwgMTAwOyBpID0gaSsrKSB7CiAgICBsb25nIHg7CiAgICB4ID0gbG9hZGVkX2N1cnJlbnRfbXMoKTsKICAgIGlmIChpc19ldmVuKHgpKSB7CgkgIHggPSB4LS07Cgl9CiAgICBiMnN0eWxlOjpib29sX3N0ZF9vdXQoaXNfZXZlbih4KSk7CiAgfQp9IAo="))
+        ufloat_std_out = Convert.FromBase64String(strcat_hint(CUInt(112), _
+        "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgdWZsb2F0IGYgPSAxLjE7CiAgYjJzdHlsZTo6c3RkX291dChmKTsKfQ=="))
+        ufloat_operators = Convert.FromBase64String(strcat_hint(CUInt(240), _
+        "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgdWZsb2F0IGkgPSAyLjI7CiAgaSArPSAzLjA7CiAgaSAtPSAzLjA7CiAgaSAvPSAyLjA7CiAgYjJzdHlsZTo6c3RkX291dChpKTsKICBpID0gYjJzdHlsZTo6dWZsb2F0OjpmcmFjdGlvbigxLCAyKTsKICBiMnN0eWxlOjpzdGRfb3V0KGkpOwp9"))
+        while_1_to_100 = Convert.FromBase64String(strcat_hint(CUInt(220), _
+        "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgaW50IHggPSAwOwogIGludCBpID0gMDsKICB3aGlsZSAoaSA8IDEwMCkgewogICAgaSArPSAxOwoJeCArPSBpOwogIH0KICBiMnN0eWxlOjppbnRfc3RkX291dCh4KTsKICBiMnN0eWxlOjpzdGRfb3V0KCJcbiIpOwp9"))
+        while_0_to_1 = Convert.FromBase64String(strcat_hint(CUInt(236), _
+        "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgdWZsb2F0IHggPSAwLjA7CiAgdWZsb2F0IGkgPSAwLjA7CiAgd2hpbGUgKGkgPCAxLjApIHsKICAgIGkgKz0gMC4wMTsKCXggKz0gaTsKICB9CiAgYjJzdHlsZTo6c3RkX291dCh4KTsKICBiMnN0eWxlOjpzdGRfb3V0KCJcbiIpOwp9Cg=="))
+        pi_integral_0_1 = Convert.FromBase64String(strcat_hint(CUInt(296), _
+        "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgdWZsb2F0IGR4ID0gMC4xOwogIHVmbG9hdCB4ID0gMC4wOwogIHVmbG9hdCBzID0gMC4wOwogIHdoaWxlICh4IDwgMS4wKSB7CiAgICB1ZmxvYXQgYyA9IDEuMCAtICh4IF4gMi4wKTsKCWMgXj0gMC41OwoJYyAqPSBkeDsKCXMgKz0gYzsKCXggKz0gZHg7CiAgfQoKICBiMnN0eWxlOjpzdGRfb3V0KHMgKiA0LjApOwp9"))
+        calculate_pi_bbp = Convert.FromBase64String(strcat_hint(CUInt(540), _
+        "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgdWZsb2F0IHMgPSAwLjA7CiAgZm9yIChpbnQgaSA9IDA7IGkgPCA1NTsgaSA9IGkrKykgewogICAgdWZsb2F0IGMgPSBiMnN0eWxlOjp1ZmxvYXQ6OmZyYWN0aW9uKDQsIDEgKyAoOCAqIGkpKTsKCWMgLT0gYjJzdHlsZTo6dWZsb2F0OjpmcmFjdGlvbigyLCA0ICsgKDggKiBpKSk7CgljIC09IGIyc3R5bGU6OnVmbG9hdDo6ZnJhY3Rpb24oMSwgNSArICg4ICogaSkpOwoJYyAtPSBiMnN0eWxlOjp1ZmxvYXQ6OmZyYWN0aW9uKDEsIDYgKyAoOCAqIGkpKTsKCWJpZ3VpbnQgYiA9IDE7CgljICo9IGIyc3R5bGU6OnVmbG9hdDo6ZnJhY3Rpb24oMSwgYiA8PCAoNCAqIGkpKTsKCXMgKz0gYzsKICB9CiAgYjJzdHlsZTo6c3RkX291dChzKTsKfQo="))
+        shift = Convert.FromBase64String(strcat_hint(CUInt(220), _
+        "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgaW50IGkgPSAxMDA7CiAgaSA8PD0gMjsKICBiMnN0eWxlOjpzdGRfb3V0KGkpOwogIGludCBqID0gMDsKICBqID0gaSA+PiA1OwogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7CiAgYjJzdHlsZTo6c3RkX291dChqKTsKfQ=="))
+        order_of_operators = Convert.FromBase64String(strcat_hint(CUInt(152), _
+        "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgYjJzdHlsZTo6c3RkX291dCgxICsgMiAqIDMgKyA0IC0gNSAqIDYgKiA3ICogOCAqIDkgLyAxMCAqICgxMSArIDEyKSk7Cn0="))
+        include = Convert.FromBase64String(strcat_hint(CUInt(320), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQojaW5jbHVkZSA8Y3N0ZGlvPg0KDQppbnQgbWFpbigpIHsNCiAgaW50IHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIGlmICh4ID09IEVPRikgew0KICAgIGIyc3R5bGU6OnN0ZF9vdXQoIkVPRiIpOw0KICB9DQp9"))
+        include2 = Convert.FromBase64String(strcat_hint(CUInt(324), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQojaW5jbHVkZSAiY3N0ZGlvIg0KDQppbnQgbWFpbigpIHsNCiAgaW50IHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIGlmICh4ID09IEVPRikgew0KICAgIGIyc3R5bGU6OnN0ZF9vdXQoIkVvRiIpOw0KICB9DQp9DQo="))
+        ifndef = Convert.FromBase64String(strcat_hint(CUInt(212), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQojaW5jbHVkZSA8c3RkaW8uaD4NCiNpbmNsdWRlICJzdGRpby5oIg0KI2luY2x1ZGUgPGNzdGRpbz4NCiNpbmNsdWRlICJjc3RkaW8iDQoNCnZvaWQgbWFpbiAoKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoImdvb2QiKTsNCn0NCg=="))
+        namespaces = Convert.FromBase64String(strcat_hint(CUInt(720), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpuYW1lc3BhY2UgYSB7DQogIG5hbWVzcGFjZSBiIHsNCiAgICA6OnZvaWQgZjIoKSB7DQogICAgICA6OmIyc3R5bGU6OnN0ZF9vdXQoImE6OmI6OmYyXG4iKTsNCiAgICB9DQogIH0NCg0KICA6OnZvaWQgZjMoKSB7DQogICAgOjpiMnN0eWxlOjpzdGRfb3V0KCJhOjpmM1xuIik7DQogIH0NCg0KICBuYW1lc3BhY2UgYiB7DQogICAgOjp2b2lkIGYxKCkgew0KICAgICAgOjpiMnN0eWxlOjpzdGRfb3V0KCJhOjpiOjpmMVxuIik7DQogICAgfQ0KICB9DQoNCiAgOjp2b2lkIGYyKCkgew0KICAgIDo6YjJzdHlsZTo6c3RkX291dCgiYTo6ZjJcbiIpOw0KICB9DQoNCiAgbmFtZXNwYWNlIGMgew0KICAgIDo6dm9pZCBmNCgpIHsNCiAgICAgIDo6YjJzdHlsZTo6c3RkX291dCgiYTo6Yzo6ZjRcbiIpOw0KICAgIH0NCiAgfQ0KfQ0KDQo6OnZvaWQgbWFpbigpIHsNCiAgYTo6Yjo6ZjEoKTsNCiAgYTo6ZjIoKTsNCg0KICA6OmE6OmI6OmYyKCk7DQogIDo6YTo6ZjMoKTsNCiAgOjphOjpjOjpmNCgpOw0KfQ0KDQo="))
+        multiline_string = Convert.FromBase64String(strcat_hint(CUInt(116), _
+        "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgYjJzdHlsZTo6c3RkX291dCgiYQogICAgYgogICAgYwogICAgZCIpOwp9Cg=="))
         comments = Convert.FromBase64String(strcat_hint(CUInt(400), _
         "77u/DQojaW5jbHVkZSA8c3RkaW8uaD4gLy8gY29tbWVudCBjYW4gYmUgcGxhY2VkIGhlcmUuDQoNCnZvaWQgbWFpbiggLyogTE9MICovICkgeyAvKiBDb21tZW50cyBjYW4gYmUgYWRkZWQgaGVyZSBhcyB3ZWxsLg0KKiBUaGlzIGlzIGEgbXVsdGkgbGluZSBjb21tZW50Lg0KKi8NCiAgaW50IGkgPSBnZXRjaGFyKCk7DQogIHdoaWxlIChpICE9IEVPRikgew0KCXB1dGNoYXIoaSk7ICAvLyBjb21tZW50IGNhbiBiZSBwbGFjZWQgaGVyZSBhcyB3ZWxsLg0KCWkgPSBnZXRjaGFyKCk7DQogIH0NCn0gIC8vIGFsc28gaGVyZS4NCg=="))
     End Sub

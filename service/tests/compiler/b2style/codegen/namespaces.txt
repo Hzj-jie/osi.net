@@ -1,4 +1,6 @@
 ﻿
+#include <b2style.h>
+
 namespace a {
   namespace b {
     ::void f2() {

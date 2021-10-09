@@ -1,4 +1,6 @@
 ﻿
+#include <b2style.h>
+
 void main() {
   b2style::bool_std_out(true && true);
   b2style::bool_std_out(true && false);

@@ -9,7 +9,7 @@ Imports osi.root.template
 Imports osi.service.interpreter.primitive
 Imports statements = osi.service.compiler.rewriters.statements
 
-Public NotInheritable Class b2style
+Partial Public NotInheritable Class b2style
     Inherits rewriter_rule_wrapper(Of parameters_t,
                                       nlexer_rule_t,
                                       syntaxer_rule_t,
@@ -40,8 +40,7 @@ Public NotInheritable Class b2style
         Inherits __do(Of vector(Of Action(Of statements, parameters_t)))
 
         Protected Overrides Function at() As vector(Of Action(Of statements, parameters_t))
-            Return vector.of(
-                       ignore_parameters(AddressOf prefix.register))
+            Return vector.of(Of Action(Of statements, parameters_t))()
         End Function
     End Class
 
@@ -56,7 +55,6 @@ Public NotInheritable Class b2style
     Public NotInheritable Class rewriter_gens_t
         Inherits __do(Of vector(Of Action(Of rewriters, parameters_t)))
 
-        ' TODO: Remove unexpected types.
         Protected Overrides Function at() As vector(Of Action(Of rewriters, parameters_t))
             Return vector.of(
                        default_registerer("root-type"),
@@ -122,15 +120,14 @@ Public NotInheritable Class b2style
                        default_registerer("value-list"),
                        default_registerer("value-with-comma"),
  _
-                       default_registerer("kw-include"),
-                       default_registerer("include"),  ' implement include for b2style to cover b2style code.
-                       default_registerer("include-with-string"),
-                       default_registerer("include-with-file"),
+                       default_registerer("include"),
+                       ignore_parameters(AddressOf include_with_string.register),
+                       ignore_parameters(AddressOf include_with_file.register),
  _
                        default_registerer("kw-ifndef"),
                        default_registerer("kw-define"),
                        default_registerer("kw-endif"),
-                       default_registerer("ifndef_wrapped"),
+                       default_registerer("ifndef-wrapped"),
                        default_registerer("define"),
  _
                        default_registerer("kw-typedef"),

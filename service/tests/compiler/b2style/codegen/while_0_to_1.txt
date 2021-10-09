@@ -1,4 +1,6 @@
 ﻿
+#include <b2style.h>
+
 void main() {
   ufloat x = 0.0;
   ufloat i = 0.0;

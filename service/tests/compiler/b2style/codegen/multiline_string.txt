@@ -1,4 +1,6 @@
 ﻿
+#include <b2style.h>
+
 void main() {
   b2style::std_out("a
     b

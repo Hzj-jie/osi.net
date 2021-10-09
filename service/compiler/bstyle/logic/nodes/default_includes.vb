@@ -5,9 +5,9 @@ Option Strict On
 
 Imports System.IO
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.formation
+Imports osi.root.template
 Imports osi.root.utils
 Imports osi.service.automata
 Imports osi.service.compiler.logic
@@ -18,8 +18,8 @@ Partial Public NotInheritable Class bstyle
     Private Shared include_folders As argument(Of vector(Of String))
     Private Shared ignore_default_include As argument(Of Boolean)
 
-    Private NotInheritable Class default_includes
-        Public Shared ReadOnly folder As String = Path.Combine(temp_folder, "bstyle-inc")
+    Public NotInheritable Class default_includes
+        Private Shared ReadOnly folder As String = Path.Combine(temp_folder, "bstyle-inc")
 
         Shared Sub New()
             assert(Not Directory.CreateDirectory(folder) Is Nothing)
@@ -30,39 +30,48 @@ Partial Public NotInheritable Class bstyle
             assert(bstyle_lib.bstyle_constants_h.sync_export(Path.Combine(folder, "bstyle_constants.h"), True))
         End Sub
 
+        Public NotInheritable Class parser
+            Inherits __do(Of String, writer, Boolean)
+
+            Public Overrides Function at(ByRef i As String, ByRef j As writer) As Boolean
+                Return bstyle.internal_parse(i, j)
+            End Function
+        End Class
+
+        Public NotInheritable Class folders
+            Inherits __do(Of vector(Of String))
+
+            Protected Overrides Function at() As vector(Of String)
+                Return +include_folders
+            End Function
+        End Class
+
+        Public NotInheritable Class ignore_default_folder
+            Inherits __do(Of Boolean)
+
+            Protected Overrides Function at() As Boolean
+                Return ignore_default_include Or False
+            End Function
+        End Class
+
+        Public NotInheritable Class default_folder
+            Inherits __do(Of String)
+
+            Protected Overrides Function at() As String
+                Return folder
+            End Function
+        End Class
+
         Private Sub New()
         End Sub
     End Class
 
-    Public MustInherit Class includes
-        Private Shared Function include_file(ByVal p As String,
-                                             ByVal s As String,
-                                             ByVal o As writer) As Boolean
-            Dim f As String = Path.Combine(p, s)
-            If File.Exists(f) Then
-                Return bstyle.internal_parse(File.ReadAllText(f), o)
-            End If
-            Return False
-        End Function
-
-        Protected Shared Function include_file(ByVal s As String, ByVal o As writer) As Boolean
-            Dim i As UInt32 = 0
-            While i < (+include_folders).size_or_0()
-                If include_file((+include_folders)(i), o) Then
-                    Return True
-                End If
-                i += uint32_1
-            End While
-            If Not (ignore_default_include Or False) AndAlso include_file(default_includes.folder, s, o) Then
-                Return True
-            End If
-            raise_error(error_type.user, "Cannot find or include file ", s)
-            Return False
-        End Function
-    End Class
-
     Public NotInheritable Class include_with_string
-        Inherits includes
+        Inherits include_with_string(Of writer,
+                                        default_includes.parser,
+                                        default_includes.folders,
+                                        default_includes.ignore_default_folder,
+                                        default_includes.default_folder)
         Implements logic_gen
 
         <inject_constructor>
@@ -74,19 +83,18 @@ Partial Public NotInheritable Class bstyle
             b.register(Of include_with_string)()
         End Sub
 
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
-            assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
-            assert(n.child_count() = 2)
-            Return include_file(n.child(1).word().str().Trim(character.quote).c_unescape(), o)
+        Public Shadows Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
+            Return MyBase.build(n, o)
         End Function
     End Class
 
     Public NotInheritable Class include_with_file
-        Inherits includes
+        Inherits include_with_file(Of writer,
+                                      default_includes.parser,
+                                      default_includes.folders,
+                                      default_includes.ignore_default_folder,
+                                      default_includes.default_folder)
         Implements logic_gen
-
-        Private Const kw_include As String = "#include"
 
         <inject_constructor>
         Public Sub New(ByVal i As logic_gens)
@@ -97,16 +105,8 @@ Partial Public NotInheritable Class bstyle
             b.register(Of include_with_file)()
         End Sub
 
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
-            assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
-            assert(n.leaf())
-            Dim file As String = n.word().str()
-            assert(file.StartsWith(kw_include))
-            file = file.Substring(kw_include.Length()).Trim()
-            assert(file.StartsWith(character.left_angle_bracket))
-            assert(file.EndsWith(character.right_angle_bracket))
-            Return include_file(file.Substring(1, file.Length() - 2), o)
+        Public Shadows Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
+            Return MyBase.build(n, o)
         End Function
     End Class
 
