@@ -131,6 +131,7 @@
     <Content Include="b2style\codegen\pi_integral_0_1.txt" />
     <Content Include="b2style\codegen\self_add.txt" />
     <Content Include="b2style\codegen\shift.txt" />
+    <Content Include="b2style\codegen\typedef.txt" />
     <Content Include="b2style\codegen\ufloat_operators.txt" />
     <Content Include="b2style\codegen\ufloat_std_out.txt" />
     <Content Include="b2style\codegen\while_0_to_1.txt" />

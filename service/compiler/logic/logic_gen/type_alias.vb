@@ -10,7 +10,7 @@ Namespace logic
         Private ReadOnly m As New unordered_map(Of String, String)()
 
         Public Function define(ByVal [alias] As String, ByVal canonical As String) As Boolean
-            If m.emplace([alias], canonical).second Then
+            If m.emplace([alias], canonical).second OrElse m([alias]).Equals(canonical) Then
                 Return True
             End If
             errors.type_alias_redefined([alias], canonical, m([alias]))
@@ -19,7 +19,12 @@ Namespace logic
 
         Default Public ReadOnly Property _D(ByVal [alias] As String) As String
             Get
-                Return m.find_or([alias], [alias])
+                Dim c As String = Nothing
+                While m.find([alias], c)
+                    [alias] = c
+                    c = Nothing
+                End While
+                Return [alias]
             End Get
         End Property
     End Class
